@@ -36,3 +36,5 @@ export type FeedType = {
   entities: Array<ActivityModel>;
   offset: string;
 };
+
+export type LockType = 'members' | 'paywall' | 'plus';

@@ -124,6 +124,7 @@ export type AppStackParamList = {
   TierScreen: {};
   PlusScreen: {
     onComplete: Function;
+    pro?: boolean;
   };
   PlusDiscoveryScreen: {};
   JoinMembershipScreen: {

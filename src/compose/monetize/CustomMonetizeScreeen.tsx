@@ -8,19 +8,17 @@ import {
 } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import TopBar from '../TopBar';
 import i18n from '../../common/services/i18n.service';
-import NavigationService from '../../navigation/NavigationService';
 import ThemedStyles from '../../styles/ThemedStyles';
 
 import { AppStackParamList } from '../../navigation/NavigationTypes';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
-import { string } from 'react-native-redash';
 import Switch from 'react-native-switch-pro';
 import Wrapper from './common/Wrapper';
 import CenteredLoading from '../../common/components/CenteredLoading';
 import { SupportTiersType } from '../../wire/WireTypes';
+import Colors from '../../styles/Colors';
 
 type CustomMonetizeScreenRouteProp = RouteProp<
   AppStackParamList,
@@ -165,20 +163,15 @@ const CustomMonetizeScreen = observer((props: PropsType) => {
             <View style={theme.rowJustifySpaceBetween}>
               <View style={theme.flexColumnCentered}>
                 <Text style={labelStyle}>
-                  {i18n.t('monetize.customMonetize.hasUsd')}
-                </Text>
-                <Switch
-                  value={localStore.has_tokens}
-                  onSyncPress={localStore.setHasTokens}
-                />
-              </View>
-              <View style={theme.flexColumnCentered}>
-                <Text style={labelStyle}>
                   {i18n.t('monetize.customMonetize.hasTokens')}
                 </Text>
                 <Switch
                   value={localStore.has_usd}
                   onSyncPress={localStore.setHasUsd}
+                  circleColorActive={Colors.switchCircle}
+                  circleColorInactive={Colors.switchCircle}
+                  backgroundActive={Colors.switchBackground}
+                  backgroundInactive={Colors.switchBackground}
                 />
               </View>
             </View>

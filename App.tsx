@@ -101,7 +101,7 @@ sessionService.onLogin(async () => {
   );
 
   // hide splash
-  RNBootSplash.hide({ duration: 250 });
+  RNBootSplash.hide({ duration: 450 });
 
   // check update
   if (Platform.OS !== 'ios' && !GOOGLE_PLAY_STORE) {

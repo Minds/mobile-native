@@ -3,19 +3,14 @@ import { View, Text, StyleSheet } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
-import MenuSubtitle from '../../common/components/menus/MenuSubtitleWithButton';
-import { useLegacyStores } from '../../common/hooks/use-stores';
-import Button from '../../common/components/Button';
 import Wrapper from './common/Wrapper';
-import openUrlService from '../../common/services/open-url.service';
-import { MINDS_PRO } from '../../config/Config';
-import WireService from '../../wire/WireService';
 import type { SupportTiersType } from '../../wire/WireTypes';
 import TierManagementScreen from '../../settings/screens/TierManagementScreen';
 import { AppStackParamList } from '../../navigation/NavigationTypes';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import supportTiersService from '../../common/services/support-tiers.service';
+import CenteredLoading from '../../common/components/CenteredLoading';
 
 type MembershipMonetizeScreenRouteProp = RouteProp<
   AppStackParamList,
@@ -41,10 +36,12 @@ const createMembershipMonetizeStore = () => {
     },
     init(wire_threshold) {
       this.getSupportTiers(wire_threshold);
-      this.loaded = true;
     },
     async getSupportTiers(wire_threshold) {
       this.supportTiers = (await supportTiersService.getAllFromUser()) || [];
+      this.checkForSelected(wire_threshold);
+    },
+    checkForSelected(wire_threshold) {
       if (wire_threshold && wire_threshold.support_tier) {
         const urn = wire_threshold.support_tier.urn;
         const found = this.supportTiers.find(
@@ -54,6 +51,7 @@ const createMembershipMonetizeStore = () => {
           this.selectedTier = found;
         }
       }
+      this.loaded = true;
     },
   };
   return store;
@@ -84,42 +82,33 @@ const MembershipMonetizeScreeen = observer(
       }
     }, [localStore, store]);
 
-    if (localStore.supportTiers.length === 0) {
-      return (
-        <Wrapper store={store} hideDone={true} onPressRight={save}>
-          <View style={[theme.paddingVertical6x, theme.paddingHorizontal3x]}>
-            <Text style={[styles.title, theme.colorPrimaryText]}>
-              {i18n.t('monetize.subScreensTitle')}
-            </Text>
-            <Text style={descriptionTextStyle}>
-              {i18n.t('monetize.membershipMonetize.description')}
-            </Text>
-            <Text style={[styles.title, theme.colorPrimaryText]}>
-              {i18n.t('monetize.membershipMonetize.noTiers')}
-            </Text>
-            <Text style={descriptionTextStyle}>
-              {i18n.t('monetize.membershipMonetize.tiersDescription')}
-            </Text>
-            <Button
-              text={i18n.t('monetize.membershipMonetize.setup')}
-              textStyle={[styles.title]}
-              onPress={() => openUrlService.open(MINDS_PRO)}
-              containerStyle={[styles.buttonLeft, theme.paddingVertical2x]}
-            />
-          </View>
-        </Wrapper>
-      );
+    const title = [styles.title, theme.colorPrimaryText, theme.paddingTop3x];
+
+    if (!localStore.loaded) {
+      return <CenteredLoading />;
     }
 
     return (
-      <Wrapper store={store} doneText={i18n.t('save')} onPressRight={save}>
-        <View style={[theme.paddingTop6x, theme.paddingHorizontal3x]}>
-          <Text style={[styles.title, theme.colorPrimaryText]}>
-            {i18n.t('monetize.subScreensTitle')}
-          </Text>
+      <Wrapper
+        store={store}
+        doneText={i18n.t('save')}
+        onPressRight={save}
+        hideDone={!localStore.selectedTier.urn}>
+        <View style={[theme.paddingTop3x, theme.paddingHorizontal3x]}>
+          <Text style={title}>{i18n.t('monetize.subScreensTitle')}</Text>
           <Text style={descriptionTextStyle}>
             {i18n.t('monetize.membershipMonetize.description')}
           </Text>
+          {localStore.supportTiers.length === 0 && (
+            <>
+              <Text style={title}>
+                {i18n.t('monetize.membershipMonetize.noTiers')}
+              </Text>
+              <Text style={descriptionTextStyle}>
+                {i18n.t('monetize.membershipMonetize.tiersDescription')}
+              </Text>
+            </>
+          )}
         </View>
         <TierManagementScreen
           route={route}

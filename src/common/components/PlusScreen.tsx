@@ -25,21 +25,24 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '../../navigation/NavigationTypes';
 import Button from './Button';
 import mindsService from '../services/minds.service';
+import UserModel from '../../channel/UserModel';
+import WireService from '../../wire/WireService';
 
 const bannerAspectRatio = 1.7;
+type payMethod = 'tokens' | 'usd';
 
 const createPlusStore = () => {
   const store = {
     loaded: false,
     loading: false,
-    method: 'usd' as 'usd' | 'tokens',
+    method: 'usd' as payMethod,
     card: '' as any,
     settings: false as boolean | any,
     selectedOption: false as boolean | any,
     monthly: false,
-    init() {
-      this.getSettings();
-      this.loaded = true;
+    owner: {} as UserModel,
+    init(pro: boolean = false) {
+      this.getSettings(pro);
     },
     setMonthly(monthly: boolean) {
       this.monthly = monthly;
@@ -47,8 +50,22 @@ const createPlusStore = () => {
     setLoading(loading) {
       this.loading = loading;
     },
-    async getSettings() {
-      this.settings = (await MindsService.getSettings()).upgrades.plus;
+    async getSettings(pro: boolean) {
+      // used to get costs for plus
+      this.settings = pro
+        ? (await MindsService.getSettings()).upgrades.pro
+        : (await MindsService.getSettings()).upgrades.plus;
+
+      // used to pay plus by wire
+      this.owner = pro
+        ? await WireService.getEntityByHandler(
+            mindsService.settings.handlers.pro,
+          )
+        : await WireService.getEntityByHandler(
+            mindsService.settings.handlers.plus,
+          );
+
+      this.loaded = true;
     },
     setMethod() {
       this.method = this.method === 'usd' ? 'tokens' : 'usd';
@@ -67,8 +84,6 @@ const createPlusStore = () => {
 };
 
 type PlusStoreType = ReturnType<typeof createPlusStore>;
-
-type payMethod = 'tokens' | 'usd';
 
 type PlusScreenRouteProp = RouteProp<AppStackParamList, 'PlusScreen'>;
 type PlusScreenNavigationProp = StackNavigationProp<
@@ -127,82 +142,63 @@ const PlusScreen = observer(({ navigation, route }: PropsType) => {
   const insets = useSafeArea();
   const cleanTop = insets.top ? { marginTop: insets.top } : null;
   const { wire } = useLegacyStores();
-  const { onComplete } = route.params;
-  const owner = mindsService.settings.plus.handler;
+  const { onComplete, pro } = route.params;
 
   const switchTextStyle = [styles.switchText, theme.colorPrimaryText];
 
-  const complete = useCallback(() => {
-    localStore.setLoading(false);
-    onComplete();
-    navigation.goBack();
-  }, [navigation, onComplete, localStore]);
-
-  const payWithUsd = useCallback(async () => {
-    try {
-      if (localStore.selectedOption === '0') {
-        complete();
-      }
-      wire.setAmount(parseFloat(localStore.selectedOption));
-      wire.setCurrency('usd');
-      wire.setOwner(owner);
-      wire.setRecurring(localStore.monthly);
-      wire.setPaymentMethodId(localStore.card.id);
-      const done = await wire.send();
-
-      if (!done) {
-        throw new UserError(i18n.t('boosts.errorPayment'));
-      }
-
-      complete();
-    } catch (err) {
-      console.log('payWithUsd err', err);
-    } finally {
+  const complete = useCallback(
+    (done: any) => {
       localStore.setLoading(false);
-    }
-  }, [localStore, complete, wire, owner]);
+      onComplete(done);
+      navigation.goBack();
+    },
+    [navigation, onComplete, localStore],
+  );
 
-  const payWithTokens = useCallback(async () => {
-    try {
-      if (localStore.selectedOption === '0') {
-        complete();
-      }
-      wire.setAmount(parseFloat(localStore.selectedOption));
-      wire.setCurrency('tokens');
-      wire.setOwner(owner);
-      wire.setRecurring(localStore.monthly);
-      const done = await wire.send();
-      if (!done) {
-        throw new UserError(i18n.t('boosts.errorPayment'));
-      }
+  const payWith = useCallback(
+    async (currency: payMethod) => {
+      try {
+        if (localStore.selectedOption === '0') {
+          complete(false);
+        }
+        wire.setAmount(parseFloat(localStore.selectedOption));
+        wire.setCurrency(currency);
+        wire.setOwner(localStore.owner);
+        wire.setRecurring(localStore.monthly);
+        if (currency === 'usd') {
+          wire.setPaymentMethodId(localStore.card.id);
+        }
+        const done = await wire.send();
+        if (!done) {
+          throw new UserError(i18n.t('boosts.errorPayment'));
+        }
 
-      complete();
-    } catch (err) {
-      console.log('payWithTokens err', err);
-    } finally {
-      localStore.setLoading(false);
-    }
-  }, [complete, wire, owner, localStore]);
+        complete(done);
+      } catch (err) {
+        throw new UserError(err.message);
+      } finally {
+        localStore.setLoading(false);
+      }
+    },
+    [complete, wire, localStore],
+  );
 
   const confirmSend = useCallback(async () => {
     localStore.setLoading(true);
-    if (localStore.method === 'usd') {
-      payWithUsd();
-    }
-    if (localStore.method === 'tokens') {
-      payWithTokens();
-    }
-  }, [localStore, payWithTokens, payWithUsd]);
+    payWith(localStore.method);
+  }, [localStore, payWith]);
 
   useEffect(() => {
     if (!localStore.loaded) {
-      localStore.init();
+      localStore.init(pro);
     }
-  }, [localStore]);
+  }, [localStore, pro]);
 
   if (localStore.settings === false) {
     return <CenteredLoading />;
   }
+
+  const texts = pro ? 'pro' : 'plus';
 
   return (
     <ScrollView style={[styles.container, cleanTop]}>
@@ -211,12 +207,10 @@ const PlusScreen = observer(({ navigation, route }: PropsType) => {
         source={require('../../assets/plus-image.png')}
         resizeMode="cover">
         <View style={styles.textContainer}>
-          <Text style={styles.minds}>Minds</Text>
-          <Text style={styles.title}>Unlock the power of Minds</Text>
+          <Text style={styles.minds}>{i18n.t(`monetize.${texts}`)}</Text>
+          <Text style={styles.title}>{i18n.t(`monetize.${texts}Title`)}</Text>
           <Text style={styles.text}>
-            Support Minds and unlock features such as earning revenue for your
-            content, hiding ads, accessing exclusive content, receiving a badge
-            and verifying your channel.
+            {i18n.t(`monetize.${texts}Description`)}
           </Text>
         </View>
       </ImageBackground>
@@ -234,8 +228,8 @@ const PlusScreen = observer(({ navigation, route }: PropsType) => {
           onSyncPress={localStore.setMethod}
           circleColorActive={Colors.switchCircle}
           circleColorInactive={Colors.switchCircle}
-          backgroundActive={Colors.switchBackgroun}
-          backgroundInactive={Colors.switchBackgroun}
+          backgroundActive={Colors.switchBackground}
+          backgroundInactive={Colors.switchBackground}
           style={theme.marginHorizontal2x}
         />
         <Text style={switchTextStyle}>{i18n.t('tokens')}</Text>
@@ -274,14 +268,16 @@ const PlusScreen = observer(({ navigation, route }: PropsType) => {
           </ScrollView>
         </LabeledComponent>
       )}
-      <View style={[theme.padding2x, theme.borderTop, theme.borderPrimary]}>
-        <Button
-          onPress={confirmSend}
-          text={'Upgrade to Plus'}
-          containerStyle={[theme.paddingVertical2x, styles.buttonRight]}
-          loading={localStore.loading}
-        />
-      </View>
+      {localStore.selectedOption && (
+        <View style={[theme.padding2x, theme.borderTop, theme.borderPrimary]}>
+          <Button
+            onPress={confirmSend}
+            text={i18n.t(`monetize.${texts}Join`)}
+            containerStyle={[theme.paddingVertical2x, styles.buttonRight]}
+            loading={localStore.loading}
+          />
+        </View>
+      )}
     </ScrollView>
   );
 });

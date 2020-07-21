@@ -3,7 +3,10 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" android:opacity="opaque">
     <item android:drawable="@color/bootsplash_background" />
 
-    <item>
-        <bitmap android:src="@mipmap/bootsplash_logo" android:gravity="center" />
+    <item
+        android:width="244dp"
+        android:height="90dp"
+        android:gravity="center">
+        <bitmap android:src="@mipmap/bootsplash_logo" android:gravity="fill" android:mipMap="true"/>
     </item>
 </layer-list>

@@ -25,6 +25,7 @@ type PlusMonetizeScreenNavigationProp = StackNavigationProp<
 
 type PropsType = {
   route: PlusMonetizeScreenRouteProp;
+  navigation: PlusMonetizeScreenNavigationProp;
 };
 
 const createPlusMonetizeStore = () => {
@@ -41,7 +42,7 @@ const createPlusMonetizeStore = () => {
   return store;
 };
 
-const PlusMonetizeScreen = observer(({ route }: PropsType) => {
+const PlusMonetizeScreen = observer(({ route, navigation }: PropsType) => {
   const { user } = useLegacyStores();
   const store = route.params.store;
   const theme = ThemedStyles.style;
@@ -53,6 +54,15 @@ const PlusMonetizeScreen = observer(({ route }: PropsType) => {
       localStore.exclusivity === '48hrs' ? 48 * 60 * 60 : null;
     store.savePlusMonetize(exclusivity);
   }, [store, localStore]);
+
+  const onComplete = useCallback(
+    (success: any) => {
+      if (success) {
+        user.me.togglePro();
+      }
+    },
+    [user],
+  );
 
   if (!user.me.pro) {
     return (
@@ -72,7 +82,9 @@ const PlusMonetizeScreen = observer(({ route }: PropsType) => {
           <Button
             text={i18n.t('monetize.plusMonetize.upgrade')}
             textStyle={styles.title}
-            onPress={() => openUrlService.open(MINDS_PRO)}
+            onPress={() =>
+              navigation.push('PlusScreen', { onComplete, pro: true })
+            }
           />
         </View>
       </Wrapper>
@@ -86,9 +98,6 @@ const PlusMonetizeScreen = observer(({ route }: PropsType) => {
       onPressRight={save}
       hideDone={!localStore.agreedTerms}>
       <View style={[theme.paddingVertical6x, theme.paddingHorizontal3x]}>
-        <Text style={[styles.title, theme.colorPrimaryText]}>
-          {i18n.t('monetize.subScreensTitle')}
-        </Text>
         <Text
           style={[
             theme.colorSecondaryText,

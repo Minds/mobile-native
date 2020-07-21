@@ -12,6 +12,8 @@ import type {
   SupportTiersResponse,
   SupportTiersType,
 } from './WireTypes';
+import entitiesService from '../common/services/entities.service';
+import UserModel from '../channel/UserModel';
 
 /**
  * Wire Service
@@ -184,6 +186,21 @@ class WireService {
     }
 
     throw new Error('Unknown type');
+  }
+
+  async getEntityByHandler(handler: string): Promise<UserModel> {
+    const response = await entitiesService.fetch(
+      [`urn:user:${handler}`],
+      null,
+      false,
+    );
+
+    let user: UserModel;
+    if (response && response[0]) {
+      user = UserModel.checkOrCreate(response[0]);
+    }
+
+    return user;
   }
 }
 

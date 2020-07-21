@@ -35,6 +35,7 @@ import apiService from '../common/services/api.service';
 import NavigationService from '../navigation/NavigationService';
 import type CommentModel from '../comments/CommentModel';
 import type ActivityModel from '../newsfeed/ActivityModel';
+import featuresService from '../common/services/features.service';
 
 const isIOS = Platform.OS === 'ios';
 
@@ -305,6 +306,13 @@ class MindsVideo extends Component<PropsType, StateType> {
     };
 
     if (!this.state.sources && this.props.entity) {
+      if (this.props.entity.paywall && featuresService.has('plus-2020')) {
+        await this.props.entity.unlockOrPay();
+        if (this.props.entity.paywall) {
+          return;
+        }
+      }
+
       const response: any = await attachmentService.getVideoSources(
         this.props.entity.attachments &&
           this.props.entity.attachments.attachment_guid
