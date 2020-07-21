@@ -179,7 +179,7 @@ export default class MediaView extends Component<PropsType> {
    */
   playVideo(sound: boolean) {
     if (this.videoPlayer) {
-      this.videoPlayer.play(sound, this.props.entity);
+      this.videoPlayer.play(sound);
     }
   }
 

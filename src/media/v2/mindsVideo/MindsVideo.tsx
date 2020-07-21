@@ -38,10 +38,12 @@ type PropsType = {
 
 const MindsVideo = observer((props: PropsType) => {
   const theme = ThemedStyles.style;
-  const localStore = useLocalStore(createMindsVideoStore);
+  const localStore = useLocalStore(createMindsVideoStore, {
+    entity: props.entity,
+  });
 
   const play = (sound: boolean) => {
-    localStore.play(sound, props.entity);
+    localStore.play(sound);
   };
 
   const pause = () => {
@@ -55,7 +57,9 @@ const MindsVideo = observer((props: PropsType) => {
         localStore.setShouldPlay(false);
       });
       localStore.toggleInited();
+
       props.onStoreCreated && props.onStoreCreated(localStore);
+
       if (props.pause !== undefined && props.pause === false) {
         localStore.setShouldPlay(true);
       }

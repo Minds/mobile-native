@@ -79,7 +79,7 @@ const Controls = observer(({ localStore, entity }: PropsType) => {
                   ? localStore.pause()
                   : localStore.paused
                   ? localStore.resume()
-                  : localStore.play(false, entity)
+                  : localStore.play(false)
               }
               style={styles.videoIcon}
               name={localStore.shouldPlay ? 'md-pause' : 'md-play-circle'}

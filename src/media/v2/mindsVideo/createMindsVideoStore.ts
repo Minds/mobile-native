@@ -12,7 +12,7 @@ export type Source = {
   size: number;
 };
 
-const createMindsVideoStore = () => {
+const createMindsVideoStore = ({ entity }) => {
   const store = {
     shouldPlay: false as boolean,
     volume: 1 as number,
@@ -78,10 +78,7 @@ const createMindsVideoStore = () => {
     setDuration(duration: number) {
       this.duration = duration / 1000;
     },
-    async onError(
-      err: string,
-      entity: ActivityModel | CommentModel | undefined,
-    ) {
+    async onError(err: string) {
       // entity is null only on video previews.
       if (!entity) {
         return;
@@ -189,10 +186,7 @@ const createMindsVideoStore = () => {
     /**
      * Play the current video and activate the player
      */
-    async play(
-      sound: boolean = true,
-      entity: ActivityModel | CommentModel | undefined,
-    ) {
+    async play(sound: boolean = true) {
       const state: any = {
         active: true,
         volume: sound ? 1 : 0,
