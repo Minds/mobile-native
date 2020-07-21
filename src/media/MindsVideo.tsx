@@ -68,6 +68,7 @@ type PropsType = {
   resizeMode?: 'contain' | 'cover' | 'stretch' | 'none';
   video?: { uri: string };
   containerStyle?: StyleProp<ViewStyle>;
+  onLoad?: (e: any) => void;
 };
 
 @observer
@@ -165,6 +166,10 @@ class MindsVideo extends Component<PropsType, StateType> {
     this.player.seek(current);
 
     this.onLoadEnd();
+
+    if (this.props.onLoad) {
+      this.props.onLoad(e);
+    }
   };
 
   /**

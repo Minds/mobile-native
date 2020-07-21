@@ -16,41 +16,13 @@ export default function (props) {
   const theme = ThemedStyles.style;
 
   const insets = useSafeArea();
-  const menuStyle = { paddingTop: insets.top || 0 };
+  const cleanTop = { paddingTop: insets.top || 0 };
+  const cleanBottom = { height: insets.bottom + 50 };
 
   const isImage = props.store.mediaToConfirm.type.startsWith('image');
 
   return (
     <View style={theme.flexContainer}>
-      <View style={[styles.topBar, menuStyle]}>
-        <MIcon
-          size={45}
-          name="chevron-left"
-          style={[styles.backIcon, theme.colorSecondaryText]}
-          onPress={props.store.rejectImage}
-        />
-        <Text
-          onPress={props.store.rejectImage}
-          style={[
-            theme.fontXL,
-            theme.colorSecondaryText,
-            theme.fontSemibold,
-            theme.flexContainer,
-            styles.text,
-          ]}>
-          {i18n.t('capture.retake')}
-        </Text>
-        <Text
-          onPress={props.store.acceptMedia}
-          style={[
-            theme.fontXL,
-            theme.colorSecondaryText,
-            theme.fontSemibold,
-            styles.text,
-          ]}>
-          {i18n.t('confirm')}
-        </Text>
-      </View>
       {isImage ? (
         <ImagePreview image={props.store.mediaToConfirm} />
       ) : (
@@ -61,6 +33,25 @@ export default function (props) {
           containerStyle={{ marginBottom: insets.bottom }}
         />
       )}
+      <View style={[styles.bottomBar, cleanBottom, theme.backgroundSecondary]}>
+        <Text
+          onPress={props.store.acceptMedia}
+          style={[
+            theme.fontXL,
+            theme.colorSecondaryText,
+            theme.fontSemibold,
+            theme.marginRight2x,
+            styles.text,
+          ]}>
+          {i18n.t('confirm')}
+        </Text>
+      </View>
+      <MIcon
+        size={45}
+        name="chevron-left"
+        style={[styles.backIcon, theme.colorWhite, cleanTop]}
+        onPress={props.store.rejectImage}
+      />
     </View>
   );
 }
@@ -69,17 +60,20 @@ const styles = StyleSheet.create({
   text: {
     paddingRight: 10,
     textAlignVertical: 'center',
-    // lineHeight: Platform.select({ ios: 17, android: 27 }),
   },
-  topBar: {
+  bottomBar: {
+    position: 'absolute',
+    bottom: 0,
     width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'flex-end',
   },
   backIcon: {
-    shadowOpacity: 2,
-    textShadowRadius: 4,
-    textShadowOffset: { width: 0, height: 0 },
+    position: 'absolute',
+    textShadowColor: 'rgba(0, 0, 0, 0.35)',
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 2.22,
     elevation: 4,
   },
 });

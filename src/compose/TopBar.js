@@ -13,13 +13,16 @@ import ThemedStyles from '../styles/ThemedStyles';
 export default observer(function (props) {
   const theme = ThemedStyles.style;
   const insets = useSafeArea();
-  const menuStyle = { paddingTop: insets.top || 5 };
+  const menuStyle = [{ paddingTop: insets.top || 5 }, props.containerStyle];
+
+  const backIconName = props.backIconName || 'chevron-left';
+  const backIconSize = props.backIconSize || 45;
 
   return (
     <View style={[styles.topBar, menuStyle]}>
       <MIcon
-        size={45}
-        name="chevron-left"
+        size={backIconSize}
+        name={backIconName}
         style={theme.colorPrimaryText}
         onPress={props.onPressBack}
       />

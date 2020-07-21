@@ -1,31 +1,30 @@
-import React, { useCallback, useRef, useEffect, useState } from 'react';
+import React, { useCallback, useRef, useEffect } from 'react';
 import {
-  TouchableOpacity,
-  KeyboardAvoidingView,
   StyleSheet,
   TextInput,
   View,
   Dimensions,
-  Platform,
+  Keyboard,
 } from 'react-native';
-import { useKeyboard } from '@react-native-community/hooks';
 import { observer, useLocalStore } from 'mobx-react';
-import * as Progress from 'react-native-progress';
+
 import IonIcon from 'react-native-vector-icons/Ionicons';
+import { KeyboardAccessoryView } from 'react-native-keyboard-accessory';
 
 import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
 import MetaPreview from './MetaPreview';
-import ImagePreview from './ImagePreview';
 import TitleInput from './TitleInput';
-import MindsVideo from '../media/MindsVideo';
 import NavigationService from '../navigation/NavigationService';
 import RemindPreview from './RemindPreview';
 import PosterOptions from './PosterOptions';
 import TopBar from './TopBar';
 import { ScrollView } from 'react-native-gesture-handler';
+import BottomBar from './BottomBar';
+import MediaPreview from './MediaPreview';
+import discardMessage from './discardMessage';
 
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 /**
  * Poster Screen
@@ -33,11 +32,8 @@ const { width, height } = Dimensions.get('window');
  */
 export default observer(function (props) {
   const theme = ThemedStyles.style;
-  const keyboard = useKeyboard();
   const inputRef = useRef(null);
-  const isImage =
-    props.store.mediaToConfirm &&
-    props.store.mediaToConfirm.type.startsWith('image');
+  const optionsRef = useRef(null);
 
   // On post press
   const onPost = useCallback(async () => {
@@ -53,34 +49,33 @@ export default observer(function (props) {
 
   // On press back
   const onPressBack = useCallback(() => {
-    if (props.store.isRemind || props.store.isEdit) {
-      props.store.clear();
-      NavigationService.goBack();
+    const discard = () => {
+      if (props.store.isRemind || props.store.isEdit) {
+        props.store.clear();
+        NavigationService.goBack();
+      } else {
+        props.store.setModePhoto();
+      }
+    };
+    if (
+      props.store.text ||
+      props.store.attachment.hasAttachment ||
+      props.store.embed.hasRichEmbed
+    ) {
+      Keyboard.dismiss();
+      discardMessage(discard);
     } else {
-      props.store.setModePhoto();
+      discard();
     }
   }, [props.store]);
 
   const localStore = useLocalStore(() => ({
     height: 42, // input height
     onSizeChange(e) {
-      localStore.height = e.nativeEvent.contentSize.height * 1.1;
+      localStore.height = e.nativeEvent.contentSize.height * 1.15;
     },
   }));
 
-  const videoPreviewStyle = {
-    height: keyboard.keyboardShown ? width / 2.5 : width,
-    width: width,
-    maxHeight: Math.round(height / 2) - 30,
-    padding: keyboard.keyboardShown ? 5 : 0,
-  };
-
-  const imagePreviewStyle = {
-    maxHeight: Math.round(height / 2) - 30,
-    padding: keyboard.keyboardShown ? 5 : 0,
-  };
-
-  const previewRatio = keyboard.keyboardShown ? 2.5 : 1;
   const showEmbed = props.store.embed.hasRichEmbed && props.store.embed.meta;
 
   const fontSize =
@@ -92,13 +87,12 @@ export default observer(function (props) {
     ? i18n.t('description')
     : i18n.t('capture.placeholder');
 
-  const rightButton = props.store.attachment.uploading
-    ? undefined
-    : props.store.isRemind
-    ? i18n.t('capture.remind')
-    : props.store.isEdit
-    ? i18n.t('save')
-    : i18n.t('capture.post');
+  const rightButton = props.store.attachment.uploading ? undefined : props.store
+      .isEdit ? (
+    i18n.t('save')
+  ) : (
+    <IonIcon name="send" size={27} />
+  );
 
   useEffect(() => {
     if (inputRef.current) {
@@ -107,70 +101,21 @@ export default observer(function (props) {
   }, [inputRef]);
 
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'height' : null}>
+    <View style={styles.container}>
       <ScrollView
         keyboardShouldPersistTaps={'handled'}
         contentContainerStyle={styles.bodyContainer}>
         <TopBar
+          containerStyle={theme.paddingLeft}
+          backIconSize={38}
+          backIconName="window-close"
           rightText={rightButton}
           onPressRight={onPost}
           onPressBack={onPressBack}
           store={props.store}
         />
         {props.store.attachment.hasAttachment && (
-          <>
-            {isImage ? (
-              <View style={imagePreviewStyle}>
-                {!props.store.isEdit && (
-                  <TouchableOpacity
-                    onPress={() =>
-                      props.store.attachment.cancelOrDelete(!props.store.isEdit)
-                    }
-                    style={[styles.removeMedia, theme.backgroundSecondary]}>
-                    <IonIcon
-                      name="ios-close"
-                      size={28}
-                      style={(styles.icon, theme.colorPrimaryText)}
-                    />
-                  </TouchableOpacity>
-                )}
-                <ImagePreview
-                  image={props.store.mediaToConfirm}
-                  minRatio={previewRatio}
-                  style={imagePreviewStyle}
-                />
-              </View>
-            ) : (
-              <View style={videoPreviewStyle}>
-                <TouchableOpacity
-                  onPress={props.store.attachment.cancelOrDelete}
-                  style={[styles.removeMedia, theme.backgroundSecondary]}>
-                  <IonIcon
-                    name="ios-close"
-                    size={28}
-                    style={(styles.icon, theme.colorPrimaryText)}
-                  />
-                </TouchableOpacity>
-                <MindsVideo
-                  video={props.store.mediaToConfirm}
-                  resizeMode={keyboard.keyboardShown ? 'cover' : 'contain'}
-                />
-              </View>
-            )}
-            {props.store.attachment.uploading && (
-              <Progress.Bar
-                progress={props.store.attachment.progress}
-                width={width}
-                color={ThemedStyles.getColor('green')}
-                borderWidth={0}
-                borderRadius={0}
-                useNativeDriver={true}
-              />
-            )}
-            <TitleInput store={props.store} />
-          </>
+          <TitleInput store={props.store} />
         )}
         <TextInput
           style={[
@@ -178,6 +123,7 @@ export default observer(function (props) {
             theme.colorPrimaryText,
             fontSize,
             theme.paddingHorizontal4x,
+            theme.marginTop4x,
             styles.input,
             { height: localStore.height },
           ]}
@@ -194,6 +140,7 @@ export default observer(function (props) {
           underlineColorAndroid="transparent"
           testID="PostInput"
         />
+        <MediaPreview store={props.store} />
         {props.store.isRemind && <RemindPreview entity={props.store.entity} />}
         {props.store.isEdit && props.store.entity.remind_object && (
           <RemindPreview entity={props.store.entity.remind_object} />
@@ -206,12 +153,36 @@ export default observer(function (props) {
           />
         )}
       </ScrollView>
-      <PosterOptions store={props.store} />
-    </KeyboardAvoidingView>
+      <PosterOptions ref={optionsRef} store={props.store} />
+      <KeyboardAccessoryView
+        hideBorder={true}
+        animateOn="all"
+        alwaysVisible
+        style={[theme.backgroundPrimary, styles.bottomBarContainer]}
+        avoidKeyboard>
+        <BottomBar
+          store={props.store}
+          onOptions={() => {
+            Keyboard.dismiss();
+            optionsRef.current.show();
+          }}
+        />
+      </KeyboardAccessoryView>
+    </View>
   );
 });
 
 const styles = StyleSheet.create({
+  bottomBarContainer: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: -2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 3.0,
+    elevation: 12,
+  },
   input: {
     minHeight: 100,
     textAlignVertical: 'top',
@@ -246,7 +217,7 @@ const styles = StyleSheet.create({
   },
   bodyContainer: {
     minHeight: '100%',
-    paddingBottom: 100,
+    paddingBottom: 75,
   },
   icon: {
     color: '#FFFFFF',

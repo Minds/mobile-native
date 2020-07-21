@@ -1,5 +1,17 @@
 # Minds Mobile Apps
 
+## Install
+
+Clone mobile\
+`git clone git@gitlab.com:minds/mobile-native.git`
+
+Clone locale\
+`cd ..`
+
+`git clone git@gitlab.com:minds/l10n.git`
+
+`cd -`
+
 ## Branch Structure
 
 | Branch    |                                                                                                                                    |

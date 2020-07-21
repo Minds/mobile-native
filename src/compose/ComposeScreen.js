@@ -62,7 +62,7 @@ export default observer(function (props) {
     [props, stores, store],
   );
 
-  const tabStyle = { paddingBottom: insets.bottom || 25 };
+  const tabStyle = { paddingBottom: insets.bottom || 30 };
 
   const theme = ThemedStyles.style;
   const showCamera = store.mode === 'photo' || store.mode === 'video';
@@ -77,13 +77,18 @@ export default observer(function (props) {
               onMedia={store.onMedia}
               mode={store.mode}
               onForceVideo={store.setModeVideo}
-              onMediaFromGallery={store.onMediaFromGallery}
+              onPressGallery={() => store.selectFromGallery(store.mode)}
             />
           ) : (
             <View style={theme.flexContainer} />
           )}
           <View
-            style={[styles.tabContainer, theme.paddingVertical5x, tabStyle]}>
+            style={[
+              styles.tabContainer,
+              theme.paddingVertical6x,
+              tabStyle,
+              theme.backgroundSecondary,
+            ]}>
             <View style={styles.tabs}>
               <Text
                 style={[
@@ -91,7 +96,7 @@ export default observer(function (props) {
                   theme.flexContainer,
                   theme.textCenter,
                   styles.tabText,
-                  store.mode === 'photo' ? theme.colorIconActive : null,
+                  store.mode === 'photo' ? theme.colorLink : null,
                 ]}
                 onPress={store.setModePhoto}>
                 {i18nService.t('capture.photo').toUpperCase()}
@@ -102,7 +107,7 @@ export default observer(function (props) {
                   theme.flexContainer,
                   theme.textCenter,
                   styles.tabText,
-                  store.mode === 'video' ? theme.colorIconActive : null,
+                  store.mode === 'video' ? theme.colorLink : null,
                 ]}
                 onPress={store.setModeVideo}>
                 {i18nService.t('capture.video').toUpperCase()}
@@ -113,7 +118,7 @@ export default observer(function (props) {
                   theme.flexContainer,
                   theme.textCenter,
                   styles.tabText,
-                  store.mode === 'text' ? theme.colorIconActive : null,
+                  store.mode === 'text' ? theme.colorLink : null,
                 ]}
                 onPress={store.setModeText}
                 testID="CaptureTextButton">
@@ -137,18 +142,14 @@ export default observer(function (props) {
 
 const styles = StyleSheet.create({
   tabContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
     width: '100%',
     paddingHorizontal: 50,
   },
   tabText: {
-    shadowOpacity: 0.4,
-    shadowOffset: { width: 0, height: 0 },
-    elevation: 5,
+    fontWeight: '400',
   },
   tabs: {
+    // backgroundColor: 'red',
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
