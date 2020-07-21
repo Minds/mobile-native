@@ -1,11 +1,13 @@
 //@ts-nocheck
 import React, { useCallback } from 'react';
-import { View, FlatList } from 'react-native';
+import { View, FlatList, Text } from 'react-native';
 import MenuItem from '../common/components/menus/MenuItem';
 import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
 import Topbar from '../topbar/Topbar';
 import authService from '../auth/AuthService';
+
+const keyExtractor = (item, index) => index.toString();
 
 export default function ({ navigation }) {
   const theme = ThemedStyles.style;
@@ -23,8 +25,6 @@ export default function ({ navigation }) {
   ]);
 
   const navToOther = useCallback(() => navigation.push('Other'), [navigation]);
-
-  const keyExtractor = useCallback((item, index) => index.toString());
 
   const setDarkMode = () => {
     if (ThemedStyles.theme) {
@@ -77,17 +77,20 @@ export default function ({ navigation }) {
 
   return (
     <View style={[theme.flexContainer, theme.backgroundPrimary]}>
-      <Topbar
-        title={i18n.t('moreScreen.settings')}
-        navigation={navigation}
-        renderBack
-        background={theme.backgroundPrimary}
-      />
+      <Topbar navigation={navigation} />
       <View style={innerWrapper}>
+        <Text
+          style={[
+            theme.titleText,
+            theme.paddingLeft4x,
+            theme.paddingVertical2x,
+          ]}>
+          {i18n.t('moreScreen.settings')}
+        </Text>
         <FlatList
           data={list}
           renderItem={MenuItem}
-          style={[theme.backgroundPrimary, theme.paddingTop4x]}
+          style={theme.backgroundPrimary}
           keyExtractor={keyExtractor}
         />
       </View>

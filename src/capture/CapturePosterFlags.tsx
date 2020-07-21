@@ -1,6 +1,6 @@
 //@ts-nocheck
 import React, { Component } from 'react';
-import { Text, TextInput, View, StyleSheet, Platform } from 'react-native';
+import { Text, TextInput, View, StyleSheet } from 'react-native';
 import { inject, observer } from 'mobx-react';
 import FaIcon from 'react-native-vector-icons/FontAwesome';
 import IonIcon from 'react-native-vector-icons/Ionicons';
@@ -14,7 +14,6 @@ import TagSelect from '../common/components/TagSelect';
 import featuresService from '../common/services/features.service';
 import NsfwToggle from '../common/components/nsfw/NsfwToggle';
 import logService from '../common/services/log.service';
-import { GOOGLE_PLAY_STORE } from '../config/Config';
 import testID from '../common/helpers/testID';
 import i18n from '../common/services/i18n.service';
 import DateTimePicker from 'react-native-modal-datetime-picker';

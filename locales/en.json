@@ -166,9 +166,9 @@
     "feedsDescription": "Your content will appear on newsfeeds across the site.",
     "offersDescription": "Your content will be shared to a specific channel in exchange for USD or tokens or rewards.",
     "sidebarsDescription": "Your content will display on the sidebars throughout the site.",
-    "tabNewsfeed": "NEWSFEED",
-    "tabSidebar": "SIDEBAR",
-    "tabOffers": "OFFERS",
+    "tabNewsfeed": "Newsfeed",
+    "tabSidebar": "Sidebar",
+    "tabOffers": "Offers",
     "rejectionReasons": {
       "0": "Illegal",
       "1": "Explicit",
@@ -250,6 +250,7 @@
     "fabPay": "Pay"
   },
   "discovery": {
+    "title":"Discovery",
     "manage":"Manage Tags",
     "justForYou":"Just for you",
     "yourTags":"Your tags",
@@ -313,6 +314,7 @@
     "setupMessage3": "By default the content of your messages is fully encrypted. For heightened security you may wish to go to your app settings and turn off push notifications in order to disallow metadata from being tracked."
   },
   "newsfeed": {
+    "title": "Newsfeed",
     "designYourChannel": "Design your channel",
     "empty": "Your newsfeed is empty"
   },
@@ -622,6 +624,7 @@
     "locationTooltip": "Please enter your city to help us connect you with channels in your area. We do not track your exact location."
   },
   "wallet": {
+    "wallet":"Wallet",
     "cash":"Cash",
     "activeAddress":"Mobile Receiver Address (Active)",
     "alternateReceiver":"Alternate receiver address",
@@ -808,6 +811,7 @@
     "title": "Update to v{{version}}"
   },
   "searchBar": {
+    "title":"Search Minds",
     "searchHistory": "Search History",
     "emptySuggested": "We couldn't find what you look for",
     "clear": "Clear"
@@ -958,9 +962,6 @@
   "notAllowed": "You are not allowed",
   "undo": "Undo",
   "validate": "VALIDATE",
-  "tabTitleNewsfeed": "Home",
-  "tabTitleNotifications": "Notifications",
-  "tabTitleDiscovery": "Discovery",
   "plusTabTitleDiscovery": "Minds+",
   "linkCopied": "Link copied to clipboard",
   "close": "Close",

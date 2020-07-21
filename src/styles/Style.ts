@@ -2,6 +2,7 @@
 import { StyleSheet, Platform } from 'react-native';
 
 export interface ThemedStyle {
+  width90: any;
   flexContainer: any;
   flexContainerCenter: any;
   flexColumn: any;
@@ -41,6 +42,9 @@ export interface ThemedStyle {
   backgroundTransparent: any;
   backgroundLink: any;
   backgroundAlert: any;
+  colorBackgroundPrimary: any;
+  colorBackgroundSecondary: any;
+  colorBackgroundTertiary: any;
   backgroundPrimary: any;
   backgroundSecondary: any;
   backgroundTertiary: any;
@@ -142,6 +146,9 @@ for (let index = 0; index <= repetitions; index++) {
 export const buildStyle = (theme): ThemedStyle => ({
   ...dynamicStyles,
   // containers
+  width90: {
+    width: '90%',
+  },
   flexContainer: {
     flex: 1,
   },
@@ -281,6 +288,15 @@ export const buildStyle = (theme): ThemedStyle => ({
   },
   backgroundAlert: {
     backgroundColor: theme.alert,
+  },
+  colorBackgroundPrimary: {
+    color: theme.primary_background,
+  },
+  colorBackgroundSecondary: {
+    color: theme.secondary_background,
+  },
+  colorBackgroundTertiary: {
+    color: theme.tertiary_background,
   },
   backgroundPrimary: {
     backgroundColor: theme.primary_background,
@@ -464,13 +480,13 @@ export const buildStyle = (theme): ThemedStyle => ({
   },
   titleText: {
     fontFamily: 'Roboto',
-    fontSize: 26,
+    fontSize: Platform.select({ ios: 26, android: 24 }),
     fontWeight: 'bold',
     lineHeight: 44,
   },
   subTitleText: {
     fontFamily: 'Roboto',
-    fontSize: 16,
+    fontSize: Platform.select({ ios: 16, android: 15 }),
     fontWeight: '500',
     lineHeight: 23,
   },

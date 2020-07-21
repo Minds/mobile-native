@@ -12,6 +12,7 @@ import { ComponentsStyle } from '../../../styles/Components';
 import i18n from '../../../common/services/i18n.service';
 
 import TextInput from '../../../common/components/TextInput';
+import colors from '../../../styles/Colors';
 
 function addressExcerpt(address) {
   return `0×${address.substr(2, 5)}...${address.substr(-5)}`;

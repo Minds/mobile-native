@@ -26,7 +26,7 @@ const ReceiverSettings = ({ navigation, walletStore }: PropsType) => {
         },
         {
           title: i18n.t('wallet.alternateReceiver'),
-          onPress: () => navigation.push('BlockchainWallet'),
+          onPress: () => navigation.push('BlockchainWallet', {}),
         },
       ]
     : [

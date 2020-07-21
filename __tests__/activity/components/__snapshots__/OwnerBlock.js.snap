@@ -35,9 +35,9 @@ exports[`Owner component renders correctly 1`] = `
       }
       style={
         Object {
-          "borderRadius": 20,
-          "height": 40,
-          "width": 40,
+          "borderRadius": 18.5,
+          "height": 37,
+          "width": 37,
         }
       }
     />

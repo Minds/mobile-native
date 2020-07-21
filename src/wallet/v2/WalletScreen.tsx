@@ -3,12 +3,11 @@ import { View } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import ThemedStyles from '../../styles/ThemedStyles';
-import { useLocalStore, observer } from 'mobx-react';
+import { observer } from 'mobx-react';
 
 import Topbar from '../../topbar/Topbar';
 import TopbarTabbar from '../../common/components/topbar-tabbar/TopbarTabbar';
 import TokensTab from './currency-tabs/TokensTab';
-import createWalletStore from './createWalletStore';
 import type { CurrencyType } from '../../types/Payment';
 import type { TabType } from '../../common/components/topbar-tabbar/TopbarTabbar';
 import type { WalletStoreType } from './createWalletStore';
@@ -22,6 +21,7 @@ import BottomOptionPopup, {
 import BitcoinsTab from './currency-tabs/BitcoinsTab';
 import UsdTab from './currency-tabs/UsdTab';
 import i18n from '../../common/services/i18n.service';
+import { useStores } from '../../common/hooks/use-stores';
 
 export type WalletScreenRouteProp = RouteProp<AppStackParamList, 'Fab'>;
 export type WalletScreenNavigationProp = StackNavigationProp<
@@ -40,7 +40,7 @@ type PropsType = {
 const WalletScreen = observer((props: PropsType) => {
   const theme = ThemedStyles.style;
 
-  const store: WalletStoreType = useLocalStore(createWalletStore);
+  const store: WalletStoreType = useStores().wallet;
   const bottomStore: BottomOptionsStoreType = useBottomOption();
 
   const tabs: Array<TabType<CurrencyType>> = [
@@ -110,11 +110,7 @@ const WalletScreen = observer((props: PropsType) => {
   }
   return (
     <View style={theme.flexContainer}>
-      <Topbar
-        title={i18n.t('moreScreen.wallet')}
-        navigation={props.navigation}
-        background={theme.backgroundPrimary}
-      />
+      <Topbar navigation={props.navigation} />
       <View style={theme.paddingTop4x}>
         <TopbarTabbar
           titleStyle={theme.bold}

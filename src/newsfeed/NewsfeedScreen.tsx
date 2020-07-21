@@ -5,11 +5,8 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { View } from 'react-native';
 
-import { CommonStyle } from '../styles/Common';
 import GroupsBar from '../groups/GroupsBar';
 import FeedList from '../common/components/FeedList';
-import i18n from '../common/services/i18n.service';
-import TopbarNewsfeed from '../topbar/TopbarNewsfeed';
 import type { AppStackParamList } from '../navigation/NavigationTypes';
 import type MessengerListStore from '../messenger/MessengerListStore';
 import type UserStore from '../auth/UserStore';
@@ -46,7 +43,7 @@ class NewsfeedScreen extends Component<PropsType> {
    * Nav to activity full screen
    */
   navToCapture = () => {
-    this.props.navigation.navigate('Capture');
+    this.props.navigation.navigate('Capture', {});
   };
 
   refreshNewsfeed = (e) => {
@@ -130,21 +127,13 @@ class NewsfeedScreen extends Component<PropsType> {
         };
 
     return (
-      <View style={CommonStyle.flexContainer} testID="NewsfeedScreen">
-        <TopbarNewsfeed
-          title={i18n.t('tabTitleNewsfeed')}
-          navigation={this.props.navigation}
-          refreshFeed={this.refreshNewsfeed}
-        />
-        <FeedList
-          ref={newsfeed.setListRef}
-          header={header}
-          feedStore={newsfeed.feedStore}
-          navigation={this.props.navigation}
-          {...additionalProps}
-        />
-        {/* <CaptureFab navigation={this.props.navigation} route={this.props.route} testID="captureFab"/> */}
-      </View>
+      <FeedList
+        ref={newsfeed.setListRef}
+        header={header}
+        feedStore={newsfeed.feedStore}
+        navigation={this.props.navigation}
+        {...additionalProps}
+      />
     );
   }
 }

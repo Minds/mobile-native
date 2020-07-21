@@ -4,8 +4,9 @@ import {
   createNativeStackNavigator,
   NativeStackNavigationOptions,
 } from 'react-native-screens/native-stack';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { useDimensions } from '@react-native-community/hooks';
 import { createSharedElementStackNavigator } from 'react-navigation-shared-element';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import LoginScreen from '../auth/LoginScreen';
 import ForgotScreen from '../auth/ForgotScreen';
@@ -46,14 +47,9 @@ import MonetizeSelector from '../compose/MonetizeSelector';
 import MonetizeScreen from '../compose/monetize/MonetizeScreeen';
 import LicenseSelector from '../compose/LicenseSelector';
 import ChannelScreenV2 from '../channel/v2/ChannelScreen';
-
-import {
-  RootStackParamList,
-  AuthStackParamList,
-  AppStackParamList,
-  MainSwiperParamList,
-  ActivityFullScreenParamList,
-} from './NavigationTypes';
+import SettingsScreen from '../settings/SettingsScreen';
+import OtherScreen from '../settings/screens/OtherScreen';
+import EmailScreen from '../settings/screens/EmailScreen';
 import EditChannelStack from '../channel/v2/edit/EditChannelStack';
 import ReceiverAddressScreen from '../wallet/v2/address/ReceiverAddressScreen';
 import LearnMoreScreen from '../wallet/v2/LearnMoreScreen';
@@ -69,8 +65,34 @@ import PlusDiscoveryScreen from '../discovery/v2/PlusDiscoveryScreen';
 import featuresService from '../common/services/features.service';
 import JoinMembershipScreen from '../wire/v2/tiers/JoinMembershipScreen';
 
+import {
+  RootStackParamList,
+  AuthStackParamList,
+  AppStackParamList,
+  DrawerParamList,
+  ActivityFullScreenParamList,
+} from './NavigationTypes';
+
+import Drawer from './Drawer';
+import OptionsDrawer from '../common/components/OptionsDrawer';
+import PasswordScreen from '../settings/screens/PasswordScreen';
+import NotificationsSettingsScreen from '../notifications/NotificationsSettingsScreen';
+import BlockedChannelsScreen from '../settings/screens/BlockedChannelsScreen';
+import TierManagementScreen from '../settings/screens/TierManagementScreen';
+import DeleteChannelScreen from '../settings/screens/DeleteChannelScreen';
+import DeactivateChannelScreen from '../settings/screens/DeactivateChannelScreen';
+import LanguageScreen from '../settings/screens/LanguageScreen';
+import NSFWScreen from '../settings/screens/NSFWScreen';
+import TFAScreen from '../settings/screens/TFAScreen';
+import DevicesScreen from '../settings/screens/DevicesScreen';
+import BillingScreen from '../settings/screens/BillingScreen';
+import RecurringPayments from '../settings/screens/RecurringPayments';
+import ReportedContentScreen from '../report/ReportedContentScreen';
+import AppInfoScreen from '../settings/screens/AppInfoScreen';
+import WalletScreen from '../wallet/v2/WalletScreen';
+import { Platform } from 'react-native';
+
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
-const messengerOptions = { title: 'Messenger' };
 const captureOptions = {
   title: '',
   stackAnimation: 'fade',
@@ -84,7 +106,8 @@ const activityOptions = ({ route }) => ({
 const AppStackNav = createNativeStackNavigator<AppStackParamList>();
 const AuthStackNav = createNativeStackNavigator<AuthStackParamList>();
 const RootStackNav = createNativeStackNavigator<RootStackParamList>();
-const MainSwiper = createMaterialTopTabNavigator<MainSwiperParamList>();
+// const MainSwiper = createMaterialTopTabNavigator<MainSwiperParamList>();
+const DrawerNav = createDrawerNavigator<DrawerParamList>();
 
 const FullScreenPostStackNav = createSharedElementStackNavigator<
   ActivityFullScreenParamList
@@ -110,30 +133,95 @@ const FullScreenPostStack = () => (
   </FullScreenPostStackNav.Navigator>
 );
 
-// Main navigation swiper
+const AccountScreenOptions = (navigation) => [
+  {
+    title: i18n.t('settings.accountOptions.1'),
+    onPress: () => navigation.push('SettingsEmail'),
+  },
+  {
+    title: i18n.t('settings.accountOptions.2'),
+    onPress: () => navigation.push('LanguageScreen'),
+  },
+  {
+    title: i18n.t('settings.accountOptions.3'),
+    onPress: () => navigation.push('SettingsPassword'),
+  },
+  {
+    title: i18n.t('settings.accountOptions.4'),
+    onPress: () => navigation.push('SettingsNotifications'),
+  },
+  {
+    title: i18n.t('settings.accountOptions.5'),
+    onPress: () => navigation.push('NSFWScreen'),
+  },
+];
+
+const SecurityScreenOptions = (navigation) => [
+  {
+    title: i18n.t('settings.securityOptions.1'),
+    onPress: () => navigation.push('TFAScreen'),
+  },
+  {
+    title: i18n.t('settings.securityOptions.2'),
+    onPress: () => navigation.push('DevicesScreen'),
+  },
+];
+
+const BillingScreenOptions = (navigation) => [
+  {
+    title: i18n.t('settings.billingOptions.1'),
+    onPress: () => navigation.push('PaymentMethods'),
+  },
+  {
+    title: i18n.t('settings.billingOptions.2'),
+    onPress: () => navigation.push('RecurringPayments'),
+  },
+];
+
+const WalletOptions = () => ({
+  title: i18n.t('wallet.wallet'),
+  headerShown: false,
+});
+
 const MainSwiperScreen = () => {
+  const dimensions = useDimensions().window;
+
+  const isLargeScreen = dimensions.width >= 600;
   return (
-    <MainSwiper.Navigator
+    <DrawerNav.Navigator
       initialRouteName="Tabs"
-      lazy={true}
-      tabBar={() => null}
-      screenOptions={ThemedStyles.defaultScreenOptions}>
-      <MainSwiper.Screen
-        name="Capture"
-        component={ComposeScreen}
-        options={captureOptions}
-      />
-      <MainSwiper.Screen
+      drawerType="slide"
+      drawerContent={Drawer}
+      drawerStyle={isLargeScreen ? null : ThemedStyles.style.width90}>
+      <DrawerNav.Screen
         name="Tabs"
         component={TabsScreen}
         options={hideHeader}
       />
-      <MainSwiper.Screen
-        name="Messenger"
-        component={MessengerScreen}
-        options={messengerOptions}
+      <DrawerNav.Screen
+        name="PlusDiscoveryScreen"
+        component={PlusDiscoveryScreen}
+        options={{ title: i18n.t('plusTabTitleDiscovery') }}
       />
-    </MainSwiper.Navigator>
+      {featuresService.has('wallet') && (
+        <DrawerNav.Screen
+          name="Wallet"
+          component={WalletScreen}
+          options={WalletOptions}
+        />
+      )}
+      <DrawerNav.Screen
+        name="BoostConsole"
+        component={BoostConsoleScreen}
+        options={hideHeader}
+      />
+      <DrawerNav.Screen
+        name="GroupsList"
+        component={GroupsListScreen}
+        options={{ title: i18n.t('discovery.groups') }}
+      />
+      <DrawerNav.Screen name="Settings" component={SettingsScreen} />
+    </DrawerNav.Navigator>
   );
 };
 
@@ -152,7 +240,7 @@ const AppStack = function () {
         options={{ stackAnimation: 'none', ...hideHeader }}
       />
       <AppStackNav.Screen
-        name="StackCapture"
+        name="Capture"
         component={ComposeScreen}
         options={captureOptions}
       />
@@ -230,11 +318,6 @@ const AppStack = function () {
       />
       <AppStackNav.Screen name="Subscribers" component={ChannelSubscribers} />
       <AppStackNav.Screen
-        name="GroupsList"
-        component={GroupsListScreen}
-        options={{ title: i18n.t('discovery.groups') }}
-      />
-      <AppStackNav.Screen
         name="GroupView"
         component={GroupViewScreen}
         options={hideHeader}
@@ -243,11 +326,6 @@ const AppStack = function () {
         name="BlogList"
         component={BlogsListScreen}
         options={{ title: i18n.t('blogs.blogs') }}
-      />
-      <AppStackNav.Screen
-        name="BoostConsole"
-        component={BoostConsoleScreen}
-        options={{ title: i18n.t('boost') }}
       />
       <AppStackNav.Screen
         name="BlogView"
@@ -362,9 +440,105 @@ const AppStack = function () {
         }}
       />
       <AppStackNav.Screen
-        name="PlusDiscoveryScreen"
-        component={PlusDiscoveryScreen}
-        options={{ title: i18n.t('plusTabTitleDiscovery') }}
+        name="Account"
+        component={OptionsDrawer}
+        options={{ title: i18n.t('settings.account') }}
+        initialParams={{ options: AccountScreenOptions }}
+      />
+      <AppStackNav.Screen
+        name="Security"
+        component={OptionsDrawer}
+        options={{ title: i18n.t('settings.security') }}
+        initialParams={{ options: SecurityScreenOptions }}
+      />
+      <AppStackNav.Screen
+        name="Billing"
+        component={OptionsDrawer}
+        options={{ title: i18n.t('settings.billing') }}
+        initialParams={{ options: BillingScreenOptions }}
+      />
+      <AppStackNav.Screen
+        name="Other"
+        component={OtherScreen}
+        options={{ title: i18n.t('settings.other') }}
+      />
+      <AppStackNav.Screen
+        name="SettingsEmail"
+        component={EmailScreen}
+        options={{ title: i18n.t('settings.accountOptions.1') }}
+      />
+      <AppStackNav.Screen
+        name="SettingsPassword"
+        component={PasswordScreen}
+        options={{ title: i18n.t('settings.accountOptions.3') }}
+      />
+      <AppStackNav.Screen
+        name="SettingsNotifications"
+        component={NotificationsSettingsScreen}
+        options={{ title: i18n.t('settings.pushNotification') }}
+      />
+      <AppStackNav.Screen
+        name="BlockedChannels"
+        component={BlockedChannelsScreen}
+        options={{ title: i18n.t('settings.blockedChannels') }}
+      />
+      <AppStackNav.Screen
+        name="TierManagementScreen"
+        component={TierManagementScreen}
+        options={{ title: i18n.t('settings.otherOptions.b1') }}
+        initialParams={{ useForSelection: false }}
+      />
+      <AppStackNav.Screen
+        name="DeleteChannel"
+        component={DeleteChannelScreen}
+      />
+      <AppStackNav.Screen
+        name="DeactivateChannel"
+        component={DeactivateChannelScreen}
+      />
+      <AppStackNav.Screen
+        name="LanguageScreen"
+        component={LanguageScreen}
+        options={{ title: i18n.t('settings.accountOptions.2') }}
+      />
+      <AppStackNav.Screen
+        name="NSFWScreen"
+        component={NSFWScreen}
+        options={{ title: i18n.t('settings.accountOptions.5') }}
+      />
+      <AppStackNav.Screen
+        name="TFAScreen"
+        component={TFAScreen}
+        options={{ title: i18n.t('settings.TFA') }}
+      />
+      <AppStackNav.Screen
+        name="DevicesScreen"
+        component={DevicesScreen}
+        options={{ title: i18n.t('settings.securityOptions.2') }}
+      />
+      {Platform.OS !== 'ios' && (
+        <AppStackNav.Screen
+          name="PaymentMethods"
+          component={BillingScreen}
+          options={{ title: i18n.t('settings.billingOptions.1') }}
+        />
+      )}
+      {Platform.OS !== 'ios' && (
+        <AppStackNav.Screen
+          name="RecurringPayments"
+          component={RecurringPayments}
+          options={{ title: i18n.t('settings.billingOptions.2') }}
+        />
+      )}
+      <AppStackNav.Screen
+        name="ReportedContent"
+        component={ReportedContentScreen}
+        options={{ title: i18n.t('settings.otherOptions.a1') }}
+      />
+      <AppStackNav.Screen
+        name="AppInfo"
+        component={AppInfoScreen}
+        options={hideHeader}
       />
     </AppStackNav.Navigator>
   );

@@ -3,12 +3,11 @@ import React, { Component } from 'react';
 
 import { Text, View, StyleSheet } from 'react-native';
 
-import Icon from 'react-native-vector-icons/Ionicons';
-
 import BlockchainWalletService from '../BlockchainWalletService';
 import i18n from '../../../common/services/i18n.service';
 import number from '../../../common/helpers/number';
 import abbrev from '../../../common/helpers/abbrev';
+import colors from '../../../styles/Colors';
 
 // Helpers
 function aliasOrAddressExcerpt(item) {

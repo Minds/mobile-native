@@ -2,29 +2,24 @@ import React from 'react';
 
 import { View } from 'react-native';
 import { observer } from 'mobx-react';
-
-import { CommonStyle as CS } from '../../styles/Common';
-
-import i18n from '../../common/services/i18n.service';
+import { RouteProp } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 import { DiscoveryTrendsList } from './trends/DiscoveryTrendsList';
 import Topbar from '../../topbar/Topbar';
-
 import ThemedStyles from '../../styles/ThemedStyles';
 import { useDiscoveryV2Store } from './DiscoveryV2Context';
 import { TDiscoveryV2Tabs } from './DiscoveryV2Store';
 import TopbarTabbar from '../../common/components/topbar-tabbar/TopbarTabbar';
 import { DiscoveryTagsList } from './tags/DiscoveryTagsList';
-import { AppStackParamList } from '../../navigation/NavigationTypes';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
+import { DrawerParamList } from '../../navigation/NavigationTypes';
 
 type PlusDiscoveryScreenRouteProp = RouteProp<
-  AppStackParamList,
+  DrawerParamList,
   'PlusDiscoveryScreen'
 >;
 type PlusDiscoveryScreenNavigationProp = StackNavigationProp<
-  AppStackParamList,
+  DrawerParamList,
   'PlusDiscoveryScreen'
 >;
 
@@ -51,6 +46,7 @@ const PlusDiscoveryScreen = observer(({ navigation }: PropsType) => {
 
   return (
     <View style={ThemedStyles.style.flexContainer}>
+      <Topbar navigation={navigation} />
       <View style={ThemedStyles.style.backgroundSecondary}>
         <TopbarTabbar
           current={store.activeTabId}

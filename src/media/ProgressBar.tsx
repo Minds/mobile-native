@@ -98,7 +98,6 @@ export default class ProgressBar extends Component<PropsType> {
   }
 
   render() {
-    let { moving } = this.state;
     let { currentTime, duration, percent } = this.props;
     return (
       <View style={styles.container}>

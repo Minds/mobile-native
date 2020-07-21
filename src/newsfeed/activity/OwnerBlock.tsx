@@ -181,9 +181,9 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
   avatar: {
-    height: 40,
-    width: 40,
-    borderRadius: 20,
+    height: 37,
+    width: 37,
+    borderRadius: 18.5,
   },
   body: {
     marginLeft: 8,

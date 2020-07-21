@@ -1,6 +1,6 @@
 //@ts-nocheck
 import React, { Component } from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {
@@ -20,10 +20,12 @@ import ThemedStyles from '../styles/ThemedStyles';
 import UserStore from '../auth/UserStore';
 
 interface Props {
-  user: UserStore;
+  user?: UserStore;
   navigation: any;
+  icon?: React.Node;
 }
 
+@inject('user')
 @observer
 class SearchComponent extends Component<Props> {
   state = {
@@ -84,17 +86,22 @@ class SearchComponent extends Component<Props> {
       borderBottomWidth: 1,
     };
 
+    const body = this.props.icon || (
+      <Icon name="search" size={26} style={[styles.button, CS.colorIcon]} />
+    );
+
     return (
       <TouchableHighlight
         onPress={!this.isSearching() ? this.toggleSearching : null}
         underlayColor="transparent">
         <View>
-          <Icon name="search" size={26} style={[styles.button, CS.colorIcon]} />
+          {body}
           <Modal
             isVisible={this.isSearching()}
             backdropColor={ThemedStyles.getColor('secondary_background')}
             backdropOpacity={0.9}
             useNativeDriver={true}
+            onBackdropPress={this.toggleSearching}
             animationInTiming={100}
             onBackButtonPress={this.props.user.toggleSearching}
             onModalShow={this.onModalShow}
@@ -102,7 +109,7 @@ class SearchComponent extends Component<Props> {
             animationOut="fadeOut"
             animationIn="fadeIn"
             style={styles.modal}>
-            <SafeAreaView style={[CS.flexContainer]}>
+            <SafeAreaView>
               <View style={[CS.backgroundSecondary, styles.body, border]}>
                 <View
                   style={[
@@ -110,12 +117,12 @@ class SearchComponent extends Component<Props> {
                     Platform.OS === 'android'
                       ? CS.marginBottom
                       : CS.marginBottom3x,
-                    Platform.OS === 'android' ? CS.marginTop2x : CS.marginTop4x,
+                    Platform.OS === 'android' ? CS.marginTop3x : CS.marginTop5x,
                   ]}>
-                  <View style={[CS.rowJustifyStart, CS.paddingLeft2x]}>
+                  <View style={[CS.rowJustifyStart, CS.paddingLeft3x]}>
                     <Icon
                       name="search"
-                      size={24}
+                      size={25}
                       style={[
                         CS.colorIcon,
                         CS.marginRight2x,
@@ -152,6 +159,7 @@ class SearchComponent extends Component<Props> {
                   ref={this.handleSearchResultRef}
                   navigation={this.props.navigation}
                   search={this.search}
+                  onClose={this.toggleSearching}
                 />
               </View>
             </SafeAreaView>
@@ -179,5 +187,6 @@ const styles = StyleSheet.create({
   },
   modal: {
     margin: 0,
+    justifyContent: 'flex-start',
   },
 });
