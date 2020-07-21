@@ -50,23 +50,19 @@ const MindsVideo = observer((props: PropsType) => {
     localStore.pause();
   };
 
+  if (props.video && props.video.uri !== localStore.video.uri) {
+    localStore.setVideo(props.video);
+  }
+
   useEffect(() => {
     let onScreenBlur: any;
     if (!localStore.inited) {
       onScreenBlur = NavigationService.addListener('blur', () => {
-        localStore.setShouldPlay(false);
+        localStore.player?.pauseAsync();
       });
       localStore.toggleInited();
 
       props.onStoreCreated && props.onStoreCreated(localStore);
-
-      if (props.pause !== undefined && props.pause === false) {
-        localStore.setShouldPlay(true);
-      }
-    }
-
-    if (props.video && props.video.uri !== localStore.video.uri) {
-      localStore.setVideo(props.video);
     }
 
     return () => {
@@ -112,6 +108,7 @@ const MindsVideo = observer((props: PropsType) => {
           localStore={localStore}
           repeat={props.repeat}
           resizeMode={props.resizeMode}
+          pause={props.pause || false}
         />
         {inProgressOverlay}
         {errorOverlay}

@@ -14,7 +14,6 @@ export type Source = {
 
 const createMindsVideoStore = ({ entity }) => {
   const store = {
-    shouldPlay: false as boolean,
     volume: 1 as number,
     inited: false,
     active: false,
@@ -30,7 +29,10 @@ const createMindsVideoStore = ({ entity }) => {
     showOverlay: false,
     fullScreen: false,
     player: null as Video | null,
-    paused: false,
+    paused: true,
+    togglePaused() {
+      this.paused = !this.paused;
+    },
     setSource(source: number) {
       this.source = source;
     },
@@ -52,9 +54,6 @@ const createMindsVideoStore = ({ entity }) => {
     setActive(active: boolean) {
       this.active = active;
     },
-    setShouldPlay(shouldPlay) {
-      this.shouldPlay = shouldPlay;
-    },
     setVolume(volume: number) {
       this.volume = volume;
     },
@@ -69,14 +68,14 @@ const createMindsVideoStore = ({ entity }) => {
      * @param currentTime in millis
      */
     onProgress(currentTime: number) {
-      this.currentTime = currentTime / 1000;
+      this.currentTime = currentTime;
     },
     /**
      * Set the total duration of video
      * @param duration in millis
      */
     setDuration(duration: number) {
-      this.duration = duration / 1000;
+      this.duration = duration;
     },
     async onError(err: string) {
       // entity is null only on video previews.
@@ -101,14 +100,13 @@ const createMindsVideoStore = ({ entity }) => {
       }
     },
     onVideoEnd() {
+      this.player?.pauseAsync();
       this.currentTime = 0;
-      this.shouldPlay = false;
+      this.paused = true;
     },
     onLoadStart() {
-      if (this.shouldPlay) {
-        this.error = false;
-        this.inProgress = true;
-      }
+      this.error = false;
+      this.inProgress = true;
     },
     onLoadEnd() {
       this.error = false;
@@ -121,12 +119,10 @@ const createMindsVideoStore = ({ entity }) => {
      * @param status
      */
     onVideoLoad(status: AVPlaybackStatus) {
-      if (status.isLoaded && status.shouldPlay) {
+      if (status.isLoaded) {
         this.loaded = false;
         this.currentTime = status.positionMillis;
-        this.duration = status.durationMillis
-          ? status.durationMillis / 1000
-          : 0;
+        this.duration = status.durationMillis || 0;
       }
       this.onLoadEnd();
     },
@@ -140,10 +136,10 @@ const createMindsVideoStore = ({ entity }) => {
       );
     },
     get currentTimeSeconds() {
-      return this.formatSeconds(this.currentTime);
+      return this.formatSeconds(this.currentTime / 1000);
     },
     get durationSeconds() {
-      return this.formatSeconds(this.duration);
+      return this.formatSeconds(this.duration / 1000);
     },
     get percent() {
       const currentTimePercent =
@@ -158,9 +154,16 @@ const createMindsVideoStore = ({ entity }) => {
      * @param newPercent
      * @param shouldPlay
      */
-    onProgressChanged(newPercent, shouldPlay) {
+    async onProgressChanged(newPercent, shouldPlay) {
       this.currentTime = (newPercent * this.duration) / 100;
-      this.shouldPlay = shouldPlay;
+      const status = await this.player?.getStatusAsync();
+      if (status && status.isLoaded) {
+        if (shouldPlay) {
+          !status.isPlaying && this.player?.playAsync();
+        } else {
+          status.isPlaying && this.player?.pauseAsync();
+        }
+      }
     },
     openControlOverlay() {
       if (!this.showOverlay) {
@@ -177,10 +180,13 @@ const createMindsVideoStore = ({ entity }) => {
       this.active = state.active;
       this.volume = this.volume;
       this.showOverlay = this.showOverlay;
-      this.shouldPlay = state.shouldPlay;
       this.sources = state.sources;
       if (state.video) {
         this.video = state.video;
+      }
+
+      if (state.shouldPlay) {
+        this.player?.playAsync();
       }
     },
     /**
@@ -222,12 +228,7 @@ const createMindsVideoStore = ({ entity }) => {
       this.setStates(state);
     },
     pause() {
-      this.paused = true;
-      this.player && this.player.pauseAsync();
-    },
-    resume() {
-      this.paused = false;
-      this.player && this.player.playFromPositionAsync(this.currentTime * 1000);
+      this.player?.pauseAsync();
     },
     setPlayer(player: Video) {
       this.player = player;

@@ -12,11 +12,12 @@ type PropsType = {
   entity?: ActivityModel | CommentModel;
   localStore: MindsVideoStoreType;
   repeat?: boolean;
+  pause?: boolean;
   resizeMode?: ResizeMode;
 };
 
 const ExpoVideo = observer(
-  ({ entity, localStore, repeat, resizeMode }: PropsType) => {
+  ({ entity, localStore, repeat, resizeMode, pause }: PropsType) => {
     const theme = ThemedStyles.style;
     const playbackObject = useRef<Video>(null);
 
@@ -29,16 +30,16 @@ const ExpoVideo = observer(
         localStore.setPlayer(playbackObject.current);
       }
       if (!status.isLoaded && status.error) {
-        localStore.onError(status.error, entity);
+        localStore.onError(status.error);
       } else {
         if (status.isLoaded) {
-          if (!localStore.paused) {
-            localStore.onProgress(status.positionMillis || 0);
-            localStore.setDuration(status.durationMillis || 0);
+          if (status.shouldPlay === localStore.paused) {
+            localStore.togglePaused();
           }
 
-          if (status.shouldPlay !== localStore.shouldPlay) {
-            localStore.setShouldPlay(status.shouldPlay);
+          if (status.isPlaying) {
+            localStore.onProgress(status.positionMillis || 0);
+            localStore.setDuration(status.durationMillis || 0);
           }
 
           if (status.didJustFinish && !status.isLooping) {
@@ -56,12 +57,12 @@ const ExpoVideo = observer(
           onPlaybackStatusUpdate={updatePlaybackCallback}
           onLoadStart={localStore.onLoadStart}
           onLoad={localStore.onVideoLoad}
-          onError={(msg) => localStore.onError(msg, entity)}
+          onError={(msg) => localStore.onError(msg)}
           source={{
             uri: localStore.video.uri,
             headers: apiService.buildHeaders(),
           }}
-          shouldPlay={localStore.shouldPlay}
+          shouldPlay={true}
           isLooping={repeat || false}
           resizeMode={resizeMode || 'cover'}
           useNativeControls={false}

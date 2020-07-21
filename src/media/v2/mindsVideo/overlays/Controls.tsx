@@ -53,7 +53,7 @@ const Controls = observer(({ localStore, entity }: PropsType) => {
     return null;
   }
 
-  const mustShow = localStore.showOverlay || (!localStore.shouldPlay && entity);
+  const mustShow = localStore.showOverlay || (localStore.paused && entity);
 
   const size = 56;
 
@@ -75,14 +75,10 @@ const Controls = observer(({ localStore, entity }: PropsType) => {
             style={[theme.positionAbsolute, theme.centered, theme.marginTop2x]}>
             <Icon
               onPress={() =>
-                localStore.shouldPlay
-                  ? localStore.pause()
-                  : localStore.paused
-                  ? localStore.resume()
-                  : localStore.play(false)
+                localStore.paused ? localStore.play(false) : localStore.pause()
               }
               style={styles.videoIcon}
-              name={localStore.shouldPlay ? 'md-pause' : 'md-play-circle'}
+              name={localStore.paused ? 'md-play-circle' : 'md-pause'}
               size={size}
               color={Colors.light}
             />
