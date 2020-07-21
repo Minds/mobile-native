@@ -1,23 +1,24 @@
-import type ActivityModel from '../../../newsfeed/ActivityModel';
 import attachmentService from '../../../common/services/attachment.service';
 import logService from '../../../common/services/log.service';
 import type { AVPlaybackStatus, Video } from 'expo-av';
 import _ from 'lodash';
 import featuresService from '../../../common/services/features.service';
 import apiService from '../../../common/services/api.service';
+import type ActivityModel from '../../../newsfeed/ActivityModel';
+import type CommentModel from '../../../comments/CommentModel';
 
 export type Source = {
   src: string;
   size: number;
 };
 
-const createMindsVideoStore = (entity: ActivityModel) => {
+const createMindsVideoStore = () => {
   const store = {
-    shouldPlay: true as boolean,
+    shouldPlay: false as boolean,
     volume: 1 as number,
     inited: false,
     active: false,
-    sources: [] as Array<Source> | null,
+    sources: null as Array<Source> | null,
     source: 0,
     currentTime: 0,
     duration: 0,
@@ -25,15 +26,13 @@ const createMindsVideoStore = (entity: ActivityModel) => {
     error: false,
     inProgress: false,
     loaded: false,
-    video: { uri: '' },
+    video: { uri: '', headers: undefined },
     showOverlay: false,
     fullScreen: false,
     player: null as Video | null,
+    paused: false,
     setSource(source: number) {
       this.source = source;
-    },
-    setPlayer(player: Video | null) {
-      this.player = player;
     },
     setFullScreen(fullSCreen: boolean) {
       this.fullScreen = fullSCreen;
@@ -47,7 +46,7 @@ const createMindsVideoStore = (entity: ActivityModel) => {
     setShowOverlay(showOverlay: boolean) {
       this.showOverlay = showOverlay;
     },
-    setVideo(video: { uri: string }) {
+    setVideo(video: any) {
       this.video = video;
     },
     setActive(active: boolean) {
@@ -79,7 +78,10 @@ const createMindsVideoStore = (entity: ActivityModel) => {
     setDuration(duration: number) {
       this.duration = duration / 1000;
     },
-    async onError(err: string) {
+    async onError(
+      err: string,
+      entity: ActivityModel | CommentModel | undefined,
+    ) {
       // entity is null only on video previews.
       if (!entity) {
         return;
@@ -106,16 +108,29 @@ const createMindsVideoStore = (entity: ActivityModel) => {
       this.shouldPlay = false;
     },
     onLoadStart() {
-      this.error = false;
-      this.inProgress = true;
+      if (this.shouldPlay) {
+        this.error = false;
+        this.inProgress = true;
+      }
     },
     onLoadEnd() {
       this.error = false;
       this.inProgress = false;
     },
+    /**
+     * Called once the video has been loaded.
+     * The data is streamed so all of it may not have been fetched yet,
+     * just enough to render the first frame
+     * @param status
+     */
     onVideoLoad(status: AVPlaybackStatus) {
-      console.log(status);
-      this.loaded = false;
+      if (status.isLoaded && status.shouldPlay) {
+        this.loaded = false;
+        this.currentTime = status.positionMillis;
+        this.duration = status.durationMillis
+          ? status.durationMillis / 1000
+          : 0;
+      }
       this.onLoadEnd();
     },
     formatSeconds(seconds: number) {
@@ -137,6 +152,9 @@ const createMindsVideoStore = (entity: ActivityModel) => {
       const currentTimePercent =
         this.currentTime > 0 ? this.currentTime / this.duration : 0;
       return currentTimePercent * 100;
+    },
+    get videoSource() {
+      return { uri: this.video.uri, headers: this.video.headers };
     },
     /**
      * used for when progress bar changes
@@ -171,7 +189,10 @@ const createMindsVideoStore = (entity: ActivityModel) => {
     /**
      * Play the current video and activate the player
      */
-    async play(sound: boolean = true) {
+    async play(
+      sound: boolean = true,
+      entity: ActivityModel | CommentModel | undefined,
+    ) {
       const state: any = {
         active: true,
         volume: sound ? 1 : 0,
@@ -180,7 +201,7 @@ const createMindsVideoStore = (entity: ActivityModel) => {
         sources: [] as Array<Source>,
       };
 
-      if (!this.sources && entity) {
+      if ((!this.sources || this.sources.length === 0) && entity) {
         if (entity.paywall && featuresService.has('plus-2020')) {
           await entity.unlockOrPay();
           if (entity.paywall) {
@@ -202,14 +223,20 @@ const createMindsVideoStore = (entity: ActivityModel) => {
             headers: apiService.buildHeaders(),
           };
         }
-      } else {
-        console.log('NO SOURCES!');
       }
 
       this.setStates(state);
     },
     pause() {
-      this.shouldPlay = false;
+      this.paused = true;
+      this.player && this.player.pauseAsync();
+    },
+    resume() {
+      this.paused = false;
+      this.player && this.player.playFromPositionAsync(this.currentTime * 1000);
+    },
+    setPlayer(player: Video) {
+      this.player = player;
     },
   };
   return store;

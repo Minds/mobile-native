@@ -7,6 +7,8 @@ import i18n from '../common/services/i18n.service';
 import ImagePreview from './ImagePreview';
 import { useSafeArea } from 'react-native-safe-area-context';
 import MindsVideo from '../media/MindsVideo';
+import MindsVideoV2 from '../media/v2/mindsVideo/MindsVideo';
+import featuresService from '../common/services/features.service';
 
 /**
  * Media confirm screen
@@ -19,6 +21,24 @@ export default function (props) {
   const menuStyle = { paddingTop: insets.top || 0 };
 
   const isImage = props.store.mediaToConfirm.type.startsWith('image');
+
+  const previewComponent = isImage ? (
+    <ImagePreview image={props.store.mediaToConfirm} />
+  ) : featuresService.has('mindsVideo-2020') ? (
+    <MindsVideoV2
+      video={{ uri: props.store.mediaToConfirm.uri }}
+      pause={false}
+      repeat={true}
+      containerStyle={{ marginBottom: insets.bottom }}
+    />
+  ) : (
+    <MindsVideo
+      video={{ uri: props.store.mediaToConfirm.uri }}
+      pause={false}
+      repeat={true}
+      containerStyle={{ marginBottom: insets.bottom }}
+    />
+  );
 
   return (
     <View style={theme.flexContainer}>
@@ -51,16 +71,7 @@ export default function (props) {
           {i18n.t('confirm')}
         </Text>
       </View>
-      {isImage ? (
-        <ImagePreview image={props.store.mediaToConfirm} />
-      ) : (
-        <MindsVideo
-          video={{ uri: props.store.mediaToConfirm.uri }}
-          pause={false}
-          repeat={true}
-          containerStyle={{ marginBottom: insets.bottom }}
-        />
-      )}
+      {previewComponent}
     </View>
   );
 }

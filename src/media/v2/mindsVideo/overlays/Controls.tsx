@@ -75,7 +75,11 @@ const Controls = observer(({ localStore, entity }: PropsType) => {
             style={[theme.positionAbsolute, theme.centered, theme.marginTop2x]}>
             <Icon
               onPress={() =>
-                localStore.shouldPlay ? localStore.pause() : localStore.play()
+                localStore.shouldPlay
+                  ? localStore.pause()
+                  : localStore.paused
+                  ? localStore.resume()
+                  : localStore.play(false, entity)
               }
               style={styles.videoIcon}
               name={localStore.shouldPlay ? 'md-pause' : 'md-play-circle'}

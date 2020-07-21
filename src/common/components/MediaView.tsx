@@ -19,6 +19,7 @@ import {
 import ExplicitImage from './explicit/ExplicitImage';
 import domain from '../helpers/domain';
 import MindsVideo from '../../media/MindsVideo';
+import MindsVideoV2 from '../../media/v2/mindsVideo/MindsVideo';
 import mediaProxyUrl from '../helpers/media-proxy-url';
 import download from '../services/download.service';
 
@@ -29,6 +30,8 @@ import i18n from '../services/i18n.service';
 import { showMessage } from 'react-native-flash-message';
 import Colors from '../../styles/Colors';
 import type ActivityModel from 'src/newsfeed/ActivityModel';
+import { MindsVideoStoreType } from '../../media/v2/mindsVideo/createMindsVideoStore';
+import featuresService from '../services/features.service';
 
 type PropsType = {
   entity: ActivityModel;
@@ -43,7 +46,7 @@ type PropsType = {
 @observer
 export default class MediaView extends Component<PropsType> {
   _currentThumbnail = 0;
-  videoPlayer: MindsVideo | null = null;
+  videoPlayer: MindsVideo | MindsVideoStoreType | null = null;
 
   static defaultProps = {
     width: Dimensions.get('window').width,
@@ -108,14 +111,25 @@ export default class MediaView extends Component<PropsType> {
       aspectRatio = this.state.width / this.state.height;
     }
 
+    const MindsVideoComponent = featuresService.has('mindsVideo-2020') ? (
+      <MindsVideoV2
+        entity={this.props.entity}
+        onStoreCreated={(store: MindsVideoStoreType) =>
+          (this.videoPlayer = store)
+        }
+      />
+    ) : (
+      <MindsVideo
+        entity={this.props.entity}
+        ref={(o) => {
+          this.videoPlayer = o;
+        }}
+      />
+    );
+
     return (
       <View style={[styles.videoContainer, { aspectRatio }]}>
-        <MindsVideo
-          entity={this.props.entity}
-          ref={(o) => {
-            this.videoPlayer = o;
-          }}
-        />
+        {MindsVideoComponent}
       </View>
     );
   }
@@ -155,14 +169,18 @@ export default class MediaView extends Component<PropsType> {
    * Pause video if exist
    */
   pauseVideo() {
-    if (this.videoPlayer) this.videoPlayer.pause();
+    if (this.videoPlayer) {
+      this.videoPlayer.pause();
+    }
   }
 
   /**
    * Play video if exist
    */
   playVideo(sound: boolean) {
-    if (this.videoPlayer) this.videoPlayer.play(sound);
+    if (this.videoPlayer) {
+      this.videoPlayer.play(sound, this.props.entity);
+    }
   }
 
   imageError = (err) => {

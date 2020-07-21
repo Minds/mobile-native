@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { observer } from 'mobx-react';
 import { MindsVideoStoreType } from './createMindsVideoStore';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
@@ -6,6 +6,7 @@ import type CommentModel from '../../../comments/CommentModel';
 import { Video, ResizeMode, AVPlaybackStatus } from 'expo-av';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import ExplicitImage from '../../../common/components/explicit/ExplicitImage';
+import apiService from '../../../common/services/api.service';
 
 type PropsType = {
   entity?: ActivityModel | CommentModel;
@@ -17,25 +18,27 @@ type PropsType = {
 const ExpoVideo = observer(
   ({ entity, localStore, repeat, resizeMode }: PropsType) => {
     const theme = ThemedStyles.style;
+    const playbackObject = useRef<Video>(null);
 
     const thumb_uri = entity
       ? entity.get('custom_data.thumbnail_src') || entity.thumbnail_src
       : null;
 
     const updatePlaybackCallback = (status: AVPlaybackStatus) => {
+      if (!localStore.player && playbackObject.current) {
+        localStore.setPlayer(playbackObject.current);
+      }
       if (!status.isLoaded && status.error) {
-        localStore.onError(status.error);
+        localStore.onError(status.error, entity);
       } else {
-        if ('shouldPlay' in status) {
-          localStore.onProgress(status.positionMillis || 0);
-          localStore.setDuration(status.durationMillis || 0);
-
-          if (status.shouldPlay && !localStore.shouldPlay) {
-            localStore.setShouldPlay(true);
+        if (status.isLoaded) {
+          if (!localStore.paused) {
+            localStore.onProgress(status.positionMillis || 0);
+            localStore.setDuration(status.durationMillis || 0);
           }
 
-          if (!status.shouldPlay && localStore.shouldPlay) {
-            localStore.setShouldPlay(false);
+          if (status.shouldPlay !== localStore.shouldPlay) {
+            localStore.setShouldPlay(status.shouldPlay);
           }
 
           if (status.didJustFinish && !status.isLooping) {
@@ -53,16 +56,17 @@ const ExpoVideo = observer(
           onPlaybackStatusUpdate={updatePlaybackCallback}
           onLoadStart={localStore.onLoadStart}
           onLoad={localStore.onVideoLoad}
-          onError={localStore.onError}
-          source={localStore.video}
+          onError={(msg) => localStore.onError(msg, entity)}
+          source={{
+            uri: localStore.video.uri,
+            headers: apiService.buildHeaders(),
+          }}
           shouldPlay={localStore.shouldPlay}
           isLooping={repeat || false}
-          resizeMode={resizeMode || 'contain'}
+          resizeMode={resizeMode || 'cover'}
           useNativeControls={false}
           style={theme.flexContainer}
-          ref={(component) => {
-            localStore.setPlayer(component);
-          }}
+          ref={playbackObject}
         />
       );
     } else {
@@ -70,7 +74,7 @@ const ExpoVideo = observer(
       return (
         <ExplicitImage
           onLoadEnd={localStore.onLoadEnd}
-          onError={localStore.onError}
+          onError={(msg) => localStore.onError(msg, entity)}
           source={image}
           entity={entity}
         />

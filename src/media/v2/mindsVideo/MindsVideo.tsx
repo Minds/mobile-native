@@ -1,11 +1,7 @@
 import React, { useEffect } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
 
-// workaround to fix tooltips on android
-import Tooltip from 'rne-modal-tooltip';
-
 import {
-  PanResponder,
   TouchableWithoutFeedback,
   View,
   StyleProp,
@@ -37,24 +33,36 @@ type PropsType = {
   resizeMode?: ResizeMode;
   video?: { uri: string };
   containerStyle?: StyleProp<ViewStyle>;
+  onStoreCreated: Function;
 };
 
 const MindsVideo = observer((props: PropsType) => {
   const theme = ThemedStyles.style;
   const localStore = useLocalStore(createMindsVideoStore);
 
+  const play = (sound: boolean) => {
+    localStore.play(sound, props.entity);
+  };
+
+  const pause = () => {
+    localStore.pause();
+  };
+
   useEffect(() => {
     let onScreenBlur: any;
     if (!localStore.inited) {
-      PanResponder.create({
-        onStartShouldSetPanResponder: () => true,
-        onStartShouldSetPanResponderCapture: () => true,
-        onMoveShouldSetPanResponder: () => true,
-        onMoveShouldSetPanResponderCapture: () => true,
-      });
       onScreenBlur = NavigationService.addListener('blur', () => {
         localStore.setShouldPlay(false);
       });
+      localStore.toggleInited();
+      props.onStoreCreated && props.onStoreCreated(localStore);
+      if (props.pause !== undefined && props.pause === false) {
+        localStore.setShouldPlay(true);
+      }
+    }
+
+    if (props.video && props.video.uri !== localStore.video.uri) {
+      localStore.setVideo(props.video);
     }
 
     return () => {
@@ -64,8 +72,10 @@ const MindsVideo = observer((props: PropsType) => {
       if (videoPlayerService.current === MindsVideo) {
         videoPlayerService.clear();
       }
+
+      localStore.toggleInited();
     };
-  }, [localStore]);
+  }, [localStore, props]);
 
   // Show inProgress overlay if load has started
   const inProgressOverlay = localStore.inProgress && <InProgress />;
@@ -84,27 +94,27 @@ const MindsVideo = observer((props: PropsType) => {
     );
 
   return (
-    <View
-      style={[
-        theme.flexContainer,
-        theme.backgroundBlack,
-        props.containerStyle,
-      ]}>
-      <TouchableWithoutFeedback
-        style={theme.flexContainer}
-        onPress={localStore.openControlOverlay}>
+    <TouchableWithoutFeedback
+      onPress={localStore.openControlOverlay}
+      style={theme.flexContainer}>
+      <View
+        style={[
+          theme.flexContainer,
+          theme.backgroundBlack,
+          props.containerStyle,
+        ]}>
         <ExpoVideo
           entity={props.entity}
           localStore={localStore}
           repeat={props.repeat}
           resizeMode={props.resizeMode}
         />
-      </TouchableWithoutFeedback>
-      {inProgressOverlay}
-      {errorOverlay}
-      {transCodingOverlay}
-      {controlsOverlay}
-    </View>
+        {inProgressOverlay}
+        {errorOverlay}
+        {transCodingOverlay}
+        {controlsOverlay}
+      </View>
+    </TouchableWithoutFeedback>
   );
 });
 
