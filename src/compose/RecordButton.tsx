@@ -1,4 +1,3 @@
-//@ts-nocheck
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated from 'react-native-reanimated';
@@ -7,20 +6,46 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { observer } from 'mobx-react';
 import Pulse from '../common/components/Pulse';
 
+type PropsType = {
+  store: any;
+  isPhoto?: boolean;
+  pulse: boolean;
+  size: number;
+  onPress: () => void;
+  onLongPress: () => void;
+  onPressOut: () => void;
+};
+
 /**
  * Animated record button
  *
  * @param {Object} props
  */
-export default observer(function (props) {
+export default observer(function (props: PropsType) {
   // base the animation on the recording prop
   const transition = useTransition(props.store.recording);
 
   const scale = bInterpolate(transition, 1, 0.4);
 
-  const internalSize = props.size - 6;
+  const internalSize = props.size - 10;
 
   const borderRadiusInternal = bInterpolate(transition, internalSize / 2, 10);
+
+  const containerStyle = {
+    width: props.size,
+    height: props.size,
+    borderRadius: props.size / 2,
+    borderWidth: 5,
+    borderColor: 'white',
+  };
+
+  const innerStyle = {
+    transform: [{ scale }],
+    backgroundColor: props.isPhoto ? '#868686' : '#E03C20',
+    borderRadius: borderRadiusInternal,
+    width: internalSize,
+    height: internalSize,
+  };
 
   return (
     <View style={styles.circleWrapper}>
@@ -29,25 +54,8 @@ export default observer(function (props) {
         onPress={props.onPress}
         onLongPress={props.onLongPress}
         onPressOut={props.onPressOut}
-        style={[
-          styles.circleWrapper,
-          {
-            width: props.size,
-            height: props.size,
-            borderRadius: props.size / 2,
-            borderWidth: 3,
-            borderColor: 'white',
-          },
-        ]}>
-        <Animated.View
-          style={{
-            transform: [{ scale }],
-            backgroundColor: '#E03C20',
-            borderRadius: borderRadiusInternal,
-            width: internalSize,
-            height: internalSize,
-          }}
-        />
+        style={[styles.circleWrapper, containerStyle]}>
+        <Animated.View style={innerStyle} />
       </TouchableOpacity>
     </View>
   );

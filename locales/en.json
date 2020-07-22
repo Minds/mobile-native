@@ -219,6 +219,7 @@
     "photo": "Photo",
     "video": "Video",
     "text": "Text",
+    "postOptions":"Post Options",
     "retake": "Retake",
     "noHashtags": "Sorry, Plus monetized posts must have hashtags.",
     "noExternalLinks": "Sorry, Plus monetized posts mustn't have external links."
