@@ -253,6 +253,7 @@ export default function (props) {
       this.nsfw = [];
       this.time_created = null;
       this.wire_threshold = DEFAULT_MONETIZE;
+      this.tags = [];
     },
     /**
      * On media
@@ -377,19 +378,18 @@ export default function (props) {
         return false;
       }
 
-      const paywall = this.wire_threshold && this.wire_threshold.min;
-
       let newPost = {
         message: this.text,
-        wire_threshold: featuresService.has('plus-2020')
-          ? this.wire_threshold || null
-          : paywall
-          ? this.wire_threshold.min
-          : null,
-        paywall,
         time_created:
           Math.floor(this.time_created / 1000) || Math.floor(Date.now() / 1000),
       };
+
+      if (this.paywalled) {
+        newPost.paywall = true;
+        newPost.wire_threshold = featuresService.has('plus-2020')
+          ? this.wire_threshold
+          : this.wire_threshold.min;
+      }
 
       if (this.title) {
         newPost.title = this.title;
@@ -460,6 +460,19 @@ export default function (props) {
     },
     clearWireThreshold() {
       this.wire_threshold = DEFAULT_MONETIZE;
+    },
+    get haveSupportTier() {
+      return (
+        this.wire_threshold &&
+        'support_tier' in this.wire_threshold &&
+        this.wire_threshold.support_tier.urn
+      );
+    },
+    get paywalled() {
+      return (
+        (featuresService.has('plus-2020') && this.haveSupportTier) ||
+        (this.wire_threshold && this.wire_threshold.min > 0)
+      );
     },
   };
 }
