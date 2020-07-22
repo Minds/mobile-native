@@ -2,9 +2,14 @@ import 'react-native';
 import React from 'react';
 import { Text, Dimensions, TouchableOpacity } from 'react-native';
 import { shallow } from 'enzyme';
+import MindsVideo from '../../../src/media/MindsVideo';
+import MindsVideoV2 from '../../../src/media/v2/mindsVideo/MindsVideo';
 import MediaView from '../../../src/common/components/MediaView';
 
 import { activitiesServiceFaker } from '../../../__mocks__/fake/ActivitiesFaker';
+
+jest.mock('../../../src/media/MindsVideo', () => 'MindsVideo');
+jest.mock('../../../src/media/v2/mindsVideo/MindsVideo', () => 'MindsVideoV2');
 
 describe('Media view component', () => {
   let user, comments, entity, screen;

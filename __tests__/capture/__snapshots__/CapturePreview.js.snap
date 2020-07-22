@@ -45,7 +45,7 @@ exports[`cature preview component should renders correctly for video 1`] = `
       }
     }
   >
-    <MindsVideo
+    <MindsVideoV2
       video={
         Object {
           "uri": "file://somevideo.mp4",

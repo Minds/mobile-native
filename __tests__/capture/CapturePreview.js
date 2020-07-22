@@ -3,11 +3,13 @@ import React from 'react';
 
 import CapturePreview from '../../src/capture/CapturePreview';
 import MindsVideo from '../../src/media/MindsVideo';
+import MindsVideoV2 from '../../src/media/v2/mindsVideo/MindsVideo';
 
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
 
 jest.mock('../../src/media/MindsVideo', () => 'MindsVideo');
+jest.mock('../../src/media/v2/mindsVideo/MindsVideo', () => 'MindsVideoV2');
 
 const imageObj = {
   uri: 'file://someimage.jpg',
