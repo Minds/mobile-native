@@ -18,7 +18,7 @@ const itemWidth = slideWidth + itemHorizontalMargin * 2;
 const itemHeight = { height: Math.floor(itemWidth * 0.55) };
 
 type PropsType = {
-  paymentmethods: Array<any>;
+  paymentmethods: Array<StripeCard>;
   onCardSelected: Function;
   onCardDeleted: Function;
 };
@@ -187,6 +187,7 @@ export default class StripeCardCarousel extends React.PureComponent<PropsType> {
         enableSnap={true}
         ref={this.carouselRef}
         data={this.props.paymentmethods}
+        //@ts-ignore
         renderItem={this._renderItem}
         inactiveSlideScale={0.94}
         inactiveSlideOpacity={0.7}
