@@ -179,6 +179,7 @@ exports[`blog card component should renders correctly 1`] = `
             }
           >
             <Image
+              borderRadius={17}
               onLoad={[Function]}
               style={
                 Object {
