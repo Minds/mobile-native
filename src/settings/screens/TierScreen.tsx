@@ -20,6 +20,9 @@ const createTierStore = () => {
   const store = {
     support_tier: { has_tokens: true, has_usd: true } as SupportTiersType,
     saving: false,
+    setName(name: string) {
+      this.support_tier.name = name;
+    },
     setDescription(description: string) {
       this.support_tier.description = description;
     },
@@ -42,7 +45,7 @@ const createTierStore = () => {
       let response;
       try {
         response = await supportTiersService.createPublic(
-          this.support_tier.description,
+          this.support_tier.name,
           this.support_tier.usd,
           this.support_tier.description,
           this.support_tier.has_usd,
@@ -99,17 +102,24 @@ const TierScreen = observer(({ route, navigation }: PropsType) => {
   return (
     <View style={theme.paddingTop3x}>
       <SettingInput
+        placeholder={i18n.t('name')}
+        onChangeText={localStore.setName}
+        value={localStore.support_tier.name}
+        testID="nameInput"
+        wrapperBorder={theme.borderTop}
+      />
+      <SettingInput
         placeholder={i18n.t('description')}
         onChangeText={localStore.setDescription}
         value={localStore.support_tier.description}
-        testID="paymentInput"
+        testID="descriptionInput"
         wrapperBorder={theme.borderTop}
       />
       <SettingInput
         placeholder={i18n.t('usd')}
         onChangeText={localStore.setUsd}
         value={localStore.support_tier.usd}
-        testID="paymentInput"
+        testID="usdInput"
         wrapperBorder={theme.borderTop}
         keyboardType="number-pad"
       />
