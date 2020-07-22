@@ -75,7 +75,7 @@ const ExpoVideo = observer(
       return (
         <ExplicitImage
           onLoadEnd={localStore.onLoadEnd}
-          onError={(msg) => localStore.onError(msg, entity)}
+          onError={(msg) => localStore.onError(msg)}
           source={image}
           entity={entity}
         />
