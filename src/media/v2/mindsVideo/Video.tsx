@@ -64,7 +64,7 @@ const ExpoVideo = observer(
           }}
           shouldPlay={true}
           isLooping={repeat || false}
-          resizeMode={resizeMode || 'cover'}
+          resizeMode={resizeMode || 'contain'}
           useNativeControls={false}
           style={theme.flexContainer}
           ref={playbackObject}
