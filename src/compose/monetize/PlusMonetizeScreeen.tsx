@@ -1,20 +1,16 @@
 import React, { useCallback } from 'react';
 import { View, Text, StyleSheet, Linking } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
-import Switch from 'react-native-switch-pro';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
 import { useLegacyStores } from '../../common/hooks/use-stores';
 import Button from '../../common/components/Button';
 import Wrapper from './common/Wrapper';
-import openUrlService from '../../common/services/open-url.service';
-import { MINDS_PRO } from '../../config/Config';
 import { CheckBox } from 'react-native-elements';
 import LabeledComponent from '../../common/components/LabeledComponent';
 import { AppStackParamList } from '../../navigation/NavigationTypes';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
-import Colors from '../../styles/Colors';
 import MindsSwitch from '../../common/components/MindsSwitch';
 
 type PlusMonetizeScreenRouteProp = RouteProp<AppStackParamList, 'PlusMonetize'>;
@@ -68,9 +64,6 @@ const PlusMonetizeScreen = observer(({ route, navigation }: PropsType) => {
     return (
       <Wrapper store={store} hideDone={true} onPressRight={save}>
         <View style={[theme.paddingVertical6x, theme.paddingHorizontal3x]}>
-          <Text style={[styles.title, theme.colorPrimaryText]}>
-            {i18n.t('monetize.subScreensTitle')}
-          </Text>
           <Text
             style={[
               theme.colorSecondaryText,
