@@ -104,6 +104,7 @@ export interface ThemedStyle {
   strikethrough: any;
   mindsSwitchBackgroundPrimary: any;
   mindsSwitchBackgroundSecondary: any;
+  positionAbsolute: any;
   [name: string]: any;
 }
 
@@ -208,6 +209,13 @@ export const buildStyle = (theme): ThemedStyle => ({
     alignItems: 'center',
     alignSelf: 'center',
     justifyContent: 'center',
+  },
+  positionAbsolute: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
   },
   colorWhite: {
     color: '#FFFFFF',

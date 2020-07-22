@@ -3,6 +3,9 @@ import React, { PureComponent } from 'react';
 import { StyleSheet, View, Image, Platform } from 'react-native';
 
 import MindsVideo from '../media/MindsVideo';
+import MindsVideoV2 from '../media/v2/mindsVideo/MindsVideo';
+
+import featuresService from '../common/services/features.service';
 
 /**
  * Capture preview
@@ -30,11 +33,13 @@ export default class CapturePreview extends PureComponent {
       case 'video/quicktime':
       case 'video/x-m4v':
       case 'video':
-        body = (
-          <View style={styles.preview}>
-            <MindsVideo video={{ uri: this.props.uri }} />
-          </View>
+        const MindsVideoComponent = featuresService.has('mindsVideo-2020') ? (
+          <MindsVideoV2 video={{ uri: this.props.uri }} />
+        ) : (
+          <MindsVideo video={{ uri: this.props.uri }} />
         );
+
+        body = <View style={styles.preview}>{MindsVideoComponent}</View>;
         break;
     }
 
