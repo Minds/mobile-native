@@ -177,7 +177,7 @@ exports[`blog view screen component should renders correctly 1`] = `
           ]
         }
       >
-        <ForwardRef
+        <FastImage
           resizeMode="cover"
           source={
             Object {
@@ -927,7 +927,7 @@ exports[`blog view screen component should renders correctly 1`] = `
             size={20}
           />
         </View>
-        <ForwardRef(_SafeAreaView)
+        <SafeAreaView
           style={
             Object {
               "left": 0,
@@ -943,7 +943,7 @@ exports[`blog view screen component should renders correctly 1`] = `
             raised={true}
             size={22}
           />
-        </ForwardRef(_SafeAreaView)>
+        </SafeAreaView>
       </View>
     }
     keyboardVerticalOffset={15}

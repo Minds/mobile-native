@@ -219,6 +219,7 @@
     "photo": "Photo",
     "video": "Video",
     "text": "Text",
+    "postOptions":"Post Options",
     "retake": "Retake",
     "noHashtags": "Sorry, Plus monetized posts must have hashtags.",
     "noExternalLinks": "Sorry, Plus monetized posts mustn't have external links."
@@ -577,7 +578,7 @@
       "a": "CONTENT ADMIN",
       "a1": "Reported Content",
       "b": "PAID CONTENT",
-      "b1": "Subscription Tier Management",
+      "b1": "Memberships",
       "b2": "Post Preview",
       "c": "ACCOUNT",
       "c2": "Delete Account",
@@ -821,10 +822,12 @@
     "none": "None",
     "options": "MONETIZATION OPTIONS",
     "plus": "Minds+",
+    "plusHeader": "Upgrade to Minds+",
     "plusTitle": "Unlock the power of Minds",
     "plusDescription": "Support Minds and unlock features such as earning revenue for your content, hiding ads, accessing exclusive content, receiving a badge and verifying your channel.",
     "plusJoin": "Join Minds Plus",
     "pro": "Minds Pro",
+    "proHeader": "Upgrade to Pro",
     "proTitle": "A new revenue model for creators",
     "proDescription": "Get paid for your traffic and referrals, launch your own website, receive multi-currency tips and subscription payments from fans and much more.",
     "proJoin": "Join Minds Pro",
@@ -841,7 +844,7 @@
       "always": "Always"
     },
     "membershipMonetize": {
-      "description": "Makes this post available exclusivley to one of your membership tiers.",
+      "description": "Make this post available exclusivley to one of your membership tiers.",
       "noTiers": "You don’t have any Membership Tiers",
       "tiersDescription": "Setting up your tiers is quick and easy. Start earning extra revenue for your content today.",
       "setup": "Setup membersip tiers",

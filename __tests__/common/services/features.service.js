@@ -12,6 +12,7 @@ describe('Feature service', () => {
       discovery: true,
       wallet: true,
       'plus-2020': true,
+      'mindsVideo-2020': true,
     };
     expect(service.features).toEqual(features);
     expect(service.has('crypto')).toEqual(true);

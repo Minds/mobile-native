@@ -1,4 +1,7 @@
+const expoPreset = require('jest-expo/jest-preset');
+
 const config = {
+  ...expoPreset,
   automock: false,
   cacheDirectory: '.jest/cache',
   testRegex: './__tests__/.*.js$',

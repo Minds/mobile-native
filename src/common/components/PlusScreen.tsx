@@ -114,7 +114,9 @@ const Options = observer(({ options, localStore }: PropsOptionType) => {
             localStore.setSelectedOption(options[0]);
             localStore.setMonthly(false);
           },
-          title: `Annually   ${options[0]}`,
+          title: `Annually   ${localStore.method === 'usd' ? '$' : ''}${
+            options[0]
+          }`,
           icon:
             localStore.selectedOption === options[0] ? checkIcon : undefined,
           noIcon: localStore.selectedOption !== options[0],
@@ -126,7 +128,9 @@ const Options = observer(({ options, localStore }: PropsOptionType) => {
             localStore.setSelectedOption(options[1]);
             localStore.setMonthly(true);
           },
-          title: `Monthly   ${options[1]} / month`,
+          title: `Monthly   ${localStore.method === 'usd' ? '$' : ''}${
+            options[1]
+          } / month`,
           icon:
             localStore.selectedOption === options[1] ? checkIcon : undefined,
           noIcon: localStore.selectedOption !== options[1],

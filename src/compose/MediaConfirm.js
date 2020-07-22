@@ -7,6 +7,8 @@ import i18n from '../common/services/i18n.service';
 import ImagePreview from './ImagePreview';
 import { useSafeArea } from 'react-native-safe-area-context';
 import MindsVideo from '../media/MindsVideo';
+import MindsVideoV2 from '../media/v2/mindsVideo/MindsVideo';
+import featuresService from '../common/services/features.service';
 
 /**
  * Media confirm screen
@@ -16,41 +18,31 @@ export default function (props) {
   const theme = ThemedStyles.style;
 
   const insets = useSafeArea();
-  const menuStyle = { paddingTop: insets.top || 0 };
+  const cleanTop = { paddingTop: insets.top || 0 };
+  const cleanBottom = { height: insets.bottom + 50 };
 
   const isImage = props.store.mediaToConfirm.type.startsWith('image');
 
+  const previewComponent = isImage ? (
+    <ImagePreview image={props.store.mediaToConfirm} />
+  ) : featuresService.has('mindsVideo-2020') ? (
+    <MindsVideoV2
+      video={{ uri: props.store.mediaToConfirm.uri }}
+      pause={false}
+      repeat={true}
+      containerStyle={{ marginBottom: insets.bottom }}
+    />
+  ) : (
+    <MindsVideo
+      video={{ uri: props.store.mediaToConfirm.uri }}
+      pause={false}
+      repeat={true}
+      containerStyle={{ marginBottom: insets.bottom }}
+    />
+  );
+
   return (
     <View style={theme.flexContainer}>
-      <View style={[styles.topBar, menuStyle]}>
-        <MIcon
-          size={45}
-          name="chevron-left"
-          style={[styles.backIcon, theme.colorSecondaryText]}
-          onPress={props.store.rejectImage}
-        />
-        <Text
-          onPress={props.store.rejectImage}
-          style={[
-            theme.fontXL,
-            theme.colorSecondaryText,
-            theme.fontSemibold,
-            theme.flexContainer,
-            styles.text,
-          ]}>
-          {i18n.t('capture.retake')}
-        </Text>
-        <Text
-          onPress={props.store.acceptMedia}
-          style={[
-            theme.fontXL,
-            theme.colorSecondaryText,
-            theme.fontSemibold,
-            styles.text,
-          ]}>
-          {i18n.t('confirm')}
-        </Text>
-      </View>
       {isImage ? (
         <ImagePreview image={props.store.mediaToConfirm} />
       ) : (
@@ -61,6 +53,26 @@ export default function (props) {
           containerStyle={{ marginBottom: insets.bottom }}
         />
       )}
+      <View style={[styles.bottomBar, cleanBottom, theme.backgroundSecondary]}>
+        <Text
+          onPress={props.store.acceptMedia}
+          style={[
+            theme.fontXL,
+            theme.colorSecondaryText,
+            theme.fontSemibold,
+            theme.marginRight2x,
+            styles.text,
+          ]}>
+          {i18n.t('confirm')}
+        </Text>
+      </View>
+      {previewComponent}
+      <MIcon
+        size={45}
+        name="chevron-left"
+        style={[styles.backIcon, theme.colorWhite, cleanTop]}
+        onPress={props.store.rejectImage}
+      />
     </View>
   );
 }
@@ -69,17 +81,20 @@ const styles = StyleSheet.create({
   text: {
     paddingRight: 10,
     textAlignVertical: 'center',
-    // lineHeight: Platform.select({ ios: 17, android: 27 }),
   },
-  topBar: {
+  bottomBar: {
+    position: 'absolute',
+    bottom: 0,
     width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'flex-end',
   },
   backIcon: {
-    shadowOpacity: 2,
-    textShadowRadius: 4,
-    textShadowOffset: { width: 0, height: 0 },
+    position: 'absolute',
+    textShadowColor: 'rgba(0, 0, 0, 0.35)',
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 2.22,
     elevation: 4,
   },
 });
