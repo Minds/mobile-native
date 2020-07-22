@@ -100,8 +100,8 @@ const ChannelButtons = observer((props: PropsType) => {
         <Icon
           raised
           reverse
-          name="ios-more"
-          type="ionicon"
+          name="more-horiz"
+          type="material"
           color={ThemedStyles.getColor('secondary_background')}
           reverseColor={ThemedStyles.getColor('primary_text')}
           size={15}
