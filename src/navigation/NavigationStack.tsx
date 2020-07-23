@@ -83,6 +83,7 @@ import DeleteChannelScreen from '../settings/screens/DeleteChannelScreen';
 import DeactivateChannelScreen from '../settings/screens/DeactivateChannelScreen';
 import LanguageScreen from '../settings/screens/LanguageScreen';
 import NSFWScreen from '../settings/screens/NSFWScreen';
+import MessengerSettingsScreen from '../settings/screens/MessengerScreen';
 import TFAScreen from '../settings/screens/TFAScreen';
 import DevicesScreen from '../settings/screens/DevicesScreen';
 import BillingScreen from '../settings/screens/BillingScreen';
@@ -153,6 +154,10 @@ const AccountScreenOptions = (navigation) => [
   {
     title: i18n.t('settings.accountOptions.5'),
     onPress: () => navigation.push('NSFWScreen'),
+  },
+  {
+    title: i18n.t('settings.accountOptions.6'),
+    onPress: () => navigation.push('MessengerSettingsScreen'),
   },
 ];
 
@@ -507,6 +512,11 @@ const AppStack = function () {
         name="NSFWScreen"
         component={NSFWScreen}
         options={{ title: i18n.t('settings.accountOptions.5') }}
+      />
+      <AppStackNav.Screen
+        name="MessengerSettingsScreen"
+        component={MessengerSettingsScreen}
+        options={{ title: i18n.t('settings.accountOptions.6') }}
       />
       <AppStackNav.Screen
         name="TFAScreen"

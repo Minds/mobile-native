@@ -53,9 +53,10 @@ export default function () {
           CS.paddingVertical3x,
           CS.paddingHorizontal3x,
           CS.borderPrimary,
-          CS.borderHair,
+          CS.borderHairTop,
+          CS.borderHairBottom,
         ]}>
-        <Text style={[CS.marginLeft, CS.colorSecondaryText, CS.fontM]}>
+        <Text style={[CS.marginLeft, CS.colorSecondaryText, CS.fontL]}>
           {i18n.t('settings.showMatureContent')}
         </Text>
         <Switch value={matureContent} onSyncPress={save}></Switch>
