@@ -70,7 +70,7 @@ const renderTiers = (
                 theme.paddingTop3x,
                 theme.paddingBottom3x,
               ]}>
-              <Text style={theme.colorPrimaryText}>{tier.description}</Text>
+              <Text style={theme.colorPrimaryText}>{tier.name}</Text>
               <Text
                 style={theme.colorSecondaryText}>{`$${tier.usd}+ / mth`}</Text>
             </View>
