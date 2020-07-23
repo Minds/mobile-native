@@ -116,11 +116,6 @@ class NotificationsScreen extends Component {
     return (
       <View style={CS.flexContainer}>
         <OnFocus onFocus={this.onFocus} />
-        <Topbar
-          title={i18n.t('tabTitleNotifications')}
-          navigation={this.props.navigation}
-          refreshFeed={this.onFocus}
-        />
         <FlatList
           data={list.entities.slice()}
           renderItem={this.renderRow}

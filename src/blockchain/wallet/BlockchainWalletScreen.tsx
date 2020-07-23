@@ -1,6 +1,6 @@
 //@ts-nocheck
 import React, { Component } from 'react';
-import { View, Alert, StyleSheet } from 'react-native';
+import { View, Alert } from 'react-native';
 
 import { observer, inject } from 'mobx-react';
 

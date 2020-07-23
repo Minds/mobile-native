@@ -40,7 +40,7 @@ const TokensOverview = observer(
       },
       {
         title: i18n.t('wallet.leanMore'),
-        onPress: () => navigation.push('LearnMoreScreen'),
+        onPress: () => navigation.push('LearnMoreScreen', {}),
         noIcon: true,
       },
     ];

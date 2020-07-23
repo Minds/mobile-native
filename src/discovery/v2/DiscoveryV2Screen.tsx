@@ -72,11 +72,6 @@ export const DiscoveryV2Screen = observer((props: Props) => {
 
   return (
     <View style={ThemedStyles.style.flexContainer}>
-      <Topbar
-        title={i18n.t('tabTitleDiscovery')}
-        navigation={navigation}
-        style={[CS.shadow]}
-      />
       <View style={ThemedStyles.style.backgroundSecondary}>
         <TopbarTabbar
           current={store.activeTabId}

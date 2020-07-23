@@ -33,8 +33,9 @@ const styles = StyleSheet.create({
   backIcon: {
     position: 'absolute',
     left: 0,
-    shadowOpacity: 0.4,
-    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    shadowOffset: { width: 1, height: 1 },
     elevation: 4,
   },
 });

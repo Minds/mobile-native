@@ -1,5 +1,6 @@
 //@ts-nocheck
-export default colors = {
+
+const colors = {
   primary: '#4690D6',
   secondary: '#FFDD63',
   tertiary: '#4C9EB1',
@@ -15,6 +16,8 @@ export default colors = {
   switchCircle: '#f6f7f5',
   switchBackground: '#3484f5',
 };
+
+export default colors;
 
 export const LIGHT_THEME = {
   name: 'LIGHT',

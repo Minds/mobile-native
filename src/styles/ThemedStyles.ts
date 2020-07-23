@@ -7,6 +7,7 @@ import { DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { buildStyle } from './Style';
 
 import type { ThemedStyle } from './Style';
+import RNBootSplash from 'react-native-bootsplash';
 
 /**
  * ThemedStylesStore
@@ -42,8 +43,12 @@ class ThemedStylesStore {
    */
   @action
   setDark() {
+    RNBootSplash.show({ duration: 150 });
     this.theme = 1;
     this.generateStyle();
+    setTimeout(() => {
+      RNBootSplash.hide({ duration: 150 });
+    }, 1000);
   }
 
   /**
@@ -51,8 +56,12 @@ class ThemedStylesStore {
    */
   @action
   setLight() {
+    RNBootSplash.show({ duration: 150 });
     this.theme = 0;
     this.generateStyle();
+    setTimeout(() => {
+      RNBootSplash.hide({ duration: 150 });
+    }, 1000);
   }
 
   /**

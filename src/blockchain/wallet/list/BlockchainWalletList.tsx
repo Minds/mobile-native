@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 import { Text, View, FlatList, StyleSheet } from 'react-native';
 
 import { observer, inject } from 'mobx-react';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import NavigationService from '../../../navigation/NavigationService';
 
@@ -12,6 +11,7 @@ import Touchable from '../../../common/components/Touchable';
 
 import BlockchainWalletListItem from './BlockchainWalletListItem';
 import i18n from '../../../common/services/i18n.service';
+import colors from '../../../styles/Colors';
 
 // Class
 

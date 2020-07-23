@@ -56,20 +56,21 @@ class ApiService {
       }
     }
 
-    let data;
+    let data, text;
 
     try {
       // Convert from JSON
-      data = await response.json();
+      text = await response.text();
+      data = JSON.parse(text);
     } catch (err) {
       if (response.ok && !__DEV__) {
         Sentry.captureMessage(
-          `Server Error: ${response.url}, STATUS: ${
-            response.status
-          } STATUSTEXT: ${response.statusText}\n${response.text()}`,
+          `Server Error: ${response.url}, STATUS: ${response.status}\n${text}`,
         );
+      } else {
+        console.log('FAILED API CALL:', url, text);
       }
-      throw new UserError(i18n.t('errorMessage'));
+      throw new ApiError(i18n.t('errorMessage'));
     }
 
     if (isApiForbidden(response) && data.must_verify) {

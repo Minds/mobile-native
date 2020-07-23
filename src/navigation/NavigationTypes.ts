@@ -8,10 +8,13 @@ import { ComposeStoreType } from '../compose/useComposeStore';
 import type ActivityModel from '../newsfeed/ActivityModel';
 import { SupportTiersType } from '../wire/WireTypes';
 
-export type MainSwiperParamList = {
-  Capture: {};
+export type DrawerParamList = {
   Tabs: {};
-  Messenger: {};
+  PlusDiscoveryScreen: {};
+  Wallet: {};
+  BoostConsole: {};
+  GroupsList: {};
+  Settings: {};
 };
 
 export type RootStackParamList = {
@@ -53,8 +56,26 @@ export type AppStackParamList = {
   ActivityFullScreenNav: {};
   Newsfeed: {};
   Capture: {};
-  StackCapture: {};
   Main: {};
+  Account: {};
+  Security: {};
+  Billing: {};
+  Other: {};
+  SettingsEmail: {};
+  SettingsPassword: {};
+  SettingsNotifications: {};
+  BlockedChannels: {};
+  TierManagementScreen: {};
+  DeleteChannel: {};
+  DeactivateChannel: {};
+  PaymentMethods: {};
+  RecurringPayments: {};
+  ReportedContent: {};
+  AppInfo: {};
+  LanguageScreen: {};
+  NSFWScreen: {};
+  TFAScreen: {};
+  DevicesScreen: {};
   TagSelector: {};
   NsfwSelector: {};
   ScheduleSelector: {};
@@ -89,11 +110,8 @@ export type AppStackParamList = {
   DiscoveryFeed: {};
   DiscoverySearch: { query: string };
   Subscribers: {};
-  GroupsList: {};
   GroupView: {};
-  Wallet: {};
   BlogList: {};
-  BoostConsole: {};
   BlogView: {};
   WireFab: {};
   WalletHistory: {};
@@ -126,7 +144,6 @@ export type AppStackParamList = {
     onComplete: Function;
     pro?: boolean;
   };
-  PlusDiscoveryScreen: {};
   JoinMembershipScreen: {
     support_tier: SupportTiersType;
     entity: ActivityModel;
