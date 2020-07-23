@@ -108,7 +108,7 @@ export type AppStackParamList = {
   Activity: {};
   Conversation: {};
   DiscoveryFeed: {};
-  DiscoverySearch: { query: string };
+  DiscoverySearch: { query: string; plus?: boolean };
   Subscribers: {};
   GroupView: {};
   BlogList: {};

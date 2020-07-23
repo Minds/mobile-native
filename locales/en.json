@@ -266,7 +266,9 @@
     "videos": "Videos",
     "images": "Images",
     "blogs": "Blogs",
-    "groups": "Groups"
+    "groups": "Groups",
+    "addTags": "Add tags to personalize your feed",
+    "selectTags": "Select tags"
   },
   "groups": {
     "ongoingGathering": "Ongoing gathering",

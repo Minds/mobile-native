@@ -13,6 +13,7 @@ import { TDiscoveryV2Tabs } from './DiscoveryV2Store';
 import TopbarTabbar from '../../common/components/topbar-tabbar/TopbarTabbar';
 import { DiscoveryTagsList } from './tags/DiscoveryTagsList';
 import { DrawerParamList } from '../../navigation/NavigationTypes';
+import i18n from '../../common/services/i18n.service';
 
 type PlusDiscoveryScreenRouteProp = RouteProp<
   DrawerParamList,
@@ -37,6 +38,8 @@ const PlusDiscoveryScreen = observer(({ navigation }: PropsType) => {
     switch (store.activeTabId) {
       case 'foryou':
         return <DiscoveryTrendsList plus={true} />;
+      case 'your-tags':
+        return <DiscoveryTagsList type="your" plus={true} />;
       case 'trending-tags':
         return <DiscoveryTagsList type="trending" plus={true} />;
       default:
@@ -54,8 +57,9 @@ const PlusDiscoveryScreen = observer(({ navigation }: PropsType) => {
             store.setTabId(tabId as TDiscoveryV2Tabs);
           }}
           tabs={[
-            { id: 'foryou', title: 'Just for you' },
-            { id: 'trending-tags', title: 'Discovery by Tags' },
+            { id: 'foryou', title: i18n.t('discovery.justForYou') },
+            { id: 'your-tags', title: i18n.t('discovery.yourTags') },
+            { id: 'trending-tags', title: i18n.t('discovery.trending') },
           ]}
         />
       </View>

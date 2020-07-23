@@ -44,6 +44,7 @@ export const DiscoveryTagsList = observer((props: Props) => {
   const onPress = (data): void => {
     navigation.push('DiscoverySearch', {
       query: '#' + data.value,
+      plus: props.plus,
     });
   };
 
