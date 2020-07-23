@@ -43,16 +43,7 @@ export default function (props) {
 
   return (
     <View style={theme.flexContainer}>
-      {isImage ? (
-        <ImagePreview image={props.store.mediaToConfirm} />
-      ) : (
-        <MindsVideo
-          video={{ uri: props.store.mediaToConfirm.uri }}
-          pause={false}
-          repeat={true}
-          containerStyle={{ marginBottom: insets.bottom }}
-        />
-      )}
+      {previewComponent}
       <View style={[styles.bottomBar, cleanBottom, theme.backgroundSecondary]}>
         <Text
           onPress={props.store.acceptMedia}
@@ -66,7 +57,6 @@ export default function (props) {
           {i18n.t('confirm')}
         </Text>
       </View>
-      {previewComponent}
       <MIcon
         size={45}
         name="chevron-left"
