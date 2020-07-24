@@ -5,7 +5,7 @@ import ThemedStyles from '../../../styles/ThemedStyles';
 
 export type MenuItemPropsType = {
   item: {
-    onPress: () => void;
+    onPress?: () => void;
     title: string | JSX.Element;
     icon?:
       | {
