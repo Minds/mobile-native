@@ -96,8 +96,8 @@ export const DiscoverySearchScreen = observer((props: Props) => {
   });
 
   useEffect(() => {
-    store.setQuery(props.route.params.query);
-  }, [props.route.params.query, store]);
+    store.setQuery(props.route.params.query, props.route.params.plus);
+  }, [props.route.params.query, props.route.params.plus, store]);
 
   return (
     <View style={theme.flexContainer}>

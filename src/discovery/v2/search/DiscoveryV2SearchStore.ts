@@ -16,6 +16,7 @@ export default class DiscoveryV2SearchStore {
     period: 'relevant',
     algorithm: this.filter,
     q: this.query,
+    plus: false,
   };
 
   constructor() {
@@ -29,9 +30,10 @@ export default class DiscoveryV2SearchStore {
   }
 
   @action
-  setQuery = (query: string) => {
+  setQuery = (query: string, plus: boolean | undefined) => {
     this.query = query;
     this.params.q = query;
+    this.params.plus = !!plus;
     this.listStore.clear();
     this.refresh();
   };

@@ -118,10 +118,10 @@ export default class DiscoveryV2Store {
   }
 
   @action
-  async refreshTrends(): Promise<void> {
+  async refreshTrends(plus: boolean | undefined = undefined): Promise<void> {
     this.refreshing = true;
     this.setTrends([]);
-    await this.loadTrends();
+    await this.loadTrends(plus);
     this.refreshing = false;
   }
 

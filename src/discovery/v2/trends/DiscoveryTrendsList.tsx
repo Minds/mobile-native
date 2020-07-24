@@ -1,11 +1,13 @@
 import { observer } from 'mobx-react';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, FlatList } from 'react-native';
 import { DiscoveryTrendsListItem } from './DiscoveryTrendsListItem';
 import { ComponentsStyle } from '../../../styles/Components';
 import { useDiscoveryV2Store } from '../DiscoveryV2Context';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import i18n from '../../../common/services/i18n.service';
+import Button from '../../../common/components/Button';
+import DiscoveryTagsManager from '../tags/DiscoveryTagsManager';
 
 type PropsType = {
   plus?: boolean;
@@ -18,8 +20,15 @@ export const DiscoveryTrendsList = observer(({ plus }: PropsType) => {
   const theme = ThemedStyles.style;
   const discoveryV2 = useDiscoveryV2Store();
   let listRef = useRef<FlatList<any>>(null);
+  const [showManageTags, setShowManageTags] = useState(false);
+
+  const closeManageTags = () => {
+    setShowManageTags(false);
+    discoveryV2.refreshTrends();
+  };
 
   useEffect(() => {
+    discoveryV2.loadTags(plus);
     discoveryV2.loadTrends(plus);
   }, [discoveryV2, plus]);
 
@@ -33,14 +42,14 @@ export const DiscoveryTrendsList = observer(({ plus }: PropsType) => {
     return discoveryV2.loading || discoveryV2.refreshing ? (
       <View />
     ) : (
-      <View>
-        <View style={ComponentsStyle.emptyComponentContainer}>
-          <View style={ComponentsStyle.emptyComponent}>
-            <Text style={ComponentsStyle.emptyComponentMessage}>
-              {i18n.t('discovery.nothingToSee')}
-            </Text>
-          </View>
-        </View>
+      <View style={[ComponentsStyle.emptyComponentContainer, theme.flexColumn]}>
+        <Text style={ComponentsStyle.emptyComponentMessage}>
+          {i18n.t('discovery.addTags')}
+        </Text>
+        <Button
+          text={i18n.t('discovery.selectTags')}
+          onPress={() => setShowManageTags(true)}
+        />
       </View>
     );
   };
@@ -50,7 +59,7 @@ export const DiscoveryTrendsList = observer(({ plus }: PropsType) => {
   };
 
   const onRefresh = () => {
-    discoveryV2.refreshTrends();
+    discoveryV2.refreshTrends(plus);
   };
 
   /**
@@ -63,9 +72,14 @@ export const DiscoveryTrendsList = observer(({ plus }: PropsType) => {
    */
   return (
     <View style={theme.flexContainer}>
+      <DiscoveryTagsManager
+        show={showManageTags}
+        onCancel={closeManageTags}
+        onDone={closeManageTags}
+      />
       <FlatList
         ref={listRef}
-        data={discoveryV2.trends.slice()}
+        data={discoveryV2.trends}
         onRefresh={onRefresh}
         refreshing={discoveryV2.loading}
         ListEmptyComponent={EmptyPartial}
