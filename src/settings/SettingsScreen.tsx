@@ -43,10 +43,10 @@ export default function ({ navigation }) {
       title: i18n.t('settings.security'),
       onPress: navToSecurity,
     },
-    /*{
+    {
       title: i18n.t('settings.billing'),
       onPress: navToBilling,
-    },*/
+    },
     {
       title: i18n.t('settings.other'),
       onPress: navToOther,

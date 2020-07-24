@@ -534,6 +534,7 @@
     "sessionsOpened": "You currently have {{amount}} opened sessions",
     "closeSessions": "CLOSE ALL SESSIONS",
     "subscriptionListEmpty": "You don't have any recurring subscription",
+    "recurringPaymentsDescription": "Track recurring payments you make to support other channels.",
     "enterDark": "Enter Dark Mode",
     "enterLight": "Enter Light Mode",
     "tokenTiers": "TOKEN TIERS",

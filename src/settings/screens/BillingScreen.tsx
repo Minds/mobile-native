@@ -1,7 +1,7 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import { View, StyleSheet, Text } from 'react-native';
+import { View, Text } from 'react-native';
 
 import i18n from '../../common/services/i18n.service';
 import StripeCardSelector from '../../wire/methods/StripeCardSelector';
@@ -22,6 +22,7 @@ export default class BillingScreen extends Component {
           theme.borderTop,
           theme.borderBottom,
           theme.borderPrimary,
+          theme.paddingBottom3x,
         ]}>
         <Text
           style={[
