@@ -1,4 +1,4 @@
-import { CurrencyType } from "../../types/Payment";
+import { CurrencyType } from '../../types/Payment';
 
 export type TokensOptions = 'overview' | 'transactions' | 'settings';
 export type UsdOptions = 'earnings' | 'transactions' | 'settings';
