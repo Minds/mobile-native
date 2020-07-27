@@ -37,7 +37,6 @@ import { DiscoverySearchScreen } from '../discovery/v2/search/DiscoverySearchScr
 import Gathering from '../gathering/Gathering';
 import EmailConfirmationScreen from '../onboarding/EmailConfirmationScreen';
 import ThemedStyles from '../styles/ThemedStyles';
-import MessengerScreen from '../messenger/MessengerScreen';
 import i18n from '../common/services/i18n.service';
 import ComposeScreen from '../compose/ComposeScreen';
 import TagSelector from '../compose/TagSelector';
@@ -91,6 +90,8 @@ import ReportedContentScreen from '../report/ReportedContentScreen';
 import AppInfoScreen from '../settings/screens/AppInfoScreen';
 import WalletScreen from '../wallet/v2/WalletScreen';
 import { Platform } from 'react-native';
+
+const isIos = Platform.OS === 'ios';
 
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 const captureOptions = {
@@ -167,16 +168,26 @@ const SecurityScreenOptions = (navigation) => [
   },
 ];
 
-const BillingScreenOptions = (navigation) => [
-  {
-    title: i18n.t('settings.billingOptions.1'),
-    onPress: () => navigation.push('PaymentMethods'),
-  },
-  {
-    title: i18n.t('settings.billingOptions.2'),
-    onPress: () => navigation.push('RecurringPayments'),
-  },
-];
+let BillingScreenOptions;
+if (!isIos) {
+  BillingScreenOptions = (navigation) => [
+    {
+      title: i18n.t('settings.billingOptions.1'),
+      onPress: () => navigation.push('PaymentMethods'),
+    },
+    {
+      title: i18n.t('settings.billingOptions.2'),
+      onPress: () => navigation.push('RecurringPayments'),
+    },
+  ];
+} else {
+  BillingScreenOptions = (navigation) => [
+    {
+      title: i18n.t('settings.billingOptions.2'),
+      onPress: () => navigation.push('RecurringPayments'),
+    },
+  ];
+}
 
 const WalletOptions = () => ({
   title: i18n.t('wallet.wallet'),

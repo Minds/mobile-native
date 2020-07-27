@@ -6,7 +6,12 @@ import toFriendlyCrypto from '../../common/helpers/toFriendlyCrypto';
 import logService from '../../common/services/log.service';
 import web3Service from '../../blockchain/services/Web3Service';
 import number from '../../common/helpers/number';
-import type { StripeDetails, Wallet, TokensOptions } from './WalletTypes';
+import type {
+  StripeDetails,
+  Wallet,
+  TokensOptions,
+  Earnings,
+} from './WalletTypes';
 import BlockchainWalletService from '../../blockchain/wallet/BlockchainWalletService';
 import { UserError } from '../../common/UserError';
 import i18n from '../../common/services/i18n.service';
@@ -88,6 +93,10 @@ const createWalletStore = () => ({
       wire: 0,
     },
   },
+  usdEarnings: [] as Earnings[],
+  usdPayouts: [],
+  usdEarningsTotal: 0,
+  usdPayoutsTotals: 0,
   /**
    * Set currency tab
    * @param currency
@@ -305,6 +314,45 @@ const createWalletStore = () => ({
     } catch (e) {
       logService.exception(e);
       return false;
+    }
+  },
+  async loadEarnings(from, to) {
+    try {
+      const response = <any>await api.get(
+        'api/v3/monetization/earnings/overview',
+        {
+          from: from,
+          to: to,
+        },
+      );
+
+      if (response.earnings) {
+        this.usdEarnings = response.earnings;
+      }
+
+      if (response.payouts) {
+        this.usdPayouts = response.payouts;
+      }
+
+      this.loadEarningsTotals();
+    } catch (e) {
+      logService.exception(e);
+      return false;
+    }
+  },
+  loadEarningsTotals() {
+    const SUM_CENTS = (arr): number => {
+      return arr.reduce((acc, item) => {
+        return acc + item.amount_cents;
+      }, 0);
+    };
+
+    if (this.usdEarnings.length > 0) {
+      this.usdEarningsTotal = SUM_CENTS(this.usdEarnings);
+    }
+
+    if (this.usdPayouts.length > 0) {
+      this.usdPayoutsTotals = SUM_CENTS(this.usdPayouts);
     }
   },
 });

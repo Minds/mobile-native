@@ -1,5 +1,7 @@
+import { CurrencyType } from "../../types/Payment";
+
 export type TokensOptions = 'overview' | 'transactions' | 'settings';
-export type UsdOptions = 'transactions' | 'settings';
+export type UsdOptions = 'earnings' | 'transactions' | 'settings';
 
 export interface StripeDetails {
   bankAccount?: any;
@@ -47,4 +49,15 @@ export interface Wallet {
   eth: WalletCurrency;
   btc: WalletCurrency;
   limits: WalletLimits;
+}
+
+export interface BaseEarning {
+  amount_cents: number;
+  amount_usd: number;
+  currency: CurrencyType;
+  id: string;
+}
+
+export interface Earnings extends BaseEarning {
+  items: BaseEarning[];
 }

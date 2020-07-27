@@ -38,3 +38,23 @@ export type FeedType = {
 };
 
 export type LockType = 'members' | 'paywall' | 'plus';
+
+export interface Filter {
+  id: string;
+  label: string;
+  options: Option[];
+  description?: string;
+  expanded?: boolean;
+}
+
+export interface Option {
+  id: string;
+  label: string;
+  available?: boolean;
+  selected?: boolean;
+  description?: string;
+  interval?: string;
+  comparison_interval?: number;
+  from_ts_ms?: number;
+  from_ts_iso?: string;
+}

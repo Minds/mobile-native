@@ -664,7 +664,8 @@
       "leaveDescription": "For security reasons, you don't be able to rejoin the monetization program",
       "leaveButton": "Leave Monetization Program",
       "confirmLeave": "Are you sure? You won't be able to rejoin.",
-      "sure": "Yes, I'm sure"
+      "sure": "Yes, I'm sure",
+      "earnings": "Earnings"
     },
     "transactions": {
       "transaction":"Transaction",

@@ -1,6 +1,13 @@
 import React, { Fragment, useCallback } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
-import { View, StyleSheet, ScrollView, Text, Alert } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  Text,
+  Alert,
+  Platform,
+} from 'react-native';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { useSafeArea } from 'react-native-safe-area-context';
 import HeaderComponent from '../../../common/components/HeaderComponent';
@@ -16,6 +23,8 @@ import Button from '../../../common/components/Button';
 import i18n from '../../../common/services/i18n.service';
 import { useLegacyStores } from '../../../common/hooks/use-stores';
 import { UserError } from '../../../common/UserError';
+
+const isIos = Platform.OS === 'ios';
 
 type payMethod = 'tokens' | 'usd';
 type JoinMembershipScreenRouteProp = RouteProp<
@@ -35,7 +44,7 @@ type PropsType = {
 const createJoinMembershipStore = () => {
   const store = {
     card: '' as any,
-    payMethod: 'usd' as payMethod,
+    payMethod: 'tokens' as payMethod,
     loading: false,
     setLoading(loading) {
       this.loading = loading;
@@ -188,19 +197,21 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
           <HeaderComponent user={owner} />
           <UserNamesComponent user={owner} />
         </View>
-        <View style={[theme.rowJustifyStart, theme.paddingLeft4x]}>
-          <Text style={switchTextStyle}>{'USD'}</Text>
-          <Switch
-            value={store.payMethod === 'tokens'}
-            onSyncPress={store.setPayMethod}
-            circleColorActive={Colors.switchCircle}
-            circleColorInactive={Colors.switchCircle}
-            backgroundActive={Colors.switchBackground}
-            backgroundInactive={Colors.switchBackground}
-            style={theme.marginHorizontal2x}
-          />
-          <Text style={switchTextStyle}>{'Tokens'}</Text>
-        </View>
+        {!isIos && (
+          <View style={[theme.rowJustifyStart, theme.paddingLeft4x]}>
+            <Text style={switchTextStyle}>{'USD'}</Text>
+            <Switch
+              value={store.payMethod === 'tokens'}
+              onSyncPress={store.setPayMethod}
+              circleColorActive={Colors.switchCircle}
+              circleColorInactive={Colors.switchCircle}
+              backgroundActive={Colors.switchBackground}
+              backgroundInactive={Colors.switchBackground}
+              style={theme.marginHorizontal2x}
+            />
+            <Text style={switchTextStyle}>{'Tokens'}</Text>
+          </View>
+        )}
         <View style={theme.padding4x}>
           <Text
             style={[

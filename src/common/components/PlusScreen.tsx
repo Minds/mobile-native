@@ -6,6 +6,7 @@ import {
   View,
   Text,
   ScrollView,
+  Platform,
 } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { useSafeArea } from 'react-native-safe-area-context';
@@ -28,6 +29,8 @@ import mindsService from '../services/minds.service';
 import UserModel from '../../channel/UserModel';
 import WireService from '../../wire/WireService';
 
+const isIos = Platform.OS === 'ios';
+
 const bannerAspectRatio = 1.7;
 type payMethod = 'tokens' | 'usd';
 
@@ -35,7 +38,7 @@ const createPlusStore = () => {
   const store = {
     loaded: false,
     loading: false,
-    method: 'usd' as payMethod,
+    method: 'tokens' as payMethod,
     card: '' as any,
     settings: false as boolean | any,
     selectedOption: false as boolean | any,
@@ -116,7 +119,7 @@ const Options = observer(({ options, localStore }: PropsOptionType) => {
           },
           title: `Annually   ${localStore.method === 'usd' ? '$' : ''}${
             options[0]
-          }`,
+          } ${localStore.method === 'tokens' ? 'Tokens' : ''}`,
           icon:
             localStore.selectedOption === options[0] ? checkIcon : undefined,
           noIcon: localStore.selectedOption !== options[0],
@@ -130,7 +133,7 @@ const Options = observer(({ options, localStore }: PropsOptionType) => {
           },
           title: `Monthly   ${localStore.method === 'usd' ? '$' : ''}${
             options[1]
-          } / month`,
+          } ${localStore.method === 'tokens' ? 'Tokens' : ''} / month`,
           icon:
             localStore.selectedOption === options[1] ? checkIcon : undefined,
           noIcon: localStore.selectedOption !== options[1],
@@ -218,26 +221,28 @@ const PlusScreen = observer(({ navigation, route }: PropsType) => {
           </Text>
         </View>
       </ImageBackground>
-      <View
-        style={[
-          theme.rowJustifyStart,
-          theme.padding4x,
-          theme.borderPrimary,
-          theme.borderTopHair,
-          theme.borderBottomHair,
-        ]}>
-        <Text style={switchTextStyle}>{i18n.t('usd')}</Text>
-        <Switch
-          value={localStore.method === 'tokens'}
-          onSyncPress={localStore.setMethod}
-          circleColorActive={Colors.switchCircle}
-          circleColorInactive={Colors.switchCircle}
-          backgroundActive={Colors.switchBackground}
-          backgroundInactive={Colors.switchBackground}
-          style={theme.marginHorizontal2x}
-        />
-        <Text style={switchTextStyle}>{i18n.t('tokens')}</Text>
-      </View>
+      {!isIos && (
+        <View
+          style={[
+            theme.rowJustifyStart,
+            theme.padding4x,
+            theme.borderPrimary,
+            theme.borderTopHair,
+            theme.borderBottomHair,
+          ]}>
+          <Text style={switchTextStyle}>{i18n.t('usd')}</Text>
+          <Switch
+            value={localStore.method === 'tokens'}
+            onSyncPress={localStore.setMethod}
+            circleColorActive={Colors.switchCircle}
+            circleColorInactive={Colors.switchCircle}
+            backgroundActive={Colors.switchBackground}
+            backgroundInactive={Colors.switchBackground}
+            style={theme.marginHorizontal2x}
+          />
+          <Text style={switchTextStyle}>{i18n.t('tokens')}</Text>
+        </View>
+      )}
       {localStore.method === 'usd' && (
         <Options
           localStore={localStore}

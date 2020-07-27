@@ -16,11 +16,7 @@ import {
 import UsdSettings from '../address/UsdSettings';
 import i18n from '../../../common/services/i18n.service';
 import TransactionsListCash from '../TransactionList/TransactionsListCash';
-
-const options: Array<ButtonTabType<UsdOptions>> = [
-  { id: 'transactions', title: i18n.t('wallet.transactions.transactions') },
-  { id: 'settings', title: i18n.t('moreScreen.settings') },
-];
+import UsdEarnings from '../earnings/UsdEarnings';
 
 type PropsType = {
   walletStore: WalletStoreType;
@@ -44,8 +40,23 @@ const UsdTab = observer(
     const store = useLocalStore(createStore);
     const theme = ThemedStyles.style;
 
+    const options: Array<ButtonTabType<UsdOptions>> = [
+      { id: 'earnings', title: i18n.t('wallet.usd.earnings') },
+      { id: 'transactions', title: i18n.t('wallet.transactions.transactions') },
+      { id: 'settings', title: i18n.t('moreScreen.settings') },
+    ];
+
     let body;
     switch (store.option) {
+      case 'earnings':
+        body = (
+          <UsdEarnings
+            navigation={navigation}
+            walletStore={walletStore}
+            route={route}
+          />
+        );
+        break;
       case 'transactions':
         //TODO: filter are not implemented in the backend change the first string to the corresponding values after
         const filters: Array<[string, string]> = [

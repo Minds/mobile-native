@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
-import { View, StyleSheet, Text, ScrollView, Alert } from 'react-native';
+import { View, StyleSheet, Text, ScrollView, Alert, Platform } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { useSafeArea } from 'react-native-safe-area-context';
 import HeaderComponent from '../../common/components/HeaderComponent';
@@ -14,12 +14,14 @@ import type WireStore from '../WireStore';
 import i18n from '../../common/services/i18n.service';
 import logService from '../../common/services/log.service';
 
+const isIos = Platform.OS === 'ios';
+
 const tabList = [
   {
     name: 'tokens',
     label: 'Tokens',
   },
-  {
+  !isIos && {
     name: 'usd',
     label: 'USD',
   },
