@@ -72,7 +72,7 @@ const Controls = observer(({ localStore, entity }: PropsType) => {
             <Icon
               onPress={() =>
                 localStore.paused
-                  ? localStore.play(localStore.volume)
+                  ? localStore.play(Boolean(localStore.volume))
                   : localStore.pause()
               }
               style={styles.videoIcon}

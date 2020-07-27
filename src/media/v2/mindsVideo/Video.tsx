@@ -45,7 +45,7 @@ const ExpoVideo = observer(
         useNativeControls={false}
         style={theme.flexContainer}
         ref={playbackObject}
-        volume={localStore.initialVolume}
+        volume={localStore.initialVolume || 0}
       />
     );
   },
