@@ -1,14 +1,21 @@
 import React from 'react';
-import { observer } from 'mobx-react';
-import { ActivityIndicator, View } from 'react-native';
+import { DotIndicator } from 'react-native-reanimated-indicators';
 import { styles } from './styles';
+import ThemedStyles from '../../../../styles/ThemedStyles';
 
-const InProgress = observer(() => {
+const InProgress = () => {
   return (
-    <View style={[styles.overlayContainer, styles.overlayContainerTransparent]}>
-      <ActivityIndicator size="large" />
-    </View>
+    <DotIndicator
+      containerStyle={[
+        styles.overlayContainer,
+        styles.overlayContainerTransparent,
+        ThemedStyles.style.rowJustifyCenter,
+      ]}
+      color={ThemedStyles.getColor('secondary_text')}
+      dotSize={15}
+      scaleEnabled={true}
+    />
   );
-});
+};
 
 export default InProgress;

@@ -4,15 +4,13 @@ import type { MindsVideoStoreType } from '../createMindsVideoStore';
 import Icon from 'react-native-vector-icons/Ionicons';
 import type ActivityModel from '../../../../newsfeed/ActivityModel';
 import type CommentModel from '../../../../comments/CommentModel';
-import { View, TouchableWithoutFeedback, Text, Platform } from 'react-native';
+import { View, TouchableWithoutFeedback, Text } from 'react-native';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 import ProgressBar from '../ProgressBar';
 import { styles } from './styles';
 import Colors from '../../../../styles/Colors';
 // workaround to fix tooltips on android
 import Tooltip from 'rne-modal-tooltip';
-
-const isIOS = Platform.OS === 'ios';
 
 type PropsType = {
   entity?: ActivityModel | CommentModel;
@@ -49,11 +47,9 @@ const SourceSelector = ({ localStore }: SourceSelectorPropsType) => {
 const Controls = observer(({ localStore, entity }: PropsType) => {
   const theme = ThemedStyles.style;
 
-  if (localStore.fullScreen) {
-    return null;
-  }
-
-  const mustShow = localStore.showOverlay || (localStore.paused && entity);
+  const mustShow = Boolean(
+    localStore.showOverlay || (localStore.paused && entity),
+  );
 
   const size = 56;
 
@@ -75,7 +71,9 @@ const Controls = observer(({ localStore, entity }: PropsType) => {
             style={[theme.positionAbsolute, theme.centered, theme.marginTop2x]}>
             <Icon
               onPress={() =>
-                localStore.paused ? localStore.play(false) : localStore.pause()
+                localStore.paused
+                  ? localStore.play(localStore.volume)
+                  : localStore.pause()
               }
               style={styles.videoIcon}
               name={localStore.paused ? 'md-play-circle' : 'md-pause'}
@@ -102,22 +100,20 @@ const Controls = observer(({ localStore, entity }: PropsType) => {
           )}
           {localStore.player && (
             <View style={styles.controlBarContainer}>
-              {isIOS && (
-                <View
-                  style={[
-                    theme.padding,
-                    theme.rowJustifySpaceEvenly,
-                    theme.marginRight,
-                  ]}>
-                  <Icon
-                    onPress={localStore.toggleFullScreen}
-                    name="ios-expand"
-                    size={23}
-                    color={Colors.light}
-                    style={theme.paddingLeft}
-                  />
-                </View>
-              )}
+              <View
+                style={[
+                  theme.padding,
+                  theme.rowJustifySpaceEvenly,
+                  theme.marginRight,
+                ]}>
+                <Icon
+                  onPress={localStore.toggleFullScreen}
+                  name="ios-expand"
+                  size={23}
+                  color={Colors.light}
+                  style={theme.paddingLeft}
+                />
+              </View>
               {progressBar}
               <View style={[theme.padding, theme.rowJustifySpaceEvenly]}>
                 <Icon
