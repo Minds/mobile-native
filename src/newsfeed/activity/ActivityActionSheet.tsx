@@ -257,7 +257,7 @@ export default class ActivityActionSheet extends Component<
         if (this.props.onTranslate) this.props.onTranslate();
         break;
       case i18n.t('edit'):
-        this.props.navigation.navigate('StackCapture', {
+        this.props.navigation.navigate('Capture', {
           isEdit: true,
           entity: this.props.entity,
         });
