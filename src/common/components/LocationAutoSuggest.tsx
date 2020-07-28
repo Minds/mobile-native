@@ -23,6 +23,10 @@ type locationType = {
 };
 type onEditFn = (onEdit: boolean) => boolean;
 type propsType = {
+  placeholder?: string;
+  info?: string;
+  editable?: boolean;
+  optional?: boolean;
   value: string;
   onChangeText: Function;
   onEdit?: onEditFn;

@@ -270,6 +270,13 @@ export default class UserModel extends BaseModel {
   }
 
   /**
+   * Has avatar
+   */
+  hasAvatar(): boolean {
+    return this.icontime !== this.time_created;
+  }
+
+  /**
    * Request subscribe
    */
   async subscribeRequest() {

@@ -23,6 +23,7 @@ type channelMediaType = 'avatar' | 'banner';
 
 type payloadType = {
   briefdescription?: string;
+  phoneNumber?: string;
   name?: string;
   city?: string;
   dob?: string;
@@ -236,17 +237,24 @@ const createChannelStore = () => {
      * Save channel info
      */
     async save(payload: payloadType) {
-      const result = await ChannelService.save(payload);
-      const success = result && result.status === 'success';
+      this.uploading = true;
+      try {
+        const result = await ChannelService.save(payload);
+        const success = result && result.status === 'success';
 
-      if (success && this.channel) {
-        const channel = this.channel;
-        channel.name = payload.name ?? this.channel.name;
-        channel.briefdescription =
-          payload.briefdescription ?? this.channel.briefdescription;
-        channel.city = payload.city ?? this.channel.city;
-        channel.dob = payload.dob ?? this.channel.dob;
-        this.loadFromEntity(channel);
+        if (success && this.channel) {
+          const channel = this.channel;
+          channel.name = payload.name ?? this.channel.name;
+          channel.briefdescription =
+            payload.briefdescription ?? this.channel.briefdescription;
+          channel.city = payload.city ?? this.channel.city;
+          channel.dob = payload.dob ?? this.channel.dob;
+          this.loadFromEntity(channel);
+        }
+      } catch (error) {
+        console.group(error);
+      } finally {
+        this.uploading = false;
       }
     },
     async getGroupCount() {
