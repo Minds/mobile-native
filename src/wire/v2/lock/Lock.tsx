@@ -9,6 +9,7 @@ import mindsService from '../../../common/services/minds.service';
 import Button from '../../../common/components/Button';
 import i18n from '../../../common/services/i18n.service';
 import type { LockType } from '../../../types/Common';
+import currency from '../../../common/helpers/currency';
 
 type PropsType = {
   entity: ActivityModel;
@@ -25,24 +26,25 @@ const getLockType = (support_tier: SupportTiersType): LockType => {
   return type;
 };
 
-const getTextForBlocked = (type: LockType, support_tier: SupportTiersType) => {
+const getTextForBlocked = (
+  type: LockType,
+  support_tier: SupportTiersType,
+  username: string,
+) => {
   let message = '';
   switch (type) {
     case 'members':
-      message = `Become ${support_tier.name} to view this post`;
+      message = `Join @${username}'s ${support_tier.name} Membership to see this post`;
       break;
     case 'plus':
       message = 'Join Minds+ to view this post';
       break;
     case 'paywall':
-      const payUsd = support_tier.has_usd ? `${support_tier.usd} USD` : '';
-      const payTokens = support_tier.has_tokens
-        ? `${support_tier.tokens} Tokens`
-        : '';
-      let pay = payUsd;
-      pay +=
-        pay !== '' ? (payTokens !== '' ? ` / ${payTokens}` : '') : payTokens;
-      message = `Pay ${pay} to see this post`;
+      message = `Join @${username}'s Custom Membership for ${currency(
+        parseFloat(support_tier.usd),
+        'usd',
+        'prefix',
+      )} per month to see this post`;
       break;
   }
   return message;
@@ -61,7 +63,19 @@ const Lock = observer(({ entity, navigation }: PropsType) => {
 
   if (support_tier) {
     lockType = getLockType(support_tier);
-    message = getTextForBlocked(lockType, support_tier);
+    message = getTextForBlocked(
+      lockType,
+      support_tier,
+      entity.ownerObj.username,
+    );
+  } else {
+    if (wire_threshold && 'min' in wire_threshold) {
+      message = `This post can only be seen by supporters who send over ${currency(
+        wire_threshold.min,
+        wire_threshold.type === 'money' ? 'money' : 'token',
+        wire_threshold.type === 'money' ? 'prefix' : 'suffix',
+      )} to @${entity.ownerObj.username}`;
+    }
   }
 
   if (entity.isOwner() || entity.hasVideo()) {

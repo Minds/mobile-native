@@ -1,6 +1,13 @@
 import React, { Fragment, useEffect } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
-import { View, StyleSheet, Text, ScrollView, Alert } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  ScrollView,
+  Alert,
+  Platform,
+} from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { useSafeArea } from 'react-native-safe-area-context';
 import HeaderComponent from '../../common/components/HeaderComponent';
@@ -14,16 +21,7 @@ import type WireStore from '../WireStore';
 import i18n from '../../common/services/i18n.service';
 import logService from '../../common/services/log.service';
 
-const tabList = [
-  {
-    name: 'tokens',
-    label: 'Tokens',
-  },
-  {
-    name: 'usd',
-    label: 'USD',
-  },
-];
+const isIos = Platform.OS === 'ios';
 
 type tabType = 'tokens' | 'usd' | 'eth';
 
@@ -140,6 +138,20 @@ export type FabScreenStore = ReturnType<typeof createFabScreenStore>;
 const FabScreen = observer(({ route, navigation }) => {
   const { wallet, wire } = useLegacyStores();
   const store = useLocalStore(createFabScreenStore);
+
+  const tabList = [
+    {
+      name: 'tokens',
+      label: 'Tokens',
+    },
+  ];
+
+  if (!isIos) {
+    tabList.push({
+      name: 'usd',
+      label: 'USD',
+    });
+  }
 
   const owner = route.params.owner;
 

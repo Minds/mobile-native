@@ -51,7 +51,7 @@ const WalletScreen = observer((props: PropsType) => {
     },
     {
       id: 'usd',
-      title: i18n.t('usd'),
+      title: i18n.t('wallet.cash'),
       subtitle: store.wallet.cash.balance.toString(),
     },
     {
@@ -115,7 +115,7 @@ const WalletScreen = observer((props: PropsType) => {
         <TopbarTabbar
           titleStyle={theme.bold}
           tabs={tabs}
-          onChange={store.setCurrent}
+          onChange={(currency) => store.setCurrent(currency)}
           current={store.currency}
         />
       </View>
