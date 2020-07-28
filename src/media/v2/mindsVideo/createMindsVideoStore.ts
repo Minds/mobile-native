@@ -4,8 +4,6 @@ import type { AVPlaybackStatus, Video } from 'expo-av';
 import _ from 'lodash';
 import featuresService from '../../../common/services/features.service';
 import apiService from '../../../common/services/api.service';
-import type ActivityModel from '../../../newsfeed/ActivityModel';
-import type CommentModel from '../../../comments/CommentModel';
 
 export type Source = {
   src: string;
@@ -14,12 +12,13 @@ export type Source = {
 
 const createMindsVideoStore = ({ entity }) => {
   const store = {
-    volume: 1 as number,
-    inited: false,
+    initialVolume: <number | null>null,
+    volume: 1,
     active: false,
     sources: null as Array<Source> | null,
     source: 0,
     currentTime: 0,
+    currentSeek: <number | null>null,
     duration: 0,
     transcoding: false,
     error: false,
@@ -30,17 +29,23 @@ const createMindsVideoStore = ({ entity }) => {
     fullScreen: false,
     player: null as Video | null,
     paused: true,
-    togglePaused() {
-      this.paused = !this.paused;
+    setPaused(val: boolean) {
+      this.paused = val;
     },
     setSource(source: number) {
       this.source = source;
+    },
+    setSources(sources: Array<Source>) {
+      this.sources = sources;
     },
     setFullScreen(fullSCreen: boolean) {
       this.fullScreen = fullSCreen;
     },
     toggleFullScreen() {
       this.fullScreen = !this.fullScreen;
+      if (this.fullScreen) {
+        this.player?.presentFullscreenPlayerAsync();
+      }
     },
     setInProgress(inProgress: boolean) {
       this.inProgress = inProgress;
@@ -56,12 +61,10 @@ const createMindsVideoStore = ({ entity }) => {
     },
     setVolume(volume: number) {
       this.volume = volume;
+      this.player?.setVolumeAsync(volume);
     },
     toggleVolume() {
-      this.volume = this.volume ? 0 : 1;
-    },
-    toggleInited() {
-      this.inited = !this.inited;
+      this.setVolume(this.volume ? 0 : 1);
     },
     /**
      * Set the currentTime of video
@@ -107,6 +110,7 @@ const createMindsVideoStore = ({ entity }) => {
     onLoadStart() {
       this.error = false;
       this.inProgress = true;
+      this.loaded = false;
     },
     onLoadEnd() {
       this.error = false;
@@ -120,7 +124,7 @@ const createMindsVideoStore = ({ entity }) => {
      */
     onVideoLoad(status: AVPlaybackStatus) {
       if (status.isLoaded) {
-        this.loaded = false;
+        this.loaded = true;
         this.currentTime = status.positionMillis;
         this.duration = status.durationMillis || 0;
       }
@@ -138,6 +142,9 @@ const createMindsVideoStore = ({ entity }) => {
     get currentTimeSeconds() {
       return this.formatSeconds(this.currentTime / 1000);
     },
+    get currentSeekSeconds() {
+      return this.formatSeconds((this.currentSeek || this.currentTime) / 1000);
+    },
     get durationSeconds() {
       return this.formatSeconds(this.duration / 1000);
     },
@@ -146,22 +153,49 @@ const createMindsVideoStore = ({ entity }) => {
         this.currentTime > 0 ? this.currentTime / this.duration : 0;
       return currentTimePercent * 100;
     },
-    get videoSource() {
-      return { uri: this.video.uri, headers: this.video.headers };
+    changeSeek(value) {
+      this.currentSeek = value;
     },
     /**
      * used for when progress bar changes
-     * @param newPercent
-     * @param shouldPlay
+     * @param time
      */
-    async onProgressChanged(newPercent, shouldPlay) {
-      this.currentTime = (newPercent * this.duration) / 100;
-      const status = await this.player?.getStatusAsync();
-      if (status && status.isLoaded) {
-        if (shouldPlay) {
-          !status.isPlaying && this.player?.playAsync();
-        } else {
-          status.isPlaying && this.player?.pauseAsync();
+    async onProgressChanged(time) {
+      await this.player?.setStatusAsync({ shouldPlay: false });
+      this.changeSeek(null);
+
+      console.log(time);
+
+      if (this.loaded) {
+        this.player?.setStatusAsync({
+          positionMillis: time,
+          shouldPlay: !this.paused,
+        });
+      }
+    },
+    async updatePlaybackCallback(status: AVPlaybackStatus) {
+      // console.log('status', status);
+
+      if (!status.isLoaded && status.error) {
+        this.onError(status.error);
+      } else {
+        if (status.isLoaded) {
+          this.onProgress(status.positionMillis || 0);
+
+          if (status.isPlaying) {
+            this.setDuration(status.durationMillis || 0);
+          } else if (!this.paused) {
+            // fix no initial play
+            this.player?.setStatusAsync({
+              progressUpdateIntervalMillis: 500,
+              shouldPlay: true,
+              volume: this.volume,
+            });
+          }
+
+          if (status.didJustFinish && !status.isLooping) {
+            this.onVideoEnd();
+          }
         }
       }
     },
@@ -169,38 +203,17 @@ const createMindsVideoStore = ({ entity }) => {
       if (!this.showOverlay) {
         this.setShowOverlay(true);
       }
-      const hideOverlay = _.debounce(() => {
-        if (this.showOverlay) {
-          this.setShowOverlay(false);
-        }
-      }, 4000);
-      hideOverlay();
+      this.hideOverlay();
     },
-    setStates(state: any) {
-      this.active = state.active;
-      this.volume = this.volume;
-      this.showOverlay = this.showOverlay;
-      this.sources = state.sources;
-      if (state.video) {
-        this.video = state.video;
+    hideOverlay: _.debounce(() => {
+      if (store.showOverlay) {
+        store.setShowOverlay(false);
       }
-
-      if (state.shouldPlay) {
-        this.player?.playAsync();
-      }
-    },
+    }, 4000),
     /**
      * Play the current video and activate the player
      */
     async play(sound: boolean = true) {
-      const state: any = {
-        active: true,
-        volume: sound ? 1 : 0,
-        showOverlay: false,
-        shouldPlay: true,
-        sources: [] as Array<Source>,
-      };
-
       if ((!this.sources || this.sources.length === 0) && entity) {
         if (entity.paywall && featuresService.has('plus-2020')) {
           await entity.unlockOrPay();
@@ -215,19 +228,30 @@ const createMindsVideoStore = ({ entity }) => {
             : entity.entity_guid || entity.guid,
         );
 
-        state.sources = response.sources.filter((v) => v.type === 'video/mp4');
-
-        if (Array.isArray(state.sources)) {
-          state.video = {
-            uri: state.sources[0].src,
-            headers: apiService.buildHeaders(),
-          };
-        }
+        this.setSources(response.sources.filter((v) => v.type === 'video/mp4'));
       }
 
-      this.setStates(state);
+      this.setShowOverlay(false);
+
+      if (Array.isArray(this.sources)) {
+        this.video = {
+          uri: this.sources[this.source].src,
+          headers: apiService.buildHeaders(),
+        };
+      }
+
+      this.setActive(true);
+      this.setPaused(false);
+
+      this.volume = sound ? 1 : 0;
+      if (this.initialVolume === null) {
+        this.initialVolume = this.volume;
+      }
+
+      this.player?.playAsync();
     },
     pause() {
+      this.setPaused(true);
       this.player?.pauseAsync();
     },
     setPlayer(player: Video) {

@@ -10,7 +10,6 @@ import {
 
 import { ResizeMode } from 'expo-av';
 import videoPlayerService from '../../../common/services/video-player.service';
-import NavigationService from '../../../navigation/NavigationService';
 import type CommentModel from '../../../comments/CommentModel';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
 import ThemedStyles from '../../../styles/ThemedStyles';
@@ -20,6 +19,7 @@ import Error from './overlays/Error';
 import Transcoding from './overlays/Transcoding';
 import InProgress from './overlays/InProgress';
 import Controls from './overlays/Controls';
+import { useIsFocused } from '@react-navigation/native';
 
 type Source = {
   src: string;
@@ -42,40 +42,30 @@ const MindsVideo = observer((props: PropsType) => {
     entity: props.entity,
   });
 
-  const play = (sound: boolean) => {
-    localStore.play(sound);
-  };
-
-  const pause = () => {
-    localStore.pause();
-  };
-
   if (props.video && props.video.uri !== localStore.video.uri) {
     localStore.setVideo(props.video);
   }
 
+  const onStoreCreated = props.onStoreCreated;
+
+  const isFocused = useIsFocused();
+
+  if (!isFocused && !localStore.paused) {
+    localStore.pause();
+  }
+
   useEffect(() => {
-    let onScreenBlur: any;
-    if (!localStore.inited) {
-      onScreenBlur = NavigationService.addListener('blur', () => {
-        localStore.player?.pauseAsync();
-      });
-      localStore.toggleInited();
+    onStoreCreated && onStoreCreated(localStore);
+  }, [onStoreCreated, localStore]);
 
-      props.onStoreCreated && props.onStoreCreated(localStore);
-    }
-
+  // remove instance of video player service
+  useEffect(() => {
     return () => {
-      if (onScreenBlur) {
-        onScreenBlur();
-      }
-      if (videoPlayerService.current === MindsVideo) {
+      if (videoPlayerService.current === localStore) {
         videoPlayerService.clear();
       }
-
-      localStore.toggleInited();
     };
-  }, [localStore, props]);
+  }, [localStore]);
 
   // Show inProgress overlay if load has started
   const inProgressOverlay = localStore.inProgress && <InProgress />;

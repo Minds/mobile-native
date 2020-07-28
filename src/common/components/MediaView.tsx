@@ -385,7 +385,6 @@ const styles = StyleSheet.create({
   },
   videoContainer: {
     width: '100%',
-    minHeight: 250,
   },
   title: {
     fontSize: 15,
