@@ -46,6 +46,12 @@ const ChannelButtons = observer((props: PropsType) => {
     });
   }, [navigation, props.channel]);
 
+  const join = useCallback(() => {
+    navigation.push('JoinMembershipScreen', {
+      user: props.channel,
+    });
+  }, [navigation, props.channel]);
+
   const openWire = useCallback(() => {
     navigation.push('WireFab', {
       owner: props.channel,
@@ -76,6 +82,8 @@ const ChannelButtons = observer((props: PropsType) => {
 
   const showEdit =
     props.channel.isOwner() && props.channel.can(FLAG_EDIT_CHANNEL);
+
+  const showJoin = !props.channel.isOwner();
 
   return (
     <View
@@ -130,6 +138,21 @@ const ChannelButtons = observer((props: PropsType) => {
           reverseColor={ThemedStyles.getColor('primary_text')}
           size={15}
           onPress={openMessenger}
+        />
+      )}
+      {showJoin && (
+        <Button
+          color={
+            showSubscribe
+              ? ThemedStyles.getColor('secondary_background')
+              : ThemedStyles.getColor('green')
+          }
+          text={i18n.t('join')}
+          textStyle={isIos ? theme.fontL : theme.fontM}
+          containerStyle={styles.button}
+          textColor="white"
+          onPress={join}
+          inverted
         />
       )}
       {showSubscribe && (
