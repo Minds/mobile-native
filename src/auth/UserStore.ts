@@ -2,7 +2,7 @@ import { observable, action } from 'mobx';
 
 import channelService from './../channel/ChannelService';
 import UserModel from './../channel/UserModel';
-import searchBarService from '../topbar/SearchBar.service';
+import searchBarService from '../topbar/searchbar/SearchBar.service';
 
 /**
  * Login Store
@@ -103,8 +103,13 @@ class UserStore {
   /**
    * Call onItemTap
    */
-  searchBarItemTap(item) {
-    searchBarService.onItemTap(item.username || item);
+  searchBarItemTap(item: UserModel | string) {
+    if (item instanceof UserModel) {
+      const user = { user: item };
+      searchBarService.onItemTap(user);
+    } else {
+      searchBarService.onItemTap(item);
+    }
   }
 
   /**

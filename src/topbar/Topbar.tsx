@@ -10,13 +10,12 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import IconFa from 'react-native-vector-icons/FontAwesome5';
 
 import { observer } from 'mobx-react';
-import SearchComponent from './SearchComponent';
+import SearchComponent from './searchbar/SearchComponent';
 import ThemedStyles from '../styles/ThemedStyles';
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
 import EmailConfirmation from './EmailConfirmation';
 import BannerInfo from './BannerInfo';
 import FastImage from 'react-native-fast-image';
-import i18n from '../common/services/i18n.service';
 import { useStores } from '../common/hooks/use-stores';
 import useCurrentUser from '../common/hooks/useCurrentUser';
 import intword from '../common/helpers/intword';
@@ -83,21 +82,7 @@ export const Topbar = observer((props: PropsType) => {
                       />
                     </View>
                   </TouchableOpacity>
-                  <SearchComponent
-                    navigation={props.navigation}
-                    icon={
-                      <Text
-                        style={[
-                          theme.fontL,
-                          theme.colorSecondaryText,
-                          theme.paddingLeft3x,
-                          theme.fullWidth,
-                          theme.paddingVertical2x,
-                        ]}>
-                        {i18n.t('searchBar.title')}
-                      </Text>
-                    }
-                  />
+                  <SearchComponent navigation={props.navigation} />
                 </View>
                 <View style={styles.topbarRight}>
                   <Text
