@@ -35,14 +35,12 @@ const SearchHistory = ({ localStore, renderItem }: PropsType) => {
           {i18n.t('searchBar.clear')}
         </Text>
       </View>
-      <MenuSubtitle>{i18n.t('searchBar.discovery')}</MenuSubtitle>
       {localStore.history.length > 0 &&
         localStore.history
           .filter((item) => typeof item === 'string')
           .map((item, index) => {
             return renderItem(item, index);
           })}
-      <MenuSubtitle>{i18n.t('searchBar.channels')}</MenuSubtitle>
       {localStore.history.length > 0 &&
         localStore.history
           .filter((item) => typeof item !== 'string')
