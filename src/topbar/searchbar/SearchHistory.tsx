@@ -5,6 +5,7 @@ import i18n from '../../common/services/i18n.service';
 import { useLegacyStores } from '../../common/hooks/use-stores';
 import { SearchResultStoreType } from './createSearchResultStore';
 import { useKeyboard } from '@react-native-community/hooks';
+import MenuSubtitle from '../../common/components/menus/MenuSubtitle';
 
 type PropsType = {
   localStore: SearchResultStoreType;
@@ -23,7 +24,7 @@ const SearchHistory = ({ localStore, renderItem }: PropsType) => {
   };
 
   const scrollHeight = {
-    height: keyboard.keyboardShown ? keyboard.keyboardHeight : '100%',
+    height: keyboard.keyboardShown ? keyboard.keyboardHeight : '90%',
   };
 
   return (
@@ -34,10 +35,20 @@ const SearchHistory = ({ localStore, renderItem }: PropsType) => {
           {i18n.t('searchBar.clear')}
         </Text>
       </View>
+      <MenuSubtitle>{i18n.t('searchBar.discovery')}</MenuSubtitle>
       {localStore.history.length > 0 &&
-        localStore.history.map((item, index) => {
-          return renderItem(item, index);
-        })}
+        localStore.history
+          .filter((item) => typeof item === 'string')
+          .map((item, index) => {
+            return renderItem(item, index);
+          })}
+      <MenuSubtitle>{i18n.t('searchBar.channels')}</MenuSubtitle>
+      {localStore.history.length > 0 &&
+        localStore.history
+          .filter((item) => typeof item !== 'string')
+          .map((item, index) => {
+            return renderItem(item, index);
+          })}
     </ScrollView>
   );
 };

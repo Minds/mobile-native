@@ -53,7 +53,7 @@ const SearchResultComponent = observer(
               <MenuItem
                 containerItemStyle={theme.backgroundTransparent}
                 item={{
-                  onPress: () => localStore.input(item),
+                  onPress: () => localStore.setSearchesAndQueryDiscovery(item),
                   title: item,
                 }}
               />

@@ -819,7 +819,9 @@
     "title":"Search Minds",
     "searchHistory": "Search History",
     "emptySuggested": "We couldn't find what you look for",
-    "clear": "Clear"
+    "clear": "Clear",
+    "discovery": "Discovery",
+    "channels": "Channels"
   },
   "monetize": {
     "title": "Monetize",

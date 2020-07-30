@@ -47,7 +47,13 @@ const createSearchResultStore = ({
       user.toggleSearching();
       user.searchBarItemTap(item);
     },
+    setSearchesAndQueryDiscovery(search: string) {
+      this.search = search;
+      this.searchText = search;
+      this.searchDiscovery();
+    },
     searchDiscovery() {
+      this.search = this.searchText;
       navigation.navigate('DiscoverySearch', { query: this.search });
       this.searchBarItemTap(this.search);
     },
