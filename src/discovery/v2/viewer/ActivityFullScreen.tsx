@@ -1,7 +1,8 @@
 import React, { useRef, useCallback, useMemo } from 'react';
-import { View, Text, StyleSheet, Platform } from 'react-native';
+import { View, Text, StyleSheet, Platform, Clipboard } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import * as entities from 'entities';
 
 import type ActivityModel from '../../../newsfeed/ActivityModel';
 import MediaView from '../../../common/components/MediaView';
@@ -25,7 +26,7 @@ import BottomOptionPopup, {
 } from '../../../common/components/BottomOptionPopup';
 import CommentList from '../../../comments/CommentList';
 import CommentsStore from '../../../comments/CommentsStore';
-import { ScrollView } from 'react-native-gesture-handler';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import isIphoneX from '../../../common/helpers/isIphoneX';
 import sessionService from '../../../common/services/session.service';
 import { useOnFocus } from '@crowdlinker/react-native-pager';
@@ -35,6 +36,7 @@ import featuresService from '../../../common/services/features.service';
 
 import LockV2 from '../../../wire/v2/lock/Lock';
 import Lock from '../../../wire/lock/Lock';
+import { showNotification } from '../../../../AppMessages';
 
 const TEXT_SHORT_THRESHOLD = 110;
 const TEXT_MEDIUM_THRESHOLD = 300;
@@ -105,6 +107,15 @@ const ActivityFullScreen = observer((props: PropsType) => {
   const overlay = entity.shouldBeBlured() ? (
     <ExplicitOverlay entity={entity} />
   ) : null;
+
+  const copyText = useCallback(() => {
+    Clipboard.setString(
+      entities.decodeHTML(
+        entity.title ? entity.title + '\n' + entity.text : entity.text,
+      ),
+    );
+    showNotification(i18n.t('copied'), 'info');
+  }, [entity]);
 
   /**
    * On press translate in actions menu
@@ -217,7 +228,9 @@ const ActivityFullScreen = observer((props: PropsType) => {
             />
           )}
           {overlay}
-          <View style={[theme.paddingHorizontal4x, theme.paddingVertical4x]}>
+          <TouchableOpacity
+            onLongPress={copyText}
+            style={[theme.paddingHorizontal4x, theme.paddingVertical4x]}>
             {showText && (
               <>
                 <ExplicitText
@@ -234,7 +247,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
                 />
               </>
             )}
-          </View>
+          </TouchableOpacity>
           {hasRemind && (
             <View
               style={[
