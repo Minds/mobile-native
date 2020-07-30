@@ -32,7 +32,7 @@ import MenuItem, {
   MenuItemItem,
 } from '../../../common/components/menus/MenuItem';
 
-const isIos = Platform.OS === 'ios' && false;
+const isIos = Platform.OS === 'ios';
 
 type payMethod = 'tokens' | 'usd';
 type JoinMembershipScreenRouteProp = RouteProp<
@@ -70,8 +70,11 @@ const createJoinMembershipStore = () => {
     setUser(user: UserModel) {
       this.user = user;
     },
-    setCurrent(tier: SupportTiersType) {
+    setCurrent(tier: SupportTiersType, isInitial = false) {
       this.currentTier = tier;
+      if (isInitial) {
+        this.payMethod = !isIos && tier.has_usd ? 'usd' : 'tokens';
+      }
     },
     async loadList() {
       if (!this.user) {
@@ -83,7 +86,7 @@ const createJoinMembershipStore = () => {
         this.list = tiers as Array<SupportTiersType>;
 
         if (!this.currentTier && this.list[0]) {
-          this.setCurrent(this.list[0]);
+          this.setCurrent(this.list[0], true);
         }
       } catch (error) {
         console.log(error);
@@ -130,7 +133,7 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
           ? entity.wire_threshold.support_tier
           : null;
       if (support_tier) {
-        store.setCurrent(support_tier);
+        store.setCurrent(support_tier, true);
       }
       store.setUser(entity.ownerObj);
     } else if (user) {
