@@ -38,7 +38,6 @@ class SettingsService {
    * Submit Settings
    */
   submitSettings(params) {
-    console.log('saving', params)
     return api.post('api/v1/settings', params).then((result) => {
       return result;
     });
