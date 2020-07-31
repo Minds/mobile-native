@@ -822,7 +822,9 @@
     "title":"Search Minds",
     "searchHistory": "Search History",
     "emptySuggested": "We couldn't find what you look for",
-    "clear": "Clear"
+    "clear": "Clear",
+    "discovery": "Discovery",
+    "channels": "Channels"
   },
   "monetize": {
     "title": "Monetize",
@@ -917,7 +919,7 @@
   "description": "Description",
   "sorry": "Sorry!",
   "tryAgain": "Try again",
-  "pleaseTryAgain": "Plase try again",
+  "pleaseTryAgain": "Please try again",
   "attention": "Attention",
   "retry": "Retry",
   "unlock": "Unlock",
