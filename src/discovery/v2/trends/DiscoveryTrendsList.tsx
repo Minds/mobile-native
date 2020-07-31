@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react';
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, FlatList } from 'react-native';
+import { View, Text } from 'react-native';
 import { DiscoveryTrendsListItem } from './DiscoveryTrendsListItem';
 import { ComponentsStyle } from '../../../styles/Components';
 import { useDiscoveryV2Store } from '../DiscoveryV2Context';
@@ -8,9 +8,15 @@ import ThemedStyles from '../../../styles/ThemedStyles';
 import i18n from '../../../common/services/i18n.service';
 import Button from '../../../common/components/Button';
 import DiscoveryTagsManager from '../tags/DiscoveryTagsManager';
+import FeedList from '../../../common/components/FeedList';
+import { useNavigation } from '@react-navigation/native';
 
 type PropsType = {
   plus?: boolean;
+};
+
+const ItemPartial = (item, index) => {
+  return <DiscoveryTrendsListItem isHero={index === 0} data={item} />;
 };
 
 /**
@@ -19,7 +25,7 @@ type PropsType = {
 export const DiscoveryTrendsList = observer(({ plus }: PropsType) => {
   const theme = ThemedStyles.style;
   const discoveryV2 = useDiscoveryV2Store();
-  let listRef = useRef<FlatList<any>>(null);
+  let listRef = useRef<FeedList<any>>(null);
   const [showManageTags, setShowManageTags] = useState(false);
 
   const closeManageTags = () => {
@@ -27,14 +33,17 @@ export const DiscoveryTrendsList = observer(({ plus }: PropsType) => {
     discoveryV2.refreshTrends();
   };
 
+  const navigation = useNavigation();
+
   useEffect(() => {
     discoveryV2.loadTags(plus);
     discoveryV2.loadTrends(plus);
+    discoveryV2.allFeed.fetch();
   }, [discoveryV2, plus]);
 
   useEffect(() => {
-    if (listRef.current) {
-      listRef.current.scrollToOffset({ offset: -65, animated: true });
+    if (listRef.current && listRef.current.listRef) {
+      listRef.current.listRef.scrollToOffset({ offset: -65, animated: true });
     }
   }, [discoveryV2.refreshing, listRef]);
 
@@ -54,18 +63,16 @@ export const DiscoveryTrendsList = observer(({ plus }: PropsType) => {
     );
   };
 
-  const ItemPartial = ({ item, index }) => {
-    return <DiscoveryTrendsListItem isHero={index === 0} data={item} />;
-  };
-
   const onRefresh = () => {
     discoveryV2.refreshTrends(plus);
   };
 
-  /**
-   * Key extractor
-   */
-  const keyExtractor = (item) => String(item.id);
+  const header = (
+    <View
+      style={[theme.borderBottom8x, theme.borderPrimary, theme.marginBottom2x]}>
+      {discoveryV2.trends.map(ItemPartial)}
+    </View>
+  );
 
   /**
    * Render
@@ -77,14 +84,13 @@ export const DiscoveryTrendsList = observer(({ plus }: PropsType) => {
         onCancel={closeManageTags}
         onDone={closeManageTags}
       />
-      <FlatList
+      <FeedList
         ref={listRef}
-        data={discoveryV2.trends}
+        header={header}
+        feedStore={discoveryV2.allFeed}
+        emptyMessage={EmptyPartial}
+        navigation={navigation}
         onRefresh={onRefresh}
-        refreshing={discoveryV2.loading}
-        ListEmptyComponent={EmptyPartial}
-        renderItem={ItemPartial}
-        keyExtractor={keyExtractor}
       />
     </View>
   );

@@ -22,6 +22,7 @@ export default class DiscoveryV2Store {
   @observable loading = false;
   @observable refreshing = false;
   boostFeed: FeedStore;
+  allFeed: FeedStore;
 
   constructor() {
     this.boostFeed = new FeedStore(true);
@@ -32,6 +33,17 @@ export default class DiscoveryV2Store {
 
     this.boostFeed
       .setEndpoint('api/v2/boost/feed')
+      .setInjectBoost(false)
+      .setLimit(15);
+
+    this.allFeed = new FeedStore(true);
+    this.allFeed
+      .getMetadataService()!
+      .setSource('feed/discovery')
+      .setMedium('feed');
+
+    this.allFeed
+      .setEndpoint('api/v2/feeds/global/topV2/all')
       .setInjectBoost(false)
       .setLimit(15);
   }

@@ -2,16 +2,12 @@ import React, { useEffect, useState } from 'react';
 
 import { View } from 'react-native';
 import { observer } from 'mobx-react';
-
-import { CommonStyle as CS } from '../../styles/Common';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 
 import i18n from '../../common/services/i18n.service';
 
 import { DiscoveryTrendsList } from './trends/DiscoveryTrendsList';
-import Topbar from '../../topbar/Topbar';
-import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { TabParamList } from '../../tabs/TabsScreen';
-
 import ThemedStyles from '../../styles/ThemedStyles';
 import { useDiscoveryV2Store } from './DiscoveryV2Context';
 import { TDiscoveryV2Tabs } from './DiscoveryV2Store';
