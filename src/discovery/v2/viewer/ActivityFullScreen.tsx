@@ -1,7 +1,8 @@
-import React, { useRef, useCallback, useMemo } from 'react';
+import React, { useRef, useCallback, useMemo, useEffect } from 'react';
 import { View, Text, StyleSheet, Platform, Clipboard } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { useFocus } from '@crowdlinker/react-native-pager';
 import * as entities from 'entities';
 
 import type ActivityModel from '../../../newsfeed/ActivityModel';
@@ -29,7 +30,6 @@ import CommentsStore from '../../../comments/CommentsStore';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import isIphoneX from '../../../common/helpers/isIphoneX';
 import sessionService from '../../../common/services/session.service';
-import { useOnFocus } from '@crowdlinker/react-native-pager';
 import videoPlayerService from '../../../common/services/video-player.service';
 import ExplicitOverlay from '../../../common/components/explicit/ExplicitOverlay';
 import featuresService from '../../../common/services/features.service';
@@ -68,6 +68,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
   }));
   const keyboard = useKeyboard();
   const route = useRoute();
+  const focused = useFocus();
   const bottomStore: BottomOptionsStoreType = useBottomOption();
   const insets = useSafeArea();
   const window = useDimensions().window;
@@ -86,6 +87,21 @@ const ActivityFullScreen = observer((props: PropsType) => {
   const cleanTop = useMemo(() => ({ paddingTop: insets.top || 10 }), [
     insets.top,
   ]);
+
+  useEffect(() => {
+    if (focused) {
+      const user = sessionService.getUser();
+
+      // if we have some video playing we pause it and reset the current video
+      videoPlayerService.setCurrent(null);
+
+      if (user.plus && !user.disable_autoplay_videos && mediaRef.current) {
+        mediaRef.current.playVideo(true);
+      }
+    } else {
+      mediaRef.current?.pauseVideo();
+    }
+  }, [focused]);
 
   const isShortText =
     !hasMedia && !hasRemind && entity.text.length < TEXT_SHORT_THRESHOLD;
@@ -132,17 +148,6 @@ const ActivityFullScreen = observer((props: PropsType) => {
       }
     }
   }, [translateRef]);
-
-  useOnFocus(() => {
-    const user = sessionService.getUser();
-
-    // if we have some video playing we pause it and reset the current video
-    videoPlayerService.setCurrent(null);
-
-    if (user.plus && !user.disable_autoplay_videos && mediaRef.current) {
-      mediaRef.current.playVideo(true);
-    }
-  });
 
   const onPressComment = useCallback(() => {
     bottomStore.show(
