@@ -5,6 +5,7 @@ exports[`Activity component renders correctly 1`] = `
   activeOpacity={0.8}
   delayPressIn={60}
   onLayout={[Function]}
+  onLongPress={[Function]}
   onPress={[Function]}
   style={
     Array [

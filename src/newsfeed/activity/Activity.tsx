@@ -8,7 +8,10 @@ import {
   TouchableOpacity,
   View,
   LayoutChangeEvent,
+  Clipboard,
 } from 'react-native';
+
+import * as entities from 'entities';
 
 import ExplicitText from '../../common/components/explicit/ExplicitText';
 import OwnerBlock from './OwnerBlock';
@@ -32,6 +35,7 @@ import type FeedStore from '../../common/stores/FeedStore';
 import featuresService from '../../common/services/features.service';
 import sessionService from '../../common/services/session.service';
 import NavigationService from '../../navigation/NavigationService';
+import { showNotification } from '../../../AppMessages';
 
 const FONT_THRESHOLD = 300;
 
@@ -186,6 +190,16 @@ export default class Activity extends Component<PropsType> {
     }
   }
 
+  copyText = () => {
+    const entity = this.props.entity;
+    Clipboard.setString(
+      entities.decodeHTML(
+        entity.title ? entity.title + '\n' + entity.text : entity.text,
+      ),
+    );
+    showNotification(i18n.t('copied'), 'info');
+  };
+
   /**
    * Render
    */
@@ -254,6 +268,7 @@ export default class Activity extends Component<PropsType> {
         activeOpacity={0.8}
         style={[styles.container, ...borderBottom, theme.backgroundSecondary]}
         onPress={this.navToActivity}
+        onLongPress={this.copyText}
         onLayout={this.onLayout}
         testID="ActivityView">
         <Pinned entity={this.props.entity} />
