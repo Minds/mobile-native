@@ -31,6 +31,7 @@ import colors from '../styles/Colors';
 import FastImage from 'react-native-fast-image';
 import CommentActionSheet from './CommentActionSheet';
 import ThemedStyles from '../styles/ThemedStyles';
+import { showNotification } from '../../AppMessages';
 
 const DoubleTapText = DoubleTap(Text);
 
@@ -268,6 +269,7 @@ class Comment extends Component {
         Clipboard.setString(
           entities.decodeHTML(this.props.comment.description),
         );
+        showNotification(i18n.t('copied'), 'info');
         break;
       default:
         break;
