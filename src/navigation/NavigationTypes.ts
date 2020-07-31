@@ -25,6 +25,10 @@ export type RootStackParamList = {
     entity?: ActivityModel;
     onComplete: Function;
   };
+  PlusScreen: {
+    onComplete: Function;
+    pro?: boolean;
+  };
 };
 
 export type AuthStackParamList = {

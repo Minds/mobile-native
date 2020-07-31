@@ -5,15 +5,13 @@ import {
   ImageBackground,
   View,
   Text,
-  ScrollView,
   Platform,
 } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { useSafeArea } from 'react-native-safe-area-context';
 import Switch from 'react-native-switch-pro';
 import i18n from '../services/i18n.service';
-import LabeledComponent from './LabeledComponent';
-import StripeCardSelector from '../../wire/methods/StripeCardSelector';
+import StripeCardSelector from '../../wire/methods/v2/StripeCardSelector';
 import MindsService from '../../common/services/minds.service';
 import CenteredLoading from './CenteredLoading';
 import MenuItem from './menus/MenuItem';
@@ -23,7 +21,7 @@ import { useLegacyStores } from '../hooks/use-stores';
 import { UserError } from '../UserError';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AppStackParamList } from '../../navigation/NavigationTypes';
+import { RootStackParamList } from '../../navigation/NavigationTypes';
 import Button from './Button';
 import mindsService from '../services/minds.service';
 import UserModel from '../../channel/UserModel';
@@ -31,7 +29,7 @@ import WireService from '../../wire/WireService';
 
 const isIos = Platform.OS === 'ios';
 
-const bannerAspectRatio = 1.7;
+const bannerAspectRatio = 1.3;
 type payMethod = 'tokens' | 'usd';
 
 const createPlusStore = () => {
@@ -88,9 +86,9 @@ const createPlusStore = () => {
 
 type PlusStoreType = ReturnType<typeof createPlusStore>;
 
-type PlusScreenRouteProp = RouteProp<AppStackParamList, 'PlusScreen'>;
+type PlusScreenRouteProp = RouteProp<RootStackParamList, 'PlusScreen'>;
 type PlusScreenNavigationProp = StackNavigationProp<
-  AppStackParamList,
+  RootStackParamList,
   'PlusScreen'
 >;
 
@@ -147,7 +145,6 @@ const PlusScreen = observer(({ navigation, route }: PropsType) => {
   const localStore = useLocalStore(createPlusStore);
   const theme = ThemedStyles.style;
   const insets = useSafeArea();
-  const cleanTop = insets.top ? { marginTop: insets.top } : null;
   const { wire } = useLegacyStores();
   const { onComplete, pro } = route.params;
 
@@ -206,15 +203,18 @@ const PlusScreen = observer(({ navigation, route }: PropsType) => {
   }
 
   const texts = pro ? 'pro' : 'plus';
+  const cleanTop = { marginTop: insets.top + (isIos ? 60 : 50) };
 
   return (
-    <ScrollView style={[styles.container, cleanTop]}>
+    <View style={[cleanTop, styles.container, theme.backgroundSecondary]}>
       <ImageBackground
         style={styles.banner}
         source={require('../../assets/plus-image.png')}
         resizeMode="cover">
         <View style={styles.textContainer}>
-          <Text style={styles.minds}>{i18n.t(`monetize.${texts}`)}</Text>
+          <Text style={styles.minds}>
+            {i18n.t(`monetize.${texts}`).toUpperCase()}
+          </Text>
           <Text style={styles.title}>{i18n.t(`monetize.${texts}Title`)}</Text>
           <Text style={styles.text}>
             {i18n.t(`monetize.${texts}Description`)}
@@ -262,20 +262,9 @@ const PlusScreen = observer(({ navigation, route }: PropsType) => {
         />
       )}
       {localStore.method === 'usd' && (
-        <LabeledComponent
-          label="SELECT CARD"
-          wrapperStyle={[theme.marginVertical4x, theme.paddingHorizontal4x]}>
-          <ScrollView
-            contentContainerStyle={[
-              theme.paddingLeft2x,
-              theme.paddingRight2x,
-              theme.columnAlignCenter,
-              theme.alignCenter,
-              theme.paddingTop2x,
-            ]}>
-            <StripeCardSelector onCardSelected={localStore.setCard} />
-          </ScrollView>
-        </LabeledComponent>
+        <View style={theme.marginTop6x}>
+          <StripeCardSelector onCardSelected={localStore.setCard} />
+        </View>
       )}
       {localStore.selectedOption && (
         <View style={[theme.padding2x, theme.borderTop, theme.borderPrimary]}>
@@ -284,10 +273,11 @@ const PlusScreen = observer(({ navigation, route }: PropsType) => {
             text={i18n.t(`monetize.${texts}Join`)}
             containerStyle={[theme.paddingVertical2x, styles.buttonRight]}
             loading={localStore.loading}
+            textStyle={[theme.fontMedium, theme.fontL]}
           />
         </View>
       )}
-    </ScrollView>
+    </View>
   );
 });
 
@@ -302,6 +292,7 @@ const styles = StyleSheet.create({
   minds: {
     color: '#FFFFFF',
     fontSize: 17,
+    paddingBottom: 5,
     fontFamily: 'Roboto-Black',
   },
   title: {
@@ -313,10 +304,14 @@ const styles = StyleSheet.create({
     color: '#AEB0B8',
     fontSize: 16,
     fontFamily: 'Roboto-Regular',
-    marginTop: 15,
+    marginVertical: 15,
   },
   container: {
     marginBottom: 10,
+    flex: 1,
+    borderTopRightRadius: 15,
+    borderTopLeftRadius: 15,
+    overflow: 'hidden',
   },
   banner: {
     aspectRatio: bannerAspectRatio,
