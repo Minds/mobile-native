@@ -32,6 +32,7 @@ type PropsType = {
   style?: StyleProp<ViewStyle>;
   hideItems?: boolean;
   ListEmptyComponent?: React.ReactNode;
+  onRefresh?: () => void;
 };
 
 /**
@@ -238,6 +239,9 @@ export default class FeedList<T> extends Component<PropsType> {
    */
   refresh = () => {
     this.props.feedStore.refresh();
+    if (this.props.onRefresh) {
+      this.props.onRefresh();
+    }
   };
 
   /**
