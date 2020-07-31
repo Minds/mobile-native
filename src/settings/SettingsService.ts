@@ -2,8 +2,6 @@
 import api from './../common/services/api.service';
 import { Alert } from 'react-native';
 import sessionService from '../common/services/session.service';
-import navigationService from '../navigation/NavigationService';
-import storageService from '../common/services/storage.service';
 
 /**
  * Settings Service
@@ -31,7 +29,7 @@ class SettingsService {
    * Get Settings
    */
   getSettings() {
-    return api.get('api/v1/settings').then((result) => {
+    return api.get<any>('api/v1/settings').then((result) => {
       return result;
     });
   }

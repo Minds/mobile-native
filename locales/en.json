@@ -298,6 +298,8 @@
   },
   "messenger": {
     "decrypting": "decrypting...",
+    "notAllowed":"This user only allows messages from users that they subscribe to",
+    "allowContact":"Allow contact from unsubscribed users",
     "couldntDecrypt":"couldn't decrypt",
     "typeYourMessage": "Type your message...",
     "invited": "Invited",
@@ -567,7 +569,8 @@
       "2": "Display Language",
       "3": "Password",
       "4": "Notifications",
-      "5": "NSFW Content"
+      "5": "NSFW Content",
+      "6": "Messenger"
     },
     "securityOptions": {
       "1": "Two-factor authentication (2FA)",

@@ -10,6 +10,8 @@ import { MINDS_CDN_URI } from '../../config/Config';
 
 import { FLAG_MESSAGE } from '../../common/Permissions';
 import ThemedStyles from '../../styles/ThemedStyles';
+import { UserError } from '../../common/UserError';
+import i18n from '../../common/services/i18n.service';
 
 /**
  * Conversation Component
@@ -21,9 +23,16 @@ export default class ConversationView extends Component {
    */
   _navToConversation = () => {
     if (this.props.navigation && this.props.item.can(FLAG_MESSAGE)) {
-      this.props.navigation.push('Conversation', {
-        conversation: this.props.item,
-      });
+      try {
+        if (!this.props.item.allowContact) {
+          throw new UserError(i18n.t('messenger.notAllowed'));
+        }
+        this.props.navigation.push('Conversation', {
+          conversation: this.props.item,
+        });
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
