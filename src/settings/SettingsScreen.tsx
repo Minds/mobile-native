@@ -4,7 +4,6 @@ import { View, FlatList, Text } from 'react-native';
 import MenuItem from '../common/components/menus/MenuItem';
 import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
-import Topbar from '../topbar/Topbar';
 import authService from '../auth/AuthService';
 
 const keyExtractor = (item, index) => index.toString();
@@ -77,7 +76,6 @@ export default function ({ navigation }) {
 
   return (
     <View style={[theme.flexContainer, theme.backgroundPrimary]}>
-      <Topbar navigation={navigation} />
       <View style={innerWrapper}>
         <Text
           style={[

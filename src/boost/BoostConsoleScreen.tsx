@@ -12,7 +12,6 @@ import { ComponentsStyle } from '../styles/Components';
 import BoostTabBar from './BoostTabBar';
 import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
-import Topbar from '../topbar/Topbar';
 
 /**
  * News feed list component
@@ -73,7 +72,6 @@ export default class BoostConsoleScreen extends Component {
 
     const tabs = (
       <View>
-        <Topbar navigation={this.props.navigation} />
         <Text
           style={[
             theme.titleText,

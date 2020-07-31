@@ -71,6 +71,7 @@ import {
   AppStackParamList,
   DrawerParamList,
   ActivityFullScreenParamList,
+  InternalStackParamList,
 } from './NavigationTypes';
 
 import Drawer from './Drawer';
@@ -109,6 +110,7 @@ const activityOptions = ({ route }) => ({
 const AppStackNav = createNativeStackNavigator<AppStackParamList>();
 const AuthStackNav = createNativeStackNavigator<AuthStackParamList>();
 const RootStackNav = createStackNavigator<RootStackParamList>();
+const InternalStackNav = createNativeStackNavigator<InternalStackParamList>();
 // const MainSwiper = createMaterialTopTabNavigator<MainSwiperParamList>();
 const DrawerNav = createDrawerNavigator<DrawerParamList>();
 
@@ -200,6 +202,41 @@ const WalletOptions = () => ({
   headerShown: false,
 });
 
+export const InternalStack = () => {
+  const internalOptions = {
+    ...ThemedStyles.defaultScreenOptions,
+    headerShown: false,
+    stackAnimation: 'none',
+  } as NativeStackNavigationOptions;
+  return (
+    <InternalStackNav.Navigator screenOptions={internalOptions}>
+      {featuresService.has('wallet') && (
+        <InternalStackNav.Screen
+          name="Wallet"
+          component={WalletScreen}
+          options={WalletOptions}
+        />
+      )}
+      <InternalStackNav.Screen
+        name="BoostConsole"
+        component={BoostConsoleScreen}
+        options={hideHeader}
+      />
+      <InternalStackNav.Screen
+        name="GroupsList"
+        component={GroupsListScreen}
+        options={{ title: i18n.t('discovery.groups') }}
+      />
+      <InternalStackNav.Screen
+        name="PlusDiscoveryScreen"
+        component={PlusDiscoveryScreen}
+        options={{ title: i18n.t('plusTabTitleDiscovery') }}
+      />
+      <InternalStackNav.Screen name="Settings" component={SettingsScreen} />
+    </InternalStackNav.Navigator>
+  );
+};
+
 const MainScreen = () => {
   const dimensions = useDimensions().window;
 
@@ -216,29 +253,6 @@ const MainScreen = () => {
         component={TabsScreen}
         options={hideHeader}
       />
-      <DrawerNav.Screen
-        name="PlusDiscoveryScreen"
-        component={PlusDiscoveryScreen}
-        options={{ title: i18n.t('plusTabTitleDiscovery') }}
-      />
-      {featuresService.has('wallet') && (
-        <DrawerNav.Screen
-          name="Wallet"
-          component={WalletScreen}
-          options={WalletOptions}
-        />
-      )}
-      <DrawerNav.Screen
-        name="BoostConsole"
-        component={BoostConsoleScreen}
-        options={hideHeader}
-      />
-      <DrawerNav.Screen
-        name="GroupsList"
-        component={GroupsListScreen}
-        options={{ title: i18n.t('discovery.groups') }}
-      />
-      <DrawerNav.Screen name="Settings" component={SettingsScreen} />
     </DrawerNav.Navigator>
   );
 };

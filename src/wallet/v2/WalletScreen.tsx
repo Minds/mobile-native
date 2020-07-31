@@ -5,7 +5,6 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { observer } from 'mobx-react';
 
-import Topbar from '../../topbar/Topbar';
 import TopbarTabbar from '../../common/components/topbar-tabbar/TopbarTabbar';
 import TokensTab from './currency-tabs/TokensTab';
 import type { CurrencyType } from '../../types/Payment';
@@ -110,7 +109,6 @@ const WalletScreen = observer((props: PropsType) => {
   }
   return (
     <View style={theme.flexContainer}>
-      <Topbar navigation={props.navigation} />
       <View style={theme.paddingTop4x}>
         <TopbarTabbar
           titleStyle={theme.bold}

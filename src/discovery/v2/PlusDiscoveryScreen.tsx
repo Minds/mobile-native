@@ -1,26 +1,25 @@
 import React from 'react';
 
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import { observer } from 'mobx-react';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 import { DiscoveryTrendsList } from './trends/DiscoveryTrendsList';
-import Topbar from '../../topbar/Topbar';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { useDiscoveryV2Store } from './DiscoveryV2Context';
 import { TDiscoveryV2Tabs } from './DiscoveryV2Store';
 import TopbarTabbar from '../../common/components/topbar-tabbar/TopbarTabbar';
 import { DiscoveryTagsList } from './tags/DiscoveryTagsList';
-import { DrawerParamList } from '../../navigation/NavigationTypes';
+import { InternalStackParamList } from '../../navigation/NavigationTypes';
 import i18n from '../../common/services/i18n.service';
 
 type PlusDiscoveryScreenRouteProp = RouteProp<
-  DrawerParamList,
+  InternalStackParamList,
   'PlusDiscoveryScreen'
 >;
 type PlusDiscoveryScreenNavigationProp = StackNavigationProp<
-  DrawerParamList,
+  InternalStackParamList,
   'PlusDiscoveryScreen'
 >;
 
@@ -47,10 +46,19 @@ const PlusDiscoveryScreen = observer(({ navigation }: PropsType) => {
     }
   };
 
+  const theme = ThemedStyles.style;
+
   return (
     <View style={ThemedStyles.style.flexContainer}>
-      <Topbar navigation={navigation} />
       <View style={ThemedStyles.style.backgroundSecondary}>
+        <Text
+          style={[
+            theme.titleText,
+            theme.paddingLeft4x,
+            theme.paddingVertical2x,
+          ]}>
+          {i18n.t('plusTabTitleDiscovery')}
+        </Text>
         <TopbarTabbar
           current={store.activeTabId}
           onChange={(tabId) => {

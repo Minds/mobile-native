@@ -93,7 +93,10 @@ const getOptionsList = (navigation) => {
         />
       ),
       onPress: () => {
-        navigation.navigate('GroupsList');
+        navigation.navigate('Tabs', {
+          screen: 'CaptureTab',
+          params: { screen: 'GroupsList' },
+        });
       },
     },
   ];
@@ -111,7 +114,10 @@ const getOptionsList = (navigation) => {
           />
         ),
         onPress: () => {
-          navigation.navigate('Wallet', {});
+          navigation.navigate('Tabs', {
+            screen: 'CaptureTab',
+            params: { screen: 'Wallet' },
+          });
         },
       },
       {
@@ -124,7 +130,10 @@ const getOptionsList = (navigation) => {
           />
         ),
         onPress: () => {
-          navigation.navigate('BoostConsole');
+          navigation.navigate('Tabs', {
+            screen: 'CaptureTab',
+            params: { screen: 'BoostConsole' },
+          });
         },
       },
     ];
@@ -142,7 +151,10 @@ const getOptionsList = (navigation) => {
         />
       ),
       onPress: () => {
-        navigation.navigate('Settings');
+        navigation.navigate('Tabs', {
+          screen: 'CaptureTab',
+          params: { screen: 'Settings' },
+        });
       },
     },
   ];

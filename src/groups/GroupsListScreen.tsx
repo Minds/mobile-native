@@ -18,7 +18,6 @@ import withPreventDoubleTap from '../common/components/PreventDoubleTap';
 import { withErrorBoundary } from '../common/components/ErrorBoundary';
 import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
-import Topbar from '../topbar/Topbar';
 
 const DebouncedGroupsListItem = withErrorBoundary(
   withPreventDoubleTap(GroupsListItem, "Can't show this group"),
@@ -97,7 +96,6 @@ export default class GroupsListScreen extends Component {
 
     const header = (
       <View style={styles.header}>
-        <Topbar navigation={this.props.navigation} />
         <Text
           style={[
             theme.titleText,

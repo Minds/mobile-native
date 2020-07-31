@@ -18,6 +18,7 @@ import MessengerTabIcon from '../messenger/MessengerTabIcon';
 import MessengerScreen from '../messenger/MessengerScreen';
 import Topbar from '../topbar/Topbar.tsx';
 import colors from '../styles/Colors';
+import { InternalStack } from '../navigation/NavigationStack';
 
 export type TabParamList = {
   Newsfeed: {};
@@ -118,7 +119,7 @@ const Tabs = observer(function ({ navigation }) {
         />
         <Tab.Screen
           name="CaptureTab"
-          component={View}
+          component={InternalStack}
           options={{
             tabBarTestID: 'CaptureTabButton',
             tabBarButton: (props) => (

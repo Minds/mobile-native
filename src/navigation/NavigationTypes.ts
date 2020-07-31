@@ -9,6 +9,9 @@ import type ActivityModel from '../newsfeed/ActivityModel';
 
 export type DrawerParamList = {
   Tabs: {};
+};
+
+export type InternalStackParamList = {
   PlusDiscoveryScreen: {};
   Wallet: {};
   BoostConsole: {};
