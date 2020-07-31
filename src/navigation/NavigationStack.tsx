@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react';
-
 import {
   createNativeStackNavigator,
   NativeStackNavigationOptions,
@@ -7,6 +6,8 @@ import {
 import { useDimensions } from '@react-native-community/hooks';
 import { createSharedElementStackNavigator } from 'react-navigation-shared-element';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import { Platform } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import LoginScreen from '../auth/LoginScreen';
 import ForgotScreen from '../auth/ForgotScreen';
@@ -89,7 +90,7 @@ import RecurringPayments from '../settings/screens/RecurringPayments';
 import ReportedContentScreen from '../report/ReportedContentScreen';
 import AppInfoScreen from '../settings/screens/AppInfoScreen';
 import WalletScreen from '../wallet/v2/WalletScreen';
-import { Platform } from 'react-native';
+import ModalTransition from './ModalTransition';
 
 const isIos = Platform.OS === 'ios';
 
@@ -106,7 +107,7 @@ const activityOptions = ({ route }) => ({
 
 const AppStackNav = createNativeStackNavigator<AppStackParamList>();
 const AuthStackNav = createNativeStackNavigator<AuthStackParamList>();
-const RootStackNav = createNativeStackNavigator<RootStackParamList>();
+const RootStackNav = createStackNavigator<RootStackParamList>();
 // const MainSwiper = createMaterialTopTabNavigator<MainSwiperParamList>();
 const DrawerNav = createDrawerNavigator<DrawerParamList>();
 
@@ -194,13 +195,14 @@ const WalletOptions = () => ({
   headerShown: false,
 });
 
-const MainSwiperScreen = () => {
+const MainScreen = () => {
   const dimensions = useDimensions().window;
 
   const isLargeScreen = dimensions.width >= 600;
   return (
     <DrawerNav.Navigator
       initialRouteName="Tabs"
+      edgeWidth={dimensions.width}
       drawerType="slide"
       drawerContent={Drawer}
       drawerStyle={isLargeScreen ? null : ThemedStyles.style.width90}>
@@ -242,7 +244,7 @@ const AppStack = function () {
     <AppStackNav.Navigator screenOptions={ThemedStyles.defaultScreenOptions}>
       <AppStackNav.Screen
         name="Main"
-        component={MainSwiperScreen}
+        component={MainScreen}
         options={hideHeader}
       />
       <AppStackNav.Screen
@@ -402,11 +404,6 @@ const AppStack = function () {
         options={({ route }) => ({
           title: i18n.t(`monetize.${route.params.pro ? 'pro' : 'plus'}Header`),
         })}
-      />
-      <AppStackNav.Screen
-        name="JoinMembershipScreen"
-        component={JoinMembershipScreen}
-        options={{ title: '' }}
       />
       <AppStackNav.Screen
         name="LearnMoreScreen"
@@ -585,18 +582,30 @@ const RootStack = function (props) {
   return (
     <RootStackNav.Navigator
       initialRouteName={initial}
-      // mode="modal"
+      mode="modal"
+      // @ts-ignore
       screenOptions={{
         headerShown: false,
-        ...ThemedStyles.defaultScreenOptions,
+        cardStyle: { backgroundColor: 'transparent' },
+        gestureEnabled: true,
+        ...ModalTransition,
+        cardOverlayEnabled: true,
       }}>
       {props.isLoggedIn ? (
         <Fragment>
           <RootStackNav.Screen name="App" component={AppStack} />
           <RootStackNav.Screen name="Gathering" component={Gathering} />
+          {/* Modal screens here */}
+          <RootStackNav.Screen
+            name="JoinMembershipScreen"
+            component={JoinMembershipScreen}
+            options={{ gestureResponseDistance: { vertical: 240 } }}
+          />
         </Fragment>
       ) : (
-        <RootStackNav.Screen name="Auth" component={AuthStack} />
+        <>
+          <RootStackNav.Screen name="Auth" component={AuthStack} />
+        </>
       )}
     </RootStackNav.Navigator>
   );

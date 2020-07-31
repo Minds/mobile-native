@@ -6,7 +6,6 @@ import { WalletStoreType } from '../wallet/v2/createWalletStore';
 import type FeedStore from '../common/stores/FeedStore';
 import { ComposeStoreType } from '../compose/useComposeStore';
 import type ActivityModel from '../newsfeed/ActivityModel';
-import { SupportTiersType } from '../wire/WireTypes';
 
 export type DrawerParamList = {
   Tabs: {};
@@ -21,6 +20,11 @@ export type RootStackParamList = {
   App: {};
   Auth: {};
   Gathering: {};
+  JoinMembershipScreen: {
+    user?: UserModel;
+    entity?: ActivityModel;
+    onComplete: Function;
+  };
 };
 
 export type AuthStackParamList = {
@@ -52,6 +56,11 @@ export type AppStackParamList = {
     };
     walletStore?: WalletStoreType;
     options?: Function;
+  };
+  JoinMembershipScreen: {
+    user?: UserModel;
+    entity?: ActivityModel;
+    onComplete?: Function;
   };
   ActivityFullScreenNav: {};
   Newsfeed: {};
@@ -143,11 +152,6 @@ export type AppStackParamList = {
   PlusScreen: {
     onComplete: Function;
     pro?: boolean;
-  };
-  JoinMembershipScreen: {
-    support_tier: SupportTiersType;
-    entity: ActivityModel;
-    onComplete: Function;
   };
 };
 

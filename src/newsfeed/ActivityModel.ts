@@ -378,7 +378,6 @@ export default class ActivityModel extends BaseModel {
       case 'members':
       case 'paywall':
         NavigationService.push('JoinMembershipScreen', {
-          support_tier,
           entity: this,
           onComplete: (resultComplete: any) => {
             if (resultComplete && resultComplete.payload.method === 'onchain') {

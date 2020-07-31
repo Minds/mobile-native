@@ -3,18 +3,20 @@ import React from 'react';
 import { ListItem } from 'react-native-elements';
 import ThemedStyles from '../../../styles/ThemedStyles';
 
+export type MenuItemItem = {
+  onPress?: () => void;
+  title: string | JSX.Element;
+  icon?:
+    | {
+        name: string;
+        type: string;
+      }
+    | JSX.Element;
+  noIcon?: boolean;
+};
+
 export type MenuItemPropsType = {
-  item: {
-    onPress?: () => void;
-    title: string | JSX.Element;
-    icon?:
-      | {
-          name: string;
-          type: string;
-        }
-      | JSX.Element;
-    noIcon?: boolean;
-  };
+  item: MenuItemItem;
   component?: any;
   containerItemStyle?: {} | [];
   testID?: string;
