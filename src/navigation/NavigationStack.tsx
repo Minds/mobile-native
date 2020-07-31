@@ -404,13 +404,6 @@ const AppStack = function () {
         options={{ title: 'Tier Management' }}
       />
       <AppStackNav.Screen
-        name="PlusScreen"
-        component={PlusScreen}
-        options={({ route }) => ({
-          title: i18n.t(`monetize.${route.params.pro ? 'pro' : 'plus'}Header`),
-        })}
-      />
-      <AppStackNav.Screen
         name="LearnMoreScreen"
         component={LearnMoreScreen}
         options={{
@@ -610,6 +603,15 @@ const RootStack = function (props) {
             name="JoinMembershipScreen"
             component={JoinMembershipScreen}
             options={{ gestureResponseDistance: { vertical: 240 } }}
+          />
+          <RootStackNav.Screen
+            name="PlusScreen"
+            component={PlusScreen}
+            options={({ route }) => ({
+              title: i18n.t(
+                `monetize.${route.params.pro ? 'pro' : 'plus'}Header`,
+              ),
+            })}
           />
         </Fragment>
       ) : (
