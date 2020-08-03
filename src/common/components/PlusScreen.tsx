@@ -307,7 +307,6 @@ const styles = StyleSheet.create({
     marginVertical: 15,
   },
   container: {
-    marginBottom: 10,
     flex: 1,
     borderTopRightRadius: 15,
     borderTopLeftRadius: 15,
