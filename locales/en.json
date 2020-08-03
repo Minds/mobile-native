@@ -630,6 +630,13 @@
     "dateofBirthTooltip": "Please enter your birth date to confirm your age and help us improve our recommendations.",
     "locationTooltip": "Please enter your city to help us connect you with channels in your area. We do not track your exact location."
   },
+  "membership": {
+    "noTokens":"It doesn't accept Tokens",
+    "noUSD":"It doesn't accept USD",
+    "join":"Join Membership",
+    "pay": "Pay Custom Tier",
+    "alreadyMember":"You are already a member"
+  },
   "wallet": {
     "wallet":"Wallet",
     "cash":"Cash",
