@@ -159,35 +159,6 @@ const getOptionsList = (navigation) => {
     },
   ];
 
-  if (featuresService.has('dark-mode')) {
-    const name = ThemedStyles.theme
-      ? i18n.t('settings.lightMode')
-      : i18n.t('settings.darkMode');
-
-    const icon = ThemedStyles.theme ? 'wb-sunny' : 'moon';
-
-    const IconCmp = ThemedStyles.theme ? Icon : IconFa;
-
-    list.push({
-      name,
-      icon: (
-        <IconCmp
-          name={icon}
-          size={ICON_SIZE}
-          style={[theme.colorIcon, styles.icon]}
-        />
-      ),
-      onPress: () => {
-        navigation.closeDrawer();
-        if (ThemedStyles.theme) {
-          ThemedStyles.setLight();
-        } else {
-          ThemedStyles.setDark();
-        }
-      },
-    });
-  }
-
   return list;
 };
 
