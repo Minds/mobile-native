@@ -44,7 +44,6 @@ export const MINDS_FEATURES = {
   discovery: true,
   channel: true,
   wallet: true,
-  'plus-2020': true,
   'mindsVideo-2020': true,
 };
 

@@ -64,11 +64,11 @@ export default function ({ navigation }) {
         <MenuItem item={item} i={i} />
       ))}
 
-      {featuresService.has('plus-2020') && (
+      {featuresService.has('paywall-2020') && (
         <MenuSubtitle>{i18n.t('settings.otherOptions.b')}</MenuSubtitle>
       )}
 
-      {featuresService.has('plus-2020') &&
+      {featuresService.has('paywall-2020') &&
         paidContent.map((item, i) => <MenuItem item={item} i={i} />)}
 
       <MenuSubtitle>{i18n.t('settings.otherOptions.c')}</MenuSubtitle>

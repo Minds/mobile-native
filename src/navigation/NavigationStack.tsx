@@ -210,13 +210,16 @@ export const InternalStack = () => {
   } as NativeStackNavigationOptions;
   return (
     <InternalStackNav.Navigator screenOptions={internalOptions}>
-      {featuresService.has('wallet') && (
-        <InternalStackNav.Screen
-          name="Wallet"
-          component={WalletScreen}
-          options={WalletOptions}
-        />
-      )}
+      <InternalStackNav.Screen
+        name="PlusDiscoveryScreen"
+        component={PlusDiscoveryScreen}
+        options={{ title: i18n.t('plusTabTitleDiscovery') }}
+      />
+      <InternalStackNav.Screen
+        name="Wallet"
+        component={WalletScreen}
+        options={WalletOptions}
+      />
       <InternalStackNav.Screen
         name="BoostConsole"
         component={BoostConsoleScreen}
@@ -227,11 +230,7 @@ export const InternalStack = () => {
         component={GroupsListScreen}
         options={{ title: i18n.t('discovery.groups') }}
       />
-      <InternalStackNav.Screen
-        name="PlusDiscoveryScreen"
-        component={PlusDiscoveryScreen}
-        options={{ title: i18n.t('plusTabTitleDiscovery') }}
-      />
+
       <InternalStackNav.Screen name="Settings" component={SettingsScreen} />
     </InternalStackNav.Navigator>
   );
@@ -294,7 +293,9 @@ const AppStack = function () {
       <AppStackNav.Screen
         name="MonetizeSelector"
         component={
-          featuresService.has('plus-2020') ? MonetizeScreen : MonetizeSelector
+          featuresService.has('paywall-2020')
+            ? MonetizeScreen
+            : MonetizeSelector
         }
         options={hideHeader}
       />
