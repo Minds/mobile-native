@@ -14,6 +14,7 @@ import mindsService from '../common/services/minds.service';
 import supportTiersService from '../common/services/support-tiers.service';
 import settingsStore from '../settings/SettingsStore';
 import attachmentService from '../common/services/attachment.service';
+import { CommonActions } from '@react-navigation/native';
 
 /**
  * Display an error message to the user.
@@ -26,7 +27,7 @@ const showError = (message) => {
     titleStyle: ThemedStyles.style.fontXL,
     duration: 2000,
     backgroundColor: ThemedStyles.getColor('tertiary_background'),
-    type: 'error',
+    type: 'danger',
   });
 };
 
@@ -38,7 +39,7 @@ const DEFAULT_MONETIZE = {
 /**
  * Composer store
  */
-export default function (props) {
+export default function ({ props, newsfeed }) {
   return {
     isRemind: false,
     isEdit: false,
@@ -56,6 +57,7 @@ export default function (props) {
     mediaToConfirm: null,
     extra: null,
     posting: false,
+    group: null,
     onScreenFocused() {
       const params = props.route.params;
       if (
@@ -98,6 +100,36 @@ export default function (props) {
         isRemind: undefined,
         text: undefined,
       });
+    },
+    onPost(entity, isEdit) {
+      const { goBack, dispatch } = props.navigation;
+      const { params } = props.route;
+
+      if (!isEdit) {
+        newsfeed.prepend(entity);
+      }
+
+      if (params && params.parentKey) {
+        console.log('params', params);
+        const routeParams = {
+          prepend:
+            isEdit || (this.isRemind && params.parentKey.includes('GroupView'))
+              ? undefined
+              : entity,
+          group: null,
+        };
+
+        if (this.group) {
+          routeParams.group = this.group;
+        }
+
+        dispatch({
+          ...CommonActions.setParams(routeParams),
+          source: params.parentKey, // passed from index
+        });
+      }
+      goBack();
+      this.clear(false);
     },
     hydrateFromEntity() {
       this.text = this.entity.message || '';
@@ -190,7 +222,7 @@ export default function (props) {
     setText(text) {
       this.text = text;
 
-      if (!this.hasAttachment && !this.isRemind) {
+      if (!this.attachment.hasAttachment && !this.isRemind) {
         this.embed.richEmbedCheck(text);
       }
     },
@@ -256,6 +288,7 @@ export default function (props) {
       this.time_created = null;
       this.wire_threshold = DEFAULT_MONETIZE;
       this.tags = [];
+      this.group = null;
     },
     /**
      * On media
@@ -294,7 +327,7 @@ export default function (props) {
      */
     async onMediaFromGallery(media) {
       this.mediaToConfirm = media;
-      this.acceptMedia(media);
+      this.acceptMedia();
     },
     /**
      * Accept media
@@ -327,7 +360,7 @@ export default function (props) {
               const resp = await getSingle(data.guid);
               return ActivityModel.create(resp.activity);
             }
-          } finally {
+          } catch (e) {
             this.clear(false);
           }
           return false;
@@ -347,6 +380,7 @@ export default function (props) {
 
       // Plus Monetize?
       if (
+        this.wire_threshold &&
         'support_tier' in this.wire_threshold &&
         this.wire_threshold.support_tier.urn ===
           mindsService.settings.plus.support_tier_urn
@@ -423,13 +457,14 @@ export default function (props) {
 
       if (props.route.params && props.route.params.group) {
         newPost.container_guid = props.route.params.group.guid;
+        this.group = props.route.params.group;
         // remove the group to avoid reuse it on future posts
         props.navigation.setParams({ group: undefined });
       }
 
       // keep the container if it is an edited activity
       if (this.isEdit && typeof this.entity.container_guid !== 'undefined') {
-        newPost.container_guid = this.entity.containerGuid;
+        newPost.container_guid = this.entity.container_guid;
       }
 
       if (this.tags.length) {

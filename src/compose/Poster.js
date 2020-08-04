@@ -43,7 +43,7 @@ export default observer(function (props) {
       : props.store.submit());
 
     if (entity) {
-      props.onPost(entity, isEdit);
+      props.store.onPost(entity, isEdit);
     }
   }, [props]);
 
