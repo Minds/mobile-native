@@ -1,13 +1,6 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
-import {
-  View,
-  StyleSheet,
-  ScrollView,
-  Text,
-  Alert,
-  Platform,
-} from 'react-native';
+import { View, StyleSheet, ScrollView, Text, Platform } from 'react-native';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { useSafeArea } from 'react-native-safe-area-context';
 import HeaderComponent from '../../../common/components/HeaderComponent';
@@ -31,6 +24,7 @@ import Selector from '../../../common/components/Selector';
 import MenuItem, {
   MenuItemItem,
 } from '../../../common/components/menus/MenuItem';
+import { showNotification } from '../../../../AppMessages';
 
 const isIos = Platform.OS === 'ios';
 
@@ -221,7 +215,7 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
     if (store.payMethod === 'usd') {
       if (!store.currentTier.has_usd) {
         store.setLoading(false);
-        Alert.alert(i18n.t('sorry'), "It doesn't accept USD");
+        showNotification(i18n.t('membership.noUSD'));
       } else {
         payWithUsd();
       }
@@ -229,7 +223,7 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
     if (store.payMethod === 'tokens') {
       if (!store.currentTier.has_tokens) {
         store.setLoading(false);
-        Alert.alert(i18n.t('sorry'), "It doesn't accept Tokens");
+        showNotification(i18n.t('membership.noTokens'));
       } else {
         payWithTokens();
       }
@@ -274,8 +268,8 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
   }
 
   const payText = store.currentTier?.public
-    ? 'Join Membership'
-    : 'Pay Custom Tier';
+    ? i18n.t('membership.join')
+    : i18n.t('membership.pay');
 
   const item = store.currentItem;
   item.onPress = openSelector;
@@ -302,7 +296,7 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
                 Join a membership
               </Text>
               <View style={theme.flexContainer} />
-              <Text style={switchTextStyle}>{'USD'}</Text>
+              <Text style={switchTextStyle}>USD</Text>
               <Switch
                 value={store.payMethod === 'tokens'}
                 onSyncPress={store.setPayMethod}
@@ -342,13 +336,30 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
               </View>
             )}
           <View style={[theme.padding4x, theme.marginTop2x]}>
-            <Button
-              onPress={confirmSend}
-              text={payText}
-              containerStyle={[theme.paddingVertical2x, styles.buttonRight]}
-              textStyle={[theme.fontMedium, theme.fontL]}
-              loading={store.loading}
-            />
+            <View
+              style={[
+                store.currentTier?.subscription_urn
+                  ? theme.rowJustifySpaceBetween
+                  : theme.rowJustifyEnd,
+                theme.alignCenter,
+              ]}>
+              {!!store.currentTier?.subscription_urn && (
+                <Text style={[theme.fontL, theme.colorAlert]}>
+                  {i18n.t('membership.alreadyMember')}
+                </Text>
+              )}
+              <Button
+                onPress={confirmSend}
+                text={payText}
+                containerStyle={[
+                  theme.paddingVertical2x,
+                  store.currentTier?.subscription_urn ? styles.disabled : null,
+                ]}
+                textStyle={[theme.fontMedium, theme.fontL]}
+                loading={store.loading}
+                disabled={!!store.currentTier?.subscription_urn}
+              />
+            </View>
           </View>
         </ScrollView>
       ) : (
@@ -385,6 +396,9 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 15,
     overflow: 'hidden',
   },
+  disabled: {
+    opacity: 0.5,
+  },
   backIcon: {
     shadowOpacity: 0.4,
     textShadowRadius: 4,
@@ -401,9 +415,6 @@ const styles = StyleSheet.create({
   costText: {
     fontFamily: 'Roboto-Medium',
     letterSpacing: 0,
-  },
-  buttonRight: {
-    alignSelf: 'flex-end',
   },
 });
 

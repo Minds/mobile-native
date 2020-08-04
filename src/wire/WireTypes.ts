@@ -30,6 +30,7 @@ export type SupportTiersType = {
   has_usd: boolean;
   has_tokens: boolean;
   tokens: string;
+  subscription_urn?: string;
 };
 
 export interface SupportTiersResponse extends ApiResponse {
