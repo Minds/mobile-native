@@ -66,9 +66,11 @@ const renderTiers = (
           title: (
             <View
               style={[
+                theme.fullWidth,
                 theme.rowJustifySpaceBetween,
                 theme.paddingTop3x,
                 theme.paddingBottom3x,
+                theme.paddingLeft2x,
               ]}>
               <Text style={theme.colorPrimaryText}>{tier.name}</Text>
               <Text
@@ -81,7 +83,7 @@ const renderTiers = (
             ? checkIcon
             : transparentCheckIcon,
         }}
-        containerItemStyle={theme.backgroundPrimary}
+        containerItemStyle={[theme.backgroundPrimary]}
       />
     ));
   } else {
