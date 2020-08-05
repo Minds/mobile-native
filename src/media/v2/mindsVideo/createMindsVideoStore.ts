@@ -215,7 +215,7 @@ const createMindsVideoStore = ({ entity }) => {
      */
     async play(sound: boolean = true) {
       if ((!this.sources || this.sources.length === 0) && entity) {
-        if (entity.paywall && featuresService.has('plus-2020')) {
+        if (entity.paywall && featuresService.has('paywall-2020')) {
           await entity.unlockOrPay();
           if (entity.paywall) {
             return;

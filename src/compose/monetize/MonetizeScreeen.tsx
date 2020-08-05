@@ -14,6 +14,7 @@ import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '../../navigation/NavigationTypes';
 import mindsService from '../../common/services/minds.service';
+import featuresService from '../../common/services/features.service';
 
 type MonetizeScreenRouteProp = RouteProp<AppStackParamList, 'MonetizeSelector'>;
 type MonetizeScreenNavigationProp = StackNavigationProp<
@@ -94,15 +95,17 @@ const MonetizeScreen = observer(({ route }: PropsType) => {
       />
       <View style={theme.marginTop4x}>
         <MenuSubtitle>{i18n.t('monetize.options')}</MenuSubtitle>
-        <MenuItem
-          item={{
-            onPress: useNavCallback('PlusMonetize', store),
-            title: i18n.t('monetize.plus'),
-            icon: <IconItem isActive={isPlusSelected} />,
-          }}
-          containerItemStyle={theme.backgroundPrimary}
-          testID="monetizePlus"
-        />
+        {featuresService.has('plus-2020') && (
+          <MenuItem
+            item={{
+              onPress: useNavCallback('PlusMonetize', store),
+              title: i18n.t('monetize.plus'),
+              icon: <IconItem isActive={isPlusSelected} />,
+            }}
+            containerItemStyle={theme.backgroundPrimary}
+            testID="monetizePlus"
+          />
+        )}
         <MenuItem
           item={{
             onPress: () =>

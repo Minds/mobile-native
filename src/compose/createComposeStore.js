@@ -401,7 +401,7 @@ export default function (props) {
 
       if (this.paywalled) {
         newPost.paywall = true;
-        newPost.wire_threshold = featuresService.has('plus-2020')
+        newPost.wire_threshold = featuresService.has('paywall-2020')
           ? this.wire_threshold
           : this.wire_threshold.min;
       }
@@ -485,7 +485,7 @@ export default function (props) {
     },
     get paywalled() {
       return (
-        (featuresService.has('plus-2020') && this.haveSupportTier) ||
+        (featuresService.has('paywall-2020') && this.haveSupportTier) ||
         (this.wire_threshold && this.wire_threshold.min > 0)
       );
     },

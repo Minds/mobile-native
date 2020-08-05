@@ -12,8 +12,8 @@ export type DrawerParamList = {
 };
 
 export type InternalStackParamList = {
-  PlusDiscoveryScreen: {};
   Wallet: {};
+  PlusDiscoveryScreen: {};
   BoostConsole: {};
   GroupsList: {};
   Settings: {};

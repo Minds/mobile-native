@@ -805,7 +805,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 201907230162;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 35U3998VRZ;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Minds/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -816,8 +816,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.minds.mobile;
 				PRODUCT_NAME = Minds;
-				PROVISIONING_PROFILE = "4bb9ac5d-bab9-489d-87df-2ca73e3ee3c5";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.minds.mobile";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};

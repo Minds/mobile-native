@@ -306,7 +306,7 @@ class MindsVideo extends Component<PropsType, StateType> {
     };
 
     if (!this.state.sources && this.props.entity) {
-      if (this.props.entity.paywall && featuresService.has('plus-2020')) {
+      if (this.props.entity.paywall && featuresService.has('paywall-2020')) {
         await this.props.entity.unlockOrPay();
         if (this.props.entity.paywall) {
           return;

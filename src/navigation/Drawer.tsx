@@ -70,19 +70,21 @@ const getOptionsList = (navigation) => {
         navigation.navigate('Discovery');
       },
     },
-    {
-      name: i18n.t('wire.lock.plus'),
-      icon: (
-        <Icon
-          name="add-to-queue"
-          size={ICON_SIZE - 4}
-          style={[theme.colorIcon, styles.icon]}
-        />
-      ),
-      onPress: () => {
-        navigation.navigate('PlusDiscoveryScreen');
-      },
-    },
+    featuresService.has('plus-2020')
+      ? {
+          name: i18n.t('wire.lock.plus'),
+          icon: (
+            <Icon
+              name="add-to-queue"
+              size={ICON_SIZE - 4}
+              style={[theme.colorIcon, styles.icon]}
+            />
+          ),
+          onPress: () => {
+            navigation.navigate('PlusDiscoveryScreen');
+          },
+        }
+      : null,
     {
       name: i18n.t('discovery.groups'),
       icon: (
@@ -241,19 +243,21 @@ export default function Drawer(props) {
           </Text>
         </View>
         <View style={styles.body}>
-          {getOptionsList(props.navigation).map((l, i) => (
-            <ListItem
-              Component={TouchableOpacity}
-              key={i}
-              title={l.name}
-              titleStyle={[styles.menuText, theme.colorPrimaryText]}
-              containerStyle={styles.listItem}
-              pad={5}
-              leftIcon={l.icon}
-              onPress={l.onPress}
-              {...testID(l.name)}
-            />
-          ))}
+          {getOptionsList(props.navigation).map((l, i) =>
+            !l ? null : (
+              <ListItem
+                Component={TouchableOpacity}
+                key={i}
+                title={l.name}
+                titleStyle={[styles.menuText, theme.colorPrimaryText]}
+                containerStyle={styles.listItem}
+                pad={5}
+                leftIcon={l.icon}
+                onPress={l.onPress}
+                {...testID(l.name)}
+              />
+            ),
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>
