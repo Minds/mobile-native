@@ -83,7 +83,7 @@ const renderTiers = (
             ? checkIcon
             : transparentCheckIcon,
         }}
-        containerItemStyle={[theme.backgroundPrimary]}
+        containerItemStyle={theme.backgroundPrimary}
       />
     ));
   } else {
