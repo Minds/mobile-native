@@ -9,6 +9,7 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import BlogCard from '../../blogs/BlogCard';
 import type BlogModel from '../../blogs/BlogModel';
 import i18n from '../../common/services/i18n.service';
+import { useFocusEffect } from '@react-navigation/native';
 
 type PropsType = {
   navigation: any;
@@ -28,6 +29,16 @@ const ChannelScreen = observer((props: PropsType) => {
       store.initialLoad(params);
     }
   }, [props.route, store]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const params = props.route.params;
+      if (params && params.prepend) {
+        store.feedStore.prepend(params.prepend);
+        props.navigation.setParams({ prepend: undefined });
+      }
+    }, [props.navigation, props.route.params, store.feedStore]),
+  );
 
   const renderBlog = useCallback(
     (row: { item: BlogModel }) => {

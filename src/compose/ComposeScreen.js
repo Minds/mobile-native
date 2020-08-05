@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { View, Text, StatusBar, StyleSheet } from 'react-native';
 import { observer } from 'mobx-react';
 import { useSafeArea } from 'react-native-safe-area-context';
@@ -10,57 +10,27 @@ import useComposeStore from './useComposeStore';
 import MediaConfirm from './MediaConfirm';
 import i18nService from '../common/services/i18n.service';
 import {
-  CommonActions,
   useIsFocused,
   useFocusEffect,
+  RouteProp,
 } from '@react-navigation/native';
 import { useLegacyStores } from '../common/hooks/use-stores';
 import FloatingBackButton from '../common/components/FloatingBackButton';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { AppStackParamList } from '../navigation/NavigationTypes';
 
 /**
  * Compose Screen
  * @param {Object} props
  */
 export default observer(function (props) {
-  const store = useComposeStore(props);
-  const insets = useSafeArea();
   const stores = useLegacyStores();
+  const store = useComposeStore({ props, newsfeed: stores.newsfeed });
+  const insets = useSafeArea();
   const focused = useIsFocused();
 
   // on focus
   useFocusEffect(store.onScreenFocused);
-
-  /**
-   * On post
-   */
-  const onPost = useCallback(
-    (entity, isEdit) => {
-      const { goBack, dispatch } = props.navigation;
-      const { params } = props.route;
-
-      if (!isEdit) {
-        stores.newsfeed.prepend(entity);
-      }
-
-      if (params && params.parentKey) {
-        const routeParams = {
-          prepend: isEdit ? undefined : entity,
-        };
-
-        if (params.group) {
-          routeParams.group = params.group;
-        }
-
-        dispatch({
-          ...CommonActions.setParams(routeParams),
-          source: params.parentKey, // passed from index
-        });
-      }
-      goBack(null);
-      store.clear(false);
-    },
-    [props, stores, store],
-  );
 
   const tabStyle = { paddingBottom: insets.bottom || 30 };
 
@@ -98,7 +68,7 @@ export default observer(function (props) {
                   styles.tabText,
                   store.mode === 'photo' ? theme.colorLink : null,
                 ]}
-                onPress={store.setModePhoto}>
+                onPress={() => store.setModePhoto()}>
                 {i18nService.t('capture.photo').toUpperCase()}
               </Text>
               <Text
@@ -134,7 +104,7 @@ export default observer(function (props) {
       ) : store.mode === 'confirm' ? (
         <MediaConfirm store={store} />
       ) : (
-        <Poster store={store} onPost={onPost} />
+        <Poster store={store} />
       )}
     </View>
   );
