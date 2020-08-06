@@ -36,6 +36,7 @@ import NavigationService from '../navigation/NavigationService';
 import type CommentModel from '../comments/CommentModel';
 import type ActivityModel from '../newsfeed/ActivityModel';
 import featuresService from '../common/services/features.service';
+import { UserError } from '../common/UserError';
 
 const isIOS = Platform.OS === 'ios';
 
@@ -198,11 +199,11 @@ class MindsVideo extends Component<PropsType, StateType> {
       if (response.transcoding) {
         this.setState({ transcoding: true });
       } else {
-        logService.exception('[MindsVideo]', new Error(err));
+        logService.exception('[MindsVideo]', new UserError(err));
         this.setState({ error: true, inProgress: false });
       }
     } catch (error) {
-      logService.exception('[MindsVideo]', new Error(error));
+      logService.exception('[MindsVideo]', new UserError(error));
       this.setState({ error: true, inProgress: false });
     }
   };
