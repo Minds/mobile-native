@@ -38,14 +38,16 @@ export default class ConversationView extends Component {
 
   render() {
     const item = this.props.item;
-    const avatarImg = {
-      uri:
-        MINDS_CDN_URI +
-        'icon/' +
-        item.participants[0].guid +
-        '/medium/' +
-        item.participants[0].icontime,
-    };
+    const avatarImg = item.participants[0]
+      ? {
+          uri:
+            MINDS_CDN_URI +
+            'icon/' +
+            item.participants[0].guid +
+            '/medium/' +
+            item.participants[0].icontime,
+        }
+      : null;
     const styles = this.props.styles;
     let unread = item.unread ? (
       <Icon
