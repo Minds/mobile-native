@@ -1,6 +1,36 @@
 {
   "versions": [
     {
+      "version": "4.4.0",
+      "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-4-0.apk",
+      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.4.0",
+      "changelog": [
+        "New side menu",
+        "New video player",
+        "Video auto-play support added",
+        "Better support for portrait content",
+        "Hold tap to copy the text of a post",
+        "Search bar enhancement",
+        "Improved post compose screen",
+        "Many UI improvement and bug fixes"
+      ],
+      "unstable": false,
+      "hashes": [
+        {
+          "type": "md5",
+          "value": "4ff2cefae8055713dcc9b908ff309268"
+        },
+        {
+          "type": "sha256",
+          "value": "20fd40e520a0099881a6e27b02d5d90e49bb67337919695fcb22835198716fce"
+        },
+        {
+          "type": "sha512",
+          "value": "3bdce6753bed8b9049e114834674ab7fa8ca3eb5a6b5356134f7e7e256fe98e1a82433d72835f3f63bcb23669cecdaf1f8341aca5688b0d3f1e856f5d6a6d859"
+        }
+      ]
+    },
+    {
       "version": "4.2.1",
       "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-2-1.apk",
       "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.2.1",
