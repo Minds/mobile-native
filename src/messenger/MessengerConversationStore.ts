@@ -219,15 +219,9 @@ class MessengerConversationStore {
     const fromSelf = session.guid == message.ownerObj.guid;
 
     if (!fromSelf) {
-      //const index =
-
-      for (let index in message.messages) {
-        try {
-          message.rowKey = Date.now().toString();
-          // break on correct decryption
-
-          if (message.message) break;
-        } catch (err) {}
+      if (!message.message) {
+        message.message = message.messages[1];
+        message.rowKey = message.guid;
       }
 
       this.addMessage(message);
