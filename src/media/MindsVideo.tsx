@@ -126,9 +126,11 @@ class MindsVideo extends Component<PropsType, StateType> {
       onMoveShouldSetPanResponder: () => true,
       onMoveShouldSetPanResponderCapture: () => true,
     });
-    this.onScreenBlur = NavigationService.addListener('blur', () => {
-      this.pause();
-    });
+    if (NavigationService && NavigationService.addListener) {
+      this.onScreenBlur = NavigationService.addListener('blur', () => {
+        this.pause();
+      });
+    }
   }
 
   /**
