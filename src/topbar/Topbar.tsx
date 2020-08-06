@@ -43,7 +43,10 @@ export const Topbar = observer((props: PropsType) => {
   };
 
   const openWallet = () => {
-    props.navigation.navigate('Wallet');
+    props.navigation.navigate('Tabs', {
+      screen: 'CaptureTab',
+      params: { screen: 'Wallet' },
+    });
   };
 
   const theme = ThemedStyles.style;
