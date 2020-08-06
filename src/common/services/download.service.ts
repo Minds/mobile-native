@@ -19,31 +19,35 @@ class DownloadService {
    * @param {object} entity
    */
   async downloadToGallery(url: string, entity: ActivityEntity) {
-    if (Platform.OS === 'ios') {
-      return CameraRoll.saveToCameraRoll(url);
-    } else {
-      let hasPermission = await permissions.checkWriteExternalStorage();
-      if (!hasPermission) {
-        hasPermission = await permissions.writeExternalStorage();
-      }
+    try {
+      if (Platform.OS === 'ios') {
+        return CameraRoll.saveToCameraRoll(url);
+      } else {
+        let hasPermission = await permissions.checkWriteExternalStorage();
+        if (!hasPermission) {
+          hasPermission = await permissions.writeExternalStorage();
+        }
 
-      if (hasPermission) {
-        const type = this.isGif(entity) ? 'gif' : 'jpg';
-        const filePath = `${RNFS.CachesDirectoryPath}/${entity.guid}.${type}`;
-        const download = RNFS.downloadFile({
-          fromUrl: url,
-          toFile: filePath,
-          progressDivider: 1,
-        });
+        if (hasPermission) {
+          const type = this.isGif(entity) ? 'gif' : 'jpg';
+          const filePath = `${RNFS.CachesDirectoryPath}/${entity.guid}.${type}`;
+          const download = RNFS.downloadFile({
+            fromUrl: url,
+            toFile: filePath,
+            progressDivider: 1,
+          });
 
-        return download.promise.then((result) => {
-          if (result.statusCode === 200) {
-            return CameraRoll.saveToCameraRoll(filePath);
-          } else {
-            showNotification(i18nService.t('errorDownloading'), 'danger');
-          }
-        });
+          return download.promise.then((result) => {
+            if (result.statusCode === 200) {
+              return CameraRoll.saveToCameraRoll(filePath);
+            } else {
+              showNotification(i18nService.t('errorDownloading'), 'danger');
+            }
+          });
+        }
       }
+    } catch (e) {
+      showNotification(i18nService.t('errorDownloading'), 'danger');
     }
   }
 
