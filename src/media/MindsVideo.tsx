@@ -324,7 +324,7 @@ class MindsVideo extends Component<PropsType, StateType> {
 
       state.sources = response.sources.filter((v) => v.type === 'video/mp4');
 
-      if (Array.isArray(state.sources)) {
+      if (Array.isArray(state.sources) && state.sources.length > 0) {
         state.video = {
           uri: state.sources[0].src,
           headers: apiService.buildHeaders(),
