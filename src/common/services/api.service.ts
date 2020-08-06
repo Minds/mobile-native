@@ -136,7 +136,7 @@ class ApiService {
       params = {};
     }
 
-    params.cb = Date.now(); //bust the cache every time
+    params['cb'] = Date.now(); //bust the cache every time
 
     const paramsString = this.getParamsString(params);
     const sep = url.indexOf('?') > -1 ? '&' : '?';
