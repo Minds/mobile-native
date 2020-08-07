@@ -41,20 +41,22 @@ type JoinMembershipScreenNavigationProp = StackNavigationProp<
 type PropsType = {
   route: JoinMembershipScreenRouteProp;
   navigation: JoinMembershipScreenNavigationProp;
+  tiers?: Array<SupportTiersType>;
 };
 
 const selectValueExtractor = (item) => item.name;
 const selectIdExtractor = (item) => item.urn;
 
-const createJoinMembershipStore = () => {
+const createJoinMembershipStore = ({ tiers }) => {
+  console.log(tiers);
   const store = {
     user: null as UserModel | null,
     card: '' as any,
-    currentTier: null as SupportTiersType | null,
-    list: [] as Array<SupportTiersType>,
+    currentTier: tiers ? tiers[0] : (null as SupportTiersType | null),
+    list: (tiers || []) as Array<SupportTiersType>,
     payMethod: 'tokens' as payMethod,
     loading: false,
-    loadingData: true,
+    loadingData: tiers ? false : true,
     get currentItem(): MenuItemItem {
       return {
         title: this.currentTier ? capitalize(this.currentTier.name) : '',
@@ -76,8 +78,8 @@ const createJoinMembershipStore = () => {
       }
       this.setLoadingData(true);
       try {
-        const tiers = await supportTiersService.getAllFromGuid(this.user.guid);
-        this.list = tiers as Array<SupportTiersType>;
+        const response = await supportTiersService.getAllFromGuid(this.user.guid);
+        this.list = response as Array<SupportTiersType>;
 
         if (!this.currentTier && this.list[0]) {
           this.setCurrent(this.list[0], true);
@@ -106,6 +108,7 @@ const createJoinMembershipStore = () => {
 };
 
 const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
+  const tiers = route.params ? route.params.tiers : undefined;
   /**
    * TODO
    * Get amounts
@@ -113,7 +116,7 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
    * show input if tokens is selected payment
    */
   const { wire } = useLegacyStores();
-  const store = useLocalStore(createJoinMembershipStore);
+  const store = useLocalStore(createJoinMembershipStore, { tiers });
   const selectorRef = useRef<Selector>(null);
 
   const { onComplete } = route.params;
@@ -133,9 +136,11 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
     } else if (user) {
       store.setUser(user);
     }
-    // load tiers
-    store.loadList();
-  }, [route.params, store]);
+    // load tiers if they are not in params
+    if (!tiers || tiers.length === 0) {
+      store.loadList();
+    }
+  }, [route.params, store, tiers]);
 
   const theme = ThemedStyles.style;
 

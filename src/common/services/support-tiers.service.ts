@@ -1,5 +1,6 @@
 import api, { ApiResponse } from './api.service';
 import { SupportTiersType } from '../../wire/WireTypes';
+import { Platform } from 'react-native';
 
 interface SupportTiersResponse extends ApiResponse {
   support_tier?: SupportTiersType;
@@ -20,6 +21,10 @@ class SupportTiersService {
     const response = <SupportTiersResponse>(
       await api.get(`${this.endpoint}/all/${guid}`)
     );
+    // only show tiers with tokens on iOS
+    if (response.support_tiers && Platform.OS === 'ios') {
+      return response.support_tiers.filter((t) => t.has_tokens);
+    }
     return response.support_tiers;
   }
 

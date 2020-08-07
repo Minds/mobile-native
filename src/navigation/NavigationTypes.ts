@@ -6,6 +6,7 @@ import { WalletStoreType } from '../wallet/v2/createWalletStore';
 import type FeedStore from '../common/stores/FeedStore';
 import { ComposeStoreType } from '../compose/useComposeStore';
 import type ActivityModel from '../newsfeed/ActivityModel';
+import { SupportTiersType } from '../wire/WireTypes';
 
 export type DrawerParamList = {
   Tabs: {};
@@ -27,6 +28,7 @@ export type RootStackParamList = {
     user?: UserModel;
     entity?: ActivityModel;
     onComplete: Function;
+    tiers?: Array<SupportTiersType>;
   };
   PlusScreen: {
     onComplete: Function;
@@ -68,6 +70,7 @@ export type AppStackParamList = {
     user?: UserModel;
     entity?: ActivityModel;
     onComplete?: Function;
+    tiers?: Array<SupportTiersType>;
   };
   ActivityFullScreenNav: {};
   Newsfeed: {};
