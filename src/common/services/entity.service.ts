@@ -16,7 +16,6 @@ class EntitiesService {
       })
       .catch((err) => {
         logService.exception('[EntitiesService]', err);
-        throw new Error(i18n.t('errorMessage'));
       });
   }
 }
