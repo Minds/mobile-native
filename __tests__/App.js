@@ -39,7 +39,6 @@ jest.mock('react-native-screens/native-stack');
 //mock i18n
 jest.mock('react-native-video');
 
-jest.mock('../src/blockchain/transaction-modal/BlockchainTransactionModalScreen', () => 'BlockchainTransactionModalScreen');
 jest.mock('../src/keychain/KeychainModalScreen', () => 'KeychainModalScreen');
 
 jest.mock('../src/common/services/translation.service');

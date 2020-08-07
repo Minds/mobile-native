@@ -31,9 +31,9 @@ class BlockchainWalletSelectorStore {
     this.opts = opts;
     this.isSelecting = true;
 
-    NavigationService.navigate('BlockchainWalletModal');
+    NavigationService.push('BlockchainWalletModal');
 
-    return await new Promise((resolve) => {
+    return await new Promise((resolve, reject) => {
       if (dispose) {
         dispose();
         dispose = void 0;
@@ -43,6 +43,10 @@ class BlockchainWalletSelectorStore {
         this,
         'selected',
         action((change) => {
+          if (change.newValue === null) {
+            reject(new Error('E_CANCELED'));
+            return;
+          }
           if (typeof change.newValue !== 'undefined') {
             dispose();
             dispose = void 0;
