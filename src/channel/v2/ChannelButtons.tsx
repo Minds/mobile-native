@@ -148,7 +148,12 @@ const ChannelButtons = observer((props: PropsType) => {
               : ThemedStyles.getColor('green')
           }
           text={i18n.t('join')}
-          textStyle={isIos ? theme.fontL : theme.fontM}
+          textStyle={[
+            isIos ? theme.fontL : theme.fontM,
+            !ThemedStyles.theme && !showSubscribe
+              ? null
+              : theme.colorPrimaryText,
+          ]}
           containerStyle={styles.button}
           textColor="white"
           onPress={join}
