@@ -78,7 +78,9 @@ const createJoinMembershipStore = ({ tiers }) => {
       }
       this.setLoadingData(true);
       try {
-        const response = await supportTiersService.getAllFromGuid(this.user.guid);
+        const response = await supportTiersService.getAllFromGuid(
+          this.user.guid,
+        );
         this.list = response as Array<SupportTiersType>;
 
         if (!this.currentTier && this.list[0]) {
