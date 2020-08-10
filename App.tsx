@@ -29,7 +29,6 @@ import NavigationService, {
   setTopLevelNavigator,
 } from './src/navigation/NavigationService';
 import KeychainModalScreen from './src/keychain/KeychainModalScreen';
-// import BlockchainTransactionModalScreen from './src/blockchain/transaction-modal/BlockchainTransactionModalScreen';
 import NavigationStack from './src/navigation/NavigationStack';
 import { getStores } from './AppStores';
 import './AppErrors';
@@ -390,11 +389,9 @@ class App extends Component<Props, State> {
       <KeychainModalScreen key="keychainModal" keychain={stores.keychain} />
     );
 
-    const blockchainTransactionModal = null;
-
     const tosModal = <TosModal user={stores.user} key="tosModal" />;
 
-    return [app, keychainModal, blockchainTransactionModal, tosModal];
+    return [app, keychainModal, tosModal];
   }
 }
 

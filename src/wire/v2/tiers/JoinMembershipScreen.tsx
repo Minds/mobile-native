@@ -205,8 +205,7 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
       if (!done) {
         throw new UserError(i18n.t('boosts.errorPayment'));
       }
-
-      complete();
+      setTimeout(complete, 500);
     } catch (err) {
       console.log('payWithTokens err', err);
     } finally {

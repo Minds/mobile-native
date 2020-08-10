@@ -24,6 +24,7 @@ export type RootStackParamList = {
   App: {};
   Auth: {};
   Gathering: {};
+  BlockchainWalletModal: {};
   JoinMembershipScreen: {
     user?: UserModel;
     entity?: ActivityModel;
@@ -139,7 +140,6 @@ export type AppStackParamList = {
   BlockchainWallet: {};
   Contributions: {};
   Transactions: {};
-  BlockchainWalletModal: {};
   BlockchainWalletImport: {};
   BlockchainWalletDetails: {};
   Report: {};
