@@ -18,15 +18,15 @@
       "hashes": [
         {
           "type": "md5",
-          "value": "4ff2cefae8055713dcc9b908ff309268"
+          "value": "1b2de257983afebd7af65d9cab19346f"
         },
         {
           "type": "sha256",
-          "value": "20fd40e520a0099881a6e27b02d5d90e49bb67337919695fcb22835198716fce"
+          "value": "76e8cf9e792123aa09c5cb4d8b397436e1eb1eb17f5de90af80f9ff56ba32437"
         },
         {
           "type": "sha512",
-          "value": "3bdce6753bed8b9049e114834674ab7fa8ca3eb5a6b5356134f7e7e256fe98e1a82433d72835f3f63bcb23669cecdaf1f8341aca5688b0d3f1e856f5d6a6d859"
+          "value": "8a91e9f6bd07a30077fc8548527472aaeb38dac62a9dc3f04196b9c64bea9725f010496ae3346eeb7007ab2c3bfd76422b8e16df4d2f1ec15055e209f3505980"
         }
       ]
     },
