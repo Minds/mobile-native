@@ -137,7 +137,7 @@ const ChannelHeader = observer((props: PropsType) => {
           ) : null}
         </View>
         <ChannelButtons
-          channel={channel}
+          store={props.store}
           onEditPress={() =>
             props.navigation.push('EditChannelScreen', { store: props.store })
           }
