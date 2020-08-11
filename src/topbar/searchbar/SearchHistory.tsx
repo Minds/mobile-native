@@ -3,9 +3,8 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import i18n from '../../common/services/i18n.service';
 import { useLegacyStores } from '../../common/hooks/use-stores';
-import { SearchResultStoreType } from './createSearchResultStore';
 import { useKeyboard } from '@react-native-community/hooks';
-import MenuSubtitle from '../../common/components/menus/MenuSubtitle';
+import { SearchResultStoreType } from './createSearchResultStore';
 
 type PropsType = {
   localStore: SearchResultStoreType;

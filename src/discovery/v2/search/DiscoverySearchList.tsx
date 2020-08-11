@@ -14,6 +14,8 @@ import { useDiscoveryV2SearchStore } from './DiscoveryV2SearchContext';
 import GroupsListItemNew from '../../../groups/GroupsListItemNew';
 import DiscoveryUser from '../../DiscoveryUserNew';
 import i18n from '../../../common/services/i18n.service';
+import type UserModel from '../../../channel/UserModel';
+import { useStores, useLegacyStores } from '../../../common/hooks/use-stores';
 
 interface Props {
   navigation: any;
@@ -24,6 +26,7 @@ export const DiscoverySearchList = observer((props: Props) => {
   const theme = ThemedStyles.style;
 
   const store = useDiscoveryV2SearchStore();
+  const searchBarStore = useStores().searchBar;
   let listRef = useRef<FlatList<[]>>(null);
 
   useEffect(() => {
@@ -41,7 +44,15 @@ export const DiscoverySearchList = observer((props: Props) => {
 
       switch (row.item.type) {
         case 'user':
-          entity = <DiscoveryUser row={row} navigation={props.navigation} />;
+          entity = (
+            <DiscoveryUser
+              row={row}
+              navigation={props.navigation}
+              onUserTap={(item: UserModel) =>
+                searchBarStore.user.searchBarItemTap(item)
+              }
+            />
+          );
           break;
         case 'group':
           entity = (
@@ -61,6 +72,7 @@ export const DiscoverySearchList = observer((props: Props) => {
               entity={row.item}
               navigation={props.navigation}
               autoHeight={false}
+              storeUserTap={true}
             />
           );
       }
@@ -73,7 +85,12 @@ export const DiscoverySearchList = observer((props: Props) => {
         </ErrorBoundary>
       );
     },
-    [props.navigation, theme.borderBottomHair, theme.borderPrimary],
+    [
+      props.navigation,
+      theme.borderBottomHair,
+      theme.borderPrimary,
+      searchBarStore,
+    ],
   );
 
   const EmptyPartial = () => {

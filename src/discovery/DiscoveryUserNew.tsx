@@ -19,6 +19,7 @@ type PropsType = {
     item: UserModel;
   };
   navigation: any;
+  onUserTap?: Function;
 };
 
 @observer

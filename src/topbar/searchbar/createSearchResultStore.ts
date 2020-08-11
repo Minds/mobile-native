@@ -1,15 +1,11 @@
 import type UserModel from '../../channel/UserModel';
 import type UserStore from '../../auth/UserStore';
 import { userItem } from './SearchBar.service';
+import NavigationService from '../../navigation/NavigationService';
 
-const createSearchResultStore = ({
-  user,
-  navigation,
-}: {
-  user: UserStore;
-  navigation: any;
-}) => {
+const createSearchResultStore = () => {
   const store = {
+    user: {} as UserStore,
     search: '',
     loading: false,
     suggested: [] as UserModel[],
@@ -27,7 +23,8 @@ const createSearchResultStore = ({
     setHistory(history: []) {
       this.history = history;
     },
-    async init() {
+    async init(user: UserStore) {
+      this.user = user;
       this.history = await user.getSearchHistory();
     },
     get shouldShowSuggested() {
@@ -38,14 +35,14 @@ const createSearchResultStore = ({
       this.search = search;
       if (this.shouldShowSuggested) {
         this.loading = true;
-        this.suggested = await user.getSuggestedSearch(search);
+        this.suggested = await this.user.getSuggestedSearch(search);
         this.loading = false;
       }
     },
     searchBarItemTap(item) {
       this.search = '';
-      user.toggleSearching();
-      user.searchBarItemTap(item);
+      this.user.toggleSearching();
+      this.user.searchBarItemTap(item);
     },
     setSearchesAndQueryDiscovery(search: string) {
       this.search = search;
@@ -54,7 +51,7 @@ const createSearchResultStore = ({
     },
     searchDiscovery() {
       this.search = this.searchText;
-      navigation.navigate('DiscoverySearch', { query: this.search });
+      NavigationService.navigate('DiscoverySearch', { query: this.search });
       this.searchBarItemTap(this.search);
     },
   };

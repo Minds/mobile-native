@@ -217,7 +217,7 @@ exports[`blog view screen component should renders correctly 1`] = `
             }
           }
         >
-          <OwnerBlock
+          <Unknown
             entity={
               BlogModel {
                 "__list": null,
@@ -387,7 +387,7 @@ exports[`blog view screen component should renders correctly 1`] = `
             >
               Apr 27, 2018, 07:17
             </Text>
-          </OwnerBlock>
+          </Unknown>
         </View>
         <View
           style={

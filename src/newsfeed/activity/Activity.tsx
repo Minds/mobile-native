@@ -50,6 +50,7 @@ type PropsType = {
   parentMature?: boolean;
   onLayout?: Function;
   showCommentsOutlet?: boolean;
+  storeUserTap?: boolean;
 };
 
 /**
@@ -403,7 +404,8 @@ export default class Activity extends Component<PropsType> {
       <OwnerBlock
         entity={this.props.entity}
         navigation={this.props.navigation}
-        rightToolbar={this.props.hideTabs ? null : rightToolbar}>
+        rightToolbar={this.props.hideTabs ? null : rightToolbar}
+        storeUserTap={this.props.storeUserTap}>
         <View style={ThemedStyles.style.rowJustifyStart}>
           <Text
             style={[

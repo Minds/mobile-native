@@ -16,7 +16,7 @@ getStores.mockReturnValue({
   },
 });
 // const DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
-describe('Owner component', () => {
+xdescribe('Owner component', () => {
   let screen, entity, navigation;
   beforeEach(() => {
     navigation = { navigate: jest.fn(), push: jest.fn() };

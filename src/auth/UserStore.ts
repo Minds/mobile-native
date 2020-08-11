@@ -105,7 +105,7 @@ class UserStore {
    */
   searchBarItemTap(item: UserModel | string) {
     if (item instanceof UserModel) {
-      const user = { user: item };
+      const user = { user: item.toPlainObject() };
       searchBarService.onItemTap(user);
     } else {
       searchBarService.onItemTap(item);
