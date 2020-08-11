@@ -4,16 +4,17 @@ import { RNCamera } from 'react-native-camera';
 import Icon from 'react-native-vector-icons/Ionicons';
 import FIcon from 'react-native-vector-icons/Feather';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import ThemedStyles from '../styles/ThemedStyles';
-import RecordButton from './RecordButton';
-import { observer, useLocalStore } from 'mobx-react';
-import { useSafeArea } from 'react-native-safe-area-context';
-import mindsService from '../common/services/minds.service';
-import VideoClock from './VideoClock';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { useTransition } from 'react-native-redash';
 import Animated from 'react-native-reanimated';
 import { when } from 'mobx';
+import { observer, useLocalStore } from 'mobx-react';
+
+import ThemedStyles from '../styles/ThemedStyles';
+import RecordButton from './RecordButton';
+import { useSafeArea } from 'react-native-safe-area-context';
+import mindsService from '../common/services/minds.service';
+import VideoClock from './VideoClock';
 
 /**
  * Camera
