@@ -220,7 +220,7 @@ class RegisterForm extends Component {
   render() {
     const CS = ThemedStyles.style;
     return (
-      <View style={[CS.flexContainerCenter, CS.backgroundPrimary]}>
+      <View style={CS.flexContainerCenter}>
         {this.getFormBody()}
       </View>
     );

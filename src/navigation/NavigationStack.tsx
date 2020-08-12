@@ -6,8 +6,12 @@ import {
 import { useDimensions } from '@react-native-community/hooks';
 import { createSharedElementStackNavigator } from 'react-navigation-shared-element';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { Platform } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { Platform, View } from 'react-native';
+import {
+  createStackNavigator,
+  CardStyleInterpolators,
+  TransitionSpecs,
+} from '@react-navigation/stack';
 
 import LoginScreen from '../auth/LoginScreen';
 import ForgotScreen from '../auth/ForgotScreen';
@@ -93,6 +97,9 @@ import ReportedContentScreen from '../report/ReportedContentScreen';
 import AppInfoScreen from '../settings/screens/AppInfoScreen';
 import WalletScreen from '../wallet/v2/WalletScreen';
 import ModalTransition from './ModalTransition';
+import AuthTransition from './AuthTransition';
+import VideoBackground from '../common/components/VideoBackground';
+import TransparentLayer from '../common/components/TransparentLayer';
 
 const isIos = Platform.OS === 'ios';
 
@@ -108,7 +115,7 @@ const activityOptions = ({ route }) => ({
 });
 
 const AppStackNav = createNativeStackNavigator<AppStackParamList>();
-const AuthStackNav = createNativeStackNavigator<AuthStackParamList>();
+const AuthStackNav = createStackNavigator<AuthStackParamList>();
 const RootStackNav = createStackNavigator<RootStackParamList>();
 const InternalStackNav = createNativeStackNavigator<InternalStackParamList>();
 // const MainSwiper = createMaterialTopTabNavigator<MainSwiperParamList>();
@@ -574,23 +581,15 @@ const AppStack = function () {
 
 const AuthStack = function () {
   return (
-    <AuthStackNav.Navigator>
-      <AuthStackNav.Screen
-        name="Login"
-        component={LoginScreen}
-        options={hideHeader}
-      />
-      <AuthStackNav.Screen
-        name="Forgot"
-        component={ForgotScreen}
-        options={hideHeader}
-      />
-      <AuthStackNav.Screen
-        name="Register"
-        component={RegisterScreen}
-        options={hideHeader}
-      />
-    </AuthStackNav.Navigator>
+    <View style={ThemedStyles.style.flexContainer}>
+      <VideoBackground source={require('../assets/videos/minds-loop.mp4')} />
+      <TransparentLayer />
+      <AuthStackNav.Navigator headerMode="none" screenOptions={AuthTransition}>
+        <AuthStackNav.Screen name="Login" component={LoginScreen} />
+        <AuthStackNav.Screen name="Forgot" component={ForgotScreen} />
+        <AuthStackNav.Screen name="Register" component={RegisterScreen} />
+      </AuthStackNav.Navigator>
+    </View>
   );
 };
 

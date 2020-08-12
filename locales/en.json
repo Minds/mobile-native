@@ -70,7 +70,7 @@
     "accept": "I have read and accept the",
     "termsAndConditions": "terms of use",
     "join": "Create a channel",
-    "createChannel": "Join Minds Now",
+    "createChannel": "Join Minds",
     "haveAccount": "Don't have an account?",
     "alreadyHaveAccount": "Already have an account? &{login}&",
     "failedToLoginNewAccount": "The login with your new account has failed, please try to log in the login screen"

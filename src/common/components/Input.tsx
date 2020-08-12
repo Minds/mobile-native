@@ -156,7 +156,7 @@ export default class Input extends Component<propsType> {
     ) : null;
 
     return (
-      <View style={theme.marginBottom2x}>
+      <View>
         <View style={styles.row}>
           <View style={styles.row}>
             <Text style={[styles.label, this.props.labelStyle]}>

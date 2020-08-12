@@ -16,6 +16,7 @@ const InputContainer = (props) => {
         theme.borderTop,
         noBottomBorder ? null : theme.borderBottom,
         theme.borderPrimary,
+        props.containerStyle,
       ]}>
       <Input
         style={[styles.input, theme.paddingLeft0x, theme.fontXL, style]}
@@ -34,7 +35,9 @@ export default InputContainer;
 
 const styles = StyleSheet.create({
   input: {
-    height: 40,
+    padding: 0,
+    height: 32,
+    marginBottom: 7,
     borderWidth: 0,
   },
 });

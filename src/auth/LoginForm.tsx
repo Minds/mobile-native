@@ -1,13 +1,12 @@
-//@ts-nocheck
 import React, { Component } from 'react';
-
 import * as Animatable from 'react-native-animatable';
 
 import {
   View,
   Text,
   LayoutAnimation,
-  // TextInput,
+  Dimensions,
+  Platform,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -16,19 +15,36 @@ import authService from './AuthService';
 
 import i18n from '../common/services/i18n.service';
 import logService from '../common/services/log.service';
-import Input from '../common/components/Input';
 import Button from '../common/components/Button';
 import ThemedStyles from '../styles/ThemedStyles';
+import InputContainer from '../common/components/InputContainer';
+import BoxShadow from '../common/components/BoxShadow';
+import { styles, shadowOpt, icon } from './styles';
 
 type PropsType = {
-  onLogin: Function;
+  onLogin?: Function;
+  onRegisterPress?: () => void;
   onForgot: Function;
 };
+
+type StateType = {
+  username: string;
+  password: string;
+  msg: string;
+  twoFactorToken: string;
+  twoFactorCode: string;
+  hidePassword: boolean;
+  inProgress: boolean;
+};
+
+const { height } = Dimensions.get('window');
+
+const loginMargin = { marginTop: height / 55 };
 
 /**
  * Login Form
  */
-export default class LoginForm extends Component<PropsType> {
+export default class LoginForm extends Component<PropsType, StateType> {
   /**
    * State
    */
@@ -38,9 +54,9 @@ export default class LoginForm extends Component<PropsType> {
     msg: '',
     twoFactorToken: '',
     twoFactorCode: '',
+    language: '',
     hidePassword: true,
     inProgress: false,
-    showLanguages: false,
   };
 
   /**
@@ -55,89 +71,98 @@ export default class LoginForm extends Component<PropsType> {
    * Render
    */
   render() {
-    const CS = ThemedStyles.style;
+    const theme = ThemedStyles.style;
 
     const msg = this.state.msg ? (
       <Animatable.Text
         animation="bounceInLeft"
         useNativeDriver
-        style={[CS.subTitleText, CS.colorSecondaryText, CS.textCenter]}
+        style={[theme.subTitleText, theme.colorSecondaryText, theme.textCenter]}
         testID="loginMsg">
         {this.state.msg}
       </Animatable.Text>
     ) : null;
 
-    return (
-      <View style={[CS.flexContainer, CS.marginTop6x]}>
-        <Text style={[CS.titleText, CS.colorPrimaryText, CS.marginBottom2x]}>
-          {i18n.t('auth.login')}
-        </Text>
-        {msg}
-        <Input
+    const inputs = (
+      <View style={styles.shadow}>
+        <InputContainer
+          containerStyle={styles.inputBackground}
           placeholder={i18n.t('auth.username')}
           onChangeText={this.setUsername}
           value={this.state.username}
-          style={CS.marginBottom2x}
           testID="usernameInput"
+          noBottomBorder
         />
         <View>
-          <Input
+          <InputContainer
+            containerStyle={styles.inputBackground}
             placeholder={i18n.t('auth.password')}
             secureTextEntry={this.state.hidePassword}
             onChangeText={this.setPassword}
             value={this.state.password}
-            style={CS.marginBottom2x}
             testID="userPasswordInput"
           />
           <Icon
             name={this.state.hidePassword ? 'md-eye' : 'md-eye-off'}
             size={25}
             onPress={this.toggleHidePassword}
-            style={CS.inputIcon}
+            style={[theme.inputIcon, icon]}
           />
         </View>
-        <Button
-          onPress={() => this.onLoginPress()}
-          text={i18n.t('auth.login')}
-          containerStyle={[CS.button, CS.fullWidth]}
-          textStyle={CS.buttonText}
-          key={1}
-          loading={this.state.inProgress}
-          loadingRight={true}
-          disabled={this.state.inProgress}
-          disabledStyle={CS.backgroundTransparent}
-          testID="loginButton"
-        />
-        <View style={CS.marginTop4x}>
-          <Text style={[CS.link, CS.fontL]} onPress={this.onForgotPress}>
-            {i18n.t('auth.forgot')}
-          </Text>
+      </View>
+    );
+
+    const inputsWithShadow = Platform.select({
+      ios: inputs,
+      android: <BoxShadow setting={shadowOpt}>{inputs}</BoxShadow>, // Android fallback for shadows
+    });
+
+    return (
+      <View style={theme.flexContainer}>
+        {msg}
+        {inputsWithShadow}
+        <View style={[theme.margin6x, theme.flexContainer]}>
+          <Button
+            onPress={() => this.onLoginPress()}
+            text={i18n.t('auth.login')}
+            containerStyle={[
+              theme.transparentButton,
+              theme.paddingVertical3x,
+              loginMargin,
+              theme.fullWidth,
+            ]}
+            textStyle={theme.buttonText}
+            loading={this.state.inProgress}
+            disabled={this.state.inProgress}
+            testID="loginButton"
+          />
+          <View style={theme.marginTop4x}>
+            <Text
+              style={[theme.colorWhite, theme.fontL, theme.textCenter]}
+              onPress={this.onForgotPress}>
+              {i18n.t('auth.forgot')}
+            </Text>
+          </View>
+          <View style={theme.flexContainer} />
+          <Button
+            onPress={this.props.onRegisterPress}
+            text={i18n.t('auth.createChannel')}
+            containerStyle={[
+              theme.transparentButton,
+              theme.paddingVertical3x,
+              theme.fullWidth,
+              theme.marginTop6x,
+              styles.lightButton,
+            ]}
+            textStyle={theme.buttonText}
+            loading={this.state.inProgress}
+            disabled={this.state.inProgress}
+            testID="loginButton"
+          />
         </View>
       </View>
     );
   }
-
-  /**
-   * Show languages
-   */
-  showLanguages = () => {
-    this.setState({ showLanguages: true });
-  };
-
-  /**
-   * Language selected
-   */
-  languageSelected = (language) => {
-    this.setState({ language, showLanguages: false });
-    i18n.setLocale(language);
-  };
-
-  /**
-   * Cancel language selection
-   */
-  cancel = () => {
-    this.setState({ showLanguages: false });
-  };
 
   /**
    * Set two factor
@@ -190,8 +215,10 @@ export default class LoginForm extends Component<PropsType> {
     if (this.state.twoFactorToken) {
       authService
         .twoFactorAuth(this.state.twoFactorToken, this.state.twoFactorCode)
-        .then((data) => {
-          this.props.onLogin();
+        .then(() => {
+          if (this.props.onLogin) {
+            this.props.onLogin();
+          }
         })
         .catch((err) => {
           logService.exception('[LoginForm]', err);
@@ -199,8 +226,8 @@ export default class LoginForm extends Component<PropsType> {
     } else {
       authService
         .login(this.state.username, this.state.password)
-        .then((data) => {
-          this.props.onLogin();
+        .then(() => {
+          this.props.onLogin && this.props.onLogin();
         })
         .catch((errJson) => {
           LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);

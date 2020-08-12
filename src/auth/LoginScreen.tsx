@@ -1,162 +1,79 @@
-//@ts-nocheck
-import React, { Component } from 'react';
-
-import {
-  StyleSheet,
-  View,
-  Keyboard,
-  Animated,
-  Text,
-  TouchableOpacity,
-  ScrollView,
-  Platform,
-  KeyboardAvoidingView,
-} from 'react-native';
+import React from 'react';
+import { StyleSheet, View, Dimensions, Text } from 'react-native';
+import Animated from 'react-native-reanimated';
+import { useTransition, mix } from 'react-native-redash';
 
 import LoginForm from './LoginForm';
-import logService from '../common/services/log.service';
-import i18nService from '../common/services/i18n.service';
-import sessionService from '../common/services/session.service';
 
 import ThemedStyles from '../styles/ThemedStyles';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import BannerInfo from '../topbar/BannerInfo';
+import DismissKeyboard from '../common/components/DismissKeyboard';
+import { useKeyboard } from '@react-native-community/hooks';
+import i18n from '../common/services/i18n.service';
 
-const LOGO_HEIGHT = 80;
-const LOGO_HEIGHT_SMALL = 40;
+const { height, width } = Dimensions.get('window');
+const LOGO_HEIGHT = height / 7;
+const titleMargin = { paddingVertical: height / 18 };
 
-/**
- * Login screen
- */
-export default class LoginScreen extends Component {
-  state = {
-    keyboard: false,
-  };
+type PropsType = {
+  navigation: any;
+};
 
-  constructor(props) {
-    super(props);
+export default function LoginScreen(props: PropsType) {
+  const theme = ThemedStyles.style;
 
-    this.logoHeight = new Animated.Value(LOGO_HEIGHT);
-  }
+  const keyboard = useKeyboard();
+  const transition = useTransition(keyboard.keyboardShown);
+  const translateY = mix(transition, 0, -LOGO_HEIGHT);
+  const containerHeight = mix(transition, LOGO_HEIGHT, 0);
+  const opacity = mix(transition, 1, 0);
 
-  componentDidMount() {
-    // Setting this here because if user register, then onboarding then logout and login again, will go to onboarding again
-    sessionService.setInitialScreen('Tabs');
-    this.keyboardWillShowSub = Keyboard.addListener(
-      'keyboardDidShow',
-      this.keyboardWillShow,
-    );
-    this.keyboardWillHideSub = Keyboard.addListener(
-      'keyboardDidHide',
-      this.keyboardWillHide,
-    );
-  }
-
-  componentWillUnmount() {
-    this.keyboardWillShowSub.remove();
-    this.keyboardWillHideSub.remove();
-  }
-
-  keyboardWillShow = (event) => {
-    Animated.timing(this.logoHeight, {
-      duration: 500,
-      toValue: LOGO_HEIGHT_SMALL,
-    }).start();
-
-    // this.setState({keyboard: true});
-    // LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
-  };
-
-  keyboardWillHide = (event) => {
-    Animated.timing(this.logoHeight, {
-      duration: 500,
-      toValue: LOGO_HEIGHT,
-    }).start();
-
-    // this.setState({keyboard: false});
-    // LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
-  };
-
-  /**
-   * Render
-   */
-  render() {
-    const CS = ThemedStyles.style;
-
-    return (
-      <KeyboardAvoidingView
-        style={[CS.flexColumnStretch, CS.backgroundPrimary]}
-        behavior={Platform.OS == 'ios' ? 'padding' : null}>
-        <SafeAreaView style={[styles.flex10]}>
-          <BannerInfo logged={false} />
-          <ScrollView style={CS.flexContainer} keyboardShouldPersistTaps={true}>
-            <View style={[CS.paddingHorizontal4x, CS.flexColumnStretch]}>
+  return (
+    <SafeAreaView style={theme.flexContainer}>
+      <BannerInfo logged={false} />
+      <DismissKeyboard>
+        <View style={theme.flexContainer}>
+          <View style={theme.flexColumnStretch}>
+            <Animated.View style={[styles.bulb, { height: containerHeight }]}>
               <Animated.Image
                 resizeMode="contain"
-                source={require('./../assets/logos/bulb.png')}
-                style={[styles.bulb, { height: this.logoHeight }]}
+                source={require('./../assets/logos/logo-white.png')}
+                style={[styles.image, { transform: [{ translateY }], opacity }]}
               />
-              <LoginForm
-                onLogin={() => this.login()}
-                onForgot={this.onPressForgot}
-              />
-            </View>
-          </ScrollView>
-        </SafeAreaView>
-        <View
-          style={[
-            CS.paddingVertical2x,
-            CS.backgroundSecondary,
-            CS.mindsLayoutFooter,
-          ]}>
-          <TouchableOpacity
-            onPress={this.onPressRegister}
-            testID="registerButton">
-            <View style={CS.flexColumnCentered}>
-              <Text style={[CS.subTitleText, CS.colorSecondaryText]}>
-                {i18nService.t('auth.haveAccount')}
-              </Text>
-              <Text style={[CS.titleText, CS.colorPrimaryText]}>
-                {i18nService.t('auth.createChannel')}
-              </Text>
-            </View>
-          </TouchableOpacity>
+            </Animated.View>
+            <Text
+              style={[
+                theme.titleText,
+                theme.textCenter,
+                theme.colorWhite,
+                titleMargin,
+              ]}>
+              {i18n.t('auth.login')}
+            </Text>
+
+            <LoginForm
+              onForgot={() => props.navigation.push('Forgot')}
+              onRegisterPress={() => props.navigation.push('Register')}
+            />
+          </View>
         </View>
-      </KeyboardAvoidingView>
-    );
-  }
-
-  /**
-   * On press forgot
-   */
-  onPressForgot = () => {
-    this.props.navigation.push('Forgot');
-  };
-
-  /**
-   * On press register
-   */
-  onPressRegister = () => {
-    this.props.navigation.push('Register');
-  };
-
-  /**
-   * On login successful
-   */
-  login() {
-    logService.info('user logged in');
-  }
+      </DismissKeyboard>
+    </SafeAreaView>
+  );
 }
 
 const styles = StyleSheet.create({
-  flex10: {
-    flex: 10,
-  },
   bulb: {
-    width: 40,
-    height: 67,
+    width: '100%',
+    height: LOGO_HEIGHT,
+    justifyContent: 'flex-end',
+    // height: 70,
+  },
+  image: {
+    height: 0.3679 * (width * 0.43),
+    width: '43%',
     alignSelf: 'center',
-    marginTop: 10,
   },
 });
