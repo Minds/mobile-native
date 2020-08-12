@@ -90,6 +90,7 @@
     "react-native-modal-datetime-picker": "^8.5.1",
     "react-native-navigation-bar-color": "^2.0.1",
     "react-native-notifications": "Minds/react-native-notifications#333e376f866a805f250cc68706d97ace503b948a",
+    "react-native-permissions": "^2.1.5",
     "react-native-phone-input": "thegamenicorus/react-native-phone-input#6ab1a91a09ddd4272fe85e30ecedf092f0fcb1a7",
     "react-native-progress": "^4.0.3",
     "react-native-qrcode-svg": "^5.2.0",
