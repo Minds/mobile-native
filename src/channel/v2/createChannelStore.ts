@@ -8,7 +8,8 @@ import type {
   customImagePromise,
 } from '../../common/services/image-picker.service';
 import sessionService from '../../common/services/session.service';
-
+import supportTiersService from '../../common/services/support-tiers.service';
+import type { SupportTiersType } from '../../wire/WireTypes';
 type InitialLoadParams = {
   entity?: { guid: string } | UserModel;
   guid?: string;
@@ -40,6 +41,7 @@ const createChannelStore = () => {
     tab: 'feed' as ChannelTabType,
     channel: null as UserModel | null,
     loaded: false,
+    tiers: <Array<SupportTiersType>>[],
     filter: 'all' as FilterType,
     feedStore: new FeedStore(true),
     showScheduled: false,
@@ -72,12 +74,14 @@ const createChannelStore = () => {
      * Initial load
      * @param params
      */
-    initialLoad(params: InitialLoadParams) {
-      if (params.guid || params.username) {
+    async initialLoad(params: InitialLoadParams) {
+      if (params.entity) {
+        this.loadFromEntity(params.entity);
+        this.tiers =
+          (await supportTiersService.getAllFromGuid(params.entity.guid)) || [];
+      } else if (params.guid || params.username) {
         //@ts-ignore
         this.loadFromGuidOrUsername(params.guid || params.username);
-      } else if (params.entity) {
-        this.loadFromEntity(params.entity);
       }
     },
     /**
@@ -142,7 +146,6 @@ const createChannelStore = () => {
         defaultChannel.guid,
         defaultChannel,
       );
-
       if (channel) {
         this.setChannel(channel);
         this.loadFeed();
@@ -158,6 +161,8 @@ const createChannelStore = () => {
       const channel = await channelsService.get(guidOrUsername);
       this.setChannel(channel);
       this.loadFeed();
+      this.tiers =
+        (await supportTiersService.getAllFromGuid(channel.guid)) || [];
     },
     async updateFromRemote(guidOrUsername: string) {
       const channel = await channelsService.get(

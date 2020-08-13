@@ -12,6 +12,7 @@ import { FLAG_MESSAGE } from '../../common/Permissions';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { UserError } from '../../common/UserError';
 import i18n from '../../common/services/i18n.service';
+import featuresService from '../../common/services/features.service';
 
 /**
  * Conversation Component
@@ -24,7 +25,10 @@ export default class ConversationView extends Component {
   _navToConversation = () => {
     if (this.props.navigation && this.props.item.can(FLAG_MESSAGE)) {
       try {
-        if (!this.props.item.allowContact) {
+        if (
+          !this.props.item.allowContact &&
+          featuresService.has('subscriber-conversations')
+        ) {
           throw new UserError(i18n.t('messenger.notAllowed'));
         }
         this.props.navigation.push('Conversation', {
@@ -38,14 +42,16 @@ export default class ConversationView extends Component {
 
   render() {
     const item = this.props.item;
-    const avatarImg = {
-      uri:
-        MINDS_CDN_URI +
-        'icon/' +
-        item.participants[0].guid +
-        '/medium/' +
-        item.participants[0].icontime,
-    };
+    const avatarImg = item.participants[0]
+      ? {
+          uri:
+            MINDS_CDN_URI +
+            'icon/' +
+            item.participants[0].guid +
+            '/medium/' +
+            item.participants[0].icontime,
+        }
+      : null;
     const styles = this.props.styles;
     let unread = item.unread ? (
       <Icon

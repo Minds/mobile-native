@@ -2,6 +2,10 @@ import React from 'react';
 import { View, Text, StatusBar, StyleSheet } from 'react-native';
 import { observer } from 'mobx-react';
 import { useSafeArea } from 'react-native-safe-area-context';
+import { useIsFocused, useFocusEffect } from '@react-navigation/native';
+import { useLegacyStores } from '../common/hooks/use-stores';
+import FloatingBackButton from '../common/components/FloatingBackButton';
+import PermissionsCheck from './PermissionsCheck';
 
 import ThemedStyles from '../styles/ThemedStyles';
 import Camera from './Camera';
@@ -9,15 +13,6 @@ import Poster from './Poster';
 import useComposeStore from './useComposeStore';
 import MediaConfirm from './MediaConfirm';
 import i18nService from '../common/services/i18n.service';
-import {
-  useIsFocused,
-  useFocusEffect,
-  RouteProp,
-} from '@react-navigation/native';
-import { useLegacyStores } from '../common/hooks/use-stores';
-import FloatingBackButton from '../common/components/FloatingBackButton';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { AppStackParamList } from '../navigation/NavigationTypes';
 
 /**
  * Compose Screen
@@ -43,12 +38,14 @@ export default observer(function (props) {
       {showCamera ? (
         <>
           {focused ? (
-            <Camera
-              onMedia={store.onMedia}
-              mode={store.mode}
-              onForceVideo={store.setModeVideo}
-              onPressGallery={() => store.selectFromGallery(store.mode)}
-            />
+            <PermissionsCheck>
+              <Camera
+                onMedia={store.onMedia}
+                mode={store.mode}
+                onForceVideo={store.setModeVideo}
+                onPressGallery={() => store.selectFromGallery(store.mode)}
+              />
+            </PermissionsCheck>
           ) : (
             <View style={theme.flexContainer} />
           )}

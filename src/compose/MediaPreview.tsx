@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity, StyleSheet, Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/Foundation';
+import * as Progress from 'react-native-progress';
+
+import { useDimensions } from '@react-native-community/hooks';
+import { observer } from 'mobx-react';
 import ThemedStyles from '../styles/ThemedStyles';
 import ImagePreview from './ImagePreview';
 import MindsVideo from '../media/MindsVideo';
-import * as Progress from 'react-native-progress';
-import { useDimensions } from '@react-native-community/hooks';
 
 type PropsType = {
   store: any;
@@ -18,7 +20,7 @@ type VideoSizeType = {
   height: number;
 } | null;
 
-export default function MediaPreview(props: PropsType) {
+export default observer(function MediaPreview(props: PropsType) {
   const theme = ThemedStyles.style;
 
   const { width } = useDimensions().window;
@@ -49,6 +51,16 @@ export default function MediaPreview(props: PropsType) {
 
   return (
     <>
+      {props.store.attachment.uploading && (
+        <Progress.Bar
+          progress={props.store.attachment.progress}
+          width={props.width}
+          color={ThemedStyles.getColor('green')}
+          borderWidth={0}
+          borderRadius={0}
+          useNativeDriver={true}
+        />
+      )}
       {isImage ? (
         <View>
           {!props.store.isEdit && (
@@ -95,19 +107,9 @@ export default function MediaPreview(props: PropsType) {
           />
         </View>
       )}
-      {props.store.attachment.uploading && (
-        <Progress.Bar
-          progress={props.store.attachment.progress}
-          width={props.width}
-          color={ThemedStyles.getColor('green')}
-          borderWidth={0}
-          borderRadius={0}
-          useNativeDriver={true}
-        />
-      )}
     </>
   );
-}
+});
 
 const styles = StyleSheet.create({
   icon: {

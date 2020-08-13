@@ -223,6 +223,8 @@
     "text": "Text",
     "postOptions":"Post Options",
     "retake": "Retake",
+    "allowMinds":"Enable access so you can start taking photos and videos.",
+    "blockedMinds":"You have blocked access to your camera and microphone. Please go to your device settings to enable.",
     "noHashtags": "Sorry, Plus monetized posts must have hashtags.",
     "noExternalLinks": "Sorry, Plus monetized posts mustn't have external links."
   },

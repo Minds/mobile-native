@@ -388,11 +388,6 @@ const AppStack = function () {
         options={BlockchainWalletScreen.navigationOptions}
       />
       <AppStackNav.Screen
-        name="BlockchainWalletModal"
-        component={BlockchainWalletModalScreen}
-        options={{ gestureEnabled: false }}
-      />
-      <AppStackNav.Screen
         name="BlockchainWalletImport"
         component={BlockchainWalletImportScreen}
       />
@@ -616,6 +611,11 @@ const RootStack = function (props) {
             name="JoinMembershipScreen"
             component={JoinMembershipScreen}
             options={{ gestureResponseDistance: { vertical: 240 } }}
+          />
+          <RootStackNav.Screen
+            name="BlockchainWalletModal"
+            component={BlockchainWalletModalScreen}
+            options={{ gestureEnabled: false }}
           />
           <RootStackNav.Screen
             name="PlusScreen"

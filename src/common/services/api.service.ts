@@ -64,9 +64,13 @@ class ApiService {
       data = JSON.parse(text);
     } catch (err) {
       if (response.ok && !__DEV__) {
-        Sentry.captureMessage(
-          `Server Error: ${response.url}, STATUS: ${response.status}\n${text}`,
-        );
+        if (response.bodyUsed) {
+          Sentry.captureMessage(`Server Error: ${url}\n${text}`);
+        } else {
+          Sentry.captureMessage(
+            `Server Error: ${response.url}, STATUS: ${response.status}\n${text}`,
+          );
+        }
       } else {
         console.log('FAILED API CALL:', url, text);
       }

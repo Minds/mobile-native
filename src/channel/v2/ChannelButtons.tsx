@@ -8,7 +8,6 @@ import type { NativeStackNavigationProp } from 'react-native-screens/native-stac
 import Button from '../../common/components/Button';
 import i18n from '../../common/services/i18n.service';
 import sessionService from '../../common/services/session.service';
-import type UserModel from '../UserModel';
 import type { AppStackParamList } from '../../navigation/NavigationTypes';
 import {
   FLAG_SUBSCRIBE,
@@ -19,9 +18,10 @@ import {
 import ChannelMoreMenu from './ChannelMoreMenu';
 
 import type { GestureResponderEvent } from 'react-native';
+import { ChannelStoreType } from './createChannelStore';
 
 type PropsType = {
-  channel: UserModel;
+  store: ChannelStoreType;
   onEditPress: (ev: GestureResponderEvent) => void;
 };
 
@@ -34,29 +34,33 @@ const ChannelButtons = observer((props: PropsType) => {
   const menuRef = useRef<any>();
   const theme = ThemedStyles.style;
   const navigation = useNavigation<
-    NativeStackNavigationProp<AppStackParamList, 'Channel'>
+    NativeStackNavigationProp<AppStackParamList>
   >();
   const subscriptionText = '+ ' + i18n.t('channel.subscribe');
 
   const openMessenger = useCallback(() => {
+    if (!props.store.channel) return null;
     navigation.push('Conversation', {
       conversation: {
-        guid: props.channel.guid + ':' + sessionService.guid,
+        guid: props.store.channel.guid + ':' + sessionService.guid,
       },
     });
-  }, [navigation, props.channel]);
+  }, [navigation, props.store.channel]);
 
   const join = useCallback(() => {
-    navigation.push('JoinMembershipScreen', {
-      user: props.channel,
-    });
-  }, [navigation, props.channel]);
+    if (props.store.channel) {
+      navigation.push('JoinMembershipScreen', {
+        user: props.store.channel,
+        tiers: props.store.tiers,
+      });
+    }
+  }, [navigation, props.store.channel, props.store.tiers]);
 
   const openWire = useCallback(() => {
     navigation.push('WireFab', {
-      owner: props.channel,
+      owner: props.store.channel,
     });
-  }, [navigation, props.channel]);
+  }, [navigation, props.store.channel]);
 
   const openMore = useCallback(() => {
     if (menuRef.current) {
@@ -64,26 +68,31 @@ const ChannelButtons = observer((props: PropsType) => {
     }
   }, [menuRef]);
 
+  if (!props.store.channel) return null;
+
   const showWire =
     !isIos &&
-    !props.channel.blocked &&
-    !props.channel.isOwner() &&
-    props.channel.can(FLAG_WIRE);
+    !props.store.channel.blocked &&
+    !props.store.channel.isOwner() &&
+    props.store.channel.can(FLAG_WIRE);
 
   const showSubscribe =
-    !props.channel.isOwner() &&
-    props.channel.can(FLAG_SUBSCRIBE) &&
-    !props.channel.subscribed;
+    !props.store.channel.isOwner() &&
+    props.store.channel.can(FLAG_SUBSCRIBE) &&
+    !props.store.channel.subscribed;
 
   const showMessage =
-    !props.channel.isOwner() &&
-    props.channel.isSubscribed() &&
-    props.channel.can(FLAG_MESSAGE);
+    !props.store.channel.isOwner() &&
+    props.store.channel.isSubscribed() &&
+    props.store.channel.can(FLAG_MESSAGE);
 
   const showEdit =
-    props.channel.isOwner() && props.channel.can(FLAG_EDIT_CHANNEL);
+    props.store.channel.isOwner() && props.store.channel.can(FLAG_EDIT_CHANNEL);
 
-  const showJoin = !props.channel.isOwner();
+  const showJoin =
+    !props.store.channel.isOwner() &&
+    props.store.tiers &&
+    props.store.tiers.length > 0;
 
   return (
     <View
@@ -148,7 +157,12 @@ const ChannelButtons = observer((props: PropsType) => {
               : ThemedStyles.getColor('green')
           }
           text={i18n.t('join')}
-          textStyle={isIos ? theme.fontL : theme.fontM}
+          textStyle={[
+            isIos ? theme.fontL : theme.fontM,
+            !ThemedStyles.theme && !showSubscribe
+              ? null
+              : theme.colorPrimaryText,
+          ]}
           containerStyle={styles.button}
           textColor="white"
           onPress={join}
@@ -162,11 +176,11 @@ const ChannelButtons = observer((props: PropsType) => {
           textStyle={isIos ? theme.fontL : theme.fontM}
           containerStyle={styles.button}
           textColor="white"
-          onPress={props.channel.toggleSubscription}
+          onPress={props.store.channel.toggleSubscription}
           inverted
         />
       )}
-      <ChannelMoreMenu channel={props.channel} ref={menuRef} />
+      <ChannelMoreMenu channel={props.store.channel} ref={menuRef} />
     </View>
   );
 });

@@ -36,6 +36,7 @@ import NavigationService from '../navigation/NavigationService';
 import type CommentModel from '../comments/CommentModel';
 import type ActivityModel from '../newsfeed/ActivityModel';
 import featuresService from '../common/services/features.service';
+import { UserError } from '../common/UserError';
 
 const isIOS = Platform.OS === 'ios';
 
@@ -126,9 +127,11 @@ class MindsVideo extends Component<PropsType, StateType> {
       onMoveShouldSetPanResponder: () => true,
       onMoveShouldSetPanResponderCapture: () => true,
     });
-    this.onScreenBlur = NavigationService.addListener('blur', () => {
-      this.pause();
-    });
+    if (NavigationService && NavigationService.addListener) {
+      this.onScreenBlur = NavigationService.addListener('blur', () => {
+        this.pause();
+      });
+    }
   }
 
   /**
@@ -196,11 +199,11 @@ class MindsVideo extends Component<PropsType, StateType> {
       if (response.transcoding) {
         this.setState({ transcoding: true });
       } else {
-        logService.exception('[MindsVideo]', new Error(err));
+        logService.exception('[MindsVideo]', new UserError(err));
         this.setState({ error: true, inProgress: false });
       }
     } catch (error) {
-      logService.exception('[MindsVideo]', new Error(error));
+      logService.exception('[MindsVideo]', new UserError(error));
       this.setState({ error: true, inProgress: false });
     }
   };
@@ -322,7 +325,7 @@ class MindsVideo extends Component<PropsType, StateType> {
 
       state.sources = response.sources.filter((v) => v.type === 'video/mp4');
 
-      if (Array.isArray(state.sources)) {
+      if (Array.isArray(state.sources) && state.sources.length > 0) {
         state.video = {
           uri: state.sources[0].src,
           headers: apiService.buildHeaders(),
