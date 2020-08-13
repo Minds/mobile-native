@@ -32,7 +32,6 @@ export default function LoginScreen(props: PropsType) {
 
   return (
     <SafeAreaView style={theme.flexContainer}>
-      <BannerInfo logged={false} />
       <DismissKeyboard>
         <View style={theme.flexContainer}>
           <View style={theme.flexColumnStretch}>

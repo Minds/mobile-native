@@ -37,13 +37,13 @@ export default class ForgotScreen extends Component<PropsType> {
    */
   render() {
     const code = this.props.route.params && this.props.route.params.code;
-    const CS = ThemedStyles.style;
+    const theme = ThemedStyles.style;
 
     return (
       <KeyboardAvoidingView
-        style={[CS.flexContainer, CS.backgroundPrimary]}
-        behavior={Platform.OS == 'ios' ? 'padding' : null}>
-        <View style={[CS.flexContainer, CS.padding2x]}>
+        style={theme.flexContainer}
+        behavior={Platform.OS === 'ios' ? 'padding' : null}>
+        <View style={[theme.flexContainer, theme.paddingTop4x]}>
           {code ? (
             <ResetPassword onBack={this.onForgotBack} />
           ) : (

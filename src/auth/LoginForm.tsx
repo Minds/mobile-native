@@ -87,6 +87,8 @@ export default class LoginForm extends Component<PropsType, StateType> {
       <View style={styles.shadow}>
         <InputContainer
           containerStyle={styles.inputBackground}
+          labelStyle={theme.colorWhite}
+          style={theme.colorWhite}
           placeholder={i18n.t('auth.username')}
           onChangeText={this.setUsername}
           value={this.state.username}
@@ -96,6 +98,8 @@ export default class LoginForm extends Component<PropsType, StateType> {
         <View>
           <InputContainer
             containerStyle={styles.inputBackground}
+            labelStyle={theme.colorWhite}
+            style={theme.colorWhite}
             placeholder={i18n.t('auth.password')}
             secureTextEntry={this.state.hidePassword}
             onChangeText={this.setPassword}
@@ -134,7 +138,7 @@ export default class LoginForm extends Component<PropsType, StateType> {
             textStyle={theme.buttonText}
             loading={this.state.inProgress}
             disabled={this.state.inProgress}
-            testID="loginButton"
+            accessibilityLabel="loginButton"
           />
           <View style={theme.marginTop4x}>
             <Text

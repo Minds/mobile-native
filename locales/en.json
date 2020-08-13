@@ -55,6 +55,7 @@
     }
   },
   "auth": {
+    "fieldRequired": "Required",
     "login": "Login",
     "forgot": "Forgot your password?",
     "email": "Email",
@@ -67,8 +68,9 @@
     "invalidPassword": "Incorrect password. Please try again.",
     "confirmPasswordError": "Passwords should match",
     "termsAcceptedError": "You should accept the terms and conditions",
-    "accept": "I have read and accept the",
-    "termsAndConditions": "terms of use",
+    "promotions":"Receive exclusive promotions from Minds",
+    "accept": "I accept the",
+    "termsAndConditions": "Terms & Conditions",
     "join": "Create a channel",
     "createChannel": "Join Minds",
     "haveAccount": "Don't have an account?",
@@ -991,6 +993,7 @@
   "captcha": "Enter the characters above",
   "about": "About",
   "purchase":"Purchase",
+  "verification":"Verification",
   "verify":"Verify",
   "other":"Other"
 }

@@ -69,8 +69,8 @@ const AuthTransition = {
             translateX: translateUnfocused,
           },
           { translateX },
-          {perspective: 1000 },
-          { rotateY }
+          { perspective: 1000 },
+          { rotateY },
         ],
       },
     };

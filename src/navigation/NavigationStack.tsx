@@ -7,11 +7,7 @@ import { useDimensions } from '@react-native-community/hooks';
 import { createSharedElementStackNavigator } from 'react-navigation-shared-element';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Platform, View } from 'react-native';
-import {
-  createStackNavigator,
-  CardStyleInterpolators,
-  TransitionSpecs,
-} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import LoginScreen from '../auth/LoginScreen';
 import ForgotScreen from '../auth/ForgotScreen';
@@ -584,7 +580,10 @@ const AuthStack = function () {
     <View style={ThemedStyles.style.flexContainer}>
       <VideoBackground source={require('../assets/videos/minds-loop.mp4')} />
       <TransparentLayer />
-      <AuthStackNav.Navigator headerMode="none" screenOptions={AuthTransition}>
+      <AuthStackNav.Navigator
+        headerMode="none"
+        // @ts-ignore
+        screenOptions={AuthTransition}>
         <AuthStackNav.Screen name="Login" component={LoginScreen} />
         <AuthStackNav.Screen name="Forgot" component={ForgotScreen} />
         <AuthStackNav.Screen name="Register" component={RegisterScreen} />

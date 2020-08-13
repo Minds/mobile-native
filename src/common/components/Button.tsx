@@ -24,7 +24,7 @@ interface PropsType extends TouchableOpacityProps {
   textStyle?: TextStyle | Array<TextStyle>;
   disabled?: boolean;
   inverted?: boolean;
-};
+}
 
 /**
  * Custom Button component

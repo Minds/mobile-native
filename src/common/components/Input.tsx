@@ -1,11 +1,16 @@
 //@ts-nocheck
 import React, { Component, Props } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  TextInput,
+} from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import InfoPopup from './InfoPopup';
 import PhoneValidationComponent from './PhoneValidationComponent';
 
-import TextInput from './TextInput';
 import ThemedStyles from '../../styles/ThemedStyles';
 
 type propsType = {
@@ -28,6 +33,21 @@ export default class Input extends Component<propsType> {
   state = {
     datePickerVisible: false,
   };
+
+  /**
+   * Constructor
+   * @param props
+   */
+  constructor(props) {
+    super(props);
+    this.inputRef = React.createRef();
+  }
+
+  componentDidMount() {
+    if (this.inputRef.current && this.props.autofocus) {
+      this.inputRef.current.focus();
+    }
+  }
 
   /**
    * Show date picker
@@ -73,6 +93,7 @@ export default class Input extends Component<propsType> {
         returnKeyType={'done'}
         autoCapitalize={'none'}
         underlineColorAndroid="transparent"
+        ref={this.inputRef}
         placeholder=""
       />
     );
@@ -183,6 +204,7 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    width: '100%',
   },
   label: {
     color: '#AEB0B8',
@@ -193,6 +215,7 @@ const styles = StyleSheet.create({
   },
   errorContainer: {
     alignContent: 'flex-end',
+    flexGrow: 1,
     paddingRight: 10,
   },
   optional: {
