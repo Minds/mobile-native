@@ -62,15 +62,15 @@
 	<key>NSCalendarsUsageDescription</key>
 	<string>$(PRODUCT_NAME) need access to the calendar to schedule your gatherings</string>
 	<key>NSCameraUsageDescription</key>
-	<string>$(PRODUCT_NAME) needs access to use your camera in order to upload images or videos</string>
+	<string>This lets you take photos and record videos</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string/>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>This lets you record videos with sound.</string>
+	<string>This lets you record videos with sound</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>$(PRODUCT_NAME) needs access to your Photo Library in order to upload images</string>
+	<string>This lets you save photos to your camera roll</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>$(PRODUCT_NAME) would like access to your photo gallery so that you can upload images</string>
+	<string>This lets you share photos from your library and save photos to your camera roll</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>
