@@ -110,7 +110,6 @@ export default function ({ props, newsfeed }) {
       }
 
       if (params && params.parentKey) {
-        console.log('params', params);
         const routeParams = {
           prepend:
             isEdit || (this.isRemind && params.parentKey.includes('GroupView'))

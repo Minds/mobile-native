@@ -27,6 +27,8 @@ import logService from '../services/log.service';
 import createWalletStore, {
   WalletStoreType,
 } from '../../wallet/v2/createWalletStore';
+import createSearchResultStore from '../../topbar/searchbar/createSearchResultStore';
+import { SearchResultStoreType } from '../../topbar/searchbar/createSearchResultStore';
 
 /**
  * Creates global stores that can be conused with `useStores` method
@@ -34,6 +36,7 @@ import createWalletStore, {
 export function createStores() {
   return {
     wallet: <WalletStoreType>createWalletStore(),
+    searchBar: <SearchResultStoreType>createSearchResultStore(),
   };
 }
 

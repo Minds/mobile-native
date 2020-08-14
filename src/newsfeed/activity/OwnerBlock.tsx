@@ -15,6 +15,8 @@ import number from '../../common/helpers/number';
 import i18nService from '../../common/services/i18n.service';
 import { Icon } from 'react-native-elements';
 import IconMa from 'react-native-vector-icons/MaterialIcons';
+import { SearchResultStoreType } from '../../topbar/searchbar/createSearchResultStore';
+import { withSearchResultStore } from '../../common/hooks/withStores';
 const DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
 
 type PropsType = {
@@ -25,17 +27,24 @@ type PropsType = {
   navigation: any;
   route?: any;
   children?: React.ReactNode;
+  storeUserTap?: boolean;
+  searchResultStore: SearchResultStoreType;
 };
 
 /**
  * Owner Block Component
  */
-export default class OwnerBlock extends PureComponent<PropsType> {
+class OwnerBlock extends PureComponent<PropsType> {
   /**
    * Navigate To channel
    */
   _navToChannel = () => {
     // only active if receive the navigation property
+    if (this.props.storeUserTap) {
+      this.props.searchResultStore.user.searchBarItemTap(
+        this.props.entity.ownerObj,
+      );
+    }
     if (this.props.navigation) {
       this.props.navigation.push('Channel', {
         guid: this.props.entity.ownerObj.guid,
@@ -170,6 +179,8 @@ export default class OwnerBlock extends PureComponent<PropsType> {
     );
   }
 }
+
+export default withSearchResultStore(OwnerBlock);
 
 const styles = StyleSheet.create({
   container: {
