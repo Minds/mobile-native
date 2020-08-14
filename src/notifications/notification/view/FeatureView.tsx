@@ -1,14 +1,13 @@
-//@ts-nocheck
 import React, { PureComponent } from 'react';
-
 import { Text, View } from 'react-native';
 
 import i18n from '../../../common/services/i18n.service';
-
+import NotificationBody from '../NotificationBody';
+import type { PropsType } from './NotificationTypes';
 /**
  * Feature Notification Component
  */
-export default class FeatureView extends PureComponent {
+export default class FeatureView extends PureComponent<PropsType> {
   /**
    * Navigate to activity
    */
@@ -24,12 +23,17 @@ export default class FeatureView extends PureComponent {
     const styles = this.props.styles;
 
     return (
-      <View style={styles.bodyContents}>
-        <Text onPress={this.navToActivity}>
-          <Text style={styles.link}>{entity.entityObj.title}</Text>{' '}
-          {i18n.t('notification.featured')}
-        </Text>
-      </View>
+      <NotificationBody
+        styles={styles}
+        onPress={this.navToActivity}
+        entity={entity}>
+        <View style={styles.bodyContents}>
+          <Text>
+            <Text style={styles.link}>{entity.entityObj.title}</Text>{' '}
+            {i18n.t('notification.featured')}
+          </Text>
+        </View>
+      </NotificationBody>
     );
   }
 }

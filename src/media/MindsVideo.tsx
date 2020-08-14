@@ -1,4 +1,3 @@
-//@ts-nocheck
 import React, { Component } from 'react';
 
 // workaround to fix tooltips on android
@@ -12,6 +11,8 @@ import {
   TouchableWithoutFeedback,
   Platform,
   View,
+  StyleProp,
+  ViewStyle,
 } from 'react-native';
 
 import Video from 'react-native-video';
@@ -32,23 +33,63 @@ import attachmentService from '../common/services/attachment.service';
 import videoPlayerService from '../common/services/video-player.service';
 import apiService from '../common/services/api.service';
 import NavigationService from '../navigation/NavigationService';
+import type CommentModel from '../comments/CommentModel';
+import type ActivityModel from '../newsfeed/ActivityModel';
+import featuresService from '../common/services/features.service';
+import { UserError } from '../common/UserError';
 
 const isIOS = Platform.OS === 'ios';
 
+type Source = {
+  src: string;
+  size: number;
+};
+
+type StateType = {
+  paused: boolean;
+  volume: number;
+  currentTime: number;
+  duration: number;
+  loaded: boolean;
+  active: boolean;
+  showOverlay: boolean;
+  fullScreen: boolean;
+  error: boolean;
+  inProgress: boolean;
+  video: any;
+  transcoding: boolean;
+  sources: Array<Source> | null;
+  source: number;
+};
+
+type PropsType = {
+  entity?: ActivityModel | CommentModel;
+  pause?: boolean;
+  repeat?: boolean;
+  resizeMode?: 'contain' | 'cover' | 'stretch' | 'none';
+  video?: { uri: string };
+  containerStyle?: StyleProp<ViewStyle>;
+  onLoad?: (e: any) => void;
+};
+
 @observer
-class MindsVideo extends Component {
+class MindsVideo extends Component<PropsType, StateType> {
+  onScreenBlur?: () => void;
+  player?: Video;
+  _panResponder: any;
+
   /**
    * Constructor
    *
    * @param {*} props
-   * @param {*} context
-   * @param  {...any} args
    */
-  constructor(props, context, ...args) {
-    super(props, context, ...args);
+  constructor(props) {
+    super(props);
     this.state = {
       paused: props.pause !== undefined ? props.pause : true,
       volume: 1,
+      currentTime: 0,
+      duration: 0,
       loaded: true,
       active: !props.entity,
       showOverlay: true,
@@ -81,15 +122,16 @@ class MindsVideo extends Component {
    */
   componentDidMount() {
     this._panResponder = PanResponder.create({
-      onStartShouldSetPanResponder: (evt, gestureState) => true,
-      onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
-      onMoveShouldSetPanResponder: (evt, gestureState) => true,
-      onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
+      onStartShouldSetPanResponder: () => true,
+      onStartShouldSetPanResponderCapture: () => true,
+      onMoveShouldSetPanResponder: () => true,
+      onMoveShouldSetPanResponderCapture: () => true,
     });
-
-    this.onScreenBlur = NavigationService.addListener('blur', () => {
-      this.pause();
-    });
+    if (NavigationService && NavigationService.addListener) {
+      this.onScreenBlur = NavigationService.addListener('blur', () => {
+        this.pause();
+      });
+    }
   }
 
   /**
@@ -108,7 +150,7 @@ class MindsVideo extends Component {
    * On video end
    */
   onVideoEnd = () => {
-    this.setState({ key: new Date(), currentTime: 0, paused: true }, () => {
+    this.setState({ currentTime: 0, paused: true }, () => {
       this.player.seek(0);
     });
   };
@@ -117,12 +159,7 @@ class MindsVideo extends Component {
    * On video load
    */
   onVideoLoad = (e) => {
-    let current = 0;
-    if (this.state.changedModeTime > 0) {
-      current = this.state.changedModeTime;
-    } else {
-      current = e.currentTime;
-    }
+    const current = e.currentTime;
 
     this.setState({
       loaded: false,
@@ -132,6 +169,10 @@ class MindsVideo extends Component {
     this.player.seek(current);
 
     this.onLoadEnd();
+
+    if (this.props.onLoad) {
+      this.props.onLoad(e);
+    }
   };
 
   /**
@@ -146,18 +187,23 @@ class MindsVideo extends Component {
    */
   onError = async (err) => {
     const entity = this.props.entity;
+
+    // entity is null only on video previews.
+    if (!entity) {
+      return;
+    }
     try {
-      const response = await attachmentService.isTranscoding(
+      const response: any = await attachmentService.isTranscoding(
         entity.entity_guid,
       );
       if (response.transcoding) {
         this.setState({ transcoding: true });
       } else {
-        logService.exception('[MindsVideo]', new Error(err));
+        logService.exception('[MindsVideo]', new UserError(err));
         this.setState({ error: true, inProgress: false });
       }
     } catch (error) {
-      logService.exception('[MindsVideo]', new Error(error));
+      logService.exception('[MindsVideo]', new UserError(error));
       this.setState({ error: true, inProgress: false });
     }
   };
@@ -176,6 +222,13 @@ class MindsVideo extends Component {
     const v = this.state.volume ? 0 : 1;
     this.setState({ volume: v });
   };
+
+  /**
+   * Mute video
+   */
+  mute() {
+    this.setState({ volume: 0 });
+  }
 
   /**
    * On progress
@@ -227,12 +280,12 @@ class MindsVideo extends Component {
    * @param {number} newPercent
    * @param {boolean} paused
    */
-  onProgressChanged(newPercent, paused) {
+  onProgressChanged = (newPercent, paused) => {
     let { duration } = this.state;
     let newTime = (newPercent * duration) / 100;
     this.setState({ currentTime: newTime, paused: paused });
     this.player.seek(newTime);
-  }
+  };
 
   /**
    * Toggle full-screen
@@ -244,26 +297,42 @@ class MindsVideo extends Component {
   /**
    * Play the current video and activate the player
    */
-  play = async () => {
+  play = async (sound: boolean = true) => {
     videoPlayerService.setCurrent(this);
 
-    const state = {
+    const state: any = {
       active: true,
+      volume: sound ? 1 : 0,
       showOverlay: false,
       paused: false,
+      sources: [] as Array<Source>,
     };
 
     if (!this.state.sources && this.props.entity) {
-      const response = await attachmentService.getVideoSources(
-        this.props.entity.entity_guid,
+      if (this.props.entity.paywall && featuresService.has('paywall-2020')) {
+        await this.props.entity.unlockOrPay();
+        if (this.props.entity.paywall) {
+          return;
+        }
+      }
+
+      const response: any = await attachmentService.getVideoSources(
+        this.props.entity.attachments &&
+          this.props.entity.attachments.attachment_guid
+          ? this.props.entity.attachments.attachment_guid
+          : this.props.entity.entity_guid || this.props.entity.guid,
       );
 
       state.sources = response.sources.filter((v) => v.type === 'video/mp4');
 
-      state.video = {
-        uri: state.sources[0].src,
-        headers: apiService.buildHeaders(),
-      };
+      if (Array.isArray(state.sources) && state.sources.length > 0) {
+        state.video = {
+          uri: state.sources[0].src,
+          headers: apiService.buildHeaders(),
+        };
+      }
+    } else {
+      console.log('NO SOURCES!');
     }
 
     this.setState(state);
@@ -286,9 +355,9 @@ class MindsVideo extends Component {
     if (this.state.paused) {
       return (
         <Icon
-          onPress={this.play}
+          onPress={this.play as () => void}
           style={styles.videoIcon}
-          name="md-play"
+          name="md-play-circle"
           size={size}
           color={colors.light}
         />
@@ -310,6 +379,7 @@ class MindsVideo extends Component {
    * Show control overlay (hide debounced 4 seconds)
    */
   openControlOverlay = () => {
+    //this.play();
     if (!this.state.showOverlay) {
       this.setState({
         showOverlay: true,
@@ -397,6 +467,9 @@ class MindsVideo extends Component {
   }
 
   changeSource(index) {
+    if (!this.state.sources || !this.state.sources[index]) {
+      return;
+    }
     this.setState({
       source: index,
       video: {
@@ -443,8 +516,8 @@ class MindsVideo extends Component {
    * Get video component or thumb
    */
   get video() {
-    let { video, entity } = this.props;
-    let { paused, volume } = this.state;
+    let { entity } = this.props;
+    let { paused } = this.state;
     const thumb_uri = entity
       ? entity.get('custom_data.thumbnail_src') || entity.thumbnail_src
       : null;
@@ -453,7 +526,7 @@ class MindsVideo extends Component {
         <Video
           key={`video${this.state.source}`}
           ref={this.setRef}
-          volume={parseFloat(this.state.volume)}
+          volume={this.state.volume}
           onEnd={this.onVideoEnd}
           onLoadStart={this.onLoadStart}
           onLoad={this.onVideoLoad}
@@ -478,8 +551,6 @@ class MindsVideo extends Component {
           onError={this.onError}
           source={image}
           entity={entity}
-          style={[CS.positionAbsolute]}
-          // loadingIndicator="placeholder"
         />
       );
     }
@@ -495,7 +566,7 @@ class MindsVideo extends Component {
     }
 
     const entity = this.props.entity;
-    let { currentTime, duration, paused } = this.state;
+    let { currentTime, duration } = this.state;
 
     const mustShow = this.state.showOverlay || (this.state.paused && entity);
 
@@ -508,7 +579,7 @@ class MindsVideo extends Component {
             duration={duration}
             currentTime={currentTime}
             percent={completedPercentage}
-            onNewPercent={this.onProgressChanged.bind(this)}
+            onNewPercent={this.onProgressChanged}
           />
         </View>
       );
@@ -595,13 +666,6 @@ class MindsVideo extends Component {
    * Render
    */
   render() {
-    if (
-      !(this.props.entity && this.props.entity.is_visible) &&
-      !this.state.pause &&
-      this.state.active
-    ) {
-      this.setState({ pause: false, active: false, showOverlay: true });
-    }
     const { error, inProgress, transcoding } = this.state;
 
     const overlay = this.renderOverlay();

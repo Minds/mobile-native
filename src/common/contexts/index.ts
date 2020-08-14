@@ -1,19 +1,11 @@
-import React from 'react';
-
 import newsfeed from '../../newsfeed/NewsfeedStore';
 import boost from '../../boost/BoostStore';
 import notifications from '../../notifications/NotificationsStore';
 import notificationsSettings from '../../notifications/NotificationsSettingsStore';
 import messengerList from '../../messenger/MessengerListStore';
-import channel from '../../channel/ChannelStores';
 import user from '../../auth/UserStore';
-import discovery from '../../discovery/DiscoveryStore';
-import discoveryV2 from '../../discovery/v2/DiscoveryV2Store';
-import discoveryV2Search from '../../discovery/v2/search/DiscoveryV2SearchStore';
 import blogs from '../../blogs/BlogsStore';
 import blogsView from '../../blogs/BlogsViewStore';
-import wallet from '../../wallet/WalletStore';
-import walletHistory from '../../wallet/WalletHistoryStore';
 import wire from '../../wire/WireStore';
 import groups from '../../groups/GroupsStore';
 import groupView from '../../groups/GroupViewStore';
@@ -23,23 +15,28 @@ import blockchainTransaction from '../../blockchain/transaction-modal/Blockchain
 import blockchainWallet from '../../blockchain/wallet/BlockchainWalletStore';
 import blockchainWalletSelector from '../../blockchain/wallet/BlockchainWalletSelectorStore';
 import capture from '../../capture/CaptureStore';
-import withdraw from '../../wallet/tokens/WithdrawStore';
 import hashtag from '../../common/stores/HashtagStore';
 import onboarding from '../../onboarding/OnboardingStore';
 import groupsBar from '../../groups/GroupsBarStore';
 import SubscriptionRequestStore from '../../channel/subscription/SubscriptionRequestStore';
 import reportStore from '../../report/ReportStore';
+import wallet from '../../wallet/WalletStore';
 
 import sessionService from '../services/session.service';
 import logService from '../services/log.service';
+import createWalletStore, {
+  WalletStoreType,
+} from '../../wallet/v2/createWalletStore';
+import createSearchResultStore from '../../topbar/searchbar/createSearchResultStore';
+import { SearchResultStoreType } from '../../topbar/searchbar/createSearchResultStore';
 
 /**
  * Creates global stores that can be conused with `useStores` method
  */
 export function createStores() {
   return {
-    discoveryV2: new discoveryV2(),
-    discoveryV2Search: new discoveryV2Search(),
+    wallet: <WalletStoreType>createWalletStore(),
+    searchBar: <SearchResultStoreType>createSearchResultStore(),
   };
 }
 
@@ -54,13 +51,9 @@ export function createLegacyStores() {
     notifications: new notifications(),
     notificationsSettings: new notificationsSettings(),
     messengerList: new messengerList(),
-    channel: new channel(),
     user: new user(),
-    discovery: new discovery(),
     blogs: new blogs(),
     blogsView: new blogsView(),
-    wallet: new wallet(),
-    walletHistory: new walletHistory(),
     wire: new wire(),
     boost: new boost(),
     groups: new groups(),
@@ -71,11 +64,11 @@ export function createLegacyStores() {
     blockchainWalletSelector: new blockchainWalletSelector(),
     channelSubscribersStore: new channelSubscribersStore(),
     capture: new capture(),
-    withdraw: new withdraw(),
     hashtag: new hashtag(),
     onboarding: new onboarding(),
     groupsBar: new groupsBar(),
     reportstore: new reportStore(),
+    wallet: new wallet(),
   };
   sessionService.onLogout(() => {
     for (const id in stores) {

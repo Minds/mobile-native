@@ -6,12 +6,11 @@ import {
   View,
   Text,
   Image,
-  FlatList,
+  // FlatList,
   Keyboard,
   Platform,
   // TextInput,
-  TouchableOpacity,
-  TouchableHighlight,
+  TouchableOpacity as TouchableOpacityIos,
   ActivityIndicator,
   KeyboardAvoidingView,
 } from 'react-native';
@@ -43,6 +42,13 @@ import { FLAG_CREATE_COMMENT } from '../common/Permissions';
 import ThemedStyles from '../styles/ThemedStyles';
 
 import type CommentModel from './CommentModel';
+import {
+  FlatList,
+  TouchableOpacity as TouchableOpacityAndroid,
+} from 'react-native-gesture-handler';
+
+const TouchableOpacity =
+  Platform.OS === 'ios' ? TouchableOpacityIos : TouchableOpacityAndroid;
 
 // types
 type PropsType = {
@@ -51,9 +57,10 @@ type PropsType = {
   keyboardVerticalOffset?: any;
   entity: any;
   store: any;
-  user: any;
+  user?: any;
   navigation: any;
   route: any;
+  scrollToBottom?: boolean;
   onInputFocus?: Function;
   onCommentFocus?: Function;
 };
@@ -76,7 +83,7 @@ type CommentType = {
 
 const isIOS = Platform.OS === 'ios';
 const vPadding = isIphoneX ? 88 : 66;
-const paddingBottom = isIphoneX ? { paddingBottom: 12 } : null;
+const paddingBottom = isIphoneX ? { paddingBottom: 20 } : null;
 const inputStyle = isIOS
   ? { marginTop: 3, paddingVertical: 2 }
   : { marginTop: 2, paddingVertical: 2 };
@@ -291,7 +298,8 @@ class CommentList extends React.Component<PropsType, StateType> {
     descending: boolean = true,
   ): Promise<void> => {
     let guid;
-    const scrollToBottom = this.props.route.params.scrollToBottom;
+    const scrollToBottom =
+      this.props.route.params.scrollToBottom || this.props.scrollToBottom;
 
     if (this.props.entity) {
       guid = this.props.entity.guid;
@@ -339,6 +347,7 @@ class CommentList extends React.Component<PropsType, StateType> {
    * Render poster
    */
   renderPoster(): React.Node {
+    const theme = ThemedStyles.style;
     const entity = this.props.entity;
 
     if (
@@ -360,79 +369,85 @@ class CommentList extends React.Component<PropsType, StateType> {
     return (
       <View>
         <View
-          style={[
-            CS.rowJustifyCenter,
-            CS.margin,
-            CS.padding,
-            ThemedStyles.style.backgroundSecondary,
-            CS.borderRadius12x,
-            CS.borderGreyed,
-            CS.borderHair,
-          ]}
+          style={[theme.rowJustifyCenter, theme.margin]}
           testID={this.props.parent ? 'CommentParentView' : ''}>
-          <Image source={avatarImg} style={CmpStyle.posterAvatar} />
-          <TextInput
-            style={[
-              CS.flexContainer,
-              CS.marginLeft,
-              inputStyle,
-              ThemedStyles.style.colorPrimaryText,
-            ]}
-            editable={true}
-            underlineColorAndroid="transparent"
-            placeholder={i18n.t('activity.typeComment')}
-            placeholderTextColor={ThemedStyles.getColor('secondary_text')}
-            onChangeText={this.setText}
-            onFocus={this.onFocus}
-            onBlur={this.onBlur}
-            multiline={true}
-            autogrow={true}
-            maxHeight={110}
-            value={comments.text}
-            onSelectionChange={this.onSelectionChanges}
-            testID="CommentText"
+          <Image
+            source={avatarImg}
+            style={[CmpStyle.posterAvatar, theme.centered]}
           />
-          {attachment.uploading ? (
-            <Progress.Pie progress={attachment.progress} size={36} />
-          ) : comments.saving || attachment.checkingVideoLength ? (
-            <ActivityIndicator size={'large'} />
-          ) : (
-            <View style={[CS.rowJustifyEnd, CS.centered]}>
-              <TouchableOpacity
-                onPress={this.showAttachment}
-                style={CS.paddingRight2x}>
-                <Icon
-                  name="md-attach"
-                  size={24}
-                  style={[CS.paddingRight2x, ThemedStyles.style.colorIcon]}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={comments.toggleMature}
-                style={CS.paddingRight2x}>
-                <IconMd
-                  name="explicit"
-                  size={24}
-                  style={[
-                    CS.paddingRight2x,
-                    comments.mature
-                      ? ThemedStyles.style.colorAlert
-                      : ThemedStyles.style.colorIcon,
-                  ]}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={this.postComment}
-                style={CS.paddingRight2x}
-                testID="PostCommentButton">
-                <Icon
-                  name="md-send"
-                  size={24}
-                  style={ThemedStyles.style.colorIcon}
-                />
-              </TouchableOpacity>
-            </View>
-          )}
+          <View
+            style={[
+              theme.rowJustifyStart,
+              theme.marginLeft2x,
+              theme.marginRight,
+              theme.flexContainer,
+              theme.borderRadius2x,
+              theme.borderPrimary,
+              theme.borderHair,
+            ]}>
+            <TextInput
+              style={[
+                CS.flexContainer,
+                CS.marginLeft,
+                inputStyle,
+                ThemedStyles.style.colorPrimaryText,
+              ]}
+              editable={true}
+              underlineColorAndroid="transparent"
+              placeholder={i18n.t('activity.typeComment')}
+              placeholderTextColor={ThemedStyles.getColor('secondary_text')}
+              onChangeText={this.setText}
+              onFocus={this.onFocus}
+              onBlur={this.onBlur}
+              multiline={true}
+              autogrow={true}
+              maxHeight={110}
+              value={comments.text}
+              onSelectionChange={this.onSelectionChanges}
+              testID="CommentText"
+            />
+            {attachment.uploading ? (
+              <Progress.Pie progress={attachment.progress} size={36} />
+            ) : comments.saving || attachment.checkingVideoLength ? (
+              <ActivityIndicator size={'large'} />
+            ) : (
+              <View style={[CS.rowJustifyEnd, CS.centered]}>
+                <TouchableOpacity
+                  onPress={this.showAttachment}
+                  style={CS.paddingRight2x}>
+                  <Icon
+                    name="md-attach"
+                    size={24}
+                    style={[CS.paddingRight2x, ThemedStyles.style.colorIcon]}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={comments.toggleMature}
+                  style={CS.paddingRight2x}>
+                  <IconMd
+                    name="explicit"
+                    size={24}
+                    style={[
+                      CS.paddingRight2x,
+                      comments.mature
+                        ? ThemedStyles.style.colorAlert
+                        : ThemedStyles.style.colorIcon,
+                    ]}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={this.postComment}
+                  style={CS.paddingRight2x}
+                  testID="PostCommentButton">
+                  <Icon
+                    name="md-send"
+                    size={24}
+                    style={ThemedStyles.style.colorIcon}
+                  />
+                </TouchableOpacity>
+              </View>
+            )}
+          </View>
         </View>
         {attachment.hasAttachment && (
           <View style={CmpStyle.preview}>
@@ -521,7 +536,7 @@ class CommentList extends React.Component<PropsType, StateType> {
       <View>
         {header}
         {this.props.store.loadPrevious && !this.props.store.loadingPrevious ? (
-          <TouchableHighlight
+          <TouchableOpacity
             onPress={() => {
               this.loadComments(true);
             }}
@@ -531,7 +546,7 @@ class CommentList extends React.Component<PropsType, StateType> {
               <IconMC name="update" size={16} />{' '}
               {i18n.t('activity.loadEarlier')}{' '}
             </Text>
-          </TouchableHighlight>
+          </TouchableOpacity>
         ) : null}
         {this.props.store.loadingPrevious && this.props.store.loaded && (
           <ActivityIndicator size="small" style={CS.paddingTop2x} />
@@ -583,7 +598,7 @@ class CommentList extends React.Component<PropsType, StateType> {
     return (
       <View>
         {this.props.store.loadNext && !this.props.store.loadingNext ? (
-          <TouchableHighlight
+          <TouchableOpacity
             onPress={(): any => this.loadComments(true, false)}
             underlayColor="transparent"
             style={[CS.rowJustifyCenter, CS.padding2x]}>
@@ -591,7 +606,7 @@ class CommentList extends React.Component<PropsType, StateType> {
               <IconMC name="update" size={16} />
               {i18n.t('activity.loadLater')}{' '}
             </Text>
-          </TouchableHighlight>
+          </TouchableOpacity>
         ) : null}
         {this.props.store.loadingNext && this.props.store.loaded && (
           <ActivityIndicator size="small" style={CS.paddingTop2x} />
@@ -644,11 +659,12 @@ class CommentList extends React.Component<PropsType, StateType> {
    * Render
    */
   render(): React.Node {
+    const theme = ThemedStyles.style;
     const header = this.getHeader();
 
     let actionsheet = null;
 
-    if (Platform.OS != 'ios') {
+    if (Platform.OS !== 'ios') {
       actionsheet = (
         <ActionSheet
           ref={this.setIosActionSheetRef}
@@ -663,7 +679,7 @@ class CommentList extends React.Component<PropsType, StateType> {
     const footer = this.getFooter();
 
     const emptyThread = (
-      <View style={[CS.textCenter]}>
+      <View style={CS.textCenter}>
         {this.isWholeThreadBlocked() && (
           <Text
             style={[
@@ -679,16 +695,10 @@ class CommentList extends React.Component<PropsType, StateType> {
     );
 
     return (
-      <View
-        style={[
-          CS.flexContainer,
-          ThemedStyles.style.backgroundSecondary,
-          paddingBottom,
-        ]}
-        onLayout={this.onLayout}>
+      <View style={[CS.flexContainer, paddingBottom]} onLayout={this.onLayout}>
         <KeyboardAvoidingView
-          style={[CS.flexContainer]}
-          behavior={Platform.OS == 'ios' ? 'padding' : null}
+          style={CS.flexContainer}
+          behavior={Platform.OS === 'ios' ? 'padding' : null}
           keyboardVerticalOffset={
             this.props.keyboardVerticalOffset
               ? -this.props.keyboardVerticalOffset
@@ -699,7 +709,7 @@ class CommentList extends React.Component<PropsType, StateType> {
               ? this.state.focused || this.focusedChild !== -1
               : false
           }>
-          <View style={CS.flexContainer}>
+          <View style={[theme.fullHeight, theme.fullWidth]}>
             <FlatList
               ref={this.setListRef}
               ListHeaderComponent={header}
@@ -719,7 +729,7 @@ class CommentList extends React.Component<PropsType, StateType> {
                   <CenteredLoading />
                 )
               }
-              style={[CS.flexContainer, ThemedStyles.style.backgroundSecondary]}
+              style={theme.flexContainer}
             />
             {this.renderPoster()}
             <UserAutocomplete

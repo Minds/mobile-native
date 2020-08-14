@@ -196,7 +196,6 @@ export const ComponentsStyle = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    flex: 1,
     height: Dimensions.get('window').height / 2,
   },
   emptyComponent: {

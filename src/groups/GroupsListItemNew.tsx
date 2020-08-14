@@ -11,10 +11,16 @@ import { FLAG_JOIN } from '../common/Permissions';
 import i18n from '../common/services/i18n.service';
 import { CommonStyle as CS } from '../styles/Common';
 import ListItemButton from '../common/components/ListItemButton';
+import type GroupModel from './GroupModel';
+
+type PropsType = {
+  group: GroupModel;
+  onPress?: () => void;
+};
 
 @inject('groupView')
 @observer
-class GroupsListItemNew extends Component {
+class GroupsListItemNew extends Component<PropsType> {
   state = {
     source: null,
   };

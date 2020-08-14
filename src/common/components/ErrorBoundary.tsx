@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 
-import { Text, Clipboard, Alert, View, ViewStyle } from 'react-native';
+import { Text, Clipboard, View, ViewStyle } from 'react-native';
 import { CommonStyle as CS } from '../../styles/Common';
 import logService from '../services/log.service';
 import i18n from '../services/i18n.service';
+import { showNotification } from '../../../AppMessages';
 
 type PropsType = {
   message: string;
-  containerStyle?: ViewStyle;
+  containerStyle?: ViewStyle | Array<ViewStyle>;
   children: React.ReactNode;
   textSmall?: boolean;
 };
@@ -56,7 +57,7 @@ export default class ErrorBoundary extends Component<PropsType, StateType> {
         '\nSTACK:\n' +
         this.info.componentStack,
     );
-    Alert.alert(i18n.t('stacktraceCopied'));
+    showNotification(i18n.t('stacktraceCopied'));
   };
 
   getErrorMessage() {

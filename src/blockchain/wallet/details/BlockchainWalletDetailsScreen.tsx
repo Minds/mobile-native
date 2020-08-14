@@ -11,23 +11,19 @@ import {
   Dimensions,
   Platform,
 } from 'react-native';
+import { observer, inject } from 'mobx-react';
 
 import Share from 'react-native-share';
-
 import QRCode from 'react-native-qrcode-svg';
 
 import TransparentButton from '../../../common/components/TransparentButton';
-import Touchable from '../../../common/components/Touchable';
-
-import { observer, inject } from 'mobx-react';
-
 import BlockchainWalletService from '../BlockchainWalletService';
 import NavigationService from '../../../navigation/NavigationService';
-
 import { CommonStyle } from '../../../styles/Common';
 import number from '../../../common/helpers/number';
 import BlockchainApiService from '../../BlockchainApiService';
 import i18n from '../../../common/services/i18n.service';
+import colors from '../../../styles/Colors';
 
 // Helpers
 
@@ -441,7 +437,7 @@ export default class BlockchainWalletDetailsScreen extends Component {
   render() {
     return (
       <ScrollView>
-        <View style={[CommonStyle.flexContainer, { flex: 1 }]}>
+        <View style={CommonStyle.flexContainer}>
           {this.state.editable && this.labelItem()}
 
           {!this.state.edit && this.qrCode()}

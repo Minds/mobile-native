@@ -4,7 +4,7 @@ import { NativeModules } from 'react-native';
 import session from './session.service';
 import { MINDS_API_URI, NETWORK_TIMEOUT } from '../../config/Config';
 
-import abortableFetch from '../helpers/abortableFetch';
+import abortableFetch, { abort } from '../helpers/abortableFetch';
 import { Version } from '../../config/Version';
 import logService from './log.service';
 
@@ -56,21 +56,25 @@ class ApiService {
       }
     }
 
-    let data;
+    let data, text;
 
     try {
       // Convert from JSON
-      data = await response.json();
+      text = await response.text();
+      data = JSON.parse(text);
     } catch (err) {
       if (response.ok && !__DEV__) {
-        Sentry.captureMessage(
-          `Server Error: ${response.url}, STATUS: ${
-            response.status
-          } STATUSTEXT: ${response.statusText}\n${response.text()}`,
-        );
+        if (response.bodyUsed) {
+          Sentry.captureMessage(`Server Error: ${url}\n${text}`);
+        } else {
+          Sentry.captureMessage(
+            `Server Error: ${response.url}, STATUS: ${response.status}\n${text}`,
+          );
+        }
+      } else {
+        console.log('FAILED API CALL:', url, text);
       }
-      console.log(url, err, response);
-      throw new UserError(i18n.t('errorMessage'));
+      throw new ApiError(i18n.t('errorMessage'));
     }
 
     if (isApiForbidden(response) && data.must_verify) {
@@ -88,6 +92,14 @@ class ApiService {
   }
 
   /**
+   * Abort the calls attached to the tag
+   * @param tag
+   */
+  abort(tag: any) {
+    abort(tag);
+  }
+
+  /**
    * Clear cookies
    */
   clearCookies() {
@@ -101,6 +113,7 @@ class ApiService {
    */
   buildHeaders() {
     const headers: any = {
+      'Content-Type': 'application/json',
       'Cache-Control': 'no-cache, no-store, must-revalidate',
       Pragma: 'no-cache',
       'App-Version': Version.VERSION,

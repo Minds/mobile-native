@@ -78,10 +78,9 @@ export default class StripeCardSelector extends React.PureComponent<
         )}
         <View style={[CS.rowJustifyCenter, CS.marginTop2x]}>
           <Button
-            inverted
             text="Add Card"
             onPress={this.addNewCard}
-            textStyle={[CS.fontL, CS.padding]}
+            textStyle={[CS.padding]}
           />
         </View>
       </View>

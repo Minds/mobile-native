@@ -2,21 +2,16 @@
 import React, { Component } from 'react';
 
 import {
-  ScrollView,
   StyleSheet,
   FlatList,
   ActivityIndicator,
   View,
+  Text,
 } from 'react-native';
 
 import { observer, inject } from 'mobx-react';
 
-import { Avatar } from 'react-native-elements';
-import { MINDS_CDN_URI, MINDS_FEATURES } from '../config/Config';
 import { CommonStyle as CS } from '../styles/Common';
-import CenteredLoading from '../common/components/CenteredLoading';
-import Toolbar from '../common/components/toolbar/Toolbar';
-import TagsSubBar from '../newsfeed/topbar/TagsSubBar';
 import ErrorLoading from '../common/components/ErrorLoading';
 import GroupsListItem from './GroupsListItem';
 import withPreventDoubleTap from '../common/components/PreventDoubleTap';
@@ -24,7 +19,7 @@ import { withErrorBoundary } from '../common/components/ErrorBoundary';
 import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
 
-DebouncedGroupsListItem = withErrorBoundary(
+const DebouncedGroupsListItem = withErrorBoundary(
   withPreventDoubleTap(GroupsListItem, "Can't show this group"),
 );
 
@@ -34,10 +29,6 @@ DebouncedGroupsListItem = withErrorBoundary(
 @inject('groups')
 @observer
 export default class GroupsListScreen extends Component {
-  static navigationOptions = ({ navigation }) => {
-    return { title: i18n.t('groups.myGroups') };
-  };
-
   /**
    * Component will mount
    */
@@ -99,13 +90,28 @@ export default class GroupsListScreen extends Component {
    */
   render() {
     const list = this.props.groups.list;
+    const theme = ThemedStyles.style;
 
     const footer = this.getFooter();
+
+    const header = (
+      <View style={styles.header}>
+        <Text
+          style={[
+            theme.titleText,
+            theme.paddingLeft4x,
+            theme.paddingVertical2x,
+          ]}>
+          {i18n.t('groups.myGroups')}
+        </Text>
+      </View>
+    );
 
     return (
       <FlatList
         data={list.entities.slice()}
         renderItem={this.renderItem}
+        ListHeaderComponent={header}
         ListFooterComponent={footer}
         keyExtractor={(item) => item.rowKey}
         onRefresh={this.refresh}
@@ -141,6 +147,10 @@ export default class GroupsListScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+  header: {
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+  },
   list: {
     flex: 1,
     borderTopWidth: 0,

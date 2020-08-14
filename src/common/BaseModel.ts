@@ -1,6 +1,5 @@
 import { observable, action, computed, toJS } from 'mobx';
 import _ from 'lodash';
-import { Alert } from 'react-native';
 import EventEmitter from 'eventemitter3';
 
 import sessionService from './services/session.service';
@@ -13,11 +12,13 @@ import i18n from './services/i18n.service';
 import featuresService from './services/features.service';
 import type UserModel from '../channel/UserModel';
 import type FeedStore from './stores/FeedStore';
+import { showNotification } from '../../AppMessages';
+import AbstractModel from './AbstractModel';
 
 /**
  * Base model
  */
-export default class BaseModel {
+export default class BaseModel extends AbstractModel {
   username: string = '';
   guid: string = '';
   ownerObj!: UserModel;
@@ -82,38 +83,6 @@ export default class BaseModel {
   }
 
   /**
-   * Child models classes
-   */
-  childModels() {
-    return {};
-  }
-
-  /**
-   * Assign values to obj
-   * @param data any
-   */
-  assign(data: any) {
-    // Some users have a number as username and engine return them as a number
-    if (data.username) {
-      data.username = String(data.username);
-    }
-
-    // some blogs has numeric name
-    if (data.name) {
-      data.name = String(data.name);
-    }
-    Object.assign(this, data);
-
-    // create childs instances
-    const childs = this.childModels();
-    for (var prop in childs) {
-      if (this[prop]) {
-        this[prop] = childs[prop].create(this[prop]);
-      }
-    }
-  }
-
-  /**
    * Return if the current user is the owner of the activity
    */
   isOwner = () => {
@@ -139,56 +108,6 @@ export default class BaseModel {
         }
       }
     });
-  }
-
-  /**
-   * Create an instance
-   * @param {object} data
-   */
-  static create<T extends typeof BaseModel>(
-    this: T,
-    data: object,
-  ): InstanceType<T> {
-    const obj: InstanceType<T> = new this() as InstanceType<T>;
-    obj.assign(data);
-    return obj;
-  }
-
-  /**
-   * Create an array of instances
-   * @param {array} arrayData
-   */
-  static createMany<T extends typeof BaseModel>(
-    this: T,
-    arrayData: Array<object>,
-  ): Array<InstanceType<T>> {
-    const collection: Array<InstanceType<T>> = [];
-    if (!arrayData) {
-      return collection;
-    }
-
-    arrayData.forEach((data) => {
-      const obj: InstanceType<T> = new this() as InstanceType<T>;
-      obj.assign(data);
-      collection.push(obj);
-    });
-
-    return collection;
-  }
-
-  /**
-   * Check if data is an instance of the model and if it is not
-   * returns a new instance
-   * @param {object} data
-   */
-  static checkOrCreate<T extends typeof BaseModel>(
-    this: T,
-    data,
-  ): InstanceType<T> {
-    if (data instanceof this) {
-      return data as InstanceType<T>;
-    }
-    return this.create(data);
   }
 
   /**
@@ -380,11 +299,11 @@ export default class BaseModel {
     }
 
     if (showAlert && !allowed) {
-      Alert.alert(
-        i18n.t('sorry'),
+      showNotification(
         i18n.t(`permissions.notAllowed.${actionName}`, {
           defaultValue: i18n.t('notAllowed'),
         }),
+        'warning',
       );
     }
 
@@ -392,7 +311,7 @@ export default class BaseModel {
   }
 
   isScheduled() {
-    return parseInt(this.time_created, 10) * 1000 > Date.now();
+    return parseInt(this.time_created, 10) * 1000 > Date.now() + 15000;
   }
 
   /**

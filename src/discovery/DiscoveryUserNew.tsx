@@ -1,14 +1,7 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import {
-  TouchableOpacity,
-  Image,
-  StyleSheet,
-  Keyboard,
-  Text,
-  View,
-} from 'react-native';
+import { TouchableOpacity, Image, Keyboard, Text, View } from 'react-native';
 
 import { observer } from 'mobx-react';
 
@@ -18,9 +11,19 @@ import { MINDS_CDN_URI } from '../config/Config';
 import { FLAG_SUBSCRIBE, FLAG_VIEW } from '../common/Permissions';
 import SubscriptionButtonNew from '../channel/subscription/SubscriptionButtonNew';
 import ThemedStyles from '../styles/ThemedStyles';
+import type UserModel from '../channel/UserModel';
+
+type PropsType = {
+  row: {
+    index: number;
+    item: UserModel;
+  };
+  navigation: any;
+  onUserTap?: Function;
+};
 
 @observer
-class DiscoveryUser extends Component {
+class DiscoveryUser extends Component<PropsType> {
   /**
    * State
    */

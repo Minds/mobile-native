@@ -44,7 +44,6 @@ exports[`blog view screen component should renders correctly 1`] = `
         "ownerObj": UserModel {
           "__list": null,
           "access_id": "2",
-          "admin": false,
           "allow_comments": true,
           "banned": "no",
           "blocked": false,
@@ -78,10 +77,12 @@ exports[`blog view screen component should renders correctly 1`] = `
           "founder": false,
           "gender": "private",
           "getAvatarSource": [MockFunction],
+          "groupsCount": 0,
           "guid": 100,
           "icontime": "1523515420",
           "impressions": 100,
           "isOwner": [Function],
+          "is_admin": false,
           "language": "en",
           "last_accepted_tos": 0,
           "legacy_guid": false,
@@ -104,6 +105,7 @@ exports[`blog view screen component should renders correctly 1`] = `
           "permissions": Object {},
           "pinned_posts": Array [],
           "plus": true,
+          "pro": false,
           "programs": Array [
             "affiliate",
           ],
@@ -116,7 +118,9 @@ exports[`blog view screen component should renders correctly 1`] = `
           "subscribed": false,
           "subscriber": true,
           "subscribers_count": 50,
+          "subscriptions_count": 0,
           "subtype": false,
+          "tags": Array [],
           "time_created": "1468113204",
           "time_updated": false,
           "type": "user",
@@ -173,13 +177,14 @@ exports[`blog view screen component should renders correctly 1`] = `
           ]
         }
       >
-        <ForwardRef
+        <FastImage
           resizeMode="cover"
           source={
             Object {
               "headers": Object {
                 "App-Version": "3.8.0",
                 "Cache-Control": "no-cache, no-store, must-revalidate",
+                "Content-Type": "application/json",
                 "Pragma": "no-cache",
               },
               "uri": "https://www.minds.com/fs/v1/banners/836607056186159104/1524838665",
@@ -212,7 +217,7 @@ exports[`blog view screen component should renders correctly 1`] = `
             }
           }
         >
-          <OwnerBlock
+          <Unknown
             entity={
               BlogModel {
                 "__list": null,
@@ -245,7 +250,6 @@ exports[`blog view screen component should renders correctly 1`] = `
                 "ownerObj": UserModel {
                   "__list": null,
                   "access_id": "2",
-                  "admin": false,
                   "allow_comments": true,
                   "banned": "no",
                   "blocked": false,
@@ -279,10 +283,12 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "founder": false,
                   "gender": "private",
                   "getAvatarSource": [MockFunction],
+                  "groupsCount": 0,
                   "guid": 100,
                   "icontime": "1523515420",
                   "impressions": 100,
                   "isOwner": [Function],
+                  "is_admin": false,
                   "language": "en",
                   "last_accepted_tos": 0,
                   "legacy_guid": false,
@@ -305,6 +311,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "permissions": Object {},
                   "pinned_posts": Array [],
                   "plus": true,
+                  "pro": false,
                   "programs": Array [
                     "affiliate",
                   ],
@@ -317,7 +324,9 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "subscribed": false,
                   "subscriber": true,
                   "subscribers_count": 50,
+                  "subscriptions_count": 0,
                   "subtype": false,
+                  "tags": Array [],
                   "time_created": "1468113204",
                   "time_updated": false,
                   "type": "user",
@@ -378,7 +387,7 @@ exports[`blog view screen component should renders correctly 1`] = `
             >
               Apr 27, 2018, 07:17
             </Text>
-          </OwnerBlock>
+          </Unknown>
         </View>
         <View
           style={
@@ -423,7 +432,6 @@ exports[`blog view screen component should renders correctly 1`] = `
                 "ownerObj": UserModel {
                   "__list": null,
                   "access_id": "2",
-                  "admin": false,
                   "allow_comments": true,
                   "banned": "no",
                   "blocked": false,
@@ -457,10 +465,12 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "founder": false,
                   "gender": "private",
                   "getAvatarSource": [MockFunction],
+                  "groupsCount": 0,
                   "guid": 100,
                   "icontime": "1523515420",
                   "impressions": 100,
                   "isOwner": [Function],
+                  "is_admin": false,
                   "language": "en",
                   "last_accepted_tos": 0,
                   "legacy_guid": false,
@@ -483,6 +493,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "permissions": Object {},
                   "pinned_posts": Array [],
                   "plus": true,
+                  "pro": false,
                   "programs": Array [
                     "affiliate",
                   ],
@@ -495,7 +506,9 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "subscribed": false,
                   "subscriber": true,
                   "subscribers_count": 50,
+                  "subscriptions_count": 0,
                   "subtype": false,
+                  "tags": Array [],
                   "time_created": "1468113204",
                   "time_updated": false,
                   "type": "user",
@@ -576,7 +589,6 @@ exports[`blog view screen component should renders correctly 1`] = `
                 "ownerObj": UserModel {
                   "__list": null,
                   "access_id": "2",
-                  "admin": false,
                   "allow_comments": true,
                   "banned": "no",
                   "blocked": false,
@@ -610,10 +622,12 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "founder": false,
                   "gender": "private",
                   "getAvatarSource": [MockFunction],
+                  "groupsCount": 0,
                   "guid": 100,
                   "icontime": "1523515420",
                   "impressions": 100,
                   "isOwner": [Function],
+                  "is_admin": false,
                   "language": "en",
                   "last_accepted_tos": 0,
                   "legacy_guid": false,
@@ -636,6 +650,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "permissions": Object {},
                   "pinned_posts": Array [],
                   "plus": true,
+                  "pro": false,
                   "programs": Array [
                     "affiliate",
                   ],
@@ -648,7 +663,9 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "subscribed": false,
                   "subscriber": true,
                   "subscribers_count": 50,
+                  "subscriptions_count": 0,
                   "subtype": false,
+                  "tags": Array [],
                   "time_created": "1468113204",
                   "time_updated": false,
                   "type": "user",
@@ -695,7 +712,7 @@ exports[`blog view screen component should renders correctly 1`] = `
               }
             }
             orientation="row"
-            size={20}
+            size={21}
           />
           <ThumbDownAction
             entity={
@@ -730,7 +747,6 @@ exports[`blog view screen component should renders correctly 1`] = `
                 "ownerObj": UserModel {
                   "__list": null,
                   "access_id": "2",
-                  "admin": false,
                   "allow_comments": true,
                   "banned": "no",
                   "blocked": false,
@@ -764,10 +780,12 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "founder": false,
                   "gender": "private",
                   "getAvatarSource": [MockFunction],
+                  "groupsCount": 0,
                   "guid": 100,
                   "icontime": "1523515420",
                   "impressions": 100,
                   "isOwner": [Function],
+                  "is_admin": false,
                   "language": "en",
                   "last_accepted_tos": 0,
                   "legacy_guid": false,
@@ -790,6 +808,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "permissions": Object {},
                   "pinned_posts": Array [],
                   "plus": true,
+                  "pro": false,
                   "programs": Array [
                     "affiliate",
                   ],
@@ -802,7 +821,9 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "subscribed": false,
                   "subscriber": true,
                   "subscribers_count": 50,
+                  "subscriptions_count": 0,
                   "subtype": false,
+                  "tags": Array [],
                   "time_created": "1468113204",
                   "time_updated": false,
                   "type": "user",
@@ -849,7 +870,7 @@ exports[`blog view screen component should renders correctly 1`] = `
               }
             }
             orientation="row"
-            size={20}
+            size={21}
           />
         </View>
         <View
@@ -863,6 +884,7 @@ exports[`blog view screen component should renders correctly 1`] = `
         >
           <BlogViewHTML
             html="Some Blog"
+            onHeightUpdated={[Function]}
           />
         </View>
         <View
@@ -905,7 +927,7 @@ exports[`blog view screen component should renders correctly 1`] = `
             size={20}
           />
         </View>
-        <ForwardRef(_SafeAreaView)
+        <SafeAreaView
           style={
             Object {
               "left": 0,
@@ -921,7 +943,7 @@ exports[`blog view screen component should renders correctly 1`] = `
             raised={true}
             size={22}
           />
-        </ForwardRef(_SafeAreaView)>
+        </SafeAreaView>
       </View>
     }
     keyboardVerticalOffset={15}

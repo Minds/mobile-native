@@ -1,7 +1,6 @@
 //@ts-nocheck
-import React, { Component } from 'react';
+import React, { Component, Props } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
-import { ComponentsStyle } from '../../styles/Components';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import InfoPopup from './InfoPopup';
 import PhoneValidationComponent from './PhoneValidationComponent';
@@ -9,20 +8,25 @@ import PhoneValidationComponent from './PhoneValidationComponent';
 import TextInput from './TextInput';
 import ThemedStyles from '../../styles/ThemedStyles';
 
+type propsType = {
+  TFA: any;
+  TFAConfirmed: boolean;
+  inputType: string;
+  optional: boolean;
+  labelStyle: any;
+  info: any;
+  error?: string;
+} & Props;
+
 /**
  * Form input
  */
-export default class Input extends Component {
+export default class Input extends Component<propsType> {
   /**
    * State
    */
   state = {
     datePickerVisible: false,
-    error: false,
-  };
-
-  showError = () => {
-    this.setState({ error: true });
   };
 
   /**
@@ -43,19 +47,28 @@ export default class Input extends Component {
    * Confirm date picker
    */
   confirmDatePicker = (date) => {
+    let dateString = '';
+    switch (this.props.dateFormat) {
+      case 'ISOString':
+        dateString = date.toISOString().substring(0, 10);
+        break;
+      default:
+        dateString = date.toLocaleDateString();
+        break;
+    }
     this.dismissDatePicker();
-    this.props.onChangeText(date.toLocaleDateString());
+    this.props.onChangeText(dateString);
   };
 
   /**
    * Text input
    */
   textInput = () => {
-    const CS = ThemedStyles.style;
+    const theme = ThemedStyles.style;
     return (
       <TextInput
         {...this.props}
-        style={[CS.input, this.props.style]}
+        style={[theme.input, this.props.style]}
         placeholderTextColor="#444"
         returnKeyType={'done'}
         autoCapitalize={'none'}
@@ -69,11 +82,11 @@ export default class Input extends Component {
    * Phone input
    */
   phoneInput = () => {
-    const CS = ThemedStyles.style;
+    const theme = ThemedStyles.style;
     return (
       <PhoneValidationComponent
-        style={[CS.input, this.props.style]}
-        textStyle={CS.colorPrimaryText}
+        style={[theme.input, this.props.style]}
+        textStyle={theme.colorPrimaryText}
         onFocus={this.props.onFocus}
         onBlur={this.props.onBlur}
         TFA={this.props.TFA}
@@ -86,21 +99,21 @@ export default class Input extends Component {
    * Date input
    */
   dateInput = () => {
-    const CS = ThemedStyles.style;
+    const theme = ThemedStyles.style;
     const maxDate = new Date();
     maxDate.setFullYear(maxDate.getFullYear() - 13);
     return (
       <View>
         <TouchableOpacity
           {...this.props}
-          style={[CS.input, this.props.style]}
+          style={[theme.input, this.props.style]}
           placeholderTextColor="#444"
           returnKeyType={'done'}
           autoCapitalize={'none'}
           underlineColorAndroid="transparent"
           placeholder=""
           onPress={this.showDatePicker}>
-          <Text style={CS.colorPrimaryText}>{this.props.value}</Text>
+          <Text style={theme.colorPrimaryText}>{this.props.value}</Text>
         </TouchableOpacity>
         <DateTimePicker
           isVisible={this.state.datePickerVisible}
@@ -137,23 +150,23 @@ export default class Input extends Component {
    * Render
    */
   render() {
-    const CS = ThemedStyles.style;
+    const theme = ThemedStyles.style;
     const optional = this.props.optional ? (
       <Text style={[styles.optional]}>{'Optional'}</Text>
     ) : null;
 
     return (
-      <View style={CS.marginBottom2x}>
-        <View style={[styles.row]}>
+      <View style={theme.marginBottom2x}>
+        <View style={styles.row}>
           <View style={styles.row}>
             <Text style={[styles.label, this.props.labelStyle]}>
               {this.props.placeholder}
             </Text>
             {this.props.info && <InfoPopup info={this.props.info} />}
-            {this.props.onError && this.state.error && (
+            {!!this.props.error && (
               <View style={styles.errorContainer}>
-                <Text style={[CS.colorAlert, CS.fontL, CS.textRight]}>
-                  {this.props.onError}
+                <Text style={[theme.colorAlert, theme.fontL, theme.textRight]}>
+                  {this.props.error}
                 </Text>
               </View>
             )}
@@ -180,7 +193,7 @@ const styles = StyleSheet.create({
   },
   errorContainer: {
     alignContent: 'flex-end',
-    width: '65%',
+    paddingRight: 10,
   },
   optional: {
     color: '#AEB0B8',

@@ -16,7 +16,7 @@ function frendlyTime(date) {
 
 export default function formatDate(
   timestamp,
-  format = 'datetime',
+  format: 'date' | 'nameDay' | 'time' | 'friendly' | 'datetime' = 'datetime',
   timezone = '',
 ) {
   let options;
@@ -28,6 +28,12 @@ export default function formatDate(
   switch (format) {
     case 'date':
       options = 'MMM DD, YYYY';
+      break;
+    case 'nameDay':
+      if (date.isSame(moment().subtract(1, 'day'), 'day')) {
+        return 'Yesterday';
+      }
+      options = 'ddd MMM Do';
       break;
     case 'time':
       options = 'hh:mm';

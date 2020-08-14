@@ -13,7 +13,7 @@ export default class CaptureFab extends Component {
    * Nav to activity full screen
    */
   navToCapture = () => {
-    this.props.navigation.push('StackCapture', {
+    this.props.navigation.push('Capture', {
       group: this.props.group,
       parentKey: this.props.route.key,
     });

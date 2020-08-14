@@ -1,6 +1,5 @@
 import React from 'react';
 import DiscoveryV2Store from './DiscoveryV2Store';
-import { useLocalStore } from 'mobx-react';
 
 const storesContext = React.createContext(new DiscoveryV2Store());
 

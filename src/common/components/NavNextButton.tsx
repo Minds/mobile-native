@@ -1,17 +1,30 @@
-//@ts-nocheck
 import React, { Component } from 'react';
 
 import { View, TouchableHighlight, Text, StyleSheet } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-export default class NavNextButton extends Component {
+type PropsType = {
+  disabled?: boolean;
+  textStyle?: any;
+  title: string;
+  color: string;
+  disabledColor?: string;
+  onPress: Function | undefined;
+  style?: any;
+  hideChevron?: boolean;
+  chevronStyle?: any;
+  chevronColor?: string;
+  chevronSize?: number;
+};
+
+export default class NavNextButton extends Component<PropsType> {
   onPressAction = () => {
     if (this.props.disabled) {
       return;
     }
 
-    this.props.onPress();
+    this.props.onPress && this.props.onPress();
   };
 
   render() {

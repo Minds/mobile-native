@@ -1,12 +1,6 @@
 //@ts-nocheck
 import React, { Component } from 'react';
-import {
-  FlatList,
-  StyleSheet,
-  View,
-  TouchableHighlight,
-  Text,
-} from 'react-native';
+import { FlatList, View, Text } from 'react-native';
 import { observer, inject } from 'mobx-react';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -14,7 +8,6 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import Boost from './Boost';
 
 import CenteredLoading from '../common/components/CenteredLoading';
-import { CommonStyle } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
 import BoostTabBar from './BoostTabBar';
 import i18n from '../common/services/i18n.service';
@@ -26,10 +19,6 @@ import ThemedStyles from '../styles/ThemedStyles';
 @inject('boost')
 @observer
 export default class BoostConsoleScreen extends Component {
-  static navigationOptions = {
-    title: 'Boost Console',
-  };
-
   state = {
     screen: 'gallery',
   };
@@ -38,7 +27,9 @@ export default class BoostConsoleScreen extends Component {
    * On component will mount
    */
   componentWillMount() {
-    const filter = this.props.route.params.filter;
+    const filter = this.props.route.params
+      ? this.props.route.params.filter
+      : null;
 
     if (filter) {
       this.props.boost.setFilter(filter);
@@ -55,6 +46,7 @@ export default class BoostConsoleScreen extends Component {
    */
   render() {
     let empty;
+    const theme = ThemedStyles.style;
 
     if (this.props.boost.loading) {
       empty = <CenteredLoading />;
@@ -70,7 +62,7 @@ export default class BoostConsoleScreen extends Component {
             </Text>
             <Text
               style={ComponentsStyle.emptyComponentLink}
-              onPress={() => this.props.navigation.push('Capture')}>
+              onPress={() => this.props.navigation.navigate('Capture')}>
               {i18n.t('createAPost')}
             </Text>
           </View>
@@ -78,8 +70,19 @@ export default class BoostConsoleScreen extends Component {
       );
     }
 
-    const tabs = <BoostTabBar />;
-    const theme = ThemedStyles.style;
+    const tabs = (
+      <View>
+        <Text
+          style={[
+            theme.titleText,
+            theme.paddingLeft4x,
+            theme.paddingVertical2x,
+          ]}>
+          {i18n.t('boost')}
+        </Text>
+        <BoostTabBar />
+      </View>
+    );
     return (
       <FlatList
         ListHeaderComponent={tabs}
@@ -118,17 +121,3 @@ export default class BoostConsoleScreen extends Component {
     return <Boost boost={boost} navigation={this.props.navigation} />;
   };
 }
-
-const styles = StyleSheet.create({
-  buttons: {
-    alignItems: 'center',
-  },
-  selectedButton: {
-    alignItems: 'center',
-    borderBottomWidth: 3,
-    borderColor: 'yellow',
-  },
-  buttonBar: {
-    height: 35,
-  },
-});

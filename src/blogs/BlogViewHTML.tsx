@@ -172,7 +172,6 @@ export default class BlogViewHTML extends PureComponent {
     style: {
       height: Dimensions.get('window').height,
       flex: 0,
-      height: 0,
       opacity: 0,
     },
     html: { html: '' },
@@ -187,7 +186,11 @@ export default class BlogViewHTML extends PureComponent {
     height += 30;
 
     if (height > this.state.style.height) {
-      this.setState({ style: { height, flex: 0 } });
+      this.setState({ style: { height, flex: 0 } }, () => {
+        if (this.props.onHeightUpdated) {
+          this.props.onHeightUpdated();
+        }
+      });
     }
   };
 
@@ -248,9 +251,7 @@ export default class BlogViewHTML extends PureComponent {
         onMessage={this.onMessage}
         // renderLoading={this.renderLoading}
         startInLoadingState={true}
-        renderLoading={() => (
-          <View style={{ flex: 1, backgroundColor: 'green' }} />
-        )}
+        renderLoading={() => <View style={ThemedStyles.style.flexContainer} />}
         renderError={this.onError}
         onNavigationStateChange={this.onStateChange}
       />

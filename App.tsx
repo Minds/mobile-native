@@ -21,7 +21,6 @@ import {
 } from 'react-native';
 import { Provider, observer } from 'mobx-react';
 import RNBootSplash from 'react-native-bootsplash';
-import FlashMessage from 'react-native-flash-message';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import * as Sentry from '@sentry/react-native';
@@ -30,7 +29,6 @@ import NavigationService, {
   setTopLevelNavigator,
 } from './src/navigation/NavigationService';
 import KeychainModalScreen from './src/keychain/KeychainModalScreen';
-// import BlockchainTransactionModalScreen from './src/blockchain/transaction-modal/BlockchainTransactionModalScreen';
 import NavigationStack from './src/navigation/NavigationStack';
 import { getStores } from './AppStores';
 import './AppErrors';
@@ -49,7 +47,6 @@ import { CommonStyle as CS } from './src/styles/Common';
 import logService from './src/common/services/log.service';
 import settingsStore from './src/settings/SettingsStore';
 import TosModal from './src/tos/TosModal';
-import Notification from './src/notifications/notification/Notification';
 import entitiesStorage from './src/common/services/sql/entities.storage';
 import feedsStorage from './src/common/services/sql/feeds.storage';
 import connectivityService from './src/common/services/connectivity.service';
@@ -60,6 +57,7 @@ import boostedContentService from './src/common/services/boosted-content.service
 import translationService from './src/common/services/translation.service';
 import ThemedStyles from './src/styles/ThemedStyles';
 import { StoresProvider } from './src/common/hooks/use-stores';
+import AppMessages from './AppMessages';
 import i18n from './src/common/services/i18n.service';
 
 const stores = getStores();
@@ -102,14 +100,7 @@ sessionService.onLogin(async () => {
   );
 
   // hide splash
-  RNBootSplash.hide({ duration: 250 });
-
-  NavigationService.navigate('App', { screen: sessionService.initialScreen });
-
-  // check onboarding progress and navigate if necessary
-  getStores().onboarding.getProgress(
-    sessionService.initialScreen !== 'OnboardingScreenNew',
-  );
+  RNBootSplash.hide({ duration: 450 });
 
   // check update
   if (Platform.OS !== 'ios' && !GOOGLE_PLAY_STORE) {
@@ -119,29 +110,38 @@ sessionService.onLogin(async () => {
     }, 5000);
   }
 
-  try {
-    // handle deep link (if the app is opened by one)
-    if (deepLinkUrl) {
-      deeplinkService.navigate('App', { screen: deepLinkUrl });
-      deepLinkUrl = '';
+  // delay initial navigation until the app navigator is ready
+  setTimeout(() => {
+    try {
+      NavigationService.navigate(sessionService.initialScreen);
+
+      // check onboarding progress and navigate if necessary
+      getStores().onboarding.getProgress(
+        sessionService.initialScreen !== 'OnboardingScreen',
+      );
+      // // handle deep link (if the app is opened by one)
+      if (deepLinkUrl) {
+        deeplinkService.navigate('App', { screen: deepLinkUrl });
+        deepLinkUrl = '';
+      }
+
+      // handle initial notifications (if the app is opened by tap on one)
+      pushService.handleInitialNotification();
+
+      // handle shared
+      receiveShare.handle();
+    } catch (err) {
+      logService.exception(err);
     }
+  }, 500);
 
-    // handle initial notifications (if the app is opened by tap on one)
-    pushService.handleInitialNotification();
-
-    // handle shared
-    receiveShare.handle();
-
-    // fire offline cache garbage collector 30 seconds after start
-    setTimeout(() => {
-      if (!connectivityService.isConnected) return;
-      entitiesStorage.removeOlderThan(30);
-      feedsStorage.removeOlderThan(30);
-      commentStorageService.removeOlderThan(30);
-    }, 30000);
-  } catch (err) {
-    logService.exception(err);
-  }
+  // fire offline cache garbage collector 30 seconds after start
+  setTimeout(() => {
+    if (!connectivityService.isConnected) return;
+    entitiesStorage.removeOlderThan(30);
+    feedsStorage.removeOlderThan(30);
+    commentStorageService.removeOlderThan(30);
+  }, 30000);
 });
 
 //on app logout
@@ -377,7 +377,7 @@ class App extends Component<Props, State> {
                   key={ThemedStyles.theme + i18n.locale}
                   isLoggedIn={isLoggedIn}
                 />
-                <FlashMessage renderCustomContent={this.renderNotification} />
+                <AppMessages />
               </ErrorBoundary>
             </Provider>
           </StoresProvider>
@@ -389,24 +389,10 @@ class App extends Component<Props, State> {
       <KeychainModalScreen key="keychainModal" keychain={stores.keychain} />
     );
 
-    const blockchainTransactionModal = null;
-
     const tosModal = <TosModal user={stores.user} key="tosModal" />;
 
-    return [app, keychainModal, blockchainTransactionModal, tosModal];
+    return [app, keychainModal, tosModal];
   }
-
-  renderNotification = (message) => {
-    if (!stores.notifications.last) {
-      return message.renderCustomContent ? message.renderCustomContent() : null;
-    }
-    return (
-      <Notification
-        entity={stores.notifications.last}
-        navigation={NavigationService}
-      />
-    );
-  };
 }
 
 export default App;

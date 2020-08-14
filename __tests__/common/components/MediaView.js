@@ -2,9 +2,14 @@ import 'react-native';
 import React from 'react';
 import { Text, Dimensions, TouchableOpacity } from 'react-native';
 import { shallow } from 'enzyme';
+import MindsVideo from '../../../src/media/MindsVideo';
+import MindsVideoV2 from '../../../src/media/v2/mindsVideo/MindsVideo';
 import MediaView from '../../../src/common/components/MediaView';
 
 import { activitiesServiceFaker } from '../../../__mocks__/fake/ActivitiesFaker';
+
+jest.mock('../../../src/media/MindsVideo', () => 'MindsVideo');
+jest.mock('../../../src/media/v2/mindsVideo/MindsVideo', () => 'MindsVideoV2');
 
 describe('Media view component', () => {
   let user, comments, entity, screen;
@@ -15,6 +20,8 @@ describe('Media view component', () => {
     entity.subtype = 'image';
     entity.getThumbSource = jest.fn();
     entity.getThumbSource.mockReturnValue({ uri: 'www.something.com' });
+    entity.hasThumbnails = jest.fn();
+    entity.hasThumbnails.mockReturnValue(false);
     screen = shallow(<MediaView entity={entity} />);
   });
 
@@ -29,10 +36,12 @@ describe('Media view component', () => {
     expect(screen.find('TouchableOpacity')).toHaveLength(1);
   });
 
-  it('sholdnt show overlay if press', async () => {
+  it('should show overlay if press', async () => {
     let mockResponse = activitiesServiceFaker().load(1);
     entity = mockResponse.activities[0];
     entity.mature = false;
+    entity.hasThumbnails = jest.fn();
+    entity.hasThumbnails.mockReturnValue(false);
     screen = shallow(<MediaView entity={entity} />);
     screen.update();
     expect(screen.find('ExplicitOverlay')).toHaveLength(0);
@@ -45,6 +54,8 @@ describe('Media view component', () => {
     entity.subtype = 'videos';
     entity.getThumbSource = jest.fn();
     entity.getThumbSource.mockReturnValue({ uri: 'www.something.com' });
+    entity.hasThumbnails = jest.fn();
+    entity.hasThumbnails.mockReturnValue(false);
     screen = shallow(<MediaView entity={entity} />);
     screen.update();
     expect(screen.find('ExplicitOverlay')).toHaveLength(0);

@@ -1,11 +1,12 @@
 //@ts-nocheck
 import React, { useCallback } from 'react';
-import { View, FlatList } from 'react-native';
-import SettingsItem from './SettingsItem';
+import { View, FlatList, Text } from 'react-native';
+import MenuItem from '../common/components/menus/MenuItem';
 import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
-import Topbar from '../topbar/Topbar';
 import authService from '../auth/AuthService';
+
+const keyExtractor = (item, index) => index.toString();
 
 export default function ({ navigation }) {
   const theme = ThemedStyles.style;
@@ -24,8 +25,6 @@ export default function ({ navigation }) {
 
   const navToOther = useCallback(() => navigation.push('Other'), [navigation]);
 
-  const keyExtractor = useCallback((item, index) => index.toString());
-
   const setDarkMode = () => {
     if (ThemedStyles.theme) {
       ThemedStyles.setLight();
@@ -43,10 +42,10 @@ export default function ({ navigation }) {
       title: i18n.t('settings.security'),
       onPress: navToSecurity,
     },
-    /*{
+    {
       title: i18n.t('settings.billing'),
       onPress: navToBilling,
-    },*/
+    },
     {
       title: i18n.t('settings.other'),
       onPress: navToOther,
@@ -77,23 +76,25 @@ export default function ({ navigation }) {
 
   return (
     <View style={[theme.flexContainer, theme.backgroundPrimary]}>
-      <Topbar
-        title={i18n.t('moreScreen.settings')}
-        navigation={navigation}
-        renderBack
-        background={theme.backgroundPrimary}
-      />
       <View style={innerWrapper}>
+        <Text
+          style={[
+            theme.titleText,
+            theme.paddingLeft4x,
+            theme.paddingVertical2x,
+          ]}>
+          {i18n.t('moreScreen.settings')}
+        </Text>
         <FlatList
           data={list}
-          renderItem={SettingsItem}
-          style={[theme.backgroundPrimary, theme.paddingTop4x]}
+          renderItem={MenuItem}
+          style={theme.backgroundPrimary}
           keyExtractor={keyExtractor}
         />
       </View>
       <View style={[innerWrapper, theme.marginTop7x]}>
-        <SettingsItem item={themeChange} i={4} />
-        <SettingsItem item={logOut} i={5} />
+        <MenuItem item={themeChange} i={4} />
+        <MenuItem item={logOut} i={5} />
       </View>
     </View>
   );

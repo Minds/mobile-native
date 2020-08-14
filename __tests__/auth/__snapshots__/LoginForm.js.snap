@@ -23,12 +23,10 @@ exports[`LoginForm component should renders correctly 1`] = `
   <View>
     <View
       style={
-        Array [
-          Object {
-            "flexDirection": "row",
-            "justifyContent": "space-between",
-          },
-        ]
+        Object {
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+        }
       }
     >
       <View
@@ -81,12 +79,10 @@ exports[`LoginForm component should renders correctly 1`] = `
     <View>
       <View
         style={
-          Array [
-            Object {
-              "flexDirection": "row",
-              "justifyContent": "space-between",
-            },
-          ]
+          Object {
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+          }
         }
       >
         <View
@@ -155,7 +151,7 @@ exports[`LoginForm component should renders correctly 1`] = `
         ]
       }
     >
-      
+      
     </Text>
   </View>
   <View

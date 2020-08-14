@@ -27,6 +27,7 @@ import { CommonStyle as CS } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
 import token from '../common/helpers/token';
 import i18n from '../common/services/i18n.service';
+import colors from '../styles/Colors';
 
 @inject('user', 'boost')
 @observer

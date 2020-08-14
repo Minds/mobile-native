@@ -6,330 +6,313 @@ import {
   StyleSheet,
   Text,
   ScrollView,
-  BackHandler,
-  Linking,
-  ImageBackground,
-  Alert,
-  Platform,
-  ToastAndroid,
   TouchableOpacity,
+  SafeAreaView,
+  Image,
 } from 'react-native';
 
-import { inject } from 'mobx-react';
-
-import RNExitApp from 'react-native-exit-app';
-
-import { MINDS_URI, CODE_PUSH_TOKEN } from '../config/Config';
+import { inject, observer } from 'mobx-react';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import authService from './../auth/AuthService';
+import IconFa from 'react-native-vector-icons/FontAwesome5';
 import { ListItem } from 'react-native-elements';
-import FastImage from 'react-native-fast-image';
 
-import { ComponentsStyle } from '../styles/Components';
-import { CommonStyle as CS } from '../styles/Common';
-import shareService from '../share/ShareService';
-import { Version } from '../config/Version';
-import mindsService from '../common/services/minds.service';
-import colors from '../styles/Colors';
-import logService from '../common/services/log.service';
 import testID from '../common/helpers/testID';
 import i18n from '../common/services/i18n.service';
-import TabIcon from './TabIcon';
 
-const ICON_SIZE = 24;
+import abbrev from '../common/helpers/abbrev';
+
+import featuresService from '../common/services/features.service';
+import ThemedStyles from '../styles/ThemedStyles';
+
+const ICON_SIZE = 23;
 
 /**
- * More screen (menu)
+ * More screen, new design (menu)
  */
 @inject('user')
-export default class MoreScreen extends Component {
-  static navigationOptions = {
-    title: 'Minds',
-    tabBarIcon: ({ tintColor }) => (
-      <TabIcon name="md-menu" size={24} color={tintColor} />
-    ),
+@observer
+class MoreScreenNew extends Component {
+  navToChannel = () =>
+    this.props.navigation.push('Channel', { username: 'me' });
+
+  /**
+   * Get Channel Avatar
+   */
+  getAvatar() {
+    return this.props.user.me && this.props.user.me.getAvatarSource
+      ? this.props.user.me.getAvatarSource('medium')
+      : {};
+  }
+
+  navToSubscribers = () =>
+    this.props.navigation.push('Subscribers', {
+      guid: this.props.user.me.guid,
+    });
+
+  navToSubscriptions = () =>
+    this.props.navigation.push('Subscribers', {
+      guid: this.props.user.me.guid,
+      filter: 'subscriptions',
+    });
+
+  setDarkMode = () => {
+    if (ThemedStyles.theme) {
+      ThemedStyles.setLight();
+    } else {
+      ThemedStyles.setDark();
+    }
   };
 
-  state = {
-    active: false,
-    activities: [],
-    refreshing: false,
-  };
+  /**
+   * Return Options List ready to be rendered
+   */
+  getOptionsList = () => {
+    const theme = ThemedStyles.style;
 
-  render() {
-    const list = [
+    let list = [
+      /* Removed as per request in https://gitlab.com/minds/mobile-native/issues/1886
       {
         name: i18n.t('moreScreen.helpSupport'),
-        icon: <Icon name="help-outline" size={ICON_SIZE} style={styles.icon} />,
+        icon: (<Icon name='help-outline' size={ICON_SIZE} style={ theme.colorIcon }/>),
         onPress: () => {
-          this.props.navigation.push('GroupView', {
-            guid: '100000000000000681',
-          });
-        },
+          this.props.navigation.push('GroupView', { guid: '100000000000000681'});
+        }
       },
       {
         name: i18n.t('moreScreen.invite'),
-        icon: <Icon name="share" size={ICON_SIZE} style={styles.icon} />,
+        icon: (<Icon name='share' size={ICON_SIZE} style={ theme.colorIcon }/>),
         onPress: () => {
           shareService.invite(this.props.user.me.guid);
+        }
+      },
+      */
+      {
+        name: i18n.t('wire.lock.plus'),
+        icon: (
+          <Icon
+            name="add-to-queue"
+            size={ICON_SIZE - 4}
+            style={[theme.colorIcon, styles.icon]}
+          />
+        ),
+        onPress: () => {
+          this.props.navigation.navigate('PlusDiscoveryScreen');
         },
       },
       {
+        name: i18n.t('discovery.groups'),
+        icon: (
+          <IconFa
+            name="users"
+            size={ICON_SIZE - 4}
+            style={[theme.colorIcon, styles.icon]}
+          />
+        ),
+        onPress: () => {
+          this.props.navigation.navigate('GroupsList');
+        },
+      },
+    ];
+
+    if (featuresService.has('crypto')) {
+      list = [
+        ...list,
+        {
+          name: i18n.t('moreScreen.wallet'),
+          icon: (
+            <IconFa
+              name="coins"
+              size={ICON_SIZE}
+              style={[theme.colorIcon, styles.icon]}
+            />
+          ),
+          onPress: () => {
+            this.props.navigation.navigation.navigate('Tabs', {
+              screen: 'CaptureTab',
+              params: { screen: 'Wallet' },
+            });
+          },
+        },
+        {
+          name: i18n.t('boost'),
+          icon: (
+            <Icon
+              name="trending-up"
+              size={ICON_SIZE}
+              style={[theme.colorIcon, styles.icon]}
+            />
+          ),
+          onPress: () => {
+            this.props.navigation.navigate('BoostConsole', {
+              navigation: this.props.navigation,
+            });
+          },
+        },
+      ];
+    }
+
+    list = [
+      ...list,
+      {
         name: i18n.t('moreScreen.settings'),
-        icon: <Icon name="settings" size={ICON_SIZE} style={styles.icon} />,
+        icon: (
+          <Icon
+            name="settings"
+            size={ICON_SIZE}
+            style={[theme.colorIcon, styles.icon]}
+          />
+        ),
         onPress: () => {
           this.props.navigation.navigate('Settings');
         },
       },
-      {
-        name: i18n.t('settings.logout'),
-        hideChevron: true,
+    ];
+
+    if (featuresService.has('dark-mode')) {
+      const name = ThemedStyles.theme
+        ? i18n.t('settings.lightMode')
+        : i18n.t('settings.darkMode');
+
+      const icon = ThemedStyles.theme ? 'wb-sunny' : 'moon';
+
+      const IconCmp = ThemedStyles.theme ? Icon : IconFa;
+
+      list.push({
+        name,
         icon: (
-          <Icon
-            name="power-settings-new"
+          <IconCmp
+            name={icon}
             size={ICON_SIZE}
-            style={styles.icon}
+            style={[theme.colorIcon, styles.icon]}
           />
         ),
-        onPress: () => {
-          authService.logout();
-        },
-      },
-    ];
-
-    const links1 = [
-      {
-        name: i18n.t('moreScreen.faq'),
-        icon: <Icon name="open-in-new" size={16} style={styles.icon} />,
-        hideChevron: true,
-        onPress: () => {
-          Linking.openURL(MINDS_URI + 'faq');
-        },
-      },
-      {
-        name: i18n.t('moreScreen.code'),
-        icon: <Icon name="open-in-new" size={16} style={styles.icon} />,
-        hideChevron: true,
-        onPress: () => {
-          Linking.openURL('https://gitlab.com/Minds');
-        },
-      },
-    ];
-    const links2 = [
-      {
-        name: i18n.t('moreScreen.terms'),
-        icon: <Icon name="open-in-new" size={16} style={styles.icon} />,
-        hideChevron: true,
-        onPress: () => {
-          Linking.openURL(MINDS_URI + 'p/terms');
-        },
-      },
-      {
-        name: i18n.t('moreScreen.privacy'),
-        icon: <Icon name="open-in-new" size={16} style={styles.icon} />,
-        hideChevron: true,
-        onPress: () => {
-          Linking.openURL(MINDS_URI + 'p/privacy');
-        },
-      },
-    ];
-
-    // if it is enabled
-    if (
-      mindsService.settings &&
-      mindsService.settings.features.mobile_bug_report
-    ) {
-      list.push({
-        name: i18n.t('moreScreen.reportBug'),
-        icon: <Icon name="bug-report" size={ICON_SIZE} style={styles.icon} />,
-        onPress: () => {
-          this.props.navigation.navigate('IssueReport');
-        },
+        onPress: this.setDarkMode,
       });
     }
 
-    list.push({
-      name: i18n.t('moreScreen.exit'),
-      hideChevron: true,
-      icon: <Icon name="close" size={ICON_SIZE} style={styles.icon} />,
-      onPress: () => {
-        RNExitApp.exitApp();
-      },
-    });
-
-    return (
-      <ScrollView style={styles.scrollView}>
-        <ImageBackground
-          source={require('../assets/bg-1.jpg')}
-          style={{ width: '100%' }}>
-          <View style={{ backgroundColor: 'rgba(255, 255, 255, 0.66)' }}>
-            <View
-              style={[
-                CS.rowJustifySpaceEvenly,
-                CS.flexContainer,
-                CS.paddingTop3x,
-                CS.paddingBottom3x,
-                CS.borderBottomHair,
-                CS.borderDarkGreyed,
-              ]}>
-              <TouchableOpacity
-                style={[
-                  CS.borderRadius5x,
-                  CS.shadow,
-                  CS.backgroundPrimary,
-                  CS.padding2x,
-                  styles.button,
-                ]}
-                onPress={() => {
-                  this.props.navigation.navigate('BlogList');
-                }}>
-                <Icon
-                  name="subject"
-                  size={35}
-                  style={[CS.colorWhite, CS.textCenter]}
-                />
-                <Text style={[CS.colorWhite, CS.textCenter]}>
-                  {i18n.t('blogs.blogs')}
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[
-                  CS.borderRadius5x,
-                  CS.shadow,
-                  CS.backgroundPrimary,
-                  CS.padding2x,
-                  styles.button,
-                ]}
-                onPress={() => {
-                  this.props.navigation.navigate('GroupsList');
-                }}>
-                <Icon
-                  name="group-work"
-                  size={35}
-                  style={[CS.colorWhite, CS.textCenter]}
-                />
-                <Text style={[CS.colorWhite, CS.textCenter]}>
-                  {i18n.t('groups.myGroups')}
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </ImageBackground>
-        {this.getList(list)}
-        <View
-          style={[
-            CS.rowJustifyCenter,
-            CS.marginTop1x,
-            CS.borderTopHair,
-            CS.borderDarkGreyed,
-          ]}>
-          {this.getList(links1)}
-          {this.getList(links2)}
-        </View>
-        <View style={styles.logoBackground}>
-          <FastImage
-            resizeMode={FastImage.resizeMode.cover}
-            style={[styles.logo, CS.marginTop2x]}
-            source={require('../assets/logos/logo.png')}
-          />
-          <View style={styles.footer}>
-            <Text style={styles.version} textAlign={'center'}>
-              v{Version.VERSION} ({Version.BUILD})
-            </Text>
-          </View>
-        </View>
-      </ScrollView>
-    );
-  }
-
-  onPressSettings = () => {
-    this.props.navigation.navigate('Settings');
+    return list;
   };
 
-  getList(list) {
+  render() {
+    const avatar = this.getAvatar(),
+      channel = this.props.user.me;
+
+    const theme = ThemedStyles.style;
+
+    const subscribersStyle = [
+      theme.subTitleText,
+      theme.colorTertiaryText,
+      theme.fontNormal,
+      theme.marginTop3x,
+    ];
+
     return (
-      <View style={styles.container}>
-        {list.map((l, i) => (
-          <ListItem
-            key={i}
-            title={l.name}
-            titleStyle={styles.listTitle}
-            containerStyle={styles.listItem}
-            switchButton={l.switchButton}
-            hideChevron={l.hideChevron}
-            leftIcon={l.icon}
-            onPress={l.onPress}
-            noBorder
-            {...testID(l.name)}
-          />
-        ))}
-      </View>
+      <SafeAreaView style={[theme.flexContainer, theme.backgroundPrimary]}>
+        <ScrollView
+          style={[
+            theme.flexContainer,
+            theme.backgroundPrimary,
+            theme.marginTop11x,
+          ]}>
+          <View style={styles.headerContainer}>
+            <TouchableOpacity onPress={this.navToChannel}>
+              <Image source={avatar} style={styles.wrappedAvatar} />
+            </TouchableOpacity>
+            <Text
+              style={[theme.titleText, theme.colorPrimaryText, theme.marginTop]}
+              onPress={this.navToChannel}>
+              {channel.name}
+            </Text>
+            <Text
+              onPress={this.navToChannel}
+              style={[
+                theme.subTitleText,
+                theme.colorSecondaryText,
+                theme.fontNormal,
+              ]}>
+              @{channel.username}
+            </Text>
+            <Text style={subscribersStyle}>
+              <Text onPress={this.navToSubscribers} style={subscribersStyle}>
+                {`${abbrev(channel.subscribers_count, 0)} ${i18n.t(
+                  'subscribers',
+                )}`}
+              </Text>
+              {'   ·   '}
+              <Text onPress={this.navToSubscriptions} style={subscribersStyle}>
+                {`${abbrev(channel.subscriptions_count, 0)} ${i18n.t(
+                  'subscriptions',
+                )}`}
+              </Text>
+            </Text>
+          </View>
+          <View style={styles.body}>
+            {this.getOptionsList().map((l, i) => (
+              <ListItem
+                Component={TouchableOpacity}
+                key={i}
+                title={l.name}
+                titleStyle={[
+                  styles.menuText,
+                  l.textColor || theme.colorSecondaryText,
+                ]}
+                containerStyle={styles.listItem}
+                switchButton={l.switchButton}
+                pad={5}
+                hideChevron={l.hideChevron}
+                leftIcon={l.icon}
+                onPress={l.onPress}
+                noBorder
+                {...testID(l.name)}
+              />
+            ))}
+          </View>
+        </ScrollView>
+      </SafeAreaView>
     );
   }
 }
 
+export default MoreScreenNew;
+
 const styles = StyleSheet.create({
-  logo: {
-    height: 85,
-    width: 230,
-  },
-  scrollView: {
-    backgroundColor: '#FFF',
+  headerContainer: {
     flexDirection: 'column',
+    justifyContent: 'flex-start',
+    paddingTop: 23,
+    paddingLeft: 40,
+    paddingBottom: 25,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: '#CCC',
   },
-  button: {
-    width: 100,
+  icon: {
+    width: 30,
+  },
+  menuText: {
+    fontSize: 24,
+    fontWeight: '700',
+    paddingLeft: 10,
+  },
+  wrappedAvatar: {
+    height: 55,
+    width: 55,
+    borderRadius: 55,
+  },
+  body: {
+    paddingLeft: 24,
+    paddingTop: 40,
   },
   container: {
-    flex: 1,
-    marginTop: 0,
-    backgroundColor: 'transparent',
     borderTopWidth: 0,
     borderBottomWidth: 0,
-  },
-  logoBackground: {
-    alignItems: 'center',
-    paddingTop: 16,
-    paddingBottom: 20,
-    backgroundColor: '#FFF',
-  },
-  screen: {
-    //paddingTop: 20,
-    backgroundColor: '#FFF',
-    flex: 1,
-  },
-  footer: {
-    alignItems: 'stretch',
-    width: '100%',
-    height: 50,
+    paddingLeft: 30,
   },
   listItem: {
     borderBottomWidth: 0,
-    borderBottomColor: '#ddd',
-    paddingTop: 8,
-    paddingBottom: 8,
+    backgroundColor: 'transparent',
+    paddingTop: 0,
+    paddingBottom: 37,
     //height:20
-  },
-  listTitle: {
-    padding: 8,
-    color: '#455a64',
-    fontFamily: 'Roboto',
-  },
-  icon: {
-    color: colors.darkGreyed,
-    alignSelf: 'center',
-  },
-  footercol: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
-  version: {
-    marginTop: 16,
-    fontSize: 16,
-    padding: 8,
-    textAlign: 'center',
-    fontWeight: '200',
-    color: '#444',
   },
 });

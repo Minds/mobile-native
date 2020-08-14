@@ -53,12 +53,10 @@ exports[`ForgotScreen component should renders correctly 1`] = `
       <View>
         <View
           style={
-            Array [
-              Object {
-                "flexDirection": "row",
-                "justifyContent": "space-between",
-              },
-            ]
+            Object {
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+            }
           }
         >
           <View

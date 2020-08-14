@@ -8,6 +8,7 @@ import { observer, inject } from 'mobx-react';
 import Switch from 'react-native-switch-pro';
 import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
+import logService from '../common/services/log.service';
 
 @inject('notificationsSettings')
 @observer
@@ -38,16 +39,25 @@ export default class NotificationsSettingsScreen extends Component {
         </Text>
         {Object.keys(settings).map(function (key) {
           const toggle = settings[key];
+          const notificationText = i18n.t('notificationSettings.' + key);
+          if (
+            notificationText.includes('missing') &&
+            notificationText.includes('translation')
+          ) {
+            logService.exception('[i18n]', new Error(notificationText));
+            return null;
+          }
           return (
             <View
               style={[styles.row, CS.borderPrimary, CS.borderBottomHair]}
               key={key}>
-              <Text>{i18n.t('notificationSettings.' + key)}</Text>
+              <Text>{notificationText}</Text>
               <Switch
                 value={toggle}
                 onSyncPress={(val) =>
                   notificationsSettings.saveSetting(key, val)
-                }></Switch>
+                }
+              />
             </View>
           );
         })}
@@ -68,6 +78,7 @@ const styles = StyleSheet.create({
     height: 40,
     justifyContent: 'space-between',
     flexDirection: 'row',
+    paddingLeft: 20,
   },
   container: {
     flex: 1,

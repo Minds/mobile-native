@@ -10,7 +10,7 @@ import testID from '../../../common/helpers/testID';
 import { FLAG_VOTE } from '../../../common/Permissions';
 import remoteAction from '../../../common/RemoteAction';
 import ThemedStyles from '../../../styles/ThemedStyles';
-import type ActivityModel from 'src/newsfeed/ActivityModel';
+import type ActivityModel from '../../../newsfeed/ActivityModel';
 
 // prevent double tap in touchable
 const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
@@ -30,7 +30,7 @@ class ThumbUpAction extends Component<PropsType> {
    * Default Props
    */
   static defaultProps = {
-    size: 20,
+    size: 21,
     orientation: 'row',
   };
 
@@ -48,40 +48,41 @@ class ThumbUpAction extends Component<PropsType> {
    * Render
    */
   render() {
+    const theme = ThemedStyles.style;
     const entity = this.props.entity;
 
-    //@ts-ignore
     const count = entity[`thumbs:${this.direction}:count`];
 
     const canVote = entity.can(FLAG_VOTE);
 
     const color = canVote
       ? this.voted
-        ? ThemedStyles.style.colorIconActive
-        : ThemedStyles.style.colorIcon
+        ? theme.colorIconActive
+        : theme.colorIcon
       : CS.colorLightGreyed;
 
     return (
       <TouchableOpacityCustom
         style={[
-          CS.flexContainer,
-          CS.centered,
-          this.props.orientation === 'column'
-            ? CS.columnAlignCenter
-            : CS.rowJustifyCenter,
+          theme.rowJustifyCenter,
+          theme.paddingHorizontal3x,
+          theme.paddingVertical4x,
+          theme.alignCenter,
         ]}
         onPress={this.toggleThumb}
         {...testID(`Thumb ${this.direction} activity button`)}>
         <Icon
-          style={[color, CS.marginRight]}
+          style={[color, theme.marginRight]}
           name={this.iconName}
           size={this.props.size}
         />
-        <Counter
-          size={this.props.size * 0.7}
-          count={count}
-          testID={`Thumb ${this.direction} count`}
-        />
+        {count ? (
+          <Counter
+            // size={this.props.size * 0.7}
+            count={count}
+            testID={`Thumb ${this.direction} count`}
+          />
+        ) : undefined}
       </TouchableOpacityCustom>
     );
   }

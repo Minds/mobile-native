@@ -418,7 +418,7 @@ export default class FeedStore {
   /**
    * Load next page
    */
-  async loadMore() {
+  loadMore = async () => {
     if (this.loading || !this.loaded || !this.feedsService.hasMore) {
       return;
     }
@@ -447,7 +447,7 @@ export default class FeedStore {
     } finally {
       this.setLoading(false);
     }
-  }
+  };
 
   /**
    * Refresh
@@ -491,7 +491,7 @@ export default class FeedStore {
    */
   async getScheduledCount(guid) {
     const count = await channelService.getScheduledCount(guid);
-    this.setScheduledCount(count);
+    this.setScheduledCount(parseInt(count, 10));
   }
 
   @action

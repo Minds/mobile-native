@@ -5,6 +5,7 @@ import i18n from '../common/services/i18n.service';
 import { Text } from 'react-native';
 import Button from '../common/components/Button';
 import { useNavigation } from '@react-navigation/native';
+import reportService from './ReportService';
 
 export default function ({ appeal }) {
   const CS = ThemedStyles.style;
@@ -60,7 +61,7 @@ export default function ({ appeal }) {
   const date = new Date(appeal.time_created * 1000);
 
   const entityType =
-    appeal.report.entity.type == 'comment'
+    appeal.report.entity.type === 'comment'
       ? i18n.t('settings.reportedContent.entityComment')
       : i18n.t('settings.reportedContent.entityPost');
 

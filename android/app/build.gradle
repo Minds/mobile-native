@@ -1,4 +1,5 @@
 apply plugin: "com.android.application"
+apply from: '../../node_modules/react-native-unimodules/gradle.groovy'
 
 import com.android.build.OutputFile
 
@@ -139,6 +140,7 @@ android {
         missingDimensionStrategy "react-native-camera", "general", "RNNotifications.reactNativeVersion", "reactNative60"
         testBuildType System.getProperty('testBuildType', 'debug')  // This will later be used to control the test apk build type
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+        vectorDrawables.useSupportLibrary = true
     }
     signingConfigs {
         debug {
@@ -200,6 +202,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-alpha02'
 
+    addUnimodulesDependencies()
 
     implementation project(':tipsi-stripe')
     implementation project(':reactnativenotifications')
@@ -214,6 +217,7 @@ dependencies {
       exclude group: 'com.facebook.react', module:'react-native-community-async-storage'
       exclude group: 'com.facebook.react', module:'react-native-community_netinfo'
       exclude group: 'com.facebook.react', module:'react-native-webview'
+      exclude group: 'com.facebook.react', module:'react-native-linear-gradient'
       exclude group: 'com.facebook.react', module:'react-native-vector-icons'
       exclude group: 'com.facebook.react', module:'react-native-svg'
     //   exclude group: 'com.facebook.react', module:'react-native-gesture-handler'

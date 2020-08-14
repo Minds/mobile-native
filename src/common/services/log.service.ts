@@ -55,7 +55,7 @@ class LogService {
     // deviceLog.error(...args);
   }
 
-  exception(prepend, error = undefined) {
+  exception(prepend, error?: Error = undefined) {
     if (!error) {
       error = prepend;
       prepend = null;

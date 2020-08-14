@@ -35,6 +35,8 @@ import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
 import isIphoneX from '../common/helpers/isIphoneX';
 
+const keyExtractor = (item) => item.rowKey;
+
 /**
  * Messenger Conversation Screen
  */
@@ -78,16 +80,16 @@ export default class ConversationScreen extends Component {
       }
     }
 
+    this.store.setGuid(conversation.guid);
+
     if (this.props.messengerList.configured) {
       this.updateTopAvatar(conversation);
+      // load conversation
+      this.store.load().then((conv) => {
+        // we send the conversation to update the topbar (in case we only receive the guid)
+        this.updateTopAvatar(conv);
+      });
     }
-
-    // load conversation
-    this.store.setGuid(conversation.guid);
-    this.store.load().then((conversation) => {
-      // we send the conversation to update the topbar (in case we only receive the guid)
-      this.updateTopAvatar(conversation);
-    });
   }
 
   /**
@@ -166,6 +168,13 @@ export default class ConversationScreen extends Component {
   };
 
   /**
+   * Set list ref
+   */
+  setRef = (c) => {
+    this.list = c;
+  };
+
+  /**
    * Render component
    */
   render() {
@@ -194,7 +203,6 @@ export default class ConversationScreen extends Component {
 
     const footer = this.getFooter();
     const messages = this.store.messages.slice();
-    const conversation = this.props.route.params.conversation;
     const avatarImg = {
       uri:
         MINDS_CDN_URI +
@@ -207,17 +215,15 @@ export default class ConversationScreen extends Component {
       <SafeAreaView style={styles.container}>
         <KeyboardAvoidingView
           style={[styles.container, ThemedStyles.style.backgroundSecondary]}
-          behavior={Platform.OS == 'ios' ? 'padding' : null}
+          behavior={Platform.OS === 'ios' ? 'padding' : null}
           keyboardVerticalOffset={isIphoneX ? 100 : 64}>
           <FlatList
             inverted={true}
             data={messages}
-            ref={(c) => {
-              this.list = c;
-            }}
+            ref={this.setRef}
             renderItem={this.renderMessage}
             maxToRenderPerBatch={15}
-            keyExtractor={(item) => item.rowKey}
+            keyExtractor={keyExtractor}
             style={styles.listView}
             ListFooterComponent={footer}
             windowSize={3}
@@ -235,7 +241,7 @@ export default class ConversationScreen extends Component {
               underlineColorAndroid="transparent"
               placeholder={i18n.t('messenger.typeYourMessage')}
               placeholderTextColor={ThemedStyles.getColor('secondary_text')}
-              onChangeText={(text) => this.textChanged(text)}
+              onChangeText={this.textChanged}
               multiline={true}
               autogrow={true}
               maxHeight={110}
@@ -264,12 +270,12 @@ export default class ConversationScreen extends Component {
    *
    * @param { string } text - the text to be checked
    */
-  textChanged(text) {
+  textChanged = (text) => {
     if (text.length > 180) {
       return;
     }
     this.setState({ text: text });
-  }
+  };
 
   /**
    * Get list header
@@ -297,16 +303,17 @@ export default class ConversationScreen extends Component {
    * Send message
    */
   send = async () => {
-    const conversationGuid = this.store.guid;
     const myGuid = this.props.user.me.guid;
     const msg = this.state.text;
 
+    this.setState({ text: '' });
+
     try {
-      const result = await this.store.send(myGuid, msg);
+      await this.store.send(myGuid, msg);
     } catch (err) {
       logService.exception('[ConversationScreen]', err);
     }
-    this.setState({ text: '' });
+
     setTimeout(() => {
       if (this.list && this.list.scrollToOffset) {
         this.list.scrollToOffset({ offset: 0, animated: false });
@@ -322,7 +329,7 @@ export default class ConversationScreen extends Component {
     return (
       <Message
         message={row.item}
-        right={row.item.owner.guid == this.props.user.me.guid}
+        right={row.item.owner.guid === this.props.user.me.guid}
         navigation={this.props.navigation}
       />
     );

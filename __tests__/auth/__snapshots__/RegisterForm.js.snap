@@ -16,6 +16,7 @@ exports[`RegisterForm component should renders correctly 1`] = `
         undefined,
       ]
     }
+    keyboardShouldPersistTaps="handled"
     style={
       Array [
         undefined,
@@ -75,7 +76,7 @@ exports[`RegisterForm component should renders correctly 1`] = `
             ]
           }
         >
-          Join the Revolution
+          Create a channel
         </Text>
         <Text
           style={
@@ -88,12 +89,10 @@ exports[`RegisterForm component should renders correctly 1`] = `
         <View>
           <View
             style={
-              Array [
-                Object {
-                  "flexDirection": "row",
-                  "justifyContent": "space-between",
-                },
-              ]
+              Object {
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+              }
             }
           >
             <View
@@ -145,12 +144,10 @@ exports[`RegisterForm component should renders correctly 1`] = `
         <View>
           <View
             style={
-              Array [
-                Object {
-                  "flexDirection": "row",
-                  "justifyContent": "space-between",
-                },
-              ]
+              Object {
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+              }
             }
           >
             <View
@@ -202,12 +199,10 @@ exports[`RegisterForm component should renders correctly 1`] = `
         <View>
           <View
             style={
-              Array [
-                Object {
-                  "flexDirection": "row",
-                  "justifyContent": "space-between",
-                },
-              ]
+              Object {
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+              }
             }
           >
             <View
@@ -262,12 +257,10 @@ exports[`RegisterForm component should renders correctly 1`] = `
         <View>
           <View
             style={
-              Array [
-                Object {
-                  "flexDirection": "row",
-                  "justifyContent": "space-between",
-                },
-              ]
+              Object {
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+              }
             }
           >
             <View
@@ -318,6 +311,12 @@ exports[`RegisterForm component should renders correctly 1`] = `
           />
         </View>
         <View
+          accessibilityRole="checkbox"
+          accessibilityState={
+            Object {
+              "checked": false,
+            }
+          }
           accessible={true}
           focusable={true}
           isTVSelectable={true}
@@ -391,6 +390,9 @@ exports[`RegisterForm component should renders correctly 1`] = `
             </Text>
           </View>
         </View>
+        <Captcha
+          onResult={[Function]}
+        />
         <View>
           <View
             accessible={true}

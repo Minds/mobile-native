@@ -20,8 +20,10 @@ import type ActivityModel from 'src/newsfeed/ActivityModel';
 
 type PropsType = {
   entity: ActivityModel;
+  selectable?: boolean;
   navigation: any;
   style?: TextStyle | Array<TextStyle>;
+  noTruncate?: boolean;
 };
 
 type StateType = {
@@ -79,23 +81,32 @@ export default class ExplicitText extends Component<PropsType, StateType> {
       ? entities.decodeHTML(entity.message).trim()
       : '';
 
+    if (title === message) {
+      message = '';
+    }
+
     let body = null;
     let moreLess = null;
     let explicitToggle = null;
 
     if (message !== '') {
-      const truncated = this.truncate(message);
-      // truncate if necessary
-      if (message.length > truncated.length) {
-        if (!this.state.more) message = truncated;
-        moreLess = this.getMoreLess();
+      if (!this.props.noTruncate) {
+        const truncated = this.truncate(message);
+        // truncate if necessary
+        if (message.length > truncated.length) {
+          if (!this.state.more) message = truncated;
+          moreLess = this.getMoreLess();
+        }
       }
 
       body =
         entity.shouldBeBlured() && !entity.mature_visibility ? (
           <Text style={styles.mature}>{message}</Text>
         ) : (
-          <Tags navigation={this.props.navigation} style={this.props.style}>
+          <Tags
+            navigation={this.props.navigation}
+            style={this.props.style}
+            selectable={this.props.selectable}>
             {message}
           </Tags>
         );
@@ -147,7 +158,7 @@ export default class ExplicitText extends Component<PropsType, StateType> {
    * Get text char limit based on screen height
    */
   getTextLimit() {
-    return this.state.height * 1.5;
+    return this.state.height * 0.5;
   }
 
   /**

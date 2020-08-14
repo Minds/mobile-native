@@ -1,5 +1,6 @@
 //@ts-nocheck
-export default colors = {
+
+const colors = {
   primary: '#4690D6',
   secondary: '#FFDD63',
   tertiary: '#4C9EB1',
@@ -12,7 +13,11 @@ export default colors = {
   darkGreyed: '#777777',
   explicit: '#f44336',
   action: 'rgb(96, 125, 139)',
+  switchCircle: '#f6f7f5',
+  switchBackground: '#3484f5',
 };
+
+export default colors;
 
 export const LIGHT_THEME = {
   name: 'LIGHT',
@@ -29,9 +34,17 @@ export const LIGHT_THEME = {
   action: '#A5A5A5',
   icon: '#7D7D82',
   icon_active: '#0085DD',
-  link: '#0091FF',
+  link: '#1B85D6',
   alert: '#E03C20',
-  green: 'rgb(76, 175, 80)',
+  info_background: '#5A91BB',
+  success_background: '#59A05E',
+  danger_background: '#CA4A34',
+  warning_background: '#D49538',
+  green: '#5AC36F',
+  tab_border: '#4A90E2',
+  borderColorPrimary: '#dce2e4',
+  borderColorSecondary: '#979797',
+  borderColorTertiary: '#ececec',
 };
 
 export const DARK_THEME = {
@@ -49,7 +62,15 @@ export const DARK_THEME = {
   action: '#A5A5A5',
   icon: '#AEB0B8',
   icon_active: '#0085DD',
-  link: '#0091FF',
+  link: '#1B85D6',
   alert: '#E03C20',
-  green: 'rgb(76, 175, 80)',
+  info_background: '#5A91BB',
+  success_background: '#59A05E',
+  danger_background: '#CA4A34',
+  warning_background: '#D49538',
+  green: '#5AC36F',
+  tab_border: '#4A90E2',
+  borderColorPrimary: '#404a4e',
+  borderColorSecondary: '#979797',
+  borderColorTertiary: '#202527',
 };

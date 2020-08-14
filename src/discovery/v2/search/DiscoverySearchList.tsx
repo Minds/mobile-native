@@ -1,31 +1,21 @@
-import React, { Component, Fragment, ComponentType, useEffect } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 
-import {
-  StyleSheet,
-  Platform,
-  Text,
-  Dimensions,
-  RefreshControl,
-  View,
-  FlatList,
-} from 'react-native';
+import { Text, View, FlatList } from 'react-native';
 
 import { observer } from 'mobx-react';
 
-import _ from 'lodash';
-
 import Activity from '../../../newsfeed/activity/Activity';
-import { CommonStyle as CS } from '../../../styles/Common';
 import { ComponentsStyle } from '../../../styles/Components';
-
-import ErrorLoading from '../../../common/components/ErrorLoading';
-
 import ErrorBoundary from '../../../common/components/ErrorBoundary';
-import i18n from '../../../common/services/i18n.service';
-import FallbackBoundary from '../../FallbackBoundary';
+import FeedList from '../../../common/components/FeedList';
 
-import { useStores } from '../../../common/hooks/use-stores';
 import ThemedStyles from '../../../styles/ThemedStyles';
+import { useDiscoveryV2SearchStore } from './DiscoveryV2SearchContext';
+import GroupsListItemNew from '../../../groups/GroupsListItemNew';
+import DiscoveryUser from '../../DiscoveryUserNew';
+import i18n from '../../../common/services/i18n.service';
+import type UserModel from '../../../channel/UserModel';
+import { useStores, useLegacyStores } from '../../../common/hooks/use-stores';
 
 interface Props {
   navigation: any;
@@ -33,36 +23,85 @@ interface Props {
 }
 
 export const DiscoverySearchList = observer((props: Props) => {
-  const { discoveryV2Search } = useStores();
+  const theme = ThemedStyles.style;
 
-  const keyExtractor = (item) => item.urn;
+  const store = useDiscoveryV2SearchStore();
+  const searchBarStore = useStores().searchBar;
+  let listRef = useRef<FlatList<[]>>(null);
+
+  useEffect(() => {
+    if (listRef.current) {
+      listRef.current.scrollToOffset({ offset: -65, animated: true });
+    }
+  }, [listRef, store.refreshing]);
 
   /**
    * Render activity item
    */
-  const ItemPartial = (row) => {
-    return (
-      <ErrorBoundary
-        containerStyle={CS.hairLineBottom}
-        message="Could not load">
-        <Activity
-          entity={row.item}
-          navigation={props.navigation}
-          autoHeight={false}
-        />
-      </ErrorBoundary>
-    );
-  };
+  const ItemPartial = useCallback(
+    (row) => {
+      let entity: Element;
+
+      switch (row.item.type) {
+        case 'user':
+          entity = (
+            <DiscoveryUser
+              row={row}
+              navigation={props.navigation}
+              onUserTap={(item: UserModel) =>
+                searchBarStore.user.searchBarItemTap(item)
+              }
+            />
+          );
+          break;
+        case 'group':
+          entity = (
+            <GroupsListItemNew
+              group={row.item}
+              onPress={() =>
+                props.navigation.push('GroupView', {
+                  group: row.item.toPlainObject(),
+                })
+              }
+            />
+          );
+          break;
+        default:
+          entity = (
+            <Activity
+              entity={row.item}
+              navigation={props.navigation}
+              autoHeight={false}
+              storeUserTap={true}
+            />
+          );
+      }
+
+      return (
+        <ErrorBoundary
+          containerStyle={[theme.borderBottomHair, theme.borderPrimary]}
+          message="Could not load">
+          {entity}
+        </ErrorBoundary>
+      );
+    },
+    [
+      props.navigation,
+      theme.borderBottomHair,
+      theme.borderPrimary,
+      searchBarStore,
+    ],
+  );
 
   const EmptyPartial = () => {
-    return discoveryV2Search.refreshing ? (
-      <View></View>
+    return store.refreshing ? (
+      <View />
     ) : (
       <View>
         <View style={ComponentsStyle.emptyComponentContainer}>
           <View style={ComponentsStyle.emptyComponent}>
             <Text style={ComponentsStyle.emptyComponentMessage}>
-              Nothing to see here...
+              {i18n.t('discovery.nothingToSee')}
             </Text>
           </View>
         </View>
@@ -70,49 +109,14 @@ export const DiscoverySearchList = observer((props: Props) => {
     );
   };
 
-  // const FooterPartial = () => {
-  //   const store = discoveryV2Search;
-
-  //   if (store.listStore.loading && !store.listStore.refreshing) {
-  //     return (
-  //       <View
-  //         style={{
-  //           flex: 1,
-  //           alignItems: 'center',
-  //           justifyContent: 'center',
-  //           padding: 16,
-  //         }}>
-  //         <ActivityIndicator size={'large'} />
-  //       </View>
-  //     );
-  //   }
-
-  //   if (!store.listStore.errorLoading) return null;
-
-  //   const message = store.listStore.entities.length
-  //     ? i18n.t('cantLoadMore')
-  //     : i18n.t('cantLoad');
-
-  //   return <ErrorLoading message={message} tryAgain={() => {}} />;
-  // };
-
   return (
-    <View style={{ flex: 1 }}>
-      <FlatList
-        data={discoveryV2Search.listStore.entities.slice()}
-        onRefresh={discoveryV2Search.refresh}
-        refreshing={discoveryV2Search.refreshing}
-        ListEmptyComponent={EmptyPartial}
-        renderItem={ItemPartial}
-        keyExtractor={keyExtractor}
-        style={[styles.list, ThemedStyles.getColor('primary_background')]}
+    <View style={theme.flexContainer}>
+      <FeedList
+        feedStore={store.listStore}
+        navigation={props.navigation}
+        emptyMessage={EmptyPartial}
+        renderActivity={ItemPartial}
       />
     </View>
   );
-});
-
-const styles = StyleSheet.create({
-  list: {
-    flex: 1,
-  },
 });

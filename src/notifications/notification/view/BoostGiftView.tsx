@@ -1,13 +1,14 @@
-//@ts-nocheck
 import React, { Component } from 'react';
-
 import { Text, View } from 'react-native';
+
 import i18n from '../../../common/services/i18n.service';
+import type { PropsType } from './NotificationTypes';
+import NotificationBody from '../NotificationBody';
 
 /**
  * Boost Gift Notification Component
  */
-export default class BoostGiftView extends Component {
+export default class BoostGiftView extends Component<PropsType> {
   render() {
     const entity = this.props.entity;
     const styles = this.props.styles;
@@ -26,9 +27,14 @@ export default class BoostGiftView extends Component {
     );
 
     return (
-      <View style={styles.bodyContents}>
-        <Text onPress={this.navToBoostConsole}>{text}</Text>
-      </View>
+      <NotificationBody
+        styles={styles}
+        onPress={this.navToBoostConsole}
+        entity={this.props.entity}>
+        <View style={styles.bodyContents}>
+          <Text>{text}</Text>
+        </View>
+      </NotificationBody>
     );
   }
 
@@ -36,8 +42,7 @@ export default class BoostGiftView extends Component {
    * Navigate to activity
    */
   navToActivity = () => {
-    let params = { hydrate: true };
-    params.entity = this.props.entity.entityObj;
+    let params = { hydrate: true, entity: this.props.entity.entityObj };
 
     this.props.navigation.push('Activity', params);
   };

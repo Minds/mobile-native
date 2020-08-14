@@ -9,7 +9,7 @@ import abbrev from '../../../common/helpers/abbrev';
 import token from '../../../common/helpers/token';
 import number from '../../../common/helpers/number';
 import ThemedStyles from '../../../styles/ThemedStyles';
-import type ActivityModel from 'src/newsfeed/ActivityModel';
+import type ActivityModel from '../../../newsfeed/ActivityModel';
 
 type PropsType = {
   entity: ActivityModel;

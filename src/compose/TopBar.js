@@ -13,14 +13,17 @@ import ThemedStyles from '../styles/ThemedStyles';
 export default observer(function (props) {
   const theme = ThemedStyles.style;
   const insets = useSafeArea();
-  const menuStyle = { paddingTop: insets.top || 5 };
+  const menuStyle = [{ paddingTop: insets.top || 5 }, props.containerStyle];
+
+  const backIconName = props.backIconName || 'chevron-left';
+  const backIconSize = props.backIconSize || 45;
 
   return (
     <View style={[styles.topBar, menuStyle]}>
       <MIcon
-        size={45}
-        name="chevron-left"
-        style={[styles.backIcon, theme.colorWhite]}
+        size={backIconSize}
+        name={backIconName}
+        style={theme.colorPrimaryText}
         onPress={props.onPressBack}
       />
       {props.leftText && <Text style={styles.leftText}>{props.leftText}</Text>}
@@ -33,7 +36,10 @@ export default observer(function (props) {
         />
       ) : (
         props.rightText && (
-          <Text style={styles.postButton} onPress={props.onPressRight}>
+          <Text
+            style={styles.postButton}
+            onPress={props.onPressRight}
+            testID="topBarDone">
             {props.rightText}
           </Text>
         )
@@ -48,12 +54,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  backIcon: {
-    shadowOpacity: 2,
-    textShadowRadius: 4,
-    textShadowOffset: { width: 0, height: 0 },
-    elevation: 4,
   },
   leftText: {
     textAlign: 'left',

@@ -1,100 +1,167 @@
 //@ts-nocheck
-import React, { Component } from 'react';
+import React, { useCallback } from 'react';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { View, Platform, TouchableOpacity } from 'react-native';
 
-const Tab = createBottomTabNavigator();
-
-import { Platform, Dimensions } from 'react-native';
-
-const { height, width } = Dimensions.get('window');
-const aspectRatio = height / width;
-
-import Topbar from '../topbar/Topbar';
 import NewsfeedScreen from '../newsfeed/NewsfeedScreen';
 import NotificationsScreen from '../notifications/NotificationsScreen';
-import DiscoveryScreen from '../discovery/DiscoveryScreen';
-import MessengerScreen from '../messenger/MessengerScreen';
-import featuresService from '../common/services/features.service';
-import { withErrorBoundaryScreen } from '../common/components/ErrorBoundary';
-import isIphoneX from '../common/helpers/isIphoneX';
-import IonIcon from 'react-native-vector-icons/Ionicons';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import CIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import MessengerTabIcon from '../messenger/MessengerTabIcon';
+import ThemedStyles from '../styles/ThemedStyles';
+import TabIcon from './TabIcon';
 import NotificationIcon from '../notifications/NotificationsTabIcon';
+import gatheringService from '../common/services/gathering.service';
+import { observer } from 'mobx-react';
+import isIphoneX from '../common/helpers/isIphoneX';
+import { DiscoveryV2Screen } from '../discovery/v2/DiscoveryV2Screen';
+import ComposeIcon from '../compose/ComposeIcon';
+import MessengerTabIcon from '../messenger/MessengerTabIcon';
+import MessengerScreen from '../messenger/MessengerScreen';
+import Topbar from '../topbar/Topbar.tsx';
+import colors from '../styles/Colors';
+import { InternalStack } from '../navigation/NavigationStack';
 
-const getCrypto = function () {
-  const WalletScreen = require('../wallet/WalletScreen').default;
-  return (
-    <Tab.Screen
-      name="Wallet"
-      component={WalletScreen}
-      options={{ tabBarTestID: 'Wallet tab button' }}
-    />
-  );
+export type TabParamList = {
+  Newsfeed: {};
+  Discovery: {};
+  Notifications: {};
+  Capture: {};
+  Menu: {};
 };
 
-const Tabs = function ({ navigation }) {
+const Tab = createBottomTabNavigator<TabParamList>();
+
+/**
+ * Main tabs
+ * @param {Object} props
+ */
+const Tabs = observer(function ({ navigation }) {
   const isIOS = Platform.OS === 'ios';
+  const theme = ThemedStyles.style;
+
+  const navToCapture = useCallback(() => navigation.push('Capture'), [
+    navigation,
+  ]);
+
+  const navToVideoCapture = useCallback(
+    () => navigation.jumpTo('Capture', { mode: 'video', start: true }),
+    [navigation],
+  );
+
+  if (gatheringService.inGatheringScreen) {
+    return null;
+  }
+
+  const height = isIOS ? (Platform.isPad ? 100 : isIphoneX ? 75 : 70) : 65;
 
   return (
-    <Tab.Navigator
-      initialRouteName="Newsfeed"
-      tabBarOptions={{
-        showLabel: false,
-        showIcon: true,
-        activeTintColor: '#FFF',
-        style: {
-          backgroundColor: '#222',
-          paddingBottom: isIphoneX ? 20 : null,
-        },
-        indicatorStyle: {
-          marginBottom: isIphoneX ? 20 : null,
-        },
-      }}
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName,
-            iconsize = 24;
+    <View style={theme.flexContainer}>
+      <Topbar navigation={navigation} />
+      <Tab.Navigator
+        initialRouteName="Newsfeed"
+        tabBarOptions={{
+          showLabel: false,
+          showIcon: true,
+          activeTintColor: ThemedStyles.getColor('link'),
+          inactiveTintColor: ThemedStyles.getColor('text_secondary'),
+          style: {
+            borderTopWidth: 1,
+            borderTopColor: ThemedStyles.getColor('primary_border'),
+            backgroundColor: ThemedStyles.getColor('secondary_background'),
+            height,
+            paddingTop: isIOS && isIphoneX ? 30 : 2,
+            paddingLeft: isIphoneX ? 20 : 15,
+            paddingRight: isIphoneX ? 20 : 15,
+          },
+          tabStyle: {
+            height,
+            ...ThemedStyles.style.centered,
+          },
+        }}
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color }) => {
+            let iconName,
+              iconsize = 28;
 
-          switch (route.name) {
-            case 'Messenger':
-              return <MessengerTabIcon tintColor={color} />;
-            case 'Newsfeed':
-              return <IonIcon name="md-home" size={iconsize} color={color} />;
-            case 'Discovery':
-              return <Icon name="search" size={iconsize} color={color} />;
-            case 'Notifications':
-              return <NotificationIcon tintColor={color} size={iconsize} />;
-            case 'Wallet':
-              return <CIcon name="bank" size={iconsize} color={color} />;
-          }
-        },
-      })}>
-      {featuresService.has('crypto') && getCrypto()}
-      <Tab.Screen
-        name="Discovery"
-        component={DiscoveryScreen}
-        options={{ tabBarTestID: 'Discovery tab button' }}
-      />
-      <Tab.Screen
-        name="Newsfeed"
-        component={NewsfeedScreen}
-        options={{ tabBarTestID: 'Menu tab button' }}
-      />
-      <Tab.Screen
-        name="Messenger"
-        component={MessengerScreen}
-        options={{ tabBarTestID: 'Messenger tab button' }}
-      />
-      <Tab.Screen
-        name="Notifications"
-        component={NotificationsScreen}
-        options={{ tabBarTestID: 'Notifications tab button' }}
-      />
-    </Tab.Navigator>
+            switch (route.name) {
+              case 'Messenger':
+                return <MessengerTabIcon tintColor={color} />;
+              case 'Newsfeed':
+                iconName = 'home';
+                iconsize = 28;
+                break;
+              case 'Discovery':
+                iconName = 'hashtag';
+                iconsize = 24;
+                break;
+              case 'Notifications':
+                return <NotificationIcon tintColor={color} size={iconsize} />;
+              case 'CaptureTab':
+                return <ComposeIcon style={styles.compose} />;
+            }
+
+            if (Platform.isPad) {
+              iconsize = Math.round(iconsize * 1.2);
+            }
+
+            // You can return any component that you like here!
+            return <TabIcon name={iconName} size={iconsize} color={color} />;
+          },
+        })}>
+        <Tab.Screen
+          name="Newsfeed"
+          component={NewsfeedScreen}
+          options={{ tabBarTestID: 'Menu tab button', headerShown: false }}
+        />
+        <Tab.Screen
+          name="Discovery"
+          component={DiscoveryV2Screen}
+          options={{ tabBarTestID: 'Discovery tab button' }}
+        />
+        <Tab.Screen
+          name="CaptureTab"
+          component={InternalStack}
+          options={{
+            tabBarTestID: 'CaptureTabButton',
+            tabBarButton: (props) => (
+              <TouchableOpacity
+                {...props}
+                onPress={navToCapture}
+                onLongPress={navToVideoCapture}
+              />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Notifications"
+          component={NotificationsScreen}
+          options={{ tabBarTestID: 'Notifications tab button' }}
+        />
+        <Tab.Screen
+          name="Messenger"
+          component={MessengerScreen}
+          options={{ tabBarTestID: 'Messenger tab button' }}
+        />
+      </Tab.Navigator>
+    </View>
   );
+});
+
+const styles = {
+  compose: {
+    width: 48,
+    height: 46,
+  },
+  activity: {
+    zIndex: 9990,
+    top: -5,
+    left: -5,
+    right: -5,
+    bottom: -5,
+    borderWidth: 2.5,
+    borderRadius: 35,
+    position: 'absolute',
+    borderColor: colors.primary,
+  },
 };
 
 export default Tabs;

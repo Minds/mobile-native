@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 import { Text, View, FlatList, StyleSheet } from 'react-native';
 
 import { observer, inject } from 'mobx-react';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import NavigationService from '../../../navigation/NavigationService';
 
@@ -12,6 +11,7 @@ import Touchable from '../../../common/components/Touchable';
 
 import BlockchainWalletListItem from './BlockchainWalletListItem';
 import i18n from '../../../common/services/i18n.service';
+import ThemedStyles from '../../../styles/ThemedStyles';
 
 // Class
 
@@ -39,6 +39,7 @@ export default class BlockchainWalletList extends Component {
   };
 
   EmptyPartial = () => {
+    const theme = ThemedStyles.style;
     return (
       <View style={style.emptyView}>
         <Text style={style.emptyViewText}>
@@ -47,7 +48,7 @@ export default class BlockchainWalletList extends Component {
 
         {!this.props.disableCreation && (
           <Touchable onPress={this.createWalletAction}>
-            <Text style={style.emptyViewTappableText}>
+            <Text style={[theme.fontL, theme.colorLink]}>
               {i18n.t('blockchain.tapToCreate')}
             </Text>
           </Touchable>
@@ -82,12 +83,10 @@ const style = StyleSheet.create({
   emptyViewText: {
     marginBottom: 10,
     fontSize: 16,
-    color: colors.darkGreyed,
     textAlign: 'center',
   },
   emptyViewTappableText: {
     fontSize: 16,
-    color: colors.primary,
     textAlign: 'center',
   },
 });

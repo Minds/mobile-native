@@ -48,7 +48,7 @@ function reset(routeName, params) {
 }
 
 function addListener(name, fn) {
-  return _navigator.addListener(name, fn);
+  return _navigator?.addListener(name, fn);
 }
 
 // add other navigation functions that you need and export them

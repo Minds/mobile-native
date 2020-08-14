@@ -2,9 +2,11 @@
 import { StyleSheet, Platform } from 'react-native';
 
 export interface ThemedStyle {
+  width90: any;
   flexContainer: any;
   flexContainerCenter: any;
   flexColumn: any;
+  justifyCenter: any;
   columnAlignCenter: any;
   flexColumnStretch: any;
   flexColumnCentered: any;
@@ -31,11 +33,18 @@ export interface ThemedStyle {
   colorIconActive: any;
   colorSeparator: any;
   colorAlert: any;
-  backgroundWhite: any;
+  colorTransparent: any;
+  backgroundInfo: any;
+  backgroundSuccess: any;
+  backgroundDanger: any;
+  backgroundWarning: any;
   backgroundBlack: any;
   backgroundTransparent: any;
   backgroundLink: any;
   backgroundAlert: any;
+  colorBackgroundPrimary: any;
+  colorBackgroundSecondary: any;
+  colorBackgroundTertiary: any;
   backgroundPrimary: any;
   backgroundSecondary: any;
   backgroundTertiary: any;
@@ -43,13 +52,20 @@ export interface ThemedStyle {
   backgroundSeparator: any;
   backgroundIcon: any;
   backgroundIconActive: any;
+  borderTransparent: any;
+  borderBackgroundPrimary: any;
+  borderBackgroundSecondary: any;
+  borderBackgroundTertiary: any;
   borderPrimary: any;
+  borderTab: any;
+  borderLink: any;
   borderIconActive: any;
   borderIcon: any;
   fontXS: any;
   fontS: any;
   fontM: any;
   fontL: any;
+  fontLM: any;
   fontXL: any;
   fontXXL: any;
   fontXXXL: any;
@@ -88,6 +104,11 @@ export interface ThemedStyle {
   borderTopHair: any;
   borderBottomHair: any;
   buttonBorder: any;
+  listItemTitle: any;
+  strikethrough: any;
+  mindsSwitchBackgroundPrimary: any;
+  mindsSwitchBackgroundSecondary: any;
+  positionAbsolute: any;
   [name: string]: any;
 }
 
@@ -96,7 +117,7 @@ const step = 5;
 
 const dynamicStyles = {};
 
-for (let index = 0; index < repetitions; index++) {
+for (let index = 0; index <= repetitions; index++) {
   let value = step * index;
   const post = index === 1 ? '' : `${index}x`;
   dynamicStyles[`margin${post}`] = { margin: value };
@@ -126,6 +147,9 @@ for (let index = 0; index < repetitions; index++) {
 export const buildStyle = (theme): ThemedStyle => ({
   ...dynamicStyles,
   // containers
+  width90: {
+    width: '90%',
+  },
   flexContainer: {
     flex: 1,
   },
@@ -136,6 +160,9 @@ export const buildStyle = (theme): ThemedStyle => ({
   flexColumn: {
     flex: 1,
     flexDirection: 'column',
+  },
+  justifyCenter: {
+    justifyContent: 'center',
   },
   columnAlignCenter: {
     alignItems: 'center',
@@ -190,6 +217,13 @@ export const buildStyle = (theme): ThemedStyle => ({
     alignSelf: 'center',
     justifyContent: 'center',
   },
+  positionAbsolute: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+  },
   colorWhite: {
     color: '#FFFFFF',
   },
@@ -232,7 +266,22 @@ export const buildStyle = (theme): ThemedStyle => ({
   colorAlert: {
     color: theme.alert,
   },
+  colorTransparent: {
+    color: 'transparent',
+  },
   // backgrounds
+  backgroundInfo: {
+    backgroundColor: theme.info_background,
+  },
+  backgroundSuccess: {
+    backgroundColor: theme.success_background,
+  },
+  backgroundDanger: {
+    backgroundColor: theme.danger_background,
+  },
+  backgroundWarning: {
+    backgroundColor: theme.warning_background,
+  },
   backgroundWhite: {
     backgroundColor: 'white',
   },
@@ -247,6 +296,15 @@ export const buildStyle = (theme): ThemedStyle => ({
   },
   backgroundAlert: {
     backgroundColor: theme.alert,
+  },
+  colorBackgroundPrimary: {
+    color: theme.primary_background,
+  },
+  colorBackgroundSecondary: {
+    color: theme.secondary_background,
+  },
+  colorBackgroundTertiary: {
+    color: theme.tertiary_background,
   },
   backgroundPrimary: {
     backgroundColor: theme.primary_background,
@@ -269,10 +327,34 @@ export const buildStyle = (theme): ThemedStyle => ({
   backgroundIconActive: {
     backgroundColor: theme.icon_active,
   },
+  mindsSwitchBackgroundPrimary: {
+    backgroundColor: theme.secondary_background,
+  },
+  mindsSwitchBackgroundSecondary: {
+    backgroundColor: theme.primary_border,
+  },
 
   // borders
+  borderTransparent: {
+    borderColor: 'transparent',
+  },
+  borderBackgroundPrimary: {
+    borderColor: theme.primary_background,
+  },
+  borderBackgroundSecondary: {
+    borderColor: theme.secondary_background,
+  },
+  borderBackgroundTertiary: {
+    borderColor: theme.tertiary_background,
+  },
+  borderLink: {
+    borderColor: theme.link,
+  },
   borderPrimary: {
     borderColor: theme.primary_border,
+  },
+  borderTab: {
+    borderColor: theme.tab_border,
   },
   borderIconActive: {
     borderColor: theme.icon_active,
@@ -293,6 +375,9 @@ export const buildStyle = (theme): ThemedStyle => ({
   },
   fontL: {
     fontSize: 16,
+  },
+  fontLM: {
+    fontSize: 17,
   },
   fontXL: {
     fontSize: 18,
@@ -358,6 +443,10 @@ export const buildStyle = (theme): ThemedStyle => ({
   fontSemibold: {
     fontWeight: '600',
   },
+  strikethrough: {
+    textDecorationLine: 'line-through',
+    textDecorationStyle: 'solid',
+  },
   // onboarding
   onboardingTitle: {
     color: '#AEB0B8',
@@ -399,13 +488,13 @@ export const buildStyle = (theme): ThemedStyle => ({
   },
   titleText: {
     fontFamily: 'Roboto',
-    fontSize: 26,
+    fontSize: Platform.select({ ios: 26, android: 24 }),
     fontWeight: 'bold',
     lineHeight: 44,
   },
   subTitleText: {
     fontFamily: 'Roboto',
-    fontSize: 16,
+    fontSize: Platform.select({ ios: 16, android: 15 }),
     fontWeight: '500',
     lineHeight: 23,
   },
@@ -474,5 +563,12 @@ export const buildStyle = (theme): ThemedStyle => ({
   },
   buttonBorder: {
     borderColor: theme.button_border,
+  },
+
+  // others
+  listItemTitle: {
+    color: theme.primary_text,
+    paddingVertical: 15,
+    fontSize: 17,
   },
 });

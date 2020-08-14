@@ -16,9 +16,9 @@ class BoostStore {
   /**
    * Boost list store
    */
-  @observable list = new OffsetListStore();
+  list: OffsetListStore;
 
-  service = new BoostService();
+  service: BoostService;
 
   /**
    * Boosts list filter
@@ -30,6 +30,14 @@ class BoostStore {
    * List loading
    */
   @observable loading = false;
+
+  /**
+   * Store constructor
+   */
+  constructor() {
+    this.list = new OffsetListStore();
+    this.service = new BoostService();
+  }
 
   /**
    * Load boost list
@@ -82,11 +90,11 @@ class BoostStore {
   }
 
   @action
-  setFilter(filter) {
+  setFilter = (filter) => {
     this.filter = filter;
     this.list.clearList();
     this.loadList();
-  }
+  };
 
   @action
   setPeerFilter(filter) {

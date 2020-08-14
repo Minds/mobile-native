@@ -3,12 +3,12 @@ import React, { Component } from 'react';
 
 import { Text, View, StyleSheet } from 'react-native';
 
-import Icon from 'react-native-vector-icons/Ionicons';
-
 import BlockchainWalletService from '../BlockchainWalletService';
 import i18n from '../../../common/services/i18n.service';
 import number from '../../../common/helpers/number';
 import abbrev from '../../../common/helpers/abbrev';
+import colors from '../../../styles/Colors';
+import ThemedStyles from '../../../styles/ThemedStyles';
 
 // Helpers
 function aliasOrAddressExcerpt(item) {
@@ -65,7 +65,13 @@ export default class BlockchainWalletListItem extends Component {
     }
 
     if (isNaN(value)) {
-      return <Text style={styles.value}>{`${value}`}</Text>;
+      return (
+        <Text
+          style={[
+            styles.value,
+            ThemedStyles.style.colorGreen,
+          ]}>{`${value}`}</Text>
+      );
     }
 
     let amount = number(value, 0, 4);
@@ -74,7 +80,13 @@ export default class BlockchainWalletListItem extends Component {
       amount = abbrev(Math.floor(value), 0);
     }
 
-    return <Text style={styles.value}>{`${amount}`}</Text>;
+    return (
+      <Text
+        style={[
+          styles.value,
+          ThemedStyles.style.colorGreen,
+        ]}>{`${amount}`}</Text>
+    );
   }
 
   displayETH(value) {
@@ -92,8 +104,16 @@ export default class BlockchainWalletListItem extends Component {
   }
 
   render() {
+    const theme = ThemedStyles.style;
     return (
-      <View style={styles.container}>
+      <View
+        style={[
+          theme.padding2x,
+          theme.paddingVertical4x,
+          theme.rowStretch,
+          theme.borderBottomHair,
+          theme.borderPrimary,
+        ]}>
         <View>
           <View style={styles.headerContainer}>
             <Text style={[styles.label]}>
@@ -138,7 +158,7 @@ export default class BlockchainWalletListItem extends Component {
 
         <View style={{ flexGrow: 1 }}></View>
 
-        <View style={styles.valueContainer}>
+        <View style={[styles.valueContainer, ThemedStyles.style.colorGreen]}>
           {this.displayValue(this.state.tokens, 'TOK')}
           {!this.props.item.offchain && this.displayETH(this.state.eth)}
         </View>
@@ -148,13 +168,6 @@ export default class BlockchainWalletListItem extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
-    flexDirection: 'row',
-    alignItems: 'stretch',
-  },
   headerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -192,7 +205,6 @@ const styles = StyleSheet.create({
     paddingBottom: 1,
     paddingLeft: 3,
     paddingRight: 3,
-    color: 'green',
     fontSize: 20,
     fontWeight: '700',
     textAlign: 'right',

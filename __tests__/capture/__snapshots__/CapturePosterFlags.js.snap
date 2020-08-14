@@ -159,7 +159,7 @@ exports[`cature poster flags component should renders correctly for props false 
         ]
       }
     >
-      
+      
     </Text>
   </View>
   <Modal
@@ -316,7 +316,7 @@ exports[`cature poster flags component should renders correctly for props false 
                 ]
               }
             >
-              
+              
             </Text>
           </View>
           <View
@@ -357,7 +357,7 @@ exports[`cature poster flags component should renders correctly for props false 
                 ]
               }
             >
-              
+              
             </Text>
             <Text
               style={
@@ -414,7 +414,7 @@ exports[`cature poster flags component should renders correctly for props false 
                 ]
               }
             >
-              
+              
             </Text>
             <Text
               style={
@@ -590,7 +590,7 @@ exports[`cature poster flags component should renders correctly for props false 
                 ]
               }
             >
-              
+              
             </Text>
           </View>
           <View>
@@ -875,7 +875,7 @@ exports[`cature poster flags component should renders correctly for props false 
                 ]
               }
             >
-              
+              
             </Text>
           </View>
           <RCTScrollView
@@ -931,6 +931,8 @@ exports[`cature poster flags component should renders correctly for props false 
   <Modal
     animationType="none"
     hardwareAccelerated={false}
+    isVisible={false}
+    onHide={[Function]}
     transparent={true}
     visible={false}
   >
@@ -1121,7 +1123,7 @@ exports[`cature poster flags component should renders correctly for props true 1
         ]
       }
     >
-      
+      
     </Text>
   </View>
   <Modal
@@ -1278,7 +1280,7 @@ exports[`cature poster flags component should renders correctly for props true 1
                 ]
               }
             >
-              
+              
             </Text>
           </View>
           <View
@@ -1319,7 +1321,7 @@ exports[`cature poster flags component should renders correctly for props true 1
                 ]
               }
             >
-              
+              
             </Text>
             <Text
               style={
@@ -1376,7 +1378,7 @@ exports[`cature poster flags component should renders correctly for props true 1
                 ]
               }
             >
-              
+              
             </Text>
             <Text
               style={
@@ -1552,7 +1554,7 @@ exports[`cature poster flags component should renders correctly for props true 1
                 ]
               }
             >
-              
+              
             </Text>
           </View>
           <View>
@@ -1837,7 +1839,7 @@ exports[`cature poster flags component should renders correctly for props true 1
                 ]
               }
             >
-              
+              
             </Text>
           </View>
           <RCTScrollView
@@ -1893,6 +1895,8 @@ exports[`cature poster flags component should renders correctly for props true 1
   <Modal
     animationType="none"
     hardwareAccelerated={false}
+    isVisible={false}
+    onHide={[Function]}
     transparent={true}
     visible={false}
   >

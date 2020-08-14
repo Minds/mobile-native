@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DiscoveryTagsManager component should render correctly 1`] = `
+<Memo(wrappedComponent)
+  content={
+    <UNDEFINED>
+      <SectionList
+        ListHeaderComponent={
+          <InputContainer
+            onChangeText={[Function]}
+            onSubmitEditing={[Function]}
+            placeholder="Add"
+            selectTextOnFocus={true}
+            style={
+              Array [
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+            testID="hashtagInput"
+            value=""
+          />
+        }
+        data={Array []}
+        disableVirtualization={false}
+        horizontal={false}
+        initialNumToRender={10}
+        keyExtractor={[Function]}
+        maxToRenderPerBatch={10}
+        onEndReachedThreshold={2}
+        renderItem={[Function]}
+        renderSectionHeader={[Function]}
+        scrollEventThrottle={50}
+        sections={
+          Array [
+            Object {
+              "data": Array [],
+              "title": "Your tags",
+            },
+            Object {
+              "data": Array [],
+              "title": "Other tags",
+            },
+          ]
+        }
+        stickySectionHeadersEnabled={true}
+        updateCellsBatchingPeriod={50}
+        windowSize={21}
+      />
+    </UNDEFINED>
+  }
+  doneText="Done"
+  height={500}
+  onCancel={[Function]}
+  onDone={[Function]}
+  show={false}
+  title="Manage Tags"
+/>
+`;

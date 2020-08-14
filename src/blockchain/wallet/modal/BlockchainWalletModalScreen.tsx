@@ -1,6 +1,6 @@
 //@ts-nocheck
 import React, { Component } from 'react';
-import { Text, View, Button, StyleSheet, BackHandler } from 'react-native';
+import { Text, View, BackHandler } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -13,9 +13,9 @@ import BlockchainWalletList from '../list/BlockchainWalletList';
 import { CommonStyle } from '../../../styles/Common';
 
 import { getStores } from '../../../../AppStores';
-import currency from '../../../common/helpers/currency';
-import BlockchainApiService from '../../BlockchainApiService';
 import i18n from '../../../common/services/i18n.service';
+import ThemedStyles from '../../../styles/ThemedStyles';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 @inject('blockchainWallet', 'blockchainWalletSelector')
 @observer
@@ -80,34 +80,28 @@ export default class BlockchainWalletModalScreen extends Component {
     BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
   }
 
-  /**
-   * Modal navigation
-   */
-  static navigationOptions = ({ navigation }) => ({
-    header: (
-      <View style={CommonStyle.backgroundWhite}>
-        <Icon
-          size={36}
-          name="ios-close"
-          onPress={() => getStores().blockchainWalletSelector.cancel()}
-          style={styles.navHeaderIcon}
-        />
-      </View>
-    ),
-    transitionConfig: {
-      isModal: true,
-    },
-  });
-
   selectAction = (wallet) => this.select(wallet);
 
   render() {
     const opts = this.props.blockchainWalletSelector.opts;
+    const theme = ThemedStyles.style;
 
     return (
-      <View style={[CommonStyle.flexContainer, CommonStyle.backgroundWhite]}>
-        <View style={{ paddingLeft: 16, paddingRight: 16 }}>
-          <Text style={CommonStyle.modalTitle}>
+      <SafeAreaView
+        style={[CommonStyle.flexContainer, theme.backgroundSecondary]}>
+        <View>
+          <Icon
+            size={36}
+            name="ios-chevron-back-outline"
+            onPress={() => {
+              getStores().blockchainWalletSelector.cancel();
+              this.props.navigation.goBack();
+            }}
+            style={ThemedStyles.style.colorIcon}
+          />
+        </View>
+        <View style={theme.paddingHorizontal3x}>
+          <Text style={[theme.subTitleText, theme.marginVertical3x]}>
             {this.props.blockchainWalletSelector.selectMessage
               ? this.props.blockchainWalletSelector.selectMessage
               : i18n.t('blockchain.selectWallet')}
@@ -119,14 +113,7 @@ export default class BlockchainWalletModalScreen extends Component {
           signableOnly={opts.signable}
           allowOffchain={opts.offchain}
         />
-      </View>
+      </SafeAreaView>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  navHeaderIcon: {
-    alignSelf: 'flex-end',
-    padding: 10,
-  },
-});

@@ -41,8 +41,11 @@ class NotificationsScreen extends Component {
    * On component mount
    */
   componentDidMount() {
-    // initial load moved to newsfeed did mount
-    // this.initialLoad();
+    this.disposeTabPress = this.props.navigation.addListener(
+      //@ts-ignore
+      'tabPress',
+      this.refresh,
+    );
   }
 
   /**
@@ -62,6 +65,10 @@ class NotificationsScreen extends Component {
   componentWillUnmount() {
     // clear data to free memory
     this.props.notifications.list.clearList();
+
+    if (this.disposeTabPress) {
+      this.disposeTabPress();
+    }
   }
 
   /**
@@ -98,7 +105,7 @@ class NotificationsScreen extends Component {
             {design}
             <Text
               style={ComponentsStyle.emptyComponentLink}
-              onPress={() => this.props.navigation.push('Capture')}>
+              onPress={() => this.props.navigation.navigate('Capture')}>
               {i18n.t('createAPost')}
             </Text>
           </View>
@@ -109,11 +116,6 @@ class NotificationsScreen extends Component {
     return (
       <View style={CS.flexContainer}>
         <OnFocus onFocus={this.onFocus} />
-        <Topbar
-          title={i18n.t('tabTitleNotifications')}
-          navigation={this.props.navigation}
-          refreshFeed={this.onFocus}
-        />
         <FlatList
           data={list.entities.slice()}
           renderItem={this.renderRow}
@@ -123,13 +125,15 @@ class NotificationsScreen extends Component {
           ListEmptyComponent={this.props.notifications.loading ? null : empty}
           ListHeaderComponent={<NotificationsTopbar />}
           ListFooterComponent={
-            this.props.notifications.loading ? <CenteredLoading /> : null
+            this.props.notifications.loading && !list.refreshing ? (
+              <CenteredLoading />
+            ) : null
           }
           // onEndReachedThreshold={0.05}
           initialNumToRender={12}
           stickyHeaderIndices={this.headerIndex}
           windowSize={8}
-          refreshing={list.refreshing || this.props.notifications.loading}
+          refreshing={list.refreshing}
           style={[ThemedStyles.style.backgroundPrimary, CS.flexContainer]}
         />
       </View>
@@ -147,8 +151,9 @@ class NotificationsScreen extends Component {
   /**
    * Clear and reload
    */
-  refresh = () => {
-    this.props.notifications.refresh();
+  refresh = async () => {
+    await this.props.notifications.loadRemoteOrLocal();
+    this.props.notifications.setUnread(0);
   };
 
   /**

@@ -1,6 +1,7 @@
 import React from 'react';
 import FastImage from 'react-native-fast-image';
 import { Platform, Dimensions } from 'react-native';
+import ThemedStyles from '../styles/ThemedStyles';
 
 const { width } = Dimensions.get('window');
 
@@ -36,8 +37,8 @@ export default function (props) {
   return (
     <FastImage
       source={{ uri: props.image.uri }}
-      style={[imageStyle, props.style]}
-      resizeMode={FastImage.resizeMode.cover}
+      style={[imageStyle, props.style, ThemedStyles.style.backgroundTertiary]}
+      resizeMode={FastImage.resizeMode.contain}
     />
   );
 }

@@ -1,14 +1,16 @@
-//@ts-nocheck
 import React, { PureComponent } from 'react';
-
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, View } from 'react-native';
 
 import i18n from '../../../common/services/i18n.service';
+import NotificationBody from '../NotificationBody';
+import type { PropsType } from './NotificationTypes';
 
 /**
  * Like Notification Component
  */
-export default class LikeView extends PureComponent {
+export default class LikeView extends PureComponent<PropsType> {
+  translatedMessage: string;
+
   constructor(props) {
     super(props);
     this.translatedMessage = this.getMessage();
@@ -28,11 +30,12 @@ export default class LikeView extends PureComponent {
     const body = this.getBody(entity);
 
     return (
-      <TouchableOpacity
-        style={styles.bodyContents}
-        onPress={this.navToActivity}>
-        {body}
-      </TouchableOpacity>
+      <NotificationBody
+        styles={styles}
+        onPress={this.navToActivity}
+        entity={entity}>
+        <View style={styles.bodyContents}>{body}</View>
+      </NotificationBody>
     );
   }
 
@@ -40,7 +43,7 @@ export default class LikeView extends PureComponent {
    * Navigate to activity
    */
   navToActivity = () => {
-    let params = {};
+    let params: any = {};
     let screen = 'Activity';
     switch (this.props.entity.entityObj.type) {
       case 'comment':

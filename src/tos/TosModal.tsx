@@ -5,10 +5,9 @@ import { View, Text, Linking } from 'react-native';
 import Modal from 'react-native-modal';
 
 import { CommonStyle as CS } from '../styles/Common';
-import colors from '../styles/Colors';
 import Button from '../common/components/Button';
 import i18nService from '../common/services/i18n.service';
-import { inject, observer } from 'mobx-react';
+import { observer } from 'mobx-react';
 import mindsService from '../common/services/minds.service';
 import logService from '../common/services/log.service';
 import apiService from '../common/services/api.service';

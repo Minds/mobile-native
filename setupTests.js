@@ -31,4 +31,4 @@ jest.doMock('moment-timezone', () => {
   return moment;
 });
 
-i18n.setLocale('en');
+i18n.setLocale('en', false);

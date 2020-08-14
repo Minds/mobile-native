@@ -1,12 +1,13 @@
-//@ts-nocheck
 import React, { Component } from 'react';
 
 import { Text, View } from 'react-native';
+import type { PropsType } from './NotificationTypes';
+import NotificationBody from '../NotificationBody';
 
 /**
  * Messenger Invite Notification Component
  */
-export default class MessengerInviteView extends Component {
+export default class MessengerInviteView extends Component<PropsType> {
   /**
    * Navigate to chat
    */
@@ -24,12 +25,17 @@ export default class MessengerInviteView extends Component {
     const styles = this.props.styles;
 
     return (
-      <View style={styles.bodyContents}>
-        <Text onPress={this.navToChat}>
-          <Text style={styles.link}>{entity.fromObj.name}</Text> wants to chat
-          with you!
-        </Text>
-      </View>
+      <NotificationBody
+        styles={styles}
+        onPress={this.navToChat}
+        entity={entity}>
+        <View style={styles.bodyContents}>
+          <Text>
+            <Text style={styles.link}>{entity.fromObj.name}</Text> wants to chat
+            with you!
+          </Text>
+        </View>
+      </NotificationBody>
     );
   }
 }

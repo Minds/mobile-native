@@ -9,7 +9,7 @@ import apiService from '../common/services/api.service';
 import UserStore from '../auth/UserStore';
 
 interface Props {
-  user: UserStore;
+  user?: UserStore;
 }
 
 /**

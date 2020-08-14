@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, FlatList } from 'react-native';
+import { View, StyleSheet, FlatList, TextStyle } from 'react-native';
 import { Text, Icon } from 'react-native-elements';
 import Modal from 'react-native-modal';
 import { CommonStyle } from '../../styles/Common';
@@ -12,6 +12,8 @@ type PropsType = {
   keyExtractor: Function;
   title: String;
   onItemSelect: Function;
+  textStyle?: TextStyle;
+  backdropOpacity?: number;
 };
 
 export default class Selector extends Component<PropsType> {
@@ -20,8 +22,23 @@ export default class Selector extends Component<PropsType> {
     selected: '',
   };
 
+  flatListRef = React.createRef<FlatList<any>>();
+
   show = (item) => {
     this.setState({ show: true, selected: item });
+
+    // SCROLL TO INDEX IF SELECTED
+    setTimeout(() => {
+      if (this.state.selected) {
+        const itemToScrollTo = this.props.data.find(
+          (item) => this.props.keyExtractor(item) === this.state.selected,
+        );
+        this.flatListRef.current?.scrollToIndex({
+          animated: false,
+          index: this.props.data.indexOf(itemToScrollTo || 0),
+        });
+      }
+    }, 500);
   };
 
   close = () => {
@@ -37,7 +54,13 @@ export default class Selector extends Component<PropsType> {
       <Touchable
         onPress={() => this.itemSelect(item)}
         style={CommonStyle.margin2x}>
-        <Text style={[fontColor, theme.fontXL, theme.centered]}>
+        <Text
+          style={[
+            fontColor,
+            theme.fontXL,
+            theme.centered,
+            this.props.textStyle,
+          ]}>
           {this.valueExtractor(item)}
         </Text>
       </Touchable>
@@ -68,7 +91,9 @@ export default class Selector extends Component<PropsType> {
   render() {
     const theme = ThemedStyles.style;
     return (
-      <Modal isVisible={this.state.show}>
+      <Modal
+        isVisible={this.state.show}
+        backdropOpacity={this.props.backdropOpacity}>
         <View style={[styles.container]}>
           <Text
             style={[
@@ -90,6 +115,10 @@ export default class Selector extends Component<PropsType> {
               data={this.props.data}
               renderItem={this.renderItem}
               extraData={this.state.selected}
+              ref={this.flatListRef}
+              onScrollToIndexFailed={() =>
+                this.flatListRef.current?.scrollToEnd()
+              }
             />
           </View>
           <Icon

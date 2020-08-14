@@ -1,4 +1,10 @@
-import React, { useEffect, useRef, useCallback } from 'react';
+import React, {
+  useEffect,
+  useRef,
+  useCallback,
+  forwardRef,
+  useImperativeHandle,
+} from 'react';
 import {
   StyleSheet,
   Text,
@@ -17,35 +23,47 @@ import ThemedStyles from '../styles/ThemedStyles';
 import NavigationService from '../navigation/NavigationService';
 import i18n from '../common/services/i18n.service';
 import { getLicenseText } from '../common/services/list-options.service';
+import featuresService from '../common/services/features.service';
 
 const Touchable = Platform.select({
   ios: RNTouchableOpacity,
   android: TouchableOpacity,
 });
 
-const height = Platform.select({ android: 80, ios: 90 });
+const height = 83;
 
 /**
  * Header
  */
 const Header = (props) => (
-  <Touchable
-    onPress={props.onPress}
-    style={[
-      styles.header,
-      ThemedStyles.style.backgroundPrimary,
-      ThemedStyles.style.borderPrimary,
-    ]}>
-    <Text
-      style={[ThemedStyles.style.fontL, ThemedStyles.style.colorSecondaryText]}>
-      POST OPTIONS
-    </Text>
-    <MIcon
-      size={24}
-      name={props.opened ? 'chevron-down' : 'chevron-right'}
-      style={ThemedStyles.style.colorSecondaryText}
-    />
-  </Touchable>
+  <View style={[styles.headerContainer, ThemedStyles.style.borderPrimary]}>
+    <View
+      style={[
+        styles.header,
+        ThemedStyles.style.backgroundSecondary,
+        ThemedStyles.style.borderPrimary,
+      ]}>
+      <Text
+        style={[
+          ThemedStyles.style.fontXL,
+          ThemedStyles.style.colorPrimaryText,
+          ThemedStyles.style.textCenter,
+          ThemedStyles.style.flexContainer,
+          ThemedStyles.style.bold,
+        ]}>
+        {i18n.t('capture.postOptions')}
+      </Text>
+      <Text
+        onPress={props.onPress}
+        style={[
+          ThemedStyles.style.fontL,
+          ThemedStyles.style.colorSecondaryText,
+          styles.close,
+        ]}>
+        {i18n.t('close')}
+      </Text>
+    </View>
+  </View>
 );
 
 /**
@@ -55,7 +73,8 @@ const Item = (props) => {
   return (
     <Touchable
       style={[styles.row, ThemedStyles.style.borderPrimary]}
-      onPress={props.onPress}>
+      onPress={props.onPress}
+      testID={props.testID}>
       <Text style={[styles.optionTitle, ThemedStyles.style.colorSecondaryText]}>
         {props.title}
       </Text>
@@ -71,135 +90,178 @@ const Item = (props) => {
   );
 };
 
-function useNavCallback(screen, props) {
+export function useNavCallback(screen, store) {
   return useCallback(() => {
-    NavigationService.navigate(screen, { store: props.store });
-  }, [props.store, screen]);
+    NavigationService.navigate(screen, { store });
+  }, [store, screen]);
 }
 
 /**
  * Options
  * @param {Object} props
  */
-export default observer(function (props) {
-  const theme = ThemedStyles.style;
-  // dereference observables to listen to his changes
-  const nsfw = props.store.nsfw.slice();
-  const tags = props.store.tags;
-  const time_created = props.store.time_created;
-  const tokens = props.store.wire_threshold.min;
-  const license = props.store.attachment.license;
-  const hasAttachment = props.store.attachment.hasAttachment;
+export default observer(
+  forwardRef((props, ref) => {
+    const theme = ThemedStyles.style;
+    const store = props.store;
+    // dereference observables to listen to his changes
+    const nsfw = store.nsfw.slice();
+    const tags = store.tags.slice();
+    const time_created = store.time_created;
+    const tokens = store.wire_threshold.min;
+    const license = store.attachment.license;
+    const hasAttachment = store.attachment.hasAttachment;
 
-  const keyboard = useKeyboard();
-  const ref = useRef();
+    const keyboard = useKeyboard();
+    const sheetRef = useRef();
 
-  const onTagPress = useNavCallback('TagSelector', props);
-  const onNsfwPress = useNavCallback('NsfwSelector', props);
-  const onSchedulePress = useNavCallback('ScheduleSelector', props);
-  const onMonetizePress = useNavCallback('MonetizeSelector', props);
-  const onLicensePress = useNavCallback('LicenseSelector', props);
+    const onTagPress = useNavCallback('TagSelector', store);
+    const onNsfwPress = useNavCallback('NsfwSelector', store);
+    const onSchedulePress = useNavCallback('ScheduleSelector', store);
+    const onMonetizePress = useNavCallback('MonetizeSelector', store);
+    const onLicensePress = useNavCallback('LicenseSelector', store);
 
-  const localStore = useLocalStore(() => ({
-    opened: false,
-    setOpened(value) {
-      localStore.opened = value;
-    },
-  }));
+    const localStore = useLocalStore(() => ({
+      opened: false,
+      setOpened(value) {
+        localStore.opened = value;
+      },
+    }));
 
-  const onHeaderPress = useCallback(() => {
-    if (localStore.opened) {
-      // called twice as a workaround
-      ref.current.snapTo(0);
-      ref.current.snapTo(0);
-    } else {
-      ref.current.snapTo(1);
-      ref.current.snapTo(1);
-    }
-  }, [localStore.opened]);
+    const onHeaderPress = useCallback(() => {
+      if (!sheetRef.current) return;
+      if (localStore.opened) {
+        // called twice as a workaround
+        sheetRef.current.snapTo(0);
+        sheetRef.current.snapTo(0);
+      } else {
+        sheetRef.current.snapTo(1);
+        sheetRef.current.snapTo(1);
+      }
+    }, [localStore.opened]);
 
-  const onOpenEnd = useCallback(() => {
-    localStore.setOpened(true);
-  }, [localStore]);
+    const onOpenEnd = useCallback(() => {
+      localStore.setOpened(true);
+    }, [localStore]);
 
-  const onCloseEnd = useCallback(() => {
-    localStore.setOpened(false);
-  }, [localStore]);
+    const onCloseEnd = useCallback(() => {
+      localStore.setOpened(false);
+    }, [localStore]);
 
-  useEffect(() => {
-    if (keyboard.keyboardShown) {
-      ref.current.snapTo(0);
-    }
-  }, [keyboard.keyboardShown]);
+    useEffect(() => {
+      if (keyboard.keyboardShown && sheetRef.current) {
+        sheetRef.current.snapTo(0);
+      }
+    }, [keyboard.keyboardShown]);
 
-  const renderInner = () => (
-    <View style={[theme.backgroundPrimary, theme.fullHeight]}>
-      <Item
-        title="Tag"
-        description={tags.slice(0, 4).map((t) => `#${t} `)}
-        onPress={onTagPress}
-      />
-      <Item
-        title={i18n.t('nsfw.button')}
-        description={
-          nsfw.length !== 0 ? i18n.t('nsfw.notSafe') : i18n.t('nsfw.safe')
-        }
-        onPress={onNsfwPress}
-      />
-      <Item
-        title={i18n.t('capture.schedule')}
-        description={
-          time_created ? moment(time_created).calendar() : i18n.t('now')
-        }
-        onPress={onSchedulePress}
-      />
-      <Item
-        title={i18n.t('monetize')}
-        description={
-          tokens ? `${tokens} ${i18n.t('tokens').toLowerCase()} +` : ''
-        }
-        onPress={onMonetizePress}
-      />
-      {hasAttachment && (
+    useImperativeHandle(ref, () => ({
+      show: () => {
+        sheetRef.current.snapTo(1);
+        sheetRef.current.snapTo(1);
+      },
+    }));
+
+    const showSchedule = props.store.isEdit ? time_created > Date.now() : true;
+
+    const monetizeDesc = featuresService.has('plus-2020')
+      ? store.wire_threshold.support_tier?.urn
+        ? store.wire_threshold.support_tier?.name || 'Plus'
+        : ''
+      : tokens
+      ? `${tokens} ${i18n.t('tokens').toLowerCase()} +`
+      : '';
+
+    const renderInner = () => (
+      <View style={[theme.backgroundSecondary, theme.fullHeight]}>
         <Item
-          title="License"
-          description={getLicenseText(license)}
-          onPress={onLicensePress}
+          title="Tag"
+          description={tags.slice(0, 4).map((t) => `#${t} `)}
+          onPress={onTagPress}
         />
-      )}
-      {/* <Item
+        <Item
+          title={i18n.t('nsfw.button')}
+          description={
+            nsfw.length !== 0 ? i18n.t('nsfw.notSafe') : i18n.t('nsfw.safe')
+          }
+          onPress={onNsfwPress}
+        />
+        {showSchedule && (
+          <Item
+            title={i18n.t('capture.schedule')}
+            description={
+              time_created ? moment(time_created).calendar() : i18n.t('now')
+            }
+            onPress={onSchedulePress}
+          />
+        )}
+        <Item
+          title={i18n.t('monetize.title')}
+          description={monetizeDesc}
+          onPress={onMonetizePress}
+          testID="monetizeButton"
+        />
+        {hasAttachment && (
+          <Item
+            title="License"
+            description={getLicenseText(license)}
+            onPress={onLicensePress}
+          />
+        )}
+        {/* <Item
           title="Visibility"
           description="Public"
           onPress={onMonetizePress}
         /> */}
-    </View>
-  );
+      </View>
+    );
 
-  return (
-    <BottomSheet
-      ref={ref}
-      snapPoints={[height, 450]}
-      renderContent={renderInner}
-      renderHeader={() => (
-        <Header onPress={onHeaderPress} opened={localStore.opened} />
-      )}
-      enabledInnerScrolling={true}
-      enabledContentTapInteraction={true}
-      style={ThemedStyles.style.backgroundPrimary}
-      onOpenEnd={onOpenEnd}
-      onCloseEnd={onCloseEnd}
-    />
-  );
-});
+    return (
+      <BottomSheet
+        ref={sheetRef}
+        snapPoints={[0, 450]}
+        renderContent={renderInner}
+        enabledInnerScrolling={true}
+        enabledContentTapInteraction={true}
+        renderHeader={() => (
+          <Header onPress={onHeaderPress} opened={localStore.opened} />
+        )}
+        style={[
+          ThemedStyles.style.backgroundSecondary,
+          // keyboard.keyboardShown
+          //   ? { bottom: keyboard.keyboardHeight }
+          //   : null,
+        ]}
+        onOpenEnd={onOpenEnd}
+        onCloseEnd={onCloseEnd}
+      />
+    );
+  }),
+);
 
 const styles = StyleSheet.create({
+  headerContainer: {
+    overflow: 'hidden',
+    paddingTop: 20,
+  },
   header: {
     height,
-    padding: 20,
     flexDirection: 'row',
     alignItems: 'center',
-    borderTopWidth: 10,
-    paddingBottom: Platform.select({ ios: 30, android: 20 }),
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: -10,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 5.0,
+    elevation: 10,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  close: {
+    position: 'absolute',
+    right: 20,
   },
   optionTitle: {
     width: '40%',
@@ -213,7 +275,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 20,
-    height: 50,
+    height: 55,
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
 });

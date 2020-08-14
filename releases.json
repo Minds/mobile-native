@@ -1,26 +1,80 @@
 {
   "versions": [
     {
-      "version": "4.1.2",
-      "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-1-2.apk",
-      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.1.2",
+      "version": "4.4.0",
+      "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-4-0.apk",
+      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.4.0",
       "changelog": [
-        "Thai language",
+        "New side menu",
+        "New video player",
+        "Video auto-play support added",
+        "Better support for portrait content",
+        "Hold tap to copy the text of a post",
+        "Search bar enhancement",
+        "Improved post compose screen",
+        "Many UI improvement and bug fixes"
+      ],
+      "unstable": false,
+      "hashes": [
+        {
+          "type": "md5",
+          "value": "1b2de257983afebd7af65d9cab19346f"
+        },
+        {
+          "type": "sha256",
+          "value": "76e8cf9e792123aa09c5cb4d8b397436e1eb1eb17f5de90af80f9ff56ba32437"
+        },
+        {
+          "type": "sha512",
+          "value": "8a91e9f6bd07a30077fc8548527472aaeb38dac62a9dc3f04196b9c64bea9725f010496ae3346eeb7007ab2c3bfd76422b8e16df4d2f1ec15055e209f3505980"
+        }
+      ]
+    },
+    {
+      "version": "4.2.1",
+      "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-2-1.apk",
+      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.2.1",
+      "changelog": [
         "Bug fixing"
       ],
       "unstable": false,
       "hashes": [
         {
           "type": "md5",
-          "value": "27db90aafd04946819a880e961df7222"
+          "value": "19d999928d067e7531a2ab15bfb509db"
         },
         {
           "type": "sha256",
-          "value": "e825ad8525c6ff0230b02f7fd54494616b9821d75a3f5f5870415ab7d0af4f2b"
+          "value": "9b3898ac341f3cf22b8bc69195fe23fb3ba71cf65a8a4705f012b9744004c491"
         },
         {
           "type": "sha512",
-          "value": "cff83c7ad5a56761a0db9f67aa6cd7aab214ca5cb2632da7c2ff157ff59ddd7b890f49163d0ba060ebb156c17f12609d7e8bc7ca39e12f1c69280e7b6a3c944b"
+          "value": "14a3668e7b52ba57428e36dc9d7416a20e8fcfb4bab1b6b27d385ea45bd9b2a57a1574d5b75607ba6127624e784c7e7a176cbba1b5fe28c72f7aa25d81b69684"
+        }
+      ]
+    },
+    {
+      "version": "4.2.0",
+      "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-2-0.apk",
+      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.2.0",
+      "changelog": [
+        "Full-screen post swiper",
+        "New discovery",
+        "Bug fixing"
+      ],
+      "unstable": false,
+      "hashes": [
+        {
+          "type": "md5",
+          "value": "7fbdada7371d73c8e845cb0b1cb4fb62"
+        },
+        {
+          "type": "sha256",
+          "value": "1ed115c755262559d659e3f5e57124af908945998b2e172701445b3e5c94aebb"
+        },
+        {
+          "type": "sha512",
+          "value": "7b2e32b1785602f901fa3798f49f80b6113b71ce129eae20d9a8d3dd134da25d4c5ccb4657becc662a760ad6d39db84a1349a87659a537412fbec1ead2d71f76"
         }
       ]
     },

@@ -2,42 +2,69 @@
 
 exports[`renders correctly 1`] = `
 <View
+  accessible={true}
+  focusable={true}
+  isTVSelectable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
   style={
     Object {
-      "flexDirection": "row",
-      "flexWrap": "wrap",
+      "flex": 1,
+      "marginLeft": 8,
+      "opacity": 1,
     }
   }
 >
-  <Text
-    onPress={[Function]}
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+      }
+    }
   >
-    100 points 
     <Text>
-      for
+      100 points 
+      <Text>
+        for
+         
+        <Text
+          style={
+            Object {
+              "fontWeight": "600",
+            }
+          }
+        >
+          some title
+        </Text>
+      </Text>
+       is awaiting approval by
        
       <Text
+        onPress={[Function]}
         style={
           Object {
             "fontWeight": "600",
           }
         }
       >
-        some title
+        someChannel
       </Text>
     </Text>
-     is awaiting approval by
-     
-    <Text
-      onPress={[Function]}
-      style={
-        Object {
-          "fontWeight": "600",
-        }
+  </View>
+  <Text
+    style={
+      Object {
+        "fontSize": 11,
       }
-    >
-      someChannel
-    </Text>
+    }
+  >
+    Invalid date
   </Text>
 </View>
 `;

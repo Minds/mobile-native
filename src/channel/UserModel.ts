@@ -7,6 +7,7 @@ import ChannelService from './ChannelService';
 import sessionService from '../common/services/session.service';
 import apiService from '../common/services/api.service';
 import logService from '../common/services/log.service';
+import { SupportTiersType } from '../wire/WireTypes';
 
 //@ts-nocheck
 export const USER_MODE_OPEN = 0;
@@ -17,24 +18,32 @@ export const USER_MODE_CLOSED = 2;
  * User model
  */
 export default class UserModel extends BaseModel {
+  programs;
   merchant;
   /**
    * Eth wallet
    */
   eth_wallet: string = '';
-  wire_rewards;
+  disable_autoplay_videos?: boolean;
   sums;
   btc_address?: string;
   icontime!: string;
   username!: string;
+  briefdescription!: string;
+  city!: string;
   name!: string;
-  admin = false;
+  is_admin = false;
   plus: boolean = false;
   verified: boolean = false;
   founder: boolean = false;
   rewards: boolean = false;
   last_accepted_tos: number = 0;
+  subscriptions_count: number = 0;
   carousels?: Array<any>;
+  dob?: string;
+
+  tags: Array<string> = [];
+  groupsCount: number = 0;
 
   /**
    * @var {boolean}
@@ -76,6 +85,10 @@ export default class UserModel extends BaseModel {
    */
   @observable email_confirmed = false;
 
+  @observable wire_rewards;
+
+  @observable pro: boolean = false;
+
   /**
    * Confirm email
    * @param {Object} params
@@ -109,9 +122,10 @@ export default class UserModel extends BaseModel {
   }
 
   @action
-  async toggleSubscription() {
+  toggleSubscription = async () => {
     const value = !this.subscribed;
     this.subscribed = value;
+
     try {
       const metadata = this.getClientMetadata();
       await ChannelService.toggleSubscription(this.guid, value, metadata);
@@ -122,7 +136,7 @@ export default class UserModel extends BaseModel {
       });
       throw err;
     }
-  }
+  };
 
   @action
   async toggleBlock(value: boolean | null = null) {
@@ -147,11 +161,39 @@ export default class UserModel extends BaseModel {
     this.email_confirmed = value;
   }
 
+  @action
+  setTier(tier: SupportTiersType, type: 'usd' | 'tokens') {
+    const wire_rewards = this.wire_rewards;
+    if (!wire_rewards.rewards) {
+      wire_rewards.rewards = {
+        money: [] as SupportTiersType[],
+        tokens: [] as SupportTiersType[],
+      };
+    }
+    if (type === 'tokens') {
+      if (!wire_rewards.rewards.tokens) {
+        wire_rewards.rewards.tokens = [] as SupportTiersType[];
+      }
+      wire_rewards.rewards.tokens.push(tier);
+    } else {
+      if (!wire_rewards.rewards.money) {
+        wire_rewards.rewards.money = [] as SupportTiersType[];
+      }
+      wire_rewards.rewards.money.push(tier);
+    }
+    this.wire_rewards = wire_rewards;
+  }
+
+  @action
+  togglePro() {
+    this.pro = !this.pro;
+  }
+
   /**
    * Is admin
    */
   isAdmin() {
-    return this.admin;
+    return this.is_admin;
   }
 
   /**
@@ -182,9 +224,7 @@ export default class UserModel extends BaseModel {
    */
   getAvatarSource(size = 'medium') {
     return {
-      uri: `${MINDS_CDN_URI}icon/${
-        this.guid
-      }/${size}/${this.getOwnerIcontime()}`,
+      uri: `${MINDS_CDN_URI}icon/${this.guid}/${size}/${this.icontime}`,
       headers: api.buildHeaders(),
     };
   }
@@ -227,6 +267,13 @@ export default class UserModel extends BaseModel {
    */
   isSubscribed() {
     return !!this.subscribed;
+  }
+
+  /**
+   * Has avatar
+   */
+  hasAvatar(): boolean {
+    return this.icontime !== this.time_created;
   }
 
   /**

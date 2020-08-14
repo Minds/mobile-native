@@ -29,7 +29,9 @@ import PasswordValidator from '../common/components/PasswordValidator';
 import validatePassword from '../common/helpers/validatePassword';
 
 import type { registerParams } from '../auth/AuthService';
+import Captcha from '../common/components/Captcha';
 import logService from '../common/services/log.service';
+import i18nService from '../common/services/i18n.service';
 
 /**
  * Register Form
@@ -37,6 +39,7 @@ import logService from '../common/services/log.service';
 @inject('user')
 @observer
 class RegisterForm extends Component {
+  captcha;
   state = {
     error: {},
     password: '',
@@ -48,6 +51,11 @@ class RegisterForm extends Component {
     exclusive_promotions: false,
     inProgress: false,
   };
+
+  constructor(props) {
+    super(props);
+    this.captcha = React.createRef();
+  }
 
   validatePassword(value) {
     let error = this.state.error;
@@ -84,6 +92,7 @@ class RegisterForm extends Component {
     return (
       <ScrollView
         style={[CS.flexContainer, CS.marginTop2x]}
+        keyboardShouldPersistTaps={'handled'}
         contentContainerStyle={[CS.paddingHorizontal4x, CS.paddingBottom5x]}>
         <SafeAreaView style={CS.flexContainer}>
           <TouchableOpacity
@@ -169,9 +178,11 @@ class RegisterForm extends Component {
             testID="checkbox"
           />
 
+          <Captcha ref={this.captcha} onResult={this.onCaptchResult} />
+
           <View style={(CS.flexContainer, CS.paddingTop2x)}>
             <Button
-              onPress={() => this.onPressRegister()}
+              onPress={this.onPressRegister}
               borderRadius={2}
               containerStyle={[CS.button, CS.fullWidth]}
               textStyle={CS.buttonText}
@@ -228,7 +239,7 @@ class RegisterForm extends Component {
   /**
    * On press register
    */
-  async onPressRegister() {
+  onPressRegister = () => {
     this.validatePassword(this.state.confirmPassword);
 
     if (!this.state.termsAccepted) {
@@ -242,7 +253,10 @@ class RegisterForm extends Component {
     if (this.state.error.invalidPasswordError) {
       return Alert.alert(i18n.t('ops'), this.state.error.invalidPasswordError);
     }
+    this.captcha.current.show();
+  };
 
+  onCaptchResult = async (captcha: string) => {
     this.setState({ inProgress: true });
 
     try {
@@ -251,6 +265,7 @@ class RegisterForm extends Component {
         email: this.state.email,
         password: this.state.password,
         exclusive_promotions: this.state.exclusive_promotions,
+        captcha,
       } as registerParams;
       await authService.register(params);
       sessionService.setInitialScreen('OnboardingScreen');
@@ -258,6 +273,7 @@ class RegisterForm extends Component {
       await delay(100);
       try {
         await authService.login(this.state.username, this.state.password);
+        i18nService.setLocaleBackend();
       } catch (err) {
         try {
           await authService.login(this.state.username, this.state.password);
@@ -272,7 +288,7 @@ class RegisterForm extends Component {
     }
 
     this.setState({ inProgress: false });
-  }
+  };
 }
 
 export default RegisterForm;

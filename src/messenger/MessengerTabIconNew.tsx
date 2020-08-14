@@ -1,6 +1,6 @@
 //@ts-nocheck
 import React, { Component } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, TouchableHighlight } from 'react-native';
 
 import { observer, inject } from 'mobx-react';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
@@ -29,22 +29,25 @@ export default class MessengerTabIconNew extends Component<Props> {
     const tintColor = this.props.tintColor;
     const theme = ThemedStyles.style;
     return (
-      <View>
-        <Icon
-          name="chat-bubble-outline"
-          size={24}
-          style={[styles.button, theme.colorIcon]}
-          onPress={this.navToMessenger}
-        />
-        {this.props.messengerList.unread ? (
-          <FAIcon
-            name="circle"
-            size={10}
-            color="rgba(70, 144, 223, 1)"
-            style={styles.unread}
+      <TouchableHighlight
+        underlayColor="transparent"
+        onPress={this.navToMessenger}>
+        <View>
+          <Icon
+            name="chat-bubble-outline"
+            size={26}
+            style={[styles.button, theme.colorIcon]}
           />
-        ) : null}
-      </View>
+          {this.props.messengerList.unread ? (
+            <FAIcon
+              name="circle"
+              size={10}
+              color="rgba(70, 144, 223, 1)"
+              style={styles.unread}
+            />
+          ) : null}
+        </View>
+      </TouchableHighlight>
     );
   }
 }
@@ -60,9 +63,9 @@ const styles = StyleSheet.create({
     opacity: 1,
     position: 'absolute',
     top: -2,
-    left: 25,
+    left: 28,
   },
   button: {
-    paddingHorizontal: 8,
+    paddingHorizontal: 10,
   },
 });

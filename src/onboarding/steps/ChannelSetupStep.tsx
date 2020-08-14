@@ -1,224 +1,205 @@
-//@ts-nocheck
-import React, { Component } from 'react';
+import React from 'react';
 
 import {
   View,
   Text,
-  TextInput,
   StyleSheet,
-  Image,
   TouchableOpacity,
+  Image,
+  ImageSourcePropType,
 } from 'react-native';
+import { observer, useLocalStore } from 'mobx-react';
 
-import { observer, inject } from 'mobx-react';
+import i18n from '../../common/services/i18n.service';
+import { ScrollView } from 'react-native-gesture-handler';
+import Input from '../../common/components/Input';
+
+import OnboardingButtons from '../OnboardingButtons';
+import OnboardingBackButton from '../OnboardingBackButton';
+
+import withPreventDoubleTap from '../../common/components/PreventDoubleTap';
+
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as Progress from 'react-native-progress';
-
-import { CommonStyle as CS } from '../../styles/Common';
-import sessionService from '../../common/services/session.service';
-import imagePicker from '../../common/services/image-picker.service';
-import withPreventDoubleTap from '../../common/components/PreventDoubleTap';
-import i18n from '../../common/services/i18n.service';
-import { UserError } from '../../common/UserError';
+import ThemedStyles from '../../styles/ThemedStyles';
+import LocationAutoSuggest from '../../common/components/LocationAutoSuggest';
+import createChannelStore from '../../channel/v2/createChannelStore';
+import useCurrentUser from '../../common/hooks/useCurrentUser';
 
 const TouchableCustom = withPreventDoubleTap(TouchableOpacity);
 
-@inject('channel', 'user')
-@observer
-export default class ChannelSetupStep extends Component {
-  state = {
+type PropsType = {
+  onNext: () => void;
+  onBack: () => void;
+};
+
+const ChannelSetupStep = observer((props: PropsType) => {
+  const store = useLocalStore(() => ({
+    phoneNumber: '+1',
+    city: '',
+    dob: '',
     preview_avatar: null,
     preview_banner: null,
-    briefdescription: '',
-    name: '',
     saving: false,
     dirty: false,
-  };
+    setPhoneNumber(val: string) {
+      store.phoneNumber = val;
+    },
+    setCity(val: string) {
+      store.city = val;
+    },
+    setBirthDate(val) {
+      this.dob = val;
+    },
+  }));
 
-  uploads = {
-    avatar: null,
-    banner: null,
-  };
+  const channelStore = useLocalStore(createChannelStore);
+  const user = useCurrentUser();
+  if (!channelStore.channel && user) {
+    channelStore.setChannel(user);
+  }
 
-  /**
-   * Component will mount
-   */
-  componentWillMount() {
-    this.store = this.props.channel.store(sessionService.guid);
-    this.setState({
-      briefdescription: this.props.user.me.briefdescription,
-      name: this.props.user.me.name,
+  const next = async () => {
+    await channelStore.save({
+      dob: store.dob,
+      city: store.city,
+      phoneNumber: store.phoneNumber,
     });
-  }
-
-  changeAvatarAction = async () => {
-    try {
-      const response = await imagePicker.show('Select avatar', 'photo');
-      if (response) {
-        this.selectMedia(response);
-      }
-    } catch (err) {
-      alert(err);
-    }
+    props.onNext();
   };
 
-  selectMedia(file) {
-    this.setState({
-      preview_avatar: file.uri,
-    });
+  const hasAvatar = channelStore.channel?.hasAvatar();
+  const avatar: ImageSourcePropType = channelStore.channel?.getAvatarSource() as ImageSourcePropType;
 
-    this.store.uploadAvatar(file);
-    this.uploads['avatar'] = file;
-  }
-
-  save = async () => {
-    if (this.store.isUploading)
-      throw new UserError('Avatar is uploading, please wait');
-    if (!this.state.dirty) return;
-    payload = {
-      briefdescription: this.state.briefdescription,
-      name: this.state.name,
-      // avatar: this.uploads.avatar,
-    };
-
-    this.setState({ saving: true });
-
-    const response = await this.store.save(payload);
-
-    if (response === true) {
-      await this.props.user.load(true);
-      this.setState({ saving: false, edit: false });
-      this.uploads = {
-        avatar: null,
-        banner: null,
-      };
-    } else if (response === false) {
-      alert('Error saving channel');
-      this.setState({ saving: false });
-    } else {
-      alert(response);
-      this.setState({ saving: false });
-    }
-  };
-
-  /**
-   * Get Channel Avatar
-   */
-  getAvatar() {
-    if (this.state.preview_avatar) {
-      return { uri: this.state.preview_avatar };
-    }
-
-    return this.props.user.me.getAvatarSource();
-  }
-
-  setBriefdescription = (briefdescription) =>
-    this.setState({ briefdescription, dirty: true });
-  setName = (name) => this.setState({ name, dirty: true });
-
-  /**
-   * Render
-   */
-  render() {
-    const hasAvatar = this.props.user.hasAvatar() || this.state.preview_avatar;
-    const avatar = this.getAvatar();
-
-    return (
-      <View style={CS.marginBottom3x}>
-        <View
-          style={[
-            CS.padding4x,
-            CS.flexContainer,
-            CS.rowJustifyStart,
-            CS.alignCenter,
-          ]}>
-          <Text style={[CS.fontXXL, CS.colorDark, CS.fontMedium]}>
-            {i18n.t('onboarding.chooseAvatar')}
-          </Text>
-          <View style={[CS.rowJustifyEnd, CS.flexContainer]}>
-            <TouchableCustom
-              onPress={this.changeAvatarAction}
+  const theme = ThemedStyles.style;
+  const containersStyle = [
+    theme.rowJustifyCenter,
+    theme.backgroundPrimary,
+    theme.paddingHorizontal4x,
+    theme.paddingVertical4x,
+  ];
+  return (
+    <ScrollView style={styles.inputContainer} keyboardShouldPersistTaps={true}>
+      <View style={containersStyle}>
+        <View style={[theme.flexContainer, theme.columnAlignCenter]}>
+          <OnboardingBackButton onBack={props.onBack} />
+          <View style={[styles.textsContainer]}>
+            <Text style={[theme.onboardingTitle, theme.marginBottom2x]}>
+              {i18n.t('onboarding.profileSetup')}
+            </Text>
+            <Text style={[theme.titleText, theme.colorPrimaryText]}>
+              {i18n.t('onboarding.infoTitle')}
+            </Text>
+            <Text style={[theme.subTitleText, theme.colorSecondaryText]}>
+              {i18n.t('onboarding.step', { step: 2, total: 4 })}
+            </Text>
+          </View>
+          <View style={theme.fullWidth}>
+            <View
               style={[
-                styles.avatar,
-                CS.marginLeft3x,
-                CS.border,
-                CS.borderGreyed,
-              ]}
-              disabled={this.saving}
-              testID="selectAvatar">
-              {hasAvatar && (
-                <Image source={avatar} style={styles.wrappedAvatar} />
-              )}
-
-              <View
+                theme.padding4x,
+                theme.flexContainer,
+                theme.rowJustifyStart,
+                theme.alignCenter,
+                theme.marginVertical1x,
+              ]}>
+              <Text
                 style={[
-                  styles.tapOverlayView,
-                  hasAvatar ? null : CS.backgroundTransparent,
-                ]}
-              />
-              <View style={[styles.overlay, CS.centered]}>
-                <Icon
-                  name="md-cloud-upload"
-                  size={40}
-                  color={hasAvatar ? '#FFF' : '#444'}
-                />
-              </View>
-              {this.store.isUploading && this.store.avatarProgress ? (
-                <View style={[styles.tapOverlayView, styles.progress]}>
-                  <Progress.Pie
-                    progress={this.store.avatarProgress}
-                    size={36}
+                  theme.fontXXL,
+                  theme.colorSecondaryText,
+                  theme.fontMedium,
+                ]}>
+                {i18n.t('onboarding.chooseAvatar')}
+              </Text>
+              <View style={[theme.rowJustifyEnd, theme.flexContainer]}>
+                <TouchableCustom
+                  onPress={() => channelStore.upload('avatar')}
+                  style={[
+                    styles.avatar,
+                    theme.marginLeft3x,
+                    theme.border,
+                    theme.buttonBorder,
+                  ]}
+                  disabled={channelStore.uploading}
+                  testID="selectAvatar">
+                  {hasAvatar && avatar && (
+                    <Image source={avatar} style={styles.wrappedAvatar} />
+                  )}
+
+                  <View
+                    style={[
+                      styles.tapOverlayView,
+                      hasAvatar ? null : theme.backgroundTransparent,
+                    ]}
                   />
-                </View>
-              ) : null}
-            </TouchableCustom>
+                  <View style={[styles.overlay, theme.centered]}>
+                    <Icon
+                      name="md-cloud-upload"
+                      size={40}
+                      style={hasAvatar ? theme.colorWhite : theme.colorButton}
+                    />
+                  </View>
+                  {channelStore.uploading && channelStore.avatarProgress ? (
+                    <View style={[styles.tapOverlayView, styles.progress]}>
+                      <Progress.Pie
+                        progress={channelStore.avatarProgress}
+                        size={36}
+                      />
+                    </View>
+                  ) : null}
+                </TouchableCustom>
+              </View>
+            </View>
+            <Input
+              placeholder={i18n.t('onboarding.infoMobileNumber')}
+              onChangeText={store.setPhoneNumber}
+              value={store.phoneNumber}
+              editable={true}
+              optional={true}
+              info={i18n.t('onboarding.phoneNumberTooltip')}
+              inputType={'phoneInput'}
+            />
+            <LocationAutoSuggest
+              placeholder={i18n.t('onboarding.infoLocation')}
+              onChangeText={store.setCity}
+              value={store.city}
+              editable={true}
+              optional={true}
+              info={i18n.t('onboarding.locationTooltip')}
+              inputStyle={'inputAlone'}
+            />
+            <Input
+              placeholder={i18n.t('onboarding.infoDateBirth')}
+              onChangeText={store.setBirthDate}
+              value={store.dob}
+              editable={true}
+              optional={true}
+              info={i18n.t('onboarding.dateofBirthTooltip')}
+              inputType={'dateInput'}
+            />
           </View>
         </View>
-        <View style={[CS.padding4x, CS.flexContainer]}>
-          <Text style={[CS.fontXXL, CS.colorDark, CS.fontMedium]}>
-            {i18n.t('onboarding.chooseName')}
-          </Text>
-          <TextInput
-            style={[
-              CS.borderHair,
-              CS.borderDarkGreyed,
-              CS.borderRadius10x,
-              CS.fontXL,
-              CS.padding2x,
-              CS.fontHairline,
-              CS.marginTop4x,
-            ]}
-            placeholder="eg. John Smith"
-            value={this.state.name}
-            onChangeText={this.setName}
-          />
-        </View>
-        <View style={[CS.padding4x, CS.flexContainer]}>
-          <Text style={[CS.fontXXL, CS.colorDark, CS.fontMedium]}>
-            {i18n.t('onboarding.describeChannel')}
-          </Text>
-          <TextInput
-            style={[
-              CS.borderHair,
-              CS.borderDarkGreyed,
-              CS.borderRadius10x,
-              CS.fontXL,
-              CS.padding2x,
-              CS.fontHairline,
-              CS.marginTop4x,
-            ]}
-            placeholder="eg. Independent Journalist"
-            value={this.state.briefdescription}
-            onChangeText={this.setBriefdescription}
-          />
-        </View>
       </View>
-    );
-  }
-}
+      <View style={containersStyle}>
+        <OnboardingButtons onNext={next} saving={channelStore.uploading} />
+      </View>
+    </ScrollView>
+  );
+});
 
-// style
+export default ChannelSetupStep;
+
 const styles = StyleSheet.create({
+  containerButton: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
+  inputContainer: {
+    width: '100%',
+  },
+  textsContainer: {
+    alignItems: 'center',
+  },
   avatar: {
     height: 90,
     width: 90,

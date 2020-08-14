@@ -40,6 +40,7 @@ exports[`blog card component should renders correctly 1`] = `
           "headers": Object {
             "App-Version": "3.8.0",
             "Cache-Control": "no-cache, no-store, must-revalidate",
+            "Content-Type": "application/json",
             "Pragma": "no-cache",
           },
           "uri": "https://www.minds.com/fs/v1/banners/836607056186159104/1524838665",
@@ -169,7 +170,7 @@ exports[`blog card component should renders correctly 1`] = `
             accessibilityIgnoresInvertColors={true}
             style={
               Object {
-                "backgroundColor": "#bdbdbd",
+                "backgroundColor": "transparent",
                 "borderRadius": 17,
                 "flex": 1,
                 "overflow": "hidden",
@@ -178,21 +179,19 @@ exports[`blog card component should renders correctly 1`] = `
             }
           >
             <Image
+              borderRadius={17}
               onLoad={[Function]}
               style={
-                Array [
-                  Object {
-                    "bottom": 0,
-                    "left": 0,
-                    "position": "absolute",
-                    "right": 0,
-                    "top": 0,
-                  },
-                  Object {
-                    "height": null,
-                    "width": null,
-                  },
-                ]
+                Object {
+                  "bottom": 0,
+                  "flex": 1,
+                  "height": null,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                  "width": null,
+                }
               }
               testID="RNE__Image"
               theme={
@@ -232,6 +231,7 @@ exports[`blog card component should renders correctly 1`] = `
                   },
                 }
               }
+              transition={true}
             />
             <View
               accessibilityElementsHidden={false}
@@ -341,7 +341,6 @@ exports[`blog card component should renders correctly 1`] = `
         "ownerObj": UserModel {
           "__list": null,
           "access_id": "2",
-          "admin": false,
           "allow_comments": true,
           "banned": "no",
           "blocked": false,
@@ -385,10 +384,12 @@ exports[`blog card component should renders correctly 1`] = `
               },
             ],
           },
+          "groupsCount": 0,
           "guid": 100,
           "icontime": "1523515420",
           "impressions": 100,
           "isOwner": [Function],
+          "is_admin": false,
           "language": "en",
           "last_accepted_tos": 0,
           "legacy_guid": false,
@@ -411,6 +412,7 @@ exports[`blog card component should renders correctly 1`] = `
           "permissions": Object {},
           "pinned_posts": Array [],
           "plus": true,
+          "pro": false,
           "programs": Array [
             "affiliate",
           ],
@@ -423,7 +425,9 @@ exports[`blog card component should renders correctly 1`] = `
           "subscribed": false,
           "subscriber": true,
           "subscribers_count": 50,
+          "subscriptions_count": 0,
           "subtype": false,
+          "tags": Array [],
           "time_created": "1468113204",
           "time_updated": false,
           "type": "user",

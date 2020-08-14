@@ -2,7 +2,7 @@
 import api from './api.service';
 import imagePicker from './image-picker.service';
 import Cancelable from 'promise-cancelable';
-import { Platform } from 'react-native';
+import logService from './log.service';
 
 /**
  * Attacment service
@@ -135,8 +135,8 @@ class AttachmentService {
    * Open gallery
    * @param {string} mediaType photo or video (or mixed only ios)
    */
-  async gallery(mediaType = 'photo') {
-    const response = await imagePicker.launchImageLibrary(mediaType);
+  async gallery(mediaType = 'photo', crop = true) {
+    const response = await imagePicker.launchImageLibrary(mediaType, crop);
 
     if (!response) {
       return null;

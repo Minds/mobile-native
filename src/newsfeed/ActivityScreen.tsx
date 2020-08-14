@@ -15,7 +15,8 @@ import commentsStoreProvider from '../comments/CommentsStoreProvider';
 import i18n from '../common/services/i18n.service';
 import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
 import { FLAG_VIEW } from '../common/Permissions';
-import type CommentsStore from 'src/comments/CommentsStore';
+import type CommentsStore from '../comments/CommentsStore';
+import ThemedStyles from '../styles/ThemedStyles';
 
 type PropsType = {
   route: any;
@@ -113,7 +114,8 @@ class ActivityScreen extends Component<PropsType> {
         ref={this.setRef}
         entity={this.entityStore.entity}
         navigation={this.props.navigation}
-        autoHeight={false}
+        autoHeight={true}
+        showCommentsOutlet={false}
       />
     ) : null;
   }
@@ -135,6 +137,7 @@ class ActivityScreen extends Component<PropsType> {
    * Render
    */
   render() {
+    const theme = ThemedStyles.style;
     if (!this.entityStore.entity && !this.entityStore.errorLoading) {
       return <CenteredLoading />;
     }
@@ -145,7 +148,7 @@ class ActivityScreen extends Component<PropsType> {
     }
 
     return (
-      <View style={[CS.flexContainer]}>
+      <View style={[theme.flexContainer, theme.backgroundSecondary]}>
         {!this.entityStore.errorLoading ? (
           //@ts-ignore user store is injected
           <CommentList

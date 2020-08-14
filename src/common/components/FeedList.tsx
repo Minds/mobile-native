@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { FlatList, View, Text, ActivityIndicator } from 'react-native';
+import {
+  FlatList,
+  View,
+  Text,
+  ActivityIndicator,
+  StyleProp,
+  ViewStyle,
+} from 'react-native';
 import { observer } from 'mobx-react';
 
 import Activity from '../../newsfeed/activity/Activity';
@@ -12,15 +19,20 @@ import i18n from '../services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import type FeedStore from '../stores/FeedStore';
 import type ActivityModel from '../../newsfeed/ActivityModel';
+import { ChannelTabType } from '../../channel/v2/createChannelStore';
 
 type PropsType = {
   feedStore: FeedStore;
   renderTileActivity?: Function;
   renderActivity?: Function;
   emptyMessage?: React.ReactNode;
-  header: React.ReactNode;
+  header?: React.ReactNode;
   listComponent?: React.ComponentType;
   navigation: any;
+  style?: StyleProp<ViewStyle>;
+  hideItems?: boolean;
+  ListEmptyComponent?: React.ReactNode;
+  onRefresh?: () => void;
 };
 
 /**
@@ -31,7 +43,7 @@ export default class FeedList<T> extends Component<PropsType> {
   listRef?: FlatList<T>;
   cantShowActivity: string = '';
   viewOpts = {
-    viewAreaCoveragePercentThreshold: 50,
+    itemVisiblePercentThreshold: 50,
     minimumViewTime: 300,
   };
   state = {
@@ -126,7 +138,7 @@ export default class FeedList<T> extends Component<PropsType> {
         onLayout={this.onLayout}
         ListHeaderComponent={header}
         ListFooterComponent={footer}
-        data={feedStore.entities.slice()}
+        data={!this.props.hideItems ? feedStore.entities.slice() : []}
         renderItem={renderRow}
         keyExtractor={this.keyExtractor}
         onRefresh={this.refresh}
@@ -136,15 +148,16 @@ export default class FeedList<T> extends Component<PropsType> {
         numColumns={feedStore.isTiled ? 3 : 1}
         style={[
           ThemedStyles.style.flexContainer,
-          ThemedStyles.style.backgroundPrimary,
+          ThemedStyles.style.backgroundSecondary,
         ]}
         initialNumToRender={6}
         windowSize={11}
         // removeClippedSubviews={true}
-        ListEmptyComponent={empty}
+        ListEmptyComponent={!this.props.hideItems ? empty : null}
         viewabilityConfig={this.viewOpts}
         onViewableItemsChanged={this.onViewableItemsChanged}
         onScroll={this.onScroll}
+        keyboardShouldPersistTaps="always"
         {...passThroughProps}
       />
     );
@@ -226,6 +239,9 @@ export default class FeedList<T> extends Component<PropsType> {
    */
   refresh = () => {
     this.props.feedStore.refresh();
+    if (this.props.onRefresh) {
+      this.props.onRefresh();
+    }
   };
 
   /**
@@ -244,6 +260,7 @@ export default class FeedList<T> extends Component<PropsType> {
           navigation={this.props.navigation}
           autoHeight={false}
           isLast={isLast}
+          showCommentsOutlet={false}
         />
       </ErrorBoundary>
     );

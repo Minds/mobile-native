@@ -29,11 +29,13 @@ export default observer(function (props) {
 
   return (
     <View style={[styles.container, theme.paddingHorizontal4x]}>
-      <TouchableOpacity
-        onPress={props.onRemove}
-        style={[styles.removeRichEmbed, theme.backgroundSecondary]}>
-        <IonIcon name="ios-close" size={28} style={styles.icon} />
-      </TouchableOpacity>
+      {!props.isEdit && (
+        <TouchableOpacity
+          onPress={props.onRemove}
+          style={[styles.removeRichEmbed, theme.backgroundSecondary]}>
+          <IonIcon name="ios-close" size={22} style={theme.colorPrimaryText} />
+        </TouchableOpacity>
+      )}
       <View
         style={[
           styles.row,
@@ -48,11 +50,12 @@ export default observer(function (props) {
           resizeMode={FastImage.resizeMode.cover}
         />
         <View style={[styles.metaContainer, theme.padding]}>
-          <Text numberOfLines={1} style={[theme.fontL, theme.padding]}>
+          <Text numberOfLines={1} style={[theme.fontXL, theme.padding]}>
             {props.meta.title}
           </Text>
-
-          <Text numberOfLines={2} style={[theme.fontM, theme.padding]}>
+          <Text
+            numberOfLines={2}
+            style={[theme.fontM, theme.padding, theme.colorSecondaryText]}>
             {props.meta.description || domain(props.meta.url)}
           </Text>
         </View>
@@ -65,15 +68,14 @@ const styles = StyleSheet.create({
   thumbnail: {
     width: imgSize,
     height: imgSize,
-  },
-  icon: {
-    color: '#FFFFFF',
+    borderRadius: 2,
   },
   container: {
     width: '100%',
     backgroundColor: 'transparent',
     height: imgSize,
     position: 'relative',
+    borderRadius: 1,
   },
   metaContainer: {
     flex: 1,
@@ -93,8 +95,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 15,
     elevation: 2,
-    shadowOffset: { width: 1, height: 1 },
-    shadowColor: 'black',
-    shadowOpacity: 0.65,
   },
 });
