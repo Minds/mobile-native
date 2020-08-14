@@ -65,7 +65,11 @@ exports[`renders correctly 1`] = `
             "flex": 1,
             "justifyContent": "center",
           },
-          undefined,
+          Array [
+            undefined,
+            undefined,
+            undefined,
+          ],
           Object {
             "margin": 0,
           },
@@ -110,44 +114,159 @@ exports[`renders correctly 1`] = `
         style={
           Array [
             Object {
-              "borderRadius": 5,
+              "borderTopLeftRadius": 20,
+              "borderTopRightRadius": 20,
               "flexDirection": "column",
-              "height": 240,
               "justifyContent": "center",
+              "paddingBottom": 50,
               "width": "100%",
             },
-            undefined,
-            undefined,
+            Object {
+              "backgroundColor": "#252E31",
+            },
           ]
         }
       >
-        <Text
+        <View
           style={
             Array [
-              undefined,
               undefined,
               undefined,
             ]
           }
         >
-          Captcha
-        </Text>
-        <TextInput
-          allowFontScaling={true}
-          onChangeText={[Function]}
-          onEndEditing={[Function]}
-          placeholder="Enter the characters above"
-          placeholderTextColor="#797B82"
-          rejectResponderTermination={true}
+          <Text
+            onPress={[Function]}
+            style={
+              Array [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+          >
+            Close
+          </Text>
+          <Text
+            style={
+              Array [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+          >
+            Verification
+          </Text>
+          <Text
+            onPress={[Function]}
+            style={
+              Array [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+          >
+            Verify
+          </Text>
+        </View>
+        <View
           style={
             Array [
               undefined,
+              Object {
+                "paddingTop": 12,
+              },
               undefined,
+              undefined,
+              undefined,
+              undefined,
+              Object {
+                "backgroundColor": "#202527",
+                "borderColor": "#404a4e",
+              },
             ]
           }
-          testID="captchInput"
-          underlineColorAndroid="transparent"
-        />
+        >
+          <View>
+            <View
+              style={
+                Object {
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                  "width": "100%",
+                }
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "flexDirection": "row",
+                    "justifyContent": "space-between",
+                    "width": "100%",
+                  }
+                }
+              >
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#AEB0B8",
+                        "fontFamily": "Roboto",
+                        "fontSize": 16,
+                        "fontWeight": "600",
+                        "marginBottom": 5,
+                      },
+                      undefined,
+                    ]
+                  }
+                >
+                  Enter the characters above
+                </Text>
+              </View>
+            </View>
+            <TextInput
+              allowFontScaling={true}
+              autoCapitalize="none"
+              autofocus={true}
+              containerStyle={
+                Object {
+                  "backgroundColor": "#202527",
+                  "borderColor": "#404a4e",
+                }
+              }
+              onChangeText={[Function]}
+              onEndEditing={[Function]}
+              placeholder=""
+              placeholderTextColor="#444"
+              rejectResponderTermination={true}
+              returnKeyType="done"
+              style={
+                Array [
+                  undefined,
+                  Array [
+                    Object {
+                      "borderWidth": 0,
+                      "height": 32,
+                      "marginBottom": 7,
+                      "padding": 0,
+                    },
+                    undefined,
+                    undefined,
+                    undefined,
+                  ],
+                ]
+              }
+              testID="captchInput"
+              underlineColorAndroid="transparent"
+            />
+          </View>
+        </View>
       </View>
     </View>
   </View>

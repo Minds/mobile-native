@@ -1,8 +1,10 @@
 import React, { useRef, useCallback, useMemo, useEffect } from 'react';
 import { View, Text, StyleSheet, Platform, Clipboard } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import { useDimensions, useKeyboard } from '@react-native-community/hooks';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useFocus } from '@crowdlinker/react-native-pager';
+import { LinearGradient } from 'expo-linear-gradient';
+import { observer, useLocalStore } from 'mobx-react';
 import * as entities from 'entities';
 
 import type ActivityModel from '../../../newsfeed/ActivityModel';
@@ -19,8 +21,7 @@ import Translate from '../../../common/components/Translate';
 import { useSafeArea } from 'react-native-safe-area-context';
 import Actions from '../../../newsfeed/activity/Actions';
 import Activity from '../../../newsfeed/activity/Activity';
-import { useDimensions, useKeyboard } from '@react-native-community/hooks';
-import { observer, useLocalStore } from 'mobx-react';
+
 import BottomOptionPopup, {
   useBottomOption,
   BottomOptionsStoreType,

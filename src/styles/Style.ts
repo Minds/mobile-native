@@ -7,6 +7,7 @@ export interface ThemedStyle {
   flexContainerCenter: any;
   flexColumn: any;
   justifyCenter: any;
+  justifyEnd: any;
   columnAlignCenter: any;
   flexColumnStretch: any;
   flexColumnCentered: any;
@@ -163,6 +164,9 @@ export const buildStyle = (theme): ThemedStyle => ({
   },
   justifyCenter: {
     justifyContent: 'center',
+  },
+  justifyEnd: {
+    justifyContent: 'flex-end',
   },
   columnAlignCenter: {
     alignItems: 'center',
@@ -489,7 +493,7 @@ export const buildStyle = (theme): ThemedStyle => ({
   titleText: {
     fontFamily: 'Roboto',
     fontSize: Platform.select({ ios: 26, android: 24 }),
-    fontWeight: 'bold',
+    fontWeight: '500',
     lineHeight: 44,
   },
   subTitleText: {
@@ -503,10 +507,10 @@ export const buildStyle = (theme): ThemedStyle => ({
   input: {
     color: theme.primary_text,
     fontSize: 16,
-    padding: 10,
+    // padding: 10,
     fontFamily: 'Roboto',
     backgroundColor: 'transparent',
-    height: 50,
+    // height: 50,
     borderRadius: 2,
     borderColor: theme.primary_border,
     borderWidth: 1,
@@ -521,6 +525,15 @@ export const buildStyle = (theme): ThemedStyle => ({
     right: 8,
     top: Platform.OS === 'ios' ? 36 : 40,
     color: theme.primary_text,
+  },
+  transparentButton: {
+    borderWidth: 1,
+    backgroundColor: 'rgba(0,0,0,0.30)',
+    borderColor: Platform.select({
+      android: 'rgba(255,255,255,0.40)',
+      ios: 'rgba(255,255,255,0.60)',
+    }),
+    borderRadius: 30,
   },
   button: {
     marginRight: 0,
@@ -542,7 +555,6 @@ export const buildStyle = (theme): ThemedStyle => ({
     marginLeft: 0,
     paddingLeft: 0,
     borderWidth: 0,
-    marginTop: 15,
   },
 
   // borders
