@@ -11,11 +11,12 @@ const InputContainer = (props) => {
     <View
       style={[
         theme.paddingLeft4x,
-        theme.paddingTop3x,
+        styles.container,
         theme.backgroundSecondary,
         theme.borderTop,
         noBottomBorder ? null : theme.borderBottom,
         theme.borderPrimary,
+        props.containerStyle,
       ]}>
       <Input
         style={[styles.input, theme.paddingLeft0x, theme.fontXL, style]}
@@ -23,6 +24,7 @@ const InputContainer = (props) => {
           theme.colorSecondaryText,
           theme.fontL,
           theme.paddingLeft0x,
+          props.labelStyle,
         ]}
         {...otherProps}
       />
@@ -33,8 +35,13 @@ const InputContainer = (props) => {
 export default InputContainer;
 
 const styles = StyleSheet.create({
+  container: {
+    paddingTop: 12,
+  },
   input: {
-    height: 40,
+    padding: 0,
+    height: 32,
+    marginBottom: 7,
     borderWidth: 0,
   },
 });

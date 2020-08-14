@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated from 'react-native-reanimated';
-import { bInterpolate, useTransition } from 'react-native-redash';
+import { mix, useTransition } from 'react-native-redash';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { observer } from 'mobx-react';
 import Pulse from '../common/components/Pulse';
@@ -25,11 +25,11 @@ export default observer(function (props: PropsType) {
   // base the animation on the recording prop
   const transition = useTransition(props.store.recording);
 
-  const scale = bInterpolate(transition, 1, 0.4);
+  const scale = mix(transition, 1, 0.4);
 
   const internalSize = props.size - 10;
 
-  const borderRadiusInternal = bInterpolate(transition, internalSize / 2, 10);
+  const borderRadiusInternal = mix(transition, internalSize / 2, 10);
 
   const containerStyle = {
     width: props.size,

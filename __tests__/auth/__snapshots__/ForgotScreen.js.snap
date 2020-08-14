@@ -4,15 +4,9 @@ exports[`ForgotScreen component should renders correctly 1`] = `
 <View
   onLayout={[Function]}
   style={
-    Array [
-      Array [
-        undefined,
-        undefined,
-      ],
-      Object {
-        "paddingBottom": 0,
-      },
-    ]
+    Object {
+      "paddingBottom": 0,
+    }
   }
 >
   <View
@@ -50,59 +44,109 @@ exports[`ForgotScreen component should renders correctly 1`] = `
       >
         To request a new password, enter your username
       </Text>
-      <View>
-        <View
-          style={
+      <View
+        style={
+          Array [
+            undefined,
             Object {
-              "flexDirection": "row",
-              "justifyContent": "space-between",
-            }
-          }
-        >
+              "paddingTop": 12,
+            },
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            Object {
+              "backgroundColor": "rgba(0,0,0,0.25)",
+              "borderColor": "rgba(255,255,255,0.30)",
+            },
+          ]
+        }
+      >
+        <View>
           <View
             style={
               Object {
                 "flexDirection": "row",
                 "justifyContent": "space-between",
+                "width": "100%",
               }
             }
           >
-            <Text
+            <View
               style={
-                Array [
-                  Object {
-                    "color": "#AEB0B8",
-                    "fontFamily": "Roboto",
-                    "fontSize": 16,
-                    "fontWeight": "600",
-                    "marginBottom": 5,
-                  },
-                  undefined,
-                ]
+                Object {
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                  "width": "100%",
+                }
               }
             >
-              Username
-            </Text>
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "color": "#AEB0B8",
+                      "fontFamily": "Roboto",
+                      "fontSize": 16,
+                      "fontWeight": "600",
+                      "marginBottom": 5,
+                    },
+                    Array [
+                      undefined,
+                      undefined,
+                      undefined,
+                      undefined,
+                    ],
+                  ]
+                }
+              >
+                Username
+              </Text>
+            </View>
           </View>
+          <TextInput
+            accessibilityLabel="usernameInput"
+            allowFontScaling={true}
+            autoCapitalize="none"
+            containerStyle={
+              Object {
+                "backgroundColor": "rgba(0,0,0,0.25)",
+                "borderColor": "rgba(255,255,255,0.30)",
+              }
+            }
+            labelStyle={
+              Array [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+            onChangeText={[Function]}
+            placeholder=""
+            placeholderTextColor="#444"
+            rejectResponderTermination={true}
+            returnKeyType="done"
+            style={
+              Array [
+                undefined,
+                Array [
+                  Object {
+                    "borderWidth": 0,
+                    "height": 32,
+                    "marginBottom": 7,
+                    "padding": 0,
+                  },
+                  undefined,
+                  undefined,
+                  undefined,
+                ],
+              ]
+            }
+            underlineColorAndroid="transparent"
+            value=""
+          />
         </View>
-        <TextInput
-          allowFontScaling={true}
-          autoCapitalize="none"
-          editable={false}
-          onChangeText={[Function]}
-          placeholder=""
-          placeholderTextColor="#444"
-          rejectResponderTermination={true}
-          returnKeyType="done"
-          style={
-            Array [
-              undefined,
-              undefined,
-            ]
-          }
-          underlineColorAndroid="transparent"
-          value=""
-        />
       </View>
       <View
         style={
@@ -113,6 +157,7 @@ exports[`ForgotScreen component should renders correctly 1`] = `
         }
       >
         <View
+          accessibilityLabel="backButton"
           accessible={true}
           focusable={true}
           isTVSelectable={true}
@@ -126,6 +171,7 @@ exports[`ForgotScreen component should renders correctly 1`] = `
           style={
             Object {
               "backgroundColor": "#5DBAC0",
+              "borderColor": "rgba(255,255,255,0.20)",
               "borderRadius": 36,
               "opacity": 1,
             }
@@ -147,6 +193,7 @@ exports[`ForgotScreen component should renders correctly 1`] = `
           </Text>
         </View>
         <View
+          accessibilityLabel="continueButton"
           accessible={true}
           focusable={true}
           isTVSelectable={true}
@@ -160,6 +207,7 @@ exports[`ForgotScreen component should renders correctly 1`] = `
           style={
             Object {
               "backgroundColor": "#5DBAC0",
+              "borderColor": "rgba(255,255,255,0.20)",
               "borderRadius": 36,
               "opacity": 1,
             }
