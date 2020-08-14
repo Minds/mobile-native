@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback, MutableRefObject } from 'react';
 
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import DiscoveryUserNew from '../../discovery/DiscoveryUserNew';
 
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -8,8 +8,9 @@ import UserModel from '../../channel/UserModel';
 import { observer } from 'mobx-react';
 import SuggestedSearch from './SuggestedSearch';
 import SearchHistory from './SearchHistory';
-import { SearchResultStoreType } from './createSearchResultStore';
 import MenuItem from '../../common/components/menus/MenuItem';
+import { useLegacyStores } from '../../common/hooks/use-stores';
+import { SearchResultStoreType } from './createSearchResultStore';
 
 type PropsType = {
   navigation: any;
@@ -20,10 +21,11 @@ type PropsType = {
 const SearchResultComponent = observer(
   ({ navigation, localStore }: PropsType) => {
     const theme = ThemedStyles.style;
+    const { user } = useLegacyStores();
 
     useEffect(() => {
-      localStore.init();
-    }, [localStore]);
+      localStore.init(user);
+    }, [localStore, user]);
 
     const renderUser = useCallback(
       (user, index) => {
@@ -33,7 +35,7 @@ const SearchResultComponent = observer(
             key={user.guid}
             //@ts-ignore
             testID={`suggestedUser${index}`}
-            onUserTap={localStore.searchBarItemTap}
+            onUserTap={(item) => localStore.searchBarItemTap(item)}
             subscribe={false}
             navigation={navigation}
           />

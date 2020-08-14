@@ -3,8 +3,8 @@ import { View, ScrollView } from 'react-native';
 import CenteredLoading from '../../common/components/CenteredLoading';
 import ThemedStyles from '../../styles/ThemedStyles';
 import FindInDiscoveryButton from './FindInDiscoveryButton';
-import { SearchResultStoreType } from './createSearchResultStore';
 import { observer } from 'mobx-react';
+import { SearchResultStoreType } from './createSearchResultStore';
 
 type PropsType = {
   localStore: SearchResultStoreType;

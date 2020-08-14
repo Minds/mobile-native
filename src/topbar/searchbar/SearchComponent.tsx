@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { observer, useLocalStore } from 'mobx-react';
+import { observer } from 'mobx-react';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {
@@ -17,8 +17,7 @@ import SearchResult from './SearchResultComponent';
 
 import Modal from 'react-native-modal';
 import ThemedStyles from '../../styles/ThemedStyles';
-import { useLegacyStores } from '../../common/hooks/use-stores';
-import createSearchResultStore from './createSearchResultStore';
+import { useLegacyStores, useStores } from '../../common/hooks/use-stores';
 
 interface Props {
   navigation: any;
@@ -27,10 +26,7 @@ interface Props {
 const SearchComponent = observer((props: Props) => {
   const theme = ThemedStyles.style;
   const { user } = useLegacyStores();
-  const localStore = useLocalStore(createSearchResultStore, {
-    user,
-    navigation: props.navigation,
-  });
+  const localStore = useStores().searchBar;
   const searchResult = useRef<any>(null);
   const inputRef = useRef<TextInput>(null);
 
@@ -104,12 +100,12 @@ const SearchComponent = observer((props: Props) => {
                     placeholderTextColor={ThemedStyles.getColor(
                       'secondary_text',
                     )}
-                    onChangeText={localStore.input}
+                    onChangeText={(search) => localStore.input(search)}
                     value={localStore.searchText}
                     testID="searchInput"
                     style={[styles.textInput, theme.colorPrimaryText]}
                     selectTextOnFocus={true}
-                    onSubmitEditing={localStore.searchDiscovery}
+                    onSubmitEditing={() => localStore.searchDiscovery}
                   />
                 </View>
                 <Icon

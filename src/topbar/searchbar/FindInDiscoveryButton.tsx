@@ -13,7 +13,7 @@ const FindInDiscoveryButton = ({ showBorder, localStore }: PropsType) => {
   const borders = showBorder ? [theme.borderTopHair, theme.borderPrimary] : [];
   return (
     <TouchableOpacity
-      onPress={localStore.searchDiscovery}
+      onPress={() => localStore.searchDiscovery()}
       style={[theme.flexColumnStretch, theme.padding3x, ...borders]}>
       <Text
         style={
