@@ -52,9 +52,10 @@ export default class ExplicitText extends Component<PropsType, StateType> {
   };
 
   /**
-   * On component will mount
+   * constructor
    */
-  componentWillMount() {
+  constructor(props) {
+    super(props);
     Dimensions.addEventListener('change', this.dimensionChange);
   }
 
@@ -77,9 +78,7 @@ export default class ExplicitText extends Component<PropsType, StateType> {
       entity.title && !entity.perma_url
         ? entities.decodeHTML(entity.title).trim()
         : '';
-    let message = entity.message
-      ? entities.decodeHTML(entity.message).trim()
-      : '';
+    let message = entity.text ? entities.decodeHTML(entity.text).trim() : '';
 
     if (title === message) {
       message = '';

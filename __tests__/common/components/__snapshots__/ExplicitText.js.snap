@@ -13,16 +13,11 @@ exports[`Explicit text component renders correctly 1`] = `
       Array [
         undefined,
         undefined,
-        Object {
-          "fontWeight": "bold",
-        },
+        null,
       ]
     }
   >
     TITLE
-  </Tags>
-  <Tags>
-    Message
   </Tags>
 </View>
 `;
