@@ -58,6 +58,5 @@ export const RESULTS = Object.freeze({
 });
 
 // mock out any functions you want in this style...
-export async function check(permission) {
-  jest.fn();
-}
+export const check = jest.fn();
+export const request = jest.fn();
