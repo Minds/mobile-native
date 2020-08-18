@@ -46,6 +46,7 @@ const SearchComponent = observer((props: Props) => {
 
   return (
     <TouchableHighlight
+      style={theme.flexContainer}
       onPress={!user.searching ? user.toggleSearching : () => {}}
       underlayColor="transparent">
       <View>
