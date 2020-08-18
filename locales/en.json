@@ -21,10 +21,15 @@
     "pendingModeration": "This post is awaiting moderation"
   },
   "permissions": {
-    "externalStorage": "Minds needs access to your external storage so you can upload awesome pictures.",
-    "writeExternalStorage": "Minds needs access to your external storage so you can download awesome pictures.",
-    "sms": "Minds needs access to read sms to auto-detect the validation code.",
-    "camera": "Minds needs access to your external camera so you can upload awesome pictures.",
+    "externalStorage": "Minds needs access to your external storage so you can upload images and videos.",
+    "writeExternalStorage": "Minds needs access to your external storage so you can download images and videos.",
+    "camera": "Minds needs access to your external camera so you can capture pictures.",
+    "mediaLibrary": "This lets you share photos from your library and save photos to your camera roll",
+    "blockedCamera":"You have blocked access to your camera. Please go to your device settings to enable.",
+    "blockedStorageWrite":"You have blocked to write the storage. Please go to your device settings to enable.",
+    "blockedStorageRead":"You have blocked to read the storage. Please go to your device settings to enable.",
+    "blockedMediaLibrary":"You have blocked access to media library. Please go to your device settings to enable.",
+    "tapAllow":"Tap to allow",
     "grant":"Grant",
     "notAllowed": {
       "appoint_admin": "You are not allowed to appoint an admin",
