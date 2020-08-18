@@ -1,7 +1,7 @@
-import { Platform, Alert } from 'react-native';
+import { Platform } from 'react-native';
 import ImagePicker, { Options, Image } from 'react-native-image-crop-picker';
 
-import androidPermissions from './android-permissions.service';
+import permissions from './permissions.service';
 
 export interface CustomImage extends Image {
   uri: string;
@@ -16,13 +16,6 @@ export type customImagePromise = false | CustomImage | CustomImage[];
  * Image picker service
  */
 class ImagePickerService {
-  showMessage(message: string): void {
-    setTimeout(() => {
-      // without settimeout alert is not shown
-      Alert.alert(message);
-    }, 100);
-  }
-
   /**
    * Check if we have permission or ask the user
    */
@@ -30,11 +23,9 @@ class ImagePickerService {
     let allowed = true;
 
     if (Platform.OS !== 'ios') {
-      allowed = await androidPermissions.checkReadExternalStorage();
-      if (!allowed) {
-        // request user permission
-        allowed = await androidPermissions.readExternalStorage();
-      }
+      allowed = await permissions.checkReadExternalStorage(true);
+    } else {
+      allowed = await permissions.checkMediaLibrary(true);
     }
 
     return allowed;
@@ -46,12 +37,10 @@ class ImagePickerService {
   async checkCameraPermissions(): Promise<boolean> {
     let allowed = true;
 
-    if (Platform.OS !== 'ios') {
-      allowed = await androidPermissions.checkCamera();
-      if (!allowed) {
-        // request user permission
-        allowed = await androidPermissions.camera();
-      }
+    allowed = await permissions.checkCamera();
+    if (!allowed) {
+      // request user permission
+      allowed = await permissions.camera();
     }
 
     return allowed;
@@ -71,7 +60,7 @@ class ImagePickerService {
    */
   async launchCamera(type: mediaType = 'photo'): Promise<customImagePromise> {
     // check or ask for permissions
-    const allowed = await this.checkPermissions();
+    const allowed = await this.checkCameraPermissions();
 
     if (!allowed) {
       return false;
@@ -92,7 +81,7 @@ class ImagePickerService {
     crop = true,
   ): Promise<customImagePromise> {
     // check or ask for permissions
-    const allowed = await this.checkPermissions();
+    const allowed = await this.checkGalleryPermissions();
 
     if (!allowed) {
       return false;
@@ -114,7 +103,9 @@ class ImagePickerService {
     cropperCircleOverlay: boolean = false,
   ): Promise<customImagePromise> {
     // check or ask for permissions
-    const allowed = await this.checkPermissions();
+    const allowed = await this.checkGalleryPermissions();
+
+    console.log(allowed);
 
     if (!allowed) {
       return false;
