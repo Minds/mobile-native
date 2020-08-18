@@ -9,6 +9,15 @@ import type { ApiResponse } from '../services/api.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../services/i18n.service';
 import { Icon } from 'react-native-elements';
+import { DARK_THEME } from '../../styles/Colors';
+import i18nService from '../services/i18n.service';
+import InputContainer from './InputContainer';
+
+const backgroundPrimary = { backgroundColor: DARK_THEME.primary_background };
+const backgroundSecondary = {
+  backgroundColor: DARK_THEME.secondary_background,
+  borderColor: DARK_THEME.borderColorPrimary,
+};
 
 interface CaptchaResponse extends ApiResponse {
   base64_image: string;
@@ -17,6 +26,7 @@ interface CaptchaResponse extends ApiResponse {
 
 type PropsType = {
   onResult: (result: string) => void;
+  testID?: string;
 };
 
 /**
@@ -25,15 +35,18 @@ type PropsType = {
 const Captcha = observer(
   forwardRef((props: PropsType, ref: any) => {
     const theme = ThemedStyles.style;
-    const inputRef = useRef<TextInput>(null);
 
     const store = useLocalStore(() => ({
       show: false,
+      error: '',
       captchaImage: { uri: '' as string },
       clientText: '' as string,
       jwtToken: '' as string,
       setText(value: string) {
         store.clientText = value;
+      },
+      setError(value: string) {
+        store.error = value;
       },
       hideModal() {
         store.show = false;
@@ -42,14 +55,8 @@ const Captcha = observer(
         store.show = true;
         store.clientText = '';
         store.load();
-        setTimeout(() => {
-          if (inputRef.current) {
-            inputRef.current.focus();
-          }
-        }, 500);
       },
       send() {
-        store.show = false;
         if (!store.clientText) {
           return;
         }
@@ -71,6 +78,9 @@ const Captcha = observer(
       show: () => {
         store.showModal();
       },
+      hide: () => {
+        store.hideModal();
+      },
     }));
 
     const src = toJS(store.captchaImage);
@@ -80,23 +90,55 @@ const Captcha = observer(
         avoidKeyboard={true}
         onBackdropPress={store.hideModal}
         isVisible={store.show}
-        backdropColor={ThemedStyles.getColor('secondary_background')}
+        backdropColor={DARK_THEME.secondary_background}
         backdropOpacity={0.9}
         useNativeDriver={true}
+        style={[theme.fullWidth, theme.margin0x, theme.justifyEnd]}
         animationInTiming={100}
         animationOutTiming={100}
         animationOut="fadeOut"
         animationIn="fadeIn">
-        <View style={[styles.modal, theme.backgroundPrimary, theme.padding]}>
-          <Text style={[theme.fontXL, theme.paddingBottom2x, theme.textCenter]}>
-            Captcha
-          </Text>
+        <View style={[styles.modal, backgroundPrimary]}>
+          <View
+            style={[theme.paddingHorizontal4x, theme.rowJustifySpaceBetween]}>
+            <Text
+              onPress={store.hideModal}
+              style={[
+                theme.fontXL,
+                theme.colorWhite,
+                theme.paddingVertical4x,
+                theme.textCenter,
+              ]}>
+              {i18nService.t('close')}
+            </Text>
+            <Text
+              style={[
+                theme.fontXL,
+                theme.colorWhite,
+                theme.paddingVertical4x,
+                theme.textCenter,
+                theme.bold,
+              ]}>
+              {i18nService.t('verification')}
+            </Text>
+            <Text
+              onPress={store.send}
+              style={[
+                theme.fontXL,
+                theme.paddingVertical4x,
+                theme.textCenter,
+                theme.colorLink,
+              ]}>
+              {i18nService.t('verify')}
+            </Text>
+          </View>
           {store.captchaImage.uri !== '' && (
             <View
               style={[
                 theme.rowJustifyStart,
                 theme.alignCenter,
-                theme.rowJustifySpaceBetween,
+                theme.rowJustifyCenter,
+                theme.paddingVertical4x,
               ]}>
               <Image source={src} style={styles.image} />
               <Icon
@@ -109,14 +151,15 @@ const Captcha = observer(
               />
             </View>
           )}
-          <TextInput
+          <InputContainer
+            labelStyle={theme.colorWhite}
+            containerStyle={backgroundSecondary}
+            style={theme.colorWhite}
             placeholder={i18n.t('captcha')}
-            ref={inputRef}
-            placeholderTextColor={ThemedStyles.getColor('tertiary_text')}
             onChangeText={store.setText}
             onEndEditing={store.send}
             testID="captchInput"
-            style={[theme.input, theme.marginTop2x]}
+            autofocus
           />
         </View>
       </Modal>
@@ -128,9 +171,10 @@ export default Captcha;
 
 const styles = StyleSheet.create({
   modal: {
-    borderRadius: 5,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
     justifyContent: 'center',
-    height: 240,
+    paddingBottom: 50,
     flexDirection: 'column',
     width: '100%',
   },

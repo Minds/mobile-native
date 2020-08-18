@@ -9,9 +9,8 @@ const XMLHttpRequest = {
   open: jest.fn(),
   abort: jest.fn(),
   onerror: jest.fn(),
-}
+};
 global.XMLHttpRequest = XMLHttpRequest;
-
 
 configure({ adapter: new Adapter() });
 

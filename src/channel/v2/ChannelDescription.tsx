@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { Text, TouchableOpacity, StyleSheet } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import ReadMore from 'react-native-read-more-text';
-import LinearGradient from 'react-native-linear-gradient';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 
 import i18n from '../../common/services/i18n.service';

@@ -18,10 +18,11 @@ export const showNotification = (
   message: string,
   type: MessageType = 'info',
   duration: number = 2800,
+  position: 'top' | 'bottom' | 'center' | undefined = 'bottom',
 ) => {
   showMessage({
     floating: true,
-    position: 'bottom',
+    position,
     message,
     icon: type,
     duration,
