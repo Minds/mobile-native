@@ -6,44 +6,44 @@ import {
 } from 'react-native-screens/native-stack';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
-import LoginScreen from '../auth/LoginScreen';
-import ForgotScreen from '../auth/ForgotScreen';
+// import LoginScreen from '../auth/LoginScreen';
+// import ForgotScreen from '../auth/ForgotScreen';
 import TabsScreen from '../tabs/TabsScreen';
-import NotificationsScreen from '../notifications/NotificationsScreen';
-import ActivityScreen from '../newsfeed/ActivityScreen';
-import ChannelSubscribers from '../channel/subscribers/ChannelSubscribers';
-import RegisterScreen from '../auth/RegisterScreen';
-import ConversationScreen from '../messenger/ConversationScreen';
-import GroupsListScreen from '../groups/GroupsListScreen';
-import GroupViewScreen from '../groups/GroupViewScreen';
-import BoostConsoleScreen from '../boost/BoostConsoleScreen';
-import BlogsListScreen from '../blogs/BlogsListScreen';
-import BlogsViewScreen from '../blogs/BlogsViewScreen';
-import FabScreenV2 from '../wire/v2/FabScreen';
-import ViewImageScreen from '../media/ViewImageScreen';
-import BoostScreen from '../boost/creator/BoostScreen';
-import BlockchainWalletScreen from '../blockchain/wallet/BlockchainWalletScreen';
-import BlockchainWalletModalScreen from '../blockchain/wallet/modal/BlockchainWalletModalScreen';
-import BlockchainWalletImportScreen from '../blockchain/wallet/import/BlockchainWalletImportScreen';
-import BlockchainWalletDetailsScreen from '../blockchain/wallet/details/BlockchainWalletDetailsScreen';
-import ReportScreen from '../report/ReportScreen';
+// import NotificationsScreen from '../notifications/NotificationsScreen';
+// import ActivityScreen from '../newsfeed/ActivityScreen';
+// import ChannelSubscribers from '../channel/subscribers/ChannelSubscribers';
+// import RegisterScreen from '../auth/RegisterScreen';
+// import ConversationScreen from '../messenger/ConversationScreen';
+// import GroupsListScreen from '../groups/GroupsListScreen';
+// import GroupViewScreen from '../groups/GroupViewScreen';
+// import BoostConsoleScreen from '../boost/BoostConsoleScreen';
+// import BlogsListScreen from '../blogs/BlogsListScreen';
+// import BlogsViewScreen from '../blogs/BlogsViewScreen';
+// import FabScreenV2 from '../wire/v2/FabScreen';
+// import ViewImageScreen from '../media/ViewImageScreen';
+// import BoostScreen from '../boost/creator/BoostScreen';
+// import BlockchainWalletScreen from '../blockchain/wallet/BlockchainWalletScreen';
+// import BlockchainWalletModalScreen from '../blockchain/wallet/modal/BlockchainWalletModalScreen';
+// import BlockchainWalletImportScreen from '../blockchain/wallet/import/BlockchainWalletImportScreen';
+// import BlockchainWalletDetailsScreen from '../blockchain/wallet/details/BlockchainWalletDetailsScreen';
+// import ReportScreen from '../report/ReportScreen';
 import MoreScreen from '../tabs/MoreScreen';
-import NotSupportedScreen from '../static-views/NotSupportedScreen';
-import OnboardingScreen from '../onboarding/OnboardingScreen';
-import UpdatingScreen from '../update/UpdateScreen';
-import { DiscoverySearchScreen } from '../discovery/v2/search/DiscoverySearchScreen';
+// import NotSupportedScreen from '../static-views/NotSupportedScreen';
+// import OnboardingScreen from '../onboarding/OnboardingScreen';
+// import UpdatingScreen from '../update/UpdateScreen';
+// import { DiscoverySearchScreen } from '../discovery/v2/search/DiscoverySearchScreen';
 import Gathering from '../gathering/Gathering';
-import EmailConfirmationScreen from '../onboarding/EmailConfirmationScreen';
-import ThemedStyles from '../styles/ThemedStyles';
+// import EmailConfirmationScreen from '../onboarding/EmailConfirmationScreen';
 import MessengerScreen from '../messenger/MessengerScreen';
-import i18n from '../common/services/i18n.service';
 import ComposeScreen from '../compose/ComposeScreen';
-import TagSelector from '../compose/TagSelector';
-import NsfwSelector from '../compose/NsfwSelector';
-import ScheduleSelector from '../compose/ScheduleSelector';
-import MonetizeSelector from '../compose/MonetizeSelector';
-import LicenseSelector from '../compose/LicenseSelector';
-import ChannelScreenV2 from '../channel/v2/ChannelScreen';
+// import TagSelector from '../compose/TagSelector';
+// import NsfwSelector from '../compose/NsfwSelector';
+// import ScheduleSelector from '../compose/ScheduleSelector';
+// import MonetizeSelector from '../compose/MonetizeSelector';
+// import LicenseSelector from '../compose/LicenseSelector';
+// import ChannelScreenV2 from '../channel/v2/ChannelScreen';
+import i18n from '../common/services/i18n.service';
+import ThemedStyles from '../styles/ThemedStyles';
 
 import {
   RootStackParamList,
@@ -51,12 +51,12 @@ import {
   AppStackParamList,
   MainSwiperParamList,
 } from './NavigationTypes';
-import featuresService from '../common/services/features.service';
+// import featuresService from '../common/services/features.service';
 import EditChannelStack from '../channel/v2/edit/EditChannelStack';
-import ReceiverAddressScreen from '../wallet/v2/address/ReceiverAddressScreen';
-import LearnMoreScreen from '../wallet/v2/LearnMoreScreen';
-import BtcReceiverAddressScreen from '../wallet/v2/address/BtcAddressScreen';
-import BankInfoScreen from '../wallet/v2/address/BankInfoScreen';
+// import ReceiverAddressScreen from '../wallet/v2/address/ReceiverAddressScreen';
+// import LearnMoreScreen from '../wallet/v2/LearnMoreScreen';
+// import BtcReceiverAddressScreen from '../wallet/v2/address/BtcAddressScreen';
+// import BankInfoScreen from '../wallet/v2/address/BankInfoScreen';
 import ViewerScreen from '../discovery/v2/viewer/ViewerScreen';
 
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
@@ -122,7 +122,7 @@ const AppStack = function () {
         component={ComposeScreen}
         options={captureOptions}
       />
-      <AppStackNav.Screen
+      {/* <AppStackNav.Screen
         name="TagSelector"
         component={TagSelector}
         options={hideHeader}
@@ -239,19 +239,19 @@ const AppStack = function () {
         name="Report"
         component={ReportScreen}
         options={{ title: i18n.t('report') }}
-      />
+      /> */}
       <AppStackNav.Screen
         name="More"
         component={MoreScreen}
         options={{ title: i18n.t('report') }}
       />
-      <AppStackNav.Screen name="NotSupported" component={NotSupportedScreen} />
+      {/* <AppStackNav.Screen name="NotSupported" component={NotSupportedScreen} />
       <AppStackNav.Screen
         name="OnboardingScreen"
         component={OnboardingScreen}
         options={hideHeader}
-      />
-      <AppStackNav.Screen
+      /> */}
+      {/* <AppStackNav.Screen
         name="LearnMoreScreen"
         component={LearnMoreScreen}
         options={{
@@ -294,7 +294,7 @@ const AppStack = function () {
           },
           headerHideShadow: true,
         }}
-      />
+      /> */}
     </AppStackNav.Navigator>
   );
 };
@@ -302,7 +302,7 @@ const AppStack = function () {
 const AuthStack = function () {
   return (
     <AuthStackNav.Navigator>
-      <AuthStackNav.Screen
+      {/* <AuthStackNav.Screen
         name="Login"
         component={LoginScreen}
         options={hideHeader}
@@ -311,12 +311,12 @@ const AuthStack = function () {
         name="Forgot"
         component={ForgotScreen}
         options={hideHeader}
-      />
-      <AuthStackNav.Screen
+      /> */}
+      {/* <AuthStackNav.Screen
         name="Register"
         component={RegisterScreen}
         options={hideHeader}
-      />
+      /> */}
     </AuthStackNav.Navigator>
   );
 };

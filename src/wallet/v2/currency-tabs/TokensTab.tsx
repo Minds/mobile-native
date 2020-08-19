@@ -16,7 +16,7 @@ import type { BottomOptionsStoreType } from '../../../common/components/BottomOp
 import TransactionsListTokens from '../TransactionList/TransactionsListTokens';
 import ReceiverSettings from '../address/ReceiverSettings';
 import { WalletScreenNavigationProp } from '../WalletScreen';
-import PhoneValidationComponent from '../../../common/components/PhoneValidationComponent';
+// import PhoneValidationComponent from '../../../common/components/PhoneValidationComponent';
 import i18n from '../../../common/services/i18n.service';
 
 const options: Array<ButtonTabType<TokensOptions>> = [
@@ -78,12 +78,12 @@ const PhoneValidator = ({ bottomStore }: PhoneValidatorPropsType) => {
           styles.inputWraper,
         ]}>
         <Text style={[theme.colorSecondaryText]}>{label}</Text>
-        <PhoneValidationComponent
+        {/* <PhoneValidationComponent
           textStyle={theme.colorPrimaryText}
           inputStyles={[theme.colorPrimaryText, theme.border0x, styles.input]}
           bottomStore={bottomStore}
           ref={ref}
-        />
+        /> */}
       </View>
     </View>
   );

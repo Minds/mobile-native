@@ -1,7 +1,6 @@
 //@ts-nocheck
 import React, { PureComponent } from 'react';
 
-import PropTypes from 'prop-types';
 
 import { Text, FlatList, View, TouchableOpacity } from 'react-native';
 
@@ -23,13 +22,13 @@ export default class DateRangePicker extends PureComponent {
     from: new Date(),
   };
 
-  /**
-   * Prop types
-   */
-  static propTypes = {
-    onToChange: PropTypes.func.isRequired,
-    onFromChange: PropTypes.func.isRequired,
-  };
+  // /**
+  //  * Prop types
+  //  */
+  // static propTypes = {
+  //   onToChange: PropTypes.func.isRequired,
+  //   onFromChange: PropTypes.func.isRequired,
+  // };
 
   /**
    * On component will mount

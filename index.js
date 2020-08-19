@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler'; // fix ongesture handler error
-import '@hawkingnetwork/node-libs-react-native/globals';
+// import 'node-libs-react-native/globals';
 import 'mobx-react/batchingForReactNative';
 import './global';
 

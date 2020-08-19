@@ -18,7 +18,7 @@ import api from '../common/services/api.service';
 import { GOOGLE_PLAY_STORE, MINDS_CDN_URI, MINDS_URI } from '../config/Config';
 import i18n from '../common/services/i18n.service';
 import logService from '../common/services/log.service';
-import entitiesService from '../common/services/entities.service';
+// import entitiesService from '../common/services/entities.service';
 import type { ThumbSize } from '../types/Common';
 import type GroupModel from '../groups/GroupModel';
 
@@ -308,7 +308,7 @@ export default class ActivityModel extends BaseModel {
     try {
       await deleteItem(this.guid);
       this.removeFromList();
-      entitiesService.deleteFromCache(this.urn);
+      // entitiesService.deleteFromCache(this.urn);
     } catch (err) {
       logService.exception('[ActivityModel]', err);
       throw err;

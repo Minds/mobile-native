@@ -1,5 +1,5 @@
 //@ts-nocheck
-import Web3Service from './Web3Service';
+// import Web3Service from './Web3Service';
 import i18n from '../../common/services/i18n.service';
 
 class BlockchainTokenService {

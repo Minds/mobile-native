@@ -1,6 +1,5 @@
 //@ts-nocheck
 import * as React from 'react';
-import type { ViewLayoutEvent } from 'react-native/Libraries/Components/View/ViewPropTypes';
 
 import {
   View,
@@ -186,7 +185,7 @@ class CommentList extends React.Component<PropsType, StateType> {
     }
   };
 
-  onLayout = (e: ViewLayoutEvent) => {
+  onLayout = (e) => {
     if (!this.props.parent) {
       this.height = e.nativeEvent.layout.height || 0;
     }

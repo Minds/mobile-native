@@ -3,7 +3,7 @@ import React, { Component, Props } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import InfoPopup from './InfoPopup';
-import PhoneValidationComponent from './PhoneValidationComponent';
+// import PhoneValidationComponent from './PhoneValidationComponent';
 
 import TextInput from './TextInput';
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -84,14 +84,15 @@ export default class Input extends Component<propsType> {
   phoneInput = () => {
     const theme = ThemedStyles.style;
     return (
-      <PhoneValidationComponent
-        style={[theme.input, this.props.style]}
-        textStyle={theme.colorPrimaryText}
-        onFocus={this.props.onFocus}
-        onBlur={this.props.onBlur}
-        TFA={this.props.TFA}
-        TFAConfirmed={this.props.TFAConfirmed}
-      />
+      null
+      // <PhoneValidationComponent
+      //   style={[theme.input, this.props.style]}
+      //   textStyle={theme.colorPrimaryText}
+      //   onFocus={this.props.onFocus}
+      //   onBlur={this.props.onBlur}
+      //   TFA={this.props.TFA}
+      //   TFAConfirmed={this.props.TFAConfirmed}
+      // />
     );
   };
 

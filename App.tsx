@@ -392,9 +392,9 @@ class App extends Component<Props, State> {
 
     const blockchainTransactionModal = null;
 
-    const tosModal = <TosModal user={stores.user} key="tosModal" />;
+    // const tosModal = <TosModal user={stores.user} key="tosModal" />;
 
-    return [app, keychainModal, blockchainTransactionModal, tosModal];
+    return [app, keychainModal, blockchainTransactionModal];
   }
 }
 

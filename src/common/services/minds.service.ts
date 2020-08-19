@@ -1,7 +1,7 @@
 //@ts-nocheck
 import api from './api.service';
 import AsyncStorage from '@react-native-community/async-storage';
-import featuresService from './features.service';
+// import featuresService from './features.service';
 
 /**
  * Minds Service
@@ -23,7 +23,7 @@ class MindsService {
     await AsyncStorage.setItem('@MindsSettings', JSON.stringify(settings));
     this.settings = settings;
     // update the features based on the settings
-    featuresService.updateFeatures();
+    // featuresService.updateFeatures();
   }
 
   /**

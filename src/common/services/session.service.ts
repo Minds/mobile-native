@@ -2,7 +2,7 @@
 import { observable, action, reaction } from 'mobx';
 
 import sessionStorage from './session.storage.service';
-import AuthService from '../../auth/AuthService';
+// import AuthService from '../../auth/AuthService';
 import NavigationService from '../../navigation/NavigationService';
 import { getStores } from '../../../AppStores';
 import logService from './log.service';
@@ -83,14 +83,14 @@ class SessionService {
         refresh_token_expires * 1000 > Date.now()
       ) {
         logService.info('[SessionService] refreshing token');
-        return await AuthService.refreshToken();
+        // return await AuthService.refreshToken();
       }
 
       // ensure user loaded before activate the session
       await this.loadUser(user);
 
       // refresh the token
-      await AuthService.refreshToken();
+      // await AuthService.refreshToken();
 
       this.setLoggedIn(true);
 
