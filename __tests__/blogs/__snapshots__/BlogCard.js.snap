@@ -310,8 +310,7 @@ exports[`blog card component should renders correctly 1`] = `
   </View>
   <Actions
     entity={
-      BlogModel {
-        "__list": null,
+      Object {
         "access_id": "2",
         "allow_comments": true,
         "boost_rejection_reason": -1,
@@ -338,7 +337,7 @@ exports[`blog card component should renders correctly 1`] = `
         "license": "attribution-noncommercial-cc",
         "mature": false,
         "monetized": false,
-        "ownerObj": UserModel {
+        "ownerObj": Object {
           "__list": null,
           "access_id": "2",
           "allow_comments": true,

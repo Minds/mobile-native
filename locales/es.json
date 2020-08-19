@@ -184,7 +184,7 @@
         "createFirstPost": "Crear tu primer post",
         "mature": "Este canal tiene contenido para adultos",
         "confirmUnsubscribe": "Estás seguro que quieres desuscribirte de este canal? ",
-        "blocked": "Has bloqueado a @{{username}}",
+        "blocked": "Canal Bloqueado",
         "tapUnblock": "Pulsa para desbloquear",
         "notFound": "Canal no encontrado",
         "viewScheduled": "Agendado",
@@ -193,7 +193,6 @@
         "modeModerated": "Moderado",
         "isClosed": "Este es un canal cerrado",
         "requestSubscription": "Pedir subscripción",
-        "blockedNav": "Has bloqueado a &{username}&"
     },
     "discovery": {
         "search": "Buscar...",

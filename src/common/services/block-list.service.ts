@@ -1,12 +1,14 @@
-//@ts-nocheck
 import apiService from './api.service';
 import sessionService from './session.service';
 import storageService from './storage.service';
 import logService from './log.service';
 import { observable, action } from 'mobx';
 
+/**
+ * Block list service
+ */
 export class BlockListService {
-  @observable blocked: Map = new Map();
+  @observable blocked: Map<string, undefined> = new Map();
 
   constructor() {
     sessionService.onSession(async (token) => {
@@ -26,20 +28,20 @@ export class BlockListService {
   async loadFromStorage() {
     const guids = await storageService.getItem('@minds:blocked');
     if (guids) {
-      guids.forEach((g) => this.blocked.set(g));
+      guids.forEach((g) => this.blocked.set(g, undefined));
     }
   }
 
   async fetch() {
     try {
-      const response = await apiService.get('api/v1/block', {
+      const response = await apiService.get<any>('api/v1/block', {
         sync: 1,
         limit: 10000,
       });
 
       if (response.guids) {
         this.blocked.clear();
-        response.guids.forEach((g) => this.blocked.set(g));
+        response.guids.forEach((g) => this.blocked.set(g, undefined));
       }
 
       storageService.setItem('@minds:blocked', response.guids); // save to storage
@@ -59,7 +61,7 @@ export class BlockListService {
 
   @action
   async add(guid: string) {
-    this.blocked.set(guid);
+    this.blocked.set(guid, undefined);
     storageService.setItem('@minds:blocked', this.blocked.keys());
   }
 

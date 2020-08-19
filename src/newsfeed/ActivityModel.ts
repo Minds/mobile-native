@@ -110,6 +110,26 @@ export default class ActivityModel extends BaseModel {
   }
 
   /**
+   * Block owner
+   */
+  async blockOwner() {
+    await super.blockOwner();
+    if (this._list) {
+      this._list.refresh();
+    }
+  }
+
+  /**
+   * Unblock owner
+   */
+  async unblockOwner() {
+    await super.unblockOwner();
+    if (this._list) {
+      this._list.refresh();
+    }
+  }
+
+  /**
    * Has media
    */
   hasMedia(): boolean {
