@@ -17,6 +17,7 @@ import { Icon } from 'react-native-elements';
 import IconMa from 'react-native-vector-icons/MaterialIcons';
 import { SearchResultStoreType } from '../../topbar/searchbar/createSearchResultStore';
 import { withSearchResultStore } from '../../common/hooks/withStores';
+import ChannelBadge from '../../common/components/ChannelBadge';
 const DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
 
 type PropsType = {
@@ -137,6 +138,7 @@ class OwnerBlock extends PureComponent<PropsType> {
                 style={[styles.username, ThemedStyles.style.colorPrimaryText]}>
                 {channel.username}
               </Text>
+              <ChannelBadge channel={channel} />
             </DebouncedTouchableOpacity>
             {this.group}
           </View>

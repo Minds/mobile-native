@@ -89,6 +89,8 @@ export default class UserModel extends BaseModel {
 
   @observable pro: boolean = false;
 
+  onchain_booster: number = 0;
+
   /**
    * Confirm email
    * @param {Object} params

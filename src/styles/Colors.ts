@@ -45,6 +45,8 @@ export const LIGHT_THEME = {
   borderColorPrimary: '#dce2e4',
   borderColorSecondary: '#979797',
   borderColorTertiary: '#ececec',
+  adminBadge: '#4caf50',
+  verifiedBadge: '#4690df',
 };
 
 export const DARK_THEME = {
@@ -73,4 +75,6 @@ export const DARK_THEME = {
   borderColorPrimary: '#404a4e',
   borderColorSecondary: '#979797',
   borderColorTertiary: '#202527',
+  adminBadge: '#5cb860',
+  verifiedBadge: '#4af',
 };

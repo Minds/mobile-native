@@ -32,6 +32,7 @@ import FastImage from 'react-native-fast-image';
 import CommentActionSheet from './CommentActionSheet';
 import ThemedStyles from '../styles/ThemedStyles';
 import { showNotification } from '../../AppMessages';
+import ChannelBadge from '../common/components/ChannelBadge';
 
 const DoubleTapText = DoubleTap(Text);
 
@@ -115,14 +116,20 @@ class Comment extends Component {
                 />
               ) : (
                 <DoubleTapText
-                  style={styles.message}
+                  style={[styles.message]}
                   selectable={true}
                   onDoubleTap={this.showActions}
                   selectable={false}
                   onLongPress={this.showActions}>
                   <Text style={styles.username} onPress={this._navToChannel}>
-                    @{comment.ownerObj.username}{' '}
+                    @{comment.ownerObj.username}
                   </Text>
+                  <ChannelBadge
+                    channel={comment.ownerObj}
+                    addSpace
+                    iconSize={10}
+                  />
+                  <Text> </Text>
                   {comment.description && (
                     <Tags navigation={this.props.navigation}>
                       {entities.decodeHTML(comment.description)}
