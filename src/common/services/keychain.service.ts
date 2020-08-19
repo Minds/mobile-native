@@ -1,6 +1,6 @@
 //@ts-nocheck
 import AsyncStorage from '@react-native-community/async-storage';
-import CryptoJS from 'crypto-js';
+// import CryptoJS from 'crypto-js';
 
 import { getStores } from '../../../AppStores';
 

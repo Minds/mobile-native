@@ -1,5 +1,5 @@
 //@ts-nocheck
-import ReactNativeAPK from 'rn-apk';
+// import ReactNativeAPK from 'rn-apk';
 import { Alert } from 'react-native';
 
 import RNFS from 'react-native-fs';
@@ -11,6 +11,8 @@ import navigationService from '../../navigation/NavigationService';
 import logService from './log.service';
 import i18n from './i18n.service';
 import storageService from './storage.service';
+
+const ReactNativeAPK = {};
 
 /**
  * Update service

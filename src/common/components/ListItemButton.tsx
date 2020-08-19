@@ -4,7 +4,7 @@ import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 
-export default class ListItemButton extends TouchableOpacity {
+export default class ListItemButton extends React.Component {
   render() {
     const CS = ThemedStyles.style;
     return (
