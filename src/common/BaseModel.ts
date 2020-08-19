@@ -73,6 +73,9 @@ export default class BaseModel extends AbstractModel {
     }
   }
 
+  /**
+   * Return a plain JS obj without observables
+   */
   toPlainObject() {
     const plainEntity = toJS(this);
 
@@ -80,6 +83,16 @@ export default class BaseModel extends AbstractModel {
     delete plainEntity.__list;
 
     return plainEntity;
+  }
+
+  /**
+   * Json converter
+   *
+   * Convert to plain obj and remove the list reference
+   * to avoid circular reference errors
+   */
+  toJSON() {
+    return this.toPlainObject();
   }
 
   /**
@@ -209,7 +222,7 @@ export default class BaseModel extends AbstractModel {
    * Block owner
    */
   blockOwner() {
-    if (!this.ownerObj) throw new Error('This entity has no owner');
+    if (!this.ownerObj) return;
     return this.ownerObj.toggleBlock(true);
   }
 
@@ -217,7 +230,7 @@ export default class BaseModel extends AbstractModel {
    * Unblock owner
    */
   unblockOwner() {
-    if (!this.ownerObj) throw new Error('This entity has no owner');
+    if (!this.ownerObj) return;
     return this.ownerObj.toggleBlock(false);
   }
 
