@@ -10,6 +10,8 @@
 		<string>activitycontinuation:www.minds.com</string>
 	</array>
 	<key>com.apple.security.application-groups</key>
-	<array/>
+	<array>
+		<string>group.com.minds.mobile</string>
+	</array>
 </dict>
 </plist>
