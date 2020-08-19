@@ -14,6 +14,9 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		1AA59E37AB3047CFBD86BE17 /* Roboto-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1130D1F2C2E04310B09E2143 /* Roboto-Italic.ttf */; };
 		28B61F20242C070D00550028 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 28B61F1F242C070D00550028 /* BootSplash.storyboard */; };
+		28DE665F24EDC2C20081CFBB /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DE665E24EDC2C20081CFBB /* ShareViewController.swift */; };
+		28DE666224EDC2C20081CFBB /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 28DE666024EDC2C20081CFBB /* MainInterface.storyboard */; };
+		28DE666624EDC2C20081CFBB /* Share to Minds.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 28DE665C24EDC2C20081CFBB /* Share to Minds.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -43,6 +46,13 @@
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
 			remoteInfo = Minds;
 		};
+		28DE666424EDC2C20081CFBB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 28DE665B24EDC2C20081CFBB;
+			remoteInfo = "Share to Minds";
+		};
 		2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
@@ -51,6 +61,20 @@
 			remoteInfo = "Minds-tvOS";
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		28DE666724EDC2C20081CFBB /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				28DE666624EDC2C20081CFBB /* Share to Minds.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
@@ -70,6 +94,10 @@
 		1FDD531A5CCB46F89DED8B17 /* Roboto-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Black.ttf"; path = "../src/assets/fonts/Roboto/Roboto-Black.ttf"; sourceTree = "<group>"; };
 		22BFDDB4D04FFCBEAEDF3516 /* libPods-MindsTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MindsTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		28B61F1F242C070D00550028 /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = Minds/BootSplash.storyboard; sourceTree = "<group>"; };
+		28DE665C24EDC2C20081CFBB /* Share to Minds.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Share to Minds.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		28DE665E24EDC2C20081CFBB /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		28DE666124EDC2C20081CFBB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		28DE666324EDC2C20081CFBB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2CD2622D204E4B0286943196 /* Roboto-MediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-MediumItalic.ttf"; path = "../src/assets/fonts/Roboto/Roboto-MediumItalic.ttf"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* Minds-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Minds-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* Minds-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Minds-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -111,6 +139,13 @@
 			files = (
 				4DBD76CA42C18451868A4BD6 /* libPods-Minds.a in Frameworks */,
 				B080D11FCFB44B31B8AA0E13 /* libz.tbd in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		28DE665924EDC2C20081CFBB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -165,6 +200,16 @@
 			name = Minds;
 			sourceTree = "<group>";
 		};
+		28DE665D24EDC2C20081CFBB /* Share to Minds */ = {
+			isa = PBXGroup;
+			children = (
+				28DE665E24EDC2C20081CFBB /* ShareViewController.swift */,
+				28DE666024EDC2C20081CFBB /* MainInterface.storyboard */,
+				28DE666324EDC2C20081CFBB /* Info.plist */,
+			);
+			path = "Share to Minds";
+			sourceTree = "<group>";
+		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -211,6 +256,7 @@
 				13B07FAE1A68108700A75B9A /* Minds */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* MindsTests */,
+				28DE665D24EDC2C20081CFBB /* Share to Minds */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				FE1DBD94E1B49F8F110400B4 /* Pods */,
@@ -228,6 +274,7 @@
 				00E356EE1AD99517003FC87E /* MindsTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* Minds-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* Minds-tvOSTests.xctest */,
+				28DE665C24EDC2C20081CFBB /* Share to Minds.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -282,15 +329,34 @@
 				5D4283786B433FEB77EB2907 /* [CP] Embed Pods Frameworks */,
 				521352FB382A6F4552BD3ED7 /* [CP] Copy Pods Resources */,
 				DF23D9AE37694D50863E721D /* Upload Debug Symbols to Sentry */,
+				28DE666724EDC2C20081CFBB /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				28DE666524EDC2C20081CFBB /* PBXTargetDependency */,
 			);
 			name = Minds;
 			productName = Minds;
 			productReference = 13B07F961A680F5B00A75B9A /* Minds.app */;
 			productType = "com.apple.product-type.application";
+		};
+		28DE665B24EDC2C20081CFBB /* Share to Minds */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 28DE666A24EDC2C20081CFBB /* Build configuration list for PBXNativeTarget "Share to Minds" */;
+			buildPhases = (
+				28DE665824EDC2C20081CFBB /* Sources */,
+				28DE665924EDC2C20081CFBB /* Frameworks */,
+				28DE665A24EDC2C20081CFBB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Share to Minds";
+			productName = "Share to Minds";
+			productReference = 28DE665C24EDC2C20081CFBB /* Share to Minds.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 		2D02E47A1E0B4A5D006451C7 /* Minds-tvOS */ = {
 			isa = PBXNativeTarget;
@@ -337,6 +403,7 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 1120;
 				LastUpgradeCheck = 940;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
@@ -345,13 +412,17 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = 35U3998VRZ;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Push = {
 								enabled = 1;
 							};
 						};
+					};
+					28DE665B24EDC2C20081CFBB = {
+						CreatedOnToolsVersion = 11.2.1;
+						DevelopmentTeam = 35U3998VRZ;
+						ProvisioningStyle = Automatic;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -382,6 +453,7 @@
 				00E356ED1AD99517003FC87E /* MindsTests */,
 				2D02E47A1E0B4A5D006451C7 /* Minds-tvOS */,
 				2D02E48F1E0B4A5D006451C7 /* Minds-tvOSTests */,
+				28DE665B24EDC2C20081CFBB /* Share to Minds */,
 			);
 		};
 /* End PBXProject section */
@@ -412,6 +484,14 @@
 				0EA47AA13B1C4DFC8DCD3912 /* Roboto-Regular.ttf in Resources */,
 				F82709059E5746EF863ADD14 /* Roboto-Thin.ttf in Resources */,
 				DDCDA3D26013483999518551 /* Roboto-ThinItalic.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		28DE665A24EDC2C20081CFBB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				28DE666224EDC2C20081CFBB /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -693,6 +773,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		28DE665824EDC2C20081CFBB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				28DE665F24EDC2C20081CFBB /* ShareViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2D02E4771E0B4A5D006451C7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -718,12 +806,28 @@
 			target = 13B07F861A680F5B00A75B9A /* Minds */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
+		28DE666524EDC2C20081CFBB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 28DE665B24EDC2C20081CFBB /* Share to Minds */;
+			targetProxy = 28DE666424EDC2C20081CFBB /* PBXContainerItemProxy */;
+		};
 		2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 2D02E47A1E0B4A5D006451C7 /* Minds-tvOS */;
 			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		28DE666024EDC2C20081CFBB /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				28DE666124EDC2C20081CFBB /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
@@ -773,13 +877,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E0F0DBA3E9FE7A03AF5DCCC7 /* Pods-Minds.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Minds/Minds.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 201907230162;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = 35U3998VRZ;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Minds/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -800,6 +905,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = BD48608AFCB4650CB2C03E11 /* Pods-Minds.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Minds/Minds.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
@@ -820,6 +926,63 @@
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.minds.mobile";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		28DE666824EDC2C20081CFBB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 35U3998VRZ;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "Share to Minds/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.minds.mobile.Share-to-Minds";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		28DE666924EDC2C20081CFBB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 35U3998VRZ;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "Share to Minds/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.minds.mobile.Share-to-Minds";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -1049,6 +1212,15 @@
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
 				13B07F951A680F5B00A75B9A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		28DE666A24EDC2C20081CFBB /* Build configuration list for PBXNativeTarget "Share to Minds" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				28DE666824EDC2C20081CFBB /* Debug */,
+				28DE666924EDC2C20081CFBB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

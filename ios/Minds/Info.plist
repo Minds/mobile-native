@@ -32,6 +32,7 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>minds</string>
+				<string>ShareMedia</string>
 			</array>
 		</dict>
 	</array>
