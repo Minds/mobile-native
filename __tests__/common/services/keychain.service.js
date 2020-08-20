@@ -1,7 +1,7 @@
 
 import service from '../../../src/common/services/keychain.service';
 
-// import CryptoJS from 'crypto-js';
+import CryptoJS from 'crypto-js';/
 
 // import stores from '../../../AppStores';
 

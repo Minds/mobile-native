@@ -1,6 +1,6 @@
 //@ts-nocheck
 import AsyncStorage from '@react-native-community/async-storage';
-// import CryptoJS from 'crypto-js';
+import CryptoJS from 'crypto-js';
 
 const STORAGE_KEY_PREFIX = '@MindsStorage:';
 const STORAGE_KEY_KEYCHAIN_PREFIX = '@MindsStorageKeychainLookup:';
