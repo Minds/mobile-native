@@ -38,21 +38,11 @@ exports[`notification component renders correctly for every type 1`] = `
     }
   />
   <View
-    accessible={true}
-    focusable={true}
-    isTVSelectable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
+    onPress={[Function]}
     style={
       Object {
         "flex": 1,
         "marginLeft": 8,
-        "opacity": 1,
       }
     }
   >
@@ -133,21 +123,11 @@ exports[`notification component renders correctly for every type 2`] = `
     }
   />
   <View
-    accessible={true}
-    focusable={true}
-    isTVSelectable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
+    onPress={[Function]}
     style={
       Object {
         "flex": 1,
         "marginLeft": 8,
-        "opacity": 1,
       }
     }
   >
@@ -228,21 +208,11 @@ exports[`notification component renders correctly for every type 3`] = `
     }
   />
   <View
-    accessible={true}
-    focusable={true}
-    isTVSelectable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
+    onPress={[Function]}
     style={
       Object {
         "flex": 1,
         "marginLeft": 8,
-        "opacity": 1,
       }
     }
   >
@@ -323,21 +293,11 @@ exports[`notification component renders correctly for every type 4`] = `
     }
   />
   <View
-    accessible={true}
-    focusable={true}
-    isTVSelectable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
+    onPress={[Function]}
     style={
       Object {
         "flex": 1,
         "marginLeft": 8,
-        "opacity": 1,
       }
     }
   >
@@ -441,21 +401,11 @@ exports[`notification component renders correctly for every type 5`] = `
     }
   />
   <View
-    accessible={true}
-    focusable={true}
-    isTVSelectable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
+    onPress={[Function]}
     style={
       Object {
         "flex": 1,
         "marginLeft": 8,
-        "opacity": 1,
       }
     }
   >
@@ -564,21 +514,11 @@ exports[`notification component renders correctly for every type 6`] = `
     }
   />
   <View
-    accessible={true}
-    focusable={true}
-    isTVSelectable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
+    onPress={[Function]}
     style={
       Object {
         "flex": 1,
         "marginLeft": 8,
-        "opacity": 1,
       }
     }
   >
@@ -683,21 +623,11 @@ exports[`notification component renders correctly for every type 7`] = `
     }
   />
   <View
-    accessible={true}
-    focusable={true}
-    isTVSelectable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
+    onPress={[Function]}
     style={
       Object {
         "flex": 1,
         "marginLeft": 8,
-        "opacity": 1,
       }
     }
   >
@@ -834,21 +764,11 @@ exports[`notification component renders correctly for every type 9`] = `
     }
   />
   <View
-    accessible={true}
-    focusable={true}
-    isTVSelectable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
+    onPress={[Function]}
     style={
       Object {
         "flex": 1,
         "marginLeft": 8,
-        "opacity": 1,
       }
     }
   >
@@ -940,21 +860,11 @@ exports[`notification component renders correctly for every type 10`] = `
     }
   />
   <View
-    accessible={true}
-    focusable={true}
-    isTVSelectable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
+    onPress={[Function]}
     style={
       Object {
         "flex": 1,
         "marginLeft": 8,
-        "opacity": 1,
       }
     }
   >
@@ -1035,21 +945,11 @@ exports[`notification component renders correctly for every type 11`] = `
     }
   />
   <View
-    accessible={true}
-    focusable={true}
-    isTVSelectable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
+    onPress={[Function]}
     style={
       Object {
         "flex": 1,
         "marginLeft": 8,
-        "opacity": 1,
       }
     }
   >
@@ -1129,21 +1029,11 @@ exports[`notification component renders correctly for every type 12`] = `
     }
   />
   <View
-    accessible={true}
-    focusable={true}
-    isTVSelectable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
+    onPress={[Function]}
     style={
       Object {
         "flex": 1,
         "marginLeft": 8,
-        "opacity": 1,
       }
     }
   >
@@ -1210,21 +1100,11 @@ exports[`notification component renders correctly for every type 13`] = `
     }
   />
   <View
-    accessible={true}
-    focusable={true}
-    isTVSelectable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
+    onPress={[Function]}
     style={
       Object {
         "flex": 1,
         "marginLeft": 8,
-        "opacity": 1,
       }
     }
   >
@@ -1311,21 +1191,11 @@ exports[`notification component renders correctly for every type 14`] = `
     }
   />
   <View
-    accessible={true}
-    focusable={true}
-    isTVSelectable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
+    onPress={[Function]}
     style={
       Object {
         "flex": 1,
         "marginLeft": 8,
-        "opacity": 1,
       }
     }
   >
@@ -1402,21 +1272,11 @@ exports[`notification component renders correctly for every type 15`] = `
     }
   />
   <View
-    accessible={true}
-    focusable={true}
-    isTVSelectable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
+    onPress={[Function]}
     style={
       Object {
         "flex": 1,
         "marginLeft": 8,
-        "opacity": 1,
       }
     }
   >
@@ -1489,21 +1349,11 @@ exports[`notification component renders correctly for every type 16`] = `
     }
   />
   <View
-    accessible={true}
-    focusable={true}
-    isTVSelectable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
+    onPress={[Function]}
     style={
       Object {
         "flex": 1,
         "marginLeft": 8,
-        "opacity": 1,
       }
     }
   >
@@ -1592,21 +1442,11 @@ exports[`notification component renders correctly for every type 17`] = `
     }
   />
   <View
-    accessible={true}
-    focusable={true}
-    isTVSelectable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
+    onPress={[Function]}
     style={
       Object {
         "flex": 1,
         "marginLeft": 8,
-        "opacity": 1,
       }
     }
   >
@@ -1673,21 +1513,11 @@ exports[`notification component renders correctly for every type 18`] = `
     }
   />
   <View
-    accessible={true}
-    focusable={true}
-    isTVSelectable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
+    onPress={[Function]}
     style={
       Object {
         "flex": 1,
         "marginLeft": 8,
-        "opacity": 1,
       }
     }
   >
@@ -1754,21 +1584,11 @@ exports[`notification component renders correctly for every type 19`] = `
     }
   />
   <View
-    accessible={true}
-    focusable={true}
-    isTVSelectable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
+    onPress={[Function]}
     style={
       Object {
         "flex": 1,
         "marginLeft": 8,
-        "opacity": 1,
       }
     }
   >
@@ -1855,21 +1675,11 @@ exports[`notification component renders correctly for every type 20`] = `
     }
   />
   <View
-    accessible={true}
-    focusable={true}
-    isTVSelectable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
+    onPress={[Function]}
     style={
       Object {
         "flex": 1,
         "marginLeft": 8,
-        "opacity": 1,
       }
     }
   >
@@ -1946,21 +1756,11 @@ exports[`notification component renders correctly for every type 21`] = `
     }
   />
   <View
-    accessible={true}
-    focusable={true}
-    isTVSelectable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
+    onPress={[Function]}
     style={
       Object {
         "flex": 1,
         "marginLeft": 8,
-        "opacity": 1,
       }
     }
   >
@@ -2033,21 +1833,11 @@ exports[`notification component renders correctly for every type 22`] = `
     }
   />
   <View
-    accessible={true}
-    focusable={true}
-    isTVSelectable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
+    onPress={[Function]}
     style={
       Object {
         "flex": 1,
         "marginLeft": 8,
-        "opacity": 1,
       }
     }
   >
@@ -2116,21 +1906,11 @@ exports[`notification component renders correctly for every type 23`] = `
     }
   />
   <View
-    accessible={true}
-    focusable={true}
-    isTVSelectable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
+    onPress={[Function]}
     style={
       Object {
         "flex": 1,
         "marginLeft": 8,
-        "opacity": 1,
       }
     }
   >
@@ -2197,21 +1977,11 @@ exports[`notification component renders correctly for every type 24`] = `
     }
   />
   <View
-    accessible={true}
-    focusable={true}
-    isTVSelectable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
+    onPress={[Function]}
     style={
       Object {
         "flex": 1,
         "marginLeft": 8,
-        "opacity": 1,
       }
     }
   >
@@ -2278,21 +2048,11 @@ exports[`notification component renders correctly for every type 25`] = `
     }
   />
   <View
-    accessible={true}
-    focusable={true}
-    isTVSelectable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
+    onPress={[Function]}
     style={
       Object {
         "flex": 1,
         "marginLeft": 8,
-        "opacity": 1,
       }
     }
   >
@@ -2359,21 +2119,11 @@ exports[`notification component renders correctly for every type 26`] = `
     }
   />
   <View
-    accessible={true}
-    focusable={true}
-    isTVSelectable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
+    onPress={[Function]}
     style={
       Object {
         "flex": 1,
         "marginLeft": 8,
-        "opacity": 1,
       }
     }
   >
@@ -2451,21 +2201,11 @@ exports[`notification component renders correctly for every type 27`] = `
     }
   />
   <View
-    accessible={true}
-    focusable={true}
-    isTVSelectable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
+    onPress={[Function]}
     style={
       Object {
         "flex": 1,
         "marginLeft": 8,
-        "opacity": 1,
       }
     }
   >
@@ -2538,21 +2278,11 @@ exports[`notification component renders correctly for every type 28`] = `
     }
   />
   <View
-    accessible={true}
-    focusable={true}
-    isTVSelectable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
+    onPress={[Function]}
     style={
       Object {
         "flex": 1,
         "marginLeft": 8,
-        "opacity": 1,
       }
     }
   >

@@ -1,7 +1,7 @@
 //@ts-nocheck
 import { getStores } from '../../../AppStores';
 import StorageService from '../../common/services/storage.service';
-// import Web3Service from '../services/Web3Service';
+import Web3Service from '../services/Web3Service';
 import BlockchainTokenService from '../services/BlockchainTokenService';
 import KeychainService from '../../common/services/keychain.service';
 import api from '../../common/services/api.service';

@@ -157,9 +157,6 @@ sessionService.onLogout(() => {
   translationService.purgeLanguagesCache();
 });
 
-// disable yellow boxes
-console.disableYellowBox = true;
-
 if (
   Platform.OS === 'android' &&
   UIManager.setLayoutAnimationEnabledExperimental

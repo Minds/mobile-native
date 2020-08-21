@@ -1,6 +1,6 @@
 import 'react-native';
 import React from 'react';
-import { Alert } from 'react-native';
+import { Alert, TextInput } from 'react-native';
 import { shallow } from 'enzyme';
 import MessengerSetup from '../../src/messenger/MessengerSetup';
 import MessengerListStore from '../../src/messenger/MessengerListStore';
@@ -75,7 +75,7 @@ describe('Messenger setup component', () => {
     );
 
     // simulate user input
-    wrapper.find('TextInput').forEach(child => {
+    wrapper.find(TextInput).forEach(child => {
       child.simulate('changeText', 'mypass');
     });
 
@@ -96,7 +96,7 @@ describe('Messenger setup component', () => {
     );
 
     // simulate user input
-    wrapper.find('TextInput').forEach((child, i) => {
+    wrapper.find(TextInput).forEach((child, i) => {
       child.simulate('changeText', 'mypass' + i);
     });
 
@@ -126,7 +126,7 @@ describe('Messenger setup component', () => {
     store.getCryptoKeys.mockResolvedValue(true);
 
     // simulate user input
-    wrapper.find('TextInput').forEach(child => {
+    wrapper.find(TextInput).forEach(child => {
       child.simulate('changeText', 'mypass');
     });
 
@@ -156,7 +156,7 @@ describe('Messenger setup component', () => {
     store.doSetup.mockResolvedValue(true);
 
     // simulate user input
-    wrapper.find('TextInput').forEach(child => {
+    wrapper.find(TextInput).forEach(child => {
       child.simulate('changeText', 'mypass');
     });
 

@@ -3,16 +3,7 @@
 exports[`Boost action component renders correctly 1`] = `
 <View>
   <View
-    accessible={true}
-    focusable={true}
-    isTVSelectable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
+    onPress={[Function]}
     style={
       Array [
         undefined,
@@ -21,6 +12,7 @@ exports[`Boost action component renders correctly 1`] = `
         undefined,
       ]
     }
+    underlayColor="transparent"
   >
     <Text
       adjustsFontSizeToFit={true}
