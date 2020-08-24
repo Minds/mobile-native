@@ -39,6 +39,13 @@ target 'Minds' do
   # end
 end
 
+target 'ShareToMinds' do
+  use_react_native!
+
+  pod 'RNShareMenu', :path => '../node_modules/react-native-share-menu'
+  # Manually link packages here to keep your extension bundle size minimal
+end
+
 target 'Minds-tvOS' do
   # Pods for Minds-tvOS
 

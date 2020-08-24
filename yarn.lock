@@ -10639,6 +10639,11 @@ react-native-scrollable-mixin@^1.0.1:
   resolved "https://registry.yarnpkg.com/react-native-scrollable-mixin/-/react-native-scrollable-mixin-1.0.1.tgz#34a32167b64248594154fd0d6a8b03f22740548e"
   integrity sha1-NKMhZ7ZCSFlBVP0NaosD8idAVI4=
 
+react-native-share-menu@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-share-menu/-/react-native-share-menu-5.0.1.tgz#50b8e13425286ae253482fa9cebed49a11ae648e"
+  integrity sha512-FVLiXNTRUaKednWZ5+BNB/+HUhkS40xvRjLd5jJiRGmwYgrV7QcNZ8PQvvHQS+T8ryYIqzgnic5MG/KTJt94ug==
+
 react-native-share@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/react-native-share/-/react-native-share-2.0.0.tgz#4543a746013e0d8fa9f765fb8937007cfbcffcf7"

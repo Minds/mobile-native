@@ -101,6 +101,7 @@
     "react-native-safe-area-context": "^3.1.4",
     "react-native-screens": "^2.8.0",
     "react-native-share": "^2.0.0",
+    "react-native-share-menu": "^5.0.1",
     "react-native-shared-element": "^0.7.0",
     "react-native-snap-carousel": "^3.8.2",
     "react-native-sqlite-storage": "^4.1.0",

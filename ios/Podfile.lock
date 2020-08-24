@@ -382,6 +382,8 @@ PODS:
     - React
   - RNSharedElement (0.7.0):
     - React
+  - RNShareMenu (5.0.1):
+    - React
   - RNSVG (12.1.0):
     - React
   - RNVectorIcons (7.0.0):
@@ -491,6 +493,7 @@ DEPENDENCIES:
   - "RNSentry (from `../node_modules/@sentry/react-native`)"
   - RNShare (from `../node_modules/react-native-share`)
   - RNSharedElement (from `../node_modules/react-native-shared-element`)
+  - RNShareMenu (from `../node_modules/react-native-share-menu`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - UMAppLoader (from `../node_modules/unimodules-app-loader/ios`)
@@ -665,6 +668,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-share"
   RNSharedElement:
     :path: "../node_modules/react-native-shared-element"
+  RNShareMenu:
+    :path: "../node_modules/react-native-share-menu"
   RNSVG:
     :path: "../node_modules/react-native-svg"
   RNVectorIcons:
@@ -764,7 +769,7 @@ SPEC CHECKSUMS:
   RNDateTimePicker: e386ff4ef3300964ed0cad97ce6f206e0effbfdb
   RNDeviceInfo: 687c1b2ab6d86ff1ca1208783320cd144138c7f2
   RNFastImage: c104f15f04c4f68bd65c9645cc27900bbacd9cc7
-  RNFileShareIntent: 65b162c473575e83ce7dffc494dcda5a6b6ecbc0
+  RNFileShareIntent: 39232d8273bd207aee68a7376cb7aadade8ed944
   RNFS: 2bd9eb49dc82fa9676382f0585b992c424cd59df
   RNGestureHandler: b6b359bb800ae399a9c8b27032bdbf7c18f08a08
   RNImageCropPicker: f0557a908758c4a3f83978894ec7227651529b45
@@ -775,6 +780,7 @@ SPEC CHECKSUMS:
   RNSentry: ae1e005e4f2655775475445a9c49c1d343e8e3a7
   RNShare: 8b171d4b43c1d886917fdd303bf7a4b87167b05c
   RNSharedElement: 00b1a1420d213a34459bb9a5aacabb38107d7948
+  RNShareMenu: 7749fe038181a5d66b71afc76b32b8f8069a58cd
   RNSVG: ce9d996113475209013317e48b05c21ee988d42e
   RNVectorIcons: da6fe858f5a65d7bbc3379540a889b0b12aa5976
   SDWebImage: cf6922231e95550934da2ada0f20f2becf2ceba9
@@ -796,6 +802,6 @@ SPEC CHECKSUMS:
   UMTaskManagerInterface: 80653f25c55d9e6d79d6a0a65589fa213feaee11
   Yoga: 7740b94929bbacbddda59bf115b5317e9a161598
 
-PODFILE CHECKSUM: ed98639a858d758075225925dd8b1ea2b0900752
+PODFILE CHECKSUM: f11a5d0b58df11d49afc9061463f9706690c2a13
 
 COCOAPODS: 1.8.4
