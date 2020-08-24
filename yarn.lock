@@ -10429,7 +10429,7 @@ react-native-fs@2.11.15:
     base-64 "^0.1.0"
     utf8 "^2.1.1"
 
-react-native-fs@^2.16.1:
+react-native-fs@^2.16.1, react-native-fs@^2.16.6:
   version "2.16.6"
   resolved "https://registry.yarnpkg.com/react-native-fs/-/react-native-fs-2.16.6.tgz#2901789a43210a35a0ef0a098019bbef3af395fd"
   integrity sha512-ZWOooD1AuFoAGY3HS2GY7Qx2LZo4oIg6AK0wbC68detxwvX75R/q9lRqThXNKP6vIo2VHWa0fYUo/SrLw80E8w==
@@ -11241,6 +11241,13 @@ rn-placeholder@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/rn-placeholder/-/rn-placeholder-3.0.1.tgz#5073210e9d35791e379df9604414d3c6d531a3ee"
   integrity sha512-hpJiCiNXMvljCaDFdjLATYmHaU2RZg8Nv+g/VaAdLzGIMlV7/pFxvR4B+tYd93iVOMbHuKDmfqGYobAlTHOVIw==
+
+rn-update-apk@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/rn-update-apk/-/rn-update-apk-4.5.0.tgz#9d7a827c5f044dd29f4c40ee65b1d437c6f35350"
+  integrity sha512-oLbYRnzX42HmpV2ebqCualFewST/KEZ8UIh1OyHZhq6eu4Bbi21+rmuMop1y/n17Elz5lsSjlpgA7CeoE68kSQ==
+  dependencies:
+    react-native-fs "^2.16.6"
 
 "rne-modal-tooltip@gist:b28c003d87c619674def0878473338a0":
   version "1.1.0"

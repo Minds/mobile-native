@@ -115,6 +115,7 @@
     "reanimated-bottom-sheet": "^1.0.0-alpha.19",
     "rn-apk": "^0.2.9",
     "rn-placeholder": "^3.0.1",
+    "rn-update-apk": "^4.5.0",
     "rne-modal-tooltip": "gist:b28c003d87c619674def0878473338a0",
     "rxjs": "^6.5.5",
     "socket.io-client": "^2.3.0",
