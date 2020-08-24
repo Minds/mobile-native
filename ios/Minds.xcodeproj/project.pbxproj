@@ -474,7 +474,7 @@
 					};
 					28BF6F1E24F412A600B7ED2E = {
 						CreatedOnToolsVersion = 11.2.1;
-						DevelopmentTeam = TC7L8T3842;
+						DevelopmentTeam = 35U3998VRZ;
 						LastSwiftMigration = 1120;
 						ProvisioningStyle = Automatic;
 					};
@@ -1114,7 +1114,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = TC7L8T3842;
+				DEVELOPMENT_TEAM = 35U3998VRZ;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = ShareToMinds/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -1149,7 +1149,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 35U3998VRZ;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = ShareToMinds/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
