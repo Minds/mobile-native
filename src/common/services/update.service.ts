@@ -1,9 +1,6 @@
 //@ts-nocheck
-import ReactNativeAPK from 'rn-apk';
 import { Alert } from 'react-native';
 
-import RNFS from 'react-native-fs';
-import api from './api.service';
 import moment from 'moment-timezone';
 import { Version } from '../../config/Version';
 import { action, observable } from 'mobx';
@@ -11,13 +8,15 @@ import navigationService from '../../navigation/NavigationService';
 import logService from './log.service';
 import i18n from './i18n.service';
 import storageService from './storage.service';
+import * as UpdateAPK from 'rn-update-apk';
+import { showNotification } from '../../../AppMessages';
 
 /**
  * Update service
  */
 class UpdateService {
-  version = '';
   @observable progress = 0;
+  @observable version = '';
   @observable downloading = false;
 
   /**
@@ -165,38 +164,22 @@ class UpdateService {
    */
   updateApk(url) {
     this.setDownloading(true);
-    this.setProgress(0);
 
-    const filePath = RNFS.CachesDirectoryPath + '/update.apk';
+    const updater = new UpdateAPK.UpdateAPK({
+      fileProviderAuthority: 'com.minds.mobile.fileprovider',
 
-    const download = RNFS.downloadFile({
-      fromUrl: url,
-      toFile: filePath,
-      progress: (res) => {
-        this.setProgress(
-          Math.round((res.bytesWritten / res.contentLength) * 100),
-        );
+      downloadApkProgress: (progress) => {
+        this.setProgress(progress);
       },
-      progressDivider: 1,
+
+      onError: (err) => {
+        showNotification(i18n.t('update.failed'), 'danger');
+        logService.exception(err);
+        navigationService.goBack();
+      },
     });
 
-    download.promise
-      .then((result) => {
-        navigationService.navigate('Tabs');
-        if (result.statusCode == 200) {
-          ReactNativeAPK.installApp(filePath);
-        } else {
-          logService.info('[UpdateService] Download failes');
-        }
-        this.setProgress(0);
-        this.setDownloading(false);
-      })
-      .catch((e) => {
-        logService.exception('[UpdateService]', e);
-        this.setProgress(0);
-        this.setDownloading(false);
-        navigationService.navigate('Tabs');
-      });
+    updater.downloadApk({ apkUrl: url });
   }
 
   /**

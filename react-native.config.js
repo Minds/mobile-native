@@ -2,7 +2,7 @@ module.exports = {
   dependencies: {
     'react-native-notifications': {
       platforms: {
-        android: null
+        android: null,
       },
     },
     'tipsi-stripe': {

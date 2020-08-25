@@ -832,7 +832,8 @@
     "button": "NSFW"
   },
   "update": {
-    "title": "Update to v{{version}}"
+    "title": "Update to v{{version}}",
+    "failed":"Error updating the App"
   },
   "searchBar": {
     "title":"Search Minds",

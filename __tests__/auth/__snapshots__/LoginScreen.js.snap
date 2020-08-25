@@ -304,24 +304,29 @@ exports[`LoginScreen component should renders correctly 1`] = `
         >
           <View
             accessibilityLabel="loginButton"
-            accessible={true}
-            focusable={true}
-            isTVSelectable={true}
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
+            disabled={false}
+            onPress={[Function]}
             style={
-              Object {
-                "backgroundColor": "#5DBAC0",
-                "borderRadius": 36,
-                "marginTop": 24.254545454545454,
-                "opacity": 1,
-              }
+              Array [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                Object {
+                  "backgroundColor": "#5DBAC0",
+                  "borderRadius": 36,
+                },
+                Array [
+                  undefined,
+                  undefined,
+                  Object {
+                    "marginTop": 24.254545454545454,
+                  },
+                  undefined,
+                ],
+              ]
             }
+            text="Login"
           >
             <Text
               style={
@@ -354,25 +359,31 @@ exports[`LoginScreen component should renders correctly 1`] = `
           </View>
           <View />
           <View
-            accessible={true}
-            focusable={true}
-            isTVSelectable={true}
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
+            disabled={false}
+            onPress={[Function]}
             style={
-              Object {
-                "backgroundColor": "#5DBAC0",
-                "borderColor": "rgba(255,255,255,0.20)",
-                "borderRadius": 36,
-                "opacity": 1,
-              }
+              Array [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                Object {
+                  "backgroundColor": "#5DBAC0",
+                  "borderRadius": 36,
+                },
+                Array [
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  Object {
+                    "borderColor": "rgba(255,255,255,0.20)",
+                  },
+                ],
+              ]
             }
             testID="loginButton"
+            text="Join Minds"
           >
             <Text
               style={
