@@ -18,6 +18,8 @@
 #import <UMReactNativeAdapter/UMNativeModulesProxy.h>
 #import <UMReactNativeAdapter/UMModuleRegistryAdapter.h>
 
+#import <RNShareMenu/ShareMenuManager.h>
+
 @interface AppDelegate () <RCTBridgeDelegate>
 
 @property (nonatomic, strong) UMModuleRegistryAdapter *moduleRegistryAdapter;
@@ -110,6 +112,13 @@ static void InitializeFlipper(UIApplication *application) {
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
   [RNNotifications didFailToRegisterForRemoteNotificationsWithError:error];
+}
+
+- (BOOL)application:(UIApplication *)app
+        openURL:(NSURL *)url
+        options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
+{
+  return [ShareMenuManager application:app openURL:url options:options];
 }
 
 static NSDictionary *arguments()

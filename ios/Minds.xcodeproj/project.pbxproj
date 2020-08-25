@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* MindsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* MindsTests.m */; };
-		0C1BAC50A9BDD1D9233FE35C /* libPods-ShareToMinds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB92452F7CF84C1DBD894E62 /* libPods-ShareToMinds.a */; };
 		0EA47AA13B1C4DFC8DCD3912 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BFA6449C294D4B2FA6E84139 /* Roboto-Regular.ttf */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -18,6 +17,7 @@
 		28BF6F2524F412A600B7ED2E /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 28BF6F2324F412A600B7ED2E /* MainInterface.storyboard */; };
 		28BF6F2924F412A600B7ED2E /* ShareToMinds.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 28BF6F1F24F412A600B7ED2E /* ShareToMinds.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		28BF6F3024F414A300B7ED2E /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28BF6F2F24F414A300B7ED2E /* ShareViewController.swift */; };
+		28E34EF424F5624500D2E038 /* BridgeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E34EF324F5624500D2E038 /* BridgeHelper.swift */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -25,6 +25,7 @@
 		2F0CB44F2DED46AD90ACAB77 /* Roboto-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 729486A08ED94889AEF5E356 /* Roboto-BlackItalic.ttf */; };
 		3DA2BBCAEB564997AFD1C084 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8B643CFCAA3F4577B09A2534 /* Roboto-Medium.ttf */; };
 		48CAA0973AD04D1A9053E464 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 75FAB4811732472D8C17DC7B /* Roboto-Bold.ttf */; };
+		4A7DC1B72EBF10E3A902B58E /* libPods-ShareToMinds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63C25D591CE52D5DE03B201D /* libPods-ShareToMinds.a */; };
 		4DBD76CA42C18451868A4BD6 /* libPods-Minds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BA1A05D8A3AC327E259DEF9 /* libPods-Minds.a */; };
 		7788B31180840E8F634B672F /* libPods-Minds-MindsTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56392A462F14D87D35BCB640 /* libPods-Minds-MindsTests.a */; };
 		A50188A89F8B46A8A07DF06C /* Roboto-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 09A1906E337F47559DC79E93 /* Roboto-BoldItalic.ttf */; };
@@ -99,10 +100,11 @@
 		28BF6F1F24F412A600B7ED2E /* ShareToMinds.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareToMinds.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		28BF6F2424F412A600B7ED2E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		28BF6F2624F412A600B7ED2E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		28BF6F2E24F414A200B7ED2E /* ShareToMinds-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ShareToMinds-Bridging-Header.h"; sourceTree = "<group>"; };
 		28BF6F2F24F414A300B7ED2E /* ShareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShareViewController.swift; path = "../../node_modules/react-native-share-menu/ios/ShareViewController.swift"; sourceTree = "<group>"; };
 		28BF6F3124F448B000B7ED2E /* ShareToMinds.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShareToMinds.entitlements; sourceTree = "<group>"; };
-		28CAD73BBBCEF8955237629A /* Pods-ShareToMinds.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShareToMinds.release.xcconfig"; path = "Target Support Files/Pods-ShareToMinds/Pods-ShareToMinds.release.xcconfig"; sourceTree = "<group>"; };
+		28E34EF224F5623600D2E038 /* Minds-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Minds-Bridging-Header.h"; path = "Minds/Minds-Bridging-Header.h"; sourceTree = "<group>"; };
+		28E34EF324F5624500D2E038 /* BridgeHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BridgeHelper.swift; path = Minds/BridgeHelper.swift; sourceTree = "<group>"; };
+		28E34EF524F5625200D2E038 /* ShareToMinds-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ShareToMinds-Bridging-Header.h"; sourceTree = "<group>"; };
 		2CD2622D204E4B0286943196 /* Roboto-MediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-MediumItalic.ttf"; path = "../src/assets/fonts/Roboto/Roboto-MediumItalic.ttf"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* Minds-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Minds-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* Minds-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Minds-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -115,7 +117,7 @@
 		56392A462F14D87D35BCB640 /* libPods-Minds-MindsTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Minds-MindsTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E29162356AA4F08BB78B216 /* Roboto-ThinItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-ThinItalic.ttf"; path = "../src/assets/fonts/Roboto/Roboto-ThinItalic.ttf"; sourceTree = "<group>"; };
 		604B0D8EE6770667596955AD /* Pods-Minds-MindsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Minds-MindsTests.release.xcconfig"; path = "Target Support Files/Pods-Minds-MindsTests/Pods-Minds-MindsTests.release.xcconfig"; sourceTree = "<group>"; };
-		679B9A865737E48103367693 /* Pods-ShareToMinds.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShareToMinds.debug.xcconfig"; path = "Target Support Files/Pods-ShareToMinds/Pods-ShareToMinds.debug.xcconfig"; sourceTree = "<group>"; };
+		63C25D591CE52D5DE03B201D /* libPods-ShareToMinds.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ShareToMinds.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		728C16C16413E9B0E10971C9 /* libPods-Minds-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Minds-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		729486A08ED94889AEF5E356 /* Roboto-BlackItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-BlackItalic.ttf"; path = "../src/assets/fonts/Roboto/Roboto-BlackItalic.ttf"; sourceTree = "<group>"; };
 		73818081AF2E4726B1E7FBBC /* Roboto-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-LightItalic.ttf"; path = "../src/assets/fonts/Roboto/Roboto-LightItalic.ttf"; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 		83F383987437412091619595 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		8B643CFCAA3F4577B09A2534 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Medium.ttf"; path = "../src/assets/fonts/Roboto/Roboto-Medium.ttf"; sourceTree = "<group>"; };
 		8BA1A05D8A3AC327E259DEF9 /* libPods-Minds.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Minds.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D5AFB418C237772CD1045A1 /* Pods-ShareToMinds.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShareToMinds.release.xcconfig"; path = "Target Support Files/Pods-ShareToMinds/Pods-ShareToMinds.release.xcconfig"; sourceTree = "<group>"; };
 		8FFFE348C8BD3869CC628571 /* Pods-Minds-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Minds-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-Minds-tvOS/Pods-Minds-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		A19E1A09322941E3A3DEB34B /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
 		AF49184C3B7B4F3880BE848F /* Roboto-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Light.ttf"; path = "../src/assets/fonts/Roboto/Roboto-Light.ttf"; sourceTree = "<group>"; };
@@ -134,8 +137,8 @@
 		BFA6449C294D4B2FA6E84139 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Regular.ttf"; path = "../src/assets/fonts/Roboto/Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		C8BCF958B14D4858AB34647A /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		CB3378F9EB6781ED5A558E01 /* libPods-Minds-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Minds-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CB92452F7CF84C1DBD894E62 /* libPods-ShareToMinds.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ShareToMinds.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1320EAA0C19D5CCC50D9B4C /* Pods-Minds-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Minds-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-Minds-tvOSTests/Pods-Minds-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		D49B94ECDEC2DA4DE1119EB2 /* Pods-ShareToMinds.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShareToMinds.debug.xcconfig"; path = "Target Support Files/Pods-ShareToMinds/Pods-ShareToMinds.debug.xcconfig"; sourceTree = "<group>"; };
 		D72521D82367A1FF00F95DC2 /* Minds.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Minds.entitlements; path = Minds/Minds.entitlements; sourceTree = "<group>"; };
 		D9E376C2870E44E28C59FC94 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		DE2209E216E44B24A4EA55AC /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
@@ -170,7 +173,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0C1BAC50A9BDD1D9233FE35C /* libPods-ShareToMinds.a in Frameworks */,
+				4A7DC1B72EBF10E3A902B58E /* libPods-ShareToMinds.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -213,6 +216,7 @@
 		13B07FAE1A68108700A75B9A /* Minds */ = {
 			isa = PBXGroup;
 			children = (
+				28E34EF324F5624500D2E038 /* BridgeHelper.swift */,
 				D72521D82367A1FF00F95DC2 /* Minds.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				28B61F1F242C070D00550028 /* BootSplash.storyboard */,
@@ -228,11 +232,11 @@
 		28BF6F2024F412A600B7ED2E /* ShareToMinds */ = {
 			isa = PBXGroup;
 			children = (
+				28E34EF524F5625200D2E038 /* ShareToMinds-Bridging-Header.h */,
 				28BF6F3124F448B000B7ED2E /* ShareToMinds.entitlements */,
 				28BF6F2F24F414A300B7ED2E /* ShareViewController.swift */,
 				28BF6F2324F412A600B7ED2E /* MainInterface.storyboard */,
 				28BF6F2624F412A600B7ED2E /* Info.plist */,
-				28BF6F2E24F414A200B7ED2E /* ShareToMinds-Bridging-Header.h */,
 			);
 			path = ShareToMinds;
 			sourceTree = "<group>";
@@ -247,7 +251,7 @@
 				CB3378F9EB6781ED5A558E01 /* libPods-Minds-tvOSTests.a */,
 				37DF9BB306F046229D6C90DA /* libz.tbd */,
 				56392A462F14D87D35BCB640 /* libPods-Minds-MindsTests.a */,
-				CB92452F7CF84C1DBD894E62 /* libPods-ShareToMinds.a */,
+				63C25D591CE52D5DE03B201D /* libPods-ShareToMinds.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -297,6 +301,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				28E34EF224F5623600D2E038 /* Minds-Bridging-Header.h */,
 				13B07FAE1A68108700A75B9A /* Minds */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* MindsTests */,
@@ -336,8 +341,8 @@
 				827F334441350B1A9D7BDB6A /* Pods-MindsTests.release.xcconfig */,
 				FCC0C7C8B13F69F70EDFD62A /* Pods-Minds-MindsTests.debug.xcconfig */,
 				604B0D8EE6770667596955AD /* Pods-Minds-MindsTests.release.xcconfig */,
-				679B9A865737E48103367693 /* Pods-ShareToMinds.debug.xcconfig */,
-				28CAD73BBBCEF8955237629A /* Pods-ShareToMinds.release.xcconfig */,
+				D49B94ECDEC2DA4DE1119EB2 /* Pods-ShareToMinds.debug.xcconfig */,
+				8D5AFB418C237772CD1045A1 /* Pods-ShareToMinds.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -395,11 +400,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 28BF6F2D24F412A700B7ED2E /* Build configuration list for PBXNativeTarget "ShareToMinds" */;
 			buildPhases = (
-				624CCBC3D31CFEB33365A60B /* [CP] Check Pods Manifest.lock */,
+				EE8F8B1BBC0CD3ED8F986D5C /* [CP] Check Pods Manifest.lock */,
 				28BF6F1B24F412A600B7ED2E /* Sources */,
 				28BF6F1C24F412A600B7ED2E /* Frameworks */,
 				28BF6F1D24F412A600B7ED2E /* Resources */,
-				60AD29FA073C4A8FF6AE683C /* [CP] Copy Pods Resources */,
+				1688986CD3549E9BBA567C08 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -465,6 +470,7 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = 35U3998VRZ;
+						LastSwiftMigration = 1120;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Push = {
@@ -580,6 +586,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\nif [ \"${CONFIGURATION}\" = \"Release\" ]; then\n    export SENTRY_PROPERTIES=sentry.properties\n\n    ../node_modules/@sentry/cli/bin/sentry-cli react-native xcode ../node_modules/react-native/scripts/react-native-xcode.sh\nelse \n    ../node_modules/react-native/scripts/react-native-xcode.sh\nfi\n";
+		};
+		1688986CD3549E9BBA567C08 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ShareToMinds/Pods-ShareToMinds-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ShareToMinds/Pods-ShareToMinds-resources.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		296731C110F3A1661160366F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -809,46 +833,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Minds/Pods-Minds-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		60AD29FA073C4A8FF6AE683C /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ShareToMinds/Pods-ShareToMinds-resources.sh",
-				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ShareToMinds/Pods-ShareToMinds-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		624CCBC3D31CFEB33365A60B /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-ShareToMinds-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		DF23D9AE37694D50863E721D /* Upload Debug Symbols to Sentry */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -879,6 +863,28 @@
 			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-Minds-tvOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EE8F8B1BBC0CD3ED8F986D5C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ShareToMinds-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -939,6 +945,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				28E34EF424F5624500D2E038 /* BridgeHelper.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1004,6 +1011,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FCC0C7C8B13F69F70EDFD62A /* Pods-Minds-MindsTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -1027,6 +1035,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 604B0D8EE6770667596955AD /* Pods-Minds-MindsTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = MindsTests/Info.plist;
@@ -1049,6 +1058,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Minds/Minds.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -1066,6 +1076,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.minds.mobile;
 				PRODUCT_NAME = Minds;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Minds-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1077,6 +1090,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Minds/Minds.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
@@ -1094,6 +1108,8 @@
 				PRODUCT_NAME = Minds;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.minds.mobile";
+				SWIFT_OBJC_BRIDGING_HEADER = "Minds-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1101,7 +1117,7 @@
 		};
 		28BF6F2B24F412A700B7ED2E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 679B9A865737E48103367693 /* Pods-ShareToMinds.debug.xcconfig */;
+			baseConfigurationReference = D49B94ECDEC2DA4DE1119EB2 /* Pods-ShareToMinds.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -1121,6 +1137,40 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"DoubleConversion\"",
+					"-l\"FBReactNativeSpec\"",
+					"-l\"Folly\"",
+					"-l\"RCTTypeSafety\"",
+					"-l\"RNShareMenu\"",
+					"-l\"React-Core\"",
+					"-l\"React-CoreModules\"",
+					"-l\"React-RCTAnimation\"",
+					"-l\"React-RCTBlob\"",
+					"-l\"React-RCTImage\"",
+					"-lc++",
+					"-l\"React-RCTLinking\"",
+					"-l\"React-RCTNetwork\"",
+					"-l\"React-RCTSettings\"",
+					"-l\"React-RCTText\"",
+					"-l\"React-RCTVibration\"",
+					"-l\"React-cxxreact\"",
+					"-l\"React-jsi\"",
+					"-l\"React-jsiexecutor\"",
+					"-l\"React-jsinspector\"",
+					"-l\"ReactCommon\"",
+					"-l\"Yoga\"",
+					"-l\"glog\"",
+					"-l\"stdc++\"",
+					"-framework",
+					"\"AudioToolbox\"",
+					"-framework",
+					"\"JavaScriptCore\"",
+					"-framework",
+					"\"MobileCoreServices\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.minds.mobile.ShareToMinds;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1135,7 +1185,7 @@
 		};
 		28BF6F2C24F412A700B7ED2E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 28CAD73BBBCEF8955237629A /* Pods-ShareToMinds.release.xcconfig */;
+			baseConfigurationReference = 8D5AFB418C237772CD1045A1 /* Pods-ShareToMinds.release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -1155,6 +1205,40 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MTL_FAST_MATH = YES;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"DoubleConversion\"",
+					"-l\"FBReactNativeSpec\"",
+					"-l\"Folly\"",
+					"-l\"RCTTypeSafety\"",
+					"-l\"RNShareMenu\"",
+					"-l\"React-Core\"",
+					"-l\"React-CoreModules\"",
+					"-l\"React-RCTAnimation\"",
+					"-l\"React-RCTBlob\"",
+					"-l\"React-RCTImage\"",
+					"-l\"React-RCTLinking\"",
+					"-l\"React-RCTNetwork\"",
+					"-l\"React-RCTSettings\"",
+					"-l\"React-RCTText\"",
+					"-l\"React-RCTVibration\"",
+					"-l\"React-cxxreact\"",
+					"-l\"React-jsi\"",
+					"-l\"React-jsiexecutor\"",
+					"-l\"React-jsinspector\"",
+					"-l\"ReactCommon\"",
+					"-l\"Yoga\"",
+					"-l\"glog\"",
+					"-l\"stdc++\"",
+					"-framework",
+					"\"AudioToolbox\"",
+					"-framework",
+					"\"JavaScriptCore\"",
+					"-framework",
+					"\"MobileCoreServices\"",
+					"-lc++",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.minds.mobile.ShareToMinds;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
