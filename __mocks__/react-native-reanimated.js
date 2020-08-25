@@ -1,4 +1,4 @@
-import { View as mockView } from "react-native";
+import { mockView } from 'react-native';
 export default {
   Value: jest.fn(),
   event: jest.fn(),
@@ -7,6 +7,12 @@ export default {
   set: jest.fn(),
   cond: jest.fn(),
   interpolate: jest.fn(),
+  sub: jest.fn(),
+  multiply: jest.fn(),
+  sqrt: jest.fn(),
+  max: jest.fn(),
+  diff: jest.fn(),
+  onChange: jest.fn(),
   View: mockView,
   Extrapolate: { CLAMP: jest.fn() },
   Clock: jest.fn(),
@@ -22,13 +28,14 @@ export default {
   decay: jest.fn(),
   defined: jest.fn(),
   call: jest.fn(),
-  Code: mockView,
   block: jest.fn(),
   abs: jest.fn(),
   greaterOrEq: jest.fn(),
   lessOrEq: jest.fn(),
   debug: jest.fn(),
   Transition: {
-    Out: "Out"
+    Together: 'Together',
+    Out: 'Out',
+    In: 'In',
   },
 };

@@ -121,7 +121,7 @@ sessionService.onLogin(async () => {
       );
       // // handle deep link (if the app is opened by one)
       if (deepLinkUrl) {
-        deeplinkService.navigate('App', { screen: deepLinkUrl });
+        deeplinkService.navigate(deepLinkUrl);
         deepLinkUrl = '';
       }
 
@@ -156,9 +156,6 @@ sessionService.onLogout(() => {
   getStores().groupsBar.clearLocal();
   translationService.purgeLanguagesCache();
 });
-
-// disable yellow boxes
-console.disableYellowBox = true;
 
 if (
   Platform.OS === 'android' &&

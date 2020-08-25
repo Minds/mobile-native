@@ -32,10 +32,10 @@ const AuthTransition = {
     inverted,
     layouts: { screen },
   }: StackCardInterpolationProps): StackCardInterpolatedStyle {
-    const rotateY = multiply(
+    const scale = multiply(
       current.progress.interpolate({
         inputRange: [0, 1],
-        outputRange: [1.3, 0],
+        outputRange: [0.8, 1],
         extrapolate: 'identity',
       }),
       inverted,
@@ -70,7 +70,7 @@ const AuthTransition = {
           },
           { translateX },
           { perspective: 1000 },
-          { rotateY },
+          { scale },
         ],
       },
     };

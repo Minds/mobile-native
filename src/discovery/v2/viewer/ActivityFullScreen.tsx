@@ -235,6 +235,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
           )}
           {overlay}
           <TouchableOpacity
+            accessibilityLabel="touchableTextCopy"
             onLongPress={copyText}
             style={[theme.paddingHorizontal4x, theme.paddingVertical4x]}>
             {showText && (

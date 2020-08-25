@@ -1,16 +1,17 @@
 import 'react-native';
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, waitFor } from '@testing-library/react-native';
 
 import ActivityScreen from '../../../src/newsfeed/ActivityScreen';
-import RichEmbedStore from '../../../src/common/stores/RichEmbedStore';
-import commentsStoreProvider from '../../../src/comments/CommentsStoreProvider';
-
-import { commentsServiceFaker } from '../../../__mocks__/fake/CommentsFaker';
 import { activitiesServiceFaker } from '../../../__mocks__/fake/ActivitiesFaker';
-import CommentList from '../../../src/comments/CommentList';
 import entitiesService from '../../../src/common/services/entities.service';
 import ActivityModel from '../../../src/newsfeed/ActivityModel';
+import { useNavigation } from '../../../__mocks__/@react-navigation/native';
+
+jest.mock('react-native-safe-area-context');
+jest.mock('@react-navigation/native');
+jest.mock('react-native-gesture-handler');
+jest.mock('reanimated-bottom-sheet', () => 'BottomSheet');
 
 jest.mock('../../../src/newsfeed/NewsfeedService');
 jest.mock('../../../src/newsfeed/activity/Activity', () => 'Activity');
@@ -22,31 +23,21 @@ jest.mock(
 jest.mock('../../../src/comments/CommentsStore');
 jest.mock('../../../src/comments/CommentsStoreProvider');
 jest.mock('../../../src/common/services/entities.service');
+jest.mock('../../../src/common/hooks/use-stores');
+
+// react testing library has a problem with the fake timers
+// https://github.com/callstack/react-native-testing-library/issues/391
+jest.useRealTimers();
 
 describe('Activity screen component', () => {
-  let screen, navigation, route;
-  beforeEach(() => {
-    let mockResponse = commentsServiceFaker().load(5);
-    commentsStoreProvider.get.mockReturnValue({
-      comments: mockResponse.comments,
-      embed: new RichEmbedStore(),
-      loadNext: mockResponse['load-next'],
-      loadPrevious: mockResponse['load-previous'],
-      setText: () => {},
-      post: () => {},
-      loadComments: () => {
-        return mockResponse.comments;
-      },
-      attachment: {},
-    });
-  });
-
-  it('renders correctly with an entity as param', async () => {
-    navigation = {
+  it('renders correctly ', async () => {
+    const navigation = {
       push: jest.fn(),
+      goBack: jest.fn(),
     };
+    useNavigation.mockReturnValue(navigation);
 
-    route = {
+    const route = {
       routeName: 'some',
       params: { entity: activitiesServiceFaker().load(1).activities[0] },
     };
@@ -55,22 +46,16 @@ describe('Activity screen component', () => {
       ActivityModel.create(route.params.entity),
     );
 
-    screen = shallow(<ActivityScreen navigation={navigation} route={route} />);
+    const { toJSON, getByA11yLabel } = render(
+      <ActivityScreen navigation={navigation} route={route} />,
+    );
 
-    // shoul show loading
-    expect(screen).toMatchSnapshot();
-
-    // unmount
-    await screen.instance().loadEntity();
-
-    jest.runAllTicks();
-
-    // await is important here!
-    await screen.update();
+    await waitFor(() => getByA11yLabel('touchableTextCopy'), {
+      timeout: 4000,
+      interval: 100,
+    });
 
     // should show the activity
-    expect(screen).toMatchSnapshot();
-    // should have a comment list component
-    expect(screen.find(CommentList)).toHaveLength(1);
+    expect(toJSON()).toMatchSnapshot();
   });
 });

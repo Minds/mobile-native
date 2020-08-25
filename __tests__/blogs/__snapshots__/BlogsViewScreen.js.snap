@@ -922,7 +922,7 @@ exports[`blog view screen component should renders correctly 1`] = `
             size={20}
           />
         </View>
-        <SafeAreaView
+        <ForwardRef(SafeAreaView)
           style={
             Object {
               "left": 0,
@@ -938,7 +938,7 @@ exports[`blog view screen component should renders correctly 1`] = `
             raised={true}
             size={22}
           />
-        </SafeAreaView>
+        </ForwardRef(SafeAreaView)>
       </View>
     }
     keyboardVerticalOffset={15}

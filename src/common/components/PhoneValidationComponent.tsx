@@ -63,9 +63,9 @@ export default class PhoneValidationComponent extends Component<propsType> {
   constructor(props: propsType) {
     super(props);
 
-    this.setState({
-      TFAConfirmed: this.props.TFAConfirmed && this.props.TFAConfirmed === true,
-    });
+    this.state.TFAConfirmed = Boolean(
+      this.props.TFAConfirmed && this.props.TFAConfirmed === true,
+    );
   }
 
   async join(retry = false) {

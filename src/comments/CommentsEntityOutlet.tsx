@@ -1,4 +1,4 @@
-import { observer, useLocalStore } from 'mobx-react';
+import { observer } from 'mobx-react';
 import React from 'react';
 
 import { View, Text, KeyboardAvoidingView, Platform } from 'react-native';
@@ -7,7 +7,6 @@ import ThemedStyles from '../styles/ThemedStyles';
 import { useNavigation } from '@react-navigation/native';
 import { AppStackParamList } from '../navigation/NavigationTypes';
 import { NativeStackNavigationProp } from 'react-native-screens/native-stack';
-import CommentsInput from './CommentsInput';
 
 type Props = {
   entity: ActivityModel;

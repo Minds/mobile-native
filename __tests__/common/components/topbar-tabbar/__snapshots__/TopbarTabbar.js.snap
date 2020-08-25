@@ -12,20 +12,16 @@ exports[`renders correctly 1`] = `
   }
 >
   <View
-    accessible={true}
-    focusable={true}
-    isTVSelectable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
+    onPress={[Function]}
     style={
-      Object {
-        "opacity": 1,
-      }
+      Array [
+        Array [
+          undefined,
+          undefined,
+          undefined,
+        ],
+        undefined,
+      ]
     }
   >
     <Text
@@ -54,20 +50,16 @@ exports[`renders correctly 1`] = `
     </Text>
   </View>
   <View
-    accessible={true}
-    focusable={true}
-    isTVSelectable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
+    onPress={[Function]}
     style={
-      Object {
-        "opacity": 1,
-      }
+      Array [
+        Array [
+          undefined,
+          undefined,
+          undefined,
+        ],
+        undefined,
+      ]
     }
   >
     <Text
@@ -96,20 +88,16 @@ exports[`renders correctly 1`] = `
     </Text>
   </View>
   <View
-    accessible={true}
-    focusable={true}
-    isTVSelectable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
+    onPress={[Function]}
     style={
-      Object {
-        "opacity": 1,
-      }
+      Array [
+        Array [
+          undefined,
+          undefined,
+          undefined,
+        ],
+        undefined,
+      ]
     }
   >
     <Text
@@ -138,20 +126,16 @@ exports[`renders correctly 1`] = `
     </Text>
   </View>
   <View
-    accessible={true}
-    focusable={true}
-    isTVSelectable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
+    onPress={[Function]}
     style={
-      Object {
-        "opacity": 1,
-      }
+      Array [
+        Array [
+          undefined,
+          undefined,
+          undefined,
+        ],
+        undefined,
+      ]
     }
   >
     <Text
