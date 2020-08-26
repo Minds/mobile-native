@@ -97,21 +97,7 @@ exports[`Activity screen component renders correctly  1`] = `
         󰅁
       </Text>
       <View
-        accessible={true}
-        focusable={true}
-        isTVSelectable={true}
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "opacity": 1,
-          }
-        }
+        onPress={[Function]}
       >
         <View
           style={
@@ -170,20 +156,12 @@ exports[`Activity screen component renders correctly  1`] = `
           }
         >
           <View
-            accessible={true}
-            focusable={true}
-            isTVSelectable={true}
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
+            onPress={[Function]}
             style={
-              Object {
-                "opacity": 1,
-              }
+              Array [
+                undefined,
+                undefined,
+              ]
             }
           >
             <Text
@@ -330,16 +308,8 @@ exports[`Activity screen component renders correctly  1`] = `
                   <View />
                 </RCTScrollView>
                 <View
-                  accessible={true}
-                  focusable={true}
-                  isTVSelectable={true}
-                  onClick={[Function]}
-                  onResponderGrant={[Function]}
-                  onResponderMove={[Function]}
-                  onResponderRelease={[Function]}
-                  onResponderTerminate={[Function]}
-                  onResponderTerminationRequest={[Function]}
-                  onStartShouldSetResponder={[Function]}
+                  activeOpacity={1}
+                  onPress={[Function]}
                   style={
                     Array [
                       Object {
@@ -358,6 +328,7 @@ exports[`Activity screen component renders correctly  1`] = `
                       },
                     ]
                   }
+                  underlayColor="#F4F4F4"
                 >
                   <Text
                     style={
@@ -397,20 +368,12 @@ exports[`Activity screen component renders correctly  1`] = `
       <View>
         <View
           accessibilityLabel="touchableTextCopy"
-          accessible={true}
-          focusable={false}
-          isTVSelectable={true}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
+          onLongPress={[Function]}
           style={
-            Object {
-              "opacity": 1,
-            }
+            Array [
+              undefined,
+              undefined,
+            ]
           }
         >
           <View
@@ -497,20 +460,14 @@ exports[`Activity screen component renders correctly  1`] = `
         }
       >
         <View
-          accessible={true}
-          focusable={true}
-          isTVSelectable={true}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
+          onPress={[Function]}
           style={
-            Object {
-              "opacity": 1,
-            }
+            Array [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+            ]
           }
           testID="Thumb up activity button"
         >
@@ -539,20 +496,14 @@ exports[`Activity screen component renders correctly  1`] = `
           </Text>
         </View>
         <View
-          accessible={true}
-          focusable={true}
-          isTVSelectable={true}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
+          onPress={[Function]}
           style={
-            Object {
-              "opacity": 1,
-            }
+            Array [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+            ]
           }
           testID="Thumb down activity button"
         >
@@ -581,20 +532,14 @@ exports[`Activity screen component renders correctly  1`] = `
           </Text>
         </View>
         <View
-          accessible={true}
-          focusable={true}
-          isTVSelectable={true}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
+          onPress={[Function]}
           style={
-            Object {
-              "opacity": 1,
-            }
+            Array [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+            ]
           }
           testID=""
         >
@@ -647,20 +592,14 @@ exports[`Activity screen component renders correctly  1`] = `
           </View>
         </View>
         <View
-          accessible={true}
-          focusable={true}
-          isTVSelectable={true}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
+          onPress={[Function]}
           style={
-            Object {
-              "opacity": 1,
-            }
+            Array [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+            ]
           }
           testID="Remind activity button"
         >
