@@ -17,6 +17,10 @@ type MediaEvent = {
   uri: string;
 };
 
+export type SharedItem = {
+  mimeType: string;
+  data: string;
+};
 /**
  * Receive Share Service
  */
@@ -39,47 +43,41 @@ class ReceiveShareService {
    * Handle a media event
    * @param media
    */
-  private handleMedia(media: MediaEvent) {
-    // if (media.mime.startsWith('image/')) {
-    //   Image.getSize(
-    //     media.path,
-    //     (width, height) => {
-    //       navigationService.navigate('Capture', {
-    //         media: {
-    //           type: media.mime,
-    //           uri: media.path,
-    //           width,
-    //           height,
-    //         },
-    //       });
-    //     },
-    //     (err) => console.log(err),
-    //   );
-    // } else if (media.mime.startsWith('video/')) {
-    //   navigationService.navigate('Capture', {
-    //     media: {
-    //       type: media.mime,
-    //       uri: media.path,
-    //     },
-    //   });
-    // }
-    // RNFileShareIntent.clearFilePath();
+  private handleMedia(item: SharedItem) {
+    if (item.mimeType.startsWith('image/')) {
+      Image.getSize(
+        item.data,
+        (width, height) => {
+          navigationService.navigate('Capture', {
+            media: {
+              type: item.mimeType,
+              uri: item.data,
+              width,
+              height,
+            },
+          });
+        },
+        (err) => console.log(err),
+      );
+    } else if (item.mimeType.startsWith('video/')) {
+      navigationService.navigate('Capture', {
+        media: {
+          type: item.mimeType,
+          uri: item.data,
+        },
+      });
+    }
   }
 
   /**
    * Handle received text data
    */
-  handle() {
-  //   if (!RNFileShareIntent) {
-  //     return;
-  //   }
-
-  //   RNFileShareIntent.getFilePath((text: string, type: string) => {
-  //     RNFileShareIntent.clearFilePath();
-  //     if (text) {
-  //       navigationService.navigate('Capture', { text });
-  //     }
-  //   });
+  handle(item: SharedItem) {
+    if (item.mimeType.includes('image/') || item.mimeType.includes('video/')) {
+      this.handleMedia(item);
+    } else if (item.mimeType.includes('text')) {
+      navigationService.navigate('Capture', { text: item.data });
+    }
   }
 }
 
