@@ -75,10 +75,10 @@ const ViewerScreen = observer((props: PropsType) => {
           inputRange: [-1, 0, 1],
           outputRange: [1000, 1000, 1000],
         },
-        rotateY: {
-          inputRange: [-1, 0, 1],
-          outputRange: [0.5, 0, -0.5],
-        },
+        // rotateY: {
+        //   inputRange: [-1, 0, 1],
+        //   outputRange: [0.5, 0, -0.5],
+        // },
         scale: {
           inputRange: [-1, 0, 1],
           outputRange: [0.8, 1, 0.8],

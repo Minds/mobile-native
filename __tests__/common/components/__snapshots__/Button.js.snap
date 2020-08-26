@@ -2,23 +2,20 @@
 
 exports[`renders correctly 1`] = `
 <View
-  accessible={true}
-  focusable={false}
-  isTVSelectable={true}
-  onClick={[Function]}
-  onResponderGrant={[Function]}
-  onResponderMove={[Function]}
-  onResponderRelease={[Function]}
-  onResponderTerminate={[Function]}
-  onResponderTerminationRequest={[Function]}
-  onStartShouldSetResponder={[Function]}
   style={
-    Object {
-      "backgroundColor": "#5DBAC0",
-      "borderRadius": 36,
-      "opacity": 1,
-    }
+    Array [
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      Object {
+        "backgroundColor": "#5DBAC0",
+        "borderRadius": 36,
+      },
+      undefined,
+    ]
   }
+  text="hello"
 >
   <Text
     style={

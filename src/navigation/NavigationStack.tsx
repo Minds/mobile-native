@@ -106,10 +106,6 @@ const captureOptions = {
   headerShown: false,
 } as NativeStackNavigationOptions;
 
-const activityOptions = ({ route }) => ({
-  title: route.params.entity ? route.params.entity.ownerObj.name : '',
-});
-
 const AppStackNav = createNativeStackNavigator<AppStackParamList>();
 const AuthStackNav = createStackNavigator<AuthStackParamList>();
 const RootStackNav = createStackNavigator<RootStackParamList>();
@@ -345,7 +341,7 @@ const AppStack = function () {
       <AppStackNav.Screen
         name="Activity"
         component={ActivityScreen}
-        options={activityOptions}
+        options={hideHeader}
       />
       <AppStackNav.Screen name="Conversation" component={ConversationScreen} />
       <AppStackNav.Screen

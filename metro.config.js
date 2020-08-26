@@ -8,9 +8,12 @@ const blacklist = require('metro-config/src/defaults/blacklist');
 const defaultSourceExts = require('metro-config/src/defaults/defaults')
   .sourceExts;
 
+const nodelibs = require('node-libs-react-native');
+nodelibs.vm = require.resolve('vm-browserify');
+
 module.exports = {
   resolver: {
-    extraNodeModules: require('@hawkingnetwork/node-libs-react-native'),
+    extraNodeModules: nodelibs,
     blacklistRE: blacklist([
       /ios\/Pods\/JitsiMeetSDK\/Frameworks\/JitsiMeet.framework\/assets\/node_modules\/react-native\/.*/,
     ]),
