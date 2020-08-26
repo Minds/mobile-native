@@ -10399,10 +10399,6 @@ react-native-fast-image@DylanVann/react-native-fast-image#e94e6fee66e1c60c6e8602
   version "8.0.0"
   resolved "https://codeload.github.com/DylanVann/react-native-fast-image/tar.gz/e94e6fee66e1c60c6e8602eee20d7d5456b79a41"
 
-react-native-file-share-intent@Minds/react-native-file-share-intent#316072d2d7ef7cb861048eae22c4b6614213a0d2:
-  version "1.1.2"
-  resolved "https://codeload.github.com/Minds/react-native-file-share-intent/tar.gz/316072d2d7ef7cb861048eae22c4b6614213a0d2"
-
 react-native-file-type@^0.0.8:
   version "0.0.8"
   resolved "https://registry.yarnpkg.com/react-native-file-type/-/react-native-file-type-0.0.8.tgz#1f9d9b43bb81e2e02d13a7ee6798b40b7f83353e"
@@ -10638,6 +10634,11 @@ react-native-scrollable-mixin@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/react-native-scrollable-mixin/-/react-native-scrollable-mixin-1.0.1.tgz#34a32167b64248594154fd0d6a8b03f22740548e"
   integrity sha1-NKMhZ7ZCSFlBVP0NaosD8idAVI4=
+
+react-native-share-menu@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-share-menu/-/react-native-share-menu-5.0.1.tgz#50b8e13425286ae253482fa9cebed49a11ae648e"
+  integrity sha512-FVLiXNTRUaKednWZ5+BNB/+HUhkS40xvRjLd5jJiRGmwYgrV7QcNZ8PQvvHQS+T8ryYIqzgnic5MG/KTJt94ug==
 
 react-native-share@^2.0.0:
   version "2.0.0"

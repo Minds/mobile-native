@@ -1,4 +1,4 @@
-import RNFileShareIntent from 'react-native-file-share-intent';
+// import RNFileShareIntent from 'react-native-file-share-intent';
 import {
   NativeEventEmitter,
   NativeModules,
@@ -24,15 +24,15 @@ class ReceiveShareService {
   subscription!: EmitterSubscription;
 
   constructor() {
-    if (process.env.JEST_WORKER_ID === undefined && Platform.OS === 'android') {
-      const eventEmitter = new NativeEventEmitter(ModuleWithEmitter);
-      this.subscription = eventEmitter.addListener(
-        'FileShareIntent',
-        (event) => {
-          setTimeout(() => this.handleMedia(event), 200);
-        },
-      );
-    }
+    // if (process.env.JEST_WORKER_ID === undefined && Platform.OS === 'android') {
+    //   const eventEmitter = new NativeEventEmitter(ModuleWithEmitter);
+    //   this.subscription = eventEmitter.addListener(
+    //     'FileShareIntent',
+    //     (event) => {
+    //       setTimeout(() => this.handleMedia(event), 200);
+    //     },
+    //   );
+    // }
   }
 
   /**
@@ -40,46 +40,46 @@ class ReceiveShareService {
    * @param media
    */
   private handleMedia(media: MediaEvent) {
-    if (media.mime.startsWith('image/')) {
-      Image.getSize(
-        media.path,
-        (width, height) => {
-          navigationService.navigate('Capture', {
-            media: {
-              type: media.mime,
-              uri: media.path,
-              width,
-              height,
-            },
-          });
-        },
-        (err) => console.log(err),
-      );
-    } else if (media.mime.startsWith('video/')) {
-      navigationService.navigate('Capture', {
-        media: {
-          type: media.mime,
-          uri: media.path,
-        },
-      });
-    }
-    RNFileShareIntent.clearFilePath();
+    // if (media.mime.startsWith('image/')) {
+    //   Image.getSize(
+    //     media.path,
+    //     (width, height) => {
+    //       navigationService.navigate('Capture', {
+    //         media: {
+    //           type: media.mime,
+    //           uri: media.path,
+    //           width,
+    //           height,
+    //         },
+    //       });
+    //     },
+    //     (err) => console.log(err),
+    //   );
+    // } else if (media.mime.startsWith('video/')) {
+    //   navigationService.navigate('Capture', {
+    //     media: {
+    //       type: media.mime,
+    //       uri: media.path,
+    //     },
+    //   });
+    // }
+    // RNFileShareIntent.clearFilePath();
   }
 
   /**
    * Handle received text data
    */
   handle() {
-    if (!RNFileShareIntent) {
-      return;
-    }
+  //   if (!RNFileShareIntent) {
+  //     return;
+  //   }
 
-    RNFileShareIntent.getFilePath((text: string, type: string) => {
-      RNFileShareIntent.clearFilePath();
-      if (text) {
-        navigationService.navigate('Capture', { text });
-      }
-    });
+  //   RNFileShareIntent.getFilePath((text: string, type: string) => {
+  //     RNFileShareIntent.clearFilePath();
+  //     if (text) {
+  //       navigationService.navigate('Capture', { text });
+  //     }
+  //   });
   }
 }
 

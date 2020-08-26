@@ -336,6 +336,8 @@ PODS:
     - React
   - ReactNativeExceptionHandler (2.10.8):
     - React
+  - rn-update-apk (4.5.0):
+    - React
   - RNBootSplash (2.2.5):
     - React
   - RNCAsyncStorage (1.11.0):
@@ -352,8 +354,6 @@ PODS:
     - React
     - SDWebImage (~> 5.0)
     - SDWebImageWebPCoder (~> 0.2.3)
-  - RNFileShareIntent (1.1.2):
-    - React
   - RNFS (2.16.6):
     - React
   - RNGestureHandler (1.7.0):
@@ -381,6 +381,8 @@ PODS:
   - RNShare (2.0.0):
     - React
   - RNSharedElement (0.7.0):
+    - React
+  - RNShareMenu (5.0.1):
     - React
   - RNSVG (12.1.0):
     - React
@@ -473,6 +475,7 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "ReactNativeART (from `../node_modules/@react-native-community/art`)"
   - ReactNativeExceptionHandler (from `../node_modules/react-native-exception-handler`)
+  - rn-update-apk (from `../node_modules/rn-update-apk`)
   - RNBootSplash (from `../node_modules/react-native-bootsplash`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
@@ -480,7 +483,6 @@ DEPENDENCIES:
   - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNFastImage (from `../node_modules/react-native-fast-image`)
-  - RNFileShareIntent (from `../node_modules/react-native-file-share-intent`)
   - RNFS (from `../node_modules/react-native-fs`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
@@ -491,6 +493,7 @@ DEPENDENCIES:
   - "RNSentry (from `../node_modules/@sentry/react-native`)"
   - RNShare (from `../node_modules/react-native-share`)
   - RNSharedElement (from `../node_modules/react-native-shared-element`)
+  - RNShareMenu (from `../node_modules/react-native-share-menu`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - UMAppLoader (from `../node_modules/unimodules-app-loader/ios`)
@@ -629,6 +632,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/art"
   ReactNativeExceptionHandler:
     :path: "../node_modules/react-native-exception-handler"
+  rn-update-apk:
+    :path: "../node_modules/rn-update-apk"
   RNBootSplash:
     :path: "../node_modules/react-native-bootsplash"
   RNCAsyncStorage:
@@ -643,8 +648,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-device-info"
   RNFastImage:
     :path: "../node_modules/react-native-fast-image"
-  RNFileShareIntent:
-    :path: "../node_modules/react-native-file-share-intent"
   RNFS:
     :path: "../node_modules/react-native-fs"
   RNGestureHandler:
@@ -665,6 +668,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-share"
   RNSharedElement:
     :path: "../node_modules/react-native-shared-element"
+  RNShareMenu:
+    :path: "../node_modules/react-native-share-menu"
   RNSVG:
     :path: "../node_modules/react-native-svg"
   RNVectorIcons:
@@ -757,6 +762,7 @@ SPEC CHECKSUMS:
   ReactCommon: a0a1edbebcac5e91338371b72ffc66aa822792ce
   ReactNativeART: 78edc68dd4a1e675338cd0cd113319cf3a65f2ab
   ReactNativeExceptionHandler: 8025d98049c25f186835a3af732dd7c9974d6dce
+  rn-update-apk: 276b95ff7f22c7659e0325352552d5179a0218b8
   RNBootSplash: b3836aa90c5bec690c6cd3c9ab355fcf98d0fe1d
   RNCAsyncStorage: d059c3ee71738c39834a627476322a5a8cd5bf36
   RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f
@@ -764,7 +770,6 @@ SPEC CHECKSUMS:
   RNDateTimePicker: e386ff4ef3300964ed0cad97ce6f206e0effbfdb
   RNDeviceInfo: 687c1b2ab6d86ff1ca1208783320cd144138c7f2
   RNFastImage: c104f15f04c4f68bd65c9645cc27900bbacd9cc7
-  RNFileShareIntent: 65b162c473575e83ce7dffc494dcda5a6b6ecbc0
   RNFS: 2bd9eb49dc82fa9676382f0585b992c424cd59df
   RNGestureHandler: b6b359bb800ae399a9c8b27032bdbf7c18f08a08
   RNImageCropPicker: f0557a908758c4a3f83978894ec7227651529b45
@@ -775,6 +780,7 @@ SPEC CHECKSUMS:
   RNSentry: ae1e005e4f2655775475445a9c49c1d343e8e3a7
   RNShare: 8b171d4b43c1d886917fdd303bf7a4b87167b05c
   RNSharedElement: 00b1a1420d213a34459bb9a5aacabb38107d7948
+  RNShareMenu: 7749fe038181a5d66b71afc76b32b8f8069a58cd
   RNSVG: ce9d996113475209013317e48b05c21ee988d42e
   RNVectorIcons: da6fe858f5a65d7bbc3379540a889b0b12aa5976
   SDWebImage: cf6922231e95550934da2ada0f20f2becf2ceba9
@@ -796,6 +802,6 @@ SPEC CHECKSUMS:
   UMTaskManagerInterface: 80653f25c55d9e6d79d6a0a65589fa213feaee11
   Yoga: 7740b94929bbacbddda59bf115b5317e9a161598
 
-PODFILE CHECKSUM: ed98639a858d758075225925dd8b1ea2b0900752
+PODFILE CHECKSUM: f1c2b090b20c445817ebfa83ccec0f81bb7b6a0d
 
 COCOAPODS: 1.8.4
