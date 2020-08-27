@@ -36,6 +36,7 @@
     "@react-navigation/native": "^5.7.3",
     "@react-navigation/stack": "^5.9.0",
     "@sentry/react-native": "^1.6.3",
+    "@snowplow/react-native-tracker": "^0.1.0",
     "@types/react-native-vector-icons": "^6.4.5",
     "add": "^2.0.6",
     "bn.js": "^5.1.1",

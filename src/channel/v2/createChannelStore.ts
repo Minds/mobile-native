@@ -10,8 +10,9 @@ import type {
 import sessionService from '../../common/services/session.service';
 import supportTiersService from '../../common/services/support-tiers.service';
 import type { SupportTiersType } from '../../wire/WireTypes';
+import analyticsService from '../../common/services/analytics.service';
 type InitialLoadParams = {
-  entity?: { guid: string } | UserModel;
+  entity?: UserModel;
   guid?: string;
   username?: string;
 };
@@ -76,6 +77,9 @@ const createChannelStore = () => {
      */
     async initialLoad(params: InitialLoadParams) {
       if (params.entity) {
+        analyticsService.trackPageViewEvent(
+          `https://www.minds.com/${params.entity.username}/`,
+        );
         this.loadFromEntity(params.entity);
         this.tiers =
           (await supportTiersService.getAllFromGuid(params.entity.guid)) || [];
@@ -159,6 +163,9 @@ const createChannelStore = () => {
      */
     async loadFromGuidOrUsername(guidOrUsername: string) {
       const channel = await channelsService.get(guidOrUsername);
+      analyticsService.trackPageViewEvent(
+        `https://www.minds.com/${channel.username}/`,
+      );
       this.setChannel(channel);
       this.loadFeed();
       this.tiers =

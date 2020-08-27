@@ -48,6 +48,7 @@ import i18n from '../common/services/i18n.service';
 import featuresService from '../common/services/features.service';
 import { FLAG_VIEW } from '../common/Permissions';
 import ThemedStyles from '../styles/ThemedStyles';
+import analyticsService from '../common/services/analytics.service';
 
 /**
  * Blog View Screen
@@ -98,6 +99,9 @@ export default class BlogsViewScreen extends Component {
         if (!params.blog.description) {
           await this.props.blogsView.loadBlog(params.blog.guid);
         }
+        analyticsService.trackPageViewEvent(
+          `https://www.minds.com/minds/blog/${this.props.blogsView.blog.slug}`,
+        );
       } else {
         this.props.blogsView.reset();
         let guid;
@@ -108,6 +112,9 @@ export default class BlogsViewScreen extends Component {
         }
 
         await this.props.blogsView.loadBlog(guid);
+        analyticsService.trackPageViewEvent(
+          `https://www.minds.com/minds/blog/${this.props.blogsView.blog.slug}`,
+        );
       }
 
       // check permissions

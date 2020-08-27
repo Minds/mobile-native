@@ -18,6 +18,10 @@ export function setTopLevelNavigator(navigatorRef) {
   _navigator = navigatorRef;
 }
 
+export function getTopLevelNavigator() {
+  return _navigator;
+}
+
 function getCurrentState() {
   const root = _navigator.getRootState();
   return getStateFrom(root);

@@ -27,6 +27,7 @@ import * as Sentry from '@sentry/react-native';
 
 import NavigationService, {
   setTopLevelNavigator,
+  getTopLevelNavigator,
 } from './src/navigation/NavigationService';
 import KeychainModalScreen from './src/keychain/KeychainModalScreen';
 import NavigationStack from './src/navigation/NavigationStack';
@@ -59,6 +60,7 @@ import ThemedStyles from './src/styles/ThemedStyles';
 import { StoresProvider } from './src/common/hooks/use-stores';
 import AppMessages from './AppMessages';
 import i18n from './src/common/services/i18n.service';
+import analyticsService from './src/common/services/analytics.service';
 
 const stores = getStores();
 let deepLinkUrl = '';
@@ -218,6 +220,8 @@ class App extends Component<Props, State> {
       'icon_active',
     );
     RefreshControl.defaultProps.colors = [ThemedStyles.getColor('icon_active')];
+
+    this.routeNameRef = React.createRef();
   }
 
   /**
@@ -236,6 +240,7 @@ class App extends Component<Props, State> {
       const results = await Promise.all([
         settingsStore.init(),
         Linking.getInitialURL(),
+        analyticsService.init(),
       ]);
 
       deepLinkUrl = results[1];
@@ -358,6 +363,21 @@ class App extends Component<Props, State> {
       <SafeAreaProvider>
         <NavigationContainer
           ref={(navigatorRef) => setTopLevelNavigator(navigatorRef)}
+          onReady={() =>
+            (this.routeNameRef.current = getTopLevelNavigator().getCurrentRoute().name)
+          }
+          onStateChange={() => {
+            const previousRouteName = this.routeNameRef.current;
+            const currentRouteName = getTopLevelNavigator().getCurrentRoute()
+              .name;
+
+            if (previousRouteName !== currentRouteName) {
+              analyticsService.trackScreenViewEvent(currentRouteName);
+            }
+
+            // Save the current route name for later comparison
+            this.routeNameRef.current = currentRouteName;
+          }}
           theme={ThemedStyles.navTheme}>
           <StoresProvider>
             <Provider key="app" {...stores}>

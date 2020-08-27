@@ -2207,6 +2207,11 @@
   dependencies:
     type-detect "4.0.8"
 
+"@snowplow/react-native-tracker@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@snowplow/react-native-tracker/-/react-native-tracker-0.1.0.tgz#da4ca1c69ac5b85271b8d82dd13a895538306c67"
+  integrity sha512-I9nMfaASDi90cqtrXEcoJRBxsp7igijv4QTlvv3n6on6YEzGBpveILeekIBS2I5xUmuFzY46ib0wtLsqQF3o0A==
+
 "@szmarczak/http-timer@^1.1.2":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@szmarczak/http-timer/-/http-timer-1.1.2.tgz#b1665e2c461a2cd92f4c1bbf50d5454de0d4b421"

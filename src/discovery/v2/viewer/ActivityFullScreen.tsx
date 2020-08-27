@@ -38,6 +38,7 @@ import featuresService from '../../../common/services/features.service';
 import LockV2 from '../../../wire/v2/lock/Lock';
 import Lock from '../../../wire/lock/Lock';
 import { showNotification } from '../../../../AppMessages';
+import analyticsService from '../../../common/services/analytics.service';
 
 const TEXT_SHORT_THRESHOLD = 110;
 const TEXT_MEDIUM_THRESHOLD = 300;
@@ -99,10 +100,13 @@ const ActivityFullScreen = observer((props: PropsType) => {
       if (user.plus && !user.disable_autoplay_videos && mediaRef.current) {
         mediaRef.current.playVideo(true);
       }
+      analyticsService.trackPageViewEvent(
+        `https://www.minds.com/newsfeed/${entity.guid || entity.entity_guid}`,
+      );
     } else {
       mediaRef.current?.pauseVideo();
     }
-  }, [focused]);
+  }, [entity.entity_guid, entity.guid, focused]);
 
   const isShortText =
     !hasMedia && !hasRemind && entity.text.length < TEXT_SHORT_THRESHOLD;

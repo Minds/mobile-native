@@ -11,6 +11,7 @@ import logService from '../common/services/log.service';
 import entitiesService from '../common/services/entities.service';
 import GroupModel from './GroupModel';
 import FeedStore from '../common/stores/FeedStore';
+import analyticsService from '../common/services/analytics.service';
 
 /**
  * Groups store
@@ -146,11 +147,17 @@ class GroupViewStore {
     );
     this.setGroup(group);
     this.feed.viewed.clearViewed();
+    analyticsService.trackPageViewEvent(
+      `https://www.minds.com/groups/profile/${group.guid}/feed`,
+    );
     return group;
   }
 
   async loadGroupByGuid(guid) {
     const group = await entitiesService.single(`urn:entity:${guid}`);
+    analyticsService.trackPageViewEvent(
+      `https://www.minds.com/groups/profile/${guid}/feed`,
+    );
     this.setGroup(group);
   }
 

@@ -13,6 +13,7 @@ export default class BlogModel extends BaseModel {
   subtype?: string;
   thumbnail_src?: string;
   license: string = '';
+  owner_guid: string = '';
   reminds: number = 0;
   impressions: number = 0;
   'thumbs:down:count': number;

@@ -5,6 +5,7 @@ import { abort } from '../common/helpers/abortableFetch';
 import { getStores } from '../../AppStores';
 import logService from '../common/services/log.service';
 import connectivityService from '../common/services/connectivity.service';
+import analyticsService from '../common/services/analytics.service';
 
 export default class NewsfeedService {
   async _getFeed(endpoint, offset, limit) {
@@ -107,6 +108,8 @@ export async function setViewed(entity, extra = {}) {
 
   // ignore if there is no internet
   if (!connectivityService.isConnected) return;
+
+  analyticsService.trackViewedContent(entity, extra);
 
   if (entity.boosted_guid) {
     data = await api.post(
