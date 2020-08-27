@@ -241,10 +241,10 @@
     "briefDescription": "Brief description about you...",
     "block": "Block",
     "unsubscribe": "Unsubscribe",
-    "unblock": "Un-Block",
+    "unblock": "Unblock channel",
     "report": "Report",
     "createFirstPost": "Create your first post",
-    "blockedNav": "You have blocked &{username}&",
+    "blocked": "Channel Blocked",
     "viewScheduled": "Scheduled",
     "edit": {
       "bio": "Bio",

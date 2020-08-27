@@ -1,17 +1,19 @@
-//@ts-nocheck
 import React, { Component } from 'react';
 
 import { Text, View } from 'react-native';
-
-import { CommonStyle as CS } from '../../styles/Common';
 import i18n from '../services/i18n.service';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import type ActivityModel from 'src/newsfeed/ActivityModel';
-import type BlogModel from 'src/blogs/BlogModel';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import type ActivityModel from '../../newsfeed/ActivityModel';
+import type BlogModel from '../../blogs/BlogModel';
+import ThemedStyles from '../../styles/ThemedStyles';
+import UserModel from '../../channel/UserModel';
 
 type PropsType = {
-  entity: ActivityModel | BlogModel;
+  entity?: ActivityModel | BlogModel;
+  channel?: UserModel;
   navigation: any;
+  onPressBack?: () => void;
 };
 
 /**
@@ -25,7 +27,7 @@ export default class BlockedChannel extends Component<PropsType> {
     // only active if receive the navigation property
     if (this.props.navigation) {
       this.props.navigation.push('Channel', {
-        guid: this.props.entity.ownerObj.guid,
+        guid: this.props.entity?.ownerObj.guid,
       });
     }
   };
@@ -34,38 +36,48 @@ export default class BlockedChannel extends Component<PropsType> {
    * Render
    */
   render() {
+    const theme = ThemedStyles.style;
+
+    const user = this.props.entity
+      ? this.props.entity.ownerObj
+      : this.props.channel;
+
     return (
       <View
         style={[
-          CS.flexContainer,
-          CS.centered,
-          CS.padding2x,
-          CS.backgroundLight,
-          CS.fullWidth,
+          theme.flexContainer,
+          theme.centered,
+          theme.padding2x,
+          theme.backgroundLight,
+          theme.fullWidth,
         ]}>
-        <Text style={[CS.fontXL, CS.colorDarkGreyed, CS.marginTop3x]}>
-          {i18n.to('channel.blockedNav', null, {
-            username: (
-              <Text style={CS.bold} onPress={this.navToChannel}>
-                @{this.props.entity.ownerObj.username}
-              </Text>
-            ),
-          })}
+        <Text
+          style={[theme.fontXXL, theme.colorPrimaryText, theme.marginBottom5x]}>
+          @{user?.username}
         </Text>
-        <TouchableOpacity
-          onPress={async () => {
-            await this.props.entity.unblockOwner();
-          }}>
+        <Icon name="cancel" style={theme.colorPrimaryText} size={60} />
+        <Text
+          style={[theme.fontXXXL, theme.colorPrimaryText, theme.marginTop5x]}>
+          {i18n.t('channel.blocked')}
+        </Text>
+        <TouchableOpacity onPress={() => user?.toggleBlock(false)}>
           <Text
             style={[
-              CS.fontL,
-              CS.colorPrimary,
-              CS.marginTop3x,
-              CS.marginBottom3x,
+              theme.fontXXL,
+              theme.colorLink,
+              theme.marginTop3x,
+              theme.link,
             ]}>
-            {i18n.t('undo')}
+            {i18n.t('channel.unblock')}
           </Text>
         </TouchableOpacity>
+        {this.props.onPressBack && (
+          <Text
+            onPress={this.props.onPressBack}
+            style={[theme.fontXL, theme.colorLink, theme.marginTop8x]}>
+            {i18n.t('goback')}
+          </Text>
+        )}
       </View>
     );
   }
