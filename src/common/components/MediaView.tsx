@@ -68,7 +68,11 @@ export default class MediaView extends Component<PropsType> {
         ? this.props.entity.title.substring(0, 200) + '...'
         : this.props.entity.title;
     let type = this.props.entity.custom_type || this.props.entity.subtype;
-    if (!type && this.props.entity.hasThumbnails()) {
+    if (
+      !type &&
+      this.props.entity.hasThumbnails() &&
+      this.props.entity.type !== 'comment'
+    ) {
       type = 'image';
     }
     switch (type) {
@@ -82,8 +86,13 @@ export default class MediaView extends Component<PropsType> {
 
     if (this.props.entity.perma_url) {
       source = {
-        uri: mediaProxyUrl(this.props.entity.thumbnail_src),
+        uri:
+          this.props.entity.type === 'comment'
+            ? this.props.entity.thumbnail_src
+            : mediaProxyUrl(this.props.entity.thumbnail_src),
       };
+
+      console.log(source);
 
       return (
         <View style={styles.richMediaContainer}>
