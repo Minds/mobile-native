@@ -150,7 +150,6 @@ class Comment extends Component {
           ) : null}
           {comment.hasMedia() && (
             <View style={styles.media}>
-              {console.log(comment)}
               <MediaView
                 entity={comment}
                 style={styles.media}
