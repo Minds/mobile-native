@@ -188,6 +188,14 @@ class App extends Component<Props, State> {
    * Handle app state changes
    */
   handleAppStateChange = (nextState) => {
+    // if the app turns active we check for shared
+    if (
+      this.state.appState &&
+      this.state.appState.match(/inactive|background/) &&
+      nextState === 'active'
+    ) {
+      ShareMenu.getInitialShare(this.onShareReceive);
+    }
     this.setState({ appState: nextState });
   };
 
@@ -324,6 +332,7 @@ class App extends Component<Props, State> {
   };
 
   onShareReceive = (item: SharedItem) => {
+    console.log('ONSHARERECEIVE', item);
     if (!item) {
       return;
     }
