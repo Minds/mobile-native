@@ -235,18 +235,18 @@ export default class Activity extends Component<PropsType> {
     const message = (
       <View style={hasText ? styles.messageContainer : styles.emptyMessage}>
         {hasText ? (
-          <ExplicitText
-            entity={entity}
-            navigation={this.props.navigation}
-            style={[styles.message, fontStyle]}
-          />
-        ) : null}
-        {hasText ? (
-          <Translate
-            ref={(r) => (this.translate = r)}
-            entity={entity}
-            style={styles.message}
-          />
+          <>
+            <ExplicitText
+              entity={entity}
+              navigation={this.props.navigation}
+              style={[styles.message, fontStyle]}
+            />
+            <Translate
+              ref={(r) => (this.translate = r)}
+              entity={entity}
+              style={styles.message}
+            />
+          </>
         ) : null}
       </View>
     );

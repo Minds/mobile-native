@@ -167,7 +167,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
 
   let buttonPopUpHeight = window.height * 0.85;
 
-  const LockCmp = featuresService.has('paywalls-2020') ? LockV2 : Lock;
+  const LockCmp = featuresService.has('paywall-2020') ? LockV2 : Lock;
 
   const lock = entity.paywall ? (
     <LockCmp entity={entity} navigation={navigation} />
@@ -223,14 +223,18 @@ const ActivityFullScreen = observer((props: PropsType) => {
             theme.fullWidth,
             styles.content,
           ]}>
-          {lock}
-          {hasMedia && (
-            <MediaView
-              ref={mediaRef}
-              entity={entity}
-              navigation={navigation}
-              autoHeight={true}
-            />
+          {hasMedia ? (
+            <View>
+              {lock}
+              <MediaView
+                ref={mediaRef}
+                entity={entity}
+                navigation={navigation}
+                autoHeight={true}
+              />
+            </View>
+          ) : (
+            <>{lock}</>
           )}
           {overlay}
           <TouchableOpacity
