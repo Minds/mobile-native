@@ -12,12 +12,13 @@ import {
   TextStyle,
 } from 'react-native';
 
+import LinearGradient from 'expo-linear-gradient';
+
 import Tags from '../../../common/components/Tags';
 import colors from '../../../styles/Colors';
 import i18n from '../../services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import type ActivityModel from 'src/newsfeed/ActivityModel';
-import LinearGradient from 'react-native-linear-gradient';
 
 type PropsType = {
   entity: ActivityModel;
