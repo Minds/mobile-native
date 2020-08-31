@@ -21,8 +21,8 @@ const Share = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: DARK_THEME.primary_background,
+    height: '100%',
+    width: '100%',
     alignContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
