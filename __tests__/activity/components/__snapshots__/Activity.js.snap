@@ -56,14 +56,11 @@ exports[`Activity component renders correctly 1`] = `
           "is_admin": false,
           "last_accepted_tos": 0,
           "mature": false,
-<<<<<<< HEAD
-          "onchain_booster": 0,
-=======
           "mature_visibility": false,
           "mode": 0,
+          "onchain_booster": 0,
           "pending_subscribe": false,
           "permissions": Object {},
->>>>>>> origin/release/4.5.0
           "plus": false,
           "pro": false,
           "rewards": false,
@@ -153,14 +150,11 @@ exports[`Activity component renders correctly 1`] = `
           "is_admin": false,
           "last_accepted_tos": 0,
           "mature": false,
-<<<<<<< HEAD
-          "onchain_booster": 0,
-=======
           "mature_visibility": false,
           "mode": 0,
+          "onchain_booster": 0,
           "pending_subscribe": false,
           "permissions": Object {},
->>>>>>> origin/release/4.5.0
           "plus": false,
           "pro": false,
           "rewards": false,
@@ -257,14 +251,11 @@ exports[`Activity component renders correctly 1`] = `
                 "is_admin": false,
                 "last_accepted_tos": 0,
                 "mature": false,
-<<<<<<< HEAD
-                "onchain_booster": 0,
-=======
                 "mature_visibility": false,
                 "mode": 0,
+                "onchain_booster": 0,
                 "pending_subscribe": false,
                 "permissions": Object {},
->>>>>>> origin/release/4.5.0
                 "plus": false,
                 "pro": false,
                 "rewards": false,
@@ -392,14 +383,11 @@ exports[`Activity component renders correctly 1`] = `
             "is_admin": false,
             "last_accepted_tos": 0,
             "mature": false,
-<<<<<<< HEAD
-            "onchain_booster": 0,
-=======
             "mature_visibility": false,
             "mode": 0,
+            "onchain_booster": 0,
             "pending_subscribe": false,
             "permissions": Object {},
->>>>>>> origin/release/4.5.0
             "plus": false,
             "pro": false,
             "rewards": false,
@@ -509,14 +497,11 @@ exports[`Activity component renders correctly 1`] = `
               "is_admin": false,
               "last_accepted_tos": 0,
               "mature": false,
-<<<<<<< HEAD
-              "onchain_booster": 0,
-=======
               "mature_visibility": false,
               "mode": 0,
+              "onchain_booster": 0,
               "pending_subscribe": false,
               "permissions": Object {},
->>>>>>> origin/release/4.5.0
               "plus": false,
               "pro": false,
               "rewards": false,
@@ -625,14 +610,11 @@ exports[`Activity component renders correctly 1`] = `
               "is_admin": false,
               "last_accepted_tos": 0,
               "mature": false,
-<<<<<<< HEAD
-              "onchain_booster": 0,
-=======
               "mature_visibility": false,
               "mode": 0,
+              "onchain_booster": 0,
               "pending_subscribe": false,
               "permissions": Object {},
->>>>>>> origin/release/4.5.0
               "plus": false,
               "pro": false,
               "rewards": false,
@@ -731,14 +713,11 @@ exports[`Activity component renders correctly 1`] = `
           "is_admin": false,
           "last_accepted_tos": 0,
           "mature": false,
-<<<<<<< HEAD
-          "onchain_booster": 0,
-=======
           "mature_visibility": false,
           "mode": 0,
+          "onchain_booster": 0,
           "pending_subscribe": false,
           "permissions": Object {},
->>>>>>> origin/release/4.5.0
           "plus": false,
           "pro": false,
           "rewards": false,
