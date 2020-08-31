@@ -13,8 +13,7 @@ exports[`blog view screen component should renders correctly 1`] = `
 >
   <CommentList
     entity={
-      BlogModel {
-        "__list": null,
+      Object {
         "access_id": "2",
         "allow_comments": true,
         "boost_rejection_reason": -1,
@@ -41,7 +40,7 @@ exports[`blog view screen component should renders correctly 1`] = `
         "license": "attribution-noncommercial-cc",
         "mature": false,
         "monetized": false,
-        "ownerObj": UserModel {
+        "ownerObj": Object {
           "__list": null,
           "access_id": "2",
           "allow_comments": true,
@@ -219,8 +218,7 @@ exports[`blog view screen component should renders correctly 1`] = `
         >
           <Unknown
             entity={
-              BlogModel {
-                "__list": null,
+              Object {
                 "access_id": "2",
                 "allow_comments": true,
                 "boost_rejection_reason": -1,
@@ -247,7 +245,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                 "license": "attribution-noncommercial-cc",
                 "mature": false,
                 "monetized": false,
-                "ownerObj": UserModel {
+                "ownerObj": Object {
                   "__list": null,
                   "access_id": "2",
                   "allow_comments": true,
@@ -401,8 +399,7 @@ exports[`blog view screen component should renders correctly 1`] = `
         >
           <_default
             entity={
-              BlogModel {
-                "__list": null,
+              Object {
                 "access_id": "2",
                 "allow_comments": true,
                 "boost_rejection_reason": -1,
@@ -429,7 +426,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                 "license": "attribution-noncommercial-cc",
                 "mature": false,
                 "monetized": false,
-                "ownerObj": UserModel {
+                "ownerObj": Object {
                   "__list": null,
                   "access_id": "2",
                   "allow_comments": true,
@@ -558,8 +555,7 @@ exports[`blog view screen component should renders correctly 1`] = `
           />
           <ThumbUpAction
             entity={
-              BlogModel {
-                "__list": null,
+              Object {
                 "access_id": "2",
                 "allow_comments": true,
                 "boost_rejection_reason": -1,
@@ -586,7 +582,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                 "license": "attribution-noncommercial-cc",
                 "mature": false,
                 "monetized": false,
-                "ownerObj": UserModel {
+                "ownerObj": Object {
                   "__list": null,
                   "access_id": "2",
                   "allow_comments": true,
@@ -716,8 +712,7 @@ exports[`blog view screen component should renders correctly 1`] = `
           />
           <ThumbDownAction
             entity={
-              BlogModel {
-                "__list": null,
+              Object {
                 "access_id": "2",
                 "allow_comments": true,
                 "boost_rejection_reason": -1,
@@ -744,7 +739,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                 "license": "attribution-noncommercial-cc",
                 "mature": false,
                 "monetized": false,
-                "ownerObj": UserModel {
+                "ownerObj": Object {
                   "__list": null,
                   "access_id": "2",
                   "allow_comments": true,

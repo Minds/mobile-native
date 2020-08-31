@@ -29,7 +29,6 @@ import Pinned from '../../common/components/Pinned';
 import blockListService from '../../common/services/block-list.service';
 import i18n from '../../common/services/i18n.service';
 import ActivityModel from '../ActivityModel';
-import BlockedChannel from '../../common/components/BlockedChannel';
 import ThemedStyles from '../../styles/ThemedStyles';
 import type FeedStore from '../../common/stores/FeedStore';
 import featuresService from '../../common/services/features.service';
@@ -207,15 +206,7 @@ export default class Activity extends Component<PropsType> {
   render() {
     const theme = ThemedStyles.style;
     const entity = ActivityModel.checkOrCreate(this.props.entity);
-
-    if (blockListService.blocked.has(entity.ownerObj.guid)) {
-      return (
-        <BlockedChannel entity={entity} navigation={this.props.navigation} />
-      );
-    }
-
     const hasText = !!entity.text || !!entity.title;
-
     const hasMedia = entity.hasMedia();
     const hasRemind = !!entity.remind_object;
 
