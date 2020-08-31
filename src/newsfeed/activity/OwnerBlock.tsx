@@ -138,7 +138,10 @@ class OwnerBlock extends PureComponent<PropsType> {
                 style={[styles.username, ThemedStyles.style.colorPrimaryText]}>
                 {channel.username}
               </Text>
-              <ChannelBadge channel={channel} />
+              {
+                //@ts-ignore
+                <ChannelBadge channel={channel} />
+              }
             </DebouncedTouchableOpacity>
             {this.group}
           </View>
