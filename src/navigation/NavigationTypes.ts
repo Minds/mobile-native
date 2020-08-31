@@ -126,7 +126,11 @@ export type AppStackParamList = {
   About: {
     store: ChannelStoreType;
   };
-  Activity: {};
+  Activity: {
+    entity?: ActivityModel;
+    guid?: string;
+    scrollToBottom?: boolean;
+  };
   Conversation: {};
   DiscoveryFeed: {};
   DiscoverySearch: { query: string; plus?: boolean };

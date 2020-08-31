@@ -3,7 +3,7 @@
 exports[`DiscoveryTagsManager component should render correctly 1`] = `
 <Memo(wrappedComponent)
   content={
-    <UNDEFINED>
+    <ScrollView>
       <SectionList
         ListHeaderComponent={
           <InputContainer
@@ -48,7 +48,7 @@ exports[`DiscoveryTagsManager component should render correctly 1`] = `
         updateCellsBatchingPeriod={50}
         windowSize={21}
       />
-    </UNDEFINED>
+    </ScrollView>
   }
   doneText="Done"
   height={500}

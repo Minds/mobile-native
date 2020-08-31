@@ -241,10 +241,10 @@
     "briefDescription": "Brief description about you...",
     "block": "Block",
     "unsubscribe": "Unsubscribe",
-    "unblock": "Un-Block",
+    "unblock": "Unblock channel",
     "report": "Report",
     "createFirstPost": "Create your first post",
-    "blockedNav": "You have blocked &{username}&",
+    "blocked": "Channel Blocked",
     "viewScheduled": "Scheduled",
     "edit": {
       "bio": "Bio",
@@ -333,7 +333,7 @@
     "empty": "Your newsfeed is empty"
   },
   "comments": {
-    "successRemoving": "Comment removed succesfully",
+    "successRemoving": "Comment removed",
     "comments": "Comments",
     "errorRemoving": "Error removing comment"
   },
@@ -832,7 +832,8 @@
     "button": "NSFW"
   },
   "update": {
-    "title": "Update to v{{version}}"
+    "title": "Update to v{{version}}",
+    "failed":"Error updating the App"
   },
   "searchBar": {
     "title":"Search Minds",

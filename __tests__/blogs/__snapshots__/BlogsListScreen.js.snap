@@ -470,7 +470,6 @@ exports[`blog list screen component should renders correctly 1`] = `
   initialNumToRender={10}
   keyExtractor={[Function]}
   maxToRenderPerBatch={10}
-  numColumns={1}
   onContentSizeChange={[Function]}
   onEndReached={[Function]}
   onEndReachedThreshold={2}
@@ -542,16 +541,7 @@ exports[`blog list screen component should renders correctly 1`] = `
             }
           >
             <View
-              accessible={true}
-              focusable={true}
-              isTVSelectable={true}
-              onClick={[Function]}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
+              onPress={[Function]}
               style={
                 Object {
                   "alignItems": "center",
@@ -559,7 +549,6 @@ exports[`blog list screen component should renders correctly 1`] = `
                   "borderBottomWidth": 2,
                   "flex": 1,
                   "flexDirection": "column",
-                  "opacity": 1,
                   "padding": 5,
                 }
               }
@@ -581,16 +570,7 @@ exports[`blog list screen component should renders correctly 1`] = `
               </Text>
             </View>
             <View
-              accessible={true}
-              focusable={true}
-              isTVSelectable={true}
-              onClick={[Function]}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
+              onPress={[Function]}
               style={
                 Object {
                   "alignItems": "center",
@@ -598,7 +578,6 @@ exports[`blog list screen component should renders correctly 1`] = `
                   "borderBottomWidth": 2,
                   "flex": 1,
                   "flexDirection": "column",
-                  "opacity": 1,
                   "padding": 5,
                 }
               }

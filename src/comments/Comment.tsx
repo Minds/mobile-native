@@ -34,7 +34,7 @@ import ThemedStyles from '../styles/ThemedStyles';
 import { showNotification } from '../../AppMessages';
 import ChannelBadge from '../common/components/ChannelBadge';
 
-const DoubleTapText = DoubleTap(Text);
+const DoubleTapTouch = DoubleTap(TouchableOpacity);
 
 /**
  * Comment Component
@@ -106,7 +106,12 @@ class Comment extends Component {
         </TouchableOpacity>
 
         <View style={styles.contentContainer}>
-          <View style={styles.content}>
+          <DoubleTapTouch
+            style={styles.content}
+            onDoubleTap={this.showActions}
+            hitSlop={null} // important, reducing the touch extra space for the touchable makes the text links easier to tap.
+            selectable={false}
+            onLongPress={this.showActions}>
             <View style={[styles.textContainer, theme.backgroundTertiary]}>
               {this.state.editing ? (
                 <CommentEditor
@@ -115,12 +120,7 @@ class Comment extends Component {
                   store={this.props.store}
                 />
               ) : (
-                <DoubleTapText
-                  style={[styles.message]}
-                  selectable={true}
-                  onDoubleTap={this.showActions}
-                  selectable={false}
-                  onLongPress={this.showActions}>
+                <Text style={styles.message} selectable={false}>
                   <Text style={styles.username} onPress={this._navToChannel}>
                     @{comment.ownerObj.username}
                   </Text>
@@ -135,10 +135,10 @@ class Comment extends Component {
                       {entities.decodeHTML(comment.description)}
                     </Tags>
                   )}
-                </DoubleTapText>
+                </Text>
               )}
             </View>
-          </View>
+          </DoubleTapTouch>
 
           {comment.mature ? (
             <ExplicitOverlay
@@ -237,17 +237,14 @@ class Comment extends Component {
               onPress: () => {
                 this.props.store
                   .delete(this.props.comment.guid)
-                  .then((result) => {
-                    Alert.alert(
-                      i18n.t('success'),
+                  .then(() => {
+                    showNotification(
                       i18n.t('comments.successRemoving'),
+                      'success',
                     );
                   })
-                  .catch((err) => {
-                    Alert.alert(
-                      i18n.t('error'),
-                      i18n.t('comments.errorRemoving'),
-                    );
+                  .catch(() => {
+                    showNotification(i18n.t('comments.errorRemoving'));
                   });
               },
             },
@@ -257,14 +254,10 @@ class Comment extends Component {
 
         break;
       case i18n.t('setExplicit'):
-        this.props.store
-          .commentToggleExplicit(this.props.comment.guid)
-          .then((result) => {});
+        this.props.store.commentToggleExplicit(this.props.comment.guid);
         break;
       case i18n.t('removeExplicit'):
-        this.props.store
-          .commentToggleExplicit(this.props.comment.guid)
-          .then((result) => {});
+        this.props.store.commentToggleExplicit(this.props.comment.guid);
         break;
       case i18n.t('report'):
         this.props.navigation.push('Report', { entity: this.props.comment });
@@ -350,7 +343,7 @@ const styles = StyleSheet.create({
   message: {
     paddingHorizontal: 6,
     paddingVertical: 6,
-    fontSize: 14,
+    fontSize: 16,
   },
   username: {
     // fontWeight: '800',

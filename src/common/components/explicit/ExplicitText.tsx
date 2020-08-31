@@ -17,6 +17,7 @@ import colors from '../../../styles/Colors';
 import i18n from '../../services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import type ActivityModel from 'src/newsfeed/ActivityModel';
+import LinearGradient from 'react-native-linear-gradient';
 
 type PropsType = {
   entity: ActivityModel;
@@ -52,9 +53,10 @@ export default class ExplicitText extends Component<PropsType, StateType> {
   };
 
   /**
-   * On component will mount
+   * constructor
    */
-  componentWillMount() {
+  constructor(props) {
+    super(props);
     Dimensions.addEventListener('change', this.dimensionChange);
   }
 
@@ -77,9 +79,7 @@ export default class ExplicitText extends Component<PropsType, StateType> {
       entity.title && !entity.perma_url
         ? entities.decodeHTML(entity.title).trim()
         : '';
-    let message = entity.message
-      ? entities.decodeHTML(entity.message).trim()
-      : '';
+    let message = entity.text ? entities.decodeHTML(entity.text).trim() : '';
 
     if (title === message) {
       message = '';
@@ -125,12 +125,23 @@ export default class ExplicitText extends Component<PropsType, StateType> {
     ) : null;
 
     return (
-      <View style={styles.container}>
+      <View
+        style={[styles.container, !!entity.paywall ? styles.paywalled : null]}>
         {titleCmp}
         {body}
         {moreLess}
         {explicitToggle}
+        {!!entity.paywall && this.renderGradient()}
       </View>
+    );
+  }
+
+  renderGradient() {
+    const backgroundColor = ThemedStyles.getColor('secondary_background');
+    const startColor = backgroundColor + '00';
+    const endColor = backgroundColor + 'FF';
+    return (
+      <LinearGradient colors={[startColor, endColor]} style={styles.linear} />
     );
   }
 
@@ -184,6 +195,19 @@ export default class ExplicitText extends Component<PropsType, StateType> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  paywalled: {
+    height: 70,
+    overflow: 'hidden',
+  },
+  linear: {
+    position: 'relative',
+    height: 60,
+    width: '100%',
+    // backgroundColor: 'red',
+    left: 0,
+    top: -65,
+    zIndex: 9999,
   },
   readmore: {
     color: colors.primary,

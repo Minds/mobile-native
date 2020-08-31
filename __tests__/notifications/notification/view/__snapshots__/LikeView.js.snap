@@ -2,21 +2,11 @@
 
 exports[`renders correctly for activity 1`] = `
 <View
-  accessible={true}
-  focusable={true}
-  isTVSelectable={true}
-  onClick={[Function]}
-  onResponderGrant={[Function]}
-  onResponderMove={[Function]}
-  onResponderRelease={[Function]}
-  onResponderTerminate={[Function]}
-  onResponderTerminationRequest={[Function]}
-  onStartShouldSetResponder={[Function]}
+  onPress={[Function]}
   style={
     Object {
       "flex": 1,
       "marginLeft": 8,
-      "opacity": 1,
     }
   }
 >
@@ -66,21 +56,11 @@ exports[`renders correctly for activity 1`] = `
 
 exports[`renders correctly for comment 1`] = `
 <View
-  accessible={true}
-  focusable={true}
-  isTVSelectable={true}
-  onClick={[Function]}
-  onResponderGrant={[Function]}
-  onResponderMove={[Function]}
-  onResponderRelease={[Function]}
-  onResponderTerminate={[Function]}
-  onResponderTerminationRequest={[Function]}
-  onStartShouldSetResponder={[Function]}
+  onPress={[Function]}
   style={
     Object {
       "flex": 1,
       "marginLeft": 8,
-      "opacity": 1,
     }
   }
 >
@@ -132,21 +112,11 @@ exports[`renders correctly for comment 1`] = `
 
 exports[`renders correctly for object 1`] = `
 <View
-  accessible={true}
-  focusable={true}
-  isTVSelectable={true}
-  onClick={[Function]}
-  onResponderGrant={[Function]}
-  onResponderMove={[Function]}
-  onResponderRelease={[Function]}
-  onResponderTerminate={[Function]}
-  onResponderTerminationRequest={[Function]}
-  onStartShouldSetResponder={[Function]}
+  onPress={[Function]}
   style={
     Object {
       "flex": 1,
       "marginLeft": 8,
-      "opacity": 1,
     }
   }
 >

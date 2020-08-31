@@ -47,6 +47,7 @@ export default class ActivityModel extends BaseModel {
   'thumbs:down:user_guids': Array<number>;
   'thumbs:up:user_guids': Array<number>;
   rowKey?: string;
+  description?: string; // on image objects in some cases the message is on description field
   containerObj?: GroupModel;
   remind_object?: ActivityModel;
   ownerObj!: UserModel;
@@ -107,6 +108,26 @@ export default class ActivityModel extends BaseModel {
    */
   get _list() {
     return this.__list;
+  }
+
+  /**
+   * Block owner
+   */
+  async blockOwner() {
+    await super.blockOwner();
+    if (this._list) {
+      this._list.refresh();
+    }
+  }
+
+  /**
+   * Unblock owner
+   */
+  async unblockOwner() {
+    await super.unblockOwner();
+    if (this._list) {
+      this._list.refresh();
+    }
   }
 
   /**
@@ -254,7 +275,7 @@ export default class ActivityModel extends BaseModel {
    * Get activity text
    */
   get text() {
-    return this.message || '';
+    return this.message || this.description || '';
   }
 
   @action

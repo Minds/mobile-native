@@ -113,8 +113,18 @@ const Lock = observer(({ entity, navigation }: PropsType) => {
     );
   }
 
+  let aspectRatio =
+    entity.custom_data &&
+    entity.custom_data[0] &&
+    entity.custom_data[0].width / entity.custom_data[0].height;
+
   return (
-    <View style={[styles.backgroundImage, styles.mask]}>
+    <View
+      style={[
+        styles.backgroundImage,
+        styles.mask,
+        aspectRatio ? { aspectRatio } : theme.fullHeight,
+      ]}>
       <Text
         style={[theme.colorWhite, styles.lockMessage, theme.marginBottom2x]}>
         {message}
@@ -128,8 +138,7 @@ const Lock = observer(({ entity, navigation }: PropsType) => {
 const styles = StyleSheet.create({
   mask: {
     position: 'absolute',
-    bottom: 0,
-    height: '100%',
+    top: 0,
     width: '100%',
     zIndex: 10,
     alignItems: 'center',
