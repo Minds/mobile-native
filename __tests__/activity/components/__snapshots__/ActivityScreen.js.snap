@@ -378,9 +378,12 @@ exports[`Activity screen component renders correctly  1`] = `
         >
           <View
             style={
-              Object {
-                "flex": 1,
-              }
+              Array [
+                Object {
+                  "flex": 1,
+                },
+                null,
+              ]
             }
           >
             <Text
