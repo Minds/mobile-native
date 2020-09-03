@@ -45,7 +45,7 @@
     "ethjs-signer": "^0.1.1",
     "expo": "^38.0.8",
     "expo-av": "^8.3.0",
-    "expo-linear-gradient": "^8.2.1",
+    "expo-linear-gradient": "~8.2.1",
     "i18n-js": "^3.2.2",
     "lodash": "^4.17.15",
     "mobx": "^5.15.4",
