@@ -1,3 +1,4 @@
+//@ts-ignore
 import RNFileShareIntent from 'react-native-file-share-intent';
 import {
   NativeEventEmitter,
