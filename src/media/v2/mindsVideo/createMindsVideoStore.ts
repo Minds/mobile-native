@@ -203,13 +203,10 @@ const createMindsVideoStore = ({ entity }) => {
       if (!this.showOverlay) {
         this.setShowOverlay(true);
       }
+
       this.hideOverlay();
     },
-    hideOverlay: _.debounce(() => {
-      if (store.showOverlay) {
-        store.setShowOverlay(false);
-      }
-    }, 4000),
+    hideOverlay: () => null,
     /**
      * Play the current video and activate the player
      */
@@ -256,6 +253,13 @@ const createMindsVideoStore = ({ entity }) => {
     },
     setPlayer(player: Video) {
       this.player = player;
+
+      // We define hide overlay here to avoid the weird scope issue on the arrow function
+      this.hideOverlay = _.debounce(() => {
+        if (this.showOverlay) {
+          this.setShowOverlay(false);
+        }
+      }, 4000);
     },
   };
   return store;

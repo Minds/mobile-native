@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   topbarRight: {
-    width: 100,
+    width: 50,
     justifyContent: 'flex-end',
     alignItems: 'center',
     flexDirection: 'row',

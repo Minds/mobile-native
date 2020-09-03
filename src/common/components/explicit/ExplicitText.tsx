@@ -12,6 +12,8 @@ import {
   TextStyle,
 } from 'react-native';
 
+import LinearGradient from 'expo-linear-gradient';
+
 import Tags from '../../../common/components/Tags';
 import colors from '../../../styles/Colors';
 import i18n from '../../services/i18n.service';
@@ -124,12 +126,23 @@ export default class ExplicitText extends Component<PropsType, StateType> {
     ) : null;
 
     return (
-      <View style={styles.container}>
+      <View
+        style={[styles.container, !!entity.paywall ? styles.paywalled : null]}>
         {titleCmp}
         {body}
         {moreLess}
         {explicitToggle}
+        {!!entity.paywall && this.renderGradient()}
       </View>
+    );
+  }
+
+  renderGradient() {
+    const backgroundColor = ThemedStyles.getColor('secondary_background');
+    const startColor = backgroundColor + '00';
+    const endColor = backgroundColor + 'FF';
+    return (
+      <LinearGradient colors={[startColor, endColor]} style={styles.linear} />
     );
   }
 
@@ -183,6 +196,19 @@ export default class ExplicitText extends Component<PropsType, StateType> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  paywalled: {
+    height: 70,
+    overflow: 'hidden',
+  },
+  linear: {
+    position: 'relative',
+    height: 60,
+    width: '100%',
+    // backgroundColor: 'red',
+    left: 0,
+    top: -65,
+    zIndex: 9999,
   },
   readmore: {
     color: colors.primary,

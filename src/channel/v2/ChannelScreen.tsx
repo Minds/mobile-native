@@ -10,6 +10,7 @@ import BlogCard from '../../blogs/BlogCard';
 import type BlogModel from '../../blogs/BlogModel';
 import i18n from '../../common/services/i18n.service';
 import { useFocusEffect } from '@react-navigation/native';
+import BlockedChannel from '../../common/components/BlockedChannel';
 
 type PropsType = {
   navigation: any;
@@ -48,6 +49,16 @@ const ChannelScreen = observer((props: PropsType) => {
   );
 
   const renderActivity = store.filter === 'blogs' ? renderBlog : undefined;
+
+  if (store.channel?.blocked) {
+    return (
+      <BlockedChannel
+        navigation={props.navigation}
+        channel={store.channel}
+        onPressBack={props.navigation.goBack}
+      />
+    );
+  }
 
   if (!store.loaded) {
     return <CenteredLoading />;

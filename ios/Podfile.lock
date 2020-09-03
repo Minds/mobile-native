@@ -262,7 +262,7 @@ PODS:
     - React
   - react-native-randombytes (3.5.3):
     - React
-  - react-native-safe-area-context (3.1.4):
+  - react-native-safe-area-context (3.1.7):
     - React
   - react-native-slider (3.0.3):
     - React
@@ -351,7 +351,7 @@ PODS:
     - React
   - RNDateTimePicker (2.6.0):
     - React
-  - RNDeviceInfo (4.0.1):
+  - RNDeviceInfo (5.6.5):
     - React
   - RNFastImage (8.0.0):
     - React
@@ -759,7 +759,7 @@ SPEC CHECKSUMS:
   react-native-netinfo: ddaca8bbb9e6e914b1a23787ccb879bc642931c9
   react-native-notifications: 163ddedac6fcc8d850ea15b06abdadcacdff00f1
   react-native-randombytes: 3638d24759d67c68f6ccba60c52a7a8a8faa6a23
-  react-native-safe-area-context: eb91fe1fb3f7b87d9c30a7f0808407d8569d539d
+  react-native-safe-area-context: 955ecfce672683b495d9294d2f154a9ad1d9796b
   react-native-slider: e99fc201cefe81270fc9d81714a7a0f5e566b168
   react-native-sqlite-storage: f06bfba10f67f989c00b6a699b9c2b80a816edbe
   react-native-video: d01ed7ff1e38fa7dcc6c15c94cf505e661b7bfd0
@@ -782,7 +782,7 @@ SPEC CHECKSUMS:
   RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f
   RNConvertPhAsset: 9b366b8a1abc194b76572712c6f7dd89c9e4e37f
   RNDateTimePicker: e386ff4ef3300964ed0cad97ce6f206e0effbfdb
-  RNDeviceInfo: 687c1b2ab6d86ff1ca1208783320cd144138c7f2
+  RNDeviceInfo: c5f8f3a456adcbba405ace475254b08febc4c095
   RNFastImage: c104f15f04c4f68bd65c9645cc27900bbacd9cc7
   RNFileShareIntent: 65b162c473575e83ce7dffc494dcda5a6b6ecbc0
   RNFS: 2bd9eb49dc82fa9676382f0585b992c424cd59df
