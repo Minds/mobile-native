@@ -36,7 +36,7 @@ const UserNamesComponent: FunctionComponent<propsType> = observer(
           ]}>
           {pay && (
             <View style={[theme.rowStretch, theme.centered]}>
-              <Text style={[theme.bold, theme.fontXL]}>Pay</Text>
+              <Text style={[theme.bold, theme.fontXL]}>Tip</Text>
               <MIcon size={30} name="menu-right" color="#95C064" />
             </View>
           )}

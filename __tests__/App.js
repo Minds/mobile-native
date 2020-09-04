@@ -35,6 +35,7 @@ jest.mock('react-native-convert-ph-asset');
 jest.mock('@react-navigation/native');
 jest.mock('@react-navigation/bottom-tabs');
 jest.mock('react-native-screens/native-stack');
+jest.mock('react-native-file-share-intent');
 
 //mock i18n
 jest.mock('react-native-video');

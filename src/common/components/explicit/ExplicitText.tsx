@@ -1,4 +1,3 @@
-//@ts-nocheck
 import React, { Component } from 'react';
 
 import { observer } from 'mobx-react';
@@ -12,13 +11,12 @@ import {
   TextStyle,
 } from 'react-native';
 
-import LinearGradient from 'expo-linear-gradient';
-
 import Tags from '../../../common/components/Tags';
 import colors from '../../../styles/Colors';
 import i18n from '../../services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
-import type ActivityModel from 'src/newsfeed/ActivityModel';
+import type ActivityModel from '../../../newsfeed/ActivityModel';
+import { LinearGradient } from 'expo-linear-gradient';
 
 type PropsType = {
   entity: ActivityModel;
@@ -86,8 +84,8 @@ export default class ExplicitText extends Component<PropsType, StateType> {
       message = '';
     }
 
-    let body = null;
-    let moreLess = null;
+    let body: Element | null = null;
+    let moreLess: JSX.Element | null = null;
     let explicitToggle = null;
 
     if (message !== '') {
@@ -141,6 +139,7 @@ export default class ExplicitText extends Component<PropsType, StateType> {
     const backgroundColor = ThemedStyles.getColor('secondary_background');
     const startColor = backgroundColor + '00';
     const endColor = backgroundColor + 'FF';
+    console.log('LinearGradient', Text);
     return (
       <LinearGradient colors={[startColor, endColor]} style={styles.linear} />
     );
