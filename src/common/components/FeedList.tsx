@@ -19,7 +19,6 @@ import i18n from '../services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import type FeedStore from '../stores/FeedStore';
 import type ActivityModel from '../../newsfeed/ActivityModel';
-import { ChannelTabType } from '../../channel/v2/createChannelStore';
 
 type PropsType = {
   feedStore: FeedStore;

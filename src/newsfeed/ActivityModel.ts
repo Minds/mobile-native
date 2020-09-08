@@ -46,6 +46,7 @@ export default class ActivityModel extends BaseModel {
   'comments:count': number;
   'thumbs:down:user_guids': Array<number>;
   'thumbs:up:user_guids': Array<number>;
+  seen?: boolean;
   rowKey?: string;
   description?: string; // on image objects in some cases the message is on description field
   containerObj?: GroupModel;

@@ -59,6 +59,11 @@ import ThemedStyles from './src/styles/ThemedStyles';
 import { StoresProvider } from './src/common/hooks/use-stores';
 import AppMessages from './AppMessages';
 import i18n from './src/common/services/i18n.service';
+import portraitContentService from './src/portrait/PortraitContentService';
+
+// disable warnings
+import { YellowBox } from 'react-native';
+YellowBox.ignoreWarnings(['']);
 
 const stores = getStores();
 let deepLinkUrl = '';
@@ -141,6 +146,7 @@ sessionService.onLogin(async () => {
     entitiesStorage.removeOlderThan(30);
     feedsStorage.removeOlderThan(30);
     commentStorageService.removeOlderThan(30);
+    portraitContentService.removeOlderThan(3);
   }, 30000);
 });
 

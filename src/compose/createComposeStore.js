@@ -41,6 +41,7 @@ const DEFAULT_MONETIZE = {
  */
 export default function ({ props, newsfeed }) {
   return {
+    portraitMode: false,
     isRemind: false,
     isEdit: false,
     mode: settingsStore.composerMode,
@@ -62,11 +63,18 @@ export default function ({ props, newsfeed }) {
       const params = props.route.params;
       if (
         !params ||
-        (!params.entity && !params.mode && !params.media && !params.text)
+        (!params.entity &&
+          !params.mode &&
+          !params.media &&
+          !params.text &&
+          !params.portrait)
       ) {
         return;
       }
 
+      console.log(params);
+
+      this.portraitMode = params.portrait;
       this.isRemind = params.isRemind;
       this.isEdit = params.isEdit;
       this.entity = params.entity || null;
@@ -99,6 +107,7 @@ export default function ({ props, newsfeed }) {
         mode: undefined,
         isRemind: undefined,
         text: undefined,
+        portrait: undefined,
       });
     },
     onPost(entity, isEdit) {

@@ -5494,10 +5494,10 @@ expo-asset@~8.1.7:
     path-browserify "^1.0.0"
     url-parse "^1.4.4"
 
-expo-av@^8.3.0:
-  version "8.3.0"
-  resolved "https://registry.yarnpkg.com/expo-av/-/expo-av-8.3.0.tgz#d4a7863000c5787fcd4ea3b40e97e639ce252ede"
-  integrity sha512-Povz56nfGDf2tVXWsHCiVtCtoiD6MlgxCne+BjVuPGMMRxK+7bNWobpXH/CJEz35bVe2vSwPXKwTL1cwjh8+Rg==
+expo-av@^8.4.0:
+  version "8.4.0"
+  resolved "https://registry.yarnpkg.com/expo-av/-/expo-av-8.4.0.tgz#84881f89df35361893b55e739a639cd51d3ecf04"
+  integrity sha512-yboOV6hlZTKPjcEb7bxqIPAQIZ5SupaPEWvGv7aVzdoPNhmY4/uEceMQ6Pm8d33r72Zofp5fR1a2Alvg18bVUQ==
   dependencies:
     lodash "^4.17.15"
     nullthrows "^1.1.0"
@@ -10527,9 +10527,9 @@ react-native-navigation-bar-color@^2.0.1:
   resolved "https://registry.yarnpkg.com/react-native-navigation-bar-color/-/react-native-navigation-bar-color-2.0.1.tgz#ee2be25cc37105f7da355717b0a9a32c9c059ae6"
   integrity sha512-1kE/oxWt+HYjRxdZdvke9tJ365xaee5n3+euOQA1En8zQuSbOxiE4SYEGM7TeaWnmLJ0l37mRnPHaB2H4mGh0A==
 
-react-native-notifications@Minds/react-native-notifications#333e376f866a805f250cc68706d97ace503b948a:
+react-native-notifications@Minds/react-native-notifications#6955229ed2b7c44a75b151d727acf532fc4fd7ba:
   version "2.0.6"
-  resolved "https://codeload.github.com/Minds/react-native-notifications/tar.gz/333e376f866a805f250cc68706d97ace503b948a"
+  resolved "https://codeload.github.com/Minds/react-native-notifications/tar.gz/6955229ed2b7c44a75b151d727acf532fc4fd7ba"
   dependencies:
     core-js "^1.0.0"
     uuid "^2.0.3"

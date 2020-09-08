@@ -5,7 +5,6 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { View } from 'react-native';
 
-import GroupsBar from '../groups/GroupsBar';
 import FeedList from '../common/components/FeedList';
 import type { AppStackParamList } from '../navigation/NavigationTypes';
 import type MessengerListStore from '../messenger/MessengerListStore';
@@ -14,6 +13,7 @@ import type NewsfeedStore from './NewsfeedStore';
 import type NotificationsStore from '../notifications/NotificationsStore';
 import CheckLanguage from '../common/components/CheckLanguage';
 import ActivityPlaceHolder from './ActivityPlaceHolder';
+import PortraitContentBar from '../portrait/PortraitContentBar';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
@@ -37,8 +37,7 @@ type PropsType = {
 @observer
 class NewsfeedScreen extends Component<PropsType> {
   disposeTabPress?: Function;
-  groupsBar: GroupsBar | null = null;
-
+  portraitBar = React.createRef<typeof PortraitContentBar>();
   /**
    * Nav to activity full screen
    */
@@ -73,9 +72,6 @@ class NewsfeedScreen extends Component<PropsType> {
 
     await this.props.newsfeed.feedStore.fetchRemoteOrLocal();
 
-    // load groups after the feed
-    if (this.groupsBar) await this.groupsBar.initialLoad();
-
     // load messenger
     this.props.messengerList.loadList();
 
@@ -100,7 +96,11 @@ class NewsfeedScreen extends Component<PropsType> {
     }
   }
 
-  setGroupsBarRef = (r) => (this.groupsBar = r);
+  refreshPortrait = () => {
+    if (this.portraitBar.current) {
+      this.portraitBar.current.load();
+    }
+  };
 
   /**
    * Render
@@ -111,6 +111,7 @@ class NewsfeedScreen extends Component<PropsType> {
     const header = (
       <View>
         <CheckLanguage />
+        <PortraitContentBar ref={this.portraitBar} />
       </View>
     );
 
@@ -132,6 +133,7 @@ class NewsfeedScreen extends Component<PropsType> {
         header={header}
         feedStore={newsfeed.feedStore}
         navigation={this.props.navigation}
+        onRefresh={this.refreshPortrait}
         {...additionalProps}
       />
     );

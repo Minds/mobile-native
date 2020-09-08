@@ -46,6 +46,10 @@ export type AuthStackParamList = {
 };
 
 export type ActivityFullScreenParamList = {
+  PortraitViewerScreen: {
+    activities: Array<ActivityModel>;
+    current: number;
+  };
   ActivityFullScreen: {
     feed: FeedStore;
     current: number;
