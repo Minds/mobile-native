@@ -198,16 +198,15 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   paywalled: {
-    height: 70,
+    maxHeight: 70,
     overflow: 'hidden',
   },
   linear: {
-    position: 'relative',
-    height: 60,
+    position: 'absolute',
+    height: 50,
     width: '100%',
-    // backgroundColor: 'red',
     left: 0,
-    top: -65,
+    bottom: 0,
     zIndex: 9999,
   },
   readmore: {
