@@ -119,7 +119,7 @@ class MessengerScreen extends Component {
       );
     }
 
-    const iconRight = messengerList.configured ? 'md-unlock' : null;
+    const iconRight = messengerList.configured ? 'md-lock-open-outline' : null;
     const footer = this.getFooter();
 
     return (
