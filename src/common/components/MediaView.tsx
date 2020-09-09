@@ -92,8 +92,6 @@ export default class MediaView extends Component<PropsType> {
             : mediaProxyUrl(this.props.entity.thumbnail_src),
       };
 
-      console.log(source);
-
       return (
         <View style={styles.richMediaContainer}>
           {source.uri ? this.getImage(source) : null}
