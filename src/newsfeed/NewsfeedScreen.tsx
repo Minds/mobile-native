@@ -37,7 +37,7 @@ type PropsType = {
 @observer
 class NewsfeedScreen extends Component<PropsType> {
   disposeTabPress?: Function;
-  portraitBar = React.createRef<typeof PortraitContentBar>();
+  portraitBar = React.createRef<any>();
   /**
    * Nav to activity full screen
    */
