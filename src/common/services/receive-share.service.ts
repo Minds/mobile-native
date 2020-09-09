@@ -1,11 +1,5 @@
 // import RNFileShareIntent from 'react-native-file-share-intent';
-import {
-  NativeEventEmitter,
-  NativeModules,
-  Image,
-  Platform,
-} from 'react-native';
-const { ModuleWithEmitter } = NativeModules;
+import { Image } from 'react-native';
 import type { EmitterSubscription } from 'react-native';
 
 import navigationService from '../../navigation/NavigationService';
@@ -26,18 +20,6 @@ export type SharedItem = {
  */
 class ReceiveShareService {
   subscription!: EmitterSubscription;
-
-  constructor() {
-    // if (process.env.JEST_WORKER_ID === undefined && Platform.OS === 'android') {
-    //   const eventEmitter = new NativeEventEmitter(ModuleWithEmitter);
-    //   this.subscription = eventEmitter.addListener(
-    //     'FileShareIntent',
-    //     (event) => {
-    //       setTimeout(() => this.handleMedia(event), 200);
-    //     },
-    //   );
-    // }
-  }
 
   /**
    * Handle a media event
