@@ -1,8 +1,6 @@
 import blogsService from '../../src/blogs/BlogsService';
 import BlogsStore from '../../src/blogs/BlogsStore';
 import BlogModel from '../../src/blogs/BlogModel';
-import OffsetListStore from '../../src/common/stores/OffsetListStore';
-import { whenWithTimeout } from 'mobx-utils';
 
 jest.mock('../../src/blogs/BlogsService');
 jest.mock('../../src/blogs/BlogModel');

@@ -1,4 +1,4 @@
-import { whenWithTimeout } from 'mobx-utils';
+import { when } from 'mobx';
 import channelService from '../../src/channel/ChannelService';
 import UserStore from '../../src/auth/UserStore';
 import meFactory from '../../__mocks__/fake/auth/MeFactory';
@@ -28,11 +28,10 @@ describe('user store', () => {
     // UserModel.create.mockReturnValue(apiResponseFake.channel);
 
     // me observable should be updated with the api returned data
-    await whenWithTimeout(
+    when(
       () => store.me.guid,
       () => expect(store.me.guid).toEqual(apiResponseFake.channel.guid),
-      200,
-      () => done.fail("store didn't set me observable"),
+      { timeout: 200 },
     );
 
     try {
@@ -57,11 +56,10 @@ describe('user store', () => {
     const fakeUser = meFactory(1);
 
     // me observable should be updated with the new user
-    whenWithTimeout(
+    when(
       () => store.me.guid,
       () => expect(store.me.guid).toEqual(fakeUser.guid),
-      200,
-      () => done.fail("store didn't set me observable"),
+      { timeout: 200 },
     );
 
     try {
@@ -83,11 +81,10 @@ describe('user store', () => {
     const fakeUser = meFactory(1);
 
     // me observable should be updated with the new user
-    whenWithTimeout(
+    when(
       () => store.me.rewards === true,
       () => expect(store.me.rewards).toEqual(true),
-      200,
-      () => done.fail("store didn't set me observable"),
+      { timeout: 200 },
     );
 
     try {
@@ -107,11 +104,10 @@ describe('user store', () => {
       const fakeUser = meFactory(1);
 
       // me observable should be updated with the new user
-      whenWithTimeout(
+      when(
         () => store.me.eth_wallet === '0xFFFFFFFF',
         () => done(),
-        200,
-        () => done.fail("store didn't set me observable"),
+        { timeout: 200 },
       );
 
       // set the user
@@ -135,11 +131,10 @@ describe('user store', () => {
       store.setUser(fakeUser);
 
       // me observable should be updated with the new user
-      whenWithTimeout(
+      when(
         () => store.me.guid !== 1,
         () => expect(store.me.guid).toEqual(''),
-        200,
-        () => done.fail("store didn't set me observable"),
+        { timeout: 200 },
       );
 
       // clear
@@ -162,11 +157,10 @@ describe('user store', () => {
       store.setUser(fakeUser);
 
       // me observable should be updated with the new user
-      whenWithTimeout(
+      when(
         () => store.me.guid !== 1,
         () => expect(store.me.guid).toEqual(''),
-        200,
-        () => done.fail("store didn't set me observable"),
+        { timeout: 200 },
       );
 
       // clear

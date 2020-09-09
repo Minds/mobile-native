@@ -16,6 +16,8 @@ type PropsType = {
   backdropOpacity?: number;
 };
 
+const extractor = (r, i) => String(i);
+
 export default class Selector extends Component<PropsType> {
   state = {
     show: false,
@@ -116,6 +118,7 @@ export default class Selector extends Component<PropsType> {
               renderItem={this.renderItem}
               extraData={this.state.selected}
               ref={this.flatListRef}
+              keyExtractor={extractor}
               onScrollToIndexFailed={() =>
                 this.flatListRef.current?.scrollToEnd()
               }

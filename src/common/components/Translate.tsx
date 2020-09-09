@@ -9,7 +9,7 @@ import { Icon } from 'react-native-elements';
 import { CommonStyle } from '../../styles/Common';
 import translationService from '../../common/services/translation.service';
 import Tags from '../../common/components/Tags';
-import ModalPicker from './ModalPicker';
+import Selector from '../../common/components/Selector';
 import CenterLoading from '../../common/components/CenteredLoading';
 import i18n from '../services/i18n.service';
 import type ActivityModel from 'src/newsfeed/ActivityModel';
@@ -31,6 +31,11 @@ export default class Translate extends PureComponent<PropsType> {
    */
   selectedResolve = null;
 
+  /**
+   * Selector ref
+   */
+  selectorRef = React.createRef<any>(null);
+
   state = {
     show: false,
     languages: null,
@@ -49,6 +54,8 @@ export default class Translate extends PureComponent<PropsType> {
       this.state.current || i18n.getCurrentLocale() || languages[0].language;
 
     this.setState({ languages, current });
+
+    this.selectorRef.current?.show();
 
     const selectPromise = new Promise((resolve, reject) => {
       this.selectedResolve = resolve;
@@ -120,13 +127,19 @@ export default class Translate extends PureComponent<PropsType> {
    */
   render() {
     if (!this.state.show) return null;
-    const picker = this.state.languages ? this.renderPicker() : null;
     const translated = this.renderTranslated();
 
     return (
       <View>
         {this.state.translating ? <CenterLoading /> : null}
-        {picker}
+        <Selector
+          ref={this.selectorRef}
+          onItemSelect={this.languageSelected}
+          title={''}
+          data={this.state.languages}
+          valueExtractor={(item) => item.name}
+          keyExtractor={(item) => item.language}
+        />
         {translated}
       </View>
     );
@@ -234,24 +247,6 @@ export default class Translate extends PureComponent<PropsType> {
           </Text>
         </View>
       </View>
-    );
-  }
-
-  /**
-   * Render languages picker
-   */
-  renderPicker() {
-    return (
-      <ModalPicker
-        onSelect={this.languageSelected}
-        onCancel={this.cancel}
-        value={this.state.current}
-        show={true}
-        title="Select Language"
-        valueField="language"
-        labelField="name"
-        items={this.state.languages}
-      />
     );
   }
 }
