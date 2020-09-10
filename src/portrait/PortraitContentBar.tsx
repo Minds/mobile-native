@@ -42,20 +42,21 @@ const PortraitContentBar = observer(
     }));
 
     const renderItem = useCallback(
-      (row: { item: PortraitBarItem }) => (
+      (row: { item: PortraitBarItem; index: number }) => (
         <PortraitContentBarItem
           item={row.item}
           onPress={() =>
             navigation.push('ActivityFullScreenNav', {
               screen: 'PortraitViewerScreen',
               params: {
-                activities: row.item.activities,
+                items: store.items,
+                index: row.index,
               },
             })
           }
         />
       ),
-      [navigation],
+      [navigation, store],
     );
 
     return (

@@ -2,11 +2,12 @@ import UserModel from '../channel/UserModel';
 import { ChannelStoreType } from '../channel/v2/createChannelStore';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { WalletStoreType } from '../wallet/v2/createWalletStore';
+import type { WalletStoreType } from '../wallet/v2/createWalletStore';
 import type FeedStore from '../common/stores/FeedStore';
-import { ComposeStoreType } from '../compose/useComposeStore';
+import type { ComposeStoreType } from '../compose/useComposeStore';
 import type ActivityModel from '../newsfeed/ActivityModel';
-import { SupportTiersType } from '../wire/WireTypes';
+import type { SupportTiersType } from '../wire/WireTypes';
+import type { PortraitBarItem } from '../portrait/createPortraitStore';
 
 export type DrawerParamList = {
   Tabs: {};
@@ -47,8 +48,8 @@ export type AuthStackParamList = {
 
 export type ActivityFullScreenParamList = {
   PortraitViewerScreen: {
-    activities: Array<ActivityModel>;
-    current: number;
+    items: Array<PortraitBarItem>;
+    index: number;
   };
   ActivityFullScreen: {
     feed: FeedStore;

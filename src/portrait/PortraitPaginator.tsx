@@ -1,6 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet } from 'react-native';
 import { Pagination } from '@crowdlinker/react-native-pager';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type PropsType = {
   store: {
@@ -28,10 +29,14 @@ const pagerAnimation = {
  * Portrait paginator
  */
 export default function PortraitPaginator({ store, pages }: PropsType) {
+  const insets = useSafeAreaInsets();
+
+  const style = StyleSheet.flatten([
+    styles.circlesContainer,
+    { marginTop: insets.top ? insets.top - 5 : 0 },
+  ]);
   return (
-    <Pagination
-      pageInterpolation={pagerAnimation}
-      style={styles.circlesContainer}>
+    <Pagination pageInterpolation={pagerAnimation} style={style}>
       {React.Children.map(pages, (_, i) => (
         <Marker i={i} onPress={store.setIndex} />
       ))}
@@ -49,15 +54,22 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 8,
     borderRadius: 10,
+    elevation: 1,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.18,
+    shadowRadius: 1.0,
   },
   circlesContainer: {
     position: 'absolute',
     flexDirection: 'row',
-    top: 110,
+    top: 73,
     left: 0,
     height: 8,
     width: '100%',
-    marginTop: 10,
     paddingHorizontal: 10,
     zIndex: 9999,
   },

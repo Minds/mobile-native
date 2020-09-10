@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { ActivityFullScreenParamList } from '../navigation/NavigationTypes';
 import { RouteProp } from '@react-navigation/native';
 import { useLocalStore, observer } from 'mobx-react';
@@ -9,14 +9,11 @@ import {
   Extrapolate,
 } from '@crowdlinker/react-native-pager';
 
-import ActivityFullScreen from '../discovery/v2/viewer/ActivityFullScreen';
 import { StatusBar } from 'react-native';
 import { useDimensions } from '@react-native-community/hooks';
 import ThemedStyles from '../styles/ThemedStyles';
-import portraitContentService from './PortraitContentService';
-import Viewed from '../common/stores/Viewed';
 import MetadataService from '../common/services/metadata.service';
-import PortraitPaginator from './PortraitPaginator';
+import UserContentSwiper from './UserContentSwiper';
 
 type ActivityFullScreenRouteProp = RouteProp<
   ActivityFullScreenParamList,
@@ -34,25 +31,13 @@ metadataService.setSource('portrait').setMedium('feed');
  * Portrait content swiper
  */
 const PortraitViewerScreen = observer((props: PropsType) => {
-  const activities = props.route.params.activities;
-  const firstUnseen = activities.findIndex((a) => !a.seen);
-
   const store = useLocalStore(() => ({
-    index: firstUnseen !== -1 ? firstUnseen : 0,
-    viewed: new Viewed(),
+    index: props.route.params.index,
+    items: props.route.params.items,
     setIndex(v) {
       store.index = v;
-      portraitContentService.seen(activities[store.index].urn);
-      activities[store.index].seen = true;
-      store.viewed.addViewed(activities[store.index], metadataService);
     },
   }));
-
-  useEffect(() => {
-    store.viewed.addViewed(activities[store.index], metadataService);
-    portraitContentService.seen(activities[store.index].urn);
-    activities[store.index].seen = true;
-  }, [activities, store.index, store.viewed]);
 
   const { width, height } = useDimensions().window;
   const angle = 0.5;
@@ -91,22 +76,21 @@ const PortraitViewerScreen = observer((props: PropsType) => {
     },
   };
 
-  const pages = activities.map((e, i) => (
-    <ActivityFullScreen key={i} entity={e} />
+  const pages = store.items.map((item, index) => (
+    <UserContentSwiper key={index} item={item} />
   ));
 
   return (
     <PagerProvider activeIndex={store.index} onChange={store.setIndex}>
       <Pager
         adjacentChildOffset={1}
-        maxIndex={activities.length - 1}
+        maxIndex={store.items.length - 1}
         style={pagerStyle}
         clamp={{ next: 1, prev: 1 }}
         pageInterpolation={stackConfig}
         initialIndex={store.index}>
         {pages}
       </Pager>
-      <PortraitPaginator store={store} pages={pages} />
     </PagerProvider>
   );
 });
