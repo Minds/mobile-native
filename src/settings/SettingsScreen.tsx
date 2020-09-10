@@ -1,6 +1,6 @@
 //@ts-nocheck
 import React, { useCallback } from 'react';
-import { View, FlatList, Text } from 'react-native';
+import { View, FlatList, Text, Linking } from 'react-native';
 import MenuItem from '../common/components/menus/MenuItem';
 import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
@@ -74,6 +74,15 @@ export default function ({ navigation }) {
     onPress: setDarkMode,
   };
 
+  const help = {
+    title: i18n.t('help'),
+    onPress: () => Linking.openURL('https://www.minds.com/help'),
+    icon: {
+      name: 'help-circle-outline',
+      type: 'material-community',
+    },
+  };
+
   return (
     <View style={[theme.flexContainer, theme.backgroundPrimary]}>
       <View style={innerWrapper}>
@@ -94,7 +103,8 @@ export default function ({ navigation }) {
       </View>
       <View style={[innerWrapper, theme.marginTop7x]}>
         <MenuItem item={themeChange} i={4} />
-        <MenuItem item={logOut} i={5} />
+        <MenuItem item={help} i={5} />
+        <MenuItem item={logOut} i={6} />
       </View>
     </View>
   );
