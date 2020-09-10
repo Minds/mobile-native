@@ -1,7 +1,7 @@
 //@ts-nocheck
 import React from 'react';
 import { View, BackHandler } from 'react-native';
-import JitsiMeet, { JitsiMeetView } from 'react-native-jitsi-meet';
+// import JitsiMeet, { JitsiMeetView } from 'react-native-jitsi-meet';
 import { CommonStyle } from '../styles/Common';
 import sessionService from '../common/services/session.service';
 import gatheringService from '../common/services/gathering.service';
@@ -42,7 +42,7 @@ class Gathering extends React.Component {
         const user = sessionService.getUser();
         const avatar = user.getAvatarSource().uri;
 
-        JitsiMeet.callWithUserInfo(url, avatar, user.name, entity.name);
+        // JitsiMeet.callWithUserInfo(url, avatar, user.name, entity.name);
       }, 300);
     }
   }
@@ -59,7 +59,7 @@ class Gathering extends React.Component {
     if (this.timer) {
       clearTimeout(this.timer);
     }
-    JitsiMeet.endCall();
+    // JitsiMeet.endCall();
   }
 
   /**
@@ -82,7 +82,7 @@ class Gathering extends React.Component {
       this.backHandler = BackHandler.addEventListener(
         'hardwareBackPress',
         () => {
-          JitsiMeet.endCall();
+          // JitsiMeet.endCall();
           return true;
         },
       );
@@ -100,12 +100,12 @@ class Gathering extends React.Component {
   render() {
     return (
       <View style={[CommonStyle.flexContainer, CommonStyle.backgroundBlack]}>
-        <JitsiMeetView
+        {/* <JitsiMeetView
           onConferenceTerminated={this.onConferenceTerminated}
           onConferenceJoined={this.onConferenceJoined}
           onConferenceWillJoin={this.onConferenceWillJoin}
           style={[CommonStyle.flexContainer, CommonStyle.backgroundBlack]}
-        />
+        /> */}
       </View>
     );
   }
