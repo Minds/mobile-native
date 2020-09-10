@@ -42,9 +42,8 @@ const CommentsAction = observer((props: PropsType) => {
     }
     const cantOpen =
       !props.entity.allow_comments && props.entity['comments:count'] === 0;
-    // TODO: fix
-    const routes = props.navigation.dangerouslyGetState().routes;
-    if ((routes && routes[routes.length - 1].name === 'Activity') || cantOpen) {
+
+    if ((route && route.name === 'Activity') || cantOpen) {
       return;
     }
     if (props.entity.subtype && props.entity.subtype === 'blog') {
@@ -58,10 +57,10 @@ const CommentsAction = observer((props: PropsType) => {
         scrollToBottom: true,
       });
     }
-  }, [props]);
+  }, [props, route]);
 
   useEffect(() => {
-    if (route.params?.focusedUrn) {
+    if (route && route.params?.focusedUrn) {
       setTimeout(() => {
         openComments();
       }, 100);
