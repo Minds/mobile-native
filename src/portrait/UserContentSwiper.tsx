@@ -90,16 +90,14 @@ const UserContentSwiper = observer((props: PropsType) => {
   };
 
   const onTapStateChange = useCallback(
-    ({ nativeEvent, preventDefault }) => {
+    ({ nativeEvent }) => {
       const halfWidth = width / 2;
       if (nativeEvent.pageX < halfWidth) {
         if (store.index > 0) {
           store.setIndex(store.index - 1);
-          preventDefault();
         }
       } else if (store.index < activities.length - 1) {
         store.setIndex(store.index + 1);
-        preventDefault();
       }
     },
     [activities.length, store],
