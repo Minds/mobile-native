@@ -130,6 +130,7 @@ export type AppStackParamList = {
     entity?: ActivityModel;
     guid?: string;
     scrollToBottom?: boolean;
+    focusedUrn?: string;
   };
   Conversation: {};
   DiscoveryFeed: {};
