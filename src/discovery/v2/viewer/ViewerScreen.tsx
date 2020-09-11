@@ -13,6 +13,7 @@ import type FeedStore from '../../../common/stores/FeedStore';
 import { StatusBar } from 'react-native';
 import { useDimensions } from '@react-native-community/hooks';
 import ThemedStyles from '../../../styles/ThemedStyles';
+import SwipeAnimation from '../../../common/components/animations/SwipeAnimation';
 
 type ActivityFullScreenRouteProp = RouteProp<
   ActivityFullScreenParamList,
@@ -108,10 +109,12 @@ const ViewerScreen = observer((props: PropsType) => {
         {feedStore.entities.map((e, i) => (
           <ActivityFullScreen key={i} entity={e} />
         ))}
-        {/* {feedStore.loading && <CenteredLoading />} */}
       </Pager>
+      <SwipeAnimation style={swipeStyle} autoPlay={true} />
     </PagerProvider>
   );
 });
+
+const swipeStyle = { width: '100%', height: 200 };
 
 export default ViewerScreen;
