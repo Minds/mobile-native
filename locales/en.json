@@ -256,8 +256,8 @@
       "dob": "Date of Birth"
     },
     "badges": "Badges",
-    "fabSend": "Send Payment",
-    "fabPay": "Pay"
+    "fabSend": "Send Tip",
+    "fabPay": "Tip"
   },
   "discovery": {
     "title":"Discovery",
@@ -1003,5 +1003,6 @@
   "purchase":"Purchase",
   "verification":"Verification",
   "verify":"Verify",
-  "other":"Other"
+  "other":"Other",
+  "help":"Help"
 }

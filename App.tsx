@@ -35,6 +35,7 @@ import './AppErrors';
 import './src/common/services/socket.service';
 import pushService from './src/common/services/push.service';
 import mindsService from './src/common/services/minds.service';
+import ShareMenu from 'react-native-share-menu';
 import receiveShare from './src/common/services/receive-share.service';
 import sessionService from './src/common/services/session.service';
 import deeplinkService from './src/common/services/deeplinks-router.service';
@@ -133,12 +134,11 @@ sessionService.onLogin(async () => {
       // handle initial notifications (if the app is opened by tap on one)
       pushService.handleInitialNotification();
 
-      // handle shared
-      receiveShare.handle();
+      ShareMenu.getInitialShare(receiveShare.handle);
     } catch (err) {
       logService.exception(err);
     }
-  }, 500);
+  }, 200);
 
   // fire offline cache garbage collector 30 seconds after start
   setTimeout(() => {
@@ -181,6 +181,8 @@ type Props = {};
  */
 @observer
 class App extends Component<Props, State> {
+  ShareReceiveListener;
+
   /**
    * State
    */
@@ -192,14 +194,6 @@ class App extends Component<Props, State> {
    * Handle app state changes
    */
   handleAppStateChange = (nextState) => {
-    // if the app turns active we check for shared
-    if (
-      this.state.appState &&
-      this.state.appState.match(/inactive|background/) &&
-      nextState === 'active'
-    ) {
-      receiveShare.handle();
-    }
     this.setState({ appState: nextState });
   };
 
@@ -249,6 +243,10 @@ class App extends Component<Props, State> {
       BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
       Linking.addEventListener('url', this.handleOpenURL);
       AppState.addEventListener('change', this.handleAppStateChange);
+
+      this.ShareReceiveListener = ShareMenu.addNewShareListener(
+        receiveShare.handle,
+      );
 
       if (!this.handlePasswordResetDeepLink()) {
         logService.info('[App] initializing session');
@@ -314,6 +312,9 @@ class App extends Component<Props, State> {
     BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
     Linking.removeEventListener('url', this.handleOpenURL);
     AppState.removeEventListener('change', this.handleAppStateChange);
+    if (this.ShareReceiveListener) {
+      this.ShareReceiveListener.remove();
+    }
   }
 
   /**

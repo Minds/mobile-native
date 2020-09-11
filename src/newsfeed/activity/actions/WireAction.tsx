@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 
 import { TouchableOpacity } from 'react-native';
 
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { CommonStyle } from '../../../styles/Common';
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
@@ -31,7 +31,7 @@ export default class WireAction extends PureComponent<PropsType> {
         onPress={this.openWire}>
         <Icon
           style={ThemedStyles.style.colorIconActive}
-          name="coins"
+          name="attach-money"
           size={20}
         />
       </TouchableOpacityCustom>

@@ -91,7 +91,7 @@ export default observer(function (props) {
       .isEdit ? (
     i18n.t('save')
   ) : (
-    <IonIcon name="send" size={27} />
+    <IonIcon name="send" size={27} style={theme.colorPrimaryText} />
   );
 
   useEffect(() => {

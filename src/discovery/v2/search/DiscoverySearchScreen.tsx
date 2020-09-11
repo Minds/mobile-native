@@ -51,21 +51,23 @@ export const DiscoverySearchHeader = observer(() => {
             onPress={onPressBack}
           />
         </View>
-
-        <SearchView
-          placeholder={i18n.t('discovery.search')}
-          onChangeText={store.setQuery}
-          value={store.query}
-          containerStyle={[
-            theme.marginVertical,
-            theme.marginRight4x,
-            theme.backgroundPrimary,
-            theme.flexContainer,
-          ]}
-          // iconRight={iconRight}
-          // iconRightOnPress={this.clearSearch}
-          {...testID('Discovery Search Input')}
-        />
+        {
+          //@ts-ignore
+          <SearchView
+            placeholder={i18n.t('discovery.search')}
+            onChangeText={store.setQuery}
+            value={store.query}
+            containerStyle={[
+              theme.marginVertical,
+              theme.marginRight4x,
+              theme.backgroundPrimary,
+              theme.flexContainer,
+            ]}
+            // iconRight={iconRight}
+            // iconRightOnPress={this.clearSearch}
+            {...testID('Discovery Search Input')}
+          />
+        }
       </View>
       <TopbarTabbar
         current={store.filter}

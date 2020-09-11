@@ -2,6 +2,8 @@ import React, { PureComponent } from 'react';
 
 import { Text, View, StyleSheet, TouchableHighlight } from 'react-native';
 
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import i18n from '../../../common/services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
@@ -35,12 +37,17 @@ export default class BoostAction extends PureComponent<PropsType> {
           ]}
           underlayColor="transparent"
           onPress={this.openBoost}>
-          <Text
-            style={[styles.text, theme.colorIconActive]}
-            numberOfLines={1}
-            adjustsFontSizeToFit={true}>
-            {i18n.t('boost').toUpperCase()}
-          </Text>
+          <View style={[theme.rowJustifyStart, theme.centered]}>
+            <Icon
+              name="trending-up"
+              style={[theme.fontS, theme.colorSecondaryText]}
+            />
+            <Text
+              style={[styles.text, theme.colorSecondaryText]}
+              numberOfLines={1}>
+              {i18n.t('boost')}
+            </Text>
+          </View>
         </TouchableHighlightCustom>
       </View>
     );
@@ -57,9 +64,11 @@ export default class BoostAction extends PureComponent<PropsType> {
 const styles = StyleSheet.create({
   text: {
     fontFamily: 'Roboto',
-    fontSize: 15,
+    fontSize: 12,
     textAlignVertical: 'center',
     lineHeight: 21,
     letterSpacing: 1,
+    marginLeft: 3,
+    fontWeight: '500',
   },
 });

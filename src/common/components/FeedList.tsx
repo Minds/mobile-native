@@ -149,8 +149,9 @@ export default class FeedList<T> extends Component<PropsType> {
           ThemedStyles.style.flexContainer,
           ThemedStyles.style.backgroundSecondary,
         ]}
-        initialNumToRender={6}
-        windowSize={11}
+        initialNumToRender={3}
+        maxToRenderPerBatch={5}
+        windowSize={7}
         // removeClippedSubviews={true}
         ListEmptyComponent={!this.props.hideItems ? empty : null}
         viewabilityConfig={this.viewOpts}
