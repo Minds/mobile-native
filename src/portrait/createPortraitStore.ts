@@ -31,6 +31,7 @@ function createPortraitStore() {
   return {
     items: <Array<PortraitBarItem>>[],
     async load() {
+      feedStore.clear();
       try {
         feedStore.setParams({
           portrait: true,
