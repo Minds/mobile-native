@@ -130,10 +130,12 @@ sessionService.onLogin(async () => {
 
       // handle initial notifications (if the app is opened by tap on one)
       pushService.handleInitialNotification();
+
+      ShareMenu.getInitialShare(receiveShare.handle);
     } catch (err) {
       logService.exception(err);
     }
-  }, 500);
+  }, 200);
 
   // fire offline cache garbage collector 30 seconds after start
   setTimeout(() => {
@@ -188,14 +190,6 @@ class App extends Component<Props, State> {
    * Handle app state changes
    */
   handleAppStateChange = (nextState) => {
-    // if the app turns active we check for shared
-    if (
-      this.state.appState &&
-      this.state.appState.match(/inactive|background/) &&
-      nextState === 'active'
-    ) {
-      ShareMenu.getInitialShare(this.onShareReceive);
-    }
     this.setState({ appState: nextState });
   };
 
@@ -247,7 +241,7 @@ class App extends Component<Props, State> {
       AppState.addEventListener('change', this.handleAppStateChange);
 
       this.ShareReceiveListener = ShareMenu.addNewShareListener(
-        this.onShareReceive,
+        receiveShare.handle,
       );
 
       if (!this.handlePasswordResetDeepLink()) {
@@ -329,14 +323,6 @@ class App extends Component<Props, State> {
     } catch (err) {
       return true;
     }
-  };
-
-  onShareReceive = (item: SharedItem) => {
-    console.log('ONSHARERECEIVE', item);
-    if (!item) {
-      return;
-    }
-    receiveShare.handle(item);
   };
 
   /**

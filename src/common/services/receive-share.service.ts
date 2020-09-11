@@ -54,13 +54,16 @@ class ReceiveShareService {
   /**
    * Handle received text data
    */
-  handle(item: SharedItem) {
+  handle = (item: SharedItem) => {
+    if (!item) {
+      return;
+    }
     if (item.mimeType.includes('image/') || item.mimeType.includes('video/')) {
       this.handleMedia(item);
     } else if (item.mimeType.includes('text')) {
       navigationService.navigate('Capture', { text: item.data });
     }
-  }
+  };
 }
 
 export default new ReceiveShareService();
