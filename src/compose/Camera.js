@@ -72,17 +72,27 @@ export default observer(function (props) {
 
         store.setRecording(true, pulse);
 
-        return await ref.current.recordAsync({
+        const options = {
           quality: 0.9,
           maxDuration: settings.max_video_length,
-        });
+        };
+
+        if (p.store.portraitMode) {
+          options.orientation = 'portrait';
+        }
+
+        return await ref.current.recordAsync();
       },
       takePicture() {
-        return ref.current.takePictureAsync({
+        const options = {
           base64: false,
           quality: 0.9,
           pauseAfterCapture: true,
-        });
+        };
+        if (p.store.portraitMode) {
+          options.orientation = 'portrait';
+        }
+        return ref.current.takePictureAsync(options);
       },
     }),
     props,
