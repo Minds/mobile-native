@@ -77,16 +77,15 @@ const UserContentSwiper = observer((props: PropsType) => {
   const stackConfig: iPageInterpolation = {
     transform: [
       {
-        scaleY: {
+        scale: {
           inputRange: [-1, -0.4, 0, 0.4, 1],
-          outputRange: [0.8, 0.9, 1, 0.9, 0.8],
+          outputRange: [0.85, 0.9, 1, 0.9, 0.85],
         },
       },
     ],
-    zIndex: (offset) => offset,
     opacity: {
       inputRange: [-1, 0, 1],
-      outputRange: [0.5, 1, 0.5],
+      outputRange: [0, 1, 0],
     },
   };
 
