@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useCallback, useEffect } from 'react';
 
 import { observer } from 'mobx-react';
 
@@ -6,13 +6,13 @@ import { TouchableOpacity } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import { CommonStyle as CS } from '../../../styles/Common';
 import Counter from './Counter';
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
-import { FLAG_CREATE_COMMENT } from '../../../common/Permissions';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
 import type BlogModel from '../../../blogs/BlogModel';
+import { useRoute } from '@react-navigation/native';
+import { ActivityRouteProp } from '../../ActivityScreen';
 
 // prevent double tap in touchable
 const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
@@ -20,7 +20,6 @@ const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
 type PropsType = {
   entity: ActivityModel | BlogModel;
   testID?: string;
-  size: number;
   navigation: any;
   onPressComment?: () => void;
 };
@@ -28,74 +27,64 @@ type PropsType = {
 /**
  * Comments Action Component
  */
-@observer
-class CommentsAction extends Component<PropsType> {
-  static defaultProps = {
-    size: 21,
-  };
-  /**
-   * Render
-   */
-  render() {
-    const theme = ThemedStyles.style;
-    const icon = this.props.entity.allow_comments
-      ? 'chat-bubble'
-      : 'speaker-notes-off';
+const CommentsAction = observer((props: PropsType) => {
+  const theme = ThemedStyles.style;
+  const icon = props.entity.allow_comments
+    ? 'chat-bubble'
+    : 'speaker-notes-off';
 
-    // const color = canComment
-    //   ? this.props.entity['comments:count'] > 0
-    //     ? ThemedStyles.style.colorIconActive
-    //     : ThemedStyles.style.colorIcon
-    //   : CS.colorLightGreyed;
+  const route: ActivityRouteProp = useRoute();
 
-    return (
-      <TouchableOpacityCustom
-        style={[
-          theme.rowJustifyCenter,
-          theme.paddingHorizontal3x,
-          theme.paddingVertical4x,
-          theme.alignCenter,
-        ]}
-        onPress={this.openComments}
-        testID={this.props.testID}>
-        <Icon
-          style={[theme.colorIcon, CS.marginRight]}
-          name={icon}
-          size={this.props.size}
-        />
-        <Counter count={this.props.entity['comments:count']} />
-      </TouchableOpacityCustom>
-    );
-  }
-
-  /**
-   * Open comments screen
-   */
-  openComments = () => {
-    if (this.props.onPressComment) {
-      this.props.onPressComment();
+  const openComments = useCallback(() => {
+    if (props.onPressComment) {
+      props.onPressComment();
       return;
     }
     const cantOpen =
-      !this.props.entity.allow_comments &&
-      this.props.entity['comments:count'] === 0;
-    // TODO: fix
-    const routes = this.props.navigation.dangerouslyGetState().routes;
-    if ((routes && routes[routes.length - 1].name === 'Activity') || cantOpen) {
+      !props.entity.allow_comments && props.entity['comments:count'] === 0;
+
+    if ((route && route.name === 'Activity') || cantOpen) {
       return;
     }
-    if (this.props.entity.subtype && this.props.entity.subtype === 'blog') {
-      this.props.navigation.push('BlogView', {
-        blog: this.props.entity,
+    if (props.entity.subtype && props.entity.subtype === 'blog') {
+      props.navigation.push('BlogView', {
+        blog: props.entity,
         scrollToBottom: true,
       });
     } else {
-      this.props.navigation.push('Activity', {
-        entity: this.props.entity,
+      props.navigation.push('Activity', {
+        entity: props.entity,
         scrollToBottom: true,
       });
     }
-  };
-}
+  }, [props, route]);
+
+  useEffect(() => {
+    if (route && route.params?.focusedUrn) {
+      setTimeout(() => {
+        openComments();
+      }, 100);
+    }
+  }, [openComments, route]);
+
+  return (
+    <TouchableOpacityCustom
+      style={[
+        theme.rowJustifyCenter,
+        theme.paddingHorizontal3x,
+        theme.paddingVertical4x,
+        theme.alignCenter,
+      ]}
+      onPress={openComments}
+      testID={props.testID}>
+      <Icon
+        style={[theme.colorIcon, theme.marginRight]}
+        name={icon}
+        size={21}
+      />
+      <Counter count={props.entity['comments:count']} />
+    </TouchableOpacityCustom>
+  );
+});
 
 export default CommentsAction;

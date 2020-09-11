@@ -556,9 +556,7 @@ exports[`Activity screen component renders correctly  1`] = `
                 },
                 Array [
                   undefined,
-                  Object {
-                    "marginRight": 5,
-                  },
+                  undefined,
                 ],
                 Object {
                   "fontFamily": "Material Icons",
