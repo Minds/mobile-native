@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { ActivityFullScreenParamList } from '../navigation/NavigationTypes';
 import { RouteProp } from '@react-navigation/native';
 import { useLocalStore, observer } from 'mobx-react';
@@ -6,6 +6,7 @@ import {
   Pager,
   PagerProvider,
   iPageInterpolation,
+  useOnFocus,
 } from '@crowdlinker/react-native-pager';
 
 import ActivityFullScreen from '../discovery/v2/viewer/ActivityFullScreen';
@@ -58,11 +59,11 @@ const UserContentSwiper = observer((props: PropsType) => {
     },
   }));
 
-  useEffect(() => {
+  useOnFocus(() => {
     store.viewed.addViewed(activities[store.index], metadataService);
     portraitContentService.seen(activities[store.index].urn);
     activities[store.index].seen = true;
-  }, [activities, store.index, store.viewed]);
+  });
 
   const pagerStyle: any = {
     height: height - (StatusBar.currentHeight || 0),
