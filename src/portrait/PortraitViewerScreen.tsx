@@ -37,6 +37,11 @@ const PortraitViewerScreen = observer((props: PropsType) => {
     setIndex(v) {
       store.index = v;
     },
+    nextIndex() {
+      if (store.index < store.items.length - 1) {
+        store.index = store.index + 1;
+      }
+    },
   }));
 
   const { width, height } = useDimensions().window;
@@ -77,7 +82,13 @@ const PortraitViewerScreen = observer((props: PropsType) => {
   };
 
   const pages = store.items.map((item, index) => (
-    <UserContentSwiper key={index} item={item} />
+    <UserContentSwiper
+      key={index}
+      item={item}
+      nextUser={() => {
+        store.nextIndex();
+      }}
+    />
   ));
 
   return (

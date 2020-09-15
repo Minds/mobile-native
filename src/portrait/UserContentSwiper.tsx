@@ -31,6 +31,7 @@ type ActivityFullScreenRouteProp = RouteProp<
 
 type PropsType = {
   item: PortraitBarItem;
+  nextUser: Function;
 };
 
 const metadataService = new MetadataService();
@@ -98,9 +99,11 @@ const UserContentSwiper = observer((props: PropsType) => {
         }
       } else if (store.index < activities.length - 1) {
         store.setIndex(store.index + 1);
+      } else {
+        props.nextUser();
       }
     },
-    [activities.length, store],
+    [activities.length, store, props],
   );
 
   const pages = activities.map((e, i) => (
