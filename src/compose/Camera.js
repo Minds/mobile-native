@@ -77,7 +77,7 @@ export default observer(function (props) {
           maxDuration: settings.max_video_length,
         };
 
-        if (p.store.portraitMode) {
+        if (p.portraitMode) {
           options.orientation = 'portrait';
         }
 
@@ -89,9 +89,11 @@ export default observer(function (props) {
           quality: 0.9,
           pauseAfterCapture: true,
         };
-        if (p.store.portraitMode) {
+
+        if (p.portraitMode) {
           options.orientation = 'portrait';
         }
+
         return ref.current.takePictureAsync(options);
       },
     }),

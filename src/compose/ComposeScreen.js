@@ -44,6 +44,7 @@ export default observer(function (props) {
                 mode={store.mode}
                 onForceVideo={store.setModeVideo}
                 onPressGallery={() => store.selectFromGallery(store.mode)}
+                portraitMode={store.portraitMode}
               />
             </PermissionsCheck>
           ) : (
