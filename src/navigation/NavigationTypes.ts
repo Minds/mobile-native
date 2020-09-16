@@ -78,6 +78,7 @@ export type AppStackParamList = {
   Capture: {};
   Main: {};
   Account: {};
+  Network: {};
   Security: {};
   Billing: {};
   Other: {};
@@ -85,6 +86,7 @@ export type AppStackParamList = {
   MessengerSettingsScreen: {};
   SettingsPassword: {};
   SettingsNotifications: {};
+  DataSaverScreen: {};
   BlockedChannels: {};
   TierManagementScreen: {};
   DeleteChannel: {};

@@ -528,6 +528,7 @@
     "lightMode": "Light mode",
     "other": "Other",
     "account": "Account",
+    "network": "Network",
     "security": "Security",
     "billing": "Billing",
     "invalidPassword": "Incorrect password",
@@ -553,6 +554,9 @@
     "addTier": "Add Tier",
     "noTiers": "You don't have any tier",
     "payment": "Payment",
+    "dataSaverDisableOnWifi": "Disable on Wi-Fi",
+    "dataSaverDescription": "When Data Saver is turned on, videos won't load in advance to help you use less data.",
+    "dataSaverDisableOnWiFiDescription": "When enabled, Data Saver mode will automatically disable when a Wi-Fi connection is detected.",
     "reportedContent": {
       "action": {
         "actionNSFW": "marked NSFW",
@@ -580,6 +584,9 @@
       "4": "Notifications",
       "5": "NSFW Content",
       "6": "Messenger"
+    },
+    "networkOptions": {
+      "1": "Data Saver"
     },
     "securityOptions": {
       "1": "Two-factor authentication (2FA)",

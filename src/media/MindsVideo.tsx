@@ -17,6 +17,7 @@ import {
 
 import Video from 'react-native-video';
 import _ from 'lodash';
+import settingsStore from '../settings/SettingsStore'
 
 import ProgressBar from './ProgressBar';
 
@@ -518,7 +519,9 @@ class MindsVideo extends Component<PropsType, StateType> {
   get video() {
     let { entity } = this.props;
     let { paused } = this.state;
-    const thumb_uri = entity
+    const dataSaverEnabled = settingsStore.dataSaverEnabled
+
+    const thumb_uri = !dataSaverEnabled && entity
       ? entity.get('custom_data.thumbnail_src') || entity.thumbnail_src
       : null;
     if (this.state.active || !thumb_uri) {

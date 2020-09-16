@@ -79,7 +79,7 @@ export default class MediaView extends Component<PropsType> {
       case 'image':
       case 'batch':
         source = this.props.entity.getThumbSource('xlarge');
-        return this.getImage(source);
+        return this.getImage(source, this.props.entity.getThumbSource('small'));
       case 'video':
         return this.getVideo();
     }
@@ -229,8 +229,9 @@ export default class MediaView extends Component<PropsType> {
   /**
    * Get image with autoheight or Touchable fixed height
    * @param {object} source
+   * @param {object} thumbnail
    */
-  getImage(source) {
+  getImage(source, thumbnail?) {
     this.source = source;
     const autoHeight = this.props.autoHeight;
     const custom_data = this.props.entity.custom_data;
@@ -291,6 +292,7 @@ export default class MediaView extends Component<PropsType> {
           {...testID('Posted Image')}>
           <ExplicitImage
             source={source}
+            thumbnail={thumbnail}
             entity={this.props.entity}
             onLoad={this.onLoadImage}
             // loadingIndicator="placeholder"

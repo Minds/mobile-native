@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { observer } from 'mobx-react';
+import settingsStore from '../../../settings/SettingsStore'
 import { MindsVideoStoreType } from './createMindsVideoStore';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
 import type CommentModel from '../../../comments/CommentModel';
@@ -19,6 +20,7 @@ const ExpoVideo = observer(
   ({ entity, localStore, repeat, resizeMode, pause }: PropsType) => {
     const theme = ThemedStyles.style;
     const playbackObject = useRef<Video>(null);
+    const dataSaverEnabled = settingsStore.dataSaverEnabled
 
     const thumb_uri = entity
       ? entity.get('custom_data.thumbnail_src') || entity.thumbnail_src
@@ -39,7 +41,7 @@ const ExpoVideo = observer(
         onError={localStore.onError}
         source={source}
         usePoster={true}
-        posterSource={{ uri: thumb_uri }}
+        posterSource={dataSaverEnabled ? undefined : { uri: thumb_uri }}
         isLooping={repeat || false}
         resizeMode={resizeMode || 'contain'}
         useNativeControls={false}

@@ -15,6 +15,10 @@ export default function ({ navigation }) {
     navigation,
   ]);
 
+  const navToNetwork = useCallback(() => navigation.push('Network'), [
+    navigation,
+  ]);
+
   const navToSecurity = useCallback(() => navigation.push('Security'), [
     navigation,
   ]);
@@ -37,6 +41,10 @@ export default function ({ navigation }) {
     {
       title: i18n.t('settings.account'),
       onPress: navToAccount,
+    },
+    {
+      title: i18n.t('settings.network'),
+      onPress: navToNetwork,
     },
     {
       title: i18n.t('settings.security'),
