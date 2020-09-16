@@ -53,7 +53,7 @@ export default observer(function ExplicitImage(props: PropsType) {
       setShowOverlay(false);
       setImageVisible(true);
     }
-  }, [showOverlay, dataSaverEnabled]);
+  }, [dataSaverEnabled]);
 
   const _imageError = useCallback(
     (event) => {
