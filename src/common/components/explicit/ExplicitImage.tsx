@@ -78,7 +78,7 @@ export default observer(function ExplicitImage(props: PropsType) {
     }
   }, [imageVisible, onLoadEnd]);
 
-  const onProgress = useCallback(
+  const _onProgress = useCallback(
     (e) => setProgress(e.nativeEvent.loaded / e.nativeEvent.total),
     [],
   );
@@ -137,7 +137,7 @@ export default observer(function ExplicitImage(props: PropsType) {
           onLoadEnd={_onLoadEnd}
           onLoad={onLoad}
           onError={_imageError}
-          onProgress={onProgress}
+          onProgress={_onProgress}
           style={[CommonStyle.positionAbsolute, imageStyle]}
         />
       )}
