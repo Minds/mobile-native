@@ -31,6 +31,10 @@ const pagerAnimation = {
 export default function PortraitPaginator({ store, pages }: PropsType) {
   const insets = useSafeAreaInsets();
 
+  if (pages.length === 1) {
+    return null;
+  }
+
   const style = StyleSheet.flatten([
     styles.circlesContainer,
     { marginTop: insets.top ? insets.top - 5 : 0 },
