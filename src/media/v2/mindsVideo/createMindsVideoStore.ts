@@ -13,7 +13,7 @@ export type Source = {
 const createMindsVideoStore = ({ entity }) => {
   const store = {
     initialVolume: <number | null>null,
-    volume: 1,
+    volume: 0,
     active: false,
     sources: null as Array<Source> | null,
     source: 0,
