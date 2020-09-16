@@ -278,7 +278,7 @@ export default class Activity extends Component<PropsType> {
               this.mediaView = o;
             }}
             entity={entity}
-            navigation={this.props.navigation}
+            onPress={this.navToActivity}
             style={styles.media}
             autoHeight={this.props.autoHeight}
           />
