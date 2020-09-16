@@ -3,19 +3,19 @@ PODS:
   - Crypto (0.1.0):
     - React
   - DoubleConversion (1.1.6)
-  - EXAV (8.3.0):
+  - EXAV (8.4.0):
     - UMCore
     - UMFileSystemInterface
     - UMPermissionsInterface
   - EXConstants (9.1.1):
     - UMConstantsInterface
     - UMCore
-  - EXErrorRecovery (1.2.1):
+  - EXErrorRecovery (1.2.2):
     - UMCore
   - EXFileSystem (9.0.1):
     - UMCore
     - UMFileSystemInterface
-  - EXFont (8.2.1):
+  - EXFont (8.2.2):
     - UMCore
     - UMFontInterface
   - EXImageLoader (1.1.1):
@@ -33,7 +33,8 @@ PODS:
   - EXPermissions (9.0.1):
     - UMCore
     - UMPermissionsInterface
-  - EXSplashScreen (0.3.1):
+  - EXSplashScreen (0.5.0):
+    - React
     - UMCore
   - EXSQLite (8.2.1):
     - UMCore
@@ -66,11 +67,11 @@ PODS:
   - libwebp/mux (1.1.0):
     - libwebp/demux
   - libwebp/webp (1.1.0)
-  - Permission-Camera (2.1.5):
+  - Permission-Camera (2.2.0):
     - RNPermissions
-  - Permission-Microphone (2.1.5):
+  - Permission-Microphone (2.2.0):
     - RNPermissions
-  - Permission-PhotoLibrary (2.1.5):
+  - Permission-PhotoLibrary (2.2.0):
     - RNPermissions
   - RCTRequired (0.63.2)
   - RCTTypeSafety (0.63.2):
@@ -238,13 +239,15 @@ PODS:
     - React-cxxreact (= 0.63.2)
     - React-jsi (= 0.63.2)
   - React-jsinspector (0.63.2)
-  - react-native-camera (3.33.0):
+  - react-native-blur (0.8.0):
     - React
-    - react-native-camera/RCT (= 3.33.0)
-    - react-native-camera/RN (= 3.33.0)
-  - react-native-camera/RCT (3.33.0):
+  - react-native-camera (3.39.0):
     - React
-  - react-native-camera/RN (3.33.0):
+    - react-native-camera/RCT (= 3.39.0)
+    - react-native-camera/RN (= 3.39.0)
+  - react-native-camera/RCT (3.39.0):
+    - React
+  - react-native-camera/RN (3.39.0):
     - React
   - react-native-cameraroll (1.4.0):
     - React
@@ -340,13 +343,13 @@ PODS:
     - React
   - RNBootSplash (2.2.5):
     - React
-  - RNCAsyncStorage (1.11.0):
+  - RNCAsyncStorage (1.12.0):
     - React
   - RNCMaskedView (0.1.10):
     - React
   - RNConvertPhAsset (1.0.3):
     - React
-  - RNDateTimePicker (2.6.0):
+  - RNDateTimePicker (2.6.2):
     - React
   - RNDeviceInfo (5.6.5):
     - React
@@ -356,28 +359,28 @@ PODS:
     - SDWebImageWebPCoder (~> 0.2.3)
   - RNFS (2.16.6):
     - React
-  - RNGestureHandler (1.7.0):
+  - RNGestureHandler (1.8.0):
     - React
-  - RNImageCropPicker (0.32.2):
+  - RNImageCropPicker (0.32.3):
     - React-Core
     - React-RCTImage
-    - RNImageCropPicker/QBImagePickerController (= 0.32.2)
+    - RNImageCropPicker/QBImagePickerController (= 0.32.3)
     - TOCropViewController
-  - RNImageCropPicker/QBImagePickerController (0.32.2):
+  - RNImageCropPicker/QBImagePickerController (0.32.3):
     - React-Core
     - React-RCTImage
     - TOCropViewController
-  - RNLocalize (1.4.0):
+  - RNLocalize (1.4.1):
     - React
-  - RNPermissions (2.1.5):
+  - RNPermissions (2.2.0):
     - React
   - RNReanimated (1.9.0):
     - React
-  - RNScreens (2.9.0):
+  - RNScreens (2.11.0):
     - React
-  - RNSentry (1.6.3):
+  - RNSentry (1.7.2):
     - React
-    - Sentry (~> 5.1.8)
+    - Sentry (~> 5.2.0)
   - RNShare (2.0.0):
     - React
   - RNSharedElement (0.7.0):
@@ -386,17 +389,17 @@ PODS:
     - React
   - RNSVG (12.1.0):
     - React
-  - RNVectorIcons (7.0.0):
+  - RNVectorIcons (7.1.0):
     - React
-  - SDWebImage (5.8.4):
-    - SDWebImage/Core (= 5.8.4)
-  - SDWebImage/Core (5.8.4)
+  - SDWebImage (5.9.1):
+    - SDWebImage/Core (= 5.9.1)
+  - SDWebImage/Core (5.9.1)
   - SDWebImageWebPCoder (0.2.5):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.0)
-  - Sentry (5.1.10):
-    - Sentry/Core (= 5.1.10)
-  - Sentry/Core (5.1.10)
+  - Sentry (5.2.2):
+    - Sentry/Core (= 5.2.2)
+  - Sentry/Core (5.2.2)
   - TOCropViewController (2.5.4)
   - UMAppLoader (1.2.0)
   - UMBarCodeScannerInterface (5.2.1)
@@ -451,6 +454,7 @@ DEPENDENCIES:
   - React-jsi (from `../node_modules/react-native/ReactCommon/jsi`)
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
+  - "react-native-blur (from `../node_modules/@react-native-community/blur`)"
   - react-native-camera (from `../node_modules/react-native-camera`)
   - "react-native-cameraroll (from `../node_modules/@react-native-community/cameraroll`)"
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
@@ -584,6 +588,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsiexecutor"
   React-jsinspector:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
+  react-native-blur:
+    :path: "../node_modules/@react-native-community/blur"
   react-native-camera:
     :path: "../node_modules/react-native-camera"
   react-native-cameraroll:
@@ -707,17 +713,17 @@ SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   Crypto: 523c2f143c741d3f61371c811c0983ee9c7d18ec
   DoubleConversion: cde416483dac037923206447da6e1454df403714
-  EXAV: 9a5ff571128707309aa0376171f0903d49410352
+  EXAV: e9c3a5e6fc4137ddb65a7d5810efc95261365ee2
   EXConstants: f907b3b6ce16e20d1750f22af1e095e924574bcb
-  EXErrorRecovery: 500f1d4231c534f415e86caeb3fc677c7f5dd23c
+  EXErrorRecovery: ff58873bf2714fcd5290935d49b74d9fc589d575
   EXFileSystem: 76875135b61708b9afa7e6a89b72a60ba0fdfa20
-  EXFont: d6cabb73989fc29296972c52915a023f46b2c7f5
+  EXFont: e583875d5d37a9e272d1cdba7f383bd576952919
   EXImageLoader: 02ca02c9cd5cc8a97b423207a73a791e0a86bea5
   EXKeepAwake: 8b0f68242f036b971f9f8976341823cbe6f50812
   EXLinearGradient: 663bf3b9009a96567e98498016e40422631be81d
   EXLocation: e93020e255f52a1cc031e0f45b0a24eb20fc4b55
   EXPermissions: 80ac3acbdb145930079810fe5b08c022b3428aa8
-  EXSplashScreen: c4ed5d39cd5dbc1329f8dec720e280276bafa28b
+  EXSplashScreen: 9423d258b71afa5bf128a83dcb57b636d9900a74
   EXSQLite: 64611c1b369c0f1e9cae4e551d0aa4478a58cadf
   FBLazyVector: 3ef4a7f62e7db01092f9d517d2ebc0d0677c4a37
   FBReactNativeSpec: dc7fa9088f0f2a998503a352b0554d69a4391c5a
@@ -725,9 +731,9 @@ SPEC CHECKSUMS:
   glog: 40a13f7840415b9a77023fbcae0f1e6f43192af3
   JitsiMeetSDK: d4a3aeed1a75fd57e6a78e5d202b6051dfcb9320
   libwebp: 946cb3063cea9236285f7e9a8505d806d30e07f3
-  Permission-Camera: afad27bf90337684d4a86f3825112d648c8c4d3b
-  Permission-Microphone: 0ffabc3fe1c75cfb260525ee3f529383c9f4368c
-  Permission-PhotoLibrary: 4d2eff62c8f4b8a27bcf045c0e36f5047efbbf20
+  Permission-Camera: 9ff12884205fb282b4a22b9e8c358ba53cee7567
+  Permission-Microphone: 06462b9d979ada12095bcff8d5ee1aeeeaf20b5d
+  Permission-PhotoLibrary: e3ff899f87a3eda29427c142ca93837e8802d228
   RCTRequired: f13f25e7b12f925f1f6a6a8c69d929a03c0129fe
   RCTTypeSafety: 44982c5c8e43ff4141eb519a8ddc88059acd1f3a
   React: e1c65dd41cb9db13b99f24608e47dd595f28ca9a
@@ -738,7 +744,8 @@ SPEC CHECKSUMS:
   React-jsi: 54245e1d5f4b690dec614a73a3795964eeef13a8
   React-jsiexecutor: 8ca588cc921e70590820ce72b8789b02c67cce38
   React-jsinspector: b14e62ebe7a66e9231e9581279909f2fc3db6606
-  react-native-camera: 55e1afb6d585314ca96ea5504e6b1ba7583c1d21
+  react-native-blur: cad4d93b364f91e7b7931b3fa935455487e5c33c
+  react-native-camera: 3940f67a49eaf736525a3e730653fcb98e1525dd
   react-native-cameraroll: dbda741db5dadcdcf738e55a1fd565c307943bca
   react-native-image-picker: 3d3f85baabca60a00b75fb8facc1376db7bbdafa
   react-native-jitsi-meet: becd37e8fa1c5f3321b9222c232d190a36f90880
@@ -764,28 +771,28 @@ SPEC CHECKSUMS:
   ReactNativeExceptionHandler: 8025d98049c25f186835a3af732dd7c9974d6dce
   rn-update-apk: 276b95ff7f22c7659e0325352552d5179a0218b8
   RNBootSplash: b3836aa90c5bec690c6cd3c9ab355fcf98d0fe1d
-  RNCAsyncStorage: d059c3ee71738c39834a627476322a5a8cd5bf36
+  RNCAsyncStorage: 2a692bcb9b69b76a2f1a95f33db057129700af64
   RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f
   RNConvertPhAsset: 9b366b8a1abc194b76572712c6f7dd89c9e4e37f
-  RNDateTimePicker: e386ff4ef3300964ed0cad97ce6f206e0effbfdb
+  RNDateTimePicker: 968ccf716b3b6aee07849641966005924de5c0f9
   RNDeviceInfo: c5f8f3a456adcbba405ace475254b08febc4c095
   RNFastImage: c104f15f04c4f68bd65c9645cc27900bbacd9cc7
   RNFS: 2bd9eb49dc82fa9676382f0585b992c424cd59df
-  RNGestureHandler: b6b359bb800ae399a9c8b27032bdbf7c18f08a08
-  RNImageCropPicker: f0557a908758c4a3f83978894ec7227651529b45
-  RNLocalize: b6df30cc25ae736d37874f9bce13351db2f56796
-  RNPermissions: ad71dd4f767ec254f2cd57592fbee02afee75467
+  RNGestureHandler: 7a5833d0f788dbd107fbb913e09aa0c1ff333c39
+  RNImageCropPicker: 54e5ea3d0e298ed51e1441a2fa0a0e7c90ee256d
+  RNLocalize: 49634a6a605dcdeb319e9c42a5c2f1aec508694b
+  RNPermissions: 477d88d0be7ecb0a7b344e4d5fbb0352de104626
   RNReanimated: b5ccb50650ba06f6e749c7c329a1bc3ae0c88b43
-  RNScreens: c526239bbe0e957b988dacc8d75ac94ec9cb19da
-  RNSentry: ae1e005e4f2655775475445a9c49c1d343e8e3a7
+  RNScreens: 0e91da98ab26d5d04c7b59a9b6bd694124caf88c
+  RNSentry: 2d4a0e18c6dfe93b647c360e0d15c9391d24e9d1
   RNShare: 8b171d4b43c1d886917fdd303bf7a4b87167b05c
   RNSharedElement: 00b1a1420d213a34459bb9a5aacabb38107d7948
   RNShareMenu: 7749fe038181a5d66b71afc76b32b8f8069a58cd
   RNSVG: ce9d996113475209013317e48b05c21ee988d42e
-  RNVectorIcons: da6fe858f5a65d7bbc3379540a889b0b12aa5976
-  SDWebImage: cf6922231e95550934da2ada0f20f2becf2ceba9
+  RNVectorIcons: bc69e6a278b14842063605de32bec61f0b251a59
+  SDWebImage: a990c053fff71e388a10f3357edb0be17929c9c5
   SDWebImageWebPCoder: 947093edd1349d820c40afbd9f42acb6cdecd987
-  Sentry: 8715e88b813bde9ad37aead365d5b04ac7302153
+  Sentry: 8fa58a051237554f22507fb483b9a1de0171a2dc
   TOCropViewController: 2a1ae1242600b1f2d996fd91a5268b2309a33b5c
   UMAppLoader: 61049c8d55590b74e9ae1d5429bf68d96b4a2528
   UMBarCodeScannerInterface: e5e4c87797d3d01214e25cd1618866caf5d4f17f
@@ -804,4 +811,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: f1c2b090b20c445817ebfa83ccec0f81bb7b6a0d
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.8.3
