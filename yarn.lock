@@ -9793,6 +9793,10 @@ phin@^2.9.1:
   resolved "https://registry.yarnpkg.com/phin/-/phin-2.9.3.tgz#f9b6ac10a035636fb65dfc576aaaa17b8743125c"
   integrity sha512-CzFr90qM24ju5f88quFC/6qohjC144rehe5n6DH900lgXmUe86+xCKc10ev56gRKC4/BkHUoG4uSiQgBiIXwDA==
 
+"photo-editor@https://github.com/prscX/photo-editor":
+  version "0.0.0"
+  resolved "https://github.com/prscX/photo-editor#4924e9ec984d25d03644e58aa148282642171de9"
+
 picomatch@^2.0.4, picomatch@^2.0.5:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/picomatch/-/picomatch-2.2.2.tgz#21f333e9b6b8eaff02468f5146ea406d345f4dad"
@@ -10543,17 +10547,17 @@ react-native-navigation-bar-color@^2.0.1:
   resolved "https://registry.yarnpkg.com/react-native-navigation-bar-color/-/react-native-navigation-bar-color-2.0.1.tgz#ee2be25cc37105f7da355717b0a9a32c9c059ae6"
   integrity sha512-1kE/oxWt+HYjRxdZdvke9tJ365xaee5n3+euOQA1En8zQuSbOxiE4SYEGM7TeaWnmLJ0l37mRnPHaB2H4mGh0A==
 
-react-native-notifications@Minds/react-native-notifications#3a2fa2fc4d1def058a72b9de8deb0b6cbf3df3b5:
+react-native-notifications@Minds/react-native-notifications#333e376f866a805f250cc68706d97ace503b948a:
   version "2.0.6"
-  resolved "https://codeload.github.com/Minds/react-native-notifications/tar.gz/3a2fa2fc4d1def058a72b9de8deb0b6cbf3df3b5"
+  resolved "https://codeload.github.com/Minds/react-native-notifications/tar.gz/333e376f866a805f250cc68706d97ace503b948a"
   dependencies:
     core-js "^1.0.0"
     uuid "^2.0.3"
 
-react-native-permissions@^2.1.5:
-  version "2.1.5"
-  resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-2.1.5.tgz#6cfc4f1ab1590f4952299b7cdc9698525ad540e0"
-  integrity sha512-b9KO/4UEV9qddl+kcSybmdk8nlAifclSDBR2rSvc5KZM06vIaJWJNIzK2ZwPXqDQ5yD3CJLuKTRj7Fz+jM9qyQ==
+react-native-permissions@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-2.2.0.tgz#7980caccf98814c6a4677816d21e90ba456362d3"
+  integrity sha512-y5GvcYdEe9PEWVM12UgdkNI/BVvjEU6SZGN7zBpoalTczSlWGQ4SeD2dBz9KfCu1jg5l1752sKDAggTjaq3QKQ==
 
 react-native-phone-input@thegamenicorus/react-native-phone-input#6ab1a91a09ddd4272fe85e30ecedf092f0fcb1a7:
   version "0.1.10"
@@ -10562,6 +10566,11 @@ react-native-phone-input@thegamenicorus/react-native-phone-input#6ab1a91a09ddd42
     google-libphonenumber "^2.0.9"
     lodash "^4.17.4"
     prop-types "^15.5.10"
+
+react-native-photo-editor@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/react-native-photo-editor/-/react-native-photo-editor-1.0.7.tgz#4ecfe51d4ffc61cbca4d60e67c6fc647b11e895f"
+  integrity sha512-FsgsuGj3oWhOMAzJU4ETvO5yaIqnkkTWRDVpYXyrnnltbwYHwTPhr3udRlnbU9/xq1LrIMVjP4XWFv0IXsibfg==
 
 react-native-progress@^4.0.3:
   version "4.1.2"

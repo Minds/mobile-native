@@ -2,6 +2,12 @@ require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 require_relative '../node_modules/react-native-unimodules/cocoapods.rb'
 
+install! 'cocoapods',
+         :deterministic_uuids => false
+
+
+$RNFirebaseAsStaticFramework = true
+
 platform :ios, '10.0'
 
 target 'Minds' do
@@ -11,6 +17,10 @@ target 'Minds' do
 
   use_unimodules!
 
+  # use_frameworks! :linkage => :static
+
+  pod 'iOSPhotoEditor', :path => '../node_modules/photo-editor'
+  # pod 'RNShareMenu', :path => '../node_modules/react-native-share-menu'
 
   permissions_path = '../node_modules/react-native-permissions/ios'
   pod 'Permission-Camera', :path => "#{permissions_path}/Camera.podspec"
@@ -41,8 +51,10 @@ target 'Minds' do
         config.build_settings['APPLICATION_EXTENSION_API_ONLY'] = 'NO'
       end
     end
-
   end
+
+
+
 end
 
 target 'Minds-tvOS' do
