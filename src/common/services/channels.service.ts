@@ -34,6 +34,21 @@ class ChannelsService {
   }
 
   /**
+   * Get channel from entity
+   * @param {string} guid
+   */
+  async getFromEntity(
+    guidOrUsername: string,
+    defaultChannel: UserModel,
+  ): Promise<UserModel> {
+    const channel = UserModel.checkOrCreate(defaultChannel);
+
+    this.fetch(guidOrUsername, channel); // Update in the background
+
+    return channel;
+  }
+
+  /**
    * Fetch a channel
    * on success is added or updated
    * @param {string} guidOrUsername

@@ -96,6 +96,7 @@ import ModalTransition from './ModalTransition';
 import AuthTransition from './AuthTransition';
 import VideoBackground from '../common/components/VideoBackground';
 import TransparentLayer from '../common/components/TransparentLayer';
+import PortraitViewerScreen from '../portrait/PortraitViewerScreen';
 
 const isIos = Platform.OS === 'ios';
 
@@ -122,6 +123,11 @@ const FullScreenPostStack = () => (
     <FullScreenPostStackNav.Screen
       name="ActivityFullScreen"
       component={ViewerScreen}
+      options={{ stackAnimation: 'none', ...hideHeader, title: '' }}
+    />
+    <FullScreenPostStackNav.Screen
+      name="PortraitViewerScreen"
+      component={PortraitViewerScreen}
       options={{ stackAnimation: 'none', ...hideHeader, title: '' }}
     />
     <FullScreenPostStackNav.Screen
@@ -242,7 +248,11 @@ const MainScreen = () => {
   return (
     <DrawerNav.Navigator
       initialRouteName="Tabs"
-      edgeWidth={dimensions.width}
+      gestureHandlerProps={{
+        hitSlop: { left: 0, width: dimensions.width },
+        //@ts-ignore
+        waitFor: 'portrait-bar',
+      }}
       drawerType="slide"
       drawerContent={Drawer}
       drawerStyle={isLargeScreen ? null : ThemedStyles.style.width90}>

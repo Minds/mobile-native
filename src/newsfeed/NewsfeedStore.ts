@@ -1,11 +1,10 @@
-import { action, when } from 'mobx';
+import { action } from 'mobx';
 
 import NewsfeedService from './NewsfeedService';
 import ActivityModel from './ActivityModel';
 import FeedStore from '../common/stores/FeedStore';
 import UserModel from '../channel/UserModel';
 import type FeedList from '../common/components/FeedList';
-import { LayoutAnimation } from 'react-native';
 
 /**
  * News feed store
@@ -30,12 +29,6 @@ class NewsfeedStore<T> {
 
     // we don't need to unsubscribe to the event because this stores is destroyed when the app is closed
     UserModel.events.on('toggleSubscription', this.onSubscriptionChange);
-
-    // animate the layout change on the first load and then dispose the runner
-    when(
-      () => this.feedStore.loaded,
-      () => LayoutAnimation.configureNext(LayoutAnimation.Presets.spring),
-    );
   }
 
   /**

@@ -27,7 +27,6 @@ const SearchComponent = observer((props: Props) => {
   const theme = ThemedStyles.style;
   const { user } = useLegacyStores();
   const localStore = useStores().searchBar;
-  const searchResult = useRef<any>(null);
   const inputRef = useRef<TextInput>(null);
 
   /**
@@ -121,7 +120,6 @@ const SearchComponent = observer((props: Props) => {
                 />
               </View>
               <SearchResult
-                ref={searchResult}
                 navigation={props.navigation}
                 localStore={localStore}
               />

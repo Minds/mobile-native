@@ -19,6 +19,7 @@ import ChannelMoreMenu from './ChannelMoreMenu';
 
 import type { GestureResponderEvent } from 'react-native';
 import { ChannelStoreType } from './createChannelStore';
+import { SupportTiersType } from '../../wire/WireTypes';
 
 type PropsType = {
   store: ChannelStoreType;
@@ -26,6 +27,9 @@ type PropsType = {
 };
 
 const isIos = Platform.OS === 'ios';
+
+const isSubscribedToTier = (tiers: SupportTiersType[]) =>
+  tiers.some((tier) => typeof tier.subscription_urn === 'string');
 
 /**
  * Channel buttons
@@ -37,6 +41,7 @@ const ChannelButtons = observer((props: PropsType) => {
     NativeStackNavigationProp<AppStackParamList>
   >();
   const subscriptionText = '+ ' + i18n.t('channel.subscribe');
+  const isTierSubscribed = isSubscribedToTier(props.store.tiers);
 
   const openMessenger = useCallback(() => {
     if (!props.store.channel) return null;
@@ -92,7 +97,8 @@ const ChannelButtons = observer((props: PropsType) => {
   const showJoin =
     !props.store.channel.isOwner() &&
     props.store.tiers &&
-    props.store.tiers.length > 0;
+    props.store.tiers.length > 0 &&
+    !isTierSubscribed;
 
   return (
     <View
@@ -129,8 +135,8 @@ const ChannelButtons = observer((props: PropsType) => {
         <Icon
           raised
           reverse
-          name="coins"
-          type="font-awesome-5"
+          name="attach-money"
+          type="material"
           color={ThemedStyles.getColor('secondary_background')}
           reverseColor={ThemedStyles.getColor('primary_text')}
           size={15}
@@ -180,7 +186,11 @@ const ChannelButtons = observer((props: PropsType) => {
           inverted
         />
       )}
-      <ChannelMoreMenu channel={props.store.channel} ref={menuRef} />
+      <ChannelMoreMenu
+        channel={props.store.channel}
+        ref={menuRef}
+        isSubscribedToTier={isTierSubscribed}
+      />
     </View>
   );
 });

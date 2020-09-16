@@ -8,6 +8,7 @@ import MindsVideoV2 from '../src/media/v2/mindsVideo/MindsVideo';
 import {
   BackHandler,
 } from 'react-native';
+import ShareMenu from 'react-native-share-menu';
 
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
@@ -27,6 +28,7 @@ jest.mock('../src/media/v2/mindsVideo/MindsVideo', () => 'MindsVideoV2');
 jest.mock('web3');
 
 //mock packages
+jest.mock('react-native-share-menu');
 jest.mock('react-native-notifications');
 jest.mock('react-navigation-shared-element', () => ({
   createSharedElementStackNavigator: jest.fn(),
@@ -35,6 +37,7 @@ jest.mock('react-native-convert-ph-asset');
 jest.mock('@react-navigation/native');
 jest.mock('@react-navigation/bottom-tabs');
 jest.mock('react-native-screens/native-stack');
+jest.mock('react-native-file-share-intent');
 
 //mock i18n
 jest.mock('react-native-video');

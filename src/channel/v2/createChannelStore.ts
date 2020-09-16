@@ -1,4 +1,4 @@
-import type UserModel from '../UserModel';
+import UserModel from '../UserModel';
 import channelsService from '../../common/services/channels.service';
 import FeedStore from '../../common/stores/FeedStore';
 import ChannelService from '../ChannelService';
@@ -145,11 +145,17 @@ const createChannelStore = () => {
      * Load channel from existing entity
      * @param defaultChannel
      */
-    async loadFromEntity(defaultChannel: { guid: string } | UserModel) {
-      const channel = await channelsService.get(
-        defaultChannel.guid,
-        defaultChannel,
-      );
+    async loadFromEntity(
+      defaultChannel: { guid: string } | UserModel,
+      useChannel: boolean = false,
+    ) {
+      const channel =
+        useChannel && defaultChannel instanceof UserModel
+          ? await channelsService.getFromEntity(
+              defaultChannel.guid,
+              defaultChannel,
+            )
+          : await channelsService.get(defaultChannel.guid, defaultChannel);
       if (channel) {
         this.setChannel(channel);
         this.loadFeed();
@@ -261,7 +267,7 @@ const createChannelStore = () => {
             payload.briefdescription ?? this.channel.briefdescription;
           channel.city = payload.city ?? this.channel.city;
           channel.dob = payload.dob ?? this.channel.dob;
-          this.loadFromEntity(channel);
+          this.loadFromEntity(channel, true);
         }
       } catch (error) {
         console.group(error);

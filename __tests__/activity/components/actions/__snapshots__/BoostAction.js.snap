@@ -14,24 +14,57 @@ exports[`Boost action component renders correctly 1`] = `
     }
     underlayColor="transparent"
   >
-    <Text
-      adjustsFontSizeToFit={true}
-      numberOfLines={1}
+    <View
       style={
         Array [
-          Object {
-            "fontFamily": "Roboto",
-            "fontSize": 15,
-            "letterSpacing": 1,
-            "lineHeight": 21,
-            "textAlignVertical": "center",
-          },
+          undefined,
           undefined,
         ]
       }
     >
-      BOOST
-    </Text>
+      <Text
+        allowFontScaling={false}
+        style={
+          Array [
+            Object {
+              "color": undefined,
+              "fontSize": 12,
+            },
+            Array [
+              undefined,
+              undefined,
+            ],
+            Object {
+              "fontFamily": "Material Design Icons",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        󰔵
+      </Text>
+      <Text
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "fontFamily": "Roboto",
+              "fontSize": 12,
+              "fontWeight": "500",
+              "letterSpacing": 1,
+              "lineHeight": 21,
+              "marginLeft": 3,
+              "textAlignVertical": "center",
+            },
+            undefined,
+          ]
+        }
+      >
+        Boost
+      </Text>
+    </View>
   </View>
 </View>
 `;
