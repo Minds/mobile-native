@@ -24,6 +24,7 @@
     "@crowdlinker/react-native-pager": "^0.2.3",
     "@react-native-community/art": "^1.1.2",
     "@react-native-community/async-storage": "^1.8.0",
+    "@react-native-community/blur": "^3.6.0",
     "@react-native-community/cameraroll": "1.4.0",
     "@react-native-community/datetimepicker": "^2.2.2",
     "@react-native-community/hooks": "^2.6.0",

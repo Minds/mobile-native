@@ -11,7 +11,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import LoginScreen from '../auth/LoginScreen';
 import ForgotScreen from '../auth/ForgotScreen';
-import DataSaverScreen from '../settings/screens/DataSaverScreen'
+import DataSaverScreen from '../settings/screens/DataSaverScreen';
 import TabsScreen from '../tabs/TabsScreen';
 import NotificationsScreen from '../notifications/NotificationsScreen';
 import ActivityScreen from '../newsfeed/ActivityScreen';
@@ -169,7 +169,7 @@ const NetworkScreenOptions = (navigation) => [
   {
     title: i18n.t('settings.networkOptions.1'),
     onPress: () => navigation.push('DataSaverScreen'),
-  }
+  },
 ];
 
 const SecurityScreenOptions = (navigation) => [

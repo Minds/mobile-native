@@ -1,11 +1,11 @@
 //@ts-nocheck
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react';
 import { observer } from 'mobx-react';
 import { TouchableWithoutFeedback, View } from 'react-native';
 import { BlurView } from '@react-native-community/blur';
 import { createImageProgress } from 'react-native-image-progress';
 import ProgressCircle from 'react-native-progress/Circle';
-import { mix, useTimingTransition } from 'react-native-redash'
+import { mix, useTimingTransition } from 'react-native-redash';
 import Icon from 'react-native-vector-icons/Ionicons';
 import settingsStore from '../../../settings/SettingsStore';
 import { CommonStyle } from '../../../styles/Common';
@@ -34,13 +34,13 @@ export default observer(function ExplicitImage(props: PropsType) {
     onLoad,
     onLoadEnd,
     imageStyle,
-  } = props
+  } = props;
 
-  const dataSaverEnabled = settingsStore.dataSaverEnabled
-  const [showOverlay, setShowOverlay] = useState<boolean>(dataSaverEnabled)
-  const [imageVisible, setImageVisible] = useState<boolean>(!dataSaverEnabled)
-  const [progress, setProgress] = useState<number | undefined>()
-  const theme = ThemedStyles.style
+  const dataSaverEnabled = settingsStore.dataSaverEnabled;
+  const [showOverlay, setShowOverlay] = useState<boolean>(dataSaverEnabled);
+  const [imageVisible, setImageVisible] = useState<boolean>(!dataSaverEnabled);
+  const [progress, setProgress] = useState<number | undefined>();
+  const theme = ThemedStyles.style;
   const overlayTransition = useTimingTransition(showOverlay, { duration: 150 });
 
   const opacity = mix(overlayTransition, 0, 1);
@@ -50,39 +50,41 @@ export default observer(function ExplicitImage(props: PropsType) {
      * If overlay was visible and Data Saver was turned off, remove overlay
      * */
     if (showOverlay && !dataSaverEnabled) {
-      setShowOverlay(false)
-      setImageVisible(true)
+      setShowOverlay(false);
+      setImageVisible(true);
     }
-  }, [showOverlay, dataSaverEnabled])
+  }, [showOverlay, dataSaverEnabled]);
 
-  const _imageError = useCallback((event) => {
-    // bubble event up
-    onError && onError(event.nativeEvent.error)
-    setProgress(undefined)
-  }, [onError])
+  const _imageError = useCallback(
+    (event) => {
+      // bubble event up
+      onError && onError(event.nativeEvent.error);
+      setProgress(undefined);
+    },
+    [onError],
+  );
 
   const _onShowImage = useCallback(() => {
-    setImageVisible(true)
-    setProgress(0)
-  }, [])
+    setImageVisible(true);
+    setProgress(0);
+  }, []);
 
   const _onLoadEnd = useCallback(() => {
     if (imageVisible) {
-      setShowOverlay(false)
+      setShowOverlay(false);
     }
     if (onLoadEnd) {
-      onLoadEnd()
+      onLoadEnd();
     }
-  }, [imageVisible, onLoadEnd])
+  }, [imageVisible, onLoadEnd]);
 
-  const onProgress = useCallback(e => setProgress(e.nativeEvent.loaded / e.nativeEvent.total), [])
+  const onProgress = useCallback(
+    (e) => setProgress(e.nativeEvent.loaded / e.nativeEvent.total),
+    [],
+  );
 
   // do not show image if it is mature
-  if (
-    entity &&
-    entity.shouldBeBlured() &&
-    !entity.mature_visibility
-  ) {
+  if (entity && entity.shouldBeBlured() && !entity.mature_visibility) {
     return (
       <View
         style={[
@@ -91,15 +93,11 @@ export default observer(function ExplicitImage(props: PropsType) {
           CommonStyle.blackOverlay,
         ]}
       />
-    )
+    );
   }
 
-  if (
-    !source ||
-    !source.uri ||
-    source.uri.indexOf('//') < 0
-  ) {
-    return <View />
+  if (!source || !source.uri || source.uri.indexOf('//') < 0) {
+    return <View />;
   }
 
   const imageOverlay = (
@@ -109,45 +107,31 @@ export default observer(function ExplicitImage(props: PropsType) {
         CommonStyle.positionAbsolute,
         CommonStyle.centered,
         {
-          opacity
-        }
-      ]}
-    >
+          opacity,
+        },
+      ]}>
       <TouchableWithoutFeedback
         onPress={progress === undefined ? _onShowImage : undefined}
-        style={[
-          CommonStyle.positionAbsolute,
-          CommonStyle.centered,
-        ]}
-      >
+        style={[CommonStyle.positionAbsolute, CommonStyle.centered]}>
         <BlurView
           blurType={ThemedStyles.theme ? 'dark' : 'xlight'}
-          style={[
-            CommonStyle.positionAbsolute,
-            CommonStyle.centered,
-          ]}
-        >
-          {
-            typeof progress === 'number'
-              ? <ProgressCircle
-                progress={progress}
-                indeterminate={imageVisible && progress === 0}
-              />
-              : <Icon
-                name="md-download"
-                style={theme.colorIcon}
-                size={40}
-              />
-          }
+          style={[CommonStyle.positionAbsolute, CommonStyle.centered]}>
+          {typeof progress === 'number' ? (
+            <ProgressCircle
+              progress={progress}
+              indeterminate={imageVisible && progress === 0}
+            />
+          ) : (
+            <Icon name="md-download" style={theme.colorIcon} size={40} />
+          )}
         </BlurView>
       </TouchableWithoutFeedback>
     </Animated.View>
-  )
+  );
 
   return (
     <>
-      {
-        imageVisible &&
+      {imageVisible && (
         <ConnectivityAwareSmartImage
           source={source}
           onLoadEnd={_onLoadEnd}
@@ -156,9 +140,8 @@ export default observer(function ExplicitImage(props: PropsType) {
           onProgress={onProgress}
           style={[CommonStyle.positionAbsolute, imageStyle]}
         />
-      }
-      {
-        showOverlay && thumbnail &&
+      )}
+      {showOverlay && thumbnail && (
         <ConnectivityAwareSmartImage
           source={thumbnail}
           onLoadEnd={_onLoadEnd}
@@ -166,10 +149,8 @@ export default observer(function ExplicitImage(props: PropsType) {
           onError={_imageError}
           style={[CommonStyle.positionAbsolute, imageStyle]}
         />
-      }
-      {
-        imageOverlay
-      }
+      )}
+      {imageOverlay}
     </>
-  )
-})
+  );
+});

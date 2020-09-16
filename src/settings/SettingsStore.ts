@@ -1,6 +1,6 @@
 //@ts-nocheck
-import { observable, action, computed } from 'mobx'
-import connectivityService from '../common/services/connectivity.service'
+import { observable, action, computed } from 'mobx';
+import connectivityService from '../common/services/connectivity.service';
 
 import storageService from '../common/services/storage.service';
 import { getStores } from '../../AppStores';
@@ -25,12 +25,15 @@ class SettingsStore {
 
   @computed
   get dataSaverEnabled() {
-    let dataSaverEnabled = this.dataSaverMode
-    if (this.dataSaverModeDisablesOnWiFi && connectivityService.connectionInfo.type === 'wifi') {
-      dataSaverEnabled = false
+    let dataSaverEnabled = this.dataSaverMode;
+    if (
+      this.dataSaverModeDisablesOnWiFi &&
+      connectivityService.connectionInfo.type === 'wifi'
+    ) {
+      dataSaverEnabled = false;
     }
 
-    return dataSaverEnabled
+    return dataSaverEnabled;
   }
 
   /**
