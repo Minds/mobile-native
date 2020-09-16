@@ -1,20 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { observer } from 'mobx-react';
 import { View, StyleSheet, Text } from 'react-native';
 import Input from '../../common/components/Input';
 import ThemedStyles from '../../styles/ThemedStyles';
 import type { FabScreenStore } from './FabScreen';
 import LabeledComponent from '../../common/components/LabeledComponent';
-import type WalletStore from '../../wallet/WalletStore';
 import { CheckBox } from 'react-native-elements';
 
 type propsType = {
   store: FabScreenStore;
-  wallet: WalletStore;
 };
 
-const TokensForm = observer(({ store, wallet }: propsType) => {
+const TokensForm = observer(({ store }: propsType) => {
   const theme = ThemedStyles.style;
+
+  useEffect(() => {
+    store.getLastAmount();
+  }, [store]);
+
+  useEffect(() => {
+    store.getWalletBalance();
+  }, [store]);
 
   return (
     <View>
@@ -23,7 +29,7 @@ const TokensForm = observer(({ store, wallet }: propsType) => {
         style={[theme.marginBottom2x, styles.input]}
         placeholder={'Tokens'}
         onChangeText={store.setAmount}
-        value={store.amount}
+        value={store.amount.toString()}
         testID="fabTokensInput"
         keyboardType="decimal-pad"
       />
@@ -31,7 +37,7 @@ const TokensForm = observer(({ store, wallet }: propsType) => {
       <LabeledComponent
         label="Wallet Balance"
         wrapperStyle={theme.marginBottom4x}>
-        <Text style={theme.colorPrimaryText}>{wallet.formattedBalance}</Text>
+        <Text style={theme.colorPrimaryText}>{store.walletBalance}</Text>
       </LabeledComponent>
 
       <LabeledComponent label="Repeat Payment Monthly">

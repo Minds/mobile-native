@@ -439,12 +439,7 @@ exports[`Activity component renders correctly 1`] = `
           },
         }
       }
-      navigation={
-        Object {
-          "navigate": [MockFunction],
-          "push": [MockFunction],
-        }
-      }
+      onPress={[Function]}
       style={
         Object {
           "flex": 1,

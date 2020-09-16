@@ -35,9 +35,8 @@ import './AppErrors';
 import './src/common/services/socket.service';
 import pushService from './src/common/services/push.service';
 import mindsService from './src/common/services/minds.service';
-import receiveShare, {
-  SharedItem,
-} from './src/common/services/receive-share.service';
+import ShareMenu from 'react-native-share-menu';
+import receiveShare from './src/common/services/receive-share.service';
 import sessionService from './src/common/services/session.service';
 import deeplinkService from './src/common/services/deeplinks-router.service';
 import badgeService from './src/common/services/badge.service';
@@ -61,7 +60,11 @@ import ThemedStyles from './src/styles/ThemedStyles';
 import { StoresProvider } from './src/common/hooks/use-stores';
 import AppMessages from './AppMessages';
 import i18n from './src/common/services/i18n.service';
-import ShareMenu from 'react-native-share-menu';
+import portraitContentService from './src/portrait/PortraitContentService';
+
+// disable warnings
+import { YellowBox } from 'react-native';
+YellowBox.ignoreWarnings(['']);
 
 const stores = getStores();
 let deepLinkUrl = '';
@@ -143,6 +146,7 @@ sessionService.onLogin(async () => {
     entitiesStorage.removeOlderThan(30);
     feedsStorage.removeOlderThan(30);
     commentStorageService.removeOlderThan(30);
+    portraitContentService.removeOlderThan(3);
   }, 30000);
 });
 
