@@ -20,7 +20,7 @@ describe('Explicit image component', () => {
       <ExplicitImage entity={entity}/>
     );
 
-    jest.runOnlyPendingTimers();
+    jest.runTimersToTime(1000);
   });
 
   it('renders correctly', async () => {
