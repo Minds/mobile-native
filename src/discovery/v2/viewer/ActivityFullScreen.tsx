@@ -97,7 +97,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
       videoPlayerService.setCurrent(null);
 
       if (user.plus && !user.disable_autoplay_videos && mediaRef.current) {
-        mediaRef.current.playVideo(true);
+        mediaRef.current.playVideo(false);
       }
     } else {
       mediaRef.current?.pauseVideo();
