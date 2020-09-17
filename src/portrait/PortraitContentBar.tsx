@@ -25,6 +25,8 @@ const Header = () => {
   );
 };
 
+export const portraitBarRef = React.createRef<FlatList<PortraitBarItem>>();
+
 const PortraitContentBar = observer(
   forwardRef((_, ref) => {
     const theme = ThemedStyles.style;
@@ -61,7 +63,7 @@ const PortraitContentBar = observer(
 
     return (
       <FlatList
-        id="portrait-bar"
+        ref={portraitBarRef}
         contentContainerStyle={[
           theme.rowJustifyStart,
           theme.backgroundSecondary,

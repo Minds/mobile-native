@@ -97,6 +97,7 @@ import AuthTransition from './AuthTransition';
 import VideoBackground from '../common/components/VideoBackground';
 import TransparentLayer from '../common/components/TransparentLayer';
 import PortraitViewerScreen from '../portrait/PortraitViewerScreen';
+import { portraitBarRef } from '../portrait/PortraitContentBar';
 
 const isIos = Platform.OS === 'ios';
 
@@ -251,7 +252,7 @@ const MainScreen = () => {
       gestureHandlerProps={{
         hitSlop: { left: 0, width: dimensions.width },
         //@ts-ignore
-        waitFor: 'portrait-bar',
+        waitFor: portraitBarRef,
       }}
       drawerType="slide"
       drawerContent={Drawer}
