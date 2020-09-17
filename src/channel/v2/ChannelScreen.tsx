@@ -11,6 +11,7 @@ import type BlogModel from '../../blogs/BlogModel';
 import i18n from '../../common/services/i18n.service';
 import { useFocusEffect } from '@react-navigation/native';
 import BlockedChannel from '../../common/components/BlockedChannel';
+import sessionService from '../../common/services/session.service';
 
 type PropsType = {
   navigation: any;
@@ -34,11 +35,15 @@ const ChannelScreen = observer((props: PropsType) => {
   useFocusEffect(
     React.useCallback(() => {
       const params = props.route.params;
-      if (params && params.prepend) {
+      if (
+        params &&
+        params.prepend &&
+        store.channel?.guid === sessionService.guid
+      ) {
         store.feedStore.prepend(params.prepend);
         props.navigation.setParams({ prepend: undefined });
       }
-    }, [props.navigation, props.route.params, store.feedStore]),
+    }, [props.navigation, props.route.params, store.channel, store.feedStore]),
   );
 
   const renderBlog = useCallback(
