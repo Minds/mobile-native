@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import { TouchableOpacity } from 'react-native';
+import React, { useCallback } from 'react';
 import { observer } from 'mobx-react';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -11,98 +10,86 @@ import { FLAG_VOTE } from '../../../common/Permissions';
 import remoteAction from '../../../common/RemoteAction';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
+import { TouchableOpacity as RNGHTouchableOpacity } from 'react-native-gesture-handler';
+import { Platform, TouchableOpacity as RNTouchableOpacity } from 'react-native';
+import { useRoute } from '@react-navigation/native';
 
 // prevent double tap in touchable
-const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
+const CustomRNGHTouchable = withPreventDoubleTap(RNGHTouchableOpacity);
+const CustomRNTouchable = withPreventDoubleTap(RNTouchableOpacity);
 
 type PropsType = {
   entity: ActivityModel;
-  size: number;
-  orientation: 'column' | 'row';
+  size?: number;
+  orientation?: 'column' | 'row';
+  voted?: boolean;
+  direction?: 'up' | 'down';
+  iconName?: string;
 };
 
-/**
- * Thumb Up Action Component
- */
-@observer
-class ThumbUpAction extends Component<PropsType> {
-  /**
-   * Default Props
-   */
-  static defaultProps = {
-    size: 21,
-    orientation: 'row',
-  };
-
-  /**
-   * Thumb direction
-   */
-  direction: 'up' | 'down' = 'up';
-
-  /**
-   * Action Icon
-   */
-  iconName: string = 'thumb-up';
-
-  /**
-   * Render
-   */
-  render() {
+const ThumbUpAction = observer(
+  ({
+    size = 21,
+    orientation = 'row',
+    entity,
+    voted,
+    direction = 'up',
+    iconName = 'thumb-up',
+  }: PropsType) => {
+    const route = useRoute();
     const theme = ThemedStyles.style;
-    const entity = this.props.entity;
 
-    const count = entity[`thumbs:${this.direction}:count`];
+    const count = entity[`thumbs:${direction}:count`];
 
     const canVote = entity.can(FLAG_VOTE);
 
+    const _voted = voted !== undefined ? voted : entity.votedUp;
+
     const color = canVote
-      ? this.voted
+      ? _voted
         ? theme.colorIconActive
         : theme.colorIcon
       : CS.colorLightGreyed;
 
+    /**
+     * Toggle thumb
+     */
+    const toggleThumb = useCallback(async () => {
+      if (!entity.can(FLAG_VOTE, true)) {
+        return;
+      }
+
+      remoteAction(() => {
+        return entity.toggleVote(direction);
+      });
+    }, [entity, direction]);
+
+    const Touchable =
+      Platform.OS === 'android' && route.name === 'Activity'
+        ? CustomRNGHTouchable
+        : CustomRNTouchable;
+
     return (
-      <TouchableOpacityCustom
+      <Touchable
         style={[
           theme.rowJustifyCenter,
           theme.paddingHorizontal3x,
           theme.paddingVertical4x,
           theme.alignCenter,
         ]}
-        onPress={this.toggleThumb}
-        {...testID(`Thumb ${this.direction} activity button`)}>
-        <Icon
-          style={[color, theme.marginRight]}
-          name={this.iconName}
-          size={this.props.size}
-        />
+        onPress={toggleThumb}
+        {...testID(`Thumb ${direction} activity button`)}>
+        <Icon style={[color, theme.marginRight]} name={iconName} size={size} />
         {count ? (
           <Counter
             // size={this.props.size * 0.7}
             count={count}
-            testID={`Thumb ${this.direction} count`}
+            testID={`Thumb ${direction} count`}
           />
         ) : undefined}
-      </TouchableOpacityCustom>
+      </Touchable>
     );
-  }
-
-  get voted() {
-    return this.props.entity.votedUp;
-  }
-
-  /**
-   * Toggle thumb
-   */
-  toggleThumb = async () => {
-    if (!this.props.entity.can(FLAG_VOTE, true)) {
-      return;
-    }
-
-    remoteAction(() => {
-      return this.props.entity.toggleVote(this.direction);
-    });
-  };
-}
+  },
+);
 
 export default ThumbUpAction;

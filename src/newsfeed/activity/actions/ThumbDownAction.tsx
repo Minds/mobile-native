@@ -1,14 +1,23 @@
-//@ts-nocheck
+import React from 'react';
+import { observer } from 'mobx-react';
+import ActivityModel from '../../ActivityModel';
 import ThumbUpAction from './ThumbUpAction';
 
-/**
- * Thumb Down Action Component
- */
-export default class ThumbDownAction extends ThumbUpAction {
-  direction: 'up' | 'down' = 'down';
-  iconName = 'thumb-down';
+type PropsType = {
+  entity: ActivityModel;
+  size?: number;
+  orientation?: 'column' | 'row';
+};
 
-  get voted() {
-    return this.props.entity.votedDown;
-  }
-}
+const ThumbDownAction = observer((props: PropsType) => {
+  return (
+    <ThumbUpAction
+      direction="down"
+      iconName="thumb-down"
+      voted={props.entity.votedDown}
+      {...props}
+    />
+  );
+});
+
+export default ThumbDownAction;
