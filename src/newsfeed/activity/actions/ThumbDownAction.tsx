@@ -7,6 +7,7 @@ type PropsType = {
   entity: ActivityModel;
   size?: number;
   orientation?: 'column' | 'row';
+  TouchableComponent?: any;
 };
 
 const ThumbDownAction = observer((props: PropsType) => {

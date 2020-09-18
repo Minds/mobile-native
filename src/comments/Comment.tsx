@@ -33,8 +33,15 @@ import CommentActionSheet from './CommentActionSheet';
 import ThemedStyles from '../styles/ThemedStyles';
 import { showNotification } from '../../AppMessages';
 import ChannelBadge from '../common/components/ChannelBadge';
+import withPreventDoubleTap from '../common/components/PreventDoubleTap';
+import { TouchableOpacity as RNGHTouchableOpacity } from 'react-native-gesture-handler';
+import { Platform, TouchableOpacity as RNTouchableOpacity } from 'react-native';
 
 const DoubleTapTouch = DoubleTap(TouchableOpacity);
+
+const CustomTouchable = withPreventDoubleTap(
+  Platform.OS === 'android' ? RNGHTouchableOpacity : RNTouchableOpacity,
+);
 
 /**
  * Comment Component
@@ -83,8 +90,16 @@ class Comment extends Component {
           </Text>
           <View
             style={[CommonStyle.flexContainer, CommonStyle.rowJustifyStart]}>
-            <ThumbUpAction entity={comment} size={16} />
-            <ThumbDownAction entity={comment} size={16} />
+            <ThumbUpAction
+              entity={comment}
+              size={16}
+              TouchableComponent={CustomTouchable}
+            />
+            <ThumbDownAction
+              entity={comment}
+              size={16}
+              TouchableComponent={CustomTouchable}
+            />
             {canReply && (
               <ReplyAction
                 entity={comment}

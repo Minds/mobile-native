@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import { TouchableOpacity } from 'react-native';
 import { observer } from 'mobx-react';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -10,13 +11,9 @@ import { FLAG_VOTE } from '../../../common/Permissions';
 import remoteAction from '../../../common/RemoteAction';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
-import { TouchableOpacity as RNGHTouchableOpacity } from 'react-native-gesture-handler';
-import { Platform, TouchableOpacity as RNTouchableOpacity } from 'react-native';
-import { useRoute } from '@react-navigation/native';
 
 // prevent double tap in touchable
-const CustomRNGHTouchable = withPreventDoubleTap(RNGHTouchableOpacity);
-const CustomRNTouchable = withPreventDoubleTap(RNTouchableOpacity);
+const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
 
 type PropsType = {
   entity: ActivityModel;
@@ -25,18 +22,18 @@ type PropsType = {
   voted?: boolean;
   direction?: 'up' | 'down';
   iconName?: string;
+  TouchableComponent?: any;
 };
 
 const ThumbUpAction = observer(
   ({
     size = 21,
-    orientation = 'row',
     entity,
     voted,
     direction = 'up',
     iconName = 'thumb-up',
+    TouchableComponent,
   }: PropsType) => {
-    const route = useRoute();
     const theme = ThemedStyles.style;
 
     const count = entity[`thumbs:${direction}:count`];
@@ -64,10 +61,7 @@ const ThumbUpAction = observer(
       });
     }, [entity, direction]);
 
-    const Touchable =
-      Platform.OS === 'android' && route.name === 'Activity'
-        ? CustomRNGHTouchable
-        : CustomRNTouchable;
+    const Touchable = TouchableComponent || TouchableOpacityCustom;
 
     return (
       <Touchable
