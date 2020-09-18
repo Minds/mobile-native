@@ -11,7 +11,7 @@ import type { AppStackParamList } from '../../navigation/NavigationTypes';
  * Get menu options
  * @param channel
  */
-const getOptions = (channel: UserModel) => {
+const getOptions = (channel: UserModel, isSubscribedToTier: boolean) => {
   let options = [i18n.t('cancel')];
   if (channel.isSubscribed()) {
     options.push(i18n.t('channel.unsubscribe'));
@@ -22,11 +22,13 @@ const getOptions = (channel: UserModel) => {
     options.push(i18n.t('channel.unblock'));
   }
   options.push(i18n.t('channel.report'));
+  isSubscribedToTier && options.push(i18n.t('settings.billingOptions.2'));
   return options;
 };
 
 type PropsType = {
   channel: UserModel;
+  isSubscribedToTier: boolean;
 };
 
 /**
@@ -40,7 +42,7 @@ const ChannelMoreMenu = (props: PropsType, ref: any) => {
 
   const handleSelection = useCallback(
     (option) => {
-      let options = getOptions(props.channel);
+      let options = getOptions(props.channel, props.isSubscribedToTier);
       let selected = options[option];
       switch (selected) {
         case i18n.t('channel.unsubscribe'):
@@ -57,16 +59,19 @@ const ChannelMoreMenu = (props: PropsType, ref: any) => {
             entity: props.channel,
           });
           break;
+        case i18n.t('settings.billingOptions.2'):
+          navigation.navigate('RecurringPayments', {});
+          break;
       }
     },
-    [props.channel, navigation],
+    [props, navigation],
   );
 
   return (
     <ActionSheet
       ref={ref}
       title={i18n.t('actions')}
-      options={getOptions(props.channel)}
+      options={getOptions(props.channel, props.isSubscribedToTier)}
       onPress={handleSelection}
       cancelButtonIndex={0}
     />

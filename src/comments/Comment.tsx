@@ -100,7 +100,7 @@ class Comment extends Component {
     return (
       <View style={[styles.container, comment.focused ? styles.focused : null]}>
         <TouchableOpacity
-          onPress={this._navToChannel}
+          onPress={this.navToChannel}
           style={styles.avatarContainer}>
           <FastImage source={avatarSrc} style={styles.avatar} />
         </TouchableOpacity>
@@ -121,7 +121,7 @@ class Comment extends Component {
                 />
               ) : (
                 <Text style={styles.message} selectable={false}>
-                  <Text style={styles.username} onPress={this._navToChannel}>
+                  <Text style={styles.username} onPress={this.navToChannel}>
                     @{comment.ownerObj.username}
                   </Text>
                   <ChannelBadge
@@ -160,7 +160,7 @@ class Comment extends Component {
               <MediaView
                 entity={comment}
                 style={styles.media}
-                navigation={this.props.navigation}
+                onPress={this.navToImage}
                 width={Dimensions.get('window').width - 60}
               />
             </View>
@@ -209,11 +209,24 @@ class Comment extends Component {
   /**
    * Navigate To channel
    */
-  _navToChannel = () => {
+  navToChannel = () => {
     // only active if receive the navigation property
     if (this.props.navigation) {
       this.props.navigation.push('Channel', {
         guid: this.props.comment.ownerObj.guid,
+      });
+    }
+  };
+
+  /**
+   * Navigate to full screen image view
+   */
+  navToImage = () => {
+    if (this.props.navigation) {
+      const source = this.props.entity.getThumbSource('xlarge');
+      this.props.navigation.push('ViewImage', {
+        source,
+        entity: this.props.entity,
       });
     }
   };

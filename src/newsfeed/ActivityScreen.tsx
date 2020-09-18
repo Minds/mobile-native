@@ -9,7 +9,7 @@ import { FLAG_VIEW } from '../common/Permissions';
 import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
 import CenteredLoading from '../common/components/CenteredLoading';
 
-type ActivityRouteProp = RouteProp<AppStackParamList, 'Activity'>;
+export type ActivityRouteProp = RouteProp<AppStackParamList, 'Activity'>;
 type ActivityNavigationProp = NavigationProp<AppStackParamList, 'Activity'>;
 
 type PropsType = {

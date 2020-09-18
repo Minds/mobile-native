@@ -16,7 +16,7 @@ type PropsType = {
 };
 
 const ExpoVideo = observer(
-  ({ entity, localStore, repeat, resizeMode, pause }: PropsType) => {
+  ({ entity, localStore, repeat = true, resizeMode, pause }: PropsType) => {
     const theme = ThemedStyles.style;
     const playbackObject = useRef<Video>(null);
 
@@ -40,7 +40,7 @@ const ExpoVideo = observer(
         source={source}
         usePoster={true}
         posterSource={{ uri: thumb_uri }}
-        isLooping={repeat || false}
+        isLooping={repeat}
         resizeMode={resizeMode || 'contain'}
         useNativeControls={false}
         style={theme.flexContainer}

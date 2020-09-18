@@ -24,8 +24,14 @@ class ImagePickerService {
 
     if (Platform.OS !== 'ios') {
       allowed = await permissions.checkReadExternalStorage(true);
+      if (!allowed) {
+        allowed = await permissions.readExternalStorage();
+      }
     } else {
       allowed = await permissions.checkMediaLibrary(true);
+      if (!allowed) {
+        allowed = await permissions.mediaLibrary();
+      }
     }
 
     return allowed;

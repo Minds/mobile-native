@@ -44,6 +44,7 @@ export default observer(function (props) {
                 mode={store.mode}
                 onForceVideo={store.setModeVideo}
                 onPressGallery={() => store.selectFromGallery(store.mode)}
+                portraitMode={store.portraitMode}
               />
             </PermissionsCheck>
           ) : (
@@ -79,18 +80,20 @@ export default observer(function (props) {
                 onPress={store.setModeVideo}>
                 {i18nService.t('capture.video').toUpperCase()}
               </Text>
-              <Text
-                style={[
-                  theme.fontXL,
-                  theme.flexContainer,
-                  theme.textCenter,
-                  styles.tabText,
-                  store.mode === 'text' ? theme.colorLink : null,
-                ]}
-                onPress={store.setModeText}
-                testID="CaptureTextButton">
-                {i18nService.t('capture.text').toUpperCase()}
-              </Text>
+              {!store.portraitMode && (
+                <Text
+                  style={[
+                    theme.fontXL,
+                    theme.flexContainer,
+                    theme.textCenter,
+                    styles.tabText,
+                    store.mode === 'text' ? theme.colorLink : null,
+                  ]}
+                  onPress={store.setModeText}
+                  testID="CaptureTextButton">
+                  {i18nService.t('capture.text').toUpperCase()}
+                </Text>
+              )}
             </View>
           </View>
           <FloatingBackButton

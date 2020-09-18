@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
+import { observer } from 'mobx-react';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import ThemedStyles from '../styles/ThemedStyles';
@@ -14,7 +15,7 @@ import featuresService from '../common/services/features.service';
  * Media confirm screen
  * @param {Object} props
  */
-export default function (props) {
+export default observer(function (props) {
   const theme = ThemedStyles.style;
 
   const insets = useSafeArea();
@@ -46,12 +47,23 @@ export default function (props) {
       {previewComponent}
       <View style={[styles.bottomBar, cleanBottom, theme.backgroundSecondary]}>
         <Text
-          onPress={props.store.acceptMedia}
+          onPress={props.store.editImage}
           style={[
             theme.fontXL,
             theme.colorSecondaryText,
             theme.fontSemibold,
-            theme.marginRight2x,
+            theme.marginLeft3x,
+            styles.text,
+          ]}>
+          {i18n.t('edit')}
+        </Text>
+        <Text
+          onPress={props.store.acceptMedia}
+          style={[
+            theme.fontXL,
+            theme.colorSecondaryText,
+            theme.bold,
+            theme.marginRight3x,
             styles.text,
           ]}>
           {i18n.t('confirm')}
@@ -65,7 +77,7 @@ export default function (props) {
       />
     </View>
   );
-}
+});
 
 const styles = StyleSheet.create({
   text: {
@@ -78,7 +90,7 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
   },
   backIcon: {
     position: 'absolute',

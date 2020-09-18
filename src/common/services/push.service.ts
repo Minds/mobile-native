@@ -1,7 +1,6 @@
-//@ts-nocheck
 import { Platform } from 'react-native';
 
-import Router from './push/router';
+import Router from './push/v2/router';
 import logService from './log.service';
 
 /**
