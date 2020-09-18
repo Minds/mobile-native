@@ -98,22 +98,25 @@ const PortraitContentBar = observer(
     );
 
     return (
-      <FlatList
-        //id="portrait-bar"
-        contentContainerStyle={[
-          theme.rowJustifyStart,
-          theme.backgroundSecondary,
+      <View
+        style={[
           theme.borderBottom8x,
           theme.borderBackgroundPrimary,
           theme.fullWidth,
-        ]}
-        style={styles.bar}
-        horizontal={true}
-        ListHeaderComponent={Header}
-        ListEmptyComponent={Empty}
-        renderItem={renderItem}
-        data={store.items.slice()}
-      />
+        ]}>
+        <FlatList
+          contentContainerStyle={[
+            theme.rowJustifyStart,
+            theme.backgroundSecondary,
+          ]}
+          style={styles.bar}
+          horizontal={true}
+          ListHeaderComponent={Header}
+          ListEmptyComponent={Empty}
+          renderItem={renderItem}
+          data={store.items.slice()}
+        />
+      </View>
     );
   }),
 );

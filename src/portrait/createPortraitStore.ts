@@ -69,7 +69,7 @@ function createPortraitStore() {
       } catch (err) {
         console.log(err);
       } finally {
-        this.loading = true;
+        this.loading = false;
       }
     },
   };
