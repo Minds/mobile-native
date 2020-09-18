@@ -76,14 +76,6 @@ const UserContentSwiper = observer((props: PropsType) => {
   };
 
   const stackConfig: iPageInterpolation = {
-    transform: [
-      {
-        scale: {
-          inputRange: [-1, -0.4, 0, 0.4, 1],
-          outputRange: [0.85, 0.9, 1, 0.9, 0.85],
-        },
-      },
-    ],
     opacity: {
       inputRange: [-1, 0, 1],
       outputRange: [0, 1, 0],
@@ -118,7 +110,7 @@ const UserContentSwiper = observer((props: PropsType) => {
           maxIndex={activities.length - 1}
           panProps={{ enabled: false }}
           style={pagerStyle}
-          clamp={{ next: 1, prev: 1 }}
+          clamp={{ next: 0, prev: 0 }}
           pageInterpolation={stackConfig}
           initialIndex={store.index}>
           {pages}
