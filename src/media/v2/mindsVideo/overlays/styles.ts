@@ -28,7 +28,7 @@ export const styles = StyleSheet.create({
   },
   controlSettingsContainer: {
     position: 'absolute',
-    top: 0,
+    top: 10,
     right: 0,
     margin: 8,
     paddingRight: 5,

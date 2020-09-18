@@ -4,13 +4,15 @@ import React, {
   useImperativeHandle,
   forwardRef,
 } from 'react';
+import { FlatList } from 'react-native-gesture-handler';
+import { PlaceholderMedia, Fade, Placeholder } from 'rn-placeholder';
 import { observer, useLocalStore } from 'mobx-react';
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+
 import ThemedStyles from '../styles/ThemedStyles';
 import PortraitContentBarItem from './PortraitContentBarItem';
 import createPortraitStore, { PortraitBarItem } from './createPortraitStore';
 import { useNavigation } from '@react-navigation/native';
-import { FlatList } from 'react-native-gesture-handler';
 
 const Header = () => {
   const theme = ThemedStyles.style;
@@ -26,6 +28,34 @@ const Header = () => {
 };
 
 export const portraitBarRef = React.createRef<FlatList<PortraitBarItem>>();
+const BarPlaceholder = () => {
+  const theme = ThemedStyles.style;
+  const color = ThemedStyles.getColor('tertiary_background');
+  const animation = (props) => (
+    <Fade {...props} style={theme.backgroundPrimary} />
+  );
+  return (
+    <Placeholder Animation={animation}>
+      <View style={theme.rowJustifyStart}>
+        <PlaceholderMedia
+          isRound
+          color={color}
+          style={[theme.margin2x, styles.placeholder]}
+        />
+        <PlaceholderMedia
+          isRound
+          color={color}
+          style={[theme.margin2x, styles.placeholder]}
+        />
+        <PlaceholderMedia
+          isRound
+          color={color}
+          style={[theme.margin2x, styles.placeholder]}
+        />
+      </View>
+    </Placeholder>
+  );
+};
 
 const PortraitContentBar = observer(
   forwardRef((_, ref) => {
@@ -42,6 +72,13 @@ const PortraitContentBar = observer(
         store.load();
       },
     }));
+
+    const Empty = useCallback(() => {
+      if (store.loading) {
+        return <BarPlaceholder />;
+      }
+      return null;
+    }, [store]);
 
     const renderItem = useCallback(
       (row: { item: PortraitBarItem; index: number }) => (
@@ -67,10 +104,14 @@ const PortraitContentBar = observer(
         contentContainerStyle={[
           theme.rowJustifyStart,
           theme.backgroundSecondary,
+          theme.borderBottom8x,
+          theme.borderBackgroundPrimary,
+          theme.fullWidth,
         ]}
         style={styles.bar}
         horizontal={true}
         ListHeaderComponent={Header}
+        ListEmptyComponent={Empty}
         renderItem={renderItem}
         data={store.items.slice()}
       />
@@ -88,6 +129,11 @@ const styles = StyleSheet.create({
   },
   add: {
     margin: 10,
+    height: 55,
+    width: 55,
+    borderRadius: 27.5,
+  },
+  placeholder: {
     height: 55,
     width: 55,
     borderRadius: 27.5,
