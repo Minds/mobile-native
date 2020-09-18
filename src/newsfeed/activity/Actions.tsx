@@ -23,7 +23,6 @@ type PropsType = {
   entity: ActivityModel;
   showCommentsOutlet?: boolean;
   onPressComment?: () => void;
-  shouldOpenComments?: boolean;
 };
 
 export const Actions = observer((props: PropsType) => {
@@ -52,7 +51,6 @@ export const Actions = observer((props: PropsType) => {
             testID={
               props.entity.text === 'e2eTest' ? 'ActivityCommentButton' : ''
             }
-            shouldOpenComments={props.shouldOpenComments}
           />
           <RemindAction entity={entity} />
 

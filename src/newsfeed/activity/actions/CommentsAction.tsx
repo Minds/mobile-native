@@ -22,7 +22,6 @@ type PropsType = {
   testID?: string;
   navigation: any;
   onPressComment?: () => void;
-  shouldOpenComments?: boolean;
 };
 
 /**
@@ -59,14 +58,6 @@ const CommentsAction = observer((props: PropsType) => {
       });
     }
   }, [props, route]);
-
-  useEffect(() => {
-    if (props.shouldOpenComments) {
-      setTimeout(() => {
-        openComments();
-      }, 100);
-    }
-  }, [openComments, props.shouldOpenComments]);
 
   return (
     <TouchableOpacityCustom

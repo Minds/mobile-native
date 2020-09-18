@@ -92,14 +92,21 @@ const ActivityFullScreen = observer((props: PropsType) => {
     insets.top,
   ]);
 
-  let shouldOpenComments = false;
-  if (
-    route &&
-    (route.params?.focusedUrn ||
-      (route.params?.scrollToBottom && route.name === 'Activity'))
-  ) {
-    shouldOpenComments = true;
-  }
+  const onPressComment = useCallback(() => {
+    bottomStore.show(
+      'Comments',
+      '',
+      <CommentList
+        entity={entity}
+        scrollToBottom={true}
+        store={store.comments}
+        navigation={navigation}
+        keyboardVerticalOffset={isIphoneX ? -225 : -185}
+        // onInputFocus={this.onFocus}
+        route={route}
+      />,
+    );
+  }, [bottomStore, entity, navigation, route, store]);
 
   useEffect(() => {
     if (focused) {
@@ -115,6 +122,20 @@ const ActivityFullScreen = observer((props: PropsType) => {
       mediaRef.current?.pauseVideo();
     }
   }, [focused]);
+
+  useEffect(() => {
+    let openComentsTimeOut: NodeJS.Timeout | null = null;
+    if (route && (route.params?.focusedUrn || route.params?.scrollToBottom)) {
+      openComentsTimeOut = setTimeout(() => {
+        onPressComment();
+      }, 100);
+    }
+    return () => {
+      if (openComentsTimeOut) {
+        clearTimeout(openComentsTimeOut);
+      }
+    };
+  }, [onPressComment, route]);
 
   const isShortText =
     !hasMedia && !hasRemind && entity.text.length < TEXT_SHORT_THRESHOLD;
@@ -161,22 +182,6 @@ const ActivityFullScreen = observer((props: PropsType) => {
       }
     }
   }, [translateRef]);
-
-  const onPressComment = useCallback(() => {
-    bottomStore.show(
-      'Comments',
-      '',
-      <CommentList
-        entity={entity}
-        scrollToBottom={true}
-        store={store.comments}
-        navigation={navigation}
-        keyboardVerticalOffset={isIphoneX ? -225 : -185}
-        // onInputFocus={this.onFocus}
-        route={route}
-      />,
-    );
-  }, [bottomStore, entity, navigation, route, store]);
 
   let buttonPopUpHeight = window.height * 0.85;
 
@@ -302,7 +307,6 @@ const ActivityFullScreen = observer((props: PropsType) => {
           entity={entity}
           showCommentsOutlet={false}
           onPressComment={onPressComment}
-          shouldOpenComments={shouldOpenComments}
         />
       </View>
       {overlay}
