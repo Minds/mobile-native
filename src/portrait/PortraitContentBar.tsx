@@ -65,6 +65,9 @@ const PortraitContentBar = observer(
         contentContainerStyle={[
           theme.rowJustifyStart,
           theme.backgroundSecondary,
+          theme.borderBottom8x,
+          theme.borderBackgroundPrimary,
+          theme.fullWidth,
         ]}
         style={styles.bar}
         horizontal={true}
