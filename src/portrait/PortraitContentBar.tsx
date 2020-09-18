@@ -61,7 +61,7 @@ const PortraitContentBar = observer(
 
     return (
       <FlatList
-        id="portrait-bar"
+        //id="portrait-bar"
         contentContainerStyle={[
           theme.rowJustifyStart,
           theme.backgroundSecondary,

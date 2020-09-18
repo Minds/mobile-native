@@ -82,13 +82,7 @@ const PortraitViewerScreen = observer((props: PropsType) => {
   };
 
   const pages = store.items.map((item, index) => (
-    <UserContentSwiper
-      key={index}
-      item={item}
-      nextUser={() => {
-        store.nextIndex();
-      }}
-    />
+    <UserContentSwiper key={index} item={item} nextUser={store.nextIndex} />
   ));
 
   return (
