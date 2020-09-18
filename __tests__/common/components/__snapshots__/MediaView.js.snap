@@ -93,6 +93,15 @@ exports[`Media view component renders correctly 1`] = `
             "uri": "www.something.com",
           }
         }
+        style={
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
         thumbnail={
           Object {
             "uri": "www.something.com",

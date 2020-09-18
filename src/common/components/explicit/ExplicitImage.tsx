@@ -3,27 +3,23 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { observer } from 'mobx-react';
 import { TouchableWithoutFeedback, View } from 'react-native';
 import { BlurView } from '@react-native-community/blur';
+import { FastImageProperties } from 'react-native-fast-image';
 import { createImageProgress } from 'react-native-image-progress';
 import ProgressCircle from 'react-native-progress/Circle';
+import Animated from 'react-native-reanimated';
 import { mix, useTimingTransition } from 'react-native-redash';
 import Icon from 'react-native-vector-icons/Ionicons';
 import settingsStore from '../../../settings/SettingsStore';
 import { CommonStyle } from '../../../styles/Common';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import ConnectivityAwareSmartImage from '../ConnectivityAwareSmartImage';
-import Animated from 'react-native-reanimated';
 import type { Source } from 'react-native-fast-image';
 import type BaseModel from '../../BaseModel';
 
-type PropsType = {
-  onLoadEnd: () => void;
-  source: Source;
-  onError: (error: any) => void;
+interface PropsType extends FastImageProperties {
   entity?: BaseModel;
   thumbnail?: Source;
-  onLoad?: any;
-  imageStyle?: any;
-};
+}
 
 export default observer(function ExplicitImage(props: PropsType) {
   const {
@@ -33,16 +29,19 @@ export default observer(function ExplicitImage(props: PropsType) {
     thumbnail,
     onLoad,
     onLoadEnd,
-    imageStyle,
+    ...otherProps
   } = props;
 
   const dataSaverEnabled = settingsStore.dataSaverEnabled;
-  const [showOverlay, setShowOverlay] = useState<boolean>(dataSaverEnabled);
-  const [imageVisible, setImageVisible] = useState<boolean>(!dataSaverEnabled);
+  const [showOverlay, setShowOverlay] = useState<boolean>(
+    entity && entity.paywall ? false : dataSaverEnabled,
+  );
+  const [imageVisible, setImageVisible] = useState<boolean>(
+    entity && entity.paywall ? true : !dataSaverEnabled,
+  );
   const [progress, setProgress] = useState<number | undefined>();
   const theme = ThemedStyles.style;
   const overlayTransition = useTimingTransition(showOverlay, { duration: 150 });
-
   const opacity = mix(overlayTransition, 0, 1);
 
   useEffect(() => {
@@ -73,27 +72,19 @@ export default observer(function ExplicitImage(props: PropsType) {
     if (imageVisible) {
       setShowOverlay(false);
     }
-    if (onLoadEnd) {
-      onLoadEnd();
-    }
+    onLoadEnd && onLoadEnd();
   }, [imageVisible, onLoadEnd]);
 
-  const _onProgress = useCallback(
-    (e) => setProgress(e.nativeEvent.loaded / e.nativeEvent.total),
-    [],
-  );
+  const _onProgress = useCallback((e) => {
+    const p = e.nativeEvent.loaded / e.nativeEvent.total;
+    if (p) {
+      setProgress(p);
+    }
+  }, []);
 
   // do not show image if it is mature
   if (entity && entity.shouldBeBlured() && !entity.mature_visibility) {
-    return (
-      <View
-        style={[
-          CommonStyle.positionAbsolute,
-          imageStyle,
-          CommonStyle.blackOverlay,
-        ]}
-      />
-    );
+    return <View style={[CommonStyle.blackOverlay, otherProps.style]} />;
   }
 
   if (!source || !source.uri || source.uri.indexOf('//') < 0) {
@@ -130,7 +121,7 @@ export default observer(function ExplicitImage(props: PropsType) {
   );
 
   return (
-    <>
+    <View style={otherProps.style}>
       {imageVisible && (
         <ConnectivityAwareSmartImage
           source={source}
@@ -138,19 +129,19 @@ export default observer(function ExplicitImage(props: PropsType) {
           onLoad={onLoad}
           onError={_imageError}
           onProgress={_onProgress}
-          style={[CommonStyle.positionAbsolute, imageStyle]}
+          {...otherProps}
         />
       )}
-      {showOverlay && thumbnail && (
+      {showOverlay && (
         <ConnectivityAwareSmartImage
           source={thumbnail}
           onLoadEnd={_onLoadEnd}
           onLoad={onLoad}
           onError={_imageError}
-          style={[CommonStyle.positionAbsolute, imageStyle]}
+          {...otherProps}
         />
       )}
       {imageOverlay}
-    </>
+    </View>
   );
 });

@@ -6,11 +6,12 @@ import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 import FastImage from 'react-native-fast-image';
 
 import { observer } from 'mobx-react';
+import ExplicitImage from '../common/components/explicit/ExplicitImage';
+import ExplicitImage from '../common/components/explicit/ExplicitImage';
 
 import ExplicitOverlay from '../common/components/explicit/ExplicitOverlay';
 import { CommonStyle as CS } from '../styles/Common';
 import ThemedStyles from '../styles/ThemedStyles';
-import ConnectivityAwareSmartImage from '../common/components/ConnectivityAwareSmartImage';
 
 @observer
 class DiscoveryTile extends Component {
@@ -95,7 +96,7 @@ class DiscoveryTile extends Component {
         <View
           style={[CS.flexContainer, ThemedStyles.style.backgroundSeparator]}>
           {boundary}
-          <ConnectivityAwareSmartImage
+          <ExplicitImage
             source={url}
             style={CS.positionAbsolute}
             onLoadEnd={this.setActive}

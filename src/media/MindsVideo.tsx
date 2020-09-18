@@ -25,7 +25,7 @@ let FORWARD_DURATION = 7;
 
 import { observer } from 'mobx-react';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { CommonStyle as CS } from '../styles/Common';
+import { CommonStyle, CommonStyle as CS } from '../styles/Common';
 import colors from '../styles/Colors';
 import ExplicitImage from '../common/components/explicit/ExplicitImage';
 import logService from '../common/services/log.service';
@@ -553,6 +553,7 @@ class MindsVideo extends Component<PropsType, StateType> {
         <ExplicitImage
           onLoadEnd={this.onLoadEnd}
           onError={this.onError}
+          style={CommonStyle.positionAbsolute}
           source={image}
           entity={entity}
         />

@@ -15,6 +15,7 @@ import {
   Clipboard,
   ViewStyle,
 } from 'react-native';
+import { CommonStyle } from '../../styles/Common';
 
 import ExplicitImage from './explicit/ExplicitImage';
 import domain from '../helpers/domain';
@@ -295,6 +296,7 @@ export default class MediaView extends Component<PropsType> {
             thumbnail={thumbnail}
             entity={this.props.entity}
             onLoad={this.onLoadImage}
+            style={CommonStyle.positionAbsolute}
             // loadingIndicator="placeholder"
             onError={this.imageError}
           />

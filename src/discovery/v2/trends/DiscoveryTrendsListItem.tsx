@@ -7,6 +7,7 @@ import {
   TouchableHighlight,
   Dimensions,
 } from 'react-native';
+import ExplicitImage from '../../../common/components/explicit/ExplicitImage';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import FastImage from 'react-native-fast-image';
 import formatDate from '../../../common/helpers/date';
@@ -107,12 +108,9 @@ export const DiscoveryTrendsListItem = observer((props: Props) => {
     const image = { uri: entity.thumbnail_src };
 
     return (
-      <FastImage
+      <ExplicitImage
         source={image}
-        style={{
-          ...styles.thumbnail,
-          ...(isHero ? styles.heroThumbnail : null),
-        }}
+        style={[styles.thumbnail, isHero ? styles.heroThumbnail : null]}
         resizeMode={FastImage.resizeMode.cover}
       />
     );
