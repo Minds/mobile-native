@@ -17,6 +17,7 @@ import type { Source } from 'react-native-fast-image';
 import type BaseModel from '../../BaseModel';
 
 interface PropsType extends FastImageProperties {
+  onError?: (error: any) => void;
   entity?: BaseModel;
   thumbnail?: Source;
 }
