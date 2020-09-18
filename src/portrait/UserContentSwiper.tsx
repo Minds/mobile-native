@@ -106,7 +106,7 @@ const UserContentSwiper = observer((props: PropsType) => {
     <PagerProvider activeIndex={store.index} onChange={store.setIndex}>
       <View>
         <Pager
-          adjacentChildOffset={1}
+          adjacentChildOffset={0}
           maxIndex={activities.length - 1}
           panProps={{ enabled: false }}
           style={pagerStyle}
