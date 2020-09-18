@@ -9,6 +9,7 @@ target 'Minds' do
   permissions_path = '../node_modules/react-native-permissions/ios'
   pod 'Permission-Camera', :path => "#{permissions_path}/Camera.podspec"
   pod 'Permission-Microphone', :path => "#{permissions_path}/Microphone.podspec"
+  pod 'Permission-PhotoLibrary', :path => "#{permissions_path}/PhotoLibrary.podspec"
 
   # Pods for RnDiffApp
   pod 'FBLazyVector', :path => "../node_modules/react-native/Libraries/FBLazyVector"

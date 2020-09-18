@@ -119,7 +119,7 @@ class ThemedStylesStore {
     this.defaultScreenOptions = {
       title: '',
       headerStyle: {
-        backgroundColor: theme.secondary_background,
+        backgroundColor: theme.primary_background,
       },
       contentStyle: {
         backgroundColor: theme.primary_background,
@@ -129,6 +129,11 @@ class ThemedStylesStore {
         android: 'fade',
       }),
     };
+
+    // Fix for the header's extra padding on android
+    if (Platform.OS === 'android') {
+      this.defaultScreenOptions.headerTopInsetEnabled = false;
+    }
 
     this.style = StyleSheet.create(buildStyle(theme));
   }

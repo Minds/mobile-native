@@ -17,6 +17,7 @@ import colors from '../../../styles/Colors';
 import i18n from '../../services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import type ActivityModel from 'src/newsfeed/ActivityModel';
+import LinearGradient from 'react-native-linear-gradient';
 
 type PropsType = {
   entity: ActivityModel;
@@ -125,12 +126,23 @@ export default class ExplicitText extends Component<PropsType, StateType> {
     ) : null;
 
     return (
-      <View style={styles.container}>
+      <View
+        style={[styles.container, !!entity.paywall ? styles.paywalled : null]}>
         {titleCmp}
         {body}
         {moreLess}
         {explicitToggle}
+        {!!entity.paywall && this.renderGradient()}
       </View>
+    );
+  }
+
+  renderGradient() {
+    const backgroundColor = ThemedStyles.getColor('secondary_background');
+    const startColor = backgroundColor + '00';
+    const endColor = backgroundColor + 'FF';
+    return (
+      <LinearGradient colors={[startColor, endColor]} style={styles.linear} />
     );
   }
 
@@ -184,6 +196,18 @@ export default class ExplicitText extends Component<PropsType, StateType> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  paywalled: {
+    maxHeight: 70,
+    overflow: 'hidden',
+  },
+  linear: {
+    position: 'absolute',
+    height: 50,
+    width: '100%',
+    left: 0,
+    bottom: 0,
+    zIndex: 9999,
   },
   readmore: {
     color: colors.primary,

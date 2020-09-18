@@ -50,7 +50,7 @@ const getTextForBlocked = (
   return message;
 };
 
-const Lock = observer(({ entity, navigation }: PropsType) => {
+const Lock = observer(({ entity }: PropsType) => {
   const theme = ThemedStyles.style;
   const wire_threshold = entity.wire_threshold;
   const support_tier: SupportTiersType | null =
@@ -104,7 +104,12 @@ const Lock = observer(({ entity, navigation }: PropsType) => {
           theme.padding2x,
         ]}>
         <Text
-          style={[theme.colorWhite, styles.lockMessage, theme.marginBottom2x]}>
+          style={[
+            theme.colorWhite,
+            styles.lockMessage,
+            theme.marginBottom2x,
+            theme.textCenter,
+          ]}>
           {message}
         </Text>
         {button}
@@ -113,10 +118,25 @@ const Lock = observer(({ entity, navigation }: PropsType) => {
     );
   }
 
+  let aspectRatio =
+    entity.custom_data &&
+    entity.custom_data[0] &&
+    entity.custom_data[0].width / entity.custom_data[0].height;
+
   return (
-    <View style={[styles.backgroundImage, styles.mask]}>
+    <View
+      style={[
+        styles.backgroundImage,
+        styles.mask,
+        aspectRatio ? { aspectRatio } : theme.fullHeight,
+      ]}>
       <Text
-        style={[theme.colorWhite, styles.lockMessage, theme.marginBottom2x]}>
+        style={[
+          theme.colorWhite,
+          styles.lockMessage,
+          theme.marginBottom2x,
+          theme.textCenter,
+        ]}>
         {message}
       </Text>
       {button}
@@ -128,10 +148,11 @@ const Lock = observer(({ entity, navigation }: PropsType) => {
 const styles = StyleSheet.create({
   mask: {
     position: 'absolute',
-    bottom: 0,
-    height: '100%',
+    top: 0,
     width: '100%',
+    minHeight: 150,
     zIndex: 10,
+    padding: 10,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -151,6 +172,9 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Medium',
     fontSize: 16,
     letterSpacing: 0,
+    textShadowColor: 'rgba(0, 0, 0, 0.5)',
+    textShadowOffset: { width: -1, height: 0 },
+    textShadowRadius: 1,
   },
 });
 

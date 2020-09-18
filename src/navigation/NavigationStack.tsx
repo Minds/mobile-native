@@ -460,7 +460,9 @@ const AppStack = function () {
       <AppStackNav.Screen
         name="Account"
         component={OptionsDrawer}
-        options={{ title: i18n.t('settings.account') }}
+        options={{
+          title: i18n.t('settings.account'),
+        }}
         initialParams={{ options: AccountScreenOptions }}
       />
       <AppStackNav.Screen
@@ -558,11 +560,7 @@ const AppStack = function () {
         component={ReportedContentScreen}
         options={{ title: i18n.t('settings.otherOptions.a1') }}
       />
-      <AppStackNav.Screen
-        name="AppInfo"
-        component={AppInfoScreen}
-        options={hideHeader}
-      />
+      <AppStackNav.Screen name="AppInfo" component={AppInfoScreen} />
     </AppStackNav.Navigator>
   );
 };
@@ -600,7 +598,7 @@ const RootStack = function (props) {
       screenOptions={{
         headerShown: false,
         cardStyle: { backgroundColor: 'transparent' },
-        gestureEnabled: true,
+        gestureEnabled: false,
         ...ModalTransition,
         cardOverlayEnabled: true,
       }}>
@@ -612,17 +610,20 @@ const RootStack = function (props) {
           <RootStackNav.Screen
             name="JoinMembershipScreen"
             component={JoinMembershipScreen}
-            options={{ gestureResponseDistance: { vertical: 240 } }}
+            options={{
+              gestureResponseDistance: { vertical: 240 },
+              gestureEnabled: true,
+            }}
           />
           <RootStackNav.Screen
             name="BlockchainWalletModal"
             component={BlockchainWalletModalScreen}
-            options={{ gestureEnabled: false }}
           />
           <RootStackNav.Screen
             name="PlusScreen"
             component={PlusScreen}
             options={({ route }) => ({
+              gestureEnabled: false,
               title: i18n.t(
                 `monetize.${route.params.pro ? 'pro' : 'plus'}Header`,
               ),

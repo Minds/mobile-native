@@ -2,12 +2,11 @@ import { Platform } from 'react-native';
 
 import CameraRoll from '@react-native-community/cameraroll';
 
-import session from './session.service';
 import RNFS from 'react-native-fs';
-import permissions from './android-permissions.service';
 import i18nService from './i18n.service';
 import { ActivityEntity } from '../../types/Common';
 import { showNotification } from '../../../AppMessages';
+import permissionsService from './permissions.service';
 
 /**
  * Download Service
@@ -23,9 +22,11 @@ class DownloadService {
       if (Platform.OS === 'ios') {
         return CameraRoll.saveToCameraRoll(url);
       } else {
-        let hasPermission = await permissions.checkWriteExternalStorage();
+        let hasPermission = await permissionsService.checkWriteExternalStorage(
+          true,
+        );
         if (!hasPermission) {
-          hasPermission = await permissions.writeExternalStorage();
+          hasPermission = await permissionsService.writeExternalStorage();
         }
 
         if (hasPermission) {

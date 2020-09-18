@@ -212,15 +212,16 @@ class MessengerConversationStore {
    * Socket pushConversationMessage
    */
   pushConversationMessage = async (guid, message) => {
-    if (guid != this.guid) {
+    if (guid !== this.guid) {
       return;
     }
 
-    const fromSelf = session.guid == message.ownerObj.guid;
+    const fromSelf = session.guid === message.ownerObj.guid;
 
     if (!fromSelf) {
       if (!message.message) {
-        message.message = message.messages[1];
+        message.message =
+          message.messages[session.guid > message.ownerObj.guid ? 1 : 0];
         message.rowKey = message.guid;
       }
 

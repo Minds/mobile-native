@@ -1,36 +1,58 @@
-//@ts-nocheck
 import React from 'react';
 import { View, Text } from 'react-native-animatable';
-import ThemedStyles from '../../styles/ThemedStyles';
-import i18n from '../../common/services/i18n.service';
-import { Version } from '../../config/Version';
+import DeviceInfo from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
+import ThemedStyles from '../../styles/ThemedStyles';
+import { Version } from '../../config/Version';
 
-export default function () {
-  const CS = ThemedStyles.style;
+export default function AppInfoScreen() {
+  const theme = ThemedStyles.style;
   const logo = ThemedStyles.theme
     ? require('../../assets/logos/logo-white.png')
     : require('../../assets/logos/logo.png');
+
+  const rowStyle = [
+    theme.rowJustifySpaceBetween,
+    theme.padding4x,
+    theme.borderBottomHair,
+    theme.borderPrimary,
+  ];
+
+  const valueStyle = [theme.colorSecondaryText, theme.fontL, theme.fontThin];
+
+  const titleStyle = [theme.colorSecondaryText, theme.fontXL];
 
   return (
     <View
       style={[
         styles.logoBackground,
-        CS.flexContainer,
-        CS.centered,
-        CS.backgroundPrimary,
+        theme.flexContainer,
+        theme.centered,
+        theme.backgroundPrimary,
       ]}>
       <FastImage
         resizeMode={FastImage.resizeMode.cover}
-        style={[styles.logo, CS.marginTop2x]}
+        style={[styles.logo, theme.marginTop2x]}
         source={logo}
       />
       <View style={styles.footer}>
         <Text
-          style={[styles.version, CS.colorSecondaryText]}
+          style={[styles.version, theme.colorSecondaryText]}
           textAlign={'center'}>
           v{Version.VERSION} ({Version.BUILD})
         </Text>
+        <View style={rowStyle}>
+          <Text style={titleStyle}>Brand</Text>
+          <Text style={valueStyle}>{DeviceInfo.getBrand()}</Text>
+        </View>
+        <View style={rowStyle}>
+          <Text style={titleStyle}>Type</Text>
+          <Text style={valueStyle}>{DeviceInfo.getDeviceType()}</Text>
+        </View>
+        <View style={rowStyle}>
+          <Text style={titleStyle}>Device</Text>
+          <Text style={valueStyle}>{DeviceInfo.getModel()}</Text>
+        </View>
       </View>
     </View>
   );
@@ -50,7 +72,6 @@ const styles = {
   footer: {
     alignItems: 'stretch',
     width: '100%',
-    height: 50,
   },
   version: {
     marginTop: 16,
