@@ -142,7 +142,7 @@ export default observer(function ExplicitImage(props: PropsType) {
           {...otherProps}
         />
       )}
-      {imageOverlay}
+      {dataSaverEnabled && imageOverlay}
     </View>
   );
 });
