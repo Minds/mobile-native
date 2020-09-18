@@ -7,7 +7,6 @@ import FastImage from 'react-native-fast-image';
 
 import { observer } from 'mobx-react';
 import ExplicitImage from '../common/components/explicit/ExplicitImage';
-import ExplicitImage from '../common/components/explicit/ExplicitImage';
 
 import ExplicitOverlay from '../common/components/explicit/ExplicitOverlay';
 import { CommonStyle as CS } from '../styles/Common';
