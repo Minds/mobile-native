@@ -155,7 +155,7 @@ export default observer(function (props: SmartImageProps) {
         /**
          * Thumbnail
          * */
-        store.showOverlay && (
+        store.showOverlay && props.thumbnail && (
           <RetryableImage
             {...otherProps}
             retry={2}
