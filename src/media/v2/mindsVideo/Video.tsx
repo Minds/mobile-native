@@ -14,13 +14,14 @@ type PropsType = {
   repeat?: boolean;
   pause?: boolean;
   resizeMode?: ResizeMode;
+  ignoreDataSaver?: boolean;
 };
 
 const ExpoVideo = observer(
-  ({ entity, localStore, repeat, resizeMode, pause }: PropsType) => {
+  ({ entity, localStore, repeat, resizeMode, ignoreDataSaver }: PropsType) => {
     const theme = ThemedStyles.style;
     const playbackObject = useRef<Video>(null);
-    const dataSaverEnabled = settingsStore.dataSaverEnabled;
+    const dataSaverEnabled = !ignoreDataSaver && settingsStore.dataSaverEnabled;
 
     const thumb_uri = entity
       ? entity.get('custom_data.thumbnail_src') || entity.thumbnail_src

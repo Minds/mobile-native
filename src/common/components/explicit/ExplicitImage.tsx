@@ -14,6 +14,7 @@ interface PropsType extends FastImageProperties {
   source: Source;
   onError: (error: any) => void;
   entity?: BaseModel;
+  ignoreDataSaver?: boolean;
 }
 
 @observer
@@ -54,7 +55,10 @@ export default class ExplicitImage extends Component<
     return (
       <SmartImage
         {...this.props}
-        ignoreDataSaver={this.props.entity && this.props.entity.paywall}
+        ignoreDataSaver={
+          this.props.ignoreDataSaver ||
+          (this.props.entity && this.props.entity.paywall)
+        }
         style={[theme.positionAbsolute, this.props.style]}
       />
     );

@@ -71,6 +71,7 @@ type PropsType = {
   video?: { uri: string };
   containerStyle?: StyleProp<ViewStyle>;
   onLoad?: (e: any) => void;
+  ignoreDataSaver?: boolean;
 };
 
 @observer
@@ -517,9 +518,9 @@ class MindsVideo extends Component<PropsType, StateType> {
    * Get video component or thumb
    */
   get video() {
-    let { entity } = this.props;
+    let { entity, ignoreDataSaver } = this.props;
     let { paused } = this.state;
-    const dataSaverEnabled = settingsStore.dataSaverEnabled;
+    const dataSaverEnabled = !ignoreDataSaver && settingsStore.dataSaverEnabled;
 
     const thumb_uri =
       !dataSaverEnabled && entity

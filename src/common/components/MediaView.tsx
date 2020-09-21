@@ -42,6 +42,7 @@ type PropsType = {
   containerStyle?: ViewStyle | Array<ViewStyle>;
   autoHeight?: boolean;
   onPress?: () => void;
+  ignoreDataSaver?: boolean;
 };
 /**
  * Activity
@@ -124,6 +125,7 @@ export default class MediaView extends Component<PropsType> {
     const MindsVideoComponent = featuresService.has('mindsVideo-2020') ? (
       <MindsVideoV2
         entity={this.props.entity}
+        ignoreDataSaver={this.props.ignoreDataSaver}
         onStoreCreated={(store: MindsVideoStoreType) =>
           (this.videoPlayer = store)
         }
@@ -131,6 +133,7 @@ export default class MediaView extends Component<PropsType> {
     ) : (
       <MindsVideo
         entity={this.props.entity}
+        ignoreDataSaver={this.props.ignoreDataSaver}
         ref={(o) => {
           this.videoPlayer = o;
         }}
@@ -299,6 +302,7 @@ export default class MediaView extends Component<PropsType> {
             entity={this.props.entity}
             onLoad={this.onLoadImage}
             onError={this.imageError}
+            ignoreDataSaver={this.props.ignoreDataSaver}
           />
         </TouchableOpacity>
       </SharedElement>
