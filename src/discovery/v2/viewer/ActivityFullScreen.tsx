@@ -10,6 +10,7 @@ import * as entities from 'entities';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
 import MediaView from '../../../common/components/MediaView';
 import OwnerBlock from '../../../newsfeed/activity/OwnerBlock';
+import settingsStore from '../../../settings/SettingsStore';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import ActivityActionSheet from '../../../newsfeed/activity/ActivityActionSheet';
 import formatDate from '../../../common/helpers/date';
@@ -96,7 +97,12 @@ const ActivityFullScreen = observer((props: PropsType) => {
       // if we have some video playing we pause it and reset the current video
       videoPlayerService.setCurrent(null);
 
-      if (user.plus && !user.disable_autoplay_videos && mediaRef.current) {
+      if (
+        user.plus &&
+        !user.disable_autoplay_videos &&
+        mediaRef.current &&
+        !settingsStore.dataSaverEnabled
+      ) {
         mediaRef.current.playVideo(true);
       }
     } else {
