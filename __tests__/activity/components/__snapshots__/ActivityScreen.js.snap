@@ -656,7 +656,9 @@ exports[`Activity screen component renders correctly  1`] = `
     </View>
   </View>
   <BottomSheet
+    enabledContentGestureInteraction={false}
     enabledContentTapInteraction={true}
+    enabledHeaderGestureInteraction={false}
     enabledInnerScrolling={true}
     initialSnap={0}
     onCloseEnd={[Function]}

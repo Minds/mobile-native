@@ -117,7 +117,7 @@
     "react-native-video": "^5.0.2",
     "react-native-webview": "^8.1.0",
     "react-navigation-shared-element": "^5.0.0-alpha1",
-    "reanimated-bottom-sheet": "^1.0.0-alpha.19",
+    "reanimated-bottom-sheet": "^1.0.0-alpha.22",
     "rn-apk": "^0.2.9",
     "rn-placeholder": "^3.0.1",
     "rn-update-apk": "^4.5.0",
