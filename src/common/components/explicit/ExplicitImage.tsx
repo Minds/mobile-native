@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import type { FastImageProperties, Source } from 'react-native-fast-image';
 import { CommonStyle } from '../../../styles/Common';
+import ThemedStyles from '../../../styles/ThemedStyles';
 import type BaseModel from '../../BaseModel';
 
 import SmartImage from '../SmartImage';
@@ -25,6 +26,7 @@ export default class ExplicitImage extends Component<
   };
 
   render() {
+    const theme = ThemedStyles.style;
     // do not show image if it is mature
     if (
       this.props.entity.shouldBeBlured() &&
@@ -33,7 +35,7 @@ export default class ExplicitImage extends Component<
       return (
         <View
           style={[
-            CommonStyle.positionAbsolute,
+            theme.positionAbsolute,
             this.props.imageStyle,
             CommonStyle.blackOverlay,
           ]}
@@ -53,7 +55,7 @@ export default class ExplicitImage extends Component<
       <SmartImage
         {...this.props}
         ignoreDataSaver={this.props.entity && this.props.entity.paywall}
-        style={[CommonStyle.positionAbsolute, this.props.style]}
+        style={[theme.positionAbsolute, this.props.style]}
       />
     );
   }

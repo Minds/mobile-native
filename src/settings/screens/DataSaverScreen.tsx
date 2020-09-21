@@ -5,7 +5,6 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import Switch from 'react-native-switch-pro';
 import i18n from '../../common/services/i18n.service';
-import { CommonStyle } from '../../styles/Common';
 import ThemedStyles from '../../styles/ThemedStyles';
 import settingsStore from '../SettingsStore';
 
@@ -13,7 +12,7 @@ import settingsStore from '../SettingsStore';
  * Data-saver settings screen
  */
 export default observer(function DataSaverScreen() {
-  const CS = ThemedStyles.style;
+  const theme = ThemedStyles.style;
 
   const setDataSaverMode = useCallback(
     (val) => settingsStore.setDataSaverMode(val),
@@ -25,10 +24,10 @@ export default observer(function DataSaverScreen() {
   );
 
   return (
-    <View style={[CommonStyle.flexContainer, CommonStyle.margin]}>
-      <View style={[CommonStyle.padding]}>
+    <View style={[theme.flexContainer, theme.margin]}>
+      <View style={[theme.padding]}>
         <View style={styles.row}>
-          <Text style={[CS.marginLeft, CS.fontL]}>
+          <Text style={[theme.marginLeft, theme.fontL]}>
             {i18n.t('settings.networkOptions.1')}
           </Text>
           <Switch
@@ -36,14 +35,14 @@ export default observer(function DataSaverScreen() {
             onSyncPress={setDataSaverMode}
           />
         </View>
-        <Text style={[CS.marginLeft, CS.colorSecondaryText, CS.fontM]}>
+        <Text style={[theme.marginLeft, theme.colorSecondaryText, theme.fontM]}>
           {i18n.t('settings.dataSaverDescription')}
         </Text>
       </View>
 
-      <View style={[CommonStyle.padding]}>
+      <View style={[theme.padding]}>
         <View style={styles.row}>
-          <Text style={[CS.marginLeft, CS.fontL]}>
+          <Text style={[theme.marginLeft, theme.fontL]}>
             {i18n.t('settings.dataSaverDisableOnWifi')}
           </Text>
           <Switch
@@ -56,7 +55,7 @@ export default observer(function DataSaverScreen() {
             disabled={!settingsStore.dataSaverMode}
           />
         </View>
-        <Text style={[CS.marginLeft, CS.colorSecondaryText, CS.fontM]}>
+        <Text style={[theme.marginLeft, theme.colorSecondaryText, theme.fontM]}>
           {i18n.t('settings.dataSaverDisableOnWiFiDescription')}
         </Text>
       </View>

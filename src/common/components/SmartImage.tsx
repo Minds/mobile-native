@@ -10,7 +10,6 @@ import { mix, useTimingTransition } from 'react-native-redash';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import settingsStore from '../../settings/SettingsStore';
-import { CommonStyle } from '../../styles/Common';
 import ThemedStyles from '../../styles/ThemedStyles';
 import connectivityService from '../services/connectivity.service';
 import RetryableImage from './RetryableImage';
@@ -118,18 +117,18 @@ export default observer(function (props: SmartImageProps) {
     <Animated.View
       pointerEvents={store.showOverlay ? undefined : 'none'}
       style={[
-        CommonStyle.positionAbsolute,
-        CommonStyle.centered,
+        theme.positionAbsolute,
+        theme.centered,
         {
           opacity,
         },
       ]}>
       <TouchableWithoutFeedback
         onPress={store.progress === undefined ? store.onDownload : undefined}
-        style={[CommonStyle.positionAbsolute, CommonStyle.centered]}>
+        style={[theme.positionAbsolute, theme.centered]}>
         <BlurView
           blurType={ThemedStyles.theme ? 'dark' : 'xlight'}
-          style={[CommonStyle.positionAbsolute, CommonStyle.centered]}>
+          style={[theme.positionAbsolute, theme.centered]}>
           {typeof store.progress === 'number' ? (
             <ProgressCircle
               progress={store.progress}
