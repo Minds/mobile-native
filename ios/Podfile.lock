@@ -244,8 +244,6 @@ PODS:
     - React-cxxreact (= 0.63.2)
     - React-jsi (= 0.63.2)
   - React-jsinspector (0.63.2)
-  - react-native-blur (0.8.0):
-    - React
   - react-native-camera (3.39.0):
     - React
     - react-native-camera/RCT (= 3.39.0)
@@ -465,7 +463,6 @@ DEPENDENCIES:
   - React-jsi (from `../node_modules/react-native/ReactCommon/jsi`)
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
-  - "react-native-blur (from `../node_modules/@react-native-community/blur`)"
   - react-native-camera (from `../node_modules/react-native-camera`)
   - "react-native-cameraroll (from `../node_modules/@react-native-community/cameraroll`)"
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
@@ -606,8 +603,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsiexecutor"
   React-jsinspector:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
-  react-native-blur:
-    :path: "../node_modules/@react-native-community/blur"
   react-native-camera:
     :path: "../node_modules/react-native-camera"
   react-native-cameraroll:
@@ -767,7 +762,6 @@ SPEC CHECKSUMS:
   React-jsi: 54245e1d5f4b690dec614a73a3795964eeef13a8
   React-jsiexecutor: 8ca588cc921e70590820ce72b8789b02c67cce38
   React-jsinspector: b14e62ebe7a66e9231e9581279909f2fc3db6606
-  react-native-blur: cad4d93b364f91e7b7931b3fa935455487e5c33c
   react-native-camera: 3940f67a49eaf736525a3e730653fcb98e1525dd
   react-native-cameraroll: dbda741db5dadcdcf738e55a1fd565c307943bca
   react-native-image-picker: 3d3f85baabca60a00b75fb8facc1376db7bbdafa
@@ -802,8 +796,8 @@ SPEC CHECKSUMS:
   RNFastImage: c104f15f04c4f68bd65c9645cc27900bbacd9cc7
   RNFS: 2bd9eb49dc82fa9676382f0585b992c424cd59df
   RNGestureHandler: 7a5833d0f788dbd107fbb913e09aa0c1ff333c39
-  RNImageCropPicker: f0557a908758c4a3f83978894ec7227651529b45
-  RNLocalize: b6df30cc25ae736d37874f9bce13351db2f56796
+  RNImageCropPicker: 54e5ea3d0e298ed51e1441a2fa0a0e7c90ee256d
+  RNLocalize: 49634a6a605dcdeb319e9c42a5c2f1aec508694b
   RNPermissions: 477d88d0be7ecb0a7b344e4d5fbb0352de104626
   RNPhotoEditor: f00eb35b43ce3650b743fab6fce333ccde26b384
   RNReanimated: b5ccb50650ba06f6e749c7c329a1bc3ae0c88b43

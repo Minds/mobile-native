@@ -1,8 +1,7 @@
-import { BlurView } from '@react-native-community/blur';
 import { autorun } from 'mobx';
 import { observer, useLocalStore } from 'mobx-react';
 import React, { useEffect } from 'react';
-import { TouchableWithoutFeedback, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { FastImageProperties, FastImageSource } from 'react-native-fast-image';
 import ProgressCircle from 'react-native-progress/Circle';
 import Animated from 'react-native-reanimated';
@@ -123,22 +122,19 @@ export default observer(function (props: SmartImageProps) {
           opacity,
         },
       ]}>
-      <TouchableWithoutFeedback
+      <TouchableOpacity
+        activeOpacity={0.9}
         onPress={store.progress === undefined ? store.onDownload : undefined}
         style={[theme.positionAbsolute, theme.centered]}>
-        <BlurView
-          blurType={ThemedStyles.theme ? 'dark' : 'xlight'}
-          style={[theme.positionAbsolute, theme.centered]}>
-          {typeof store.progress === 'number' ? (
-            <ProgressCircle
-              progress={store.progress}
-              indeterminate={store.imageVisible && store.progress === 0}
-            />
-          ) : (
-            <Icon name="md-download" style={theme.colorIcon} size={40} />
-          )}
-        </BlurView>
-      </TouchableWithoutFeedback>
+        {typeof store.progress === 'number' ? (
+          <ProgressCircle
+            progress={store.progress}
+            indeterminate={store.imageVisible && store.progress === 0}
+          />
+        ) : (
+          <Icon name="md-download" style={theme.colorIcon} size={40} />
+        )}
+      </TouchableOpacity>
     </Animated.View>
   );
 
