@@ -262,7 +262,7 @@ class CommentList extends React.Component<PropsType, StateType> {
         if (!this.listRef) return;
         this.listRef.scrollToIndex({
           index: comments.indexOf(item),
-          viewOffset: offset ? -(offset - (this.height - 200)) : -110,
+          viewOffset: offset ? -(offset - (this.height - 600)) : -110,
           viewPosition: 0,
         });
       }, 50);
@@ -478,26 +478,15 @@ class CommentList extends React.Component<PropsType, StateType> {
 
   commentFocusCall = (comment: CommentModel, index: number) => {
     if (comment.focused) {
-      if (this.props.parent) {
+      const onCommentFocus = this.props.parent
+        ? this.props.onCommentFocus
+        : this.onCommentFocus;
+
+      if (onCommentFocus && this.listRef && this.listRef._listRef) {
         setTimeout(() => {
-          if (
-            this.props.onCommentFocus &&
-            this.listRef &&
-            this.listRef._listRef
-          ) {
-            const frame = this.listRef._listRef._getFrameMetricsApprox(index);
-            this.props.onCommentFocus(comment, frame.offset + frame.length);
-          }
+          const frame = this.listRef._listRef._getFrameMetricsApprox(index);
+          onCommentFocus(comment, frame.offset + frame.length);
         }, 1000);
-      } else {
-        if (this.listRef && this.listRef._listRef) {
-          setTimeout(() => {
-            if (this.listRef && this.listRef._listRef) {
-              const frame = this.listRef._listRef._getFrameMetricsApprox(index);
-              this.onCommentFocus(comment, frame.offset + frame.length);
-            }
-          }, 1000);
-        }
       }
     }
   };

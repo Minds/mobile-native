@@ -1,4 +1,5 @@
 import { showMessage } from 'react-native-flash-message';
+import RNPhotoEditor from 'react-native-photo-editor';
 
 import AttachmentStore from '../common/stores/AttachmentStore';
 import RichEmbedStore from '../common/stores/RichEmbedStore';
@@ -15,6 +16,9 @@ import supportTiersService from '../common/services/support-tiers.service';
 import settingsStore from '../settings/SettingsStore';
 import attachmentService from '../common/services/attachment.service';
 import { CommonActions } from '@react-navigation/native';
+import logService from '../common/services/log.service';
+import { runInAction } from 'mobx';
+import { Image, Platform } from 'react-native';
 
 /**
  * Display an error message to the user.
@@ -41,6 +45,7 @@ const DEFAULT_MONETIZE = {
  */
 export default function ({ props, newsfeed }) {
   return {
+    portraitMode: false,
     isRemind: false,
     isEdit: false,
     mode: settingsStore.composerMode,
@@ -62,11 +67,18 @@ export default function ({ props, newsfeed }) {
       const params = props.route.params;
       if (
         !params ||
-        (!params.entity && !params.mode && !params.media && !params.text)
+        (!params.entity &&
+          !params.mode &&
+          !params.media &&
+          !params.text &&
+          !params.portrait)
       ) {
         return;
       }
 
+      console.log(params);
+
+      this.portraitMode = params.portrait;
       this.isRemind = params.isRemind;
       this.isEdit = params.isEdit;
       this.entity = params.entity || null;
@@ -99,6 +111,7 @@ export default function ({ props, newsfeed }) {
         mode: undefined,
         isRemind: undefined,
         text: undefined,
+        portrait: undefined,
       });
     },
     onPost(entity, isEdit) {
@@ -181,6 +194,48 @@ export default function ({ props, newsfeed }) {
         } else {
           this.nsfw.push(opt);
         }
+      }
+    },
+    /**
+     * Edit the current post image
+     */
+    async editImage() {
+      if (
+        !this.mediaToConfirm ||
+        !this.mediaToConfirm.type.startsWith('image')
+      ) {
+        return;
+      }
+
+      try {
+        RNPhotoEditor.Edit({
+          path: this.mediaToConfirm.uri.replace('file://', ''),
+          stickers: ['sticker6', 'sticker9'],
+          hiddenControls: ['save', 'share'],
+          onDone: (result) => {
+            Image.getSize(
+              this.mediaToConfirm.uri,
+              (w, h) => {
+                runInAction(() => {
+                  this.mediaToConfirm.key++;
+                  if (
+                    Platform.OS === 'android' &&
+                    this.mediaToConfirm.pictureOrientation <= 2
+                  ) {
+                    this.mediaToConfirm.width = h;
+                    this.mediaToConfirm.height = w;
+                  } else {
+                    this.mediaToConfirm.width = w;
+                    this.mediaToConfirm.height = h;
+                  }
+                });
+              },
+              (err) => console.log(err),
+            );
+          },
+        });
+      } catch (err) {
+        logService.exception(err);
       }
     },
     /**
@@ -297,6 +352,7 @@ export default function ({ props, newsfeed }) {
     onMedia(media, mode = 'confirm') {
       setTimeout(() => {
         this.mediaToConfirm = media;
+        this.mediaToConfirm.key = 1;
         this.mode = mode;
       }, 100);
     },

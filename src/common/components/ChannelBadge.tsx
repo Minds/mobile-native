@@ -84,6 +84,7 @@ const ChannelBadge = ({
 
       badgesIcons.push(
         <Icon
+          key={badge.badge}
           name={badge.icon}
           size={sizeIcon}
           style={[styles.badge, badgeColor]}
