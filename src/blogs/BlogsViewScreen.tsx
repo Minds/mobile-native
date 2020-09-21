@@ -1,53 +1,41 @@
 //@ts-nocheck
-import React, { Component } from 'react';
-
-import {
-  View,
-  StyleSheet,
-  ScrollView,
-  Dimensions,
-  Image,
-  TextInput,
-  Keyboard,
-  TouchableOpacity,
-  TouchableHighlight,
-  FlatList,
-  Text,
-  Platform,
-  KeyboardAvoidingView,
-  ActivityIndicator,
-  SafeAreaView,
-  Alert,
-} from 'react-native';
-
-import ActionSheet from 'react-native-actionsheet';
-
 import { Header } from '@react-navigation/stack';
 
 import { inject, observer } from 'mobx-react';
+import React, { Component } from 'react';
+
+import {
+  Alert,
+  Dimensions,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+
+import ActionSheet from 'react-native-actionsheet';
+import { Icon } from 'react-native-elements';
 
 import FastImage from 'react-native-fast-image';
-import { Icon } from 'react-native-elements';
-import IonIcon from 'react-native-vector-icons/Ionicons';
+import CommentList from '../comments/CommentList';
+import commentsStoreProvider from '../comments/CommentsStoreProvider';
+import CenteredLoading from '../common/components/CenteredLoading';
+import SmartImage from '../common/components/SmartImage';
+import formatDate from '../common/helpers/date';
+import { FLAG_VIEW } from '../common/Permissions';
+import featuresService from '../common/services/features.service';
+import i18n from '../common/services/i18n.service';
+import logService from '../common/services/log.service';
+import RemindAction from '../newsfeed/activity/actions/RemindAction';
+import ThumbDownAction from '../newsfeed/activity/actions/ThumbDownAction';
+import ThumbUpAction from '../newsfeed/activity/actions/ThumbUpAction';
+import OwnerBlock from '../newsfeed/activity/OwnerBlock';
+import shareService from '../share/ShareService';
+import colors from '../styles/Colors';
+import { CommonStyle as CS } from '../styles/Common';
+import ThemedStyles from '../styles/ThemedStyles';
 
 import BlogViewHTML from './BlogViewHTML';
-import OwnerBlock from '../newsfeed/activity/OwnerBlock';
-import formatDate from '../common/helpers/date';
-import { CommonStyle as CS } from '../styles/Common';
-import colors from '../styles/Colors';
-import ThumbUpAction from '../newsfeed/activity/actions/ThumbUpAction';
-import ThumbDownAction from '../newsfeed/activity/actions/ThumbDownAction';
-import RemindAction from '../newsfeed/activity/actions/RemindAction';
-import CommentsAction from '../newsfeed/activity/actions/CommentsAction';
-import shareService from '../share/ShareService';
-import commentsStoreProvider from '../comments/CommentsStoreProvider';
-import CommentList from '../comments/CommentList';
-import CenteredLoading from '../common/components/CenteredLoading';
-import logService from '../common/services/log.service';
-import i18n from '../common/services/i18n.service';
-import featuresService from '../common/services/features.service';
-import { FLAG_VIEW } from '../common/Permissions';
-import ThemedStyles from '../styles/ThemedStyles';
 
 /**
  * Blog View Screen
@@ -184,7 +172,7 @@ export default class BlogsViewScreen extends Component {
     ) : null;
     return (
       <View style={[styles.screen, theme.backgroundSecondary]}>
-        <FastImage
+        <SmartImage
           source={image}
           resizeMode={FastImage.resizeMode.cover}
           style={styles.image}
@@ -285,7 +273,12 @@ export default class BlogsViewScreen extends Component {
     Alert.alert(
       i18n.t('sorry'),
       i18n.t('errorMessage') + '\n' + i18n.t('activity.tryAgain'),
-      [{ text: i18n.t('ok'), onPress: () => {} }],
+      [
+        {
+          text: i18n.t('ok'),
+          onPress: () => {},
+        },
+      ],
       { cancelable: false },
     );
   }

@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { PropsWithChildren, useCallback, useRef } from 'react';
 import { View, StyleSheet, Platform } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { useNavigation } from '@react-navigation/native';
@@ -30,7 +30,7 @@ const isIos = Platform.OS === 'ios';
 /**
  * Channel buttons
  */
-const ChannelButtons = observer((props: PropsType) => {
+const ChannelButtons = observer((props: PropsWithChildren<PropsType>) => {
   const menuRef = useRef<any>();
   const theme = ThemedStyles.style;
   const navigation = useNavigation<
@@ -101,6 +101,8 @@ const ChannelButtons = observer((props: PropsType) => {
         styles.marginContainer,
         theme.marginRight2x,
       ]}>
+      {props.children}
+
       {showEdit ? (
         <View style={isIos ? undefined : theme.paddingTop2x}>
           <Button

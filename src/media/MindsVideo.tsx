@@ -553,7 +553,6 @@ class MindsVideo extends Component<PropsType, StateType> {
         <ExplicitImage
           onLoadEnd={this.onLoadEnd}
           onError={this.onError}
-          style={CS.positionAbsolute}
           source={image}
           entity={entity}
         />

@@ -4,6 +4,7 @@ import { StyleSheet, View, Dimensions } from 'react-native';
 import ImageZoom from 'react-native-image-pan-zoom';
 import FastImage from 'react-native-fast-image';
 import { SharedElement } from 'react-navigation-shared-element';
+import SmartImage from './SmartImage';
 
 /**
  * Image Viewer
@@ -18,7 +19,7 @@ export default class ImageViewer extends Component {
           imageWidth={this.props.width}
           imageHeight={this.props.height}>
           <SharedElement id={`${this.props.urn}.image`}>
-            <FastImage
+            <SmartImage
               style={[
                 styles.image,
                 { height: this.props.height, width: this.props.width },

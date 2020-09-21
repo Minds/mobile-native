@@ -296,8 +296,6 @@ export default class MediaView extends Component<PropsType> {
             thumbnail={thumbnail}
             entity={this.props.entity}
             onLoad={this.onLoadImage}
-            style={CommonStyle.positionAbsolute}
-            // loadingIndicator="placeholder"
             onError={this.imageError}
           />
         </TouchableOpacity>

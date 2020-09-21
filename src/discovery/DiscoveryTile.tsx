@@ -97,7 +97,6 @@ class DiscoveryTile extends Component {
           {boundary}
           <ExplicitImage
             source={url}
-            style={CS.positionAbsolute}
             onLoadEnd={this.setActive}
             onError={this.setError}
           />

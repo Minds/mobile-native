@@ -6,42 +6,57 @@ exports[`blog card component should renders correctly 1`] = `
 >
   <View
     style={
-      Array [
-        Object {
-          "overflow": "hidden",
-        },
-        Object {
-          "alignItems": "stretch",
-          "flexDirection": "row",
-          "height": 150,
-          "width": "100%",
-        },
-      ]
+      Object {
+        "alignItems": "stretch",
+        "flexDirection": "row",
+        "height": 150,
+        "width": "100%",
+      }
     }
   >
-    <FastImageView
-      resizeMode="cover"
-      source={
-        Object {
-          "headers": Object {
-            "App-Version": "3.8.0",
-            "Cache-Control": "no-cache, no-store, must-revalidate",
-            "Content-Type": "application/json",
-            "Pragma": "no-cache",
-          },
-          "uri": "https://www.minds.com/fs/v1/banners/836607056186159104/1524838665",
-        }
-      }
+    <View
       style={
-        Object {
-          "bottom": 0,
-          "left": 0,
-          "position": "absolute",
-          "right": 0,
-          "top": 0,
-        }
+        Array [
+          Object {
+            "overflow": "hidden",
+          },
+          Object {
+            "alignItems": "stretch",
+            "flexDirection": "row",
+            "height": 150,
+            "width": "100%",
+          },
+        ]
       }
-    />
+    >
+      <FastImageView
+        onFastImageError={[Function]}
+        onFastImageLoadEnd={[Function]}
+        onFastImageProgress={[Function]}
+        resizeMode="cover"
+        retry={2}
+        source={
+          Object {
+            "headers": Object {
+              "App-Version": "3.8.0",
+              "Cache-Control": "no-cache, no-store, must-revalidate",
+              "Content-Type": "application/json",
+              "Pragma": "no-cache",
+            },
+            "uri": "https://www.minds.com/fs/v1/banners/836607056186159104/1524838665",
+          }
+        }
+        style={
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+      />
+    </View>
   </View>
   <View
     style={
