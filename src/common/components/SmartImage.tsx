@@ -39,6 +39,7 @@ export default observer(function (props: SmartImageProps) {
     imageVisible: ignoreDataSaver ? true : !dataSaverEnabled,
     showOverlay: ignoreDataSaver ? false : dataSaverEnabled,
     showImage() {
+      store.imageVisible = true;
       store.showOverlay = false;
     },
     setError(error) {
@@ -87,20 +88,15 @@ export default observer(function (props: SmartImageProps) {
   });
   const opacity = mix(showOverlayTransition, 0, 1);
 
-  useEffect(() => {
-    /**
-     * If showOverlay was visible and Data Saver was turned off, remove showOverlay
-     * */
-    if (store.showOverlay && !dataSaverEnabled) {
-      store.showImage();
-    }
-  }, [dataSaverEnabled, store, store.showOverlay]);
-
   useEffect(
     () =>
       autorun(() => {
         if (connectivityService.isConnected && store.error) {
           store.retry();
+        }
+
+        if (store.showOverlay && !settingsStore.dataSaverEnabled) {
+          store.showImage();
         }
       }),
     [store],
