@@ -19,8 +19,6 @@ describe('Explicit image component', () => {
     screen = shallow(
       <ExplicitImage entity={entity}/>
     );
-
-    jest.runTimersToTime(1000);
   });
 
   it('renders correctly', async () => {
