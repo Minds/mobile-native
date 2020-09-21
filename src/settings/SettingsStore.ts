@@ -20,8 +20,6 @@ class SettingsStore {
   creatorNsfw = [];
   useHashtag = true;
   composerMode = 'photo';
-  dataSaverMode = false;
-  dataSaverModeDisablesOnWiFi = false;
 
   @computed
   get dataSaverEnabled() {
