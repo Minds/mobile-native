@@ -27,6 +27,7 @@ const Header = () => {
   );
 };
 
+export const portraitBarRef = React.createRef<FlatList<PortraitBarItem>>();
 const BarPlaceholder = () => {
   const theme = ThemedStyles.style;
   const color = ThemedStyles.getColor('tertiary_background');
@@ -108,6 +109,7 @@ const PortraitContentBar = observer(
           contentContainerStyle={[
             theme.rowJustifyStart,
             theme.backgroundSecondary,
+            theme.fullWidth,
           ]}
           style={styles.bar}
           horizontal={true}

@@ -74,10 +74,11 @@ import com.android.build.OutputFile
  */
 
 project.ext.react = [
-    bundleCommand: "ram-bundle",
+    // bundleCommand: "ram-bundle",
     entryFile: "index.js",
     bundleAssetName: "app.bundle",
-    enableHermes: false,  // clean and rebuild if changing
+    enableHermes: true  // clean and rebuild if changing
+    //  hermesCommand: "../../node_modules/hermes-engine/%OS-BIN%/hermes",
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
@@ -226,16 +227,17 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:17.3.3' // IMPORTANT: fix the crash when the app receives a push notification
 
     // I manually linked this package to fix the build errors ignoring the following packages
-    implementation(project(':react-native-jitsi-meet')) {
-      exclude group: 'com.facebook.react', module:'react-native-community-async-storage'
-      exclude group: 'com.facebook.react', module:'react-native-community_netinfo'
-      exclude group: 'com.facebook.react', module:'react-native-webview'
-      exclude group: 'com.facebook.react', module:'react-native-linear-gradient'
-      exclude group: 'com.facebook.react', module:'react-native-vector-icons'
-      exclude group: 'com.facebook.react', module:'react-native-svg'
-    //   exclude group: 'com.facebook.react', module:'react-native-gesture-handler'
-      exclude group: 'com.google.firebase'
-    }
+    // implementation(project(':react-native-jitsi-meet')) {
+    //   exclude group: 'com.facebook.react', module:'react-native-community-async-storage'
+    //   exclude group: 'com.facebook.react', module:'react-native-community_netinfo'
+    //   exclude group: 'com.facebook.react', module:'react-native-webview'
+    // //   exclude group: 'com.facebook.react', module:'react-native-linear-gradient'
+    //   exclude group: 'com.facebook.react', module:'react-native-vector-icons'
+    //   exclude group: 'com.facebook.react', module:'react-native-svg'
+    //   exclude group: 'com.facebook',module:'hermes'
+    // //   exclude group: 'com.facebook.react', module:'react-native-gesture-handler'
+    //   exclude group: 'com.google.firebase'
+    // }
 
     implementation project(':react-native-fs')
     implementation project(':react-native-minds-encryption')

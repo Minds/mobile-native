@@ -59,14 +59,6 @@ const CommentsAction = observer((props: PropsType) => {
     }
   }, [props, route]);
 
-  useEffect(() => {
-    if (route && (route.params?.focusedUrn || route.params?.scrollToBottom)) {
-      setTimeout(() => {
-        openComments();
-      }, 100);
-    }
-  }, [openComments, route]);
-
   return (
     <TouchableOpacityCustom
       style={[
