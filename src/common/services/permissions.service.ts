@@ -101,7 +101,6 @@ class PermissionsService {
   async checkMediaLibrary(warnBlocked = false): Promise<boolean> {
     try {
       const result = await check(PERMISSIONS.IOS.PHOTO_LIBRARY);
-      console.log(result);
       if (warnBlocked && result === RESULTS.BLOCKED) {
         showNotification(
           i18n.t('permissions.blockedMediaLibrary'),
