@@ -24,21 +24,6 @@ import wallet from '../../wallet/WalletStore';
 
 import sessionService from '../services/session.service';
 import logService from '../services/log.service';
-import createWalletStore, {
-  WalletStoreType,
-} from '../../wallet/v2/createWalletStore';
-import createSearchResultStore from '../../topbar/searchbar/createSearchResultStore';
-import { SearchResultStoreType } from '../../topbar/searchbar/createSearchResultStore';
-
-/**
- * Creates global stores that can be conused with `useStores` method
- */
-export function createStores() {
-  return {
-    wallet: <WalletStoreType>createWalletStore(),
-    searchBar: <SearchResultStoreType>createSearchResultStore(),
-  };
-}
 
 /**
  * This is initialized by /src/AppStores.ts and uses MobXProviderContext
@@ -81,5 +66,4 @@ export function createLegacyStores() {
   return stores;
 }
 
-export type TStores = ReturnType<typeof createStores>;
 export type TLegacyStores = ReturnType<typeof createLegacyStores>;
