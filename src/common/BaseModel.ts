@@ -99,7 +99,9 @@ export default class BaseModel extends AbstractModel {
    * Return if the current user is the owner of the activity
    */
   isOwner = () => {
-    return this.ownerObj && sessionService.guid === this.ownerObj.guid;
+    return this.ownerObj
+      ? sessionService.guid === this.ownerObj.guid
+      : this.owner_guid === sessionService.guid;
   };
 
   /**
