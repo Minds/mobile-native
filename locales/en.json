@@ -861,8 +861,8 @@
     "custom": "Custom",
     "subScreensTitle": "Last month Pro creators earned over $2,500!",
     "plusMonetize": {
-      "notPro": "You’ll need to upgrade to Minds Pro in order to submit your post to the Minds Plus content pool. You will earn revenue based on the performance of the content.",
-      "upgrade": "Upgrade to Minds Pro",
+      "notPlus": "You’ll need to upgrade to Minds+ in order to submit your post to the Minds+ content pool. You will earn revenue based on the performance of the content.",
+      "upgrade": "Upgrade to Minds+",
       "submit": "Submit this post to the Minds Plus pool and earn potential revenue.",
       "agree": "I agree to the T&C’s",
       "exclusivity": "Exclusivity Period",
