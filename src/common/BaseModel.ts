@@ -21,6 +21,7 @@ import AbstractModel from './AbstractModel';
 export default class BaseModel extends AbstractModel {
   username: string = '';
   guid: string = '';
+  owner_guid?: string;
   ownerObj!: UserModel;
   mature: boolean = false;
   pending?: '0' | '1';
