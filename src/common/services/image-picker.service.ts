@@ -8,8 +8,13 @@ export interface CustomImage extends Image {
   type: string;
 }
 
+// add missing property of the image type
+interface PatchImage extends Image {
+  sourceURL?: string;
+}
+
 type mediaType = 'photo' | 'video' | 'any';
-type imagePromise = false | Image | Image[];
+type imagePromise = false | PatchImage | PatchImage[];
 export type customImagePromise = false | CustomImage | CustomImage[];
 
 /**
@@ -135,12 +140,28 @@ class ImagePickerService {
       }
 
       if (Array.isArray(response)) {
-        return response.map((image: Image) =>
-          Object.assign({ uri: image.path, type: image.mime }, image),
+        return response.map((image: PatchImage) =>
+          Object.assign(
+            {
+              uri:
+                Platform.OS === 'ios' && image.sourceURL
+                  ? image.sourceURL // fix images not show on ios
+                  : image.path,
+              type: image.mime,
+            },
+            image,
+          ),
         );
       } else {
+        const uri =
+          Platform.OS === 'ios' && response.sourceURL
+            ? response.sourceURL // fix images not show on ios
+            : response.path;
         return Object.assign(
-          { uri: response.path, type: response.mime },
+          {
+            uri,
+            type: response.mime,
+          },
           response,
         );
       }
