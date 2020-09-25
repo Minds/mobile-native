@@ -41,6 +41,7 @@ import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
 import ComposeScreen from '../compose/ComposeScreen';
 import TagSelector from '../compose/TagSelector';
+import AccessSelector from '../compose/AccessSelector';
 import NsfwSelector from '../compose/NsfwSelector';
 import ScheduleSelector from '../compose/ScheduleSelector';
 import MonetizeSelector from '../compose/MonetizeSelector';
@@ -327,6 +328,11 @@ const AppStack = function () {
       <AppStackNav.Screen
         name="LicenseSelector"
         component={LicenseSelector}
+        options={hideHeader}
+      />
+      <AppStackNav.Screen
+        name="AccessSelector"
+        component={AccessSelector}
         options={hideHeader}
       />
       <AppStackNav.Screen

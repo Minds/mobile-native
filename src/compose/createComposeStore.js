@@ -48,6 +48,7 @@ export default function ({ props, newsfeed }) {
     portraitMode: false,
     isRemind: false,
     isEdit: false,
+    accessId: 2,
     mode: settingsStore.composerMode,
     videoPoster: null,
     entity: null,
@@ -75,8 +76,6 @@ export default function ({ props, newsfeed }) {
       ) {
         return;
       }
-
-      console.log(params);
 
       this.portraitMode = params.portrait;
       this.isRemind = params.isRemind;
@@ -172,6 +171,9 @@ export default function ({ props, newsfeed }) {
           thumbnail: this.entity.thumbnail_src || '',
         });
       }
+    },
+    setAccessId(value) {
+      this.accessId = value;
     },
     setTokenThreshold(value) {
       value = parseFloat(value);
@@ -484,6 +486,7 @@ export default function ({ props, newsfeed }) {
 
       let newPost = {
         message: this.text,
+        accessId: this.accessId,
         time_created:
           Math.floor(this.time_created / 1000) || Math.floor(Date.now() / 1000),
       };
