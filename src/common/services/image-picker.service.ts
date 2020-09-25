@@ -68,10 +68,6 @@ class ImagePickerService {
     // check or ask for permissions
     const allowed = await this.checkCameraPermissions();
 
-    if (!allowed) {
-      return false;
-    }
-
     const opt = this.buildOptions(type);
 
     return this.returnCustom(ImagePicker.openCamera(opt));
@@ -86,12 +82,8 @@ class ImagePickerService {
     type: mediaType = 'photo',
     crop = true,
   ): Promise<customImagePromise> {
-    // check or ask for permissions
-    const allowed = await this.checkGalleryPermissions();
-
-    if (!allowed) {
-      return false;
-    }
+    // check permissions
+    await this.checkGalleryPermissions();
 
     const opt = this.buildOptions(type, crop);
 
@@ -108,14 +100,8 @@ class ImagePickerService {
     type: mediaType = 'photo',
     cropperCircleOverlay: boolean = false,
   ): Promise<customImagePromise> {
-    // check or ask for permissions
-    const allowed = await this.checkGalleryPermissions();
-
-    console.log(allowed);
-
-    if (!allowed) {
-      return false;
-    }
+    // check permissions
+    await this.checkGalleryPermissions();
 
     const opt = this.buildOptions(type, true);
 
