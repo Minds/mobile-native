@@ -334,7 +334,7 @@ exports[`Activity component renders correctly 1`] = `
           ]
         }
       >
-        2 years ago
+        3 years ago
       </Text>
     </View>
   </OwnerBlock>
