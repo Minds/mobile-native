@@ -1,4 +1,5 @@
 import { observable, action, runInAction } from 'mobx';
+import { ImageSourcePropType } from 'react-native'
 
 import { MINDS_CDN_URI, GOOGLE_PLAY_STORE } from '../config/Config';
 import api from '../common/services/api.service';
@@ -218,6 +219,19 @@ export default class UserModel extends BaseModel {
       uri: `${MINDS_CDN_URI}fs/v1/banners/${this.guid}/fat/${this.icontime}`,
       headers: api.buildHeaders(),
     };
+  }
+
+  /**
+   * Get banner thumbnail
+   */
+  getBannerThumbnailSource(): ImageSourcePropType | null {
+    if (this.carousels && this.carousels[0].thumb) {
+      return {
+        uri: this.carousels[0].thumb,
+      };
+    }
+
+    return null;
   }
 
   /**

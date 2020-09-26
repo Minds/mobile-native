@@ -1,8 +1,8 @@
 import { autorun } from 'mobx';
 import { observer, useLocalStore } from 'mobx-react';
 import React, { useEffect } from 'react';
-import { TouchableOpacity, View } from 'react-native';
-import { FastImageProperties, FastImageSource } from 'react-native-fast-image';
+import { Image, ImageURISource, TouchableOpacity, View } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import ProgressCircle from 'react-native-progress/Circle';
 import Animated from 'react-native-reanimated';
 import { mix, useTimingTransition } from 'react-native-redash';
@@ -10,14 +10,20 @@ import { mix, useTimingTransition } from 'react-native-redash';
 import Icon from 'react-native-vector-icons/Ionicons';
 import settingsStore from '../../settings/SettingsStore';
 import ThemedStyles from '../../styles/ThemedStyles';
+import mediaProxyUrl from '../helpers/media-proxy-url';
 import connectivityService from '../services/connectivity.service';
 import RetryableImage from './RetryableImage';
 
-interface SmartImageProps extends Omit<FastImageProperties, 'onError'> {
-  thumbnail?: FastImageSource;
+interface SmartImageProps {
+  thumbnail?: ImageURISource;
   ignoreDataSaver?: boolean;
   onError?: (e: any) => void;
   size?: number;
+  style?: any;
+  source: ImageURISource;
+  onLoadEnd?: Function;
+  resizeMode?: FastImage.ResizeMode;
+  thumbSize?: number;
 }
 
 /**
@@ -112,6 +118,18 @@ export default observer(function (props: SmartImageProps) {
     );
   }
 
+  let thumbnail = props.thumbnail;
+  let source = props.source;
+
+  if (!props.source.uri!.includes('minds.com')) {
+    source = {
+      uri: mediaProxyUrl(props.source.uri, props.thumbSize),
+    };
+    thumbnail = {
+      uri: mediaProxyUrl(props.source.uri, 30),
+    };
+  }
+
   const imageOverlay = (
     <Animated.View
       pointerEvents={store.showOverlay ? undefined : 'none'}
@@ -146,7 +164,7 @@ export default observer(function (props: SmartImageProps) {
           retry={2}
           key={store.retries}
           onError={store.setError}
-          source={props.source}
+          source={source}
           onLoadEnd={store.onLoadEnd}
           onProgress={store.onProgress}
         />
@@ -155,13 +173,12 @@ export default observer(function (props: SmartImageProps) {
         /**
          * Thumbnail
          * */
-        store.showOverlay && props.thumbnail && (
-          <RetryableImage
-            {...otherProps}
-            retry={2}
+        store.showOverlay && thumbnail && (
+          <Image
             key={`thumbnail:${store.retries}`}
-            onError={store.setError}
-            source={props.thumbnail}
+            blurRadius={1}
+            style={props.style}
+            source={thumbnail}
           />
         )
       }

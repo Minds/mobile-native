@@ -83,17 +83,14 @@ export default class MediaView extends Component<PropsType> {
       case 'image':
       case 'batch':
         source = this.props.entity.getThumbSource('xlarge');
-        return this.getImage(source);
+        return this.getImage(source, this.props.entity.getThumbSource('small'));
       case 'video':
         return this.getVideo();
     }
 
     if (this.props.entity.perma_url) {
       source = {
-        uri:
-          this.props.entity.type === 'comment'
-            ? this.props.entity.thumbnail_src
-            : mediaProxyUrl(this.props.entity.thumbnail_src),
+        uri: this.props.entity.thumbnail_src,
       };
 
       return (
