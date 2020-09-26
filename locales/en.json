@@ -769,6 +769,13 @@
       "complete": "Complete bank details"
     }
   },
+  "analytics": {
+    "title": "Analytics",
+    "traffic": "Traffic",
+    "engagement": "Engagement",
+    "earnings": "Earnings",
+    "trending": "Trending"
+  },
   "wire": {
     "customDonation": "Custom Donation",
     "selectCredit": "Select a credit card.",

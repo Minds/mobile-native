@@ -122,6 +122,7 @@ export type AppStackParamList = {
   EmailConfirmation: {};
   Update: {};
   Boost: {};
+  Analytics: {};
   Notifications: {};
   Channel: {};
   EditChannelScreen: {};
