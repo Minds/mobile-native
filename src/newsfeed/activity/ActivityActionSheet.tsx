@@ -201,6 +201,10 @@ export default class ActivityActionSheet extends Component<
       }
     }
 
+    if (entity.hasImage()) {
+      options.push(i18n.t('imageViewer'));
+    }
+
     return options;
   }
 
@@ -320,6 +324,13 @@ export default class ActivityActionSheet extends Component<
         } catch (err) {
           this.showError();
         }
+        break;
+      case i18n.t('imageViewer'):
+        const source = this.props.entity.getThumbSource('xlarge');
+        this.props.navigation.navigate('ViewImage', {
+          entity: this.props.entity,
+          source,
+        });
         break;
     }
   }

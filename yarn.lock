@@ -6838,6 +6838,11 @@ hash.js@^1.0.0, hash.js@^1.0.3, hash.js@^1.1.7:
     inherits "^2.0.3"
     minimalistic-assert "^1.0.1"
 
+hermes-engine@0.5.2-rc1:
+  version "0.5.2-rc1"
+  resolved "https://registry.yarnpkg.com/hermes-engine/-/hermes-engine-0.5.2-rc1.tgz#01faccf58b45f6a4592443c1acf98f0ddbd5bf36"
+  integrity sha512-+cLjML2+XVSLPdEtU/b5FwtF+3yhxV8dfuviRS3MPdMxlxDlG/Iu3wFvTByOzTzWaQyPg+Q/68o5HLrL4QqJng==
+
 hermes-engine@~0.5.0:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/hermes-engine/-/hermes-engine-0.5.1.tgz#601115e4b1e0a17d9aa91243b96277de4e926e09"
@@ -10972,10 +10977,6 @@ react-native-iphone-x-helper@^1.2.1:
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.2.1.tgz#645e2ffbbb49e80844bb4cbbe34a126fda1e6772"
   integrity sha512-/VbpIEp8tSNNHIvstuA3Swx610whci1Zpc9mqNkqn14DkMbw+ORviln2u0XyHG1kPvvwTNGZY6QpeFwxYaSdbQ==
 
-react-native-jitsi-meet@Minds/react-native-jitsi-meet#a8362eecfbbbd93f64775cdcea24e3e9485461de:
-  version "2.0.1"
-  resolved "https://codeload.github.com/Minds/react-native-jitsi-meet/tar.gz/a8362eecfbbbd93f64775cdcea24e3e9485461de"
-
 react-native-keyboard-accessory@^0.1.11:
   version "0.1.12"
   resolved "https://registry.yarnpkg.com/react-native-keyboard-accessory/-/react-native-keyboard-accessory-0.1.12.tgz#13ad6294292b6de9c0aba2dc159250d4b32eb9ee"
@@ -11015,9 +11016,9 @@ react-native-navigation-bar-color@^2.0.1:
   resolved "https://registry.yarnpkg.com/react-native-navigation-bar-color/-/react-native-navigation-bar-color-2.0.1.tgz#ee2be25cc37105f7da355717b0a9a32c9c059ae6"
   integrity sha512-1kE/oxWt+HYjRxdZdvke9tJ365xaee5n3+euOQA1En8zQuSbOxiE4SYEGM7TeaWnmLJ0l37mRnPHaB2H4mGh0A==
 
-react-native-notifications@Minds/react-native-notifications#333e376f866a805f250cc68706d97ace503b948a:
+react-native-notifications@Minds/react-native-notifications#3a2fa2fc4d1def058a72b9de8deb0b6cbf3df3b5:
   version "2.0.6"
-  resolved "https://codeload.github.com/Minds/react-native-notifications/tar.gz/333e376f866a805f250cc68706d97ace503b948a"
+  resolved "https://codeload.github.com/Minds/react-native-notifications/tar.gz/3a2fa2fc4d1def058a72b9de8deb0b6cbf3df3b5"
   dependencies:
     core-js "^1.0.0"
     uuid "^2.0.3"
@@ -11443,7 +11444,7 @@ realpath-native@^2.0.0:
   resolved "https://registry.yarnpkg.com/realpath-native/-/realpath-native-2.0.0.tgz#7377ac429b6e1fd599dc38d08ed942d0d7beb866"
   integrity sha512-v1SEYUOXXdbBZK8ZuNgO4TBjamPsiSgcFr0aP+tEKpQZK8vooEUqV6nm6Cv502mX4NF2EfsnVqtNAHG+/6Ur1Q==
 
-reanimated-bottom-sheet@^1.0.0-alpha.19:
+reanimated-bottom-sheet@^1.0.0-alpha.22:
   version "1.0.0-alpha.22"
   resolved "https://registry.yarnpkg.com/reanimated-bottom-sheet/-/reanimated-bottom-sheet-1.0.0-alpha.22.tgz#01a200946f1a461f01f1e773e5b4961c2df2e53b"
   integrity sha512-NxecCn+2iA4YzkFuRK5/b86GHHS2OhZ9VRgiM4q18AC20YE/psRilqxzXCKBEvkOjP5AaAvY0yfE7EkEFBjTvw==

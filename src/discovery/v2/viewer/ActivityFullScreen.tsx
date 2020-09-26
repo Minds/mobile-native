@@ -1,7 +1,7 @@
 import React, { useRef, useCallback, useMemo, useEffect } from 'react';
 import { View, Text, StyleSheet, Platform, Clipboard } from 'react-native';
 import { useDimensions, useKeyboard } from '@react-native-community/hooks';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { useFocus } from '@crowdlinker/react-native-pager';
 import { LinearGradient } from 'expo-linear-gradient';
 import { observer, useLocalStore } from 'mobx-react';
@@ -39,6 +39,9 @@ import featuresService from '../../../common/services/features.service';
 import LockV2 from '../../../wire/v2/lock/Lock';
 import Lock from '../../../wire/lock/Lock';
 import { showNotification } from '../../../../AppMessages';
+import { AppStackParamList } from '../../../navigation/NavigationTypes';
+
+type ActivityRoute = RouteProp<AppStackParamList, 'Activity'>;
 
 const TEXT_SHORT_THRESHOLD = 110;
 const TEXT_MEDIUM_THRESHOLD = 300;
@@ -69,7 +72,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
     },
   }));
   const keyboard = useKeyboard();
-  const route = useRoute();
+  const route = useRoute<ActivityRoute>();
   const focused = useFocus();
   const bottomStore: BottomOptionsStoreType = useBottomOption();
   const insets = useSafeArea();
@@ -90,6 +93,22 @@ const ActivityFullScreen = observer((props: PropsType) => {
     insets.top,
   ]);
 
+  const onPressComment = useCallback(() => {
+    bottomStore.show(
+      'Comments',
+      '',
+      <CommentList
+        entity={entity}
+        scrollToBottom={true}
+        store={store.comments}
+        navigation={navigation}
+        keyboardVerticalOffset={isIphoneX ? -225 : -185}
+        // onInputFocus={this.onFocus}
+        route={route}
+      />,
+    );
+  }, [bottomStore, entity, navigation, route, store]);
+
   useEffect(() => {
     if (focused) {
       const user = sessionService.getUser();
@@ -98,12 +117,26 @@ const ActivityFullScreen = observer((props: PropsType) => {
       videoPlayerService.setCurrent(null);
 
       if (user.plus && !user.disable_autoplay_videos && mediaRef.current) {
-        mediaRef.current.playVideo(true);
+        mediaRef.current.playVideo(false);
       }
     } else {
       mediaRef.current?.pauseVideo();
     }
   }, [focused]);
+
+  useEffect(() => {
+    let openComentsTimeOut: NodeJS.Timeout | null = null;
+    if (route && (route.params?.focusedUrn || route.params?.scrollToBottom)) {
+      openComentsTimeOut = setTimeout(() => {
+        onPressComment();
+      }, 100);
+    }
+    return () => {
+      if (openComentsTimeOut) {
+        clearTimeout(openComentsTimeOut);
+      }
+    };
+  }, [onPressComment, route]);
 
   const isShortText =
     !hasMedia && !hasRemind && entity.text.length < TEXT_SHORT_THRESHOLD;
@@ -150,22 +183,6 @@ const ActivityFullScreen = observer((props: PropsType) => {
       }
     }
   }, [translateRef]);
-
-  const onPressComment = useCallback(() => {
-    bottomStore.show(
-      'Comments',
-      '',
-      <CommentList
-        entity={entity}
-        scrollToBottom={true}
-        store={store.comments}
-        navigation={navigation}
-        keyboardVerticalOffset={isIphoneX ? -225 : -185}
-        // onInputFocus={this.onFocus}
-        route={route}
-      />,
-    );
-  }, [bottomStore, entity, navigation, route, store]);
 
   let buttonPopUpHeight = window.height * 0.85;
 

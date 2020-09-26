@@ -341,7 +341,7 @@ export default class GroupHeader extends Component {
                 ]}
                 onPress={this.share}
               />
-              {group.can(FLAG_JOIN_GATHERING) && this.getGatheringButton()}
+              {/* {group.can(FLAG_JOIN_GATHERING) && this.getGatheringButton()} */}
               {group.can(FLAG_JOIN) && this.getActionButton()}
             </View>
           </View>

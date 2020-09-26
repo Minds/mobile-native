@@ -18,7 +18,13 @@ type PropsType = {
 };
 
 const ExpoVideo = observer(
-  ({ entity, localStore, repeat, resizeMode, ignoreDataSaver }: PropsType) => {
+  ({
+    entity,
+    localStore,
+    repeat = true,
+    resizeMode,
+    ignoreDataSaver,
+  }: PropsType) => {
     const theme = ThemedStyles.style;
     const playbackObject = useRef<Video>(null);
     const dataSaverEnabled = !ignoreDataSaver && settingsStore.dataSaverEnabled;
@@ -43,7 +49,7 @@ const ExpoVideo = observer(
         source={source}
         usePoster={true}
         posterSource={dataSaverEnabled ? undefined : { uri: thumb_uri }}
-        isLooping={repeat || false}
+        isLooping={repeat}
         resizeMode={resizeMode || 'contain'}
         useNativeControls={false}
         style={theme.flexContainer}

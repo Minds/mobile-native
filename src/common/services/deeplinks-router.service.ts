@@ -65,7 +65,7 @@ class DeeplinksRouter {
   navigate(url) {
     if (!url) return;
     const route = this._getUrlRoute(url);
-    if (route) {
+    if (route && route.screen !== 'Redirect') {
       navigationService.navigate(route.screen, route.params);
     } else {
       Linking.openURL(url.replace('https://www.', 'https://mobile.'));

@@ -36,7 +36,7 @@ import NotSupportedScreen from '../static-views/NotSupportedScreen';
 import OnboardingScreen from '../onboarding/OnboardingScreen';
 import UpdatingScreen from '../update/UpdateScreen';
 import { DiscoverySearchScreen } from '../discovery/v2/search/DiscoverySearchScreen';
-import Gathering from '../gathering/Gathering';
+// import Gathering from '../gathering/Gathering';
 import EmailConfirmationScreen from '../onboarding/EmailConfirmationScreen';
 import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
@@ -98,6 +98,7 @@ import AuthTransition from './AuthTransition';
 import VideoBackground from '../common/components/VideoBackground';
 import TransparentLayer from '../common/components/TransparentLayer';
 import PortraitViewerScreen from '../portrait/PortraitViewerScreen';
+import { portraitBarRef } from '../portrait/PortraitContentBar';
 
 const isIos = Platform.OS === 'ios';
 
@@ -259,7 +260,7 @@ const MainScreen = () => {
       gestureHandlerProps={{
         hitSlop: { left: 0, width: dimensions.width },
         //@ts-ignore
-        waitFor: 'portrait-bar',
+        waitFor: portraitBarRef,
       }}
       drawerType="slide"
       drawerContent={Drawer}
@@ -630,7 +631,7 @@ const RootStack = function (props) {
       {props.isLoggedIn ? (
         <Fragment>
           <RootStackNav.Screen name="App" component={AppStack} />
-          <RootStackNav.Screen name="Gathering" component={Gathering} />
+          {/* <RootStackNav.Screen name="Gathering" component={Gathering} /> */}
           {/* Modal screens here */}
           <RootStackNav.Screen
             name="JoinMembershipScreen"

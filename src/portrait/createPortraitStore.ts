@@ -30,6 +30,7 @@ function createPortraitStore() {
 
   return {
     items: <Array<PortraitBarItem>>[],
+    loading: false,
     async load() {
       feedStore.clear();
       try {
@@ -38,6 +39,8 @@ function createPortraitStore() {
           hide_own_posts: true,
           to_timestamp: moment().subtract(2, 'days').unix(),
         });
+
+        this.loading = true;
 
         const [seenList] = await Promise.all([
           portraitContentService.getSeen(),
@@ -63,7 +66,11 @@ function createPortraitStore() {
               new PortraitBarItem(activities[0].ownerObj, activities),
           );
         }
-      } catch (error) {}
+      } catch (err) {
+        console.log(err);
+      } finally {
+        this.loading = false;
+      }
     },
   };
 }

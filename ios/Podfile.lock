@@ -58,7 +58,6 @@ PODS:
     - glog
   - glog (0.3.5)
   - iOSPhotoEditor (0.5)
-  - JitsiMeetSDK (2.4.0)
   - libwebp (1.1.0):
     - libwebp/demux (= 1.1.0)
     - libwebp/mux (= 1.1.0)
@@ -255,9 +254,6 @@ PODS:
   - react-native-cameraroll (1.4.0):
     - React
   - react-native-image-picker (2.3.3):
-    - React
-  - react-native-jitsi-meet (2.0.1):
-    - JitsiMeetSDK (= 2.4.0)
     - React
   - react-native-netinfo (4.7.0):
     - React
@@ -466,7 +462,6 @@ DEPENDENCIES:
   - react-native-camera (from `../node_modules/react-native-camera`)
   - "react-native-cameraroll (from `../node_modules/@react-native-community/cameraroll`)"
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
-  - react-native-jitsi-meet (from `../node_modules/react-native-jitsi-meet`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-notifications (from `../node_modules/react-native-notifications`)
   - react-native-randombytes (from `../node_modules/react-native-randombytes`)
@@ -527,7 +522,6 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - boost-for-react-native
-    - JitsiMeetSDK
     - libwebp
     - SDWebImage
     - SDWebImageWebPCoder
@@ -609,8 +603,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/cameraroll"
   react-native-image-picker:
     :path: "../node_modules/react-native-image-picker"
-  react-native-jitsi-meet:
-    :path: "../node_modules/react-native-jitsi-meet"
   react-native-netinfo:
     :path: "../node_modules/@react-native-community/netinfo"
   react-native-notifications:
@@ -745,7 +737,6 @@ SPEC CHECKSUMS:
   Folly: b73c3869541e86821df3c387eb0af5f65addfab4
   glog: 40a13f7840415b9a77023fbcae0f1e6f43192af3
   iOSPhotoEditor: 0f36d2c064d2999b7f4cd20c9db679581d24f7bf
-  JitsiMeetSDK: d4a3aeed1a75fd57e6a78e5d202b6051dfcb9320
   libwebp: 946cb3063cea9236285f7e9a8505d806d30e07f3
   lottie-ios: 48fac6be217c76937e36e340e2d09cf7b10b7f5f
   lottie-react-native: 1fb4ce21d6ad37dab8343eaff8719df76035bd93
@@ -765,7 +756,6 @@ SPEC CHECKSUMS:
   react-native-camera: 3940f67a49eaf736525a3e730653fcb98e1525dd
   react-native-cameraroll: dbda741db5dadcdcf738e55a1fd565c307943bca
   react-native-image-picker: 3d3f85baabca60a00b75fb8facc1376db7bbdafa
-  react-native-jitsi-meet: becd37e8fa1c5f3321b9222c232d190a36f90880
   react-native-netinfo: ddaca8bbb9e6e914b1a23787ccb879bc642931c9
   react-native-notifications: 163ddedac6fcc8d850ea15b06abdadcacdff00f1
   react-native-randombytes: 3638d24759d67c68f6ccba60c52a7a8a8faa6a23
@@ -829,4 +819,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: ccd7495510034e0f284e0fc6f5c905fec133aa8f
 
-COCOAPODS: 1.8.3
+COCOAPODS: 1.9.3

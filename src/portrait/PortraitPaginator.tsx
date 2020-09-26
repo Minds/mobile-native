@@ -6,6 +6,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 type PropsType = {
   store: {
     setIndex: (number) => void;
+    index: number;
   };
   pages: Array<React.ReactNode>;
 };
@@ -31,6 +32,10 @@ const pagerAnimation = {
 export default function PortraitPaginator({ store, pages }: PropsType) {
   const insets = useSafeAreaInsets();
 
+  if (pages.length === 1) {
+    return null;
+  }
+
   const style = StyleSheet.flatten([
     styles.circlesContainer,
     { marginTop: insets.top ? insets.top - 5 : 0 },
@@ -38,22 +43,32 @@ export default function PortraitPaginator({ store, pages }: PropsType) {
   return (
     <Pagination pageInterpolation={pagerAnimation} style={style}>
       {React.Children.map(pages, (_, i) => (
-        <Marker i={i} onPress={store.setIndex} />
+        <Marker i={i} onPress={store.setIndex} current={store.index} />
       ))}
     </Pagination>
   );
 }
 
-function Marker({ i, onPress }) {
-  return <TouchableOpacity onPress={() => onPress(i)} style={styles.marker} />;
+function Marker({ i, onPress, current }) {
+  return (
+    <TouchableOpacity
+      onPress={() => onPress(i)}
+      style={[styles.marker, i > current ? styles.dark : styles.light]}
+    />
+  );
 }
 
 const styles = StyleSheet.create({
-  marker: {
+  light: {
     backgroundColor: '#FFFFFF',
+  },
+  dark: {
+    backgroundColor: '#000000',
+  },
+  marker: {
     width: '100%',
-    height: 8,
-    borderRadius: 10,
+    height: 5,
+    borderRadius: 5,
     elevation: 1,
     shadowColor: '#000',
     shadowOffset: {
