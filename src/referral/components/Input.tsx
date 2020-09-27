@@ -44,6 +44,7 @@ const Input = ({ textToCopy, label, style }: InputProps) => {
             theme.input,
             theme.backgroundSecondary,
             theme.padding2x,
+            theme.fontM,
             styles.borderRadius,
           ]}
           value={textToCopy}
