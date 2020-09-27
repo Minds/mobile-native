@@ -45,7 +45,7 @@ const Input = ({ textToCopy, label, style }: InputProps) => {
             theme.backgroundSecondary,
             theme.padding2x,
             theme.fontM,
-            styles.borderRadius,
+            styles.input,
           ]}
           value={textToCopy}
         />
@@ -71,7 +71,7 @@ const Input = ({ textToCopy, label, style }: InputProps) => {
 export default Input;
 
 const styles = StyleSheet.create({
-  borderRadius: {
+  input: {
     borderRadius: 3,
     lineHeight: 17,
   },
