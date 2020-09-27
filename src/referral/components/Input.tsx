@@ -73,6 +73,7 @@ export default Input;
 const styles = StyleSheet.create({
   borderRadius: {
     borderRadius: 3,
+    lineHeight: 17,
   },
   inputContainer: {
     alignItems: 'stretch',
