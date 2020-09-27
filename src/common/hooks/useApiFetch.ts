@@ -85,8 +85,10 @@ export default function useApiFetch<T>(
   const observableParams = useAsObservableSource(params);
 
   useEffect(() => {
-    store.fetch(params);
-  });
+    if (!reactToParams) {
+      store.fetch(params);
+    }
+  }, []);
 
   React.useEffect(() => {
     if (reactToParams) {
