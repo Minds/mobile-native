@@ -1,5 +1,4 @@
-import { useDimensions } from '@react-native-community/hooks';
-import React, { useCallback, useRef } from 'react';
+import React from 'react';
 import { ScrollView, Text } from 'react-native';
 import i18n from '../common/services/i18n.service';
 import sessionService from '../common/services/session.service';
@@ -23,13 +22,22 @@ const ReferralsScreen = ({ navigation }: ReferralsScreenProps) => {
     <ScrollView
       style={theme.flexContainer}
       contentContainerStyle={[theme.padding4x]}>
+      <Text style={[theme.fontXL, theme.marginBottom4x, { lineHeight: 25 }]}>
+        {i18n.t('referrals.title')}
+      </Text>
+
       <Text
         style={[
           theme.colorSecondaryText,
           theme.textJustify,
-          theme.marginBottom4x,
+          theme.marginBottom,
         ]}>
         {i18n.t('referrals.description')}
+      </Text>
+      <Text
+        style={[theme.colorLink, theme.marginBottom4x]}
+        onPress={() => navigation.push('LearnMoreScreen')}>
+        {i18n.t('wallet.learnMore.title')}
       </Text>
 
       <Input

@@ -885,6 +885,7 @@
     }
   },
   "referrals": {
+    "title": "Earn tokens by inviting your friends to Minds",
     "sendLinkToFriends": "Send this link to your friends to earn tokens for referrals",
     "codeSuffixLabel": "You can also get referrals by adding this code to the end of any Minds link you share",
     "moreWaysToShare": "More ways to share",
