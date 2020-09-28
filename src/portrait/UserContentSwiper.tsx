@@ -82,21 +82,19 @@ const UserContentSwiper = observer((props: PropsType) => {
     },
   };
 
-  const onTapStateChange = useCallback(
-    ({ nativeEvent }) => {
-      const halfWidth = width / 2;
-      if (nativeEvent.pageX < halfWidth) {
-        if (store.index > 0) {
-          store.setIndex(store.index - 1);
-        }
-      } else if (store.index < activities.length - 1) {
-        store.setIndex(store.index + 1);
-      } else {
-        props.nextUser();
-      }
-    },
-    [activities.length, store, props],
-  );
+  const onTapStateChangeRight = useCallback(() => {
+    if (store.index < activities.length - 1) {
+      store.setIndex(store.index + 1);
+    } else {
+      props.nextUser();
+    }
+  }, [activities.length, store, props]);
+
+  const onTapStateChangeLeft = useCallback(() => {
+    if (store.index > 0) {
+      store.setIndex(store.index - 1);
+    }
+  }, [store]);
 
   const pages = activities.map((e, i) => (
     <ActivityFullScreen key={i} entity={e} />
@@ -117,19 +115,36 @@ const UserContentSwiper = observer((props: PropsType) => {
         </Pager>
         <PortraitPaginator store={store} pages={pages} />
       </View>
-      <TouchableOpacity style={styles.touch} onPress={onTapStateChange} />
+      <TouchableOpacity
+        style={styles.touchLeft}
+        onPress={onTapStateChangeLeft}
+      />
+      <TouchableOpacity
+        style={styles.touchRight}
+        onPress={onTapStateChangeRight}
+      />
     </PagerProvider>
   );
 });
 
 export default UserContentSwiper;
 
+const touchableHeight = height * 0.25;
+const touchableTop = height * 0.375;
+
 const styles = StyleSheet.create({
-  touch: {
+  touchLeft: {
     position: 'absolute',
-    top: height / 3,
-    height: height / 3,
+    top: touchableTop,
+    height: touchableHeight,
     left: 0,
-    width: '100%',
+    width: 55,
+  },
+  touchRight: {
+    position: 'absolute',
+    top: touchableTop,
+    height: touchableHeight,
+    right: 0,
+    width: 55,
   },
 });

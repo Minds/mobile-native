@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useMemo, useEffect } from 'react';
+import React, { useRef, useCallback, useEffect } from 'react';
 import { View, Text, StyleSheet, Platform, Clipboard } from 'react-native';
 import { useDimensions } from '@react-native-community/hooks';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
@@ -82,12 +82,12 @@ const ActivityFullScreen = observer((props: PropsType) => {
   const hasMedia = entity.hasMedia();
   const hasRemind = !!entity.remind_object;
   const showText = !!entity.text || !!entity.title;
-  const cleanBottom = useMemo(() => ({ paddingBottom: insets.bottom - 10 }), [
-    insets.bottom,
-  ]);
-  const cleanTop = useMemo(() => ({ paddingTop: insets.top || 10 }), [
-    insets.top,
-  ]);
+  const { current: cleanBottom } = useRef({
+    paddingBottom: insets.bottom - 10,
+  });
+  const { current: cleanTop } = useRef({
+    paddingTop: insets.top || 10,
+  });
 
   const onPressComment = useCallback(() => {
     bottomStore.show(

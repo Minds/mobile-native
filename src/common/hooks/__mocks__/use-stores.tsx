@@ -1,22 +1,21 @@
 import { useLocalStore } from 'mobx-react';
-import {
-  createStores,
-  TStores,
-  createLegacyStores,
-  TLegacyStores,
-} from '../../contexts';
+import createPortraitStore from '../../../portrait/createPortraitStore';
+import createSearchResultStore from '../../../topbar/searchbar/createSearchResultStore';
+import createWalletStore from '../../../wallet/v2/createWalletStore';
+import { createLegacyStores, TLegacyStores } from '../../contexts';
+import { StoresType } from '../use-stores';
 
 /**
  * Allows for a function component to consume our global stores
  * This **MUST** be only consumed below <StoresProvider> (which is placed in src/App.tsx)
  */
-export const useStores = (): TStores => {
-  const store = useLocalStore(createStores);
-  if (!store) {
-    // this is especially useful in TypeScript so you don't need to be checking for null all the time
-    throw new Error('useStores must be used within a StoreProvider.');
-  }
-  return store;
+export const useStores = (): StoresType => {
+  const stores = {
+    wallet: useLocalStore(createWalletStore),
+    searchBar: useLocalStore(createSearchResultStore),
+    portrait: useLocalStore(createPortraitStore),
+  };
+  return stores;
 };
 
 /**
