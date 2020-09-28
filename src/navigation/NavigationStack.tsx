@@ -208,6 +208,11 @@ const WalletOptions = () => ({
   headerShown: false,
 });
 
+const modalOptions = {
+  gestureResponseDistance: { vertical: 240 },
+  gestureEnabled: true,
+};
+
 export const InternalStack = () => {
   const internalOptions = {
     ...ThemedStyles.defaultScreenOptions,
@@ -615,10 +620,7 @@ const RootStack = function (props) {
           <RootStackNav.Screen
             name="JoinMembershipScreen"
             component={JoinMembershipScreen}
-            options={{
-              gestureResponseDistance: { vertical: 240 },
-              gestureEnabled: true,
-            }}
+            options={modalOptions}
           />
           <RootStackNav.Screen
             name="BlockchainWalletModal"
@@ -627,12 +629,7 @@ const RootStack = function (props) {
           <RootStackNav.Screen
             name="PlusScreen"
             component={PlusScreen}
-            options={({ route }) => ({
-              gestureEnabled: false,
-              title: i18n.t(
-                `monetize.${route.params.pro ? 'pro' : 'plus'}Header`,
-              ),
-            })}
+            options={modalOptions}
           />
         </Fragment>
       ) : (

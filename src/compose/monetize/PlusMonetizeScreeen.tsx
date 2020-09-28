@@ -60,7 +60,7 @@ const PlusMonetizeScreen = observer(({ route, navigation }: PropsType) => {
     [user],
   );
 
-  if (!user.me.pro) {
+  if (!user.me.plus) {
     return (
       <Wrapper store={store} hideDone={true} onPressRight={save}>
         <View style={[theme.paddingVertical6x, theme.paddingHorizontal3x]}>
@@ -70,13 +70,13 @@ const PlusMonetizeScreen = observer(({ route, navigation }: PropsType) => {
               theme.fontL,
               theme.paddingVertical2x,
             ]}>
-            {i18n.t('monetize.plusMonetize.notPro')}
+            {i18n.t('monetize.plusMonetize.notPlus')}
           </Text>
           <Button
             text={i18n.t('monetize.plusMonetize.upgrade')}
             textStyle={styles.title}
             onPress={() =>
-              navigation.push('PlusScreen', { onComplete, pro: true })
+              navigation.push('PlusScreen', { onComplete, pro: false })
             }
           />
         </View>
