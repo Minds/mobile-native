@@ -22,8 +22,10 @@ import moment from 'moment';
 import ThemedStyles from '../styles/ThemedStyles';
 import NavigationService from '../navigation/NavigationService';
 import i18n from '../common/services/i18n.service';
-import { getLicenseText } from '../common/services/list-options.service';
-import featuresService from '../common/services/features.service';
+import {
+  getLicenseText,
+  getAccessText,
+} from '../common/services/list-options.service';
 
 const Touchable = Platform.select({
   ios: RNTouchableOpacity,
@@ -111,6 +113,7 @@ export default observer(
     const tokens = store.wire_threshold.min;
     const license = store.attachment.license;
     const hasAttachment = store.attachment.hasAttachment;
+    const accessId = store.accessId;
 
     const keyboard = useKeyboard();
     const sheetRef = useRef();
@@ -120,6 +123,7 @@ export default observer(
     const onSchedulePress = useNavCallback('ScheduleSelector', store);
     const onMonetizePress = useNavCallback('MonetizeSelector', store);
     const onLicensePress = useNavCallback('LicenseSelector', store);
+    const onPressVisibility = useNavCallback('AccessSelector', store);
 
     const localStore = useLocalStore(() => ({
       opened: false,
@@ -203,18 +207,20 @@ export default observer(
             onPress={onLicensePress}
           />
         )}
-        {/* <Item
-          title="Visibility"
-          description="Public"
-          onPress={onMonetizePress}
-        /> */}
+        {!store.group && (
+          <Item
+            title="Visibility"
+            description={getAccessText(accessId)}
+            onPress={onPressVisibility}
+          />
+        )}
       </View>
     );
 
     return (
       <BottomSheet
         ref={sheetRef}
-        snapPoints={[0, 450]}
+        snapPoints={[0, 500]}
         renderContent={renderInner}
         enabledInnerScrolling={true}
         enabledContentTapInteraction={true}

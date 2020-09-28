@@ -54,20 +54,13 @@ export const LICENSES = [
   { value: 'bsd', text: 'BSD License' },
 ];
 
-/**
- * Get the license text
- */
-export const getLicenseText = (value) => {
-  const lic = LICENSES.find((license) => value == license.value);
-  if (!lic) return;
-  return lic.text;
-};
-
 export const ACCESS = [
   { value: 0, text: 'Unlisted' },
   { value: 1, text: 'Loggedin' },
   { value: 2, text: 'Public' },
 ];
+
+export type AccessType = typeof ACCESS[number]['value'];
 
 export const REASONS = [
   { value: 1, label: 'Illegal' },
@@ -95,4 +88,21 @@ export const REPORT_ACTIONS = {
   explicit: 'Marked as Explicit',
   spam: 'Marked as Spam',
   delete: 'Deleted',
+};
+
+/**
+ * Get the license text
+ */
+const getText = (data, value) => {
+  const lic = data.find((license) => value === license.value);
+  if (!lic) return;
+  return lic.text;
+};
+
+export const getLicenseText = (value) => {
+  return getText(LICENSES, value);
+};
+
+export const getAccessText = (value) => {
+  return getText(ACCESS, value);
 };
