@@ -137,21 +137,18 @@ const TrendingTab = observer(({ navigation }: TrendingTabProps) => {
       style={[theme.flexContainer, { width }, { marginBottom: 180 }]}
       contentContainerStyle={theme.padding4x}>
       <View style={[theme.rowJustifySpaceBetween]}>
-        {result.dashboard.metrics![0].visualisation.columns!.map((column) =>
-          column.order === 0 ? (
-            <View
-              key={column.id}
-              style={[styles.firstColumn, theme.paddingVertical4x]}>
-              <Text style={theme.bold}>{column.label}</Text>
-            </View>
-          ) : (
-            <View
-              key={column.id}
-              style={[theme.flexColumnCentered, theme.padding]}>
-              <Text style={theme.bold}>{column.label}</Text>
-            </View>
-          ),
-        )}
+        <View style={[styles.firstColumn, theme.paddingVertical4x]}>
+          <Text style={theme.bold}>{i18n.t('analytics.trending.content')}</Text>
+        </View>
+        <View style={[theme.flexColumnCentered, theme.padding]}>
+          <Text style={theme.bold}>{i18n.t('analytics.trending.totalViews')}</Text>
+        </View>
+        <View style={[theme.flexColumnCentered, theme.padding]}>
+          <Text style={theme.bold}>{i18n.t('analytics.trending.organic')}</Text>
+        </View>
+        <View style={[theme.flexColumnCentered, theme.padding]}>
+          <Text style={theme.bold}>{i18n.t('analytics.trending.pageViews')}</Text>
+        </View>
       </View>
 
       {rows.map((row) => (

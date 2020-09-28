@@ -66,7 +66,7 @@ const AnalyticsScreen = observer(({ navigation }: AnalyticsScreenProps) => {
           { id: 'traffic', title: i18n.t('analytics.traffic') },
           { id: 'engagement', title: i18n.t('analytics.engagement') },
           { id: 'earnings', title: i18n.t('analytics.earnings') },
-          { id: 'trending', title: i18n.t('analytics.trending') },
+          { id: 'trending', title: i18n.t('analytics.trending.title') },
         ]}
       />
       <View style={[theme.centered]}>{screen()}</View>
