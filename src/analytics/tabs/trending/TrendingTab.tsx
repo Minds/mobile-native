@@ -141,13 +141,17 @@ const TrendingTab = observer(({ navigation }: TrendingTabProps) => {
           <Text style={theme.bold}>{i18n.t('analytics.trending.content')}</Text>
         </View>
         <View style={[theme.flexColumnCentered, theme.padding]}>
-          <Text style={theme.bold}>{i18n.t('analytics.trending.totalViews')}</Text>
+          <Text style={theme.bold}>
+            {i18n.t('analytics.trending.totalViews')}
+          </Text>
         </View>
         <View style={[theme.flexColumnCentered, theme.padding]}>
           <Text style={theme.bold}>{i18n.t('analytics.trending.organic')}</Text>
         </View>
         <View style={[theme.flexColumnCentered, theme.padding]}>
-          <Text style={theme.bold}>{i18n.t('analytics.trending.pageViews')}</Text>
+          <Text style={theme.bold}>
+            {i18n.t('analytics.trending.pageViews')}
+          </Text>
         </View>
       </View>
 
