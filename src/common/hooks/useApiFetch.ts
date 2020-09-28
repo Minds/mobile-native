@@ -65,7 +65,7 @@ export interface PostStore<T> extends FetchStore<T> {
 export default function useApiFetch<T>(
   url: string,
   params: object = {},
-  updateState,
+  updateState?,
 ): FetchStore<T> {
   const store: FetchStore<T> = useLocalStore(createStore, { url, updateState });
   const observableParams = useAsObservableSource(params);
