@@ -686,7 +686,7 @@ class CommentList extends React.Component<PropsType, StateType> {
       <View style={[CS.flexContainer, paddingBottom]} onLayout={this.onLayout}>
         <KeyboardAvoidingView
           style={CS.flexContainer}
-          behavior={Platform.OS === 'ios' ? 'padding' : null}
+          behavior={'padding'}
           keyboardVerticalOffset={
             this.props.keyboardVerticalOffset
               ? -this.props.keyboardVerticalOffset

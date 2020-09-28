@@ -14,7 +14,6 @@ import BoostAction from './actions/BoostAction';
 import featuresService from '../../common/services/features.service';
 import BaseModel from '../../common/BaseModel';
 import type ActivityModel from '../ActivityModel';
-import { useLegacyStores } from '../../common/hooks/use-stores';
 import { useNavigation } from '@react-navigation/native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import CommentsEntityOutlet from '../../comments/CommentsEntityOutlet';
@@ -27,11 +26,10 @@ type PropsType = {
 
 export const Actions = observer((props: PropsType) => {
   const theme = ThemedStyles.style;
-  const { user } = useLegacyStores();
   const navigation = useNavigation();
 
   const entity = props.entity;
-  const isOwner = user.me.guid === entity.owner_guid;
+  const isOwner = entity.isOwner();
   const hasWire = Platform.OS !== 'ios';
   const hasCrypto = featuresService.has('crypto');
   const isScheduled = BaseModel.isScheduled(

@@ -1,6 +1,6 @@
-import React, { useRef, useCallback, useMemo, useEffect } from 'react';
+import React, { useRef, useCallback, useEffect } from 'react';
 import { View, Text, StyleSheet, Platform, Clipboard } from 'react-native';
-import { useDimensions, useKeyboard } from '@react-native-community/hooks';
+import { useDimensions } from '@react-native-community/hooks';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { useFocus } from '@crowdlinker/react-native-pager';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -49,8 +49,6 @@ type PropsType = {
   entity: ActivityModel;
 };
 
-const isIos = Platform.OS === 'ios';
-
 const ActivityFullScreen = observer((props: PropsType) => {
   // Local store
   const store = useLocalStore(() => ({
@@ -70,7 +68,6 @@ const ActivityFullScreen = observer((props: PropsType) => {
       return store.scrollViewHeight + 50 > store.contentHeight;
     },
   }));
-  const keyboard = useKeyboard();
   const route = useRoute<ActivityRoute>();
   const focused = useFocus();
   const bottomStore: BottomOptionsStoreType = useBottomOption();
@@ -85,12 +82,12 @@ const ActivityFullScreen = observer((props: PropsType) => {
   const hasMedia = entity.hasMedia();
   const hasRemind = !!entity.remind_object;
   const showText = !!entity.text || !!entity.title;
-  const cleanBottom = useMemo(() => ({ paddingBottom: insets.bottom - 10 }), [
-    insets.bottom,
-  ]);
-  const cleanTop = useMemo(() => ({ paddingTop: insets.top || 10 }), [
-    insets.top,
-  ]);
+  const { current: cleanBottom } = useRef({
+    paddingBottom: insets.bottom - 10,
+  });
+  const { current: cleanTop } = useRef({
+    paddingTop: insets.top || 10,
+  });
 
   const onPressComment = useCallback(() => {
     bottomStore.show(
@@ -315,11 +312,6 @@ const ActivityFullScreen = observer((props: PropsType) => {
           ThemedStyles.theme === 1
             ? theme.backgroundPrimary
             : theme.backgroundSecondary
-        }
-        contentContainerStyle={
-          keyboard.keyboardShown && !isIos
-            ? { paddingBottom: keyboard.keyboardHeight }
-            : undefined
         }
         height={buttonPopUpHeight}
         title={bottomStore.title}

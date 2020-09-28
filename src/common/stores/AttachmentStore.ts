@@ -7,6 +7,7 @@ import attachmentService from '../services/attachment.service';
 import logService from '../services/log.service';
 import i18n from '../services/i18n.service';
 import mindsService from '../services/minds.service';
+import { showNotification } from '../../../AppMessages';
 
 /**
  * Attachment Store
@@ -110,7 +111,7 @@ export default class AttachmentStore {
       this.guid = result.guid;
     } catch (err) {
       this.clear();
-      Alert.alert('Upload failed', 'Please try again');
+      showNotification(i18n.t('uploadFailed'));
     } finally {
       this.setUploading(false);
     }

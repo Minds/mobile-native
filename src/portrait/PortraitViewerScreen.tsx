@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { ActivityFullScreenParamList } from '../navigation/NavigationTypes';
-import { RouteProp } from '@react-navigation/native';
+import { RouteProp, useFocusEffect } from '@react-navigation/native';
 import { useLocalStore, observer } from 'mobx-react';
 import {
   Pager,
@@ -14,6 +14,7 @@ import { useDimensions } from '@react-native-community/hooks';
 import ThemedStyles from '../styles/ThemedStyles';
 import MetadataService from '../common/services/metadata.service';
 import UserContentSwiper from './UserContentSwiper';
+import { useStores } from '../common/hooks/use-stores';
 
 type ActivityFullScreenRouteProp = RouteProp<
   ActivityFullScreenParamList,
@@ -43,6 +44,15 @@ const PortraitViewerScreen = observer((props: PropsType) => {
       }
     },
   }));
+
+  const portraitStore = useStores().portrait;
+
+  useFocusEffect(
+    useCallback(() => {
+      // resort data when unfocused
+      return () => portraitStore.sort();
+    }, [portraitStore]),
+  );
 
   const { width, height } = useDimensions().window;
   const angle = 0.5;

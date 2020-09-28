@@ -30,7 +30,7 @@ jest.mock('../../../src/common/hooks/use-stores');
 jest.useRealTimers();
 
 describe('Activity screen component', () => {
-  it('renders correctly ', async () => {
+  it('renders correctly ', async (done) => {
     const navigation = {
       push: jest.fn(),
       goBack: jest.fn(),
@@ -57,5 +57,7 @@ describe('Activity screen component', () => {
 
     // should show the activity
     expect(toJSON()).toMatchSnapshot();
+
+    done();
   });
 });

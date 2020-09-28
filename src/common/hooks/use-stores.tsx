@@ -1,25 +1,45 @@
 import React from 'react';
-import { createStores, TStores, TLegacyStores } from '../contexts';
+import { TLegacyStores } from '../contexts';
 import { useLocalStore, MobXProviderContext } from 'mobx-react';
+import createWalletStore, {
+  WalletStoreType,
+} from '../../wallet/v2/createWalletStore';
+import createSearchResultStore, {
+  SearchResultStoreType,
+} from '../../topbar/searchbar/createSearchResultStore';
+import createPortraitStore, {
+  PortraitStoreType,
+} from '../../portrait/createPortraitStore';
 
-export const storesContext = React.createContext<TStores | null>(null);
+export const storesContext = React.createContext<StoresType | null>(null);
 
 /**
  * This is used in /src/App.tsx and provides a single instance of
  * our global stores
  */
 export const StoresProvider = ({ children }) => {
-  const stores = useLocalStore(createStores);
+  const stores = {
+    wallet: useLocalStore(createWalletStore),
+    searchBar: useLocalStore(createSearchResultStore),
+    portrait: useLocalStore(createPortraitStore),
+  };
+
   return (
     <storesContext.Provider value={stores}>{children}</storesContext.Provider>
   );
+};
+
+export type StoresType = {
+  wallet: WalletStoreType;
+  searchBar: SearchResultStoreType;
+  portrait: PortraitStoreType;
 };
 
 /**
  * Allows for a function component to consume our global stores
  * This **MUST** be only consumed below <StoresProvider> (which is placed in src/App.tsx)
  */
-export const useStores = (): TStores => {
+export const useStores = (): StoresType => {
   const store = React.useContext(storesContext);
   if (!store) {
     // this is especially useful in TypeScript so you don't need to be checking for null all the time

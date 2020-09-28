@@ -6,28 +6,40 @@ import React, {
 } from 'react';
 import { FlatList } from 'react-native-gesture-handler';
 import { PlaceholderMedia, Fade, Placeholder } from 'rn-placeholder';
-import { observer, useLocalStore } from 'mobx-react';
+import { observer } from 'mobx-react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import ThemedStyles from '../styles/ThemedStyles';
 import PortraitContentBarItem from './PortraitContentBarItem';
-import createPortraitStore, { PortraitBarItem } from './createPortraitStore';
+import { PortraitBarItem } from './createPortraitStore';
 import { useNavigation } from '@react-navigation/native';
+import { useStores } from '../common/hooks/use-stores';
 
+/**
+ * Header component
+ */
 const Header = () => {
   const theme = ThemedStyles.style;
   const navigation = useNavigation<any>();
+  const nav = useCallback(
+    () => navigation.push('Capture', { portrait: true }),
+    [navigation],
+  );
 
   return (
     <TouchableOpacity
-      onPress={() => navigation.push('Capture', { portrait: true })}
+      onPress={nav}
       style={[styles.add, theme.backgroundTertiary, theme.centered]}>
       <Text style={[theme.fontXXL, theme.colorSecondaryText]}>+</Text>
     </TouchableOpacity>
   );
 };
 
+/**
+ * Portrait bar Ref
+ */
 export const portraitBarRef = React.createRef<FlatList<PortraitBarItem>>();
+
 const BarPlaceholder = () => {
   const theme = ThemedStyles.style;
   const color = ThemedStyles.getColor('tertiary_background');
@@ -57,10 +69,13 @@ const BarPlaceholder = () => {
   );
 };
 
+/**
+ * Portrait content bar
+ */
 const PortraitContentBar = observer(
   forwardRef((_, ref) => {
     const theme = ThemedStyles.style;
-    const store = useLocalStore(createPortraitStore);
+    const store = useStores().portrait;
     const navigation = useNavigation<any>();
 
     useEffect(() => {
@@ -106,10 +121,10 @@ const PortraitContentBar = observer(
           theme.fullWidth,
         ]}>
         <FlatList
+          ref={portraitBarRef}
           contentContainerStyle={[
             theme.rowJustifyStart,
             theme.backgroundSecondary,
-            theme.fullWidth,
           ]}
           style={styles.bar}
           horizontal={true}

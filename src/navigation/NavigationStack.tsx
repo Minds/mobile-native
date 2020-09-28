@@ -42,6 +42,7 @@ import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
 import ComposeScreen from '../compose/ComposeScreen';
 import TagSelector from '../compose/TagSelector';
+import AccessSelector from '../compose/AccessSelector';
 import NsfwSelector from '../compose/NsfwSelector';
 import ScheduleSelector from '../compose/ScheduleSelector';
 import MonetizeSelector from '../compose/MonetizeSelector';
@@ -209,6 +210,11 @@ const WalletOptions = () => ({
   headerShown: false,
 });
 
+const modalOptions = {
+  gestureResponseDistance: { vertical: 240 },
+  gestureEnabled: true,
+};
+
 export const InternalStack = () => {
   const internalOptions = {
     ...ThemedStyles.defaultScreenOptions,
@@ -329,6 +335,11 @@ const AppStack = function () {
       <AppStackNav.Screen
         name="LicenseSelector"
         component={LicenseSelector}
+        options={hideHeader}
+      />
+      <AppStackNav.Screen
+        name="AccessSelector"
+        component={AccessSelector}
         options={hideHeader}
       />
       <AppStackNav.Screen
@@ -617,10 +628,7 @@ const RootStack = function (props) {
           <RootStackNav.Screen
             name="JoinMembershipScreen"
             component={JoinMembershipScreen}
-            options={{
-              gestureResponseDistance: { vertical: 240 },
-              gestureEnabled: true,
-            }}
+            options={modalOptions}
           />
           <RootStackNav.Screen
             name="BlockchainWalletModal"
@@ -629,12 +637,7 @@ const RootStack = function (props) {
           <RootStackNav.Screen
             name="PlusScreen"
             component={PlusScreen}
-            options={({ route }) => ({
-              gestureEnabled: false,
-              title: i18n.t(
-                `monetize.${route.params.pro ? 'pro' : 'plus'}Header`,
-              ),
-            })}
+            options={modalOptions}
           />
         </Fragment>
       ) : (
