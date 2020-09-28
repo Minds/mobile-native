@@ -6,14 +6,15 @@ import ThemedStyles from '../../../styles/ThemedStyles';
 interface LineChartProps {
   data: ChartData;
   width: number;
+  style?: object;
 }
 
-const LineChart = ({ data, width }: LineChartProps) => {
+const LineChart = ({ data, width, style }: LineChartProps) => {
   return (
     <RNLineChart
       data={data}
       width={width}
-      height={width * 0.7}
+      height={width * 0.6}
       withOuterLines={false}
       withHorizontalLabels={false}
       withScrollableDot
@@ -61,7 +62,10 @@ const LineChart = ({ data, width }: LineChartProps) => {
         },
         scrollableInfoOffset: 15,
       }}
-      style={styles.chart}
+      style={{
+        ...styles.chart,
+        ...style,
+      }}
     />
   );
 };

@@ -93,7 +93,12 @@ const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
   }
 
   const chartData = {
-    labels: data.map((d) => moment(d.date).format('MM/DD')),
+    labels:
+      data.length > 15
+        ? data.map((d, index) =>
+            index % 2 ? moment(d.date).format('MM/DD') : '',
+          )
+        : data.map((d) => moment(d.date).format('MM/DD')),
     datasets: [
       {
         data: data.map((d) => d.value),
@@ -120,7 +125,7 @@ const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
   return (
     <View
       style={[
-        { minWidth: width - theme.padding3x.padding * 2 },
+        { width: width - theme.padding3x.padding * 2 },
         theme.justifyCenter,
         theme.paddingTop3x,
       ]}>
@@ -218,7 +223,8 @@ const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
       {data.length > 1 && (
         <LineChart
           data={chartData}
-          width={width - theme.padding5x.padding * 2}
+          width={width - theme.padding3x.padding * 2}
+          style={theme.alignCenter}
         />
       )}
 
