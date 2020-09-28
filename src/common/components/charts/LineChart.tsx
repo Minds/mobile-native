@@ -13,7 +13,7 @@ const LineChart = ({ data, width }: LineChartProps) => {
     <RNLineChart
       data={data}
       width={width}
-      height={width * 0.8}
+      height={width * 0.7}
       withOuterLines={false}
       withHorizontalLabels={false}
       withScrollableDot

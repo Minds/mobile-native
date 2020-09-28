@@ -26,6 +26,7 @@ const Select = ({ label, onPress }: SelectProps) => {
         style={[
           theme.rowJustifySpaceBetween,
           theme.padding2x,
+          theme.borderPrimary,
           styles.container,
         ]}>
         <Text style={styles.label}>{label}</Text>
@@ -45,10 +46,6 @@ const styles = StyleSheet.create({
   container: {
     borderWidth: StyleSheet.hairlineWidth,
     backgroundColor: 'transparent',
-    borderColor: Platform.select({
-      android: 'rgba(255,255,255,0.40)',
-      ios: 'rgba(255,255,255,0.60)',
-    }),
     borderRadius: 3,
   },
   label: {},
