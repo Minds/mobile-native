@@ -1,28 +1,31 @@
 import React, { useEffect } from 'react';
 import { useLocalStore, useAsObservableSource } from 'mobx-react';
 import apiService from '../services/api.service';
-import { action, reaction } from 'mobx';
+import { reaction } from 'mobx';
 import storageService from '../../common/services/storage.service';
+
+const getCacheKey = (url: string, params: any) =>
+  `@minds:persist:${url}${params ? `?${JSON.stringify(params)}` : ''}`;
 
 const createStore = ({ url }) => ({
   loading: true,
   result: null,
   error: null,
-  async hydrate() {
+  async hydrate(params: any) {
     if (this.result) {
       return;
     }
 
     try {
-      const data = await storageService.getItem(`@minds:persist:${url}`);
+      const data = await storageService.getItem(getCacheKey(url, params));
       this.result = JSON.parse(data);
     } catch (e) {
       console.error(e);
     }
   },
-  persist() {
+  persist(params: any) {
     return storageService.setItem(
-      `@minds:persist:${url}`,
+      getCacheKey(url, params),
       JSON.stringify(this.result),
     );
   },
@@ -41,7 +44,7 @@ const createStore = ({ url }) => ({
     try {
       const result = await apiService.get(url, params, this);
       this.setResult(result);
-      this.persist();
+      this.persist(params);
     } catch (err) {
       console.log(err);
       this.setError(err);
@@ -59,7 +62,7 @@ export interface StateStore<T> {
   setLoading: (v: boolean) => void;
   setError: (v: any) => void;
   fetch: (object) => Promise<void>;
-  hydrate: () => Promise<any>;
+  hydrate: (params: any) => Promise<any>;
 }
 
 /**
@@ -81,9 +84,9 @@ export default function useApiFetch<T>(
 
   useEffect(() => {
     if (persist) {
-      store.hydrate();
+      store.hydrate(params);
     }
-  }, [persist, store]);
+  }, []);
 
   const observableParams = useAsObservableSource(params);
 
