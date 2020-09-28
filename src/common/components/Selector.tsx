@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { FlatList, StyleSheet, TextStyle } from 'react-native';
-import { Text } from 'react-native-elements';
+import { FlatList, StyleSheet, TextStyle, View } from 'react-native';
+import Modal from 'react-native-modal';
+import { Icon, Text } from 'react-native-elements';
 import { CommonStyle } from '../../styles/Common';
 import ThemedStyles from '../../styles/ThemedStyles';
-import ModalPicker from './ModalPicker';
 import Touchable from './Touchable';
 
 type PropsType = {
@@ -69,9 +69,7 @@ export default class Selector extends Component<PropsType> {
   };
 
   itemSelect = (item) => {
-    this.props.onItemSelect(
-      this.props.data.find((p) => this.props.keyExtractor(p) === item),
-    );
+    this.props.onItemSelect(item);
     this.close();
   };
 
@@ -92,17 +90,50 @@ export default class Selector extends Component<PropsType> {
   };
 
   render() {
+    const theme = ThemedStyles.style;
+
     const modal = (
-      <ModalPicker
-        onSelect={this.itemSelect}
-        onCancel={this.close}
-        show={this.state.show}
-        title={this.props.title}
-        valueExtractor={this.props.valueExtractor}
-        keyExtractor={this.props.keyExtractor}
-        value={this.state.selected}
-        items={this.props.data}
-      />
+      <Modal
+        isVisible={this.state.show}
+        backdropOpacity={this.props.backdropOpacity}>
+        <View style={[styles.container]}>
+          <Text
+            style={[
+              styles.fontColor,
+              theme.fontXXL,
+              styles.marginBottom,
+              theme.centered,
+            ]}>
+            {this.props.title}
+          </Text>
+          <View
+            style={[
+              theme.flexContainer,
+              theme.marginTop3x,
+              theme.paddingLeft2x,
+              styles.marginBottom,
+            ]}>
+            <FlatList
+              data={this.props.data}
+              renderItem={this.renderItem}
+              extraData={this.state.selected}
+              ref={this.flatListRef}
+              onScrollToIndexFailed={() =>
+                this.flatListRef.current?.scrollToEnd()
+              }
+            />
+          </View>
+          <Icon
+            raised
+            name="md-close"
+            type="ionicon"
+            color="black"
+            size={24}
+            containerStyle={styles.iconContainer}
+            onPress={this.close}
+          />
+        </View>
+      </Modal>
     );
 
     if (this.props.children) {
