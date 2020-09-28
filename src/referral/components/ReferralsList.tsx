@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react';
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Button } from 'react-native-elements';
 import CenteredLoading from '../../common/components/CenteredLoading';
@@ -21,34 +21,27 @@ const ReferralsList = observer(({ navigation }: ReferralsListProps) => {
     },
     [navigation],
   );
-  const _offsetRef = useRef<any>('');
+  const [offset, setOffset] = useState('');
   const opts = {
-    limit: 20,
-    offset: _offsetRef.current,
+    limit: 2,
+    offset,
   };
-  const { result, loading, fetchMore, error, fetch } = useApiFetch<Referral>(
+  const { result, loading, error, fetch } = useApiFetch<Referral>(
     'api/v2/referrals',
     opts,
-    false,
+    (newData: Referral, oldData: Referral) =>
+      ({
+        ...newData,
+        referrals: [
+          ...(oldData ? oldData.referrals : []),
+          ...newData.referrals,
+        ],
+      } as Referral),
   );
   const _onFetchMore = useCallback(
-    () =>
-      fetchMore(
-        opts,
-        (newData: Referral, oldData: Referral) =>
-          ({
-            ...newData,
-            referrals: [...oldData.referrals, ...newData.referrals],
-          } as Referral),
-      ),
-    [fetchMore, opts],
+    () => result && setOffset(result?.['load-next']),
+    [result],
   );
-
-  useEffect(() => {
-    if (result?.['load-next'] !== _offsetRef.current) {
-      _offsetRef.current = result?.['load-next'];
-    }
-  }, [result]);
 
   const _renderRow = useCallback(
     (referral: ReferralsEntity) => (

@@ -1,9 +1,13 @@
 import { reaction } from 'mobx';
 import { useAsObservableSource, useLocalStore } from 'mobx-react';
-import React, { useEffect } from 'react';
+import React from 'react';
 import apiService from '../services/api.service';
 
-const createStore = ({ url, method = 'get' }) => ({
+const createStore = ({
+  url,
+  updateState = (newData, _) => newData,
+  method = 'get',
+}) => ({
   loading: false,
   result: null,
   error: null,
@@ -21,21 +25,7 @@ const createStore = ({ url, method = 'get' }) => ({
     this.setError(null);
     try {
       const result = await apiService[method](url, data);
-      this.setResult(result);
-    } catch (err) {
-      console.log(err);
-      this.setError(err);
-    } finally {
-      this.setLoading(false);
-    }
-
-    return this.result;
-  },
-  async fetchMore(data = {}, updateState) {
-    this.setLoading(true);
-    this.setError(null);
-    try {
-      const result = await apiService.get(url, data);
+      console.log('result', result);
       this.setResult(updateState(result, this.result));
     } catch (err) {
       console.log(err);
@@ -56,10 +46,6 @@ export interface FetchStore<T> {
   setLoading: (v: boolean) => void;
   setError: (v: any) => void;
   fetch: (object?) => Promise<any>;
-  fetchMore: (
-    data: any,
-    updateState: (newData: any, oldData: any) => any,
-  ) => Promise<any>;
 }
 
 export interface PostStore<T> extends FetchStore<T> {
@@ -74,29 +60,21 @@ export interface PostStore<T> extends FetchStore<T> {
  *
  * @param url string
  * @param params object
- * @param reactToParams boolean
+ * @param updateState function
  */
 export default function useApiFetch<T>(
   url: string,
   params: object = {},
-  reactToParams: boolean = true,
+  updateState,
 ): FetchStore<T> {
-  const store: FetchStore<T> = useLocalStore(createStore, { url });
+  const store: FetchStore<T> = useLocalStore(createStore, { url, updateState });
   const observableParams = useAsObservableSource(params);
 
-  useEffect(() => {
-    if (!reactToParams) {
-      store.fetch(params);
-    }
-  }, []);
-
   React.useEffect(() => {
-    if (reactToParams) {
-      reaction(() => ({ ...observableParams }), store.fetch, {
-        fireImmediately: true,
-      });
-    }
-  }, [reactToParams, observableParams, store, url]);
+    reaction(() => ({ ...observableParams }), store.fetch, {
+      fireImmediately: true,
+    });
+  }, [observableParams, store, url]);
 
   return store;
 }
