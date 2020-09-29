@@ -513,7 +513,6 @@ exports[`blog list screen component should renders correctly 1`] = `
             Array [
               Object {
                 "borderBottomColor": "#EEE",
-                "borderTopWidth": 0.5,
                 "display": "flex",
                 "flexDirection": "row",
                 "paddingLeft": 0,
@@ -527,7 +526,6 @@ exports[`blog list screen component should renders correctly 1`] = `
                 "shadowRadius": 0.5,
               },
               Object {},
-              undefined,
             ]
           }
         >
