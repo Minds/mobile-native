@@ -2,7 +2,13 @@ import { useDimensions } from '@react-native-community/hooks';
 import { observer } from 'mobx-react';
 import moment from 'moment';
 import React, { useCallback, useState } from 'react';
-import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
+import {
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import LineChart from '../../../common/components/charts/LineChart';
 import Select from '../../../common/components/controls/Select';
@@ -29,10 +35,23 @@ const keyExtractor = (item) => item.id;
 const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
   const { width } = useDimensions().window;
   const theme = ThemedStyles.style;
-
   const [filters, setFilters] = useState<{ [k: string]: FiltersEntity }>({});
   const [timespan, setTimespan] = useState<TimespansEntity | undefined>();
   const [metric, setMetric] = useState<MetricsEntity | undefined>();
+  const _getFilterKey = useCallback(
+    (filter: FiltersEntity) =>
+      filters[filter.id] ? filters[filter.id].id : filter.options![0].id,
+    [filters],
+  );
+  const _getFilterLabel = useCallback(
+    (filter: FiltersEntity) =>
+      filters[filter.id] ? filters[filter.id].label : filter.options![0].label,
+    [filters],
+  );
+
+  /**
+   * Events
+   * */
   const _onFilterChange = useCallback(
     (id: string) => (value: any) => {
       setFilters({
@@ -50,6 +69,10 @@ const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
     (ts: MetricsEntity) => setMetric(ts),
     [],
   );
+
+  /**
+   * API Call
+   * */
   const { result, loading, error, fetch } = useApiFetch<{
     dashboard: Dashboard;
   }>(
@@ -92,20 +115,6 @@ const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
     dataError = e;
   }
 
-  const chartData = {
-    labels:
-      data.length > 15
-        ? data.map((d, index) =>
-            index % 2 ? moment(d.date).format('MM/DD') : '',
-          )
-        : data.map((d) => moment(d.date).format('MM/DD')),
-    datasets: [
-      {
-        data: data.map((d) => d.value),
-      },
-    ],
-  };
-
   if (error || dataError) {
     return (
       <Text
@@ -122,6 +131,34 @@ const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
     );
   }
 
+  const chartData = {
+    labels:
+      // If the data were large, show only the even indexes
+      data.length > 15
+        ? data.map((d, index) =>
+            index % 2 ? moment(d.date).format('MM/DD') : '',
+          )
+        : data.map((d) => moment(d.date).format('MM/DD')),
+    datasets: [
+      {
+        data: data.map((d) => d.value),
+      },
+    ],
+  };
+
+  const metricsKey = metric ? metric.id : result.dashboard.metric;
+  const metricsLabel = metric
+    ? metric.label
+    : result.dashboard.metrics!.find((p) => p.id === result.dashboard.metric)!
+        .label;
+
+  const timeSpanKey = timespan ? timespan.id : result.dashboard.timespan;
+  const timeSpanLabel = timespan
+    ? timespan.label
+    : result.dashboard.timespans!.find(
+        (p) => p.id === result.dashboard.timespan,
+      )!.label;
+
   return (
     <View
       style={[
@@ -135,16 +172,7 @@ const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
         valueExtractor={valueExtractor}
         keyExtractor={keyExtractor}>
         {(show) => (
-          <Select
-            onPress={() => show(metric ? metric.id : result.dashboard.metric)}
-            label={
-              metric
-                ? metric.label
-                : result.dashboard.metrics!.find(
-                    (p) => p.id === result.dashboard.metric,
-                  )!.label
-            }
-          />
+          <Select onPress={() => show(metricsKey)} label={metricsLabel} />
         )}
       </Selector>
 
@@ -164,20 +192,14 @@ const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
             <View style={theme.alignedCenterRow}>
               <TouchableOpacity
                 style={[theme.rowJustifyCenter, theme.alignCenter]}
-                onPress={() =>
-                  show(timespan ? timespan.id : result.dashboard.timespan)
-                }>
+                onPress={() => show(timeSpanKey)}>
                 <MIcon
                   name={'date-range'}
                   color={ThemedStyles.getColor('icon')}
                   size={18}
                 />
                 <Text style={[theme.colorSecondaryText, theme.marginLeft]}>
-                  {timespan
-                    ? timespan.label
-                    : result.dashboard.timespans!.find(
-                        (p) => p.id === result.dashboard.timespan,
-                      )!.label}
+                  {timeSpanLabel}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -196,17 +218,9 @@ const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
                 <View style={theme.alignedCenterRow}>
                   <TouchableOpacity
                     style={[theme.rowJustifyCenter, theme.alignCenter]}
-                    onPress={() =>
-                      show(
-                        filters[filter.id]
-                          ? filters[filter.id].id
-                          : filter.options![0].id,
-                      )
-                    }>
+                    onPress={() => show(_getFilterKey(filter))}>
                     <Text style={[theme.colorSecondaryText, theme.marginRight]}>
-                      {filters[filter.id]
-                        ? filters[filter.id].label
-                        : filter.options![0].label}
+                      {_getFilterLabel(filter)}
                     </Text>
                     <MIcon
                       name={'filter-alt'}
@@ -230,7 +244,7 @@ const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
 
       {loading && (
         <ActivityIndicator
-          style={[theme.positionAbsolute, { top: 200 }]}
+          style={[theme.positionAbsolute, styles.activityIndicator]}
           size={'large'}
         />
       )}
@@ -239,3 +253,7 @@ const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
 });
 
 export default DashboardTab;
+
+const styles = StyleSheet.create({
+  activityIndicator: { top: 200 },
+});
