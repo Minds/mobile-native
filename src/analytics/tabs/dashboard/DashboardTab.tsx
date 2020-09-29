@@ -90,7 +90,7 @@ const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
   if (!result && loading) {
     return (
       <ActivityIndicator
-        style={[theme.positionAbsolute, { top: 200 }]}
+        style={[theme.positionAbsolute, styles.activityIndicator]}
         size={'large'}
       />
     );
