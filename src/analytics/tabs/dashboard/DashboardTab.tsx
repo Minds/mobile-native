@@ -2,14 +2,9 @@ import { useDimensions } from '@react-native-community/hooks';
 import { observer } from 'mobx-react';
 import moment from 'moment';
 import React, { useCallback, useState } from 'react';
-import {
-  ActivityIndicator,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
+import ActivityIndicator from '../../../common/components/ActivityIndicator';
 import LineChart from '../../../common/components/charts/LineChart';
 import Select from '../../../common/components/controls/Select';
 import Selector from '../../../common/components/Selector';

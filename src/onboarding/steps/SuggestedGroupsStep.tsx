@@ -1,13 +1,7 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  ActivityIndicator,
-} from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { observer, inject } from 'mobx-react';
 
 import { CommonStyle as CS } from '../../styles/Common';
@@ -16,6 +10,7 @@ import i18n from '../../common/services/i18n.service';
 
 import OnboardingButtons from '../OnboardingButtons';
 import OnboardingBackButton from '../OnboardingBackButton';
+import ActivityIndicator from '../../common/components/ActivityIndicator';
 
 @inject('discovery', 'hashtag')
 @observer

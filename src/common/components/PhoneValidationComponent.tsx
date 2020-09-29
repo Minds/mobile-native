@@ -4,7 +4,6 @@ import {
   View,
   Text,
   TextInput,
-  ActivityIndicator,
   StyleSheet,
   Alert,
   TextInputProps,
@@ -28,6 +27,7 @@ import twoFactorAuthenticationService from '../services/two-factor-authenticatio
 import { BottomOptionsStoreType } from './BottomOptionPopup';
 import type WalletStore from '../../wallet/WalletStore';
 import type UserStore from '../../auth/UserStore';
+import ActivityIndicator from './ActivityIndicator';
 
 type propsType = {
   TFA?: any;

@@ -1,7 +1,7 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import { ActivityIndicator, View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
 import FastImage from 'react-native-fast-image';
 import { createImageProgress } from 'react-native-image-progress';
@@ -9,13 +9,12 @@ import ProgressCircle from 'react-native-progress/Circle';
 
 import IonIcon from 'react-native-vector-icons/Ionicons';
 
-import colors from '../styles/Colors';
-
 import Touchable from '../common/components/Touchable';
 import mediaProxyUrl from '../common/helpers/media-proxy-url';
 import domain from '../common/helpers/domain';
 import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
+import ActivityIndicator from '../common/components/ActivityIndicator';
 
 const ProgressFastImage = createImageProgress(FastImage);
 

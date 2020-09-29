@@ -1,19 +1,11 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import {
-  View,
-  Text,
-  TextInput,
-  ActivityIndicator,
-  StyleSheet,
-} from 'react-native';
+import { View, Text, TextInput, StyleSheet } from 'react-native';
 
 import { inject, observer } from 'mobx-react';
 
 import PhoneInput from 'react-native-phone-input';
-
-import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import TransparentButton from '../../common/components/TransparentButton';
 import NavNextButton from '../../common/components/NavNextButton';
@@ -23,6 +15,7 @@ import stylesheet from '../../onboarding/stylesheet';
 import { CommonStyle as CS } from '../../styles/Common';
 import i18n from '../../common/services/i18n.service';
 import logService from '../../common/services/log.service';
+import ActivityIndicator from '../../common/components/ActivityIndicator';
 
 @inject('user', 'wallet')
 @observer

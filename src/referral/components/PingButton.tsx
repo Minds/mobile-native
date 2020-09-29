@@ -1,8 +1,9 @@
 import { observer } from 'mobx-react';
 import React, { useCallback } from 'react';
-import { ActivityIndicator, StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import { showNotification } from '../../../AppMessages';
+import ActivityIndicator from '../../common/components/ActivityIndicator';
 import { useApiPost } from '../../common/hooks/useApiFetch';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -33,7 +34,7 @@ const PingButton = observer(
             );
           }
         }),
-      [post],
+      [post, username],
     );
 
     return (
