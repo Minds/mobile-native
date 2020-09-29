@@ -13,14 +13,17 @@ import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import { GOOGLE_PLAY_STORE } from '../../../config/Config';
 import i18n from '../../services/i18n.service';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
+import type UserModel from '../../../channel/UserModel';
 import ThemedStyles from '../../../styles/ThemedStyles';
+import GroupModel from '../../../groups/GroupModel';
 
 type PropsType = {
-  entity: ActivityModel;
+  entity: ActivityModel | UserModel | GroupModel;
   iconSize: number;
   hideText: boolean;
   fontStyle?: TextStyle | Array<TextStyle>;
   containerStyle?: ViewStyle | Array<ViewStyle>;
+  text?: string;
 };
 
 /**
@@ -97,13 +100,24 @@ export default class ExplicitOverlay extends PureComponent<PropsType> {
         />
         {!hideText && (
           <>
+            {!!this.props.text && (
+              <Text
+                style={[
+                  theme.colorPrimaryText,
+                  theme.paddingTop6x,
+                  theme.fontXL,
+                  theme.bold,
+                  fontStyle,
+                ]}>
+                {this.props.text}
+              </Text>
+            )}
             <Text
               style={[
                 theme.colorPrimaryText,
                 theme.paddingTop6x,
                 theme.fontXXL,
                 theme.bold,
-                fontStyle,
               ]}>
               NSFW
             </Text>
@@ -113,7 +127,6 @@ export default class ExplicitOverlay extends PureComponent<PropsType> {
                 theme.paddingVertical2x,
                 theme.marginBottom6x,
                 theme.fontXL,
-                fontStyle,
               ]}>
               {this.getLocalizedReasons()}
             </Text>

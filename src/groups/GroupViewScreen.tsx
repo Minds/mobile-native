@@ -25,7 +25,6 @@ import colors from '../styles/Colors';
 import Tags from '../common/components/Tags';
 import CaptureFab from '../capture/CaptureFab';
 import GroupHeader from './header/GroupHeader';
-import { CommonStyle as CS } from '../styles/Common';
 import CommentList from '../comments/CommentList';
 import CenteredLoading from '../common/components/CenteredLoading';
 import commentsStoreProvider from '../comments/CommentsStoreProvider';
@@ -37,6 +36,8 @@ import {
   FLAG_VIEW,
 } from '../common/Permissions';
 import ThemedStyles from '../styles/ThemedStyles';
+import sessionService from '../common/services/session.service';
+import ExplicitOverlay from '../common/components/explicit/ExplicitOverlay';
 
 /**
  * Groups view screen
@@ -167,6 +168,20 @@ export default class GroupViewScreen extends Component {
 
   headerRefHandler = (ref) => (this.headerRef = ref);
 
+  getBackIcon() {
+    return (
+      <SafeAreaView style={styles.gobackicon}>
+        <Icon
+          raised
+          color={colors.primary}
+          size={22}
+          name="arrow-back"
+          onPress={() => this.props.navigation.goBack()}
+        />
+      </SafeAreaView>
+    );
+  }
+
   getList() {
     const group = this.props.groupView;
 
@@ -179,15 +194,7 @@ export default class GroupViewScreen extends Component {
           ref={this.headerRefHandler}
           navigation={this.props.navigation}
         />
-        <SafeAreaView style={styles.gobackicon}>
-          <Icon
-            raised
-            color={colors.primary}
-            size={22}
-            name="arrow-back"
-            onPress={() => this.props.navigation.goBack()}
-          />
-        </SafeAreaView>
+        {this.getBackIcon()}
       </View>
     );
     switch (group.tab) {
@@ -235,7 +242,7 @@ export default class GroupViewScreen extends Component {
         return (
           <ScrollView>
             {header}
-            <View style={CS.padding2x}>
+            <View style={ThemedStyles.style.padding2x}>
               <Tags navigation={this.props.navigation}>{description}</Tags>
             </View>
           </ScrollView>
@@ -371,8 +378,31 @@ export default class GroupViewScreen extends Component {
       />
     ) : null;
 
+    const theme = ThemedStyles.style;
+
+    if (
+      !sessionService.getUser().mature &&
+      group &&
+      group.guid !== sessionService.guid &&
+      group.nsfw &&
+      group.nsfw.length > 0 &&
+      !group.mature_visibility
+    ) {
+      return (
+        <View
+          style={[
+            theme.backgroundSecondary,
+            theme.flexContainer,
+            theme.justifyCenter,
+          ]}>
+          <ExplicitOverlay entity={group} text={group.name} />
+          {this.getBackIcon()}
+        </View>
+      );
+    }
+
     return (
-      <View style={[CS.flexContainer, ThemedStyles.style.backgroundSecondary]}>
+      <View style={[theme.flexContainer, theme.backgroundSecondary]}>
         {showPosterFab && (
           <CaptureFab
             navigation={this.props.navigation}

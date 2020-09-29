@@ -245,6 +245,7 @@
     "report": "Report",
     "createFirstPost": "Create your first post",
     "blocked": "Channel Blocked",
+    "banned": "This channel is banned",
     "viewScheduled": "Scheduled",
     "edit": {
       "bio": "Bio",
