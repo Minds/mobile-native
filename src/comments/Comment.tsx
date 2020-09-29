@@ -184,7 +184,6 @@ class Comment extends Component {
     this.actionSheetRef.current && this.actionSheetRef.current.showActions();
   };
 
-
   /**
    * toggle mature
    */
