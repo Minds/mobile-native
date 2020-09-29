@@ -76,6 +76,11 @@ export interface PostStore<T> extends FetchStore<T> {
   post: (object?) => Promise<any>;
 }
 
+export interface FetchOptions {
+  updateState?: (newData: any, oldData: any) => any;
+  persist?: boolean;
+}
+
 /**
  * Fetch the api and return a stable StateStore with
  * loading state, result or error
@@ -84,21 +89,22 @@ export interface PostStore<T> extends FetchStore<T> {
  *
  * @param url string
  * @param params object
- * @param updateState function
- * @param persist boolean
+ * @param options object
  */
 export default function useApiFetch<T>(
   url: string,
   params: object = {},
-  updateState?,
-  persist: boolean = false,
+  options: FetchOptions = {},
 ): FetchStore<T> {
-  const store: FetchStore<T> = useLocalStore(createStore, { url, updateState });
+  const store: FetchStore<T> = useLocalStore(createStore, {
+    url,
+    updateState: options.updateState,
+  });
   const observableParams = useAsObservableSource(params);
 
   // if persist was true, hydrate on the first render
   useEffect(() => {
-    if (persist) {
+    if (options.persist) {
       store.hydrate(params);
     }
   }, []);

@@ -81,7 +81,9 @@ const TrendingTab = observer(({ navigation }: TrendingTabProps) => {
       metric: 'views',
       filter: 'platform::all,view_type::total,channel::all',
     },
-    true,
+    {
+      persist: true,
+    },
   );
 
   if (!result && loading) {
