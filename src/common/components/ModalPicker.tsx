@@ -1,21 +1,30 @@
 //@ts-nocheck
 import React, { PureComponent } from 'react';
-import { Picker, View, Text, Platform } from 'react-native';
-import { Icon } from 'react-native-elements';
+import { Picker, Platform, Text, View } from 'react-native';
 import Modal from 'react-native-modal';
-
-import { CommonStyle } from '../../styles/Common';
-import colors from '../../styles/Colors';
 import Button from '../../common/components/Button';
-import i18nService from '../services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
+import i18nService from '../services/i18n.service';
 
 const height = Platform.OS === 'ios' ? 300 : 150;
+
+interface ModalPickerProps {
+  onSelect: (item: any) => any;
+  onCancel: () => any;
+  show?: boolean;
+  title?: string;
+  valueExtractor?: Function;
+  keyExtractor?: Function;
+  valueField?: string;
+  labelField?: string;
+  value?: string;
+  items: any[];
+}
 
 /**
  * Modal picker component
  */
-export default class ModalPicker extends PureComponent {
+export default class ModalPicker extends PureComponent<ModalPickerProps> {
   state = {
     show: false,
     current: '',
@@ -41,7 +50,7 @@ export default class ModalPicker extends PureComponent {
     return null;
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentWillUpdate(prevProps) {
     if (this.props.value !== prevProps.value) {
       this.setState({ value: this.props.value });
     }
@@ -75,7 +84,19 @@ export default class ModalPicker extends PureComponent {
    * Render
    */
   render() {
-    const { title, labelField, valueField, items, props } = this.props;
+    const {
+      title,
+      labelField,
+      valueField,
+      items,
+      props,
+      valueExtractor,
+      keyExtractor,
+    } = this.props;
+
+    if (!keyExtractor && !valueField) {
+      throw new Error('Either keyExtractor or valueField must be provided');
+    }
 
     const CS = ThemedStyles.style;
 
@@ -106,8 +127,10 @@ export default class ModalPicker extends PureComponent {
               {items.map((item, i) => (
                 <Picker.Item
                   key={i}
-                  label={item[labelField]}
-                  value={item[valueField]}
+                  label={
+                    valueExtractor ? valueExtractor(item) : item[labelField]
+                  }
+                  value={keyExtractor ? keyExtractor(item) : item[valueField]}
                   style={[CS.fontM, CS.colorPrimaryText, CS.backgroundTertiary]}
                 />
               ))}

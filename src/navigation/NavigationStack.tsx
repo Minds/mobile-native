@@ -8,9 +8,11 @@ import { createSharedElementStackNavigator } from 'react-navigation-shared-eleme
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Platform, View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
+import AnalyticsScreen from '../analytics/AnalyticsScreen';
 
 import LoginScreen from '../auth/LoginScreen';
 import ForgotScreen from '../auth/ForgotScreen';
+import ReferralsScreen from '../referral/ReferralsScreen';
 import TabsScreen from '../tabs/TabsScreen';
 import NotificationsScreen from '../notifications/NotificationsScreen';
 import ActivityScreen from '../newsfeed/ActivityScreen';
@@ -242,6 +244,7 @@ export const InternalStack = () => {
         component={GroupsListScreen}
         options={{ title: i18n.t('discovery.groups') }}
       />
+      <AppStackNav.Screen name="Analytics" component={AnalyticsScreen} />
 
       <InternalStackNav.Screen name="Settings" component={SettingsScreen} />
     </InternalStackNav.Navigator>
@@ -497,6 +500,11 @@ const AppStack = function () {
         component={OptionsDrawer}
         options={{ title: i18n.t('settings.billing') }}
         initialParams={{ options: BillingScreenOptions }}
+      />
+      <AppStackNav.Screen
+        name="Referrals"
+        component={ReferralsScreen}
+        options={{ title: i18n.t('settings.referrals') }}
       />
       <AppStackNav.Screen
         name="Other"

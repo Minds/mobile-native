@@ -151,9 +151,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
   const startColor = backgroundColor + '00';
   const endColor = backgroundColor + 'FF';
 
-  const overlay = entity.shouldBeBlured() ? (
-    <ExplicitOverlay entity={entity} />
-  ) : null;
+  const showNSFW = entity.shouldBeBlured() && !entity.mature_visibility;
 
   const copyText = useCallback(() => {
     Clipboard.setString(
@@ -238,58 +236,63 @@ const ActivityFullScreen = observer((props: PropsType) => {
             theme.fullWidth,
             styles.content,
           ]}>
-          {hasMedia ? (
-            <View>
-              {lock}
-              <MediaView
-                ref={mediaRef}
-                entity={entity}
-                navigation={navigation}
-                autoHeight={true}
-              />
-            </View>
+          {showNSFW ? (
+            <ExplicitOverlay entity={entity} />
           ) : (
-            <>{lock}</>
-          )}
-          {overlay}
-          <TouchableOpacity
-            accessibilityLabel="touchableTextCopy"
-            onLongPress={copyText}
-            style={[theme.paddingHorizontal4x, theme.paddingVertical4x]}>
-            {showText && (
-              <>
-                <ExplicitText
-                  entity={entity}
-                  navigation={navigation}
-                  style={fontStyle}
-                  selectable={false}
-                  noTruncate={true}
-                />
-                <Translate
-                  ref={translateRef}
-                  entity={entity}
-                  style={fontStyle}
-                />
-              </>
-            )}
-          </TouchableOpacity>
-          {hasRemind && (
-            <View
-              style={[
-                styles.remind,
-                theme.margin2x,
-                theme.borderHair,
-                theme.borderBackgroundPrimary,
-              ]}>
-              <Activity
-                ref={remindRef}
-                hideTabs={true}
-                entity={entity.remind_object as ActivityModel}
-                navigation={navigation}
-                isReminded={true}
-                hydrateOnNav={true}
-              />
-            </View>
+            <>
+              {hasMedia ? (
+                <View>
+                  {lock}
+                  <MediaView
+                    ref={mediaRef}
+                    entity={entity}
+                    navigation={navigation}
+                    autoHeight={true}
+                  />
+                </View>
+              ) : (
+                <>{lock}</>
+              )}
+              <TouchableOpacity
+                accessibilityLabel="touchableTextCopy"
+                onLongPress={copyText}
+                style={[theme.paddingHorizontal4x, theme.paddingVertical4x]}>
+                {showText && (
+                  <>
+                    <ExplicitText
+                      entity={entity}
+                      navigation={navigation}
+                      style={fontStyle}
+                      selectable={false}
+                      noTruncate={true}
+                    />
+                    <Translate
+                      ref={translateRef}
+                      entity={entity}
+                      style={fontStyle}
+                    />
+                  </>
+                )}
+              </TouchableOpacity>
+              {hasRemind && (
+                <View
+                  style={[
+                    styles.remind,
+                    theme.margin2x,
+                    theme.borderHair,
+                    theme.borderBackgroundPrimary,
+                  ]}>
+                  <Activity
+                    ref={remindRef}
+                    hideTabs={true}
+                    entity={entity.remind_object as ActivityModel}
+                    navigation={navigation}
+                    isReminded={true}
+                    hydrateOnNav={true}
+                  />
+                </View>
+              )}
+            </>
           )}
         </ScrollView>
         {!store.contentFit && (
@@ -306,7 +309,6 @@ const ActivityFullScreen = observer((props: PropsType) => {
           onPressComment={onPressComment}
         />
       </View>
-      {overlay}
       <BottomOptionPopup
         backgroundColor={
           ThemedStyles.theme === 1

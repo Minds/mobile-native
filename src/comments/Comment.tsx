@@ -14,8 +14,9 @@ import {
   Dimensions,
 } from 'react-native';
 
+import Icon from 'react-native-vector-icons/SimpleLineIcons';
+
 import CommentEditor from './CommentEditor';
-import { CommonStyle } from '../styles/Common';
 import formatDate from '../common/helpers/date';
 import ThumbUpAction from '../newsfeed/activity/actions/ThumbUpAction';
 import ThumbDownAction from '../newsfeed/activity/actions/ThumbDownAction';
@@ -76,13 +77,12 @@ class Comment extends Component {
     const canReply = comment.can_reply && comment.parent_guid_l2 == 0;
 
     const actions = (
-      <View style={[CommonStyle.flexContainer]}>
+      <View style={[theme.flexContainer]}>
         <View style={styles.actionsContainer}>
           <Text style={[theme.fontM, theme.colorSecondaryText]}>
             {formatDate(comment.time_created, 'friendly')}
           </Text>
-          <View
-            style={[CommonStyle.flexContainer, CommonStyle.rowJustifyStart]}>
+          <View style={[theme.flexContainer, theme.rowJustifyStart]}>
             <ThumbUpAction entity={comment} size={16} />
             <ThumbDownAction entity={comment} size={16} />
             {canReply && (
@@ -128,33 +128,25 @@ class Comment extends Component {
                     channel={comment.ownerObj}
                     addSpace
                     iconSize={10}
-                  />
-                  <Text> </Text>
-                  {comment.description && (
-                    <Tags navigation={this.props.navigation}>
-                      {entities.decodeHTML(comment.description)}
-                    </Tags>
-                  )}
+                  />{' '}
+                  {comment.description &&
+                    (!comment.mature || comment.mature_visibility) && (
+                      <Tags navigation={this.props.navigation}>
+                        {entities.decodeHTML(comment.description)}
+                      </Tags>
+                    )}
                 </Text>
+              )}
+              {comment.mature && !comment.mature_visibility && (
+                <Icon
+                  name="lock"
+                  size={22}
+                  style={[theme.colorPrimaryText, styles.matureIcon]}
+                  onPress={this.toggleMature}
+                />
               )}
             </View>
           </DoubleTapTouch>
-
-          {comment.mature ? (
-            <ExplicitOverlay
-              entity={comment}
-              iconSize={35}
-              fontStyle={theme.fontS}
-              iconPosition="left"
-              closeContainerStyle={styles.matureCloseContainer}
-              containerStyle={[
-                styles.matureContainer,
-                CommonStyle.marginLeft,
-                CommonStyle.marginRight,
-                CommonStyle.borderRadius5x,
-              ]}
-            />
-          ) : null}
           {comment.hasMedia() && (
             <View style={styles.media}>
               <MediaView
@@ -190,6 +182,13 @@ class Comment extends Component {
 
   showActions = () => {
     this.actionSheetRef.current && this.actionSheetRef.current.showActions();
+  };
+
+  /**
+   * toggle mature
+   */
+  toggleMature = () => {
+    this.props.comment.toggleMatureVisibility();
   };
 
   /**
@@ -297,8 +296,10 @@ const styles = StyleSheet.create({
     marginLeft: -29,
     marginTop: 40,
   },
-  matureContainer: {
-    backgroundColor: '#9A9A9A',
+  matureIcon: {
+    position: 'absolute',
+    right: 10,
+    top: 8,
   },
   container: {
     padding: 8,

@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AnalyticsScreen component should render correctly 1`] = `
+<View>
+  <Text
+    style={
+      Array [
+        undefined,
+        undefined,
+        undefined,
+      ]
+    }
+  >
+    Analytics
+  </Text>
+  <TopbarTabbar
+    current="engagement"
+    onChange={[Function]}
+    tabs={
+      Array [
+        Object {
+          "id": "traffic",
+          "title": "Traffic",
+        },
+        Object {
+          "id": "engagement",
+          "title": "Engagement",
+        },
+        Object {
+          "id": "earnings",
+          "title": "Earnings",
+        },
+        Object {
+          "id": "trending",
+          "title": "Trending",
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      Array [
+        undefined,
+      ]
+    }
+  >
+    <Memo(wrappedComponent)
+      defaultMetric="votes_up"
+      key="engagement"
+      url="api/v2/analytics/dashboards/engagement"
+    />
+  </View>
+</View>
+`;

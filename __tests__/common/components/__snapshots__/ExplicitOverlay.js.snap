@@ -1,29 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Explicit overlay component renders correctly 1`] = `
-<TouchableOpacity
-  activeOpacity={1}
-  onPress={[Function]}
+<View
   style={
     Array [
+      undefined,
+      undefined,
       Object {
-        "bottom": 0,
-        "left": 0,
-        "position": "absolute",
-        "right": 0,
-        "top": 0,
-      },
-      Object {
-        "alignContent": "center",
-        "alignItems": "center",
-        "alignSelf": "center",
-        "justifyContent": "center",
-      },
-      Object {
-        "backgroundColor": "#777777",
-      },
-      Object {
-        "zIndex": 99999,
+        "minHeight": 400,
       },
       undefined,
     ]
@@ -31,86 +15,121 @@ exports[`Explicit overlay component renders correctly 1`] = `
 >
   <Icon
     allowFontScaling={false}
-    color="white"
-    name="explicit"
-    size={80}
-    style={
-      Object {
-        "elevation": 4,
-        "shadowColor": "black",
-        "shadowOffset": Object {
-          "height": 2,
-          "width": 0,
-        },
-        "shadowOpacity": 0.1,
-        "shadowRadius": 2,
-      }
-    }
+    name="lock"
+    onPress={[Function]}
+    size={55}
   />
   <Text
     style={
       Array [
-        Object {
-          "color": "#FFFFFF",
-        },
-        Object {
-          "elevation": 4,
-          "shadowColor": "black",
-          "shadowOffset": Object {
-            "height": 2,
-            "width": 0,
-          },
-          "shadowOpacity": 0.1,
-          "shadowRadius": 2,
-        },
+        undefined,
+        undefined,
+        undefined,
         undefined,
       ]
     }
   >
-    Confirm you are 18+
+    NSFW
   </Text>
-</TouchableOpacity>
+  <Text
+    style={
+      Array [
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+      ]
+    }
+  />
+  <TouchableOpacity
+    onPress={[Function]}
+    style={
+      Array [
+        undefined,
+        undefined,
+        undefined,
+      ]
+    }
+  >
+    <Text
+      style={
+        Array [
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+        ]
+      }
+    >
+      I'm over 18 years of age
+    </Text>
+  </TouchableOpacity>
+</View>
 `;
 
 exports[`Explicit overlay component should renders the etag 1`] = `
 <View
   style={
     Array [
-      Array [
-        Object {
-          "position": "absolute",
-          "right": 0,
-          "top": 0,
-        },
-        Object {
-          "paddingRight": 15,
-        },
-        Object {
-          "marginRight": 15,
-        },
-      ],
+      undefined,
+      undefined,
+      Object {
+        "minHeight": 400,
+      },
       undefined,
     ]
   }
 >
   <Icon
     allowFontScaling={false}
-    color="red"
-    name="explicit"
+    name="lock"
     onPress={[Function]}
-    size={32}
+    size={55}
+  />
+  <Text
     style={
-      Object {
-        "elevation": 4,
-        "shadowColor": "black",
-        "shadowOffset": Object {
-          "height": 2,
-          "width": 0,
-        },
-        "shadowOpacity": 0.1,
-        "shadowRadius": 2,
-      }
+      Array [
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+      ]
+    }
+  >
+    NSFW
+  </Text>
+  <Text
+    style={
+      Array [
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+      ]
     }
   />
+  <TouchableOpacity
+    onPress={[Function]}
+    style={
+      Array [
+        undefined,
+        undefined,
+        undefined,
+      ]
+    }
+  >
+    <Text
+      style={
+        Array [
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+        ]
+      }
+    >
+      I'm over 18 years of age
+    </Text>
+  </TouchableOpacity>
 </View>
 `;

@@ -10,6 +10,9 @@ import type {
 import sessionService from '../../common/services/session.service';
 import supportTiersService from '../../common/services/support-tiers.service';
 import type { SupportTiersType } from '../../wire/WireTypes';
+import NavigationService from '../../navigation/NavigationService';
+import i18n from '../../common/services/i18n.service';
+import { showNotification } from '../../../AppMessages';
 type InitialLoadParams = {
   entity?: { guid: string } | UserModel;
   guid?: string;
@@ -138,6 +141,18 @@ const createChannelStore = () => {
       }
     },
     /**
+     * Check and navigate back for banned channels
+     * @param channel
+     */
+    checkBanned(channel: UserModel): boolean {
+      if (channel.banned === 'yes') {
+        showNotification(i18n.t('channel.banned'), 'warning');
+        NavigationService.goBack();
+        return true;
+      }
+      return false;
+    },
+    /**
      * Load channel from existing entity
      * @param defaultChannel
      */
@@ -153,6 +168,7 @@ const createChannelStore = () => {
             )
           : await channelsService.get(defaultChannel.guid, defaultChannel);
       if (channel) {
+        if (this.checkBanned(channel)) return false;
         this.setChannel(channel);
         this.loadFeed();
         return channel;
@@ -165,6 +181,7 @@ const createChannelStore = () => {
      */
     async loadFromGuidOrUsername(guidOrUsername: string) {
       const channel = await channelsService.get(guidOrUsername);
+      if (this.checkBanned(channel)) return false;
       this.setChannel(channel);
       this.loadFeed();
       this.tiers =

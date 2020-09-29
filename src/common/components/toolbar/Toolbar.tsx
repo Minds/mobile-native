@@ -69,12 +69,7 @@ export default class Toolbar extends PureComponent {
     });
 
     return (
-      <View
-        style={[
-          styles.container,
-          calcStyle,
-          ThemedStyles.style.backgroundPrimary,
-        ]}>
+      <View style={[styles.container, calcStyle]}>
         <View style={styles.topbar}>{buttons}</View>
       </View>
     );
@@ -96,7 +91,6 @@ const styles = StyleSheet.create({
     shadowOffset: {
       height: StyleSheet.hairlineWidth,
     },
-    borderTopWidth: StyleSheet.hairlineWidth,
   },
   topbar: {
     flex: 1,
