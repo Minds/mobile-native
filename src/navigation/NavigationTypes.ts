@@ -85,6 +85,7 @@ export type AppStackParamList = {
   Account: {};
   Security: {};
   Billing: {};
+  Referrals: {};
   Other: {};
   SettingsEmail: {};
   MessengerSettingsScreen: {};

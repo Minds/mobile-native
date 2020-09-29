@@ -11,6 +11,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import LoginScreen from '../auth/LoginScreen';
 import ForgotScreen from '../auth/ForgotScreen';
+import ReferralsScreen from '../referral/ReferralsScreen';
 import TabsScreen from '../tabs/TabsScreen';
 import NotificationsScreen from '../notifications/NotificationsScreen';
 import ActivityScreen from '../newsfeed/ActivityScreen';
@@ -497,6 +498,11 @@ const AppStack = function () {
         component={OptionsDrawer}
         options={{ title: i18n.t('settings.billing') }}
         initialParams={{ options: BillingScreenOptions }}
+      />
+      <AppStackNav.Screen
+        name="Referrals"
+        component={ReferralsScreen}
+        options={{ title: i18n.t('settings.referrals') }}
       />
       <AppStackNav.Screen
         name="Other"
