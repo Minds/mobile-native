@@ -263,7 +263,6 @@ export default class Activity extends Component<PropsType> {
         onLongPress={this.copyText}
         onLayout={this.onLayout}
         testID="ActivityView">
-        <Pinned entity={this.props.entity} />
         {this.showOwner()}
 
         <View style={styles.bodyContainer}>
