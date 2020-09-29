@@ -242,13 +242,11 @@ export default class Activity extends Component<PropsType> {
       </View>
     );
 
-    const show_overlay =
+    const showNSFW =
       entity.shouldBeBlured() &&
       !this.props.parentMature &&
-      !(entity.shouldBeBlured() && this.props.parentMature);
-    const overlay = show_overlay ? (
-      <ExplicitOverlay entity={this.props.entity} />
-    ) : null;
+      !(entity.shouldBeBlured() && this.props.parentMature) &&
+      !entity.mature_visibility;
 
     const borderBottom = this.props.isReminded
       ? []
@@ -265,32 +263,37 @@ export default class Activity extends Component<PropsType> {
         testID="ActivityView">
         {this.showOwner()}
 
-        <View style={styles.bodyContainer}>
-          {lock}
-          {/* Shows ontop only for rich embed or reminds */}
-          {this.props.entity.perma_url || this.props.entity.remind_object
-            ? message
-            : undefined}
-          {this.showRemind()}
-          <MediaView
-            ref={(o) => {
-              this.mediaView = o;
-            }}
-            entity={entity}
-            onPress={this.navToActivity}
-            style={styles.media}
-            autoHeight={this.props.autoHeight}
-          />
-          {!(this.props.entity.perma_url || this.props.entity.remind_object)
-            ? message
-            : undefined}
-          {overlay}
-        </View>
-        {this.showActions()}
-        {this.renderScheduledMessage()}
-        {this.renderPendingMessage()}
-        {this.renderActivitySpacer()}
-        {/* {this.renderActivityMetrics()} */}
+        {showNSFW ? (
+          <ExplicitOverlay entity={this.props.entity} />
+        ) : (
+          <>
+            <View style={styles.bodyContainer}>
+              {lock}
+              {/* Shows ontop only for rich embed or reminds */}
+              {this.props.entity.perma_url || this.props.entity.remind_object
+                ? message
+                : undefined}
+              {this.showRemind()}
+              <MediaView
+                ref={(o) => {
+                  this.mediaView = o;
+                }}
+                entity={entity}
+                onPress={this.navToActivity}
+                style={styles.media}
+                autoHeight={this.props.autoHeight}
+              />
+              {!(this.props.entity.perma_url || this.props.entity.remind_object)
+                ? message
+                : undefined}
+            </View>
+            {this.showActions()}
+            {this.renderScheduledMessage()}
+            {this.renderPendingMessage()}
+            {this.renderActivitySpacer()}
+            {/* {this.renderActivityMetrics()} */}
+          </>
+        )}
       </TouchableOpacity>
     );
   }
