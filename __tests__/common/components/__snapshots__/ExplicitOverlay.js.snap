@@ -26,7 +26,6 @@ exports[`Explicit overlay component renders correctly 1`] = `
         undefined,
         undefined,
         undefined,
-        undefined,
       ]
     }
   >
@@ -35,7 +34,6 @@ exports[`Explicit overlay component renders correctly 1`] = `
   <Text
     style={
       Array [
-        undefined,
         undefined,
         undefined,
         undefined,
@@ -95,7 +93,6 @@ exports[`Explicit overlay component should renders the etag 1`] = `
         undefined,
         undefined,
         undefined,
-        undefined,
       ]
     }
   >
@@ -104,7 +101,6 @@ exports[`Explicit overlay component should renders the etag 1`] = `
   <Text
     style={
       Array [
-        undefined,
         undefined,
         undefined,
         undefined,

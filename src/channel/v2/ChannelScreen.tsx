@@ -12,6 +12,7 @@ import i18n from '../../common/services/i18n.service';
 import { useFocusEffect } from '@react-navigation/native';
 import BlockedChannel from '../../common/components/BlockedChannel';
 import sessionService from '../../common/services/session.service';
+import ExplicitOverlay from '../../common/components/explicit/ExplicitOverlay';
 
 type PropsType = {
   navigation: any;
@@ -55,6 +56,10 @@ const ChannelScreen = observer((props: PropsType) => {
 
   const renderActivity = store.filter === 'blogs' ? renderBlog : undefined;
 
+  if (!store.loaded) {
+    return <CenteredLoading />;
+  }
+
   if (store.channel?.blocked) {
     return (
       <BlockedChannel
@@ -65,8 +70,26 @@ const ChannelScreen = observer((props: PropsType) => {
     );
   }
 
-  if (!store.loaded) {
-    return <CenteredLoading />;
+  if (
+    !sessionService.getUser().mature &&
+    store.channel &&
+    store.channel.guid !== sessionService.guid &&
+    ((store.channel.nsfw && store.channel.nsfw.length > 0) ||
+      store.channel.is_mature) &&
+    !store.channel.mature_visibility
+  ) {
+    return (
+      <View style={[theme.backgroundSecondary, theme.flexContainer]}>
+        <ChannelHeader
+          store={store}
+          navigation={props.navigation}
+          hideButtons
+          hideDescription
+          hideTabs
+        />
+        <ExplicitOverlay entity={store.channel} />
+      </View>
+    );
   }
 
   const emptyMessage = store.channel!.isOwner() ? (
