@@ -10,7 +10,6 @@ import {
   Platform,
   // TextInput,
   TouchableOpacity as TouchableOpacityIos,
-  ActivityIndicator,
   KeyboardAvoidingView,
 } from 'react-native';
 
@@ -45,6 +44,7 @@ import {
   FlatList,
   TouchableOpacity as TouchableOpacityAndroid,
 } from 'react-native-gesture-handler';
+import ActivityIndicator from '../common/components/ActivityIndicator';
 
 const TouchableOpacity =
   Platform.OS === 'ios' ? TouchableOpacityIos : TouchableOpacityAndroid;

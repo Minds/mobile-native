@@ -6,7 +6,6 @@ import Tooltip from 'rne-modal-tooltip';
 import {
   PanResponder,
   StyleSheet,
-  ActivityIndicator,
   Text,
   TouchableWithoutFeedback,
   Platform,
@@ -37,6 +36,7 @@ import type CommentModel from '../comments/CommentModel';
 import type ActivityModel from '../newsfeed/ActivityModel';
 import featuresService from '../common/services/features.service';
 import { UserError } from '../common/UserError';
+import ActivityIndicator from '../common/components/ActivityIndicator';
 
 const isIOS = Platform.OS === 'ios';
 

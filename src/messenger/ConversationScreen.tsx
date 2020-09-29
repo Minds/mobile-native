@@ -11,7 +11,6 @@ import {
   KeyboardAvoidingView,
   Platform,
   Dimensions,
-  ActivityIndicator,
   SafeAreaView,
 } from 'react-native';
 
@@ -34,6 +33,7 @@ import TextInput from '../common/components/TextInput';
 import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
 import isIphoneX from '../common/helpers/isIphoneX';
+import ActivityIndicator from '../common/components/ActivityIndicator';
 
 const keyExtractor = (item) => item.rowKey;
 

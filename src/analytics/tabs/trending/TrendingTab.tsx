@@ -2,13 +2,13 @@ import { useDimensions } from '@react-native-community/hooks';
 import { observer } from 'mobx-react';
 import React, { useCallback } from 'react';
 import {
-  ActivityIndicator,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
+import ActivityIndicator from '../../../common/components/ActivityIndicator';
 import useApiFetch from '../../../common/hooks/useApiFetch';
 import i18n from '../../../common/services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';

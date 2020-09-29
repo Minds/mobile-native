@@ -1,12 +1,5 @@
 import React, { Component } from 'react';
-import {
-  FlatList,
-  View,
-  Text,
-  ActivityIndicator,
-  StyleProp,
-  ViewStyle,
-} from 'react-native';
+import { FlatList, View, Text, StyleProp, ViewStyle } from 'react-native';
 import { observer } from 'mobx-react';
 
 import Activity from '../../newsfeed/activity/Activity';
@@ -19,6 +12,7 @@ import i18n from '../services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import type FeedStore from '../stores/FeedStore';
 import type ActivityModel from '../../newsfeed/ActivityModel';
+import ActivityIndicator from './ActivityIndicator';
 
 type PropsType = {
   feedStore: FeedStore;

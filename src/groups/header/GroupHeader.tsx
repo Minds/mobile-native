@@ -1,7 +1,7 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import { Text, Image, View, ActivityIndicator, StyleSheet } from 'react-native';
+import { Text, Image, View, StyleSheet, Alert } from 'react-native';
 
 import { observer, inject } from 'mobx-react';
 import { debounce } from 'lodash';
@@ -17,10 +17,11 @@ import { CommonStyle } from '../../styles/Common';
 import CenteredLoading from '../../common/components/CenteredLoading';
 import SearchView from '../../common/components/SearchView';
 import i18n from '../../common/services/i18n.service';
-import { FLAG_JOIN, FLAG_JOIN_GATHERING } from '../../common/Permissions';
+import { FLAG_JOIN } from '../../common/Permissions';
 import Button from '../../common/components/Button';
 import ThemedStyles from '../../styles/ThemedStyles';
 import ShareService from '../../share/ShareService';
+import ActivityIndicator from '../../common/components/ActivityIndicator';
 
 /**
  * Group Header

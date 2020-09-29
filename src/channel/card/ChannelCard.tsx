@@ -1,21 +1,10 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import {
-  Text,
-  Image,
-  View,
-  ActivityIndicator,
-  Button,
-  StyleSheet,
-} from 'react-native';
+import { Text, Image, View, StyleSheet } from 'react-native';
 
-import { observer, inject } from 'mobx-react';
+import { observer } from 'mobx-react';
 
-import Icon from 'react-native-vector-icons/Ionicons';
-import { MINDS_CDN_URI } from '../../config/Config';
-import channelService from '../ChannelService';
-import abbrev from '../../common/helpers/abbrev';
 import FastImage from 'react-native-fast-image';
 
 /**

@@ -4,18 +4,8 @@ import React, { Component } from 'react';
 import {
   View,
   StyleSheet,
-  ScrollView,
   Dimensions,
-  Image,
-  TextInput,
-  Keyboard,
-  TouchableOpacity,
-  TouchableHighlight,
-  FlatList,
   Text,
-  Platform,
-  KeyboardAvoidingView,
-  ActivityIndicator,
   SafeAreaView,
   Alert,
 } from 'react-native';
@@ -28,7 +18,6 @@ import { inject, observer } from 'mobx-react';
 
 import FastImage from 'react-native-fast-image';
 import { Icon } from 'react-native-elements';
-import IonIcon from 'react-native-vector-icons/Ionicons';
 
 import BlogViewHTML from './BlogViewHTML';
 import OwnerBlock from '../newsfeed/activity/OwnerBlock';
@@ -38,7 +27,6 @@ import colors from '../styles/Colors';
 import ThumbUpAction from '../newsfeed/activity/actions/ThumbUpAction';
 import ThumbDownAction from '../newsfeed/activity/actions/ThumbDownAction';
 import RemindAction from '../newsfeed/activity/actions/RemindAction';
-import CommentsAction from '../newsfeed/activity/actions/CommentsAction';
 import shareService from '../share/ShareService';
 import commentsStoreProvider from '../comments/CommentsStoreProvider';
 import CommentList from '../comments/CommentList';
@@ -48,6 +36,7 @@ import i18n from '../common/services/i18n.service';
 import featuresService from '../common/services/features.service';
 import { FLAG_VIEW } from '../common/Permissions';
 import ThemedStyles from '../styles/ThemedStyles';
+import { ComponentsStyle } from '../styles/Components';
 
 /**
  * Blog View Screen
