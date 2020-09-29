@@ -29,7 +29,7 @@ const TokensChart = observer(({ timespan }: PropsType) => {
     params: {
       metric: 'token_balance',
       timespan,
-    }
+    },
   });
 
   if (store.loading) {

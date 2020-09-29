@@ -74,17 +74,14 @@ const TrendingTab = observer(({ navigation }: TrendingTabProps) => {
   );
   const { result, error, loading, fetch } = useApiFetch<{
     dashboard: Dashboard;
-  }>(
-    'api/v2/analytics/dashboards/trending',
-    {
-      params: {
-        timespan: '30d',
-        metric: 'views',
-        filter: 'platform::all,view_type::total,channel::all',
-      },
-      persist: true,
+  }>('api/v2/analytics/dashboards/trending', {
+    params: {
+      timespan: '30d',
+      metric: 'views',
+      filter: 'platform::all,view_type::total,channel::all',
     },
-  );
+    persist: true,
+  });
 
   if (!result && loading) {
     return (
