@@ -1,7 +1,11 @@
 import { reaction } from 'mobx';
 import { useAsObservableSource, useLocalStore } from 'mobx-react';
-import React from 'react';
+import React, { useEffect } from 'react';
+import storageService from '../../common/services/storage.service';
 import apiService from '../services/api.service';
+
+const getCacheKey = (url: string, params: any) =>
+  `@minds:persist:${url}${params ? `?${JSON.stringify(params)}` : ''}`;
 
 const createStore = ({
   url,
@@ -11,6 +15,24 @@ const createStore = ({
   loading: false,
   result: null,
   error: null,
+  async hydrate(params: any) {
+    if (this.result) {
+      return;
+    }
+
+    try {
+      const data = await storageService.getItem(getCacheKey(url, params));
+      this.result = JSON.parse(data);
+    } catch (e) {
+      console.error(e);
+    }
+  },
+  persist(params: any) {
+    return storageService.setItem(
+      getCacheKey(url, params),
+      JSON.stringify(this.result),
+    );
+  },
   setResult(v: any) {
     this.result = v;
   },
@@ -25,8 +47,9 @@ const createStore = ({
     this.setError(null);
     try {
       const result = await apiService[method](url, data);
-      console.log('result', result);
-      this.setResult(updateState(result, this.result));
+      const state = updateState(result, this.result);
+      this.setResult(state);
+      this.persist(state);
     } catch (err) {
       console.log(err);
       this.setError(err);
@@ -46,10 +69,17 @@ export interface FetchStore<T> {
   setLoading: (v: boolean) => void;
   setError: (v: any) => void;
   fetch: (object?) => Promise<any>;
+  hydrate: (params: any) => Promise<any>;
 }
 
 export interface PostStore<T> extends FetchStore<T> {
   post: (object?) => Promise<any>;
+}
+
+export interface FetchOptions {
+  updateState?: (newData: any, oldData: any) => any;
+  params?: object;
+  persist?: boolean;
 }
 
 /**
@@ -59,16 +89,24 @@ export interface PostStore<T> extends FetchStore<T> {
  * If the parameters changes it automatically cancel the previous call and fetch it again
  *
  * @param url string
- * @param params object
- * @param updateState function
+ * @param options object
  */
 export default function useApiFetch<T>(
   url: string,
-  params: object = {},
-  updateState?,
+  options: FetchOptions = {},
 ): FetchStore<T> {
-  const store: FetchStore<T> = useLocalStore(createStore, { url, updateState });
-  const observableParams = useAsObservableSource(params);
+  const store: FetchStore<T> = useLocalStore(createStore, {
+    url,
+    updateState: options.updateState,
+  });
+  const observableParams = useAsObservableSource(options.params);
+
+  // if persist was true, hydrate on the first render
+  useEffect(() => {
+    if (options.persist) {
+      store.hydrate(options.params);
+    }
+  }, []);
 
   React.useEffect(() => {
     reaction(() => ({ ...observableParams }), store.fetch, {

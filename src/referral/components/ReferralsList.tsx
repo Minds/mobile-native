@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Button } from 'react-native-elements';
 import CenteredLoading from '../../common/components/CenteredLoading';
@@ -28,15 +28,17 @@ const ReferralsList = observer(({ navigation }: ReferralsListProps) => {
   };
   const { result, loading, error, fetch } = useApiFetch<Referral>(
     'api/v2/referrals',
-    opts,
-    (newData: Referral, oldData: Referral) =>
-      ({
-        ...newData,
-        referrals: [
-          ...(oldData ? oldData.referrals : []),
-          ...newData.referrals,
-        ],
-      } as Referral),
+    {
+      params: opts,
+      updateState: (newData: Referral, oldData: Referral) =>
+        ({
+          ...newData,
+          referrals: [
+            ...(oldData ? oldData.referrals : []),
+            ...newData.referrals,
+          ],
+        } as Referral),
+    },
   );
   const _onFetchMore = useCallback(
     () => result && setOffset(result?.['load-next']),
