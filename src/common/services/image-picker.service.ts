@@ -108,9 +108,7 @@ class ImagePickerService {
     // check permissions
     await this.checkGalleryPermissions();
 
-    const opt = this.buildOptions(type, true);
-
-    opt.cropperCircleOverlay = cropperCircleOverlay;
+    const opt = this.buildOptions(type, true, cropperCircleOverlay);
 
     return this.returnCustom(ImagePicker.openPicker(opt));
   }
@@ -163,11 +161,16 @@ class ImagePickerService {
    * Build the options
    * @param {string} type
    */
-  buildOptions(type: mediaType, crop: boolean = true): Options {
+  buildOptions(
+    type: mediaType,
+    crop: boolean = true,
+    cropperCircleOverlay: boolean,
+  ): Options {
     return {
       mediaType: type,
       cropping: crop && type !== 'video',
       showCropGuidelines: false,
+      cropperCircleOverlay,
     };
   }
 }
