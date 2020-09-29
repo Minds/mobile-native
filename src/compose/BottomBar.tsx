@@ -1,12 +1,15 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import FIcon from 'react-native-vector-icons/Feather';
 import Icon from 'react-native-vector-icons/Ionicons';
-import IconM from 'react-native-vector-icons/MaterialCommunityIcons';
+import IconMC from 'react-native-vector-icons/MaterialCommunityIcons';
+import IconM from 'react-native-vector-icons/MaterialIcons';
 import ThemedStyles from '../styles/ThemedStyles';
 
 export default function BottomBar(props) {
   const theme = ThemedStyles.style;
+  const navigation = useNavigation();
   const iconStyle = [
     theme.padding3x,
     ThemedStyles.theme ? theme.colorWhite : theme.colorIcon,
@@ -31,8 +34,21 @@ export default function BottomBar(props) {
         style={iconStyle}
         onPress={() => props.store.setModePhoto(false)}
       />
+      <IconM
+        name="attach-money"
+        size={27}
+        style={iconStyle}
+        onPress={() =>
+          navigation.navigate('MonetizeSelector', { store: props.store })
+        }
+      />
       <View style={theme.flexContainer} />
-      <IconM name="cog" size={27} style={iconStyle} onPress={props.onOptions} />
+      <IconMC
+        name="cog"
+        size={27}
+        style={iconStyle}
+        onPress={props.onOptions}
+      />
     </View>
   );
 }
