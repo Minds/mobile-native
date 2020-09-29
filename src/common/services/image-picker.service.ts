@@ -164,7 +164,7 @@ class ImagePickerService {
   buildOptions(
     type: mediaType,
     crop: boolean = true,
-    cropperCircleOverlay: boolean,
+    cropperCircleOverlay: boolean = false,
   ): Options {
     return {
       mediaType: type,
