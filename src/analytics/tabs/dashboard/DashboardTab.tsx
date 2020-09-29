@@ -76,11 +76,13 @@ const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
   const { result, loading, error, fetch } = useApiFetch<{
     dashboard: Dashboard;
   }>(url, {
-    timespan: timespan ? timespan.id : '30d',
-    metric: metric ? metric.id : defaultMetric,
-    filter: Object.keys(filters)
-      .map((key) => `${key}::${filters[key]}`)
-      .join(','),
+    params: {
+      timespan: timespan ? timespan.id : '30d',
+      metric: metric ? metric.id : defaultMetric,
+      filter: Object.keys(filters)
+        .map((key) => `${key}::${filters[key]}`)
+        .join(','),
+    },
   });
 
   if (!result && loading) {

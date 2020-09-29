@@ -26,8 +26,10 @@ const TokensChart = observer(({ timespan }: PropsType) => {
     data;
 
   const store = useApiFetch<any>('api/v2/analytics/dashboards/token', {
-    metric: 'token_balance',
-    timespan,
+    params: {
+      metric: 'token_balance',
+      timespan,
+    }
   });
 
   if (store.loading) {

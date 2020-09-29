@@ -28,8 +28,8 @@ const ReferralsList = observer(({ navigation }: ReferralsListProps) => {
   };
   const { result, loading, error, fetch } = useApiFetch<Referral>(
     'api/v2/referrals',
-    opts,
     {
+      params: opts,
       updateState: (newData: Referral, oldData: Referral) =>
         ({
           ...newData,

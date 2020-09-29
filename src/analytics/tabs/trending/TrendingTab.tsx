@@ -77,11 +77,11 @@ const TrendingTab = observer(({ navigation }: TrendingTabProps) => {
   }>(
     'api/v2/analytics/dashboards/trending',
     {
-      timespan: '30d',
-      metric: 'views',
-      filter: 'platform::all,view_type::total,channel::all',
-    },
-    {
+      params: {
+        timespan: '30d',
+        metric: 'views',
+        filter: 'platform::all,view_type::total,channel::all',
+      },
       persist: true,
     },
   );
