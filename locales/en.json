@@ -245,6 +245,7 @@
     "report": "Report",
     "createFirstPost": "Create your first post",
     "blocked": "Channel Blocked",
+    "banned": "This channel is banned",
     "viewScheduled": "Scheduled",
     "edit": {
       "bio": "Bio",
@@ -527,6 +528,7 @@
     "darkMode": "Dark mode",
     "lightMode": "Light mode",
     "other": "Other",
+    "referrals": "Referrals",
     "account": "Account",
     "security": "Security",
     "billing": "Billing",
@@ -896,9 +898,26 @@
       "hasTokens": "Accept Tokens"
     }
   },
-  "add": "Add",
+  "referrals": {
+    "title": "Earn tokens by inviting your friends to Minds",
+    "sendLinkToFriends": "Send this link to your friends to earn tokens for referrals",
+    "codeSuffixLabel": "You can also get referrals by adding this code to the end of any Minds link you share",
+    "moreWaysToShare": "More ways to share",
+    "myReferrals": "My Referrals",
+    "noReferrals": "You don't have any referrals yet.",
+    "signedUpOn": "Signed up on",
+    "pinged": "You pinged @{{username}}",
+    "joinMeOnMinds": "Join me on Minds",
+
+    "user": "User",
+    "status": "Status",
+    "rewardsSignup": "Rewards Signup",
+
+    "description": "If your friend signs up for Minds within 24 hours of clicking the link you shared with them, they’ll be added to your pending referrals. Once they sign up for the rewards program by setting up their Minds wallet, the referral is complete and you’ll both get +1 added to your contribution scores!"
+  },
+  "add":"Add",
   "downloading": "Downloading",
-  "confirm18": "Confirm you are 18+",
+  "confirm18": "I'm over 18 years of age",
   "postCantBeShown": "This post can't be shown on apps installed via the Play Store.",
   "readMore": "Read More",
   "showLess": "Show less",
@@ -933,6 +952,7 @@
   "accept": "Accept",
   "confirmNoUndo": "Are you sure? There's no UNDO.",
   "confirmMessage": "Are you sure?",
+  "loadMore": "Load more",
   "cantLoadMore": "Can't load more",
   "cantLoad": "Can't load",
   "conversation": "Conversation",

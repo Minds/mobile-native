@@ -32,6 +32,9 @@ import AboutTab from './tabs/AboutTab';
 type PropsType = {
   store: ChannelStoreType;
   navigation: any;
+  hideButtons?: boolean;
+  hideDescription?: boolean;
+  hideTabs?: boolean;
 };
 
 const bannerAspectRatio = 2.9;
@@ -136,12 +139,14 @@ const ChannelHeader = observer((props: PropsType) => {
             </View>
           ) : null}
         </View>
-        <ChannelButtons
-          store={props.store}
-          onEditPress={() =>
-            props.navigation.push('EditChannelScreen', { store: props.store })
-          }
-        />
+        {!props.hideButtons && (
+          <ChannelButtons
+            store={props.store}
+            onEditPress={() =>
+              props.navigation.push('EditChannelScreen', { store: props.store })
+            }
+          />
+        )}
         {props.store.uploading && props.store.bannerProgress ? (
           <View style={styles.tapOverlayView}>
             <Progress.Pie progress={props.store.bannerProgress} size={36} />
@@ -197,16 +202,22 @@ const ChannelHeader = observer((props: PropsType) => {
             <Text style={[theme.fontL, theme.paddingLeft]}>{channel.city}</Text>
           </View>
         )}
-        <View style={theme.paddingTop2x}>
-          <ChannelDescription channel={channel} />
-        </View>
+        {!props.hideDescription && (
+          <View style={theme.paddingTop2x}>
+            <ChannelDescription channel={channel} />
+          </View>
+        )}
       </View>
-      <TopbarTabbar
-        tabs={tabs}
-        onChange={props.store.setTab}
-        current={props.store.tab}
-      />
-      {screen()}
+      {!props.hideTabs && (
+        <>
+          <TopbarTabbar
+            tabs={tabs}
+            onChange={props.store.setTab}
+            current={props.store.tab}
+          />
+          {screen()}
+        </>
+      )}
     </View>
   );
 });
