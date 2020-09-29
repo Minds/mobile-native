@@ -55,7 +55,8 @@ const AnalyticsScreen = observer(({ navigation }: AnalyticsScreenProps) => {
   };
 
   return (
-    <View style={theme.padding4x}>
+    <View style={theme.flexContainer}>
+      <Text style={[theme.padding4x, theme.titleText, theme.paddingBottom2x]}>
       <Text style={[theme.titleText, theme.paddingBottom2x]}>
         {i18n.t('analytics.title')}
       </Text>
