@@ -29,7 +29,6 @@ import BottomOptionPopup, {
 import CommentList from '../../../comments/CommentList';
 import CommentsStore from '../../../comments/CommentsStore';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
-import isIphoneX from '../../../common/helpers/isIphoneX';
 import sessionService from '../../../common/services/session.service';
 import videoPlayerService from '../../../common/services/video-player.service';
 import ExplicitOverlay from '../../../common/components/explicit/ExplicitOverlay';
@@ -88,6 +87,10 @@ const ActivityFullScreen = observer((props: PropsType) => {
   const { current: cleanTop } = useRef({
     paddingTop: insets.top || 10,
   });
+  const buttonPopUpHeight = window.height * 0.85;
+
+  // the offset of the keyboard avoiding view with the top of the screen
+  const keyboardAvoidOffset = buttonPopUpHeight - 90 - window.height;
 
   const onPressComment = useCallback(() => {
     bottomStore.show(
@@ -98,12 +101,19 @@ const ActivityFullScreen = observer((props: PropsType) => {
         scrollToBottom={true}
         store={store.comments}
         navigation={navigation}
-        keyboardVerticalOffset={isIphoneX ? -225 : -185}
+        keyboardVerticalOffset={keyboardAvoidOffset}
         // onInputFocus={this.onFocus}
         route={route}
       />,
     );
-  }, [bottomStore, entity, navigation, route, store]);
+  }, [
+    bottomStore,
+    entity,
+    keyboardAvoidOffset,
+    navigation,
+    route,
+    store.comments,
+  ]);
 
   useEffect(() => {
     if (focused) {
@@ -177,8 +187,6 @@ const ActivityFullScreen = observer((props: PropsType) => {
       }
     }
   }, [translateRef]);
-
-  let buttonPopUpHeight = window.height * 0.85;
 
   const LockCmp = featuresService.has('paywall-2020') ? LockV2 : Lock;
 
