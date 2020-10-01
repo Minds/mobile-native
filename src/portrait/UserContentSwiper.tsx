@@ -38,6 +38,8 @@ const metadataService = new MetadataService();
 metadataService.setSource('portrait').setMedium('feed');
 
 const { width, height } = Dimensions.get('window');
+const panProps = { enabled: false };
+const clamp = { next: 0, prev: 0 };
 
 /**
  * User content swiper
@@ -77,8 +79,8 @@ const UserContentSwiper = observer((props: PropsType) => {
 
   const stackConfig: iPageInterpolation = {
     opacity: {
-      inputRange: [-1, 0, 1],
-      outputRange: [0, 1, 0],
+      inputRange: [-1, -0.5, 0, 0.5, 1],
+      outputRange: [0, 1, 1, 1, 0],
     },
   };
 
@@ -97,18 +99,18 @@ const UserContentSwiper = observer((props: PropsType) => {
   }, [store]);
 
   const pages = activities.map((e, i) => (
-    <ActivityFullScreen key={i} entity={e} />
+    <ActivityFullScreen key={i} entity={e} forceAutoplay />
   ));
 
   return (
     <PagerProvider activeIndex={store.index} onChange={store.setIndex}>
       <View>
         <Pager
-          adjacentChildOffset={0}
+          adjacentChildOffset={1}
           maxIndex={activities.length - 1}
-          panProps={{ enabled: false }}
+          panProps={panProps}
           style={pagerStyle}
-          clamp={{ next: 0, prev: 0 }}
+          clamp={clamp}
           pageInterpolation={stackConfig}
           initialIndex={store.index}>
           {pages}
@@ -129,8 +131,8 @@ const UserContentSwiper = observer((props: PropsType) => {
 
 export default UserContentSwiper;
 
-const touchableHeight = height * 0.25;
-const touchableTop = height * 0.375;
+const touchableHeight = height * 0.34;
+const touchableTop = height * 0.33;
 
 const styles = StyleSheet.create({
   touchLeft: {
@@ -138,13 +140,13 @@ const styles = StyleSheet.create({
     top: touchableTop,
     height: touchableHeight,
     left: 0,
-    width: 55,
+    width: '42%',
   },
   touchRight: {
     position: 'absolute',
     top: touchableTop,
     height: touchableHeight,
     right: 0,
-    width: 55,
+    width: '42%',
   },
 });

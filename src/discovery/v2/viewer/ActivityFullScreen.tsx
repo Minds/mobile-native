@@ -46,6 +46,7 @@ const TEXT_MEDIUM_THRESHOLD = 300;
 
 type PropsType = {
   entity: ActivityModel;
+  forceAutoplay?: boolean;
 };
 
 const ActivityFullScreen = observer((props: PropsType) => {
@@ -122,13 +123,16 @@ const ActivityFullScreen = observer((props: PropsType) => {
       // if we have some video playing we pause it and reset the current video
       videoPlayerService.setCurrent(null);
 
-      if (user.plus && !user.disable_autoplay_videos && mediaRef.current) {
+      if (
+        ((user.plus && !user.disable_autoplay_videos) || props.forceAutoplay) &&
+        mediaRef.current
+      ) {
         mediaRef.current.playVideo(false);
       }
     } else {
       mediaRef.current?.pauseVideo();
     }
-  }, [focused]);
+  }, [focused, props.forceAutoplay]);
 
   useEffect(() => {
     let openComentsTimeOut: NodeJS.Timeout | null = null;
