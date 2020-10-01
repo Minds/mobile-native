@@ -78,6 +78,10 @@ function createPortraitStore() {
         this.loading = false;
       }
     },
+    reset() {
+      this.items = [];
+      this.loading = false;
+    },
   };
 }
 

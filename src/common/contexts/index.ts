@@ -58,7 +58,7 @@ export function createLegacyStores() {
   sessionService.onLogout(() => {
     for (const id in stores) {
       if (stores[id].reset) {
-        logService.info(`Reseting store ${id}`);
+        logService.info(`Reseting legacy store ${id}`);
         stores[id].reset();
       }
     }

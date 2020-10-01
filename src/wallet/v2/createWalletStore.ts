@@ -19,80 +19,84 @@ import BlockchainApiService from '../../blockchain/BlockchainApiService';
 import { ChartTimespanType } from './currency-tabs/TokensChart';
 import sessionService from '../../common/services/session.service';
 
+const defaultStripeDetails = <StripeDetails>{
+  hasAccount: false,
+  hasBank: false,
+  pendingBalanceSplit: 0,
+  totalPaidOutSplit: 0,
+  verified: false,
+  accountNumber: '',
+  bankAccount: null,
+  city: '',
+  country: 'US',
+  firstName: '',
+  lastName: '',
+  postCode: '',
+  routingNumber: null,
+  ssn: null,
+  state: '',
+  street: '',
+  dob: '',
+  phoneNumber: '',
+  personalIdNumber: '',
+};
+
+const defaultWallet = <Wallet>{
+  loaded: false,
+  tokens: {
+    label: i18n.t('tokens'),
+    unit: 'tokens',
+    balance: 0,
+    address: null,
+  },
+  offchain: {
+    label: i18n.t('blockchain.offchain'),
+    unit: 'tokens',
+    balance: 0,
+    address: 'offchain',
+  },
+  onchain: {
+    label: i18n.t('blockchain.onchain'),
+    unit: 'tokens',
+    balance: 0, //eth balance
+    address: null,
+  },
+  receiver: {
+    label: i18n.t('blockchain.receiver'),
+    unit: 'tokens',
+    balance: 0,
+    address: null,
+  },
+  cash: {
+    label: i18n.t('wallet.cash'),
+    unit: 'cash',
+    balance: 0,
+    address: null,
+  },
+  eth: {
+    label: i18n.t('ether'),
+    unit: 'eth',
+    balance: 0,
+    address: null,
+  },
+  btc: {
+    label: i18n.t('bitcoin'),
+    unit: 'btc',
+    balance: 0,
+    address: null,
+  },
+  limits: {
+    wire: 0,
+  },
+};
+
 const createWalletStore = () => ({
   currency: 'tokens' as CurrencyType,
   initialTab: <TokensOptions | undefined>undefined,
   chart: <ChartTimespanType>'7d',
-  stripeDetails: <StripeDetails>{
-    hasAccount: false,
-    hasBank: false,
-    pendingBalanceSplit: 0,
-    totalPaidOutSplit: 0,
-    verified: false,
-    accountNumber: '',
-    bankAccount: null,
-    city: '',
-    country: 'US',
-    firstName: '',
-    lastName: '',
-    postCode: '',
-    routingNumber: null,
-    ssn: null,
-    state: '',
-    street: '',
-    dob: '',
-    phoneNumber: '',
-    personalIdNumber: '',
-  },
+  stripeDetails: defaultStripeDetails,
   balance: 0,
-  wallet: <Wallet>{
-    loaded: false,
-    tokens: {
-      label: i18n.t('tokens'),
-      unit: 'tokens',
-      balance: 0,
-      address: null,
-    },
-    offchain: {
-      label: i18n.t('blockchain.offchain'),
-      unit: 'tokens',
-      balance: 0,
-      address: 'offchain',
-    },
-    onchain: {
-      label: i18n.t('blockchain.onchain'),
-      unit: 'tokens',
-      balance: 0, //eth balance
-      address: null,
-    },
-    receiver: {
-      label: i18n.t('blockchain.receiver'),
-      unit: 'tokens',
-      balance: 0,
-      address: null,
-    },
-    cash: {
-      label: i18n.t('wallet.cash'),
-      unit: 'cash',
-      balance: 0,
-      address: null,
-    },
-    eth: {
-      label: i18n.t('ether'),
-      unit: 'eth',
-      balance: 0,
-      address: null,
-    },
-    btc: {
-      label: i18n.t('bitcoin'),
-      unit: 'btc',
-      balance: 0,
-      address: null,
-    },
-    limits: {
-      wire: 0,
-    },
-  },
+  wallet: defaultWallet,
   usdEarnings: [] as Earnings[],
   usdPayouts: [],
   usdEarningsTotal: 0,
@@ -354,6 +358,15 @@ const createWalletStore = () => ({
     if (this.usdPayouts.length > 0) {
       this.usdPayoutsTotals = SUM_CENTS(this.usdPayouts);
     }
+  },
+  reset() {
+    this.balance = 0;
+    this.stripeDetails = defaultStripeDetails;
+    this.wallet = defaultWallet;
+    this.usdEarnings = [];
+    this.usdPayouts = [];
+    this.usdEarningsTotal = 0;
+    this.usdPayoutsTotals = 0;
   },
 });
 
