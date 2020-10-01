@@ -10,6 +10,8 @@ import createSearchResultStore, {
 import createPortraitStore, {
   PortraitStoreType,
 } from '../../portrait/createPortraitStore';
+import sessionService from '../services/session.service';
+import logService from '../services/log.service';
 
 export const storesContext = React.createContext<StoresType | null>(null);
 
@@ -23,6 +25,15 @@ export const StoresProvider = ({ children }) => {
     searchBar: useLocalStore(createSearchResultStore),
     portrait: useLocalStore(createPortraitStore),
   };
+
+  sessionService.onLogout(() => {
+    for (const id in stores) {
+      if (stores[id].reset) {
+        logService.info(`Reseting store ${id}`);
+        stores[id].reset();
+      }
+    }
+  });
 
   return (
     <storesContext.Provider value={stores}>{children}</storesContext.Provider>
