@@ -53,7 +53,6 @@ export function createLegacyStores() {
     onboarding: new onboarding(),
     groupsBar: new groupsBar(),
     reportstore: new reportStore(),
-    wallet: new wallet(),
   };
   sessionService.onLogout(() => {
     for (const id in stores) {
