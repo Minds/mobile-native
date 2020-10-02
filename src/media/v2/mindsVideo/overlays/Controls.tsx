@@ -4,7 +4,7 @@ import type { MindsVideoStoreType } from '../createMindsVideoStore';
 import Icon from 'react-native-vector-icons/Ionicons';
 import type ActivityModel from '../../../../newsfeed/ActivityModel';
 import type CommentModel from '../../../../comments/CommentModel';
-import { View, TouchableWithoutFeedback, Text } from 'react-native';
+import { View, TouchableWithoutFeedback, Text, Platform } from 'react-native';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 import ProgressBar from '../ProgressBar';
 import { styles } from './styles';
@@ -20,6 +20,10 @@ type PropsType = {
 type SourceSelectorPropsType = {
   localStore: MindsVideoStoreType;
 };
+
+const iconSize = Platform.select({ ios: 30, android: 26 });
+const iconResSize = Platform.select({ ios: 28, android: 24 });
+const playSize = Platform.select({ ios: 68, android: 58 });
 
 const SourceSelector = ({ localStore }: SourceSelectorPropsType) => {
   const theme = ThemedStyles.style;
@@ -51,8 +55,6 @@ const Controls = observer(({ localStore, entity }: PropsType) => {
     localStore.showOverlay || (localStore.paused && entity),
   );
 
-  const size = 56;
-
   if (mustShow) {
     const progressBar = (
       <View style={[theme.flexContainer, theme.columnAlignCenter]}>
@@ -75,9 +77,9 @@ const Controls = observer(({ localStore, entity }: PropsType) => {
                   ? localStore.play(Boolean(localStore.volume))
                   : localStore.pause()
               }
-              style={styles.videoIcon}
+              style={[styles.videoIcon, styles.textShadow]}
               name={localStore.paused ? 'md-play-circle' : 'md-pause'}
-              size={size}
+              size={playSize}
               color={Colors.light}
             />
           </View>
@@ -90,40 +92,36 @@ const Controls = observer(({ localStore, entity }: PropsType) => {
                 onOpen={localStore.openControlOverlay}
                 backgroundColor="rgba(48,48,48,0.7)">
                 <Icon
-                  name="ios-settings"
-                  size={23}
-                  color={Colors.light}
-                  style={theme.paddingLeft}
+                  name="ios-settings-sharp"
+                  size={iconResSize}
+                  style={[
+                    theme.paddingLeft,
+                    styles.textShadow,
+                    theme.colorWhite,
+                  ]}
                 />
               </Tooltip>
             </View>
           )}
           {localStore.player && (
             <View style={styles.controlBarContainer}>
-              <View
-                style={[
-                  theme.padding,
-                  theme.rowJustifySpaceEvenly,
-                  theme.marginRight,
-                ]}>
-                <Icon
-                  onPress={localStore.toggleFullScreen}
-                  name="ios-expand"
-                  size={23}
-                  color={Colors.light}
-                  style={theme.paddingLeft}
-                />
-              </View>
+              <Icon
+                onPress={localStore.toggleFullScreen}
+                name="ios-expand"
+                size={iconSize}
+                color={Colors.light}
+                style={theme.paddingHorizontal}
+              />
               {progressBar}
               <View style={[theme.padding, theme.rowJustifySpaceEvenly]}>
                 <Icon
                   onPress={localStore.toggleVolume}
                   name={
                     localStore.volume === 0
-                      ? 'ios-volume-off'
+                      ? 'ios-volume-mute'
                       : 'ios-volume-high'
                   }
-                  size={23}
+                  size={iconSize}
                   color={Colors.light}
                 />
               </View>

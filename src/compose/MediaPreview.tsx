@@ -7,7 +7,8 @@ import { useDimensions } from '@react-native-community/hooks';
 import { observer } from 'mobx-react';
 import ThemedStyles from '../styles/ThemedStyles';
 import ImagePreview from './ImagePreview';
-import MindsVideo from '../media/MindsVideo';
+import MindsVideo from '../media/v2/mindsVideo/MindsVideo';
+import { ResizeMode } from 'expo-av';
 
 type PropsType = {
   store: any;
@@ -92,8 +93,9 @@ export default observer(function MediaPreview(props: PropsType) {
           <MindsVideo
             video={props.store.mediaToConfirm}
             containerStyle={previewStyle}
-            resizeMode="contain"
-            onLoad={(e) => {
+            resizeMode={ResizeMode.CONTAIN}
+            autoplay
+            onReadyForDisplay={(e) => {
               if (
                 e.naturalSize.orientation === 'portrait' &&
                 Platform.OS === 'ios'
