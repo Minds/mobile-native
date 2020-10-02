@@ -18,9 +18,6 @@ const ProgressBar = observer(({ store }: PropsType) => {
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.timeText, theme.marginRight2x]}>
-        {store.currentSeekSeconds}
-      </Text>
       <Slider
         style={styles.barView}
         thumbTintColor={colors.primary}
@@ -30,14 +27,14 @@ const ProgressBar = observer(({ store }: PropsType) => {
         onValueChange={store.changeSeek}
         onSlidingComplete={store.onProgressChanged}
       />
-      <Text style={[styles.timeText, theme.marginLeft2x]}>
-        {store.durationSeconds}
+      <Text style={[styles.timeText, theme.marginLeft2x, theme.marginRight]}>
+        {store.currentSeekSeconds} / {store.durationSeconds}
       </Text>
     </View>
   );
 });
 
-let height = 15;
+let height = 18;
 
 let styles = StyleSheet.create({
   container: {
@@ -58,6 +55,7 @@ let styles = StyleSheet.create({
   },
   timeText: {
     color: 'white',
+    fontSize: Platform.select({ ios: 14, android: 12 }),
   },
   line: {
     borderWidth: 3,

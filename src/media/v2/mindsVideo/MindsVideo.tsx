@@ -8,7 +8,7 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import { ResizeMode } from 'expo-av';
+import { ResizeMode, VideoReadyForDisplayEvent } from 'expo-av';
 import videoPlayerService from '../../../common/services/video-player.service';
 import type CommentModel from '../../../comments/CommentModel';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
@@ -28,18 +28,20 @@ type Source = {
 
 type PropsType = {
   entity?: ActivityModel | CommentModel;
-  pause?: boolean;
+  autoplay?: boolean;
   repeat?: boolean;
   resizeMode?: ResizeMode;
   video?: { uri: string };
   containerStyle?: StyleProp<ViewStyle>;
-  onStoreCreated: Function;
+  onStoreCreated?: Function;
+  onReadyForDisplay?: (event: VideoReadyForDisplayEvent) => void;
 };
 
 const MindsVideo = observer((props: PropsType) => {
   const theme = ThemedStyles.style;
   const localStore = useLocalStore(createMindsVideoStore, {
     entity: props.entity,
+    autoplay: props.autoplay,
   });
 
   if (props.video && props.video.uri !== localStore.video.uri) {
@@ -93,7 +95,7 @@ const MindsVideo = observer((props: PropsType) => {
           localStore={localStore}
           repeat={props.repeat}
           resizeMode={props.resizeMode}
-          pause={props.pause || false}
+          onReadyForDisplay={props.onReadyForDisplay}
         />
         {inProgressOverlay}
         {errorOverlay}

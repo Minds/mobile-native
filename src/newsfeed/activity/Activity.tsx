@@ -160,8 +160,10 @@ export default class Activity extends Component<PropsType> {
             const user = sessionService.getUser();
             if (user.plus && !user.disable_autoplay_videos) {
               const state = NavigationService.getCurrentState();
+
               // sound only for ActivityScreen (Full screen)
-              const sound = state.name === 'Activity';
+              const sound = state.name === 'Activity' ? true : undefined; // undefined to use the latest option from the video player service
+
               this.autoplayVideoTimeout = setTimeout(() => {
                 if (this.props.entity.is_visible) {
                   this.playVideo(sound);
@@ -362,7 +364,7 @@ export default class Activity extends Component<PropsType> {
   /**
    * Play video if exist
    */
-  playVideo(sound = true) {
+  playVideo(sound) {
     this.mediaView?.playVideo(sound);
   }
 

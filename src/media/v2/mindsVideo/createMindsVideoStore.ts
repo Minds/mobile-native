@@ -4,17 +4,17 @@ import type { AVPlaybackStatus, Video } from 'expo-av';
 import _ from 'lodash';
 import featuresService from '../../../common/services/features.service';
 import apiService from '../../../common/services/api.service';
+import videoPlayerService from '../../../common/services/video-player.service';
 
 export type Source = {
   src: string;
   size: number;
 };
 
-const createMindsVideoStore = ({ entity }) => {
+const createMindsVideoStore = ({ entity, autoplay }) => {
   const store = {
     initialVolume: <number | null>null,
     volume: 1,
-    active: false,
     sources: null as Array<Source> | null,
     source: 0,
     currentTime: 0,
@@ -28,7 +28,7 @@ const createMindsVideoStore = ({ entity }) => {
     showOverlay: false,
     fullScreen: false,
     player: null as Video | null,
-    paused: true,
+    paused: !autoplay,
     setPaused(val: boolean) {
       this.paused = val;
     },
@@ -56,12 +56,10 @@ const createMindsVideoStore = ({ entity }) => {
     setVideo(video: any) {
       this.video = video;
     },
-    setActive(active: boolean) {
-      this.active = active;
-    },
     setVolume(volume: number) {
       this.volume = volume;
       this.player?.setVolumeAsync(volume);
+      videoPlayerService.setVolume(volume);
     },
     toggleVolume() {
       this.setVolume(this.volume ? 0 : 1);
@@ -164,8 +162,6 @@ const createMindsVideoStore = ({ entity }) => {
       await this.player?.setStatusAsync({ shouldPlay: false });
       this.changeSeek(null);
 
-      console.log(time);
-
       if (this.loaded) {
         this.player?.setStatusAsync({
           positionMillis: time,
@@ -174,8 +170,6 @@ const createMindsVideoStore = ({ entity }) => {
       }
     },
     async updatePlaybackCallback(status: AVPlaybackStatus) {
-      // console.log('status', status);
-
       if (!status.isLoaded && status.error) {
         this.onError(status.error);
       } else {
@@ -184,13 +178,6 @@ const createMindsVideoStore = ({ entity }) => {
 
           if (status.isPlaying) {
             this.setDuration(status.durationMillis || 0);
-          } else if (!this.paused) {
-            // fix no initial play
-            this.player?.setStatusAsync({
-              progressUpdateIntervalMillis: 500,
-              shouldPlay: true,
-              volume: this.volume,
-            });
           }
 
           if (status.didJustFinish && !status.isLooping) {
@@ -210,7 +197,11 @@ const createMindsVideoStore = ({ entity }) => {
     /**
      * Play the current video and activate the player
      */
-    async play(sound: boolean = true) {
+    async play(sound: boolean | undefined) {
+      if (sound === undefined) {
+        sound = Boolean(videoPlayerService.currentVolume);
+      }
+
       if ((!this.sources || this.sources.length === 0) && entity) {
         if (entity.paywall && featuresService.has('paywall-2020')) {
           await entity.unlockOrPay();
@@ -237,7 +228,6 @@ const createMindsVideoStore = ({ entity }) => {
         };
       }
 
-      this.setActive(true);
       this.setPaused(false);
 
       this.volume = sound ? 1 : 0;
@@ -245,10 +235,21 @@ const createMindsVideoStore = ({ entity }) => {
         this.initialVolume = this.volume;
       }
 
-      this.player?.playAsync();
+      // set as the current player in the service
+      videoPlayerService.setCurrent(this);
+
+      // this.player?.playAsync();
+      this.player?.setStatusAsync({
+        progressUpdateIntervalMillis: 500,
+        shouldPlay: true,
+        volume: this.volume,
+      });
     },
     pause() {
       this.setPaused(true);
+      if (videoPlayerService.current === this) {
+        videoPlayerService.clear();
+      }
       this.player?.pauseAsync();
     },
     setPlayer(player: Video) {
@@ -260,6 +261,10 @@ const createMindsVideoStore = ({ entity }) => {
           this.setShowOverlay(false);
         }
       }, 4000);
+
+      if (!this.paused) {
+        this.play(undefined);
+      }
     },
   };
   return store;
