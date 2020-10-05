@@ -1,4 +1,3 @@
-//@ts-nocheck
 /**
  * Video Player Service
  */
@@ -6,7 +5,12 @@ class VideoPlayerService {
   /**
    * current playing video player reference
    */
-  current = null;
+  current: { pause: () => void } | null = null;
+
+  /**
+   * current initial volume
+   */
+  currentVolume = 0;
 
   /**
    * Set current player reference
@@ -17,6 +21,10 @@ class VideoPlayerService {
       this.current.pause();
     }
     this.current = videoPlayerRef;
+  }
+
+  setVolume(value: number) {
+    this.currentVolume = value;
   }
 
   /**

@@ -15,7 +15,6 @@ import {
 
 import ActionSheet from 'react-native-actionsheet';
 import { Icon } from 'react-native-elements';
-
 import FastImage from 'react-native-fast-image';
 import CommentList from '../comments/CommentList';
 import commentsStoreProvider from '../comments/CommentsStoreProvider';
@@ -33,6 +32,7 @@ import OwnerBlock from '../newsfeed/activity/OwnerBlock';
 import shareService from '../share/ShareService';
 import colors from '../styles/Colors';
 import { CommonStyle as CS } from '../styles/Common';
+import { ComponentsStyle } from '../styles/Components';
 import ThemedStyles from '../styles/ThemedStyles';
 
 import BlogViewHTML from './BlogViewHTML';

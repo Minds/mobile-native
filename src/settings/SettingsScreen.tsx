@@ -29,6 +29,10 @@ export default function ({ navigation }) {
 
   const navToOther = useCallback(() => navigation.push('Other'), [navigation]);
 
+  const navToReferrals = useCallback(() => navigation.push('Referrals'), [
+    navigation,
+  ]);
+
   const setDarkMode = () => {
     if (ThemedStyles.theme) {
       ThemedStyles.setLight();
@@ -53,6 +57,10 @@ export default function ({ navigation }) {
     {
       title: i18n.t('settings.billing'),
       onPress: navToBilling,
+    },
+    {
+      title: i18n.t('settings.referrals'),
+      onPress: navToReferrals,
     },
     {
       title: i18n.t('settings.other'),

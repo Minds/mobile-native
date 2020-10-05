@@ -8,9 +8,11 @@ import { createSharedElementStackNavigator } from 'react-navigation-shared-eleme
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Platform, View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
+import AnalyticsScreen from '../analytics/AnalyticsScreen';
 
 import LoginScreen from '../auth/LoginScreen';
 import ForgotScreen from '../auth/ForgotScreen';
+import ReferralsScreen from '../referral/ReferralsScreen';
 import DataSaverScreen from '../settings/screens/DataSaverScreen';
 import TabsScreen from '../tabs/TabsScreen';
 import NotificationsScreen from '../notifications/NotificationsScreen';
@@ -42,6 +44,7 @@ import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
 import ComposeScreen from '../compose/ComposeScreen';
 import TagSelector from '../compose/TagSelector';
+import AccessSelector from '../compose/AccessSelector';
 import NsfwSelector from '../compose/NsfwSelector';
 import ScheduleSelector from '../compose/ScheduleSelector';
 import MonetizeSelector from '../compose/MonetizeSelector';
@@ -216,6 +219,11 @@ const WalletOptions = () => ({
   headerShown: false,
 });
 
+const modalOptions = {
+  gestureResponseDistance: { vertical: 240 },
+  gestureEnabled: true,
+};
+
 export const InternalStack = () => {
   const internalOptions = {
     ...ThemedStyles.defaultScreenOptions,
@@ -244,6 +252,7 @@ export const InternalStack = () => {
         component={GroupsListScreen}
         options={{ title: i18n.t('discovery.groups') }}
       />
+      <AppStackNav.Screen name="Analytics" component={AnalyticsScreen} />
 
       <InternalStackNav.Screen name="Settings" component={SettingsScreen} />
     </InternalStackNav.Navigator>
@@ -335,6 +344,11 @@ const AppStack = function () {
       <AppStackNav.Screen
         name="LicenseSelector"
         component={LicenseSelector}
+        options={hideHeader}
+      />
+      <AppStackNav.Screen
+        name="AccessSelector"
+        component={AccessSelector}
         options={hideHeader}
       />
       <AppStackNav.Screen
@@ -504,6 +518,11 @@ const AppStack = function () {
         initialParams={{ options: BillingScreenOptions }}
       />
       <AppStackNav.Screen
+        name="Referrals"
+        component={ReferralsScreen}
+        options={{ title: i18n.t('settings.referrals') }}
+      />
+      <AppStackNav.Screen
         name="Other"
         component={OtherScreen}
         options={{ title: i18n.t('settings.other') }}
@@ -636,10 +655,7 @@ const RootStack = function (props) {
           <RootStackNav.Screen
             name="JoinMembershipScreen"
             component={JoinMembershipScreen}
-            options={{
-              gestureResponseDistance: { vertical: 240 },
-              gestureEnabled: true,
-            }}
+            options={modalOptions}
           />
           <RootStackNav.Screen
             name="BlockchainWalletModal"
@@ -648,12 +664,7 @@ const RootStack = function (props) {
           <RootStackNav.Screen
             name="PlusScreen"
             component={PlusScreen}
-            options={({ route }) => ({
-              gestureEnabled: false,
-              title: i18n.t(
-                `monetize.${route.params.pro ? 'pro' : 'plus'}Header`,
-              ),
-            })}
+            options={modalOptions}
           />
         </Fragment>
       ) : (

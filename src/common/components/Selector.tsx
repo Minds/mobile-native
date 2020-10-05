@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, FlatList, TextStyle } from 'react-native';
-import { Text, Icon } from 'react-native-elements';
+import { FlatList, StyleSheet, TextStyle, View } from 'react-native';
 import Modal from 'react-native-modal';
+import { Icon, Text } from 'react-native-elements';
 import { CommonStyle } from '../../styles/Common';
-import Touchable from './Touchable';
 import ThemedStyles from '../../styles/ThemedStyles';
+import Touchable from './Touchable';
 
 type PropsType = {
   data: Array<Object>;
   valueExtractor: Function;
   keyExtractor: Function;
-  title: String;
+  title?: string;
   onItemSelect: Function;
   textStyle?: TextStyle;
   backdropOpacity?: number;
+  children?: (onItemSelect: any) => any;
 };
 
 export default class Selector extends Component<PropsType> {
@@ -90,7 +91,8 @@ export default class Selector extends Component<PropsType> {
 
   render() {
     const theme = ThemedStyles.style;
-    return (
+
+    const modal = (
       <Modal
         isVisible={this.state.show}
         backdropOpacity={this.props.backdropOpacity}>
@@ -133,6 +135,12 @@ export default class Selector extends Component<PropsType> {
         </View>
       </Modal>
     );
+
+    if (this.props.children) {
+      return [this.props.children(this.show), modal];
+    }
+
+    return modal;
   }
 }
 

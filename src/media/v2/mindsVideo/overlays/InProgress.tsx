@@ -11,7 +11,7 @@ const InProgress = () => {
         styles.overlayContainerTransparent,
         ThemedStyles.style.rowJustifyCenter,
       ]}
-      color={ThemedStyles.getColor('secondary_text')}
+      color={ThemedStyles.getColor('link')}
       dotSize={15}
       scaleEnabled={true}
     />

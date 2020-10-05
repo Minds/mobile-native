@@ -158,7 +158,7 @@ const createFabScreenStore = () => {
 export type FabScreenStore = ReturnType<typeof createFabScreenStore>;
 
 const FabScreen = observer(({ route, navigation }) => {
-  const { wallet, wire } = useLegacyStores();
+  const { wire } = useLegacyStores();
   const store = useLocalStore(createFabScreenStore);
 
   const tabList = [

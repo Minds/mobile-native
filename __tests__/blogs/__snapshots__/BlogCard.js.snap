@@ -407,6 +407,7 @@ exports[`blog card component should renders correctly 1`] = `
           "mode": 0,
           "monetized": "",
           "name": "Some User",
+          "nsfw": Array [],
           "onchain_booster": 0,
           "owner_guid": "0",
           "pending_subscribe": false,

@@ -55,9 +55,6 @@ class AttachmentService {
    * @param {function} progress
    */
   uploadToS3(file, progress) {
-    // Prepare media and wait for lease => {media_type, guid}
-    let lease;
-
     return new Cancelable(async (resolve, reject, onCancel) => {
       const response = await api.put(`api/v2/media/upload/prepare/video`);
       // upload file to s3

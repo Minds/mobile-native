@@ -10,7 +10,6 @@ import {
   Platform,
   // TextInput,
   TouchableOpacity as TouchableOpacityIos,
-  ActivityIndicator,
   KeyboardAvoidingView,
 } from 'react-native';
 
@@ -45,6 +44,7 @@ import {
   FlatList,
   TouchableOpacity as TouchableOpacityAndroid,
 } from 'react-native-gesture-handler';
+import ActivityIndicator from '../common/components/ActivityIndicator';
 
 const TouchableOpacity =
   Platform.OS === 'ios' ? TouchableOpacityIos : TouchableOpacityAndroid;
@@ -686,7 +686,7 @@ class CommentList extends React.Component<PropsType, StateType> {
       <View style={[CS.flexContainer, paddingBottom]} onLayout={this.onLayout}>
         <KeyboardAvoidingView
           style={CS.flexContainer}
-          behavior={Platform.OS === 'ios' ? 'padding' : null}
+          behavior={'padding'}
           keyboardVerticalOffset={
             this.props.keyboardVerticalOffset
               ? -this.props.keyboardVerticalOffset

@@ -144,6 +144,23 @@ const getOptionsList = (navigation) => {
   list = [
     ...list,
     {
+      name: 'Analytics',
+      icon: (
+        <Icon
+          name="analytics"
+          size={ICON_SIZE}
+          style={[theme.colorIcon, styles.icon]}
+        />
+      ),
+
+      onPress: () => {
+        navigation.navigate('Tabs', {
+          screen: 'CaptureTab',
+          params: { screen: 'Analytics' },
+        });
+      },
+    },
+    {
       name: i18n.t('moreScreen.settings'),
       icon: (
         <Icon

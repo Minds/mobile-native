@@ -1,7 +1,7 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import { FlatList, ActivityIndicator, Text, View } from 'react-native';
+import { FlatList, Text, View } from 'react-native';
 
 import type { Node, Element } from 'react';
 import type SubscriptionRequestStore from './SubscriptionRequestStore';
@@ -11,6 +11,7 @@ import SubscriptionRequest from './SubscriptionRequest';
 import i18n from '../../common/services/i18n.service';
 import { CommonStyle as CS } from '../../styles/Common';
 import ErrorLoading from '../../common/components/ErrorLoading';
+import ActivityIndicator from '../../common/components/ActivityIndicator';
 
 type PropsType = {
   subscriptionRequest: SubscriptionRequestStore;

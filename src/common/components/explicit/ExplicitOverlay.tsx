@@ -1,41 +1,40 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
 import {
   Text,
-  TouchableOpacity,
   StyleSheet,
   View,
   TextStyle,
   ViewStyle,
+  TouchableOpacity,
 } from 'react-native';
 
-import { observer } from 'mobx-react';
-import { CommonStyle as CS } from '../../../styles/Common';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import { GOOGLE_PLAY_STORE } from '../../../config/Config';
 import i18n from '../../services/i18n.service';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
+import type UserModel from '../../../channel/UserModel';
+import ThemedStyles from '../../../styles/ThemedStyles';
+import GroupModel from '../../../groups/GroupModel';
 
 type PropsType = {
-  entity: ActivityModel;
+  entity: ActivityModel | UserModel | GroupModel;
   iconSize: number;
   hideText: boolean;
-  iconPosition: 'right' | 'left';
   fontStyle?: TextStyle | Array<TextStyle>;
   containerStyle?: ViewStyle | Array<ViewStyle>;
-  closeContainerStyle?: ViewStyle | Array<ViewStyle>;
+  text?: string;
 };
 
 /**
  * Explicit overlay
  */
-@observer
-export default class ExplicitOverlay extends Component<PropsType> {
+export default class ExplicitOverlay extends PureComponent<PropsType> {
   /**
    * Default props
    */
   static defaultProps = {
-    iconSize: 80,
+    iconSize: 55,
     hideText: false,
     iconPosition: 'right',
   };
@@ -43,40 +42,42 @@ export default class ExplicitOverlay extends Component<PropsType> {
   /**
    * toggle overlay
    */
-  toogle = () => {
+  toggle = () => {
     this.props.entity.toggleMatureVisibility();
   };
+
+  getLocalizedReasons() {
+    const reasons = this.props.entity.nsfw?.map((i) => i18n.t(`nsfw.${i}`));
+
+    if (!reasons) {
+      return '';
+    }
+
+    if (reasons.length === 1) {
+      return reasons[0];
+    }
+    if (reasons.length === 2) {
+      return reasons.join(' & ');
+    }
+    if (reasons.length > 2) {
+      return (
+        reasons.slice(0, reasons.length - 1).join(', ') +
+        ' & ' +
+        reasons[reasons.length - 1]
+      );
+    }
+  }
 
   /**
    * Render
    */
   render() {
-    const {
-      iconSize,
-      hideText,
-      fontStyle,
-      containerStyle,
-      closeContainerStyle,
-      iconPosition,
-    } = this.props;
+    const { iconSize, hideText, fontStyle, containerStyle } = this.props;
+
+    const theme = ThemedStyles.style;
 
     if (this.props.entity.mature_visibility) {
-      const size = Math.max(iconSize / 2.5, 25);
-      const styles =
-        iconPosition === 'right'
-          ? [CS.positionAbsoluteTopRight, CS.paddingRight3x, CS.marginRight3x]
-          : [CS.positionAbsoluteTop, CS.paddingLeft3x, CS.marginLeft3x];
-      return (
-        <View style={[styles, closeContainerStyle]}>
-          <Icon
-            name="explicit"
-            size={size}
-            color={'red'}
-            style={CS.shadow}
-            onPress={this.toogle}
-          />
-        </View>
-      );
+      return null;
     }
 
     const text = GOOGLE_PLAY_STORE
@@ -84,32 +85,72 @@ export default class ExplicitOverlay extends Component<PropsType> {
       : i18n.t('confirm18');
 
     return (
-      <TouchableOpacity
-        activeOpacity={1}
+      <View
         style={[
-          CS.positionAbsolute,
-          CS.centered,
-          CS.backgroundDarkGreyed,
+          theme.centered,
+          theme.backgroundSecondary,
           styles.onTop,
           containerStyle,
-        ]}
-        onPress={this.toogle}>
+        ]}>
         <Icon
-          name="explicit"
+          name="lock"
           size={iconSize}
-          color={'white'}
-          style={CS.shadow}
+          style={theme.colorSecondaryText}
+          onPress={this.toggle}
         />
         {!hideText && (
-          <Text style={[CS.colorWhite, CS.shadow, fontStyle]}>{text}</Text>
+          <>
+            {!!this.props.text && (
+              <Text
+                style={[
+                  theme.colorPrimaryText,
+                  theme.paddingTop6x,
+                  theme.fontXL,
+                  theme.bold,
+                  fontStyle,
+                ]}>
+                {this.props.text}
+              </Text>
+            )}
+            <Text
+              style={[
+                theme.colorPrimaryText,
+                theme.paddingTop6x,
+                theme.fontXXL,
+                theme.bold,
+              ]}>
+              NSFW
+            </Text>
+            <Text
+              style={[
+                theme.colorTertiaryText,
+                theme.paddingVertical2x,
+                theme.marginBottom6x,
+                theme.fontXL,
+              ]}>
+              {this.getLocalizedReasons()}
+            </Text>
+            <TouchableOpacity
+              style={[
+                theme.borderPrimary,
+                theme.borderHair,
+                theme.backgroundPrimary,
+              ]}
+              onPress={this.toggle}>
+              <Text
+                style={[theme.col, theme.padding2x, theme.fontL, fontStyle]}>
+                {text}
+              </Text>
+            </TouchableOpacity>
+          </>
         )}
-      </TouchableOpacity>
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
   onTop: {
-    zIndex: 99999,
+    minHeight: 400,
   },
 });

@@ -1,13 +1,7 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import {
-  View,
-  FlatList,
-  ActivityIndicator,
-  StyleSheet,
-  Text,
-} from 'react-native';
+import { View, FlatList, StyleSheet, Text } from 'react-native';
 
 import { observer, inject } from 'mobx-react';
 
@@ -20,6 +14,8 @@ import { MINDS_CDN_URI, MINDS_FEATURES } from '../config/Config';
 import ErrorLoading from '../common/components/ErrorLoading';
 import { withErrorBoundary } from '../common/components/ErrorBoundary';
 import i18n from '../common/services/i18n.service';
+
+import ActivityIndicator from '../common/components/ActivityIndicator';
 
 const selectedTextStyle = { color: 'black' };
 

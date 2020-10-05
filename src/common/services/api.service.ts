@@ -52,7 +52,7 @@ class ApiService {
     if (response.status) {
       if (response.status === 401) {
         session.logout();
-        throw Error('Session lost');
+        throw new UserError('Session lost');
       }
     }
 

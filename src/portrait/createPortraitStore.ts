@@ -6,6 +6,7 @@ import type UserModel from '../channel/UserModel';
 import FeedStore from '../common/stores/FeedStore';
 import portraitContentService from './PortraitContentService';
 import { extendObservable, computed } from 'mobx';
+import logService from '../common/services/log.service';
 
 export class PortraitBarItem {
   user: UserModel;
@@ -31,6 +32,9 @@ function createPortraitStore() {
   return {
     items: <Array<PortraitBarItem>>[],
     loading: false,
+    sort() {
+      this.items = _.sortBy(this.items, (d) => !d.unseen);
+    },
     async load() {
       feedStore.clear();
       try {
@@ -60,17 +64,23 @@ function createPortraitStore() {
             });
           }
 
-          this.items = _.map(
+          const items = _.map(
             _.groupBy(feedStore.entities, 'owner_guid'),
             (activities) =>
-              new PortraitBarItem(activities[0].ownerObj, activities),
+              new PortraitBarItem(activities[0].ownerObj, activities.reverse()),
           );
+
+          this.items = _.sortBy(items, (d) => !d.unseen);
         }
       } catch (err) {
-        console.log(err);
+        logService.exception(err);
       } finally {
         this.loading = false;
       }
+    },
+    reset() {
+      this.items = [];
+      this.loading = false;
     },
   };
 }

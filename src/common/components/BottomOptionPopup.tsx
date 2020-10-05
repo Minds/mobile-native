@@ -92,7 +92,7 @@ const BottomOptionPopup = observer((props: PropsType) => {
         snapPoints={[0, props.height]}
         onCloseEnd={store.cancel}
         enabledContentGestureInteraction={false}
-        enabledHeaderGestureInteraction={false}
+        enabledHeaderGestureInteraction={true}
         renderHeader={() =>
           store.showing ? (
             <View style={styles.headerContainer}>

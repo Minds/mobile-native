@@ -1,13 +1,7 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import {
-  StyleSheet,
-  FlatList,
-  ActivityIndicator,
-  View,
-  Text,
-} from 'react-native';
+import { StyleSheet, FlatList, View, Text } from 'react-native';
 
 import { observer, inject } from 'mobx-react';
 
@@ -18,6 +12,7 @@ import withPreventDoubleTap from '../common/components/PreventDoubleTap';
 import { withErrorBoundary } from '../common/components/ErrorBoundary';
 import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
+import ActivityIndicator from '../common/components/ActivityIndicator';
 
 const DebouncedGroupsListItem = withErrorBoundary(
   withPreventDoubleTap(GroupsListItem, "Can't show this group"),

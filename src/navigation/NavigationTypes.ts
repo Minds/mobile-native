@@ -86,6 +86,7 @@ export type AppStackParamList = {
   Network: {};
   Security: {};
   Billing: {};
+  Referrals: {};
   Other: {};
   SettingsEmail: {};
   MessengerSettingsScreen: {};
@@ -107,6 +108,9 @@ export type AppStackParamList = {
   TagSelector: {};
   NsfwSelector: {};
   ScheduleSelector: {};
+  AccessSelector: {
+    store: ComposeStoreType;
+  };
   MonetizeSelector: {
     store: ComposeStoreType;
   };
@@ -124,6 +128,7 @@ export type AppStackParamList = {
   EmailConfirmation: {};
   Update: {};
   Boost: {};
+  Analytics: {};
   Notifications: {};
   Channel: {};
   EditChannelScreen: {};

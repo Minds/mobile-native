@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { observer } from 'mobx-react';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -7,9 +7,8 @@ import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
 import ImagePreview from './ImagePreview';
 import { useSafeArea } from 'react-native-safe-area-context';
-import MindsVideo from '../media/MindsVideo';
 import MindsVideoV2 from '../media/v2/mindsVideo/MindsVideo';
-import featuresService from '../common/services/features.service';
+import { ResizeMode } from 'expo-av';
 
 /**
  * Media confirm screen
@@ -19,33 +18,35 @@ export default observer(function (props) {
   const theme = ThemedStyles.style;
 
   const insets = useSafeArea();
-  const cleanTop = { paddingTop: insets.top || 0 };
-  const cleanBottom = { height: insets.bottom + 50 };
+  const cleanTop = useRef({ paddingTop: insets.top || 0 }).current;
+  const cleanBottom = useRef({ height: insets.bottom + 50 }).current;
+  const videoStyle = useRef({ marginBottom: insets.bottom, flex: 1 }).current;
+  const video = useRef({ uri: props.store.mediaToConfirm.uri }).current;
 
   const isImage = props.store.mediaToConfirm.type.startsWith('image');
 
   const previewComponent = isImage ? (
     <ImagePreview image={props.store.mediaToConfirm} />
-  ) : featuresService.has('mindsVideo-2020') ? (
-    <MindsVideoV2
-      video={{ uri: props.store.mediaToConfirm.uri }}
-      pause={false}
-      repeat={true}
-      containerStyle={{ marginBottom: insets.bottom }}
-    />
   ) : (
-    <MindsVideo
-      video={{ uri: props.store.mediaToConfirm.uri }}
-      pause={false}
+    <MindsVideoV2
+      video={video}
+      resizeMode={ResizeMode.COVER}
+      autoplay
       repeat={true}
-      containerStyle={{ marginBottom: insets.bottom }}
+      containerStyle={videoStyle}
     />
   );
 
   return (
     <View style={theme.flexContainer}>
       {previewComponent}
-      <View style={[styles.bottomBar, cleanBottom, theme.backgroundSecondary]}>
+      <View
+        style={[
+          styles.bottomBar,
+          cleanBottom,
+          theme.backgroundSecondary,
+          isImage ? styles.floating : null,
+        ]}>
         <Text
           onPress={props.store.editImage}
           style={[
@@ -84,9 +85,11 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     textAlignVertical: 'center',
   },
-  bottomBar: {
+  floating: {
     position: 'absolute',
     bottom: 0,
+  },
+  bottomBar: {
     width: '100%',
     flexDirection: 'row',
     alignItems: 'center',

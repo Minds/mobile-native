@@ -1,10 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { observer } from 'mobx-react';
 import settingsStore from '../../../settings/SettingsStore';
 import { MindsVideoStoreType } from './createMindsVideoStore';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
 import type CommentModel from '../../../comments/CommentModel';
-import { Video, ResizeMode } from 'expo-av';
+import { Video, ResizeMode, VideoReadyForDisplayEvent } from 'expo-av';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { toJS } from 'mobx';
 
@@ -12,8 +12,8 @@ type PropsType = {
   entity?: ActivityModel | CommentModel;
   localStore: MindsVideoStoreType;
   repeat?: boolean;
-  pause?: boolean;
   resizeMode?: ResizeMode;
+  onReadyForDisplay?: (event: VideoReadyForDisplayEvent) => void;
   ignoreDataSaver?: boolean;
 };
 
@@ -23,6 +23,7 @@ const ExpoVideo = observer(
     localStore,
     repeat = true,
     resizeMode,
+    onReadyForDisplay,
     ignoreDataSaver,
   }: PropsType) => {
     const theme = ThemedStyles.style;
@@ -35,9 +36,11 @@ const ExpoVideo = observer(
 
     const source = localStore.video.uri ? toJS(localStore.video) : undefined;
 
-    if (!localStore.player && playbackObject.current) {
-      localStore.setPlayer(playbackObject.current);
-    }
+    useEffect(() => {
+      if (!localStore.player && playbackObject.current) {
+        localStore.setPlayer(playbackObject.current);
+      }
+    }, [localStore]);
 
     return (
       <Video
@@ -47,7 +50,7 @@ const ExpoVideo = observer(
         onLoad={localStore.onVideoLoad}
         onError={localStore.onError}
         source={source}
-        usePoster={true}
+        usePoster={!!thumb_uri}
         posterSource={dataSaverEnabled ? undefined : { uri: thumb_uri }}
         isLooping={repeat}
         resizeMode={resizeMode || 'contain'}
@@ -55,6 +58,7 @@ const ExpoVideo = observer(
         style={theme.flexContainer}
         ref={playbackObject}
         volume={localStore.initialVolume || 0}
+        onReadyForDisplay={onReadyForDisplay}
       />
     );
   },

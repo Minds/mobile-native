@@ -38,6 +38,8 @@ const metadataService = new MetadataService();
 metadataService.setSource('portrait').setMedium('feed');
 
 const { width, height } = Dimensions.get('window');
+const panProps = { enabled: false };
+const clamp = { next: 0, prev: 0 };
 
 /**
  * User content swiper
@@ -77,59 +79,74 @@ const UserContentSwiper = observer((props: PropsType) => {
 
   const stackConfig: iPageInterpolation = {
     opacity: {
-      inputRange: [-1, 0, 1],
-      outputRange: [0, 1, 0],
+      inputRange: [-1, -0.5, 0, 0.5, 1],
+      outputRange: [0, 1, 1, 1, 0],
     },
   };
 
-  const onTapStateChange = useCallback(
-    ({ nativeEvent }) => {
-      const halfWidth = width / 2;
-      if (nativeEvent.pageX < halfWidth) {
-        if (store.index > 0) {
-          store.setIndex(store.index - 1);
-        }
-      } else if (store.index < activities.length - 1) {
-        store.setIndex(store.index + 1);
-      } else {
-        props.nextUser();
-      }
-    },
-    [activities.length, store, props],
-  );
+  const onTapStateChangeRight = useCallback(() => {
+    if (store.index < activities.length - 1) {
+      store.setIndex(store.index + 1);
+    } else {
+      props.nextUser();
+    }
+  }, [activities.length, store, props]);
+
+  const onTapStateChangeLeft = useCallback(() => {
+    if (store.index > 0) {
+      store.setIndex(store.index - 1);
+    }
+  }, [store]);
 
   const pages = activities.map((e, i) => (
-    <ActivityFullScreen key={i} entity={e} />
+    <ActivityFullScreen key={i} entity={e} forceAutoplay />
   ));
 
   return (
     <PagerProvider activeIndex={store.index} onChange={store.setIndex}>
       <View>
         <Pager
-          adjacentChildOffset={0}
+          adjacentChildOffset={1}
           maxIndex={activities.length - 1}
-          panProps={{ enabled: false }}
+          panProps={panProps}
           style={pagerStyle}
-          clamp={{ next: 0, prev: 0 }}
+          clamp={clamp}
           pageInterpolation={stackConfig}
           initialIndex={store.index}>
           {pages}
         </Pager>
         <PortraitPaginator store={store} pages={pages} />
       </View>
-      <TouchableOpacity style={styles.touch} onPress={onTapStateChange} />
+      <TouchableOpacity
+        style={styles.touchLeft}
+        onPress={onTapStateChangeLeft}
+      />
+      <TouchableOpacity
+        style={styles.touchRight}
+        onPress={onTapStateChangeRight}
+      />
     </PagerProvider>
   );
 });
 
 export default UserContentSwiper;
 
+const touchableHeight = height * 0.34;
+const touchableTop = height * 0.33;
+
 const styles = StyleSheet.create({
-  touch: {
+  touchLeft: {
     position: 'absolute',
-    top: height / 3,
-    height: height / 3,
+    top: touchableTop,
+    height: touchableHeight,
     left: 0,
-    width: '100%',
+    width: '42%',
+  },
+  touchRight: {
+    position: 'absolute',
+    top: touchableTop,
+    height: touchableHeight,
+    right: 0,
+    width: '42%',
   },
 });
