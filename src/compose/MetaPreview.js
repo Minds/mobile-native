@@ -25,6 +25,8 @@ const thumbSize = PixelRatio.getPixelSizeForLayoutSize(imgSize);
  */
 export default observer(function (props) {
   const theme = ThemedStyles.style;
+  const source = { uri: mediaProxyUrl(props.meta.thumbnail, thumbSize) };
+  const thumbnail = { uri: mediaProxyUrl(props.meta.thumbnail, 30) };
 
   return (
     <View style={[styles.container, theme.paddingHorizontal4x]}>
@@ -45,8 +47,8 @@ export default observer(function (props) {
         <SmartImage
           style={styles.thumbnail}
           threshold={150}
-          source={{ uri: props.meta.thumbnail }}
-          thumbSize={thumbSize}
+          source={source}
+          thumbnail={thumbnail}
           resizeMode={FastImage.resizeMode.cover}
         />
         <View style={[styles.metaContainer, theme.padding]}>

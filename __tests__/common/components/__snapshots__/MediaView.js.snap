@@ -63,6 +63,17 @@ exports[`Media view component renders correctly 1`] = `
             },
             "guid": "activityguid0",
             "hasThumbnails": [MockFunction],
+            "isGif": [MockFunction] {
+              "calls": Array [
+                Array [],
+              ],
+              "results": Array [
+                Object {
+                  "type": "return",
+                  "value": false,
+                },
+              ],
+            },
             "mature": false,
             "message": "Message",
             "ownerObj": Object {

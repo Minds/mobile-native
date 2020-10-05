@@ -1,16 +1,21 @@
 import { autorun } from 'mobx';
 import { observer, useLocalStore } from 'mobx-react';
 import React, { useEffect } from 'react';
-import { Image, ImageURISource, TouchableOpacity, View } from 'react-native';
+import {
+  Image,
+  ImageURISource,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import FastImage from 'react-native-fast-image';
-import ProgressCircle from 'react-native-progress/Circle';
+import ProgressCircle from 'react-native-progress/CircleSnail';
 import Animated from 'react-native-reanimated';
 import { mix, useTimingTransition } from 'react-native-redash';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import settingsStore from '../../settings/SettingsStore';
 import ThemedStyles from '../../styles/ThemedStyles';
-import mediaProxyUrl from '../helpers/media-proxy-url';
 import connectivityService from '../services/connectivity.service';
 import RetryableImage from './RetryableImage';
 
@@ -23,7 +28,6 @@ interface SmartImageProps {
   source: ImageURISource;
   onLoadEnd?: Function;
   resizeMode?: FastImage.ResizeMode;
-  thumbSize?: number;
 }
 
 /**
@@ -71,12 +75,10 @@ export default observer(function (props: SmartImageProps) {
     },
     onDownload() {
       store.imageVisible = true;
-      setTimeout(() => {
-        if (store.progress === undefined) {
-          // @ts-ignore
-          store.progress = 0;
-        }
-      }, 500);
+      if (store.progress === undefined) {
+        // @ts-ignore
+        store.progress = 0;
+      }
     },
     clearError() {
       store.error = false;
@@ -118,18 +120,6 @@ export default observer(function (props: SmartImageProps) {
     );
   }
 
-  let thumbnail = props.thumbnail;
-  let source = props.source;
-
-  if (!props.source.uri!.includes('minds.com')) {
-    source = {
-      uri: mediaProxyUrl(props.source.uri, props.thumbSize),
-    };
-    thumbnail = {
-      uri: mediaProxyUrl(props.source.uri, 30),
-    };
-  }
-
   const imageOverlay = (
     <Animated.View
       pointerEvents={store.showOverlay ? undefined : 'none'}
@@ -144,14 +134,17 @@ export default observer(function (props: SmartImageProps) {
         activeOpacity={0.9}
         onPress={store.progress === undefined ? store.onDownload : undefined}
         style={[theme.positionAbsolute, theme.centered]}>
-        {typeof store.progress === 'number' ? (
-          <ProgressCircle
-            progress={store.progress}
-            indeterminate={store.imageVisible && store.progress === 0}
-          />
-        ) : (
-          <Icon name="md-download" style={theme.colorIcon} size={40} />
-        )}
+        <View style={[styles.downloadButton, theme.centered]}>
+          {typeof store.progress === 'number' ? (
+            <ProgressCircle
+              progress={store.progress}
+              color="white"
+              indeterminate={store.imageVisible && store.progress === 0}
+            />
+          ) : (
+            <Icon name="arrow-down" style={theme.colorWhite} size={30} />
+          )}
+        </View>
       </TouchableOpacity>
     </Animated.View>
   );
@@ -164,7 +157,7 @@ export default observer(function (props: SmartImageProps) {
           retry={2}
           key={store.retries}
           onError={store.setError}
-          source={source}
+          source={props.source}
           onLoadEnd={store.onLoadEnd}
           onProgress={store.onProgress}
         />
@@ -173,16 +166,25 @@ export default observer(function (props: SmartImageProps) {
         /**
          * Thumbnail
          * */
-        store.showOverlay && thumbnail && (
+        store.showOverlay && props.thumbnail && (
           <Image
             key={`thumbnail:${store.retries}`}
-            blurRadius={1}
+            blurRadius={5}
             style={props.style}
-            source={thumbnail}
+            source={props.thumbnail}
           />
         )
       }
       {dataSaverEnabled && imageOverlay}
     </View>
   );
+});
+
+const styles = StyleSheet.create({
+  downloadButton: {
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    borderRadius: 100,
+    width: 50,
+    height: 50,
+  },
 });

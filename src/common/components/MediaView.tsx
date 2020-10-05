@@ -1,39 +1,37 @@
 //@ts-nocheck
+import { observer } from 'mobx-react';
 import React, { Component } from 'react';
 
-import { observer } from 'mobx-react';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import { SharedElement } from 'react-navigation-shared-element';
-
 import {
-  Text,
-  StyleSheet,
-  TouchableOpacity,
   Alert,
-  View,
-  Dimensions,
   Clipboard,
+  Dimensions,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
   ViewStyle,
 } from 'react-native';
-import { CommonStyle } from '../../styles/Common';
-
-import ExplicitImage from './explicit/ExplicitImage';
-import domain from '../helpers/domain';
+import { showMessage } from 'react-native-flash-message';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { SharedElement } from 'react-navigation-shared-element';
+import type ActivityModel from 'src/newsfeed/ActivityModel';
 import MindsVideo from '../../media/MindsVideo';
+import { MindsVideoStoreType } from '../../media/v2/mindsVideo/createMindsVideoStore';
 import MindsVideoV2 from '../../media/v2/mindsVideo/MindsVideo';
+import Colors from '../../styles/Colors';
+import ThemedStyles from '../../styles/ThemedStyles';
+import domain from '../helpers/domain';
 import mediaProxyUrl from '../helpers/media-proxy-url';
+import testID from '../helpers/testID';
 import download from '../services/download.service';
+import featuresService from '../services/features.service';
+import i18n from '../services/i18n.service';
+import logService from '../services/log.service';
 
 import openUrlService from '../services/open-url.service';
-import logService from '../services/log.service';
-import testID from '../helpers/testID';
-import i18n from '../services/i18n.service';
-import { showMessage } from 'react-native-flash-message';
-import Colors from '../../styles/Colors';
-import type ActivityModel from 'src/newsfeed/ActivityModel';
-import { MindsVideoStoreType } from '../../media/v2/mindsVideo/createMindsVideoStore';
-import featuresService from '../services/features.service';
-import ThemedStyles from '../../styles/ThemedStyles';
+
+import ExplicitImage from './explicit/ExplicitImage';
 
 type PropsType = {
   entity: ActivityModel;
@@ -83,19 +81,31 @@ export default class MediaView extends Component<PropsType> {
       case 'image':
       case 'batch':
         source = this.props.entity.getThumbSource('xlarge');
-        return this.getImage(source, this.props.entity.getThumbSource('small'));
+        return this.getImage(
+          source,
+          // do not show a thumbnail for GIFs
+          !this.props.entity.isGif() &&
+            this.props.entity.getThumbSource('small'),
+        );
       case 'video':
         return this.getVideo();
     }
 
     if (this.props.entity.perma_url) {
       source = {
-        uri: this.props.entity.thumbnail_src,
+        uri:
+          this.props.entity.type === 'comment'
+            ? this.props.entity.thumbnail_src
+            : mediaProxyUrl(this.props.entity.thumbnail_src),
+      };
+
+      const thumbnail = {
+        uri: mediaProxyUrl(this.props.entity.thumbnail_src, 30),
       };
 
       return (
         <View style={styles.richMediaContainer}>
-          {source.uri ? this.getImage(source) : null}
+          {source.uri ? this.getImage(source, thumbnail) : null}
           <TouchableOpacity style={styles.richMedia} onPress={this.openLink}>
             <Text style={styles.title}>{title}</Text>
             <Text style={styles.domain}>

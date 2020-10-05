@@ -61,7 +61,7 @@ export default class CaptureMetaPreview extends Component {
           style={style.thumbnail}
           indicator={ProgressCircle}
           threshold={150}
-          source={{ uri: this.props.meta.thumbnail }}
+          source={{ uri: mediaProxyUrl(this.props.meta.thumbnail) }}
           resizeMode={FastImage.resizeMode.cover}
           onError={this.imageError}
         />
