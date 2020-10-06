@@ -4,10 +4,10 @@ import type { MindsVideoStoreType } from '../createMindsVideoStore';
 import Icon from 'react-native-vector-icons/Ionicons';
 import type ActivityModel from '../../../../newsfeed/ActivityModel';
 import type CommentModel from '../../../../comments/CommentModel';
-import { View, TouchableWithoutFeedback, Text, Platform } from 'react-native';
+import { View, TouchableWithoutFeedback, Text } from 'react-native';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 import ProgressBar from '../ProgressBar';
-import { styles } from './styles';
+import { styles, iconSize, iconResSize, playSize } from './styles';
 import Colors from '../../../../styles/Colors';
 // workaround to fix tooltips on android
 import Tooltip from 'rne-modal-tooltip';
@@ -20,10 +20,6 @@ type PropsType = {
 type SourceSelectorPropsType = {
   localStore: MindsVideoStoreType;
 };
-
-const iconSize = Platform.select({ ios: 30, android: 26 });
-const iconResSize = Platform.select({ ios: 28, android: 24 });
-const playSize = Platform.select({ ios: 68, android: 58 });
 
 const SourceSelector = ({ localStore }: SourceSelectorPropsType) => {
   const theme = ThemedStyles.style;
@@ -71,17 +67,19 @@ const Controls = observer(({ localStore, entity }: PropsType) => {
         <View style={styles.overlayContainer}>
           <View
             style={[theme.positionAbsolute, theme.centered, theme.marginTop2x]}>
-            <Icon
-              onPress={() =>
-                localStore.paused
-                  ? localStore.play(Boolean(localStore.volume))
-                  : localStore.pause()
-              }
-              style={[styles.videoIcon, styles.textShadow]}
-              name={localStore.paused ? 'md-play-circle' : 'md-pause'}
-              size={playSize}
-              color={Colors.light}
-            />
+            <View style={[theme.centered, styles.playContainer]}>
+              <Icon
+                onPress={() =>
+                  localStore.paused
+                    ? localStore.play(Boolean(localStore.volume))
+                    : localStore.pause()
+                }
+                style={[styles.videoIcon, styles.textShadow]}
+                name={localStore.paused ? 'play' : 'pause'}
+                size={playSize - 25}
+                color={Colors.light}
+              />
+            </View>
           </View>
           {localStore.player && entity && (
             <View style={styles.controlSettingsContainer}>

@@ -1,43 +1,39 @@
+import _ from 'lodash';
+import { observer } from 'mobx-react';
 import React, { Component } from 'react';
-
-// workaround to fix tooltips on android
-import Tooltip from 'rne-modal-tooltip';
-
 import {
   PanResponder,
+  Platform,
+  StyleProp,
   StyleSheet,
   Text,
   TouchableWithoutFeedback,
-  Platform,
   View,
-  StyleProp,
   ViewStyle,
 } from 'react-native';
-
+import Icon from 'react-native-vector-icons/Ionicons';
 import Video from 'react-native-video';
-import _ from 'lodash';
+// workaround to fix tooltips on android
+import Tooltip from 'rne-modal-tooltip';
+import type CommentModel from '../comments/CommentModel';
+import ActivityIndicator from '../common/components/ActivityIndicator';
+import ExplicitImage from '../common/components/explicit/ExplicitImage';
+import getVideoThumb from '../common/helpers/get-video-thumbnail';
+import apiService from '../common/services/api.service';
+import attachmentService from '../common/services/attachment.service';
+import featuresService from '../common/services/features.service';
+import i18n from '../common/services/i18n.service';
+import logService from '../common/services/log.service';
+import videoPlayerService from '../common/services/video-player.service';
+import { UserError } from '../common/UserError';
+import NavigationService from '../navigation/NavigationService';
+import type ActivityModel from '../newsfeed/ActivityModel';
 import settingsStore from '../settings/SettingsStore';
-
+import colors from '../styles/Colors';
+import { CommonStyle as CS } from '../styles/Common';
 import ProgressBar from './ProgressBar';
 
 let FORWARD_DURATION = 7;
-
-import { observer } from 'mobx-react';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { CommonStyle as CS } from '../styles/Common';
-import colors from '../styles/Colors';
-import ExplicitImage from '../common/components/explicit/ExplicitImage';
-import logService from '../common/services/log.service';
-import i18n from '../common/services/i18n.service';
-import attachmentService from '../common/services/attachment.service';
-import videoPlayerService from '../common/services/video-player.service';
-import apiService from '../common/services/api.service';
-import NavigationService from '../navigation/NavigationService';
-import type CommentModel from '../comments/CommentModel';
-import type ActivityModel from '../newsfeed/ActivityModel';
-import featuresService from '../common/services/features.service';
-import { UserError } from '../common/UserError';
-import ActivityIndicator from '../common/components/ActivityIndicator';
 
 const isIOS = Platform.OS === 'ios';
 
@@ -521,12 +517,11 @@ class MindsVideo extends Component<PropsType, StateType> {
     let { entity, ignoreDataSaver } = this.props;
     let { paused } = this.state;
     const dataSaverEnabled = !ignoreDataSaver && settingsStore.dataSaverEnabled;
+    const posterSource = getVideoThumb(entity, 1024);
+    const thumbnailSource =
+      entity && dataSaverEnabled && getVideoThumb(entity, 16);
 
-    const thumb_uri =
-      !dataSaverEnabled && entity
-        ? entity.get('custom_data.thumbnail_src') || entity.thumbnail_src
-        : null;
-    if (this.state.active || !thumb_uri) {
+    if (this.state.active || !posterSource) {
       return (
         <Video
           key={`video${this.state.source}`}
@@ -549,12 +544,12 @@ class MindsVideo extends Component<PropsType, StateType> {
         />
       );
     } else {
-      const image = { uri: thumb_uri };
       return (
         <ExplicitImage
           onLoadEnd={this.onLoadEnd}
           onError={this.onError}
-          source={image}
+          source={posterSource}
+          thumbnail={thumbnailSource}
           entity={entity}
         />
       );

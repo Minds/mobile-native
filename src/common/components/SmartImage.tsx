@@ -28,6 +28,8 @@ interface SmartImageProps {
   source: ImageURISource;
   onLoadEnd?: Function;
   resizeMode?: FastImage.ResizeMode;
+  withoutDownloadButton?: boolean;
+  imageVisible?: boolean;
 }
 
 /**
@@ -35,7 +37,7 @@ interface SmartImageProps {
  * @param {Object} props
  */
 export default observer(function (props: SmartImageProps) {
-  const { ignoreDataSaver, ...otherProps } = props;
+  const { ignoreDataSaver, withoutDownloadButton, ...otherProps } = props;
 
   const theme = ThemedStyles.style;
   const dataSaverEnabled = settingsStore.dataSaverEnabled;
@@ -46,9 +48,9 @@ export default observer(function (props: SmartImageProps) {
     progress: undefined,
     imageVisible: ignoreDataSaver ? true : !dataSaverEnabled,
     showOverlay: ignoreDataSaver ? false : dataSaverEnabled,
-    showImage() {
-      store.imageVisible = true;
-      store.showOverlay = false;
+    showImage(show: boolean = true) {
+      store.imageVisible = show;
+      store.showOverlay = !show;
     },
     setError(error) {
       store.error = true;
@@ -110,6 +112,12 @@ export default observer(function (props: SmartImageProps) {
   }));
 
   useEffect(() => {
+    if (props.imageVisible) {
+      store.showImage(props.imageVisible);
+    }
+  }, [props.imageVisible]);
+
+  useEffect(() => {
     store.showImageIfCacheExists();
   }, []);
 
@@ -154,22 +162,24 @@ export default observer(function (props: SmartImageProps) {
           opacity,
         },
       ]}>
-      <TouchableOpacity
-        activeOpacity={0.9}
-        onPress={store.progress === undefined ? store.onDownload : undefined}
-        style={[theme.positionAbsolute, theme.centered]}>
-        <View style={[styles.downloadButton, theme.centered]}>
-          {typeof store.progress === 'number' ? (
-            <ProgressCircle
-              progress={store.progress}
-              color="white"
-              indeterminate={store.imageVisible && store.progress === 0}
-            />
-          ) : (
-            <Icon name="arrow-down" style={theme.colorWhite} size={30} />
-          )}
-        </View>
-      </TouchableOpacity>
+      {!withoutDownloadButton && (
+        <TouchableOpacity
+          activeOpacity={0.9}
+          onPress={store.progress === undefined ? store.onDownload : undefined}
+          style={[theme.positionAbsolute, theme.centered]}>
+          <View style={[styles.downloadButton, theme.centered]}>
+            {typeof store.progress === 'number' ? (
+              <ProgressCircle
+                progress={store.progress}
+                color="white"
+                indeterminate={store.imageVisible && store.progress === 0}
+              />
+            ) : (
+              <Icon name="arrow-down" style={theme.colorWhite} size={30} />
+            )}
+          </View>
+        </TouchableOpacity>
+      )}
     </Animated.View>
   );
 

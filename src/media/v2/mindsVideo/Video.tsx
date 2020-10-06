@@ -1,12 +1,11 @@
-import React, { useEffect, useRef } from 'react';
-import { observer } from 'mobx-react';
-import settingsStore from '../../../settings/SettingsStore';
-import { MindsVideoStoreType } from './createMindsVideoStore';
-import type ActivityModel from '../../../newsfeed/ActivityModel';
-import type CommentModel from '../../../comments/CommentModel';
-import { Video, ResizeMode, VideoReadyForDisplayEvent } from 'expo-av';
-import ThemedStyles from '../../../styles/ThemedStyles';
+import { ResizeMode, Video, VideoReadyForDisplayEvent } from 'expo-av';
 import { toJS } from 'mobx';
+import { observer } from 'mobx-react';
+import React, { useEffect, useRef } from 'react';
+import type CommentModel from '../../../comments/CommentModel';
+import type ActivityModel from '../../../newsfeed/ActivityModel';
+import ThemedStyles from '../../../styles/ThemedStyles';
+import { MindsVideoStoreType } from './createMindsVideoStore';
 
 type PropsType = {
   entity?: ActivityModel | CommentModel;
@@ -14,25 +13,12 @@ type PropsType = {
   repeat?: boolean;
   resizeMode?: ResizeMode;
   onReadyForDisplay?: (event: VideoReadyForDisplayEvent) => void;
-  ignoreDataSaver?: boolean;
 };
 
 const ExpoVideo = observer(
-  ({
-    entity,
-    localStore,
-    repeat = true,
-    resizeMode,
-    onReadyForDisplay,
-    ignoreDataSaver,
-  }: PropsType) => {
+  ({ localStore, repeat = true, resizeMode, onReadyForDisplay }: PropsType) => {
     const theme = ThemedStyles.style;
     const playbackObject = useRef<Video>(null);
-    const dataSaverEnabled = !ignoreDataSaver && settingsStore.dataSaverEnabled;
-
-    const thumb_uri = entity
-      ? entity.get('custom_data.thumbnail_src') || entity.thumbnail_src
-      : null;
 
     const source = localStore.video.uri ? toJS(localStore.video) : undefined;
 
@@ -41,7 +27,6 @@ const ExpoVideo = observer(
         localStore.setPlayer(playbackObject.current);
       }
     }, [localStore]);
-
     return (
       <Video
         key={`video${localStore.source}`}
@@ -50,8 +35,6 @@ const ExpoVideo = observer(
         onLoad={localStore.onVideoLoad}
         onError={localStore.onError}
         source={source}
-        usePoster={!!thumb_uri}
-        posterSource={dataSaverEnabled ? undefined : { uri: thumb_uri }}
         isLooping={repeat}
         resizeMode={resizeMode || 'contain'}
         useNativeControls={false}

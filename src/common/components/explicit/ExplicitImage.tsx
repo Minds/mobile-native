@@ -12,6 +12,7 @@ import SmartImage from '../SmartImage';
 interface PropsType extends FastImageProperties {
   onLoadEnd: () => void;
   source: Source;
+  thumbnail?: Source;
   onError: (error: any) => void;
   entity?: BaseModel;
   ignoreDataSaver?: boolean;
