@@ -12,11 +12,11 @@ import FastImage from 'react-native-fast-image';
 import ProgressCircle from 'react-native-progress/CircleSnail';
 import Animated from 'react-native-reanimated';
 import { mix, useTimingTransition } from 'react-native-redash';
-
 import Icon from 'react-native-vector-icons/Ionicons';
 import settingsStore from '../../settings/SettingsStore';
 import ThemedStyles from '../../styles/ThemedStyles';
 import connectivityService from '../services/connectivity.service';
+import imageCacheStorageService from '../services/image-cache.storage.service';
 import RetryableImage from './RetryableImage';
 
 interface SmartImageProps {
@@ -60,7 +60,12 @@ export default observer(function (props: SmartImageProps) {
     },
     onLoadEnd() {
       store.showOverlay = false;
+      store.progress = undefined;
       store.retries = 0;
+
+      if (props.source.uri) {
+        imageCacheStorageService.addCache(props.source.uri);
+      }
 
       if (props.onLoadEnd) {
         props.onLoadEnd();
@@ -87,7 +92,26 @@ export default observer(function (props: SmartImageProps) {
       store.error = false;
       store.retries++;
     },
+    showImageIfCacheExists() {
+      if (!props.source.uri) {
+        return;
+      }
+
+      imageCacheStorageService
+        .checkCacheExists(props.source.uri)
+        .then((cached) => {
+          if (!cached) {
+            return;
+          }
+
+          this.showImage();
+        });
+    },
   }));
+
+  useEffect(() => {
+    store.showImageIfCacheExists();
+  }, []);
 
   const showOverlayTransition = useTimingTransition(store.showOverlay, {
     duration: 150,
