@@ -6,6 +6,8 @@ import { useNavigation } from '@react-navigation/native';
 import type UserModel from '../UserModel';
 import i18n from '../../common/services/i18n.service';
 import type { AppStackParamList } from '../../navigation/NavigationTypes';
+import shareService from '../../share/ShareService';
+import { MINDS_URI } from '../../config/Config';
 
 /**
  * Get menu options
@@ -13,6 +15,7 @@ import type { AppStackParamList } from '../../navigation/NavigationTypes';
  */
 const getOptions = (channel: UserModel, isSubscribedToTier: boolean) => {
   let options = [i18n.t('cancel')];
+  options.push(i18n.t('channel.share'));
   if (channel.isSubscribed()) {
     options.push(i18n.t('channel.unsubscribe'));
   }
@@ -61,6 +64,12 @@ const ChannelMoreMenu = (props: PropsType, ref: any) => {
           break;
         case i18n.t('settings.billingOptions.2'):
           navigation.navigate('RecurringPayments', {});
+          break;
+        case i18n.t('channel.share'):
+          shareService.share(
+            i18n.t('channel.share'),
+            MINDS_URI + props.channel.username,
+          );
           break;
       }
     },
