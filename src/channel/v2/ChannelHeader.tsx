@@ -27,7 +27,6 @@ import TopbarTabbar, {
   TabType,
 } from '../../common/components/topbar-tabbar/TopbarTabbar';
 import AboutTab from './tabs/AboutTab';
-import ChannelTopBar from './ChannelTopBar';
 
 type PropsType = {
   store: ChannelStoreType;
@@ -109,11 +108,6 @@ const ChannelHeader = observer((props: PropsType) => {
 
   return (
     <View style={[styles.container, cleanTop]}>
-      <ChannelTopBar
-        navigation={props.navigation}
-        store={props.store}
-        hideButtons={props.hideButtons}
-      />
       <ImageBackground
         style={styles.banner}
         source={channel.getBannerSource()}
@@ -229,7 +223,7 @@ const styles = StyleSheet.create({
   },
   bannerSmallButton: {
     position: 'absolute',
-    top: 60,
+    top: 8,
     left: 5,
   },
   avatarSmallButton: {

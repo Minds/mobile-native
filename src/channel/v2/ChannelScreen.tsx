@@ -13,6 +13,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import BlockedChannel from '../../common/components/BlockedChannel';
 import sessionService from '../../common/services/session.service';
 import ExplicitOverlay from '../../common/components/explicit/ExplicitOverlay';
+import ChannelTopBar from './ChannelTopBar';
 
 type PropsType = {
   navigation: any;
@@ -80,6 +81,11 @@ const ChannelScreen = observer((props: PropsType) => {
   ) {
     return (
       <View style={[theme.backgroundSecondary, theme.flexContainer]}>
+        <ChannelTopBar
+          navigation={props.navigation}
+          store={store}
+          hideButtons
+        />
         <ChannelHeader
           store={store}
           navigation={props.navigation}
@@ -106,15 +112,18 @@ const ChannelScreen = observer((props: PropsType) => {
   ) : undefined;
 
   return (
-    <FeedList
-      feedStore={store.feedStore}
-      renderActivity={renderActivity}
-      header={<ChannelHeader store={store} navigation={props.navigation} />}
-      navigation={props.navigation}
-      emptyMessage={emptyMessage}
-      style={[theme.backgroundSecondary, theme.flexContainer]}
-      hideItems={store.tab !== 'feed'}
-    />
+    <>
+      <ChannelTopBar navigation={props.navigation} store={store} />
+      <FeedList
+        feedStore={store.feedStore}
+        renderActivity={renderActivity}
+        header={<ChannelHeader store={store} navigation={props.navigation} />}
+        navigation={props.navigation}
+        emptyMessage={emptyMessage}
+        style={[theme.backgroundSecondary, theme.flexContainer]}
+        hideItems={store.tab !== 'feed'}
+      />
+    </>
   );
 });
 
