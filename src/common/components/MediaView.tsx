@@ -192,6 +192,29 @@ export default class MediaView extends Component<PropsType> {
     }
   }
 
+  /**
+   * Toggle video sound on/off
+   */
+  toggleSound() {
+    this.videoPlayer?.toggleVolume();
+  }
+
+  /**
+   * Hide the video controls no matter if it is paused
+   * @param forceHideOverlay
+   */
+  setForceHideOverlay(forceHideOverlay: boolean) {
+    this.videoPlayer?.setForceHideOverlay(forceHideOverlay);
+  }
+
+  /**
+   * Show or hide video controls
+   * @param showOverlay
+   */
+  setShowOverlay(showOverlay: boolean) {
+    this.videoPlayer?.setShowOverlay(showOverlay);
+  }
+
   imageError = (err) => {
     logService.log('[MediaView] Image error: ' + this.source.uri, err);
     this.setState({ imageLoadFailed: true });

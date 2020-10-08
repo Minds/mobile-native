@@ -52,7 +52,8 @@ const Controls = observer(({ localStore, entity }: PropsType) => {
   const theme = ThemedStyles.style;
 
   const mustShow = Boolean(
-    localStore.showOverlay || (localStore.paused && entity),
+    localStore.showOverlay ||
+      (!localStore.forceHideOverlay && localStore.paused && entity),
   );
 
   if (mustShow) {
