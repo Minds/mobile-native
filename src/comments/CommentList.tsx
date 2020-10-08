@@ -28,7 +28,6 @@ import CenteredLoading from '../common/components/CenteredLoading';
 import UserAutocomplete from '../common/components/UserAutocomplete';
 import CaptureMetaPreview from '../capture/CaptureMetaPreview';
 
-import { CommonStyle as CS } from '../styles/Common';
 import { ComponentsStyle as CmpStyle } from '../styles/Components';
 import i18n from '../common/services/i18n.service';
 
@@ -45,6 +44,7 @@ import {
   TouchableOpacity as TouchableOpacityAndroid,
 } from 'react-native-gesture-handler';
 import ActivityIndicator from '../common/components/ActivityIndicator';
+import KeyboardSpacingView from '../common/components/KeyboardSpacingView';
 
 const TouchableOpacity =
   Platform.OS === 'ios' ? TouchableOpacityIos : TouchableOpacityAndroid;
@@ -81,8 +81,6 @@ type CommentType = {
 };
 
 const isIOS = Platform.OS === 'ios';
-const vPadding = isIphoneX ? 88 : 66;
-const paddingBottom = isIphoneX ? { paddingBottom: 20 } : null;
 const inputStyle = isIOS
   ? { marginTop: 3, paddingVertical: 2 }
   : { marginTop: 2, paddingVertical: 2 };
@@ -93,6 +91,8 @@ const inputStyle = isIOS
 @inject('user')
 @observer
 class CommentList extends React.Component<PropsType, StateType> {
+  viewRef = React.createRef<View>(null);
+  keybAvoidRef = React.createRef<KeyboardAvoidingView>(null);
   listRef: FlatList<any>;
   actionAttachmentSheetRef?: ActionSheet;
   actionSheetRef?: ActionSheet;
@@ -172,6 +172,11 @@ class CommentList extends React.Component<PropsType, StateType> {
           }, 200);
         }
       }
+
+      // if it is the root component and the main input is focused scroll
+      if (this.focusedChild === -1) {
+        this.scrollToBottom();
+      }
     }
     // this.scrollBottomIfNeeded();
   };
@@ -179,7 +184,7 @@ class CommentList extends React.Component<PropsType, StateType> {
   /**
    * On keyboard  hide
    */
-  _keyboardDidHide = (e) => {
+  _keyboardDidHide = () => {
     if (!this.props.parent) {
       this.setState({ hideInput: false });
     }
@@ -245,7 +250,7 @@ class CommentList extends React.Component<PropsType, StateType> {
       //this.forceUpdate();
     } else {
       const index = comments.indexOf(item);
-      const frame = this.listRef._listRef._getFrameMetricsApprox(index);
+      const frame = this.listRef._listRef._getFrameMetrithemeApprox(index);
       if (this.props.onInputFocus) {
         this.props.onInputFocus(item, offset + frame.offset + frame.length);
       }
@@ -268,7 +273,7 @@ class CommentList extends React.Component<PropsType, StateType> {
       }, 50);
     } else {
       const index = comments.indexOf(item);
-      const frame = this.listRef._listRef._getFrameMetricsApprox(index);
+      const frame = this.listRef._listRef._getFrameMetrithemeApprox(index);
       if (this.props.onCommentFocus) {
         this.props.onCommentFocus(item, offset + frame.offset);
       }
@@ -386,8 +391,8 @@ class CommentList extends React.Component<PropsType, StateType> {
             ]}>
             <TextInput
               style={[
-                CS.flexContainer,
-                CS.marginLeft,
+                theme.flexContainer,
+                theme.marginLeft,
                 inputStyle,
                 ThemedStyles.style.colorPrimaryText,
               ]}
@@ -410,24 +415,24 @@ class CommentList extends React.Component<PropsType, StateType> {
             ) : comments.saving || attachment.checkingVideoLength ? (
               <ActivityIndicator size={'large'} />
             ) : (
-              <View style={[CS.rowJustifyEnd, CS.centered]}>
+              <View style={[theme.rowJustifyEnd, theme.centered]}>
                 <TouchableOpacity
                   onPress={this.showAttachment}
-                  style={CS.paddingRight2x}>
+                  style={theme.paddingRight2x}>
                   <Icon
                     name="md-attach"
                     size={24}
-                    style={[CS.paddingRight2x, ThemedStyles.style.colorIcon]}
+                    style={[theme.paddingRight2x, ThemedStyles.style.colorIcon]}
                   />
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={comments.toggleMature}
-                  style={CS.paddingRight2x}>
+                  style={theme.paddingRight2x}>
                   <IconMd
                     name="explicit"
                     size={24}
                     style={[
-                      CS.paddingRight2x,
+                      theme.paddingRight2x,
                       comments.mature
                         ? ThemedStyles.style.colorAlert
                         : ThemedStyles.style.colorIcon,
@@ -436,7 +441,7 @@ class CommentList extends React.Component<PropsType, StateType> {
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={this.postComment}
-                  style={CS.paddingRight2x}
+                  style={theme.paddingRight2x}
                   testID="PostCommentButton">
                   <Icon
                     name="md-send"
@@ -456,9 +461,9 @@ class CommentList extends React.Component<PropsType, StateType> {
               name="md-close"
               size={36}
               style={[
-                CS.positionAbsoluteTopRight,
-                CS.colorWhite,
-                CS.paddingRight2x,
+                theme.positionAbsoluteTopRight,
+                theme.colorWhite,
+                theme.paddingRight2x,
               ]}
               onPress={this.deleteAttachment}
             />
@@ -484,7 +489,7 @@ class CommentList extends React.Component<PropsType, StateType> {
 
       if (onCommentFocus && this.listRef && this.listRef._listRef) {
         setTimeout(() => {
-          const frame = this.listRef._listRef._getFrameMetricsApprox(index);
+          const frame = this.listRef._listRef._getFrameMetrithemeApprox(index);
           onCommentFocus(comment, frame.offset + frame.length);
         }, 1000);
       }
@@ -520,6 +525,7 @@ class CommentList extends React.Component<PropsType, StateType> {
    */
   getHeader(): React.Node {
     const header = this.props.header || null;
+    const theme = ThemedStyles.style;
     return (
       <View>
         {header}
@@ -529,15 +535,15 @@ class CommentList extends React.Component<PropsType, StateType> {
               this.loadComments(true);
             }}
             underlayColor="transparent"
-            style={[CS.rowJustifyCenter, CS.padding2x]}>
-            <Text style={[CS.fontM, CS.colorPrimary]}>
+            style={[theme.rowJustifyCenter, theme.padding2x]}>
+            <Text style={[theme.fontM, theme.colorPrimary]}>
               <IconMC name="update" size={16} />{' '}
               {i18n.t('activity.loadEarlier')}{' '}
             </Text>
           </TouchableOpacity>
         ) : null}
         {this.props.store.loadingPrevious && this.props.store.loaded && (
-          <ActivityIndicator size="small" style={CS.paddingTop2x} />
+          <ActivityIndicator size="small" style={theme.paddingTop2x} />
         )}
         {this.getErrorLoading(this.props.store.errorLoadingPrevious, true)}
       </View>
@@ -558,6 +564,7 @@ class CommentList extends React.Component<PropsType, StateType> {
   };
 
   getErrorLoading(errorLoading: boolean): React.Node {
+    const theme = ThemedStyles.style;
     if (errorLoading) {
       const message = this.props.store.comments.length
         ? i18n.t('cantLoadMore') + '\n' + i18n.t('tryAgain')
@@ -567,12 +574,12 @@ class CommentList extends React.Component<PropsType, StateType> {
         <Text
           onPress={(): any => this.loadComments()}
           style={[
-            CS.fontM,
-            CS.colorDarkGreyed,
-            CS.marginBottom,
-            CS.textCenter,
+            theme.fontM,
+            theme.colorDarkGreyed,
+            theme.marginBottom,
+            theme.textCenter,
           ]}>
-          <Text style={CS.fontSemibold}>{i18n.t('ops')}</Text> {message}
+          <Text style={theme.fontSemibold}>{i18n.t('ops')}</Text> {message}
         </Text>
       );
     }
@@ -583,21 +590,22 @@ class CommentList extends React.Component<PropsType, StateType> {
    * Get list footer
    */
   getFooter(): React.Node {
+    const theme = ThemedStyles.style;
     return (
       <View>
         {this.props.store.loadNext && !this.props.store.loadingNext ? (
           <TouchableOpacity
             onPress={(): any => this.loadComments(true, false)}
             underlayColor="transparent"
-            style={[CS.rowJustifyCenter, CS.padding2x]}>
-            <Text style={[CS.fontM, CS.colorPrimary]}>
+            style={[theme.rowJustifyCenter, theme.padding2x]}>
+            <Text style={[theme.fontM, theme.colorPrimary]}>
               <IconMC name="update" size={16} />
               {i18n.t('activity.loadLater')}{' '}
             </Text>
           </TouchableOpacity>
         ) : null}
         {this.props.store.loadingNext && this.props.store.loaded && (
-          <ActivityIndicator size="small" style={CS.paddingTop2x} />
+          <ActivityIndicator size="small" style={theme.paddingTop2x} />
         )}
         {this.getErrorLoading(this.props.store.errorLoadingNext, false)}
       </View>
@@ -667,14 +675,14 @@ class CommentList extends React.Component<PropsType, StateType> {
     const footer = this.getFooter();
 
     const emptyThread = (
-      <View style={CS.textCenter}>
+      <View style={theme.textCenter}>
         {this.isWholeThreadBlocked() && (
           <Text
             style={[
-              CS.textCenter,
-              CS.marginBottom2x,
-              CS.marginTop2x,
-              CS.fontLight,
+              theme.textCenter,
+              theme.marginBottom2x,
+              theme.marginTop2x,
+              theme.fontLight,
             ]}>
             This thread contains replies from blocked channels.
           </Text>
@@ -683,64 +691,54 @@ class CommentList extends React.Component<PropsType, StateType> {
     );
 
     return (
-      <View style={[CS.flexContainer, paddingBottom]} onLayout={this.onLayout}>
-        <KeyboardAvoidingView
-          style={CS.flexContainer}
-          behavior={'padding'}
-          keyboardVerticalOffset={
-            this.props.keyboardVerticalOffset
-              ? -this.props.keyboardVerticalOffset
-              : vPadding
-          }
-          enabled={
-            !this.props.parent
-              ? this.state.focused || this.focusedChild !== -1
-              : false
-          }>
-          <View style={[theme.fullHeight, theme.fullWidth]}>
-            <FlatList
-              ref={this.setListRef}
-              ListHeaderComponent={header}
-              ListFooterComponent={footer}
-              data={comments}
-              keyboardShouldPersistTaps={'handled'}
-              removeClippedSubviews={false}
-              renderItem={this.renderComment}
-              keyExtractor={(item) => item.guid}
-              initialNumToRender={25}
-              onRefresh={this.refresh}
-              refreshing={this.props.store.refreshing}
-              ListEmptyComponent={
-                this.props.store.loaded && !this.props.store.refreshing ? (
-                  emptyThread
-                ) : (
-                  <CenteredLoading />
-                )
-              }
-              style={theme.flexContainer}
-            />
-            {this.renderPoster()}
-            <UserAutocomplete
-              text={this.props.store.text}
-              selection={this.state.selection}
-              onSelect={this.setText}
-              noFloat={true}
-            />
-          </View>
-          {actionsheet}
-          <ActionSheet
-            ref={this.setActionSheetRef}
-            options={[
-              i18n.t('cancel'),
-              i18n.t('capture.gallery'),
-              i18n.t('capture.photo'),
-              i18n.t('capture.video'),
-            ]}
-            onPress={this.selectMediaSource}
-            cancelButtonIndex={0}
+      <KeyboardSpacingView
+        style={theme.flexContainer}
+        onLayout={this.onLayout}
+        ref={this.viewRef}
+        enabled={!this.props.parent}>
+        <View style={[theme.fullHeight, theme.fullWidth]}>
+          <FlatList
+            ref={this.setListRef}
+            ListHeaderComponent={header}
+            ListFooterComponent={footer}
+            data={comments}
+            keyboardShouldPersistTaps={'handled'}
+            removeClippedSubviews={false}
+            renderItem={this.renderComment}
+            keyExtractor={(item) => item.guid}
+            initialNumToRender={25}
+            onRefresh={this.refresh}
+            refreshing={this.props.store.refreshing}
+            ListEmptyComponent={
+              this.props.store.loaded && !this.props.store.refreshing ? (
+                emptyThread
+              ) : (
+                <CenteredLoading />
+              )
+            }
+            style={theme.flexContainer}
           />
-        </KeyboardAvoidingView>
-      </View>
+          {this.renderPoster()}
+          <UserAutocomplete
+            text={this.props.store.text}
+            selection={this.state.selection}
+            onSelect={this.setText}
+            noFloat={true}
+          />
+        </View>
+        {actionsheet}
+        <ActionSheet
+          ref={this.setActionSheetRef}
+          options={[
+            i18n.t('cancel'),
+            i18n.t('capture.gallery'),
+            i18n.t('capture.photo'),
+            i18n.t('capture.video'),
+          ]}
+          onPress={this.selectMediaSource}
+          cancelButtonIndex={0}
+        />
+      </KeyboardSpacingView>
     );
   }
 }
