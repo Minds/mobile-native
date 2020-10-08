@@ -32,7 +32,6 @@ exports[`Activity screen component renders correctly  1`] = `
             undefined,
             Object {
               "borderBottomWidth": 0,
-              "elevation": 3,
               "shadowColor": "#000",
               "shadowOffset": Object {
                 "height": 1,
@@ -184,6 +183,7 @@ exports[`Activity screen component renders correctly  1`] = `
         </View>
         <View>
           <Text
+            numberOfLines={1}
             style={
               Array [
                 undefined,
@@ -656,10 +656,17 @@ exports[`Activity screen component renders correctly  1`] = `
     </View>
   </View>
   <BottomSheet
+    callbackNode={
+      Array [
+        Array [
+          1,
+        ],
+      ]
+    }
     enabledContentGestureInteraction={false}
-    enabledContentTapInteraction={true}
+    enabledContentTapInteraction={false}
     enabledHeaderGestureInteraction={true}
-    enabledInnerScrolling={true}
+    enabledInnerScrolling={false}
     initialSnap={0}
     onCloseEnd={[Function]}
     renderContent={[Function]}
@@ -667,7 +674,8 @@ exports[`Activity screen component renders correctly  1`] = `
     snapPoints={
       Array [
         0,
-        1133.8999999999999,
+        760.3799999999999,
+        1160.58,
       ]
     }
   />
