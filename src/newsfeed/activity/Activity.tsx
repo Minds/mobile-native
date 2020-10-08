@@ -384,6 +384,7 @@ export default class Activity extends Component<PropsType> {
    * Show Owner
    */
   showOwner() {
+    const theme = ThemedStyles.style;
     const rightToolbar: React.ReactNode = (
       <View>
         <ActivityActionSheet
@@ -402,27 +403,21 @@ export default class Activity extends Component<PropsType> {
         navigation={this.props.navigation}
         rightToolbar={this.props.hideTabs ? null : rightToolbar}
         storeUserTap={this.props.storeUserTap}>
-        <View style={ThemedStyles.style.rowJustifyStart}>
+        <View style={theme.rowJustifyStart}>
           <Text
             style={[
               styles.timestamp,
               CommonStyle.paddingRight,
-              ThemedStyles.style.colorTertiaryText,
+              theme.colorTertiaryText,
             ]}>
             {formatDate(this.props.entity.time_created, 'friendly')}
-          </Text>
-
-          {!!this.props.entity.edited && (
-            <View style={styles.boostTagContainer}>
-              <Text
-                style={[
-                  styles.boostTagLabel,
-                  ThemedStyles.style.colorSecondaryText,
-                ]}>
+            {!!this.props.entity.edited && (
+              <Text style={[theme.fontS, theme.colorSecondaryText]}>
+                {' '}
                 · {i18n.t('edited').toUpperCase()}
               </Text>
-            </View>
-          )}
+            )}
+          </Text>
         </View>
       </OwnerBlock>
     );
