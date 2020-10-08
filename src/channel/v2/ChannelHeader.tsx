@@ -8,7 +8,6 @@ import {
   ScrollView,
 } from 'react-native';
 import IconM from 'react-native-vector-icons/MaterialIcons';
-import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { observer } from 'mobx-react';
 
 import type { ChannelStoreType, ChannelTabType } from './createChannelStore';
@@ -109,12 +108,6 @@ const ChannelHeader = observer((props: PropsType) => {
 
   return (
     <View style={[styles.container, cleanTop]}>
-      <MIcon
-        size={30}
-        name="chevron-left"
-        style={[styles.backIcon, theme.colorIcon]}
-        onPress={props.navigation.goBack}
-      />
       <ImageBackground
         style={styles.banner}
         source={channel.getBannerSource()}
@@ -145,6 +138,8 @@ const ChannelHeader = observer((props: PropsType) => {
             onEditPress={() =>
               props.navigation.push('EditChannelScreen', { store: props.store })
             }
+            notShow={['message', 'wire', 'more']}
+            containerStyle={styles.buttonsMarginContainer}
           />
         )}
         {props.store.uploading && props.store.bannerProgress ? (
@@ -223,20 +218,17 @@ const ChannelHeader = observer((props: PropsType) => {
 });
 
 const styles = StyleSheet.create({
-  backIcon: {
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
-    shadowOffset: { height: 3, width: 0 },
-    elevation: 4,
+  buttonsMarginContainer: {
+    marginTop: 5,
   },
   bannerSmallButton: {
     position: 'absolute',
-    top: 33,
+    top: 8,
     left: 5,
   },
   avatarSmallButton: {
     position: 'absolute',
-    top: -5,
+    top: -10,
     right: -10,
   },
   description: {

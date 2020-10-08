@@ -2,7 +2,7 @@ import React, { useCallback, useRef } from 'react';
 import { View, StyleSheet, Platform } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { useNavigation } from '@react-navigation/native';
-import { Icon } from 'react-native-elements';
+import MIcon from 'react-native-vector-icons/MaterialIcons';
 import { observer } from 'mobx-react';
 import type { NativeStackNavigationProp } from 'react-native-screens/native-stack';
 import Button from '../../common/components/Button';
@@ -21,15 +21,22 @@ import type { GestureResponderEvent } from 'react-native';
 import { ChannelStoreType } from './createChannelStore';
 import { SupportTiersType } from '../../wire/WireTypes';
 
+type ButtonsType = 'edit' | 'more' | 'wire' | 'subscribe' | 'message' | 'join';
+
 type PropsType = {
   store: ChannelStoreType;
   onEditPress: (ev: GestureResponderEvent) => void;
+  notShow?: Array<ButtonsType>;
+  containerStyle?: any;
+  iconsStyle?: any;
 };
 
 const isIos = Platform.OS === 'ios';
 
 const isSubscribedToTier = (tiers: SupportTiersType[]) =>
   tiers.some((tier) => typeof tier.subscription_urn === 'string');
+
+const SIZE = 18;
 
 /**
  * Channel buttons
@@ -75,39 +82,46 @@ const ChannelButtons = observer((props: PropsType) => {
 
   if (!props.store.channel) return null;
 
+  const shouldShow = (button: ButtonsType) =>
+    !props.notShow || !props.notShow.includes(button);
+
   const showWire =
     !isIos &&
     !props.store.channel.blocked &&
     !props.store.channel.isOwner() &&
-    props.store.channel.can(FLAG_WIRE);
+    props.store.channel.can(FLAG_WIRE) &&
+    shouldShow('wire');
 
   const showSubscribe =
     !props.store.channel.isOwner() &&
     props.store.channel.can(FLAG_SUBSCRIBE) &&
-    !props.store.channel.subscribed;
+    !props.store.channel.subscribed &&
+    shouldShow('subscribe');
 
   const showMessage =
     !props.store.channel.isOwner() &&
     props.store.channel.isSubscribed() &&
-    props.store.channel.can(FLAG_MESSAGE);
+    props.store.channel.can(FLAG_MESSAGE) &&
+    shouldShow('message');
 
   const showEdit =
-    props.store.channel.isOwner() && props.store.channel.can(FLAG_EDIT_CHANNEL);
+    props.store.channel.isOwner() &&
+    props.store.channel.can(FLAG_EDIT_CHANNEL) &&
+    shouldShow('edit');
 
   const showJoin =
     !props.store.channel.isOwner() &&
     props.store.tiers &&
     props.store.tiers.length > 0 &&
-    !isTierSubscribed;
+    !isTierSubscribed &&
+    shouldShow('join');
+
+  const showMore = shouldShow('more');
 
   return (
     <View
-      style={[
-        theme.rowJustifyEnd,
-        styles.marginContainer,
-        theme.marginRight2x,
-      ]}>
-      {showEdit ? (
+      style={[theme.rowJustifyEnd, theme.marginRight2x, props.containerStyle]}>
+      {showEdit && (
         <View style={isIos ? undefined : theme.paddingTop2x}>
           <Button
             color={ThemedStyles.getColor('secondary_background')}
@@ -119,40 +133,32 @@ const ChannelButtons = observer((props: PropsType) => {
             inverted
           />
         </View>
-      ) : (
-        <Icon
-          raised
-          reverse
-          name="more-horiz"
-          type="material"
-          color={ThemedStyles.getColor('secondary_background')}
-          reverseColor={ThemedStyles.getColor('primary_text')}
-          size={15}
-          onPress={openMore}
+      )}
+      {showMessage && (
+        <MIcon
+          name="chat-bubble-outline"
+          color={ThemedStyles.getColor('primary_text')}
+          size={SIZE}
+          onPress={openMessenger}
+          style={props.iconsStyle}
         />
       )}
       {showWire && (
-        <Icon
-          raised
-          reverse
+        <MIcon
           name="attach-money"
-          type="material"
-          color={ThemedStyles.getColor('secondary_background')}
-          reverseColor={ThemedStyles.getColor('primary_text')}
-          size={15}
+          color={ThemedStyles.getColor('primary_text')}
+          size={SIZE}
           onPress={openWire}
+          style={props.iconsStyle}
         />
       )}
-      {showMessage && (
-        <Icon
-          raised
-          reverse
-          name="chat-bubble-outline"
-          type="material"
-          color={ThemedStyles.getColor('secondary_background')}
-          reverseColor={ThemedStyles.getColor('primary_text')}
-          size={15}
-          onPress={openMessenger}
+      {showMore && (
+        <MIcon
+          name="more-horiz"
+          color={ThemedStyles.getColor('primary_text')}
+          size={22}
+          onPress={openMore}
+          style={[theme.paddingRight, props.iconsStyle]}
         />
       )}
       {showJoin && (
@@ -198,12 +204,6 @@ const ChannelButtons = observer((props: PropsType) => {
 export default ChannelButtons;
 
 const styles = StyleSheet.create({
-  marginContainer: {
-    marginTop: Platform.select({
-      ios: 5,
-      android: 0,
-    }),
-  },
   button: {
     padding: Platform.select({ ios: 8, android: 6 }),
     marginLeft: 5,
