@@ -50,8 +50,6 @@ const ChannelHeader = observer((props: PropsType) => {
     return null;
   }
   const channel = props.store.channel;
-  const insets = useSafeArea();
-  const cleanTop = insets.top ? { marginTop: insets.top } : null;
 
   const canEdit = channel.isOwner() && channel.can(FLAG_EDIT_CHANNEL);
 
@@ -107,7 +105,7 @@ const ChannelHeader = observer((props: PropsType) => {
   };
 
   return (
-    <View style={[styles.container, cleanTop]}>
+    <View style={[styles.container]}>
       <ImageBackground
         style={styles.banner}
         source={channel.getBannerSource()}
