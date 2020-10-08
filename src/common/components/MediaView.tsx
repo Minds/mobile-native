@@ -41,6 +41,7 @@ type PropsType = {
   containerStyle?: ViewStyle | Array<ViewStyle>;
   autoHeight?: boolean;
   onPress?: () => void;
+  hideOverlay?: boolean;
 };
 /**
  * Activity
@@ -126,6 +127,7 @@ export default class MediaView extends Component<PropsType> {
         onStoreCreated={(store: MindsVideoStoreType) =>
           (this.videoPlayer = store)
         }
+        hideOverlay={this.props.hideOverlay}
       />
     ) : (
       <MindsVideo
