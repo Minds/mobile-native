@@ -18,7 +18,6 @@ import abbrev from '../../common/helpers/abbrev';
 import ChannelDescription from './ChannelDescription';
 import ChannelButtons from './ChannelButtons';
 import FeedFilter from '../../common/components/FeedFilter';
-import { useSafeArea } from 'react-native-safe-area-context';
 import ChannelBadges from '../badges/ChannelBadges';
 import SmallCircleButton from '../../common/components/SmallCircleButton';
 import { FLAG_EDIT_CHANNEL } from '../../common/Permissions';

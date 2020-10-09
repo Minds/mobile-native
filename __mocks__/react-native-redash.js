@@ -1,13 +1,9 @@
 const NOOP = () => undefined;
 
-module.exports = {
-  __esModule: true,
-
-  useTimingTransition: NOOP,
-  mix: NOOP,
-  bin: NOOP,
-  onGestureEvent: NOOP,
-  useValues: (...a) => [a],
-  onScrollEvent: NOOP,
-  useTransition: NOOP,
-};
+export const useTimingTransition = NOOP;
+export const mix = NOOP;
+export const bin = NOOP;
+export const onGestureEvent = NOOP;
+export const useValue = (...a) => [a];
+export const onScrollEvent = NOOP;
+export const useTransition = NOOP;

@@ -324,6 +324,7 @@ exports[`Activity component renders correctly 1`] = `
   >
     <View>
       <Text
+        numberOfLines={1}
         style={
           Array [
             Object {
