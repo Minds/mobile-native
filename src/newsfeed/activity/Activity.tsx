@@ -405,6 +405,7 @@ export default class Activity extends Component<PropsType> {
         storeUserTap={this.props.storeUserTap}>
         <View style={theme.rowJustifyStart}>
           <Text
+            numberOfLines={1}
             style={[
               styles.timestamp,
               CommonStyle.paddingRight,
