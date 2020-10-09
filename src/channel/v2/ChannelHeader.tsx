@@ -114,12 +114,6 @@ const ChannelHeader = observer((props: PropsType) => {
 
   return (
     <View style={[styles.container, cleanTop]}>
-      <MIcon
-        size={30}
-        name="chevron-left"
-        style={[styles.backIcon, theme.colorIcon]}
-        onPress={props.navigation.goBack}
-      />
       <Background
         style={styles.banner}
         source={channel.getBannerSource()}
@@ -151,8 +145,7 @@ const ChannelHeader = observer((props: PropsType) => {
               props.navigation.push('EditChannelScreen', { store: props.store })
             }
             notShow={['message', 'wire', 'more']}
-            containerStyle={styles.buttonsMarginContainer}
-          />
+            containerStyle={styles.buttonsMarginContainer}>
             {!showBanner && settingsStore.dataSaverEnabled && (
               <Icon
                 raised

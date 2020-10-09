@@ -123,7 +123,7 @@ const ChannelButtons = observer((props: PropsWithChildren<PropsType>) => {
       style={[theme.rowJustifyEnd, theme.marginRight2x, props.containerStyle]}>
       {props.children}
 
-      {showEdit ? (
+      {showEdit && (
         <View style={isIos ? undefined : theme.paddingTop2x}>
           <Button
             color={ThemedStyles.getColor('secondary_background')}
