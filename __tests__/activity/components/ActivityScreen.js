@@ -11,6 +11,8 @@ import { useNavigation } from '../../../__mocks__/@react-navigation/native';
 jest.mock('react-native-safe-area-context');
 jest.mock('@react-navigation/native');
 jest.mock('react-native-gesture-handler');
+jest.mock('react-native-redash');
+jest.mock('../../../src/common/components/KeyboardSpacingView');
 jest.mock('reanimated-bottom-sheet', () => 'BottomSheet');
 
 jest.mock('../../../src/newsfeed/NewsfeedService');

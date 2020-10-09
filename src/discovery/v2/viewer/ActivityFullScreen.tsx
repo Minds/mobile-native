@@ -18,15 +18,10 @@ import i18n from '../../../common/services/i18n.service';
 import FloatingBackButton from '../../../common/components/FloatingBackButton';
 import ExplicitText from '../../../common/components/explicit/ExplicitText';
 import Translate from '../../../common/components/Translate';
-import { useSafeArea } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Actions from '../../../newsfeed/activity/Actions';
 import Activity from '../../../newsfeed/activity/Activity';
 
-import BottomOptionPopup, {
-  useBottomOption,
-  BottomOptionsStoreType,
-} from '../../../common/components/BottomOptionPopup';
-import CommentList from '../../../comments/CommentList';
 import CommentsStore from '../../../comments/CommentsStore';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import sessionService from '../../../common/services/session.service';
@@ -38,6 +33,8 @@ import LockV2 from '../../../wire/v2/lock/Lock';
 import Lock from '../../../wire/lock/Lock';
 import { showNotification } from '../../../../AppMessages';
 import { AppStackParamList } from '../../../navigation/NavigationTypes';
+import CommentsBottomPopup from '../../../comments/CommentsBottomPopup';
+import BoxShadow from '../../../common/components/BoxShadow';
 
 type ActivityRoute = RouteProp<AppStackParamList, 'Activity'>;
 
@@ -70,14 +67,14 @@ const ActivityFullScreen = observer((props: PropsType) => {
   }));
   const route = useRoute<ActivityRoute>();
   const focused = useFocus();
-  const bottomStore: BottomOptionsStoreType = useBottomOption();
-  const insets = useSafeArea();
+  const insets = useSafeAreaInsets();
   const window = useDimensions().window;
   const theme = ThemedStyles.style;
   const entity: ActivityModel = props.entity;
   const mediaRef = useRef<MediaView>(null);
   const remindRef = useRef<Activity>(null);
   const translateRef = useRef<Translate>(null);
+  const commentsRef = useRef<any>(null);
   const navigation = useNavigation();
   const hasMedia = entity.hasMedia();
   const hasRemind = !!entity.remind_object;
@@ -88,33 +85,12 @@ const ActivityFullScreen = observer((props: PropsType) => {
   const { current: cleanTop } = useRef({
     paddingTop: insets.top || 10,
   });
-  const buttonPopUpHeight = window.height * 0.85;
-
-  // the offset of the keyboard avoiding view with the top of the screen
-  const keyboardAvoidOffset = buttonPopUpHeight - 90 - window.height;
 
   const onPressComment = useCallback(() => {
-    bottomStore.show(
-      'Comments',
-      '',
-      <CommentList
-        entity={entity}
-        scrollToBottom={true}
-        store={store.comments}
-        navigation={navigation}
-        keyboardVerticalOffset={keyboardAvoidOffset}
-        // onInputFocus={this.onFocus}
-        route={route}
-      />,
-    );
-  }, [
-    bottomStore,
-    entity,
-    keyboardAvoidOffset,
-    navigation,
-    route,
-    store.comments,
-  ]);
+    if (commentsRef.current?.open) {
+      commentsRef.current.open();
+    }
+  }, [commentsRef]);
 
   useEffect(() => {
     if (focused) {
@@ -198,47 +174,61 @@ const ActivityFullScreen = observer((props: PropsType) => {
     <LockCmp entity={entity} navigation={navigation} />
   ) : null;
 
+  const ownerBlock = (
+    <OwnerBlock
+      entity={entity}
+      navigation={navigation}
+      containerStyle={[theme.backgroundPrimary, styles.header, cleanTop]}
+      leftToolbar={
+        <FloatingBackButton
+          onPress={navigation.goBack}
+          style={[theme.colorPrimaryText, styles.backButton]}
+        />
+      }
+      rightToolbar={
+        <View style={theme.rowJustifyCenter}>
+          <ActivityActionSheet
+            entity={entity}
+            navigation={navigation}
+            onTranslate={onTranslate}
+          />
+        </View>
+      }>
+      <View style={theme.rowJustifyStart}>
+        <Text
+          numberOfLines={1}
+          style={[theme.fontM, theme.colorSecondaryText, theme.paddingRight]}>
+          {formatDate(entity.time_created, 'friendly')}
+          {!!entity.edited && (
+            <Text style={[theme.fontS, theme.colorSecondaryText]}>
+              {' '}
+              · {i18n.t('edited').toUpperCase()}
+            </Text>
+          )}
+        </Text>
+      </View>
+    </OwnerBlock>
+  );
+
+  const shadowOpt = {
+    width: window.width,
+    height: 70,
+    color: '#000',
+    border: 5,
+    opacity: 0.15,
+    x: 0,
+    y: 0,
+  };
+
+  const ownerBlockShadow = Platform.select({
+    ios: ownerBlock,
+    android: <BoxShadow setting={shadowOpt}>{ownerBlock}</BoxShadow>, // Android fallback for shadows
+  });
+
   return (
     <View style={[window, theme.flexContainer, theme.backgroundSecondary]}>
       <View style={theme.flexContainer}>
-        <OwnerBlock
-          entity={entity}
-          navigation={navigation}
-          containerStyle={[theme.backgroundPrimary, styles.header, cleanTop]}
-          leftToolbar={
-            <FloatingBackButton
-              onPress={navigation.goBack}
-              style={[theme.colorPrimaryText, styles.backButton]}
-            />
-          }
-          rightToolbar={
-            <View style={theme.rowJustifyCenter}>
-              <ActivityActionSheet
-                entity={entity}
-                navigation={navigation}
-                onTranslate={onTranslate}
-              />
-            </View>
-          }>
-          <View style={theme.rowJustifyStart}>
-            <Text
-              style={[
-                theme.fontM,
-                theme.colorSecondaryText,
-                theme.paddingRight,
-              ]}>
-              {formatDate(entity.time_created, 'friendly')}
-            </Text>
-
-            {!!entity.edited && (
-              <View style={[theme.rowJustifyCenter, theme.alignCenter]}>
-                <Text style={[theme.fontM, theme.colorSecondaryText]}>
-                  · {i18n.t('edited').toUpperCase()}
-                </Text>
-              </View>
-            )}
-          </View>
-        </OwnerBlock>
+        {ownerBlockShadow}
         <ScrollView
           style={theme.flexContainer}
           onLayout={store.onScrollViewSizeChange}
@@ -321,19 +311,10 @@ const ActivityFullScreen = observer((props: PropsType) => {
           onPressComment={onPressComment}
         />
       </View>
-      <BottomOptionPopup
-        backgroundColor={
-          ThemedStyles.theme === 1
-            ? theme.backgroundPrimary
-            : theme.backgroundSecondary
-        }
-        height={buttonPopUpHeight}
-        title={bottomStore.title}
-        show={bottomStore.visible}
-        onCancel={bottomStore.hide}
-        onDone={bottomStore.hide}
-        content={bottomStore.content}
-        doneText=""
+      <CommentsBottomPopup
+        entity={entity}
+        commentsStore={store.comments}
+        ref={commentsRef}
       />
     </View>
   );
@@ -364,7 +345,6 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
-    elevation: 3,
     borderBottomWidth: 0,
   },
   linear: {
