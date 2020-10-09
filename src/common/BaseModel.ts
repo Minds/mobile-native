@@ -32,6 +32,9 @@ export default class BaseModel extends AbstractModel {
     [name: string]: number;
   };
 
+  // TODO remove this and fix model.listRef logic
+  listRef?: any;
+
   /**
    * Event emitter
    */
@@ -82,6 +85,7 @@ export default class BaseModel extends AbstractModel {
 
     // remove references to the list
     delete plainEntity.__list;
+    delete plainEntity.listRef;
 
     return plainEntity;
   }

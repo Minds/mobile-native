@@ -38,7 +38,7 @@ export default observer(function MediaPreview(props: PropsType) {
   let aspectRatio,
     videoHeight = 300;
 
-  if (!isImage && (props.store.mediaToConfirm.width || videoSize)) {
+  if (!isImage && (props.store.mediaToConfirm?.width || videoSize)) {
     const vs = videoSize || props.store.mediaToConfirm;
 
     aspectRatio = vs.width / vs.height;
@@ -81,16 +81,19 @@ export default observer(function MediaPreview(props: PropsType) {
         </View>
       ) : (
         <View style={previewStyle}>
-          <TouchableOpacity
-            onPress={props.store.attachment.cancelOrDelete}
-            style={[styles.removeMedia, theme.backgroundSecondary]}>
-            <Icon
-              name="trash"
-              size={26}
-              style={(styles.icon, theme.colorIcon)}
-            />
-          </TouchableOpacity>
+          {!props.store.isEdit && (
+            <TouchableOpacity
+              onPress={props.store.attachment.cancelOrDelete}
+              style={[styles.removeMedia, theme.backgroundSecondary]}>
+              <Icon
+                name="trash"
+                size={26}
+                style={(styles.icon, theme.colorIcon)}
+              />
+            </TouchableOpacity>
+          )}
           <MindsVideo
+            entity={props.store.entity}
             video={props.store.mediaToConfirm}
             containerStyle={previewStyle}
             resizeMode={ResizeMode.CONTAIN}

@@ -258,7 +258,8 @@
     },
     "badges": "Badges",
     "fabSend": "Send Tip",
-    "fabPay": "Tip"
+    "fabPay": "Tip",
+    "share": "Share Channel"
   },
   "discovery": {
     "title": "Discovery",

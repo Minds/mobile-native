@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import IconM from 'react-native-vector-icons/MaterialIcons';
-import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { observer } from 'mobx-react';
 import settingsStore from '../../settings/SettingsStore';
 
@@ -150,7 +149,10 @@ const ChannelHeader = observer((props: PropsType) => {
             store={props.store}
             onEditPress={() =>
               props.navigation.push('EditChannelScreen', { store: props.store })
-            }>
+            }
+            notShow={['message', 'wire', 'more']}
+            containerStyle={styles.buttonsMarginContainer}
+          />
             {!showBanner && settingsStore.dataSaverEnabled && (
               <Icon
                 raised
@@ -241,20 +243,17 @@ const ChannelHeader = observer((props: PropsType) => {
 });
 
 const styles = StyleSheet.create({
-  backIcon: {
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
-    shadowOffset: { height: 3, width: 0 },
-    elevation: 4,
+  buttonsMarginContainer: {
+    marginTop: 5,
   },
   bannerSmallButton: {
     position: 'absolute',
-    top: 33,
+    top: 8,
     left: 5,
   },
   avatarSmallButton: {
     position: 'absolute',
-    top: -5,
+    top: -10,
     right: -10,
   },
   description: {
