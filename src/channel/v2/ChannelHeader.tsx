@@ -18,7 +18,6 @@ import abbrev from '../../common/helpers/abbrev';
 import ChannelDescription from './ChannelDescription';
 import ChannelButtons from './ChannelButtons';
 import FeedFilter from '../../common/components/FeedFilter';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ChannelBadges from '../badges/ChannelBadges';
 import SmallCircleButton from '../../common/components/SmallCircleButton';
 import { FLAG_EDIT_CHANNEL } from '../../common/Permissions';
@@ -50,8 +49,6 @@ const ChannelHeader = observer((props: PropsType) => {
     return null;
   }
   const channel = props.store.channel;
-  const insets = useSafeAreaInsets();
-  const cleanTop = insets.top ? { marginTop: insets.top } : null;
 
   const canEdit = channel.isOwner() && channel.can(FLAG_EDIT_CHANNEL);
 
@@ -107,7 +104,7 @@ const ChannelHeader = observer((props: PropsType) => {
   };
 
   return (
-    <View style={[styles.container, cleanTop]}>
+    <View style={[styles.container]}>
       <ImageBackground
         style={styles.banner}
         source={channel.getBannerSource()}

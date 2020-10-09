@@ -4,6 +4,7 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import type { ChannelStoreType } from './createChannelStore';
 import ChannelButtons from './ChannelButtons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type PropsType = {
   navigation: any;
@@ -13,12 +14,18 @@ type PropsType = {
 
 const ChannelTopBar = ({ navigation, store, hideButtons }: PropsType) => {
   const theme = ThemedStyles.style;
+
+  const insets = useSafeAreaInsets();
+  const cleanTop = insets.top ? { marginTop: insets.top } : null;
+
   return (
     <View
       style={[
         theme.rowJustifySpaceBetween,
+        cleanTop,
         theme.paddingTop2x,
         theme.paddingBottom,
+        theme.backgroundSecondary,
       ]}>
       <MIcon
         size={36}
