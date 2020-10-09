@@ -35,6 +35,7 @@ type PropsType = {
   containerStyle?: StyleProp<ViewStyle>;
   onStoreCreated?: Function;
   onReadyForDisplay?: (event: VideoReadyForDisplayEvent) => void;
+  hideOverlay?: boolean;
 };
 
 const MindsVideo = observer((props: PropsType) => {
@@ -82,7 +83,11 @@ const MindsVideo = observer((props: PropsType) => {
   const controlsOverlay = !localStore.inProgress &&
     !localStore.error &&
     !localStore.transcoding && (
-      <Controls localStore={localStore} entity={props.entity} />
+      <Controls
+        localStore={localStore}
+        entity={props.entity}
+        hideOverlay={props.hideOverlay}
+      />
     );
 
   return (

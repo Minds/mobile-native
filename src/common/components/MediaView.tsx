@@ -41,6 +41,7 @@ type PropsType = {
   containerStyle?: ViewStyle | Array<ViewStyle>;
   autoHeight?: boolean;
   onPress?: () => void;
+  hideOverlay?: boolean;
 };
 /**
  * Activity
@@ -126,6 +127,7 @@ export default class MediaView extends Component<PropsType> {
         onStoreCreated={(store: MindsVideoStoreType) =>
           (this.videoPlayer = store)
         }
+        hideOverlay={this.props.hideOverlay}
       />
     ) : (
       <MindsVideo
@@ -190,6 +192,29 @@ export default class MediaView extends Component<PropsType> {
     if (this.videoPlayer) {
       this.videoPlayer.play(sound);
     }
+  }
+
+  /**
+   * Toggle video sound on/off
+   */
+  toggleSound() {
+    this.videoPlayer?.toggleVolume();
+  }
+
+  /**
+   * Hide the video controls no matter if it is paused
+   * @param forceHideOverlay
+   */
+  setForceHideOverlay(forceHideOverlay: boolean) {
+    this.videoPlayer?.setForceHideOverlay(forceHideOverlay);
+  }
+
+  /**
+   * Show or hide video controls
+   * @param showOverlay
+   */
+  setShowOverlay(showOverlay: boolean) {
+    this.videoPlayer?.setShowOverlay(showOverlay);
   }
 
   imageError = (err) => {
