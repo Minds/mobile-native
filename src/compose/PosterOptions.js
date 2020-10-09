@@ -26,6 +26,8 @@ import {
   getLicenseText,
   getAccessText,
 } from '../common/services/list-options.service';
+import featuresService from '../common/services/features.service';
+import sessionService from '../common/services/session.service';
 
 const Touchable = Platform.select({
   ios: RNTouchableOpacity,
@@ -121,6 +123,7 @@ export default observer(
     const onTagPress = useNavCallback('TagSelector', store);
     const onNsfwPress = useNavCallback('NsfwSelector', store);
     const onSchedulePress = useNavCallback('ScheduleSelector', store);
+    const onPermawebPress = useNavCallback('PermawebSelector', store);
     const onMonetizePress = useNavCallback('MonetizeSelector', store);
     const onLicensePress = useNavCallback('LicenseSelector', store);
     const onPressVisibility = useNavCallback('AccessSelector', store);
@@ -171,6 +174,17 @@ export default observer(
       ? store.wire_threshold.support_tier?.name || 'Plus'
       : '';
 
+    const showPermaweb =
+      sessionService.getUser().plus &&
+      !store.isEdit &&
+      !store.group &&
+      !store.isRemind &&
+      featuresService.has('permaweb');
+
+    const permawebDesc = store.postToPermaweb
+      ? i18n.t('permaweb.description')
+      : null;
+
     const renderInner = () => (
       <View style={[theme.backgroundSecondary, theme.fullHeight]}>
         <Item
@@ -200,6 +214,14 @@ export default observer(
           onPress={onMonetizePress}
           testID="monetizeButton"
         />
+        {showPermaweb && (
+          <Item
+            title={i18n.t('permaweb.title')}
+            description={permawebDesc}
+            onPress={onPermawebPress}
+            testID="permawebButton"
+          />
+        )}
         {hasAttachment && (
           <Item
             title="License"
