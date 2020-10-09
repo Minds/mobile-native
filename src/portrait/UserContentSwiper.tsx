@@ -2,20 +2,9 @@ import React, { useCallback } from 'react';
 import { ActivityFullScreenParamList } from '../navigation/NavigationTypes';
 import { RouteProp } from '@react-navigation/native';
 import { useLocalStore, observer } from 'mobx-react';
-import {
-  Pager,
-  PagerProvider,
-  iPageInterpolation,
-  useOnFocus,
-} from '@crowdlinker/react-native-pager';
+import { useOnFocus } from '@crowdlinker/react-native-pager';
 
-import {
-  StatusBar,
-  View,
-  Dimensions,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import { View, Dimensions, StyleSheet, TouchableOpacity } from 'react-native';
 import ThemedStyles from '../styles/ThemedStyles';
 import portraitContentService from './PortraitContentService';
 import Viewed from '../common/stores/Viewed';
@@ -39,9 +28,7 @@ type PropsType = {
 const metadataService = new MetadataService();
 metadataService.setSource('portrait').setMedium('feed');
 
-const { width, height } = Dimensions.get('window');
-const panProps = { enabled: false };
-const clamp = { next: 0, prev: 0 };
+const { height } = Dimensions.get('window');
 
 /**
  * User content swiper
@@ -71,22 +58,6 @@ const UserContentSwiper = observer((props: PropsType) => {
     activities[store.index].seen = true;
   });
 
-  const pagerStyle: any = {
-    height: height - (StatusBar.currentHeight || 0),
-    width,
-    backgroundColor: ThemedStyles.theme
-      ? 'black'
-      : ThemedStyles.getColor('tertiary_background'),
-    alignSelf: 'center',
-  };
-
-  const stackConfig: iPageInterpolation = {
-    opacity: {
-      inputRange: [-1, -0.5, 0, 0.5, 1],
-      outputRange: [0, 1, 1, 1, 0],
-    },
-  };
-
   const onTapStateChangeRight = useCallback(() => {
     if (store.index < activities.length - 1) {
       store.setIndex(store.index + 1);
@@ -103,30 +74,19 @@ const UserContentSwiper = observer((props: PropsType) => {
     }
   }, [store, props]);
 
-  const pages = activities.slice(0,2).map((e, i) => (
-    <PortraitActivity key={i} entity={e} forceAutoplay />
-  ));
-
   const touchableStyle = {
     top: 90 + insets.top,
     height: height - (230 + insets.bottom),
   };
 
   return (
-    <PagerProvider activeIndex={store.index} onChange={store.setIndex}>
-      <View>
-        <Pager
-          adjacentChildOffset={0}
-          maxIndex={activities.length - 1}
-          panProps={panProps}
-          style={pagerStyle}
-          clamp={clamp}
-          pageInterpolation={stackConfig}
-          initialIndex={store.index}>
-          {pages}
-        </Pager>
-        <PortraitPaginator store={store} pages={pages} />
-      </View>
+    <View style={ThemedStyles.style.flexContainer}>
+      <PortraitActivity
+        key={`activity${store.index}`}
+        entity={activities[store.index]}
+        forceAutoplay
+      />
+      <PortraitPaginator store={store} activities={activities} />
       <TouchableOpacity
         activeOpacity={1}
         style={[styles.touchLeft, touchableStyle]}
@@ -137,7 +97,7 @@ const UserContentSwiper = observer((props: PropsType) => {
         style={[styles.touchRight, touchableStyle]}
         onPress={onTapStateChangeRight}
       />
-    </PagerProvider>
+    </View>
   );
 });
 
