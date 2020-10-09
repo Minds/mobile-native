@@ -15,6 +15,7 @@ import Tooltip from 'rne-modal-tooltip';
 type PropsType = {
   entity?: ActivityModel | CommentModel;
   localStore: MindsVideoStoreType;
+  hideOverlay?: boolean;
 };
 
 type SourceSelectorPropsType = {
@@ -44,11 +45,13 @@ const SourceSelector = ({ localStore }: SourceSelectorPropsType) => {
   );
 };
 
-const Controls = observer(({ localStore, entity }: PropsType) => {
+const Controls = observer(({ localStore, entity, hideOverlay }: PropsType) => {
   const theme = ThemedStyles.style;
 
   const mustShow = Boolean(
-    localStore.showOverlay || (localStore.paused && entity),
+    !hideOverlay &&
+      (localStore.showOverlay ||
+        (!localStore.forceHideOverlay && localStore.paused && entity)),
   );
 
   if (mustShow) {

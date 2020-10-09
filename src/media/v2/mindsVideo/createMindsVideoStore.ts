@@ -30,6 +30,10 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
     fullScreen: false,
     player: null as Video | null,
     paused: !autoplay,
+    forceHideOverlay: false,
+    setForceHideOverlay(forceHideOverlay: boolean) {
+      this.forceHideOverlay = forceHideOverlay;
+    },
     setPaused(val: boolean) {
       this.paused = val;
     },

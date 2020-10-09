@@ -12,7 +12,7 @@ import IconFa from 'react-native-vector-icons/FontAwesome5';
 import { observer } from 'mobx-react';
 import SearchComponent from './searchbar/SearchComponent';
 import ThemedStyles from '../styles/ThemedStyles';
-import { SafeAreaConsumer } from 'react-native-safe-area-context';
+import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
 import EmailConfirmation from './EmailConfirmation';
 import BannerInfo from './BannerInfo';
 import FastImage from 'react-native-fast-image';
@@ -53,7 +53,7 @@ export const Topbar = observer((props: PropsType) => {
 
   const theme = ThemedStyles.style;
   return (
-    <SafeAreaConsumer>
+    <SafeAreaInsetsContext.Consumer>
       {(insets) => {
         const cleanTop = {
           paddingTop: insets && insets.top ? insets.top - 5 : 0,
@@ -114,7 +114,7 @@ export const Topbar = observer((props: PropsType) => {
           </View>
         );
       }}
-    </SafeAreaConsumer>
+    </SafeAreaInsetsContext.Consumer>
   );
 });
 

@@ -20,7 +20,7 @@ import abbrev from '../../common/helpers/abbrev';
 import ChannelDescription from './ChannelDescription';
 import ChannelButtons from './ChannelButtons';
 import FeedFilter from '../../common/components/FeedFilter';
-import { useSafeArea } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ChannelBadges from '../badges/ChannelBadges';
 import SmallCircleButton from '../../common/components/SmallCircleButton';
 import { FLAG_EDIT_CHANNEL } from '../../common/Permissions';
@@ -53,7 +53,7 @@ const ChannelHeader = observer((props: PropsType) => {
   }
   const channel = props.store.channel;
   const [showBanner, setShowBanner] = useState(!settingsStore.dataSaverEnabled);
-  const insets = useSafeArea();
+  const insets = useSafeAreaInsets();
   const cleanTop = insets.top ? { marginTop: insets.top } : null;
 
   const _onBannerDownload = useCallback(() => setShowBanner(true), []);

@@ -47,6 +47,7 @@ import TagSelector from '../compose/TagSelector';
 import AccessSelector from '../compose/AccessSelector';
 import NsfwSelector from '../compose/NsfwSelector';
 import ScheduleSelector from '../compose/ScheduleSelector';
+import PermawebSelector from '../compose/PermawebSelector';
 import MonetizeSelector from '../compose/MonetizeSelector';
 import MonetizeScreen from '../compose/monetize/MonetizeScreeen';
 import LicenseSelector from '../compose/LicenseSelector';
@@ -310,6 +311,11 @@ const AppStack = function () {
       <AppStackNav.Screen
         name="NsfwSelector"
         component={NsfwSelector}
+        options={hideHeader}
+      />
+      <AppStackNav.Screen
+        name="PermawebSelector"
+        component={PermawebSelector}
         options={hideHeader}
       />
       <AppStackNav.Screen

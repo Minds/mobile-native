@@ -57,6 +57,7 @@ type StateType = {
   transcoding: boolean;
   sources: Array<Source> | null;
   source: number;
+  forceHideOverlay: boolean;
 };
 
 type PropsType = {
@@ -91,6 +92,7 @@ class MindsVideo extends Component<PropsType, StateType> {
       loaded: true,
       active: !props.entity,
       showOverlay: true,
+      forceHideOverlay: false,
       fullScreen: false,
       error: false,
       inProgress: false,
@@ -219,6 +221,10 @@ class MindsVideo extends Component<PropsType, StateType> {
   toggleVolume = () => {
     const v = this.state.volume ? 0 : 1;
     this.setState({ volume: v });
+  };
+
+  setForceHideOverlay = (forceHideOverlay: boolean) => {
+    this.setState({ forceHideOverlay });
   };
 
   /**
@@ -385,6 +391,18 @@ class MindsVideo extends Component<PropsType, StateType> {
     }
 
     this.hideOverlay();
+  };
+
+  setShowOverlay = (showOverlay: boolean) => {
+    if (showOverlay) {
+      this.openControlOverlay();
+    } else {
+      if (this.state.showOverlay) {
+        this.setState({
+          showOverlay: false,
+        });
+      }
+    }
   };
 
   /**
@@ -568,7 +586,9 @@ class MindsVideo extends Component<PropsType, StateType> {
     const entity = this.props.entity;
     let { currentTime, duration } = this.state;
 
-    const mustShow = this.state.showOverlay || (this.state.paused && entity);
+    const mustShow =
+      this.state.showOverlay ||
+      (!this.state.forceHideOverlay && this.state.paused && entity);
 
     if (mustShow) {
       const completedPercentage =

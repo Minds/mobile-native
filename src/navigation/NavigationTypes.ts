@@ -108,6 +108,7 @@ export type AppStackParamList = {
   TagSelector: {};
   NsfwSelector: {};
   ScheduleSelector: {};
+  PermawebSelector: {};
   AccessSelector: {
     store: ComposeStoreType;
   };

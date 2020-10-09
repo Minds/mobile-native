@@ -173,7 +173,7 @@ class OwnerBlock extends PureComponent<PropsType> {
               style={[
                 theme.marginRight2x,
                 theme.colorTertiaryText,
-                theme.fontM,
+                theme.fontS,
               ]}>
               {i18nService.t('boosted').toUpperCase()}
             </Text>
