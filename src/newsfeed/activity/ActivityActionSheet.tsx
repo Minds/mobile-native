@@ -19,7 +19,7 @@ import type ActivityModel from '../ActivityModel';
 
 type PropsType = {
   entity: ActivityModel;
-  onTranslate: Function;
+  onTranslate?: Function;
   testID?: string;
   navigation: any;
 };
@@ -118,7 +118,10 @@ export default class ActivityActionSheet extends Component<
         }
       }
 
-      if (translationService.isTranslatable(entity)) {
+      if (
+        !!this.props.onTranslate &&
+        translationService.isTranslatable(entity)
+      ) {
         options.push(i18n.t('translate.translate'));
       }
 

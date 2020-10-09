@@ -135,7 +135,21 @@ const Controls = observer(({ localStore, entity, hideOverlay }: PropsType) => {
     );
   }
 
-  return null;
+  return !localStore.paused && !hideOverlay ? (
+    <View
+      style={[
+        theme.positionAbsoluteBottomRight,
+        theme.padding2x,
+        styles.floatingVolume,
+      ]}>
+      <Icon
+        onPress={localStore.toggleVolume}
+        name={localStore.volume === 0 ? 'ios-volume-mute' : 'ios-volume-high'}
+        size={iconSize}
+        color={Colors.light}
+      />
+    </View>
+  ) : null;
 });
 
 export default Controls;

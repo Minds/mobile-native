@@ -9,13 +9,12 @@ import {
   useOnFocus,
 } from '@crowdlinker/react-native-pager';
 
-import ActivityFullScreen from '../discovery/v2/viewer/ActivityFullScreen';
 import {
   StatusBar,
   View,
-  TouchableOpacity,
   Dimensions,
   StyleSheet,
+  TouchableOpacity,
 } from 'react-native';
 import ThemedStyles from '../styles/ThemedStyles';
 import portraitContentService from './PortraitContentService';
@@ -23,6 +22,8 @@ import Viewed from '../common/stores/Viewed';
 import MetadataService from '../common/services/metadata.service';
 import PortraitPaginator from './PortraitPaginator';
 import { PortraitBarItem } from './createPortraitStore';
+import PortraitActivity from './PortraitActivity';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type ActivityFullScreenRouteProp = RouteProp<
   ActivityFullScreenParamList,
@@ -32,6 +33,7 @@ type ActivityFullScreenRouteProp = RouteProp<
 type PropsType = {
   item: PortraitBarItem;
   nextUser: Function;
+  prevUser: Function;
 };
 
 const metadataService = new MetadataService();
@@ -47,6 +49,7 @@ const clamp = { next: 0, prev: 0 };
 const UserContentSwiper = observer((props: PropsType) => {
   const activities = props.item.activities;
   const firstUnseen = activities.findIndex((a) => !a.seen);
+  const insets = useSafeAreaInsets();
 
   const store = useLocalStore(() => ({
     index: firstUnseen !== -1 ? firstUnseen : 0,
@@ -95,12 +98,19 @@ const UserContentSwiper = observer((props: PropsType) => {
   const onTapStateChangeLeft = useCallback(() => {
     if (store.index > 0) {
       store.setIndex(store.index - 1);
+    } else {
+      props.prevUser();
     }
-  }, [store]);
+  }, [store, props]);
 
-  const pages = activities.map((e, i) => (
-    <ActivityFullScreen key={i} entity={e} forceAutoplay />
+  const pages = activities.slice(0,2).map((e, i) => (
+    <PortraitActivity key={i} entity={e} forceAutoplay />
   ));
+
+  const touchableStyle = {
+    top: 90 + insets.top,
+    height: height - (230 + insets.bottom),
+  };
 
   return (
     <PagerProvider activeIndex={store.index} onChange={store.setIndex}>
@@ -118,11 +128,13 @@ const UserContentSwiper = observer((props: PropsType) => {
         <PortraitPaginator store={store} pages={pages} />
       </View>
       <TouchableOpacity
-        style={styles.touchLeft}
+        activeOpacity={1}
+        style={[styles.touchLeft, touchableStyle]}
         onPress={onTapStateChangeLeft}
       />
       <TouchableOpacity
-        style={styles.touchRight}
+        activeOpacity={1}
+        style={[styles.touchRight, touchableStyle]}
         onPress={onTapStateChangeRight}
       />
     </PagerProvider>
@@ -131,22 +143,15 @@ const UserContentSwiper = observer((props: PropsType) => {
 
 export default UserContentSwiper;
 
-const touchableHeight = height * 0.34;
-const touchableTop = height * 0.33;
-
 const styles = StyleSheet.create({
   touchLeft: {
     position: 'absolute',
-    top: touchableTop,
-    height: touchableHeight,
     left: 0,
-    width: '42%',
+    width: '50%',
   },
   touchRight: {
     position: 'absolute',
-    top: touchableTop,
-    height: touchableHeight,
     right: 0,
-    width: '42%',
+    width: '50%',
   },
 });

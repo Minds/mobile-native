@@ -110,6 +110,10 @@ export interface ThemedStyle {
   mindsSwitchBackgroundPrimary: any;
   mindsSwitchBackgroundSecondary: any;
   positionAbsolute: any;
+  positionAbsoluteTopLeft: any;
+  positionAbsoluteTopRight: any;
+  positionAbsoluteBottomRight: any;
+  positionAbsoluteBottomRight: any;
   [name: string]: any;
 }
 
@@ -225,6 +229,26 @@ export const buildStyle = (theme): ThemedStyle => ({
     position: 'absolute',
     top: 0,
     left: 0,
+    bottom: 0,
+    right: 0,
+  },
+  positionAbsoluteTopLeft: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+  },
+  positionAbsoluteTopRight: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+  },
+  positionAbsoluteBottomLeft: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+  },
+  positionAbsoluteBottomRight: {
+    position: 'absolute',
     bottom: 0,
     right: 0,
   },
