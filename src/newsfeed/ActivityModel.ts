@@ -82,6 +82,8 @@ export default class ActivityModel extends BaseModel {
     attachment_guid: string;
   };
 
+  permaweb_id?: string;
+
   /**
    * Mature visibility flag
    */

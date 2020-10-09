@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { View, Alert, Text, StyleSheet } from 'react-native';
+import { View, Alert, Text, StyleSheet, Linking } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { ActionSheetCustom as ActionSheet } from 'react-native-actionsheet';
@@ -176,6 +176,10 @@ export default class ActivityActionSheet extends Component<
         options.push(i18n.t('translate.translate'));
       }
 
+      if (featuresService.has('permaweb') && entity.permaweb_id) {
+        options.push(i18n.t('permaweb.viewOnPermaweb'));
+      }
+
       // if is not the owner
       if (!entity.isOwner()) {
         options.push(i18n.t('report'));
@@ -324,6 +328,11 @@ export default class ActivityActionSheet extends Component<
         } catch (err) {
           this.showError();
         }
+        break;
+      case i18n.t('permaweb.viewOnPermaweb'):
+        Linking.openURL(
+          'https://viewblock.io/arweave/tx/' + this.props.entity.permaweb_id,
+        );
         break;
       case i18n.t('imageViewer'):
         const source = this.props.entity.getThumbSource('xlarge');
