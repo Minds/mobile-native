@@ -16,14 +16,14 @@ const ChannelTopBar = ({ navigation, store, hideButtons }: PropsType) => {
   const theme = ThemedStyles.style;
 
   const insets = useSafeAreaInsets();
-  const cleanTop = insets.top ? { marginTop: insets.top } : null;
+  const cleanTop = insets.top ? { paddingTop: insets.top } : null;
 
   return (
     <View
       style={[
         theme.rowJustifySpaceBetween,
         cleanTop,
-        theme.paddingTop2x,
+        // theme.paddingTop2x,
         theme.paddingBottom,
         theme.backgroundSecondary,
       ]}>
