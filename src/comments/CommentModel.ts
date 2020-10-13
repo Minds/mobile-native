@@ -1,5 +1,5 @@
 //@ts-nocheck
-import { computed, action, observable, decorate } from 'mobx';
+import { action, observable, decorate } from 'mobx';
 
 import ActivityModel from '../newsfeed/ActivityModel';
 import commentsStoreProvider from '../comments/CommentsStoreProvider';
@@ -13,6 +13,7 @@ import api from '../common/services/api.service';
 export default class CommentModel extends ActivityModel {
   @observable expanded = false;
   entity_guid: string = '';
+  focused?: boolean;
   attachments?: {
     attachment_guid: string;
   };

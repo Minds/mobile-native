@@ -27,21 +27,37 @@ import i18n from '../common/services/i18n.service';
 
 import CommentList from './CommentList';
 import DoubleTap from '../common/components/DoubleTap';
-import ExplicitOverlay from '../common/components/explicit/ExplicitOverlay';
 import colors from '../styles/Colors';
 import FastImage from 'react-native-fast-image';
 import CommentActionSheet from './CommentActionSheet';
 import ThemedStyles from '../styles/ThemedStyles';
 import { showNotification } from '../../AppMessages';
 import ChannelBadge from '../common/components/ChannelBadge';
+import CommentModel from './CommentModel';
+import type BlogModel from '../blogs/BlogModel';
+import type GroupModel from '../groups/GroupModel';
+import type ActivityModel from '../newsfeed/ActivityModel';
+import type CommentsStore from './CommentsStore';
 
 const DoubleTapTouch = DoubleTap(TouchableOpacity);
+
+type PropsType = {
+  comment: CommentModel;
+  entity?: ActivityModel | BlogModel | GroupModel; //parent entity
+  store: CommentsStore;
+  onTextInputfocus: (CommentModel, offset: number) => void;
+  onCommentFocus: (CommentModel, offset: number) => void;
+  commentFocusCall: (CommentModel, index: number) => void;
+  navigation: any;
+  route: any;
+  index: number;
+};
 
 /**
  * Comment Component
  */
 @observer
-class Comment extends Component {
+class Comment extends Component<PropsType> {
   state = {
     editing: false,
   };
