@@ -8,7 +8,7 @@ import ThemedStyles from '../styles/ThemedStyles';
 /**
  * Store for the values held in Settings.
  */
-class SettingsStore {
+export class SettingsStore {
   @observable appLog = true;
   @observable leftHanded = null;
   @observable ignoreBestLanguage = '';
@@ -43,8 +43,9 @@ class SettingsStore {
     if (!data) {
       ThemedStyles.theme = 0;
       ThemedStyles.init();
-      return;
+      return this;
     }
+
     this.leftHanded = data[0][1];
     this.appLog = data[1][1];
     this.creatorNsfw = data[2][1] || [];
