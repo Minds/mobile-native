@@ -208,6 +208,7 @@ const createWalletStore = () => ({
 
         this.wallet.loaded = true;
       } else {
+        console.log('getTokenAccounts');
         console.error('No data');
       }
     } catch (e) {
@@ -222,6 +223,7 @@ const createWalletStore = () => ({
       const { account } = await api.get<any>('api/v2/payments/stripe/connect');
       this.setStripeAccount(account);
     } catch (e) {
+      console.log('loadStripeAccount');
       logService.exception(e);
     }
     return this.stripeDetails;
@@ -266,6 +268,7 @@ const createWalletStore = () => ({
         this.wallet.btc.address = response.address;
       }
     } catch (e) {
+      console.log('loadBtcAccount');
       logService.exception(e);
     }
   },
