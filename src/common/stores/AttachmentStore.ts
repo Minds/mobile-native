@@ -62,7 +62,7 @@ export default class AttachmentStore {
           const converted = await RNConvertPhAsset.convertVideoFromUrl({
             url: media.uri,
             convertTo: 'm4v',
-            quality: 'high',
+            quality: 'original',
           });
           media.type = converted.mimeType;
           media.uri = converted.path;
