@@ -113,9 +113,11 @@ class ImagePickerService {
     const opt = this.buildOptions(type, true, cropperCircleOverlay);
 
     if (width) {
+      //@ts-ignore
       opt.width = width;
     }
     if (height) {
+      //@ts-ignore
       opt.height = height;
     }
 
