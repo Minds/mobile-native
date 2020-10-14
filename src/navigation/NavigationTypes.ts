@@ -80,7 +80,14 @@ export type AppStackParamList = {
   };
   ActivityFullScreenNav: {};
   Newsfeed: {};
-  Capture: {};
+  Capture: {
+    portrait?: boolean;
+    noText?: boolean;
+    entity?: any;
+    text?: string;
+    media?: any;
+    mode?: 'photo' | 'video' | 'text';
+  };
   Main: {};
   Account: {};
   Security: {};

@@ -80,7 +80,7 @@ export default observer(function (props) {
                 onPress={store.setModeVideo}>
                 {i18nService.t('capture.video').toUpperCase()}
               </Text>
-              {!store.portraitMode && (
+              {!store.noText && (
                 <Text
                   style={[
                     theme.fontXL,

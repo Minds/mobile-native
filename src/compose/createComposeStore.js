@@ -46,6 +46,7 @@ const DEFAULT_MONETIZE = {
 export default function ({ props, newsfeed }) {
   return {
     portraitMode: false,
+    noText: false,
     isRemind: false,
     isEdit: false,
     accessId: 2,
@@ -73,11 +74,13 @@ export default function ({ props, newsfeed }) {
           !params.mode &&
           !params.media &&
           !params.text &&
+          !params.noText &&
           !params.portrait)
       ) {
         return;
       }
 
+      this.noText = Boolean(params.noText);
       this.portraitMode = params.portrait;
       this.isRemind = params.isRemind;
       this.isEdit = params.isEdit;
