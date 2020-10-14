@@ -68,20 +68,24 @@ const UsdSettings = ({ walletStore, navigation }: PropsType) => {
           />
         </View>
       )}
-      <View style={[theme.paddingHorizontal3x, theme.marginBottom3x]}>
-        <Text style={[theme.colorPrimaryText, styles.title]}>
-          {i18n.t('wallet.usd.leave')}
-        </Text>
-        <Text style={theme.colorSecondaryText}>
-          {i18n.t('wallet.usd.leaveDescription')}
-        </Text>
-      </View>
-      <MenuItem
-        item={{
-          title: i18n.t('wallet.usd.leaveButton'),
-          onPress: confirm,
-        }}
-      />
+      {hasBankInfo && (
+        <>
+          <View style={[theme.paddingHorizontal3x, theme.marginBottom3x]}>
+            <Text style={[theme.colorPrimaryText, styles.title]}>
+              {i18n.t('wallet.usd.leave')}
+            </Text>
+            <Text style={theme.colorSecondaryText}>
+              {i18n.t('wallet.usd.leaveDescription')}
+            </Text>
+          </View>
+          <MenuItem
+            item={{
+              title: i18n.t('wallet.usd.leaveButton'),
+              onPress: confirm,
+            }}
+          />
+        </>
+      )}
     </View>
   );
 };
