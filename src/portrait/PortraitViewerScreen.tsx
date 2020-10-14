@@ -1,6 +1,10 @@
 import React, { useCallback } from 'react';
 import { ActivityFullScreenParamList } from '../navigation/NavigationTypes';
-import { RouteProp, useFocusEffect } from '@react-navigation/native';
+import {
+  NavigationProp,
+  RouteProp,
+  useFocusEffect,
+} from '@react-navigation/native';
 import { useLocalStore, observer } from 'mobx-react';
 import {
   Pager,
@@ -20,13 +24,47 @@ type ActivityFullScreenRouteProp = RouteProp<
   ActivityFullScreenParamList,
   'PortraitViewerScreen'
 >;
+type ActivityFullScreenNavProp = NavigationProp<
+  ActivityFullScreenParamList,
+  'PortraitViewerScreen'
+>;
 
 type PropsType = {
   route: ActivityFullScreenRouteProp;
+  navigation: ActivityFullScreenNavProp;
 };
 
 const metadataService = new MetadataService();
 metadataService.setSource('portrait').setMedium('feed');
+
+// transition angle
+const ANGLE = 0.5;
+
+const clamp = { next: 1, prev: 1 };
+const stackConfig: iPageInterpolation = {
+  transform: [
+    {
+      perspective: {
+        inputRange: [-1, 0, 1],
+        outputRange: [1000, 1000, 1000],
+      },
+      rotateY: {
+        inputRange: [-1, -0.4, 0, 0.4, 1],
+        outputRange: [-ANGLE, -ANGLE, 0, ANGLE, ANGLE],
+        extrapolate: Extrapolate.IDENTITY,
+      },
+      scaleY: {
+        inputRange: [-1, -0.4, 0, 0.4, 1],
+        outputRange: [0.9, 0.9, 1, 0.9, 0.9],
+      },
+    },
+  ],
+  zIndex: (offset) => offset,
+  opacity: {
+    inputRange: [-1, 0, 1],
+    outputRange: [0.5, 1, 0.5],
+  },
+};
 
 /**
  * Portrait content swiper
@@ -38,9 +76,16 @@ const PortraitViewerScreen = observer((props: PropsType) => {
     setIndex(v) {
       store.index = v;
     },
+    prevIndex() {
+      if (store.index > 0) {
+        store.index = store.index - 1;
+      }
+    },
     nextIndex() {
       if (store.index < store.items.length - 1) {
         store.index = store.index + 1;
+      } else {
+        props.navigation.goBack();
       }
     },
   }));
@@ -55,7 +100,6 @@ const PortraitViewerScreen = observer((props: PropsType) => {
   );
 
   const { width, height } = useDimensions().window;
-  const angle = 0.5;
 
   const pagerStyle: any = {
     height: height - (StatusBar.currentHeight || 0),
@@ -66,33 +110,13 @@ const PortraitViewerScreen = observer((props: PropsType) => {
     alignSelf: 'center',
   };
 
-  const stackConfig: iPageInterpolation = {
-    transform: [
-      {
-        perspective: {
-          inputRange: [-1, 0, 1],
-          outputRange: [1000, 1000, 1000],
-        },
-        rotateY: {
-          inputRange: [-1, -0.4, 0, 0.4, 1],
-          outputRange: [-angle, -angle, 0, angle, angle],
-          extrapolate: Extrapolate.IDENTITY,
-        },
-        scaleY: {
-          inputRange: [-1, -0.4, 0, 0.4, 1],
-          outputRange: [0.9, 0.9, 1, 0.9, 0.9],
-        },
-      },
-    ],
-    zIndex: (offset) => offset,
-    opacity: {
-      inputRange: [-1, 0, 1],
-      outputRange: [0.5, 1, 0.5],
-    },
-  };
-
   const pages = store.items.map((item, index) => (
-    <UserContentSwiper key={index} item={item} nextUser={store.nextIndex} />
+    <UserContentSwiper
+      key={index}
+      item={item}
+      nextUser={store.nextIndex}
+      prevUser={store.prevIndex}
+    />
   ));
 
   return (
@@ -101,7 +125,7 @@ const PortraitViewerScreen = observer((props: PropsType) => {
         adjacentChildOffset={1}
         maxIndex={store.items.length - 1}
         style={pagerStyle}
-        clamp={{ next: 1, prev: 1 }}
+        clamp={clamp}
         pageInterpolation={stackConfig}
         initialIndex={store.index}>
         {pages}
