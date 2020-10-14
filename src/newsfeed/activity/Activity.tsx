@@ -436,7 +436,7 @@ export default class Activity extends Component<PropsType> {
         return (
           <View
             style={[
-              styles.blockedNoticeView,
+              theme.backgroundTertiary,
               theme.margin2x,
               theme.borderRadius2x,
               theme.padding2x,
@@ -541,9 +541,6 @@ const styles = StyleSheet.create({
   activitySpacer: {
     flex: 1,
     height: 70,
-  },
-  blockedNoticeView: {
-    backgroundColor: '#eee',
   },
   blockedNoticeDesc: {
     opacity: 0.7,
