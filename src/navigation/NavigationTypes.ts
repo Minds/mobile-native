@@ -101,7 +101,6 @@ export type AppStackParamList = {
   AppInfo: {};
   LanguageScreen: {};
   NSFWScreen: {};
-  TFAScreen: {};
   DevicesScreen: {};
   TagSelector: {};
   NsfwSelector: {};
