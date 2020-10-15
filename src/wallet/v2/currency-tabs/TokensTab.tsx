@@ -138,7 +138,7 @@ const TokensTab = observer(
             }
           },
           icon: walletStore.wallet.receiver.address
-            ? { name: 'md-checkmark' }
+            ? { name: 'md-checkmark', type: 'ionicon' }
             : undefined,
           noIcon: !walletStore.wallet.receiver.address,
         },
