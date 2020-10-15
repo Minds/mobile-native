@@ -1,4 +1,3 @@
-//@ts-nocheck
 import * as React from 'react';
 
 import {
@@ -22,7 +21,6 @@ import IconMd from 'react-native-vector-icons/MaterialIcons';
 import ActionSheet from 'react-native-actionsheet';
 
 import Comment from './Comment';
-import isIphoneX from '../common/helpers/isIphoneX';
 import CapturePreview from '../capture/CapturePreview';
 import CenteredLoading from '../common/components/CenteredLoading';
 import UserAutocomplete from '../common/components/UserAutocomplete';
@@ -73,13 +71,6 @@ type StateType = {
   };
 };
 
-type CommentType = {
-  ownerObj: {
-    username: string;
-  };
-  editing: any;
-};
-
 const isIOS = Platform.OS === 'ios';
 const inputStyle = isIOS
   ? { marginTop: 3, paddingVertical: 2 }
@@ -91,9 +82,18 @@ const inputStyle = isIOS
 @inject('user')
 @observer
 class CommentList extends React.Component<PropsType, StateType> {
-  viewRef = React.createRef<View>(null);
-  keybAvoidRef = React.createRef<KeyboardAvoidingView>(null);
-  listRef: FlatList<any>;
+  keybAvoidRef = React.createRef<KeyboardAvoidingView>();
+  listRef?: FlatList<any> & {
+    // we rely on an internal method of the virtualized list to measure the height
+    _listRef?: {
+      _getFrameMetricsApprox: (
+        number,
+      ) => {
+        length: number;
+        offset: number;
+      };
+    };
+  };
   actionAttachmentSheetRef?: ActionSheet;
   actionSheetRef?: ActionSheet;
   keyboardDidShowListener: any;
@@ -238,7 +238,7 @@ class CommentList extends React.Component<PropsType, StateType> {
     }
   };
 
-  onChildFocus = (item: CommentType, offset: number) => {
+  onChildFocus = (item: CommentModel, offset: number) => {
     if (!offset) offset = 0;
 
     const comments = this.getComments();
@@ -250,9 +250,12 @@ class CommentList extends React.Component<PropsType, StateType> {
       //this.forceUpdate();
     } else {
       const index = comments.indexOf(item);
-      const frame = this.listRef._listRef._getFrameMetrithemeApprox(index);
-      if (this.props.onInputFocus) {
-        this.props.onInputFocus(item, offset + frame.offset + frame.length);
+
+      if (this.listRef && this.listRef._listRef) {
+        const frame = this.listRef._listRef._getFrameMetricsApprox(index);
+        if (this.props.onInputFocus) {
+          this.props.onInputFocus(item, offset + frame.offset + frame.length);
+        }
       }
     }
   };
@@ -273,9 +276,11 @@ class CommentList extends React.Component<PropsType, StateType> {
       }, 50);
     } else {
       const index = comments.indexOf(item);
-      const frame = this.listRef._listRef._getFrameMetrithemeApprox(index);
-      if (this.props.onCommentFocus) {
-        this.props.onCommentFocus(item, offset + frame.offset);
+      if (this.listRef && this.listRef._listRef) {
+        const frame = this.listRef._listRef._getFrameMetricsApprox(index);
+        if (this.props.onCommentFocus) {
+          this.props.onCommentFocus(item, offset + frame.offset);
+        }
       }
     }
   };
@@ -350,7 +355,7 @@ class CommentList extends React.Component<PropsType, StateType> {
   /**
    * Render poster
    */
-  renderPoster(): React.Node {
+  renderPoster(): React.ReactNode {
     const theme = ThemedStyles.style;
     const entity = this.props.entity;
 
@@ -487,19 +492,19 @@ class CommentList extends React.Component<PropsType, StateType> {
         ? this.props.onCommentFocus
         : this.onCommentFocus;
 
-      if (onCommentFocus && this.listRef && this.listRef._listRef) {
-        setTimeout(() => {
-          const frame = this.listRef._listRef._getFrameMetrithemeApprox(index);
+      setTimeout(() => {
+        if (onCommentFocus && this.listRef && this.listRef._listRef) {
+          const frame = this.listRef._listRef._getFrameMetricsApprox(index);
           onCommentFocus(comment, frame.offset + frame.length);
-        }, 1000);
-      }
+        }
+      }, 1000);
     }
   };
 
   /**
    * Render comments
    */
-  renderComment = (row: any): React.Element<Comment> => {
+  renderComment = (row: any): React.ReactElement => {
     const comment = row.item;
 
     // add the editing observable property
@@ -523,7 +528,7 @@ class CommentList extends React.Component<PropsType, StateType> {
   /**
    * Get list header
    */
-  getHeader(): React.Node {
+  getHeader(): React.ReactElement {
     const header = this.props.header || null;
     const theme = ThemedStyles.style;
     return (
@@ -534,7 +539,6 @@ class CommentList extends React.Component<PropsType, StateType> {
             onPress={() => {
               this.loadComments(true);
             }}
-            underlayColor="transparent"
             style={[theme.rowJustifyCenter, theme.padding2x]}>
             <Text style={[theme.fontM, theme.colorPrimary]}>
               <IconMC name="update" size={16} />{' '}
@@ -545,7 +549,7 @@ class CommentList extends React.Component<PropsType, StateType> {
         {this.props.store.loadingPrevious && this.props.store.loaded && (
           <ActivityIndicator size="small" style={theme.paddingTop2x} />
         )}
-        {this.getErrorLoading(this.props.store.errorLoadingPrevious, true)}
+        {this.getErrorLoading(this.props.store.errorLoadingPrevious)}
       </View>
     );
   }
@@ -563,7 +567,7 @@ class CommentList extends React.Component<PropsType, StateType> {
     this.refreshAsync();
   };
 
-  getErrorLoading(errorLoading: boolean): React.Node {
+  getErrorLoading(errorLoading: boolean): React.ReactNode {
     const theme = ThemedStyles.style;
     if (errorLoading) {
       const message = this.props.store.comments.length
@@ -572,7 +576,7 @@ class CommentList extends React.Component<PropsType, StateType> {
 
       return (
         <Text
-          onPress={(): any => this.loadComments()}
+          onPress={() => this.loadComments()}
           style={[
             theme.fontM,
             theme.colorDarkGreyed,
@@ -589,14 +593,13 @@ class CommentList extends React.Component<PropsType, StateType> {
   /**
    * Get list footer
    */
-  getFooter(): React.Node {
+  getFooter(): React.ReactElement {
     const theme = ThemedStyles.style;
     return (
       <View>
         {this.props.store.loadNext && !this.props.store.loadingNext ? (
           <TouchableOpacity
             onPress={(): any => this.loadComments(true, false)}
-            underlayColor="transparent"
             style={[theme.rowJustifyCenter, theme.padding2x]}>
             <Text style={[theme.fontM, theme.colorPrimary]}>
               <IconMC name="update" size={16} />
@@ -607,7 +610,7 @@ class CommentList extends React.Component<PropsType, StateType> {
         {this.props.store.loadingNext && this.props.store.loaded && (
           <ActivityIndicator size="small" style={theme.paddingTop2x} />
         )}
-        {this.getErrorLoading(this.props.store.errorLoadingNext, false)}
+        {this.getErrorLoading(this.props.store.errorLoadingNext)}
       </View>
     );
   }
@@ -654,11 +657,11 @@ class CommentList extends React.Component<PropsType, StateType> {
   /**
    * Render
    */
-  render(): React.Node {
+  render(): React.ReactNode {
     const theme = ThemedStyles.style;
     const header = this.getHeader();
 
-    let actionsheet = null;
+    let actionsheet: React.ReactElement | null = null;
 
     if (Platform.OS !== 'ios') {
       actionsheet = (
@@ -694,7 +697,6 @@ class CommentList extends React.Component<PropsType, StateType> {
       <KeyboardSpacingView
         style={theme.flexContainer}
         onLayout={this.onLayout}
-        ref={this.viewRef}
         enabled={!this.props.parent}>
         <View style={[theme.fullHeight, theme.fullWidth]}>
           <FlatList

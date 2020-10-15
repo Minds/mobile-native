@@ -1,8 +1,14 @@
-//@ts-nocheck
 import { observable, action, runInAction } from 'mobx';
 import RichEmbedService from '../services/rich-embed.service';
 import Util from '../helpers/util';
 import logService from '../services/log.service';
+
+export type MetaType = {
+  thumbnail?: string;
+  title?: string;
+  url: string;
+  description?: string;
+} | null;
 
 /**
  * Rich embed store
@@ -10,10 +16,10 @@ import logService from '../services/log.service';
 export default class RichEmbedStore {
   @observable hasRichEmbed = false;
   @observable metaInProgress = false;
-  @observable meta = null;
+  @observable meta: MetaType = null;
   richEmbedUrl = '';
-  _richEmbedFetchTimer = null;
-  setRichEmbedPromise = null; // used for testing
+  _richEmbedFetchTimer: NodeJS.Timeout | null = null;
+  setRichEmbedPromise: Promise<void> | null = null; // used for testing
 
   /**
    * Richembed check
@@ -90,7 +96,7 @@ export default class RichEmbedStore {
     this.metaInProgress = true;
 
     try {
-      const meta = await RichEmbedService.getMeta(url);
+      const meta: MetaType = await RichEmbedService.getMeta(url);
       runInAction(() => {
         this.meta = meta;
         this.metaInProgress = false;
