@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   View,
   Text,
@@ -51,6 +51,23 @@ const ChannelHeader = observer((props: PropsType) => {
   const channel = props.store.channel;
 
   const canEdit = channel.isOwner() && channel.can(FLAG_EDIT_CHANNEL);
+
+  const navToSubscribers = useCallback(() => {
+    if (props.store.channel) {
+      props.navigation.push('Subscribers', {
+        guid: props.store.channel.guid,
+      });
+    }
+  }, [props.navigation, props.store]);
+
+  const navToSubscriptions = useCallback(() => {
+    if (props.store.channel) {
+      props.navigation.push('Subscribers', {
+        guid: props.store.channel.guid,
+        filter: 'subscriptions',
+      });
+    }
+  }, [props.navigation, props.store]);
 
   const tabs: Array<TabType<ChannelTabType>> = [
     { id: 'feed', title: i18n.t('feed') },
@@ -174,15 +191,17 @@ const ChannelHeader = observer((props: PropsType) => {
         @{channel.username}
       </Text>
       <View style={theme.paddingHorizontal4x}>
-        <Text>
-          <Text style={[theme.colorSecondaryText, theme.fontL]}>
+        <Text style={[theme.colorSecondaryText, theme.fontL]}>
+          <Text onPress={navToSubscribers} style={theme.colorSecondaryText}>
             {i18n.t('subscribers')}
             <Text> {abbrev(channel.subscribers_count, 0)}</Text>
+          </Text>
+          <Text onPress={navToSubscriptions} style={theme.colorSecondaryText}>
             {' · ' + i18n.t('subscriptions')}
             <Text> {abbrev(channel.subscriptions_count, 0)}</Text>
-            {' · ' + i18n.t('views')}
-            <Text> {abbrev(channel.impressions, 1)}</Text>
           </Text>
+          {' · ' + i18n.t('views')}
+          <Text> {abbrev(channel.impressions, 1)}</Text>
         </Text>
         {!!channel.city && (
           <View style={styles.location}>

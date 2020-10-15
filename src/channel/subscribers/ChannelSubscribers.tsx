@@ -43,7 +43,7 @@ class ChannelSubscribers extends Component {
    * Load data
    */
   _loadData() {
-    const params = this.props.route.params;
+    const params = this.props.route.params || {};
     if (params.filter) {
       this.props.channelSubscribersStore.setFilter(params.filter);
     } else {
