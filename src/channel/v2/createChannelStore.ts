@@ -221,9 +221,17 @@ const createChannelStore = () => {
         return;
       }
 
+      const isBanner = type === 'banner';
+
       try {
         imagePickerService
-          .show('', 'photo', type === 'avatar')
+          .show(
+            '',
+            'photo',
+            type === 'avatar',
+            isBanner ? 1500 : 1024,
+            isBanner ? 600 : 1024,
+          )
           .then(async (response: customImagePromise) => {
             let file: CustomImage;
             if (response !== false && !Array.isArray(response)) {
@@ -237,7 +245,7 @@ const createChannelStore = () => {
               null,
               type,
               {
-                uri: file.uri,
+                uri: file.path || file.uri,
                 type: file.type,
                 name: file.filename || `${type}.jpg`,
               },

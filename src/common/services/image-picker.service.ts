@@ -104,11 +104,22 @@ class ImagePickerService {
     title: string,
     type: mediaType = 'photo',
     cropperCircleOverlay: boolean = false,
+    width,
+    height,
   ): Promise<customImagePromise> {
     // check permissions
     await this.checkGalleryPermissions();
 
     const opt = this.buildOptions(type, true, cropperCircleOverlay);
+
+    if (width) {
+      //@ts-ignore
+      opt.width = width;
+    }
+    if (height) {
+      //@ts-ignore
+      opt.height = height;
+    }
 
     return this.returnCustom(ImagePicker.openPicker(opt));
   }
