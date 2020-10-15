@@ -23,7 +23,7 @@ const ReferralsList = observer(({ navigation }: ReferralsListProps) => {
   );
   const [offset, setOffset] = useState('');
   const opts = {
-    limit: 2,
+    limit: 20,
     offset,
   };
   const { result, loading, error, fetch } = useApiFetch<Referral>(

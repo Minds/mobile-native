@@ -37,13 +37,7 @@ exports[`AnalyticsScreen component should render correctly 1`] = `
       ]
     }
   />
-  <View
-    style={
-      Array [
-        undefined,
-      ]
-    }
-  >
+  <View>
     <Memo(wrappedComponent)
       defaultMetric="votes_up"
       key="engagement"

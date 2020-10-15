@@ -69,7 +69,7 @@ const AnalyticsScreen = observer(({ navigation }: AnalyticsScreenProps) => {
           { id: 'trending', title: i18n.t('analytics.trending.title') },
         ]}
       />
-      <View style={[theme.centered]}>{screen()}</View>
+      <View style={theme.centered}>{screen()}</View>
     </View>
   );
 });
