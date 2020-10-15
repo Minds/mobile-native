@@ -70,11 +70,18 @@ const stackConfig: iPageInterpolation = {
  * Portrait content swiper
  */
 const PortraitViewerScreen = observer((props: PropsType) => {
+  // global portrait store
+  const portraitStore = useStores().portrait;
+
   const store = useLocalStore(() => ({
+    unseenMode: portraitStore.items[props.route.params.index].unseen,
     index: props.route.params.index,
-    items: props.route.params.items,
+    items: portraitStore.items,
     setIndex(v) {
       store.index = v;
+      if (!store.items[store.index].unseen) {
+        this.unseenMode = false;
+      }
     },
     prevIndex() {
       if (store.index > 0) {
@@ -82,15 +89,32 @@ const PortraitViewerScreen = observer((props: PropsType) => {
       }
     },
     nextIndex() {
-      if (store.index < store.items.length - 1) {
-        store.index = store.index + 1;
+      if (store.unseenMode) {
+        const nextUnseen = store.items
+          .slice(store.index + 1)
+          .findIndex((user) => user.unseen);
+
+        if (nextUnseen !== -1) {
+          store.index = store.index + nextUnseen + 1;
+        } else {
+          const prevUnseen = store.items
+            .slice(0, store.index)
+            .findIndex((user) => user.unseen);
+          if (prevUnseen !== -1) {
+            store.index = prevUnseen;
+          } else {
+            props.navigation.goBack();
+          }
+        }
       } else {
-        props.navigation.goBack();
+        if (store.index < store.items.length - 1) {
+          store.index = store.index + 1;
+        } else {
+          props.navigation.goBack();
+        }
       }
     },
   }));
-
-  const portraitStore = useStores().portrait;
 
   useFocusEffect(
     useCallback(() => {
@@ -116,6 +140,7 @@ const PortraitViewerScreen = observer((props: PropsType) => {
       item={item}
       nextUser={store.nextIndex}
       prevUser={store.prevIndex}
+      unseenMode={store.unseenMode}
     />
   ));
 
