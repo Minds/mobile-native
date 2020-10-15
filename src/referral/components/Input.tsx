@@ -53,8 +53,8 @@ const Input = ({ textToCopy, label, style }: InputProps) => {
           style={[
             theme.colorLink,
             theme.backgroundSecondary,
-            theme.paddingLeft2x,
-            { position: 'absolute', right: 16 },
+            theme.paddingHorizontal4x,
+            styles.copyText,
           ]}>
           {i18n.t('copy')}
         </Text>
@@ -79,4 +79,5 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     justifyContent: 'center',
   },
+  copyText: { position: 'absolute', right: 1 },
 });

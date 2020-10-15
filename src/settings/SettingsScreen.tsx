@@ -1,12 +1,11 @@
 //@ts-nocheck
 import React, { useCallback } from 'react';
-import { View, FlatList, Text, Linking } from 'react-native';
-import MenuItem from '../common/components/menus/MenuItem';
-import ThemedStyles from '../styles/ThemedStyles';
-import i18n from '../common/services/i18n.service';
+import { Linking, ScrollView, StyleSheet, Text, View } from 'react-native';
 import authService from '../auth/AuthService';
-
-const keyExtractor = (item, index) => index.toString();
+import MenuItem from '../common/components/menus/MenuItem';
+import i18n from '../common/services/i18n.service';
+import ThemedStyles from '../styles/ThemedStyles';
+import { TAB_BAR_HEIGHT } from '../tabs/TabsScreen';
 
 export default function ({ navigation }) {
   const theme = ThemedStyles.style;
@@ -36,29 +35,6 @@ export default function ({ navigation }) {
       ThemedStyles.setDark();
     }
   };
-
-  const list = [
-    {
-      title: i18n.t('settings.account'),
-      onPress: navToAccount,
-    },
-    {
-      title: i18n.t('settings.security'),
-      onPress: navToSecurity,
-    },
-    {
-      title: i18n.t('settings.billing'),
-      onPress: navToBilling,
-    },
-    {
-      title: i18n.t('settings.referrals'),
-      onPress: navToReferrals,
-    },
-    {
-      title: i18n.t('settings.other'),
-      onPress: navToOther,
-    },
-  ];
 
   const innerWrapper = [
     theme.borderTopHair,
@@ -92,21 +68,43 @@ export default function ({ navigation }) {
   };
 
   return (
-    <View style={[theme.flexContainer, theme.backgroundPrimary]}>
-      <View style={innerWrapper}>
-        <Text
-          style={[
-            theme.titleText,
-            theme.paddingLeft4x,
-            theme.paddingVertical2x,
-          ]}>
-          {i18n.t('moreScreen.settings')}
-        </Text>
-        <FlatList
-          data={list}
-          renderItem={MenuItem}
-          style={theme.backgroundPrimary}
-          keyExtractor={keyExtractor}
+    <ScrollView
+      style={[theme.flexContainer, theme.backgroundPrimary]}
+      contentContainerStyle={styles.container}>
+      <Text
+        style={[theme.titleText, theme.paddingLeft4x, theme.paddingVertical2x]}>
+        {i18n.t('moreScreen.settings')}
+      </Text>
+      <View style={[innerWrapper, theme.backgroundPrimary]}>
+        <MenuItem
+          item={{
+            title: i18n.t('settings.account'),
+            onPress: navToAccount,
+          }}
+        />
+        <MenuItem
+          item={{
+            title: i18n.t('settings.security'),
+            onPress: navToSecurity,
+          }}
+        />
+        <MenuItem
+          item={{
+            title: i18n.t('settings.billing'),
+            onPress: navToBilling,
+          }}
+        />
+        <MenuItem
+          item={{
+            title: i18n.t('settings.referrals'),
+            onPress: navToReferrals,
+          }}
+        />
+        <MenuItem
+          item={{
+            title: i18n.t('settings.other'),
+            onPress: navToOther,
+          }}
         />
       </View>
       <View style={[innerWrapper, theme.marginTop7x]}>
@@ -114,6 +112,12 @@ export default function ({ navigation }) {
         <MenuItem item={help} i={5} />
         <MenuItem item={logOut} i={6} />
       </View>
-    </View>
+    </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    paddingBottom: TAB_BAR_HEIGHT / 2,
+  },
+});

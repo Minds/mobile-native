@@ -1,6 +1,6 @@
 import { useDimensions } from '@react-native-community/hooks';
 import { observer } from 'mobx-react';
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -21,6 +21,7 @@ interface TrendingTabProps {
 const TrendingTab = observer(({ navigation }: TrendingTabProps) => {
   const theme = ThemedStyles.style;
   const { width } = useDimensions().window;
+  const widthStyle = useMemo(() => ({ width }), [width]);
 
   const getEntityRoute = useCallback(
     (type, entity) => {
@@ -133,22 +134,24 @@ const TrendingTab = observer(({ navigation }: TrendingTabProps) => {
 
   return (
     <ScrollView
-      style={[theme.flexContainer, { width }, { marginBottom: 180 }]}
+      style={[theme.flexContainer, widthStyle]}
       contentContainerStyle={theme.padding4x}>
       <View style={[theme.rowJustifySpaceBetween]}>
         <View style={[styles.firstColumn, theme.paddingVertical4x]}>
           <Text style={theme.bold}>{i18n.t('analytics.trending.content')}</Text>
         </View>
-        <View style={[theme.flexColumnCentered, theme.padding]}>
-          <Text style={theme.bold}>
+        <View style={[theme.flexColumnCentered, theme.paddingRight]}>
+          <Text style={[theme.bold, theme.textCenter]}>
             {i18n.t('analytics.trending.totalViews')}
           </Text>
         </View>
-        <View style={[theme.flexColumnCentered, theme.padding]}>
-          <Text style={theme.bold}>{i18n.t('analytics.trending.organic')}</Text>
+        <View style={[theme.flexColumnCentered, theme.paddingRight]}>
+          <Text style={[theme.bold, theme.textCenter]}>
+            {i18n.t('analytics.trending.organic')}
+          </Text>
         </View>
-        <View style={[theme.flexColumnCentered, theme.padding]}>
-          <Text style={theme.bold}>
+        <View style={[theme.flexColumnCentered, theme.paddingRight]}>
+          <Text style={[theme.bold, theme.textCenter]}>
             {i18n.t('analytics.trending.pageViews')}
           </Text>
         </View>
