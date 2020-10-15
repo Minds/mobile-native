@@ -33,6 +33,7 @@ export default class UserModel extends BaseModel {
   city!: string;
   name!: string;
   is_admin = false;
+  canary = false;
   plus: boolean = false;
   verified: boolean = false;
   founder: boolean = false;

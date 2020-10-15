@@ -333,6 +333,7 @@ exports[`blog card component should renders correctly 1`] = `
           "boost_autorotate": true,
           "boost_rating": "2",
           "briefdescription": "",
+          "canary": false,
           "categories": Array [
             "music",
             "nature",

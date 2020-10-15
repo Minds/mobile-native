@@ -50,6 +50,7 @@ exports[`blog view screen component should renders correctly 1`] = `
           "boost_autorotate": true,
           "boost_rating": "2",
           "briefdescription": "",
+          "canary": false,
           "categories": Array [
             "music",
             "nature",
@@ -257,6 +258,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "boost_autorotate": true,
                   "boost_rating": "2",
                   "briefdescription": "",
+                  "canary": false,
                   "categories": Array [
                     "music",
                     "nature",
@@ -440,6 +442,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "boost_autorotate": true,
                   "boost_rating": "2",
                   "briefdescription": "",
+                  "canary": false,
                   "categories": Array [
                     "music",
                     "nature",
@@ -598,6 +601,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "boost_autorotate": true,
                   "boost_rating": "2",
                   "briefdescription": "",
+                  "canary": false,
                   "categories": Array [
                     "music",
                     "nature",
@@ -757,6 +761,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "boost_autorotate": true,
                   "boost_rating": "2",
                   "briefdescription": "",
+                  "canary": false,
                   "categories": Array [
                     "music",
                     "nature",
