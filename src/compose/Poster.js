@@ -114,32 +114,36 @@ export default observer(function (props) {
           onPressBack={onPressBack}
           store={props.store}
         />
-        {props.store.attachment.hasAttachment && (
-          <TitleInput store={props.store} />
+        {!props.store.noText && (
+          <>
+            {props.store.attachment.hasAttachment && (
+              <TitleInput store={props.store} />
+            )}
+            <TextInput
+              style={[
+                theme.fullWidth,
+                theme.colorPrimaryText,
+                fontSize,
+                theme.paddingHorizontal4x,
+                theme.marginTop4x,
+                styles.input,
+                { height: localStore.height },
+              ]}
+              onContentSizeChange={localStore.onSizeChange}
+              ref={inputRef}
+              scrollEnabled={false}
+              placeholder={placeholder}
+              placeholderTextColor={ThemedStyles.getColor('tertiary_text')}
+              onChangeText={props.store.setText}
+              textAlignVertical="top"
+              value={props.store.text}
+              multiline={true}
+              selectTextOnFocus={false}
+              underlineColorAndroid="transparent"
+              testID="PostInput"
+            />
+          </>
         )}
-        <TextInput
-          style={[
-            theme.fullWidth,
-            theme.colorPrimaryText,
-            fontSize,
-            theme.paddingHorizontal4x,
-            theme.marginTop4x,
-            styles.input,
-            { height: localStore.height },
-          ]}
-          onContentSizeChange={localStore.onSizeChange}
-          ref={inputRef}
-          scrollEnabled={false}
-          placeholder={placeholder}
-          placeholderTextColor={ThemedStyles.getColor('tertiary_text')}
-          onChangeText={props.store.setText}
-          textAlignVertical="top"
-          value={props.store.text}
-          multiline={true}
-          selectTextOnFocus={false}
-          underlineColorAndroid="transparent"
-          testID="PostInput"
-        />
         <MediaPreview store={props.store} />
         {props.store.isRemind && <RemindPreview entity={props.store.entity} />}
         {props.store.isEdit && props.store.entity.remind_object && (
