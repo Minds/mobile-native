@@ -54,8 +54,8 @@ const Controls = observer(({ localStore, entity, hideOverlay }: PropsType) => {
 
   const mustShow = Boolean(
     !hideOverlay &&
-      (localStore.showOverlay ||
-        (!localStore.forceHideOverlay && localStore.paused && entity)),
+      !localStore.forceHideOverlay &&
+      (localStore.showOverlay || (localStore.paused && entity)),
   );
 
   if (mustShow) {
@@ -86,7 +86,7 @@ const Controls = observer(({ localStore, entity, hideOverlay }: PropsType) => {
               color={Colors.light}
             />
           </View>
-          {localStore.player && entity && (
+          {localStore.duration > 0 && entity && (
             <View style={styles.controlSettingsContainer}>
               <Tooltip
                 popover={sourceSelector}
@@ -106,7 +106,7 @@ const Controls = observer(({ localStore, entity, hideOverlay }: PropsType) => {
               </Tooltip>
             </View>
           )}
-          {localStore.player && (
+          {localStore.duration > 0 && (
             <View style={styles.controlBarContainer}>
               <Icon
                 onPress={localStore.toggleFullScreen}
