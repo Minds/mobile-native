@@ -198,9 +198,9 @@ export default class ActivityModel extends BaseModel {
    * @param {string} size
    */
   getThumbSource(size: ThumbSize = 'medium') {
-    // for gif use always the same size to take adventage of the cache (they are not resized)
+    // for gif use always the same size to take advantage of the cache (they are not resized)
     if (this.isGif()) {
-      size = 'medium';
+      size = 'xlarge';
     }
 
     if (this.thumbnails && this.thumbnails[size]) {
