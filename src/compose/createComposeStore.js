@@ -92,6 +92,11 @@ export default function ({ props, newsfeed }) {
         ? 'text'
         : settingsStore.composerMode;
 
+      // if noText is enabled the first screen shouldn't be text.
+      if (this.mode === 'text' && this.noText) {
+        this.mode = 'photo';
+      }
+
       if (params.media) {
         this.mode = 'text';
         this.mediaToConfirm = params.media;
@@ -115,6 +120,7 @@ export default function ({ props, newsfeed }) {
         isRemind: undefined,
         text: undefined,
         portrait: undefined,
+        noText: undefined,
       });
     },
     onPost(entity, isEdit) {
