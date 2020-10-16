@@ -1,6 +1,6 @@
 import { runInAction, action, observable, decorate } from 'mobx';
 import FastImage from 'react-native-fast-image';
-import { FlatList, Alert } from 'react-native';
+import { FlatList, Alert, Platform } from 'react-native';
 
 import BaseModel from '../common/BaseModel';
 import UserModel from '../channel/UserModel';
@@ -283,7 +283,7 @@ export default class ActivityModel extends BaseModel {
 
   @action
   toggleMatureVisibility() {
-    if (GOOGLE_PLAY_STORE) {
+    if (GOOGLE_PLAY_STORE || Platform.OS === 'ios') {
       return;
     }
     this.mature_visibility = !this.mature_visibility;
