@@ -23,6 +23,7 @@ type PropsType = {
   item: PortraitBarItem;
   nextUser: Function;
   prevUser: Function;
+  unseenMode: boolean;
 };
 
 const metadataService = new MetadataService();
@@ -60,11 +61,20 @@ const UserContentSwiper = observer((props: PropsType) => {
 
   const onTapStateChangeRight = useCallback(() => {
     if (store.index < activities.length - 1) {
+      if (
+        props.unseenMode &&
+        !activities.slice(store.index).some((p) => p.seen) // there no seen posts ahead
+      ) {
+        if (activities[store.index + 1].seen) {
+          props.nextUser();
+          return;
+        }
+      }
       store.setIndex(store.index + 1);
     } else {
       props.nextUser();
     }
-  }, [activities.length, store, props]);
+  }, [activities, store, props]);
 
   const onTapStateChangeLeft = useCallback(() => {
     if (store.index > 0) {

@@ -103,14 +103,13 @@ const PortraitContentBar = observer(
             navigation.push('ActivityFullScreenNav', {
               screen: 'PortraitViewerScreen',
               params: {
-                items: store.items,
                 index: row.index,
               },
             })
           }
         />
       ),
-      [navigation, store],
+      [navigation],
     );
 
     return (
