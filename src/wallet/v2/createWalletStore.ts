@@ -368,8 +368,8 @@ const createWalletStore = () => ({
    * @param {string} number
    * @param {boolean} retry
    */
-  join(number: string, retry: boolean): Promise<WalletJoinResponse> {
-    return walletService.join(number, retry);
+  join(numberToJoin: string, retry: boolean): Promise<WalletJoinResponse> {
+    return walletService.join(numberToJoin, retry);
   },
   /**
    * Confirm join
