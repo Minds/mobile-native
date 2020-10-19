@@ -18,6 +18,7 @@ import i18n from '../../common/services/i18n.service';
 import BlockchainApiService from '../../blockchain/BlockchainApiService';
 import { ChartTimespanType } from './currency-tabs/TokensChart';
 import sessionService from '../../common/services/session.service';
+import walletService, { WalletJoinResponse } from '../WalletService';
 
 const defaultStripeDetails = <StripeDetails>{
   hasAccount: false,
@@ -361,6 +362,23 @@ const createWalletStore = () => ({
     if (this.usdPayouts.length > 0) {
       this.usdPayoutsTotals = SUM_CENTS(this.usdPayouts);
     }
+  },
+  /**
+   * Join to wallet tokens
+   * @param {string} number
+   * @param {boolean} retry
+   */
+  join(number: string, retry: boolean): Promise<WalletJoinResponse> {
+    return walletService.join(number, retry);
+  },
+  /**
+   * Confirm join
+   * @param {string} number
+   * @param {string} code
+   * @param {string} secret
+   */
+  confirm(number, code, secret) {
+    return walletService.confirm(number, code, secret);
   },
   reset() {
     this.balance = 0;

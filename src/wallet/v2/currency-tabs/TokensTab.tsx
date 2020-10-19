@@ -16,8 +16,8 @@ import type { BottomOptionsStoreType } from '../../../common/components/BottomOp
 import TransactionsListTokens from '../TransactionList/TransactionsListTokens';
 import ReceiverSettings from '../address/ReceiverSettings';
 import { WalletScreenNavigationProp } from '../WalletScreen';
-import PhoneValidationComponent from '../../../common/components/PhoneValidationComponent';
 import i18n from '../../../common/services/i18n.service';
+import PhoneValidationComponent from '../../../common/components/phoneValidation/PhoneValidationComponent';
 
 const options: Array<ButtonTabType<TokensOptions>> = [
   { id: 'overview', title: 'Overview' },
@@ -47,19 +47,21 @@ type PhoneValidatorPropsType = {
 };
 const PhoneValidator = ({ bottomStore }: PhoneValidatorPropsType) => {
   const theme = ThemedStyles.style;
-  const ref = useRef<PhoneValidationComponent>(null);
+  const ref = useRef<typeof PhoneValidationComponent>();
   const [msg, setMsg] = useState(i18n.t('wallet.phoneValidationMessage'));
   const [label, setLabel] = useState(i18n.t('onboarding.phoneNumber'));
 
   const verify = useCallback(() => {
-    ref.current?.confirmAction();
+    //@ts-ignore
+    ref.current?.confirmNumber.current?.confirmAction();
     bottomStore.doneText = i18n.t('done');
     setLabel('');
     bottomStore.setOnPressDone(() => bottomStore.hide());
   }, [ref, bottomStore]);
 
   const send = useCallback(() => {
-    ref.current?.joinAction();
+    //@ts-ignore
+    ref.current?.numberInput.current?.joinAction();
     bottomStore.doneText = i18n.t('verify');
     bottomStore.setOnPressDone(verify);
     setMsg('');
