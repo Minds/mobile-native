@@ -3,9 +3,12 @@ import { useAsObservableSource, useLocalStore } from 'mobx-react';
 import React, { useEffect } from 'react';
 import storageService from '../../common/services/storage.service';
 import apiService from '../services/api.service';
+import sessionService from '../services/session.service';
 
 const getCacheKey = (url: string, params: any) =>
-  `@minds:persist:${url}${params ? `?${JSON.stringify(params)}` : ''}`;
+  `persist:${sessionService.guid}:${url}${
+    params ? `?${JSON.stringify(params)}` : ''
+  }`;
 
 const createStore = ({
   url,
@@ -106,9 +109,9 @@ export default function useApiFetch<T>(
     if (options.persist) {
       store.hydrate(options.params);
     }
-  }, []);
+  });
 
-  React.useEffect(() => {
+  useEffect(() => {
     reaction(() => ({ ...observableParams }), store.fetch, {
       fireImmediately: true,
     });
