@@ -1,4 +1,5 @@
 import React from 'react';
+import { TextStyle } from 'react-native';
 
 import { ListItem } from 'react-native-elements';
 import ThemedStyles from '../../../styles/ThemedStyles';
@@ -19,6 +20,7 @@ export type MenuItemPropsType = {
   item: MenuItemItem;
   component?: any;
   containerItemStyle?: {} | [];
+  titleStyle?: TextStyle;
   testID?: string;
 };
 
@@ -26,6 +28,7 @@ export default function ({
   item,
   component,
   containerItemStyle,
+  titleStyle,
   testID,
 }: MenuItemPropsType) {
   const theme = ThemedStyles.style;
@@ -44,17 +47,26 @@ export default function ({
   // ListItem Chevron Style
   const chevronStyle = item.noIcon
     ? undefined
-    : { ...theme.colorIcon, size: 24, ...item.icon };
+    : {
+        ...theme.colorIcon,
+        size: 24,
+        type: 'ionicon',
+        name: 'chevron-forward',
+        ...item.icon,
+      };
 
   return (
     <ListItem
       Component={component}
-      title={item.title}
       onPress={item.onPress}
       containerStyle={containerStyle}
-      titleStyle={theme.listItemTitle}
-      chevron={chevronStyle}
-      testID={testID}
-    />
+      testID={testID}>
+      <ListItem.Content>
+        <ListItem.Title style={[theme.listItemTitle, titleStyle]}>
+          {item.title}
+        </ListItem.Title>
+      </ListItem.Content>
+      {chevronStyle && <ListItem.Chevron {...chevronStyle} />}
+    </ListItem>
   );
 }
