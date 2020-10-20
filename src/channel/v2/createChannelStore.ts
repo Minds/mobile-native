@@ -13,6 +13,7 @@ import type { SupportTiersType } from '../../wire/WireTypes';
 import NavigationService from '../../navigation/NavigationService';
 import i18n from '../../common/services/i18n.service';
 import { showNotification } from '../../../AppMessages';
+import debounce from '../../common/helpers/debounce';
 type InitialLoadParams = {
   entity?: { guid: string } | UserModel;
   guid?: string;
@@ -51,6 +52,18 @@ const createChannelStore = () => {
     uploading: false,
     bannerProgress: 0,
     avatarProgress: 0,
+    channelSearch: '',
+    setChannelSearch(channelSearch: string) {
+      this.channelSearch = channelSearch;
+
+      // alternative to this would be to search after user tap search
+      if (this.channelSearch.length >= 3) {
+        debounce(this.searchInChannel, 500)();
+      }
+    },
+    clearSearch() {
+      this.channelSearch = '';
+    },
     get esFeedfilter() {
       switch (this.filter) {
         case 'all':
@@ -128,6 +141,10 @@ const createChannelStore = () => {
         .setAsActivities(this.esFeedfilter !== 'blogs')
         .clear()
         .fetchRemoteOrLocal();
+    },
+    searchInChannel() {
+      //TODO should set the feedstore keeping in mind filters
+      console.log('searching...');
     },
     /**
      * Set channel
