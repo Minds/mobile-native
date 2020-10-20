@@ -152,7 +152,9 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
 
   const complete = useCallback(() => {
     store.setLoading(false);
-    onComplete();
+    if (onComplete && typeof onComplete === 'function') {
+      onComplete();
+    }
     navigation.goBack();
   }, [navigation, onComplete, store]);
 
