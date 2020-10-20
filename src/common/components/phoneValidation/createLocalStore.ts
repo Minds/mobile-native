@@ -1,3 +1,8 @@
+import type UserStore from '../../../auth/UserStore';
+import walletService from '../../../wallet/WalletService';
+import logService from '../../services/log.service';
+import twoFactorAuthenticationService from '../../services/two-factor-authentication.service';
+
 const createLocalStore = () => ({
   inProgress: false,
   confirming: false,
@@ -11,6 +16,10 @@ const createLocalStore = () => ({
   confirmed: false,
   password: '',
   TFAConfirmed: false,
+  phoneInputRef: null as any,
+  setPhoneInputRef(phoneInputRef: any) {
+    this.phoneInputRef = phoneInputRef;
+  },
   setCode(code: string) {
     this.code = code;
   },
@@ -50,6 +59,61 @@ const createLocalStore = () => ({
   },
   get canConfirm() {
     return this.code.length > 0;
+  },
+  canJoin() {
+    return this.phoneInputRef?.current?.isValidNumber();
+  },
+  async join(TFA = undefined, retry = false) {
+    try {
+      let { secret } = TFA
+        ? await twoFactorAuthenticationService.authenticate(this.phone)
+        : await walletService.join(this.phone, retry);
+
+      this.isConfirming(secret);
+    } catch (e) {
+      const error = (e && e.message) || 'Unknown server error';
+      this.setInProgress(false);
+      this.setError(error);
+    }
+  },
+  joinAction(TFA = undefined, retry = false) {
+    if (this.inProgress || (!retry && !this.canJoin())) {
+      return null;
+    }
+
+    this.isJoining();
+
+    return this.join(TFA, retry);
+  },
+  async confirm(user, TFA = undefined) {
+    try {
+      if (TFA) {
+        await twoFactorAuthenticationService.check(
+          this.phone,
+          this.code,
+          this.secret,
+        );
+      } else {
+        await walletService.confirm(this.phone, this.code, this.secret);
+        user.setRewards(true);
+      }
+      this.isConfirmed();
+    } catch (e) {
+      const error = (e && e.message) || 'Unknown server error';
+      this.setError(error);
+      logService.exception(e);
+    } finally {
+      this.setInProgress(false);
+    }
+  },
+  confirmAction(user: UserStore, TFA = undefined) {
+    if (this.inProgress || !this.canConfirm || !user) {
+      return null;
+    }
+
+    this.inProgressNow();
+
+    return this.confirm(user, TFA);
   },
 });
 
