@@ -41,7 +41,8 @@ const ChannelTopBar = observer(
           placeholderTextColor={ThemedStyles.getColor('primary_text')}
           value={store.channelSearch}
           onChangeText={store.setChannelSearch}
-          //returnKeyType={'search'}
+          returnKeyType={'search'}
+          onSubmitEditing={store.searchInChannel}
         />
         {store.channelSearch.length > 0 && (
           <MIcon

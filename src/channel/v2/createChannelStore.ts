@@ -55,14 +55,11 @@ const createChannelStore = () => {
     channelSearch: '',
     setChannelSearch(channelSearch: string) {
       this.channelSearch = channelSearch;
-
-      // alternative to this would be to search after user tap search
-      if (this.channelSearch.length >= 3) {
-        debounce(this.searchInChannel, 500)();
-      }
     },
     clearSearch() {
       this.channelSearch = '';
+      this.feedStore.clear();
+      this.loadFeed();
     },
     get esFeedfilter() {
       switch (this.filter) {
@@ -142,9 +139,31 @@ const createChannelStore = () => {
         .clear()
         .fetchRemoteOrLocal();
     },
-    searchInChannel() {
-      //TODO should set the feedstore keeping in mind filters
-      console.log('searching...');
+    async searchInChannel() {
+      this.feedStore.clear();
+
+      if (!this.channel) {
+        return;
+      }
+
+      const params: any = {
+        period: '1y',
+        all: 1,
+        query: this.channelSearch,
+        sync: 1,
+        force_public: 1,
+      };
+
+      this.feedStore
+        .setEndpoint(
+          `api/v2/pro/content/${this.channel.guid}/${this.esFeedfilter}`,
+        )
+        .setAsActivities(this.esFeedfilter !== 'blogs')
+        .setLimit(12)
+        .setParams(params)
+        .fetchRemoteOrLocal();
+
+      return;
     },
     /**
      * Set channel

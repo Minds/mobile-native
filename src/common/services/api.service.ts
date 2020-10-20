@@ -62,6 +62,9 @@ class ApiService {
       // Convert from JSON
       text = await response.text();
       data = JSON.parse(text);
+      if (url.includes('pro/content')) {
+        console.log(url, data.entities.length);
+      }
     } catch (err) {
       if (response.ok && !__DEV__) {
         if (response.bodyUsed) {
