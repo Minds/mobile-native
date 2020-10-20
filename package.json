@@ -72,7 +72,7 @@
     "react-native-convert-ph-asset": "^1.0.3",
     "react-native-device-info": "^5.6.5",
     "react-native-device-log": "Minds/react-native-device-log#74f06b09c6656aa228a9a3a474c714d82abf509e",
-    "react-native-elements": "^2.0.2",
+    "react-native-elements": "^2.3.2",
     "react-native-exception-handler": "^2.10.8",
     "react-native-fast-image": "DylanVann/react-native-fast-image#e94e6fee66e1c60c6e8602eee20d7d5456b79a41",
     "react-native-file-type": "^0.0.8",
