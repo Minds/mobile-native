@@ -139,7 +139,6 @@ export default class ExplicitText extends Component<PropsType, StateType> {
     const backgroundColor = ThemedStyles.getColor('secondary_background');
     const startColor = backgroundColor + '00';
     const endColor = backgroundColor + 'FF';
-    console.log('LinearGradient', Text);
     return (
       <LinearGradient colors={[startColor, endColor]} style={styles.linear} />
     );
