@@ -143,7 +143,7 @@ class Comment extends Component<PropsType> {
                   <ChannelBadge
                     channel={comment.ownerObj}
                     addSpace
-                    iconSize={10}
+                    iconSize={16}
                   />{' '}
                   {comment.description &&
                     (!comment.mature || comment.mature_visibility) && (
