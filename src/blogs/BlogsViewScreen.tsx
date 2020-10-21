@@ -33,7 +33,6 @@ import CommentList from '../comments/CommentList';
 import CenteredLoading from '../common/components/CenteredLoading';
 import logService from '../common/services/log.service';
 import i18n from '../common/services/i18n.service';
-import featuresService from '../common/services/features.service';
 import { FLAG_VIEW } from '../common/Permissions';
 import ThemedStyles from '../styles/ThemedStyles';
 import { ComponentsStyle } from '../styles/Components';
@@ -159,19 +158,6 @@ export default class BlogsViewScreen extends Component {
       </View>
     );
     const image = blog.getBannerSource();
-
-    const actionSheet = this.getActionSheet();
-    const optMenu = featuresService.has('allow-comments-toggle') ? (
-      <View style={styles.rightToolbar}>
-        <Icon
-          name="more-vert"
-          onPress={() => this.showActionSheet()}
-          size={26}
-          style={styles.icon}
-        />
-        {actionSheet}
-      </View>
-    ) : null;
     return (
       <View style={[styles.screen, theme.backgroundSecondary]}>
         <FastImage
