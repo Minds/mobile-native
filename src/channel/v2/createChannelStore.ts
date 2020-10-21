@@ -58,8 +58,8 @@ const createChannelStore = () => {
     },
     clearSearch() {
       this.channelSearch = '';
-      this.feedStore.clear();
-      this.loadFeed();
+      this.feedStore.setParams({});
+      this.loadFeed(true);
     },
     get esFeedfilter() {
       switch (this.filter) {
@@ -156,7 +156,7 @@ const createChannelStore = () => {
 
       this.feedStore
         .setEndpoint(
-          `api/v2/pro/content/${this.channel.guid}/${this.esFeedfilter}`,
+          `api/v2/${this.endpoint}/${this.channel.guid}/${this.esFeedfilter}`,
         )
         .setAsActivities(this.esFeedfilter !== 'blogs')
         .setLimit(12)
