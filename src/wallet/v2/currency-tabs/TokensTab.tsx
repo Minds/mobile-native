@@ -1,4 +1,10 @@
-import React, { useRef, useCallback, useState } from 'react';
+import React, {
+  useRef,
+  useCallback,
+  useState,
+  useEffect,
+  forwardRef,
+} from 'react';
 import { observer, useLocalStore } from 'mobx-react';
 import { View, Text, StyleSheet } from 'react-native';
 import TopBarButtonTabBar, {
@@ -16,8 +22,9 @@ import type { BottomOptionsStoreType } from '../../../common/components/BottomOp
 import TransactionsListTokens from '../TransactionList/TransactionsListTokens';
 import ReceiverSettings from '../address/ReceiverSettings';
 import { WalletScreenNavigationProp } from '../WalletScreen';
-import PhoneValidationComponent from '../../../common/components/PhoneValidationComponent';
 import i18n from '../../../common/services/i18n.service';
+import PhoneValidationComponent from '../../../common/components/phoneValidation/PhoneValidationComponent';
+import createLocalStore from '../../../common/components/phoneValidation/createLocalStore';
 
 const options: Array<ButtonTabType<TokensOptions>> = [
   { id: 'overview', title: 'Overview' },
@@ -45,26 +52,27 @@ const createStore = (walletStore: WalletStoreType) => ({
 type PhoneValidatorPropsType = {
   bottomStore: BottomOptionsStoreType;
 };
-const PhoneValidator = ({ bottomStore }: PhoneValidatorPropsType) => {
+const PhoneValidator = observer(({ bottomStore }: PhoneValidatorPropsType) => {
   const theme = ThemedStyles.style;
-  const ref = useRef<PhoneValidationComponent>(null);
+  const localStore = useLocalStore(createLocalStore);
+  const user = useLegacyStores().user;
   const [msg, setMsg] = useState(i18n.t('wallet.phoneValidationMessage'));
   const [label, setLabel] = useState(i18n.t('onboarding.phoneNumber'));
 
-  const verify = useCallback(() => {
-    ref.current?.confirmAction();
+  const verify = async () => {
+    await localStore.confirmAction(user);
     bottomStore.doneText = i18n.t('done');
     setLabel('');
     bottomStore.setOnPressDone(() => bottomStore.hide());
-  }, [ref, bottomStore]);
+  };
 
-  const send = useCallback(() => {
-    ref.current?.joinAction();
+  const send = async () => {
+    await localStore.joinAction();
     bottomStore.doneText = i18n.t('verify');
     bottomStore.setOnPressDone(verify);
     setMsg('');
     setLabel(i18n.t('onboarding.confirmationCode'));
-  }, [ref, bottomStore, verify, setMsg, setLabel]);
+  };
 
   bottomStore.setOnPressDone(send);
 
@@ -82,12 +90,12 @@ const PhoneValidator = ({ bottomStore }: PhoneValidatorPropsType) => {
           textStyle={theme.colorPrimaryText}
           inputStyles={[theme.colorPrimaryText, theme.border0x, styles.input]}
           bottomStore={bottomStore}
-          ref={ref}
+          localStore={localStore}
         />
       </View>
     </View>
   );
-};
+});
 
 const showPhoneValidator = (bottomStore: BottomOptionsStoreType) => {
   bottomStore.show(
