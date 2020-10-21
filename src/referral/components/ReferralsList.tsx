@@ -97,7 +97,7 @@ const ReferralsList = observer(({ navigation }: ReferralsListProps) => {
             </Text>
           )}
 
-          {result?.referrals.map(_renderRow)}
+          {result?.referrals.filter((r) => r.prospect).map(_renderRow)}
         </View>
       )}
 
