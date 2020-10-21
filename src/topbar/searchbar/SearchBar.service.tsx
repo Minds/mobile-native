@@ -56,12 +56,13 @@ class SearchBarService {
     const index =
       typeof item === 'string'
         ? this.searchHistory.indexOf(item)
-        : this.searchHistory.findIndex(
-            (value) =>
-              !(typeof value === 'string') &&
-              value.user.guid === item.user.guid,
-          );
+        : this.searchHistory.findIndex((value) => {
+            if (typeof value === 'string') {
+              return false;
+            }
 
+            return value.user.guid === item.user.guid;
+          });
     if (index !== -1) {
       this.searchHistory.splice(index, 1);
     }
