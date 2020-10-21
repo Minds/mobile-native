@@ -29,7 +29,7 @@ type PropsType = {
 const metadataService = new MetadataService();
 metadataService.setSource('portrait').setMedium('feed');
 
-const { height } = Dimensions.get('window');
+const { height } = Dimensions.get('screen');
 
 /**
  * User content swiper
@@ -86,7 +86,7 @@ const UserContentSwiper = observer((props: PropsType) => {
 
   const touchableStyle = {
     top: 90 + insets.top,
-    height: height - (230 + insets.bottom),
+    height: height - (200 + insets.top + insets.bottom),
   };
 
   return (
