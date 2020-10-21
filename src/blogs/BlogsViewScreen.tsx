@@ -37,6 +37,7 @@ import featuresService from '../common/services/features.service';
 import { FLAG_VIEW } from '../common/Permissions';
 import ThemedStyles from '../styles/ThemedStyles';
 import { ComponentsStyle } from '../styles/Components';
+import BlogActionSheet from './BlogActionSheet';
 
 /**
  * Blog View Screen
@@ -179,7 +180,9 @@ export default class BlogsViewScreen extends Component {
           style={styles.image}
         />
         <Text style={styles.title}>{blog.title}</Text>
-        {optMenu}
+        <View style={[styles.actionSheet]}>
+          <BlogActionSheet entity={blog} navigation={this.props.navigation} />
+        </View>
         <View style={styles.ownerBlockContainer}>
           <OwnerBlock entity={blog} navigation={this.props.navigation}>
             <Text style={[styles.timestamp, theme.colorSecondaryText]}>
@@ -342,6 +345,12 @@ const styles = StyleSheet.create({
   containerContainer: {
     flex: 1,
     paddingBottom: paddingBottom,
+  },
+  actionSheet: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    zIndex: 1,
   },
   header: {
     position: 'absolute',
