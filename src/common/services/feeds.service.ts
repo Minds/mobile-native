@@ -10,6 +10,8 @@ import connectivityService from './connectivity.service';
 import Colors from '../../styles/Colors';
 import boostedContentService from './boosted-content.service';
 import BaseModel from '../BaseModel';
+import { Platform } from 'react-native';
+import { GOOGLE_PLAY_STORE } from '../../config/Config';
 
 export type FeedRecordType = {
   owner_guid: string;
@@ -294,6 +296,11 @@ export default class FeedsService {
       ...this.params,
       ...{ limit: 150, as_activities: this.asActivities ? 1 : 0 },
     };
+
+    // For iOS and play store force safe content
+    if (Platform.OS === 'ios' || GOOGLE_PLAY_STORE) {
+      params.nsfw = [];
+    }
 
     if (this.paginated && more) {
       params.from_timestamp = this.pagingToken;
