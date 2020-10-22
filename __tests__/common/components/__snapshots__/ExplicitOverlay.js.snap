@@ -2,6 +2,7 @@
 
 exports[`Explicit overlay component renders correctly 1`] = `
 <View
+  pointerEvents="box-none"
   style={
     Array [
       undefined,
@@ -69,6 +70,7 @@ exports[`Explicit overlay component renders correctly 1`] = `
 
 exports[`Explicit overlay component should renders the etag 1`] = `
 <View
+  pointerEvents="box-none"
   style={
     Array [
       undefined,

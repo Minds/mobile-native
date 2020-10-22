@@ -157,11 +157,28 @@ const PortraitActivity = observer((props: PropsType) => {
     height: height - (200 + insets.top + insets.bottom),
   };
 
+  const tappingArea = (
+    <>
+      <TouchableOpacity
+        activeOpacity={1}
+        style={[styles.touchLeft, touchableStyle]}
+        onPress={props.onPressPrev}
+      />
+      <TouchableOpacity
+        activeOpacity={1}
+        style={[styles.touchRight, touchableStyle]}
+        onPress={props.onPressNext}
+      />
+    </>
+  );
+
   return (
     <View style={[window, theme.flexContainer, theme.backgroundSecondary]}>
       <View style={theme.flexContainer}>
         {ownerBlockShadow}
+        {showNSFW && tappingArea}
         <View
+          pointerEvents="box-none"
           style={[theme.justifyCenter, theme.flexContainer, styles.content]}>
           {showNSFW ? (
             <ExplicitOverlay entity={entity} />
@@ -229,16 +246,7 @@ const PortraitActivity = observer((props: PropsType) => {
           onPressComment={onPressComment}
         />
       </View>
-      <TouchableOpacity
-        activeOpacity={1}
-        style={[styles.touchLeft, touchableStyle]}
-        onPress={props.onPressPrev}
-      />
-      <TouchableOpacity
-        activeOpacity={1}
-        style={[styles.touchRight, touchableStyle]}
-        onPress={props.onPressNext}
-      />
+      {!showNSFW && tappingArea}
       <CommentsBottomPopup
         entity={entity}
         commentsStore={store.comments}
