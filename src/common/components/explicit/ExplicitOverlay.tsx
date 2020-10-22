@@ -88,6 +88,7 @@ export default class ExplicitOverlay extends PureComponent<PropsType> {
 
     return (
       <View
+        pointerEvents="box-none"
         style={[
           theme.centered,
           theme.backgroundSecondary,
