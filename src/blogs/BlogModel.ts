@@ -20,6 +20,7 @@ export default class BlogModel extends BaseModel {
   'comments:count': number;
   'thumbs:down:user_guids': Array<number>;
   'thumbs:up:user_guids': Array<number>;
+  title: string = '';
 
   /**
    * Get banner source
