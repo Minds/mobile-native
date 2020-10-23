@@ -582,7 +582,8 @@
       "3": "Password",
       "4": "Notifications",
       "5": "NSFW Content",
-      "6": "Messenger"
+      "6": "Messenger",
+      "7": "Autoplay Videos"
     },
     "securityOptions": {
       "1": "Two-factor authentication (2FA)",
@@ -602,6 +603,12 @@
       "c2": "Delete Account",
       "d": "INFO",
       "d1": "App"
+    },
+    "autoplay": {
+      "description": "Control whether videos in your feed play automatically.",
+      "enable": "Enable video autoplay",
+      "saved": "Changes Saved",
+      "notPlus": "This feature is only available to Plus users."
     }
   },
   "comingSoon": {
