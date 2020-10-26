@@ -8,7 +8,6 @@ import i18n from '../../../common/services/i18n.service';
 import ChannelBadges from '../../badges/ChannelBadges';
 import CenteredLoading from '../../../common/components/CenteredLoading';
 import abbrev from '../../../common/helpers/abbrev';
-import MindsIcons from '../../../common/components/MindsIcons';
 import SocialLinks from '../../../common/components/SocialLinks';
 
 type PropsType = {
@@ -16,7 +15,7 @@ type PropsType = {
   navigation: any;
 };
 
-const AboutTab = observer(({ store, navigation }: PropsType) => {
+const AboutTab = observer(({ store }: PropsType) => {
   const theme = ThemedStyles.style;
   const localStore = useLocalStore(() => ({
     groupCount: 0,
