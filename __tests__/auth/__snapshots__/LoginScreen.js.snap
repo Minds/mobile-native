@@ -61,6 +61,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
             },
           ]
         }
+        testID="loginscreentext"
       >
         Login
       </Text>
