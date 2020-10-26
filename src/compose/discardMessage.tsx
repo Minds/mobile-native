@@ -2,6 +2,7 @@ import React from 'react';
 import { showMessage, hideMessage } from 'react-native-flash-message';
 import ThemedStyles from '../styles/ThemedStyles';
 import { View, Text } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const discardMessage = (confirm) => {
   const theme = ThemedStyles.style;
@@ -44,16 +45,21 @@ const discardMessage = (confirm) => {
               Keep Editing
             </Text>
           </View>
-          <View style={theme.justifyCenter}>
+          <TouchableOpacity
+            style={theme.justifyCenter}
+            onPress={() => {
+              hideMessage();
+              confirm();
+            }}>
             <Text
-              style={[theme.fontXL, theme.colorLink, theme.paddingHorizontal4x]}
-              onPress={() => {
-                hideMessage();
-                confirm();
-              }}>
+              style={[
+                theme.fontXL,
+                theme.colorLink,
+                theme.paddingHorizontal4x,
+              ]}>
               Yes, Discard
             </Text>
-          </View>
+          </TouchableOpacity>
         </View>
       </View>
     ),
