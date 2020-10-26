@@ -66,19 +66,13 @@ export default function ({ props, newsfeed }) {
     posting: false,
     group: null,
     postToPermaweb: false,
+    initialized: false,
     onScreenFocused() {
       const params = props.route.params;
-      if (
-        !params ||
-        (!params.entity &&
-          !params.mode &&
-          !params.media &&
-          !params.text &&
-          !params.noText &&
-          !params.portrait)
-      ) {
+      if (this.initialized || !params) {
         return;
       }
+      this.initialized = true;
 
       this.noText = Boolean(params.noText);
       this.portraitMode = params.portrait;
