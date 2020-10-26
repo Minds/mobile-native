@@ -35,10 +35,13 @@ export default observer(function (props) {
     width: '100%',
   };
 
+  // workaround: we use sourceURL for the preview on iOS because the image is not displayed with the uri
+  const uri = props.image.sourceURL || props.image.uri;
+
   return (
     <FastImage
       key={props.image.key || 'imagePreview'}
-      source={{ uri: props.image.uri + `?${props.image.key}` }} // // we need to change the uri in order to force the reload of the image
+      source={{ uri: uri + `?${props.image.key}` }} // // we need to change the uri in order to force the reload of the image
       style={[imageStyle, props.style, ThemedStyles.style.backgroundTertiary]}
       resizeMode={FastImage.resizeMode.contain}
     />
