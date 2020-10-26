@@ -8,6 +8,8 @@ import i18n from '../../../common/services/i18n.service';
 import ChannelBadges from '../../badges/ChannelBadges';
 import CenteredLoading from '../../../common/components/CenteredLoading';
 import abbrev from '../../../common/helpers/abbrev';
+import MindsIcons from '../../../common/components/MindsIcons';
+import SocialLinks from '../../../common/components/SocialLinks';
 
 type PropsType = {
   store: ChannelStoreType;
@@ -86,6 +88,11 @@ const AboutTab = observer(({ store, navigation }: PropsType) => {
         label={i18n.t('subscriptions')}
         wrapperStyle={theme.marginBottom2x}>
         <Text>{store.channel.subscriptions_count}</Text>
+      </LabeledComponent>
+      <LabeledComponent
+        label={i18n.t('channel.edit.links')}
+        wrapperStyle={theme.marginBottom2x}>
+        <SocialLinks socialLinks={store.channel.social_profiles} />
       </LabeledComponent>
     </View>
   );
