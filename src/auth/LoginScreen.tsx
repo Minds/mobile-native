@@ -48,7 +48,8 @@ export default function LoginScreen(props: PropsType) {
                 theme.textCenter,
                 theme.colorWhite,
                 titleMargin,
-              ]}>
+              ]}
+              testID="loginscreentext">
               {i18n.t('auth.login')}
             </Text>
 
