@@ -101,6 +101,7 @@ import VideoBackground from '../common/components/VideoBackground';
 import TransparentLayer from '../common/components/TransparentLayer';
 import PortraitViewerScreen from '../portrait/PortraitViewerScreen';
 import { portraitBarRef } from '../portrait/PortraitContentBar';
+import AutoplaySettingsScreen from '../settings/screens/AutoplaySettingsScreen';
 
 const isIos = Platform.OS === 'ios';
 
@@ -164,13 +165,19 @@ const AccountScreenOptions = (navigation) => [
     title: i18n.t('settings.accountOptions.4'),
     onPress: () => navigation.push('SettingsNotifications'),
   },
-  {
-    title: i18n.t('settings.accountOptions.5'),
-    onPress: () => navigation.push('NSFWScreen'),
-  },
+  Platform.OS !== 'ios'
+    ? {
+        title: i18n.t('settings.accountOptions.5'),
+        onPress: () => navigation.push('NSFWScreen'),
+      }
+    : null,
   {
     title: i18n.t('settings.accountOptions.6'),
     onPress: () => navigation.push('MessengerSettingsScreen'),
+  },
+  {
+    title: i18n.t('settings.accountOptions.7'),
+    onPress: () => navigation.push('AutoplaySettingsScreen'),
   },
 ];
 
@@ -560,6 +567,11 @@ const AppStack = function () {
         name="MessengerSettingsScreen"
         component={MessengerSettingsScreen}
         options={{ title: i18n.t('settings.accountOptions.6') }}
+      />
+      <AppStackNav.Screen
+        name="AutoplaySettingsScreen"
+        component={AutoplaySettingsScreen}
+        options={{ title: i18n.t('settings.accountOptions.7') }}
       />
       <AppStackNav.Screen
         name="DevicesScreen"

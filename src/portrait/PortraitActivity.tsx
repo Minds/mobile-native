@@ -1,5 +1,12 @@
 import React, { useRef, useCallback, useEffect } from 'react';
-import { View, Text, StyleSheet, Platform } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Platform,
+  Dimensions,
+  TouchableOpacity,
+} from 'react-native';
 import { useDimensions } from '@react-native-community/hooks';
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { useFocus } from '@crowdlinker/react-native-pager';
@@ -34,9 +41,12 @@ type ActivityRoute = RouteProp<AppStackParamList, 'Activity'>;
 type PropsType = {
   entity: ActivityModel;
   forceAutoplay?: boolean;
+  onPressNext: () => void;
+  onPressPrev: () => void;
 };
 
 const volumeIconSize = Platform.select({ ios: 30, android: 26 });
+const { height } = Dimensions.get('screen');
 
 const PortraitActivity = observer((props: PropsType) => {
   // Local store
@@ -142,11 +152,33 @@ const PortraitActivity = observer((props: PropsType) => {
     android: <BoxShadow setting={shadowOpt}>{ownerBlock}</BoxShadow>, // Android fallback for shadows
   });
 
+  const touchableStyle = {
+    top: 90 + insets.top,
+    height: height - (200 + insets.top + insets.bottom),
+  };
+
+  const tappingArea = (
+    <>
+      <TouchableOpacity
+        activeOpacity={1}
+        style={[styles.touchLeft, touchableStyle]}
+        onPress={props.onPressPrev}
+      />
+      <TouchableOpacity
+        activeOpacity={1}
+        style={[styles.touchRight, touchableStyle]}
+        onPress={props.onPressNext}
+      />
+    </>
+  );
+
   return (
     <View style={[window, theme.flexContainer, theme.backgroundSecondary]}>
       <View style={theme.flexContainer}>
         {ownerBlockShadow}
+        {showNSFW && tappingArea}
         <View
+          pointerEvents="box-none"
           style={[theme.justifyCenter, theme.flexContainer, styles.content]}>
           {showNSFW ? (
             <ExplicitOverlay entity={entity} />
@@ -214,6 +246,7 @@ const PortraitActivity = observer((props: PropsType) => {
           onPressComment={onPressComment}
         />
       </View>
+      {!showNSFW && tappingArea}
       <CommentsBottomPopup
         entity={entity}
         commentsStore={store.comments}
@@ -271,5 +304,15 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
 
     elevation: 5,
+  },
+  touchLeft: {
+    position: 'absolute',
+    left: 0,
+    width: '50%',
+  },
+  touchRight: {
+    position: 'absolute',
+    right: 0,
+    width: '50%',
   },
 });

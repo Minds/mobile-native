@@ -1,6 +1,6 @@
 import { runInAction, action, observable, decorate } from 'mobx';
 import FastImage from 'react-native-fast-image';
-import { FlatList, Alert } from 'react-native';
+import { FlatList, Alert, Platform } from 'react-native';
 
 import BaseModel from '../common/BaseModel';
 import UserModel from '../channel/UserModel';
@@ -198,9 +198,9 @@ export default class ActivityModel extends BaseModel {
    * @param {string} size
    */
   getThumbSource(size: ThumbSize = 'medium') {
-    // for gif use always the same size to take adventage of the cache (they are not resized)
+    // for gif use always the same size to take advantage of the cache (they are not resized)
     if (this.isGif()) {
-      size = 'medium';
+      size = 'xlarge';
     }
 
     if (this.thumbnails && this.thumbnails[size]) {
@@ -283,7 +283,7 @@ export default class ActivityModel extends BaseModel {
 
   @action
   toggleMatureVisibility() {
-    if (GOOGLE_PLAY_STORE) {
+    if (GOOGLE_PLAY_STORE || Platform.OS === 'ios') {
       return;
     }
     this.mature_visibility = !this.mature_visibility;

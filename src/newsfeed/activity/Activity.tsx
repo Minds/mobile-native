@@ -61,10 +61,7 @@ export default class Activity extends Component<PropsType> {
    * Disposer for autoplay reaction
    */
   autoPlayDispose: any;
-  /**
-   * Disposer for autoplay timeout
-   */
-  autoplayVideoTimeout: any;
+
   /**
    * Translate reference
    */
@@ -163,12 +160,7 @@ export default class Activity extends Component<PropsType> {
 
               // sound only for ActivityScreen (Full screen)
               const sound = state.name === 'Activity' ? true : undefined; // undefined to use the latest option from the video player service
-
-              this.autoplayVideoTimeout = setTimeout(() => {
-                if (this.props.entity.is_visible) {
-                  this.playVideo(sound);
-                }
-              }, 300);
+              this.playVideo(sound);
             }
           } else {
             // no longer visible we pause it
@@ -186,9 +178,6 @@ export default class Activity extends Component<PropsType> {
   componentWillUnmount() {
     if (this.autoPlayDispose) {
       this.autoPlayDispose();
-    }
-    if (this.autoplayVideoTimeout) {
-      clearTimeout(this.autoplayVideoTimeout);
     }
   }
 

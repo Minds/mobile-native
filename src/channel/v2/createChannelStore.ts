@@ -13,9 +13,9 @@ import type { SupportTiersType } from '../../wire/WireTypes';
 import NavigationService from '../../navigation/NavigationService';
 import i18n from '../../common/services/i18n.service';
 import { showNotification } from '../../../AppMessages';
-import debounce from '../../common/helpers/debounce';
+import { Platform } from 'react-native';
 type InitialLoadParams = {
-  entity?: { guid: string } | UserModel;
+  entity?: { guid: string; nsfw?: Array<string> } | UserModel;
   guid?: string;
   username?: string;
 };
@@ -89,6 +89,14 @@ const createChannelStore = () => {
      */
     async initialLoad(params: InitialLoadParams) {
       if (params.entity) {
+        if (
+          Platform.OS === 'ios' &&
+          params.entity.nsfw &&
+          params.entity.nsfw.length > 0
+        ) {
+          NavigationService.goBack();
+          showNotification(i18n.t('nsfw.notSafeChannel'));
+        }
         this.loadFromEntity(params.entity);
         this.tiers =
           (await supportTiersService.getAllFromGuid(params.entity.guid)) || [];
@@ -217,6 +225,10 @@ const createChannelStore = () => {
      */
     async loadFromGuidOrUsername(guidOrUsername: string) {
       const channel = await channelsService.get(guidOrUsername);
+      if (Platform.OS === 'ios' && channel.nsfw && channel.nsfw.length > 0) {
+        NavigationService.goBack();
+        showNotification(i18n.t('nsfw.notSafeChannel'));
+      }
       if (this.checkBanned(channel)) return false;
       this.setChannel(channel);
       this.loadFeed();

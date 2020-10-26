@@ -7,6 +7,7 @@ import {
   TextStyle,
   ViewStyle,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
@@ -80,12 +81,14 @@ export default class ExplicitOverlay extends PureComponent<PropsType> {
       return null;
     }
 
-    const text = GOOGLE_PLAY_STORE
-      ? i18n.t('postCantBeShown')
-      : i18n.t('confirm18');
+    const text =
+      GOOGLE_PLAY_STORE || Platform.OS === 'ios'
+        ? i18n.t('postCantBeShown')
+        : i18n.t('confirm18');
 
     return (
       <View
+        pointerEvents="box-none"
         style={[
           theme.centered,
           theme.backgroundSecondary,
@@ -135,10 +138,10 @@ export default class ExplicitOverlay extends PureComponent<PropsType> {
                 theme.borderPrimary,
                 theme.borderHair,
                 theme.backgroundPrimary,
+                theme.margin4x,
               ]}
               onPress={this.toggle}>
-              <Text
-                style={[theme.col, theme.padding2x, theme.fontL, fontStyle]}>
+              <Text style={[theme.padding2x, theme.fontL, fontStyle]}>
                 {text}
               </Text>
             </TouchableOpacity>

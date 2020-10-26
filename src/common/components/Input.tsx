@@ -9,9 +9,9 @@ import {
 } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import InfoPopup from './InfoPopup';
-import PhoneValidationComponent from './PhoneValidationComponent';
 
 import ThemedStyles from '../../styles/ThemedStyles';
+import PhoneValidationComponent from './phoneValidation/PhoneValidationComponent';
 
 type propsType = {
   TFA: any;
