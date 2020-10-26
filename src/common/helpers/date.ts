@@ -9,33 +9,16 @@ function pad(n, width, z) {
 
 function frendlyTime(date) {
   const now = moment();
+  const diff = moment.duration(date.diff(now));
 
-  const diff = moment.duration(now.diff(date));
-
-  if (diff.years() > 0) {
-    return `${diff.years()}y ago`;
-  }
-
-  if (diff.weeks() > 0) {
-    return `${diff.weeks()}w ago`;
-  }
-
-  if (diff.days() > 0) {
-    return `${diff.days()}d ago`;
-  }
-
-  if (diff.hours() > 0) {
-    return `${diff.hours()}h ago`;
-  }
-
-  if (diff.minutes() > 0) {
-    return `${diff.minutes()}m ago`;
-  }
-
-  return `${diff.seconds()}s ago`
+  return diff.humanize(true);
 }
 
-export default function formatDate(timestamp, format = 'datetime', timezone='') {
+export default function formatDate(
+  timestamp,
+  format: 'date' | 'nameDay' | 'time' | 'friendly' | 'datetime' = 'datetime',
+  timezone = '',
+) {
   let options;
 
   let date = moment(timestamp * 1000);
@@ -45,6 +28,12 @@ export default function formatDate(timestamp, format = 'datetime', timezone='') 
   switch (format) {
     case 'date':
       options = 'MMM DD, YYYY';
+      break;
+    case 'nameDay':
+      if (date.isSame(moment().subtract(1, 'day'), 'day')) {
+        return 'Yesterday';
+      }
+      options = 'ddd MMM Do';
       break;
     case 'time':
       options = 'hh:mm';

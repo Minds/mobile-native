@@ -3,12 +3,18 @@
 exports[`Owner component renders correctly 1`] = `
 <View
   style={
-    Object {
-      "alignItems": "center",
-      "display": "flex",
-      "flexDirection": "row",
-      "padding": 8,
-    }
+    Array [
+      Object {
+        "alignItems": "center",
+        "borderBottomWidth": 0.5,
+        "display": "flex",
+        "flexDirection": "row",
+        "paddingHorizontal": 20,
+        "paddingVertical": 13,
+      },
+      undefined,
+      undefined,
+    ]
   }
 >
   <preventDoubleTap(TouchableOpacity)
@@ -21,6 +27,7 @@ exports[`Owner component renders correctly 1`] = `
           "headers": Object {
             "App-Version": "3.8.0",
             "Cache-Control": "no-cache, no-store, must-revalidate",
+            "Content-Type": "application/json",
             "Pragma": "no-cache",
           },
           "uri": "https://cdn.minds.com/icon/824853017709780997/medium/undefined",
@@ -28,11 +35,9 @@ exports[`Owner component renders correctly 1`] = `
       }
       style={
         Object {
-          "borderColor": "#EEE",
-          "borderRadius": 23,
-          "borderWidth": 0.5,
-          "height": 46,
-          "width": 46,
+          "borderRadius": 18.5,
+          "height": 37,
+          "width": 37,
         }
       }
     />
@@ -56,13 +61,21 @@ exports[`Owner component renders correctly 1`] = `
     >
       <preventDoubleTap(TouchableOpacity)
         onPress={[Function]}
+        style={
+          Array [
+            undefined,
+            undefined,
+          ]
+        }
       >
         <Text
+          numberOfLines={1}
           style={
             Array [
               Object {
                 "color": "#444",
                 "fontFamily": "Roboto",
+                "fontSize": 16,
                 "fontWeight": "bold",
               },
               undefined,
@@ -92,7 +105,8 @@ exports[`Owner component renders correctly 1`] = `
             ]
           }
         >
-          &gt; 
+          &gt;
+           
           group
         </Text>
       </preventDoubleTap(TouchableOpacity)>

@@ -1,18 +1,25 @@
-//@ts-nocheck
 import React, { PureComponent } from 'react';
-import { StyleSheet, View, Image, Platform } from 'react-native';
+import { StyleSheet, View, Image } from 'react-native';
 
 import MindsVideo from '../media/MindsVideo';
+import MindsVideoV2 from '../media/v2/mindsVideo/MindsVideo';
+
+import featuresService from '../common/services/features.service';
+
+type PropsType = {
+  uri: string;
+  type: string;
+};
 
 /**
  * Capture preview
  */
-export default class CapturePreview extends PureComponent {
+export default class CapturePreview extends PureComponent<PropsType> {
   /**
    * Render
    */
   render() {
-    let body = null;
+    let body: React.ReactNode | null = null;
     switch (this.props.type) {
       case 'image/gif':
       case 'image/jpeg':
@@ -21,7 +28,7 @@ export default class CapturePreview extends PureComponent {
         body = (
           <Image
             resizeMode="contain"
-            source={{uri: this.props.uri}}
+            source={{ uri: this.props.uri }}
             style={styles.preview}
           />
         );
@@ -30,17 +37,18 @@ export default class CapturePreview extends PureComponent {
       case 'video/quicktime':
       case 'video/x-m4v':
       case 'video':
-        body = (
-          <View style={styles.preview}>
-            <MindsVideo video={{uri: this.props.uri}} />
-          </View>
+        const MindsVideoComponent = featuresService.has('mindsVideo-2020') ? (
+          <MindsVideoV2 video={{ uri: this.props.uri }} />
+        ) : (
+          <MindsVideo video={{ uri: this.props.uri }} />
         );
+
+        body = <View style={styles.preview}>{MindsVideoComponent}</View>;
         break;
     }
 
     return <View style={styles.wrapper}>{body}</View>;
   }
-
 }
 
 const styles = StyleSheet.create({

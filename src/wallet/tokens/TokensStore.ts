@@ -1,13 +1,10 @@
 //@ts-nocheck
-import {
-  observable,
-  computed,
-  action
-} from 'mobx';
+import { action } from 'mobx';
 
 import walletService from '../WalletService';
 import OffsetListStore from '../../common/stores/OffsetListStore';
 import logService from '../../common/services/log.service';
+import { ListFiltersType } from '../v2/TransactionList/TransactionsListTypes';
 
 export default class TokensStore {
   list = new OffsetListStore('shallow');
@@ -31,29 +28,61 @@ export default class TokensStore {
     }
     this.loading = true;
 
-    fetchFn = (this.mode == 'transactions') ? walletService.getTransactionsLedger : walletService.getContributions;
+    const fetchFn =
+      this.mode === 'transactions'
+        ? walletService.getTransactionsLedger
+        : walletService.getContributions;
 
     return fetchFn(from, to, this.list.offset)
-      .then(
-        feed => {
-          this.list.setList(feed);
-          this.loaded = true;
-        }
-      )
+      .then((feed) => {
+        this.list.setList(feed);
+        this.loaded = true;
+      })
       .finally(() => {
         this.loading = false;
       })
-      .catch(err => {
+      .catch((err) => {
         logService.exception('[TokensStore]', err);
       });
+  }
+
+  async loadTransactionsListAsync(
+    filters: ListFiltersType,
+    callback?: Function,
+  ) {
+    if (this.list.cantLoadMore() || this.loading) {
+      return false;
+    }
+    this.loading = true;
+
+    try {
+      const feed = await walletService.getFilteredTransactionsLedger(
+        filters,
+        this.list.offset,
+      );
+
+      this.list.setList(feed, false, callback);
+      this.loaded = true;
+    } catch (err) {
+      logService.exception('[TokensStore]', err);
+    } finally {
+      this.loading = false;
+    }
+  }
+
+  @action
+  refreshTransactionsList(filters: ListFiltersType, callback?: Function) {
+    this.list.refresh();
+    this.loadTransactionsListAsync(filters, callback).finally(() => {
+      this.list.refreshDone();
+    });
   }
 
   @action
   refresh(from, to) {
     this.list.refresh();
-    this.loadList(from, to)
-      .finally(() => {
-        this.list.refreshDone();
-      });
+    this.loadList(from, to).finally(() => {
+      this.list.refreshDone();
+    });
   }
 }

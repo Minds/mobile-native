@@ -1,23 +1,18 @@
-//@ts-nocheck
-import {
-  observable,
-  action,
-  computed,
-  toJS,
-} from 'mobx';
+import { observable, action, toJS } from 'mobx';
 
-import { showMessage, hideMessage } from "react-native-flash-message";
+import { showMessage } from 'react-native-flash-message';
 
-import NotificationsService, { getFeed, getCount, getSingle } from './NotificationsService';
+import NotificationsService, { getCount } from './NotificationsService';
 
 import OffsetListStore from '../common/stores/OffsetListStore';
 import session from '../common/services/session.service';
 import badge from '../common/services/badge.service';
 import logService from '../common/services/log.service';
 import socketService from '../common/services/socket.service';
-import { Alert } from 'react-native';
-import storageService from '../common/services/storage.service'
+import storageService from '../common/services/storage.service';
 import i18n from '../common/services/i18n.service';
+
+export type FilterType = 'all' | 'tags' | 'comments' | 'boosts' | 'votes';
 
 /**
  * Notifications Store
@@ -35,28 +30,28 @@ class NotificationsStore {
   /**
    * unread notifications counter
    */
-  @observable unread = 0;
+  @observable unread: number = 0;
 
   /**
    * Notifications list filter
    */
-  @observable filter = 'all';
+  @observable filter: FilterType = 'all';
 
   /**
    * PollInterval
    */
-  pollInterval = null;
+  pollInterval: NodeJS.Timeout | null = null;
 
   /**
    * List loading
    */
-  @observable loading = false;
+  @observable loading: boolean = false;
 
   /**
    * Class constructor
    */
   constructor() {
-    const dispose = session.onSession(token => {
+    session.onSession((token: string) => {
       if (token) {
         // load count on session start
         this.loadCount();
@@ -69,17 +64,9 @@ class NotificationsStore {
         this.stopPollCount();
       }
     });
-
-    // fix to clear the interval when are developing with hot reload (timers was not cleared automatically)
-    if (module.hot) {
-      module.hot.accept(() => {
-        this.stopPollCount();
-        dispose();
-      });
-    }
   }
 
-  onSocket = async(guid) => {
+  onSocket = async () => {
     this.increment();
 
     // TODO: enable live notifications
@@ -94,24 +81,31 @@ class NotificationsStore {
     //     message: ""
     //   });
     // }
-  }
+  };
 
   persist() {
     const data = toJS(this.list.entities);
 
-    data.forEach(n => delete(n._list));
+    data.forEach((n) => delete n._list);
 
     storageService.setItem(`notificationsList:${this.filter}`, data);
   }
 
   @action
+  setLoading(value: boolean) {
+    this.loading = value;
+  }
+
+  @action
   async readLocal() {
-    const notifications = await storageService.getItem(`notificationsList:${this.filter}`);
+    const notifications = await storageService.getItem(
+      `notificationsList:${this.filter}`,
+    );
 
     if (notifications) {
-      this.list.setList({entities: notifications}, true);
+      this.list.setList({ entities: notifications }, true);
     } else {
-      this.list.setList({entities: []}, true);
+      this.list.setList({ entities: [] }, true);
     }
   }
 
@@ -136,36 +130,43 @@ class NotificationsStore {
    */
   async loadList(refresh = false) {
     // no more data? return
-    if (!refresh && (this.list.cantLoadMore() || this.loading)) {
-      return
+    if (
+      (!refresh || this.list.refreshing) &&
+      (this.list.cantLoadMore() || this.loading)
+    ) {
+      return;
     }
 
-    this.loading = true;
+    this.setLoading(true);
 
     const filter = this.filter;
 
     const offset = refresh ? '' : this.list.offset;
 
     try {
-      const feed = await this.service.getFeed(offset, filter)
+      const feed = await this.service.getFeed(offset, filter);
 
       // prevent race conditions when filter change
-      if (feed && filter == this.filter) {
+      if (feed && filter === this.filter) {
         this.list.setList(feed, refresh);
         this.persist();
       }
     } catch (err) {
       logService.exception('[NotificationStore]', err);
     } finally {
-      this.loading = false;
+      this.setLoading(false);
     }
   }
 
   /**
    * Refresh list
    */
-  async refresh() {
-    await this.list.refresh(true);
+  async loadRemoteOrLocal(refresh = true) {
+    if (refresh) {
+      this.list.refresh(true);
+    } else {
+      this.list.clearList();
+    }
     try {
       await this.loadList(true);
     } catch (err) {
@@ -174,7 +175,7 @@ class NotificationsStore {
         position: 'center',
         message: i18n.t('cantReachServer'),
         description: i18n.t('showingStored'),
-        type: "default",
+        type: 'default',
       });
     } finally {
       this.list.refreshDone();
@@ -185,11 +186,13 @@ class NotificationsStore {
    * Load unread count from endpoint
    */
   loadCount() {
-    getCount().then(data => {
-      this.setUnread(data.count);
-    }).catch(err => {
-      logService.exception('[NotificationStore]', err);
-    });
+    getCount()
+      .then((data) => {
+        this.setUnread(data.count);
+      })
+      .catch((err) => {
+        logService.exception('[NotificationStore]', err);
+      });
   }
 
   /**
@@ -212,14 +215,14 @@ class NotificationsStore {
   }
 
   @action
-  setFilter(filter) {
+  setFilter(filter: FilterType) {
     this.filter = filter;
     this.list.clearList();
-    this.refresh();
+    this.loadRemoteOrLocal(false);
   }
 
   @action
-  setUnread(count) {
+  setUnread(count: number) {
     this.unread = count;
     badge.setUnreadNotifications(count);
   }
@@ -231,6 +234,11 @@ class NotificationsStore {
   }
 
   @action
+  refresh() {
+    this.loadList(true);
+  }
+
+  @action
   reset() {
     this.list = new OffsetListStore('shallow');
     this.unread = 0;
@@ -238,7 +246,6 @@ class NotificationsStore {
     this.loading = false;
     this.stopPollCount();
   }
-
 }
 
 export default NotificationsStore;

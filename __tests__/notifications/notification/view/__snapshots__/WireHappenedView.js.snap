@@ -2,116 +2,184 @@
 
 exports[`renders correctly for not owner and not subscribed 1`] = `
 <View
+  onPress={[Function]}
   style={
     Object {
-      "flexDirection": "row",
-      "flexWrap": "wrap",
+      "flex": 1,
+      "marginLeft": 8,
     }
   }
 >
-  <Text
-    onPress={[Function]}
-  >
-    You have received a wire of 1000 from
-     
-    <Text
-      onPress={[Function]}
-      style={
-        Object {
-          "fontWeight": "600",
-        }
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "flexWrap": "wrap",
       }
-    >
-      @
-      fromUser
+    }
+  >
+    <Text>
+      You have received a wire of 1000 from
+       
+      <Text
+        onPress={[Function]}
+        style={
+          Object {
+            "fontWeight": "600",
+          }
+        }
+      >
+        @
+        fromUser
+      </Text>
     </Text>
+  </View>
+  <Text
+    style={
+      Object {
+        "fontSize": 11,
+      }
+    }
+  >
+    Invalid date
   </Text>
 </View>
 `;
 
 exports[`renders correctly for owner and not subscribed 1`] = `
 <View
+  onPress={[Function]}
   style={
     Object {
-      "flexDirection": "row",
-      "flexWrap": "wrap",
+      "flex": 1,
+      "marginLeft": 8,
     }
   }
 >
-  <Text
-    onPress={[Function]}
-  >
-    You have successfully wired 1000 to
-     
-    <Text
-      onPress={[Function]}
-      style={
-        Object {
-          "fontWeight": "600",
-        }
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "flexWrap": "wrap",
       }
-    >
-      @
-      toUser
+    }
+  >
+    <Text>
+      You have successfully wired 1000 to
+       
+      <Text
+        onPress={[Function]}
+        style={
+          Object {
+            "fontWeight": "600",
+          }
+        }
+      >
+        @
+        toUser
+      </Text>
     </Text>
+  </View>
+  <Text
+    style={
+      Object {
+        "fontSize": 11,
+      }
+    }
+  >
+    Invalid date
   </Text>
 </View>
 `;
 
 exports[`renders correctly for owner and subscribed 1`] = `
 <View
+  onPress={[Function]}
   style={
     Object {
-      "flexDirection": "row",
-      "flexWrap": "wrap",
+      "flex": 1,
+      "marginLeft": 8,
     }
   }
 >
-  <Text
-    onPress={[Function]}
-  >
-    You have subscribed to wire 1000/month to
-     
-    <Text
-      onPress={[Function]}
-      style={
-        Object {
-          "fontWeight": "600",
-        }
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "flexWrap": "wrap",
       }
-    >
-      @
-      toUser
+    }
+  >
+    <Text>
+      You have subscribed to wire 1000/month to
+       
+      <Text
+        onPress={[Function]}
+        style={
+          Object {
+            "fontWeight": "600",
+          }
+        }
+      >
+        @
+        toUser
+      </Text>
     </Text>
+  </View>
+  <Text
+    style={
+      Object {
+        "fontSize": 11,
+      }
+    }
+  >
+    Invalid date
   </Text>
 </View>
 `;
 
 exports[`renders correctly for owner and subscribed 2`] = `
 <View
+  onPress={[Function]}
   style={
     Object {
-      "flexDirection": "row",
-      "flexWrap": "wrap",
+      "flex": 1,
+      "marginLeft": 8,
     }
   }
 >
-  <Text
-    onPress={[Function]}
-  >
-    You have received a wire subscription of 1000/month from
-     
-    <Text
-      onPress={[Function]}
-      style={
-        Object {
-          "fontWeight": "600",
-        }
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "flexWrap": "wrap",
       }
-    >
-      @
-      fromUser
+    }
+  >
+    <Text>
+      You have received a wire subscription of 1000/month from
+       
+      <Text
+        onPress={[Function]}
+        style={
+          Object {
+            "fontWeight": "600",
+          }
+        }
+      >
+        @
+        fromUser
+      </Text>
     </Text>
+  </View>
+  <Text
+    style={
+      Object {
+        "fontSize": 11,
+      }
+    }
+  >
+    Invalid date
   </Text>
 </View>
 `;

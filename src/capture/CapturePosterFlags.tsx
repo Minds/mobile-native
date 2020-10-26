@@ -1,6 +1,6 @@
 //@ts-nocheck
 import React, { Component } from 'react';
-import { Text, TextInput, View, StyleSheet, Platform } from 'react-native';
+import { Text, TextInput, View, StyleSheet } from 'react-native';
 import { inject, observer } from 'mobx-react';
 import FaIcon from 'react-native-vector-icons/FontAwesome';
 import IonIcon from 'react-native-vector-icons/Ionicons';
@@ -14,7 +14,6 @@ import TagSelect from '../common/components/TagSelect';
 import featuresService from '../common/services/features.service';
 import NsfwToggle from '../common/components/nsfw/NsfwToggle';
 import logService from '../common/services/log.service';
-import { GOOGLE_PLAY_STORE } from '../config/Config';
 import testID from '../common/helpers/testID';
 import i18n from '../common/services/i18n.service';
 import DateTimePicker from 'react-native-modal-datetime-picker';
@@ -39,7 +38,7 @@ class CapturePosterFlags extends Component {
 
   componentWillMount() {
     // this.props.capture.loadThirdPartySocialNetworkStatus();
-    this.props.capture.loadSuggestedTags().catch(e => {
+    this.props.capture.loadSuggestedTags().catch((e) => {
       logService.exception('[CapturePosterFlags] loadSuggestedTags', e);
     });
 
@@ -162,7 +161,7 @@ class CapturePosterFlags extends Component {
         color: '#1da1f2',
         label: 'Twitter',
       },
-    ].map(i => {
+    ].map((i) => {
       const available = this.props.capture.socialNetworks[i.key],
         onShare = () => available && this.props.onShare(i.key);
 
@@ -272,7 +271,7 @@ class CapturePosterFlags extends Component {
     return parseFloat(this.state.min) > 0;
   }
 
-  setMin = min => {
+  setMin = (min) => {
     if (min === '') {
       min = '0';
     } else {
@@ -333,7 +332,7 @@ class CapturePosterFlags extends Component {
     );
   }
 
-  onScheduled = time_created => {
+  onScheduled = (time_created) => {
     this.props.onScheduled(time_created);
     this.dismissDatePicker();
   };
@@ -418,7 +417,7 @@ class CapturePosterFlags extends Component {
         {attachment.hasAttachment && (
           <View style={styles.cell}>
             <LicensePicker
-              onLicenseSelected={v => attachment.setLicense(v)}
+              onLicenseSelected={(v) => attachment.setLicense(v)}
               value={attachment.license}
               iconColor={
                 attachment.license ? theme.colorIconActive : theme.colorIcon

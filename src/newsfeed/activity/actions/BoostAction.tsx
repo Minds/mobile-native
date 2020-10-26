@@ -2,13 +2,12 @@ import React, { PureComponent } from 'react';
 
 import { Text, View, StyleSheet, TouchableHighlight } from 'react-native';
 
-import { CommonStyle } from '../../../styles/Common';
-import { ComponentsStyle } from '../../../styles/Components';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import i18n from '../../../common/services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
-import ActivityModel from 'src/newsfeed/ActivityModel';
+import ActivityModel from '../../../newsfeed/ActivityModel';
 
 // prevent double tap in touchable
 const TouchableHighlightCustom = withPreventDoubleTap(TouchableHighlight);
@@ -26,24 +25,29 @@ export default class BoostAction extends PureComponent<PropsType> {
    * Render
    */
   render() {
+    const theme = ThemedStyles.style;
     return (
-      <View style={[CommonStyle.flexContainer, CommonStyle.rowJustifyCenter]}>
+      <View>
         <TouchableHighlightCustom
           style={[
-            CommonStyle.flexContainer,
-            CommonStyle.rowJustifyCenter,
-            ComponentsStyle.bluebutton,
-            CommonStyle.backgroundTransparent,
-            ThemedStyles.style.borderIconActive,
+            theme.rowJustifyCenter,
+            theme.paddingHorizontal3x,
+            theme.paddingVertical4x,
+            theme.alignCenter,
           ]}
           underlayColor="transparent"
           onPress={this.openBoost}>
-          <Text
-            style={[styles.text, ThemedStyles.style.colorIconActive]}
-            numberOfLines={1}
-            adjustsFontSizeToFit={true}>
-            {i18n.t('boost').toUpperCase()}
-          </Text>
+          <View style={[theme.rowJustifyStart, theme.centered]}>
+            <Icon
+              name="trending-up"
+              style={[theme.fontS, theme.colorSecondaryText]}
+            />
+            <Text
+              style={[styles.text, theme.colorSecondaryText]}
+              numberOfLines={1}>
+              {i18n.t('boost')}
+            </Text>
+          </View>
         </TouchableHighlightCustom>
       </View>
     );
@@ -59,9 +63,12 @@ export default class BoostAction extends PureComponent<PropsType> {
 
 const styles = StyleSheet.create({
   text: {
-    paddingLeft: 2,
-    paddingRight: 2,
     fontFamily: 'Roboto',
     fontSize: 12,
+    textAlignVertical: 'center',
+    lineHeight: 21,
+    letterSpacing: 1,
+    marginLeft: 3,
+    fontWeight: '500',
   },
 });

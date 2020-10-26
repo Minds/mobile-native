@@ -1,23 +1,26 @@
 //@ts-nocheck
 import React, { Component } from 'react';
+import { StyleSheet, View, TouchableHighlight } from 'react-native';
 
-import {
-  StyleSheet,
-  View,
-  Platform,
-} from 'react-native';
-
-import colors from '../styles/Colors';
 import { observer, inject } from 'mobx-react';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import ThemedStyles from '../styles/ThemedStyles';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { MainSwiperParamList } from '../navigation/NavigationTypes';
+
+interface Props {
+  navigation: StackNavigationProp<MainSwiperParamList>;
+  tintColor?: string;
+}
 
 @inject('messengerList')
 @observer
-export default class MessengerTabIconNew extends Component {
-
-  navToMessenger = () => this.props.navigation.push('Messenger');
+export default class MessengerTabIconNew extends Component<Props> {
+  /**
+   * Navigate to messenger screen
+   */
+  navToMessenger = () => this.props.navigation.navigate('Messenger');
 
   /**
    * Render
@@ -26,10 +29,26 @@ export default class MessengerTabIconNew extends Component {
     const tintColor = this.props.tintColor;
     const theme = ThemedStyles.style;
     return (
-      <View>
-        <Icon name="chat-bubble-outline" size={24} style={[styles.button, theme.colorIcon]} onPress={this.navToMessenger} testID="MessengerButton"/>
-        { this.props.messengerList.unread ? <FAIcon name="circle" size={10} color='rgba(70, 144, 223, 1)' style={styles.unread} /> : null}
-      </View>
+      <TouchableHighlight
+        underlayColor="transparent"
+        onPress={this.navToMessenger}>
+        <View>
+          <Icon
+            name="chat-bubble-outline"
+            size={26}
+            style={[styles.button, theme.colorIcon]}
+            testID="MessengerButton"
+          />
+          {this.props.messengerList.unread ? (
+            <FAIcon
+              name="circle"
+              size={10}
+              color="rgba(70, 144, 223, 1)"
+              style={styles.unread}
+            />
+          ) : null}
+        </View>
+      </TouchableHighlight>
     );
   }
 }
@@ -45,9 +64,9 @@ const styles = StyleSheet.create({
     opacity: 1,
     position: 'absolute',
     top: -2,
-    left: 25
+    left: 28,
   },
   button: {
-    paddingHorizontal: 8,
+    paddingHorizontal: 10,
   },
 });

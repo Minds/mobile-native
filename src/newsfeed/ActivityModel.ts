@@ -1,6 +1,6 @@
 import { runInAction, action, observable, decorate } from 'mobx';
 import FastImage from 'react-native-fast-image';
-import { FlatList, Alert } from 'react-native';
+import { FlatList, Alert, Platform } from 'react-native';
 
 import BaseModel from '../common/BaseModel';
 import UserModel from '../channel/UserModel';
@@ -11,7 +11,6 @@ import {
   deleteItem,
   unfollow,
   follow,
-  update,
 } from '../newsfeed/NewsfeedService';
 import api from '../common/services/api.service';
 
@@ -19,10 +18,13 @@ import { GOOGLE_PLAY_STORE, MINDS_CDN_URI, MINDS_URI } from '../config/Config';
 import i18n from '../common/services/i18n.service';
 import logService from '../common/services/log.service';
 import entitiesService from '../common/services/entities.service';
-import type { ThumbSize } from '../types/Common';
-import type GroupModel from 'src/groups/GroupModel';
+import type { ThumbSize, LockType } from '../types/Common';
+import type GroupModel from '../groups/GroupModel';
+import { SupportTiersType } from '../wire/WireTypes';
+import mindsService from '../common/services/minds.service';
+import NavigationService from '../navigation/NavigationService';
 
-type Thumbs = Record<ThumbSize, string>;
+type Thumbs = Record<ThumbSize, string> | Record<ThumbSize, string>[];
 
 /**
  * Activity model
@@ -35,6 +37,7 @@ export default class ActivityModel extends BaseModel {
   @observable title: string = '';
   @observable mature: boolean = false;
   @observable edited: '0' | '1' = '0';
+  @observable paywall: true | '1' | '' = '';
 
   // decorated observables
   'is:following': boolean;
@@ -43,13 +46,14 @@ export default class ActivityModel extends BaseModel {
   'comments:count': number;
   'thumbs:down:user_guids': Array<number>;
   'thumbs:up:user_guids': Array<number>;
-
+  seen?: boolean;
+  rowKey?: string;
+  description?: string; // on image objects in some cases the message is on description field
   containerObj?: GroupModel;
   remind_object?: ActivityModel;
   ownerObj!: UserModel;
   listRef?: FlatList<any>;
   thumbnails?: Thumbs;
-  paywall: '1' | '' = '';
   paywall_unlocked: boolean = false;
   guid: string = '';
   subtype: string = '';
@@ -66,15 +70,19 @@ export default class ActivityModel extends BaseModel {
   thumbnail_src?: string;
   dontPin?: boolean;
   boosted?: boolean;
-  wire_threshold?: {
-    type: 'token' | 'money';
-    min: number;
-  } | null;
+  wire_threshold?:
+    | {
+        type: 'token' | 'money';
+        min: number;
+      }
+    | { support_tier: SupportTiersType }
+    | null;
   _preview?: boolean;
-  /**
-   * Set programatically to indicate that the parent is marked as mature
-   */
-  is_parent_mature?: boolean;
+  attachments?: {
+    attachment_guid: string;
+  };
+
+  permaweb_id?: string;
 
   /**
    * Mature visibility flag
@@ -84,7 +92,7 @@ export default class ActivityModel extends BaseModel {
   /**
    * Is visible in flat list
    */
-  @observable is_visible: boolean = true;
+  @observable is_visible: boolean = false;
 
   /**
    *  List reference setter
@@ -103,6 +111,66 @@ export default class ActivityModel extends BaseModel {
    */
   get _list() {
     return this.__list;
+  }
+
+  /**
+   * Block owner
+   */
+  async blockOwner() {
+    await super.blockOwner();
+    if (this._list) {
+      this._list.refresh();
+    }
+  }
+
+  /**
+   * Unblock owner
+   */
+  async unblockOwner() {
+    await super.unblockOwner();
+    if (this._list) {
+      this._list.refresh();
+    }
+  }
+
+  /**
+   * Has media
+   */
+  hasMedia(): boolean {
+    const type = this.custom_type || this.subtype;
+    switch (type) {
+      case 'image':
+      case 'video':
+      case 'batch':
+        return true;
+    }
+    if (this.perma_url) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Has an attached video
+   */
+  hasVideo(): boolean {
+    return (this.custom_type || this.subtype) === 'video';
+  }
+
+  /**
+   * Has an attached image
+   */
+  hasImage(): boolean {
+    const type = this.custom_type || this.subtype;
+    return type === 'image' || type === 'batch';
+  }
+
+  hasThumbnails(): boolean {
+    return Array.isArray(this.thumbnails) && this.thumbnails.length === 0
+      ? false
+      : this.thumbnails
+      ? true
+      : false;
   }
 
   toPlainObject() {
@@ -130,9 +198,9 @@ export default class ActivityModel extends BaseModel {
    * @param {string} size
    */
   getThumbSource(size: ThumbSize = 'medium') {
-    // for gif use always the same size to take adventage of the cache (they are not resized)
+    // for gif use always the same size to take advantage of the cache (they are not resized)
     if (this.isGif()) {
-      size = 'medium';
+      size = 'xlarge';
     }
 
     if (this.thumbnails && this.thumbnails[size]) {
@@ -210,17 +278,17 @@ export default class ActivityModel extends BaseModel {
    * Get activity text
    */
   get text() {
-    return this.message || this.title || '';
+    return this.message || this.description || '';
   }
 
   @action
   toggleMatureVisibility() {
-    if (GOOGLE_PLAY_STORE) {
+    if (GOOGLE_PLAY_STORE || Platform.OS === 'ios') {
       return;
     }
     this.mature_visibility = !this.mature_visibility;
 
-    if (this.remind_object && this.remind_object.mature) {
+    if (this.remind_object && this.remind_object) {
       this.remind_object.mature_visibility = this.mature_visibility;
     }
   }
@@ -228,6 +296,9 @@ export default class ActivityModel extends BaseModel {
   @action
   setVisible(value: boolean) {
     this.is_visible = value;
+    if (this.remind_object) {
+      this.remind_object.is_visible = value;
+    }
   }
 
   /**
@@ -257,8 +328,10 @@ export default class ActivityModel extends BaseModel {
         // all changes should be atomic (trigger render only once)
         runInAction(() => {
           // create a new model because we need the child models
+          const list = this.__list;
           const model: ActivityModel = ActivityModel.create(result);
           Object.assign(this, model);
+          this.__list = list;
         });
       }
       return result;
@@ -267,6 +340,82 @@ export default class ActivityModel extends BaseModel {
         Alert.alert(err.message);
       }
       return false;
+    }
+  }
+
+  /**
+   * Get the lock type for the activity
+   */
+  getLockType = (): LockType | undefined => {
+    const support_tier: SupportTiersType | null =
+      this.wire_threshold && 'support_tier' in this.wire_threshold
+        ? this.wire_threshold.support_tier
+        : null;
+    if (!support_tier) {
+      return;
+    }
+    let type: LockType = support_tier.public ? 'members' : 'paywall';
+
+    if (mindsService.settings.plus.support_tier_urn === support_tier.urn) {
+      type = 'plus';
+    }
+
+    return type;
+  };
+
+  /**
+   * Unlock the entity or prompt pay options
+   */
+  async unlockOrPay() {
+    const result = await this.unlock(true);
+
+    if (result) {
+      return;
+    }
+
+    const lockType = this.getLockType();
+
+    const support_tier: SupportTiersType | null =
+      this.wire_threshold && 'support_tier' in this.wire_threshold
+        ? this.wire_threshold.support_tier
+        : null;
+
+    switch (lockType) {
+      case 'plus':
+        NavigationService.push('PlusScreen', {
+          support_tier,
+          entity: this,
+          onComplete: (resultComplete: any) => {
+            if (resultComplete && resultComplete.payload.method === 'onchain') {
+              setTimeout(() => {
+                Alert.alert(
+                  i18n.t('wire.weHaveReceivedYourTransaction'),
+                  i18n.t('wire.pleaseTryUnlockingMessage'),
+                );
+              }, 400);
+            } else {
+              this.unlock();
+            }
+          },
+        });
+        break;
+      case 'members':
+      case 'paywall':
+        NavigationService.push('JoinMembershipScreen', {
+          entity: this,
+          onComplete: (resultComplete: any) => {
+            if (resultComplete && resultComplete.payload.method === 'onchain') {
+              setTimeout(() => {
+                Alert.alert(
+                  i18n.t('wire.weHaveReceivedYourTransaction'),
+                  i18n.t('wire.pleaseTryUnlockingMessage'),
+                );
+              }, 400);
+            } else {
+              this.unlock();
+            }
+          },
+        });
     }
   }
 
@@ -313,28 +462,8 @@ export default class ActivityModel extends BaseModel {
   }
 
   @action
-  async updateActivity(data: any = {}) {
-    const entity: any = this.toPlainObject();
-
-    if (data) {
-      for (const field in data) {
-        entity[field] = data[field];
-      }
-    }
-
-    // call update endpoint
-    await update(entity);
-
-    // update instance properties
-    this.update(data);
-
-    this.setEdited(entity.message);
-  }
-
-  @action
-  setEdited(message: string) {
-    this.message = message;
-    this.edited = '1';
+  setEdited(value) {
+    this.edited = value;
   }
 }
 

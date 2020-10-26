@@ -1,5 +1,5 @@
 //@ts-nocheck
-import { MINDS_CDN_URI } from "../../config/Config";
+import { MINDS_CDN_URI } from '../../config/Config';
 
 export default function mediaProxyUrl(url, size = 1024) {
   if (!url || typeof url !== 'string') {

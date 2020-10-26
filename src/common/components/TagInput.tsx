@@ -1,7 +1,5 @@
 //@ts-nocheck
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
 import { observer } from 'mobx-react';
 
@@ -13,10 +11,10 @@ import {
   Platform,
   TouchableOpacity,
   KeyboardAvoidingView,
-  ScrollView
+  ScrollView,
 } from 'react-native';
 
-import {Icon} from 'react-native-elements';
+import { Icon } from 'react-native-elements';
 import { CommonStyle } from '../../styles/Common';
 import i18nService from '../services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -26,11 +24,10 @@ import ThemedStyles from '../../styles/ThemedStyles';
  */
 @observer
 export default class TagInput extends Component {
-
   state = {
     text: '',
-    error:'',
-  }
+    error: '',
+  };
 
   /**
    * On change
@@ -40,32 +37,32 @@ export default class TagInput extends Component {
   }
 
   onChangeText = (text) => {
-    text = text.replace(/[^\w]/gim,'');
-    this.setState({text, error:''});
-  }
+    text = text.replace(/[^\w]/gim, '');
+    this.setState({ text, error: '' });
+  };
 
   addTag = (e) => {
     const inTags = this.props.tags.some((t) => this.state.text === t);
     if (this.state.text === '') return;
     if (inTags) {
-      this.setState({error: i18nService.t('hashtags.exists')});
+      this.setState({ error: i18nService.t('hashtags.exists') });
       return;
     }
     if (this.props.max && this.props.max < this.props.tags.length) {
-      this.setState({error: 'You can\'t add more tags'});
+      this.setState({ error: "You can't add more tags" });
       return;
     }
-    this.props.onTagAdded({value: this.state.text});
-    this.setState({text:''},() => this.inputRef.focus());
+    this.props.onTagAdded({ value: this.state.text });
+    this.setState({ text: '' }, () => this.inputRef.focus());
     this.onChange();
-  }
+  };
 
   /**
    * Remove tag
    * @param {string} tag
    */
   delete(tag) {
-    this.props.onTagDeleted({value: tag});
+    this.props.onTagDeleted({ value: tag });
     this.onChange();
   }
 
@@ -79,17 +76,29 @@ export default class TagInput extends Component {
     const theme = ThemedStyles.style;
 
     if (!this.props.hideTags) {
-      tags = <View style={styles.tagContainer}>
-        {this.props.tags.map((t,i) => <View style={[styles.tag, theme.backgroundPrimary]} key={i} >
-          <Text style={styles.tagText}>#{t}</Text><Icon name='ios-close' type='ionicon' iconStyle={[theme.colorIcon, theme.paddingLeft]} size={28} onPress={() => this.delete(t)}/>
+      tags = (
+        <View style={styles.tagContainer}>
+          {this.props.tags.map((t, i) => (
+            <View style={[styles.tag, theme.backgroundPrimary]} key={i}>
+              <Text style={styles.tagText}>#{t}</Text>
+              <Icon
+                name="ios-close"
+                type="ionicon"
+                iconStyle={[theme.colorIcon, theme.paddingLeft]}
+                size={28}
+                onPress={() => this.delete(t)}
+              />
+            </View>
+          ))}
         </View>
-        )}
-      </View>
+      );
     }
     return (
       <ViewCmp keyboardShouldPersistTaps={'always'}>
         {tags}
-        {this.state.error ? <Text style={styles.error}>{this.state.error}</Text> : null}
+        {this.state.error ? (
+          <Text style={styles.error}>{this.state.error}</Text>
+        ) : null}
         <TextInput
           autoCapitalize="none"
           autoFocus={autoFocus}
@@ -107,7 +116,6 @@ export default class TagInput extends Component {
           testID="tagInput"
         />
       </ViewCmp>
-
     );
   }
 
@@ -115,9 +123,8 @@ export default class TagInput extends Component {
    * Set input ref
    * @param {TextInputRef} r
    */
-  setInputRef = r => this.inputRef = r;
+  setInputRef = (r) => (this.inputRef = r);
 }
-
 
 const styles = StyleSheet.create({
   input: {
@@ -125,7 +132,7 @@ const styles = StyleSheet.create({
     width: '100%',
     borderColor: '#ccc',
     borderBottomWidth: 1,
-    padding: 10
+    padding: 10,
   },
   error: {
     fontFamily: 'Roboto',
@@ -133,7 +140,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   tag: {
-    borderRadius:18,
+    borderRadius: 18,
     // alignContent: 'center',
     alignItems: 'center',
     // justifyContent: 'center',
@@ -145,11 +152,11 @@ const styles = StyleSheet.create({
   tagText: {
     fontFamily: 'Roboto',
   },
-  tagContainer:{
-    flex:1,
+  tagContainer: {
+    flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'flex-start',
-    display: 'flex'
-  }
+    display: 'flex',
+  },
 });

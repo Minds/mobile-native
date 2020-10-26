@@ -1,40 +1,95 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import {
-  View,
-  Text,
-  TouchableHighlight,
-} from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { observer, inject } from 'mobx-react';
 
 import { CommonStyle as CS } from '../../styles/Common';
-import GroupsListItem from '../../groups/GroupsListItem';
+import GroupsListItemNew from '../../groups/GroupsListItemNew';
 import i18n from '../../common/services/i18n.service';
 
-@inject('groups', 'hashtag')
+import OnboardingButtons from '../OnboardingButtons';
+import OnboardingBackButton from '../OnboardingBackButton';
+import ActivityIndicator from '../../common/components/ActivityIndicator';
+
+@inject('discovery', 'hashtag')
 @observer
-export default class SuggestedGroupsStep extends Component {
+export default class SuggestedGroupsStepNew extends Component {
+  constructor(props) {
+    super(props);
 
-  componentWillMount() {
-    this.props.hashtag.setAll(true);
-    this.props.groups.reset();
-    this.props.groups.loadList();
+    this.props.discovery.init();
   }
 
-  renderGroup = (group) => {
-    return  <GroupsListItem key={group.guid} group={group}/>
+  componentDidMount() {
+    this.props.hashtag.setAll(false);
+    this.props.discovery.filters.setType('groups');
+    this.props.discovery.filters.setPeriod('1y');
   }
+
+  renderGroup = (group, i) => {
+    return <GroupsListItemNew key={group.guid} group={group} index={i} />;
+  };
+
+  getBody = () => {
+    const discovery = this.props.discovery;
+
+    return (
+      <View style={[CS.flexContainer, CS.columnAlignCenter]}>
+        <OnboardingBackButton onBack={this.props.onBack} />
+        <View style={styles.textsContainer}>
+          <Text style={[CS.onboardingTitle, CS.marginBottom2x]}>
+            {i18n.t('onboarding.profileSetup')}
+          </Text>
+          <Text style={[CS.titleText, CS.colorPrimaryText]}>
+            {i18n.t('onboarding.groupTitle')}
+          </Text>
+          <Text style={[CS.subTitleText, CS.colorSecondaryText]}>
+            {i18n.t('onboarding.step', { step: 3, total: 4 })}
+          </Text>
+          <Text
+            style={[
+              CS.subTitleText,
+              CS.colorPrimaryText,
+              CS.marginBottom4x,
+              CS.marginTop4x,
+            ]}>
+            {i18n.t('onboarding.suggestedGroupsDescription')}
+          </Text>
+        </View>
+        <ScrollView style={styles.groupContainer}>
+          {!discovery.listStore.loaded && <ActivityIndicator />}
+          {discovery.listStore.entities
+            .slice()
+            .map((group, i) => this.renderGroup(group, i))}
+        </ScrollView>
+      </View>
+    );
+  };
+
+  getFooter = () => {
+    return <OnboardingButtons onNext={this.props.onNext} />;
+  };
 
   render() {
     return (
-      <View>
-        <View style={[CS.padding4x]}>
-          <Text style={[CS.fontXXL, CS.colorDark, CS.fontMedium]}>{i18n.t('onboarding.suggestedGroups')}</Text>
-          <Text style={[CS.fontL, CS.colorDarkGreyed, CS.marginBottom3x]}>{i18n.t('onboarding.suggestedGroupsDescription')}</Text>
+      <View style={[CS.flexContainerCenter]}>
+        <View style={[CS.mindsLayoutBody, CS.backgroundPrimary]}>
+          {this.getBody()}
         </View>
-        {this.props.groups.list.entities.map(group => this.renderGroup(group))}
+        <View style={[CS.mindsLayoutFooter, CS.backgroundPrimary]}>
+          {this.getFooter()}
+        </View>
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  groupContainer: {
+    width: '100%',
+  },
+  textsContainer: {
+    alignItems: 'center',
+  },
+});

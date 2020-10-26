@@ -17,7 +17,7 @@ export default class ModelStorageList {
    * @param {integer} limit 0 for unlimeted list
    */
   constructor(storageName, limit = 0) {
-    this.storageName = 'model:'+ storageName;
+    this.storageName = 'model:' + storageName;
     this.limit = limit;
     this.loadIndex();
   }
@@ -32,7 +32,10 @@ export default class ModelStorageList {
         this.index = [];
       }
     } catch (err) {
-      logService.exception('[ModelStorageList] loadIndex:'+ this.storageName, err);
+      logService.exception(
+        '[ModelStorageList] loadIndex:' + this.storageName,
+        err,
+      );
     }
   }
 
@@ -66,7 +69,7 @@ export default class ModelStorageList {
       await AsyncStorage.removeItem(this._getKeyGuid(guid));
     }
     const list = model.__list;
-    delete(model.__list);
+    delete model.__list;
     await this._persist(model);
     model._list = list;
     return 0;
@@ -88,7 +91,7 @@ export default class ModelStorageList {
    */
   async moveLast(guid) {
     const i = this.index.indexOf(guid);
-    if(i > -1 && i + 1 < this.index.length) {
+    if (i > -1 && i + 1 < this.index.length) {
       _.pull(this.index, guid);
       this.index.push(guid);
       await AsyncStorage.setItem(this.indexKey, this.indexString);
@@ -173,7 +176,6 @@ export default class ModelStorageList {
     return this.index.indexOf(guid) > -1;
   }
 
-
   /**
    * Return many items
    * @param {array} guids array of guids
@@ -181,7 +183,7 @@ export default class ModelStorageList {
   async getMany(guids) {
     try {
       const data = await AsyncStorage.multiGet(this._getKeys(guids));
-      return data.map(item => JSON.parse(item[1]));
+      return data.map((item) => JSON.parse(item[1]));
     } catch (err) {
       return false;
     }
@@ -195,13 +197,12 @@ export default class ModelStorageList {
     try {
       errors = await AsyncStorage.multiSet([
         [this.indexKey, this.indexString],
-        [this._getKey(model), this._serialize(model)]
+        [this._getKey(model), this._serialize(model)],
       ]);
       if (!errors) return this.index.length;
-    } catch (err) { }
+    } catch (err) {}
     return -1;
   }
-
 
   _serialize(model) {
     return JSON.stringify(model);
@@ -216,7 +217,7 @@ export default class ModelStorageList {
   }
 
   _getKeys(guids) {
-    return guids.map(i => this._getKeyGuid(i));
+    return guids.map((i) => this._getKeyGuid(i));
   }
 
   get indexKey() {

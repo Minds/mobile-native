@@ -1,12 +1,11 @@
-//@ts-nocheck
-import React, { Component } from 'react';
-
+import React from 'react';
 import { Text, View } from 'react-native';
 
 import i18n from '../../../common/services/i18n.service';
 import token from '../../../../src/common/helpers/token';
 import BoostGiftView from './BoostGiftView';
 import number from '../../../common/helpers/number';
+import NotificationBody from '../NotificationBody';
 
 /**
  * Boost Peer Accepted Notification Component
@@ -21,18 +20,21 @@ export default class BoostPeerAcceptedView extends BoostGiftView {
     const amount = this.getAmount();
 
     return (
-      <View style={styles.bodyContents}>
-        <Text onPress={() => this.navToBoostConsole({ filter: 'peer' })}>
-          <Text style={styles.bold} onPress={this.navToChannel}>
-            @{entity.from.username}
-          </Text>{' '}
-          {i18n.t('notification.boostPeerAccepted')}{' '}
-          <Text style={styles.bold}>
-            {amount} {type}
-          </Text>{' '}
-          {description}
-        </Text>
-      </View>
+      <NotificationBody
+        styles={styles}
+        onPress={() => this.navToBoostConsole({ filter: 'peer' })}
+        entity={this.props.entity}>
+        <View style={styles.bodyContents}>
+          <Text>
+            <Text style={styles.bold}>@{entity.from.username}</Text>{' '}
+            {i18n.t('notification.boostPeerAccepted')}{' '}
+            <Text style={styles.bold}>
+              {amount} {type}
+            </Text>{' '}
+            {description}
+          </Text>
+        </View>
+      </NotificationBody>
     );
   }
 

@@ -1,0 +1,276 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<Modal
+  animationType="none"
+  hardwareAccelerated={false}
+  hideModalContentWhileAnimating={false}
+  onModalHide={[Function]}
+  onModalWillHide={[Function]}
+  onModalWillShow={[Function]}
+  onRequestClose={[Function]}
+  scrollHorizontal={false}
+  scrollOffset={0}
+  scrollOffsetMax={0}
+  scrollTo={null}
+  supportedOrientations={
+    Array [
+      "portrait",
+      "landscape",
+    ]
+  }
+  swipeThreshold={100}
+  transparent={true}
+  visible={false}
+>
+  <View
+    accessible={true}
+    focusable={true}
+    forwardedRef={[Function]}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "backgroundColor": "#202527",
+        "bottom": 0,
+        "height": 1334,
+        "left": 0,
+        "opacity": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+        "width": 750,
+      }
+    }
+  />
+  <View
+    onLayout={[Function]}
+    pointerEvents="box-none"
+    style={
+      Array [
+        Array [
+          Object {
+            "margin": 37.5,
+            "transform": Array [
+              Object {
+                "translateY": 0,
+              },
+            ],
+          },
+          Object {
+            "flex": 1,
+            "justifyContent": "center",
+          },
+          Array [
+            undefined,
+            undefined,
+            undefined,
+          ],
+          Object {
+            "margin": 0,
+          },
+        ],
+        Object {
+          "paddingBottom": 0,
+        },
+      ]
+    }
+  >
+    <View
+      forwardedRef={[Function]}
+      hideModalContentWhileAnimating={false}
+      onModalHide={[Function]}
+      onModalWillHide={[Function]}
+      onModalWillShow={[Function]}
+      pointerEvents="box-none"
+      scrollHorizontal={false}
+      scrollOffset={0}
+      scrollOffsetMax={0}
+      scrollTo={null}
+      style={
+        Object {
+          "flex": 1,
+          "justifyContent": "center",
+          "margin": 37.5,
+          "transform": Array [
+            Object {
+              "translateY": 0,
+            },
+          ],
+        }
+      }
+      supportedOrientations={
+        Array [
+          "portrait",
+          "landscape",
+        ]
+      }
+      swipeThreshold={100}
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "borderTopLeftRadius": 20,
+              "borderTopRightRadius": 20,
+              "flexDirection": "column",
+              "justifyContent": "center",
+              "paddingBottom": 50,
+              "width": "100%",
+            },
+            Object {
+              "backgroundColor": "#252E31",
+            },
+          ]
+        }
+      >
+        <View
+          style={
+            Array [
+              undefined,
+              undefined,
+            ]
+          }
+        >
+          <Text
+            onPress={[Function]}
+            style={
+              Array [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+          >
+            Close
+          </Text>
+          <Text
+            style={
+              Array [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+          >
+            Verification
+          </Text>
+          <Text
+            onPress={[Function]}
+            style={
+              Array [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+          >
+            Verify
+          </Text>
+        </View>
+        <View
+          style={
+            Array [
+              undefined,
+              Object {
+                "paddingTop": 12,
+              },
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              Object {
+                "backgroundColor": "#202527",
+                "borderColor": "#404a4e",
+              },
+            ]
+          }
+        >
+          <View>
+            <View
+              style={
+                Object {
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                  "width": "100%",
+                }
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "flexDirection": "row",
+                    "justifyContent": "space-between",
+                    "width": "100%",
+                  }
+                }
+              >
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#AEB0B8",
+                        "fontFamily": "Roboto",
+                        "fontSize": 16,
+                        "fontWeight": "600",
+                        "marginBottom": 5,
+                      },
+                      undefined,
+                    ]
+                  }
+                >
+                  Enter the characters above
+                </Text>
+              </View>
+            </View>
+            <TextInput
+              allowFontScaling={true}
+              autoCapitalize="none"
+              autofocus={true}
+              containerStyle={
+                Object {
+                  "backgroundColor": "#202527",
+                  "borderColor": "#404a4e",
+                }
+              }
+              onChangeText={[Function]}
+              onEndEditing={[Function]}
+              placeholder=""
+              placeholderTextColor="#444"
+              rejectResponderTermination={true}
+              returnKeyType="done"
+              style={
+                Array [
+                  undefined,
+                  Array [
+                    Object {
+                      "borderWidth": 0,
+                      "height": 32,
+                      "marginBottom": 7,
+                      "padding": 0,
+                    },
+                    undefined,
+                    undefined,
+                    undefined,
+                  ],
+                ]
+              }
+              testID="captchInput"
+              underlineColorAndroid="transparent"
+            />
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</Modal>
+`;

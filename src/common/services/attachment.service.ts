@@ -2,6 +2,8 @@
 import api from './api.service';
 import imagePicker from './image-picker.service';
 import Cancelable from 'promise-cancelable';
+import logService from './log.service';
+import { showNotification } from '../../../AppMessages';
 import { Platform } from 'react-native';
 
 /**
@@ -18,7 +20,7 @@ class AttachmentService {
       uri: media.uri,
       path: media.path || null,
       type: media.type,
-      name: media.fileName || 'test'
+      name: media.fileName || 'test',
     };
 
     const progress = (e) => {
@@ -33,6 +35,11 @@ class AttachmentService {
     if (file.type.includes('video')) {
       promise = this.uploadToS3(file, progress);
     } else {
+      // ugly hack for file upload on ios
+      if (Platform.OS === 'ios') {
+        file.uri = file.uri.replace('file://', '/private');
+      }
+
       promise = api.upload('api/v1/media/', file, extra, progress);
     }
 
@@ -47,27 +54,28 @@ class AttachmentService {
    * @param {any} file
    * @param {function} progress
    */
-  uploadToS3(file, progress){
-    // Prepare media and wait for lease => {media_type, guid}
-    let lease;
-
+  uploadToS3(file, progress) {
     return new Cancelable(async (resolve, reject, onCancel) => {
       const response = await api.put(`api/v2/media/upload/prepare/video`);
       // upload file to s3
-      const uploadPromise = api.uploadToS3(response.lease, file, progress).then(async () => {
-        // complete upload and wait for status
-        const {status} = await api.put(`api/v2/media/upload/complete/${response.lease.media_type}/${response.lease.guid}`);
+      const uploadPromise = api
+        .uploadToS3(response.lease, file, progress)
+        .then(async () => {
+          // complete upload and wait for status
+          const { status } = await api.put(
+            `api/v2/media/upload/complete/${response.lease.media_type}/${response.lease.guid}`,
+          );
 
-        // if false is returned, upload fails message will be showed
-        return status === 'success' ? {guid: response.lease.guid} : false;
-      });
+          // if false is returned, upload fails message will be showed
+          return status === 'success' ? { guid: response.lease.guid } : false;
+        });
       // handle cancel
       onCancel((cb) => {
         uploadPromise.cancel();
         cb();
       });
       resolve(uploadPromise);
-    }).catch( error => {
+    }).catch((error) => {
       if (error.name !== 'CancelationError') {
         logService.exception('[ApiService] upload', error);
         throw error;
@@ -121,7 +129,7 @@ class AttachmentService {
         path: response.path,
         type: 'image/jpeg',
         fileName: 'image.jpg',
-      }
+      };
     }
 
     return response;
@@ -131,9 +139,8 @@ class AttachmentService {
    * Open gallery
    * @param {string} mediaType photo or video (or mixed only ios)
    */
-  async gallery(mediaType = 'photo') {
-
-    const response = await imagePicker.launchImageLibrary(mediaType);
+  async gallery(mediaType = 'photo', crop = true) {
+    const response = await imagePicker.launchImageLibrary(mediaType, crop);
 
     if (!response) {
       return null;
@@ -142,7 +149,7 @@ class AttachmentService {
     if (response.didCancel) {
       return null;
     } else if (response.error) {
-      alert(response.error);
+      showNotification(response.error);
       return null;
     } else {
       if (!response.type) {

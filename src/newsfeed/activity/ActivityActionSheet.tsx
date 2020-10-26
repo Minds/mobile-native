@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 
-import { View, Alert, Text, StyleSheet } from 'react-native';
+import { View, Alert, Text, StyleSheet, Linking } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { ActionSheetCustom as ActionSheet } from 'react-native-actionsheet';
 
 import { MINDS_URI } from '../../config/Config';
 import { isFollowing } from '../NewsfeedService';
-import { CommonStyle as CS } from '../../styles/Common';
 import shareService from '../../share/ShareService';
 import i18n from '../../common/services/i18n.service';
 import featuresService from '../../common/services/features.service';
@@ -20,8 +19,7 @@ import type ActivityModel from '../ActivityModel';
 
 type PropsType = {
   entity: ActivityModel;
-  onTranslate: Function;
-  toggleEdit: Function;
+  onTranslate?: Function;
   testID?: string;
   navigation: any;
 };
@@ -51,8 +49,9 @@ export default class ActivityActionSheet extends Component<
    */
   constructor(props) {
     super(props);
+    const theme = ThemedStyles.style;
     this.deleteOption = (
-      <Text testID="deleteOption" style={[CS.colorDanger, CS.fontXL]}>
+      <Text testID="deleteOption" style={[theme.colorDanger, theme.fontXL]}>
         {i18n.t('delete')}
       </Text>
     );
@@ -119,7 +118,10 @@ export default class ActivityActionSheet extends Component<
         }
       }
 
-      if (translationService.isTranslatable(entity)) {
+      if (
+        !!this.props.onTranslate &&
+        translationService.isTranslatable(entity)
+      ) {
         options.push(i18n.t('translate.translate'));
       }
 
@@ -177,6 +179,10 @@ export default class ActivityActionSheet extends Component<
         options.push(i18n.t('translate.translate'));
       }
 
+      if (featuresService.has('permaweb') && entity.permaweb_id) {
+        options.push(i18n.t('permaweb.viewOnPermaweb'));
+      }
+
       // if is not the owner
       if (!entity.isOwner()) {
         options.push(i18n.t('report'));
@@ -200,6 +206,10 @@ export default class ActivityActionSheet extends Component<
       if (entity.isOwner() || sessionService.getUser().isAdmin()) {
         options.push(this.deleteOption);
       }
+    }
+
+    if (entity.hasImage()) {
+      options.push(i18n.t('imageViewer'));
     }
 
     return options;
@@ -258,7 +268,10 @@ export default class ActivityActionSheet extends Component<
         if (this.props.onTranslate) this.props.onTranslate();
         break;
       case i18n.t('edit'):
-        this.props.toggleEdit(true);
+        this.props.navigation.navigate('Capture', {
+          isEdit: true,
+          entity: this.props.entity,
+        });
         break;
       case i18n.t('setExplicit'):
       case i18n.t('removeExplicit'):
@@ -319,6 +332,18 @@ export default class ActivityActionSheet extends Component<
           this.showError();
         }
         break;
+      case i18n.t('permaweb.viewOnPermaweb'):
+        Linking.openURL(
+          'https://viewblock.io/arweave/tx/' + this.props.entity.permaweb_id,
+        );
+        break;
+      case i18n.t('imageViewer'):
+        const source = this.props.entity.getThumbSource('xlarge');
+        this.props.navigation.navigate('ViewImage', {
+          entity: this.props.entity,
+          source,
+        });
+        break;
     }
   }
 
@@ -326,7 +351,7 @@ export default class ActivityActionSheet extends Component<
    * Render Header
    */
   render() {
-    const CS = ThemedStyles.style;
+    const theme = ThemedStyles.style;
 
     const styles = {
       body: {
@@ -357,12 +382,12 @@ export default class ActivityActionSheet extends Component<
     };
 
     return (
-      <View style={[CS.flexContainer, CS.centered]}>
+      <View>
         <Icon
           name="more-vert"
           onPress={() => this.showActionSheet()}
-          size={26}
-          style={CS.colorSecondaryText}
+          size={28}
+          style={theme.colorTertiaryText}
           testID={this.props.testID}
         />
         <ActionSheet

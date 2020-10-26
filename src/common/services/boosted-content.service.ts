@@ -1,9 +1,10 @@
-import FeedsService from "./feeds.service";
-import logService from "./log.service";
-import blockListService from "./block-list.service";
+import _ from 'lodash';
+import FeedsService from './feeds.service';
+import logService from './log.service';
+import blockListService from './block-list.service';
 
 // types
-import type ActivityModel from "../../newsfeed/ActivityModel";
+import type ActivityModel from '../../newsfeed/ActivityModel';
 
 /**
  * Boosted content service
@@ -64,7 +65,8 @@ class BoostedContentService {
    * @param {Array<ActivityModel} boosts
    */
   cleanBoosts(boosts: Array<ActivityModel>): Array<ActivityModel> {
-    return boosts.filter((e: ActivityModel) => {
+    const cloned = _.cloneDeep(boosts);
+    return cloned.filter((e: ActivityModel) => {
       e.boosted = true;
       return !blockListService.has(e.ownerObj.guid);
     });

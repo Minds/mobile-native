@@ -11,7 +11,7 @@ class HashtagStore {
   @observable loading = false;
   @observable all = false;
   @observable hashtag = '';
-  @observable suggested = [];
+  @observable suggested: { value: string; selected: boolean }[] = [];
 
   /**
    * Load suggested tags
@@ -27,7 +27,7 @@ class HashtagStore {
   setHashtag(hashtag) {
     this.hashtag = hashtag;
 
-    if (hashtag && !this.suggested.some(e => e.value === hashtag)) {
+    if (hashtag && !this.suggested.some((e) => e.value === hashtag)) {
       this.suggested.push({ value: hashtag, selected: false });
     }
   }
@@ -90,7 +90,7 @@ class HashtagStore {
    * @param {string} tag
    */
   @action
-  create = async tag => {
+  create = async (tag) => {
     await this.select(tag);
     this.suggested.unshift(tag);
   };

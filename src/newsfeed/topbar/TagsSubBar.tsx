@@ -17,7 +17,7 @@ import { CommonStyle as CS } from '../../styles/Common';
 import TagOptinModal from '../../common/components/TagOptinModal';
 import colors from '../../styles/Colors';
 import logService from '../../common/services/log.service';
-import type HashtagStore from 'src/common/stores/HashtagStore';
+import type HashtagStore from '../../common/stores/HashtagStore';
 
 type PropsType = {
   onChange: Function;

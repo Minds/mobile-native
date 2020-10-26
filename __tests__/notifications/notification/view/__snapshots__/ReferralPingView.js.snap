@@ -2,27 +2,44 @@
 
 exports[`renders correctly 1`] = `
 <View
+  onPress={[Function]}
   style={
     Object {
-      "flexDirection": "row",
-      "flexWrap": "wrap",
+      "flex": 1,
+      "marginLeft": 8,
     }
   }
 >
-  <Text
-    onPress={[Function]}
-  >
-    Free tokens are waiting for you! Once you join the rewards program by setting up your Minds wallet, both you and 
-    <Text
-      style={
-        Object {
-          "fontWeight": "600",
-        }
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "flexWrap": "wrap",
       }
-    >
-      someUser
+    }
+  >
+    <Text>
+      Free tokens are waiting for you! Once you join the rewards program by setting up your Minds wallet, both you and 
+      <Text
+        style={
+          Object {
+            "fontWeight": "600",
+          }
+        }
+      >
+        someUser
+      </Text>
+       will earn tokens for your referral
     </Text>
-     will earn tokens for your referral
+  </View>
+  <Text
+    style={
+      Object {
+        "fontSize": 11,
+      }
+    }
+  >
+    Invalid date
   </Text>
 </View>
 `;

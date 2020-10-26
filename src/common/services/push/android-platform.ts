@@ -1,5 +1,8 @@
 //@ts-nocheck
-import { NotificationsAndroid, PendingNotifications } from 'react-native-notifications';
+import {
+  NotificationsAndroid,
+  PendingNotifications,
+} from 'react-native-notifications';
 import AbstractPlatform from './abstract-platform';
 import logService from '../log.service';
 
@@ -7,13 +10,12 @@ import logService from '../log.service';
  * Android Platform
  */
 export default class AndroidPlatfom extends AbstractPlatform {
-
   /**
    * Init push service
    */
   init() {
     NotificationsAndroid.setNotificationReceivedListener((notification) => {
-      logService.log("Notification received", notification);
+      logService.log('Notification received', notification);
       //NotificationsAndroid.localNotification(notification.data);
     });
 
@@ -23,7 +25,6 @@ export default class AndroidPlatfom extends AbstractPlatform {
         this.registerToken();
       }
     });
-
   }
 
   /**
@@ -52,10 +53,10 @@ export default class AndroidPlatfom extends AbstractPlatform {
   handleInitialNotification() {
     PendingNotifications.getInitialNotification()
       .then((notification) => {
-
-          if (notification && this.onInitialNotification) this.onInitialNotification(notification);
+        if (notification && this.onInitialNotification)
+          this.onInitialNotification(notification);
       })
-      .catch((err) => logService.exception("[PushService]", err));
+      .catch((err) => logService.exception('[PushService]', err));
   }
   /**
    * Stop push notification service
@@ -68,7 +69,6 @@ export default class AndroidPlatfom extends AbstractPlatform {
    * Android don't need permissions from user
    */
   checkPermissions() {
-    return Promise.resolve(true)
+    return Promise.resolve(true);
   }
-
 }

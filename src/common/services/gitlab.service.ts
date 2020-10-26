@@ -13,12 +13,11 @@ class GitlabService {
    * @param {string} description
    */
   async postIssue(title, description) {
-
-    const body = {title, description, labels:'by user'};
+    const body = { title, description, labels: 'by user' };
 
     try {
       return await api.post('api/v2/issues/mobile', body);
-    } catch(err) {
+    } catch (err) {
       console.log(err);
       throw err;
     }

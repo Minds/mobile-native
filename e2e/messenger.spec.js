@@ -1,4 +1,3 @@
-import sleep from '../src/common/helpers/sleep';
 import { waitForElement, waitForAndType, tapElement, waitForAndTap } from './helpers/waitFor';
 import login from './actions/login';
 
@@ -17,9 +16,9 @@ describe('Messenger Flow', () => {
   });
 
   it('should be able to open messenger, unblock and send message', async () => {
-    const userName = 'JACK';
-    const messageText = 'This is an auto-generated message for testing purpose';
-    
+    const userName = 'JUANMSOLARO_TEST5';
+    const messageText = 'This is an auto generated message for testing purpose';
+
     // wait for newsfeed
     await waitForElement(by.id('NewsfeedScreen'));
     await tapElement(by.id('MessengerButton'));

@@ -1,54 +1,71 @@
-//@ts-nocheck
-import {
-  observable,
-  computed,
-  action
-} from 'mobx';
+import { observable, computed, action } from 'mobx';
 
-import moment from 'moment';
 import walletService from './WalletService';
-import abbrev from "../common/helpers/abbrev";
-import token from "../common/helpers/token";
-import number from "../common/helpers/number";
+import token from '../common/helpers/token';
+import number from '../common/helpers/number';
 import TokensStore from './tokens/TokensStore';
 import storageService from '../common/services/storage.service';
 import web3Service from '../blockchain/services/Web3Service';
+import type { ApiResponse } from '../common/services/api.service';
 
+interface WalletResponse extends ApiResponse {
+  balance: number;
+  addresses: Array<Address>;
+  boostCap: number;
+  wireCap: number;
+}
+
+export type Address = {
+  address: string;
+  available?: number;
+  balance: number;
+  label: string;
+  ethBalance?: number;
+};
 
 /**
  * Wallet store
  */
 class WalletStore {
+  @observable balance: number = -1;
+  @observable addresses: Array<Address> = [];
+  @observable overview: any = {};
 
-  @observable balance = -1;
-  @observable addresses = [];
-  @observable overview = {};
-
-  @observable onboardingShown = false;
+  @observable onboardingShown: boolean = false;
 
   ledger = new TokensStore();
 
-  refreshing = false;
-  loaded = false;
+  refreshing: boolean = false;
+  loaded: boolean = false;
+
+  interval!: NodeJS.Timeout;
+
+  isOnboardingShown!: boolean;
 
   @action
-  clockTick() {
+  clockTick(): void {
     this.overview.nextPayout--;
   }
 
   @action
-  async refresh(force = false) {
+  async refresh(force: boolean = false): Promise<void> {
     if ((this.refreshing || this.loaded) && !force) {
       return;
     }
 
     this.refreshing = true;
 
-    const { balance, addresses } = await walletService.getBalances();
+    const {
+      balance,
+      addresses,
+    } = (await walletService.getBalances()) as WalletResponse;
 
     if (addresses && addresses.length > 0) {
-      addresses.forEach(async address => {
-        if (address.label.toLowerCase() != 'offchain' && address.address !== '') {
+      addresses.forEach(async (address) => {
+        if (
+          address.label.toLowerCase() !== 'offchain' &&
+          address.address !== ''
+        ) {
           address.ethBalance = await web3Service.getBalance(address.address);
         }
       });
@@ -59,7 +76,6 @@ class WalletStore {
     // next payout clock
     this.interval && clearInterval(this.interval);
     this.interval = setInterval(() => this.clockTick(), 1000);
-
     this.overview = overview;
     this.balance = balance;
     this.addresses = addresses;
@@ -69,7 +85,7 @@ class WalletStore {
   }
 
   @computed get formattedBalance() {
-    return this.balance > -1 ? number(token(this.balance, 18), 3) : '…'
+    return this.balance > -1 ? number(token(this.balance, 18), 3) : '…';
   }
 
   /**
@@ -77,8 +93,8 @@ class WalletStore {
    * @param {string} number
    * @param {boolean} retry
    */
-  join(number, retry) {
-    return walletService.join(number, retry)
+  join(number: string, retry: boolean) {
+    return walletService.join(number, retry);
   }
 
   /**
@@ -105,8 +121,8 @@ class WalletStore {
         referrals: 50,
         referrals_welcome: 50,
         checkin: 2,
-        jury_duty: 25
-      }
+        jury_duty: 25,
+      },
     };
     this.onboardingShown = false;
     this.ledger = new TokensStore();
@@ -119,7 +135,10 @@ class WalletStore {
   // Onboarding
 
   async canShowOnboarding() {
-    return !this.isOnboardingShown && !(await storageService.getItem('walletOnboardingComplete'));
+    return (
+      !this.isOnboardingShown &&
+      !(await storageService.getItem('walletOnboardingComplete'))
+    );
   }
 
   @action setOnboardingShown(value) {

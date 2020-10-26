@@ -1,10 +1,38 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Activity component renders correctly 1`] = `
-<View
-  style={
+<Memo(wrappedComponent)
+  entity={
     Object {
-      "flex": 1,
+      "attachment_guid": false,
+      "blurb": false,
+      "containerObj": undefined,
+      "container_guid": "activityguid0",
+      "custom_data": false,
+      "custom_type": false,
+      "description": "Congratulations! ",
+      "edited": "",
+      "guid": "activityguid0",
+      "mature": false,
+      "message": "Message",
+      "ownerObj": Object {
+        "guid": "824853017709780997",
+        "subtype": false,
+        "time_created": "1522036284",
+        "type": "user",
+      },
+      "owner_guid": "824853017709780997",
+      "parent_guid": "838106762591510528",
+      "perma_url": false,
+      "rowKey": "something0",
+      "shouldBeBlured": [MockFunction],
+      "thumbnail_src": false,
+      "time_created": "1522036284",
+      "title": "TITLE",
+      "type": "activity",
+      "wire_totals": Object {
+        "tokens": 1000000000000000000,
+      },
     }
   }
 >
@@ -87,16 +115,6 @@ exports[`Activity component renders correctly 1`] = `
           "wire_totals": Object {
             "tokens": 1000000000000000000,
           },
-        }
-      }
-    />
-    <WireAction
-      owner={
-        Object {
-          "guid": "824853017709780997",
-          "subtype": false,
-          "time_created": "1522036284",
-          "type": "user",
         }
       }
     />

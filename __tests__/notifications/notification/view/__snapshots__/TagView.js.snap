@@ -2,56 +2,72 @@
 
 exports[`renders correctly activity 1`] = `
 <View
-  accessible={true}
-  focusable={true}
-  isTVSelectable={true}
-  onClick={[Function]}
-  onResponderGrant={[Function]}
-  onResponderMove={[Function]}
-  onResponderRelease={[Function]}
-  onResponderTerminate={[Function]}
-  onResponderTerminationRequest={[Function]}
-  onStartShouldSetResponder={[Function]}
+  onPress={[Function]}
   style={
     Object {
-      "flexDirection": "row",
-      "flexWrap": "wrap",
-      "opacity": 1,
+      "flex": 1,
+      "marginLeft": 8,
     }
   }
 >
-  <Text>
-    someUser
-     
-    tagged you in a post
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+      }
+    }
+  >
+    <Text>
+      someUser
+       
+      tagged you in a post
+    </Text>
+  </View>
+  <Text
+    style={
+      Object {
+        "fontSize": 11,
+      }
+    }
+  >
+    Invalid date
   </Text>
 </View>
 `;
 
 exports[`renders correctly comment 1`] = `
 <View
-  accessible={true}
-  focusable={true}
-  isTVSelectable={true}
-  onClick={[Function]}
-  onResponderGrant={[Function]}
-  onResponderMove={[Function]}
-  onResponderRelease={[Function]}
-  onResponderTerminate={[Function]}
-  onResponderTerminationRequest={[Function]}
-  onStartShouldSetResponder={[Function]}
+  onPress={[Function]}
   style={
     Object {
-      "flexDirection": "row",
-      "flexWrap": "wrap",
-      "opacity": 1,
+      "flex": 1,
+      "marginLeft": 8,
     }
   }
 >
-  <Text>
-    someUser
-     
-    tagged you in a comment
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+      }
+    }
+  >
+    <Text>
+      someUser
+       
+      tagged you in a comment
+    </Text>
+  </View>
+  <Text
+    style={
+      Object {
+        "fontSize": 11,
+      }
+    }
+  >
+    Invalid date
   </Text>
 </View>
 `;

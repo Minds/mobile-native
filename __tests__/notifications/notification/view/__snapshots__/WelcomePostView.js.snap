@@ -2,22 +2,40 @@
 
 exports[`renders correctly 1`] = `
 <View
+  onPress={[Function]}
   style={
     Object {
-      "flexDirection": "row",
-      "flexWrap": "wrap",
+      "flex": 1,
+      "marginLeft": 8,
     }
   }
 >
-  <Text
-    onPress={[Function]}
+  <View
     style={
       Object {
-        "fontWeight": "600",
+        "flexDirection": "row",
+        "flexWrap": "wrap",
       }
     }
   >
-    Tap here to create a post.
+    <Text
+      style={
+        Object {
+          "fontWeight": "600",
+        }
+      }
+    >
+      Tap here to create a post.
+    </Text>
+  </View>
+  <Text
+    style={
+      Object {
+        "fontSize": 11,
+      }
+    }
+  >
+    Invalid date
   </Text>
 </View>
 `;

@@ -1,9 +1,8 @@
 //@ts-nocheck
-import { setViewed } from "../../newsfeed/NewsfeedService";
-import { isNetworkFail } from "../helpers/abortableFetch";
+import { setViewed } from '../../newsfeed/NewsfeedService';
+import { isNetworkFail } from '../helpers/abortableFetch';
 
 export default class Viewed {
-
   /**
    * @var {Map} viewed viewed entities list
    */
@@ -25,7 +24,9 @@ export default class Viewed {
     if (!this.viewed.get(entity.guid)) {
       this.viewed.set(entity.guid, true);
       try {
-        const meta = metadataService ? metadataService.getEntityMeta(entity) : {};
+        const meta = metadataService
+          ? metadataService.getEntityMeta(entity)
+          : {};
         await setViewed(entity, meta);
       } catch (e) {
         this.viewed.delete(entity.guid);

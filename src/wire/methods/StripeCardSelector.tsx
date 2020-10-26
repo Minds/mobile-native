@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, ActivityIndicator, Alert } from 'react-native';
+import { View, Alert } from 'react-native';
 
 import { CommonStyle as CS } from '../../styles/Common';
 import api, { ApiResponse } from '../../common/services/api.service';
@@ -8,6 +8,7 @@ import Button from '../../common/components/Button';
 import i18nService from '../../common/services/i18n.service';
 import StripeCardCarousel from './StripeCardCarousel';
 import type { StripeCard } from '../WireTypes';
+import ActivityIndicator from '../../common/components/ActivityIndicator';
 
 type PropsType = {
   onCardSelected: Function;
@@ -78,10 +79,9 @@ export default class StripeCardSelector extends React.PureComponent<
         )}
         <View style={[CS.rowJustifyCenter, CS.marginTop2x]}>
           <Button
-            inverted
             text="Add Card"
             onPress={this.addNewCard}
-            textStyle={[CS.fontL, CS.padding]}
+            textStyle={[CS.padding]}
           />
         </View>
       </View>

@@ -1,11 +1,7 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import {
-  TouchableHighlight,
-  Text,
-  StyleSheet
-} from 'react-native';
+import { TouchableHighlight, Text, StyleSheet } from 'react-native';
 import { ComponentsStyle } from '../../styles/Components';
 import { CommonStyle } from '../../styles/Common';
 
@@ -33,20 +29,22 @@ export default class TransparentButton extends Component {
 
     let submitContent;
     if (typeof title === 'string') {
-      submitContent = (<Text
-        style={[
-          CommonStyle.paddingLeft,
-          CommonStyle.paddingRight,
-          styles.buttonText,
-          textStyle,
-          { color: color || '#000' },
-          !!disabled && { color: disabledColor || '#aaa' }
-        ]}
-      >{title}</Text>);
+      submitContent = (
+        <Text
+          style={[
+            CommonStyle.paddingLeft,
+            CommonStyle.paddingRight,
+            styles.buttonText,
+            textStyle,
+            { color: color || '#000' },
+            !!disabled && { color: disabledColor || '#aaa' },
+          ]}>
+          {title}
+        </Text>
+      );
     } else {
       submitContent = title;
     }
-
 
     return (
       <TouchableHighlight
@@ -58,10 +56,11 @@ export default class TransparentButton extends Component {
           styles.button,
           style,
           { borderColor: borderColor || color || '#000' },
-          !!disabled && { borderColor: disabledBorderColor || disabledColor || '#aaa' }
+          !!disabled && {
+            borderColor: disabledBorderColor || disabledColor || '#aaa',
+          },
         ]}
-        {...otherProps}
-      >
+        {...otherProps}>
         {submitContent}
       </TouchableHighlight>
     );
@@ -74,5 +73,5 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     textAlign: 'center',
-  }
+  },
 });

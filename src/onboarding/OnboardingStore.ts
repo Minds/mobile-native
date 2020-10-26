@@ -1,5 +1,5 @@
 //@ts-nocheck
-import { observable, action, computed, extendObservable } from 'mobx'
+import { observable, action, computed, extendObservable } from 'mobx';
 import onboardingService from './OnboardingService';
 import number from '../common/helpers/number';
 import OffsetListStore from '../common/stores/OffsetListStore';
@@ -16,21 +16,27 @@ class OnboardingStore {
 
   suggestedUsers = {
     list: new OffsetListStore(),
-    loading: false
-  }
+    loading: false,
+  };
 
   @computed
   get percentage() {
     if (!this.progress) return 0;
 
-    return number(this.progress.completed_items.length / this.progress.all_items.length, 0, 2);
+    return number(
+      this.progress.completed_items.length / this.progress.all_items.length,
+      0,
+      2,
+    );
   }
 
   async getSuggestedUsers() {
     try {
       const users = await onboardingService.getSuggestedUsers();
       if (users.suggestions) {
-        this.suggestedUsers.list.setList({entities: users.suggestions.map(r => UserModel.create(r.entity))});
+        this.suggestedUsers.list.setList({
+          entities: users.suggestions.map((r) => UserModel.create(r.entity)),
+        });
       }
     } catch (err) {
       console.log(err);
@@ -42,7 +48,7 @@ class OnboardingStore {
    */
   async getProgress(navigate = true) {
     logService.info('[OnboardingStore] getting onboarding progress');
-    let onboarding = featuresService.has('onboarding-december-2019') ? 'OnboardingScreenNew' : 'OnboardingScreen';
+    let onboarding = 'OnboardingScreen';
     try {
       const progress = await onboardingService.getProgress();
       this.setProgress(progress);

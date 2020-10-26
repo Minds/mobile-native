@@ -1,5 +1,5 @@
 //@ts-nocheck
-import { MINDS_URI } from '../../config/Config';
+import { MINDS_URI, MINDS_PRO } from '../../config/Config';
 import { Linking } from 'react-native';
 import deeplinksRouterService from './deeplinks-router.service';
 
@@ -7,13 +7,13 @@ import deeplinksRouterService from './deeplinks-router.service';
  * Open url service
  */
 class OpenURLService {
-
   /**
    * Open url
    * @param {string} url
    */
   open(url) {
-    if (url.startsWith(MINDS_URI)) {
+    const navigatingToPro = url === MINDS_PRO;
+    if (url.startsWith(MINDS_URI) && !navigatingToPro) {
       const routed = deeplinksRouterService.navigate(url);
       if (routed) return;
     }

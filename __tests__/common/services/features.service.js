@@ -6,9 +6,12 @@ import { MINDS_FEATURES } from '../../../src/config/Config';
 describe('Feature service', () => {
   it('should return features', async () => {
     let features = {
+      channel: true,
       crypto: true,
-      'onboarding-december-2019': true,
       compose: true,
+      discovery: true,
+      wallet: true,
+      'mindsVideo-2020': true,
     };
     expect(service.features).toEqual(features);
     expect(service.has('crypto')).toEqual(true);

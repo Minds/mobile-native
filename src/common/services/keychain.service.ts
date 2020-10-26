@@ -23,7 +23,10 @@ async function isKeychainInStorage(keychain) {
 }
 
 async function saveKeychainToStorage(keychain, secret) {
-  await AsyncStorage.setItem(`${STORAGE_KEY_PREFIX}${keychain}`, CryptoJS.AES.encrypt(secret, secret).toString());
+  await AsyncStorage.setItem(
+    `${STORAGE_KEY_PREFIX}${keychain}`,
+    CryptoJS.AES.encrypt(secret, secret).toString(),
+  );
 }
 
 async function removeKeychainFromStorage(keychain) {
@@ -42,7 +45,9 @@ async function challengeKeychainFromSecret(keychain, secretAttempt) {
   }
 
   try {
-    const secret = CryptoJS.AES.decrypt(value, secretAttempt).toString(CryptoJS.enc.Utf8);
+    const secret = CryptoJS.AES.decrypt(value, secretAttempt).toString(
+      CryptoJS.enc.Utf8,
+    );
 
     if (!secret) {
       return null;
@@ -80,15 +85,19 @@ class KeychainService {
         attempts++;
 
         try {
-          const secretAttempt = await getStores().keychain.waitForUnlock(keychain, true, attempts);
-          await new Promise(r => setTimeout(r, 500)); // Modals have a "cooldown"
+          const secretAttempt = await getStores().keychain.waitForUnlock(
+            keychain,
+            true,
+            attempts,
+          );
+          await new Promise((r) => setTimeout(r, 500)); // Modals have a "cooldown"
 
           if (!secretAttempt) {
             break;
           }
 
           secret = await challengeKeychainFromSecret(keychain, secretAttempt);
-        } catch (e) { }
+        } catch (e) {}
 
         if (secret) {
           break;
@@ -99,14 +108,14 @@ class KeychainService {
         throw new Error('E_INVALID_PASSWORD_CHALLENGE_OUTCOME');
       }
     } else {
-      secret = await stores.keychain.waitForUnlock(keychain, false);
+      secret = await getStores().keychain.waitForUnlock(keychain, false);
 
       if (!secret) {
         throw new Error('E_INVALID_SECRET');
       }
 
       await saveKeychainToStorage(keychain, secret);
-      await new Promise(r => setTimeout(r, 500)); // Modals have a "cooldown"
+      await new Promise((r) => setTimeout(r, 500)); // Modals have a "cooldown"
     }
 
     this.storeToCache(keychain, secret);

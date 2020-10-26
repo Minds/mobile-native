@@ -7,11 +7,12 @@ import {
   TextStyle,
   ViewStyle,
   GestureResponderEvent,
+  TouchableOpacityProps,
 } from 'react-native';
 
 import ThemedStyles from '../../styles/ThemedStyles';
 
-type PropsType = {
+interface PropsType extends TouchableOpacityProps {
   text: string;
   loading?: boolean;
   onPress?: (ev: GestureResponderEvent) => void;
@@ -23,7 +24,7 @@ type PropsType = {
   textStyle?: TextStyle | Array<TextStyle>;
   disabled?: boolean;
   inverted?: boolean;
-};
+}
 
 /**
  * Custom Button component
@@ -64,7 +65,7 @@ export default class Button extends Component<PropsType> {
       mainColor = ThemedStyles.getColor('primary_button');
     }
 
-    const style = { backgroundColor: background, borderRadius: 2 };
+    const style = { backgroundColor: background, borderRadius: 36 };
 
     const body = loading ? (
       <ActivityIndicator color={mainColor} />
@@ -86,6 +87,7 @@ export default class Button extends Component<PropsType> {
           theme.rowJustifyCenter,
           theme.centered,
           theme.padding,
+          theme.paddingHorizontal2x,
           style,
           containerStyle,
         ]}

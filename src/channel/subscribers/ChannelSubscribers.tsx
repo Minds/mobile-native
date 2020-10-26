@@ -28,7 +28,7 @@ class ChannelSubscribers extends Component {
   /**
    * On component will mount
    */
-  componentWillMount() {
+  componentDidMount() {
     this._loadData();
   }
 
@@ -43,7 +43,13 @@ class ChannelSubscribers extends Component {
    * Load data
    */
   _loadData() {
-    const params = this.props.route.params;
+    const params = this.props.route.params || {};
+    if (params.filter) {
+      this.props.channelSubscribersStore.setFilter(params.filter);
+    } else {
+      this.props.channelSubscribersStore.setFilter('subscribers');
+    }
+
     if (params.guid) {
       this.props.channelSubscribersStore.setGuid(params.guid);
     }
@@ -68,7 +74,7 @@ class ChannelSubscribers extends Component {
         <FlatList
           data={store.list.entities.slice()}
           renderItem={this.renderRow}
-          keyExtractor={item => item.guid}
+          keyExtractor={(item) => item.guid}
           onRefresh={this.refresh}
           refreshing={store.list.refreshing}
           onEndReached={this.loadFeed}
@@ -134,7 +140,7 @@ class ChannelSubscribers extends Component {
   /**
    * Render user row
    */
-  renderRow = row => {
+  renderRow = (row) => {
     return (
       <DiscoveryUser
         store={this.props.channelSubscribersStore}

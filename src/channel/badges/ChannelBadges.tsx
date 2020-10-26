@@ -1,15 +1,17 @@
 import React, { PureComponent } from 'react';
 
-import { View, StyleSheet, ViewStyle } from 'react-native';
+import { View, StyleSheet, ViewStyle, TextStyle } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import type UserModel from '../UserModel';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 type PropsType = {
   channel: UserModel;
   size?: number;
   style?: ViewStyle;
+  iconStyle?: TextStyle;
 };
 
 /**
@@ -25,26 +27,36 @@ export default class ChannelBadges extends PureComponent<PropsType> {
 
     const badges: Array<React.ReactNode> = [];
 
+    const style = this.props.iconStyle
+      ? [styles.icon, this.props.iconStyle]
+      : styles.icon;
+
     if (channel.plus) {
       badges.push(
-        <Icon
-          name="add-circle-outline"
-          size={size}
-          style={styles.icon}
-          key={1}
-        />,
+        //@ts-ignore style not defined in types
+        <Icon name="add-circle-outline" size={size} style={style} key={1} />,
       );
     }
 
     if (channel.verified) {
       badges.push(
-        <Icon name="verified-user" size={size} style={styles.icon} key={2} />,
+        <Icon
+          name="verified-user"
+          size={size}
+          style={[
+            styles.icon,
+            this.props.iconStyle,
+            channel.isAdmin() ? ThemedStyles.style.colorGreen : null,
+          ]}
+          key={2}
+        />,
       );
     }
 
     if (channel.founder) {
       badges.push(
-        <Icon name="flight-takeoff" size={size} style={styles.icon} key={3} />,
+        //@ts-ignore style not defined in types
+        <Icon name="flight-takeoff" size={size} style={style} key={3} />,
       );
     }
 
@@ -58,12 +70,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   icon: {
-    color: '#fff',
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowColor: '#000000',
-    shadowOpacity: 0.35,
     marginLeft: 5,
-    textShadowRadius: 5,
-    paddingBottom: 5,
   },
 });

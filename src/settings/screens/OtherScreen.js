@@ -1,107 +1,85 @@
 //@ts-nocheck
 import React, { useCallback } from 'react';
-import { View, FlatList, Text } from 'react-native';
-import SettingsItem from '../SettingsItem';
+import { Text, ScrollView } from 'react-native';
+import MenuItem from '../../common/components/menus/MenuItem';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
-import authService from '../../auth/AuthService';
+import MenuSubtitle from '../../common/components/menus/MenuSubtitle';
+import NavigationService from '../../navigation/NavigationService';
+import featuresService from '../../common/services/features.service';
 
-export default function({ navigation }) {
-  const CS = ThemedStyles.style;
+function useNavCallback(screen) {
+  return useCallback(() => {
+    NavigationService.navigate(screen);
+  }, [screen]);
+}
 
-  const navToBlockedChannels = useCallback(() => navigation.push('BlockedChannels'), [
-    navigation,
-  ]);
-
-  const navToReportedContent = useCallback(() => navigation.push('ReportedContent'), [
-    navigation,
-  ]);
-
-  const navToDeleteChannel = useCallback(() => navigation.push('DeleteChannel'), [
-    navigation,
-  ]);
-
-  const navToDeactivateChannel = useCallback(() => navigation.push('DeactivateChannel'), [
-    navigation,
-  ]);
-
-  const navToAppInfo = useCallback(() => navigation.push('AppInfo'), [
-    navigation,
-  ]);
+export default function ({ navigation }) {
+  const theme = ThemedStyles.style;
 
   const contentAdmin = [
-    {
+    /*{
       title: i18n.t('settings.otherOptions.a1'),
-      onPress: navToReportedContent,
-    },
+      onPress: useNavCallback('ReportedContent'),
+    },*/
     {
       title: i18n.t('settings.blockedChannels'),
-      onPress: navToBlockedChannels,
+      onPress: useNavCallback('BlockedChannels'),
     },
   ];
 
   const paidContent = [
     {
       title: i18n.t('settings.otherOptions.b1'),
-      onPress: '',
+      onPress: useNavCallback('TierManagementScreen'),
     },
-    {
+    /*{
       title: i18n.t('settings.otherOptions.b2'),
       onPress: '',
-    },
+    },*/
   ];
 
   const account = [
     {
       title: i18n.t('settings.deactivate'),
-      onPress: navToDeactivateChannel,
+      onPress: useNavCallback('DeactivateChannel'),
     },
     {
       title: i18n.t('settings.otherOptions.c2'),
-      onPress: navToDeleteChannel,
-    },
-    {
-      title: i18n.t('settings.logout'),
-      onPress: authService.logout,
+      onPress: useNavCallback('DeleteChannel'),
     },
   ];
 
   const info = [
     {
       title: i18n.t('settings.otherOptions.d1'),
-      onPress: navToAppInfo,
+      onPress: useNavCallback('AppInfo'),
     },
   ];
 
-  const subTitle = [
-    CS.colorTertiaryText, 
-    CS.fontM,
-    CS.paddingLeft3x,
-  ];
-
-
   return (
-    <View style={[CS.flexContainer, CS.backgroundPrimary, CS.borderTopHair, CS.borderBottomHair, CS.borderPrimary]}>
+    <ScrollView style={[theme.flexContainer, theme.backgroundPrimary]}>
+      <MenuSubtitle>{i18n.t('settings.otherOptions.a')}</MenuSubtitle>
+      {contentAdmin.map((item, i) => (
+        <MenuItem item={item} i={i} />
+      ))}
 
-      <Text style={[subTitle, styles.subTitle]} >{i18n.t('settings.otherOptions.a')}</Text>
-      {contentAdmin.map((item, i) => (<SettingsItem item={item} i={i} />))}
+      {featuresService.has('paywall-2020') && (
+        <MenuSubtitle>{i18n.t('settings.otherOptions.b')}</MenuSubtitle>
+      )}
 
-      <Text style={[subTitle, styles.subTitle]} >{i18n.t('settings.otherOptions.b')}</Text>
-      {paidContent.map((item, i) => (<SettingsItem item={item} i={i} />))}
+      {featuresService.has('paywall-2020') &&
+        paidContent.map((item, i) => <MenuItem item={item} i={i} />)}
 
-      <Text style={[subTitle, styles.subTitle]} >{i18n.t('settings.otherOptions.c')}</Text>
-      {account.map((item, i) => (<SettingsItem item={item} i={i} />))}
+      <MenuSubtitle>{i18n.t('settings.otherOptions.c')}</MenuSubtitle>
+      {account.map((item, i) => (
+        <MenuItem item={item} i={i} />
+      ))}
 
-      <Text style={[subTitle, styles.subTitle]} >{i18n.t('settings.otherOptions.d')}</Text>
-      {info.map((item, i) => (<SettingsItem item={item} i={i} />))}
-
-    </View>
-  )
+      <MenuSubtitle>{i18n.t('settings.otherOptions.d')}</MenuSubtitle>
+      {info.map((item, i) => (
+        <MenuItem item={item} i={i} />
+      ))}
+    </ScrollView>
+  );
 }
-
-const styles = {
-  subTitle: {
-    lineHeight: 35,
-    paddingTop: 10,
-  },
-};

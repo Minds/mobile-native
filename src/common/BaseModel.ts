@@ -1,6 +1,5 @@
 import { observable, action, computed, toJS } from 'mobx';
 import _ from 'lodash';
-import { Alert } from 'react-native';
 import EventEmitter from 'eventemitter3';
 
 import sessionService from './services/session.service';
@@ -13,13 +12,16 @@ import i18n from './services/i18n.service';
 import featuresService from './services/features.service';
 import type UserModel from '../channel/UserModel';
 import type FeedStore from './stores/FeedStore';
+import { showNotification } from '../../AppMessages';
+import AbstractModel from './AbstractModel';
 
 /**
  * Base model
  */
-export default class BaseModel {
+export default class BaseModel extends AbstractModel {
   username: string = '';
   guid: string = '';
+  owner_guid?: string;
   ownerObj!: UserModel;
   mature: boolean = false;
   pending?: '0' | '1';
@@ -29,6 +31,9 @@ export default class BaseModel {
   wire_totals?: {
     [name: string]: number;
   };
+
+  // TODO remove this and fix model.listRef logic
+  listRef?: any;
 
   /**
    * Event emitter
@@ -72,52 +77,36 @@ export default class BaseModel {
     }
   }
 
+  /**
+   * Return a plain JS obj without observables
+   */
   toPlainObject() {
     const plainEntity = toJS(this);
 
     // remove references to the list
     delete plainEntity.__list;
+    delete plainEntity.listRef;
 
     return plainEntity;
   }
 
   /**
-   * Child models classes
+   * Json converter
+   *
+   * Convert to plain obj and remove the list reference
+   * to avoid circular reference errors
    */
-  childModels() {
-    return {};
-  }
-
-  /**
-   * Assign values to obj
-   * @param data any
-   */
-  assign(data: any) {
-    // Some users have a number as username and engine return them as a number
-    if (data.username) {
-      data.username = String(data.username);
-    }
-
-    // some blogs has numeric name
-    if (data.name) {
-      data.name = String(data.name);
-    }
-    Object.assign(this, data);
-
-    // create childs instances
-    const childs = this.childModels();
-    for (var prop in childs) {
-      if (this[prop]) {
-        this[prop] = childs[prop].create(this[prop]);
-      }
-    }
+  toJSON() {
+    return this.toPlainObject();
   }
 
   /**
    * Return if the current user is the owner of the activity
    */
   isOwner = () => {
-    return this.ownerObj && sessionService.guid === this.ownerObj.guid;
+    return this.ownerObj
+      ? sessionService.guid === this.ownerObj.guid
+      : this.owner_guid === sessionService.guid;
   };
 
   /**
@@ -139,56 +128,6 @@ export default class BaseModel {
         }
       }
     });
-  }
-
-  /**
-   * Create an instance
-   * @param {object} data
-   */
-  static create<T extends typeof BaseModel>(
-    this: T,
-    data: object,
-  ): InstanceType<T> {
-    const obj: InstanceType<T> = new this() as InstanceType<T>;
-    obj.assign(data);
-    return obj;
-  }
-
-  /**
-   * Create an array of instances
-   * @param {array} arrayData
-   */
-  static createMany<T extends typeof BaseModel>(
-    this: T,
-    arrayData: Array<object>,
-  ): Array<InstanceType<T>> {
-    const collection: Array<InstanceType<T>> = [];
-    if (!arrayData) {
-      return collection;
-    }
-
-    arrayData.forEach((data) => {
-      const obj: InstanceType<T> = new this() as InstanceType<T>;
-      obj.assign(data);
-      collection.push(obj);
-    });
-
-    return collection;
-  }
-
-  /**
-   * Check if data is an instance of the model and if it is not
-   * returns a new instance
-   * @param {object} data
-   */
-  static checkOrCreate<T extends typeof BaseModel>(
-    this: T,
-    data,
-  ): InstanceType<T> {
-    if (data instanceof this) {
-      return data as InstanceType<T>;
-    }
-    return this.create(data);
   }
 
   /**
@@ -290,7 +229,7 @@ export default class BaseModel {
    * Block owner
    */
   blockOwner() {
-    if (!this.ownerObj) throw new Error('This entity has no owner');
+    if (!this.ownerObj) return;
     return this.ownerObj.toggleBlock(true);
   }
 
@@ -298,7 +237,7 @@ export default class BaseModel {
    * Unblock owner
    */
   unblockOwner() {
-    if (!this.ownerObj) throw new Error('This entity has no owner');
+    if (!this.ownerObj) return;
     return this.ownerObj.toggleBlock(false);
   }
 
@@ -380,11 +319,11 @@ export default class BaseModel {
     }
 
     if (showAlert && !allowed) {
-      Alert.alert(
-        i18n.t('sorry'),
+      showNotification(
         i18n.t(`permissions.notAllowed.${actionName}`, {
           defaultValue: i18n.t('notAllowed'),
         }),
+        'warning',
       );
     }
 
@@ -392,7 +331,7 @@ export default class BaseModel {
   }
 
   isScheduled() {
-    return parseInt(this.time_created, 10) * 1000 > Date.now();
+    return parseInt(this.time_created, 10) * 1000 > Date.now() + 15000;
   }
 
   /**

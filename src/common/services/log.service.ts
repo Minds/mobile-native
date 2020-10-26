@@ -55,14 +55,14 @@ class LogService {
     // deviceLog.error(...args);
   }
 
-  exception(prepend, error = undefined) {
+  exception(prepend, error?: Error = undefined) {
     if (!error) {
       error = prepend;
       prepend = null;
     }
 
-    // log exceptions to console on spec testing
-    if (process.env.JEST_WORKER_ID !== undefined) {
+    // log exceptions to console on spec testing or dev mode
+    if (process.env.JEST_WORKER_ID !== undefined || __DEV__) {
       console.log(error);
     }
 

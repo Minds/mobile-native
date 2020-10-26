@@ -1,5 +1,5 @@
 //@ts-nocheck
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
@@ -14,14 +14,14 @@ const styles = StyleSheet.create({
 
 export default class TabIcon extends Component {
   render() {
-    const {name, size, color} = this.props;
+    const { name, size, color } = this.props;
     let icon;
     switch (name) {
       case 'plus':
         return (
           <EvilIcons
             name={name}
-            style={[color ? {color: color} : CS.colorIcon,  styles.icon]}
+            style={[color ? { color: color } : CS.colorIcon, styles.icon]}
             size={size ? size : 24}
           />
         );
@@ -29,7 +29,7 @@ export default class TabIcon extends Component {
         return (
           <Entypo
             name={name}
-            style={[color ? {color: color} : CS.colorIcon, styles.icon]}
+            style={[color ? { color: color } : CS.colorIcon, styles.icon]}
             size={size ? size : 24}
           />
         );
@@ -38,7 +38,7 @@ export default class TabIcon extends Component {
         icon = (
           <IonIcon
             name={name}
-            style={[color ? {color: color} : CS.colorIcon, styles.icon]}
+            style={[color ? { color: color } : CS.colorIcon, styles.icon]}
             size={size ? size : 24}
           />
         );
@@ -47,7 +47,7 @@ export default class TabIcon extends Component {
         icon = (
           <Fontisto
             name={name}
-            style={[color ? {color: color} : CS.colorIcon, styles.icon]}
+            style={[color ? { color: color } : CS.colorIcon, styles.icon]}
             size={size ? size : 24}
           />
         );

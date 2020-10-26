@@ -1,7 +1,5 @@
 //@ts-nocheck
-import React, {
-  PureComponent
-} from 'react';
+import React, { PureComponent } from 'react';
 
 import {
   StyleSheet,
@@ -9,7 +7,7 @@ import {
   View,
   TextInput,
   FlatList,
-  Image
+  Image,
 } from 'react-native';
 
 import Modal from 'react-native-modal';
@@ -27,6 +25,7 @@ import colors from '../../../styles/Colors';
 import abbrev from '../../helpers/abbrev';
 import logService from '../../services/log.service';
 import i18nService from '../../services/i18n.service';
+import ThemedStyles from '../../../styles/ThemedStyles';
 
 export default class UserTypeahead extends PureComponent {
   textInput = void 0;
@@ -34,7 +33,7 @@ export default class UserTypeahead extends PureComponent {
   state = {
     query: '',
     text: '',
-    users: []
+    users: [],
   };
 
   styles = StyleSheet.create({
@@ -43,34 +42,33 @@ export default class UserTypeahead extends PureComponent {
       flexDirection: 'row',
       alignItems: 'center',
       paddingTop: 10,
-      paddingBottom: 10
+      paddingBottom: 10,
     },
     itemAvatar: {
       borderWidth: 1,
-      borderColor: '#999',
       height: 40,
       width: 40,
       borderRadius: 20,
-      marginRight: 10
+      marginRight: 10,
     },
     itemUsername: {
       fontSize: 16,
-      flexGrow: 1
+      flexGrow: 1,
     },
     itemIconTextView: {
       flex: 1,
       flexDirection: 'row',
-      alignItems: 'center'
+      alignItems: 'center',
     },
     itemIcon: {
-      marginLeft: 10
+      marginLeft: 10,
     },
     itemIconText: {
       marginLeft: 10,
-      fontSize: 14
+      fontSize: 14,
     },
     itemIconWithText: {
-      marginLeft: 5
+      marginLeft: 5,
     },
 
     headerView: {
@@ -84,26 +82,24 @@ export default class UserTypeahead extends PureComponent {
       borderBottomColor: colors.greyed,
     },
     headerIcon: {
-      marginRight: 10
+      marginRight: 10,
     },
     headerTextInput: {
       flexGrow: 1,
-      borderColor: '#000',
-      fontSize: 16
+      fontSize: 16,
     },
 
     emptyView: {
-      paddingTop: 10
+      paddingTop: 10,
     },
     emptyText: {
       textAlign: 'center',
-      color: '#999',
-      fontSize: 12
-    }
+      fontSize: 12,
+    },
   });
 
   setText = (text, inmediate = false) => {
-    this.setState({text})
+    this.setState({ text });
     if (inmediate) {
       this._query(text);
     } else {
@@ -111,20 +107,20 @@ export default class UserTypeahead extends PureComponent {
     }
   };
 
-  query = debounce(async query => {
-    this._query(query)
+  query = debounce(async (query) => {
+    this._query(query);
   }, 300);
 
-  _query = async(query) => {
+  _query = async (query) => {
     try {
       this.setState({ query, users: await UserTypeaheadService.search(query) });
     } catch (e) {
       logService.exception(e);
       // TODO: Show error
     }
-  }
+  };
 
-  onSelect = item => {
+  onSelect = (item) => {
     this.props.onSelect(item);
   };
 
@@ -143,27 +139,40 @@ export default class UserTypeahead extends PureComponent {
     this.setState({
       query: '',
       text: '',
-      users: []
+      users: [],
     });
   };
 
   HeaderPartial = () => {
     return (
       <View style={this.styles.headerView}>
-        <Icon name="md-search" size={24} color={colors.greyed} style={this.styles.headerIcon} />
+        <Icon
+          name="md-search"
+          size={24}
+          color={colors.greyed}
+          style={this.styles.headerIcon}
+        />
 
         <TextInput
-          style={this.styles.headerTextInput}
+          style={[
+            this.styles.headerTextInput,
+            ThemedStyles.style.colorPrimaryText,
+          ]}
           autoCorrect={false}
           autoCapitalize="none"
           onChangeText={this.setText}
           returnKeyType="search"
-          ref={textInput => this.textInput = textInput}
+          ref={(textInput) => (this.textInput = textInput)}
           value={this.state.text}
         />
 
         <Touchable onPress={this.props.onClose}>
-          <Icon name="md-close" size={32} color={colors.greyed} style={this.styles.headerIcon} />
+          <Icon
+            name="md-close"
+            size={32}
+            color={colors.greyed}
+            style={this.styles.headerIcon}
+          />
         </Touchable>
       </View>
     );
@@ -174,41 +183,72 @@ export default class UserTypeahead extends PureComponent {
       return null;
     }
 
+    const theme = ThemedStyles.style;
+
     return (
       <Touchable onPress={() => this.onSelect(item)}>
         <View style={this.styles.itemView}>
-          <Image source={{ uri: channelAvatarUrl(item) }} style={this.styles.itemAvatar} />
+          <Image
+            source={{ uri: channelAvatarUrl(item) }}
+            style={this.styles.itemAvatar}
+          />
           <Text style={this.styles.itemUsername}>@{item.username}</Text>
 
-          {!!item.eth_wallet && <MdIcon name="check-circle" size={20} color="#000" style={this.styles.itemIcon} />}
-          {!!item.rewards && <MdIcon name="donut-large" size={20} color="#000" style={this.styles.itemIcon} />}
+          {!!item.eth_wallet && (
+            <MdIcon
+              name="check-circle"
+              size={20}
+              style={[this.styles.itemIcon, theme.colorIcon]}
+            />
+          )}
+          {!!item.rewards && (
+            <MdIcon
+              name="donut-large"
+              size={20}
+              style={[this.styles.itemIcon, theme.colorIcon]}
+            />
+          )}
 
           {!!item.subscribers_count && [
-            <Text style={this.styles.itemIconText}>{abbrev(item.subscribers_count || 0)}</Text>,
-            <Icon name="md-people" size={16} color="#000" style={this.styles.itemIconWithText} />
+            <Text style={this.styles.itemIconText}>
+              {abbrev(item.subscribers_count || 0)}
+            </Text>,
+            <Icon
+              name="md-people"
+              size={16}
+              style={[this.styles.itemIconWithText, theme.colorIcon]}
+            />,
           ]}
 
           {!!item.impressions && [
-            <Text style={this.styles.itemIconText}>{abbrev(item.impressions || 0)}</Text>,
-            <Icon name="md-eye" size={16} color="#000" style={this.styles.itemIconWithText}  />
+            <Text style={this.styles.itemIconText}>
+              {abbrev(item.impressions || 0)}
+            </Text>,
+            <Icon
+              name="md-eye"
+              size={16}
+              style={[this.styles.itemIconWithText, theme.colorIcon]}
+            />,
           ]}
         </View>
       </Touchable>
     );
   };
 
-  keyExtractor = item => item.guid;
+  keyExtractor = (item) => item.guid;
 
   EmptyPartial = () => {
     return (
       <View style={this.styles.emptyView}>
-        <Text style={this.styles.emptyText}>{
-          !this.state.query ?
-            i18nService.t('userTypeAhead.placeholder') :
-            i18nService.t('userTypeAhead.noResults', {query: this.state.query})
-        }</Text>
+        <Text style={this.styles.emptyText}>
+          {!this.state.query
+            ? i18nService.t('userTypeAhead.placeholder')
+            : i18nService.t('userTypeAhead.noResults', {
+                query: this.state.query,
+              })}
+        </Text>
       </View>
-    )
+    );
   };
 
   render() {
@@ -216,22 +256,21 @@ export default class UserTypeahead extends PureComponent {
     return (
       <Modal
         isVisible={this.props.isModalVisible}
-        backdropColor="white"
-        backdropOpacity={ 1 }
+        backdropColor={ThemedStyles.getColor('primary_background')}
+        backdropOpacity={1}
         onModalShow={this.onModalShow}
-        onModalHide={this.onModalHide}
-      >
+        onModalHide={this.onModalHide}>
         <FlatList
-          keyboardShouldPersistTaps='always'
+          keyboardShouldPersistTaps="always"
           data={this.state.users}
           ListHeaderComponent={header}
           ListEmptyComponent={this.EmptyPartial}
           renderItem={this.ItemPartial}
           keyExtractor={this.keyExtractor}
+          style={ThemedStyles.style.backgroundPrimary}
         />
         {/* TODO: Fix double tapping needed to select an item when a TextInput is active */}
       </Modal>
     );
   }
 }
-

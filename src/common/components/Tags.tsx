@@ -8,8 +8,22 @@ import { Text, TextStyle } from 'react-native';
 import colors from '../../styles/Colors';
 import openUrlService from '../services/open-url.service';
 
+const hashRegex = new RegExp(
+  [
+    '([^&]|\\B|^)', // Start of string, and word bounday. Not if preceeded by & symbol
+    '#', //
+    '([',
+    '\\wÀ-ÿ', // All Latin words + accented characters
+    '\\u0E00-\\u0E7F', // Unicode range for Thai
+    '\\u2460-\\u9FBB', // Unicode range for Japanese but may be overly zealous
+    ']+)',
+  ].join(''),
+  'gim',
+);
+
 type PropsType = {
   color?: string;
+  selectable?: boolean;
   navigation: any;
   style?: TextStyle | Array<TextStyle>;
 };
@@ -40,6 +54,8 @@ export default class Tags extends PureComponent<PropsType> {
   render() {
     this.index = 0;
     const tags = this.parseTags(this.props.children);
+    const selectable =
+      this.props.selectable !== undefined ? this.props.selectable : true;
 
     if (Array.isArray(tags)) {
       // workaround to prevent styling problems when there is many tags
@@ -47,14 +63,14 @@ export default class Tags extends PureComponent<PropsType> {
 
       return chunks.map((data, i) => {
         return (
-          <Text selectable={true} style={this.props.style} key={i}>
+          <Text selectable={selectable} style={this.props.style} key={i}>
             {data}
           </Text>
         );
       });
     } else {
       return (
-        <Text selectable={true} style={this.props.style}>
+        <Text selectable={selectable} style={this.props.style}>
           {tags}
         </Text>
       );
@@ -83,7 +99,7 @@ export default class Tags extends PureComponent<PropsType> {
    * full url
    */
   parseUrl = (str) => {
-    const url = /(^|\s)(\b(?:https?|http|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;\(\)]*[-A-Z0-9+&@#\/%=~_|])/gim;
+    const url = /(^|\b)(\b(?:https?|http|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;\(\)]*[-A-Z0-9+&@#\/%=~_|])/gim;
 
     return this.replaceRegular(str, url, (i, content) => {
       return (
@@ -103,7 +119,7 @@ export default class Tags extends PureComponent<PropsType> {
    * url .com .org .net
    */
   parseShortUrl = (str) => {
-    const url = /(^|\s)([-A-Z0-9+&@#\/%?=~_|!:,.;]+\.(?:com|org|net)\/[-A-Z0-9+&@#\/%=~_|\(\)]*)/gim;
+    const url = /(^|\b)([-A-Z0-9+&@#\/%?=~_|!:,.;]+\.(?:com|org|net)\/[-A-Z0-9+&@#\/%=~_|\(\)]*)/gim;
 
     return this.replaceRegular(str, url, (i, content) => {
       return (
@@ -123,7 +139,7 @@ export default class Tags extends PureComponent<PropsType> {
    * url starting with www
    */
   parseWwwUrl = (str) => {
-    const url = /(^|\s)(www\.[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|\(\)]*)/gim;
+    const url = /(^|\b)(www\.[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|\(\)]*)/gim;
 
     return this.replaceRegular(str, url, (i, content) => {
       return (
@@ -143,9 +159,7 @@ export default class Tags extends PureComponent<PropsType> {
    * #tags
    */
   parseHash = (str) => {
-    const hash = /(^|\s)\#(\w*[a-zA-Z_]+\w*)/gim;
-
-    return this.replaceRegular(str, hash, (i, content) => {
+    return this.replaceRegular(str, hashRegex, (i, content) => {
       return (
         <Text
           key={i}
@@ -163,7 +177,7 @@ export default class Tags extends PureComponent<PropsType> {
    * @tags
    */
   parseUser = (str) => {
-    const hash = /(^|\s)\@(\w*[a-zA-Z_]+\w*)/gim;
+    const hash = /(^|\s|\B)@(\w*[a-zA-Z_]+\w*)/gim;
 
     return this.replaceRegular(str, hash, (i, content) => {
       return (
@@ -183,7 +197,7 @@ export default class Tags extends PureComponent<PropsType> {
    * Navigate to discovery
    */
   navToDiscovery = (q) => {
-    this.props.navigation.navigate('Discovery', { query: q });
+    this.props.navigation.navigate('DiscoverySearch', { query: q });
   };
 
   /**
@@ -227,7 +241,7 @@ export default class Tags extends PureComponent<PropsType> {
    */
   replaceRegular(str, regular, replace) {
     const result = str.split(regular);
-    if (result.length == 1) return str;
+    if (result.length === 1) return str;
 
     for (let i = 2; i < result.length; i = i + 3) {
       const content = result[i];

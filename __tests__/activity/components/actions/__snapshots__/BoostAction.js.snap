@@ -1,71 +1,70 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Boost action component renders correctly 1`] = `
-<View
-  style={
-    Array [
-      Object {
-        "flex": 1,
-      },
-      Object {
-        "flexDirection": "row",
-        "justifyContent": "center",
-      },
-    ]
-  }
->
+<View>
   <View
-    accessible={true}
-    focusable={true}
-    isTVSelectable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
+    onPress={[Function]}
     style={
       Array [
-        Object {
-          "flex": 1,
-        },
-        Object {
-          "flexDirection": "row",
-          "justifyContent": "center",
-        },
-        Object {
-          "alignItems": "center",
-          "borderColor": "#4690D6",
-          "borderRadius": 20,
-          "borderWidth": 1,
-          "margin": 4,
-          "padding": 4,
-        },
-        Object {
-          "backgroundColor": "transparent",
-        },
+        undefined,
+        undefined,
+        undefined,
         undefined,
       ]
     }
+    underlayColor="transparent"
   >
-    <Text
-      adjustsFontSizeToFit={true}
-      numberOfLines={1}
+    <View
       style={
         Array [
-          Object {
-            "fontFamily": "Roboto",
-            "fontSize": 12,
-            "paddingLeft": 2,
-            "paddingRight": 2,
-          },
+          undefined,
           undefined,
         ]
       }
     >
-      BOOST
-    </Text>
+      <Text
+        allowFontScaling={false}
+        style={
+          Array [
+            Object {
+              "color": undefined,
+              "fontSize": 12,
+            },
+            Array [
+              undefined,
+              undefined,
+            ],
+            Object {
+              "fontFamily": "Material Design Icons",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        󰔵
+      </Text>
+      <Text
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "fontFamily": "Roboto",
+              "fontSize": 12,
+              "fontWeight": "500",
+              "letterSpacing": 1,
+              "lineHeight": 21,
+              "marginLeft": 3,
+              "textAlignVertical": "center",
+            },
+            undefined,
+          ]
+        }
+      >
+        Boost
+      </Text>
+    </View>
   </View>
 </View>
 `;

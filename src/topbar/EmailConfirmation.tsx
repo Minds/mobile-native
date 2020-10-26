@@ -1,21 +1,23 @@
 //@ts-nocheck
 import React, { Component } from 'react';
-import { Text, StyleSheet, View, Alert, Platform } from 'react-native';
+import { Text, StyleSheet, View, Alert } from 'react-native';
 import i18n from '../common/services/i18n.service';
 import emailConfirmationService from '../common/services/email-confirmation.service';
-import IonIcon from 'react-native-vector-icons/Ionicons';
 import { CommonStyle as CS } from '../styles/Common';
 import { observer, inject } from 'mobx-react';
-import isIphoneX from '../common/helpers/isIphoneX';
 import apiService from '../common/services/api.service';
-import BannerInfo from './BannerInfo';
+import UserStore from '../auth/UserStore';
+
+interface Props {
+  user?: UserStore;
+}
 
 /**
  * Email Confirmation Message
  */
 @inject('user')
 @observer
-class EmailConfirmation extends Component {
+class EmailConfirmation extends Component<Props> {
   /**
    * Send confirmation email
    */
@@ -68,7 +70,7 @@ class EmailConfirmation extends Component {
   }
 }
 
-export default BannerInfo;
+export default EmailConfirmation;
 
 const styles = StyleSheet.create({
   container: {

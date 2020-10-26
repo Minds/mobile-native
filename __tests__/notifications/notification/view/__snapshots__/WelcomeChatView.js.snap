@@ -2,15 +2,34 @@
 
 exports[`renders correctly 1`] = `
 <View
+  onPress={[Function]}
   style={
     Object {
-      "flexDirection": "row",
-      "flexWrap": "wrap",
+      "flex": 1,
+      "marginLeft": 8,
     }
   }
 >
-  <Text>
-    Chat securely with your mutual subscriptions.
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+      }
+    }
+  >
+    <Text>
+      Chat securely with your mutual subscriptions.
+    </Text>
+  </View>
+  <Text
+    style={
+      Object {
+        "fontSize": 11,
+      }
+    }
+  >
+    Invalid date
   </Text>
 </View>
 `;

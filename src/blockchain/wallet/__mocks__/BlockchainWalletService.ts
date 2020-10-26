@@ -17,4 +17,4 @@ export default {
   getOnchainFunds: jest.fn(),
   getOffchainFunds: jest.fn(),
   _DANGEROUS_wipe: jest.fn(),
-}
+};

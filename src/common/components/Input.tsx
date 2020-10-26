@@ -1,68 +1,99 @@
 //@ts-nocheck
-import React, { Component } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
-import { ComponentsStyle } from '../../styles/Components';
+import React, { Component, Props } from 'react';
+import {
+  Text,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  TextInput,
+} from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import InfoPopup from './InfoPopup';
-import PhoneValidationComponent from './PhoneValidationComponent';
 
-import TextInput from './TextInput';
 import ThemedStyles from '../../styles/ThemedStyles';
+import PhoneValidationComponent from './phoneValidation/PhoneValidationComponent';
+
+type propsType = {
+  TFA: any;
+  TFAConfirmed: boolean;
+  inputType: string;
+  optional: boolean;
+  labelStyle: any;
+  info: any;
+  error?: string;
+} & Props;
 
 /**
  * Form input
  */
-export default class Input extends Component {
+export default class Input extends Component<propsType> {
   /**
    * State
    */
   state = {
     datePickerVisible: false,
-    error: false,
   };
 
-  showError = () => {
-    this.setState({error: true});
+  /**
+   * Constructor
+   * @param props
+   */
+  constructor(props) {
+    super(props);
+    this.inputRef = React.createRef();
+  }
+
+  componentDidMount() {
+    if (this.inputRef.current && this.props.autofocus) {
+      this.inputRef.current.focus();
+    }
   }
 
   /**
    * Show date picker
    */
   showDatePicker = () => {
-    this.setState({datePickerVisible: true});
+    this.setState({ datePickerVisible: true });
   };
 
   /**
    * Dismiss date picker
    */
   dismissDatePicker = () => {
-    this.setState({datePickerVisible: false});
+    this.setState({ datePickerVisible: false });
   };
 
   /**
    * Confirm date picker
    */
-  confirmDatePicker = date => {
-    this.props.onChangeText(date.toLocaleDateString());
+  confirmDatePicker = (date) => {
+    let dateString = '';
+    switch (this.props.dateFormat) {
+      case 'ISOString':
+        dateString = date.toISOString().substring(0, 10);
+        break;
+      default:
+        dateString = date.toLocaleDateString();
+        break;
+    }
     this.dismissDatePicker();
+    this.props.onChangeText(dateString);
   };
 
   /**
    * Text input
    */
   textInput = () => {
-    const CS = ThemedStyles.style;
+    const theme = ThemedStyles.style;
     return (
       <TextInput
         {...this.props}
-        style={[
-          CS.input,
-          this.props.style,
-        ]}
+        style={[theme.input, this.props.style]}
         placeholderTextColor="#444"
         returnKeyType={'done'}
         autoCapitalize={'none'}
         underlineColorAndroid="transparent"
+        ref={this.inputRef}
         placeholder=""
       />
     );
@@ -72,11 +103,11 @@ export default class Input extends Component {
    * Phone input
    */
   phoneInput = () => {
-    const CS = ThemedStyles.style;
+    const theme = ThemedStyles.style;
     return (
       <PhoneValidationComponent
-        style={[CS.input, this.props.style]}
-        textStyle={CS.colorPrimaryText}
+        style={[theme.input, this.props.style]}
+        textStyle={theme.colorPrimaryText}
         onFocus={this.props.onFocus}
         onBlur={this.props.onBlur}
         TFA={this.props.TFA}
@@ -89,21 +120,21 @@ export default class Input extends Component {
    * Date input
    */
   dateInput = () => {
-    const CS = ThemedStyles.style;
+    const theme = ThemedStyles.style;
     const maxDate = new Date();
     maxDate.setFullYear(maxDate.getFullYear() - 13);
     return (
       <View>
         <TouchableOpacity
           {...this.props}
-          style={[CS.input, this.props.style]}
+          style={[theme.input, this.props.style]}
           placeholderTextColor="#444"
           returnKeyType={'done'}
           autoCapitalize={'none'}
           underlineColorAndroid="transparent"
           placeholder=""
           onPress={this.showDatePicker}>
-          <Text style={CS.colorPrimaryText}>{this.props.value}</Text>
+          <Text style={theme.colorPrimaryText}>{this.props.value}</Text>
         </TouchableOpacity>
         <DateTimePicker
           isVisible={this.state.datePickerVisible}
@@ -140,18 +171,26 @@ export default class Input extends Component {
    * Render
    */
   render() {
-    const CS = ThemedStyles.style;
+    const theme = ThemedStyles.style;
     const optional = this.props.optional ? (
       <Text style={[styles.optional]}>{'Optional'}</Text>
     ) : null;
 
     return (
-      <View style={CS.marginBottom2x}>
-        <View style={[styles.row]}>
+      <View>
+        <View style={styles.row}>
           <View style={styles.row}>
-            <Text style={[styles.label, this.props.labelStyle]}>{this.props.placeholder}</Text>
+            <Text style={[styles.label, this.props.labelStyle]}>
+              {this.props.placeholder}
+            </Text>
             {this.props.info && <InfoPopup info={this.props.info} />}
-            {this.props.onError && this.state.error && <View style={styles.errorContainer}><Text style={[CS.colorAlert, CS.fontL, CS.textRight]}>{this.props.onError}</Text></View>}
+            {!!this.props.error && (
+              <View style={styles.errorContainer}>
+                <Text style={[theme.colorAlert, theme.fontL, theme.textRight]}>
+                  {this.props.error}
+                </Text>
+              </View>
+            )}
           </View>
           {optional}
         </View>
@@ -165,17 +204,19 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    width: '100%',
   },
   label: {
     color: '#AEB0B8',
     fontSize: 16,
     fontWeight: '600',
-    marginBottom:5 ,
+    marginBottom: 5,
     fontFamily: 'Roboto',
   },
   errorContainer: {
-    alignContent:'flex-end',
-    width:'65%',
+    alignContent: 'flex-end',
+    flexGrow: 1,
+    paddingRight: 10,
   },
   optional: {
     color: '#AEB0B8',
@@ -183,7 +224,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Italic',
   },
   shadow: {
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 1,

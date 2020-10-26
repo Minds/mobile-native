@@ -3,7 +3,7 @@ export const MAX_HASH_LENGTH = 8;
 
 function dths(number, padding = 0) {
   if (number < 0) {
-    number = 0xFFFFFFFF + number + 1;
+    number = 0xffffffff + number + 1;
   }
 
   return number.toString(16).toLowerCase().padStart(padding, '0');
@@ -19,7 +19,7 @@ export function stringHash(str) {
     for (let i = 0; i < str.length; i++) {
       const chr = str.charCodeAt(i);
 
-      hash = ((hash << 5) - hash) + chr;
+      hash = (hash << 5) - hash + chr;
       hash |= 0; // Convert to 32bit integer
     }
   }

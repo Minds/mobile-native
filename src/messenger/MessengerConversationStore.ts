@@ -1,14 +1,12 @@
 //@ts-nocheck
-import {
-  observable,
-  action,
-} from 'mobx';
+import { observable, action } from 'mobx';
 
 import messengerService from './MessengerService';
 import crypto from './../common/services/crypto.service';
 import socket from '../common/services/socket.service';
 import session from '../common/services/session.service';
 import logService from '../common/services/log.service';
+import MessageModel from './conversation/MessageModel';
 
 /**
  * Messenger Conversation Store
@@ -23,7 +21,7 @@ class MessengerConversationStore {
   @observable invited = false;
   @observable errorLoading = false;
 
-  @observable offset = ''
+  @observable offset = '';
   socketRoomName = null;
   participants = null;
   invitable = null;
@@ -39,18 +37,21 @@ class MessengerConversationStore {
     this.setErrorLoading(false);
 
     try {
-      const conversation = await messengerService.getConversationFromRemote(12, this.guid, this.offset)
+      const conversation = await messengerService.getConversationFromRemote(
+        12,
+        this.guid,
+        this.offset,
+      );
 
       // offset to scroll
       this.offset = conversation['load-previous'];
       // invitable
       this.invitable = conversation.invitable || null;
       // set public keys for encryption
-      crypto.setPublicKeys( conversation.publickeys );
+      crypto.setPublicKeys(conversation.publickeys);
 
       // remove repeated message
-      if (this.messages.length)
-       conversation.messages.pop();
+      if (this.messages.length) conversation.messages.pop();
 
       if (!this.offset || !conversation.messages.length) {
         this.moreData = false;
@@ -103,12 +104,12 @@ class MessengerConversationStore {
 
   @action
   setMessages(msgs) {
-    msgs.forEach(m => this.messages.push(m));
+    msgs.forEach((m) => this.messages.push(MessageModel.create(m)));
   }
 
   @action
   addMessage(msg) {
-    this.messages.unshift(msg);
+    this.messages.unshift(MessageModel.checkOrCreate(msg));
   }
 
   /**
@@ -118,20 +119,27 @@ class MessengerConversationStore {
    * @param {string} text
    */
   @action
-  send(myGuid, text) {
-    this.messages.unshift({
+  async send(myGuid, text) {
+    const message = MessageModel.create({
       guid: myGuid + this.messages.length,
       rowKey: Date.now().toString(),
       message: text,
-      decrypted: true,
+      decryptedMessage: text,
+      sending: true,
       owner: { guid: myGuid },
-      time_created: Date.now() / 1000
+      time_created: Date.now() / 1000,
     });
 
-    return this._encryptMessage(text)
-      .then(encrypted => {
-        return messengerService.send(this.guid, encrypted)
-      })
+    this.messages.unshift(message);
+
+    try {
+      const encrypted = await this._encryptMessage(text);
+      const response = await messengerService.send(this.guid, encrypted);
+      message.setSending(false);
+      message.assign(response.message);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   @action
@@ -141,7 +149,7 @@ class MessengerConversationStore {
     }
 
     this.invited = true;
-    this.invitable.forEach(participant => {
+    this.invitable.forEach((participant) => {
       messengerService.invite(participant.guid);
     });
   }
@@ -154,17 +162,17 @@ class MessengerConversationStore {
     const encrypted = {};
     const publickeys = crypto.getPublicKeys();
 
-    if (!Object.keys(publickeys).length) return Promise.reject('No public keys to encrypt')
+    if (!Object.keys(publickeys).length)
+      return Promise.reject('No public keys to encrypt');
 
     return new Promise((resolve, reject) => {
       for (let guid in publickeys) {
-        crypto.encrypt(message, guid)
-          .then(success => {
-            encrypted[guid] = success;
-            if (Object.keys(encrypted).length == Object.keys(publickeys).length) {
-              resolve(encrypted);
-            }
-          });
+        crypto.encrypt(message, guid).then((success) => {
+          encrypted[guid] = success;
+          if (Object.keys(encrypted).length == Object.keys(publickeys).length) {
+            resolve(encrypted);
+          }
+        });
       }
     });
   }
@@ -176,18 +184,22 @@ class MessengerConversationStore {
   clear() {
     // unlisten socket
     this.unlisten();
-    this.socketRoomName  = null;
-    this.participants    = null;
-    this.guid            = null;
-    this.invitable       = null;
-    this.moreData        = true;
-    this.invited         = false;
-    this.messages        = [];
-    this.offset          = '';
-    this.loading         = false;
+    this.socketRoomName = null;
+    this.participants = null;
+    this.guid = null;
+    this.invitable = null;
+    this.moreData = true;
+    this.invited = false;
+    this.messages = [];
+    this.offset = '';
+    this.loading = false;
     if (this.lastMessageGuid) {
       // on leave set all messages as readed
-      messengerService.getConversationFromRemote(1, this.guid, this.lastMessageGuid);
+      messengerService.getConversationFromRemote(
+        1,
+        this.guid,
+        this.lastMessageGuid,
+      );
       this.lastMessageGuid = null;
     }
   }
@@ -200,26 +212,17 @@ class MessengerConversationStore {
    * Socket pushConversationMessage
    */
   pushConversationMessage = async (guid, message) => {
-    if (guid != this.guid) {
+    if (guid !== this.guid) {
       return;
     }
 
-    const fromSelf = session.guid == message.ownerObj.guid;
+    const fromSelf = session.guid === message.ownerObj.guid;
 
     if (!fromSelf) {
-
-      //const index =
-
-      for (let index in message.messages) {
-        try {
-          message.message = await crypto.decrypt(message.messages[index]);
-          message.rowKey = Date.now().toString();
-          message.decrypted = true;
-          // break on correct decryption
-
-          if (message.message)
-            break;
-        } catch (err) {}
+      if (!message.message) {
+        message.message =
+          message.messages[session.guid > message.ownerObj.guid ? 1 : 0];
+        message.rowKey = message.guid;
       }
 
       this.addMessage(message);
@@ -231,7 +234,7 @@ class MessengerConversationStore {
   @action
   clearConversation = (guid, actor) => {
     this.messages = [];
-  }
+  };
 
   unlisten() {
     socket.leave(this.socketRoomName);

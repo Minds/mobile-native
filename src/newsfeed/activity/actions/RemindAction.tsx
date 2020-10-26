@@ -9,8 +9,8 @@ import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import { FLAG_REMIND } from '../../../common/Permissions';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import ThemedStyles from '../../../styles/ThemedStyles';
-import type ActivityModel from 'src/newsfeed/ActivityModel';
-import type BlogModel from 'src/blogs/BlogModel';
+import type ActivityModel from '../../../newsfeed/ActivityModel';
+import type BlogModel from '../../../blogs/BlogModel';
 
 // prevent double tap in touchable
 const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
@@ -24,11 +24,9 @@ type PropsTypes = {
 /**
  * Remind Action Component
  */
-export default function ({ entity, size = 20, vertical = false }: PropsTypes) {
+export default function ({ entity, size = 21, vertical = false }: PropsTypes) {
   const color = entity.can(FLAG_REMIND)
-    ? entity.reminds > 0
-      ? ThemedStyles.style.colorIconActive
-      : ThemedStyles.style.colorIcon
+    ? ThemedStyles.style.colorIcon
     : CS.colorLightGreyed;
 
   const route = useRoute();
@@ -44,20 +42,22 @@ export default function ({ entity, size = 20, vertical = false }: PropsTypes) {
     }
 
     const { key } = route;
-    navigation.push('Capture', { isRemind: true, entity, parentKey: key });
+
+    navigation.navigate('Capture', { isRemind: true, entity, parentKey: key });
   }, [route, entity, navigation]);
 
   return (
     <TouchableOpacityCustom
       style={[
-        CS.flexContainer,
-        CS.centered,
-        vertical === true ? CS.columnAlignCenter : CS.rowJustifyCenter,
+        ThemedStyles.style.rowJustifyCenter,
+        ThemedStyles.style.paddingHorizontal3x,
+        ThemedStyles.style.paddingVertical4x,
+        ThemedStyles.style.alignCenter,
       ]}
       onPress={remind}
       testID="Remind activity button">
       <Icon style={[color, CS.marginRight]} name="repeat" size={size} />
-      <Counter count={entity.reminds} size={size * 0.7} />
+      <Counter count={entity.reminds} />
     </TouchableOpacityCustom>
   );
 }

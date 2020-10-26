@@ -11,10 +11,16 @@ import { FLAG_JOIN } from '../common/Permissions';
 import i18n from '../common/services/i18n.service';
 import { CommonStyle as CS } from '../styles/Common';
 import ListItemButton from '../common/components/ListItemButton';
+import type GroupModel from './GroupModel';
+
+type PropsType = {
+  group: GroupModel;
+  onPress?: () => void;
+};
 
 @inject('groupView')
 @observer
-class GroupsListItemNew extends Component {
+class GroupsListItemNew extends Component<PropsType> {
   state = {
     source: null,
   };
@@ -55,7 +61,7 @@ class GroupsListItemNew extends Component {
         containerStyle={styles.container}
         title={this.props.group.name}
         titleStyle={[styles.title, CS.colorPrimaryText]}
-        keyExtractor={item => item.rowKey}
+        keyExtractor={(item) => item.rowKey}
         leftAvatar={this.state.source}
         subtitle={i18n.t('groups.listMembersCount', {
           count: abbrev(this.props.group['members:count']),
@@ -110,14 +116,14 @@ class GroupsListItemNew extends Component {
   join = () => {
     if (!this.props.group.can(FLAG_JOIN, true)) return;
     this.props.groupView.setGroup(this.props.group);
-    this.props.groupView.join(this.props.group.guid);
+    this.props.groupView.join();
   };
   /**
    * Leave the group
    */
   leave = () => {
     this.props.groupView.setGroup(this.props.group);
-    this.props.groupView.leave(this.props.group.guid);
+    this.props.groupView.leave();
   };
 }
 

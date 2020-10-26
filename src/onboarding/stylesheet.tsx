@@ -1,12 +1,14 @@
 //@ts-nocheck
-import Colors from "../styles/Colors";
+import Colors from '../styles/Colors';
 
-import { Platform } from "react-native";
+import { Platform, ViewStyle, TextStyle, ImageStyle } from 'react-native';
 
-export default {
+type NamedStyles<T> = { [P in keyof T]: ViewStyle | TextStyle | ImageStyle };
+
+const stylesheet: NamedStyles = {
   header: {
     padding: 10,
-    paddingTop: (Platform.OS == 'ios' ? 14 : 8) + 10,
+    paddingTop: (Platform.OS === 'ios' ? 14 : 8) + 10,
     paddingBottom: 0,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -28,7 +30,7 @@ export default {
     alignItems: 'center',
   },
   colsVCenter: {
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   col: {
     flexBasis: 0,
@@ -91,7 +93,7 @@ export default {
   },
 
   form: {
-    marginTop: 20
+    marginTop: 20,
   },
   textInput: {
     borderWidth: 1,
@@ -140,18 +142,20 @@ export default {
     marginBottom: 10,
   },
   vertButtonBar: {
-    marginTop: 10
+    marginTop: 10,
   },
 
   nextButtonBar: {
     marginTop: 20,
     flexDirection: 'row',
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
   },
 
   error: {
     fontSize: 13,
     color: '#c00',
     textAlign: 'center',
-  }
+  },
 };
+
+export default stylesheet;

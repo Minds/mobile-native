@@ -9,7 +9,6 @@ import i18n from '../common/services/i18n.service';
  * Channel Service
  */
 class ChannelService {
-
   /**
    * Load Channel
    * @param {string} guid
@@ -86,16 +85,21 @@ class ChannelService {
     // abort previous call
     abort(tag);
 
-    return api.get('api/v1/entities/owner/image/' + guid, { offset: offset, limit: 12 }, tag)
-    .then((data) => {
-      return {
-        entities: data.entities,
-        offset: data['load-next'],
-        }
+    return api
+      .get(
+        'api/v1/entities/owner/image/' + guid,
+        { offset: offset, limit: 12 },
+        tag,
+      )
+      .then((data) => {
+        return {
+          entities: data.entities,
+          offset: data['load-next'],
+        };
       })
-      .catch(err => {
+      .catch((err) => {
         logService.exception('[ChannelService]', err);
-        throw new Error (i18n.t('errorMessage'));
+        throw new Error(i18n.t('errorMessage'));
       });
   }
 
@@ -104,17 +108,22 @@ class ChannelService {
     // abort previous call
     abort(tag);
 
-    return api.get('api/v1/entities/owner/video/' + guid, { offset: offset, limit: 12 }, tag)
-    .then((data) => {
-      return {
-        entities: data.entities,
-        offset: data['load-next'],
-        }
+    return api
+      .get(
+        'api/v1/entities/owner/video/' + guid,
+        { offset: offset, limit: 12 },
+        tag,
+      )
+      .then((data) => {
+        return {
+          entities: data.entities,
+          offset: data['load-next'],
+        };
       })
-      .catch(err => {
+      .catch((err) => {
         logService.exception('[ChannelService]', err);
-        throw new Error (i18n.t('errorMessage'));
-      })
+        throw new Error(i18n.t('errorMessage'));
+      });
   }
 
   async getBlogFeed(guid, offset) {
@@ -122,16 +131,17 @@ class ChannelService {
     // abort previous call
     abort(tag);
 
-    return api.get('api/v1/blog/owner/' + guid, { offset: offset, limit: 12 }, tag)
-    .then((data) => {
-      return {
-        entities: data.entities,
-        offset: data['load-next'],
-        }
+    return api
+      .get('api/v1/blog/owner/' + guid, { offset: offset, limit: 12 }, tag)
+      .then((data) => {
+        return {
+          entities: data.entities,
+          offset: data['load-next'],
+        };
       })
-      .catch(err => {
+      .catch((err) => {
         logService.exception('[ChannelService]', err);
-        throw new Error (i18n.t('errorMessage'));
+        throw new Error(i18n.t('errorMessage'));
       });
   }
 

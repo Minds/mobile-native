@@ -1,14 +1,7 @@
 //@ts-nocheck
-import React, {
-  Component,
-} from 'react';
+import React, { Component } from 'react';
 
-import {
-  View,
-  StyleSheet,
-  Dimensions,
-  Platform,
-} from 'react-native';
+import { View, StyleSheet, Dimensions, Platform } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -22,11 +15,10 @@ import ImageViewer from '../common/components/ImageViewer';
  * Full screen image viewer
  */
 export default class ViewImageScreen extends Component {
-
   static navigationOptions = ({ navigation }) => ({
     transitionConfig: {
-      isModal: true
-    }
+      isModal: true,
+    },
   });
 
   constructor(props) {
@@ -54,29 +46,28 @@ export default class ViewImageScreen extends Component {
   }
 
   render() {
-
     const source = this.getSource();
 
     return (
-      <View style={[CommonStyle.flexContainerCenter, CommonStyle.alignCenter, CommonStyle.backgroundBlack]}>
+      <View
+        style={[
+          CommonStyle.flexContainerCenter,
+          CommonStyle.alignCenter,
+          CommonStyle.backgroundBlack,
+        ]}>
         <ImageViewer
           source={source}
+          urn={this.props.route.params.entity.urn}
           width={this.state.width}
           height={this.state.height}
         />
       </View>
-    )
+    );
   }
 }
 
-const styles = StyleSheet.create({
-  header: {
-    backgroundColor: '#000',
-    paddingTop: Platform.OS == 'ios' ? 14 : 8,
-  },
-  iconclose: {
-    alignSelf: 'flex-end',
-    padding: Platform.OS == 'ios' ? 10 : 8,
-    color: '#FFF',
-  },
-});
+const sharedElements: SharedElementsComponentConfig = (route) => {
+  const item = route.params.entity;
+  return [{ id: `${item.urn}.image` }];
+};
+ViewImageScreen.sharedElements = sharedElements;

@@ -1,11 +1,8 @@
 //@ts-nocheck
-import {
-  observable,
-  action
-} from 'mobx'
+import { observable, action } from 'mobx';
 
 import OffsetListStore from '../common/stores/OffsetListStore';
-import {revokeBoost, rejectBoost, acceptBoost} from './BoostService';
+import { revokeBoost, rejectBoost, acceptBoost } from './BoostService';
 
 import BoostModel from './BoostModel';
 import BoostService from './BoostService';
@@ -16,13 +13,12 @@ import { isNetworkFail } from '../common/helpers/abortableFetch';
  * Boosts Store
  */
 class BoostStore {
-
   /**
    * Boost list store
    */
-  @observable list = new OffsetListStore();
+  list: OffsetListStore;
 
-  service = new BoostService();
+  service: BoostService;
 
   /**
    * Boosts list filter
@@ -36,6 +32,14 @@ class BoostStore {
   @observable loading = false;
 
   /**
+   * Store constructor
+   */
+  constructor() {
+    this.list = new OffsetListStore();
+    this.service = new BoostService();
+  }
+
+  /**
    * Load boost list
    */
   async loadList(refresh = false) {
@@ -46,11 +50,15 @@ class BoostStore {
 
     try {
       const peer_filter = this.filter === 'peer' ? this.peer_filter : null;
-      const feed = await this.service.getBoosts(this.list.offset, this.filter, peer_filter);
+      const feed = await this.service.getBoosts(
+        this.list.offset,
+        this.filter,
+        peer_filter,
+      );
       this.assignRowKeys(feed);
       feed.entities = BoostModel.createMany(feed.entities);
       this.list.setList(feed, refresh);
-    } catch(err) {
+    } catch (err) {
       // ignore aborts
       if (err.code === 'Abort') return;
       if (!isNetworkFail(err)) {
@@ -82,11 +90,11 @@ class BoostStore {
   }
 
   @action
-  setFilter(filter) {
+  setFilter = (filter) => {
     this.filter = filter;
     this.list.clearList();
     this.loadList();
-  }
+  };
 
   @action
   setPeerFilter(filter) {
@@ -102,7 +110,6 @@ class BoostStore {
     this.peer_filter = 'inbox';
     this.loading = false;
   }
-
 }
 
 export default BoostStore;

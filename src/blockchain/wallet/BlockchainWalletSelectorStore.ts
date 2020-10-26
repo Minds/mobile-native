@@ -1,9 +1,5 @@
 //@ts-nocheck
-import {
-  observable,
-  action,
-  observe
-} from 'mobx'
+import { observable, action, observe } from 'mobx';
 
 import NavigationService from '../../navigation/NavigationService';
 
@@ -18,7 +14,6 @@ const DEFAULT_OPTS = {
  * Blockchain Store
  */
 class BlockchainWalletSelectorStore {
-
   @observable isSelecting = false;
   @observable selected = void 0;
   @observable selectMessage = '';
@@ -36,29 +31,37 @@ class BlockchainWalletSelectorStore {
     this.opts = opts;
     this.isSelecting = true;
 
-    NavigationService.navigate('BlockchainWalletModal');
+    NavigationService.push('BlockchainWalletModal');
 
-    return await new Promise(resolve => {
+    return await new Promise((resolve, reject) => {
       if (dispose) {
         dispose();
         dispose = void 0;
       }
 
-      dispose = observe(this, 'selected', action(change => {
-        if (typeof change.newValue !== 'undefined') {
-          dispose();
-          dispose = void 0;
+      dispose = observe(
+        this,
+        'selected',
+        action((change) => {
+          if (change.newValue === null) {
+            reject(new Error('E_CANCELED'));
+            return;
+          }
+          if (typeof change.newValue !== 'undefined') {
+            dispose();
+            dispose = void 0;
 
-          this.isSelecting = false;
-          this.selected = void 0;
-          this.selectMessage = '';
-          this.opts = Object.assign({}, DEFAULT_OPTS);
+            this.isSelecting = false;
+            this.selected = void 0;
+            this.selectMessage = '';
+            this.opts = Object.assign({}, DEFAULT_OPTS);
 
-          resolve(change.newValue);
+            resolve(change.newValue);
 
-          NavigationService.goBack();
-        }
-      }));
+            NavigationService.goBack();
+          }
+        }),
+      );
     });
   }
 
@@ -85,7 +88,6 @@ class BlockchainWalletSelectorStore {
     this.selectMessage = '';
     this.opts = Object.assign({}, DEFAULT_OPTS);
   }
-
 }
 
 export default BlockchainWalletSelectorStore;

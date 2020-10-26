@@ -7,6 +7,11 @@ import ChannelService from './ChannelService';
 import sessionService from '../common/services/session.service';
 import apiService from '../common/services/api.service';
 import logService from '../common/services/log.service';
+import { SupportTiersType } from '../wire/WireTypes';
+import settingsService from '../settings/SettingsService';
+import { UserError } from '../common/UserError';
+import i18n from '../common/services/i18n.service';
+import { showNotification } from '../../AppMessages';
 
 //@ts-nocheck
 export const USER_MODE_OPEN = 0;
@@ -17,24 +22,38 @@ export const USER_MODE_CLOSED = 2;
  * User model
  */
 export default class UserModel extends BaseModel {
+  programs;
   merchant;
   /**
    * Eth wallet
    */
   eth_wallet: string = '';
-  wire_rewards;
   sums;
   btc_address?: string;
   icontime!: string;
   username!: string;
+  briefdescription!: string;
+  city!: string;
   name!: string;
-  admin = false;
-  plus: boolean = false;
+  is_admin = false;
+  canary = false;
   verified: boolean = false;
   founder: boolean = false;
   rewards: boolean = false;
   last_accepted_tos: number = 0;
+  subscriptions_count: number = 0;
   carousels?: Array<any>;
+  nsfw: Array<number> = [];
+  banned?: string;
+  is_mature?: boolean;
+  dob?: string;
+
+  tags: Array<string> = [];
+  groupsCount: number = 0;
+
+  @observable plus: boolean = false;
+
+  @observable disable_autoplay_videos?: boolean;
 
   /**
    * @var {boolean}
@@ -76,6 +95,12 @@ export default class UserModel extends BaseModel {
    */
   @observable email_confirmed = false;
 
+  @observable wire_rewards;
+
+  @observable pro: boolean = false;
+
+  onchain_booster: number = 0;
+
   /**
    * Confirm email
    * @param {Object} params
@@ -109,9 +134,10 @@ export default class UserModel extends BaseModel {
   }
 
   @action
-  async toggleSubscription() {
+  toggleSubscription = async () => {
     const value = !this.subscribed;
     this.subscribed = value;
+
     try {
       const metadata = this.getClientMetadata();
       await ChannelService.toggleSubscription(this.guid, value, metadata);
@@ -122,7 +148,7 @@ export default class UserModel extends BaseModel {
       });
       throw err;
     }
-  }
+  };
 
   @action
   async toggleBlock(value: boolean | null = null) {
@@ -147,11 +173,44 @@ export default class UserModel extends BaseModel {
     this.email_confirmed = value;
   }
 
+  @action
+  setTier(tier: SupportTiersType, type: 'usd' | 'tokens') {
+    const wire_rewards = this.wire_rewards;
+    if (!wire_rewards.rewards) {
+      wire_rewards.rewards = {
+        money: [] as SupportTiersType[],
+        tokens: [] as SupportTiersType[],
+      };
+    }
+    if (type === 'tokens') {
+      if (!wire_rewards.rewards.tokens) {
+        wire_rewards.rewards.tokens = [] as SupportTiersType[];
+      }
+      wire_rewards.rewards.tokens.push(tier);
+    } else {
+      if (!wire_rewards.rewards.money) {
+        wire_rewards.rewards.money = [] as SupportTiersType[];
+      }
+      wire_rewards.rewards.money.push(tier);
+    }
+    this.wire_rewards = wire_rewards;
+  }
+
+  @action
+  togglePro() {
+    this.pro = !this.pro;
+  }
+
+  @action
+  togglePlus() {
+    this.plus = !this.plus;
+  }
+
   /**
    * Is admin
    */
   isAdmin() {
-    return this.admin;
+    return this.is_admin;
   }
 
   /**
@@ -182,9 +241,7 @@ export default class UserModel extends BaseModel {
    */
   getAvatarSource(size = 'medium') {
     return {
-      uri: `${MINDS_CDN_URI}icon/${
-        this.guid
-      }/${size}/${this.getOwnerIcontime()}`,
+      uri: `${MINDS_CDN_URI}icon/${this.guid}/${size}/${this.icontime}`,
       headers: api.buildHeaders(),
     };
   }
@@ -230,6 +287,13 @@ export default class UserModel extends BaseModel {
   }
 
   /**
+   * Has avatar
+   */
+  hasAvatar(): boolean {
+    return this.icontime !== this.time_created;
+  }
+
+  /**
    * Request subscribe
    */
   async subscribeRequest() {
@@ -258,6 +322,31 @@ export default class UserModel extends BaseModel {
     } catch (err) {
       this.pending_subscribe = true;
       logService.exception(err);
+    }
+  }
+
+  /**
+   * Toggle disable_autoplay_videos property
+   */
+  @action
+  toggleDisableAutoplayVideos() {
+    this.disable_autoplay_videos = !this.disable_autoplay_videos;
+    this.saveDisableAutoplayVideosSetting();
+  }
+
+  /**
+   * Save disable_autoplay_videos setting or restore property on error
+   */
+  @action
+  async saveDisableAutoplayVideosSetting() {
+    try {
+      await settingsService.submitSettings({
+        disable_autoplay_videos: this.disable_autoplay_videos,
+      });
+      showNotification(i18n.t('settings.autoplay.saved'), 'info');
+    } catch (err) {
+      this.disable_autoplay_videos = !this.disable_autoplay_videos;
+      throw new UserError(err, 'danger');
     }
   }
 }

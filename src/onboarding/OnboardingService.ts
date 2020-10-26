@@ -19,7 +19,7 @@ class OnboardingService {
    * @param {boolean} value
    */
   setFrequency(value) {
-    return api.post('api/v2/onboarding/creator_frequency', {value});
+    return api.post('api/v2/onboarding/creator_frequency', { value });
   }
 
   /**
@@ -27,15 +27,15 @@ class OnboardingService {
    * @param {boolean} value
    */
   setShown(value) {
-    return api.post('api/v2/onboarding/onboarding_shown', {value});
+    return api.post('api/v2/onboarding/onboarding_shown', { value });
   }
 
   /**
    * Get suggested users
    */
   getSuggestedUsers() {
-    return api.get('api/v2/suggestions/user', {limit: 12});
+    return api.get('api/v2/suggestions/user', { limit: 12 });
   }
 }
 
-export default new OnboardingService;
+export default new OnboardingService();

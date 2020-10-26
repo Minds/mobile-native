@@ -1,21 +1,23 @@
 //@ts-nocheck
 import logService from './log.service';
 import apiService from './api.service';
-import {abort, isNetworkFail} from '../helpers/abortableFetch';
+import { abort, isNetworkFail } from '../helpers/abortableFetch';
 import entitiesService from './entities.service';
 import feedsStorage from './sql/feeds.storage';
-import {showMessage} from 'react-native-flash-message';
+import { showMessage } from 'react-native-flash-message';
 import i18n from './i18n.service';
 import connectivityService from './connectivity.service';
 import Colors from '../../styles/Colors';
 import boostedContentService from './boosted-content.service';
 import BaseModel from '../BaseModel';
+import { Platform } from 'react-native';
+import { GOOGLE_PLAY_STORE } from '../../config/Config';
 
 export type FeedRecordType = {
-  owner_guid: string,
-  timestamp: string,
-  urn: string,
-  entity?: Object,
+  owner_guid: string;
+  timestamp: string;
+  urn: string;
+  entity?: Object;
 };
 
 /**
@@ -50,7 +52,7 @@ export default class FeedsService {
   /**
    * @var {Object}
    */
-  params: Object = {sync: 1};
+  params: Object = { sync: 1 };
 
   /**
    * @var {Array}
@@ -269,7 +271,7 @@ export default class FeedsService {
 
     if (this.fallbackAt) {
       index = this.feed.findIndex(
-        r =>
+        (r) =>
           r.entity &&
           r.entity.time_created &&
           parseInt(r.entity.time_created, 10) < this.fallbackAt,
@@ -292,8 +294,13 @@ export default class FeedsService {
 
     const params = {
       ...this.params,
-      ...{limit: 150, as_activities: this.asActivities ? 1 : 0},
+      ...{ limit: 150, as_activities: this.asActivities ? 1 : 0 },
     };
+
+    // For iOS and play store force safe content
+    if (Platform.OS === 'ios' || GOOGLE_PLAY_STORE) {
+      params.nsfw = [];
+    }
 
     if (this.paginated && more) {
       params.from_timestamp = this.pagingToken;
@@ -301,7 +308,6 @@ export default class FeedsService {
     const response = await apiService.get(this.endpoint, params, this);
 
     if (response.entities && response.entities.length) {
-
       if (more) {
         this.feed = this.feed.concat(response.entities);
       } else {
@@ -339,7 +345,9 @@ export default class FeedsService {
         // support old format
         if (Array.isArray(feed)) {
           this.feed = feed;
-          this.pagingToken = (this.feed[this.feed.length - 1].timestamp - 1).toString();
+          this.pagingToken = (
+            this.feed[this.feed.length - 1].timestamp - 1
+          ).toString();
         } else {
           this.feed = feed.feed;
           this.fallbackAt = feed.fallbackAt;
@@ -349,7 +357,7 @@ export default class FeedsService {
         return true;
       }
     } catch (err) {
-      logService.error('[FeedService] error loading local data')
+      logService.error('[FeedService] error loading local data');
     }
 
     return false;
@@ -419,7 +427,7 @@ export default class FeedsService {
    */
   async removeFromOwner(guid: string): Promise<void> {
     let count = this.feed.length;
-    this.feed = this.feed.filter(e => !e.owner_guid || e.owner_guid !== guid);
+    this.feed = this.feed.filter((e) => !e.owner_guid || e.owner_guid !== guid);
     count -= this.feed.length;
     this.offset -= count;
     await feedsStorage.save(this);
@@ -428,7 +436,7 @@ export default class FeedsService {
   /**
    * Move offset to next page
    */
-  next(): FeedsService  {
+  next(): FeedsService {
     this.offset += this.limit;
     return this;
   }
@@ -442,7 +450,7 @@ export default class FeedsService {
     this.fallbackAt = null;
     this.fallbackIndex = -1;
     this.pagingToken = '';
-    this.params = {sync: 1};
+    this.params = { sync: 1 };
     this.feed = [];
     return this;
   }

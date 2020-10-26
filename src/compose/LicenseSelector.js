@@ -16,11 +16,13 @@ import i18n from '../common/services/i18n.service';
 import NavigationService from '../navigation/NavigationService';
 import { LICENSES } from '../common/services/list-options.service';
 
+const licenses = LICENSES.filter((l) => l.selectable);
+
 /**
  * Option
  * @param {Object} props
  */
-const Option = props => {
+const Option = (props) => {
   const onSelect = useCallback(() => {
     props.store.attachment.setLicense(props.option.value);
   }, [props.store, props.option.value]);
@@ -47,7 +49,7 @@ const Option = props => {
 /**
  * License selector
  */
-export default observer(function(props) {
+export default observer(function (props) {
   const theme = ThemedStyles.style;
   const store = props.route.params.store;
 
@@ -81,7 +83,7 @@ export default observer(function(props) {
           {i18n.t('capture.pupularLicenses').toUpperCase()}
         </Text>
 
-        {LICENSES.slice(0, 2).map(o => (
+        {licenses.slice(0, 2).map((o) => (
           <Option
             option={o}
             store={store}
@@ -98,7 +100,7 @@ export default observer(function(props) {
           ]}>
           {i18n.t('capture.otherLicenses').toUpperCase()}
         </Text>
-        {LICENSES.slice(2).map(o => (
+        {licenses.slice(2).map((o) => (
           <Option
             option={o}
             store={store}

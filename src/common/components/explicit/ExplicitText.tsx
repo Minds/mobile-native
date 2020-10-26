@@ -1,4 +1,3 @@
-//@ts-nocheck
 import React, { Component } from 'react';
 
 import { observer } from 'mobx-react';
@@ -16,12 +15,15 @@ import Tags from '../../../common/components/Tags';
 import colors from '../../../styles/Colors';
 import i18n from '../../services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
-import type ActivityModel from 'src/newsfeed/ActivityModel';
+import type ActivityModel from '../../../newsfeed/ActivityModel';
+import { LinearGradient } from 'expo-linear-gradient';
 
 type PropsType = {
   entity: ActivityModel;
+  selectable?: boolean;
   navigation: any;
   style?: TextStyle | Array<TextStyle>;
+  noTruncate?: boolean;
 };
 
 type StateType = {
@@ -50,9 +52,10 @@ export default class ExplicitText extends Component<PropsType, StateType> {
   };
 
   /**
-   * On component will mount
+   * constructor
    */
-  componentWillMount() {
+  constructor(props) {
+    super(props);
     Dimensions.addEventListener('change', this.dimensionChange);
   }
 
@@ -71,30 +74,38 @@ export default class ExplicitText extends Component<PropsType, StateType> {
     const theme = ThemedStyles.style;
     const entity = this.props.entity;
 
-    let title: string = entity.title
-      ? entities.decodeHTML(entity.title).trim()
-      : '';
-    let message = entity.message
-      ? entities.decodeHTML(entity.message).trim()
-      : '';
+    let title: string =
+      entity.title && !entity.perma_url
+        ? entities.decodeHTML(entity.title).trim()
+        : '';
+    let message = entity.text ? entities.decodeHTML(entity.text).trim() : '';
 
-    let body = null;
-    let moreLess = null;
+    if (title === message) {
+      message = '';
+    }
+
+    let body: Element | null = null;
+    let moreLess: JSX.Element | null = null;
     let explicitToggle = null;
 
     if (message !== '') {
-      const truncated = this.truncate(message);
-      // truncate if necessary
-      if (message.length > truncated.length) {
-        if (!this.state.more) message = truncated;
-        moreLess = this.getMoreLess();
+      if (!this.props.noTruncate) {
+        const truncated = this.truncate(message);
+        // truncate if necessary
+        if (message.length > truncated.length) {
+          if (!this.state.more) message = truncated;
+          moreLess = this.getMoreLess();
+        }
       }
 
       body =
         entity.shouldBeBlured() && !entity.mature_visibility ? (
           <Text style={styles.mature}>{message}</Text>
         ) : (
-          <Tags navigation={this.props.navigation} style={this.props.style}>
+          <Tags
+            navigation={this.props.navigation}
+            style={this.props.style}
+            selectable={this.props.selectable}>
             {message}
           </Tags>
         );
@@ -103,18 +114,33 @@ export default class ExplicitText extends Component<PropsType, StateType> {
     const titleCmp: React.ReactNode = title ? (
       <Tags
         navigation={this.props.navigation}
-        style={[this.props.style, theme.fontL, theme.marginBottom]}>
+        style={[
+          this.props.style,
+          theme.marginBottom,
+          message ? styles.titleHasMessage : null,
+        ]}>
         {title}
       </Tags>
     ) : null;
 
     return (
-      <View style={styles.container}>
+      <View
+        style={[styles.container, !!entity.paywall ? styles.paywalled : null]}>
         {titleCmp}
         {body}
         {moreLess}
         {explicitToggle}
+        {!!entity.paywall && this.renderGradient()}
       </View>
+    );
+  }
+
+  renderGradient() {
+    const backgroundColor = ThemedStyles.getColor('secondary_background');
+    const startColor = backgroundColor + '00';
+    const endColor = backgroundColor + 'FF';
+    return (
+      <LinearGradient colors={[startColor, endColor]} style={styles.linear} />
     );
   }
 
@@ -142,7 +168,7 @@ export default class ExplicitText extends Component<PropsType, StateType> {
    * Get text char limit based on screen height
    */
   getTextLimit() {
-    return this.state.height * 1.5;
+    return this.state.height * 0.5;
   }
 
   /**
@@ -169,6 +195,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  paywalled: {
+    maxHeight: 70,
+    overflow: 'hidden',
+  },
+  linear: {
+    position: 'absolute',
+    height: 50,
+    width: '100%',
+    left: 0,
+    bottom: 0,
+    zIndex: 9999,
+  },
   readmore: {
     color: colors.primary,
     marginTop: 5,
@@ -191,5 +229,8 @@ const styles = StyleSheet.create({
         textShadowRadius: 20,
       },
     }),
+  },
+  titleHasMessage: {
+    fontWeight: 'bold',
   },
 });

@@ -2,31 +2,48 @@
 
 exports[`renders correctly 1`] = `
 <View
+  onPress={[Function]}
   style={
     Object {
-      "flexDirection": "row",
-      "flexWrap": "wrap",
+      "flex": 1,
+      "marginLeft": 8,
     }
   }
 >
-  <Text
-    onPress={[Function]}
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+      }
+    }
   >
-    100/100 views 
     <Text>
-      for
-       
-      <Text
-        style={
-          Object {
-            "fontWeight": "600",
+      100/100 views 
+      <Text>
+        for
+         
+        <Text
+          style={
+            Object {
+              "fontWeight": "600",
+            }
           }
-        }
-      >
-        some title
+        >
+          some title
+        </Text>
       </Text>
+       have been met.
     </Text>
-     have been met.
+  </View>
+  <Text
+    style={
+      Object {
+        "fontSize": 11,
+      }
+    }
+  >
+    Invalid date
   </Text>
 </View>
 `;

@@ -10,6 +10,7 @@ import { LICENSES } from '../common/services/list-options.service';
  * User model
  */
 export default class BlogModel extends BaseModel {
+  subtype?: string;
   thumbnail_src?: string;
   license: string = '';
   reminds: number = 0;
@@ -19,6 +20,7 @@ export default class BlogModel extends BaseModel {
   'comments:count': number;
   'thumbs:down:user_guids': Array<number>;
   'thumbs:up:user_guids': Array<number>;
+  title: string = '';
 
   /**
    * Get banner source

@@ -5,58 +5,50 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { View } from 'react-native';
 
-import NewsfeedList from './NewsfeedList';
-import Topbar from './topbar/Topbar';
-import { CommonStyle } from '../styles/Common';
-import GroupsBar from '../groups/GroupsBar';
 import FeedList from '../common/components/FeedList';
-import i18n from '../common/services/i18n.service';
-import TopbarNewsfeed from '../topbar/TopbarNewsfeed';
-import type { RootStackParamList } from 'src/navigation/NavigationTypes';
-import type MessengerListStore from 'src/messenger/MessengerListStore';
-import type DiscoveryStore from 'src/discovery/DiscoveryStore';
-import type UserStore from 'src/auth/UserStore';
+import type { AppStackParamList } from '../navigation/NavigationTypes';
+import type MessengerListStore from '../messenger/MessengerListStore';
+import type UserStore from '../auth/UserStore';
 import type NewsfeedStore from './NewsfeedStore';
+import type NotificationsStore from '../notifications/NotificationsStore';
+import CheckLanguage from '../common/components/CheckLanguage';
+import ActivityPlaceHolder from './ActivityPlaceHolder';
+import PortraitContentBar from '../portrait/PortraitContentBar';
 
-type NewsfeedScreenRouteProp = RouteProp<RootStackParamList, 'Newsfeed'>;
-type NewsfeedcreenNavigationProp = StackNavigationProp<
-  RootStackParamList,
+type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
+type NewsfeedScreenNavigationProp = StackNavigationProp<
+  AppStackParamList,
   'Newsfeed'
 >;
 
 type PropsType = {
-  navigation: NewsfeedcreenNavigationProp;
-  discovery: DiscoveryStore;
+  navigation: NewsfeedScreenNavigationProp;
   user: UserStore;
   messengerList: MessengerListStore;
-  newsfeed: NewsfeedStore;
+  notifications: NotificationsStore;
+  newsfeed: NewsfeedStore<any>;
   route: NewsfeedScreenRouteProp;
 };
 
 /**
  * News Feed Screen
  */
-@inject('newsfeed', 'user', 'discovery', 'messengerList')
+@inject('newsfeed', 'user', 'messengerList', 'notifications')
 @observer
 class NewsfeedScreen extends Component<PropsType> {
   disposeTabPress?: Function;
-  groupsBar: GroupsBar | null = null;
-
+  portraitBar = React.createRef<any>();
   /**
    * Nav to activity full screen
    */
   navToCapture = () => {
-    this.props.navigation.navigate('Capture');
+    this.props.navigation.navigate('Capture', {});
   };
 
   refreshNewsfeed = (e) => {
     if (this.props.navigation.isFocused()) {
-      if (this.props.newsfeed.filter === 'subscribed') {
-        this.props.newsfeed.scrollToTop();
-        this.props.newsfeed.feedStore.refresh();
-      } else {
-        this.props.newsfeed.refresh();
-      }
+      this.props.newsfeed.scrollToTop();
+      this.props.newsfeed.feedStore.refresh();
       e && e.preventDefault();
     }
   };
@@ -76,20 +68,22 @@ class NewsfeedScreen extends Component<PropsType> {
   }
 
   async loadFeed() {
-    this.props.discovery.init();
+    // this.props.discovery.init();
 
     await this.props.newsfeed.feedStore.fetchRemoteOrLocal();
-
-    // load groups after the feed
-    await this.groupsBar?.initialLoad();
-    // load discovery after the feed is loaded
-    this.props.discovery.fetch();
 
     // load messenger
     this.props.messengerList.loadList();
 
     // listen socket on app start
     this.props.messengerList.listen();
+
+    // load notifications
+    try {
+      await this.props.notifications.readLocal();
+    } finally {
+      this.props.notifications.loadList(true);
+    }
   }
 
   /**
@@ -102,51 +96,46 @@ class NewsfeedScreen extends Component<PropsType> {
     }
   }
 
-  setGroupsBarRef = (r) => (this.groupsBar = r);
+  refreshPortrait = () => {
+    if (this.portraitBar.current) {
+      this.portraitBar.current.load();
+    }
+  };
 
+  /**
+   * Render
+   */
   render() {
     const newsfeed = this.props.newsfeed;
 
-    //@ts-ignore
-    const topBar = <Topbar />;
-
     const header = (
       <View>
-        {topBar}
-        <GroupsBar ref={this.setGroupsBarRef} />
+        <CheckLanguage />
+        <PortraitContentBar ref={this.portraitBar} />
       </View>
     );
 
-    let feed;
-    if (newsfeed.filter === 'subscribed') {
-      feed = (
-        <FeedList
-          ref={newsfeed.setListRef}
-          feedStore={newsfeed.feedStore}
-          header={header}
-          navigation={this.props.navigation}
-        />
-      );
-    } else {
-      feed = (
-        <NewsfeedList
-          newsfeed={newsfeed}
-          header={header}
-          navigation={this.props.navigation}
-        />
-      );
-    }
+    // Show placeholder before the loading as an empty component.
+    const additionalProps = newsfeed.feedStore.loaded
+      ? {}
+      : {
+          ListEmptyComponent: (
+            <View>
+              <ActivityPlaceHolder />
+              <ActivityPlaceHolder />
+            </View>
+          ),
+        };
 
     return (
-      <View style={CommonStyle.flexContainer} testID="NewsfeedScreen">
-        <TopbarNewsfeed
-          title={i18n.t('tabTitleNewsfeed')}
-          navigation={this.props.navigation}
-          refreshFeed={this.refreshNewsfeed}
-        />
-        {feed}
-        {/* <CaptureFab navigation={this.props.navigation} route={this.props.route} testID="captureFab"/> */}
-      </View>
+      <FeedList
+        ref={newsfeed.setListRef}
+        header={header}
+        feedStore={newsfeed.feedStore}
+        navigation={this.props.navigation}
+        onRefresh={this.refreshPortrait}
+        {...additionalProps}
+      />
     );
   }
 }

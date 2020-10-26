@@ -1,47 +1,59 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import {
-  View,
-  Text,
-  TouchableHighlight,
-} from 'react-native';
+import { View, Text, TouchableHighlight, StyleSheet } from 'react-native';
 import { observer, inject } from 'mobx-react';
 
-import { CommonStyle as CS } from '../../styles/Common';
 import TagSelect from '../../common/components/TagSelect';
-import TagInput from '../../common/components/TagInput';
 import i18n from '../../common/services/i18n.service';
+import { ComponentsStyle } from '../../styles/Components';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+
+import OnboardingButtons from '../OnboardingButtons';
+import OnboardingBackButton from '../OnboardingBackButton';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 @inject('hashtag')
 @observer
-export default class HashtagsStep extends Component {
-
-  componentWillMount() {
+export default class HashtagsStepNew extends Component {
+  componentDidMount() {
     this.props.hashtag.setAll(true);
-    this.props.hashtag.loadSuggested().catch(err => {
+    this.props.hashtag.loadSuggested().catch((err) => {
       logService.exception(err);
     });
   }
 
-  render() {
+  getBody = () => {
+    const CS = ThemedStyles.style;
     return (
-      <View style={[CS.padding4x]}>
-        <Text style={[CS.fontXXL, CS.colorDark, CS.fontMedium, CS.marginBottom3x]}>{i18n.t('onboarding.hashtagSelect')}</Text>
-        <View style={[CS.paddingBottom2x]}>
-          <TagInput
-            hideTags={true}
-            noAutofocus={true}
-            tags={this.props.hashtag.suggested.map(m => m.value)}
-            onTagDeleted={this.props.hashtag.deselect}
-            onTagAdded={this.props.hashtag.create}
-          />
+      <View style={[CS.flexContainer, CS.columnAlignCenter]}>
+        <OnboardingBackButton onBack={this.props.onBack} />
+        <View style={styles.textsContainer}>
+          <Text style={[CS.onboardingTitle, CS.marginBottom2x]}>
+            {i18n.t('onboarding.profileSetup')}
+          </Text>
+          <Text style={[CS.titleText, CS.colorPrimaryText]}>
+            {i18n.t('onboarding.hashtagTitle')}
+          </Text>
+          <Text style={[CS.subTitleText, CS.colorSecondaryText]}>
+            {i18n.t('onboarding.step', { step: 1, total: 4 })}
+          </Text>
+          <Text
+            style={[
+              CS.subTitleText,
+              CS.colorSecondaryText,
+              CS.marginBottom4x,
+              CS.marginTop4x,
+            ]}>
+            {i18n.t('onboarding.hashtagInterest')}
+          </Text>
         </View>
         <TagSelect
-          tagStyle={[CS.backgroundWhite, CS.padding1x, CS.borderGreyed, CS.border]}
-          tagSelectedStyle={[CS.borderPrimary]}
-          textStyle={[CS.fontXL, CS.colorDarkGreyed]}
-          containerStyle={[CS.columnAlignStart]}
+          tagStyle={styles.hashtag}
+          tagSelectedStyle={styles.tagSelected}
+          textSelectedStyle={styles.textSelected}
+          textStyle={styles.hashtagText}
+          containerStyle={[CS.rowJustifyStart]}
           onTagDeleted={this.props.hashtag.deselect}
           onTagAdded={this.props.hashtag.select}
           tags={this.props.hashtag.suggested}
@@ -49,5 +61,44 @@ export default class HashtagsStep extends Component {
         />
       </View>
     );
+  };
+
+  getFooter = () => {
+    return <OnboardingButtons onNext={this.props.onNext} />;
+  };
+
+  render() {
+    const CS = ThemedStyles.style;
+    return (
+      <View style={[CS.flexContainerCenter]}>
+        <View style={[CS.mindsLayoutBody, CS.backgroundPrimary]}>
+          {this.getBody()}
+        </View>
+        <View style={[CS.mindsLayoutFooter, CS.backgroundPrimary]}>
+          {this.getFooter()}
+        </View>
+      </View>
+    );
   }
 }
+
+const styles = StyleSheet.create({
+  textsContainer: {
+    alignItems: 'center',
+  },
+  hashtag: {
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+    borderColor: '#979797',
+  },
+  hashtagText: {
+    color: '#AEB0B8',
+    fontSize: 17,
+  },
+  textSelected: {
+    color: '#5DBAC0',
+  },
+  tagSelected: {
+    borderColor: '#5DBAC0',
+  },
+});

@@ -1,4 +1,54 @@
-version: 2
+version: 2.1
+commands:
+  rubygems:
+    description: 'Installs RubyGems'
+    steps:
+      - run:
+          name: set Ruby version
+          command: echo "ruby-2.6" > ~/.ruby-version
+      - restore_cache:
+          key: bundle-v1-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
+      - run:
+          command: gem update --system && gem install bundler && bundle install
+          working_directory: ios
+      - save_cache:
+          key: bundle-v1-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
+          paths:
+            - vendor/bundle
+  yarn:
+    description: 'Installs yarn dependencies'
+    steps:
+      - restore_cache:
+          key: yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
+      - restore_cache:
+          key: node-v1-{{ checksum "package.json" }}-{{ arch }}
+      # not using a workspace here as Node and Yarn versions
+      # differ between our macOS executor image and the Docker containers above
+      - run: yarn install --frozen-lockfile
+      - save_cache:
+          key: yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
+          paths:
+            - ~/.cache/yarn
+      - save_cache:
+          key: node-v1-{{ checksum "package.json" }}-{{ arch }}
+          paths:
+            - node_modules
+  brew:
+    description: 'Installs brew dependencies'
+    steps:
+      - restore_cache:
+          key: brew-v1-{{ arch }}
+      - run:
+          name: Install sentry cli for fastlane plugin
+          command: brew install getsentry/tools/sentry-cli
+      - run:
+          name: Update brew
+          command: brew update
+      - save_cache:
+          key: brew-v1-{{ arch }}
+          paths:
+            - /usr/local/Homebrew
+
 jobs:
   test:
     working_directory: ~/mobile-native
@@ -6,148 +56,50 @@ jobs:
       - image: circleci/node:10
     steps:
       - checkout
-
-      - restore_cache:
-          key: yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
-
-      - restore_cache:
-          key: node-v1-{{ checksum "package.json" }}-{{ arch }}
-
-      - run: yarn install
-
-      - save_cache:
-          key: yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
-          paths:
-            - ~/.cache/yarn
-
-      - save_cache:
-          key: node-v1-{{ checksum "package.json" }}-{{ arch }}
-          paths:
-            - node_modules
-
+      - yarn
       - run:
           name: jest tests
           command: |
             mkdir -p test-results/jest
+            yarn prettier --check "./src/**/*.{ts,tsx,js,json}" "./*.{tsx,ts}"
+            yarn tsc
             yarn run test --maxWorkers=2
           environment:
             JEST_JUNIT_OUTPUT: test-results/jest/junit.xml
-
       - persist_to_workspace:
           root: ~/mobile-native
           paths:
             - node_modules
-
       - store_test_results:
           path: test-results
-
       - store_artifacts:
           path: test-results
 
-  ios:
+  ios-build:
     macos:
-      xcode: "11.1.0"
+      xcode: '11.1.0'
     working_directory: ~/mobile-native
-
     # use a --login shell so our "set Ruby version" command gets picked up for later steps
     shell: /bin/bash --login -o pipefail
-
     steps:
       - checkout
-
-      - run:
-          name: Install sentry cli for fastlane plugin
-          command: brew install getsentry/tools/sentry-cli
-      - run:
-          name: set Ruby version
-          command:  echo "ruby-2.6" > ~/.ruby-version
-
-      - restore_cache:
-          key: yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
-
-      - restore_cache:
-          key: node-v1-{{ checksum "package.json" }}-{{ arch }}
-
-      # remove detox from CI until is fixed
-      # - run:
-      #     name: Install detox
-      #     command:
-      #       |
-      #       HOMEBREW_NO_AUTO_UPDATE=1 brew tap wix/brew
-      #       HOMEBREW_NO_AUTO_UPDATE=1 brew install --HEAD applesimutils
-      #       npm install -g detox-cli
-      #       npm install -g detox
-
-      # not using a workspace here as Node and Yarn versions
-      # differ between our macOS executor image and the Docker containers above
-      - run: yarn install --frozen-lockfile
-
-      - save_cache:
-          key: yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
-          paths:
-            - ~/.cache/yarn
-
-      - save_cache:
-          key: node-v1-{{ checksum "package.json" }}-{{ arch }}
-          paths:
-            - node_modules
-
-      - restore_cache:
-          key: bundle-v1-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
-
-      - run:
-          command: gem update --system && gem install bundler && bundle install
-          working_directory: ios
-
-      - save_cache:
-          key: bundle-v1-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
-          paths:
-            - vendor/bundle
-
+      - yarn
+      - rubygems
+      - brew
       - restore_cache:
           key: pods-v1-{{ checksum "ios/Podfile.lock" }}-{{ arch }}
-
       - run:
           name: Install CocoaPods
           command: pod install --verbose
           working_directory: ios
-
       - save_cache:
           key: pods-v1-{{ checksum "ios/Podfile.lock" }}-{{ arch }}
           paths:
             - ios/Pods
-
-      # remove detox from CI until is fixed
-      # Run e2e
-      # - run: detox build -c ios.sim.release
-      # - run: detox test -c ios.sim.release --cleanup
-
-
-      ### TODO- get tests running with fastlane
-
-      #- run:
-      #    command: bundle exec fastlane test
-      #    working_directory: ios
-
-      #- run:
-      #    name: set up test results
-      #    working_directory: ios
-      #    when: always
-      #    command: |
-      #      mkdir -p test-results/fastlane test-results/xcode
-      #      mv fastlane/report.xml test-results/fastlane
-      #      mv fastlane/test_output/report.junit test-results/xcode/junit.xml
-      #- store_test_results:
-      #    path: ios/test-results
-
-      #- store_artifacts:
-      #    path: ios/test-results
-
       - run:
           name: Build release .ipa
           command: fastlane buildrelease
           working_directory: ios
-
       - run:
           name: Upload to crashalytics
           command: echo "TODO"
@@ -155,22 +107,71 @@ jobs:
           branches:
             only:
               - /release-*/
-
       - run:
           name: Prepare sentry release
           command: fastlane preparesentry
           working_directory: ios
-
       - persist_to_workspace:
           root: ~/mobile-native/ios
           paths:
             - version
+            - Minds.ipa
+
+  ## TODO: Implement e2e in this into worflow
+  ios-e2e:
+    macos:
+      xcode: '11.1.0'
+    working_directory: ~/mobile-native
+    # use a --login shell so our "set Ruby version" command gets picked up for later steps
+    shell: /bin/bash --login -o pipefail
+    steps:
+      - checkout
+      - run:
+          name: Install detox
+          command: |
+            HOMEBREW_NO_AUTO_UPDATE=1 brew tap wix/brew
+            HOMEBREW_NO_AUTO_UPDATE=1 brew install --HEAD applesimutils
+            npm install -g detox-cli
+            npm install -g detox
+      - run: detox build -c ios.sim.release
+      - run: detox test -c ios.sim.release --cleanup
+      - run:
+          command: bundle exec fastlane test
+          working_directory: ios
+      - run:
+          name: set up test results
+          working_directory: ios
+          when: always
+          command: |
+            mkdir -p test-results/fastlane test-results/xcode
+            mv fastlane/report.xml test-results/fastlane
+            mv fastlane/test_output/report.junit test-results/xcode/junit.xml
+      - store_test_results:
+          path: ios/test-results
+      - store_artifacts:
+          path: ios/test-results
+
+  ios-testflight:
+    macos:
+      xcode: '11.1.0'
+    working_directory: ~/mobile-native
+    # use a --login shell so our "set Ruby version" command gets picked up for later steps
+    shell: /bin/bash --login -o pipefail
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      - checkout
+      - rubygems
+      - run:
+          name: Copy ipa from attached_worksapce
+          command: cp /tmp/workspace/Minds.ipa Minds.ipa
+          working_directory: ios
       - run:
           name: Upload to Testflight release
           command: fastlane testflight
           working_directory: ios
 
-  sentry:
+  ios-sentry:
     docker:
       - image: getsentry/sentry-cli
     working_directory: ~/mobile-native
@@ -191,20 +192,19 @@ jobs:
             # release created by fastlane preparesentry
             sentry-cli releases set-commits --commit "Minds / Minds Mobile@${CIRCLE_SHA1}" ${version} --log-level=debug
             sentry-cli releases finalize ${version}
+
 workflows:
   version: 2
-  node-ios:
+  ios:
     jobs:
       - test
-      - ios:
+      - ios-build
+      - ios-testflight-approval:
+          type: approval
+      - ios-testflight:
           requires:
-            - test
-          filters:
-            branches:
-              only:
-                - /^stable.*/
-                - /^test.*/
-                - test/circle-ci
-      - sentry:
+            - ios-testflight-approval
+            - ios-build
+      - ios-sentry:
           requires:
-            - ios
+            - ios-build

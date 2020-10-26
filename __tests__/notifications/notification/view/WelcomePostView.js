@@ -1,6 +1,6 @@
 import 'react-native';
 import React from 'react';
-import { Text, TouchableOpacity } from "react-native";
+import { Text, TouchableOpacity } from 'react-native';
 import { shallow } from 'enzyme';
 import WelcomePostView from '../../../../src/notifications/notification/view/WelcomePostView';
 import styles from '../../../../src/notifications/notification/style';
@@ -12,10 +12,10 @@ import boostNotificationFactory from '../../../../__mocks__/fake/notifications/B
 import renderer from 'react-test-renderer';
 
 it('renders correctly', () => {
-
-  const notification = renderer.create(
-    <WelcomePostView styles={styles} />
-  ).toJSON();
+  const entity = boostNotificationFactory('tag', 'comment');
+  const notification = renderer
+    .create(<WelcomePostView styles={styles} entity={entity} />)
+    .toJSON();
 
   expect(notification).toMatchSnapshot();
 });

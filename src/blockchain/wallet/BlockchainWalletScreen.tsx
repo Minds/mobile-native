@@ -1,6 +1,6 @@
 //@ts-nocheck
 import React, { Component } from 'react';
-import { View, Alert, StyleSheet } from 'react-native';
+import { View, Alert } from 'react-native';
 
 import { observer, inject } from 'mobx-react';
 
@@ -41,7 +41,7 @@ export default class BlockchainWalletScreen extends Component {
 
     return {
       title: i18n.t('blockchain.walletAddresses'),
-      headerRight: (
+      headerRight: () => (
         <View style={CommonStyle.rowJustifyStart}>
           <Icon
             name="add"

@@ -26,7 +26,10 @@ export default class SqliteService {
    */
   async init() {
     if (!this.db) {
-      this.db = await SQLite.openDatabase({name: this.dbname, location: 'default'});
+      this.db = await SQLite.openDatabase({
+        name: this.dbname,
+        location: 'default',
+      });
       await this.runMigrations();
     }
   }
@@ -42,10 +45,10 @@ export default class SqliteService {
 
     if (migrations.length === count) return;
 
-    const torun = (count > 0) ? migrations.slice(count) : migrations;
+    const torun = count > 0 ? migrations.slice(count) : migrations;
 
-    await this.db.transaction(tx => {
-      torun.forEach(m => {
+    await this.db.transaction((tx) => {
+      torun.forEach((m) => {
         logService.info('sql running migration' + m);
         tx.executeSql(m, []);
       });
@@ -55,12 +58,13 @@ export default class SqliteService {
   }
 
   async rebuildDB() {
-    await SQLite.deleteDatabase({name: this.dbname, location: 'default'});
-    this.db = await SQLite.openDatabase({name: this.dbname, location: 'default'});
+    await SQLite.deleteDatabase({ name: this.dbname, location: 'default' });
+    this.db = await SQLite.openDatabase({
+      name: this.dbname,
+      location: 'default',
+    });
 
-    await storageService.setItem(
-      'sqlmigrations', '0',
-    );
+    await storageService.setItem('sqlmigrations', '0');
     await this.runMigrations();
   }
   /**

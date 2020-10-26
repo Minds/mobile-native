@@ -29,12 +29,13 @@ export default class Counter extends PureComponent<PropsType> {
    * Render
    */
   render(): React.ReactNode {
-    const { size, count, style, ...otherProps } = this.props;
+    const theme = ThemedStyles.style;
+    const { count, style, ...otherProps } = this.props;
 
     return (
-      <View style={[CS.columnAlignCenter]}>
+      <View style={CS.columnAlignCenter}>
         <Text
-          style={[ThemedStyles.style.colorIcon, style, { fontSize: size }]}
+          style={[theme.colorIcon, theme.fontL, theme.fontMedium, style]}
           {...otherProps}>
           {count > 0 ? abbrev(count, 0) : ''}
         </Text>

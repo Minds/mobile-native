@@ -2,11 +2,10 @@ import login from "./login";
 import { waitForElement, tapElement, waitForAndTap } from "../helpers/waitFor";
 
 export const capturePoster = async () => {
-  await waitForElement(by.id('usernameInput'));
-  await login(process.env.loginUser, process.env.loginPass);
   await waitForElement(by.id('NewsfeedScreen'));
-  await waitForAndTap(by.id('Capture tab button'));
-  await waitForAndTap(by.id('CaptureTextButton'));
+  await waitForAndTap(by.id('CaptureTabButton'));
+  //await waitForElement(by.id('CaptureTextButton'));
+  //await waitForAndTap(by.id('CaptureTextButton'));
 }
 
 export const deletePost = async () => {

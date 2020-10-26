@@ -1,45 +1,35 @@
 import { Platform, Alert } from 'react-native';
-import ImagePicker from 'react-native-image-picker';
+import ImagePicker from 'react-native-image-crop-picker';
 import service from '../../../src/common/services/image-picker.service';
 import i18n from '../../../src/common/services/i18n.service';
 
-import androidPermissions from '../../../src/common/services/android-permissions.service';
+import androidPermissions from '../../../src/common/services/permissions.service';
 
-jest.mock('../../../src/common/services/android-permissions.service');
+jest.mock('../../../src/common/services/permissions.service');
 jest.mock('../../../src/common/services/i18n.service', () => ({
-    t: jest.fn(),
-    p: jest.fn(),
-    l: jest.fn(),
-    getCurrentLocale: jest.fn(),
-    setLocale: jest.fn(),
-    getSupportedLocales: jest.fn()
+  t: jest.fn(),
+  p: jest.fn(),
+  l: jest.fn(),
+  getCurrentLocale: jest.fn(),
+  setLocale: jest.fn(),
+  getSupportedLocales: jest.fn(),
 }));
-
 
 jest.mock('react-native', () => ({
   Alert: {
-    alert: jest.fn()
+    alert: jest.fn(),
   },
   Platform: {
-    OS: 'androit'
-  }
+    OS: 'android',
+  },
 }));
 
 /**
  * Tests
  */
 describe('Session storage service', () => {
-
-  it('should set and get initial values', async () => {
-    Alert.alert = jest.fn();
-
-    service.showMessage('message');
-    jest.runAllTimers();
-    expect(Alert.alert).toHaveBeenCalled();
-  });
-
   it('should check if needs to ask for permission', async () => {
-    androidPermissions.checkReadExternalStorage.mockResolvedValue(-1);
+    androidPermissions.checkReadExternalStorage.mockResolvedValue(false);
 
     service.checkGalleryPermissions();
 
@@ -48,14 +38,11 @@ describe('Session storage service', () => {
 
   it('should check if needs to ask for permission', async () => {
     androidPermissions.checkReadExternalStorage.mockResolvedValue(false);
-    androidPermissions.readExternalStorage.mockResolvedValue(false);
 
     await service.checkGalleryPermissions();
 
     expect(androidPermissions.checkReadExternalStorage).toHaveBeenCalled();
-    expect(androidPermissions.readExternalStorage).toHaveBeenCalled();
   });
-
 
   it('should check if needs to ask for camera permission', async () => {
     androidPermissions.checkCamera.mockResolvedValue(-1);
@@ -74,7 +61,6 @@ describe('Session storage service', () => {
     expect(androidPermissions.checkCamera).toHaveBeenCalled();
     expect(androidPermissions.camera).toHaveBeenCalled();
   });
-
 
   it('should check if needs to ask for general permissions', async () => {
     androidPermissions.checkCamera.mockResolvedValue(false);
@@ -106,13 +92,12 @@ describe('Session storage service', () => {
 
     androidPermissions.checkReadExternalStorage.mockResolvedValue(true);
     androidPermissions.readExternalStorage.mockResolvedValue(true);
-    ImagePicker.launchCamera.mockImplementation((opt, callback) => callback({}));
+    ImagePicker.openCamera.mockImplementation();
 
     await service.launchCamera('photo');
 
-    expect(ImagePicker.launchCamera).toHaveBeenCalled();
+    expect(ImagePicker.openCamera).toHaveBeenCalled();
   });
-
 
   it('should launch gallery picker', async () => {
     androidPermissions.checkCamera.mockResolvedValue(true);
@@ -120,13 +105,12 @@ describe('Session storage service', () => {
 
     androidPermissions.checkReadExternalStorage.mockResolvedValue(true);
     androidPermissions.readExternalStorage.mockResolvedValue(true);
-    ImagePicker.launchImageLibrary.mockImplementation((opt, callback) => callback({}));
+    ImagePicker.openPicker.mockImplementation();
 
     await service.launchImageLibrary();
 
-    expect(ImagePicker.launchImageLibrary).toHaveBeenCalled();
+    expect(ImagePicker.openPicker).toHaveBeenCalled();
   });
-
 
   it('should launch show', async () => {
     androidPermissions.checkCamera.mockResolvedValue(true);
@@ -134,10 +118,10 @@ describe('Session storage service', () => {
 
     androidPermissions.checkReadExternalStorage.mockResolvedValue(true);
     androidPermissions.readExternalStorage.mockResolvedValue(true);
-    ImagePicker.showImagePicker.mockImplementation((opt, callback) => callback({}));
+    ImagePicker.openPicker.mockImplementation();
 
     await service.show();
 
-    expect(ImagePicker.showImagePicker).toHaveBeenCalled();
+    expect(ImagePicker.openPicker).toHaveBeenCalled();
   });
 });

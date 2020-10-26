@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import { StyleSheet } from 'react-native';
 import IconMaterial from 'react-native-vector-icons/MaterialIcons';
 import colors from '../../styles/Colors';
-import type ActivityModel from 'src/newsfeed/ActivityModel';
+import type ActivityModel from '../../newsfeed/ActivityModel';
 
 // types
 type PropsType = {

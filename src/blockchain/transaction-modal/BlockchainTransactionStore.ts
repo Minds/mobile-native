@@ -1,9 +1,5 @@
 //@ts-nocheck
-import {
-  observable,
-  action,
-  observe
-} from 'mobx'
+import { observable, action, observe } from 'mobx';
 import BlockchainWalletService from '../wallet/BlockchainWalletService';
 import BlockchainApiService from '../BlockchainApiService';
 import Web3Service from '../services/Web3Service';
@@ -15,7 +11,6 @@ let approvalDispose;
  * Blockchain Transaction Store
  */
 class BlockchainTransactionStore {
-
   @observable isApproving = false;
   @observable approvalMessage = '';
   @observable approval = void 0;
@@ -25,7 +20,13 @@ class BlockchainTransactionStore {
   @observable gweiPriceCents = null;
   @observable weiValue = null;
 
-  @action async waitForApproval(method, approvalMessage, baseOptions = {}, estimatedGas = 0, weiValue = 0) {
+  @action async waitForApproval(
+    method,
+    approvalMessage,
+    baseOptions = {},
+    estimatedGas = 0,
+    weiValue = 0,
+  ) {
     if (this.isApproving) {
       throw new Error(i18n.t('blockchain.alreadyApproving'));
     }
@@ -43,31 +44,35 @@ class BlockchainTransactionStore {
     this.refreshFunds();
     this.getGweiPriceCents();
 
-    return await new Promise(resolve => {
+    return await new Promise((resolve) => {
       if (approvalDispose) {
         approvalDispose();
         approvalDispose = void 0;
       }
 
-      approvalDispose = observe(this, 'approval', action(change => {
-        approvalDispose();
+      approvalDispose = observe(
+        this,
+        'approval',
+        action((change) => {
+          approvalDispose();
 
-        this.isApproving = false;
+          this.isApproving = false;
 
-        this.approvalMessage = '';
-        this.approval = void 0;
-        this.baseOptions = {};
-        this.estimateGasLimit = 0;
-        this.funds = null;
-        this.gweiPriceCents = null;
-        this.weiValue = 0;
+          this.approvalMessage = '';
+          this.approval = void 0;
+          this.baseOptions = {};
+          this.estimateGasLimit = 0;
+          this.funds = null;
+          this.gweiPriceCents = null;
+          this.weiValue = 0;
 
-        if (change.newValue) {
-          resolve(change.newValue);
-        } else {
-          resolve(false);
-        }
-      }));
+          if (change.newValue) {
+            resolve(change.newValue);
+          } else {
+            resolve(false);
+          }
+        }),
+      );
     });
   }
 
@@ -77,7 +82,7 @@ class BlockchainTransactionStore {
     this.approvalMessage = '';
     this.approval = {
       ...this.baseOptions,
-      ...(data || {})
+      ...(data || {}),
     };
     this.baseOptions = {};
     this.estimateGasLimit = 0;
@@ -116,7 +121,10 @@ class BlockchainTransactionStore {
       return;
     }
 
-    const gweiRate = Web3Service.web3.utils.fromWei(Web3Service.web3.utils.toWei('1', 'ether'), 'gwei');
+    const gweiRate = Web3Service.web3.utils.fromWei(
+      Web3Service.web3.utils.toWei('1', 'ether'),
+      'gwei',
+    );
 
     // NOTE: Saving in cents to avoid JS rounding issue
     const ethPriceInCents = ethPrice * 100;

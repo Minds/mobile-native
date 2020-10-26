@@ -14,8 +14,9 @@ import {
   Dimensions,
 } from 'react-native';
 
+import Icon from 'react-native-vector-icons/SimpleLineIcons';
+
 import CommentEditor from './CommentEditor';
-import { CommonStyle } from '../styles/Common';
 import formatDate from '../common/helpers/date';
 import ThumbUpAction from '../newsfeed/activity/actions/ThumbUpAction';
 import ThumbDownAction from '../newsfeed/activity/actions/ThumbDownAction';
@@ -26,19 +27,37 @@ import i18n from '../common/services/i18n.service';
 
 import CommentList from './CommentList';
 import DoubleTap from '../common/components/DoubleTap';
-import ExplicitOverlay from '../common/components/explicit/ExplicitOverlay';
 import colors from '../styles/Colors';
 import FastImage from 'react-native-fast-image';
 import CommentActionSheet from './CommentActionSheet';
 import ThemedStyles from '../styles/ThemedStyles';
+import { showNotification } from '../../AppMessages';
+import ChannelBadge from '../common/components/ChannelBadge';
+import CommentModel from './CommentModel';
+import type BlogModel from '../blogs/BlogModel';
+import type GroupModel from '../groups/GroupModel';
+import type ActivityModel from '../newsfeed/ActivityModel';
+import type CommentsStore from './CommentsStore';
 
-const DoubleTapText = DoubleTap(Text);
+const DoubleTapTouch = DoubleTap(TouchableOpacity);
+
+type PropsType = {
+  comment: CommentModel;
+  entity?: ActivityModel | BlogModel | GroupModel; //parent entity
+  store: CommentsStore;
+  onTextInputfocus: (CommentModel, offset: number) => void;
+  onCommentFocus: (CommentModel, offset: number) => void;
+  commentFocusCall: (CommentModel, index: number) => void;
+  navigation: any;
+  route: any;
+  index: number;
+};
 
 /**
  * Comment Component
  */
 @observer
-class Comment extends Component {
+class Comment extends Component<PropsType> {
   state = {
     editing: false,
   };
@@ -68,18 +87,18 @@ class Comment extends Component {
    * Render
    */
   render() {
+    const theme = ThemedStyles.style;
     const comment = this.props.comment;
     const avatarSrc = comment.ownerObj.getAvatarSource();
     const canReply = comment.can_reply && comment.parent_guid_l2 == 0;
 
     const actions = (
-      <View style={[CommonStyle.flexContainer]}>
+      <View style={[theme.flexContainer]}>
         <View style={styles.actionsContainer}>
-          <Text style={styles.timestamp}>
+          <Text style={[theme.fontM, theme.colorSecondaryText]}>
             {formatDate(comment.time_created, 'friendly')}
           </Text>
-          <View
-            style={[CommonStyle.flexContainer, CommonStyle.rowJustifyStart]}>
+          <View style={[theme.flexContainer, theme.rowJustifyStart]}>
             <ThumbUpAction entity={comment} size={16} />
             <ThumbDownAction entity={comment} size={16} />
             {canReply && (
@@ -97,18 +116,19 @@ class Comment extends Component {
     return (
       <View style={[styles.container, comment.focused ? styles.focused : null]}>
         <TouchableOpacity
-          onPress={this._navToChannel}
+          onPress={this.navToChannel}
           style={styles.avatarContainer}>
           <FastImage source={avatarSrc} style={styles.avatar} />
         </TouchableOpacity>
 
         <View style={styles.contentContainer}>
-          <View style={styles.content}>
-            <View
-              style={[
-                styles.textContainer,
-                ThemedStyles.style.backgroundTertiary,
-              ]}>
+          <DoubleTapTouch
+            style={styles.content}
+            onDoubleTap={this.showActions}
+            hitSlop={null} // important, reducing the touch extra space for the touchable makes the text links easier to tap.
+            selectable={false}
+            onLongPress={this.showActions}>
+            <View style={[styles.textContainer, theme.backgroundTertiary]}>
               {this.state.editing ? (
                 <CommentEditor
                   setEditing={this.setEditing}
@@ -116,24 +136,43 @@ class Comment extends Component {
                   store={this.props.store}
                 />
               ) : (
-                <DoubleTapText
-                  style={styles.message}
-                  selectable={true}
-                  onDoubleTap={this.showActions}
-                  selectable={false}
-                  onLongPress={this.showActions}>
-                  <Text style={styles.username} onPress={this._navToChannel}>
-                    @{comment.ownerObj.username}{' '}
+                <Text style={styles.message} selectable={false}>
+                  <Text style={styles.username} onPress={this.navToChannel}>
+                    @{comment.ownerObj.username}
                   </Text>
-                  {comment.description && (
-                    <Tags navigation={this.props.navigation}>
-                      {entities.decodeHTML(comment.description)}
-                    </Tags>
-                  )}
-                </DoubleTapText>
+                  <ChannelBadge
+                    channel={comment.ownerObj}
+                    addSpace
+                    iconSize={16}
+                  />{' '}
+                  {comment.description &&
+                    (!comment.mature || comment.mature_visibility) && (
+                      <Tags navigation={this.props.navigation}>
+                        {entities.decodeHTML(comment.description)}
+                      </Tags>
+                    )}
+                </Text>
+              )}
+              {comment.mature && !comment.mature_visibility && (
+                <Icon
+                  name="lock"
+                  size={22}
+                  style={[theme.colorPrimaryText, styles.matureIcon]}
+                  onPress={this.toggleMature}
+                />
               )}
             </View>
-          </View>
+          </DoubleTapTouch>
+          {comment.hasMedia() && (
+            <View style={styles.media}>
+              <MediaView
+                entity={comment}
+                style={styles.media}
+                onPress={this.navToImage}
+                width={Dimensions.get('window').width - 60}
+              />
+            </View>
+          )}
           {actions}
           {comment.expanded && (
             <CommentList
@@ -146,29 +185,6 @@ class Comment extends Component {
               route={this.props.route}
             />
           )}
-
-          {comment.mature ? (
-            <ExplicitOverlay
-              entity={comment}
-              iconSize={35}
-              fontStyle={{ fontSize: 12 }}
-              iconPosition="left"
-              closeContainerStyle={styles.matureCloseContainer}
-              containerStyle={[
-                styles.matureContainer,
-                CommonStyle.marginLeft,
-                CommonStyle.marginRight,
-                CommonStyle.borderRadius5x,
-              ]}
-            />
-          ) : null}
-
-          <MediaView
-            entity={comment}
-            style={styles.media}
-            navigation={this.props.navigation}
-            width={Dimensions.get('window').width - 60}
-          />
         </View>
         <CommentActionSheet
           entity={this.props.entity}
@@ -185,6 +201,13 @@ class Comment extends Component {
   };
 
   /**
+   * toggle mature
+   */
+  toggleMature = () => {
+    this.props.comment.toggleMatureVisibility();
+  };
+
+  /**
    * Toggle expand
    */
   toggleExpand = () => {
@@ -194,14 +217,14 @@ class Comment extends Component {
   /**
    * Set editing
    */
-  setEditing = value => {
+  setEditing = (value) => {
     this.setState({ editing: value });
   };
 
   /**
    * Navigate To channel
    */
-  _navToChannel = () => {
+  navToChannel = () => {
     // only active if receive the navigation property
     if (this.props.navigation) {
       this.props.navigation.push('Channel', {
@@ -211,9 +234,22 @@ class Comment extends Component {
   };
 
   /**
+   * Navigate to full screen image view
+   */
+  navToImage = () => {
+    if (this.props.navigation) {
+      const source = this.props.entity.getThumbSource('xlarge');
+      this.props.navigation.push('ViewImage', {
+        source,
+        entity: this.props.entity,
+      });
+    }
+  };
+
+  /**
    * Handle action on comment
    */
-  onSelection = action => {
+  onSelection = (action) => {
     switch (action) {
       case i18n.t('edit'):
         this.setState({ editing: true });
@@ -229,17 +265,14 @@ class Comment extends Component {
               onPress: () => {
                 this.props.store
                   .delete(this.props.comment.guid)
-                  .then(result => {
-                    Alert.alert(
-                      i18n.t('success'),
+                  .then(() => {
+                    showNotification(
                       i18n.t('comments.successRemoving'),
+                      'success',
                     );
                   })
-                  .catch(err => {
-                    Alert.alert(
-                      i18n.t('error'),
-                      i18n.t('comments.errorRemoving'),
-                    );
+                  .catch(() => {
+                    showNotification(i18n.t('comments.errorRemoving'));
                   });
               },
             },
@@ -249,14 +282,10 @@ class Comment extends Component {
 
         break;
       case i18n.t('setExplicit'):
-        this.props.store
-          .commentToggleExplicit(this.props.comment.guid)
-          .then(result => {});
+        this.props.store.commentToggleExplicit(this.props.comment.guid);
         break;
       case i18n.t('removeExplicit'):
-        this.props.store
-          .commentToggleExplicit(this.props.comment.guid)
-          .then(result => {});
+        this.props.store.commentToggleExplicit(this.props.comment.guid);
         break;
       case i18n.t('report'):
         this.props.navigation.push('Report', { entity: this.props.comment });
@@ -268,6 +297,7 @@ class Comment extends Component {
         Clipboard.setString(
           entities.decodeHTML(this.props.comment.description),
         );
+        showNotification(i18n.t('copied'), 'info');
         break;
       default:
         break;
@@ -282,8 +312,10 @@ const styles = StyleSheet.create({
     marginLeft: -29,
     marginTop: 40,
   },
-  matureContainer: {
-    backgroundColor: '#9A9A9A',
+  matureIcon: {
+    position: 'absolute',
+    right: 10,
+    top: 8,
   },
   container: {
     padding: 8,
@@ -297,10 +329,8 @@ const styles = StyleSheet.create({
     borderLeftWidth: 4,
   },
   media: {
-    flex: 1,
-    margin: 8,
-    borderRadius: 3,
-    //marginLeft: 16,
+    margin: 5,
+    paddingTop: 10,
   },
   contentContainer: {
     flex: 1,
@@ -312,8 +342,9 @@ const styles = StyleSheet.create({
     textShadowRadius: 20,
   },
   textContainer: {
-    borderRadius: 20,
+    borderRadius: 3,
     marginHorizontal: 5,
+    flex: 1,
     padding: 5,
   },
   content: {
@@ -341,15 +372,12 @@ const styles = StyleSheet.create({
   },
   message: {
     paddingHorizontal: 6,
-    fontSize: 14,
+    paddingVertical: 6,
+    fontSize: 16,
   },
   username: {
     // fontWeight: '800',
     fontFamily: 'Roboto-Black',
     paddingRight: 8,
-  },
-  timestamp: {
-    fontSize: 10,
-    color: '#888',
   },
 });

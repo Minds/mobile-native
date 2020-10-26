@@ -1,6 +1,5 @@
 import deleteUser from './helpers/deleteUser';
-import sleep from '../src/common/helpers/sleep';
-import { waitForElement, waitForAndTap, waitForAndType } from './helpers/waitFor';
+import delay from '../src/common/helpers/delay';
 
 // eslint-disable-next-line jest/no-disabled-tests
 describe('Register Flow', () => {
@@ -80,8 +79,10 @@ describe('Register Flow', () => {
       .toBeVisible()
       .withTimeout(10000);
 
-    // subscribe to the first user of the list
-    await element(by.id('suggestedGroup0')).tap();*/
+    // tap the select avatar button
+    await element(by.id('selectAvatar')).tap();
+
+    await delay(3000);
 
     // move to next step
     //await element(by.id('wizardNext')).tap();

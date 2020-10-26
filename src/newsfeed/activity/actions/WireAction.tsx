@@ -2,12 +2,12 @@ import React, { PureComponent } from 'react';
 
 import { TouchableOpacity } from 'react-native';
 
-import IonIcon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { CommonStyle } from '../../../styles/Common';
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import ThemedStyles from '../../../styles/ThemedStyles';
-import type UserModel from 'src/channel/UserModel';
+import type UserModel from '../../../channel/UserModel';
 
 // prevent double tap in touchable
 const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
@@ -27,12 +27,12 @@ export default class WireAction extends PureComponent<PropsType> {
   render() {
     return (
       <TouchableOpacityCustom
-        style={[CommonStyle.flexContainer, CommonStyle.centered]}
+        style={[CommonStyle.centered, ThemedStyles.style.paddingHorizontal4x]}
         onPress={this.openWire}>
-        <IonIcon
+        <Icon
           style={ThemedStyles.style.colorIconActive}
-          name="ios-flash"
-          size={40}
+          name="attach-money"
+          size={20}
         />
       </TouchableOpacityCustom>
     );

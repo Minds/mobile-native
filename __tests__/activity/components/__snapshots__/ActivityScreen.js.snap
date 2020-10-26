@@ -1,331 +1,682 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Activity screen component renders correctly with an entity as param 1`] = `<CenteredLoading />`;
-
-exports[`Activity screen component renders correctly with an entity as param 2`] = `
+exports[`Activity screen component renders correctly  1`] = `
 <View
   style={
     Array [
       Object {
-        "flex": 1,
+        "fontScale": 2,
+        "height": 1334,
+        "scale": 2,
+        "width": 750,
       },
+      undefined,
+      undefined,
     ]
   }
 >
-  <CommentList
-    entity={
-      ActivityModel {
-        "__list": null,
-        "allow_comments": true,
-        "attachment_guid": false,
-        "blurb": false,
-        "comments:count": undefined,
-        "containerObj": undefined,
-        "container_guid": "activityguid0",
-        "custom_data": false,
-        "custom_type": false,
-        "description": "Congratulations! ",
-        "edited": "",
-        "entity_guid": "",
-        "guid": "activityguid0",
-        "impressions": 0,
-        "isOwner": [Function],
-        "is_visible": true,
-        "mature": false,
-        "mature_visibility": false,
-        "message": "Message",
-        "ownerObj": UserModel {
-          "__list": null,
-          "admin": false,
-          "confirmEmail": [Function],
-          "eth_wallet": "",
-          "founder": false,
-          "guid": "824853017709780997",
-          "isOwner": [Function],
-          "last_accepted_tos": 0,
-          "mature": false,
-          "plus": false,
-          "rewards": false,
-          "subtype": false,
-          "time_created": "1522036284",
-          "type": "user",
-          "urn": "",
-          "username": "",
-          "verified": false,
-        },
-        "owner_guid": "824853017709780997",
-        "parent_guid": "838106762591510528",
-        "paywall": "",
-        "paywall_unlocked": false,
-        "perma_url": false,
-        "permissions": Object {},
-        "pinned": false,
-        "reminds": 0,
-        "rowKey": "something0",
-        "shouldBeBlured": [MockFunction],
-        "subtype": "",
-        "thumbnail_src": false,
-        "thumbs:down:count": undefined,
-        "thumbs:down:user_guids": undefined,
-        "thumbs:up:count": undefined,
-        "thumbs:up:user_guids": undefined,
-        "time_created": "1522036284",
-        "title": "TITLE",
-        "type": "activity",
-        "urn": "",
-        "username": "",
-        "wire_totals": Object {
-          "tokens": 1000000000000000000,
-        },
+  <View>
+    <View
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "borderBottomWidth": 0.5,
+            "display": "flex",
+            "flexDirection": "row",
+            "paddingHorizontal": 20,
+            "paddingVertical": 13,
+          },
+          undefined,
+          Array [
+            undefined,
+            Object {
+              "borderBottomWidth": 0,
+              "shadowColor": "#000",
+              "shadowOffset": Object {
+                "height": 1,
+                "width": 0,
+              },
+              "shadowOpacity": 0.22,
+              "shadowRadius": 2.22,
+            },
+            Object {
+              "paddingTop": 10,
+            },
+          ],
+        ]
       }
-    }
-    header={
-      <Activity
-        autoHeight={false}
-        entity={
-          ActivityModel {
-            "__list": null,
-            "allow_comments": true,
-            "attachment_guid": false,
-            "blurb": false,
-            "comments:count": undefined,
-            "containerObj": undefined,
-            "container_guid": "activityguid0",
-            "custom_data": false,
-            "custom_type": false,
-            "description": "Congratulations! ",
-            "edited": "",
-            "entity_guid": "",
-            "guid": "activityguid0",
-            "impressions": 0,
-            "isOwner": [Function],
-            "is_visible": true,
-            "mature": false,
-            "mature_visibility": false,
-            "message": "Message",
-            "ownerObj": UserModel {
-              "__list": null,
-              "admin": false,
-              "confirmEmail": [Function],
-              "eth_wallet": "",
-              "founder": false,
-              "guid": "824853017709780997",
-              "isOwner": [Function],
-              "last_accepted_tos": 0,
-              "mature": false,
-              "plus": false,
-              "rewards": false,
-              "subtype": false,
-              "time_created": "1522036284",
-              "type": "user",
-              "urn": "",
-              "username": "",
-              "verified": false,
+    >
+      <Text
+        allowFontScaling={false}
+        onPress={[MockFunction]}
+        style={
+          Array [
+            Object {
+              "color": undefined,
+              "fontSize": 45,
             },
-            "owner_guid": "824853017709780997",
-            "parent_guid": "838106762591510528",
-            "paywall": "",
-            "paywall_unlocked": false,
-            "perma_url": false,
-            "permissions": Object {},
-            "pinned": false,
-            "reminds": 0,
-            "rowKey": "something0",
-            "shouldBeBlured": [MockFunction],
-            "subtype": "",
-            "thumbnail_src": false,
-            "thumbs:down:count": undefined,
-            "thumbs:down:user_guids": undefined,
-            "thumbs:up:count": undefined,
-            "thumbs:up:user_guids": undefined,
-            "time_created": "1522036284",
-            "title": "TITLE",
-            "type": "activity",
-            "urn": "",
-            "username": "",
-            "wire_totals": Object {
-              "tokens": 1000000000000000000,
+            Array [
+              Object {
+                "elevation": 4,
+                "left": 0,
+                "position": "absolute",
+                "shadowOffset": Object {
+                  "height": 1,
+                  "width": 1,
+                },
+                "shadowOpacity": 0.2,
+                "shadowRadius": 3,
+              },
+              undefined,
+              Object {
+                "top": 5,
+              },
+              Array [
+                undefined,
+                Object {
+                  "marginLeft": -17,
+                  "marginRight": -5,
+                  "paddingTop": 5,
+                  "position": undefined,
+                  "top": undefined,
+                  "width": 50,
+                },
+              ],
+            ],
+            Object {
+              "fontFamily": "Material Design Icons",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
             },
+            Object {},
+          ]
+        }
+      >
+        󰅁
+      </Text>
+      <View
+        onPress={[Function]}
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "overflow": "hidden",
+              },
+              Object {
+                "borderRadius": 18.5,
+                "height": 37,
+                "width": 37,
+              },
+            ]
+          }
+        >
+          <FastImageView
+            resizeMode="cover"
+            source={
+              Object {
+                "headers": Object {
+                  "App-Version": "3.8.0",
+                  "Cache-Control": "no-cache, no-store, must-revalidate",
+                  "Content-Type": "application/json",
+                  "Pragma": "no-cache",
+                },
+                "uri": "https://cdn.minds.com/icon/824853017709780997/medium/undefined",
+              }
+            }
+            style={
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              }
+            }
+          />
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "flex": 1,
+            "flexWrap": "wrap",
+            "marginLeft": 8,
+            "paddingRight": 36,
           }
         }
-        navigation={
-          Object {
-            "push": [MockFunction],
+      >
+        <View
+          style={
+            Object {
+              "flexDirection": "row",
+            }
           }
+        >
+          <View
+            onPress={[Function]}
+            style={
+              Array [
+                undefined,
+                undefined,
+              ]
+            }
+          >
+            <Text
+              numberOfLines={1}
+              style={
+                Array [
+                  Object {
+                    "color": "#444",
+                    "fontFamily": "Roboto",
+                    "fontSize": 16,
+                    "fontWeight": "bold",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+        </View>
+        <View>
+          <Text
+            numberOfLines={1}
+            style={
+              Array [
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+          >
+            3 years ago
+          </Text>
+        </View>
+      </View>
+      <View>
+        <View>
+          <Text
+            allowFontScaling={false}
+            onPress={[Function]}
+            style={
+              Array [
+                Object {
+                  "color": undefined,
+                  "fontSize": 28,
+                },
+                undefined,
+                Object {
+                  "fontFamily": "Material Icons",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                Object {},
+              ]
+            }
+          >
+            
+          </Text>
+          <Modal
+            animationType="none"
+            hardwareAccelerated={false}
+            onRequestClose={[Function]}
+            transparent={true}
+            visible={false}
+          >
+            <View
+              style={
+                Array [
+                  Array [
+                    Object {
+                      "flex": 1,
+                      "flexDirection": "row",
+                    },
+                  ],
+                ]
+              }
+            >
+              <Text
+                onPress={[Function]}
+                style={
+                  Array [
+                    Array [
+                      Object {
+                        "backgroundColor": "#000",
+                        "bottom": 0,
+                        "left": 0,
+                        "opacity": 0.4,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      },
+                    ],
+                  ]
+                }
+              />
+              <View
+                style={
+                  Object {
+                    "alignSelf": "flex-end",
+                    "backgroundColor": "#252E31",
+                    "flex": 1,
+                    "height": 45.5,
+                    "transform": Array [
+                      Object {
+                        "translateY": 45.5,
+                      },
+                    ],
+                  }
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#fff",
+                        "height": 40,
+                        "justifyContent": "center",
+                      },
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#252E31",
+                        "height": 40,
+                        "justifyContent": "center",
+                      },
+                    ]
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#757575",
+                          "fontSize": 14,
+                        },
+                      ]
+                    }
+                  >
+                    Actions
+                  </Text>
+                </View>
+                <RCTScrollView
+                  scrollEnabled={false}
+                >
+                  <View />
+                </RCTScrollView>
+                <View
+                  activeOpacity={1}
+                  onPress={[Function]}
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#fff",
+                        "height": 50,
+                        "justifyContent": "center",
+                        "marginTop": 6,
+                      },
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#202527",
+                        "height": 50,
+                        "justifyContent": "center",
+                        "marginTop": 6,
+                      },
+                    ]
+                  }
+                  underlayColor="#F4F4F4"
+                >
+                  <Text
+                    style={
+                      Array [
+                        Array [
+                          Object {
+                            "fontSize": 18,
+                          },
+                        ],
+                        Object {
+                          "color": "#007AFF",
+                        },
+                      ]
+                    }
+                  />
+                </View>
+              </View>
+            </View>
+          </Modal>
+        </View>
+      </View>
+    </View>
+    <RCTScrollView
+      contentContainerStyle={
+        Array [
+          null,
+          undefined,
+          Object {
+            "flexGrow": 1,
+            "justifyContent": "center",
+          },
+        ]
+      }
+      onContentSizeChange={[Function]}
+      onLayout={[Function]}
+    >
+      <View>
+        <View
+          accessibilityLabel="touchableTextCopy"
+          onLongPress={[Function]}
+          style={
+            Array [
+              undefined,
+              undefined,
+            ]
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "flex": 1,
+                },
+                null,
+              ]
+            }
+          >
+            <Text
+              selectable={true}
+              style={
+                Array [
+                  Array [
+                    undefined,
+                    undefined,
+                  ],
+                  undefined,
+                  Object {
+                    "fontWeight": "bold",
+                  },
+                ]
+              }
+            >
+              TITLE
+            </Text>
+            <Text
+              selectable={false}
+              style={
+                Array [
+                  undefined,
+                  undefined,
+                ]
+              }
+            >
+              Message
+            </Text>
+          </View>
+        </View>
+      </View>
+    </RCTScrollView>
+    <ViewManagerAdapter_ExpoLinearGradient
+      proxiedProperties={
+        Object {
+          "colors": Array [
+            2106663,
+            4280296743,
+          ],
+          "endPoint": undefined,
+          "locations": undefined,
+          "startPoint": undefined,
         }
-      />
-    }
-    navigation={
+      }
+      style={
+        Object {
+          "bottom": 0,
+          "height": 40,
+          "position": "absolute",
+          "width": "100%",
+        }
+      }
+    />
+  </View>
+  <View
+    style={
       Object {
-        "push": [MockFunction],
+        "paddingBottom": -10,
       }
     }
-    onInputFocus={[Function]}
-    route={
-      Object {
-        "params": Object {
-          "entity": Object {
-            "attachment_guid": false,
-            "blurb": false,
-            "containerObj": undefined,
-            "container_guid": "activityguid0",
-            "custom_data": false,
-            "custom_type": false,
-            "description": "Congratulations! ",
-            "edited": "",
-            "guid": "activityguid0",
-            "mature": false,
-            "message": "Message",
-            "ownerObj": Object {
-              "guid": "824853017709780997",
-              "subtype": false,
-              "time_created": "1522036284",
-              "type": "user",
+  >
+    <View>
+      <View
+        style={
+          Array [
+            Object {
+              "borderTopWidth": 0.5,
+              "display": "flex",
+              "flexDirection": "row",
+              "justifyContent": "space-evenly",
+              "paddingHorizontal": 10,
             },
-            "owner_guid": "824853017709780997",
-            "parent_guid": "838106762591510528",
-            "perma_url": false,
-            "rowKey": "something0",
-            "shouldBeBlured": [MockFunction],
-            "thumbnail_src": false,
-            "time_created": "1522036284",
-            "title": "TITLE",
-            "type": "activity",
-            "wire_totals": Object {
-              "tokens": 1000000000000000000,
-            },
-          },
-        },
-        "routeName": "some",
-      }
-    }
-    store={
-      Object {
-        "attachment": Object {},
-        "comments": Array [
-          Object {
-            "attachment_guid": false,
-            "blurb": false,
-            "container_guid": "guid0",
-            "custom_data": false,
-            "custom_type": false,
-            "description": "Congratulations! ",
-            "edited": "",
-            "guid": "guid0",
-            "mature": false,
-            "ownerObj": Object {
-              "guid": "824853017709780997",
-              "subtype": false,
-              "time_created": "1522036284",
-              "type": "user",
-            },
-            "owner_guid": "824853017709780997",
-            "parent_guid": "838106762591510528",
-            "perma_url": false,
-            "thumbnail_src": false,
-            "type": "comment",
-          },
-          Object {
-            "attachment_guid": false,
-            "blurb": false,
-            "container_guid": "guid1",
-            "custom_data": false,
-            "custom_type": false,
-            "description": "Congratulations! ",
-            "edited": "",
-            "guid": "guid1",
-            "mature": false,
-            "ownerObj": Object {
-              "guid": "824853017709780997",
-              "subtype": false,
-              "time_created": "1522036284",
-              "type": "user",
-            },
-            "owner_guid": "824853017709780997",
-            "parent_guid": "838106762591510528",
-            "perma_url": false,
-            "thumbnail_src": false,
-            "type": "comment",
-          },
-          Object {
-            "attachment_guid": false,
-            "blurb": false,
-            "container_guid": "guid2",
-            "custom_data": false,
-            "custom_type": false,
-            "description": "Congratulations! ",
-            "edited": "",
-            "guid": "guid2",
-            "mature": false,
-            "ownerObj": Object {
-              "guid": "824853017709780997",
-              "subtype": false,
-              "time_created": "1522036284",
-              "type": "user",
-            },
-            "owner_guid": "824853017709780997",
-            "parent_guid": "838106762591510528",
-            "perma_url": false,
-            "thumbnail_src": false,
-            "type": "comment",
-          },
-          Object {
-            "attachment_guid": false,
-            "blurb": false,
-            "container_guid": "guid3",
-            "custom_data": false,
-            "custom_type": false,
-            "description": "Congratulations! ",
-            "edited": "",
-            "guid": "guid3",
-            "mature": false,
-            "ownerObj": Object {
-              "guid": "824853017709780997",
-              "subtype": false,
-              "time_created": "1522036284",
-              "type": "user",
-            },
-            "owner_guid": "824853017709780997",
-            "parent_guid": "838106762591510528",
-            "perma_url": false,
-            "thumbnail_src": false,
-            "type": "comment",
-          },
-          Object {
-            "attachment_guid": false,
-            "blurb": false,
-            "container_guid": "guid4",
-            "custom_data": false,
-            "custom_type": false,
-            "description": "Congratulations! ",
-            "edited": "",
-            "guid": "guid4",
-            "mature": false,
-            "ownerObj": Object {
-              "guid": "824853017709780997",
-              "subtype": false,
-              "time_created": "1522036284",
-              "type": "user",
-            },
-            "owner_guid": "824853017709780997",
-            "parent_guid": "838106762591510528",
-            "perma_url": false,
-            "thumbnail_src": false,
-            "type": "comment",
-          },
+            undefined,
+          ]
+        }
+      >
+        <View
+          onPress={[Function]}
+          style={
+            Array [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+            ]
+          }
+          testID="Thumb up activity button"
+        >
+          <Text
+            allowFontScaling={false}
+            style={
+              Array [
+                Object {
+                  "color": undefined,
+                  "fontSize": 21,
+                },
+                Array [
+                  undefined,
+                  undefined,
+                ],
+                Object {
+                  "fontFamily": "Material Icons",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                Object {},
+              ]
+            }
+          >
+            
+          </Text>
+        </View>
+        <View
+          onPress={[Function]}
+          style={
+            Array [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+            ]
+          }
+          testID="Thumb down activity button"
+        >
+          <Text
+            allowFontScaling={false}
+            style={
+              Array [
+                Object {
+                  "color": undefined,
+                  "fontSize": 21,
+                },
+                Array [
+                  undefined,
+                  undefined,
+                ],
+                Object {
+                  "fontFamily": "Material Icons",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                Object {},
+              ]
+            }
+          >
+            
+          </Text>
+        </View>
+        <View
+          onPress={[Function]}
+          style={
+            Array [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+            ]
+          }
+          testID=""
+        >
+          <Text
+            allowFontScaling={false}
+            style={
+              Array [
+                Object {
+                  "color": undefined,
+                  "fontSize": 21,
+                },
+                Array [
+                  undefined,
+                  undefined,
+                ],
+                Object {
+                  "fontFamily": "Material Icons",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                Object {},
+              ]
+            }
+          >
+            
+          </Text>
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "flexDirection": "column",
+              }
+            }
+          >
+            <Text
+              size={15}
+              style={
+                Array [
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+        </View>
+        <View
+          onPress={[Function]}
+          style={
+            Array [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+            ]
+          }
+          testID="Remind activity button"
+        >
+          <Text
+            allowFontScaling={false}
+            style={
+              Array [
+                Object {
+                  "color": undefined,
+                  "fontSize": 21,
+                },
+                Array [
+                  undefined,
+                  Object {
+                    "marginRight": 5,
+                  },
+                ],
+                Object {
+                  "fontFamily": "Material Icons",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                Object {},
+              ]
+            }
+          >
+            
+          </Text>
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "flexDirection": "column",
+              }
+            }
+          >
+            <Text
+              size={15}
+              style={
+                Array [
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+  <BottomSheet
+    callbackNode={
+      Array [
+        Array [
+          1,
         ],
-        "embed": RichEmbedStore {
-          "_richEmbedFetchTimer": null,
-          "clearRichEmbedAction": [Function],
-          "richEmbedUrl": "",
-          "setRichEmbedPromise": null,
-        },
-        "loadComments": [Function],
-        "loadNext": "aaaaaa",
-        "loadPrevious": "aaaaaa",
-        "post": [Function],
-        "setText": [Function],
-      }
+      ]
+    }
+    enabledContentGestureInteraction={false}
+    enabledContentTapInteraction={false}
+    enabledHeaderGestureInteraction={true}
+    enabledInnerScrolling={false}
+    initialSnap={0}
+    onCloseEnd={[Function]}
+    renderContent={[Function]}
+    renderHeader={[Function]}
+    snapPoints={
+      Array [
+        0,
+        760.3799999999999,
+        1160.58,
+      ]
     }
   />
 </View>

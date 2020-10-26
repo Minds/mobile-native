@@ -9,5 +9,9 @@
 		<string>applinks:www.minds.com</string>
 		<string>activitycontinuation:www.minds.com</string>
 	</array>
+	<key>com.apple.security.application-groups</key>
+	<array>
+		<string>group.com.minds.mobile</string>
+	</array>
 </dict>
 </plist>

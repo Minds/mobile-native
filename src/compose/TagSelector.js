@@ -22,7 +22,7 @@ import sessionService from '../common/services/session.service';
  * Tag row
  * @param {Object} props
  */
-const TagRow = props => {
+const TagRow = (props) => {
   const onDelete = useCallback(() => {
     props.store.removeTag(props.tag);
   }, [props.store, props.tag]);
@@ -47,7 +47,7 @@ const TagRow = props => {
 /**
  * Tag selector
  */
-export default observer(function(props) {
+export default observer(function (props) {
   const theme = ThemedStyles.style;
   const store = props.route.params.store;
   const inputRef = useRef();
@@ -123,7 +123,7 @@ export default observer(function(props) {
           contentContainerStyle={styles.suggestedScroll}
           horizontal={true}>
           <MIcon name="fire" size={23} style={theme.colorAlert} />
-          {localStore.suggested.map(t => (
+          {localStore.suggested.map((t) => (
             <Text
               style={[styles.tag, theme.colorIconActive]}
               onPress={() => store.addTag(t.value)}>
@@ -175,7 +175,7 @@ export default observer(function(props) {
             </Text>
           </View>
           <ScrollView keyboardShouldPersistTaps={'handled'}>
-            {localStore.history.history.map(t => (
+            {localStore.history.history.map((t) => (
               <Text
                 style={styles.historyTag}
                 onPress={() => localStore.addString(t)}>
@@ -186,7 +186,7 @@ export default observer(function(props) {
         </View>
       )}
       <View style={styles.tagsContainer}>
-        {store.tags.map(t => (
+        {store.tags.map((t) => (
           <TagRow tag={t} store={store} />
         ))}
       </View>

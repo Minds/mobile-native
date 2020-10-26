@@ -1,143 +1,182 @@
-//@ts-nocheck
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import {
   StyleSheet,
   View,
   Platform,
   TouchableOpacity,
-  SafeAreaView,
+  Text,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+import IconFa from 'react-native-vector-icons/FontAwesome5';
 
-import { observer, inject } from 'mobx-react';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import { Avatar } from 'react-native-elements';
-
-import { MINDS_CDN_URI } from '../config/Config';
-import featuresService from '../common/services/features.service';
-
-import isIphoneX from '../common/helpers/isIphoneX';
-import testID from '../common/helpers/testID';
+import { observer } from 'mobx-react';
+import SearchComponent from './searchbar/SearchComponent';
+import ThemedStyles from '../styles/ThemedStyles';
+import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
 import EmailConfirmation from './EmailConfirmation';
 import BannerInfo from './BannerInfo';
+import FastImage from 'react-native-fast-image';
+import { useStores } from '../common/hooks/use-stores';
+import useCurrentUser from '../common/hooks/useCurrentUser';
+import intword from '../common/helpers/intword';
+import colors from '../styles/Colors';
 
-const forceInset = isIphoneX ? { top: 32 } : null;
+type PropsType = {
+  navigation: any;
+};
 
-@inject('user')
-@inject('wallet')
-@observer
-class Topbar extends Component {
-  componentDidMount() {
-    this.props.wallet.refresh();
-  }
+export const Topbar = observer((props: PropsType) => {
+  const { wallet } = useStores();
+  const user = useCurrentUser();
 
-  render() {
-    return (
-      <SafeAreaView style={styles.container} forceInset={forceInset}>
-        <View style={styles.topbar}>
-          {featuresService.has('crypto') && (
-            <TouchableOpacity
-              onPress={() =>
-                this.props.navigation.navigate('BoostConsole', {
-                  navigation: this.props.navigation,
-                })
-              }
-              {...testID('boost-console button')}>
-              <View style={styles.topbarLeft}>
-                <Icon
-                  name="trending-up"
-                  size={22}
-                  color="#444"
-                  style={styles.button}
-                />
+  // dereference to react to observable changes
+  const balance = wallet.balance;
+
+  useEffect(() => {
+    if (user) {
+      wallet.getTokenAccounts();
+    }
+  });
+
+  const avatar = user ? user.getAvatarSource('medium') : { uri: '' };
+
+  const openMenu = () => {
+    props.navigation.openDrawer();
+  };
+
+  const openWallet = () => {
+    props.navigation.navigate('Tabs', {
+      screen: 'CaptureTab',
+      params: { screen: 'Wallet' },
+    });
+  };
+
+  const theme = ThemedStyles.style;
+  return (
+    <SafeAreaInsetsContext.Consumer>
+      {(insets) => {
+        const cleanTop = {
+          paddingTop: insets && insets.top ? insets.top - 5 : 0,
+        };
+        return (
+          <View style={[theme.backgroundSecondary, styles.shadow]}>
+            <View
+              style={[
+                styles.container,
+                theme.borderBottomHair,
+                theme.borderPrimary,
+                cleanTop,
+              ]}>
+              <View style={styles.topbar}>
+                <View style={styles.topbarLeft}>
+                  <TouchableOpacity onPress={openMenu}>
+                    <FastImage
+                      source={avatar}
+                      style={[styles.avatar, theme.borderIcon]}
+                      resizeMode="contain"
+                    />
+                    <View style={styles.menuIconContainer}>
+                      <Icon
+                        name="md-menu"
+                        style={
+                          ThemedStyles.theme
+                            ? theme.colorBackgroundPrimary
+                            : theme.colorSecondaryText
+                        }
+                        size={14}
+                      />
+                    </View>
+                  </TouchableOpacity>
+                  <SearchComponent navigation={props.navigation} />
+                </View>
+                <View style={styles.topbarRight}>
+                  <Text
+                    onPress={openWallet}
+                    style={[
+                      theme.fontL,
+                      theme.colorSecondaryText,
+                      theme.paddingRight2x,
+                      theme.paddingVertical2x,
+                    ]}>
+                    {intword(balance)}
+                  </Text>
+                  <IconFa
+                    name="coins"
+                    size={20}
+                    style={theme.colorIcon}
+                    onPress={openWallet}
+                  />
+                </View>
               </View>
-            </TouchableOpacity>
-          )}
-
-          {!featuresService.has('crypto') && <View style={styles.topbarLeft} />}
-
-          <View style={styles.topbarCenter}>
-            {this.props.user.me && (
-              <Avatar
-                rounded
-                source={{
-                  uri:
-                    MINDS_CDN_URI +
-                    'icon/' +
-                    this.props.user.me.guid +
-                    '/medium/' +
-                    this.props.user.me.icontime,
-                }}
-                width={38}
-                height={38}
-                onPress={() =>
-                  this.props.navigation.push('Channel', {
-                    guid: this.props.user.me.guid,
-                  })
-                }
-                testID="AvatarButton"
-              />
-            )}
-          </View>
-          <TouchableOpacity
-            onPress={() =>
-              this.props.navigation.navigate('More', {
-                navigation: this.props.navigation,
-              })
-            }
-            {...testID('Main menu button')}>
-            <View style={styles.topbarRight}>
-              <Icon name="menu" size={22} color="#444" style={styles.button} />
             </View>
-          </TouchableOpacity>
-        </View>
-        <EmailConfirmation user={this.props.user} />
-        <BannerInfo user={this.props.user} logged={true} />
-      </SafeAreaView>
-    );
-  }
-}
+            <EmailConfirmation />
+            <BannerInfo />
+          </View>
+        );
+      }}
+    </SafeAreaInsetsContext.Consumer>
+  );
+});
 
 export default Topbar;
 
-let topbarHeight = 56;
-let topMargin = 0;
-
-if (Platform.OS == 'ios') {
-  topbarHeight = 45;
-}
-
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'column',
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#EEE',
-    backgroundColor: '#FFFFFF',
+    height: Platform.select({ ios: 110, android: 70 }),
+    display: 'flex',
+    flexDirection: 'row',
+    // paddingBottom: 8,
+  },
+  menuIconContainer: {
+    backgroundColor: colors.lightGreyed,
+    paddingTop: 1,
+    height: 20,
+    width: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    bottom: -3,
+    right: -3,
+  },
+  shadow: {
+    zIndex: 999,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+    elevation: 3,
+  },
+  avatar: {
+    width: 42,
+    height: 42,
+    borderRadius: 21,
+    borderWidth: 2.5,
+    alignSelf: 'flex-start',
   },
   topbar: {
     flex: 1,
-    alignItems: 'center',
+    // alignItems: 'center',
     flexDirection: 'row',
-    paddingVertical: 5,
   },
   topbarLeft: {
-    width: 100,
-    alignItems: 'center',
-    justifyContent: 'flex-start',
+    flexGrow: 1,
+    marginLeft: 20,
     flexDirection: 'row',
-  },
-  topbarCenter: {
-    flex: 1,
     alignItems: 'center',
-    padding: 2,
   },
   topbarRight: {
-    width: 100,
-    alignItems: 'center',
+    width: 50,
     justifyContent: 'flex-end',
+    alignItems: 'center',
     flexDirection: 'row',
     paddingRight: 4,
+    marginRight: 5,
   },
-  button: {
-    paddingHorizontal: 8,
+  scale0: {
+    transform: [{ scale: 0 }],
   },
 });

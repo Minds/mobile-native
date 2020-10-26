@@ -1,5 +1,9 @@
 //@ts-nocheck
-import { CommonActions, StackActions, SwitchActions } from '@react-navigation/native';
+import {
+  CommonActions,
+  StackActions,
+  SwitchActions,
+} from '@react-navigation/native';
 
 let _navigator = null;
 
@@ -24,9 +28,7 @@ function navigate(...args) {
 }
 
 function push(...args) {
-  _navigator.dispatch(
-    StackActions.push(...args)
-  );
+  _navigator.dispatch(StackActions.push(...args));
 }
 
 function goBack() {
@@ -40,15 +42,13 @@ function jumpTo(route) {
 function reset(routeName, params) {
   const resetAction = StackActions.reset({
     index: 0,
-    actions: [
-        CommonActions.navigate({ routeName: routeName })
-    ]
+    actions: [CommonActions.navigate({ routeName: routeName })],
   });
   _navigator.dispatch(resetAction);
 }
 
 function addListener(name, fn) {
-  return _navigator.addListener(name,fn);
+  return _navigator?.addListener(name, fn);
 }
 
 // add other navigation functions that you need and export them

@@ -1,12 +1,13 @@
 //@ts-nocheck
-import {observable, action} from 'mobx';
-import {Alert, Platform} from 'react-native';
+import { observable, action } from 'mobx';
+import { Alert, Platform } from 'react-native';
 import RNConvertPhAsset from 'react-native-convert-ph-asset';
 
 import attachmentService from '../services/attachment.service';
 import logService from '../services/log.service';
 import i18n from '../services/i18n.service';
 import mindsService from '../services/minds.service';
+import { showNotification } from '../../../AppMessages';
 
 /**
  * Attachment Store
@@ -47,7 +48,7 @@ export default class AttachmentStore {
       }
     }
 
-    if (!await this.validate(media)) {
+    if (!(await this.validate(media))) {
       return;
     }
 
@@ -61,7 +62,7 @@ export default class AttachmentStore {
           const converted = await RNConvertPhAsset.convertVideoFromUrl({
             url: media.uri,
             convertTo: 'm4v',
-            quality: 'high',
+            quality: 'original',
           });
           media.type = converted.mimeType;
           media.uri = converted.path;
@@ -89,9 +90,13 @@ export default class AttachmentStore {
     this.fileName = media.fileName;
 
     try {
-      const uploadPromise = attachmentService.attachMedia(media, extra, pct => {
-        this.setProgress(pct);
-      });
+      const uploadPromise = attachmentService.attachMedia(
+        media,
+        extra,
+        (pct) => {
+          this.setProgress(pct);
+        },
+      );
 
       // we need to defer the set because a cenceled promise could set it to false
       setTimeout(() => this.setUploading(true), 0);
@@ -106,7 +111,7 @@ export default class AttachmentStore {
       this.guid = result.guid;
     } catch (err) {
       this.clear();
-      Alert.alert('Upload failed', 'Please try again');
+      showNotification(i18n.t('uploadFailed'));
     } finally {
       this.setUploading(false);
     }
@@ -119,7 +124,9 @@ export default class AttachmentStore {
     if (media.duration && media.duration > settings.max_video_length * 1000) {
       Alert.alert(
         i18n.t('sorry'),
-        i18n.t('attachment.tooLong', {minutes: settings.max_video_length / 60}),
+        i18n.t('attachment.tooLong', {
+          minutes: settings.max_video_length / 60,
+        }),
       );
       return false;
     }
@@ -141,21 +148,23 @@ export default class AttachmentStore {
   /**
    * Cancel the upload or delete the attachment if it is finished
    */
-  cancelOrDelete = () => {
+  cancelOrDelete = (deleteRemote = true) => {
     if (this.uploading) {
       this.cancelCurrentUpload();
     } else {
-      this.delete();
+      this.delete(deleteRemote);
     }
   };
 
   /**
    * Delete the uploaded attachment
    */
-  async delete() {
+  async delete(deleteRemote) {
     if (!this.uploading && this.hasAttachment && this.guid) {
       try {
-        attachmentService.deleteMedia(this.guid);
+        if (deleteRemote) {
+          attachmentService.deleteMedia(this.guid);
+        }
         this.clear();
         return true;
       } catch (err) {
@@ -185,6 +194,13 @@ export default class AttachmentStore {
   @action
   setLicense(value) {
     this.license = value;
+  }
+
+  @action
+  setMedia(type, guid) {
+    this.type = type;
+    this.guid = guid;
+    this.hasAttachment = Boolean(guid);
   }
 
   @action

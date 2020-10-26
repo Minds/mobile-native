@@ -31,14 +31,14 @@ class ReportedContentScreen extends Component {
     this.props.reportstore.loadList();
   }
 
-  renderRow = row => {
+  renderRow = (row) => {
     return <ReportedContentRow appeal={row.item} />;
   };
 
   /**
    * On tab change
    */
-  onTabChange = value => {
+  onTabChange = (value) => {
     this.props.reportstore.setFilter(value);
     this.props.reportstore.reload();
   };
@@ -90,7 +90,7 @@ class ReportedContentScreen extends Component {
         <FlatList
           data={store.list.appeals.slice()}
           renderItem={this.renderRow}
-          keyExtractor={item => item.guid}
+          keyExtractor={(item) => item.guid}
           onRefresh={this.refresh}
           refreshing={store.list.refreshing}
           onEndReached={this.loadFeed}

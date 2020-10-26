@@ -1,12 +1,7 @@
 //@ts-nocheck
 import React, { PureComponent } from 'react';
 
-import {
-  Text,
-  Dimensions,
-  Linking,
-  View,
-} from 'react-native';
+import { Text, Dimensions, Linking, View } from 'react-native';
 
 import { WebView } from 'react-native-webview';
 import ThemedStyles from '../styles/ThemedStyles';
@@ -134,7 +129,7 @@ const injectedJavaScript = `
 /**
  * Render html
  */
-const renderHTML = function(props) {
+const renderHTML = function (props) {
   let html = props.html || '';
   try {
     //Decode to utf8
@@ -159,7 +154,7 @@ const renderHTML = function(props) {
         ${html}
       </body>
     </html>`;
-  };
+};
 
 /**
  * Blog view html
@@ -174,27 +169,35 @@ export default class BlogViewHTML extends PureComponent {
    * state
    */
   state = {
-    style: { height: Dimensions.get('window').height, flex: 0, height: 0, opacity: 0 },
-    html: {html:''}
+    style: {
+      height: Dimensions.get('window').height,
+      flex: 0,
+      opacity: 0,
+    },
+    html: { html: '' },
   };
 
   /**
    * On event message =
    */
-  onMessage = evt => {
+  onMessage = (evt) => {
     let height = parseInt(evt.nativeEvent.data, 10);
 
     height += 30;
 
     if (height > this.state.style.height) {
-      this.setState({ style: { height, flex: 0 } });
+      this.setState({ style: { height, flex: 0 } }, () => {
+        if (this.props.onHeightUpdated) {
+          this.props.onHeightUpdated();
+        }
+      });
     }
   };
 
   /**
    * Set ref
    */
-  setRef = ref => {
+  setRef = (ref) => {
     this.webview = ref;
   };
 
@@ -206,7 +209,7 @@ export default class BlogViewHTML extends PureComponent {
   /**
    * On nav state change
    */
-  onStateChange = event => {
+  onStateChange = (event) => {
     if (event.url.indexOf('http') > -1) {
       this.webview.stopLoading();
       Linking.openURL(event.url);
@@ -216,9 +219,7 @@ export default class BlogViewHTML extends PureComponent {
   /**
    * Render loading
    */
-  renderLoading = () => (
-    <CenteredLoading/>
-  );
+  renderLoading = () => <CenteredLoading />;
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.html !== prevState.original) {
@@ -250,7 +251,7 @@ export default class BlogViewHTML extends PureComponent {
         onMessage={this.onMessage}
         // renderLoading={this.renderLoading}
         startInLoadingState={true}
-        renderLoading={() => (<View style={{flex: 1, backgroundColor: 'green'}}/>)}
+        renderLoading={() => <View style={ThemedStyles.style.flexContainer} />}
         renderError={this.onError}
         onNavigationStateChange={this.onStateChange}
       />

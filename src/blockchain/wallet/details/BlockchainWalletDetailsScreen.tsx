@@ -11,23 +11,19 @@ import {
   Dimensions,
   Platform,
 } from 'react-native';
+import { observer, inject } from 'mobx-react';
 
 import Share from 'react-native-share';
-
 import QRCode from 'react-native-qrcode-svg';
 
 import TransparentButton from '../../../common/components/TransparentButton';
-import Touchable from '../../../common/components/Touchable';
-
-import { observer, inject } from 'mobx-react'
-
 import BlockchainWalletService from '../BlockchainWalletService';
 import NavigationService from '../../../navigation/NavigationService';
-
-import { CommonStyle } from "../../../styles/Common";
+import { CommonStyle } from '../../../styles/Common';
 import number from '../../../common/helpers/number';
 import BlockchainApiService from '../../BlockchainApiService';
 import i18n from '../../../common/services/i18n.service';
+import colors from '../../../styles/Colors';
 
 // Helpers
 
@@ -59,7 +55,7 @@ export default class BlockchainWalletDetailsScreen extends Component {
     offchain: false,
     current: false,
     tokens: null,
-    eth: null
+    eth: null,
   };
 
   aliasTextInputRef;
@@ -128,14 +124,17 @@ export default class BlockchainWalletDetailsScreen extends Component {
   }
 
   async loadFunds(passedAddress) {
-    const address = passedAddress || this.state.address
+    const address = passedAddress || this.state.address;
 
     this.setState({
       tokens: null,
       eth: null,
     });
 
-    const { tokens, eth } = await BlockchainWalletService.getFunds(address, true);
+    const { tokens, eth } = await BlockchainWalletService.getFunds(
+      address,
+      true,
+    );
 
     this.setState({
       tokens,
@@ -146,9 +145,12 @@ export default class BlockchainWalletDetailsScreen extends Component {
   async loadRemote() {
     try {
       remoteWallet = await BlockchainApiService.getWallet();
-    } catch (e) { }
+    } catch (e) {}
 
-    if (remoteWallet && remoteWallet.toLowerCase() === this.state.address.toLowerCase()) {
+    if (
+      remoteWallet &&
+      remoteWallet.toLowerCase() === this.state.address.toLowerCase()
+    ) {
       this.setState({ remote: true });
     }
   }
@@ -156,7 +158,6 @@ export default class BlockchainWalletDetailsScreen extends Component {
   balanceItem() {
     return (
       <View style={styles.itemContainer}>
-
         <View style={styles.itemBody}>
           <Text style={styles.label}>{i18n.t('blockchain.balance')}</Text>
         </View>
@@ -164,9 +165,12 @@ export default class BlockchainWalletDetailsScreen extends Component {
         <View style={styles.itemSpacer}></View>
 
         <View style={styles.itemActions}>
-          <Text style={styles.fundsItemValue}>{this.state.tokens !== null ? number(this.state.tokens, 0, 4) : '...'}</Text>
+          <Text style={styles.fundsItemValue}>
+            {this.state.tokens !== null
+              ? number(this.state.tokens, 0, 4)
+              : '...'}
+          </Text>
         </View>
-
       </View>
     );
   }
@@ -174,7 +178,6 @@ export default class BlockchainWalletDetailsScreen extends Component {
   gasItem() {
     return (
       <View style={styles.itemContainer}>
-
         <View style={styles.itemBody}>
           <Text style={styles.label}>{i18n.t('blockchain.gasEth')}</Text>
         </View>
@@ -182,9 +185,10 @@ export default class BlockchainWalletDetailsScreen extends Component {
         <View style={styles.itemSpacer}></View>
 
         <View style={styles.itemActions}>
-          <Text style={styles.fundsItemValue}>{this.state.eth !== null ? number(this.state.eth, 0, 4) : '...'}</Text>
+          <Text style={styles.fundsItemValue}>
+            {this.state.eth !== null ? number(this.state.eth, 0, 4) : '...'}
+          </Text>
         </View>
-
       </View>
     );
   }
@@ -192,11 +196,12 @@ export default class BlockchainWalletDetailsScreen extends Component {
   labelItem() {
     return (
       <View style={styles.itemContainer}>
-
         <View style={styles.itemBody}>
           <Text style={styles.label}>{i18n.t('name')}</Text>
           <View style={styles.supportingTextContainer}>
-            <Text style={[styles.supportingText, { minWidth: 200 }]}>{i18n.t('blockchain.walletNameExample')}</Text>
+            <Text style={[styles.supportingText, { minWidth: 200 }]}>
+              {i18n.t('blockchain.walletNameExample')}
+            </Text>
           </View>
         </View>
 
@@ -204,15 +209,15 @@ export default class BlockchainWalletDetailsScreen extends Component {
 
         <View style={styles.itemActions}>
           <TextInput
-            ref={ref => this.aliasTextInputRef = ref}
+            ref={(ref) => (this.aliasTextInputRef = ref)}
             editable={true}
             style={[
               CommonStyle.fieldTextInput,
               styles.aliasTextInput,
-              !this.state.edit && styles.aliasTextInputReadonly
+              !this.state.edit && styles.aliasTextInputReadonly,
             ]}
             onBlur={(e) => this.setLabel()}
-            onChangeText={alias => this.setState({alias})}
+            onChangeText={(alias) => this.setState({ alias })}
             value={this.state.alias}
             placeholder={addressExcerpt(this.state.address)}
           />
@@ -232,30 +237,29 @@ export default class BlockchainWalletDetailsScreen extends Component {
   receiverItem() {
     return (
       <View style={styles.itemContainer}>
-
         <View style={styles.itemBody}>
-          <Text style={styles.label}>{i18n.t('blockchain.receiverAddress')}</Text>
+          <Text style={styles.label}>
+            {i18n.t('blockchain.receiverAddress')}
+          </Text>
           <View style={styles.supportingTextContainer}>
-            <Text style={[styles.supportingText, { minWidth: 200 }]}>{i18n.t('blockchain.shouldBeReceiver')}</Text>
+            <Text style={[styles.supportingText, { minWidth: 200 }]}>
+              {i18n.t('blockchain.shouldBeReceiver')}
+            </Text>
           </View>
         </View>
 
         <View style={styles.itemSpacer}></View>
 
         <View style={styles.itemActions}>
-          <Switch
-            value={this.state.remote}
-            onValueChange={ this.setAsRemote }
-            />
+          <Switch value={this.state.remote} onValueChange={this.setAsRemote} />
         </View>
-
       </View>
     );
   }
 
   setAsCurrentAction = async () => {
     this.setState({
-      current: true
+      current: true,
     });
 
     await BlockchainWalletService.setCurrent(this.state.address);
@@ -264,7 +268,7 @@ export default class BlockchainWalletDetailsScreen extends Component {
 
   setAsRemote = async () => {
     this.setState({
-      remote: true
+      remote: true,
     });
 
     await BlockchainApiService.setWallet(this.state.address);
@@ -277,7 +281,9 @@ export default class BlockchainWalletDetailsScreen extends Component {
         <View style={styles.itemBody}>
           <Text style={styles.label}>{i18n.t('export')}</Text>
           <View style={styles.supportingTextContainer}>
-            <Text style={[styles.supportingText, { minWidth: 200 }]}>{i18n.t('blockchain.downloadPrivate')}</Text>
+            <Text style={[styles.supportingText, { minWidth: 200 }]}>
+              {i18n.t('blockchain.downloadPrivate')}
+            </Text>
           </View>
         </View>
 
@@ -307,7 +313,7 @@ export default class BlockchainWalletDetailsScreen extends Component {
     }
 
     const shareOptions = {
-      message: privateKey
+      message: privateKey,
     };
 
     if (Platform.OS == 'android') {
@@ -323,19 +329,23 @@ export default class BlockchainWalletDetailsScreen extends Component {
         <View style={styles.itemBody}>
           <Text style={styles.label}>{i18n.t('delete')}</Text>
           <View style={styles.supportingTextContainer}>
-            <Text style={[styles.supportingText, { minWidth: 200 }]}>{i18n.t('blockchain.deleteWarning')}</Text>
+            <Text style={[styles.supportingText, { minWidth: 200 }]}>
+              {i18n.t('blockchain.deleteWarning')}
+            </Text>
           </View>
         </View>
 
         <View style={styles.itemSpacer}></View>
 
         <View style={styles.itemActions}>
-          {(!this.state.delete && this.state.editable) && <TransparentButton
-            style={styles.actionButton}
-            color={colors.danger}
-            onPress={this.deleteAction}
-            title={i18n.t('delete').toUpperCase()}
-          />}
+          {!this.state.delete && this.state.editable && (
+            <TransparentButton
+              style={styles.actionButton}
+              color={colors.danger}
+              onPress={this.deleteAction}
+              title={i18n.t('delete').toUpperCase()}
+            />
+          )}
         </View>
       </View>
     );
@@ -349,7 +359,7 @@ export default class BlockchainWalletDetailsScreen extends Component {
         { text: i18n.t('cancel'), style: 'cancel' },
         { text: i18n.t('yesImSure'), onPress: () => this.delete() },
       ],
-      { cancelable: false }
+      { cancelable: false },
     );
   };
 
@@ -362,21 +372,21 @@ export default class BlockchainWalletDetailsScreen extends Component {
   import = () => {
     NavigationService.navigate('BlockchainWalletImport', {
       address: this.state.address,
-      onSuccess: this.importActionReload
+      onSuccess: this.importActionReload,
     });
   };
 
   importActionReload = () => {
     this.setState({
       editable: true,
-      edit: false
+      edit: false,
     });
 
     this.load(this.state.address);
   };
 
   importItem() {
-    return(
+    return (
       <View style={styles.itemContainer}>
         <View style={styles.itemBody}>
           <Text style={styles.label}>{i18n.t('import')}</Text>
@@ -390,12 +400,14 @@ export default class BlockchainWalletDetailsScreen extends Component {
         <View style={styles.itemSpacer}></View>
 
         <View style={styles.itemActions}>
-          {(!this.state.delete) && <TransparentButton
-            style={styles.actionButton}
-            color={colors.primary}
-            onPress={this.import}
-            title={i18n.t('import').toUpperCase()}
-          />}
+          {!this.state.delete && (
+            <TransparentButton
+              style={styles.actionButton}
+              color={colors.primary}
+              onPress={this.import}
+              title={i18n.t('import').toUpperCase()}
+            />
+          )}
         </View>
       </View>
     );
@@ -404,15 +416,19 @@ export default class BlockchainWalletDetailsScreen extends Component {
   qrCode() {
     return (
       <View>
-        {!this.state.offchain && <View style={[ CommonStyle.rowJustifyCenter, styles.qrCodeView ]}>
-          <QRCode
-            value={`ethereum:${this.state.address.toLowerCase()}`}
-            size={getQRSize(3 / 4)}
-          />
-        </View>}
+        {!this.state.offchain && (
+          <View style={[CommonStyle.rowJustifyCenter, styles.qrCodeView]}>
+            <QRCode
+              value={`ethereum:${this.state.address.toLowerCase()}`}
+              size={getQRSize(3 / 4)}
+            />
+          </View>
+        )}
 
-        <View style={[ CommonStyle.rowJustifyCenter, styles.qrCodeView ]}>
-          <Text style={styles.qrCodeLegend} selectable>{this.state.address}</Text>
+        <View style={[CommonStyle.rowJustifyCenter, styles.qrCodeView]}>
+          <Text style={styles.qrCodeLegend} selectable>
+            {this.state.address}
+          </Text>
         </View>
       </View>
     );
@@ -421,9 +437,7 @@ export default class BlockchainWalletDetailsScreen extends Component {
   render() {
     return (
       <ScrollView>
-
-        <View style={[ CommonStyle.flexContainer, { flex: 1 } ]}>
-
+        <View style={CommonStyle.flexContainer}>
           {this.state.editable && this.labelItem()}
 
           {!this.state.edit && this.qrCode()}
@@ -457,7 +471,7 @@ const styles = StyleSheet.create({
   },
 
   section: {
-    paddingTop: 20
+    paddingTop: 20,
   },
 
   actionBar: {
@@ -473,7 +487,6 @@ const styles = StyleSheet.create({
   actionButton: {
     marginLeft: 5,
   },
-
 
   itemContainer: {
     flexDirection: 'row',
@@ -516,9 +529,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
-    backgroundColor:
-    colors.primary,
-    borderRadius: 4
+    backgroundColor: colors.primary,
+    borderRadius: 4,
   },
   fundsItem: {
     padding: 5,
@@ -542,11 +554,11 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   aliasTextInputReadonly: {
-    borderColor: '#f0f0f0'
+    borderColor: '#f0f0f0',
   },
 
   qrCodeView: {
-    paddingTop: 30
+    paddingTop: 30,
   },
   qrCodeLegend: {
     letterSpacing: 2,
@@ -563,6 +575,6 @@ const styles = StyleSheet.create({
     padding: 8,
     borderWidth: 1,
     borderColor: colors.darkGreyed,
-    borderRadius: 3
-  }
+    borderRadius: 3,
+  },
 });

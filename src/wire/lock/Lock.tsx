@@ -12,7 +12,7 @@ import Button from '../../common/components/Button';
 import { MINDS_ASSETS_CDN_URI, MINDS_CDN_URI } from '../../config/Config';
 
 import i18n from '../../common/services/i18n.service';
-import type ActivityModel from 'src/newsfeed/ActivityModel';
+import type ActivityModel from '../../newsfeed/ActivityModel';
 import ThemedStyles from '../../styles/ThemedStyles';
 
 type PropsType = {
@@ -88,10 +88,10 @@ export default class Lock extends PureComponent<PropsType> {
           <Button
             loading={this.state.unlocking}
             text={i18n.t('unlock').toUpperCase()}
-            color="#4caf50"
+            color="white"
             containerStyle={CommonStyle.rowJustifyCenter}
             onPress={this.unlock}>
-            <Icon name="ios-flash" type="ionicon" size={22} color="#4caf50" />
+            <Icon name="ios-flash" type="ionicon" size={22} color="white" />
           </Button>
         </View>
         <FastImage source={imageUri} style={imageStyle} />
@@ -207,7 +207,11 @@ export default class Lock extends PureComponent<PropsType> {
    */
   getFormatedAmount(): string {
     const entity = this.props.entity;
-    if (entity.wire_threshold) {
+    if (
+      entity.wire_threshold &&
+      'min' in entity.wire_threshold &&
+      entity.wire_threshold.min
+    ) {
       return currency(
         entity.wire_threshold.min,
         entity.wire_threshold.type,

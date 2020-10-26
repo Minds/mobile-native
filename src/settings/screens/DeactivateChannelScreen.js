@@ -1,7 +1,5 @@
 //@ts-nocheck
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
 import {
   View,
@@ -23,15 +21,17 @@ import ThemedStyles from '../../styles/ThemedStyles';
  * Delete Channel Screen
  */
 export default class DeactivateChannelScreen extends Component {
-
   onDisable = () => {
     Alert.alert(
       i18n.t('attention'),
       i18n.t('settings.disableChannelConfirm'),
-      [{ text: i18n.t('yes'), onPress: () => SettingsService.disable()}, { text: i18n.t('no')}],
-      { cancelable: false }
+      [
+        { text: i18n.t('yes'), onPress: () => SettingsService.disable() },
+        { text: i18n.t('no') },
+      ],
+      { cancelable: false },
     );
-  }
+  };
 
   /**
    * Render
@@ -39,10 +39,30 @@ export default class DeactivateChannelScreen extends Component {
   render() {
     return (
       <ScrollView style={[CS.flexContainer, CS.padding2x]}>
-        <KeyboardAvoidingView style={[CS.flexContainer]} behavior={Platform.OS == 'ios' ? 'padding' : null}>
-          <Text style={[CS.fontXXL]}>{i18n.t('settings.disableChannel')}</Text>
-          <Text style={[CS.fontL, CS.marginTop, CS.marginBottom2x]}>{i18n.t('settings.disableDescription')}</Text>
-          <Button text="Disable" color={Colors.danger} textColor="white" inverted onPress={this.onDisable}/>
+        <KeyboardAvoidingView
+          style={[CS.flexContainer]}
+          behavior={Platform.OS == 'ios' ? 'padding' : null}>
+          <Text style={[CS.fontXXL, CS.bold]}>
+            {i18n.t('settings.disableChannel')}
+          </Text>
+          <Text
+            style={[
+              CS.fontL,
+              CS.marginTop,
+              CS.marginBottom2x,
+              CS.colorSecondaryText,
+            ]}>
+            {i18n.t('settings.disableDescription')}
+          </Text>
+          <View style={CS.marginTop4x}>
+            <Button
+              text={i18n.t('settings.disableChannelButton')}
+              color={ThemedStyles.getColor('alert')}
+              textColor="white"
+              inverted
+              onPress={this.onDisable}
+            />
+          </View>
         </KeyboardAvoidingView>
       </ScrollView>
     );

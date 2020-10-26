@@ -25,7 +25,6 @@ exports[`Remind owner component renders correctly 1`] = `
     }
   />
   <TouchableOpacity
-    activeOpacity={0.2}
     onPress={[Function]}
   >
     <FastImage
@@ -35,6 +34,7 @@ exports[`Remind owner component renders correctly 1`] = `
           "headers": Object {
             "App-Version": "3.8.0",
             "Cache-Control": "no-cache, no-store, must-revalidate",
+            "Content-Type": "application/json",
             "Pragma": "no-cache",
           },
           "uri": "https://cdn.minds.com/icon/824853017709780997/medium/undefined",
@@ -62,7 +62,6 @@ exports[`Remind owner component renders correctly 1`] = `
     }
   >
     <TouchableOpacity
-      activeOpacity={0.2}
       onPress={[Function]}
       style={
         Array [

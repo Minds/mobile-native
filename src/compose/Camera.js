@@ -1,78 +1,131 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useCallback, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import Icon from 'react-native-vector-icons/Ionicons';
-import MIcon from 'react-native-vector-icons/MaterialIcons';
-import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import FIcon from 'react-native-vector-icons/Feather';
+import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useRoute, useNavigation } from '@react-navigation/native';
+import { useTransition } from 'react-native-redash';
+import Animated from 'react-native-reanimated';
+import { when } from 'mobx';
+import { observer, useLocalStore } from 'mobx-react';
+
 import ThemedStyles from '../styles/ThemedStyles';
 import RecordButton from './RecordButton';
-import { observer, useLocalStore } from 'mobx-react';
 import { useSafeArea } from 'react-native-safe-area-context';
 import mindsService from '../common/services/minds.service';
-import attachmentService from '../common/services/attachment.service';
+import VideoClock from './VideoClock';
 
 /**
  * Camera
  * @param {Object} props
  */
-export default observer(function(props) {
+export default observer(function (props) {
   const theme = ThemedStyles.style;
   const ref = useRef();
+  const route = useRoute();
+  const navigation = useNavigation();
 
   const insets = useSafeArea();
   const cleanTop = { marginTop: insets.top || 0 };
 
   // local store
-  const store = useLocalStore(() => ({
-    cameraType: RNCamera.Constants.Type.back,
-    flashMode: RNCamera.Constants.FlashMode.off,
-    recording: false,
-    toggleFlash: () => {
-      if (store.flashMode === RNCamera.Constants.FlashMode.on) {
-        store.flashMode = RNCamera.Constants.FlashMode.off;
-      } else if (store.flashMode === RNCamera.Constants.FlashMode.off) {
-        store.flashMode = RNCamera.Constants.FlashMode.auto;
-      } else {
-        store.flashMode = RNCamera.Constants.FlashMode.on;
-      }
-    },
-    toggleCamera: () => {
-      store.cameraType =
-        store.cameraType === RNCamera.Constants.Type.back
-          ? RNCamera.Constants.Type.front
-          : RNCamera.Constants.Type.back;
-    },
-    setRecording: value => {
-      store.recording = value;
-    },
-    async recordVideo() {
-      if (store.recording) {
-        store.setRecording(false);
-        return ref.current.stopRecording();
-      }
-      const settings = await mindsService.getSettings();
+  const store = useLocalStore(
+    (p) => ({
+      cameraType: RNCamera.Constants.Type.front,
+      flashMode: RNCamera.Constants.FlashMode.off,
+      recording: false,
+      show: false,
+      pulse: false,
+      ready: false,
+      showCam() {
+        store.show = true;
+      },
+      isReady() {
+        store.ready = true;
+      },
+      toggleFlash: () => {
+        if (store.flashMode === RNCamera.Constants.FlashMode.on) {
+          store.flashMode = RNCamera.Constants.FlashMode.off;
+        } else if (store.flashMode === RNCamera.Constants.FlashMode.off) {
+          store.flashMode = RNCamera.Constants.FlashMode.auto;
+        } else {
+          store.flashMode = RNCamera.Constants.FlashMode.on;
+        }
+      },
+      toggleCamera: () => {
+        store.cameraType =
+          store.cameraType === RNCamera.Constants.Type.back
+            ? RNCamera.Constants.Type.front
+            : RNCamera.Constants.Type.back;
+      },
+      setRecording: (value, pulse = false) => {
+        store.recording = value;
+        store.pulse = pulse;
+      },
+      async recordVideo(pulse = false) {
+        if (store.recording) {
+          store.setRecording(false);
+          return ref.current.stopRecording();
+        }
+        const settings = await mindsService.getSettings();
 
-      store.setRecording(true);
+        store.setRecording(true, pulse);
 
-      return await ref.current.recordAsync({
-        quality: 0.9,
-        maxDuration: settings.max_video_length,
-      });
-    },
-    async selectFromGallery() {
-      const response = await attachmentService.gallery('mixed');
-      if (response && props.onMediaFromGallery) {
-        props.onMediaFromGallery(response);
-      }
-    },
-    takePicture() {
-      return ref.current.takePictureAsync({
-        base64: false,
-        quality: 0.9,
-        pauseAfterCapture: true,
-      });
-    },
-  }));
+        const options = {
+          quality: 0.9,
+          maxDuration: settings.max_video_length,
+        };
+
+        if (p.portraitMode) {
+          options.orientation = 'portrait';
+        }
+
+        return await ref.current.recordAsync();
+      },
+      takePicture() {
+        const options = {
+          base64: false,
+          quality: 0.9,
+          pauseAfterCapture: true,
+        };
+
+        if (p.portraitMode) {
+          options.orientation = 'portrait';
+        }
+
+        return ref.current.takePictureAsync(options);
+      },
+    }),
+    props,
+  );
+
+  useEffect(() => {
+    const t = setTimeout(() => {
+      store.showCam();
+    }, 150);
+
+    let unlisten;
+
+    if (route.params && route.params.start) {
+      unlisten = when(
+        () => store.ready,
+        () => {
+          setTimeout(() => {
+            onPress && onPress();
+            navigation.setParams({ start: false });
+          }, 100);
+        },
+      );
+    }
+
+    return () => {
+      clearTimeout(t);
+      unlisten && unlisten();
+    };
+  }, [store, onPress, route.params, navigation]);
+
+  const opacity = useTransition(store.ready);
 
   // capture press handler
   const onPress = useCallback(async () => {
@@ -83,7 +136,19 @@ export default observer(function(props) {
       }
     } else {
       const result = await store.recordVideo();
-      console.log(result);
+
+      if (result && props.onMedia) {
+        props.onMedia({ type: 'video/mp4', ...result });
+      }
+    }
+  }, [props, store]);
+
+  // capture long press handler
+  const onLongPress = useCallback(async () => {
+    if (!store.recording) {
+      props.onForceVideo();
+      const result = await store.recordVideo(true);
+
       if (result && props.onMedia) {
         props.onMedia({ type: 'video/mp4', ...result });
       }
@@ -93,62 +158,85 @@ export default observer(function(props) {
   let flashIconName;
   switch (store.flashMode) {
     case RNCamera.Constants.FlashMode.on:
-      flashIconName = 'flash-on';
+      flashIconName = 'md-flash-outline';
       break;
     case RNCamera.Constants.FlashMode.off:
-      flashIconName = 'flash-off';
+      flashIconName = 'md-flash-off-outline';
       break;
     case RNCamera.Constants.FlashMode.auto:
-      flashIconName = 'flash-auto';
+      flashIconName = 'md-flash-outline';
       break;
   }
 
   return (
     <View style={theme.flexContainer}>
-      <RNCamera
-        ref={ref}
-        style={theme.flexContainer}
-        type={store.cameraType}
-        flashMode={store.flashMode}
-        androidCameraPermissionOptions={{
-          title: 'Permission to use camera',
-          message: 'We need your permission to use your camera',
-          buttonPositive: 'Ok',
-          buttonNegative: 'Cancel',
-        }}
-        androidRecordAudioPermissionOptions={{
-          title: 'Permission to use audio recording',
-          message: 'We need your permission to use your audio',
-          buttonPositive: 'Ok',
-          buttonNegative: 'Cancel',
-        }}
-        onGoogleVisionBarcodesDetected={({ barcodes }) => {
-          console.log(barcodes);
-        }}
-      />
+      <Animated.View style={[theme.flexContainer, { opacity }]}>
+        {store.show && (
+          <RNCamera
+            ref={ref}
+            style={theme.flexContainer}
+            type={store.cameraType}
+            flashMode={store.flashMode}
+            ratio="16:9"
+            androidCameraPermissionOptions={{
+              title: 'Permission to use camera',
+              message: 'We need your permission to use your camera',
+              buttonPositive: 'Ok',
+              buttonNegative: 'Cancel',
+            }}
+            androidRecordAudioPermissionOptions={{
+              title: 'Permission to use audio recording',
+              message: 'We need your permission to use your audio',
+              buttonPositive: 'Ok',
+              buttonNegative: 'Cancel',
+            }}
+            onCameraReady={store.isReady}
+          />
+        )}
+      </Animated.View>
+      {store.recording && <VideoClock style={[styles.clock, cleanTop]} />}
       <View style={styles.buttonContainer}>
         <View style={styles.galleryIconContainer}>
-          <MCIcon
-            size={40}
-            name="image-outline"
-            style={[styles.galleryIcon]}
-            onPress={store.selectFromGallery}
+          <FIcon
+            size={30}
+            name="image"
+            style={styles.galleryIcon}
+            onPress={props.onPressGallery}
           />
         </View>
-        <RecordButton size={70} store={store} onPress={onPress} />
-      </View>
-      <View style={[styles.buttonTopContainer, cleanTop]}>
-        <Icon
-          name="ios-reverse-camera"
-          size={40}
-          style={styles.cameraReverseIcon}
-          onPress={store.toggleCamera}
-        />
-        <MIcon
-          name={flashIconName}
-          size={35}
-          style={styles.flashIcon}
-          onPress={store.toggleFlash}
+        <View style={styles.rightButtonsContainer}>
+          <View>
+            <Icon
+              name={flashIconName}
+              size={30}
+              style={styles.icon}
+              onPress={store.toggleFlash}
+            />
+            {store.flashMode === RNCamera.Constants.FlashMode.auto && (
+              <MIcon
+                name="format-text-variant"
+                size={12}
+                style={[styles.icon, styles.autoIcon]}
+                onPress={store.toggleFlash}
+              />
+            )}
+          </View>
+          {!store.recording && (
+            <Icon
+              name="md-camera-reverse-outline"
+              size={30}
+              style={styles.icon}
+              onPress={store.toggleCamera}
+            />
+          )}
+        </View>
+        <RecordButton
+          size={70}
+          store={store}
+          onLongPress={onLongPress}
+          onPressOut={onPress}
+          pulse={store.pulse}
+          isPhoto={props.mode === 'photo'}
         />
       </View>
     </View>
@@ -156,28 +244,23 @@ export default observer(function(props) {
 });
 
 const styles = StyleSheet.create({
-  buttonTopContainer: {
+  clock: {
     position: 'absolute',
-    right: 15,
-    flexDirection: 'column',
-    alignItems: 'center',
-    top: 5,
-  },
-  cameraReverseIcon: {
+    width: '100%',
+    top: 20,
+    left: 0,
     color: 'white',
-    shadowOpacity: 0.3,
-    textShadowRadius: 2,
-    textShadowOffset: { width: 0, height: 0 },
-    shadowRadius: 2.22,
-    elevation: 4,
+    textAlign: 'center',
   },
-  flashIcon: {
+  icon: {
+    padding: 10,
     color: 'white',
-    marginTop: 10,
-    shadowOpacity: 0.3,
-    textShadowRadius: 2,
-    textShadowOffset: { width: 0, height: 0 },
-    elevation: 1,
+    textShadowColor: 'rgba(0, 0, 0, 0.35)',
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 2.22,
+  },
+  autoIcon: {
+    position: 'absolute',
   },
   galleryIconContainer: {
     position: 'absolute',
@@ -185,19 +268,29 @@ const styles = StyleSheet.create({
     height: '100%',
     justifyContent: 'center',
   },
+  rightButtonsContainer: {
+    position: 'absolute',
+    right: 0,
+    width: '50%',
+    paddingLeft: 40,
+    justifyContent: 'space-around',
+    flexDirection: 'row',
+    height: '100%',
+    alignItems: 'center',
+  },
   galleryIcon: {
+    padding: 10,
     color: 'white',
     alignSelf: 'center',
-    marginLeft: 12,
-    shadowOpacity: 0.4,
-    textShadowRadius: 4,
-    textShadowOffset: { width: 0, height: 0 },
-    elevation: 4,
+    marginLeft: 15,
+    textShadowColor: 'rgba(0, 0, 0, 0.35)',
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 2.22,
   },
   buttonContainer: {
     position: 'absolute',
     bottom: 25,
     width: '100%',
     alignItems: 'center',
-  }
+  },
 });

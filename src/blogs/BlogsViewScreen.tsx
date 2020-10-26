@@ -1,23 +1,11 @@
 //@ts-nocheck
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
 import {
   View,
   StyleSheet,
-  ScrollView,
   Dimensions,
-  Image,
-  TextInput,
-  Keyboard,
-  TouchableOpacity,
-  TouchableHighlight,
-  FlatList,
   Text,
-  Platform,
-  KeyboardAvoidingView,
-  ActivityIndicator,
   SafeAreaView,
   Alert,
 } from 'react-native';
@@ -30,7 +18,6 @@ import { inject, observer } from 'mobx-react';
 
 import FastImage from 'react-native-fast-image';
 import { Icon } from 'react-native-elements';
-import IonIcon from 'react-native-vector-icons/Ionicons';
 
 import BlogViewHTML from './BlogViewHTML';
 import OwnerBlock from '../newsfeed/activity/OwnerBlock';
@@ -40,16 +27,16 @@ import colors from '../styles/Colors';
 import ThumbUpAction from '../newsfeed/activity/actions/ThumbUpAction';
 import ThumbDownAction from '../newsfeed/activity/actions/ThumbDownAction';
 import RemindAction from '../newsfeed/activity/actions/RemindAction';
-import CommentsAction from '../newsfeed/activity/actions/CommentsAction';
 import shareService from '../share/ShareService';
 import commentsStoreProvider from '../comments/CommentsStoreProvider';
 import CommentList from '../comments/CommentList';
 import CenteredLoading from '../common/components/CenteredLoading';
 import logService from '../common/services/log.service';
 import i18n from '../common/services/i18n.service';
-import featuresService from '../common/services/features.service';
 import { FLAG_VIEW } from '../common/Permissions';
 import ThemedStyles from '../styles/ThemedStyles';
+import { ComponentsStyle } from '../styles/Components';
+import BlogActionSheet from './BlogActionSheet';
 
 /**
  * Blog View Screen
@@ -57,21 +44,20 @@ import ThemedStyles from '../styles/ThemedStyles';
 @inject('user', 'blogsView')
 @observer
 export default class BlogsViewScreen extends Component {
-
   /**
    * Disable navigation bar
    */
   static navigationOptions = {
-    header: null
-  }
+    header: null,
+  };
 
   share = () => {
     const blog = this.props.blogsView.blog;
     shareService.share(blog.title, blog.perma_url);
-  }
+  };
 
   state = {
-    error: null
+    error: null,
   };
 
   /**
@@ -80,6 +66,8 @@ export default class BlogsViewScreen extends Component {
    */
   constructor(props) {
     super(props);
+
+    this.listRef = React.createRef(null);
 
     this.comments = commentsStoreProvider.get();
   }
@@ -120,17 +108,16 @@ export default class BlogsViewScreen extends Component {
       if (this.props.blogsView.blog && this.props.blogsView.blog._list) {
         this.props.blogsView.blog._list.viewed.addViewed(
           this.props.blogsView.blog,
-          this.props.blogsView.blog._list.metadataService
+          this.props.blogsView.blog._list.metadataService,
         );
       }
-
     } catch (error) {
       logService.exception(error);
       Alert.alert(
         'Error',
         error.message || i18n.t('blogs.errorLoading'),
         [{ text: i18n.t('ok'), onPress: () => this.props.navigation.goBack() }],
-        { cancelable: false }
+        { cancelable: false },
       );
     }
   }
@@ -147,6 +134,16 @@ export default class BlogsViewScreen extends Component {
   }
 
   /**
+   * On HTML height updated
+   */
+  onHeightUpdated = () => {
+    const params = this.props.route.params;
+    if (params && params.scrollToBottom && this.listRef.current) {
+      this.listRef.current.scrollToBottom();
+    }
+  };
+
+  /**
    * Render blog
    */
   getHeader() {
@@ -155,60 +152,91 @@ export default class BlogsViewScreen extends Component {
 
     const actions = (
       <View style={[CS.rowJustifyStart]}>
-        <RemindAction entity={blog} navigation={this.props.navigation}/>
+        <RemindAction entity={blog} navigation={this.props.navigation} />
         <ThumbUpAction entity={blog} />
         <ThumbDownAction entity={blog} />
       </View>
-    )
+    );
     const image = blog.getBannerSource();
-
-    const actionSheet = this.getActionSheet();
-    const optMenu = featuresService.has('allow-comments-toggle') ?
-      (<View style={styles.rightToolbar}>
-        <Icon name="more-vert"  onPress={() => this.showActionSheet()} size={26} style={styles.icon}/>
-        {actionSheet}
-      </View>) : (null);
     return (
       <View style={[styles.screen, theme.backgroundSecondary]}>
-        <FastImage source={image} resizeMode={FastImage.resizeMode.cover} style={styles.image} />
+        <FastImage
+          source={image}
+          resizeMode={FastImage.resizeMode.cover}
+          style={styles.image}
+        />
         <Text style={styles.title}>{blog.title}</Text>
-        {optMenu}
+        <View style={[styles.actionSheet]}>
+          <BlogActionSheet entity={blog} navigation={this.props.navigation} />
+        </View>
         <View style={styles.ownerBlockContainer}>
           <OwnerBlock entity={blog} navigation={this.props.navigation}>
-            <Text style={[styles.timestamp, theme.colorSecondaryText]}>{formatDate(blog.time_created)}</Text>
+            <Text style={[styles.timestamp, theme.colorSecondaryText]}>
+              {formatDate(blog.time_created)}
+            </Text>
           </OwnerBlock>
         </View>
         {actions}
         <View style={styles.description}>
-          {blog.description ?
-            <BlogViewHTML html={blog.description} /> :
-            <CenteredLoading/>}
+          {blog.description ? (
+            <BlogViewHTML
+              html={blog.description}
+              onHeightUpdated={this.onHeightUpdated}
+            />
+          ) : (
+            <CenteredLoading />
+          )}
         </View>
         <View style={styles.moreInformation}>
-          { Boolean(blog.getLicenseText()) &&
-              <Icon color={colors.medium} size={18} name='public'/>
-          }
-          <Text style={[CS.fontXS, CS.paddingLeft, CS.colorMedium, CS.paddingRight2x]}>{blog.getLicenseText()}</Text>
-          <Icon color={colors.primary} size={20} name='share' onPress={this.share} />
+          {Boolean(blog.getLicenseText()) && (
+            <Icon color={colors.medium} size={18} name="public" />
+          )}
+          <Text
+            style={[
+              CS.fontXS,
+              CS.paddingLeft,
+              CS.colorMedium,
+              CS.paddingRight2x,
+            ]}>
+            {blog.getLicenseText()}
+          </Text>
+          <Icon
+            color={colors.primary}
+            size={20}
+            name="share"
+            onPress={this.share}
+          />
         </View>
         <SafeAreaView style={styles.header}>
-          <Icon raised color={colors.primary} size={22} name='arrow-back' onPress={() => this.props.navigation.goBack()}/>
+          <Icon
+            raised
+            color={colors.primary}
+            size={22}
+            name="arrow-back"
+            onPress={() => this.props.navigation.goBack()}
+          />
         </SafeAreaView>
       </View>
-    )
+    );
   }
 
   getActionSheet() {
-    let options = [ i18n.t('cancel') ];
-    options.push(this.props.blogsView.blog.allow_comments ? i18n.t('disableComments') : i18n.t('enableComments'));
+    let options = [i18n.t('cancel')];
+    options.push(
+      this.props.blogsView.blog.allow_comments
+        ? i18n.t('disableComments')
+        : i18n.t('enableComments'),
+    );
     return (
       <ActionSheet
-        ref={o => this.ActionSheet = o}
+        ref={(o) => (this.ActionSheet = o)}
         options={options}
-        onPress={ (i) => { this.handleActionSheetSelection(options[i]) }}
+        onPress={(i) => {
+          this.handleActionSheetSelection(options[i]);
+        }}
         cancelButtonIndex={0}
       />
-    )
+    );
   }
 
   async showActionSheet() {
@@ -216,7 +244,7 @@ export default class BlogsViewScreen extends Component {
   }
 
   async handleActionSheetSelection(option) {
-    switch(option) {
+    switch (option) {
       case i18n.t('disableComments'):
       case i18n.t('enableComments'):
         try {
@@ -225,7 +253,6 @@ export default class BlogsViewScreen extends Component {
           console.error(err);
           this.showError();
         }
-
     }
   }
 
@@ -236,10 +263,8 @@ export default class BlogsViewScreen extends Component {
     Alert.alert(
       i18n.t('sorry'),
       i18n.t('errorMessage') + '\n' + i18n.t('activity.tryAgain'),
-      [
-        {text: i18n.t('ok'), onPress: () => {}},
-      ],
-      { cancelable: false }
+      [{ text: i18n.t('ok'), onPress: () => {} }],
+      { cancelable: false },
     );
   }
 
@@ -247,7 +272,6 @@ export default class BlogsViewScreen extends Component {
    * Render
    */
   render() {
-
     const theme = ThemedStyles.style;
 
     if (!this.props.blogsView.blog) {
@@ -265,27 +289,29 @@ export default class BlogsViewScreen extends Component {
 
     return (
       <View style={[CS.flexContainer, theme.backgroundSecondary]}>
-        {
-          !this.state.error ?
-            <CommentList
-              header={this.getHeader()}
-              entity={this.props.blogsView.blog}
-              store={this.comments}
-              navigation={this.props.navigation}
-              route={this.props.route}
-              keyboardVerticalOffset = {Header.HEIGHT - 65}
+        {!this.state.error ? (
+          <CommentList
+            header={this.getHeader()}
+            ref={this.listRef}
+            entity={this.props.blogsView.blog}
+            store={this.comments}
+            navigation={this.props.navigation}
+            route={this.props.route}
+            keyboardVerticalOffset={Header.HEIGHT - 65}
+          />
+        ) : (
+          <View style={CS.flexColumnCentered}>
+            <FastImage
+              resizeMode={FastImage.resizeMode.contain}
+              style={ComponentsStyle.logo}
+              source={require('../assets/logos/logo.png')}
             />
-          :
-            <View style={CS.flexColumnCentered}>
-              <FastImage
-                resizeMode={FastImage.resizeMode.contain}
-                style={ComponentsStyle.logo}
-                source={require('../assets/logos/logo.png')}
-              />
-              <Text style={[CS.fontL, CS.colorDanger]}>{i18n.t('blogs.error')}</Text>
-              <Text style={[CS.fontM]}>{i18n.t('activity.tryAgain')}</Text>
-            </View>
-        }
+            <Text style={[CS.fontL, CS.colorDanger]}>
+              {i18n.t('blogs.error')}
+            </Text>
+            <Text style={[CS.fontM]}>{i18n.t('activity.tryAgain')}</Text>
+          </View>
+        )}
       </View>
     );
   }
@@ -306,16 +332,22 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingBottom: paddingBottom,
   },
+  actionSheet: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    zIndex: 1,
+  },
   header: {
     position: 'absolute',
     left: 0,
-    top: 0
+    top: 0,
   },
   actionsContainer: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 4
+    padding: 4,
   },
   title: {
     paddingTop: 12,
@@ -335,10 +367,10 @@ const styles = StyleSheet.create({
     paddingBottom: 12,
   },
   screen: {
-    flex:1
+    flex: 1,
   },
   image: {
-    height: 200
+    height: 200,
   },
   timestamp: {
     fontSize: 11,
@@ -355,7 +387,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignSelf: 'baseline',
     backgroundColor: '#FFF',
-    padding: 5
+    padding: 5,
   },
   posterAvatar: {
     height: 36,
@@ -377,10 +409,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 8,
     top: 0,
-    color: '#FFF'
+    color: '#FFF',
   },
   sendicon: {
-    paddingRight: 8
+    paddingRight: 8,
   },
   loadCommentsContainer: {
     backgroundColor: '#EEE',
@@ -397,7 +429,7 @@ const styles = StyleSheet.create({
   rightToolbar: {
     alignSelf: 'flex-end',
     bottom: 35,
-    right: 10
+    right: 10,
   },
   icon: {
     color: '#888',

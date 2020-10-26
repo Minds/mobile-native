@@ -35,22 +35,13 @@ exports[`cature poster flags component should renders correctly for props false 
     }
   />
   <View
-    accessible={true}
-    focusable={true}
-    isTVSelectable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
+    activeOpacity={0.65}
+    onPress={[Function]}
     style={
       Object {
         "alignItems": "center",
         "flexDirection": "row",
         "justifyContent": "center",
-        "opacity": 1,
         "paddingLeft": 10,
       }
     }
@@ -77,22 +68,13 @@ exports[`cature poster flags component should renders correctly for props false 
     </Text>
   </View>
   <View
-    accessible={true}
-    focusable={true}
-    isTVSelectable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
+    activeOpacity={0.65}
+    onPress={[Function]}
     style={
       Object {
         "alignItems": "center",
         "flexDirection": "row",
         "justifyContent": "center",
-        "opacity": 1,
         "paddingLeft": 10,
       }
     }
@@ -119,25 +101,20 @@ exports[`cature poster flags component should renders correctly for props false 
     </Text>
   </View>
   <View
-    accessible={true}
-    focusable={true}
-    isTVSelectable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
+    activeOpacity={0.65}
+    onPress={[Function]}
     style={
-      Object {
-        "alignItems": "center",
-        "borderRightWidth": 0,
-        "flexDirection": "row",
-        "justifyContent": "center",
-        "opacity": 1,
-        "paddingLeft": 10,
-      }
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "paddingLeft": 10,
+        },
+        Object {
+          "borderRightWidth": 0,
+        },
+      ]
     }
   >
     <Text
@@ -159,7 +136,7 @@ exports[`cature poster flags component should renders correctly for props false 
         ]
       }
     >
-      
+      
     </Text>
   </View>
   <Modal
@@ -187,6 +164,7 @@ exports[`cature poster flags component should renders correctly for props false 
     <View
       accessible={true}
       focusable={true}
+      forwardedRef={[Function]}
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -233,6 +211,7 @@ exports[`cature poster flags component should renders correctly for props false 
       }
     >
       <View
+        forwardedRef={[Function]}
         hideModalContentWhileAnimating={false}
         onModalHide={[Function]}
         onModalWillHide={[Function]}
@@ -316,25 +295,17 @@ exports[`cature poster flags component should renders correctly for props false 
                 ]
               }
             >
-              
+              
             </Text>
           </View>
           <View
-            accessible={true}
-            focusable={true}
-            isTVSelectable={true}
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
+            activeOpacity={0.65}
+            disabled={true}
+            onPress={[Function]}
             style={
               Object {
                 "alignItems": "center",
                 "flexDirection": "row",
-                "opacity": 1,
                 "padding": 10,
               }
             }
@@ -357,7 +328,7 @@ exports[`cature poster flags component should renders correctly for props false 
                 ]
               }
             >
-              
+              
             </Text>
             <Text
               style={
@@ -377,21 +348,13 @@ exports[`cature poster flags component should renders correctly for props false 
             </Text>
           </View>
           <View
-            accessible={true}
-            focusable={true}
-            isTVSelectable={true}
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
+            activeOpacity={0.65}
+            disabled={true}
+            onPress={[Function]}
             style={
               Object {
                 "alignItems": "center",
                 "flexDirection": "row",
-                "opacity": 1,
                 "padding": 10,
               }
             }
@@ -414,7 +377,7 @@ exports[`cature poster flags component should renders correctly for props false 
                 ]
               }
             >
-              
+              
             </Text>
             <Text
               style={
@@ -462,6 +425,7 @@ exports[`cature poster flags component should renders correctly for props false 
     <View
       accessible={true}
       focusable={true}
+      forwardedRef={[Function]}
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -508,6 +472,7 @@ exports[`cature poster flags component should renders correctly for props false 
       }
     >
       <View
+        forwardedRef={[Function]}
         hideModalContentWhileAnimating={false}
         onModalHide={[Function]}
         onModalWillHide={[Function]}
@@ -590,7 +555,7 @@ exports[`cature poster flags component should renders correctly for props false 
                 ]
               }
             >
-              
+              
             </Text>
           </View>
           <View>
@@ -654,23 +619,21 @@ exports[`cature poster flags component should renders correctly for props false 
             >
               <View
                 accessibilityLabel="Poster lock done button"
-                accessible={true}
-                focusable={true}
-                isTVSelectable={true}
-                onClick={[Function]}
-                onResponderGrant={[Function]}
-                onResponderMove={[Function]}
-                onResponderRelease={[Function]}
-                onResponderTerminate={[Function]}
-                onResponderTerminationRequest={[Function]}
-                onStartShouldSetResponder={[Function]}
+                onPress={[Function]}
                 style={
-                  Object {
-                    "backgroundColor": "#5DBAC0",
-                    "borderRadius": 2,
-                    "opacity": 1,
-                  }
+                  Array [
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    Object {
+                      "backgroundColor": "#5DBAC0",
+                      "borderRadius": 36,
+                    },
+                    undefined,
+                  ]
                 }
+                text="Done"
               >
                 <Text
                   style={
@@ -718,6 +681,7 @@ exports[`cature poster flags component should renders correctly for props false 
     <View
       accessible={true}
       focusable={true}
+      forwardedRef={[Function]}
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -764,6 +728,7 @@ exports[`cature poster flags component should renders correctly for props false 
       }
     >
       <View
+        forwardedRef={[Function]}
         hideModalContentWhileAnimating={false}
         onModalHide={[Function]}
         onModalWillHide={[Function]}
@@ -875,7 +840,7 @@ exports[`cature poster flags component should renders correctly for props false 
                 ]
               }
             >
-              
+              
             </Text>
           </View>
           <RCTScrollView
@@ -931,6 +896,8 @@ exports[`cature poster flags component should renders correctly for props false 
   <Modal
     animationType="none"
     hardwareAccelerated={false}
+    isVisible={false}
+    onHide={[Function]}
     transparent={true}
     visible={false}
   >
@@ -997,22 +964,13 @@ exports[`cature poster flags component should renders correctly for props true 1
     }
   />
   <View
-    accessible={true}
-    focusable={true}
-    isTVSelectable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
+    activeOpacity={0.65}
+    onPress={[Function]}
     style={
       Object {
         "alignItems": "center",
         "flexDirection": "row",
         "justifyContent": "center",
-        "opacity": 1,
         "paddingLeft": 10,
       }
     }
@@ -1039,22 +997,13 @@ exports[`cature poster flags component should renders correctly for props true 1
     </Text>
   </View>
   <View
-    accessible={true}
-    focusable={true}
-    isTVSelectable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
+    activeOpacity={0.65}
+    onPress={[Function]}
     style={
       Object {
         "alignItems": "center",
         "flexDirection": "row",
         "justifyContent": "center",
-        "opacity": 1,
         "paddingLeft": 10,
       }
     }
@@ -1081,25 +1030,20 @@ exports[`cature poster flags component should renders correctly for props true 1
     </Text>
   </View>
   <View
-    accessible={true}
-    focusable={true}
-    isTVSelectable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
+    activeOpacity={0.65}
+    onPress={[Function]}
     style={
-      Object {
-        "alignItems": "center",
-        "borderRightWidth": 0,
-        "flexDirection": "row",
-        "justifyContent": "center",
-        "opacity": 1,
-        "paddingLeft": 10,
-      }
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "paddingLeft": 10,
+        },
+        Object {
+          "borderRightWidth": 0,
+        },
+      ]
     }
   >
     <Text
@@ -1121,7 +1065,7 @@ exports[`cature poster flags component should renders correctly for props true 1
         ]
       }
     >
-      
+      
     </Text>
   </View>
   <Modal
@@ -1149,6 +1093,7 @@ exports[`cature poster flags component should renders correctly for props true 1
     <View
       accessible={true}
       focusable={true}
+      forwardedRef={[Function]}
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -1195,6 +1140,7 @@ exports[`cature poster flags component should renders correctly for props true 1
       }
     >
       <View
+        forwardedRef={[Function]}
         hideModalContentWhileAnimating={false}
         onModalHide={[Function]}
         onModalWillHide={[Function]}
@@ -1278,25 +1224,17 @@ exports[`cature poster flags component should renders correctly for props true 1
                 ]
               }
             >
-              
+              
             </Text>
           </View>
           <View
-            accessible={true}
-            focusable={true}
-            isTVSelectable={true}
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
+            activeOpacity={0.65}
+            disabled={true}
+            onPress={[Function]}
             style={
               Object {
                 "alignItems": "center",
                 "flexDirection": "row",
-                "opacity": 1,
                 "padding": 10,
               }
             }
@@ -1319,7 +1257,7 @@ exports[`cature poster flags component should renders correctly for props true 1
                 ]
               }
             >
-              
+              
             </Text>
             <Text
               style={
@@ -1339,21 +1277,13 @@ exports[`cature poster flags component should renders correctly for props true 1
             </Text>
           </View>
           <View
-            accessible={true}
-            focusable={true}
-            isTVSelectable={true}
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
+            activeOpacity={0.65}
+            disabled={true}
+            onPress={[Function]}
             style={
               Object {
                 "alignItems": "center",
                 "flexDirection": "row",
-                "opacity": 1,
                 "padding": 10,
               }
             }
@@ -1376,7 +1306,7 @@ exports[`cature poster flags component should renders correctly for props true 1
                 ]
               }
             >
-              
+              
             </Text>
             <Text
               style={
@@ -1424,6 +1354,7 @@ exports[`cature poster flags component should renders correctly for props true 1
     <View
       accessible={true}
       focusable={true}
+      forwardedRef={[Function]}
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -1470,6 +1401,7 @@ exports[`cature poster flags component should renders correctly for props true 1
       }
     >
       <View
+        forwardedRef={[Function]}
         hideModalContentWhileAnimating={false}
         onModalHide={[Function]}
         onModalWillHide={[Function]}
@@ -1552,7 +1484,7 @@ exports[`cature poster flags component should renders correctly for props true 1
                 ]
               }
             >
-              
+              
             </Text>
           </View>
           <View>
@@ -1616,23 +1548,21 @@ exports[`cature poster flags component should renders correctly for props true 1
             >
               <View
                 accessibilityLabel="Poster lock done button"
-                accessible={true}
-                focusable={true}
-                isTVSelectable={true}
-                onClick={[Function]}
-                onResponderGrant={[Function]}
-                onResponderMove={[Function]}
-                onResponderRelease={[Function]}
-                onResponderTerminate={[Function]}
-                onResponderTerminationRequest={[Function]}
-                onStartShouldSetResponder={[Function]}
+                onPress={[Function]}
                 style={
-                  Object {
-                    "backgroundColor": "#5DBAC0",
-                    "borderRadius": 2,
-                    "opacity": 1,
-                  }
+                  Array [
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    Object {
+                      "backgroundColor": "#5DBAC0",
+                      "borderRadius": 36,
+                    },
+                    undefined,
+                  ]
                 }
+                text="Done"
               >
                 <Text
                   style={
@@ -1680,6 +1610,7 @@ exports[`cature poster flags component should renders correctly for props true 1
     <View
       accessible={true}
       focusable={true}
+      forwardedRef={[Function]}
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -1726,6 +1657,7 @@ exports[`cature poster flags component should renders correctly for props true 1
       }
     >
       <View
+        forwardedRef={[Function]}
         hideModalContentWhileAnimating={false}
         onModalHide={[Function]}
         onModalWillHide={[Function]}
@@ -1837,7 +1769,7 @@ exports[`cature poster flags component should renders correctly for props true 1
                 ]
               }
             >
-              
+              
             </Text>
           </View>
           <RCTScrollView
@@ -1893,6 +1825,8 @@ exports[`cature poster flags component should renders correctly for props true 1
   <Modal
     animationType="none"
     hardwareAccelerated={false}
+    isVisible={false}
+    onHide={[Function]}
     transparent={true}
     visible={false}
   >

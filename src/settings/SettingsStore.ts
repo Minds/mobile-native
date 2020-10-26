@@ -8,14 +8,15 @@ import ThemedStyles from '../styles/ThemedStyles';
 /**
  * Store for the values held in Settings.
  */
-class SettingsStore {
-
+export class SettingsStore {
   @observable appLog = true;
   @observable leftHanded = null;
+  @observable ignoreBestLanguage = '';
 
   consumerNsfw = [];
   creatorNsfw = [];
   useHashtag = true;
+  composerMode = 'photo';
 
   /**
    * Initializes local variables with their correct values as stored locally.
@@ -30,6 +31,8 @@ class SettingsStore {
       'ConsumerNsfw',
       'UseHashtags',
       'Theme',
+      'IgnoreBestLanguage',
+      'ComposerMode',
     ]);
 
     // store theme changes
@@ -40,13 +43,16 @@ class SettingsStore {
     if (!data) {
       ThemedStyles.theme = 0;
       ThemedStyles.init();
-      return;
+      return this;
     }
+
     this.leftHanded = data[0][1];
     this.appLog = data[1][1];
     this.creatorNsfw = data[2][1] || [];
     this.consumerNsfw = data[3][1] || [];
     this.useHashtags = data[4][1] === null ? true : data[4][1];
+    this.ignoreBestLanguage = data[6][1] || '';
+    this.composerMode = data[7][1] || 'photo';
 
     // set the initial value for hashtag
     getStores().hashtag.setAll(!this.useHashtags);
@@ -58,11 +64,29 @@ class SettingsStore {
   }
 
   /**
+   * Set ignore best language
+   * @param value string
+   */
+  @action
+  setIgnoreBestLanguage(value: string) {
+    this.ignoreBestLanguage = value;
+    storageService.setItem('IgnoreBestLanguage', value);
+  }
+
+  /**
    * Set the theme in the stored values
    * @param {numeric} value
    */
   setTheme(value) {
     storageService.setItem('Theme', value);
+  }
+  /**
+   * Set composer mode
+   * @param {string} value
+   */
+  setComposerMode(value: string) {
+    storageService.setItem('ComposerMode', value);
+    this.composerMode = value;
   }
 
   /**
@@ -97,6 +121,5 @@ class SettingsStore {
     storageService.setItem('UseHashtags', value);
     this.useHashtags = value;
   }
-
 }
-export default new SettingsStore;
+export default new SettingsStore();

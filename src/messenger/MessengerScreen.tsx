@@ -1,6 +1,5 @@
 //@ts-nocheck
 import React, { Component } from 'react';
-
 import {
   Text,
   View,
@@ -8,7 +7,6 @@ import {
   Platform,
   FlatList,
   StyleSheet,
-  ActivityIndicator,
 } from 'react-native';
 
 import { inject, observer } from 'mobx-react';
@@ -24,6 +22,7 @@ import { ComponentsStyle } from '../styles/Components';
 import ErrorLoading from '../common/components/ErrorLoading';
 import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
+import ActivityIndicator from '../common/components/ActivityIndicator';
 
 /**
  * Messenger Conversarion List Screen
@@ -66,7 +65,7 @@ class MessengerScreen extends Component {
     //this.disposeLeave();
   }
 
-  searchDebouncer = _.debounce(search => {
+  searchDebouncer = _.debounce((search) => {
     this.props.messengerList.setSearch(search);
   }, 200);
 
@@ -119,23 +118,32 @@ class MessengerScreen extends Component {
       );
     }
 
-    const iconRight = messengerList.configured ? 'md-unlock' : null;
+    const iconRight = messengerList.configured ? 'md-lock-open-outline' : null;
     const footer = this.getFooter();
 
     return (
       <View style={[styles.container, theme.backgroundSecondary]}>
-        <SearchView
-          placeholder={i18n.t('discovery.search')}
-          onChangeText={this.searchChange}
-          iconRight={iconRight}
-          containerStyle={[theme.backgroundPrimary]}
-          iconRightOnPress={this.onLogoutPress}
-        />
+        <View
+          style={[theme.rowJustifyStart, theme.alignCenter, theme.marginTop2x]}>
+          {/* <MIcon
+            size={45}
+            name="chevron-left"
+            style={[styles.backIcon, theme.colorIcon]}
+            onPress={this.props.navigation.goBack}
+          /> */}
+          <SearchView
+            placeholder={i18n.t('discovery.search')}
+            onChangeText={this.searchChange}
+            iconRight={iconRight}
+            containerStyle={[theme.backgroundPrimary, theme.flexContainer]}
+            iconRightOnPress={this.onLogoutPress}
+          />
+        </View>
         {loadingCmp}
         <FlatList
           data={conversations.slice()}
           renderItem={this.renderMessage}
-          keyExtractor={item => item.guid}
+          keyExtractor={(item) => item.guid}
           onRefresh={this.refresh}
           onEndReached={this.loadMore}
           // onEndReachedThreshold={0.01}
@@ -168,7 +176,7 @@ class MessengerScreen extends Component {
    * Search change
    * We debounce to prevent a fetch to the server on every key pressed
    */
-  searchChange = search => {
+  searchChange = (search) => {
     this.searchDebouncer(search);
   };
 
@@ -190,7 +198,7 @@ class MessengerScreen extends Component {
    * render row
    * @param {object} row
    */
-  renderMessage = row => {
+  renderMessage = (row) => {
     return (
       <ConversationView
         item={row.item}
@@ -224,7 +232,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingLeft: 5,
     paddingRight: 5,
-    paddingTop: 5,
   },
   body: {
     marginLeft: 8,
@@ -232,6 +239,12 @@ const styles = StyleSheet.create({
   },
   icons: {
     padding: 5,
+  },
+  backIcon: {
+    shadowOpacity: 0.4,
+    textShadowRadius: 4,
+    textShadowOffset: { width: 0, height: 0 },
+    elevation: 4,
   },
   row: {
     flexDirection: 'row',

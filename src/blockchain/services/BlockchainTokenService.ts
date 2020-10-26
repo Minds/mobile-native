@@ -12,12 +12,14 @@ class BlockchainTokenService {
 
     const tokenApprove = await token.methods.approve(
       address,
-      Web3Service.web3.utils.toWei(tokensAmount.toString(), 'ether')
+      Web3Service.web3.utils.toWei(tokensAmount.toString(), 'ether'),
     );
 
     const result = await Web3Service.sendSignedContractMethod(
       tokenApprove,
-      i18n.t('blockchain.tokenApprove',{address, tokensAmount, message}).trim()
+      i18n
+        .t('blockchain.tokenApprove', { address, tokensAmount, message })
+        .trim(),
     );
 
     return result.transactionHash;
@@ -31,8 +33,8 @@ class BlockchainTokenService {
   }
 
   encodeParams(params) {
-    const types = [ 'uint256', 'uint256' ],
-      values = [ 0x80, 0x40 ];
+    const types = ['uint256', 'uint256'],
+      values = [0x80, 0x40];
 
     for (let param of params) {
       types.push(param.type);

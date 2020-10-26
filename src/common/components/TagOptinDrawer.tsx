@@ -13,18 +13,24 @@ import { CommonStyle as CS } from '../../styles/Common';
 import i18n from '../services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 
+type Props = any;
+
 /**
  * Tag Opt in Drawer
  */
 @inject('hashtag')
 @observer
-class TagOptinDrawer extends Component {
+class TagOptinDrawer extends Component<Props> {
   /**
    * State
    */
   state = {
     showModal: false,
     top: 0,
+  };
+
+  static defaultProps = {
+    showPreferredToggle: true,
   };
 
   /**
@@ -60,7 +66,7 @@ class TagOptinDrawer extends Component {
   /**
    * On select one tag
    */
-  onSelectOne = tag => {
+  onSelectOne = (tag) => {
     this.props.hashtag.setHashtag(tag);
     this.props.onSelectOne && this.props.onSelectOne(tag);
   };
@@ -96,30 +102,34 @@ class TagOptinDrawer extends Component {
         style={[styles.modal]}>
         <View style={[styles.modalView, theme.backgroundSecondary]}>
           <ScrollView style={CS.flexContainer}>
-            <View
-              style={[
-                CS.rowJustifySpaceEvenly,
-                CS.alignCenter,
-                CS.borderBottomHair,
-                CS.paddingBottom2x,
-                theme.borderPrimarys,
-              ]}>
-              <Text>{i18n.t('hashtags.preferred')}</Text>
-              <Switch
-                value={!this.props.hashtag.all}
-                onSyncPress={this.toogleAll}
-              />
-            </View>
-            <Text
-              style={[
-                CS.fontS,
-                theme.colorTextSeconday,
-                CS.fontLight,
-                CS.textCenter,
-                CS.marginTop,
-              ]}>
-              {i18n.t('hashtags.hold')}
-            </Text>
+            {this.props.showPreferredToggle ? (
+              <View
+                style={[
+                  CS.rowJustifySpaceEvenly,
+                  CS.alignCenter,
+                  CS.borderBottomHair,
+                  CS.paddingBottom2x,
+                  theme.borderPrimarys,
+                ]}>
+                <Text>{i18n.t('hashtags.preferred')}</Text>
+                <Switch
+                  value={!this.props.hashtag.all}
+                  onSyncPress={this.toogleAll}
+                />
+              </View>
+            ) : null}
+            {this.props.onSelectOne ? (
+              <Text
+                style={[
+                  CS.fontS,
+                  theme.colorTextSeconday,
+                  CS.fontLight,
+                  CS.textCenter,
+                  CS.marginTop,
+                ]}>
+                {i18n.t('hashtags.hold')}
+              </Text>
+            ) : null}
             <TagSelect
               tagStyle={[CS.backgroundWhite, CS.padding1x, CS.flexContainer]}
               textSelectedStyle={[
@@ -140,7 +150,7 @@ class TagOptinDrawer extends Component {
               noScroll
               noAutofocus={true}
               hideTags={true}
-              tags={this.props.hashtag.suggested.map(m => m.value)}
+              tags={this.props.hashtag.suggested.map((m) => m.value)}
               onTagDeleted={this.props.hashtag.deselect}
               onTagAdded={this.props.hashtag.create}
               onChange={this.onChange}

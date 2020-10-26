@@ -1,13 +1,16 @@
-//@ts-nocheck
 import React from 'react';
 import { useFocusEffect } from '@react-navigation/native';
+
+type PropsType = {
+  onFocus: Function;
+};
 
 /**
  * Calls the onFocus callback when the container screen is focused in the navigator
  *
  * @param {Object} props
  */
-export default function OnFocus({ onFocus }) {
+export default function OnFocus({ onFocus }: PropsType) {
   useFocusEffect(
     React.useCallback(() => {
       const unsubscribe = onFocus();
@@ -16,8 +19,8 @@ export default function OnFocus({ onFocus }) {
       if (unsubscribe instanceof Function) {
         return () => unsubscribe();
       }
-    }, [onFocus])
+    }, [onFocus]),
   );
 
   return null;
-};
+}

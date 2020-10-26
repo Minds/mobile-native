@@ -1,13 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Activity component renders correctly 1`] = `
-<View
+<TouchableOpacity
+  activeOpacity={0.8}
+  delayPressIn={60}
   onLayout={[Function]}
+  onLongPress={[Function]}
+  onPress={[Function]}
   style={
     Array [
       Object {
         "overflow": "visible",
       },
+      undefined,
       undefined,
       undefined,
     ]
@@ -16,8 +21,7 @@ exports[`Activity component renders correctly 1`] = `
 >
   <Pinned
     entity={
-      ActivityModel {
-        "__list": null,
+      Object {
         "allow_comments": true,
         "attachment_guid": false,
         "blurb": false,
@@ -29,31 +33,51 @@ exports[`Activity component renders correctly 1`] = `
         "description": "Congratulations! ",
         "edited": "",
         "entity_guid": "",
+        "getLockType": [Function],
         "guid": "activityguid0",
         "impressions": 0,
         "isOwner": [Function],
-        "is_visible": true,
+        "is_visible": false,
         "mature": false,
         "mature_visibility": false,
         "message": "Message",
-        "ownerObj": UserModel {
+        "ownerObj": Object {
           "__list": null,
-          "admin": false,
+          "allow_comments": true,
+          "blocked": undefined,
+          "canary": false,
           "confirmEmail": [Function],
+          "disable_autoplay_videos": undefined,
+          "email_confirmed": false,
           "eth_wallet": "",
           "founder": false,
+          "groupsCount": 0,
           "guid": "824853017709780997",
+          "impressions": undefined,
           "isOwner": [Function],
+          "is_admin": false,
           "last_accepted_tos": 0,
           "mature": false,
+          "mature_visibility": false,
+          "mode": 0,
+          "nsfw": Array [],
+          "onchain_booster": 0,
+          "pending_subscribe": false,
+          "permissions": Object {},
           "plus": false,
+          "pro": false,
           "rewards": false,
+          "subscribed": undefined,
+          "subscribers_count": undefined,
+          "subscriptions_count": 0,
           "subtype": false,
+          "tags": Array [],
           "time_created": "1522036284",
           "type": "user",
           "urn": "",
           "username": "",
           "verified": false,
+          "wire_rewards": undefined,
         },
         "owner_guid": "824853017709780997",
         "parent_guid": "838106762591510528",
@@ -94,8 +118,7 @@ exports[`Activity component renders correctly 1`] = `
   />
   <OwnerBlock
     entity={
-      ActivityModel {
-        "__list": null,
+      Object {
         "allow_comments": true,
         "attachment_guid": false,
         "blurb": false,
@@ -107,31 +130,51 @@ exports[`Activity component renders correctly 1`] = `
         "description": "Congratulations! ",
         "edited": "",
         "entity_guid": "",
+        "getLockType": [Function],
         "guid": "activityguid0",
         "impressions": 0,
         "isOwner": [Function],
-        "is_visible": true,
+        "is_visible": false,
         "mature": false,
         "mature_visibility": false,
         "message": "Message",
-        "ownerObj": UserModel {
+        "ownerObj": Object {
           "__list": null,
-          "admin": false,
+          "allow_comments": true,
+          "blocked": undefined,
+          "canary": false,
           "confirmEmail": [Function],
+          "disable_autoplay_videos": undefined,
+          "email_confirmed": false,
           "eth_wallet": "",
           "founder": false,
+          "groupsCount": 0,
           "guid": "824853017709780997",
+          "impressions": undefined,
           "isOwner": [Function],
+          "is_admin": false,
           "last_accepted_tos": 0,
           "mature": false,
+          "mature_visibility": false,
+          "mode": 0,
+          "nsfw": Array [],
+          "onchain_booster": 0,
+          "pending_subscribe": false,
+          "permissions": Object {},
           "plus": false,
+          "pro": false,
           "rewards": false,
+          "subscribed": undefined,
+          "subscribers_count": undefined,
+          "subscriptions_count": 0,
           "subtype": false,
+          "tags": Array [],
           "time_created": "1522036284",
           "type": "user",
           "urn": "",
           "username": "",
           "verified": false,
+          "wire_rewards": undefined,
         },
         "owner_guid": "824853017709780997",
         "parent_guid": "838106762591510528",
@@ -176,20 +219,10 @@ exports[`Activity component renders correctly 1`] = `
       }
     }
     rightToolbar={
-      <View
-        style={
-          Object {
-            "alignSelf": "flex-end",
-            "position": "absolute",
-            "right": 10,
-            "top": 6,
-          }
-        }
-      >
+      <View>
         <ActivityActionSheet
           entity={
-            ActivityModel {
-              "__list": null,
+            Object {
               "allow_comments": true,
               "attachment_guid": false,
               "blurb": false,
@@ -201,31 +234,51 @@ exports[`Activity component renders correctly 1`] = `
               "description": "Congratulations! ",
               "edited": "",
               "entity_guid": "",
+              "getLockType": [Function],
               "guid": "activityguid0",
               "impressions": 0,
               "isOwner": [Function],
-              "is_visible": true,
+              "is_visible": false,
               "mature": false,
               "mature_visibility": false,
               "message": "Message",
-              "ownerObj": UserModel {
+              "ownerObj": Object {
                 "__list": null,
-                "admin": false,
+                "allow_comments": true,
+                "blocked": undefined,
+                "canary": false,
                 "confirmEmail": [Function],
+                "disable_autoplay_videos": undefined,
+                "email_confirmed": false,
                 "eth_wallet": "",
                 "founder": false,
+                "groupsCount": 0,
                 "guid": "824853017709780997",
+                "impressions": undefined,
                 "isOwner": [Function],
+                "is_admin": false,
                 "last_accepted_tos": 0,
                 "mature": false,
+                "mature_visibility": false,
+                "mode": 0,
+                "nsfw": Array [],
+                "onchain_booster": 0,
+                "pending_subscribe": false,
+                "permissions": Object {},
                 "plus": false,
+                "pro": false,
                 "rewards": false,
+                "subscribed": undefined,
+                "subscribers_count": undefined,
+                "subscriptions_count": 0,
                 "subtype": false,
+                "tags": Array [],
                 "time_created": "1522036284",
                 "type": "user",
                 "urn": "",
                 "username": "",
                 "verified": false,
+                "wire_rewards": undefined,
               },
               "owner_guid": "824853017709780997",
               "parent_guid": "838106762591510528",
@@ -271,21 +324,18 @@ exports[`Activity component renders correctly 1`] = `
           }
           onTranslate={[Function]}
           testID=""
-          toggleEdit={[Function]}
         />
       </View>
     }
   >
-    <TouchableOpacity
-      activeOpacity={0.2}
-      onPress={[Function]}
-    >
+    <View>
       <Text
+        numberOfLines={1}
         style={
           Array [
             Object {
               "color": "#888",
-              "fontSize": 11,
+              "fontSize": 14,
             },
             Object {
               "paddingRight": 5,
@@ -294,195 +344,21 @@ exports[`Activity component renders correctly 1`] = `
           ]
         }
       >
-        Mar 25, 2018, 20:51
+        3 years ago
       </Text>
-    </TouchableOpacity>
+    </View>
   </OwnerBlock>
   <View
     style={
       Object {
-        "padding": 8,
+        "justifyContent": "center",
+        "minHeight": 150,
       }
     }
   >
-    <ExplicitText
-      entity={
-        ActivityModel {
-          "__list": null,
-          "allow_comments": true,
-          "attachment_guid": false,
-          "blurb": false,
-          "comments:count": undefined,
-          "containerObj": undefined,
-          "container_guid": "activityguid0",
-          "custom_data": false,
-          "custom_type": false,
-          "description": "Congratulations! ",
-          "edited": "",
-          "entity_guid": "",
-          "guid": "activityguid0",
-          "impressions": 0,
-          "isOwner": [Function],
-          "is_visible": true,
-          "mature": false,
-          "mature_visibility": false,
-          "message": "Message",
-          "ownerObj": UserModel {
-            "__list": null,
-            "admin": false,
-            "confirmEmail": [Function],
-            "eth_wallet": "",
-            "founder": false,
-            "guid": "824853017709780997",
-            "isOwner": [Function],
-            "last_accepted_tos": 0,
-            "mature": false,
-            "plus": false,
-            "rewards": false,
-            "subtype": false,
-            "time_created": "1522036284",
-            "type": "user",
-            "urn": "",
-            "username": "",
-            "verified": false,
-          },
-          "owner_guid": "824853017709780997",
-          "parent_guid": "838106762591510528",
-          "paywall": "",
-          "paywall_unlocked": false,
-          "perma_url": false,
-          "permissions": Object {},
-          "pinned": false,
-          "reminds": 0,
-          "rowKey": "something0",
-          "shouldBeBlured": [MockFunction] {
-            "calls": Array [
-              Array [],
-            ],
-            "results": Array [
-              Object {
-                "type": "return",
-                "value": undefined,
-              },
-            ],
-          },
-          "subtype": "",
-          "thumbnail_src": false,
-          "thumbs:down:count": undefined,
-          "thumbs:down:user_guids": undefined,
-          "thumbs:up:count": undefined,
-          "thumbs:up:user_guids": undefined,
-          "time_created": "1522036284",
-          "title": "TITLE",
-          "type": "activity",
-          "urn": "",
-          "username": "",
-          "wire_totals": Object {
-            "tokens": 1000000000000000000,
-          },
-        }
-      }
-      navigation={
-        Object {
-          "navigate": [MockFunction],
-          "push": [MockFunction],
-        }
-      }
-      style={
-        Object {
-          "fontFamily": "Roboto",
-        }
-      }
-    />
-    <Translate
-      entity={
-        ActivityModel {
-          "__list": null,
-          "allow_comments": true,
-          "attachment_guid": false,
-          "blurb": false,
-          "comments:count": undefined,
-          "containerObj": undefined,
-          "container_guid": "activityguid0",
-          "custom_data": false,
-          "custom_type": false,
-          "description": "Congratulations! ",
-          "edited": "",
-          "entity_guid": "",
-          "guid": "activityguid0",
-          "impressions": 0,
-          "isOwner": [Function],
-          "is_visible": true,
-          "mature": false,
-          "mature_visibility": false,
-          "message": "Message",
-          "ownerObj": UserModel {
-            "__list": null,
-            "admin": false,
-            "confirmEmail": [Function],
-            "eth_wallet": "",
-            "founder": false,
-            "guid": "824853017709780997",
-            "isOwner": [Function],
-            "last_accepted_tos": 0,
-            "mature": false,
-            "plus": false,
-            "rewards": false,
-            "subtype": false,
-            "time_created": "1522036284",
-            "type": "user",
-            "urn": "",
-            "username": "",
-            "verified": false,
-          },
-          "owner_guid": "824853017709780997",
-          "parent_guid": "838106762591510528",
-          "paywall": "",
-          "paywall_unlocked": false,
-          "perma_url": false,
-          "permissions": Object {},
-          "pinned": false,
-          "reminds": 0,
-          "rowKey": "something0",
-          "shouldBeBlured": [MockFunction] {
-            "calls": Array [
-              Array [],
-            ],
-            "results": Array [
-              Object {
-                "type": "return",
-                "value": undefined,
-              },
-            ],
-          },
-          "subtype": "",
-          "thumbnail_src": false,
-          "thumbs:down:count": undefined,
-          "thumbs:down:user_guids": undefined,
-          "thumbs:up:count": undefined,
-          "thumbs:up:user_guids": undefined,
-          "time_created": "1522036284",
-          "title": "TITLE",
-          "type": "activity",
-          "urn": "",
-          "username": "",
-          "wire_totals": Object {
-            "tokens": 1000000000000000000,
-          },
-        }
-      }
-      style={
-        Object {
-          "fontFamily": "Roboto",
-        }
-      }
-    />
-  </View>
-  <View>
     <MediaView
       entity={
-        ActivityModel {
-          "__list": null,
+        Object {
           "allow_comments": true,
           "attachment_guid": false,
           "blurb": false,
@@ -494,31 +370,51 @@ exports[`Activity component renders correctly 1`] = `
           "description": "Congratulations! ",
           "edited": "",
           "entity_guid": "",
+          "getLockType": [Function],
           "guid": "activityguid0",
           "impressions": 0,
           "isOwner": [Function],
-          "is_visible": true,
+          "is_visible": false,
           "mature": false,
           "mature_visibility": false,
           "message": "Message",
-          "ownerObj": UserModel {
+          "ownerObj": Object {
             "__list": null,
-            "admin": false,
+            "allow_comments": true,
+            "blocked": undefined,
+            "canary": false,
             "confirmEmail": [Function],
+            "disable_autoplay_videos": undefined,
+            "email_confirmed": false,
             "eth_wallet": "",
             "founder": false,
+            "groupsCount": 0,
             "guid": "824853017709780997",
+            "impressions": undefined,
             "isOwner": [Function],
+            "is_admin": false,
             "last_accepted_tos": 0,
             "mature": false,
+            "mature_visibility": false,
+            "mode": 0,
+            "nsfw": Array [],
+            "onchain_booster": 0,
+            "pending_subscribe": false,
+            "permissions": Object {},
             "plus": false,
+            "pro": false,
             "rewards": false,
+            "subscribed": undefined,
+            "subscribers_count": undefined,
+            "subscriptions_count": 0,
             "subtype": false,
+            "tags": Array [],
             "time_created": "1522036284",
             "type": "user",
             "urn": "",
             "username": "",
             "verified": false,
+            "wire_rewards": undefined,
           },
           "owner_guid": "824853017709780997",
           "parent_guid": "838106762591510528",
@@ -556,12 +452,7 @@ exports[`Activity component renders correctly 1`] = `
           },
         }
       }
-      navigation={
-        Object {
-          "navigate": [MockFunction],
-          "push": [MockFunction],
-        }
-      }
+      onPress={[Function]}
       style={
         Object {
           "flex": 1,
@@ -569,95 +460,239 @@ exports[`Activity component renders correctly 1`] = `
       }
       width={750}
     />
+    <View
+      style={
+        Object {
+          "paddingHorizontal": 20,
+          "paddingVertical": 15,
+        }
+      }
+    >
+      <ExplicitText
+        entity={
+          Object {
+            "allow_comments": true,
+            "attachment_guid": false,
+            "blurb": false,
+            "comments:count": undefined,
+            "containerObj": undefined,
+            "container_guid": "activityguid0",
+            "custom_data": false,
+            "custom_type": false,
+            "description": "Congratulations! ",
+            "edited": "",
+            "entity_guid": "",
+            "getLockType": [Function],
+            "guid": "activityguid0",
+            "impressions": 0,
+            "isOwner": [Function],
+            "is_visible": false,
+            "mature": false,
+            "mature_visibility": false,
+            "message": "Message",
+            "ownerObj": Object {
+              "__list": null,
+              "allow_comments": true,
+              "blocked": undefined,
+              "canary": false,
+              "confirmEmail": [Function],
+              "disable_autoplay_videos": undefined,
+              "email_confirmed": false,
+              "eth_wallet": "",
+              "founder": false,
+              "groupsCount": 0,
+              "guid": "824853017709780997",
+              "impressions": undefined,
+              "isOwner": [Function],
+              "is_admin": false,
+              "last_accepted_tos": 0,
+              "mature": false,
+              "mature_visibility": false,
+              "mode": 0,
+              "nsfw": Array [],
+              "onchain_booster": 0,
+              "pending_subscribe": false,
+              "permissions": Object {},
+              "plus": false,
+              "pro": false,
+              "rewards": false,
+              "subscribed": undefined,
+              "subscribers_count": undefined,
+              "subscriptions_count": 0,
+              "subtype": false,
+              "tags": Array [],
+              "time_created": "1522036284",
+              "type": "user",
+              "urn": "",
+              "username": "",
+              "verified": false,
+              "wire_rewards": undefined,
+            },
+            "owner_guid": "824853017709780997",
+            "parent_guid": "838106762591510528",
+            "paywall": "",
+            "paywall_unlocked": false,
+            "perma_url": false,
+            "permissions": Object {},
+            "pinned": false,
+            "reminds": 0,
+            "rowKey": "something0",
+            "shouldBeBlured": [MockFunction] {
+              "calls": Array [
+                Array [],
+              ],
+              "results": Array [
+                Object {
+                  "type": "return",
+                  "value": undefined,
+                },
+              ],
+            },
+            "subtype": "",
+            "thumbnail_src": false,
+            "thumbs:down:count": undefined,
+            "thumbs:down:user_guids": undefined,
+            "thumbs:up:count": undefined,
+            "thumbs:up:user_guids": undefined,
+            "time_created": "1522036284",
+            "title": "TITLE",
+            "type": "activity",
+            "urn": "",
+            "username": "",
+            "wire_totals": Object {
+              "tokens": 1000000000000000000,
+            },
+          }
+        }
+        navigation={
+          Object {
+            "navigate": [MockFunction],
+            "push": [MockFunction],
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontFamily": "Roboto",
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Array [
+              undefined,
+              undefined,
+            ],
+          ]
+        }
+      />
+      <Translate
+        entity={
+          Object {
+            "allow_comments": true,
+            "attachment_guid": false,
+            "blurb": false,
+            "comments:count": undefined,
+            "containerObj": undefined,
+            "container_guid": "activityguid0",
+            "custom_data": false,
+            "custom_type": false,
+            "description": "Congratulations! ",
+            "edited": "",
+            "entity_guid": "",
+            "getLockType": [Function],
+            "guid": "activityguid0",
+            "impressions": 0,
+            "isOwner": [Function],
+            "is_visible": false,
+            "mature": false,
+            "mature_visibility": false,
+            "message": "Message",
+            "ownerObj": Object {
+              "__list": null,
+              "allow_comments": true,
+              "blocked": undefined,
+              "canary": false,
+              "confirmEmail": [Function],
+              "disable_autoplay_videos": undefined,
+              "email_confirmed": false,
+              "eth_wallet": "",
+              "founder": false,
+              "groupsCount": 0,
+              "guid": "824853017709780997",
+              "impressions": undefined,
+              "isOwner": [Function],
+              "is_admin": false,
+              "last_accepted_tos": 0,
+              "mature": false,
+              "mature_visibility": false,
+              "mode": 0,
+              "nsfw": Array [],
+              "onchain_booster": 0,
+              "pending_subscribe": false,
+              "permissions": Object {},
+              "plus": false,
+              "pro": false,
+              "rewards": false,
+              "subscribed": undefined,
+              "subscribers_count": undefined,
+              "subscriptions_count": 0,
+              "subtype": false,
+              "tags": Array [],
+              "time_created": "1522036284",
+              "type": "user",
+              "urn": "",
+              "username": "",
+              "verified": false,
+              "wire_rewards": undefined,
+            },
+            "owner_guid": "824853017709780997",
+            "parent_guid": "838106762591510528",
+            "paywall": "",
+            "paywall_unlocked": false,
+            "perma_url": false,
+            "permissions": Object {},
+            "pinned": false,
+            "reminds": 0,
+            "rowKey": "something0",
+            "shouldBeBlured": [MockFunction] {
+              "calls": Array [
+                Array [],
+              ],
+              "results": Array [
+                Object {
+                  "type": "return",
+                  "value": undefined,
+                },
+              ],
+            },
+            "subtype": "",
+            "thumbnail_src": false,
+            "thumbs:down:count": undefined,
+            "thumbs:down:user_guids": undefined,
+            "thumbs:up:count": undefined,
+            "thumbs:up:user_guids": undefined,
+            "time_created": "1522036284",
+            "title": "TITLE",
+            "type": "activity",
+            "urn": "",
+            "username": "",
+            "wire_totals": Object {
+              "tokens": 1000000000000000000,
+            },
+          }
+        }
+        style={
+          Object {
+            "fontFamily": "Roboto",
+            "fontSize": 16,
+            "lineHeight": 24,
+          }
+        }
+      />
+    </View>
   </View>
   <Actions
     entity={
-      ActivityModel {
-        "__list": null,
-        "allow_comments": true,
-        "attachment_guid": false,
-        "blurb": false,
-        "comments:count": undefined,
-        "containerObj": undefined,
-        "container_guid": "activityguid0",
-        "custom_data": false,
-        "custom_type": false,
-        "description": "Congratulations! ",
-        "edited": "",
-        "entity_guid": "",
-        "guid": "activityguid0",
-        "impressions": 0,
-        "isOwner": [Function],
-        "is_visible": true,
-        "mature": false,
-        "mature_visibility": false,
-        "message": "Message",
-        "ownerObj": UserModel {
-          "__list": null,
-          "admin": false,
-          "confirmEmail": [Function],
-          "eth_wallet": "",
-          "founder": false,
-          "guid": "824853017709780997",
-          "isOwner": [Function],
-          "last_accepted_tos": 0,
-          "mature": false,
-          "plus": false,
-          "rewards": false,
-          "subtype": false,
-          "time_created": "1522036284",
-          "type": "user",
-          "urn": "",
-          "username": "",
-          "verified": false,
-        },
-        "owner_guid": "824853017709780997",
-        "parent_guid": "838106762591510528",
-        "paywall": "",
-        "paywall_unlocked": false,
-        "perma_url": false,
-        "permissions": Object {},
-        "pinned": false,
-        "reminds": 0,
-        "rowKey": "something0",
-        "shouldBeBlured": [MockFunction] {
-          "calls": Array [
-            Array [],
-          ],
-          "results": Array [
-            Object {
-              "type": "return",
-              "value": undefined,
-            },
-          ],
-        },
-        "subtype": "",
-        "thumbnail_src": false,
-        "thumbs:down:count": undefined,
-        "thumbs:down:user_guids": undefined,
-        "thumbs:up:count": undefined,
-        "thumbs:up:user_guids": undefined,
-        "time_created": "1522036284",
-        "title": "TITLE",
-        "type": "activity",
-        "urn": "",
-        "username": "",
-        "wire_totals": Object {
-          "tokens": 1000000000000000000,
-        },
-      }
-    }
-    navigation={
       Object {
-        "navigate": [MockFunction],
-        "push": [MockFunction],
-      }
-    }
-  />
-  <ActivityMetrics
-    entity={
-      ActivityModel {
-        "__list": null,
         "allow_comments": true,
         "attachment_guid": false,
         "blurb": false,
@@ -669,31 +704,51 @@ exports[`Activity component renders correctly 1`] = `
         "description": "Congratulations! ",
         "edited": "",
         "entity_guid": "",
+        "getLockType": [Function],
         "guid": "activityguid0",
         "impressions": 0,
         "isOwner": [Function],
-        "is_visible": true,
+        "is_visible": false,
         "mature": false,
         "mature_visibility": false,
         "message": "Message",
-        "ownerObj": UserModel {
+        "ownerObj": Object {
           "__list": null,
-          "admin": false,
+          "allow_comments": true,
+          "blocked": undefined,
+          "canary": false,
           "confirmEmail": [Function],
+          "disable_autoplay_videos": undefined,
+          "email_confirmed": false,
           "eth_wallet": "",
           "founder": false,
+          "groupsCount": 0,
           "guid": "824853017709780997",
+          "impressions": undefined,
           "isOwner": [Function],
+          "is_admin": false,
           "last_accepted_tos": 0,
           "mature": false,
+          "mature_visibility": false,
+          "mode": 0,
+          "nsfw": Array [],
+          "onchain_booster": 0,
+          "pending_subscribe": false,
+          "permissions": Object {},
           "plus": false,
+          "pro": false,
           "rewards": false,
+          "subscribed": undefined,
+          "subscribers_count": undefined,
+          "subscriptions_count": 0,
           "subtype": false,
+          "tags": Array [],
           "time_created": "1522036284",
           "type": "user",
           "urn": "",
           "username": "",
           "verified": false,
+          "wire_rewards": undefined,
         },
         "owner_guid": "824853017709780997",
         "parent_guid": "838106762591510528",
@@ -732,5 +787,5 @@ exports[`Activity component renders correctly 1`] = `
       }
     }
   />
-</View>
+</TouchableOpacity>
 `;

@@ -30,10 +30,10 @@ export default class PulseAnimAvatar extends React.Component {
           width: nextProps.size,
           height: nextProps.size,
           borderRadius: nextProps.size / 2,
-          backgroundColor: nextProps.avatarBackgroundColor
+          backgroundColor: nextProps.avatarBackgroundColor,
         },
         avatarUri: {
-          uri: nextProps.avatar
+          uri: nextProps.avatar,
         },
       };
     }
@@ -44,18 +44,15 @@ export default class PulseAnimAvatar extends React.Component {
    * Render
    */
   render() {
-    const {onPress} = this.props;
+    const { onPress } = this.props;
 
     return (
       <View style={styles.main}>
-        <Pulse
-          {...this.props}
-        />
+        <Pulse {...this.props} />
         <TouchableOpacity
-          activeOpacity={.5}
+          activeOpacity={0.5}
           onPress={onPress}
-          style={this.state.sizeStyle}
-        >
+          style={this.state.sizeStyle}>
           <FastImage
             source={this.state.avatarUri}
             style={[this.state.imageStyle, this.props.style]}

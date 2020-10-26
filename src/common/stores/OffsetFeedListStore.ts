@@ -10,7 +10,6 @@ import { isNetworkFail } from '../helpers/abortableFetch';
  * Infinite scroll list that inform viewed
  */
 export default class OffsetFeedListStore extends OffsetListStore {
-
   /**
    * @var {Map} viewed viewed entities list
    */
@@ -42,7 +41,9 @@ export default class OffsetFeedListStore extends OffsetListStore {
     if (!this.viewed.get(entity.guid)) {
       this.viewed.set(entity.guid, true);
       try {
-        const meta = this.metadataService ? this.metadataService.getEntityMeta(entity) : {};
+        const meta = this.metadataService
+          ? this.metadataService.getEntityMeta(entity)
+          : {};
         await setViewed(entity, meta);
       } catch (e) {
         this.viewed.delete(entity.guid);

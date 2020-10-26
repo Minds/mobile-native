@@ -1,7 +1,7 @@
 /**
  * Simple utility task to search unused terms in the en.json language file
  */
-const {exec} = require('child_process');
+const { exec } = require('child_process');
 const locale = require('../locales/en.json');
 
 // final result
@@ -16,6 +16,7 @@ const ignore = [
   'subtype.',
   'validation.',
   'date.formats.',
+  'settings.reportedContent.action.',
 ];
 
 /**
@@ -23,9 +24,9 @@ const ignore = [
  * @param {string} term
  */
 async function search(term) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     // ignore dynamic generated terms
-    if (ignore.some(t => term.startsWith(t))) {
+    if (ignore.some((t) => term.startsWith(t))) {
       resolve(true);
       return;
     }
