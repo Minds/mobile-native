@@ -165,10 +165,12 @@ const AccountScreenOptions = (navigation) => [
     title: i18n.t('settings.accountOptions.4'),
     onPress: () => navigation.push('SettingsNotifications'),
   },
-  {
-    title: i18n.t('settings.accountOptions.5'),
-    onPress: () => navigation.push('NSFWScreen'),
-  },
+  Platform.OS !== 'ios'
+    ? {
+        title: i18n.t('settings.accountOptions.5'),
+        onPress: () => navigation.push('NSFWScreen'),
+      }
+    : null,
   {
     title: i18n.t('settings.accountOptions.6'),
     onPress: () => navigation.push('MessengerSettingsScreen'),
