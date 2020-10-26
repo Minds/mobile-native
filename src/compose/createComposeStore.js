@@ -388,6 +388,10 @@ export default function ({ props, newsfeed }) {
      * @param {object} media
      */
     async onMediaFromGallery(media) {
+      if (this.portraitMode && media.height < media.width) {
+        showError(i18n.t('capture.mediaPortraitError'));
+        return;
+      }
       this.mediaToConfirm = media;
       this.acceptMedia();
     },

@@ -204,6 +204,7 @@
   "capture": {
     "licenseDescription": "Select your desired license type. This can be changed at any time after posting.",
     "pupularLicenses": "Popular licenses",
+    "mediaPortraitError":"Selected media is not portrait",
     "otherLicenses": "Other Licenses",
     "paywallLabel": "Min monthly contribution ({{currency}})",
     "paywallDescription": "Monetize post by making it available to your users who support your channel.",
