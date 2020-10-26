@@ -849,6 +849,7 @@
     "6": "Other",
     "safe": "Safe",
     "notSafe": "Not Safe",
+    "notSafeChannel": "This channel is not Safe",
     "categories": "NSFW Categories",
     "description1": "If this post contains content that is NSFW (Not Safe for Work)  it is your responsibility to tag it accordingly.",
     "description2": "See guidelines for further information.",
