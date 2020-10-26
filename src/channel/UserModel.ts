@@ -12,6 +12,7 @@ import settingsService from '../settings/SettingsService';
 import { UserError } from '../common/UserError';
 import i18n from '../common/services/i18n.service';
 import { showNotification } from '../../AppMessages';
+import { SocialProfile } from '../types/Common';
 
 //@ts-nocheck
 export const USER_MODE_OPEN = 0;
@@ -54,6 +55,8 @@ export default class UserModel extends BaseModel {
   @observable plus: boolean = false;
 
   @observable disable_autoplay_videos?: boolean;
+
+  social_profiles?: Array<SocialProfile>;
 
   /**
    * @var {boolean}
