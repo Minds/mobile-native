@@ -1,5 +1,5 @@
 import { observer, useLocalStore } from 'mobx-react';
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   Image,
   ImageSourcePropType,
@@ -55,35 +55,42 @@ export default observer(function SetupChannelScreen() {
     },
   }));
 
-  const avatarOptions: Array<ItemType> = [
-    {
-      title: i18n.t('takePhoto'),
-      titleStyle: theme.fontXXL,
-      onPress: () => {
-        channelStore.upload('avatar', true);
-        store.hidePicker();
-      },
-    },
-    {
-      title: i18n.t('uploadPhoto'),
-      titleStyle: theme.fontXXL,
-      onPress: () => {
-        channelStore.upload('avatar', false);
-        store.hidePicker();
-      },
-    },
-    {
-      title: i18n.t('cancel'),
-      titleStyle: theme.colorSecondaryText,
-      onPress: store.hidePicker,
-    },
-  ];
+  const avatarOptions: Array<Array<ItemType>> = useMemo(
+    () => [
+      [
+        {
+          title: i18n.t('takePhoto'),
+          titleStyle: theme.fontXXL,
+          onPress: () => {
+            channelStore.upload('avatar', true);
+            store.hidePicker();
+          },
+        },
+        {
+          title: i18n.t('uploadPhoto'),
+          titleStyle: theme.fontXXL,
+          onPress: () => {
+            channelStore.upload('avatar', false);
+            store.hidePicker();
+          },
+        },
+      ],
+      [
+        {
+          title: i18n.t('cancel'),
+          titleStyle: theme.colorSecondaryText,
+          onPress: store.hidePicker,
+        },
+      ],
+    ],
+    [theme.fontXXL, theme.colorSecondaryText, store, channelStore],
+  );
 
   return (
     <ModalContainer
       title={i18n.t('onboarding.setupChannel')}
       onPressBack={NavigationService.goBack}>
-      <DismissKeyboard >
+      <DismissKeyboard>
         <View style={theme.flexContainer}>
           <InputContainer
             placeholder={i18n.t('channel.edit.displayName')}
@@ -99,7 +106,6 @@ export default observer(function SetupChannelScreen() {
             value={store.bio}
           />
           <View
-            pointerEvents="box-only"
             style={[
               theme.paddingLeft4x,
               theme.backgroundSecondary,
@@ -116,12 +122,7 @@ export default observer(function SetupChannelScreen() {
             </Text>
             <TouchableCustom
               onPress={store.showPicker}
-              style={[
-                styles.avatar,
-                theme.border,
-                theme.buttonBorder,
-                theme.marginBottom2x,
-              ]}
+              style={[styles.avatar, theme.buttonBorder, theme.marginBottom2x]}
               disabled={channelStore.uploading}
               testID="selectAvatar">
               {hasAvatar && avatar && (
@@ -166,7 +167,7 @@ export default observer(function SetupChannelScreen() {
             </TouchableCustom>
           </View>
           <View style={theme.flexContainer} />
-          <View style={theme.paddingHorizontal4x}>
+          <View style={[theme.paddingHorizontal4x, theme.marginBottom2x]}>
             <Button
               onPress={NavigationService.goBack}
               text={i18n.t('save')}
@@ -203,8 +204,8 @@ const styles = StyleSheet.create({
   },
   icon: {
     color: '#FFFFFF',
-    textShadowColor: 'rgba(0, 0, 0, 0.35)',
-    textShadowOffset: { width: -1, height: 1 },
+    textShadowColor: 'rgba(0, 0, 0, 0.45)',
+    textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 2.22,
   },
   avatar: {
