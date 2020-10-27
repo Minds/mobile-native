@@ -215,23 +215,29 @@ const createChannelStore = () => {
      * Upload Banner or Avatar
      * @param file
      * @param mediaType
+     * @param camera
      */
-    async upload(type: channelMediaType) {
-      if (!this.channel) {
-        return;
-      }
-
+    async upload(type: channelMediaType, camera = false) {
       const isBanner = type === 'banner';
 
       try {
-        imagePickerService
-          .show(
-            '',
-            'photo',
-            type === 'avatar',
-            isBanner ? 1500 : 1024,
-            isBanner ? 600 : 1024,
-          )
+        const promise = camera
+          ? imagePickerService.showCamera(
+              '',
+              'photo',
+              type === 'avatar',
+              true,
+              isBanner ? 1500 : 1024,
+              isBanner ? 600 : 1024,
+            )
+          : imagePickerService.show(
+              '',
+              'photo',
+              type === 'avatar',
+              isBanner ? 1500 : 1024,
+              isBanner ? 600 : 1024,
+            );
+        promise
           .then(async (response: customImagePromise) => {
             let file: CustomImage;
             if (response !== false && !Array.isArray(response)) {
@@ -242,7 +248,6 @@ const createChannelStore = () => {
             this.setIsUploading(true);
             this.setProgress(0, type);
             await ChannelService.upload(
-              null,
               type,
               {
                 uri: file.path || file.uri,

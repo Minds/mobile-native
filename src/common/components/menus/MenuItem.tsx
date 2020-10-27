@@ -20,7 +20,7 @@ export type MenuItemPropsType = {
   item: MenuItemItem;
   component?: any;
   containerItemStyle?: {} | [];
-  titleStyle?: TextStyle;
+  titleStyle?: TextStyle | Array<TextStyle>;
   testID?: string;
 };
 

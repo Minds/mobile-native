@@ -173,14 +173,21 @@ export default class Input extends Component<propsType> {
   render() {
     const theme = ThemedStyles.style;
     const optional = this.props.optional ? (
-      <Text style={[styles.optional]}>{'Optional'}</Text>
+      <Text style={[styles.optional, theme.colorSecondaryText]}>
+        {'Optional'}
+      </Text>
     ) : null;
 
     return (
       <View>
         <View style={styles.row}>
           <View style={styles.row}>
-            <Text style={[styles.label, this.props.labelStyle]}>
+            <Text
+              style={[
+                styles.label,
+                theme.colorSecondaryText,
+                this.props.labelStyle,
+              ]}>
               {this.props.placeholder}
             </Text>
             {this.props.info && <InfoPopup info={this.props.info} />}
@@ -207,7 +214,6 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   label: {
-    color: '#AEB0B8',
     fontSize: 16,
     fontWeight: '600',
     marginBottom: 5,
@@ -219,7 +225,6 @@ const styles = StyleSheet.create({
     paddingRight: 10,
   },
   optional: {
-    color: '#AEB0B8',
     fontSize: 14,
     fontFamily: 'Roboto-Italic',
   },

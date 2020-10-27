@@ -1,8 +1,9 @@
 import { useLocalStore } from 'mobx-react';
+import { getStores } from '../../../../AppStores';
 import createPortraitStore from '../../../portrait/createPortraitStore';
 import createSearchResultStore from '../../../topbar/searchbar/createSearchResultStore';
 import createWalletStore from '../../../wallet/v2/createWalletStore';
-import { createLegacyStores, TLegacyStores } from '../../contexts';
+import { TLegacyStores } from '../../contexts';
 import { StoresType } from '../use-stores';
 
 /**
@@ -23,5 +24,5 @@ export const useStores = (): StoresType => {
  * provided via mobx's <Provider>
  */
 export const useLegacyStores = (): TLegacyStores => {
-  return createLegacyStores();
+  return getStores();
 };

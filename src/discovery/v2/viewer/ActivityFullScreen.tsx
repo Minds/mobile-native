@@ -111,15 +111,15 @@ const ActivityFullScreen = observer((props: PropsType) => {
   }, [focused, props.forceAutoplay]);
 
   useEffect(() => {
-    let openComentsTimeOut: NodeJS.Timeout | null = null;
+    let openCommentsTimeOut: NodeJS.Timeout | null = null;
     if (route && (route.params?.focusedUrn || route.params?.scrollToBottom)) {
-      openComentsTimeOut = setTimeout(() => {
+      openCommentsTimeOut = setTimeout(() => {
         onPressComment();
       }, 100);
     }
     return () => {
-      if (openComentsTimeOut) {
-        clearTimeout(openComentsTimeOut);
+      if (openCommentsTimeOut) {
+        clearTimeout(openCommentsTimeOut);
       }
     };
   }, [onPressComment, route]);

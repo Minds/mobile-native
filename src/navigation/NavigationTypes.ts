@@ -19,6 +19,8 @@ export type InternalStackParamList = {
   BoostConsole: {};
   GroupsList: {};
   Settings: {};
+  Analytics: {};
+  InitialOnboarding: {};
 };
 
 export type RootStackParamList = {

@@ -102,7 +102,7 @@ export default function useApiFetch<T>(
     url,
     updateState: options.updateState,
   });
-  const observableParams = useAsObservableSource(options.params);
+  const observableParams = useAsObservableSource(options.params || {});
 
   // if persist was true, hydrate on the first render
   useEffect(() => {

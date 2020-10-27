@@ -1,12 +1,24 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  TextInputProps,
+  ViewStyle,
+  TextStyle,
+} from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import Input from './Input';
 
-const InputContainer = (props) => {
-  const theme = ThemedStyles.style;
+export interface PropsType extends TextInputProps {
+  noBottomBorder?: boolean;
+  containerStyle?: ViewStyle | Array<ViewStyle>;
+  labelStyle?: TextStyle | Array<TextStyle>;
+}
 
+const InputContainer = (props: PropsType) => {
+  const theme = ThemedStyles.style;
   const { style, noBottomBorder, ...otherProps } = props;
+
   return (
     <View
       style={[
@@ -19,7 +31,13 @@ const InputContainer = (props) => {
         props.containerStyle,
       ]}>
       <Input
-        style={[styles.input, theme.paddingLeft0x, theme.fontXL, style]}
+        style={[
+          styles.input,
+          theme.paddingLeft0x,
+          theme.fontXL,
+          style,
+          // heightStyle,
+        ]}
         labelStyle={[
           theme.colorSecondaryText,
           theme.fontL,
@@ -39,8 +57,8 @@ const styles = StyleSheet.create({
     paddingTop: 12,
   },
   input: {
-    padding: 0,
-    height: 32,
+    paddingVertical: 8,
+    paddingHorizontal: 0,
     marginBottom: 7,
     borderWidth: 0,
   },

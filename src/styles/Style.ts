@@ -1,6 +1,5 @@
 //@ts-nocheck
 import { StyleSheet, Platform } from 'react-native';
-
 export interface ThemedStyle {
   width90: any;
   flexContainer: any;
@@ -35,6 +34,9 @@ export interface ThemedStyle {
   colorSeparator: any;
   colorAlert: any;
   colorTransparent: any;
+  backgroundPrimaryText: any;
+  backgroundSecondaryText: any;
+  backgroundTertiaryText: any;
   backgroundInfo: any;
   backgroundSuccess: any;
   backgroundDanger: any;
@@ -116,7 +118,6 @@ export interface ThemedStyle {
   positionAbsoluteBottomRight: any;
   [name: string]: any;
 }
-
 const repetitions = 8;
 const step = 5;
 
@@ -149,7 +150,7 @@ for (let index = 0; index <= repetitions; index++) {
   dynamicStyles[`borderRadius${post}`] = { borderRadius: index * 2 };
 }
 
-export const buildStyle = (theme): ThemedStyle => ({
+export const buildStyle = (theme) => ({
   ...dynamicStyles,
   // containers
   width90: {
@@ -298,6 +299,15 @@ export const buildStyle = (theme): ThemedStyle => ({
     color: 'transparent',
   },
   // backgrounds
+  backgroundPrimaryText: {
+    backgroundColor: theme.primary_text,
+  },
+  backgroundSecondaryText: {
+    backgroundColor: theme.secondary_text,
+  },
+  backgroundTertiaryText: {
+    backgroundColor: theme.tertiary_text,
+  },
   backgroundInfo: {
     backgroundColor: theme.info_background,
   },
@@ -390,7 +400,6 @@ export const buildStyle = (theme): ThemedStyle => ({
   borderIcon: {
     borderColor: theme.icon,
   },
-
   // fonts
   fontXS: {
     fontSize: 10,
@@ -411,10 +420,10 @@ export const buildStyle = (theme): ThemedStyle => ({
     fontSize: 18,
   },
   fontXXL: {
-    fontSize: 24,
+    fontSize: 22,
   },
   fontXXXL: {
-    fontSize: 30,
+    fontSize: 28,
   },
 
   // text align

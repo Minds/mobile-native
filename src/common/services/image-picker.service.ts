@@ -97,8 +97,6 @@ class ImagePickerService {
 
   /**
    * Show image picker selector
-   *
-   * @param {string} type   photo or video
    */
   async show(
     title: string,
@@ -122,6 +120,35 @@ class ImagePickerService {
     }
 
     return this.returnCustom(ImagePicker.openPicker(opt));
+  }
+
+  /**
+   * Show camera
+   */
+  async showCamera(
+    title: string,
+    type: mediaType = 'photo',
+    cropperCircleOverlay: boolean = false,
+    front: boolean = false,
+    width,
+    height,
+  ): Promise<customImagePromise> {
+    // check permissions
+    await this.checkCameraPermissions();
+
+    const opt = this.buildOptions(type, true, cropperCircleOverlay);
+
+    if (width) {
+      //@ts-ignore
+      opt.width = width;
+    }
+    if (height) {
+      //@ts-ignore
+      opt.height = height;
+    }
+    opt.useFrontCamera = front;
+
+    return this.returnCustom(ImagePicker.openCamera(opt));
   }
 
   async returnCustom(
