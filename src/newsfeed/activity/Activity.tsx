@@ -22,8 +22,7 @@ import ActivityMetrics from './metrics/ActivityMetrics';
 import MediaView from '../../common/components/MediaView';
 import Translate from '../../common/components/Translate';
 import ExplicitOverlay from '../../common/components/explicit/ExplicitOverlay';
-import LockV2 from '../../wire/v2/lock/Lock';
-import Lock from '../../wire/lock/Lock';
+import Lock from '../../wire/v2/lock/Lock';
 import { CommonStyle } from '../../styles/Common';
 import Pinned from '../../common/components/Pinned';
 import blockListService from '../../common/services/block-list.service';
@@ -208,10 +207,8 @@ export default class Activity extends Component<PropsType> {
       ? [theme.fontXL, theme.fontMedium]
       : theme.fontL;
 
-    const LockCmp = featuresService.has('paywall-2020') ? LockV2 : Lock;
-
     const lock = entity.paywall ? (
-      <LockCmp entity={entity} navigation={this.props.navigation} />
+      <Lock entity={entity} navigation={this.props.navigation} />
     ) : null;
 
     const message = (
