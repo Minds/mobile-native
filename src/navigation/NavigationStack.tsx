@@ -105,6 +105,8 @@ import OnboardingScreen from '../onboarding/v2/OnboardingScreen';
 import VerifyEmailScreen from '../onboarding/v2/steps/VerifyEmailScreen';
 import SelectHashtagsScreen from '../onboarding/v2/steps/SelectHashtagsScreen';
 import SetupChannelScreen from '../onboarding/v2/steps/SetupChannelScreen';
+import VerifyUniquenessScreen from '../onboarding/v2/steps/VerifyUniquenessScreen';
+import PhoneValidationScreen from '../onboarding/v2/steps/PhoneValidationScreen';
 
 const isIos = Platform.OS === 'ios';
 
@@ -659,6 +661,16 @@ const RootStack = function (props) {
           <RootStackNav.Screen
             name="SetupChannel"
             component={SetupChannelScreen}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen
+            name="VerifyUniqueness"
+            component={VerifyUniquenessScreen}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen
+            name="PhoneValidation"
+            component={PhoneValidationScreen}
             options={modalOptions}
           />
         </Fragment>

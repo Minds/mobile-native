@@ -13,7 +13,7 @@ import createLocalStore, { PhoneValidationStoreType } from './createLocalStore';
 export type PhoneValidationPropsType = {
   TFA?: any;
   TFAConfirmed?: boolean;
-  bottomStore?: BottomOptionsStoreType;
+  bottomStore?: BottomOptionsStoreType | boolean;
   inputStyles?: any;
   onNext?: Function;
   textStyle?: any;

@@ -44,7 +44,7 @@ export default observer(function OnboardingScreen() {
     },
     VerifyUniquenessStep: {
       title: i18n.t('onboarding.verifyUniqueness'),
-      screen: 'SetupChannel',
+      screen: 'VerifyUniqueness',
     },
     CreatePostStep: {
       title: i18n.t('createAPost'),
