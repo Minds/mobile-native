@@ -25,12 +25,8 @@ type PropsType = {
 const createPlusMonetizeStore = () => {
   const store = {
     agreedTerms: false,
-    exclusivity: 'always' as '48hrs' | 'always',
     setAgreedTerms() {
       this.agreedTerms = !this.agreedTerms;
-    },
-    setExclusivity(exclusivity) {
-      this.exclusivity = exclusivity;
     },
   };
   return store;
