@@ -81,7 +81,10 @@ const getOptionsList = (navigation) => {
             />
           ),
           onPress: () => {
-            navigation.navigate('PlusDiscoveryScreen');
+            navigation.navigate('Tabs', {
+              screen: 'CaptureTab',
+              params: { screen: 'PlusDiscoveryScreen' },
+            });
           },
         }
       : null,
