@@ -24,6 +24,7 @@ import DismissKeyboard from '../../../common/components/DismissKeyboard';
 import BottomButtonOptions, {
   ItemType,
 } from '../../../common/components/BottomButtonOptions';
+import { showNotification } from '../../../../AppMessages';
 const TouchableCustom = withPreventDoubleTap(TouchableOpacity);
 
 /**
@@ -41,6 +42,7 @@ export default observer(function SetupChannelScreen() {
     name: user?.name || '',
     bio: user?.briefdescription || '',
     showAvatarPicker: false,
+    saving: false,
     showPicker() {
       store.showAvatarPicker = true;
     },
@@ -52,6 +54,20 @@ export default observer(function SetupChannelScreen() {
     },
     setBio(value: string) {
       store.bio = value;
+    },
+    async save() {
+      store.saving = true;
+      try {
+        await channelStore.save({
+          briefdescription: store.bio,
+          name: store.name,
+        });
+      } catch (error) {
+        showNotification(i18n.t('errorMessage'));
+      } finally {
+        store.saving = false;
+      }
+      NavigationService.goBack();
     },
   }));
 
@@ -169,7 +185,8 @@ export default observer(function SetupChannelScreen() {
           <View style={theme.flexContainer} />
           <View style={[theme.paddingHorizontal4x, theme.marginBottom2x]}>
             <Button
-              onPress={NavigationService.goBack}
+              loading={store.saving}
+              onPress={store.save}
               text={i18n.t('save')}
               containerStyle={[
                 theme.transparentButton,
