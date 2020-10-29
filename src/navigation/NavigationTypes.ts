@@ -20,6 +20,7 @@ export type InternalStackParamList = {
   GroupsList: {};
   Settings: {};
   Analytics: {};
+  Onboarding: {};
   InitialOnboarding: {};
 };
 
@@ -38,6 +39,11 @@ export type RootStackParamList = {
     onComplete: Function;
     pro?: boolean;
   };
+  VerifyEmail: {};
+  SelectHashtags: {};
+  SetupChannel: {};
+  VerifyUniqueness: {};
+  PhoneValidation: {};
 };
 
 export type AuthStackParamList = {

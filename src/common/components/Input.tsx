@@ -1,11 +1,12 @@
 //@ts-nocheck
-import React, { Component, Props } from 'react';
+import React, { Component } from 'react';
 import {
   Text,
   View,
   StyleSheet,
   TouchableOpacity,
   TextInput,
+  TextStyle,
 } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import InfoPopup from './InfoPopup';
@@ -13,20 +14,37 @@ import InfoPopup from './InfoPopup';
 import ThemedStyles from '../../styles/ThemedStyles';
 import PhoneValidationComponent from './phoneValidation/PhoneValidationComponent';
 
-type propsType = {
-  TFA: any;
-  TFAConfirmed: boolean;
-  inputType: string;
-  optional: boolean;
-  labelStyle: any;
-  info: any;
+export interface PropsType {
+  TFA?: any;
+  TFAConfirmed?: boolean;
+  inputType?: string;
+  optional?: boolean;
+  autofocus?: boolean;
+  dateFormat?: string;
+  labelStyle?: TextStyle | Array<TextStyle>;
+  placeholder?: string;
+  value?: string;
+  testID?: string;
+  keyboardType?: string;
+  editable?: boolean;
+  scrollEnabled?: boolean;
+  secureTextEntry?: boolean;
+  multiline?: boolean;
+  selectTextOnFocus?: boolean;
+  onChangeText?: (string) => void;
+  onFocus?: () => void;
+  onBlur?: () => void;
+  onEndEditing?: () => void;
+  onSubmitEditing?: () => void;
+  style?: any;
+  info?: string;
   error?: string;
-} & Props;
+}
 
 /**
  * Form input
  */
-export default class Input extends Component<propsType> {
+export default class Input extends Component<PropsType> {
   /**
    * State
    */

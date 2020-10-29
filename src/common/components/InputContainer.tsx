@@ -1,18 +1,11 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-  TextInputProps,
-  ViewStyle,
-  TextStyle,
-} from 'react-native';
+import { View, StyleSheet, ViewStyle } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
-import Input from './Input';
+import Input, { PropsType as InputPropsType } from './Input';
 
-export interface PropsType extends TextInputProps {
+export interface PropsType extends InputPropsType {
   noBottomBorder?: boolean;
   containerStyle?: ViewStyle | Array<ViewStyle>;
-  labelStyle?: TextStyle | Array<TextStyle>;
 }
 
 const InputContainer = (props: PropsType) => {
