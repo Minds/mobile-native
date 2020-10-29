@@ -54,7 +54,7 @@ const PlusMonetizeScreen = observer(({ route, navigation }: PropsType) => {
   const onComplete = useCallback(
     (success: any) => {
       if (success) {
-        user.me.togglePro();
+        user.me.togglePlus();
       }
     },
     [user],
