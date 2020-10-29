@@ -4,29 +4,68 @@ import { Linking, ScrollView, StyleSheet, Text, View } from 'react-native';
 import authService from '../auth/AuthService';
 import MenuItem from '../common/components/menus/MenuItem';
 import i18n from '../common/services/i18n.service';
+import sessionService from '../common/services/session.service';
 import ThemedStyles from '../styles/ThemedStyles';
 import { TAB_BAR_HEIGHT } from '../tabs/TabsScreen';
 
 export default function ({ navigation }) {
   const theme = ThemedStyles.style;
 
-  const navToAccount = useCallback(() => navigation.push('Account'), [
-    navigation,
-  ]);
+  const user = sessionService.getUser();
 
-  const navToSecurity = useCallback(() => navigation.push('Security'), [
-    navigation,
-  ]);
+  const onComplete = useCallback(
+    (forPro: boolean) => {
+      return (success: any) => {
+        if (success) {
+          forPro ? user.togglePro() : user.togglePlus();
+        }
+      };
+    },
+    [user],
+  );
 
-  const navToBilling = useCallback(() => navigation.push('Billing'), [
-    navigation,
-  ]);
+  const itemsMapping = [
+    {
+      title: i18n.t('settings.account'),
+      screen: 'Account',
+      params: {},
+    },
+    {
+      title: i18n.t('settings.security'),
+      screen: 'Security',
+      params: {},
+    },
+    {
+      title: i18n.t('settings.billing'),
+      screen: 'Billing',
+      params: {},
+    },
+    {
+      title: i18n.t('settings.referrals'),
+      screen: 'Referrals',
+      params: {},
+    },
+    {
+      title: i18n.t('monetize.plus'),
+      screen: 'PlusScreen',
+      params: { onComplete: onComplete(false), pro: false },
+    },
+    {
+      title: i18n.t('monetize.pro'),
+      screen: 'PlusScreen',
+      params: { onComplete: onComplete(true), pro: true },
+    },
+    {
+      title: i18n.t('settings.other'),
+      screen: 'Other',
+      params: {},
+    },
+  ];
 
-  const navToOther = useCallback(() => navigation.push('Other'), [navigation]);
-
-  const navToReferrals = useCallback(() => navigation.push('Referrals'), [
-    navigation,
-  ]);
+  const items = itemsMapping.map(({ title, screen, params }) => ({
+    title,
+    onPress: () => navigation.push(screen, params),
+  }));
 
   const setDarkMode = () => {
     if (ThemedStyles.theme) {
@@ -76,36 +115,9 @@ export default function ({ navigation }) {
         {i18n.t('moreScreen.settings')}
       </Text>
       <View style={[innerWrapper, theme.backgroundPrimary]}>
-        <MenuItem
-          item={{
-            title: i18n.t('settings.account'),
-            onPress: navToAccount,
-          }}
-        />
-        <MenuItem
-          item={{
-            title: i18n.t('settings.security'),
-            onPress: navToSecurity,
-          }}
-        />
-        <MenuItem
-          item={{
-            title: i18n.t('settings.billing'),
-            onPress: navToBilling,
-          }}
-        />
-        <MenuItem
-          item={{
-            title: i18n.t('settings.referrals'),
-            onPress: navToReferrals,
-          }}
-        />
-        <MenuItem
-          item={{
-            title: i18n.t('settings.other'),
-            onPress: navToOther,
-          }}
-        />
+        {items.map((item) => (
+          <MenuItem item={item} />
+        ))}
       </View>
       <View style={[innerWrapper, theme.marginTop7x]}>
         <MenuItem item={themeChange} i={4} />

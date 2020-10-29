@@ -66,9 +66,16 @@ const createPlusStore = () => {
         `urn:entity:${handler}`,
       )) as UserModel;
 
+      this.method = 'tokens';
+      this.selectedOption = this.settings.yearly.tokens;
+
       this.loaded = true;
     },
     setMethod() {
+      this.selectedOption =
+        this.method === 'usd'
+          ? this.settings.yearly.tokens
+          : this.settings.yearly.usd;
       this.method = this.method === 'usd' ? 'tokens' : 'usd';
     },
     setCard(card: any) {
@@ -121,20 +128,6 @@ const Options = observer(({ options, localStore }: PropsOptionType) => {
           icon:
             localStore.selectedOption === options[0] ? checkIcon : undefined,
           noIcon: localStore.selectedOption !== options[0],
-        }}
-      />
-      <MenuItem
-        item={{
-          onPress: () => {
-            localStore.setSelectedOption(options[1]);
-            localStore.setMonthly(true);
-          },
-          title: `Monthly   ${localStore.method === 'usd' ? '$' : ''}${
-            options[1]
-          } ${localStore.method === 'tokens' ? 'Tokens' : ''} / month`,
-          icon:
-            localStore.selectedOption === options[1] ? checkIcon : undefined,
-          noIcon: localStore.selectedOption !== options[1],
         }}
       />
     </View>
@@ -246,19 +239,13 @@ const PlusScreen = observer(({ navigation, route }: PropsType) => {
       {localStore.method === 'usd' && (
         <Options
           localStore={localStore}
-          options={[
-            localStore.settings.yearly.usd,
-            localStore.settings.monthly.usd,
-          ]}
+          options={[localStore.settings.yearly.usd]}
         />
       )}
       {localStore.method === 'tokens' && (
         <Options
           localStore={localStore}
-          options={[
-            localStore.settings.yearly.tokens,
-            localStore.settings.monthly.tokens,
-          ]}
+          options={[localStore.settings.yearly.tokens]}
         />
       )}
       {localStore.method === 'usd' && (
