@@ -69,6 +69,9 @@ const createPlusStore = () => {
       this.method = 'tokens';
       this.selectedOption = this.settings.yearly.tokens;
 
+      this.method = 'tokens';
+      this.selectedOption = this.settings.yearly.tokens;
+
       this.loaded = true;
     },
     setMethod() {
