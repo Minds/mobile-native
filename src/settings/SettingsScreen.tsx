@@ -45,22 +45,29 @@ export default function ({ navigation }) {
       screen: 'Referrals',
       params: {},
     },
-    {
+  ];
+
+  if (!user.plus) {
+    itemsMapping.push({
       title: i18n.t('monetize.plus'),
       screen: 'PlusScreen',
       params: { onComplete: onComplete(false), pro: false },
-    },
-    {
+    });
+  }
+
+  if (!user.pro) {
+    itemsMapping.push({
       title: i18n.t('monetize.pro'),
       screen: 'PlusScreen',
       params: { onComplete: onComplete(true), pro: true },
-    },
-    {
-      title: i18n.t('settings.other'),
-      screen: 'Other',
-      params: {},
-    },
-  ];
+    });
+  }
+
+  itemsMapping.push({
+    title: i18n.t('settings.other'),
+    screen: 'Other',
+    params: {},
+  });
 
   const items = itemsMapping.map(({ title, screen, params }) => ({
     title,
