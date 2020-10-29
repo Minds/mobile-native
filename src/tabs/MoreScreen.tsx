@@ -97,7 +97,10 @@ class MoreScreenNew extends Component {
           />
         ),
         onPress: () => {
-          this.props.navigation.navigate('PlusDiscoveryScreen');
+          this.props.navigation.navigate('Tabs', {
+            screen: 'CaptureTab',
+            params: { screen: 'PlusDiscoveryScreen' },
+          });
         },
       },
       {
