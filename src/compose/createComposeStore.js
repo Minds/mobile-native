@@ -66,19 +66,13 @@ export default function ({ props, newsfeed }) {
     posting: false,
     group: null,
     postToPermaweb: false,
+    initialized: false,
     onScreenFocused() {
       const params = props.route.params;
-      if (
-        !params ||
-        (!params.entity &&
-          !params.mode &&
-          !params.media &&
-          !params.text &&
-          !params.noText &&
-          !params.portrait)
-      ) {
+      if (this.initialized || !params) {
         return;
       }
+      this.initialized = true;
 
       this.noText = Boolean(params.noText);
       this.portraitMode = params.portrait;
@@ -91,6 +85,11 @@ export default function ({ props, newsfeed }) {
         : this.isRemind || this.isEdit
         ? 'text'
         : settingsStore.composerMode;
+
+      // if noText is enabled the first screen shouldn't be text.
+      if (this.mode === 'text' && this.noText) {
+        this.mode = 'photo';
+      }
 
       if (params.media) {
         this.mode = 'text';
@@ -115,6 +114,7 @@ export default function ({ props, newsfeed }) {
         isRemind: undefined,
         text: undefined,
         portrait: undefined,
+        noText: undefined,
       });
     },
     onPost(entity, isEdit) {
@@ -388,6 +388,10 @@ export default function ({ props, newsfeed }) {
      * @param {object} media
      */
     async onMediaFromGallery(media) {
+      if (this.portraitMode && media.height < media.width) {
+        showError(i18n.t('capture.mediaPortraitError'));
+        return;
+      }
       this.mediaToConfirm = media;
       this.acceptMedia();
     },

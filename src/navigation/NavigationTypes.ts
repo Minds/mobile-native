@@ -85,6 +85,7 @@ export type AppStackParamList = {
   Capture: {
     portrait?: boolean;
     noText?: boolean;
+    isRemind?: boolean;
     entity?: any;
     text?: string;
     media?: any;
@@ -98,6 +99,7 @@ export type AppStackParamList = {
   Other: {};
   SettingsEmail: {};
   MessengerSettingsScreen: {};
+  AutoplaySettingsScreen: {};
   SettingsPassword: {};
   SettingsNotifications: {};
   BlockedChannels: {};

@@ -8,13 +8,14 @@ import i18n from '../../../common/services/i18n.service';
 import ChannelBadges from '../../badges/ChannelBadges';
 import CenteredLoading from '../../../common/components/CenteredLoading';
 import abbrev from '../../../common/helpers/abbrev';
+import SocialLinks from '../../../common/components/SocialLinks';
 
 type PropsType = {
   store: ChannelStoreType;
   navigation: any;
 };
 
-const AboutTab = observer(({ store, navigation }: PropsType) => {
+const AboutTab = observer(({ store }: PropsType) => {
   const theme = ThemedStyles.style;
   const localStore = useLocalStore(() => ({
     groupCount: 0,
@@ -86,6 +87,11 @@ const AboutTab = observer(({ store, navigation }: PropsType) => {
         label={i18n.t('subscriptions')}
         wrapperStyle={theme.marginBottom2x}>
         <Text>{store.channel.subscriptions_count}</Text>
+      </LabeledComponent>
+      <LabeledComponent
+        label={i18n.t('channel.edit.links')}
+        wrapperStyle={theme.marginBottom2x}>
+        <SocialLinks socialLinks={store.channel.social_profiles} />
       </LabeledComponent>
     </View>
   );

@@ -144,7 +144,7 @@ const ChannelButtons = observer((props: PropsType) => {
           name="more-horiz"
           color={ThemedStyles.getColor('primary_text')}
           size={22}
-          onPress={menuRef.current?.show}
+          onPress={() => menuRef.current?.show()}
           style={[theme.paddingRight, props.iconsStyle]}
         />
       )}

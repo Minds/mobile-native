@@ -51,6 +51,7 @@ export const MINDS_FEATURES = {
  * Deeplink to screen/params maping
  */
 export const MINDS_DEEPLINK = [
+  ['plus', 'Redirect'],
   ['token', 'Redirect'],
   ['help', 'Redirect'],
   ['email-confirmation', 'EmailConfirmation'],

@@ -35,11 +35,6 @@ class AttachmentService {
     if (file.type.includes('video')) {
       promise = this.uploadToS3(file, progress);
     } else {
-      // ugly hack for file upload on ios
-      if (Platform.OS === 'ios') {
-        file.uri = file.uri.replace('file://', '/private');
-      }
-
       promise = api.upload('api/v1/media/', file, extra, progress);
     }
 

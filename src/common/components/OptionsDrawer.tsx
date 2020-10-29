@@ -10,7 +10,7 @@ export default function ({ navigation, route }) {
   }
   const theme = ThemedStyles.style;
 
-  const list = route.params.options(navigation, route);
+  const list = route.params.options(navigation, route).filter((r) => r);
 
   const innerWrapper = [theme.borderBottomHair, theme.borderPrimary];
 

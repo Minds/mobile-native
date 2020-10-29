@@ -8,6 +8,11 @@ import sessionService from '../common/services/session.service';
 import apiService from '../common/services/api.service';
 import logService from '../common/services/log.service';
 import { SupportTiersType } from '../wire/WireTypes';
+import settingsService from '../settings/SettingsService';
+import { UserError } from '../common/UserError';
+import i18n from '../common/services/i18n.service';
+import { showNotification } from '../../AppMessages';
+import { SocialProfile } from '../types/Common';
 
 //@ts-nocheck
 export const USER_MODE_OPEN = 0;
@@ -24,7 +29,6 @@ export default class UserModel extends BaseModel {
    * Eth wallet
    */
   eth_wallet: string = '';
-  disable_autoplay_videos?: boolean;
   sums;
   btc_address?: string;
   icontime!: string;
@@ -34,7 +38,6 @@ export default class UserModel extends BaseModel {
   name!: string;
   is_admin = false;
   canary = false;
-  plus: boolean = false;
   verified: boolean = false;
   founder: boolean = false;
   rewards: boolean = false;
@@ -48,6 +51,12 @@ export default class UserModel extends BaseModel {
 
   tags: Array<string> = [];
   groupsCount: number = 0;
+
+  @observable plus: boolean = false;
+
+  @observable disable_autoplay_videos?: boolean;
+
+  social_profiles?: Array<SocialProfile>;
 
   /**
    * @var {boolean}
@@ -195,6 +204,11 @@ export default class UserModel extends BaseModel {
     this.pro = !this.pro;
   }
 
+  @action
+  togglePlus() {
+    this.plus = !this.plus;
+  }
+
   /**
    * Is admin
    */
@@ -311,6 +325,31 @@ export default class UserModel extends BaseModel {
     } catch (err) {
       this.pending_subscribe = true;
       logService.exception(err);
+    }
+  }
+
+  /**
+   * Toggle disable_autoplay_videos property
+   */
+  @action
+  toggleDisableAutoplayVideos() {
+    this.disable_autoplay_videos = !this.disable_autoplay_videos;
+    this.saveDisableAutoplayVideosSetting();
+  }
+
+  /**
+   * Save disable_autoplay_videos setting or restore property on error
+   */
+  @action
+  async saveDisableAutoplayVideosSetting() {
+    try {
+      await settingsService.submitSettings({
+        disable_autoplay_videos: this.disable_autoplay_videos,
+      });
+      showNotification(i18n.t('settings.autoplay.saved'), 'info');
+    } catch (err) {
+      this.disable_autoplay_videos = !this.disable_autoplay_videos;
+      throw new UserError(err, 'danger');
     }
   }
 }

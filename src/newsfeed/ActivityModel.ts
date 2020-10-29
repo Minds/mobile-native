@@ -17,7 +17,6 @@ import api from '../common/services/api.service';
 import { GOOGLE_PLAY_STORE, MINDS_CDN_URI, MINDS_URI } from '../config/Config';
 import i18n from '../common/services/i18n.service';
 import logService from '../common/services/log.service';
-import entitiesService from '../common/services/entities.service';
 import type { ThumbSize, LockType } from '../types/Common';
 import type GroupModel from '../groups/GroupModel';
 import { SupportTiersType } from '../wire/WireTypes';
@@ -185,7 +184,7 @@ export default class ActivityModel extends BaseModel {
   /**
    * Child models
    */
-  childModels() {
+  childModels(): any {
     return {
       ownerObj: UserModel,
       remind_object: ActivityModel,
@@ -334,6 +333,18 @@ export default class ActivityModel extends BaseModel {
           this.__list = list;
         });
       }
+
+      if (
+        this.entity_guid &&
+        this.perma_url &&
+        this.perma_url?.startsWith(MINDS_URI)
+      ) {
+        NavigationService.push('BlogView', {
+          guid: this.entity_guid,
+          unlock: true,
+        });
+      }
+
       return result;
     } catch (err) {
       if (!ignoreError) {
@@ -440,7 +451,7 @@ export default class ActivityModel extends BaseModel {
     try {
       await deleteItem(this.guid);
       this.removeFromList();
-      entitiesService.deleteFromCache(this.urn);
+      ActivityModel.events.emit('deleteEntity', this);
     } catch (err) {
       logService.exception('[ActivityModel]', err);
       throw err;

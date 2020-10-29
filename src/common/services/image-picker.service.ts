@@ -165,23 +165,19 @@ class ImagePickerService {
         return response.map((image: PatchImage) =>
           Object.assign(
             {
-              uri:
-                Platform.OS === 'ios' && image.sourceURL
-                  ? image.sourceURL // fix images not show on ios
-                  : image.path,
+              uri: image.path,
+              sourceURL: image.sourceURL,
               type: image.mime,
             },
             image,
           ),
         );
       } else {
-        const uri =
-          Platform.OS === 'ios' && response.sourceURL
-            ? response.sourceURL // fix images not show on ios
-            : response.path;
+        const uri = response.path;
         return Object.assign(
           {
             uri,
+            sourceURL: response.sourceURL,
             type: response.mime,
           },
           response,

@@ -33,10 +33,11 @@ import CommentList from '../comments/CommentList';
 import CenteredLoading from '../common/components/CenteredLoading';
 import logService from '../common/services/log.service';
 import i18n from '../common/services/i18n.service';
-import featuresService from '../common/services/features.service';
 import { FLAG_VIEW } from '../common/Permissions';
 import ThemedStyles from '../styles/ThemedStyles';
 import { ComponentsStyle } from '../styles/Components';
+import BlogActionSheet from './BlogActionSheet';
+import Lock from '../wire/v2/lock/Lock';
 
 /**
  * Blog View Screen
@@ -150,27 +151,15 @@ export default class BlogsViewScreen extends Component {
     const blog = this.props.blogsView.blog;
     const theme = ThemedStyles.style;
 
-    const actions = (
+    const actions = !blog.paywall ? (
       <View style={[CS.rowJustifyStart]}>
         <RemindAction entity={blog} navigation={this.props.navigation} />
         <ThumbUpAction entity={blog} />
         <ThumbDownAction entity={blog} />
       </View>
-    );
+    ) : null;
     const image = blog.getBannerSource();
 
-    const actionSheet = this.getActionSheet();
-    const optMenu = featuresService.has('allow-comments-toggle') ? (
-      <View style={styles.rightToolbar}>
-        <Icon
-          name="more-vert"
-          onPress={() => this.showActionSheet()}
-          size={26}
-          style={styles.icon}
-        />
-        {actionSheet}
-      </View>
-    ) : null;
     return (
       <View style={[styles.screen, theme.backgroundSecondary]}>
         <FastImage
@@ -179,7 +168,9 @@ export default class BlogsViewScreen extends Component {
           style={styles.image}
         />
         <Text style={styles.title}>{blog.title}</Text>
-        {optMenu}
+        <View style={[styles.actionSheet]}>
+          <BlogActionSheet entity={blog} navigation={this.props.navigation} />
+        </View>
         <View style={styles.ownerBlockContainer}>
           <OwnerBlock entity={blog} navigation={this.props.navigation}>
             <Text style={[styles.timestamp, theme.colorSecondaryText]}>
@@ -194,30 +185,34 @@ export default class BlogsViewScreen extends Component {
               html={blog.description}
               onHeightUpdated={this.onHeightUpdated}
             />
+          ) : blog.paywall ? (
+            <Lock entity={blog} navigation={this.props.navigation} />
           ) : (
             <CenteredLoading />
           )}
         </View>
-        <View style={styles.moreInformation}>
-          {Boolean(blog.getLicenseText()) && (
-            <Icon color={colors.medium} size={18} name="public" />
-          )}
-          <Text
-            style={[
-              CS.fontXS,
-              CS.paddingLeft,
-              CS.colorMedium,
-              CS.paddingRight2x,
-            ]}>
-            {blog.getLicenseText()}
-          </Text>
-          <Icon
-            color={colors.primary}
-            size={20}
-            name="share"
-            onPress={this.share}
-          />
-        </View>
+        {!blog.paywall && (
+          <View style={styles.moreInformation}>
+            {Boolean(blog.getLicenseText()) && (
+              <Icon color={colors.medium} size={18} name="public" />
+            )}
+            <Text
+              style={[
+                CS.fontXS,
+                CS.paddingLeft,
+                CS.colorMedium,
+                CS.paddingRight2x,
+              ]}>
+              {blog.getLicenseText()}
+            </Text>
+            <Icon
+              color={colors.primary}
+              size={20}
+              name="share"
+              onPress={this.share}
+            />
+          </View>
+        )}
         <SafeAreaView style={styles.header}>
           <Icon
             raised
@@ -342,6 +337,12 @@ const styles = StyleSheet.create({
   containerContainer: {
     flex: 1,
     paddingBottom: paddingBottom,
+  },
+  actionSheet: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    zIndex: 1,
   },
   header: {
     position: 'absolute',

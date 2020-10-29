@@ -1,466 +1,643 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`blog card component should renders correctly 1`] = `
-<View
-  onPress={[Function]}
->
+<View>
   <View
     style={
       Array [
         Object {
-          "overflow": "hidden",
-        },
-        Object {
-          "alignItems": "stretch",
-          "flexDirection": "row",
-          "height": 150,
-          "width": "100%",
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+          "zIndex": 1,
         },
       ]
     }
   >
-    <FastImageView
-      resizeMode="cover"
-      source={
-        Object {
-          "headers": Object {
-            "App-Version": "3.8.0",
-            "Cache-Control": "no-cache, no-store, must-revalidate",
-            "Content-Type": "application/json",
-            "Pragma": "no-cache",
-          },
-          "uri": "https://www.minds.com/fs/v1/banners/836607056186159104/1524838665",
+    <View>
+      <Text
+        allowFontScaling={false}
+        onPress={[Function]}
+        style={
+          Array [
+            Object {
+              "color": undefined,
+              "fontSize": 28,
+            },
+            undefined,
+            Object {
+              "fontFamily": "Material Icons",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
         }
-      }
-      style={
-        Object {
-          "bottom": 0,
-          "left": 0,
-          "position": "absolute",
-          "right": 0,
-          "top": 0,
-        }
-      }
-    />
+      >
+        
+      </Text>
+      <Modal
+        animationType="none"
+        hardwareAccelerated={false}
+        onRequestClose={[Function]}
+        transparent={true}
+        visible={false}
+      >
+        <View
+          style={
+            Array [
+              Array [
+                Object {
+                  "flex": 1,
+                  "flexDirection": "row",
+                },
+              ],
+            ]
+          }
+        >
+          <Text
+            onPress={[Function]}
+            style={
+              Array [
+                Array [
+                  Object {
+                    "backgroundColor": "#000",
+                    "bottom": 0,
+                    "left": 0,
+                    "opacity": 0.4,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  },
+                ],
+              ]
+            }
+          />
+          <View
+            style={
+              Object {
+                "alignSelf": "flex-end",
+                "backgroundColor": "#252E31",
+                "flex": 1,
+                "height": 45.5,
+                "transform": Array [
+                  Object {
+                    "translateY": 45.5,
+                  },
+                ],
+              }
+            }
+          >
+            <View
+              style={
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "backgroundColor": "#fff",
+                    "height": 40,
+                    "justifyContent": "center",
+                  },
+                  Object {
+                    "alignItems": "center",
+                    "backgroundColor": "#252E31",
+                    "height": 40,
+                    "justifyContent": "center",
+                  },
+                ]
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "color": "#757575",
+                      "fontSize": 14,
+                    },
+                  ]
+                }
+              >
+                Actions
+              </Text>
+            </View>
+            <RCTScrollView
+              scrollEnabled={false}
+            >
+              <View />
+            </RCTScrollView>
+            <View
+              activeOpacity={1}
+              onPress={[Function]}
+              style={
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "backgroundColor": "#fff",
+                    "height": 50,
+                    "justifyContent": "center",
+                    "marginTop": 6,
+                  },
+                  Object {
+                    "alignItems": "center",
+                    "backgroundColor": "#202527",
+                    "height": 50,
+                    "justifyContent": "center",
+                    "marginTop": 6,
+                  },
+                ]
+              }
+              underlayColor="#F4F4F4"
+            >
+              <Text
+                style={
+                  Array [
+                    Array [
+                      Object {
+                        "fontSize": 18,
+                      },
+                    ],
+                    Object {
+                      "color": "#007AFF",
+                    },
+                  ]
+                }
+              />
+            </View>
+          </View>
+        </View>
+      </Modal>
+    </View>
   </View>
   <View
-    style={
-      Array [
-        Object {
-          "padding": 10,
-        },
-      ]
-    }
+    onPress={[Function]}
   >
     <View
       style={
         Array [
           Object {
-            "alignItems": "flex-start",
-            "flexDirection": "column",
+            "overflow": "hidden",
           },
           Object {
+            "alignItems": "stretch",
+            "flexDirection": "row",
+            "height": 150,
             "width": "100%",
           },
         ]
       }
     >
-      <Text
-        ellipsizeMode="tail"
-        numberOfLines={2}
-        style={
-          Array [
-            Object {
-              "fontSize": 16,
+      <FastImageView
+        resizeMode="cover"
+        source={
+          Object {
+            "headers": Object {
+              "App-Version": "3.8.0",
+              "Cache-Control": "no-cache, no-store, must-revalidate",
+              "Content-Type": "application/json",
+              "Pragma": "no-cache",
             },
-            Object {
-              "fontWeight": "500",
-            },
-            Object {
-              "flex": 1,
-            },
-          ]
+            "uri": "https://www.minds.com/fs/v1/banners/836607056186159104/1524838665",
+          }
         }
-      >
-        Some Title
-      </Text>
+        style={
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+      />
+    </View>
+    <View
+      style={
+        Array [
+          Object {
+            "padding": 10,
+          },
+        ]
+      }
+    >
       <View
         style={
           Array [
             Object {
-              "marginBottom": 10,
+              "alignItems": "flex-start",
+              "flexDirection": "column",
             },
             Object {
-              "marginTop": 10,
-            },
-            Object {
-              "flexDirection": "row",
-              "justifyContent": "center",
-            },
-            Object {
-              "alignItems": "center",
+              "width": "100%",
             },
           ]
         }
       >
-        <View
-          height={24}
+        <Text
+          ellipsizeMode="tail"
+          numberOfLines={2}
           style={
-            Object {
-              "backgroundColor": "transparent",
-              "borderRadius": 17,
-              "height": 34,
-              "width": 34,
-            }
-          }
-          theme={
-            Object {
-              "colors": Object {
-                "disabled": "hsl(208, 8%, 90%)",
-                "divider": "#bcbbc1",
-                "error": "#ff190c",
-                "grey0": "#393e42",
-                "grey1": "#43484d",
-                "grey2": "#5e6977",
-                "grey3": "#86939e",
-                "grey4": "#bdc6cf",
-                "grey5": "#e1e8ee",
-                "greyOutline": "#bbb",
-                "platform": Object {
-                  "android": Object {
-                    "error": "#f44336",
-                    "primary": "#2196f3",
-                    "secondary": "#9C27B0",
-                    "success": "#4caf50",
-                    "warning": "#ffeb3b",
-                  },
-                  "ios": Object {
-                    "error": "#ff3b30",
-                    "primary": "#007aff",
-                    "secondary": "#5856d6",
-                    "success": "#4cd964",
-                    "warning": "#ffcc00",
-                  },
-                },
-                "primary": "#2089dc",
-                "searchBg": "#303337",
-                "secondary": "#8F0CE8",
-                "success": "#52c41a",
-                "warning": "#faad14",
+            Array [
+              Object {
+                "fontSize": 16,
               },
-            }
+              Object {
+                "fontWeight": "500",
+              },
+              Object {
+                "flex": 1,
+              },
+            ]
           }
-          width={24}
+        >
+          Some Title
+        </Text>
+        <View
+          style={
+            Array [
+              Object {
+                "marginBottom": 10,
+              },
+              Object {
+                "marginTop": 10,
+              },
+              Object {
+                "flexDirection": "row",
+                "justifyContent": "center",
+              },
+              Object {
+                "alignItems": "center",
+              },
+            ]
+          }
         >
           <View
-            accessibilityIgnoresInvertColors={true}
+            height={24}
             style={
               Object {
                 "backgroundColor": "transparent",
                 "borderRadius": 17,
-                "flex": 1,
-                "overflow": "hidden",
-                "position": "relative",
+                "height": 34,
+                "width": 34,
               }
             }
-          >
-            <Image
-              borderRadius={17}
-              onLoad={[Function]}
-              style={
-                Object {
-                  "bottom": 0,
-                  "flex": 1,
-                  "height": null,
-                  "left": 0,
-                  "position": "absolute",
-                  "right": 0,
-                  "top": 0,
-                  "width": null,
-                }
-              }
-              testID="RNE__Image"
-              theme={
-                Object {
-                  "colors": Object {
-                    "disabled": "hsl(208, 8%, 90%)",
-                    "divider": "#bcbbc1",
-                    "error": "#ff190c",
-                    "grey0": "#393e42",
-                    "grey1": "#43484d",
-                    "grey2": "#5e6977",
-                    "grey3": "#86939e",
-                    "grey4": "#bdc6cf",
-                    "grey5": "#e1e8ee",
-                    "greyOutline": "#bbb",
-                    "platform": Object {
-                      "android": Object {
-                        "error": "#f44336",
-                        "primary": "#2196f3",
-                        "secondary": "#9C27B0",
-                        "success": "#4caf50",
-                        "warning": "#ffeb3b",
-                      },
-                      "ios": Object {
-                        "error": "#ff3b30",
-                        "primary": "#007aff",
-                        "secondary": "#5856d6",
-                        "success": "#4cd964",
-                        "warning": "#ffcc00",
-                      },
+            theme={
+              Object {
+                "colors": Object {
+                  "disabled": "hsl(208, 8%, 90%)",
+                  "divider": "#bcbbc1",
+                  "error": "#ff190c",
+                  "grey0": "#393e42",
+                  "grey1": "#43484d",
+                  "grey2": "#5e6977",
+                  "grey3": "#86939e",
+                  "grey4": "#bdc6cf",
+                  "grey5": "#e1e8ee",
+                  "greyOutline": "#bbb",
+                  "platform": Object {
+                    "android": Object {
+                      "error": "#f44336",
+                      "primary": "#2196f3",
+                      "secondary": "#9C27B0",
+                      "success": "#4caf50",
+                      "warning": "#ffeb3b",
                     },
-                    "primary": "#2089dc",
-                    "searchBg": "#303337",
-                    "secondary": "#8F0CE8",
-                    "success": "#52c41a",
-                    "warning": "#faad14",
+                    "ios": Object {
+                      "error": "#ff3b30",
+                      "primary": "#007aff",
+                      "secondary": "#5856d6",
+                      "success": "#4cd964",
+                      "warning": "#ffcc00",
+                    },
                   },
-                }
+                  "primary": "#2089dc",
+                  "searchBg": "#303337",
+                  "secondary": "#8F0CE8",
+                  "success": "#52c41a",
+                  "warning": "#faad14",
+                },
               }
-              transition={true}
-            />
+            }
+            width={24}
+          >
             <View
-              accessibilityElementsHidden={false}
-              importantForAccessibility="yes"
-              pointerEvents="auto"
+              accessibilityIgnoresInvertColors={true}
               style={
                 Object {
-                  "bottom": 0,
-                  "left": 0,
-                  "opacity": 1,
-                  "position": "absolute",
-                  "right": 0,
-                  "top": 0,
+                  "backgroundColor": "transparent",
+                  "borderRadius": 17,
+                  "flex": 1,
+                  "overflow": "hidden",
+                  "position": "relative",
                 }
               }
             >
-              <View
+              <Image
+                borderRadius={17}
+                onLoad={[Function]}
                 style={
                   Object {
-                    "alignItems": "center",
-                    "backgroundColor": "transparent",
+                    "bottom": 0,
                     "flex": 1,
                     "height": null,
-                    "justifyContent": "center",
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
                     "width": null,
                   }
                 }
-                testID="RNE__Image__placeholder"
+                testID="RNE__Image"
+                theme={
+                  Object {
+                    "colors": Object {
+                      "disabled": "hsl(208, 8%, 90%)",
+                      "divider": "#bcbbc1",
+                      "error": "#ff190c",
+                      "grey0": "#393e42",
+                      "grey1": "#43484d",
+                      "grey2": "#5e6977",
+                      "grey3": "#86939e",
+                      "grey4": "#bdc6cf",
+                      "grey5": "#e1e8ee",
+                      "greyOutline": "#bbb",
+                      "platform": Object {
+                        "android": Object {
+                          "error": "#f44336",
+                          "primary": "#2196f3",
+                          "secondary": "#9C27B0",
+                          "success": "#4caf50",
+                          "warning": "#ffeb3b",
+                        },
+                        "ios": Object {
+                          "error": "#ff3b30",
+                          "primary": "#007aff",
+                          "secondary": "#5856d6",
+                          "success": "#4cd964",
+                          "warning": "#ffcc00",
+                        },
+                      },
+                      "primary": "#2089dc",
+                      "searchBg": "#303337",
+                      "secondary": "#8F0CE8",
+                      "success": "#52c41a",
+                      "warning": "#faad14",
+                    },
+                  }
+                }
+                transition={true}
+              />
+              <View
+                accessibilityElementsHidden={false}
+                importantForAccessibility="yes"
+                pointerEvents="auto"
+                style={
+                  Object {
+                    "bottom": 0,
+                    "left": 0,
+                    "opacity": 1,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Object {
+                      "alignItems": "center",
+                      "backgroundColor": "transparent",
+                      "flex": 1,
+                      "height": null,
+                      "justifyContent": "center",
+                      "width": null,
+                    }
+                  }
+                  testID="RNE__Image__placeholder"
+                />
+              </View>
+              <View
+                style={
+                  Object {
+                    "flex": 1,
+                    "height": null,
+                    "width": null,
+                  }
+                }
               />
             </View>
-            <View
-              style={
+          </View>
+          <Text
+            numberOfLines={1}
+            style={
+              Array [
+                Object {
+                  "fontSize": 12,
+                },
+                Object {
+                  "paddingLeft": 5,
+                },
                 Object {
                   "flex": 1,
-                  "height": null,
-                  "width": null,
-                }
-              }
-            />
-          </View>
+                },
+              ]
+            }
+          >
+            SOMEUSERMANE
+          </Text>
+          <Text
+            style={
+              Array [
+                Object {
+                  "fontSize": 10,
+                },
+                Object {
+                  "paddingLeft": 5,
+                },
+              ]
+            }
+          >
+            Apr 27, 2018, 07:17
+          </Text>
         </View>
-        <Text
-          numberOfLines={1}
-          style={
-            Array [
-              Object {
-                "fontSize": 12,
-              },
-              Object {
-                "paddingLeft": 5,
-              },
-              Object {
-                "flex": 1,
-              },
-            ]
-          }
-        >
-          SOMEUSERMANE
-        </Text>
-        <Text
-          style={
-            Array [
-              Object {
-                "fontSize": 10,
-              },
-              Object {
-                "paddingLeft": 5,
-              },
-            ]
-          }
-        >
-          Apr 27, 2018, 07:17
-        </Text>
       </View>
     </View>
-  </View>
-  <Actions
-    entity={
-      Object {
-        "access_id": "2",
-        "allow_comments": true,
-        "boost_rejection_reason": -1,
-        "categories": Array [],
-        "category": "education",
-        "container_guid": "100",
-        "custom_meta": Object {
-          "author": "",
-          "description": "",
-          "title": "",
-        },
-        "description": "Some Blog",
-        "draft_access_id": "0",
-        "excerpt": "Some description",
-        "featured": false,
-        "featured_id": false,
-        "guid": 1,
-        "header_bg": "1",
-        "header_top": "0",
-        "impressions": 100,
-        "isOwner": [Function],
-        "last_save": "1524843907",
-        "last_updated": "1524838665",
-        "license": "attribution-noncommercial-cc",
-        "mature": false,
-        "monetized": false,
-        "ownerObj": Object {
-          "__list": null,
+    <Actions
+      entity={
+        Object {
           "access_id": "2",
           "allow_comments": true,
-          "banned": "no",
-          "blocked": false,
-          "boostProPlus": false,
-          "boost_autorotate": true,
-          "boost_rating": "2",
-          "briefdescription": "",
-          "canary": false,
-          "categories": Array [
-            "music",
-            "nature",
-            "news",
-            "politics",
-            "science",
-            "technology",
-            "education",
-            "art",
-            "health",
-          ],
-          "chat": true,
-          "city": "",
-          "confirmEmail": [Function],
-          "container_guid": "0",
-          "deleted": "0",
-          "disabled_boost": false,
-          "dob": "",
-          "email_confirmed": false,
-          "eth_wallet": "0x6fffffdadae350ddd5a1777d5a1777a4f39f0317",
-          "fb": false,
-          "feature_flags": false,
-          "featured_id": "725165605782560768",
-          "founder": false,
-          "gender": "private",
-          "getAvatarSource": [MockFunction] {
-            "calls": Array [
-              Array [],
-            ],
-            "results": Array [
-              Object {
-                "type": "return",
-                "value": undefined,
-              },
-            ],
+          "boost_rejection_reason": -1,
+          "categories": Array [],
+          "category": "education",
+          "comments:count": undefined,
+          "container_guid": "100",
+          "custom_meta": Object {
+            "author": "",
+            "description": "",
+            "title": "",
           },
-          "groupsCount": 0,
-          "guid": 100,
-          "icontime": "1523515420",
+          "description": "Some Blog",
+          "draft_access_id": "0",
+          "edited": "0",
+          "entity_guid": "",
+          "excerpt": "Some description",
+          "featured": false,
+          "featured_id": false,
+          "getLockType": [Function],
+          "guid": 1,
+          "header_bg": "1",
+          "header_top": "0",
           "impressions": 100,
           "isOwner": [Function],
-          "is_admin": false,
-          "language": "en",
-          "last_accepted_tos": 0,
-          "legacy_guid": false,
-          "mature": "1",
-          "mature_channel": "0",
+          "is_visible": false,
+          "last_save": "1524843907",
+          "last_updated": "1524838665",
+          "license": "attribution-noncommercial-cc",
+          "mature": false,
           "mature_visibility": false,
-          "merchant": Object {
-            "exclusive": Object {
-              "amount": "10",
-              "enabled": true,
+          "message": "",
+          "monetized": false,
+          "ownerObj": Object {
+            "__list": null,
+            "access_id": "2",
+            "allow_comments": true,
+            "banned": "no",
+            "blocked": false,
+            "boostProPlus": false,
+            "boost_autorotate": true,
+            "boost_rating": "2",
+            "briefdescription": "",
+            "canary": false,
+            "categories": Array [
+              "music",
+              "nature",
+              "news",
+              "politics",
+              "science",
+              "technology",
+              "education",
+              "art",
+              "health",
+            ],
+            "chat": true,
+            "city": "",
+            "confirmEmail": [Function],
+            "container_guid": "0",
+            "deleted": "0",
+            "disable_autoplay_videos": undefined,
+            "disabled_boost": false,
+            "dob": "",
+            "email_confirmed": false,
+            "eth_wallet": "0x6fffffdadae350ddd5a1777d5a1777a4f39f0317",
+            "fb": false,
+            "feature_flags": false,
+            "featured_id": "725165605782560768",
+            "founder": false,
+            "gender": "private",
+            "getAvatarSource": [MockFunction] {
+              "calls": Array [
+                Array [],
+              ],
+              "results": Array [
+                Object {
+                  "type": "return",
+                  "value": undefined,
+                },
+              ],
             },
-            "id": "acct_Dsdfjdlsaf34243",
-            "service": "stripe",
+            "groupsCount": 0,
+            "guid": 100,
+            "icontime": "1523515420",
+            "impressions": 100,
+            "isOwner": [Function],
+            "is_admin": false,
+            "language": "en",
+            "last_accepted_tos": 0,
+            "legacy_guid": false,
+            "mature": "1",
+            "mature_channel": "0",
+            "mature_visibility": false,
+            "merchant": Object {
+              "exclusive": Object {
+                "amount": "10",
+                "enabled": true,
+              },
+              "id": "acct_Dsdfjdlsaf34243",
+              "service": "stripe",
+            },
+            "mode": 0,
+            "monetized": "",
+            "name": "Some User",
+            "nsfw": Array [],
+            "onchain_booster": 0,
+            "owner_guid": "0",
+            "pending_subscribe": false,
+            "permissions": Object {},
+            "pinned_posts": Array [],
+            "plus": true,
+            "pro": false,
+            "programs": Array [
+              "affiliate",
+            ],
+            "rating": "1",
+            "rewards": true,
+            "signup_method": false,
+            "site_guid": false,
+            "social_profiles": Array [],
+            "spam": "0",
+            "subscribed": false,
+            "subscriber": true,
+            "subscribers_count": 50,
+            "subscriptions_count": 0,
+            "subtype": false,
+            "tags": Array [],
+            "time_created": "1468113204",
+            "time_updated": false,
+            "type": "user",
+            "urn": "",
+            "username": "someusermane",
+            "verified": true,
+            "website": "",
+            "wire_rewards": Object {
+              "description": "",
+              "rewards": Object {
+                "money": Array [],
+                "points": Array [],
+              },
+            },
           },
-          "mode": 0,
-          "monetized": "",
-          "name": "Some User",
-          "nsfw": Array [],
-          "onchain_booster": 0,
-          "owner_guid": "0",
-          "pending_subscribe": false,
+          "owner_guid": "1",
+          "paywall": false,
+          "paywall_unlocked": false,
+          "perma_url": "https://www.minds.com/blog/view/836607056186159104",
           "permissions": Object {},
-          "pinned_posts": Array [],
-          "plus": true,
-          "pro": false,
-          "programs": Array [
-            "affiliate",
+          "pinned": false,
+          "published": true,
+          "rating": 1,
+          "reminds": 58,
+          "route": "blog/view/836607056186159104",
+          "slug": "",
+          "subtype": "blog",
+          "thumbnail_src": "https://www.minds.com/fs/v1/banners/836607056186159104/1524838665",
+          "thumbs:down:count": 1,
+          "thumbs:down:user_guids": Array [
+            "3",
           ],
-          "rating": "1",
-          "rewards": true,
-          "signup_method": false,
-          "site_guid": false,
-          "social_profiles": Array [],
-          "spam": "0",
-          "subscribed": false,
-          "subscriber": true,
-          "subscribers_count": 50,
-          "subscriptions_count": 0,
-          "subtype": false,
-          "tags": Array [],
-          "time_created": "1468113204",
-          "time_updated": false,
-          "type": "user",
+          "thumbs:up:count": 2,
+          "thumbs:up:user_guids": Array [
+            "1",
+            "2",
+          ],
+          "time_created": "1524838665",
+          "time_published": "1524838665",
+          "time_updated": "1524862542",
+          "title": "Some Title",
+          "type": "object",
           "urn": "",
-          "username": "someusermane",
-          "verified": true,
-          "website": "",
-          "wire_rewards": Object {
-            "description": "",
-            "rewards": Object {
-              "money": Array [],
-              "points": Array [],
-            },
-          },
-        },
-        "owner_guid": "1",
-        "paywall": false,
-        "perma_url": "https://www.minds.com/blog/view/836607056186159104",
-        "permissions": Object {},
-        "published": true,
-        "rating": 1,
-        "reminds": 58,
-        "route": "blog/view/836607056186159104",
-        "slug": "",
-        "subtype": "blog",
-        "thumbnail_src": "https://www.minds.com/fs/v1/banners/836607056186159104/1524838665",
-        "thumbs:down:count": 1,
-        "thumbs:down:user_guids": Array [
-          "3",
-        ],
-        "thumbs:up:count": 2,
-        "thumbs:up:user_guids": Array [
-          "1",
-          "2",
-        ],
-        "time_created": "1524838665",
-        "time_published": "1524838665",
-        "time_updated": "1524862542",
-        "title": "Some Title",
-        "type": "object",
-        "urn": "",
-        "username": "",
-        "wire_threshold": "",
+          "username": "",
+          "wire_threshold": "",
+        }
       }
-    }
-  />
+    />
+  </View>
 </View>
 `;

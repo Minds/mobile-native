@@ -107,6 +107,7 @@ import SelectHashtagsScreen from '../onboarding/v2/steps/SelectHashtagsScreen';
 import SetupChannelScreen from '../onboarding/v2/steps/SetupChannelScreen';
 import VerifyUniquenessScreen from '../onboarding/v2/steps/VerifyUniquenessScreen';
 import PhoneValidationScreen from '../onboarding/v2/steps/PhoneValidationScreen';
+import AutoplaySettingsScreen from '../settings/screens/AutoplaySettingsScreen';
 
 const isIos = Platform.OS === 'ios';
 
@@ -170,13 +171,19 @@ const AccountScreenOptions = (navigation) => [
     title: i18n.t('settings.accountOptions.4'),
     onPress: () => navigation.push('SettingsNotifications'),
   },
-  {
-    title: i18n.t('settings.accountOptions.5'),
-    onPress: () => navigation.push('NSFWScreen'),
-  },
+  Platform.OS !== 'ios'
+    ? {
+        title: i18n.t('settings.accountOptions.5'),
+        onPress: () => navigation.push('NSFWScreen'),
+      }
+    : null,
   {
     title: i18n.t('settings.accountOptions.6'),
     onPress: () => navigation.push('MessengerSettingsScreen'),
+  },
+  {
+    title: i18n.t('settings.accountOptions.7'),
+    onPress: () => navigation.push('AutoplaySettingsScreen'),
   },
 ];
 
@@ -567,6 +574,11 @@ const AppStack = function () {
         name="MessengerSettingsScreen"
         component={MessengerSettingsScreen}
         options={{ title: i18n.t('settings.accountOptions.6') }}
+      />
+      <AppStackNav.Screen
+        name="AutoplaySettingsScreen"
+        component={AutoplaySettingsScreen}
+        options={{ title: i18n.t('settings.accountOptions.7') }}
       />
       <AppStackNav.Screen
         name="DevicesScreen"

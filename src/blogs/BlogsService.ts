@@ -1,6 +1,15 @@
-//@ts-nocheck
 import api from './../common/services/api.service';
+import type { ApiResponse } from './../common/services/api.service';
 import { getStores } from '../../AppStores';
+
+interface BlogApiResponse extends ApiResponse {
+  blog: any;
+}
+
+interface BlogListApiResponse extends ApiResponse {
+  entities: Array<any>;
+  offset: string;
+}
 
 /**
  * Blogs Service
@@ -16,7 +25,10 @@ class BlogsService {
           (getStores().hashtag.all ? '/all' : '')
         : 'api/v1/blog/' + filter;
 
-    const data = await api.get(endpoint, { limit: 12, offset: offset });
+    const data = await api.get<BlogListApiResponse>(endpoint, {
+      limit: 12,
+      offset: offset,
+    });
     return {
       entities: data.entities || [],
       offset: data['load-next'] || '',
@@ -28,7 +40,7 @@ class BlogsService {
    * @param {string} guid
    */
   loadEntity(guid) {
-    return api.get('api/v1/blog/' + guid);
+    return api.get<BlogApiResponse>('api/v1/blog/' + guid);
   }
 }
 

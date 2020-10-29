@@ -115,6 +115,11 @@ const ActivityFullScreen = observer((props: PropsType) => {
     if (route && (route.params?.focusedUrn || route.params?.scrollToBottom)) {
       openCommentsTimeOut = setTimeout(() => {
         onPressComment();
+        // remove the values to avoid reopens (test fix)
+        navigation.setParams({
+          focusedUrn: undefined,
+          scrollToBottom: undefined,
+        });
       }, 100);
     }
     return () => {
@@ -122,7 +127,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
         clearTimeout(openCommentsTimeOut);
       }
     };
-  }, [onPressComment, route]);
+  }, [navigation, onPressComment, route]);
 
   const isShortText =
     !hasMedia && !hasRemind && entity.text.length < TEXT_SHORT_THRESHOLD;
