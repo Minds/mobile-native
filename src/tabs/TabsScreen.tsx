@@ -52,7 +52,7 @@ const Tabs = observer(function ({ navigation }) {
   ]);
 
   const navToVideoCapture = useCallback(
-    () => navigation.jumpTo('Capture', { mode: 'video', start: true }),
+    () => navigation.push('Capture', { mode: 'video', start: true }),
     [navigation],
   );
 
