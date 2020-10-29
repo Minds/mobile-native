@@ -11,6 +11,12 @@ import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import useOnboardingProgress from './useOnboardingProgress';
 
+type StepDefinition = {
+  screen: string;
+  title: string;
+  onPress?: () => void;
+};
+
 /**
  * initial onboarding
  */
@@ -29,7 +35,7 @@ export default observer(function OnboardingScreen() {
     }, [progressStore]),
   );
 
-  const stepsMapping = {
+  const stepsMapping: { [name: string]: StepDefinition } = {
     VerifyEmailStep: {
       title: i18n.t('onboarding.verifyEmailAddress'),
       screen: 'VerifyEmail',
@@ -48,7 +54,11 @@ export default observer(function OnboardingScreen() {
     },
     CreatePostStep: {
       title: i18n.t('createAPost'),
-      screen: 'SetupChannel',
+      screen: '',
+      onPress: () =>
+        navigation.navigate('Capture', {
+          text: 'Just landed on Planet Minds 🚀',
+        }),
     },
   };
 
@@ -58,10 +68,12 @@ export default observer(function OnboardingScreen() {
           ? {
               title: stepsMapping[s.id].title,
               is_completed: s.is_completed,
-              onPress: () =>
-                navigation.navigate(stepsMapping[s.id].screen, {
-                  store: progressStore,
-                }),
+              onPress:
+                stepsMapping[s.id].onPress ||
+                (() =>
+                  navigation.navigate(stepsMapping[s.id].screen, {
+                    store: progressStore,
+                  })),
             }
           : null,
       )
