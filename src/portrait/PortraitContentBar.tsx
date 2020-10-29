@@ -22,7 +22,7 @@ const Header = () => {
   const theme = ThemedStyles.style;
   const navigation = useNavigation<any>();
   const nav = useCallback(
-    () => navigation.push('Capture', { portrait: true, noText: true }),
+    () => navigation.push('Capture', { portrait: true }),
     [navigation],
   );
 
