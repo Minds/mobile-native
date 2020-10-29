@@ -25,7 +25,7 @@ import { RootStackParamList } from '../../navigation/NavigationTypes';
 import Button from './Button';
 import mindsService from '../services/minds.service';
 import UserModel from '../../channel/UserModel';
-import WireService from '../../wire/WireService';
+import entitiesService from '../services/entities.service';
 
 const isIos = Platform.OS === 'ios';
 
@@ -58,13 +58,13 @@ const createPlusStore = () => {
         : (await MindsService.getSettings()).upgrades.plus;
 
       // used to pay plus by wire
-      this.owner = pro
-        ? await WireService.getEntityByHandler(
-            mindsService.settings.handlers.pro,
-          )
-        : await WireService.getEntityByHandler(
-            mindsService.settings.handlers.plus,
-          );
+      const handler = pro
+        ? mindsService.settings.handlers.pro
+        : mindsService.settings.handlers.plus;
+
+      this.owner = (await entitiesService.single(
+        `urn:entity:${handler}`,
+      )) as UserModel;
 
       this.loaded = true;
     },
