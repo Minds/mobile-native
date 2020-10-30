@@ -45,6 +45,7 @@ import i18n from './src/common/services/i18n.service';
 import { YellowBox } from 'react-native';
 import receiveShareService from './src/common/services/receive-share.service';
 import AppInitManager from './AppInitManager';
+import { ScreenHeightProvider } from './src/common/components/KeyboardSpacingView';
 YellowBox.ignoreWarnings(['']);
 
 const stores = getStores();
@@ -64,6 +65,10 @@ type State = {
 };
 
 type Props = {};
+
+export let APP_CONST = {
+  realScreenHeight: 0,
+};
 
 /**
  * App
@@ -180,30 +185,32 @@ class App extends Component<Props, State> {
 
     const app = (
       <SafeAreaProvider key={'App'}>
-        <NavigationContainer
-          ref={setTopLevelNavigator}
-          theme={ThemedStyles.navTheme}
-          onReady={appInitManager.onNavigatorReady}>
-          <StoresProvider>
-            <Provider key="app" {...stores}>
-              <ErrorBoundary
-                message="An error occurred"
-                containerStyle={ThemedStyles.style.centered}>
-                <StatusBar
-                  barStyle={statusBarStyle}
-                  backgroundColor={ThemedStyles.getColor(
-                    'secondary_background',
-                  )}
-                />
-                <NavigationStack
-                  key={ThemedStyles.theme + i18n.locale}
-                  isLoggedIn={isLoggedIn}
-                />
-                <AppMessages />
-              </ErrorBoundary>
-            </Provider>
-          </StoresProvider>
-        </NavigationContainer>
+        <ScreenHeightProvider>
+          <NavigationContainer
+            ref={setTopLevelNavigator}
+            theme={ThemedStyles.navTheme}
+            onReady={appInitManager.onNavigatorReady}>
+            <StoresProvider>
+              <Provider key="app" {...stores}>
+                <ErrorBoundary
+                  message="An error occurred"
+                  containerStyle={ThemedStyles.style.centered}>
+                  <StatusBar
+                    barStyle={statusBarStyle}
+                    backgroundColor={ThemedStyles.getColor(
+                      'secondary_background',
+                    )}
+                  />
+                  <NavigationStack
+                    key={ThemedStyles.theme + i18n.locale}
+                    isLoggedIn={isLoggedIn}
+                  />
+                  <AppMessages />
+                </ErrorBoundary>
+              </Provider>
+            </StoresProvider>
+          </NavigationContainer>
+        </ScreenHeightProvider>
       </SafeAreaProvider>
     );
 
