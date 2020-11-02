@@ -204,7 +204,7 @@
   "capture": {
     "licenseDescription": "Select your desired license type. This can be changed at any time after posting.",
     "pupularLicenses": "Popular licenses",
-    "mediaPortraitError":"Selected media is not portrait",
+    "mediaPortraitError": "Selected media is not portrait",
     "otherLicenses": "Other Licenses",
     "paywallLabel": "Min monthly contribution ({{currency}})",
     "paywallDescription": "Monetize post by making it available to your users who support your channel.",
@@ -416,6 +416,9 @@
     "referral_ping": "Referral Ping",
     "referral_pending": "Referral Pending",
     "referral_complete": "Referral Complete"
+  },
+  "plus": {
+    "freeTrialDesciption": "Start your free trial for 7 days"
   },
   "payments": {
     "confirmDeleteCard": "Do you want to delete this card?"
@@ -925,7 +928,7 @@
 
     "description": "If your friend signs up for Minds within 24 hours of clicking the link you shared with them, they’ll be added to your pending referrals. Once they sign up for the rewards program by setting up their Minds wallet, the referral is complete and you’ll both get +1 added to your contribution scores!"
   },
-  "add":"Add",
+  "add": "Add",
   "downloading": "Downloading",
   "confirm18": "I'm over 18 years of age",
   "postCantBeShown": "Can't be shown on apps installed via the Store",
@@ -1042,14 +1045,15 @@
   "title": "Title",
   "filter": "Filter",
   "captcha": "Enter the characters above",
+  "startFreeTrial":"Start free trial",
   "visibility": "Visibility",
   "about": "About",
-  "purchase":"Purchase",
-  "verification":"Verification",
-  "uploadFailed":"Upload failed",
-  "imageViewer":"View image",
-  "verify":"Verify",
-  "other":"Other",
+  "purchase": "Purchase",
+  "verification": "Verification",
+  "uploadFailed": "Upload failed",
+  "imageViewer": "View image",
+  "verify": "Verify",
+  "other": "Other",
   "permaweb": {
     "title": "Permaweb",
     "description": "Posting to permaweb",
@@ -1058,5 +1062,5 @@
     "cannotMonetize": "Cannot post monetized posts to permaweb",
     "viewOnPermaweb": "Permaweb"
   },
-  "help":"Help"
+  "help": "Help"
 }
