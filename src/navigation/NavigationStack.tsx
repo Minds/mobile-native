@@ -32,7 +32,6 @@ import BlockchainWalletModalScreen from '../blockchain/wallet/modal/BlockchainWa
 import BlockchainWalletImportScreen from '../blockchain/wallet/import/BlockchainWalletImportScreen';
 import BlockchainWalletDetailsScreen from '../blockchain/wallet/details/BlockchainWalletDetailsScreen';
 import ReportScreen from '../report/ReportScreen';
-import MoreScreen from '../tabs/MoreScreen';
 import NotSupportedScreen from '../static-views/NotSupportedScreen';
 import OnboardingScreen from '../onboarding/OnboardingScreen';
 import UpdatingScreen from '../update/UpdateScreen';
@@ -427,11 +426,6 @@ const AppStack = function () {
       <AppStackNav.Screen
         name="Report"
         component={ReportScreen}
-        options={{ title: i18n.t('report') }}
-      />
-      <AppStackNav.Screen
-        name="More"
-        component={MoreScreen}
         options={{ title: i18n.t('report') }}
       />
       <AppStackNav.Screen name="NotSupported" component={NotSupportedScreen} />

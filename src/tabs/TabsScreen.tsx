@@ -26,7 +26,7 @@ export const TAB_BAR_HEIGHT = isIOS
   ? Platform.isPad
     ? 100
     : isIphoneX
-    ? 75
+    ? 78
     : 70
   : 65;
 
@@ -71,8 +71,7 @@ const Tabs = observer(function ({ navigation }) {
           activeTintColor: ThemedStyles.getColor('link'),
           inactiveTintColor: ThemedStyles.getColor('text_secondary'),
           style: {
-            borderTopWidth: 1,
-            borderTopColor: ThemedStyles.getColor('primary_border'),
+            borderTopWidth: 0,
             backgroundColor: ThemedStyles.getColor('secondary_background'),
             height: TAB_BAR_HEIGHT,
             paddingTop: isIOS && isIphoneX ? 30 : 2,
@@ -157,17 +156,6 @@ const styles = {
   compose: {
     width: 48,
     height: 46,
-  },
-  activity: {
-    zIndex: 9990,
-    top: -5,
-    left: -5,
-    right: -5,
-    bottom: -5,
-    borderWidth: 2.5,
-    borderRadius: 35,
-    position: 'absolute',
-    borderColor: colors.primary,
   },
 };
 

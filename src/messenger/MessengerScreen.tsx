@@ -25,7 +25,7 @@ import ThemedStyles from '../styles/ThemedStyles';
 import ActivityIndicator from '../common/components/ActivityIndicator';
 
 /**
- * Messenger Conversarion List Screen
+ * Messenger Conversation List Screen
  */
 @inject('messengerList')
 @observer
@@ -122,7 +122,7 @@ class MessengerScreen extends Component {
     const footer = this.getFooter();
 
     return (
-      <View style={[styles.container, theme.backgroundSecondary]}>
+      <View style={[styles.container, theme.backgroundPrimary]}>
         <View
           style={[theme.rowJustifyStart, theme.alignCenter, theme.marginTop2x]}>
           {/* <MIcon
@@ -135,7 +135,7 @@ class MessengerScreen extends Component {
             placeholder={i18n.t('discovery.search')}
             onChangeText={this.searchChange}
             iconRight={iconRight}
-            containerStyle={[theme.backgroundPrimary, theme.flexContainer]}
+            containerStyle={[theme.backgroundSecondary, theme.flexContainer]}
             iconRightOnPress={this.onLogoutPress}
           />
         </View>

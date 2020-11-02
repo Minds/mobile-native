@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, MutableRefObject } from 'react';
+import React, { useEffect, useCallback } from 'react';
 
 import { View } from 'react-native';
 import DiscoveryUserNew from '../../discovery/DiscoveryUserNew';
@@ -73,7 +73,7 @@ const SearchResultComponent = observer(
 
     // If have something to search, render suggested, else, search history
     return (
-      <View style={[theme.backgroundPrimary, theme.padding2x]}>
+      <View style={[theme.backgroundSecondary, theme.padding2x]}>
         {localStore.shouldShowSuggested && (
           <SuggestedSearch localStore={localStore} renderUser={renderUser} />
         )}

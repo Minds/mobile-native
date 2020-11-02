@@ -25,7 +25,7 @@ const ChannelTopBar = ({ navigation, store, hideButtons }: PropsType) => {
         cleanTop,
         // theme.paddingTop2x,
         theme.paddingBottom,
-        theme.backgroundSecondary,
+        theme.backgroundPrimary,
       ]}>
       <MIcon
         size={36}

@@ -30,7 +30,6 @@ import i18n from '../../common/services/i18n.service';
 import ActivityModel from '../ActivityModel';
 import ThemedStyles from '../../styles/ThemedStyles';
 import type FeedStore from '../../common/stores/FeedStore';
-import featuresService from '../../common/services/features.service';
 import sessionService from '../../common/services/session.service';
 import NavigationService from '../../navigation/NavigationService';
 import { showNotification } from '../../../AppMessages';
@@ -244,7 +243,7 @@ export default class Activity extends Component<PropsType> {
       <TouchableOpacity
         delayPressIn={60}
         activeOpacity={0.8}
-        style={[styles.container, ...borderBottom, theme.backgroundSecondary]}
+        style={[styles.container, ...borderBottom, theme.backgroundPrimary]}
         onPress={this.navToActivity}
         onLongPress={this.copyText}
         onLayout={this.onLayout}

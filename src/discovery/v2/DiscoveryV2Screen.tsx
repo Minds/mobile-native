@@ -68,7 +68,7 @@ export const DiscoveryV2Screen = observer((props: Props) => {
 
   return (
     <View style={ThemedStyles.style.flexContainer}>
-      <View style={ThemedStyles.style.backgroundSecondary}>
+      <View style={ThemedStyles.style.backgroundPrimary}>
         <TopbarTabbar
           current={store.activeTabId}
           onChange={(tabId) => {

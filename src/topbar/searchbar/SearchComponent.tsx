@@ -61,8 +61,8 @@ const SearchComponent = observer((props: Props) => {
         </Text>
         <Modal
           isVisible={user.searching}
-          backdropColor={ThemedStyles.getColor('secondary_background')}
-          backdropOpacity={0.9}
+          backdropColor="#000000"
+          backdropOpacity={0.5}
           useNativeDriver={true}
           onBackdropPress={user.toggleSearching}
           animationInTiming={100}
@@ -73,7 +73,7 @@ const SearchComponent = observer((props: Props) => {
           animationIn="fadeIn"
           style={styles.modal}>
           <SafeAreaView>
-            <View style={[theme.backgroundSecondary, styles.body, border]}>
+            <View style={[theme.backgroundPrimary, styles.body, border]}>
               <View
                 style={[
                   styles.header,
