@@ -6,7 +6,7 @@ import {
 import { useDimensions } from '@react-native-community/hooks';
 import { createSharedElementStackNavigator } from 'react-navigation-shared-element';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { Platform, View } from 'react-native';
+import { Platform, StatusBar, View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import AnalyticsScreen from '../analytics/AnalyticsScreen';
 
@@ -605,6 +605,7 @@ const AppStack = function () {
 const AuthStack = function () {
   return (
     <View style={ThemedStyles.style.flexContainer}>
+      <StatusBar barStyle={'light-content'} backgroundColor="#000000" />
       <VideoBackground source={require('../assets/videos/minds-loop.mp4')} />
       <TransparentLayer />
       <AuthStackNav.Navigator
