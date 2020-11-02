@@ -36,7 +36,7 @@ export class PushService {
       // delay navigation on app start
       setTimeout(() => {
         this.router.navigate(data);
-      }, 100);
+      }, 500);
     });
   }
 
