@@ -7,23 +7,34 @@ import { LIGHT_THEME } from '../../styles/Colors';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { Tooltip, Text } from 'react-native-elements';
 import { useDimensions } from '@react-native-community/hooks';
+import useOnboardingProgress from './useOnboardingProgress';
+import { observer } from 'mobx-react';
 
 /**
  * Initial onboarding button
  */
-export default function InitialOnboardingButton() {
+export default observer(function InitialOnboardingButton() {
   const theme = ThemedStyles.style;
   const tooltipRef = useRef<Tooltip>(null);
   const navigation = useNavigation();
   const { width } = useDimensions().screen;
 
-  useEffect(() => {
-    const t = setTimeout(() => {
-      tooltipRef.current?.toggleTooltip();
-    }, 1000);
+  // get onboarding progress
+  const progressStore = useOnboardingProgress();
 
-    return () => t && clearTimeout(t);
-  }, []);
+  useEffect(() => {
+    let t;
+    if (!progressStore.result?.is_completed) {
+      t = setTimeout(() => {
+        tooltipRef.current?.toggleTooltip();
+      }, 2000);
+    }
+    return () => {
+      if (t) {
+        clearTimeout(t);
+      }
+    };
+  }, [progressStore.result]);
 
   const { current: item } = useRef({
     title: i18n.t('onboarding.startEarning'),
@@ -33,6 +44,10 @@ export default function InitialOnboardingButton() {
         params: { screen: 'Onboarding' },
       }),
   });
+
+  if (!progressStore.result || progressStore.result.is_completed) {
+    return null;
+  }
 
   return (
     <View>
@@ -53,6 +68,6 @@ export default function InitialOnboardingButton() {
       />
     </View>
   );
-}
+});
 
 const containerStyle = { left: 20, borderRadius: 2 };

@@ -10,7 +10,8 @@ export type MenuItemItem = {
   icon?:
     | {
         name: string;
-        type: string;
+        type?: string;
+        color?: string;
       }
     | JSX.Element;
   noIcon?: boolean;

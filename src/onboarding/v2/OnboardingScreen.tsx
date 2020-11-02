@@ -68,6 +68,9 @@ export default observer(function OnboardingScreen() {
           ? {
               title: stepsMapping[s.id].title,
               is_completed: s.is_completed,
+              icon: s.is_completed
+                ? { name: 'checkmark', color: ThemedStyles.getColor('link') }
+                : undefined,
               onPress:
                 stepsMapping[s.id].onPress ||
                 (() =>
