@@ -16,7 +16,6 @@ import blockchainWallet from '../../blockchain/wallet/BlockchainWalletStore';
 import blockchainWalletSelector from '../../blockchain/wallet/BlockchainWalletSelectorStore';
 import capture from '../../capture/CaptureStore';
 import hashtag from '../../common/stores/HashtagStore';
-import onboarding from '../../onboarding/OnboardingStore';
 import groupsBar from '../../groups/GroupsBarStore';
 import SubscriptionRequestStore from '../../channel/subscription/SubscriptionRequestStore';
 import reportStore from '../../report/ReportStore';
@@ -50,7 +49,6 @@ export function createLegacyStores() {
     channelSubscribersStore: new channelSubscribersStore(),
     capture: new capture(),
     hashtag: new hashtag(),
-    onboarding: new onboarding(),
     groupsBar: new groupsBar(),
     reportstore: new reportStore(),
     wallet: new wallet(),

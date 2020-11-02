@@ -75,7 +75,9 @@ export default observer(function VerifyUniquenessScreen() {
           <MenuItem item={item} />
         ))}
 
-        <LabeledComponent label={'OTHER'} labelStyle={[theme.marginTop5x, theme.marginLeft5x]}>
+        <LabeledComponent
+          label={'OTHER'}
+          labelStyle={[theme.marginTop5x, theme.marginLeft5x]}>
           {other.map((item) => (
             <MenuItem item={item} />
           ))}
