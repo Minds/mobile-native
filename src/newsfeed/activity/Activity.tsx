@@ -237,7 +237,7 @@ export default class Activity extends Component<PropsType> {
 
     const borderBottom = this.props.isReminded
       ? []
-      : [theme.borderBottom8x, theme.borderBackgroundPrimary];
+      : [theme.borderBottom8x, theme.borderBackgroundTertiary];
 
     return (
       <TouchableOpacity
