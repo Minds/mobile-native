@@ -14,6 +14,7 @@ import { TDiscoveryV2Tabs } from './DiscoveryV2Store';
 import TopbarTabbar from '../../common/components/topbar-tabbar/TopbarTabbar';
 import { DiscoveryTagsList } from './tags/DiscoveryTagsList';
 import FeedList from '../../common/components/FeedList';
+import DiscoveryTagsManager from './tags/DiscoveryTagsManager';
 
 interface Props {
   navigation: BottomTabNavigationProp<TabParamList>;
@@ -50,6 +51,11 @@ export const DiscoveryV2Screen = observer((props: Props) => {
     return unsubscribe;
   }, [store, navigation]);
 
+  const closeManageTags = () => {
+    store.setShowManageTags(false);
+    store.refreshTrends();
+  };
+
   const screen = () => {
     switch (store.activeTabId) {
       case 'foryou':
@@ -83,6 +89,11 @@ export const DiscoveryV2Screen = observer((props: Props) => {
         />
       </View>
       <View style={ThemedStyles.style.flexContainer}>{screen()}</View>
+      <DiscoveryTagsManager
+        show={store.showManageTags}
+        onCancel={closeManageTags}
+        onDone={closeManageTags}
+      />
     </View>
   );
 });

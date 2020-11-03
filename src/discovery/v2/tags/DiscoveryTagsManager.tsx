@@ -18,9 +18,7 @@ import { TDiscoveryTagsTag } from '../DiscoveryV2Store';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import InputContainer from '../../../common/components/InputContainer';
 import i18n from '../../../common/services/i18n.service';
-import { useKeyboard } from '@react-native-community/hooks';
-
-const isIos = Platform.OS === 'ios';
+import { useDimensions } from '@react-native-community/hooks';
 
 interface Props {
   style?: StyleProp<ViewStyle>;
@@ -96,7 +94,7 @@ export const DiscoveryTagsManager = observer((props: Props) => {
   const theme = ThemedStyles.style;
   const discoveryV2 = useDiscoveryV2Store();
   const store = useLocalStore<StoreType>(createStore);
-  const keyboard = useKeyboard();
+  const { height } = useDimensions().window;
 
   useEffect(() => {
     store.setTags(discoveryV2.tags.slice(), discoveryV2.trendingTags.slice());
@@ -156,19 +154,14 @@ export const DiscoveryTagsManager = observer((props: Props) => {
   /**
    * Render
    */
-
   return (
     <BottomOptionPopup
-      height={500}
+      noOverlay
+      height={(height - 100) * 0.9}
       title={i18n.t('discovery.manage')}
       show={props.show}
       onCancel={onCancel}
       onDone={onDone}
-      contentContainerStyle={
-        keyboard.keyboardShown && !isIos
-          ? { paddingTop: keyboard.keyboardHeight / 2 }
-          : undefined
-      }
       content={
         <ScrollView>
           <SectionList

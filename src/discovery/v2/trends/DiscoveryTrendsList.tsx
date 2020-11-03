@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { View, Text } from 'react-native';
 import { DiscoveryTrendsListItem } from './DiscoveryTrendsListItem';
 import { ComponentsStyle } from '../../../styles/Components';
@@ -7,7 +7,6 @@ import { useDiscoveryV2Store } from '../DiscoveryV2Context';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import i18n from '../../../common/services/i18n.service';
 import Button from '../../../common/components/Button';
-import DiscoveryTagsManager from '../tags/DiscoveryTagsManager';
 import FeedList from '../../../common/components/FeedList';
 import { useNavigation } from '@react-navigation/native';
 
@@ -26,12 +25,6 @@ export const DiscoveryTrendsList = observer(({ plus }: PropsType) => {
   const theme = ThemedStyles.style;
   const discoveryV2 = useDiscoveryV2Store();
   let listRef = useRef<FeedList<any>>(null);
-  const [showManageTags, setShowManageTags] = useState(false);
-
-  const closeManageTags = () => {
-    setShowManageTags(false);
-    discoveryV2.refreshTrends();
-  };
 
   const navigation = useNavigation();
 
@@ -57,7 +50,7 @@ export const DiscoveryTrendsList = observer(({ plus }: PropsType) => {
         </Text>
         <Button
           text={i18n.t('discovery.selectTags')}
-          onPress={() => setShowManageTags(true)}
+          onPress={() => discoveryV2.setShowManageTags(true)}
         />
       </View>
     );
@@ -78,20 +71,13 @@ export const DiscoveryTrendsList = observer(({ plus }: PropsType) => {
    * Render
    */
   return (
-    <View style={theme.flexContainer}>
-      <DiscoveryTagsManager
-        show={showManageTags}
-        onCancel={closeManageTags}
-        onDone={closeManageTags}
-      />
-      <FeedList
-        ref={listRef}
-        header={header}
-        feedStore={discoveryV2.allFeed}
-        emptyMessage={EmptyPartial}
-        navigation={navigation}
-        onRefresh={onRefresh}
-      />
-    </View>
+    <FeedList
+      ref={listRef}
+      header={header}
+      feedStore={discoveryV2.allFeed}
+      emptyMessage={EmptyPartial}
+      navigation={navigation}
+      onRefresh={onRefresh}
+    />
   );
 });

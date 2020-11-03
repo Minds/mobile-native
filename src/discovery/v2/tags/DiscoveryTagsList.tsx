@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
   Text,
@@ -14,7 +14,6 @@ import ThemedStyles from '../../../styles/ThemedStyles';
 import { Icon } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { DiscoveryTagsManager } from './DiscoveryTagsManager';
 import { TDiscoveryTagsTag } from '../DiscoveryV2Store';
 import i18n from '../../../common/services/i18n.service';
 
@@ -34,8 +33,6 @@ const keyExtractor = (item) => String(item.value);
 export const DiscoveryTagsList = observer((props: Props) => {
   const discoveryV2 = useDiscoveryV2Store();
   const navigation = useNavigation<StackNavigationProp<any>>();
-
-  const [showManageTags, setShowManageTags] = useState(false);
 
   useEffect(() => {
     discoveryV2.loadTags(props.plus);
@@ -111,16 +108,12 @@ export const DiscoveryTagsList = observer((props: Props) => {
         </Text> */}
         <View style={ThemedStyles.style.flexContainer} />
         <Text
-          onPress={() => setShowManageTags(true)}
+          onPress={() => discoveryV2.setShowManageTags(true)}
           style={[ThemedStyles.style.colorTertiaryText]}>
           Manage Tags
         </Text>
       </View>
     );
-  };
-
-  const closeManageTags = () => {
-    setShowManageTags(false);
   };
 
   const onRefresh = () => {
@@ -160,12 +153,6 @@ export const DiscoveryTagsList = observer((props: Props) => {
           },
         ]}
         keyExtractor={keyExtractor}
-      />
-
-      <DiscoveryTagsManager
-        show={showManageTags}
-        onCancel={closeManageTags}
-        onDone={closeManageTags}
       />
     </View>
   );
