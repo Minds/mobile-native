@@ -55,12 +55,14 @@ const Translated = observer(({ translateStore, style }: PropsType) => {
         </Text>
       </View>
       <View style={[theme.rowJustifyStart, theme.alignCenter, theme.marginTop]}>
-        <Text style={[theme.bold, theme.colorPrimaryText]} onPress={this.hide}>
+        <Text
+          style={[theme.bold, theme.colorPrimaryText]}
+          onPress={translateStore.hide}>
           {i18n.t('hide')}
         </Text>
         <Text
           style={[theme.bold, theme.colorPrimaryText, theme.paddingLeft2x]}
-          onPress={this.showPicker}>
+          onPress={translateStore.showPicker}>
           {i18n.t('translate.changeLanguage')}
         </Text>
       </View>
