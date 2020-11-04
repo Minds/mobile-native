@@ -105,6 +105,11 @@ export interface ThemedStyle {
   borderTopHair: any;
   borderBottomHair: any;
   buttonBorder: any;
+  opacity100: any;
+  opacity75: any;
+  opacity50: any;
+  opacity25: any;
+  opacity0: any;
   listItemTitle: any;
   strikethrough: any;
   mindsSwitchBackgroundPrimary: any;
@@ -151,6 +156,22 @@ for (let index = 0; index <= repetitions; index++) {
 
 export const buildStyle = (theme): ThemedStyle => ({
   ...dynamicStyles,
+  // opacity
+  opacity100: {
+    opacity: 1,
+  },
+  opacity75: {
+    opacity: 0.75,
+  },
+  opacity50: {
+    opacity: 0.5,
+  },
+  opacity25: {
+    opacity: 0.25,
+  },
+  opacity0: {
+    opacity: 0,
+  },
   // containers
   width90: {
     width: '90%',
