@@ -209,8 +209,10 @@ export default class ActivityModel extends BaseModel {
 
     // fallback to old behavior
     if (this.paywall || this.paywall_unlocked) {
+      const guid = this.entity_guid === '' ? this.guid : this.entity_guid;
+      const unlock = this.isOwner() ? '?unlock_paywall=1' : '';
       return {
-        uri: MINDS_URI + 'fs/v1/thumbnail/' + this.entity_guid,
+        uri: MINDS_URI + 'fs/v1/thumbnail/' + guid + unlock,
         headers: api.buildHeaders(),
       };
     }
