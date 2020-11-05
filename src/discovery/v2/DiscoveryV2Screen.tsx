@@ -9,7 +9,7 @@ import i18n from '../../common/services/i18n.service';
 import { DiscoveryTrendsList } from './trends/DiscoveryTrendsList';
 import { TabParamList } from '../../tabs/TabsScreen';
 import ThemedStyles from '../../styles/ThemedStyles';
-import { useDiscoveryV2Store } from './DiscoveryV2Context';
+import { useDiscoveryV2Store } from './useDiscoveryV2Store';
 import { TDiscoveryV2Tabs } from './DiscoveryV2Store';
 import TopbarTabbar from '../../common/components/topbar-tabbar/TopbarTabbar';
 import { DiscoveryTagsList } from './tags/DiscoveryTagsList';
@@ -53,11 +53,11 @@ export const DiscoveryV2Screen = observer((props: Props) => {
   const screen = () => {
     switch (store.activeTabId) {
       case 'foryou':
-        return <DiscoveryTrendsList />;
+        return <DiscoveryTrendsList store={store} />;
       case 'your-tags':
-        return <DiscoveryTagsList type="your" />;
+        return <DiscoveryTagsList type="your" store={store} />;
       case 'trending-tags':
-        return <DiscoveryTagsList type="trending" />;
+        return <DiscoveryTagsList type="trending" store={store} />;
       case 'boosts':
         store.boostFeed.fetchRemoteOrLocal();
         return <FeedList feedStore={store.boostFeed} navigation={navigation} />;

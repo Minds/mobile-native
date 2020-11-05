@@ -24,12 +24,13 @@ import wallet from '../../wallet/WalletStore';
 
 import sessionService from '../services/session.service';
 import logService from '../services/log.service';
+import DiscoveryV2Store from '../../discovery/v2/DiscoveryV2Store';
 
 /**
  * This is initialized by /src/AppStores.ts and uses MobXProviderContext
  * to pass through to the `inject` pattern or `useLegacyStores`
  */
-export function createLegacyStores() {
+export function createClassStores() {
   const stores = {
     subscriptionRequest: new SubscriptionRequestStore(),
     newsfeed: new newsfeed(),
@@ -53,6 +54,8 @@ export function createLegacyStores() {
     onboarding: new onboarding(),
     groupsBar: new groupsBar(),
     reportstore: new reportStore(),
+    discoveryV2Store: new DiscoveryV2Store(),
+    mindsPlusV2Store: new DiscoveryV2Store(),
     wallet: new wallet(),
   };
   sessionService.onLogout(() => {
@@ -66,4 +69,4 @@ export function createLegacyStores() {
   return stores;
 }
 
-export type TLegacyStores = ReturnType<typeof createLegacyStores>;
+export type TLegacyStores = ReturnType<typeof createClassStores>;
