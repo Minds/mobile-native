@@ -204,6 +204,7 @@ class ImagePickerService {
       mediaType: type,
       cropping: crop && type !== 'video',
       showCropGuidelines: false,
+      compressVideoPreset: 'Passthrough',
       cropperCircleOverlay,
     };
   }

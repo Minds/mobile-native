@@ -9418,6 +9418,11 @@ oboe@2.1.4:
   dependencies:
     http-https "^1.0.0"
 
+observable-hooks@^3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/observable-hooks/-/observable-hooks-3.1.2.tgz#f76f04320467f706d16c6cfdee343fc4a52aa7fc"
+  integrity sha512-RJRDg5WgqmKz88hPsW/u91buUSICpcSxgm8c792HkF01lHNAtuqOzI/rQM11TNjcXQY6iKIbpPW+WqO7Ggiohg==
+
 omggif@^1.0.10, omggif@^1.0.9:
   version "1.0.10"
   resolved "https://registry.yarnpkg.com/omggif/-/omggif-1.0.10.tgz#ddaaf90d4a42f532e9e7cb3a95ecdd47f17c7b19"

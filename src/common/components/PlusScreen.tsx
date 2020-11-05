@@ -42,6 +42,9 @@ const createPlusStore = () => {
     selectedOption: false as boolean | any,
     monthly: false,
     owner: {} as UserModel,
+    get canHaveTrial(): boolean {
+      return this.method === 'usd' && this.settings.yearly.can_have_trial;
+    },
     init(pro: boolean = false) {
       this.getSettings(pro);
     },
@@ -52,6 +55,8 @@ const createPlusStore = () => {
       this.loading = loading;
     },
     async getSettings(pro: boolean) {
+      // update the settings
+      await MindsService.update();
       // used to get costs for plus
       this.settings = pro
         ? (await MindsService.getSettings()).upgrades.pro
@@ -224,7 +229,6 @@ const PlusScreen = observer(({ navigation, route }: PropsType) => {
             theme.padding4x,
             theme.borderPrimary,
             theme.borderTopHair,
-            theme.borderBottomHair,
           ]}>
           <Text style={switchTextStyle}>{i18n.t('usd')}</Text>
           <Switch
@@ -238,6 +242,18 @@ const PlusScreen = observer(({ navigation, route }: PropsType) => {
           />
           <Text style={switchTextStyle}>{i18n.t('tokens')}</Text>
         </View>
+      )}
+      {localStore.canHaveTrial && (
+        <Text
+          style={[
+            theme.fontXL,
+            theme.textLeft,
+            theme.colorSecondaryText,
+            theme.marginVertical2x,
+            theme.paddingHorizontal4x,
+          ]}>
+          {i18n.t('plus.freeTrialDesciption')}
+        </Text>
       )}
       {localStore.method === 'usd' && (
         <Options
@@ -260,7 +276,11 @@ const PlusScreen = observer(({ navigation, route }: PropsType) => {
         <View style={[theme.padding2x, theme.borderTop, theme.borderPrimary]}>
           <Button
             onPress={confirmSend}
-            text={i18n.t(`monetize.${texts}Join`)}
+            text={
+              localStore.canHaveTrial
+                ? i18n.t('startFreeTrial')
+                : i18n.t(`monetize.${texts}Join`)
+            }
             containerStyle={[theme.paddingVertical2x, styles.buttonRight]}
             loading={localStore.loading}
             textStyle={[theme.fontMedium, theme.fontL]}

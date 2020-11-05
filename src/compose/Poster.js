@@ -37,6 +37,9 @@ export default observer(function (props) {
 
   // On post press
   const onPost = useCallback(async () => {
+    if (props.store.attachment.uploading) {
+      return;
+    }
     const isEdit = props.store.isEdit;
     const entity = await (props.store.isRemind
       ? props.store.remind()
@@ -45,7 +48,7 @@ export default observer(function (props) {
     if (entity) {
       props.store.onPost(entity, isEdit);
     }
-  }, [props]);
+  }, [props.store]);
 
   // On press back
   const onPressBack = useCallback(() => {
@@ -87,11 +90,17 @@ export default observer(function (props) {
     ? i18n.t('description')
     : i18n.t('capture.placeholder');
 
-  const rightButton = props.store.attachment.uploading ? undefined : props.store
-      .isEdit ? (
+  const rightButton = props.store.isEdit ? (
     i18n.t('save')
   ) : (
-    <IonIcon name="send" size={27} style={theme.colorPrimaryText} />
+    <IonIcon
+      name="send"
+      size={27}
+      style={[
+        theme.colorPrimaryText,
+        props.store.attachment.uploading ? theme.opacity25 : null,
+      ]}
+    />
   );
 
   useEffect(() => {
@@ -107,8 +116,7 @@ export default observer(function (props) {
         contentContainerStyle={styles.bodyContainer}>
         <TopBar
           containerStyle={theme.paddingLeft}
-          backIconSize={38}
-          backIconName="window-close"
+          backIconSize={45}
           rightText={rightButton}
           onPressRight={onPost}
           onPressBack={onPressBack}
