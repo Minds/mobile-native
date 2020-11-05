@@ -14,8 +14,10 @@ import NavigationService from '../../navigation/NavigationService';
 import i18n from '../../common/services/i18n.service';
 import { showNotification } from '../../../AppMessages';
 import { Platform } from 'react-native';
+
+type Entity = { guid: string; nsfw?: Array<string> } | UserModel;
 type InitialLoadParams = {
-  entity?: { guid: string; nsfw?: Array<string> } | UserModel;
+  entity?: Entity;
   guid?: string;
   username?: string;
 };
@@ -80,11 +82,7 @@ const createChannelStore = () => {
      */
     async initialLoad(params: InitialLoadParams) {
       if (params.entity) {
-        if (
-          Platform.OS === 'ios' &&
-          params.entity.nsfw &&
-          params.entity.nsfw.length > 0
-        ) {
+        if (this.isNsfw(params.entity)) {
           NavigationService.goBack();
           showNotification(i18n.t('nsfw.notSafeChannel'));
         }
@@ -190,7 +188,7 @@ const createChannelStore = () => {
      */
     async loadFromGuidOrUsername(guidOrUsername: string) {
       const channel = await channelsService.get(guidOrUsername);
-      if (Platform.OS === 'ios' && channel.nsfw && channel.nsfw.length > 0) {
+      if (this.isNsfw(channel)) {
         NavigationService.goBack();
         showNotification(i18n.t('nsfw.notSafeChannel'));
       }
@@ -312,6 +310,14 @@ const createChannelStore = () => {
       } else {
         return 0;
       }
+    },
+    isNsfw(channel: Entity) {
+      return (
+        Platform.OS === 'ios' &&
+        channel.nsfw &&
+        channel.nsfw.length > 0 &&
+        channel.guid !== sessionService.getUser().guid
+      );
     },
   };
   return store;
