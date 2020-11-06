@@ -9,18 +9,18 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import { ComponentsStyle } from '../../../styles/Components';
-import { useDiscoveryV2Store } from '../DiscoveryV2Context';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { Icon } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { DiscoveryTagsManager } from './DiscoveryTagsManager';
-import { TDiscoveryTagsTag } from '../DiscoveryV2Store';
+import DiscoveryV2Store, { TDiscoveryTagsTag } from '../DiscoveryV2Store';
 import i18n from '../../../common/services/i18n.service';
 
 interface Props {
   type: 'your' | 'trending';
   plus?: boolean;
+  store: DiscoveryV2Store;
 }
 
 /**
@@ -31,25 +31,24 @@ const keyExtractor = (item) => String(item.value);
 /**
  * Discovery List Item
  */
-export const DiscoveryTagsList = observer((props: Props) => {
-  const discoveryV2 = useDiscoveryV2Store();
+export const DiscoveryTagsList = observer(({ plus, store, type }: Props) => {
   const navigation = useNavigation<StackNavigationProp<any>>();
 
   const [showManageTags, setShowManageTags] = useState(false);
 
   useEffect(() => {
-    discoveryV2.loadTags(props.plus);
-  }, [discoveryV2, props]);
+    store.loadTags(plus);
+  }, [store, plus]);
 
   const onPress = (data): void => {
     navigation.push('DiscoverySearch', {
       query: '#' + data.value,
-      plus: props.plus,
+      plus: plus,
     });
   };
 
   const EmptyPartial = () => {
-    return discoveryV2.loading || discoveryV2.refreshing ? (
+    return store.loading || store.refreshing ? (
       <View />
     ) : (
       <View>
@@ -93,10 +92,7 @@ export const DiscoveryTagsList = observer((props: Props) => {
   };
 
   const SectionHeaderPatrial = (info: { section: SectionListData<any> }) => {
-    if (
-      info.section.data.length === 0 &&
-      (discoveryV2.loading || discoveryV2.refreshing)
-    ) {
+    if (info.section.data.length === 0 && (store.loading || store.refreshing)) {
       return null;
     }
     return (
@@ -124,19 +120,19 @@ export const DiscoveryTagsList = observer((props: Props) => {
   };
 
   const onRefresh = () => {
-    discoveryV2.refreshTags();
+    store.refreshTags();
   };
 
   let tags: TDiscoveryTagsTag[] = [];
   let title = i18n.t('other');
 
-  switch (props.type) {
+  switch (type) {
     case 'your':
-      tags = [...discoveryV2.tags.slice()];
+      tags = [...store.tags.slice()];
       title = i18n.t('discovery.yourTags');
       break;
     case 'trending':
-      tags = [...discoveryV2.trendingTags.slice()];
+      tags = [...store.trendingTags.slice()];
       title = i18n.t('discovery.trendingTags');
       break;
   }
@@ -152,7 +148,7 @@ export const DiscoveryTagsList = observer((props: Props) => {
         renderSectionHeader={SectionHeaderPatrial}
         ListEmptyComponent={EmptyPartial}
         onRefresh={onRefresh}
-        refreshing={discoveryV2.loading}
+        refreshing={store.loading}
         sections={[
           {
             title: title,

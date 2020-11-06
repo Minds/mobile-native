@@ -8,7 +8,7 @@ import {
   SectionListData,
   Platform,
 } from 'react-native';
-import { useDiscoveryV2Store } from '../DiscoveryV2Context';
+import { useDiscoveryV2Store } from '../useDiscoveryV2Store';
 import ThemedStyles from '../../../styles/ThemedStyles';
 
 import BottomOptionPopup from '../../../common/components/BottomOptionPopup';
