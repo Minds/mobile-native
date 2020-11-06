@@ -100,8 +100,10 @@ const TabBar = ({ state, descriptors, navigation }) => {
           });
         };
 
+        const Component = options.tabBarButton || TouchableOpacity;
+
         return (
-          <TouchableOpacity
+          <Component
             accessibilityRole="button"
             accessibilityState={focused ? { selected: true } : {}}
             accessibilityLabel={options.tabBarAccessibilityLabel}
@@ -110,7 +112,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
             onLongPress={onLongPress}
             style={[theme.flexContainer, theme.centered]}>
             {icon}
-          </TouchableOpacity>
+          </Component>
         );
       })}
     </View>
