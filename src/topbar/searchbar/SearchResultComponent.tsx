@@ -73,7 +73,7 @@ const SearchResultComponent = observer(
 
     // If have something to search, render suggested, else, search history
     return (
-      <View style={[theme.backgroundSecondary, theme.padding2x]}>
+      <View style={[theme.backgroundPrimary, theme.padding2x]}>
         {localStore.shouldShowSuggested && (
           <SuggestedSearch localStore={localStore} renderUser={renderUser} />
         )}

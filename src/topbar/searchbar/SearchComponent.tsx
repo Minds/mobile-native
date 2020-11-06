@@ -72,8 +72,8 @@ const SearchComponent = observer((props: Props) => {
           animationOut="fadeOut"
           animationIn="fadeIn"
           style={styles.modal}>
-          <SafeAreaView>
-            <View style={[theme.backgroundPrimary, styles.body, border]}>
+          <SafeAreaView style={theme.backgroundPrimary}>
+            <View style={[styles.body, border]}>
               <View
                 style={[
                   styles.header,
