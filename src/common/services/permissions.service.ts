@@ -39,7 +39,7 @@ class PermissionsService {
 
       return result === RESULTS.GRANTED;
     } catch (err) {
-      console.warn(err);
+      console.warn('permissions', err);
       return false;
     }
   }
@@ -84,6 +84,14 @@ class PermissionsService {
    * Request media library access (IOS ONLY)
    */
   async mediaLibrary() {
+    console.log(
+      await request(PERMISSIONS.IOS.MEDIA_LIBRARY, {
+        title: 'Minds',
+        message: i18n.t('permissions.mediaLibrary'),
+        buttonPositive: i18n.t('permissions.grant'),
+        buttonNegative: i18n.t('no'),
+      }),
+    );
     return (
       RESULTS.GRANTED ===
       (await request(PERMISSIONS.IOS.MEDIA_LIBRARY, {
@@ -101,7 +109,6 @@ class PermissionsService {
   async checkMediaLibrary(warnBlocked = false): Promise<boolean> {
     try {
       const result = await check(PERMISSIONS.IOS.PHOTO_LIBRARY);
-      console.log(result);
       if (warnBlocked && result === RESULTS.BLOCKED) {
         showNotification(
           i18n.t('permissions.blockedMediaLibrary'),

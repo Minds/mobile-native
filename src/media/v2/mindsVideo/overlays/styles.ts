@@ -12,6 +12,9 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  floatingVolume: {
+    opacity: 0.8,
+  },
   overlayContainerTransparent: {
     backgroundColor: 'transparent',
   },
@@ -26,14 +29,17 @@ export const styles = StyleSheet.create({
     right: 0,
     top: 0,
   },
+  textShadow: {
+    textShadowColor: 'rgba(0, 0, 0, 0.45)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 1,
+  },
   controlSettingsContainer: {
     position: 'absolute',
-    top: 0,
+    top: 10,
     right: 0,
     margin: 8,
     paddingRight: 5,
-    borderRadius: 3,
-    backgroundColor: 'rgba(48,48,48,0.7)',
   },
   controlBarContainer: {
     flexDirection: 'row',
@@ -41,11 +47,9 @@ export const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    alignItems: 'stretch',
-    margin: 8,
-    paddingLeft: 8,
-    paddingRight: 8,
-    borderRadius: 3,
+    alignItems: 'center',
+    paddingLeft: 4,
+    paddingRight: 4,
     backgroundColor: 'rgba(48,48,48,0.7)',
   },
 });

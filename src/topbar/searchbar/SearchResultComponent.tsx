@@ -14,7 +14,6 @@ import { SearchResultStoreType } from './createSearchResultStore';
 
 type PropsType = {
   navigation: any;
-  ref: MutableRefObject<any>;
   localStore: SearchResultStoreType;
 };
 

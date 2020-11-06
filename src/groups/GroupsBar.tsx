@@ -8,14 +8,14 @@ import {
   View,
   TouchableOpacity,
   StyleSheet,
-  ActivityIndicator,
   Text,
 } from 'react-native';
 
-import GrousBarItem from './GroupsBarItem';
+import GroupsBarItem from './GroupsBarItem';
 import i18n from '../common/services/i18n.service';
 import GroupModel from './GroupModel';
 import ThemedStyles from '../styles/ThemedStyles';
+import ActivityIndicator from '../common/components/ActivityIndicator';
 
 @inject('groupsBar')
 @observer
@@ -72,7 +72,7 @@ export default class GroupsBar extends Component {
    * @param {number} i
    */
   renderItem = (row, i) => {
-    return <GrousBarItem group={row.item} key={i} />;
+    return <GroupsBarItem group={row.item} key={i} />;
   };
 
   loadMore = () => {

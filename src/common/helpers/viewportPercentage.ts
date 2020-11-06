@@ -6,5 +6,5 @@ export default function (percentage) {
     'window',
   );
   const value = (percentage * viewportWidth) / 100;
-  return { value: Math.round(value), viewportWidth, viewportHeight };
+  return { value: value, viewportWidth, viewportHeight };
 }

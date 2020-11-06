@@ -21,6 +21,7 @@ import AbstractModel from './AbstractModel';
 export default class BaseModel extends AbstractModel {
   username: string = '';
   guid: string = '';
+  owner_guid?: string;
   ownerObj!: UserModel;
   mature: boolean = false;
   pending?: '0' | '1';
@@ -30,6 +31,9 @@ export default class BaseModel extends AbstractModel {
   wire_totals?: {
     [name: string]: number;
   };
+
+  // TODO remove this and fix model.listRef logic
+  listRef?: any;
 
   /**
    * Event emitter
@@ -73,20 +77,36 @@ export default class BaseModel extends AbstractModel {
     }
   }
 
+  /**
+   * Return a plain JS obj without observables
+   */
   toPlainObject() {
     const plainEntity = toJS(this);
 
     // remove references to the list
     delete plainEntity.__list;
+    delete plainEntity.listRef;
 
     return plainEntity;
+  }
+
+  /**
+   * Json converter
+   *
+   * Convert to plain obj and remove the list reference
+   * to avoid circular reference errors
+   */
+  toJSON() {
+    return this.toPlainObject();
   }
 
   /**
    * Return if the current user is the owner of the activity
    */
   isOwner = () => {
-    return this.ownerObj && sessionService.guid === this.ownerObj.guid;
+    return this.ownerObj
+      ? sessionService.guid === this.ownerObj.guid
+      : this.owner_guid === sessionService.guid;
   };
 
   /**
@@ -209,7 +229,7 @@ export default class BaseModel extends AbstractModel {
    * Block owner
    */
   blockOwner() {
-    if (!this.ownerObj) throw new Error('This entity has no owner');
+    if (!this.ownerObj) return;
     return this.ownerObj.toggleBlock(true);
   }
 
@@ -217,7 +237,7 @@ export default class BaseModel extends AbstractModel {
    * Unblock owner
    */
   unblockOwner() {
-    if (!this.ownerObj) throw new Error('This entity has no owner');
+    if (!this.ownerObj) return;
     return this.ownerObj.toggleBlock(false);
   }
 

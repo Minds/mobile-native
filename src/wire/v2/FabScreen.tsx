@@ -20,10 +20,15 @@ import UsdForm from './UsdForm';
 import type WireStore from '../WireStore';
 import i18n from '../../common/services/i18n.service';
 import logService from '../../common/services/log.service';
+import api from '../../common/services/api.service';
+import toFriendlyCrypto from '../../common/helpers/toFriendlyCrypto';
+import storageService from '../../common/services/storage.service';
 
 const isIos = Platform.OS === 'ios';
 
 type tabType = 'tokens' | 'usd' | 'eth';
+
+const lastAmountStorageKey = 'lastTipAmount';
 
 const createFabScreenStore = () => {
   const store = {
@@ -35,6 +40,7 @@ const createFabScreenStore = () => {
     goBack: (() => true) as Function | undefined,
     amount: 0,
     recurring: false,
+    walletBalance: 0,
     initialLoad(
       wire: WireStore,
       owner: any,
@@ -49,6 +55,14 @@ const createFabScreenStore = () => {
       this.onComplete = onComplete;
       this.goBack = goBack;
       this.loaded = true;
+    },
+    async getLastAmount() {
+      const lastAmount = await storageService.getItem(lastAmountStorageKey);
+      this.amount = parseFloat(lastAmount) || 0;
+      this.wire.setAmount(this.amount);
+    },
+    async setLastAmount(amount: string) {
+      await storageService.setItem(lastAmountStorageKey, amount);
     },
     setCard(card: any) {
       this.card = card;
@@ -108,6 +122,8 @@ const createFabScreenStore = () => {
           return;
         }
 
+        this.setLastAmount(this.amount.toString());
+
         if (this.onComplete) {
           this.onComplete(done);
         }
@@ -128,6 +144,12 @@ const createFabScreenStore = () => {
         }
       }
     },
+    async getWalletBalance() {
+      const response: any = await api.get('api/v2/blockchain/wallet/balance');
+      if (response && response.addresses) {
+        this.walletBalance = toFriendlyCrypto(response.balance);
+      }
+    },
   };
 
   return store;
@@ -136,7 +158,7 @@ const createFabScreenStore = () => {
 export type FabScreenStore = ReturnType<typeof createFabScreenStore>;
 
 const FabScreen = observer(({ route, navigation }) => {
-  const { wallet, wire } = useLegacyStores();
+  const { wire } = useLegacyStores();
   const store = useLocalStore(createFabScreenStore);
 
   const tabList = [
@@ -199,9 +221,7 @@ const FabScreen = observer(({ route, navigation }) => {
           <UserNamesComponent user={owner} pay={true} />
           <HeaderTabsComponent tabList={tabList} store={store} />
           <View style={theme.padding4x}>
-            {store.tab === 'tokens' && (
-              <TokensForm store={store} wallet={wallet} />
-            )}
+            {store.tab === 'tokens' && <TokensForm store={store} />}
             {store.tab === 'usd' && <UsdForm store={store} />}
           </View>
         </View>

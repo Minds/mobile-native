@@ -3,20 +3,7 @@ import React, { Component } from 'react';
 
 import { Icon } from 'react-native-elements';
 
-import {
-  Button,
-  Text,
-  FlatList,
-  TextInput,
-  StyleSheet,
-  TouchableHighlight,
-  ScrollView,
-  ActivityIndicator,
-  TouchableOpacity,
-  Image,
-  Modal,
-  View,
-} from 'react-native';
+import { Text, StyleSheet, TouchableHighlight, View } from 'react-native';
 import formatDate from '../common/helpers/date';
 
 import { observer, inject } from 'mobx-react';

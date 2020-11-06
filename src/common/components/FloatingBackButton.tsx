@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useSafeArea } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ThemedStyles from '../../styles/ThemedStyles';
 
 type PropsType = {
@@ -10,7 +10,7 @@ type PropsType = {
 };
 
 const FloatingBackButton = (props: PropsType) => {
-  const insets = useSafeArea();
+  const insets = useSafeAreaInsets();
   const iconStyle = { top: insets.top || 5 };
   return (
     <MIcon

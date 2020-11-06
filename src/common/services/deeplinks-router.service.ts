@@ -1,6 +1,7 @@
 //@ts-nocheck
 import { MINDS_DEEPLINK } from '../../config/Config';
 import navigationService from '../../navigation/NavigationService';
+import { Linking } from 'react-native';
 
 /**
  * Deeplinks router
@@ -64,8 +65,10 @@ class DeeplinksRouter {
   navigate(url) {
     if (!url) return;
     const route = this._getUrlRoute(url);
-    if (route) {
+    if (route && route.screen !== 'Redirect') {
       navigationService.navigate(route.screen, route.params);
+    } else {
+      Linking.openURL(url.replace('https://www.', 'https://mobile.'));
     }
     return !!route;
   }

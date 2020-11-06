@@ -54,6 +54,13 @@ const createSearchResultStore = () => {
       NavigationService.navigate('DiscoverySearch', { query: this.search });
       this.searchBarItemTap(this.search);
     },
+    reset() {
+      this.search = '';
+      this.loading = false;
+      this.suggested = [];
+      this.history = [];
+      this.searchText = '';
+    },
   };
   return store;
 };

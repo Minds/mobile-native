@@ -25,12 +25,12 @@
     "writeExternalStorage": "Minds needs access to your external storage so you can download images and videos.",
     "camera": "Minds needs access to your external camera so you can capture pictures.",
     "mediaLibrary": "This lets you share photos from your library and save photos to your camera roll",
-    "blockedCamera":"You have blocked access to your camera. Please go to your device settings to enable.",
-    "blockedStorageWrite":"You have blocked to write the storage. Please go to your device settings to enable.",
-    "blockedStorageRead":"You have blocked to read the storage. Please go to your device settings to enable.",
-    "blockedMediaLibrary":"You have blocked access to media library. Please go to your device settings to enable.",
-    "tapAllow":"Tap to allow",
-    "grant":"Grant",
+    "blockedCamera": "You have blocked access to your camera. Please go to your device settings to enable.",
+    "blockedStorageWrite": "You have blocked to write the storage. Please go to your device settings to enable.",
+    "blockedStorageRead": "You have blocked to read the storage. Please go to your device settings to enable.",
+    "blockedMediaLibrary": "You have blocked access to media library. Please go to your device settings to enable.",
+    "tapAllow": "Tap to allow",
+    "grant": "Grant",
     "notAllowed": {
       "appoint_admin": "You are not allowed to appoint an admin",
       "appoint_moderator": "You are not allowed to appoint a moderator",
@@ -60,6 +60,7 @@
     }
   },
   "auth": {
+    "fieldRequired": "Required",
     "login": "Login",
     "forgot": "Forgot your password?",
     "email": "Email",
@@ -72,10 +73,11 @@
     "invalidPassword": "Incorrect password. Please try again.",
     "confirmPasswordError": "Passwords should match",
     "termsAcceptedError": "You should accept the terms and conditions",
-    "accept": "I have read and accept the",
-    "termsAndConditions": "terms of use",
+    "promotions": "Receive exclusive promotions from Minds",
+    "accept": "I accept the",
+    "termsAndConditions": "Terms & Conditions",
     "join": "Create a channel",
-    "createChannel": "Join Minds Now",
+    "createChannel": "Join Minds",
     "haveAccount": "Don't have an account?",
     "alreadyHaveAccount": "Already have an account? &{login}&",
     "failedToLoginNewAccount": "The login with your new account has failed, please try to log in the login screen"
@@ -119,7 +121,7 @@
     "noTokensNoProblem": "No tokens? No problem!",
     "receivaOnly": "RECEIVE ONLY",
     "offchain": "Off-chain",
-    "onchain":"On-chain",
+    "onchain": "On-chain",
     "receiver": "Receiver",
     "selectWallet": "Select a wallet",
     "walletAddresses": "Wallet Addresses",
@@ -202,6 +204,7 @@
   "capture": {
     "licenseDescription": "Select your desired license type. This can be changed at any time after posting.",
     "pupularLicenses": "Popular licenses",
+    "mediaPortraitError": "Selected media is not portrait",
     "otherLicenses": "Other Licenses",
     "paywallLabel": "Min monthly contribution ({{currency}})",
     "paywallDescription": "Monetize post by making it available to your users who support your channel.",
@@ -224,10 +227,10 @@
     "photo": "Photo",
     "video": "Video",
     "text": "Text",
-    "postOptions":"Post Options",
+    "postOptions": "Post Options",
     "retake": "Retake",
-    "allowMinds":"Enable access so you can start taking photos and videos.",
-    "blockedMinds":"You have blocked access to your camera and microphone. Please go to your device settings to enable.",
+    "allowMinds": "Enable access so you can take photos and record videos to share on Minds",
+    "blockedMinds": "You have blocked access to your camera and microphone. Please go to your device settings to enable.",
     "noHashtags": "Sorry, Plus monetized posts must have hashtags.",
     "noExternalLinks": "Sorry, Plus monetized posts mustn't have external links."
   },
@@ -239,10 +242,11 @@
     "briefDescription": "Brief description about you...",
     "block": "Block",
     "unsubscribe": "Unsubscribe",
-    "unblock": "Un-Block",
+    "unblock": "Unblock channel",
     "report": "Report",
     "createFirstPost": "Create your first post",
-    "blockedNav": "You have blocked &{username}&",
+    "blocked": "Channel Blocked",
+    "banned": "This channel is banned",
     "viewScheduled": "Scheduled",
     "edit": {
       "bio": "Bio",
@@ -254,20 +258,21 @@
       "dob": "Date of Birth"
     },
     "badges": "Badges",
-    "fabSend": "Send Payment",
-    "fabPay": "Pay"
+    "fabSend": "Send Tip",
+    "fabPay": "Tip",
+    "share": "Share Channel"
   },
   "discovery": {
-    "title":"Discovery",
-    "manage":"Manage Tags",
-    "justForYou":"Just for you",
-    "yourTags":"Your tags",
-    "otherTags":"Other tags",
-    "trendingTags":"Trending tags",
-    "trending":"Trending",
+    "title": "Discovery",
+    "manage": "Manage Tags",
+    "justForYou": "Just for you",
+    "yourTags": "Your tags",
+    "otherTags": "Other tags",
+    "trendingTags": "Trending tags",
+    "trending": "Trending",
     "search": "Search...",
     "nothingToShow": "Nothing to show",
-    "nothingToSee":"Nothing to see here...",
+    "nothingToSee": "Nothing to see here...",
     "all": "All",
     "channels": "Channels",
     "videos": "Videos",
@@ -305,9 +310,9 @@
   },
   "messenger": {
     "decrypting": "decrypting...",
-    "notAllowed":"This user only allows messages from users that they subscribe to",
-    "allowContact":"Allow contact from unsubscribed users",
-    "couldntDecrypt":"couldn't decrypt",
+    "notAllowed": "This user only allows messages from users that they subscribe to",
+    "allowContact": "Allow contact from unsubscribed users",
+    "couldntDecrypt": "couldn't decrypt",
     "typeYourMessage": "Type your message...",
     "invited": "Invited",
     "invite": "Invite",
@@ -411,6 +416,9 @@
     "referral_ping": "Referral Ping",
     "referral_pending": "Referral Pending",
     "referral_complete": "Referral Complete"
+  },
+  "plus": {
+    "freeTrialDesciption": "Start your free trial for 7 days"
   },
   "payments": {
     "confirmDeleteCard": "Do you want to delete this card?"
@@ -525,6 +533,7 @@
     "darkMode": "Dark mode",
     "lightMode": "Light mode",
     "other": "Other",
+    "referrals": "Referrals",
     "account": "Account",
     "security": "Security",
     "billing": "Billing",
@@ -556,7 +565,7 @@
         "actionNSFW": "marked NSFW",
         "actionStrike": "given a strike",
         "banned": "banned",
-        "removed":"removed"
+        "removed": "removed"
       },
       "reviewPending": "REVIEW PENDING",
       "reviewAppealed": "APPEALED",
@@ -577,7 +586,8 @@
       "3": "Password",
       "4": "Notifications",
       "5": "NSFW Content",
-      "6": "Messenger"
+      "6": "Messenger",
+      "7": "Autoplay Videos"
     },
     "securityOptions": {
       "1": "Two-factor authentication (2FA)",
@@ -597,6 +607,12 @@
       "c2": "Delete Account",
       "d": "INFO",
       "d1": "App"
+    },
+    "autoplay": {
+      "description": "Control whether videos in your feed play automatically.",
+      "enable": "Enable video autoplay",
+      "saved": "Changes Saved",
+      "notPlus": "This feature is only available to Plus users."
     }
   },
   "comingSoon": {
@@ -638,27 +654,27 @@
     "locationTooltip": "Please enter your city to help us connect you with channels in your area. We do not track your exact location."
   },
   "membership": {
-    "noTokens":"It doesn't accept Tokens",
-    "noUSD":"It doesn't accept USD",
-    "join":"Join Membership",
+    "noTokens": "It doesn't accept Tokens",
+    "noUSD": "It doesn't accept USD",
+    "join": "Join Membership",
     "pay": "Pay Custom Tier",
-    "alreadyMember":"You are already a member"
+    "alreadyMember": "You are already a member"
   },
   "wallet": {
-    "wallet":"Wallet",
-    "cash":"Cash",
-    "activeAddress":"Mobile Receiver Address (Active)",
-    "alternateReceiver":"Alternate receiver address",
-    "createAddress":"Create a new address (Recommended)",
-    "transferToOnchain":"Transfer to On-chain",
-    "usePrivateKey":"Use your private key",
-    "receiverAddresses":"Receiver Addresses",
-    "setup":"WALLET SETUP",
-    "addOnchainAddress":"Add On-Chain Address",
-    "leanMore":"Learn more about wallet",
+    "wallet": "Wallet",
+    "cash": "Cash",
+    "activeAddress": "Mobile Receiver Address (Active)",
+    "alternateReceiver": "Alternate receiver address",
+    "createAddress": "Create a new address (Recommended)",
+    "transferToOnchain": "Transfer to On-chain",
+    "usePrivateKey": "Use your private key",
+    "receiverAddresses": "Receiver Addresses",
+    "setup": "WALLET SETUP",
+    "addOnchainAddress": "Add On-Chain Address",
+    "leanMore": "Learn more about wallet",
     "address": "Address",
-    "walletActions":"WALLET ACTIONS",
-    "walletBalance":"Wallet balance",
+    "walletActions": "WALLET ACTIONS",
+    "walletBalance": "Wallet balance",
     "transactionsEmpty": "Your transaction list is empty",
     "withdraw": {
       "errorOnlyOnceDay": "You may only withdraw once a day",
@@ -685,15 +701,15 @@
       "earnings": "Earnings"
     },
     "transactions": {
-      "transaction":"Transaction",
-      "transactions":"Transactions",
+      "transaction": "Transaction",
+      "transactions": "Transactions",
       "pending": "PENDING",
       "filter": "Filter",
       "reward": "Today’s daily reward",
       "filterTransactions": "Filter Transactions",
       "filterTypes": "TRANSACTION TYPES",
       "allFilter": "All",
-      "mindsReward":"Minds Reward",
+      "mindsReward": "Minds Reward",
       "rewardsFilter": "Minds Rewards",
       "boostsFilter": "Boosts",
       "transferFilter": "On-chain transfers",
@@ -702,15 +718,15 @@
       "fromFilter": "From",
       "toFilter": "To",
       "wiresFilter": "Wire",
-      "onchainWire":"On-Chain Wire",
-      "offchainWire":"Off-Chain Wire",
-      "offchainBoost":"Off-Chain Boost",
-      "onchainBoost":"On-Chain Boost",
+      "onchainWire": "On-Chain Wire",
+      "offchainWire": "Off-Chain Wire",
+      "offchainBoost": "Off-Chain Boost",
+      "onchainBoost": "On-Chain Boost",
       "proEarningsFilter": "Pro Earnings",
       "payoutsFilter": "Payouts"
     },
     "phoneValidationMessage": "To start earning rewards, you will need to enter a unique phone number.",
-    "phoneVerification":"Phone Verification",
+    "phoneVerification": "Phone Verification",
     "learnMore": {
       "title": "Learn More",
       "howWork": "How the new rewards system works",
@@ -765,6 +781,19 @@
       "fail": "Something went wrong",
       "finish": "Finish adding your bank details to start receiving cash payouts",
       "complete": "Complete bank details"
+    }
+  },
+  "analytics": {
+    "title": "Analytics",
+    "traffic": "Traffic",
+    "engagement": "Engagement",
+    "earnings": "Earnings",
+    "trending": {
+      "title": "Trending",
+      "content": "Content",
+      "totalViews": "Total Views",
+      "organic": "Organic",
+      "pageViews": "Page Views"
     }
   },
   "wire": {
@@ -824,16 +853,18 @@
     "6": "Other",
     "safe": "Safe",
     "notSafe": "Not Safe",
+    "notSafeChannel": "This channel is not Safe",
     "categories": "NSFW Categories",
     "description1": "If this post contains content that is NSFW (Not Safe for Work)  it is your responsibility to tag it accordingly.",
     "description2": "See guidelines for further information.",
     "button": "NSFW"
   },
   "update": {
-    "title": "Update to v{{version}}"
+    "title": "Update to v{{version}}",
+    "failed": "Error updating the App"
   },
   "searchBar": {
-    "title":"Search Minds",
+    "title": "Search Minds",
     "searchHistory": "Search History",
     "emptySuggested": "We couldn't find what you look for",
     "clear": "Clear",
@@ -858,8 +889,8 @@
     "custom": "Custom",
     "subScreensTitle": "Last month Pro creators earned over $2,500!",
     "plusMonetize": {
-      "notPro": "You’ll need to upgrade to Minds Pro in order to submit your post to the Minds Plus content pool. You will earn revenue based on the performance of the content.",
-      "upgrade": "Upgrade to Minds Pro",
+      "notPlus": "You’ll need to upgrade to Minds+ in order to submit your post to the Minds+ content pool. You will earn revenue based on the performance of the content.",
+      "upgrade": "Upgrade to Minds+",
       "submit": "Submit this post to the Minds Plus pool and earn potential revenue.",
       "agree": "I agree to the T&C’s",
       "exclusivity": "Exclusivity Period",
@@ -880,10 +911,27 @@
       "hasTokens": "Accept Tokens"
     }
   },
-  "add":"Add",
+  "referrals": {
+    "title": "Earn tokens by inviting your friends to Minds",
+    "sendLinkToFriends": "Send this link to your friends to earn tokens for referrals",
+    "codeSuffixLabel": "You can also get referrals by adding this code to the end of any Minds link you share",
+    "moreWaysToShare": "More ways to share",
+    "myReferrals": "My Referrals",
+    "noReferrals": "You don't have any referrals yet.",
+    "signedUpOn": "Signed up on",
+    "pinged": "You pinged @{{username}}",
+    "joinMeOnMinds": "Join me on Minds",
+
+    "user": "User",
+    "status": "Status",
+    "rewardsSignup": "Rewards Signup",
+
+    "description": "If your friend signs up for Minds within 24 hours of clicking the link you shared with them, they’ll be added to your pending referrals. Once they sign up for the rewards program by setting up their Minds wallet, the referral is complete and you’ll both get +1 added to your contribution scores!"
+  },
+  "add": "Add",
   "downloading": "Downloading",
-  "confirm18": "Confirm you are 18+",
-  "postCantBeShown": "This post can't be shown on apps installed via the Play Store.",
+  "confirm18": "I'm over 18 years of age",
+  "postCantBeShown": "Can't be shown on apps installed via the Store",
   "readMore": "Read More",
   "showLess": "Show less",
   "featureUnavailablePlatform": "This feature is currently unavailable on your platform",
@@ -917,6 +965,7 @@
   "accept": "Accept",
   "confirmNoUndo": "Are you sure? There's no UNDO.",
   "confirmMessage": "Are you sure?",
+  "loadMore": "Load more",
   "cantLoadMore": "Can't load more",
   "cantLoad": "Can't load",
   "conversation": "Conversation",
@@ -956,8 +1005,8 @@
   "their": "their",
   "for": "for",
   "usd": "USD",
-  "ether":"Ether",
-  "bitcoin":"Bitcoin",
+  "ether": "Ether",
+  "bitcoin": "Bitcoin",
   "locked": "Locked",
   "thanks": "Thanks",
   "completed": "Completed",
@@ -996,8 +1045,22 @@
   "title": "Title",
   "filter": "Filter",
   "captcha": "Enter the characters above",
+  "startFreeTrial":"Start free trial",
+  "visibility": "Visibility",
   "about": "About",
-  "purchase":"Purchase",
-  "verify":"Verify",
-  "other":"Other"
+  "purchase": "Purchase",
+  "verification": "Verification",
+  "uploadFailed": "Upload failed",
+  "imageViewer": "View image",
+  "verify": "Verify",
+  "other": "Other",
+  "permaweb": {
+    "title": "Permaweb",
+    "description": "Posting to permaweb",
+    "terms": "Please check the box to confirm that you understand the terms of usage for the permaweb. I have read and agree to the Terms and confirm have all necessary rights with regard to any data, information or other material (“Stored Material”) which I post or upload to Minds and the Arweave network (or Permaweb). I also understand that this content cannot be deleted from the Permaweb.",
+    "processingTime": "It may take up to an hour for your post to appear on the Permaweb. Please be patient while your freedom processes.",
+    "cannotMonetize": "Cannot post monetized posts to permaweb",
+    "viewOnPermaweb": "Permaweb"
+  },
+  "help": "Help"
 }

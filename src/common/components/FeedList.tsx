@@ -1,12 +1,5 @@
 import React, { Component } from 'react';
-import {
-  FlatList,
-  View,
-  Text,
-  ActivityIndicator,
-  StyleProp,
-  ViewStyle,
-} from 'react-native';
+import { FlatList, View, Text, StyleProp, ViewStyle } from 'react-native';
 import { observer } from 'mobx-react';
 
 import Activity from '../../newsfeed/activity/Activity';
@@ -19,7 +12,7 @@ import i18n from '../services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import type FeedStore from '../stores/FeedStore';
 import type ActivityModel from '../../newsfeed/ActivityModel';
-import { ChannelTabType } from '../../channel/v2/createChannelStore';
+import ActivityIndicator from './ActivityIndicator';
 
 type PropsType = {
   feedStore: FeedStore;
@@ -150,8 +143,9 @@ export default class FeedList<T> extends Component<PropsType> {
           ThemedStyles.style.flexContainer,
           ThemedStyles.style.backgroundSecondary,
         ]}
-        initialNumToRender={6}
-        windowSize={11}
+        initialNumToRender={3}
+        maxToRenderPerBatch={5}
+        windowSize={7}
         // removeClippedSubviews={true}
         ListEmptyComponent={!this.props.hideItems ? empty : null}
         viewabilityConfig={this.viewOpts}

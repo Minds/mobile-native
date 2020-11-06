@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { observer } from 'mobx-react';
 import { View, StyleSheet, Text, ScrollView } from 'react-native';
 import Input from '../../common/components/Input';
@@ -15,6 +15,10 @@ type propsType = {
 const UsdForm = observer(({ store }: propsType) => {
   const theme = ThemedStyles.style;
 
+  useEffect(() => {
+    store.getLastAmount();
+  }, [store]);
+
   return (
     <View>
       <Input
@@ -22,7 +26,7 @@ const UsdForm = observer(({ store }: propsType) => {
         style={[theme.marginBottom2x, styles.input]}
         placeholder={'USD'}
         onChangeText={store.setAmount}
-        value={store.amount}
+        value={store.amount.toString()}
         testID="fabTokensInput"
         keyboardType="decimal-pad"
       />

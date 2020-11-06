@@ -1,4 +1,4 @@
-import type UserModel from '../UserModel';
+import UserModel from '../UserModel';
 import channelsService from '../../common/services/channels.service';
 import FeedStore from '../../common/stores/FeedStore';
 import ChannelService from '../ChannelService';
@@ -10,8 +10,12 @@ import type {
 import sessionService from '../../common/services/session.service';
 import supportTiersService from '../../common/services/support-tiers.service';
 import type { SupportTiersType } from '../../wire/WireTypes';
+import NavigationService from '../../navigation/NavigationService';
+import i18n from '../../common/services/i18n.service';
+import { showNotification } from '../../../AppMessages';
+import { Platform } from 'react-native';
 type InitialLoadParams = {
-  entity?: { guid: string } | UserModel;
+  entity?: { guid: string; nsfw?: Array<string> } | UserModel;
   guid?: string;
   username?: string;
 };
@@ -76,6 +80,14 @@ const createChannelStore = () => {
      */
     async initialLoad(params: InitialLoadParams) {
       if (params.entity) {
+        if (
+          Platform.OS === 'ios' &&
+          params.entity.nsfw &&
+          params.entity.nsfw.length > 0
+        ) {
+          NavigationService.goBack();
+          showNotification(i18n.t('nsfw.notSafeChannel'));
+        }
         this.loadFromEntity(params.entity);
         this.tiers =
           (await supportTiersService.getAllFromGuid(params.entity.guid)) || [];
@@ -138,15 +150,34 @@ const createChannelStore = () => {
       }
     },
     /**
+     * Check and navigate back for banned channels
+     * @param channel
+     */
+    checkBanned(channel: UserModel): boolean {
+      if (channel.banned === 'yes') {
+        showNotification(i18n.t('channel.banned'), 'warning');
+        NavigationService.goBack();
+        return true;
+      }
+      return false;
+    },
+    /**
      * Load channel from existing entity
      * @param defaultChannel
      */
-    async loadFromEntity(defaultChannel: { guid: string } | UserModel) {
-      const channel = await channelsService.get(
-        defaultChannel.guid,
-        defaultChannel,
-      );
+    async loadFromEntity(
+      defaultChannel: { guid: string } | UserModel,
+      useChannel: boolean = false,
+    ) {
+      const channel =
+        useChannel && defaultChannel instanceof UserModel
+          ? await channelsService.getFromEntity(
+              defaultChannel.guid,
+              defaultChannel,
+            )
+          : await channelsService.get(defaultChannel.guid, defaultChannel);
       if (channel) {
+        if (this.checkBanned(channel)) return false;
         this.setChannel(channel);
         this.loadFeed();
         return channel;
@@ -159,6 +190,11 @@ const createChannelStore = () => {
      */
     async loadFromGuidOrUsername(guidOrUsername: string) {
       const channel = await channelsService.get(guidOrUsername);
+      if (Platform.OS === 'ios' && channel.nsfw && channel.nsfw.length > 0) {
+        NavigationService.goBack();
+        showNotification(i18n.t('nsfw.notSafeChannel'));
+      }
+      if (this.checkBanned(channel)) return false;
       this.setChannel(channel);
       this.loadFeed();
       this.tiers =
@@ -198,9 +234,17 @@ const createChannelStore = () => {
         return;
       }
 
+      const isBanner = type === 'banner';
+
       try {
         imagePickerService
-          .show('', 'photo', type === 'avatar')
+          .show(
+            '',
+            'photo',
+            type === 'avatar',
+            isBanner ? 1500 : 1024,
+            isBanner ? 600 : 1024,
+          )
           .then(async (response: customImagePromise) => {
             let file: CustomImage;
             if (response !== false && !Array.isArray(response)) {
@@ -214,7 +258,7 @@ const createChannelStore = () => {
               null,
               type,
               {
-                uri: file.uri,
+                uri: file.path || file.uri,
                 type: file.type,
                 name: file.filename || `${type}.jpg`,
               },
@@ -254,7 +298,7 @@ const createChannelStore = () => {
             payload.briefdescription ?? this.channel.briefdescription;
           channel.city = payload.city ?? this.channel.city;
           channel.dob = payload.dob ?? this.channel.dob;
-          this.loadFromEntity(channel);
+          this.loadFromEntity(channel, true);
         }
       } catch (error) {
         console.group(error);

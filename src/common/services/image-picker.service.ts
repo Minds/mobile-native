@@ -8,8 +8,13 @@ export interface CustomImage extends Image {
   type: string;
 }
 
+// add missing property of the image type
+interface PatchImage extends Image {
+  sourceURL?: string;
+}
+
 type mediaType = 'photo' | 'video' | 'any';
-type imagePromise = false | Image | Image[];
+type imagePromise = false | PatchImage | PatchImage[];
 export type customImagePromise = false | CustomImage | CustomImage[];
 
 /**
@@ -24,8 +29,14 @@ class ImagePickerService {
 
     if (Platform.OS !== 'ios') {
       allowed = await permissions.checkReadExternalStorage(true);
+      if (!allowed) {
+        allowed = await permissions.readExternalStorage();
+      }
     } else {
       allowed = await permissions.checkMediaLibrary(true);
+      if (!allowed) {
+        allowed = await permissions.mediaLibrary();
+      }
     }
 
     return allowed;
@@ -62,10 +73,6 @@ class ImagePickerService {
     // check or ask for permissions
     const allowed = await this.checkCameraPermissions();
 
-    if (!allowed) {
-      return false;
-    }
-
     const opt = this.buildOptions(type);
 
     return this.returnCustom(ImagePicker.openCamera(opt));
@@ -80,12 +87,8 @@ class ImagePickerService {
     type: mediaType = 'photo',
     crop = true,
   ): Promise<customImagePromise> {
-    // check or ask for permissions
-    const allowed = await this.checkGalleryPermissions();
-
-    if (!allowed) {
-      return false;
-    }
+    // check permissions
+    await this.checkGalleryPermissions();
 
     const opt = this.buildOptions(type, crop);
 
@@ -101,19 +104,22 @@ class ImagePickerService {
     title: string,
     type: mediaType = 'photo',
     cropperCircleOverlay: boolean = false,
+    width,
+    height,
   ): Promise<customImagePromise> {
-    // check or ask for permissions
-    const allowed = await this.checkGalleryPermissions();
+    // check permissions
+    await this.checkGalleryPermissions();
 
-    console.log(allowed);
+    const opt = this.buildOptions(type, true, cropperCircleOverlay);
 
-    if (!allowed) {
-      return false;
+    if (width) {
+      //@ts-ignore
+      opt.width = width;
     }
-
-    const opt = this.buildOptions(type, true);
-
-    opt.cropperCircleOverlay = cropperCircleOverlay;
+    if (height) {
+      //@ts-ignore
+      opt.height = height;
+    }
 
     return this.returnCustom(ImagePicker.openPicker(opt));
   }
@@ -129,12 +135,24 @@ class ImagePickerService {
       }
 
       if (Array.isArray(response)) {
-        return response.map((image: Image) =>
-          Object.assign({ uri: image.path, type: image.mime }, image),
+        return response.map((image: PatchImage) =>
+          Object.assign(
+            {
+              uri: image.path,
+              sourceURL: image.sourceURL,
+              type: image.mime,
+            },
+            image,
+          ),
         );
       } else {
+        const uri = response.path;
         return Object.assign(
-          { uri: response.path, type: response.mime },
+          {
+            uri,
+            sourceURL: response.sourceURL,
+            type: response.mime,
+          },
           response,
         );
       }
@@ -150,11 +168,17 @@ class ImagePickerService {
    * Build the options
    * @param {string} type
    */
-  buildOptions(type: mediaType, crop: boolean = true): Options {
+  buildOptions(
+    type: mediaType,
+    crop: boolean = true,
+    cropperCircleOverlay: boolean = false,
+  ): Options {
     return {
       mediaType: type,
       cropping: crop && type !== 'video',
       showCropGuidelines: false,
+      compressVideoPreset: 'Passthrough',
+      cropperCircleOverlay,
     };
   }
 }

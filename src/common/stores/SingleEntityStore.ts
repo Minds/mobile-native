@@ -8,7 +8,7 @@ import type BaseModel from '../BaseModel';
  * Single Entity Store
  */
 class SingleEntityStore<T extends BaseModel> {
-  @observable entity?: T | null;
+  @observable entity?: T;
   @observable errorLoading = false;
 
   @action
@@ -38,7 +38,7 @@ class SingleEntityStore<T extends BaseModel> {
 
   @action
   clear() {
-    this.entity = null;
+    this.entity = undefined;
     this.errorLoading = false;
   }
 }

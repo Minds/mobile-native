@@ -1,16 +1,15 @@
-//@ts-nocheck
 import React, { useMemo } from 'react';
 import { View, StyleSheet } from 'react-native';
 import Animated, { Easing } from 'react-native-reanimated';
 import { useLoop } from 'react-native-reanimated-hooks';
-import { bInterpolate } from 'react-native-redash';
+import { mix } from 'react-native-redash';
 
 export default function (props) {
   const loop = useLoop({ easing: Easing.in(Easing.ease) });
 
   const circleStyle = useMemo(() => {
-    const scale = bInterpolate(loop.position, 1, 1.3);
-    const opacity = bInterpolate(loop.position, 1, 0);
+    const scale = mix(loop.position, 1, 1.3);
+    const opacity = mix(loop.position, 1, 0);
 
     return {
       transform: [{ scale }],

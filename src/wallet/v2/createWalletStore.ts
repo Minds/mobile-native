@@ -18,81 +18,86 @@ import i18n from '../../common/services/i18n.service';
 import BlockchainApiService from '../../blockchain/BlockchainApiService';
 import { ChartTimespanType } from './currency-tabs/TokensChart';
 import sessionService from '../../common/services/session.service';
+import walletService, { WalletJoinResponse } from '../WalletService';
+
+const defaultStripeDetails = <StripeDetails>{
+  hasAccount: false,
+  hasBank: false,
+  pendingBalanceSplit: 0,
+  totalPaidOutSplit: 0,
+  verified: false,
+  accountNumber: '',
+  bankAccount: null,
+  city: '',
+  country: 'US',
+  firstName: '',
+  lastName: '',
+  postCode: '',
+  routingNumber: null,
+  ssn: null,
+  state: '',
+  street: '',
+  dob: '',
+  phoneNumber: '',
+  personalIdNumber: '',
+};
+
+const defaultWallet = <Wallet>{
+  loaded: false,
+  tokens: {
+    label: i18n.t('tokens'),
+    unit: 'tokens',
+    balance: 0,
+    address: null,
+  },
+  offchain: {
+    label: i18n.t('blockchain.offchain'),
+    unit: 'tokens',
+    balance: 0,
+    address: 'offchain',
+  },
+  onchain: {
+    label: i18n.t('blockchain.onchain'),
+    unit: 'tokens',
+    balance: 0, //eth balance
+    address: null,
+  },
+  receiver: {
+    label: i18n.t('blockchain.receiver'),
+    unit: 'tokens',
+    balance: 0,
+    address: null,
+  },
+  cash: {
+    label: i18n.t('wallet.cash'),
+    unit: 'cash',
+    balance: 0,
+    address: null,
+  },
+  eth: {
+    label: i18n.t('ether'),
+    unit: 'eth',
+    balance: 0,
+    address: null,
+  },
+  btc: {
+    label: i18n.t('bitcoin'),
+    unit: 'btc',
+    balance: 0,
+    address: null,
+  },
+  limits: {
+    wire: 0,
+  },
+};
 
 const createWalletStore = () => ({
   currency: 'tokens' as CurrencyType,
   initialTab: <TokensOptions | undefined>undefined,
   chart: <ChartTimespanType>'7d',
-  stripeDetails: <StripeDetails>{
-    hasAccount: false,
-    hasBank: false,
-    pendingBalanceSplit: 0,
-    totalPaidOutSplit: 0,
-    verified: false,
-    accountNumber: '',
-    bankAccount: null,
-    city: '',
-    country: 'US',
-    firstName: '',
-    lastName: '',
-    postCode: '',
-    routingNumber: null,
-    ssn: null,
-    state: '',
-    street: '',
-    dob: '',
-    phoneNumber: '',
-    personalIdNumber: '',
-  },
+  stripeDetails: defaultStripeDetails,
   balance: 0,
-  wallet: <Wallet>{
-    loaded: false,
-    tokens: {
-      label: i18n.t('tokens'),
-      unit: 'tokens',
-      balance: 0,
-      address: null,
-    },
-    offchain: {
-      label: i18n.t('blockchain.offchain'),
-      unit: 'tokens',
-      balance: 0,
-      address: 'offchain',
-    },
-    onchain: {
-      label: i18n.t('blockchain.onchain'),
-      unit: 'tokens',
-      balance: 0, //eth balance
-      address: null,
-    },
-    receiver: {
-      label: i18n.t('blockchain.receiver'),
-      unit: 'tokens',
-      balance: 0,
-      address: null,
-    },
-    cash: {
-      label: i18n.t('wallet.cash'),
-      unit: 'cash',
-      balance: 0,
-      address: null,
-    },
-    eth: {
-      label: i18n.t('ether'),
-      unit: 'eth',
-      balance: 0,
-      address: null,
-    },
-    btc: {
-      label: i18n.t('bitcoin'),
-      unit: 'btc',
-      balance: 0,
-      address: null,
-    },
-    limits: {
-      wire: 0,
-    },
-  },
+  wallet: defaultWallet,
   usdEarnings: [] as Earnings[],
   usdPayouts: [],
   usdEarningsTotal: 0,
@@ -204,6 +209,7 @@ const createWalletStore = () => ({
 
         this.wallet.loaded = true;
       } else {
+        console.log('getTokenAccounts');
         console.error('No data');
       }
     } catch (e) {
@@ -218,6 +224,7 @@ const createWalletStore = () => ({
       const { account } = await api.get<any>('api/v2/payments/stripe/connect');
       this.setStripeAccount(account);
     } catch (e) {
+      console.log('loadStripeAccount');
       logService.exception(e);
     }
     return this.stripeDetails;
@@ -262,6 +269,7 @@ const createWalletStore = () => ({
         this.wallet.btc.address = response.address;
       }
     } catch (e) {
+      console.log('loadBtcAccount');
       logService.exception(e);
     }
   },
@@ -354,6 +362,32 @@ const createWalletStore = () => ({
     if (this.usdPayouts.length > 0) {
       this.usdPayoutsTotals = SUM_CENTS(this.usdPayouts);
     }
+  },
+  /**
+   * Join to wallet tokens
+   * @param {string} number
+   * @param {boolean} retry
+   */
+  join(numberToJoin: string, retry: boolean): Promise<WalletJoinResponse> {
+    return walletService.join(numberToJoin, retry);
+  },
+  /**
+   * Confirm join
+   * @param {string} number
+   * @param {string} code
+   * @param {string} secret
+   */
+  confirm(number, code, secret) {
+    return walletService.confirm(number, code, secret);
+  },
+  reset() {
+    this.balance = 0;
+    this.stripeDetails = defaultStripeDetails;
+    this.wallet = defaultWallet;
+    this.usdEarnings = [];
+    this.usdPayouts = [];
+    this.usdEarningsTotal = 0;
+    this.usdPayoutsTotals = 0;
   },
 });
 

@@ -7,7 +7,8 @@ import { useDimensions } from '@react-native-community/hooks';
 import { observer } from 'mobx-react';
 import ThemedStyles from '../styles/ThemedStyles';
 import ImagePreview from './ImagePreview';
-import MindsVideo from '../media/MindsVideo';
+import MindsVideo from '../media/v2/mindsVideo/MindsVideo';
+import { ResizeMode } from 'expo-av';
 
 type PropsType = {
   store: any;
@@ -37,7 +38,7 @@ export default observer(function MediaPreview(props: PropsType) {
   let aspectRatio,
     videoHeight = 300;
 
-  if (!isImage && (props.store.mediaToConfirm.width || videoSize)) {
+  if (!isImage && (props.store.mediaToConfirm?.width || videoSize)) {
     const vs = videoSize || props.store.mediaToConfirm;
 
     aspectRatio = vs.width / vs.height;
@@ -63,7 +64,7 @@ export default observer(function MediaPreview(props: PropsType) {
       )}
       {isImage ? (
         <View>
-          {!props.store.isEdit && (
+          {!props.store.isEdit && !props.store.portraitMode && (
             <TouchableOpacity
               onPress={() =>
                 props.store.attachment.cancelOrDelete(!props.store.isEdit)
@@ -80,20 +81,24 @@ export default observer(function MediaPreview(props: PropsType) {
         </View>
       ) : (
         <View style={previewStyle}>
-          <TouchableOpacity
-            onPress={props.store.attachment.cancelOrDelete}
-            style={[styles.removeMedia, theme.backgroundSecondary]}>
-            <Icon
-              name="trash"
-              size={26}
-              style={(styles.icon, theme.colorIcon)}
-            />
-          </TouchableOpacity>
+          {!props.store.isEdit && (
+            <TouchableOpacity
+              onPress={props.store.attachment.cancelOrDelete}
+              style={[styles.removeMedia, theme.backgroundSecondary]}>
+              <Icon
+                name="trash"
+                size={26}
+                style={(styles.icon, theme.colorIcon)}
+              />
+            </TouchableOpacity>
+          )}
           <MindsVideo
+            entity={props.store.entity}
             video={props.store.mediaToConfirm}
             containerStyle={previewStyle}
-            resizeMode="contain"
-            onLoad={(e) => {
+            resizeMode={ResizeMode.CONTAIN}
+            autoplay
+            onReadyForDisplay={(e) => {
               if (
                 e.naturalSize.orientation === 'portrait' &&
                 Platform.OS === 'ios'

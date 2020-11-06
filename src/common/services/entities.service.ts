@@ -30,6 +30,11 @@ class EntitiesService {
    */
   constructor() {
     setInterval(this.garbageCollector, 60000);
+
+    // delete the cache when activities are deleted
+    ActivityModel.events.on('deleteEntity', (activity) =>
+      this.deleteFromCache(activity.urn),
+    );
   }
 
   /**

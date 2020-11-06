@@ -27,14 +27,14 @@ export default class ChannelBadges extends PureComponent<PropsType> {
 
     const badges: Array<React.ReactNode> = [];
 
+    const style = this.props.iconStyle
+      ? [styles.icon, this.props.iconStyle]
+      : styles.icon;
+
     if (channel.plus) {
       badges.push(
-        <Icon
-          name="add-circle-outline"
-          size={size}
-          style={[styles.icon, this.props.iconStyle]}
-          key={1}
-        />,
+        //@ts-ignore style not defined in types
+        <Icon name="add-circle-outline" size={size} style={style} key={1} />,
       );
     }
 
@@ -55,12 +55,8 @@ export default class ChannelBadges extends PureComponent<PropsType> {
 
     if (channel.founder) {
       badges.push(
-        <Icon
-          name="flight-takeoff"
-          size={size}
-          style={[styles.icon, this.props.iconStyle]}
-          key={3}
-        />,
+        //@ts-ignore style not defined in types
+        <Icon name="flight-takeoff" size={size} style={style} key={3} />,
       );
     }
 

@@ -11,10 +11,19 @@ import userTypeaheadService from './user-typeahead/UserTypeaheadService';
 import logService from '../services/log.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 
+type PropsType = {
+  text: string;
+  selection: {
+    start: number;
+    end: number;
+  };
+  onSelect: (string) => void;
+  noFloat?: boolean;
+};
 /**
  * User autocomplete component
  */
-export default class UserAutocomplete extends PureComponent {
+export default class UserAutocomplete extends PureComponent<PropsType> {
   state = {
     isSearchingTag: false,
     users: [],
@@ -77,7 +86,7 @@ export default class UserAutocomplete extends PureComponent {
    * @param {object} prevProps
    * @param {object} prevState
    */
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate() {
     if (this.state.tag && this.state.search) {
       this.query(this.state.tag);
     }

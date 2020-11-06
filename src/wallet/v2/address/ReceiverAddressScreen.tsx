@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '../../../navigation/NavigationTypes';
@@ -41,10 +41,22 @@ type PropsType = {
 };
 
 const ReceiverAddressScreen = ({ route, navigation }: PropsType) => {
+  const [privateKey, setPrivateKey] = useState<any>(null);
   const theme = ThemedStyles.style;
   const { blockchainWallet } = useLegacyStores();
   const { walletStore } = route.params;
   const receiver = walletStore.wallet.receiver;
+
+  useEffect(() => {
+    const getPrivateKey = async () => {
+      const privateKey = await BlockchainWalletService.unlock(receiver.address);
+      if (privateKey) {
+        setPrivateKey(privateKey);
+      }
+    };
+
+    getPrivateKey();
+  }, [setPrivateKey, receiver.address]);
 
   const onDelete = useCallback(async () => {
     await blockchainWallet.delete(receiver.address);
@@ -81,18 +93,17 @@ const ReceiverAddressScreen = ({ route, navigation }: PropsType) => {
       title: 'Export private key',
       noIcon: true,
       onPress: async () => {
-        let privateKey = await BlockchainWalletService.unlock(receiver.address);
-
-        if (!privateKey) {
+        let privateKeyTemp = privateKey;
+        if (!privateKeyTemp) {
           return;
         }
 
-        if (privateKey.substr(0, 2).toLowerCase() === '0x') {
-          privateKey = privateKey.substr(2);
+        if (privateKeyTemp.substr(0, 2).toLowerCase() === '0x') {
+          privateKeyTemp = privateKeyTemp.substr(2);
         }
 
         const shareOptions: any = {
-          message: privateKey,
+          message: privateKeyTemp,
         };
 
         if (Platform.OS === 'android') {
@@ -151,7 +162,7 @@ const ReceiverAddressScreen = ({ route, navigation }: PropsType) => {
 
       <View style={theme.marginBottom7x}>
         <MenuItem item={items[0]} />
-        <MenuItem item={items[1]} />
+        {privateKey && <MenuItem item={items[1]} />}
       </View>
 
       <View style={theme.marginBottom7x}>

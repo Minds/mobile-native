@@ -1,4 +1,3 @@
-//@ts-nocheck
 import { observable, action } from 'mobx';
 
 import logService from '../services/log.service';
@@ -6,6 +5,7 @@ import Viewed from './Viewed';
 import MetadataService from '../services/metadata.service';
 import FeedsService from '../services/feeds.service';
 import channelService from '../../channel/ChannelService';
+import type ActivityModel from '../../newsfeed/ActivityModel';
 
 /**
  * Feed store
@@ -44,7 +44,7 @@ export default class FeedStore {
   /**
    * feed observable
    */
-  @observable.shallow entities = [];
+  @observable.shallow entities: Array<ActivityModel> = [];
 
   /**
    * Viewed store

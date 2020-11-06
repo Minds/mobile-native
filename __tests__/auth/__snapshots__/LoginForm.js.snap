@@ -1,206 +1,341 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`LoginForm component should renders correctly 1`] = `
-<View
-  style={
-    Array [
-      undefined,
-      undefined,
-    ]
-  }
->
-  <Text
+<View>
+  <View
     style={
-      Array [
-        undefined,
-        undefined,
-        undefined,
-      ]
+      Object {
+        "backgroundColor": "#00000000",
+        "elevation": 6,
+        "overflow": "visible",
+        "shadowColor": "#000",
+        "shadowOffset": Object {
+          "height": 0,
+          "width": 0,
+        },
+        "shadowOpacity": 0.8,
+        "shadowRadius": 20,
+        "zIndex": 999,
+      }
     }
   >
-    Login
-  </Text>
-  <View>
     <View
-      style={
-        Object {
-          "flexDirection": "row",
-          "justifyContent": "space-between",
-        }
-      }
-    >
-      <View
-        style={
-          Object {
-            "flexDirection": "row",
-            "justifyContent": "space-between",
-          }
-        }
-      >
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#AEB0B8",
-                "fontFamily": "Roboto",
-                "fontSize": 16,
-                "fontWeight": "600",
-                "marginBottom": 5,
-              },
-              undefined,
-            ]
-          }
-        >
-          Username
-        </Text>
-      </View>
-    </View>
-    <TextInput
-      allowFontScaling={true}
-      autoCapitalize="none"
-      editable={false}
-      onChangeText={[Function]}
-      placeholder=""
-      placeholderTextColor="#444"
-      rejectResponderTermination={true}
-      returnKeyType="done"
       style={
         Array [
           undefined,
+          Object {
+            "paddingTop": 12,
+          },
           undefined,
+          undefined,
+          null,
+          undefined,
+          Object {
+            "backgroundColor": "rgba(0,0,0,0.25)",
+            "borderColor": "rgba(255,255,255,0.30)",
+          },
         ]
       }
-      testID="usernameInput"
-      underlineColorAndroid="transparent"
-      value=""
-    />
-  </View>
-  <View>
-    <View>
-      <View
-        style={
-          Object {
-            "flexDirection": "row",
-            "justifyContent": "space-between",
-          }
-        }
-      >
+    >
+      <View>
         <View
           style={
             Object {
               "flexDirection": "row",
               "justifyContent": "space-between",
+              "width": "100%",
             }
           }
         >
-          <Text
+          <View
             style={
-              Array [
-                Object {
-                  "color": "#AEB0B8",
-                  "fontFamily": "Roboto",
-                  "fontSize": 16,
-                  "fontWeight": "600",
-                  "marginBottom": 5,
-                },
-                undefined,
-              ]
+              Object {
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+                "width": "100%",
+              }
             }
           >
-            Password
-          </Text>
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#AEB0B8",
+                    "fontFamily": "Roboto",
+                    "fontSize": 16,
+                    "fontWeight": "600",
+                    "marginBottom": 5,
+                  },
+                  undefined,
+                ]
+              }
+            >
+              Username
+            </Text>
+          </View>
+        </View>
+        <TextInput
+          allowFontScaling={true}
+          autoCapitalize="none"
+          containerStyle={
+            Object {
+              "backgroundColor": "rgba(0,0,0,0.25)",
+              "borderColor": "rgba(255,255,255,0.30)",
+            }
+          }
+          onChangeText={[Function]}
+          placeholder=""
+          placeholderTextColor="#444"
+          rejectResponderTermination={true}
+          returnKeyType="done"
+          style={
+            Array [
+              undefined,
+              Array [
+                Object {
+                  "borderWidth": 0,
+                  "height": 32,
+                  "marginBottom": 7,
+                  "padding": 0,
+                },
+                undefined,
+                undefined,
+                undefined,
+              ],
+            ]
+          }
+          testID="usernameInput"
+          underlineColorAndroid="transparent"
+          value=""
+        />
+      </View>
+    </View>
+    <View>
+      <View
+        style={
+          Array [
+            undefined,
+            Object {
+              "paddingTop": 12,
+            },
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            Object {
+              "backgroundColor": "rgba(0,0,0,0.25)",
+              "borderColor": "rgba(255,255,255,0.30)",
+            },
+          ]
+        }
+      >
+        <View>
+          <View
+            style={
+              Object {
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+                "width": "100%",
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                  "width": "100%",
+                }
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "color": "#AEB0B8",
+                      "fontFamily": "Roboto",
+                      "fontSize": 16,
+                      "fontWeight": "600",
+                      "marginBottom": 5,
+                    },
+                    undefined,
+                  ]
+                }
+              >
+                Password
+              </Text>
+            </View>
+          </View>
+          <TextInput
+            allowFontScaling={true}
+            autoCapitalize="none"
+            containerStyle={
+              Object {
+                "backgroundColor": "rgba(0,0,0,0.25)",
+                "borderColor": "rgba(255,255,255,0.30)",
+              }
+            }
+            onChangeText={[Function]}
+            placeholder=""
+            placeholderTextColor="#444"
+            rejectResponderTermination={true}
+            returnKeyType="done"
+            secureTextEntry={true}
+            style={
+              Array [
+                undefined,
+                Array [
+                  Object {
+                    "borderWidth": 0,
+                    "height": 32,
+                    "marginBottom": 7,
+                    "padding": 0,
+                  },
+                  undefined,
+                  undefined,
+                  undefined,
+                ],
+              ]
+            }
+            testID="userPasswordInput"
+            underlineColorAndroid="transparent"
+            value=""
+          />
         </View>
       </View>
-      <TextInput
-        allowFontScaling={true}
-        autoCapitalize="none"
-        editable={false}
-        onChangeText={[Function]}
-        placeholder=""
-        placeholderTextColor="#444"
-        rejectResponderTermination={true}
-        returnKeyType="done"
-        secureTextEntry={true}
+      <Text
+        allowFontScaling={false}
+        onPress={[Function]}
+        style={
+          Array [
+            Object {
+              "color": undefined,
+              "fontSize": 25,
+            },
+            Array [
+              undefined,
+              Object {
+                "top": 26,
+              },
+            ],
+            Object {
+              "fontFamily": "Ionicons",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Array [
+        undefined,
+        undefined,
+      ]
+    }
+  >
+    <View
+      accessibilityLabel="loginButton"
+      disabled={false}
+      onPress={[Function]}
+      style={
+        Array [
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          Object {
+            "backgroundColor": "#5DBAC0",
+            "borderRadius": 36,
+          },
+          Array [
+            undefined,
+            undefined,
+            Object {
+              "marginTop": 24.254545454545454,
+            },
+            undefined,
+          ],
+        ]
+      }
+      text="Login"
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "white",
+            },
+            undefined,
+          ]
+        }
+      >
+         
+        Login
+         
+      </Text>
+    </View>
+    <View>
+      <Text
+        onPress={[Function]}
         style={
           Array [
             undefined,
             undefined,
+            undefined,
           ]
         }
-        testID="userPasswordInput"
-        underlineColorAndroid="transparent"
-        value=""
-      />
+      >
+        Forgot your password?
+      </Text>
     </View>
-    <Text
-      allowFontScaling={false}
-      onPress={[Function]}
-      style={
-        Array [
-          Object {
-            "color": undefined,
-            "fontSize": 25,
-          },
-          undefined,
-          Object {
-            "fontFamily": "Ionicons",
-            "fontStyle": "normal",
-            "fontWeight": "normal",
-          },
-          Object {},
-        ]
-      }
-    >
-      
-    </Text>
-  </View>
-  <View
-    accessible={true}
-    focusable={true}
-    isTVSelectable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "backgroundColor": "#5DBAC0",
-        "borderRadius": 36,
-        "opacity": 1,
-      }
-    }
-    testID="loginButton"
-  >
-    <Text
-      style={
-        Array [
-          Object {
-            "color": "white",
-          },
-          undefined,
-        ]
-      }
-    >
-       
-      Login
-       
-    </Text>
-  </View>
-  <View>
-    <Text
-      onPress={[Function]}
+    <View />
+    <View
+      disabled={false}
       style={
         Array [
           undefined,
           undefined,
+          undefined,
+          undefined,
+          Object {
+            "backgroundColor": "#5DBAC0",
+            "borderRadius": 36,
+          },
+          Array [
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            Object {
+              "borderColor": "rgba(255,255,255,0.20)",
+            },
+          ],
         ]
       }
+      testID="loginButton"
+      text="Join Minds"
     >
-      Forgot your password?
-    </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "white",
+            },
+            undefined,
+          ]
+        }
+      >
+         
+        Join Minds
+         
+      </Text>
+    </View>
   </View>
 </View>
 `;

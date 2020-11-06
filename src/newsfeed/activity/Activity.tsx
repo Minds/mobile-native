@@ -22,14 +22,12 @@ import ActivityMetrics from './metrics/ActivityMetrics';
 import MediaView from '../../common/components/MediaView';
 import Translate from '../../common/components/Translate';
 import ExplicitOverlay from '../../common/components/explicit/ExplicitOverlay';
-import LockV2 from '../../wire/v2/lock/Lock';
-import Lock from '../../wire/lock/Lock';
+import Lock from '../../wire/v2/lock/Lock';
 import { CommonStyle } from '../../styles/Common';
 import Pinned from '../../common/components/Pinned';
 import blockListService from '../../common/services/block-list.service';
 import i18n from '../../common/services/i18n.service';
 import ActivityModel from '../ActivityModel';
-import BlockedChannel from '../../common/components/BlockedChannel';
 import ThemedStyles from '../../styles/ThemedStyles';
 import type FeedStore from '../../common/stores/FeedStore';
 import featuresService from '../../common/services/features.service';
@@ -62,10 +60,7 @@ export default class Activity extends Component<PropsType> {
    * Disposer for autoplay reaction
    */
   autoPlayDispose: any;
-  /**
-   * Disposer for autoplay timeout
-   */
-  autoplayVideoTimeout: any;
+
   /**
    * Translate reference
    */
@@ -161,13 +156,10 @@ export default class Activity extends Component<PropsType> {
             const user = sessionService.getUser();
             if (user.plus && !user.disable_autoplay_videos) {
               const state = NavigationService.getCurrentState();
+
               // sound only for ActivityScreen (Full screen)
-              const sound = state.name === 'Activity';
-              this.autoplayVideoTimeout = setTimeout(() => {
-                if (this.props.entity.is_visible) {
-                  this.playVideo(sound);
-                }
-              }, 300);
+              const sound = state.name === 'Activity' ? true : undefined; // undefined to use the latest option from the video player service
+              this.playVideo(sound);
             }
           } else {
             // no longer visible we pause it
@@ -185,9 +177,6 @@ export default class Activity extends Component<PropsType> {
   componentWillUnmount() {
     if (this.autoPlayDispose) {
       this.autoPlayDispose();
-    }
-    if (this.autoplayVideoTimeout) {
-      clearTimeout(this.autoplayVideoTimeout);
     }
   }
 
@@ -207,15 +196,7 @@ export default class Activity extends Component<PropsType> {
   render() {
     const theme = ThemedStyles.style;
     const entity = ActivityModel.checkOrCreate(this.props.entity);
-
-    if (blockListService.blocked.has(entity.ownerObj.guid)) {
-      return (
-        <BlockedChannel entity={entity} navigation={this.props.navigation} />
-      );
-    }
-
     const hasText = !!entity.text || !!entity.title;
-
     const hasMedia = entity.hasMedia();
     const hasRemind = !!entity.remind_object;
 
@@ -226,10 +207,8 @@ export default class Activity extends Component<PropsType> {
       ? [theme.fontXL, theme.fontMedium]
       : theme.fontL;
 
-    const LockCmp = featuresService.has('paywall-2020') ? LockV2 : Lock;
-
     const lock = entity.paywall ? (
-      <LockCmp entity={entity} navigation={this.props.navigation} />
+      <Lock entity={entity} navigation={this.props.navigation} />
     ) : null;
 
     const message = (
@@ -251,13 +230,11 @@ export default class Activity extends Component<PropsType> {
       </View>
     );
 
-    const show_overlay =
+    const showNSFW =
       entity.shouldBeBlured() &&
       !this.props.parentMature &&
-      !(entity.shouldBeBlured() && this.props.parentMature);
-    const overlay = show_overlay ? (
-      <ExplicitOverlay entity={this.props.entity} />
-    ) : null;
+      !(entity.shouldBeBlured() && this.props.parentMature) &&
+      !entity.mature_visibility;
 
     const borderBottom = this.props.isReminded
       ? []
@@ -275,32 +252,37 @@ export default class Activity extends Component<PropsType> {
         <Pinned entity={this.props.entity} />
         {this.showOwner()}
 
-        <View style={styles.bodyContainer}>
-          {lock}
-          {/* Shows ontop only for rich embed or reminds */}
-          {this.props.entity.perma_url || this.props.entity.remind_object
-            ? message
-            : undefined}
-          {this.showRemind()}
-          <MediaView
-            ref={(o) => {
-              this.mediaView = o;
-            }}
-            entity={entity}
-            navigation={this.props.navigation}
-            style={styles.media}
-            autoHeight={this.props.autoHeight}
-          />
-          {!(this.props.entity.perma_url || this.props.entity.remind_object)
-            ? message
-            : undefined}
-          {overlay}
-        </View>
-        {this.showActions()}
-        {this.renderScheduledMessage()}
-        {this.renderPendingMessage()}
-        {this.renderActivitySpacer()}
-        {/* {this.renderActivityMetrics()} */}
+        {showNSFW ? (
+          <ExplicitOverlay entity={this.props.entity} />
+        ) : (
+          <>
+            <View style={styles.bodyContainer}>
+              {lock}
+              {/* Shows ontop only for rich embed or reminds */}
+              {this.props.entity.perma_url || this.props.entity.remind_object
+                ? message
+                : undefined}
+              {this.showRemind()}
+              <MediaView
+                ref={(o) => {
+                  this.mediaView = o;
+                }}
+                entity={entity}
+                onPress={this.navToActivity}
+                style={styles.media}
+                autoHeight={this.props.autoHeight}
+              />
+              {!(this.props.entity.perma_url || this.props.entity.remind_object)
+                ? message
+                : undefined}
+            </View>
+            {this.showActions()}
+            {this.renderScheduledMessage()}
+            {this.renderPendingMessage()}
+            {this.renderActivitySpacer()}
+            {/* {this.renderActivityMetrics()} */}
+          </>
+        )}
       </TouchableOpacity>
     );
   }
@@ -368,7 +350,7 @@ export default class Activity extends Component<PropsType> {
   /**
    * Play video if exist
    */
-  playVideo(sound = true) {
+  playVideo(sound) {
     this.mediaView?.playVideo(sound);
   }
 
@@ -388,6 +370,7 @@ export default class Activity extends Component<PropsType> {
    * Show Owner
    */
   showOwner() {
+    const theme = ThemedStyles.style;
     const rightToolbar: React.ReactNode = (
       <View>
         <ActivityActionSheet
@@ -406,27 +389,22 @@ export default class Activity extends Component<PropsType> {
         navigation={this.props.navigation}
         rightToolbar={this.props.hideTabs ? null : rightToolbar}
         storeUserTap={this.props.storeUserTap}>
-        <View style={ThemedStyles.style.rowJustifyStart}>
+        <View style={theme.rowJustifyStart}>
           <Text
+            numberOfLines={1}
             style={[
               styles.timestamp,
               CommonStyle.paddingRight,
-              ThemedStyles.style.colorTertiaryText,
+              theme.colorTertiaryText,
             ]}>
             {formatDate(this.props.entity.time_created, 'friendly')}
-          </Text>
-
-          {!!this.props.entity.edited && (
-            <View style={styles.boostTagContainer}>
-              <Text
-                style={[
-                  styles.boostTagLabel,
-                  ThemedStyles.style.colorSecondaryText,
-                ]}>
+            {!!this.props.entity.edited && (
+              <Text style={[theme.fontS, theme.colorSecondaryText]}>
+                {' '}
                 · {i18n.t('edited').toUpperCase()}
               </Text>
-            </View>
-          )}
+            )}
+          </Text>
         </View>
       </OwnerBlock>
     );
@@ -444,7 +422,7 @@ export default class Activity extends Component<PropsType> {
         return (
           <View
             style={[
-              styles.blockedNoticeView,
+              theme.backgroundTertiary,
               theme.margin2x,
               theme.borderRadius2x,
               theme.padding2x,
@@ -549,9 +527,6 @@ const styles = StyleSheet.create({
   activitySpacer: {
     flex: 1,
     height: 70,
-  },
-  blockedNoticeView: {
-    backgroundColor: '#eee',
   },
   blockedNoticeDesc: {
     opacity: 0.7,

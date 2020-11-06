@@ -25,7 +25,6 @@ exports[`Remind owner component renders correctly 1`] = `
     }
   />
   <TouchableOpacity
-    activeOpacity={0.2}
     onPress={[Function]}
   >
     <FastImage
@@ -63,7 +62,6 @@ exports[`Remind owner component renders correctly 1`] = `
     }
   >
     <TouchableOpacity
-      activeOpacity={0.2}
       onPress={[Function]}
       style={
         Array [

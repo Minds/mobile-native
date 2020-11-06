@@ -6,11 +6,13 @@ import {
 import { useDimensions } from '@react-native-community/hooks';
 import { createSharedElementStackNavigator } from 'react-navigation-shared-element';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { Platform } from 'react-native';
+import { Platform, StatusBar, View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
+import AnalyticsScreen from '../analytics/AnalyticsScreen';
 
 import LoginScreen from '../auth/LoginScreen';
 import ForgotScreen from '../auth/ForgotScreen';
+import ReferralsScreen from '../referral/ReferralsScreen';
 import TabsScreen from '../tabs/TabsScreen';
 import NotificationsScreen from '../notifications/NotificationsScreen';
 import ActivityScreen from '../newsfeed/ActivityScreen';
@@ -35,14 +37,16 @@ import NotSupportedScreen from '../static-views/NotSupportedScreen';
 import OnboardingScreen from '../onboarding/OnboardingScreen';
 import UpdatingScreen from '../update/UpdateScreen';
 import { DiscoverySearchScreen } from '../discovery/v2/search/DiscoverySearchScreen';
-import Gathering from '../gathering/Gathering';
+// import Gathering from '../gathering/Gathering';
 import EmailConfirmationScreen from '../onboarding/EmailConfirmationScreen';
 import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
 import ComposeScreen from '../compose/ComposeScreen';
 import TagSelector from '../compose/TagSelector';
+import AccessSelector from '../compose/AccessSelector';
 import NsfwSelector from '../compose/NsfwSelector';
 import ScheduleSelector from '../compose/ScheduleSelector';
+import PermawebSelector from '../compose/PermawebSelector';
 import MonetizeSelector from '../compose/MonetizeSelector';
 import MonetizeScreen from '../compose/monetize/MonetizeScreeen';
 import LicenseSelector from '../compose/LicenseSelector';
@@ -85,7 +89,6 @@ import DeactivateChannelScreen from '../settings/screens/DeactivateChannelScreen
 import LanguageScreen from '../settings/screens/LanguageScreen';
 import NSFWScreen from '../settings/screens/NSFWScreen';
 import MessengerSettingsScreen from '../settings/screens/MessengerScreen';
-import TFAScreen from '../settings/screens/TFAScreen';
 import DevicesScreen from '../settings/screens/DevicesScreen';
 import BillingScreen from '../settings/screens/BillingScreen';
 import RecurringPayments from '../settings/screens/RecurringPayments';
@@ -93,6 +96,12 @@ import ReportedContentScreen from '../report/ReportedContentScreen';
 import AppInfoScreen from '../settings/screens/AppInfoScreen';
 import WalletScreen from '../wallet/v2/WalletScreen';
 import ModalTransition from './ModalTransition';
+import AuthTransition from './AuthTransition';
+import VideoBackground from '../common/components/VideoBackground';
+import TransparentLayer from '../common/components/TransparentLayer';
+import PortraitViewerScreen from '../portrait/PortraitViewerScreen';
+import { portraitBarRef } from '../portrait/PortraitContentBar';
+import AutoplaySettingsScreen from '../settings/screens/AutoplaySettingsScreen';
 
 const isIos = Platform.OS === 'ios';
 
@@ -103,12 +112,8 @@ const captureOptions = {
   headerShown: false,
 } as NativeStackNavigationOptions;
 
-const activityOptions = ({ route }) => ({
-  title: route.params.entity ? route.params.entity.ownerObj.name : '',
-});
-
 const AppStackNav = createNativeStackNavigator<AppStackParamList>();
-const AuthStackNav = createNativeStackNavigator<AuthStackParamList>();
+const AuthStackNav = createStackNavigator<AuthStackParamList>();
 const RootStackNav = createStackNavigator<RootStackParamList>();
 const InternalStackNav = createNativeStackNavigator<InternalStackParamList>();
 // const MainSwiper = createMaterialTopTabNavigator<MainSwiperParamList>();
@@ -123,6 +128,11 @@ const FullScreenPostStack = () => (
     <FullScreenPostStackNav.Screen
       name="ActivityFullScreen"
       component={ViewerScreen}
+      options={{ stackAnimation: 'none', ...hideHeader, title: '' }}
+    />
+    <FullScreenPostStackNav.Screen
+      name="PortraitViewerScreen"
+      component={PortraitViewerScreen}
       options={{ stackAnimation: 'none', ...hideHeader, title: '' }}
     />
     <FullScreenPostStackNav.Screen
@@ -155,21 +165,23 @@ const AccountScreenOptions = (navigation) => [
     title: i18n.t('settings.accountOptions.4'),
     onPress: () => navigation.push('SettingsNotifications'),
   },
-  {
-    title: i18n.t('settings.accountOptions.5'),
-    onPress: () => navigation.push('NSFWScreen'),
-  },
+  Platform.OS !== 'ios'
+    ? {
+        title: i18n.t('settings.accountOptions.5'),
+        onPress: () => navigation.push('NSFWScreen'),
+      }
+    : null,
   {
     title: i18n.t('settings.accountOptions.6'),
     onPress: () => navigation.push('MessengerSettingsScreen'),
   },
+  {
+    title: i18n.t('settings.accountOptions.7'),
+    onPress: () => navigation.push('AutoplaySettingsScreen'),
+  },
 ];
 
 const SecurityScreenOptions = (navigation) => [
-  {
-    title: i18n.t('settings.securityOptions.1'),
-    onPress: () => navigation.push('TFAScreen'),
-  },
   {
     title: i18n.t('settings.securityOptions.2'),
     onPress: () => navigation.push('DevicesScreen'),
@@ -202,6 +214,11 @@ const WalletOptions = () => ({
   headerShown: false,
 });
 
+const modalOptions = {
+  gestureResponseDistance: { vertical: 240 },
+  gestureEnabled: true,
+};
+
 export const InternalStack = () => {
   const internalOptions = {
     ...ThemedStyles.defaultScreenOptions,
@@ -230,6 +247,7 @@ export const InternalStack = () => {
         component={GroupsListScreen}
         options={{ title: i18n.t('discovery.groups') }}
       />
+      <AppStackNav.Screen name="Analytics" component={AnalyticsScreen} />
 
       <InternalStackNav.Screen name="Settings" component={SettingsScreen} />
     </InternalStackNav.Navigator>
@@ -243,7 +261,11 @@ const MainScreen = () => {
   return (
     <DrawerNav.Navigator
       initialRouteName="Tabs"
-      edgeWidth={dimensions.width}
+      gestureHandlerProps={{
+        hitSlop: { left: 0, width: dimensions.width },
+        //@ts-ignore
+        waitFor: portraitBarRef,
+      }}
       drawerType="slide"
       drawerContent={Drawer}
       drawerStyle={isLargeScreen ? null : ThemedStyles.style.width90}>
@@ -286,6 +308,11 @@ const AppStack = function () {
         options={hideHeader}
       />
       <AppStackNav.Screen
+        name="PermawebSelector"
+        component={PermawebSelector}
+        options={hideHeader}
+      />
+      <AppStackNav.Screen
         name="ScheduleSelector"
         component={ScheduleSelector}
         options={hideHeader}
@@ -320,6 +347,11 @@ const AppStack = function () {
         options={hideHeader}
       />
       <AppStackNav.Screen
+        name="AccessSelector"
+        component={AccessSelector}
+        options={hideHeader}
+      />
+      <AppStackNav.Screen
         name="EmailConfirmation"
         component={EmailConfirmationScreen}
       />
@@ -342,7 +374,7 @@ const AppStack = function () {
       <AppStackNav.Screen
         name="Activity"
         component={ActivityScreen}
-        options={activityOptions}
+        options={hideHeader}
       />
       <AppStackNav.Screen name="Conversation" component={ConversationScreen} />
       <AppStackNav.Screen
@@ -478,6 +510,11 @@ const AppStack = function () {
         initialParams={{ options: BillingScreenOptions }}
       />
       <AppStackNav.Screen
+        name="Referrals"
+        component={ReferralsScreen}
+        options={{ title: i18n.t('settings.referrals') }}
+      />
+      <AppStackNav.Screen
         name="Other"
         component={OtherScreen}
         options={{ title: i18n.t('settings.other') }}
@@ -532,9 +569,9 @@ const AppStack = function () {
         options={{ title: i18n.t('settings.accountOptions.6') }}
       />
       <AppStackNav.Screen
-        name="TFAScreen"
-        component={TFAScreen}
-        options={{ title: i18n.t('settings.TFA') }}
+        name="AutoplaySettingsScreen"
+        component={AutoplaySettingsScreen}
+        options={{ title: i18n.t('settings.accountOptions.7') }}
       />
       <AppStackNav.Screen
         name="DevicesScreen"
@@ -567,23 +604,19 @@ const AppStack = function () {
 
 const AuthStack = function () {
   return (
-    <AuthStackNav.Navigator>
-      <AuthStackNav.Screen
-        name="Login"
-        component={LoginScreen}
-        options={hideHeader}
-      />
-      <AuthStackNav.Screen
-        name="Forgot"
-        component={ForgotScreen}
-        options={hideHeader}
-      />
-      <AuthStackNav.Screen
-        name="Register"
-        component={RegisterScreen}
-        options={hideHeader}
-      />
-    </AuthStackNav.Navigator>
+    <View style={ThemedStyles.style.flexContainer}>
+      <StatusBar barStyle={'light-content'} backgroundColor="#000000" />
+      <VideoBackground source={require('../assets/videos/minds-loop.mp4')} />
+      <TransparentLayer />
+      <AuthStackNav.Navigator
+        headerMode="none"
+        // @ts-ignore
+        screenOptions={AuthTransition}>
+        <AuthStackNav.Screen name="Login" component={LoginScreen} />
+        <AuthStackNav.Screen name="Forgot" component={ForgotScreen} />
+        <AuthStackNav.Screen name="Register" component={RegisterScreen} />
+      </AuthStackNav.Navigator>
+    </View>
   );
 };
 
@@ -605,15 +638,12 @@ const RootStack = function (props) {
       {props.isLoggedIn ? (
         <Fragment>
           <RootStackNav.Screen name="App" component={AppStack} />
-          <RootStackNav.Screen name="Gathering" component={Gathering} />
+          {/* <RootStackNav.Screen name="Gathering" component={Gathering} /> */}
           {/* Modal screens here */}
           <RootStackNav.Screen
             name="JoinMembershipScreen"
             component={JoinMembershipScreen}
-            options={{
-              gestureResponseDistance: { vertical: 240 },
-              gestureEnabled: true,
-            }}
+            options={modalOptions}
           />
           <RootStackNav.Screen
             name="BlockchainWalletModal"
@@ -622,12 +652,7 @@ const RootStack = function (props) {
           <RootStackNav.Screen
             name="PlusScreen"
             component={PlusScreen}
-            options={({ route }) => ({
-              gestureEnabled: false,
-              title: i18n.t(
-                `monetize.${route.params.pro ? 'pro' : 'plus'}Header`,
-              ),
-            })}
+            options={modalOptions}
           />
         </Fragment>
       ) : (

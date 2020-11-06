@@ -1,6 +1,5 @@
 //@ts-nocheck
 import React, { Component } from 'react';
-import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {
   Text,
   View,
@@ -8,7 +7,6 @@ import {
   Platform,
   FlatList,
   StyleSheet,
-  ActivityIndicator,
 } from 'react-native';
 
 import { inject, observer } from 'mobx-react';
@@ -24,6 +22,7 @@ import { ComponentsStyle } from '../styles/Components';
 import ErrorLoading from '../common/components/ErrorLoading';
 import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
+import ActivityIndicator from '../common/components/ActivityIndicator';
 
 /**
  * Messenger Conversarion List Screen
@@ -119,7 +118,7 @@ class MessengerScreen extends Component {
       );
     }
 
-    const iconRight = messengerList.configured ? 'md-unlock' : null;
+    const iconRight = messengerList.configured ? 'md-lock-open-outline' : null;
     const footer = this.getFooter();
 
     return (

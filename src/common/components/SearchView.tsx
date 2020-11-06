@@ -1,4 +1,3 @@
-//@ts-nocheck
 import React, { PureComponent } from 'react';
 
 import {
@@ -21,6 +20,8 @@ interface Props {
   onBlur?: Function;
   onChangeText?: Function;
   containerStyle: StyleProp<ViewStyle>;
+  iconRight: string | null;
+  iconRightOnPress: Function;
 }
 
 /**
@@ -41,7 +42,6 @@ export default class SearchView extends PureComponent<Props> {
     const {
       iconRight,
       iconRightOnPress,
-      right,
       containerStyle,
       ...attributes
     } = this.props;
@@ -55,16 +55,19 @@ export default class SearchView extends PureComponent<Props> {
           style={[styles.icon, ThemedStyles.style.colorIcon]}
           name={'md-search'}
         />
-        <TextInput
-          onFocus={this.props.onFocus}
-          onBlur={this.props.onBlur}
-          selectTextOnFocus={true}
-          placeholderTextColor={ThemedStyles.getColor('secondary_text')}
-          {...attributes}
-          underlineColorAndroid={'transparent'}
-          style={[styles.input, ThemedStyles.style.colorPrimaryText]}
-          testID="MessengerContactText"
-        />
+        {
+          //@ts-ignore
+          <TextInput
+            onFocus={this.props.onFocus}
+            onBlur={this.props.onBlur}
+            selectTextOnFocus={true}
+            placeholderTextColor={ThemedStyles.getColor('secondary_text')}
+            {...attributes}
+            underlineColorAndroid={'transparent'}
+            style={[styles.input, ThemedStyles.style.colorPrimaryText]}
+            testID="MessengerContactText"
+          />
+        }
         {rIcon}
       </View>
     );
@@ -77,7 +80,7 @@ export default class SearchView extends PureComponent<Props> {
    */
   getRightIcon(iconRight, iconRightOnPress) {
     if (iconRight) {
-      if (typeof iconRight === 'string' || iconRight instanceof String) {
+      if (typeof iconRight === 'string') {
         if (iconRightOnPress) {
           return (
             <TouchableOpacity

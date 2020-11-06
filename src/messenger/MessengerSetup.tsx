@@ -1,24 +1,17 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import {
-  Text,
-  View,
-  TextInput,
-  Alert,
-  ActivityIndicator,
-  StyleSheet,
-} from 'react-native';
+import { Text, View, TextInput, Alert, StyleSheet } from 'react-native';
 
 import { inject, observer, Observer } from 'mobx-react';
 
 import { CommonStyle } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
 import Colors from '../styles/Colors';
-import Button from '../common/components/Button';
 import NavNextButton from '../common/components/NavNextButton';
 import logService from '../common/services/log.service';
 import i18n from '../common/services/i18n.service';
+import ActivityIndicator from '../common/components/ActivityIndicator';
 
 /**
  * Messenger setup

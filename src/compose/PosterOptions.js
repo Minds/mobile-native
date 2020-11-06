@@ -22,8 +22,12 @@ import moment from 'moment';
 import ThemedStyles from '../styles/ThemedStyles';
 import NavigationService from '../navigation/NavigationService';
 import i18n from '../common/services/i18n.service';
-import { getLicenseText } from '../common/services/list-options.service';
+import {
+  getLicenseText,
+  getAccessText,
+} from '../common/services/list-options.service';
 import featuresService from '../common/services/features.service';
+import sessionService from '../common/services/session.service';
 
 const Touchable = Platform.select({
   ios: RNTouchableOpacity,
@@ -111,6 +115,7 @@ export default observer(
     const tokens = store.wire_threshold.min;
     const license = store.attachment.license;
     const hasAttachment = store.attachment.hasAttachment;
+    const accessId = store.accessId;
 
     const keyboard = useKeyboard();
     const sheetRef = useRef();
@@ -118,8 +123,10 @@ export default observer(
     const onTagPress = useNavCallback('TagSelector', store);
     const onNsfwPress = useNavCallback('NsfwSelector', store);
     const onSchedulePress = useNavCallback('ScheduleSelector', store);
+    const onPermawebPress = useNavCallback('PermawebSelector', store);
     const onMonetizePress = useNavCallback('MonetizeSelector', store);
     const onLicensePress = useNavCallback('LicenseSelector', store);
+    const onPressVisibility = useNavCallback('AccessSelector', store);
 
     const localStore = useLocalStore(() => ({
       opened: false,
@@ -163,13 +170,20 @@ export default observer(
 
     const showSchedule = props.store.isEdit ? time_created > Date.now() : true;
 
-    const monetizeDesc = featuresService.has('plus-2020')
-      ? store.wire_threshold.support_tier?.urn
-        ? store.wire_threshold.support_tier?.name || 'Plus'
-        : ''
-      : tokens
-      ? `${tokens} ${i18n.t('tokens').toLowerCase()} +`
+    const monetizeDesc = store.wire_threshold.support_tier?.urn
+      ? store.wire_threshold.support_tier?.name || 'Plus'
       : '';
+
+    const showPermaweb =
+      sessionService.getUser().plus &&
+      !store.isEdit &&
+      !store.group &&
+      !store.isRemind &&
+      featuresService.has('permaweb');
+
+    const permawebDesc = store.postToPermaweb
+      ? i18n.t('permaweb.description')
+      : null;
 
     const renderInner = () => (
       <View style={[theme.backgroundSecondary, theme.fullHeight]}>
@@ -200,6 +214,14 @@ export default observer(
           onPress={onMonetizePress}
           testID="monetizeButton"
         />
+        {showPermaweb && (
+          <Item
+            title={i18n.t('permaweb.title')}
+            description={permawebDesc}
+            onPress={onPermawebPress}
+            testID="permawebButton"
+          />
+        )}
         {hasAttachment && (
           <Item
             title="License"
@@ -207,18 +229,20 @@ export default observer(
             onPress={onLicensePress}
           />
         )}
-        {/* <Item
-          title="Visibility"
-          description="Public"
-          onPress={onMonetizePress}
-        /> */}
+        {!store.group && (
+          <Item
+            title="Visibility"
+            description={getAccessText(accessId)}
+            onPress={onPressVisibility}
+          />
+        )}
       </View>
     );
 
     return (
       <BottomSheet
         ref={sheetRef}
-        snapPoints={[0, 450]}
+        snapPoints={[0, 500]}
         renderContent={renderInner}
         enabledInnerScrolling={true}
         enabledContentTapInteraction={true}

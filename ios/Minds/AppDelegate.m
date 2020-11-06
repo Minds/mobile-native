@@ -17,19 +17,41 @@
 #import <UMCore/UMModuleRegistry.h>
 #import <UMReactNativeAdapter/UMNativeModulesProxy.h>
 #import <UMReactNativeAdapter/UMModuleRegistryAdapter.h>
+#import <RNShareMenu/ShareMenuManager.h>
 
 @interface AppDelegate () <RCTBridgeDelegate>
- 
+
 @property (nonatomic, strong) UMModuleRegistryAdapter *moduleRegistryAdapter;
- 
+
 @end
- 
+
+#ifdef FB_SONARKIT_ENABLED
+#import <FlipperKit/FlipperClient.h>
+#import <FlipperKitLayoutPlugin/FlipperKitLayoutPlugin.h>
+#import <FlipperKitUserDefaultsPlugin/FKUserDefaultsPlugin.h>
+#import <FlipperKitNetworkPlugin/FlipperKitNetworkPlugin.h>
+#import <SKIOSNetworkPlugin/SKIOSNetworkAdapter.h>
+#import <FlipperKitReactPlugin/FlipperKitReactPlugin.h>
+static void InitializeFlipper(UIApplication *application) {
+  FlipperClient *client = [FlipperClient sharedClient];
+  SKDescriptorMapper *layoutDescriptorMapper = [[SKDescriptorMapper alloc] initWithDefaults];
+  [client addPlugin:[[FlipperKitLayoutPlugin alloc] initWithRootNode:application withDescriptorMapper:layoutDescriptorMapper]];
+  [client addPlugin:[[FKUserDefaultsPlugin alloc] initWithSuiteName:nil]];
+  [client addPlugin:[FlipperKitReactPlugin new]];
+  [client addPlugin:[[FlipperKitNetworkPlugin alloc] initWithNetworkAdapter:[SKIOSNetworkAdapter new]]];
+  [client start];
+}
+#endif
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   self.moduleRegistryAdapter = [[UMModuleRegistryAdapter alloc] initWithModuleRegistryProvider:[[UMModuleRegistryProvider alloc] init]];
-  
+
+  #ifdef FB_SONARKIT_ENABLED
+    InitializeFlipper(application);
+  #endif
   NSDictionary *initialProperties = arguments();
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
@@ -59,18 +81,19 @@
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
 {
-#if DEBUG
+#ifdef FB_SONARKIT_ENABLED
   return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
 #else
-  return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+  return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
+  // return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 #endif
 }
 
-- (BOOL)application:(UIApplication *)application
-   openURL:(NSURL *)url
-   options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
+- (BOOL)application:(UIApplication *)app
+            openURL:(NSURL *)url
+            options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
 {
-  return [RCTLinkingManager application:application openURL:url options:options];
+  return [ShareMenuManager application:app openURL:url options:options];
 }
 
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity
@@ -93,15 +116,15 @@
 static NSDictionary *arguments()
 {
     NSArray *arguments = [[NSProcessInfo processInfo] arguments];
-    
+
     if(arguments.count < 2)
         return nil;
-    
+
     NSMutableDictionary *argsDict = [[NSMutableDictionary alloc] init];
-    
+
     NSMutableArray *args = [arguments mutableCopy];
     [args removeObjectAtIndex:0];
-    
+
     NSInteger skip = 0;
     for(NSString *arg in args)
     {
@@ -116,7 +139,7 @@ static NSDictionary *arguments()
                 NSArray *components = [arg componentsSeparatedByString:@"="];
                 NSString *key       = [[components objectAtIndex:0] stringByReplacingOccurrencesOfString:@"--" withString:@""];
                 NSString *value     = [components objectAtIndex:1];
-                
+
                 [argsDict setObject:value forKey:key];
             }
             else if([arg rangeOfString:@"-"].location != NSNotFound)
@@ -125,14 +148,14 @@ static NSDictionary *arguments()
                 NSInteger next  = index + 1;
                 NSString *key   = [arg stringByReplacingOccurrencesOfString:@"-" withString:@""];
                 NSString *value = [arguments objectAtIndex:next];
-                
+
                 [argsDict setObject:value forKey:key];
             }
         }
     }
-    
+
     NSLog(@"ARGS: %@", argsDict);
-    
+
     return [argsDict copy];
 }
 

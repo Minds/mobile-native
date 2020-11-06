@@ -1,6 +1,86 @@
 {
   "versions": [
     {
+      "version": "4.5.1",
+      "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-5-1.apk",
+      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.5.1",
+      "changelog": [
+        "Bug fixing"
+      ],
+      "unstable": false,
+      "hashes": [
+        {
+          "type": "md5",
+          "value": "b29f52c4c76b3d11b9b7506053515f22"
+        },
+        {
+          "type": "sha256",
+          "value": "179aeb16ead5859a99bddc02cbe2e4e8e63a7467dbab35c968c21d4d99a4e253"
+        },
+        {
+          "type": "sha512",
+          "value": "036fb426bf97169a65a72c04e82e87664c4c5317cf6b70691c953fd996ee52037fa119a184988a71ce5c1b6cb3b7dd8fd3bb69d399bc81dea5ff8832ab434d98"
+        }
+      ]
+    },
+    {
+      "version": "4.5.0",
+      "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-5-0.apk",
+      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.5.0",
+      "changelog": [
+        "New portrait media feed.",
+        "New login and register screens",
+        "Post to Permaweb",
+        "Image editor",
+        "Referrals",
+        "Analytics",
+        "Improved video player controls and logic",
+        "Improved comments UI",
+        "Deep linking",
+        "New JS engine",
+        "Smaller APK",
+        "Many bug fixes and other improvements"
+      ],
+      "unstable": false,
+      "hashes": [
+        {
+          "type": "md5",
+          "value": "9def6b3419a6112d4d7fc3d0705c2b63"
+        },
+        {
+          "type": "sha256",
+          "value": "fd619b4c4291394e160dc5630fb19a9b13e8a39ec5ebe0d62641bb40507713c4"
+        },
+        {
+          "type": "sha512",
+          "value": "5896c56ce6b7310ff3f76714254a4b6ce65f61f8e4e16dd67a5556134d938b56cc52ea84908e19fd0ede213398fb94902ef6934f9a674d3c9a5bde79056622bc"
+        }
+      ]
+    },
+    {
+      "version": "4.4.2",
+      "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-4-2.apk",
+      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.4.2",
+      "changelog": [
+        "Bug fixes"
+      ],
+      "unstable": false,
+      "hashes": [
+        {
+          "type": "md5",
+          "value": "da43017104c5ef935cc3658f5eaaf340"
+        },
+        {
+          "type": "sha256",
+          "value": "c69834c049ac3b992b95931353896f48fda8b944052527d3889595d76f0e17b3"
+        },
+        {
+          "type": "sha512",
+          "value": "c89cf5442764e952d523badd99ead4af5051950d50d187c77a0330c3f72311c3cbe8c4316a6fd62dbd3d3b8c890e06c157848559dea55ba6523a3ddc71fc783b"
+        }
+      ]
+    },
+    {
       "version": "4.4.1",
       "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-4-1.apk",
       "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.4.1",

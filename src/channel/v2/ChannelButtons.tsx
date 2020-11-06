@@ -2,7 +2,7 @@ import React, { useCallback, useRef } from 'react';
 import { View, StyleSheet, Platform } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { useNavigation } from '@react-navigation/native';
-import { Icon } from 'react-native-elements';
+import MIcon from 'react-native-vector-icons/MaterialIcons';
 import { observer } from 'mobx-react';
 import type { NativeStackNavigationProp } from 'react-native-screens/native-stack';
 import Button from '../../common/components/Button';
@@ -19,13 +19,48 @@ import ChannelMoreMenu from './ChannelMoreMenu';
 
 import type { GestureResponderEvent } from 'react-native';
 import { ChannelStoreType } from './createChannelStore';
+import { SupportTiersType } from '../../wire/WireTypes';
+
+type ButtonsType = 'edit' | 'more' | 'wire' | 'subscribe' | 'message' | 'join';
 
 type PropsType = {
   store: ChannelStoreType;
   onEditPress: (ev: GestureResponderEvent) => void;
+  notShow?: Array<ButtonsType>;
+  containerStyle?: any;
+  iconsStyle?: any;
 };
 
 const isIos = Platform.OS === 'ios';
+
+const isSubscribedToTier = (tiers: SupportTiersType[]) =>
+  tiers.some((tier) => typeof tier.subscription_urn === 'string');
+
+const SIZE = 18;
+
+const check = {
+  wire: (store: ChannelStoreType) =>
+    !isIos &&
+    !store.channel!.blocked &&
+    !store.channel!.isOwner() &&
+    store.channel!.can(FLAG_WIRE),
+  more: () => true,
+  message: (store: ChannelStoreType) =>
+    !store.channel!.isOwner() &&
+    store.channel!.isSubscribed() &&
+    store.channel!.can(FLAG_MESSAGE),
+  edit: (store: ChannelStoreType) =>
+    store.channel!.isOwner() && store.channel?.can(FLAG_EDIT_CHANNEL),
+  join: (store: ChannelStoreType) =>
+    !store.channel!.isOwner() &&
+    store.tiers &&
+    store.tiers.length > 0 &&
+    !isSubscribedToTier(store.tiers),
+  subscribe: (store: ChannelStoreType) =>
+    !store.channel!.isOwner() &&
+    store.channel!.can(FLAG_SUBSCRIBE) &&
+    !store.channel!.subscribed,
+};
 
 /**
  * Channel buttons
@@ -62,46 +97,18 @@ const ChannelButtons = observer((props: PropsType) => {
     });
   }, [navigation, props.store.channel]);
 
-  const openMore = useCallback(() => {
-    if (menuRef.current) {
-      menuRef.current.show();
-    }
-  }, [menuRef]);
-
   if (!props.store.channel) return null;
 
-  const showWire =
-    !isIos &&
-    !props.store.channel.blocked &&
-    !props.store.channel.isOwner() &&
-    props.store.channel.can(FLAG_WIRE);
+  const shouldShow = (button: ButtonsType) =>
+    !props.notShow ||
+    (!props.notShow.includes(button) && check[button](props.store));
 
-  const showSubscribe =
-    !props.store.channel.isOwner() &&
-    props.store.channel.can(FLAG_SUBSCRIBE) &&
-    !props.store.channel.subscribed;
-
-  const showMessage =
-    !props.store.channel.isOwner() &&
-    props.store.channel.isSubscribed() &&
-    props.store.channel.can(FLAG_MESSAGE);
-
-  const showEdit =
-    props.store.channel.isOwner() && props.store.channel.can(FLAG_EDIT_CHANNEL);
-
-  const showJoin =
-    !props.store.channel.isOwner() &&
-    props.store.tiers &&
-    props.store.tiers.length > 0;
+  const showSubscribe = shouldShow('subscribe');
 
   return (
     <View
-      style={[
-        theme.rowJustifyEnd,
-        styles.marginContainer,
-        theme.marginRight2x,
-      ]}>
-      {showEdit ? (
+      style={[theme.rowJustifyEnd, theme.marginRight2x, props.containerStyle]}>
+      {shouldShow('edit') && (
         <View style={isIos ? undefined : theme.paddingTop2x}>
           <Button
             color={ThemedStyles.getColor('secondary_background')}
@@ -113,43 +120,35 @@ const ChannelButtons = observer((props: PropsType) => {
             inverted
           />
         </View>
-      ) : (
-        <Icon
-          raised
-          reverse
-          name="more-horiz"
-          type="material"
-          color={ThemedStyles.getColor('secondary_background')}
-          reverseColor={ThemedStyles.getColor('primary_text')}
-          size={15}
-          onPress={openMore}
-        />
       )}
-      {showWire && (
-        <Icon
-          raised
-          reverse
-          name="coins"
-          type="font-awesome-5"
-          color={ThemedStyles.getColor('secondary_background')}
-          reverseColor={ThemedStyles.getColor('primary_text')}
-          size={15}
-          onPress={openWire}
-        />
-      )}
-      {showMessage && (
-        <Icon
-          raised
-          reverse
+      {shouldShow('message') && (
+        <MIcon
           name="chat-bubble-outline"
-          type="material"
-          color={ThemedStyles.getColor('secondary_background')}
-          reverseColor={ThemedStyles.getColor('primary_text')}
-          size={15}
+          color={ThemedStyles.getColor('primary_text')}
+          size={SIZE}
           onPress={openMessenger}
+          style={props.iconsStyle}
         />
       )}
-      {showJoin && (
+      {shouldShow('wire') && (
+        <MIcon
+          name="attach-money"
+          color={ThemedStyles.getColor('primary_text')}
+          size={SIZE}
+          onPress={openWire}
+          style={props.iconsStyle}
+        />
+      )}
+      {shouldShow('more') && (
+        <MIcon
+          name="more-horiz"
+          color={ThemedStyles.getColor('primary_text')}
+          size={22}
+          onPress={() => menuRef.current?.show()}
+          style={[theme.paddingRight, props.iconsStyle]}
+        />
+      )}
+      {shouldShow('join') && (
         <Button
           color={
             showSubscribe
@@ -180,7 +179,11 @@ const ChannelButtons = observer((props: PropsType) => {
           inverted
         />
       )}
-      <ChannelMoreMenu channel={props.store.channel} ref={menuRef} />
+      <ChannelMoreMenu
+        channel={props.store.channel}
+        ref={menuRef}
+        isSubscribedToTier={isSubscribedToTier(props.store.tiers)}
+      />
     </View>
   );
 });
@@ -188,12 +191,6 @@ const ChannelButtons = observer((props: PropsType) => {
 export default ChannelButtons;
 
 const styles = StyleSheet.create({
-  marginContainer: {
-    marginTop: Platform.select({
-      ios: 5,
-      android: 0,
-    }),
-  },
   button: {
     padding: Platform.select({ ios: 8, android: 6 }),
     marginLeft: 5,

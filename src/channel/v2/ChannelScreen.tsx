@@ -10,6 +10,10 @@ import BlogCard from '../../blogs/BlogCard';
 import type BlogModel from '../../blogs/BlogModel';
 import i18n from '../../common/services/i18n.service';
 import { useFocusEffect } from '@react-navigation/native';
+import BlockedChannel from '../../common/components/BlockedChannel';
+import sessionService from '../../common/services/session.service';
+import ExplicitOverlay from '../../common/components/explicit/ExplicitOverlay';
+import ChannelTopBar from './ChannelTopBar';
 
 type PropsType = {
   navigation: any;
@@ -33,11 +37,15 @@ const ChannelScreen = observer((props: PropsType) => {
   useFocusEffect(
     React.useCallback(() => {
       const params = props.route.params;
-      if (params && params.prepend) {
+      if (
+        params &&
+        params.prepend &&
+        store.channel?.guid === sessionService.guid
+      ) {
         store.feedStore.prepend(params.prepend);
         props.navigation.setParams({ prepend: undefined });
       }
-    }, [props.navigation, props.route.params, store.feedStore]),
+    }, [props.navigation, props.route.params, store.channel, store.feedStore]),
   );
 
   const renderBlog = useCallback(
@@ -51,6 +59,43 @@ const ChannelScreen = observer((props: PropsType) => {
 
   if (!store.loaded) {
     return <CenteredLoading />;
+  }
+
+  if (store.channel?.blocked) {
+    return (
+      <BlockedChannel
+        navigation={props.navigation}
+        channel={store.channel}
+        onPressBack={props.navigation.goBack}
+      />
+    );
+  }
+
+  if (
+    !sessionService.getUser().mature &&
+    store.channel &&
+    store.channel.guid !== sessionService.guid &&
+    ((store.channel.nsfw && store.channel.nsfw.length > 0) ||
+      store.channel.is_mature) &&
+    !store.channel.mature_visibility
+  ) {
+    return (
+      <View style={[theme.backgroundSecondary, theme.flexContainer]}>
+        <ChannelTopBar
+          navigation={props.navigation}
+          store={store}
+          hideButtons
+        />
+        <ChannelHeader
+          store={store}
+          navigation={props.navigation}
+          hideButtons
+          hideDescription
+          hideTabs
+        />
+        <ExplicitOverlay entity={store.channel} />
+      </View>
+    );
   }
 
   const emptyMessage = store.channel!.isOwner() ? (
@@ -67,15 +112,18 @@ const ChannelScreen = observer((props: PropsType) => {
   ) : undefined;
 
   return (
-    <FeedList
-      feedStore={store.feedStore}
-      renderActivity={renderActivity}
-      header={<ChannelHeader store={store} navigation={props.navigation} />}
-      navigation={props.navigation}
-      emptyMessage={emptyMessage}
-      style={[theme.backgroundSecondary, theme.flexContainer]}
-      hideItems={store.tab !== 'feed'}
-    />
+    <>
+      <ChannelTopBar navigation={props.navigation} store={store} />
+      <FeedList
+        feedStore={store.feedStore}
+        renderActivity={renderActivity}
+        header={<ChannelHeader store={store} navigation={props.navigation} />}
+        navigation={props.navigation}
+        emptyMessage={emptyMessage}
+        style={[theme.backgroundSecondary, theme.flexContainer]}
+        hideItems={store.tab !== 'feed'}
+      />
+    </>
   );
 });
 

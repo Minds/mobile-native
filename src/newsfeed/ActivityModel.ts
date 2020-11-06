@@ -1,6 +1,6 @@
 import { runInAction, action, observable, decorate } from 'mobx';
 import FastImage from 'react-native-fast-image';
-import { FlatList, Alert } from 'react-native';
+import { FlatList, Alert, Platform } from 'react-native';
 
 import BaseModel from '../common/BaseModel';
 import UserModel from '../channel/UserModel';
@@ -17,7 +17,6 @@ import api from '../common/services/api.service';
 import { GOOGLE_PLAY_STORE, MINDS_CDN_URI, MINDS_URI } from '../config/Config';
 import i18n from '../common/services/i18n.service';
 import logService from '../common/services/log.service';
-import entitiesService from '../common/services/entities.service';
 import type { ThumbSize, LockType } from '../types/Common';
 import type GroupModel from '../groups/GroupModel';
 import { SupportTiersType } from '../wire/WireTypes';
@@ -46,7 +45,9 @@ export default class ActivityModel extends BaseModel {
   'comments:count': number;
   'thumbs:down:user_guids': Array<number>;
   'thumbs:up:user_guids': Array<number>;
+  seen?: boolean;
   rowKey?: string;
+  description?: string; // on image objects in some cases the message is on description field
   containerObj?: GroupModel;
   remind_object?: ActivityModel;
   ownerObj!: UserModel;
@@ -80,6 +81,8 @@ export default class ActivityModel extends BaseModel {
     attachment_guid: string;
   };
 
+  permaweb_id?: string;
+
   /**
    * Mature visibility flag
    */
@@ -107,6 +110,26 @@ export default class ActivityModel extends BaseModel {
    */
   get _list() {
     return this.__list;
+  }
+
+  /**
+   * Block owner
+   */
+  async blockOwner() {
+    await super.blockOwner();
+    if (this._list) {
+      this._list.refresh();
+    }
+  }
+
+  /**
+   * Unblock owner
+   */
+  async unblockOwner() {
+    await super.unblockOwner();
+    if (this._list) {
+      this._list.refresh();
+    }
   }
 
   /**
@@ -161,7 +184,7 @@ export default class ActivityModel extends BaseModel {
   /**
    * Child models
    */
-  childModels() {
+  childModels(): any {
     return {
       ownerObj: UserModel,
       remind_object: ActivityModel,
@@ -174,9 +197,9 @@ export default class ActivityModel extends BaseModel {
    * @param {string} size
    */
   getThumbSource(size: ThumbSize = 'medium') {
-    // for gif use always the same size to take adventage of the cache (they are not resized)
+    // for gif use always the same size to take advantage of the cache (they are not resized)
     if (this.isGif()) {
-      size = 'medium';
+      size = 'xlarge';
     }
 
     if (this.thumbnails && this.thumbnails[size]) {
@@ -254,12 +277,12 @@ export default class ActivityModel extends BaseModel {
    * Get activity text
    */
   get text() {
-    return this.message || '';
+    return this.message || this.description || '';
   }
 
   @action
   toggleMatureVisibility() {
-    if (GOOGLE_PLAY_STORE) {
+    if (GOOGLE_PLAY_STORE || Platform.OS === 'ios') {
       return;
     }
     this.mature_visibility = !this.mature_visibility;
@@ -310,6 +333,18 @@ export default class ActivityModel extends BaseModel {
           this.__list = list;
         });
       }
+
+      if (
+        this.entity_guid &&
+        this.perma_url &&
+        this.perma_url?.startsWith(MINDS_URI)
+      ) {
+        NavigationService.push('BlogView', {
+          guid: this.entity_guid,
+          unlock: true,
+        });
+      }
+
       return result;
     } catch (err) {
       if (!ignoreError) {
@@ -416,7 +451,7 @@ export default class ActivityModel extends BaseModel {
     try {
       await deleteItem(this.guid);
       this.removeFromList();
-      entitiesService.deleteFromCache(this.urn);
+      ActivityModel.events.emit('deleteEntity', this);
     } catch (err) {
       logService.exception('[ActivityModel]', err);
       throw err;

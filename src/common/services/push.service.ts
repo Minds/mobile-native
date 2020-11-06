@@ -1,7 +1,6 @@
-//@ts-nocheck
 import { Platform } from 'react-native';
 
-import Router from './push/router';
+import Router from './push/v2/router';
 import logService from './log.service';
 
 /**
@@ -37,7 +36,7 @@ export class PushService {
       // delay navigation on app start
       setTimeout(() => {
         this.router.navigate(data);
-      }, 100);
+      }, 500);
     });
   }
 

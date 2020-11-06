@@ -37,8 +37,11 @@ const ModalTransition = {
       inverted,
     );
 
+    const opacity = multiply(current.progress, inverted);
+
     return {
       cardStyle: {
+        opacity,
         transform: [
           // Translation for the animation of the current card
           { translateY },

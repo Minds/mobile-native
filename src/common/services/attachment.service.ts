@@ -3,6 +3,8 @@ import api from './api.service';
 import imagePicker from './image-picker.service';
 import Cancelable from 'promise-cancelable';
 import logService from './log.service';
+import { showNotification } from '../../../AppMessages';
+import { Platform } from 'react-native';
 
 /**
  * Attacment service
@@ -48,9 +50,6 @@ class AttachmentService {
    * @param {function} progress
    */
   uploadToS3(file, progress) {
-    // Prepare media and wait for lease => {media_type, guid}
-    let lease;
-
     return new Cancelable(async (resolve, reject, onCancel) => {
       const response = await api.put(`api/v2/media/upload/prepare/video`);
       // upload file to s3
@@ -145,7 +144,7 @@ class AttachmentService {
     if (response.didCancel) {
       return null;
     } else if (response.error) {
-      alert(response.error);
+      showNotification(response.error);
       return null;
     } else {
       if (!response.type) {

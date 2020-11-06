@@ -20,6 +20,16 @@ import Topbar from '../topbar/Topbar.tsx';
 import colors from '../styles/Colors';
 import { InternalStack } from '../navigation/NavigationStack';
 
+const isIOS = Platform.OS === 'ios';
+
+export const TAB_BAR_HEIGHT = isIOS
+  ? Platform.isPad
+    ? 100
+    : isIphoneX
+    ? 75
+    : 70
+  : 65;
+
 export type TabParamList = {
   Newsfeed: {};
   Discovery: {};
@@ -35,7 +45,6 @@ const Tab = createBottomTabNavigator<TabParamList>();
  * @param {Object} props
  */
 const Tabs = observer(function ({ navigation }) {
-  const isIOS = Platform.OS === 'ios';
   const theme = ThemedStyles.style;
 
   const navToCapture = useCallback(() => navigation.push('Capture'), [
@@ -43,15 +52,13 @@ const Tabs = observer(function ({ navigation }) {
   ]);
 
   const navToVideoCapture = useCallback(
-    () => navigation.jumpTo('Capture', { mode: 'video', start: true }),
+    () => navigation.push('Capture', { mode: 'video', start: true }),
     [navigation],
   );
 
   if (gatheringService.inGatheringScreen) {
     return null;
   }
-
-  const height = isIOS ? (Platform.isPad ? 100 : isIphoneX ? 75 : 70) : 65;
 
   return (
     <View style={theme.flexContainer}>
@@ -67,13 +74,13 @@ const Tabs = observer(function ({ navigation }) {
             borderTopWidth: 1,
             borderTopColor: ThemedStyles.getColor('primary_border'),
             backgroundColor: ThemedStyles.getColor('secondary_background'),
-            height,
+            height: TAB_BAR_HEIGHT,
             paddingTop: isIOS && isIphoneX ? 30 : 2,
             paddingLeft: isIphoneX ? 20 : 15,
             paddingRight: isIphoneX ? 20 : 15,
           },
           tabStyle: {
-            height,
+            height: TAB_BAR_HEIGHT,
             ...ThemedStyles.style.centered,
           },
         }}

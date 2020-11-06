@@ -25,7 +25,7 @@ import { RootStackParamList } from '../../navigation/NavigationTypes';
 import Button from './Button';
 import mindsService from '../services/minds.service';
 import UserModel from '../../channel/UserModel';
-import WireService from '../../wire/WireService';
+import entitiesService from '../services/entities.service';
 
 const isIos = Platform.OS === 'ios';
 
@@ -42,6 +42,9 @@ const createPlusStore = () => {
     selectedOption: false as boolean | any,
     monthly: false,
     owner: {} as UserModel,
+    get canHaveTrial(): boolean {
+      return this.method === 'usd' && this.settings.yearly.can_have_trial;
+    },
     init(pro: boolean = false) {
       this.getSettings(pro);
     },
@@ -52,23 +55,32 @@ const createPlusStore = () => {
       this.loading = loading;
     },
     async getSettings(pro: boolean) {
+      // update the settings
+      await MindsService.update();
       // used to get costs for plus
       this.settings = pro
         ? (await MindsService.getSettings()).upgrades.pro
         : (await MindsService.getSettings()).upgrades.plus;
 
       // used to pay plus by wire
-      this.owner = pro
-        ? await WireService.getEntityByHandler(
-            mindsService.settings.handlers.pro,
-          )
-        : await WireService.getEntityByHandler(
-            mindsService.settings.handlers.plus,
-          );
+      const handler = pro
+        ? mindsService.settings.handlers.pro
+        : mindsService.settings.handlers.plus;
+
+      this.owner = (await entitiesService.single(
+        `urn:entity:${handler}`,
+      )) as UserModel;
+
+      this.method = 'tokens';
+      this.selectedOption = this.settings.yearly.tokens;
 
       this.loaded = true;
     },
     setMethod() {
+      this.selectedOption =
+        this.method === 'usd'
+          ? this.settings.yearly.tokens
+          : this.settings.yearly.usd;
       this.method = this.method === 'usd' ? 'tokens' : 'usd';
     },
     setCard(card: any) {
@@ -121,20 +133,6 @@ const Options = observer(({ options, localStore }: PropsOptionType) => {
           icon:
             localStore.selectedOption === options[0] ? checkIcon : undefined,
           noIcon: localStore.selectedOption !== options[0],
-        }}
-      />
-      <MenuItem
-        item={{
-          onPress: () => {
-            localStore.setSelectedOption(options[1]);
-            localStore.setMonthly(true);
-          },
-          title: `Monthly   ${localStore.method === 'usd' ? '$' : ''}${
-            options[1]
-          } ${localStore.method === 'tokens' ? 'Tokens' : ''} / month`,
-          icon:
-            localStore.selectedOption === options[1] ? checkIcon : undefined,
-          noIcon: localStore.selectedOption !== options[1],
         }}
       />
     </View>
@@ -228,7 +226,6 @@ const PlusScreen = observer(({ navigation, route }: PropsType) => {
             theme.padding4x,
             theme.borderPrimary,
             theme.borderTopHair,
-            theme.borderBottomHair,
           ]}>
           <Text style={switchTextStyle}>{i18n.t('usd')}</Text>
           <Switch
@@ -243,22 +240,28 @@ const PlusScreen = observer(({ navigation, route }: PropsType) => {
           <Text style={switchTextStyle}>{i18n.t('tokens')}</Text>
         </View>
       )}
+      {localStore.canHaveTrial && (
+        <Text
+          style={[
+            theme.fontXL,
+            theme.textLeft,
+            theme.colorSecondaryText,
+            theme.marginVertical2x,
+            theme.paddingHorizontal4x,
+          ]}>
+          {i18n.t('plus.freeTrialDesciption')}
+        </Text>
+      )}
       {localStore.method === 'usd' && (
         <Options
           localStore={localStore}
-          options={[
-            localStore.settings.yearly.usd,
-            localStore.settings.monthly.usd,
-          ]}
+          options={[localStore.settings.yearly.usd]}
         />
       )}
       {localStore.method === 'tokens' && (
         <Options
           localStore={localStore}
-          options={[
-            localStore.settings.yearly.tokens,
-            localStore.settings.monthly.tokens,
-          ]}
+          options={[localStore.settings.yearly.tokens]}
         />
       )}
       {localStore.method === 'usd' && (
@@ -270,7 +273,11 @@ const PlusScreen = observer(({ navigation, route }: PropsType) => {
         <View style={[theme.padding2x, theme.borderTop, theme.borderPrimary]}>
           <Button
             onPress={confirmSend}
-            text={i18n.t(`monetize.${texts}Join`)}
+            text={
+              localStore.canHaveTrial
+                ? i18n.t('startFreeTrial')
+                : i18n.t(`monetize.${texts}Join`)
+            }
             containerStyle={[theme.paddingVertical2x, styles.buttonRight]}
             loading={localStore.loading}
             textStyle={[theme.fontMedium, theme.fontL]}

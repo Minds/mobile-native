@@ -1,22 +1,12 @@
 //@ts-nocheck
 import React, { PureComponent } from 'react';
 
-import PropTypes from 'prop-types';
-
-import {
-  Text,
-  ActivityIndicator,
-  TouchableOpacity,
-  ScrollView,
-  View,
-  Image,
-} from 'react-native';
+import { TouchableOpacity, View, Image } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { CommonStyle as CS } from '../../styles/Common';
 import colors from '../../styles/Colors';
-import Rectangle from './shapes/Rectangle';
-import featuresService from '../services/features.service';
+import ActivityIndicator from './ActivityIndicator';
 
 // types
 type Props = {

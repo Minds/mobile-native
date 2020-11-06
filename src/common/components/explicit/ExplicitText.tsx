@@ -1,4 +1,3 @@
-//@ts-nocheck
 import React, { Component } from 'react';
 
 import { observer } from 'mobx-react';
@@ -16,8 +15,8 @@ import Tags from '../../../common/components/Tags';
 import colors from '../../../styles/Colors';
 import i18n from '../../services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
-import type ActivityModel from 'src/newsfeed/ActivityModel';
-import LinearGradient from 'react-native-linear-gradient';
+import type ActivityModel from '../../../newsfeed/ActivityModel';
+import { LinearGradient } from 'expo-linear-gradient';
 
 type PropsType = {
   entity: ActivityModel;
@@ -53,9 +52,10 @@ export default class ExplicitText extends Component<PropsType, StateType> {
   };
 
   /**
-   * On component will mount
+   * constructor
    */
-  componentWillMount() {
+  constructor(props) {
+    super(props);
     Dimensions.addEventListener('change', this.dimensionChange);
   }
 
@@ -78,16 +78,14 @@ export default class ExplicitText extends Component<PropsType, StateType> {
       entity.title && !entity.perma_url
         ? entities.decodeHTML(entity.title).trim()
         : '';
-    let message = entity.message
-      ? entities.decodeHTML(entity.message).trim()
-      : '';
+    let message = entity.text ? entities.decodeHTML(entity.text).trim() : '';
 
     if (title === message) {
       message = '';
     }
 
-    let body = null;
-    let moreLess = null;
+    let body: Element | null = null;
+    let moreLess: JSX.Element | null = null;
     let explicitToggle = null;
 
     if (message !== '') {
