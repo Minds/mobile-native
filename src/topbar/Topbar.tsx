@@ -59,7 +59,7 @@ export const Topbar = observer((props: PropsType) => {
           paddingTop: insets && insets.top ? insets.top - 5 : 0,
         };
         return (
-          <View style={[theme.backgroundSecondary, styles.shadow]}>
+          <View style={[theme.backgroundPrimary, styles.shadow]}>
             <View
               style={[
                 styles.container,

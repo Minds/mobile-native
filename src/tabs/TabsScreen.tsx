@@ -1,8 +1,14 @@
-//@ts-nocheck
 import React, { useCallback } from 'react';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { View, Platform, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Platform,
+  TouchableOpacity,
+  StyleSheet,
+  Dimensions,
+  PlatformIOSStatic,
+} from 'react-native';
 
 import NewsfeedScreen from '../newsfeed/NewsfeedScreen';
 import NotificationsScreen from '../notifications/NotificationsScreen';
@@ -11,34 +17,105 @@ import TabIcon from './TabIcon';
 import NotificationIcon from '../notifications/NotificationsTabIcon';
 import gatheringService from '../common/services/gathering.service';
 import { observer } from 'mobx-react';
-import isIphoneX from '../common/helpers/isIphoneX';
 import { DiscoveryV2Screen } from '../discovery/v2/DiscoveryV2Screen';
 import ComposeIcon from '../compose/ComposeIcon';
 import MessengerTabIcon from '../messenger/MessengerTabIcon';
 import MessengerScreen from '../messenger/MessengerScreen';
-import Topbar from '../topbar/Topbar.tsx';
-import colors from '../styles/Colors';
+import Topbar from '../topbar/Topbar';
 import { InternalStack } from '../navigation/NavigationStack';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import TopShadow from '../common/components/TopShadow';
 
 const isIOS = Platform.OS === 'ios';
-
-export const TAB_BAR_HEIGHT = isIOS
-  ? Platform.isPad
-    ? 100
-    : isIphoneX
-    ? 75
-    : 70
-  : 65;
 
 export type TabParamList = {
   Newsfeed: {};
   Discovery: {};
+  Messenger: {};
   Notifications: {};
-  Capture: {};
-  Menu: {};
+  CaptureTab: {};
 };
 
+const { width } = Dimensions.get('screen');
+
+const shadowOpt = {
+  width,
+  color: '#000000',
+  border: 3.5,
+  opacity: 0.08,
+  x: 0,
+  y: 0,
+};
+
+const isPad = (Platform as PlatformIOSStatic).isPad;
+
 const Tab = createBottomTabNavigator<TabParamList>();
+
+const TabBar = ({ state, descriptors, navigation }) => {
+  const focusedOptions = descriptors[state.routes[state.index].key].options;
+  const insets = useSafeAreaInsets();
+
+  if (focusedOptions.tabBarVisible === false) {
+    return null;
+  }
+
+  const bottomInset = {
+    paddingBottom: insets.bottom
+      ? isPad
+        ? insets.bottom
+        : insets.bottom - 10
+      : 10,
+  };
+  const theme = ThemedStyles.style;
+  return (
+    <View
+      style={[
+        theme.rowJustifySpaceEvenly,
+        theme.backgroundSecondary,
+        styles.tabBar,
+        bottomInset,
+      ]}>
+      {!isIOS && <TopShadow setting={shadowOpt} />}
+      {state.routes.map((route, index) => {
+        const { options } = descriptors[route.key];
+        const focused = state.index === index;
+        const icon = options.tabBarIcon({ focused, route });
+
+        const onPress = () => {
+          const event = navigation.emit({
+            type: 'tabPress',
+            target: route.key,
+            canPreventDefault: true,
+          });
+
+          if (!focused && !event.defaultPrevented) {
+            navigation.navigate(route.name);
+          }
+        };
+
+        const onLongPress = () => {
+          navigation.emit({
+            type: 'tabLongPress',
+            target: route.key,
+          });
+        };
+
+        return (
+          <TouchableOpacity
+            accessibilityRole="button"
+            accessibilityState={focused ? { selected: true } : {}}
+            accessibilityLabel={options.tabBarAccessibilityLabel}
+            testID={options.tabBarTestID}
+            onPress={onPress}
+            onLongPress={onLongPress}
+            style={[theme.flexContainer, theme.centered]}>
+            {icon}
+          </TouchableOpacity>
+        );
+      })}
+    </View>
+  );
+};
 
 /**
  * Main tabs
@@ -65,33 +142,18 @@ const Tabs = observer(function ({ navigation }) {
       <Topbar navigation={navigation} />
       <Tab.Navigator
         initialRouteName="Newsfeed"
-        tabBarOptions={{
-          showLabel: false,
-          showIcon: true,
-          activeTintColor: ThemedStyles.getColor('link'),
-          inactiveTintColor: ThemedStyles.getColor('text_secondary'),
-          style: {
-            borderTopWidth: 1,
-            borderTopColor: ThemedStyles.getColor('primary_border'),
-            backgroundColor: ThemedStyles.getColor('secondary_background'),
-            height: TAB_BAR_HEIGHT,
-            paddingTop: isIOS && isIphoneX ? 30 : 2,
-            paddingLeft: isIphoneX ? 20 : 15,
-            paddingRight: isIphoneX ? 20 : 15,
-          },
-          tabStyle: {
-            height: TAB_BAR_HEIGHT,
-            ...ThemedStyles.style.centered,
-          },
-        }}
+        tabBar={(props) => <TabBar {...props} />}
         screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color }) => {
+          tabBarIcon: ({ focused }) => {
+            const color = focused
+              ? ThemedStyles.getColor('link')
+              : ThemedStyles.getColor('secondary_text');
             let iconName,
               iconsize = 28;
 
             switch (route.name) {
               case 'Messenger':
-                return <MessengerTabIcon tintColor={color} />;
+                return <MessengerTabIcon color={color} />;
               case 'Newsfeed':
                 iconName = 'home';
                 iconsize = 28;
@@ -101,12 +163,12 @@ const Tabs = observer(function ({ navigation }) {
                 iconsize = 24;
                 break;
               case 'Notifications':
-                return <NotificationIcon tintColor={color} size={iconsize} />;
+                return <NotificationIcon color={color} size={iconsize} />;
               case 'CaptureTab':
                 return <ComposeIcon style={styles.compose} />;
             }
 
-            if (Platform.isPad) {
+            if (isPad) {
               iconsize = Math.round(iconsize * 1.2);
             }
 
@@ -117,7 +179,7 @@ const Tabs = observer(function ({ navigation }) {
         <Tab.Screen
           name="Newsfeed"
           component={NewsfeedScreen}
-          options={{ tabBarTestID: 'Menu tab button', headerShown: false }}
+          options={{ tabBarTestID: 'Menu tab button' }}
         />
         <Tab.Screen
           name="Discovery"
@@ -153,22 +215,18 @@ const Tabs = observer(function ({ navigation }) {
   );
 });
 
-const styles = {
+const styles = StyleSheet.create({
   compose: {
     width: 48,
     height: 46,
   },
-  activity: {
-    zIndex: 9990,
-    top: -5,
-    left: -5,
-    right: -5,
-    bottom: -5,
-    borderWidth: 2.5,
-    borderRadius: 35,
-    position: 'absolute',
-    borderColor: colors.primary,
+  tabBar: {
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: -1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    paddingTop: 10,
   },
-};
+});
 
 export default Tabs;

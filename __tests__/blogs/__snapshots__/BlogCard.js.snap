@@ -77,7 +77,7 @@ exports[`blog card component should renders correctly 1`] = `
             style={
               Object {
                 "alignSelf": "flex-end",
-                "backgroundColor": "#252E31",
+                "backgroundColor": "#242A30",
                 "flex": 1,
                 "height": 45.5,
                 "transform": Array [
@@ -99,7 +99,7 @@ exports[`blog card component should renders correctly 1`] = `
                   },
                   Object {
                     "alignItems": "center",
-                    "backgroundColor": "#252E31",
+                    "backgroundColor": "#242A30",
                     "height": 40,
                     "justifyContent": "center",
                   },
@@ -138,7 +138,7 @@ exports[`blog card component should renders correctly 1`] = `
                   },
                   Object {
                     "alignItems": "center",
-                    "backgroundColor": "#202527",
+                    "backgroundColor": "#1A2025",
                     "height": 50,
                     "justifyContent": "center",
                     "marginTop": 6,

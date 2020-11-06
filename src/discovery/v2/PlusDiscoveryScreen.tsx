@@ -34,7 +34,7 @@ const PlusDiscoveryScreen = observer(() => {
 
   return (
     <View style={ThemedStyles.style.flexContainer}>
-      <View style={ThemedStyles.style.backgroundSecondary}>
+      <View style={ThemedStyles.style.backgroundPrimary}>
         <Text
           style={[
             theme.titleText,
