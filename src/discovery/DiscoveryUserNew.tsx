@@ -18,7 +18,7 @@ type PropsType = {
     index: number;
     item: UserModel;
   };
-  navigation: any;
+  navigation?: any;
   onUserTap?: Function;
 };
 

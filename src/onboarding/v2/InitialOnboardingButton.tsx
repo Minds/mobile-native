@@ -36,14 +36,17 @@ export default observer(function InitialOnboardingButton() {
     };
   }, [progressStore.result]);
 
-  const { current: item } = useRef({
-    title: i18n.t('onboarding.startEarning'),
+  const item = {
+    title:
+      progressStore.result?.id === 'OngoingOnboardingGroup'
+        ? i18n.t('onboarding.improveExperience')
+        : i18n.t('onboarding.startEarning'),
     onPress: () =>
       navigation.navigate('Tabs', {
         screen: 'CaptureTab',
         params: { screen: 'Onboarding' },
       }),
-  });
+  };
 
   if (!progressStore.result || progressStore.result.is_completed) {
     return null;

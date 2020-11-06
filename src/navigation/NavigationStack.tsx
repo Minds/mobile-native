@@ -108,6 +108,8 @@ import SetupChannelScreen from '../onboarding/v2/steps/SetupChannelScreen';
 import VerifyUniquenessScreen from '../onboarding/v2/steps/VerifyUniquenessScreen';
 import PhoneValidationScreen from '../onboarding/v2/steps/PhoneValidationScreen';
 import AutoplaySettingsScreen from '../settings/screens/AutoplaySettingsScreen';
+import SuggestedChannelsScreen from '../onboarding/v2/steps/SuggestedChannelsScreen';
+import SuggestedGroupsScreen from '../onboarding/v2/steps/SuggestedGroupsScreen';
 
 const isIos = Platform.OS === 'ios';
 
@@ -679,6 +681,16 @@ const RootStack = function (props) {
           <RootStackNav.Screen
             name="VerifyUniqueness"
             component={VerifyUniquenessScreen}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen
+            name="SuggestedChannel"
+            component={SuggestedChannelsScreen}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen
+            name="SuggestedGroups"
+            component={SuggestedGroupsScreen}
             options={modalOptions}
           />
           <RootStackNav.Screen

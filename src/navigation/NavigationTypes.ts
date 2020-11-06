@@ -43,6 +43,8 @@ export type RootStackParamList = {
   SelectHashtags: {};
   SetupChannel: {};
   VerifyUniqueness: {};
+  SuggestedChannel: {};
+  SuggestedGroups: {};
   PhoneValidation: {};
 };
 

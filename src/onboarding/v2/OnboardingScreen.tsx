@@ -52,6 +52,14 @@ export default observer(function OnboardingScreen() {
       title: i18n.t('onboarding.verifyUniqueness'),
       screen: 'VerifyUniqueness',
     },
+    SuggestedChannelsStep: {
+      title: i18n.t('onboarding.subscribeToChannel'),
+      screen: 'SuggestedChannel',
+    },
+    SuggestedGroupsStep: {
+      title: i18n.t('onboarding.joinGroup'),
+      screen: 'SuggestedGroups',
+    },
     CreatePostStep: {
       title: i18n.t('createAPost'),
       screen: '',
@@ -109,7 +117,9 @@ export default observer(function OnboardingScreen() {
               theme.bold,
               theme.marginBottom3x,
             ]}>
-            {i18n.t('onboarding.completeToEarn')}
+            {progressStore.result?.id === 'OngoingOnboardingGroup'
+              ? i18n.t('onboarding.improveExperience')
+              : i18n.t('onboarding.completeToEarn')}
           </Text>
           <Progress.Bar
             color={ThemedStyles.getColor('link')}

@@ -6,11 +6,12 @@ import MetadataService from '../services/metadata.service';
 import FeedsService from '../services/feeds.service';
 import channelService from '../../channel/ChannelService';
 import type ActivityModel from '../../newsfeed/ActivityModel';
+import BaseModel from '../BaseModel';
 
 /**
  * Feed store
  */
-export default class FeedStore {
+export default class FeedStore<T extends BaseModel = ActivityModel> {
   /**
    * Scheduled count
    */
@@ -44,7 +45,7 @@ export default class FeedStore {
   /**
    * feed observable
    */
-  @observable.shallow entities: Array<ActivityModel> = [];
+  @observable.shallow entities: Array<T> = [];
 
   /**
    * Viewed store
@@ -136,7 +137,7 @@ export default class FeedStore {
    * @param {boolean} value
    */
   @action
-  setIsTiled(value): FeedStore {
+  setIsTiled(value): FeedStore<T> {
     this.isTiled = value;
     return this;
   }
@@ -146,7 +147,7 @@ export default class FeedStore {
    * @param {boolean} value
    */
   @action
-  setErrorLoading(value): FeedStore {
+  setErrorLoading(value): FeedStore<T> {
     this.errorLoading = value;
     return this;
   }
@@ -217,7 +218,7 @@ export default class FeedStore {
    * Set endpoint for the feeds service
    * @param {string} endpoint
    */
-  setEndpoint(endpoint: string): FeedStore {
+  setEndpoint(endpoint: string): FeedStore<T> {
     this.feedsService.setEndpoint(endpoint);
     return this;
   }
@@ -227,7 +228,7 @@ export default class FeedStore {
    * @param {boolean} injectBoost
    * @returns {FeedStore}
    */
-  setInjectBoost(injectBoost: boolean): FeedStore {
+  setInjectBoost(injectBoost: boolean): FeedStore<T> {
     this.feedsService.setInjectBoost(injectBoost);
     return this;
   }
@@ -237,7 +238,7 @@ export default class FeedStore {
    * @param {boolean} paginated
    * @returns {FeedStore}
    */
-  setPaginated(paginated: boolean): FeedStore {
+  setPaginated(paginated: boolean): FeedStore<T> {
     this.feedsService.setPaginated(paginated);
     return this;
   }
@@ -246,7 +247,7 @@ export default class FeedStore {
    * Set the params for the feeds service
    * @param {Object} params
    */
-  setParams(params: Object): FeedStore {
+  setParams(params: Object): FeedStore<T> {
     this.feedsService.setParams(params);
     return this;
   }
@@ -255,7 +256,7 @@ export default class FeedStore {
    * Set limit for the feeds service
    * @param {integer} limit
    */
-  setLimit(limit): FeedStore {
+  setLimit(limit): FeedStore<T> {
     this.feedsService.setLimit(limit);
     return this;
   }
@@ -264,7 +265,7 @@ export default class FeedStore {
    * Set offset for the feeds service
    * @param {integer} offset
    */
-  setOffset(offset): FeedStore {
+  setOffset(offset): FeedStore<T> {
     this.feedsService.setOffset(offset);
     return this;
   }
@@ -273,7 +274,7 @@ export default class FeedStore {
    * Set feed for the feeds service
    * @param {Array} feed
    */
-  setFeed(feed): FeedStore {
+  setFeed(feed): FeedStore<T> {
     this.feedsService.setFeed(feed);
     return this;
   }
@@ -282,7 +283,7 @@ export default class FeedStore {
    * Set feed for the feeds service
    * @param {boolean} asActivities
    */
-  setAsActivities(asActivities): FeedStore {
+  setAsActivities(asActivities): FeedStore<T> {
     this.feedsService.setAsActivities(asActivities);
     return this;
   }
@@ -291,7 +292,7 @@ export default class FeedStore {
    * Set fallback index
    * @param {number} value
    */
-  setFallbackIndex(value: number): FeedStore {
+  setFallbackIndex(value: number): FeedStore<T> {
     this.feedsService.setFallbackIndex(value);
     return this;
   }
@@ -468,7 +469,7 @@ export default class FeedStore {
    * Clear store
    */
   @action
-  clear(): FeedStore {
+  clear(): FeedStore<T> {
     this.refreshing = false;
     this.errorLoading = false;
     this.loaded = false;
