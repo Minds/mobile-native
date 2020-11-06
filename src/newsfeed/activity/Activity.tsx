@@ -20,7 +20,7 @@ import formatDate from '../../common/helpers/date';
 import ActivityActionSheet from './ActivityActionSheet';
 import ActivityMetrics from './metrics/ActivityMetrics';
 import MediaView from '../../common/components/MediaView';
-import Translate from '../../common/components/Translate';
+import Translate from '../../common/components/translate/Translate';
 import ExplicitOverlay from '../../common/components/explicit/ExplicitOverlay';
 import Lock from '../../wire/v2/lock/Lock';
 import { CommonStyle } from '../../styles/Common';
@@ -63,7 +63,7 @@ export default class Activity extends Component<PropsType> {
   /**
    * Translate reference
    */
-  translate: Translate | null = null;
+  translate = React.createRef<typeof Translate>();
 
   /**
    * Remind reference
@@ -220,7 +220,7 @@ export default class Activity extends Component<PropsType> {
               style={[styles.message, fontStyle]}
             />
             <Translate
-              ref={(r) => (this.translate = r)}
+              ref={this.translate}
               entity={entity}
               style={styles.message}
             />
@@ -357,8 +357,9 @@ export default class Activity extends Component<PropsType> {
    * Show translation
    */
   showTranslate = async () => {
-    if (this.translate) {
-      const lang = await this.translate.show();
+    if (this.translate.current) {
+      //@ts-ignore
+      const lang = await this.translate.current?.show();
       if (this.remind && lang) this.remind.showTranslate();
     } else {
       if (this.remind) this.remind.showTranslate();

@@ -584,7 +584,7 @@ exports[`Activity component renders correctly 1`] = `
           ]
         }
       />
-      <Translate
+      <ForwardRef(ObserverForwardRef)
         entity={
           Object {
             "allow_comments": true,
