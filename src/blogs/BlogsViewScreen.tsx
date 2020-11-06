@@ -83,7 +83,7 @@ export default class BlogsViewScreen extends Component {
         if (params.blog._list && params.blog._list.metadataService) {
           params.blog._list.metadataService.pushSource('single');
         }
-        this.props.blogsView.setBlog(params.blog);
+        await this.props.blogsView.setBlog(params.blog);
 
         if (!params.blog.description) {
           await this.props.blogsView.loadBlog(params.blog.guid);
