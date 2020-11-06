@@ -54,6 +54,15 @@ const createChannelStore = () => {
     uploading: false,
     bannerProgress: 0,
     avatarProgress: 0,
+    channelSearch: '',
+    setChannelSearch(channelSearch: string) {
+      this.channelSearch = channelSearch;
+    },
+    clearSearch() {
+      this.channelSearch = '';
+      this.feedStore.setParams({});
+      this.loadFeed(true);
+    },
     get esFeedfilter() {
       switch (this.filter) {
         case 'all':
@@ -135,6 +144,32 @@ const createChannelStore = () => {
         .setAsActivities(this.esFeedfilter !== 'blogs')
         .clear()
         .fetchRemoteOrLocal();
+    },
+    async searchInChannel() {
+      this.feedStore.clear();
+
+      if (!this.channel) {
+        return;
+      }
+
+      const params: any = {
+        period: '1y',
+        all: 1,
+        query: this.channelSearch,
+        sync: 1,
+        force_public: 1,
+      };
+
+      this.feedStore
+        .setEndpoint(
+          `api/v2/${this.endpoint}/${this.channel.guid}/${this.esFeedfilter}`,
+        )
+        .setAsActivities(this.esFeedfilter !== 'blogs')
+        .setLimit(12)
+        .setParams(params)
+        .fetchRemoteOrLocal();
+
+      return;
     },
     /**
      * Set channel
