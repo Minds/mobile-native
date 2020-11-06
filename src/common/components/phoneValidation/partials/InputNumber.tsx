@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 import i18n from '../../../services/i18n.service';
 import { PhoneValidationPropsType } from '../PhoneValidationComponent';
-import stylesheet from '../../../../onboarding/stylesheet';
+import { style } from './styles';
 import { ComponentsStyle } from '../../../../styles/Components';
 import ListItemButton from '../../ListItemButton';
 import { observer } from 'mobx-react';
@@ -64,9 +64,9 @@ const InputNumber = observer(({ localStore, ...props }: PropsType) => {
   );
 
   const defaultStyles = [
-    stylesheet.col,
-    stylesheet.colFirst,
-    stylesheet.phoneInput,
+    style.col,
+    style.colFirst,
+    style.phoneInput,
     ComponentsStyle.loginInputNew,
     theme.marginRight2x,
     theme.borderPrimary,

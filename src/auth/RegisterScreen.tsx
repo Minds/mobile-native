@@ -78,7 +78,6 @@ export default observer(function RegisterScreen(props: PropsType) {
           captcha,
         } as registerParams;
         await authService.register(params);
-        sessionService.setInitialScreen('OnboardingScreen');
         await apiService.clearCookies();
         await delay(100);
         try {

@@ -34,7 +34,7 @@ import BlockchainWalletDetailsScreen from '../blockchain/wallet/details/Blockcha
 import ReportScreen from '../report/ReportScreen';
 import MoreScreen from '../tabs/MoreScreen';
 import NotSupportedScreen from '../static-views/NotSupportedScreen';
-import OnboardingScreen from '../onboarding/OnboardingScreen';
+// import OnboardingScreen from '../onboarding/OnboardingScreen';
 import UpdatingScreen from '../update/UpdateScreen';
 import { DiscoverySearchScreen } from '../discovery/v2/search/DiscoverySearchScreen';
 // import Gathering from '../gathering/Gathering';
@@ -101,7 +101,15 @@ import VideoBackground from '../common/components/VideoBackground';
 import TransparentLayer from '../common/components/TransparentLayer';
 import PortraitViewerScreen from '../portrait/PortraitViewerScreen';
 import { portraitBarRef } from '../portrait/PortraitContentBar';
+import OnboardingScreen from '../onboarding/v2/OnboardingScreen';
+import VerifyEmailScreen from '../onboarding/v2/steps/VerifyEmailScreen';
+import SelectHashtagsScreen from '../onboarding/v2/steps/SelectHashtagsScreen';
+import SetupChannelScreen from '../onboarding/v2/steps/SetupChannelScreen';
+import VerifyUniquenessScreen from '../onboarding/v2/steps/VerifyUniquenessScreen';
+import PhoneValidationScreen from '../onboarding/v2/steps/PhoneValidationScreen';
 import AutoplaySettingsScreen from '../settings/screens/AutoplaySettingsScreen';
+import SuggestedChannelsScreen from '../onboarding/v2/steps/SuggestedChannelsScreen';
+import SuggestedGroupsScreen from '../onboarding/v2/steps/SuggestedGroupsScreen';
 
 const isIos = Platform.OS === 'ios';
 
@@ -247,7 +255,8 @@ export const InternalStack = () => {
         component={GroupsListScreen}
         options={{ title: i18n.t('discovery.groups') }}
       />
-      <AppStackNav.Screen name="Analytics" component={AnalyticsScreen} />
+      <InternalStackNav.Screen name="Analytics" component={AnalyticsScreen} />
+      <InternalStackNav.Screen name="Onboarding" component={OnboardingScreen} />
 
       <InternalStackNav.Screen name="Settings" component={SettingsScreen} />
     </InternalStackNav.Navigator>
@@ -652,6 +661,41 @@ const RootStack = function (props) {
           <RootStackNav.Screen
             name="PlusScreen"
             component={PlusScreen}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen
+            name="VerifyEmail"
+            component={VerifyEmailScreen}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen
+            name="SelectHashtags"
+            component={SelectHashtagsScreen}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen
+            name="SetupChannel"
+            component={SetupChannelScreen}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen
+            name="VerifyUniqueness"
+            component={VerifyUniquenessScreen}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen
+            name="SuggestedChannel"
+            component={SuggestedChannelsScreen}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen
+            name="SuggestedGroups"
+            component={SuggestedGroupsScreen}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen
+            name="PhoneValidation"
+            component={PhoneValidationScreen}
             options={modalOptions}
           />
         </Fragment>

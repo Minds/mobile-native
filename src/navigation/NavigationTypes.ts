@@ -19,6 +19,9 @@ export type InternalStackParamList = {
   BoostConsole: {};
   GroupsList: {};
   Settings: {};
+  Analytics: {};
+  Onboarding: {};
+  InitialOnboarding: {};
 };
 
 export type RootStackParamList = {
@@ -36,6 +39,13 @@ export type RootStackParamList = {
     onComplete: Function;
     pro?: boolean;
   };
+  VerifyEmail: {};
+  SelectHashtags: {};
+  SetupChannel: {};
+  VerifyUniqueness: {};
+  SuggestedChannel: {};
+  SuggestedGroups: {};
+  PhoneValidation: {};
 };
 
 export type AuthStackParamList = {
