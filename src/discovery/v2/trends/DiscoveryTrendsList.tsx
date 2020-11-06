@@ -1,12 +1,11 @@
 import { observer } from 'mobx-react';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { View, Text } from 'react-native';
 import { DiscoveryTrendsListItem } from './DiscoveryTrendsListItem';
 import { ComponentsStyle } from '../../../styles/Components';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import i18n from '../../../common/services/i18n.service';
 import Button from '../../../common/components/Button';
-import DiscoveryTagsManager from '../tags/DiscoveryTagsManager';
 import FeedList from '../../../common/components/FeedList';
 import { useNavigation } from '@react-navigation/native';
 import type DiscoveryV2Store from '../DiscoveryV2Store';
@@ -26,12 +25,6 @@ const ItemPartial = (item, index) => {
 export const DiscoveryTrendsList = observer(({ plus, store }: PropsType) => {
   const theme = ThemedStyles.style;
   let listRef = useRef<FeedList<any>>(null);
-  const [showManageTags, setShowManageTags] = useState(false);
-
-  const closeManageTags = () => {
-    setShowManageTags(false);
-    store.refreshTrends();
-  };
 
   const navigation = useNavigation();
 
@@ -60,7 +53,7 @@ export const DiscoveryTrendsList = observer(({ plus, store }: PropsType) => {
         </Text>
         <Button
           text={i18n.t('discovery.selectTags')}
-          onPress={() => setShowManageTags(true)}
+          onPress={() => store.setShowManageTags(true)}
         />
       </View>
     );
@@ -81,20 +74,13 @@ export const DiscoveryTrendsList = observer(({ plus, store }: PropsType) => {
    * Render
    */
   return (
-    <View style={theme.flexContainer}>
-      <DiscoveryTagsManager
-        show={showManageTags}
-        onCancel={closeManageTags}
-        onDone={closeManageTags}
-      />
-      <FeedList
-        ref={listRef}
-        header={header}
-        feedStore={store.allFeed}
-        emptyMessage={EmptyPartial}
-        navigation={navigation}
-        onRefresh={onRefresh}
-      />
-    </View>
+    <FeedList
+      ref={listRef}
+      header={header}
+      feedStore={store.allFeed}
+      emptyMessage={EmptyPartial}
+      navigation={navigation}
+      onRefresh={onRefresh}
+    />
   );
 });
