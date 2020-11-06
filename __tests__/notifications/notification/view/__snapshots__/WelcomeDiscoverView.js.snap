@@ -24,9 +24,12 @@ exports[`renders correctly 1`] = `
   </View>
   <Text
     style={
-      Object {
-        "fontSize": 11,
-      }
+      Array [
+        Object {
+          "fontSize": 11,
+        },
+        undefined,
+      ]
     }
   >
     Invalid date
