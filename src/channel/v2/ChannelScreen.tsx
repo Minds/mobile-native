@@ -89,6 +89,7 @@ const ChannelScreen = observer((props: PropsType) => {
         <ChannelHeader
           store={store}
           navigation={props.navigation}
+          route={props.route}
           hideButtons
           hideDescription
           hideTabs
@@ -117,7 +118,13 @@ const ChannelScreen = observer((props: PropsType) => {
       <FeedList
         feedStore={store.feedStore}
         renderActivity={renderActivity}
-        header={<ChannelHeader store={store} navigation={props.navigation} />}
+        header={
+          <ChannelHeader
+            store={store}
+            navigation={props.navigation}
+            route={props.route}
+          />
+        }
         navigation={props.navigation}
         emptyMessage={emptyMessage}
         style={[theme.backgroundSecondary, theme.flexContainer]}

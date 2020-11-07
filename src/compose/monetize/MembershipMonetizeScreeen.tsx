@@ -5,7 +5,7 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
 import Wrapper from './common/Wrapper';
 import type { SupportTiersType } from '../../wire/WireTypes';
-import TierManagementScreen from '../../settings/screens/TierManagementScreen';
+import TierManagementScreen from '../../common/components/tier-management/TierManagementScreen';
 import { AppStackParamList } from '../../navigation/NavigationTypes';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
