@@ -6,16 +6,15 @@ import { ScrollView, View, Text, StyleSheet } from 'react-native';
 import Button from '../../common/components/Button';
 
 import blockListService from '../../common/services/block-list.service';
-import entitiesService from '../../common/services/entities.service';
 import api from '../../common/services/api.service';
 
 import { MINDS_CDN_URI } from '../../config/Config';
 import Image from 'react-native-image-progress';
 import { CommonStyle } from '../../styles/Common';
 import Touchable from '../../common/components/Touchable';
-import Colors from '../../styles/Colors';
 import CenteredLoading from '../../common/components/CenteredLoading';
 import ThemedStyles from '../../styles/ThemedStyles';
+import channelsService from '../../common/services/channels.service';
 
 export default class BlockedChannelsScreen extends Component {
   CS = ThemedStyles.style;
@@ -37,13 +36,18 @@ export default class BlockedChannelsScreen extends Component {
   }
 
   async load() {
-    const guids = await blockListService.getList();
-    const channels = await entitiesService.fetch(Array.from(guids.keys()));
-    //.filter(channel => Boolean(channel));
-    this.setState({
-      channels,
-      loading: false,
-    });
+    try {
+      const guids = blockListService.getList();
+      const channels = await Promise.all(
+        Array.from(guids.keys(), async (v) => await channelsService.fetch(v)),
+      );
+      this.setState({
+        channels,
+        loading: false,
+      });
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   getAvatarSource(channel, size = 'medium') {
