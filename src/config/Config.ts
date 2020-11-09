@@ -47,12 +47,31 @@ export const MINDS_FEATURES = {
   'mindsVideo-2020': true,
 };
 
+const redirectPages = [
+  'plus',
+  'token',
+  'help',
+  'canary',
+  'mobile',
+  'content-policy',
+  'jobs',
+  'upgrades',
+  'pro',
+  'pay',
+  'nodes',
+  'boost',
+  'rewards',
+  'youtube-migration',
+  'branding',
+  'localization',
+].map((p) => [p, 'Redirect']);
+
 /**
  * Deeplink to screen/params maping
  */
 export const MINDS_DEEPLINK = [
-  ['token', 'Redirect'],
-  ['help', 'Redirect'],
+  ...redirectPages,
+  ['settings/other/referrals', 'Referrals'],
   ['email-confirmation', 'EmailConfirmation'],
   ['groups/profile/:guid/feed', 'GroupView'],
   ['groups/profile/:guid', 'GroupView'],
