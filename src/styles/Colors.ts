@@ -22,7 +22,7 @@ export default colors;
 export const LIGHT_THEME = {
   name: 'LIGHT',
   primary_background: '#FFFFFF',
-  secondary_background: '#FBFCFD',
+  secondary_background: '#F6F7F7',
   tertiary_background: '#E3E4E9',
   primary_text: '#43434D',
   secondary_text: '#72727C',

@@ -52,7 +52,16 @@ function TopbarTabbar<T>(props: PropsType<T>) {
               ? theme.borderTab
               : theme.borderTransparent,
           ]}>
-          <Text style={[theme.fontL, props.titleStyle]}>{tab.title}</Text>
+          <Text
+            style={[
+              theme.fontL,
+              tab.id === props.current
+                ? theme.colorPrimaryText
+                : theme.colorSecondaryText,
+              props.titleStyle,
+            ]}>
+            {tab.title}
+          </Text>
           {!!tab.subtitle && (
             <Text
               style={[
