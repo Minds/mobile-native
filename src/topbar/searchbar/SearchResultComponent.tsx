@@ -20,11 +20,6 @@ type PropsType = {
 const SearchResultComponent = observer(
   ({ navigation, localStore }: PropsType) => {
     const theme = ThemedStyles.style;
-    const { user } = useLegacyStores();
-
-    useEffect(() => {
-      localStore.init(user);
-    }, [localStore, user]);
 
     const renderUser = useCallback(
       (user, index) => {
