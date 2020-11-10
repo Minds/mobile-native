@@ -12,6 +12,7 @@ import boostedContentService from './boosted-content.service';
 import BaseModel from '../BaseModel';
 import { Platform } from 'react-native';
 import { GOOGLE_PLAY_STORE } from '../../config/Config';
+import _ from 'lodash';
 
 export type FeedRecordType = {
   owner_guid: string;
@@ -87,12 +88,12 @@ export default class FeedsService {
   /**
    * Get entities from the current page
    */
-  async getEntities(): Promise<Array<any>> {
+  async getEntities(fromFeed: boolean = true): Promise<Array<any>> {
     const end = this.limit + this.offset;
 
     if (this.paginated && end >= this.feed.length && !this.endReached) {
       try {
-        await this.fetch(true);
+        await this.fetch(true, fromFeed);
       } catch (err) {
         if (!isNetworkFail(err)) {
           logService.exception('[FeedService] getEntities', err);
@@ -102,11 +103,9 @@ export default class FeedsService {
 
     const feedPage = this.feed.slice(this.offset, end);
 
-    const result: Array<any> = await entitiesService.getFromFeed(
-      feedPage,
-      this,
-      this.asActivities,
-    );
+    const result: Array<any> = fromFeed
+      ? await entitiesService.getFromFeed(feedPage, this, this.asActivities)
+      : feedPage;
 
     if (!this.injectBoost) {
       return result;
@@ -236,6 +235,11 @@ export default class FeedsService {
     return this;
   }
 
+  noSync(): FeedsService {
+    this.params.sync = 0;
+    return this;
+  }
+
   /**
    * Set as activities
    * @param {boolean} asActivities
@@ -289,7 +293,7 @@ export default class FeedsService {
    * Fetch
    * @param {boolean} more
    */
-  async fetch(more: boolean = false): Promise<void> {
+  async fetch(more: boolean = false, fromFeed: boolean = true): Promise<void> {
     abort(this);
 
     const params = {
@@ -309,7 +313,9 @@ export default class FeedsService {
 
     if (response.entities && response.entities.length) {
       if (more) {
-        this.feed = this.feed.concat(response.entities);
+        this.feed = fromFeed
+          ? this.feed.concat(response.entities)
+          : _.difference(response.entities, this.feed);
       } else {
         this.feed = response.entities;
       }

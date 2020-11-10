@@ -82,7 +82,7 @@ import Drawer from './Drawer';
 import OptionsDrawer from '../common/components/OptionsDrawer';
 import PasswordScreen from '../settings/screens/PasswordScreen';
 import NotificationsSettingsScreen from '../notifications/NotificationsSettingsScreen';
-import BlockedChannelsScreen from '../settings/screens/BlockedChannelsScreen';
+import BlockedChannelsScreen from '../settings/screens/blocked/BlockedChannelsScreen';
 import TierManagementScreen from '../settings/screens/TierManagementScreen';
 import DeleteChannelScreen from '../settings/screens/DeleteChannelScreen';
 import DeactivateChannelScreen from '../settings/screens/DeactivateChannelScreen';

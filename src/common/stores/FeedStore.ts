@@ -251,6 +251,11 @@ export default class FeedStore {
     return this;
   }
 
+  noSync(): FeedStore<T> {
+    this.feedsService.noSync();
+    return this;
+  }
+
   /**
    * Set limit for the feeds service
    * @param {integer} limit
@@ -384,7 +389,7 @@ export default class FeedStore {
    * Fetch from remote endpoint or from the local storage if it fails
    * @param {boolean} refresh
    */
-  async fetchRemoteOrLocal(refresh = false) {
+  async fetchRemoteOrLocal(refresh = false, fromFeed = true) {
     this.setLoading(true).setErrorLoading(false);
 
     const endpoint = this.feedsService.endpoint;
@@ -393,7 +398,7 @@ export default class FeedStore {
     try {
       await this.feedsService.fetchRemoteOrLocal();
       if (refresh) this.setOffset(0);
-      const entities = await this.feedsService.getEntities();
+      const entities = await this.feedsService.getEntities(fromFeed);
 
       // if the endpoint or the params are changed we ignore the result
       if (
