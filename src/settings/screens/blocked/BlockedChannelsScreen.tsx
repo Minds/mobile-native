@@ -17,7 +17,7 @@ const BlockedChannelsScreen = observer((props) => {
 
   const unblock = useCallback(
     async (guid: string) => {
-      await blockListService.add(guid);
+      await blockListService.remove(guid);
       await apiService.delete(`api/v1/block/${guid}`);
       localStore.loadList(true);
     },
