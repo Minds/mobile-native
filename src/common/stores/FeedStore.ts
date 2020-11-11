@@ -223,6 +223,15 @@ export default class FeedStore {
   }
 
   /**
+   * Set if should extract entities from feed
+   * @param {boolean} value
+   */
+  setFromFeed(value: boolean): FeedStore {
+    this.feedsService.setFromFeed(value);
+    return this;
+  }
+
+  /**
    * Set inject boost
    * @param {boolean} injectBoost
    * @returns {FeedStore}
@@ -389,7 +398,7 @@ export default class FeedStore {
    * Fetch from remote endpoint or from the local storage if it fails
    * @param {boolean} refresh
    */
-  async fetchRemoteOrLocal(refresh = false, fromFeed = true) {
+  async fetchRemoteOrLocal(refresh = false) {
     this.setLoading(true).setErrorLoading(false);
 
     const endpoint = this.feedsService.endpoint;
@@ -398,7 +407,7 @@ export default class FeedStore {
     try {
       await this.feedsService.fetchRemoteOrLocal();
       if (refresh) this.setOffset(0);
-      const entities = await this.feedsService.getEntities(fromFeed);
+      const entities = await this.feedsService.getEntities();
 
       // if the endpoint or the params are changed we ignore the result
       if (

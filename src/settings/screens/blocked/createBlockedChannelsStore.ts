@@ -13,7 +13,8 @@ const createBlockedChannelsStore = () => {
         .setAsActivities(false)
         .setLimit(12)
         .noSync()
-        .fetchRemoteOrLocal(refresh, false);
+        .setFromFeed(false)
+        .fetchRemoteOrLocal(refresh);
 
       return;
     },

@@ -86,14 +86,19 @@ export default class FeedsService {
   fallbackIndex = -1;
 
   /**
+   * should extract entities from feed
+   */
+  fromFeed = true;
+
+  /**
    * Get entities from the current page
    */
-  async getEntities(fromFeed: boolean = true): Promise<Array<any>> {
+  async getEntities(): Promise<Array<any>> {
     const end = this.limit + this.offset;
 
     if (this.paginated && end >= this.feed.length && !this.endReached) {
       try {
-        await this.fetch(true, fromFeed);
+        await this.fetch(true);
       } catch (err) {
         if (!isNetworkFail(err)) {
           logService.exception('[FeedService] getEntities', err);
@@ -103,7 +108,7 @@ export default class FeedsService {
 
     const feedPage = this.feed.slice(this.offset, end);
 
-    const result: Array<any> = fromFeed
+    const result: Array<any> = this.fromFeed
       ? await entitiesService.getFromFeed(feedPage, this, this.asActivities)
       : feedPage;
 
@@ -235,6 +240,15 @@ export default class FeedsService {
     return this;
   }
 
+  /**
+   * Set if should extract entities from feed
+   * @param {boolean} value
+   */
+  setFromFeed(value: boolean): FeedsService {
+    this.fromFeed = value;
+    return this;
+  }
+
   noSync(): FeedsService {
     this.params.sync = 0;
     return this;
@@ -293,7 +307,7 @@ export default class FeedsService {
    * Fetch
    * @param {boolean} more
    */
-  async fetch(more: boolean = false, fromFeed: boolean = true): Promise<void> {
+  async fetch(more: boolean = false): Promise<void> {
     abort(this);
 
     const params = {
@@ -313,7 +327,7 @@ export default class FeedsService {
 
     if (response.entities && response.entities.length) {
       if (more) {
-        this.feed = fromFeed
+        this.feed = this.fromFeed
           ? this.feed.concat(response.entities)
           : _.difference(response.entities, this.feed);
       } else {
