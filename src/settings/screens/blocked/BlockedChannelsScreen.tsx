@@ -1,61 +1,52 @@
 import { observer, useLocalStore } from 'mobx-react';
-import React, { useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useCallback, useEffect } from 'react';
+import { Text, View } from 'react-native';
 import UserModel from '../../../channel/UserModel';
 import FeedList from '../../../common/components/FeedList';
-import Touchable from '../../../common/components/Touchable';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import createBlockedChannelsStore from './createBlockedChannelsStore';
-import Image from 'react-native-image-progress';
-import { MINDS_CDN_URI } from '../../../config/Config';
-import api from '../../../common/services/api.service';
+import DiscoveryUser from '../../../discovery/DiscoveryUserNew';
+import Button from '../../../common/components/Button';
+import i18n from '../../../common/services/i18n.service';
+import blockListService from '../../../common/services/block-list.service';
+import apiService from '../../../common/services/api.service';
 
 const BlockedChannelsScreen = observer((props) => {
   const theme = ThemedStyles.style;
   const localStore = useLocalStore(createBlockedChannelsStore);
 
+  const unblock = useCallback(
+    async (guid: string) => {
+      await blockListService.add(guid);
+      await apiService.delete(`api/v1/block/${guid}`);
+      localStore.loadList(true);
+    },
+    [localStore],
+  );
+
+  const onRefresh = useCallback(() => {
+    localStore.loadList(true);
+  }, [localStore]);
+
   useEffect(() => {
-    console.log('useEffect Blocked');
     localStore.loadList();
   });
 
-  const getAvatarSource = (channel: UserModel, size = 'medium') => {
-    if (!channel) {
-      return null;
-    }
-
-    return {
-      uri: `${MINDS_CDN_URI}icon/${channel.guid}/${size}/${channel.icontime}`,
-      headers: api.buildHeaders(),
-    };
-  };
-
-  const viewProfile = (channel) => {
-    if (props.navigation) {
-      props.navigation.push('Channel', { guid: channel.guid });
-    }
-  };
-
   const renderActivity = (row: { index: number; item: UserModel }) => {
-    const channel = row.item;
+    row.item = UserModel.checkOrCreate(row.item);
     return (
-      <View
-        style={[
-          theme.rowJustifyStart,
-          theme.alignCenter,
-          theme.padding3x,
-          theme.paddingTop4x,
-        ]}>
-        <Touchable
-          style={[styles.avatarWrapper]}
-          onPress={() => viewProfile(channel)}>
-          <Image source={getAvatarSource(channel)} style={[styles.avatar]} />
-        </Touchable>
-        <Touchable
-          style={[theme.marginLeft, theme.fillFlex]}
-          onPress={() => viewProfile(channel)}>
-          <Text>@{channel.username}</Text>
-        </Touchable>
+      <View style={[theme.rowJustifySpaceBetween, theme.paddingRight2x]}>
+        <DiscoveryUser
+          row={row}
+          key={row.item.guid}
+          //@ts-ignore
+          testID={`blockedChannel${row.index}`}
+          subscribe={false}
+        />
+        <Button
+          text={i18n.t('unblock')}
+          onPress={() => unblock(row.item.guid)}
+        />
       </View>
     );
   };
@@ -67,27 +58,15 @@ const BlockedChannelsScreen = observer((props) => {
         renderActivity={renderActivity}
         navigation={props.navigation}
         emptyMessage={
-          <View>
-            <Text>vacio</Text>
+          <View style={[theme.centered, theme.marginTop4x]}>
+            <Text>{i18n.t('settings.noBlockedChannels')}</Text>
           </View>
         }
         style={[theme.backgroundPrimary, theme.flexContainer]}
+        onRefresh={onRefresh}
       />
     </View>
   );
-});
-
-const styles = StyleSheet.create({
-  avatarWrapper: {
-    width: 32,
-    height: 32,
-    overflow: 'hidden',
-    borderRadius: 16,
-  },
-  avatar: {
-    width: 32,
-    height: 32,
-  },
 });
 
 export default BlockedChannelsScreen;
