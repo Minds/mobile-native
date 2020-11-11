@@ -251,7 +251,7 @@ export default class FeedStore {
     return this;
   }
 
-  noSync(): FeedStore<T> {
+  noSync(): FeedStore {
     this.feedsService.noSync();
     return this;
   }
