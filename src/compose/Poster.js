@@ -5,7 +5,6 @@ import {
   View,
   Dimensions,
   Keyboard,
-  Text,
 } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 
