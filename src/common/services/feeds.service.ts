@@ -86,11 +86,6 @@ export default class FeedsService {
   fallbackIndex = -1;
 
   /**
-   * should extract entities from feed
-   */
-  fromFeed = true;
-
-  /**
    * Get entities from the current page
    */
   async getEntities(): Promise<Array<any>> {
@@ -108,7 +103,7 @@ export default class FeedsService {
 
     const feedPage = this.feed.slice(this.offset, end);
 
-    const result: Array<any> = this.fromFeed
+    const result: Array<any> = this.params.sync
       ? await entitiesService.getFromFeed(feedPage, this, this.asActivities)
       : feedPage;
 
@@ -240,15 +235,6 @@ export default class FeedsService {
     return this;
   }
 
-  /**
-   * Set if should extract entities from feed
-   * @param {boolean} value
-   */
-  setFromFeed(value: boolean): FeedsService {
-    this.fromFeed = value;
-    return this;
-  }
-
   noSync(): FeedsService {
     this.params.sync = 0;
     return this;
@@ -327,7 +313,7 @@ export default class FeedsService {
 
     if (response.entities && response.entities.length) {
       if (more) {
-        this.feed = this.fromFeed
+        this.feed = this.params.sync
           ? this.feed.concat(response.entities)
           : _.difference(response.entities, this.feed);
       } else {

@@ -223,15 +223,6 @@ export default class FeedStore {
   }
 
   /**
-   * Set if should extract entities from feed
-   * @param {boolean} value
-   */
-  setFromFeed(value: boolean): FeedStore {
-    this.feedsService.setFromFeed(value);
-    return this;
-  }
-
-  /**
    * Set inject boost
    * @param {boolean} injectBoost
    * @returns {FeedStore}
