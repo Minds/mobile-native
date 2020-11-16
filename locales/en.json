@@ -1083,6 +1083,7 @@
   "remindedBy":"Reminded by",
   "postReminded":"Post has been reminded",
   "remindRemoved":"Remind has been removed",
+  "deletedRemind":"This reminded content is unavailable. It may have been deleted or you do not have permission to view it",
   "undoRemind":"Undo remind",
   "permaweb": {
     "title": "Permaweb",
