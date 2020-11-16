@@ -80,8 +80,9 @@ export default class ActivityModel extends BaseModel {
   attachments?: {
     attachment_guid: string;
   };
-
   permaweb_id?: string;
+  remind_deleted?: boolean;
+  remind_users?: Array<UserModel>;
 
   /**
    * Mature visibility flag
@@ -452,6 +453,17 @@ export default class ActivityModel extends BaseModel {
   async deleteEntity() {
     try {
       await deleteItem(this.guid);
+      this.removeFromList();
+      ActivityModel.events.emit('deleteEntity', this);
+    } catch (err) {
+      logService.exception('[ActivityModel]', err);
+      throw err;
+    }
+  }
+
+  async deleteRemind() {
+    try {
+      await api.delete(`api/v3/newsfeed/${this.urn}`);
       this.removeFromList();
       ActivityModel.events.emit('deleteEntity', this);
     } catch (err) {

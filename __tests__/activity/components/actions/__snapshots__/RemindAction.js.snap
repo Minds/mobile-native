@@ -1,34 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Thumb action component renders correctly 1`] = `
-<preventDoubleTap(TouchableOpacity)
-  onPress={[Function]}
-  style={
-    Array [
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-    ]
-  }
-  testID="Remind activity button"
->
-  <Icon
-    allowFontScaling={false}
-    name="repeat"
-    size={21}
-    style={
-      Array [
-        undefined,
-        Object {
-          "marginRight": 5,
-        },
-      ]
-    }
-  />
-  <Counter
-    count={0}
-    size={15}
-  />
-</preventDoubleTap(TouchableOpacity)>
-`;
+exports[`Thumb action component renders correctly 1`] = `undefined`;

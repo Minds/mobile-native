@@ -41,9 +41,7 @@ export default observer(function (props) {
       return;
     }
     const isEdit = props.store.isEdit;
-    const entity = await (props.store.isRemind
-      ? props.store.remind()
-      : props.store.submit());
+    const entity = await props.store.submit();
 
     if (entity) {
       props.store.onPost(entity, isEdit);

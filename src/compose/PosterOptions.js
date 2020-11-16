@@ -169,12 +169,15 @@ export default observer(
     }));
 
     const showSchedule =
+      !store.isRemind &&
       (props.store.isEdit ? time_created > Date.now() : true) &&
       !props.store.portraitMode;
 
     const monetizeDesc = store.wire_threshold.support_tier?.urn
       ? store.wire_threshold.support_tier?.name || 'Plus'
       : '';
+
+    const showMonetize = !props.store.portraitMode && !props.store.isRemind;
 
     const showPermaweb =
       sessionService.getUser().plus &&
@@ -210,7 +213,7 @@ export default observer(
             onPress={onSchedulePress}
           />
         )}
-        {!props.store.portraitMode && (
+        {showMonetize && (
           <Item
             title={i18n.t('monetize.title')}
             description={monetizeDesc}
