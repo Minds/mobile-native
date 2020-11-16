@@ -2,48 +2,11 @@ import apiService, { isApiForbidden } from './api.service';
 
 import UserModel from '../../channel/UserModel';
 import entitiesStorage from './sql/entities.storage';
-import { action, observable, reaction } from 'mobx';
-import logService from './log.service';
 
 /**
  * Channels services
  */
 class ChannelsService {
-  /**
-   * Keep track of background channel update process
-   */
-  @observable channelUpdated = false;
-
-  @action
-  setChannelUpdated(channelUpdated) {
-    this.channelUpdated = channelUpdated;
-  }
-
-  /**
-   * Run on channel update
-   * @return dispose (remember to dispose!)
-   * @param {function} fn
-   * @param {string} guidOrUsername
-   */
-  onChannelUpdate(fn, guidOrUsername?: string) {
-    return reaction(
-      () => [this.channelUpdated],
-      async (channelUpdated) => {
-        if (channelUpdated && guidOrUsername) {
-          try {
-            const channel = await this.getFromLocal(guidOrUsername);
-            await fn(channel);
-          } catch (error) {
-            logService.exception('[ChannelsService]', error);
-          } finally {
-            this.setChannelUpdated(false);
-          }
-        }
-      },
-      { fireImmediately: true },
-    );
-  }
-
   /**
    * Get one channel
    * @param {string} guid
@@ -62,27 +25,11 @@ class ChannelsService {
       return await this.fetch(guidOrUsername);
     }
 
-    const channel = UserModel.checkOrCreate(local || defaultChannel);
+    const channel = UserModel.create(local || defaultChannel);
 
     this.fetch(guidOrUsername, channel); // Update in the background
 
     return channel;
-  }
-
-  /**
-   * Try to retrieve from local
-   * @param {string} guidOrUsername
-   */
-  async getFromLocal(guidOrUsername: string) {
-    const urn = `urn:channels:${guidOrUsername}`;
-
-    const local = await entitiesStorage.read(urn);
-
-    if (!local) {
-      return false;
-    }
-
-    return UserModel.checkOrCreate(local);
   }
 
   /**
@@ -122,10 +69,7 @@ class ChannelsService {
         }
         // add urn to channel
         response.channel.urn = urn;
-
-        const onSave = () => this.setChannelUpdated(true);
-        entitiesStorage.save(response.channel, onSave);
-
+        entitiesStorage.save(response.channel);
         return channel;
       } else {
         throw new Error('No channel response');

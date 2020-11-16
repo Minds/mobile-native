@@ -16,7 +16,7 @@ export class EntitiesStorage {
    * Save an entity
    * @param {Object} entity
    */
-  async save(entity, onSave?: Function) {
+  async save(entity) {
     if (!entity.urn) {
       return;
     }
@@ -27,9 +27,6 @@ export class EntitiesStorage {
         'REPLACE INTO entities (urn, data, updated) values (?,?,?)',
         [entity.urn, JSON.stringify(entity), Math.floor(Date.now() / 1000)],
       );
-      if (onSave) {
-        onSave();
-      }
     } catch (err) {
       logService.exception('[EntitiesStorage]', err);
     }
