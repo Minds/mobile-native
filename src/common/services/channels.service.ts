@@ -1,22 +1,58 @@
-//@ts-nocheck
 import apiService, { isApiForbidden } from './api.service';
 
 import UserModel from '../../channel/UserModel';
 import entitiesStorage from './sql/entities.storage';
+import { action, observable, reaction } from 'mobx';
+import logService from './log.service';
 
 /**
  * Channels services
  */
 class ChannelsService {
   /**
+   * Keep track of background channel update process
+   */
+  @observable channelUpdated = false;
+
+  @action
+  setChannelUpdated(channelUpdated) {
+    this.channelUpdated = channelUpdated;
+  }
+
+  /**
+   * Run on channel update
+   * @return dispose (remember to dispose!)
+   * @param {function} fn
+   * @param {string} guidOrUsername
+   */
+  onChannelUpdate(fn, guidOrUsername?: string) {
+    return reaction(
+      () => [this.channelUpdated],
+      async (channelUpdated) => {
+        if (channelUpdated && guidOrUsername) {
+          try {
+            const channel = await this.getFromLocal(guidOrUsername);
+            await fn(channel);
+          } catch (error) {
+            logService.exception('[ChannelsService]', error);
+          } finally {
+            this.setChannelUpdated(false);
+          }
+        }
+      },
+      { fireImmediately: true },
+    );
+  }
+
+  /**
    * Get one channel
    * @param {string} guid
    */
   async get(
     guidOrUsername: string,
-    defaultChannel?: UserModel | object = undefined,
+    defaultChannel?: UserModel | object,
     forceUpdate: boolean = false,
-  ): Promise<UserModel> {
+  ): Promise<UserModel | undefined> {
     const urn = `urn:channels:${guidOrUsername}`;
 
     const local = await entitiesStorage.read(urn);
@@ -31,6 +67,22 @@ class ChannelsService {
     this.fetch(guidOrUsername, channel); // Update in the background
 
     return channel;
+  }
+
+  /**
+   * Try to retrieve from local
+   * @param {string} guidOrUsername
+   */
+  async getFromLocal(guidOrUsername: string) {
+    const urn = `urn:channels:${guidOrUsername}`;
+
+    const local = await entitiesStorage.read(urn);
+
+    if (!local) {
+      return false;
+    }
+
+    return UserModel.checkOrCreate(local);
   }
 
   /**
@@ -53,7 +105,7 @@ class ChannelsService {
    * on success is added or updated
    * @param {string} guidOrUsername
    */
-  async fetch(guidOrUsername: string, channel: UserModel) {
+  async fetch(guidOrUsername: string, channel?: UserModel) {
     try {
       const response: any = await apiService.get(
         `api/v1/channel/${guidOrUsername}`,
@@ -70,7 +122,10 @@ class ChannelsService {
         }
         // add urn to channel
         response.channel.urn = urn;
-        entitiesStorage.save(response.channel);
+
+        const onSave = () => this.setChannelUpdated(true);
+        entitiesStorage.save(response.channel, onSave);
+
         return channel;
       } else {
         throw new Error('No channel response');
