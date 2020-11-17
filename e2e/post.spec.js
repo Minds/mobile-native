@@ -2,7 +2,7 @@ import sleep from '../src/common/helpers/sleep';
 import { waitForElement, waitForAndType, tapElement, waitForAndTap } from './helpers/waitFor';
 import { deletePost, capturePoster } from './actions/capturePoster';
 
-describe('Post Flow', () => {
+describe.skip('Post Flow', () => {
   beforeEach(async () => {
     await device.launchApp({
       newInstance: true,
