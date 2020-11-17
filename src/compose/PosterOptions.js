@@ -169,7 +169,6 @@ export default observer(
     }));
 
     const showSchedule =
-      !store.isRemind &&
       (props.store.isEdit ? time_created > Date.now() : true) &&
       !props.store.portraitMode;
 
