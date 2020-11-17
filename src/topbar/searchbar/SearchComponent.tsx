@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { observer } from 'mobx-react';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -28,6 +28,10 @@ const SearchComponent = observer((props: Props) => {
   const { user } = useLegacyStores();
   const localStore = useStores().searchBar;
   const inputRef = useRef<TextInput>(null);
+
+  useEffect(() => {
+    localStore.init(user);
+  });
 
   /**
    * On modal show focus input
