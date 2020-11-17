@@ -136,7 +136,7 @@ const ChannelHeader = observer((props: PropsType) => {
         style={styles.banner}
         source={channel.getBannerSource()}
         resizeMode="cover">
-        <View style={[styles.avatarContainer, theme.borderBackgroundPrimary]}>
+        <View style={[styles.avatarContainer, theme.borderBackgroundTertiary]}>
           <Image
             style={[styles.avatar, theme.borderPrimary]}
             source={channel.getAvatarSource()}

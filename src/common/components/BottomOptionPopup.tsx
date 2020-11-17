@@ -21,6 +21,7 @@ type PropsType = {
   content: React.ReactNode;
   backgroundColor?: ViewStyle;
   contentContainerStyle?: ViewStyle;
+  noOverlay?: boolean;
 };
 
 /**
@@ -80,7 +81,7 @@ const BottomOptionPopup = observer((props: PropsType) => {
 
   return (
     <>
-      {store.showing && (
+      {store.showing && !props.noOverlay && (
         <TouchableHighlight
           style={[styles.overlay, theme.backgroundSecondary]}
           onPress={store.close}>

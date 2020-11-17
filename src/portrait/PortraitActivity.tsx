@@ -4,8 +4,8 @@ import {
   Text,
   StyleSheet,
   Platform,
-  Dimensions,
   TouchableOpacity,
+  useWindowDimensions,
 } from 'react-native';
 import { useDimensions } from '@react-native-community/hooks';
 import { RouteProp, useNavigation } from '@react-navigation/native';
@@ -46,9 +46,11 @@ type PropsType = {
 };
 
 const volumeIconSize = Platform.select({ ios: 30, android: 26 });
-const { height } = Dimensions.get('screen');
+const isIOS = Platform.OS === 'ios';
 
 const PortraitActivity = observer((props: PropsType) => {
+  const windowHeight = useWindowDimensions().height;
+
   // Local store
   const store = useLocalStore(() => ({
     comments: new CommentsStore(),
@@ -154,7 +156,7 @@ const PortraitActivity = observer((props: PropsType) => {
 
   const touchableStyle = {
     top: 90 + insets.top,
-    height: height - (200 + insets.top + insets.bottom),
+    height: windowHeight - ((isIOS ? 200 : 230) + insets.top + insets.bottom),
   };
 
   const tappingArea = (

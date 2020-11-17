@@ -868,7 +868,7 @@ exports[`cature poster flags component should renders correctly for props false 
                 onEndEditing={[Function]}
                 onSubmitEditing={[Function]}
                 placeholder="eg. science"
-                placeholderTextColor="#AEB0B8"
+                placeholderTextColor="#B8C1CA"
                 rejectResponderTermination={true}
                 returnKeyType="next"
                 style={
@@ -1797,7 +1797,7 @@ exports[`cature poster flags component should renders correctly for props true 1
                 onEndEditing={[Function]}
                 onSubmitEditing={[Function]}
                 placeholder="eg. science"
-                placeholderTextColor="#AEB0B8"
+                placeholderTextColor="#B8C1CA"
                 rejectResponderTermination={true}
                 returnKeyType="next"
                 style={

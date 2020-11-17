@@ -14,6 +14,7 @@ import type NotificationsStore from '../notifications/NotificationsStore';
 import CheckLanguage from '../common/components/CheckLanguage';
 import ActivityPlaceHolder from './ActivityPlaceHolder';
 import PortraitContentBar from '../portrait/PortraitContentBar';
+import InitialOnboardingButton from '../onboarding/v2/InitialOnboardingButton';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
@@ -111,6 +112,7 @@ class NewsfeedScreen extends Component<PropsType> {
     const header = (
       <View>
         <CheckLanguage />
+        <InitialOnboardingButton />
         <PortraitContentBar ref={this.portraitBar} />
       </View>
     );

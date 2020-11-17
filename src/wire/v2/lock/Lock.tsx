@@ -10,9 +10,10 @@ import Button from '../../../common/components/Button';
 import i18n from '../../../common/services/i18n.service';
 import type { LockType } from '../../../types/Common';
 import currency from '../../../common/helpers/currency';
+import BlogModel from '../../../blogs/BlogModel';
 
 type PropsType = {
-  entity: ActivityModel;
+  entity: ActivityModel | BlogModel;
   navigation: any;
 };
 
@@ -51,6 +52,10 @@ const getTextForBlocked = (
 };
 
 const Lock = observer(({ entity }: PropsType) => {
+  const unlock = useCallback(() => {
+    entity.unlockOrPay();
+  }, [entity]);
+
   const theme = ThemedStyles.style;
   const wire_threshold = entity.wire_threshold;
   const support_tier: SupportTiersType | null =
@@ -81,10 +86,6 @@ const Lock = observer(({ entity }: PropsType) => {
   if (entity.isOwner() || entity.hasVideo()) {
     return <LockTag type={lockType} />;
   }
-
-  const unlock = useCallback(() => {
-    entity.unlockOrPay();
-  }, [entity]);
 
   const button = entity.hasVideo() ? null : (
     <Button

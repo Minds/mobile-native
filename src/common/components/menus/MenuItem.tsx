@@ -1,4 +1,5 @@
 import React from 'react';
+import { TextStyle } from 'react-native';
 
 import { ListItem } from 'react-native-elements';
 import ThemedStyles from '../../../styles/ThemedStyles';
@@ -9,7 +10,8 @@ export type MenuItemItem = {
   icon?:
     | {
         name: string;
-        type: string;
+        type?: string;
+        color?: string;
       }
     | JSX.Element;
   noIcon?: boolean;
@@ -19,6 +21,7 @@ export type MenuItemPropsType = {
   item: MenuItemItem;
   component?: any;
   containerItemStyle?: {} | [];
+  titleStyle?: TextStyle | Array<TextStyle>;
   testID?: string;
 };
 
@@ -26,6 +29,7 @@ export default function ({
   item,
   component,
   containerItemStyle,
+  titleStyle,
   testID,
 }: MenuItemPropsType) {
   const theme = ThemedStyles.style;
@@ -41,20 +45,37 @@ export default function ({
     containerItemStyle,
   ];
 
+  // icon is element?
+  const isIconElement = item.icon && !('name' in item.icon);
+
   // ListItem Chevron Style
-  const chevronStyle = item.noIcon
-    ? undefined
-    : { ...theme.colorIcon, size: 24, ...item.icon };
+  let chevronStyle: undefined | object;
+  if (!item.noIcon && !isIconElement) {
+    chevronStyle = {
+      ...theme.colorIcon,
+      size: 24,
+      type: 'ionicon',
+      name: 'chevron-forward',
+    };
+
+    if (item.icon && !isIconElement) {
+      chevronStyle = { ...chevronStyle, ...item.icon };
+    }
+  }
 
   return (
     <ListItem
       Component={component}
-      title={item.title}
       onPress={item.onPress}
       containerStyle={containerStyle}
-      titleStyle={theme.listItemTitle}
-      chevron={chevronStyle}
-      testID={testID}
-    />
+      testID={testID}>
+      <ListItem.Content>
+        <ListItem.Title style={[theme.listItemTitle, titleStyle]}>
+          {item.title}
+        </ListItem.Title>
+      </ListItem.Content>
+      {chevronStyle && <ListItem.Chevron {...chevronStyle} />}
+      {isIconElement && item.icon}
+    </ListItem>
   );
 }

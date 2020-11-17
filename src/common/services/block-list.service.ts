@@ -55,7 +55,7 @@ export class BlockListService {
     await storageService.setItem('@minds:blocked', []);
   }
 
-  async getList() {
+  getList() {
     return this.blocked;
   }
 

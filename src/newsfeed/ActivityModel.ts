@@ -17,7 +17,6 @@ import api from '../common/services/api.service';
 import { GOOGLE_PLAY_STORE, MINDS_CDN_URI, MINDS_URI } from '../config/Config';
 import i18n from '../common/services/i18n.service';
 import logService from '../common/services/log.service';
-import entitiesService from '../common/services/entities.service';
 import type { ThumbSize, LockType } from '../types/Common';
 import type GroupModel from '../groups/GroupModel';
 import { SupportTiersType } from '../wire/WireTypes';
@@ -81,8 +80,9 @@ export default class ActivityModel extends BaseModel {
   attachments?: {
     attachment_guid: string;
   };
-
   permaweb_id?: string;
+  remind_deleted?: boolean;
+  remind_users?: Array<UserModel>;
 
   /**
    * Mature visibility flag
@@ -185,7 +185,7 @@ export default class ActivityModel extends BaseModel {
   /**
    * Child models
    */
-  childModels() {
+  childModels(): any {
     return {
       ownerObj: UserModel,
       remind_object: ActivityModel,
@@ -209,8 +209,10 @@ export default class ActivityModel extends BaseModel {
 
     // fallback to old behavior
     if (this.paywall || this.paywall_unlocked) {
+      const guid = this.entity_guid === '' ? this.guid : this.entity_guid;
+      const unlock = this.isOwner() ? '?unlock_paywall=1' : '';
       return {
-        uri: MINDS_URI + 'fs/v1/thumbnail/' + this.entity_guid,
+        uri: MINDS_URI + 'fs/v1/thumbnail/' + guid + unlock,
         headers: api.buildHeaders(),
       };
     }
@@ -334,6 +336,18 @@ export default class ActivityModel extends BaseModel {
           this.__list = list;
         });
       }
+
+      if (
+        this.entity_guid &&
+        this.perma_url &&
+        this.perma_url?.startsWith(MINDS_URI)
+      ) {
+        NavigationService.push('BlogView', {
+          guid: this.entity_guid,
+          unlock: true,
+        });
+      }
+
       return result;
     } catch (err) {
       if (!ignoreError) {
@@ -440,7 +454,18 @@ export default class ActivityModel extends BaseModel {
     try {
       await deleteItem(this.guid);
       this.removeFromList();
-      entitiesService.deleteFromCache(this.urn);
+      ActivityModel.events.emit('deleteEntity', this);
+    } catch (err) {
+      logService.exception('[ActivityModel]', err);
+      throw err;
+    }
+  }
+
+  async deleteRemind() {
+    try {
+      await api.delete(`api/v3/newsfeed/${this.urn}`);
+      this.removeFromList();
+      ActivityModel.events.emit('deleteEntity', this);
     } catch (err) {
       logService.exception('[ActivityModel]', err);
       throw err;

@@ -21,6 +21,7 @@ export default class DiscoveryV2Store {
   @observable trendingTags: TDiscoveryTagsTag[] = [];
   @observable loading = false;
   @observable refreshing = false;
+  @observable showManageTags = false;
   boostFeed: FeedStore;
   allFeed: FeedStore;
 
@@ -49,6 +50,11 @@ export default class DiscoveryV2Store {
   }
 
   @action
+  setShowManageTags(value: boolean) {
+    this.showManageTags = value;
+  }
+
+  @action
   setTabId(id: TDiscoveryV2Tabs) {
     switch (id) {
       case 'foryou':
@@ -69,16 +75,17 @@ export default class DiscoveryV2Store {
    * Load discovery overview
    */
   @action
-  async loadTrends(plus: boolean | undefined = undefined): Promise<void> {
+  async loadTrends(plus?: boolean): Promise<void> {
     this.loading = true;
 
     try {
-      let response: any;
-      if (plus) {
-        response = await apiService.get('api/v3/discovery/trends', { plus });
-      } else {
-        response = await apiService.get('api/v3/discovery/trends');
-      }
+      const params = plus
+        ? { plus: 1, as_activities: 1 }
+        : { as_activities: 1 };
+      const response = await apiService.get<any>(
+        'api/v3/discovery/trends',
+        params,
+      );
       const trends = response.trends.filter((trend) => !!trend);
       if (response.hero) {
         trends.unshift(response.hero);
@@ -96,15 +103,16 @@ export default class DiscoveryV2Store {
    * Load discovery overview
    */
   @action
-  async loadTags(plus: boolean | undefined = undefined): Promise<void> {
+  async loadTags(plus?: boolean): Promise<void> {
     this.loading = true;
     try {
-      let response: any;
-      if (plus) {
-        response = await apiService.get('api/v3/discovery/tags', { plus });
-      } else {
-        response = await apiService.get('api/v3/discovery/tags');
-      }
+      const params = plus
+        ? { plus: 1, as_activities: 1 }
+        : { as_activities: 1 };
+      const response = await apiService.get<any>(
+        'api/v3/discovery/tags',
+        params,
+      );
       this.setTags(response.tags);
       this.setTrendingTags(response.trending);
     } catch (err) {
@@ -164,7 +172,10 @@ export default class DiscoveryV2Store {
   @action
   reset() {
     this.trends = [];
+    this.tags = [];
+    this.trendingTags = [];
     this.activeTabId = 'foryou';
     this.refreshing = false;
+    this.loading = false;
   }
 }

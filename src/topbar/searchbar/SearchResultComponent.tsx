@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, MutableRefObject } from 'react';
+import React, { useEffect, useCallback } from 'react';
 
 import { View } from 'react-native';
 import DiscoveryUserNew from '../../discovery/DiscoveryUserNew';

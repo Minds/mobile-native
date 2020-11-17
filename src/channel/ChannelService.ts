@@ -17,7 +17,7 @@ class ChannelService {
     return await api.get('api/v1/channel/' + guid);
   }
 
-  upload(guid, type, file, progress) {
+  upload(type, file, progress) {
     return api.upload(`api/v1/channel/${type}`, file, null, progress);
   }
 

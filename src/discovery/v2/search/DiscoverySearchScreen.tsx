@@ -40,7 +40,7 @@ export const DiscoverySearchHeader = observer(() => {
   }, [navigation, store]);
 
   return (
-    <View style={[CS.shadow, theme.backgroundSecondary, paddingTop]}>
+    <View style={[CS.shadow, theme.backgroundPrimary, paddingTop]}>
       <View style={[theme.rowJustifyStart, theme.alignCenter]}>
         <View style={theme.padding2x}>
           <Icon
@@ -60,7 +60,7 @@ export const DiscoverySearchHeader = observer(() => {
             containerStyle={[
               theme.marginVertical,
               theme.marginRight4x,
-              theme.backgroundPrimary,
+              theme.backgroundSecondary,
               theme.flexContainer,
             ]}
             // iconRight={iconRight}
