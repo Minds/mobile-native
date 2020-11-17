@@ -26,10 +26,12 @@ import TopbarTabbar, {
   TabType,
 } from '../../common/components/topbar-tabbar/TopbarTabbar';
 import AboutTab from './tabs/AboutTab';
+import TierManagementScreen from '../../common/components/tier-management/TierManagementScreen';
 
 type PropsType = {
   store: ChannelStoreType;
   navigation: any;
+  route: any;
   hideButtons?: boolean;
   hideDescription?: boolean;
   hideTabs?: boolean;
@@ -69,11 +71,18 @@ const ChannelHeader = observer((props: PropsType) => {
     }
   }, [props.navigation, props.store]);
 
-  const tabs: Array<TabType<ChannelTabType>> = [
-    { id: 'feed', title: i18n.t('feed') },
-    // { id: 'shop', title: 'Shop' },
-    { id: 'about', title: i18n.t('about') },
-  ];
+  const tabs: Array<TabType<ChannelTabType>> = channel.isOwner()
+    ? [
+        { id: 'feed', title: i18n.t('feed') },
+        { id: 'memberships', title: i18n.t('settings.otherOptions.b1') },
+        // { id: 'shop', title: 'Shop' },
+        { id: 'about', title: i18n.t('about') },
+      ]
+    : [
+        { id: 'feed', title: i18n.t('feed') },
+        // { id: 'shop', title: 'Shop' },
+        { id: 'about', title: i18n.t('about') },
+      ];
 
   const screen = () => {
     switch (props.store.tab) {
@@ -114,6 +123,13 @@ const ChannelHeader = observer((props: PropsType) => {
           <ScrollView>
             <AboutTab store={props.store} navigation={props.navigation} />
           </ScrollView>
+        );
+      case 'memberships':
+        return (
+          <TierManagementScreen
+            route={props.route}
+            navigation={props.navigation}
+          />
         );
       default:
         return <View />;

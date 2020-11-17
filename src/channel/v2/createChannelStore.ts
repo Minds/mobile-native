@@ -22,7 +22,7 @@ type InitialLoadParams = {
   username?: string;
 };
 
-export type ChannelTabType = 'feed' | 'shop' | 'about';
+export type ChannelTabType = 'feed' | 'shop' | 'about' | 'memberships';
 
 type FilterType = 'all' | 'images' | 'videos' | 'blogs';
 
