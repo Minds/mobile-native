@@ -6,7 +6,7 @@ import {
 import { useDimensions } from '@react-native-community/hooks';
 import { createSharedElementStackNavigator } from 'react-navigation-shared-element';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { Platform, View } from 'react-native';
+import { Platform, StatusBar, View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import AnalyticsScreen from '../analytics/AnalyticsScreen';
 
@@ -32,9 +32,8 @@ import BlockchainWalletModalScreen from '../blockchain/wallet/modal/BlockchainWa
 import BlockchainWalletImportScreen from '../blockchain/wallet/import/BlockchainWalletImportScreen';
 import BlockchainWalletDetailsScreen from '../blockchain/wallet/details/BlockchainWalletDetailsScreen';
 import ReportScreen from '../report/ReportScreen';
-import MoreScreen from '../tabs/MoreScreen';
 import NotSupportedScreen from '../static-views/NotSupportedScreen';
-import OnboardingScreen from '../onboarding/OnboardingScreen';
+// import OnboardingScreen from '../onboarding/OnboardingScreen';
 import UpdatingScreen from '../update/UpdateScreen';
 import { DiscoverySearchScreen } from '../discovery/v2/search/DiscoverySearchScreen';
 // import Gathering from '../gathering/Gathering';
@@ -82,7 +81,7 @@ import Drawer from './Drawer';
 import OptionsDrawer from '../common/components/OptionsDrawer';
 import PasswordScreen from '../settings/screens/PasswordScreen';
 import NotificationsSettingsScreen from '../notifications/NotificationsSettingsScreen';
-import BlockedChannelsScreen from '../settings/screens/BlockedChannelsScreen';
+import BlockedChannelsScreen from '../settings/screens/blocked/BlockedChannelsScreen';
 import TierManagementScreen from '../settings/screens/TierManagementScreen';
 import DeleteChannelScreen from '../settings/screens/DeleteChannelScreen';
 import DeactivateChannelScreen from '../settings/screens/DeactivateChannelScreen';
@@ -101,7 +100,15 @@ import VideoBackground from '../common/components/VideoBackground';
 import TransparentLayer from '../common/components/TransparentLayer';
 import PortraitViewerScreen from '../portrait/PortraitViewerScreen';
 import { portraitBarRef } from '../portrait/PortraitContentBar';
+import OnboardingScreen from '../onboarding/v2/OnboardingScreen';
+import VerifyEmailScreen from '../onboarding/v2/steps/VerifyEmailScreen';
+import SelectHashtagsScreen from '../onboarding/v2/steps/SelectHashtagsScreen';
+import SetupChannelScreen from '../onboarding/v2/steps/SetupChannelScreen';
+import VerifyUniquenessScreen from '../onboarding/v2/steps/VerifyUniquenessScreen';
+import PhoneValidationScreen from '../onboarding/v2/steps/PhoneValidationScreen';
 import AutoplaySettingsScreen from '../settings/screens/AutoplaySettingsScreen';
+import SuggestedChannelsScreen from '../onboarding/v2/steps/SuggestedChannelsScreen';
+import SuggestedGroupsScreen from '../onboarding/v2/steps/SuggestedGroupsScreen';
 
 const isIos = Platform.OS === 'ios';
 
@@ -247,7 +254,8 @@ export const InternalStack = () => {
         component={GroupsListScreen}
         options={{ title: i18n.t('discovery.groups') }}
       />
-      <AppStackNav.Screen name="Analytics" component={AnalyticsScreen} />
+      <InternalStackNav.Screen name="Analytics" component={AnalyticsScreen} />
+      <InternalStackNav.Screen name="Onboarding" component={OnboardingScreen} />
 
       <InternalStackNav.Screen name="Settings" component={SettingsScreen} />
     </InternalStackNav.Navigator>
@@ -429,11 +437,6 @@ const AppStack = function () {
         component={ReportScreen}
         options={{ title: i18n.t('report') }}
       />
-      <AppStackNav.Screen
-        name="More"
-        component={MoreScreen}
-        options={{ title: i18n.t('report') }}
-      />
       <AppStackNav.Screen name="NotSupported" component={NotSupportedScreen} />
       <AppStackNav.Screen
         name="OnboardingScreen"
@@ -605,6 +608,7 @@ const AppStack = function () {
 const AuthStack = function () {
   return (
     <View style={ThemedStyles.style.flexContainer}>
+      <StatusBar barStyle={'light-content'} backgroundColor="#000000" />
       <VideoBackground source={require('../assets/videos/minds-loop.mp4')} />
       <TransparentLayer />
       <AuthStackNav.Navigator
@@ -651,6 +655,41 @@ const RootStack = function (props) {
           <RootStackNav.Screen
             name="PlusScreen"
             component={PlusScreen}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen
+            name="VerifyEmail"
+            component={VerifyEmailScreen}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen
+            name="SelectHashtags"
+            component={SelectHashtagsScreen}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen
+            name="SetupChannel"
+            component={SetupChannelScreen}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen
+            name="VerifyUniqueness"
+            component={VerifyUniquenessScreen}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen
+            name="SuggestedChannel"
+            component={SuggestedChannelsScreen}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen
+            name="SuggestedGroups"
+            component={SuggestedGroupsScreen}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen
+            name="PhoneValidation"
+            component={PhoneValidationScreen}
             options={modalOptions}
           />
         </Fragment>

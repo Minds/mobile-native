@@ -5,15 +5,22 @@ import IonIcon from 'react-native-vector-icons/Ionicons';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Entypo from 'react-native-vector-icons/Entypo';
-import { CommonStyle as CS } from '../styles/Common';
-import { StyleSheet } from 'react-native';
+import { ColorValue, StyleSheet } from 'react-native';
+import ThemedStyles from '../styles/ThemedStyles';
 
 const styles = StyleSheet.create({
   icon: { width: 68, textAlign: 'center' },
 });
 
-export default class TabIcon extends Component {
+interface PropsType {
+  color: ColorValue;
+  size?: number;
+  name: string;
+}
+
+export default class TabIcon extends Component<PropsType> {
   render() {
+    const theme = ThemedStyles.style;
     const { name, size, color } = this.props;
     let icon;
     switch (name) {
@@ -21,7 +28,7 @@ export default class TabIcon extends Component {
         return (
           <EvilIcons
             name={name}
-            style={[color ? { color: color } : CS.colorIcon, styles.icon]}
+            style={[color ? { color: color } : theme.colorIcon, styles.icon]}
             size={size ? size : 24}
           />
         );
@@ -29,7 +36,7 @@ export default class TabIcon extends Component {
         return (
           <Entypo
             name={name}
-            style={[color ? { color: color } : CS.colorIcon, styles.icon]}
+            style={[color ? { color: color } : theme.colorIcon, styles.icon]}
             size={size ? size : 24}
           />
         );
@@ -38,7 +45,7 @@ export default class TabIcon extends Component {
         icon = (
           <IonIcon
             name={name}
-            style={[color ? { color: color } : CS.colorIcon, styles.icon]}
+            style={[color ? { color: color } : theme.colorIcon, styles.icon]}
             size={size ? size : 24}
           />
         );
@@ -47,7 +54,7 @@ export default class TabIcon extends Component {
         icon = (
           <Fontisto
             name={name}
-            style={[color ? { color: color } : CS.colorIcon, styles.icon]}
+            style={[color ? { color: color } : theme.colorIcon, styles.icon]}
             size={size ? size : 24}
           />
         );

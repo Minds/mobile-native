@@ -110,26 +110,7 @@ export default class Notification extends Component<PropsType> {
   }
 
   render() {
-    // set border for notification using themes
-    styles.container = {
-      ...styles.container,
-      ...ThemedStyles.style.borderBottomHair,
-      ...ThemedStyles.style.borderPrimary,
-      ...ThemedStyles.style.backgroundSecondary,
-    };
-
-    // set color for timestamp text using themes
-    styles.timestamp = {
-      ...styles.timestamp,
-      ...ThemedStyles.style.colorSecondaryText,
-    };
-
-    // set border for avatar using themes
-    styles.avatar = {
-      ...styles.avatar,
-      ...ThemedStyles.style.borderHair,
-      ...ThemedStyles.style.borderPrimary,
-    };
+    const theme = ThemedStyles.style;
 
     const entity = this.props.entity;
 
@@ -140,9 +121,22 @@ export default class Notification extends Component<PropsType> {
     };
 
     return (
-      <View style={styles.container}>
+      <View
+        style={[
+          styles.container,
+          theme.borderBottomHair,
+          theme.borderPrimary,
+          theme.backgroundPrimary,
+        ]}>
         <TouchableWithoutFeedback onPress={this.navToChannel}>
-          <Image source={avatarSrc} style={styles.avatar} />
+          <Image
+            source={avatarSrc}
+            style={[
+              styles.avatar,
+              ThemedStyles.style.borderHair,
+              ThemedStyles.style.borderPrimary,
+            ]}
+          />
         </TouchableWithoutFeedback>
         {body}
       </View>

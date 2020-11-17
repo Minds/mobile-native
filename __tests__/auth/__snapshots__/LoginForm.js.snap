@@ -60,12 +60,12 @@ exports[`LoginForm component should renders correctly 1`] = `
               style={
                 Array [
                   Object {
-                    "color": "#AEB0B8",
                     "fontFamily": "Roboto",
                     "fontSize": 16,
                     "fontWeight": "600",
                     "marginBottom": 5,
                   },
+                  undefined,
                   undefined,
                 ]
               }
@@ -94,9 +94,9 @@ exports[`LoginForm component should renders correctly 1`] = `
               Array [
                 Object {
                   "borderWidth": 0,
-                  "height": 32,
                   "marginBottom": 7,
-                  "padding": 0,
+                  "paddingHorizontal": 0,
+                  "paddingVertical": 8,
                 },
                 undefined,
                 undefined,
@@ -152,12 +152,12 @@ exports[`LoginForm component should renders correctly 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": "#AEB0B8",
                       "fontFamily": "Roboto",
                       "fontSize": 16,
                       "fontWeight": "600",
                       "marginBottom": 5,
                     },
+                    undefined,
                     undefined,
                   ]
                 }
@@ -187,9 +187,9 @@ exports[`LoginForm component should renders correctly 1`] = `
                 Array [
                   Object {
                     "borderWidth": 0,
-                    "height": 32,
                     "marginBottom": 7,
-                    "padding": 0,
+                    "paddingHorizontal": 0,
+                    "paddingVertical": 8,
                   },
                   undefined,
                   undefined,

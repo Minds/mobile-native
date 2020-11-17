@@ -14,8 +14,10 @@ import NavigationService from '../../navigation/NavigationService';
 import i18n from '../../common/services/i18n.service';
 import { showNotification } from '../../../AppMessages';
 import { Platform } from 'react-native';
+
+type Entity = { guid: string; nsfw?: Array<string> } | UserModel;
 type InitialLoadParams = {
-  entity?: { guid: string; nsfw?: Array<string> } | UserModel;
+  entity?: Entity;
   guid?: string;
   username?: string;
 };
@@ -52,6 +54,15 @@ const createChannelStore = () => {
     uploading: false,
     bannerProgress: 0,
     avatarProgress: 0,
+    channelSearch: '',
+    setChannelSearch(channelSearch: string) {
+      this.channelSearch = channelSearch;
+    },
+    clearSearch() {
+      this.channelSearch = '';
+      this.feedStore.setParams({});
+      this.loadFeed(true);
+    },
     get esFeedfilter() {
       switch (this.filter) {
         case 'all':
@@ -80,11 +91,7 @@ const createChannelStore = () => {
      */
     async initialLoad(params: InitialLoadParams) {
       if (params.entity) {
-        if (
-          Platform.OS === 'ios' &&
-          params.entity.nsfw &&
-          params.entity.nsfw.length > 0
-        ) {
+        if (this.isNsfw(params.entity)) {
           NavigationService.goBack();
           showNotification(i18n.t('nsfw.notSafeChannel'));
         }
@@ -138,6 +145,32 @@ const createChannelStore = () => {
         .clear()
         .fetchRemoteOrLocal();
     },
+    async searchInChannel() {
+      this.feedStore.clear();
+
+      if (!this.channel) {
+        return;
+      }
+
+      const params: any = {
+        period: '1y',
+        all: 1,
+        query: this.channelSearch,
+        sync: 1,
+        force_public: 1,
+      };
+
+      this.feedStore
+        .setEndpoint(
+          `api/v2/${this.endpoint}/${this.channel.guid}/${this.esFeedfilter}`,
+        )
+        .setAsActivities(this.esFeedfilter !== 'blogs')
+        .setLimit(12)
+        .setParams(params)
+        .fetchRemoteOrLocal();
+
+      return;
+    },
     /**
      * Set channel
      * @param channel
@@ -190,7 +223,7 @@ const createChannelStore = () => {
      */
     async loadFromGuidOrUsername(guidOrUsername: string) {
       const channel = await channelsService.get(guidOrUsername);
-      if (Platform.OS === 'ios' && channel.nsfw && channel.nsfw.length > 0) {
+      if (this.isNsfw(channel)) {
         NavigationService.goBack();
         showNotification(i18n.t('nsfw.notSafeChannel'));
       }
@@ -228,23 +261,29 @@ const createChannelStore = () => {
      * Upload Banner or Avatar
      * @param file
      * @param mediaType
+     * @param camera
      */
-    async upload(type: channelMediaType) {
-      if (!this.channel) {
-        return;
-      }
-
+    async upload(type: channelMediaType, camera = false) {
       const isBanner = type === 'banner';
 
       try {
-        imagePickerService
-          .show(
-            '',
-            'photo',
-            type === 'avatar',
-            isBanner ? 1500 : 1024,
-            isBanner ? 600 : 1024,
-          )
+        const promise = camera
+          ? imagePickerService.showCamera(
+              '',
+              'photo',
+              type === 'avatar',
+              true,
+              isBanner ? 1500 : 1024,
+              isBanner ? 600 : 1024,
+            )
+          : imagePickerService.show(
+              '',
+              'photo',
+              type === 'avatar',
+              isBanner ? 1500 : 1024,
+              isBanner ? 600 : 1024,
+            );
+        promise
           .then(async (response: customImagePromise) => {
             let file: CustomImage;
             if (response !== false && !Array.isArray(response)) {
@@ -255,7 +294,6 @@ const createChannelStore = () => {
             this.setIsUploading(true);
             this.setProgress(0, type);
             await ChannelService.upload(
-              null,
               type,
               {
                 uri: file.path || file.uri,
@@ -312,6 +350,14 @@ const createChannelStore = () => {
       } else {
         return 0;
       }
+    },
+    isNsfw(channel: Entity) {
+      return (
+        Platform.OS === 'ios' &&
+        channel.nsfw &&
+        channel.nsfw.length > 0 &&
+        channel.guid !== sessionService.getUser().guid
+      );
     },
   };
   return store;

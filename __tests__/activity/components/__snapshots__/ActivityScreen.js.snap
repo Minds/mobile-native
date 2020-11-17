@@ -19,335 +19,340 @@ exports[`Activity screen component renders correctly  1`] = `
     <View
       style={
         Array [
-          Object {
-            "alignItems": "center",
-            "borderBottomWidth": 0.5,
-            "display": "flex",
-            "flexDirection": "row",
-            "paddingHorizontal": 20,
-            "paddingVertical": 13,
-          },
           undefined,
-          Array [
-            undefined,
-            Object {
-              "borderBottomWidth": 0,
-              "shadowColor": "#000",
-              "shadowOffset": Object {
-                "height": 1,
-                "width": 0,
-              },
-              "shadowOpacity": 0.22,
-              "shadowRadius": 2.22,
+          Object {
+            "borderBottomWidth": 0,
+            "shadowColor": "#000",
+            "shadowOffset": Object {
+              "height": 1,
+              "width": 0,
             },
-            Object {
-              "paddingTop": 10,
-            },
-          ],
+            "shadowOpacity": 0.22,
+            "shadowRadius": 2.22,
+          },
+          Object {
+            "paddingTop": 10,
+          },
         ]
       }
     >
-      <Text
-        allowFontScaling={false}
-        onPress={[MockFunction]}
+      <View
         style={
           Array [
             Object {
-              "color": undefined,
-              "fontSize": 45,
+              "alignItems": "center",
+              "borderBottomWidth": 0.5,
+              "display": "flex",
+              "flexDirection": "row",
+              "paddingHorizontal": 20,
+              "paddingVertical": 13,
             },
-            Array [
-              Object {
-                "elevation": 4,
-                "left": 0,
-                "position": "absolute",
-                "shadowOffset": Object {
-                  "height": 1,
-                  "width": 1,
-                },
-                "shadowOpacity": 0.2,
-                "shadowRadius": 3,
-              },
-              undefined,
-              Object {
-                "top": 5,
-              },
-              Array [
-                undefined,
-                Object {
-                  "marginLeft": -17,
-                  "marginRight": -5,
-                  "paddingTop": 5,
-                  "position": undefined,
-                  "top": undefined,
-                  "width": 50,
-                },
-              ],
-            ],
-            Object {
-              "fontFamily": "Material Design Icons",
-              "fontStyle": "normal",
-              "fontWeight": "normal",
-            },
-            Object {},
+            undefined,
           ]
         }
       >
-        󰅁
-      </Text>
-      <View
-        onPress={[Function]}
-      >
-        <View
+        <Text
+          allowFontScaling={false}
+          onPress={[MockFunction]}
           style={
             Array [
               Object {
-                "overflow": "hidden",
+                "color": undefined,
+                "fontSize": 45,
               },
+              Array [
+                Object {
+                  "elevation": 4,
+                  "left": 0,
+                  "position": "absolute",
+                  "shadowOffset": Object {
+                    "height": 1,
+                    "width": 1,
+                  },
+                  "shadowOpacity": 0.2,
+                  "shadowRadius": 3,
+                },
+                undefined,
+                Object {
+                  "top": 5,
+                },
+                Array [
+                  undefined,
+                  Object {
+                    "marginLeft": -17,
+                    "marginRight": -5,
+                    "paddingTop": 5,
+                    "position": undefined,
+                    "top": undefined,
+                    "width": 50,
+                  },
+                ],
+              ],
               Object {
-                "borderRadius": 18.5,
-                "height": 37,
-                "width": 37,
+                "fontFamily": "Material Design Icons",
+                "fontStyle": "normal",
+                "fontWeight": "normal",
               },
+              Object {},
             ]
           }
         >
-          <FastImageView
-            resizeMode="cover"
-            source={
-              Object {
-                "headers": Object {
-                  "App-Version": "3.8.0",
-                  "Cache-Control": "no-cache, no-store, must-revalidate",
-                  "Content-Type": "application/json",
-                  "Pragma": "no-cache",
-                },
-                "uri": "https://cdn.minds.com/icon/824853017709780997/medium/undefined",
-              }
-            }
+          󰅁
+        </Text>
+        <View
+          onPress={[Function]}
+        >
+          <View
             style={
-              Object {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              }
+              Array [
+                Object {
+                  "overflow": "hidden",
+                },
+                Object {
+                  "borderRadius": 18.5,
+                  "height": 37,
+                  "width": 37,
+                },
+              ]
             }
-          />
+          >
+            <FastImageView
+              resizeMode="cover"
+              source={
+                Object {
+                  "headers": Object {
+                    "App-Version": "3.8.0",
+                    "Cache-Control": "no-cache, no-store, must-revalidate",
+                    "Content-Type": "application/json",
+                    "Pragma": "no-cache",
+                  },
+                  "uri": "https://cdn.minds.com/icon/824853017709780997/medium/undefined",
+                }
+              }
+              style={
+                Object {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+            />
+          </View>
         </View>
-      </View>
-      <View
-        style={
-          Object {
-            "flex": 1,
-            "flexWrap": "wrap",
-            "marginLeft": 8,
-            "paddingRight": 36,
-          }
-        }
-      >
         <View
           style={
             Object {
-              "flexDirection": "row",
+              "flex": 1,
+              "flexWrap": "wrap",
+              "marginLeft": 8,
+              "paddingRight": 36,
             }
           }
         >
           <View
-            onPress={[Function]}
             style={
-              Array [
-                undefined,
-                undefined,
-              ]
+              Object {
+                "flexDirection": "row",
+              }
             }
           >
-            <Text
-              numberOfLines={1}
+            <View
+              onPress={[Function]}
               style={
                 Array [
-                  Object {
-                    "color": "#444",
-                    "fontFamily": "Roboto",
-                    "fontSize": 16,
-                    "fontWeight": "bold",
-                  },
+                  undefined,
                   undefined,
                 ]
               }
             >
-              
+              <Text
+                numberOfLines={1}
+                style={
+                  Array [
+                    Object {
+                      "color": "#444",
+                      "fontFamily": "Roboto",
+                      "fontSize": 16,
+                      "fontWeight": "bold",
+                    },
+                    undefined,
+                  ]
+                }
+              >
+                
+              </Text>
+            </View>
+          </View>
+          <View>
+            <Text
+              numberOfLines={1}
+              style={
+                Array [
+                  undefined,
+                  undefined,
+                  undefined,
+                ]
+              }
+            >
+              3 years ago
             </Text>
           </View>
         </View>
         <View>
-          <Text
-            numberOfLines={1}
-            style={
-              Array [
-                undefined,
-                undefined,
-                undefined,
-              ]
-            }
-          >
-            3 years ago
-          </Text>
-        </View>
-      </View>
-      <View>
-        <View>
-          <Text
-            allowFontScaling={false}
-            onPress={[Function]}
-            style={
-              Array [
-                Object {
-                  "color": undefined,
-                  "fontSize": 28,
-                },
-                undefined,
-                Object {
-                  "fontFamily": "Material Icons",
-                  "fontStyle": "normal",
-                  "fontWeight": "normal",
-                },
-                Object {},
-              ]
-            }
-          >
-            
-          </Text>
-          <Modal
-            animationType="none"
-            hardwareAccelerated={false}
-            onRequestClose={[Function]}
-            transparent={true}
-            visible={false}
-          >
-            <View
+          <View>
+            <Text
+              allowFontScaling={false}
+              onPress={[Function]}
               style={
                 Array [
-                  Array [
-                    Object {
-                      "flex": 1,
-                      "flexDirection": "row",
-                    },
-                  ],
+                  Object {
+                    "color": undefined,
+                    "fontSize": 28,
+                  },
+                  undefined,
+                  Object {
+                    "fontFamily": "Material Icons",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  Object {},
                 ]
               }
             >
-              <Text
-                onPress={[Function]}
+              
+            </Text>
+            <Modal
+              animationType="none"
+              hardwareAccelerated={false}
+              onRequestClose={[Function]}
+              transparent={true}
+              visible={false}
+            >
+              <View
                 style={
                   Array [
                     Array [
                       Object {
-                        "backgroundColor": "#000",
-                        "bottom": 0,
-                        "left": 0,
-                        "opacity": 0.4,
-                        "position": "absolute",
-                        "right": 0,
-                        "top": 0,
+                        "flex": 1,
+                        "flexDirection": "row",
                       },
                     ],
                   ]
                 }
-              />
-              <View
-                style={
-                  Object {
-                    "alignSelf": "flex-end",
-                    "backgroundColor": "#252E31",
-                    "flex": 1,
-                    "height": 45.5,
-                    "transform": Array [
-                      Object {
-                        "translateY": 45.5,
-                      },
-                    ],
-                  }
-                }
               >
-                <View
+                <Text
+                  onPress={[Function]}
                   style={
                     Array [
-                      Object {
-                        "alignItems": "center",
-                        "backgroundColor": "#fff",
-                        "height": 40,
-                        "justifyContent": "center",
-                      },
-                      Object {
-                        "alignItems": "center",
-                        "backgroundColor": "#252E31",
-                        "height": 40,
-                        "justifyContent": "center",
-                      },
+                      Array [
+                        Object {
+                          "backgroundColor": "#000",
+                          "bottom": 0,
+                          "left": 0,
+                          "opacity": 0.4,
+                          "position": "absolute",
+                          "right": 0,
+                          "top": 0,
+                        },
+                      ],
                     ]
                   }
+                />
+                <View
+                  style={
+                    Object {
+                      "alignSelf": "flex-end",
+                      "backgroundColor": "#242A30",
+                      "flex": 1,
+                      "height": 45.5,
+                      "transform": Array [
+                        Object {
+                          "translateY": 45.5,
+                        },
+                      ],
+                    }
+                  }
                 >
-                  <Text
+                  <View
                     style={
                       Array [
                         Object {
-                          "color": "#757575",
-                          "fontSize": 14,
+                          "alignItems": "center",
+                          "backgroundColor": "#fff",
+                          "height": 40,
+                          "justifyContent": "center",
+                        },
+                        Object {
+                          "alignItems": "center",
+                          "backgroundColor": "#242A30",
+                          "height": 40,
+                          "justifyContent": "center",
                         },
                       ]
                     }
                   >
-                    Actions
-                  </Text>
-                </View>
-                <RCTScrollView
-                  scrollEnabled={false}
-                >
-                  <View />
-                </RCTScrollView>
-                <View
-                  activeOpacity={1}
-                  onPress={[Function]}
-                  style={
-                    Array [
-                      Object {
-                        "alignItems": "center",
-                        "backgroundColor": "#fff",
-                        "height": 50,
-                        "justifyContent": "center",
-                        "marginTop": 6,
-                      },
-                      Object {
-                        "alignItems": "center",
-                        "backgroundColor": "#202527",
-                        "height": 50,
-                        "justifyContent": "center",
-                        "marginTop": 6,
-                      },
-                    ]
-                  }
-                  underlayColor="#F4F4F4"
-                >
-                  <Text
-                    style={
-                      Array [
+                    <Text
+                      style={
                         Array [
                           Object {
-                            "fontSize": 18,
+                            "color": "#757575",
+                            "fontSize": 14,
                           },
-                        ],
+                        ]
+                      }
+                    >
+                      Actions
+                    </Text>
+                  </View>
+                  <RCTScrollView
+                    scrollEnabled={false}
+                  >
+                    <View />
+                  </RCTScrollView>
+                  <View
+                    activeOpacity={1}
+                    onPress={[Function]}
+                    style={
+                      Array [
                         Object {
-                          "color": "#007AFF",
+                          "alignItems": "center",
+                          "backgroundColor": "#fff",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "marginTop": 6,
+                        },
+                        Object {
+                          "alignItems": "center",
+                          "backgroundColor": "#1A2025",
+                          "height": 50,
+                          "justifyContent": "center",
+                          "marginTop": 6,
                         },
                       ]
                     }
-                  />
+                    underlayColor="#F4F4F4"
+                  >
+                    <Text
+                      style={
+                        Array [
+                          Array [
+                            Object {
+                              "fontSize": 18,
+                            },
+                          ],
+                          Object {
+                            "color": "#007AFF",
+                          },
+                        ]
+                      }
+                    />
+                  </View>
                 </View>
               </View>
-            </View>
-          </Modal>
+            </Modal>
+          </View>
         </View>
       </View>
     </View>
@@ -415,6 +420,216 @@ exports[`Activity screen component renders correctly  1`] = `
               Message
             </Text>
           </View>
+          <View>
+            <Modal
+              animationType="none"
+              hardwareAccelerated={false}
+              hideModalContentWhileAnimating={false}
+              onModalHide={[Function]}
+              onModalWillHide={[Function]}
+              onModalWillShow={[Function]}
+              onRequestClose={[Function]}
+              scrollHorizontal={false}
+              scrollOffset={0}
+              scrollOffsetMax={0}
+              scrollTo={null}
+              supportedOrientations={
+                Array [
+                  "portrait",
+                  "landscape",
+                ]
+              }
+              swipeThreshold={100}
+              transparent={true}
+              visible={false}
+            >
+              <View
+                accessible={true}
+                focusable={true}
+                forwardedRef={[Function]}
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  Object {
+                    "backgroundColor": "black",
+                    "bottom": 0,
+                    "height": 1334,
+                    "left": 0,
+                    "opacity": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                    "width": 750,
+                  }
+                }
+              />
+              <View
+                forwardedRef={[Function]}
+                hideModalContentWhileAnimating={false}
+                onModalHide={[Function]}
+                onModalWillHide={[Function]}
+                onModalWillShow={[Function]}
+                pointerEvents="box-none"
+                scrollHorizontal={false}
+                scrollOffset={0}
+                scrollOffsetMax={0}
+                scrollTo={null}
+                style={
+                  Object {
+                    "flex": 1,
+                    "justifyContent": "center",
+                    "margin": 37.5,
+                    "transform": Array [
+                      Object {
+                        "translateY": 0,
+                      },
+                    ],
+                  }
+                }
+                supportedOrientations={
+                  Array [
+                    "portrait",
+                    "landscape",
+                  ]
+                }
+                swipeThreshold={100}
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "transparent",
+                        "flex": 1,
+                        "justifyContent": "center",
+                      },
+                    ]
+                  }
+                >
+                  <Text
+                    style={
+                      Object {
+                        "color": "#fff",
+                        "marginBottom": 30,
+                      }
+                    }
+                  >
+                    
+                  </Text>
+                  <View
+                    style={
+                      Array [
+                        undefined,
+                        undefined,
+                        undefined,
+                        Object {
+                          "marginBottom": 30,
+                        },
+                      ]
+                    }
+                  >
+                    <RCTScrollView
+                      data={null}
+                      disableVirtualization={false}
+                      extraData=""
+                      getItem={[Function]}
+                      getItemCount={[Function]}
+                      horizontal={false}
+                      initialNumToRender={10}
+                      keyExtractor={[Function]}
+                      maxToRenderPerBatch={10}
+                      onContentSizeChange={[Function]}
+                      onEndReachedThreshold={2}
+                      onLayout={[Function]}
+                      onMomentumScrollEnd={[Function]}
+                      onScroll={[Function]}
+                      onScrollBeginDrag={[Function]}
+                      onScrollEndDrag={[Function]}
+                      onScrollToIndexFailed={[Function]}
+                      removeClippedSubviews={false}
+                      renderItem={[Function]}
+                      scrollEventThrottle={50}
+                      stickyHeaderIndices={Array []}
+                      updateCellsBatchingPeriod={50}
+                      viewabilityConfigCallbackPairs={Array []}
+                      windowSize={21}
+                    >
+                      <View />
+                    </RCTScrollView>
+                  </View>
+                  <View
+                    style={
+                      Object {
+                        "backgroundColor": "transparent",
+                        "borderRadius": 28,
+                        "height": 55,
+                        "margin": 7,
+                        "overflow": "hidden",
+                        "shadowColor": "rgba(0,0,0, .4)",
+                        "shadowOffset": Object {
+                          "height": 1,
+                          "width": 1,
+                        },
+                        "shadowOpacity": 1,
+                        "shadowRadius": 1,
+                        "width": 55,
+                        "zIndex": 1000,
+                      }
+                    }
+                  >
+                    <View
+                      activeOpacity={0.3}
+                      disabled={false}
+                      onPress={[Function]}
+                      underlayColor="transparent"
+                    >
+                      <View
+                        style={
+                          Object {
+                            "alignItems": "center",
+                            "backgroundColor": "#ffffff",
+                            "borderRadius": 28,
+                            "height": 52,
+                            "justifyContent": "center",
+                            "width": 52,
+                          }
+                        }
+                      >
+                        <Text
+                          allowFontScaling={false}
+                          style={
+                            Array [
+                              Object {
+                                "color": "black",
+                                "fontSize": 24,
+                              },
+                              Object {
+                                "backgroundColor": "transparent",
+                              },
+                              Object {
+                                "fontFamily": "Ionicons",
+                                "fontStyle": "normal",
+                                "fontWeight": "normal",
+                              },
+                              Object {},
+                            ]
+                          }
+                          testID="iconIcon"
+                        >
+                          
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </Modal>
+          </View>
         </View>
       </View>
     </RCTScrollView>
@@ -422,8 +637,8 @@ exports[`Activity screen component renders correctly  1`] = `
       proxiedProperties={
         Object {
           "colors": Array [
-            2106663,
-            4280296743,
+            1712165,
+            4279902245,
           ],
           "endPoint": undefined,
           "locations": undefined,
@@ -592,53 +807,10 @@ exports[`Activity screen component renders correctly  1`] = `
             </Text>
           </View>
         </View>
-        <View
-          onPress={[Function]}
-          style={
-            Array [
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-            ]
-          }
-          testID="Remind activity button"
-        >
-          <Text
-            allowFontScaling={false}
-            style={
-              Array [
-                Object {
-                  "color": undefined,
-                  "fontSize": 21,
-                },
-                Array [
-                  undefined,
-                  Object {
-                    "marginRight": 5,
-                  },
-                ],
-                Object {
-                  "fontFamily": "Material Icons",
-                  "fontStyle": "normal",
-                  "fontWeight": "normal",
-                },
-                Object {},
-              ]
-            }
-          >
-            
-          </Text>
-          <View
-            style={
-              Object {
-                "alignItems": "center",
-                "flexDirection": "column",
-              }
-            }
-          >
-            <Text
-              size={15}
+        <Menu
+          button={
+            <preventDoubleTap(TouchableOpacity)
+              onPress={[Function]}
               style={
                 Array [
                   undefined,
@@ -647,11 +819,93 @@ exports[`Activity screen component renders correctly  1`] = `
                   undefined,
                 ]
               }
+              testID="Remind activity button"
             >
-              
+              <Icon
+                allowFontScaling={false}
+                name="repeat"
+                size={21}
+                style={
+                  Array [
+                    undefined,
+                    undefined,
+                  ]
+                }
+              />
+              <Counter
+                count={0}
+                size={15}
+              />
+            </preventDoubleTap(TouchableOpacity)>
+          }
+        >
+          <MenuItem
+            onPress={[Function]}
+            textStyle={
+              Array [
+                undefined,
+                undefined,
+              ]
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              style={
+                Array [
+                  Object {
+                    "color": undefined,
+                    "fontSize": 15,
+                  },
+                  Array [
+                    undefined,
+                  ],
+                  Object {
+                    "fontFamily": "Material Icons",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  Object {},
+                ]
+              }
+            >
+              
             </Text>
-          </View>
-        </View>
+              Remind
+          </MenuItem>
+          <MenuItem
+            onPress={[Function]}
+            textStyle={
+              Array [
+                undefined,
+                undefined,
+              ]
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              style={
+                Array [
+                  Object {
+                    "color": undefined,
+                    "fontSize": 15,
+                  },
+                  Array [
+                    undefined,
+                  ],
+                  Object {
+                    "fontFamily": "Material Icons",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  Object {},
+                ]
+              }
+            >
+              
+            </Text>
+              Quote
+          </MenuItem>
+        </Menu>
       </View>
     </View>
   </View>

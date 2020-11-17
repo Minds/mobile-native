@@ -44,9 +44,12 @@ exports[`renders correctly for activity 1`] = `
   </View>
   <Text
     style={
-      Object {
-        "fontSize": 11,
-      }
+      Array [
+        Object {
+          "fontSize": 11,
+        },
+        undefined,
+      ]
     }
   >
     Invalid date
@@ -100,9 +103,12 @@ exports[`renders correctly for comment 1`] = `
   </View>
   <Text
     style={
-      Object {
-        "fontSize": 11,
-      }
+      Array [
+        Object {
+          "fontSize": 11,
+        },
+        undefined,
+      ]
     }
   >
     Invalid date
@@ -154,9 +160,12 @@ exports[`renders correctly for object 1`] = `
   </View>
   <Text
     style={
-      Object {
-        "fontSize": 11,
-      }
+      Array [
+        Object {
+          "fontSize": 11,
+        },
+        undefined,
+      ]
     }
   >
     Invalid date

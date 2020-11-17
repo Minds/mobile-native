@@ -7,19 +7,30 @@ import {
   StyleSheet,
   ScrollView,
   View,
+  StyleProp,
+  ViewStyle,
+  TextStyle,
 } from 'react-native';
 
-import _ from 'lodash';
-
-import { CommonStyle as CS } from '../../styles/Common';
 import ThemedStyles from '../../styles/ThemedStyles';
+
+interface PropsType {
+  tagStyle?: StyleProp<ViewStyle>;
+  tagSelectedStyle?: StyleProp<ViewStyle>;
+  textSelectedStyle?: StyleProp<TextStyle>;
+  textStyle?: StyleProp<TextStyle>;
+  onTagDeleted: (string) => void;
+  onTagAdded: (string) => void;
+  tags: Array<{ value: string; selected: boolean }>;
+  disableSort?: boolean;
+}
 
 /**
  * Tag Select Component
  */
 @inject('hashtag')
 @observer
-export default class TagSelect extends Component {
+export default class TagSelect extends Component<PropsType> {
   /**
    * Remove tag
    * @param {string} tag
@@ -71,12 +82,12 @@ export default class TagSelect extends Component {
             <TouchableOpacity
               style={[
                 styles.tag,
+                theme.backgroundPrimary,
                 tagStyle,
                 tag.selected ? tagSelectedStyle : null,
                 tag.value === this.props.hashtag.hashtag
-                  ? [CS.borderPrimary, CS.border]
+                  ? [theme.borderPrimary, theme.border]
                   : null,
-                theme.backgroundPrimary,
               ]}
               key={i}
               onPress={() => this.toogle(tag)}

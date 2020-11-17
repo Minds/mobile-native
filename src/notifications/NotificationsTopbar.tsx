@@ -23,7 +23,7 @@ export default class NotificacionsTopbar extends Component {
     const filter = this.props.notifications.filter;
 
     const bstyle = {
-      borderBottomColor: ThemedStyles.getColor('primary_background'),
+      borderBottomColor: ThemedStyles.getColor('tertiary_background'),
     };
 
     return (
@@ -31,7 +31,7 @@ export default class NotificacionsTopbar extends Component {
         style={[
           styles.container,
           CommonStyle.shadow,
-          ThemedStyles.style.backgroundSecondary,
+          ThemedStyles.style.backgroundPrimary,
         ]}>
         <View style={styles.topbar}>
           <View style={[styles.tab, bstyle, this.selected('all')]}>

@@ -19,6 +19,7 @@ import { CommonActions } from '@react-navigation/native';
 import logService from '../common/services/log.service';
 import { runInAction } from 'mobx';
 import { Image, Platform } from 'react-native';
+import { hashRegex } from '../common/components/Tags';
 
 /**
  * Display an error message to the user.
@@ -268,6 +269,9 @@ export default function ({ props, newsfeed }) {
         this.tags.splice(index, 1);
       }
     },
+    parseTags() {
+      this.text.match(hashRegex).forEach((v) => this.addTag(v.trim()));
+    },
     /**
      * Set posting
      * @param {boolean} value
@@ -402,40 +406,7 @@ export default function ({ props, newsfeed }) {
       this.attachment.attachMedia(this.mediaToConfirm, this.extra);
       this.mode = 'text';
     },
-    /**
-     * Remind
-     */
-    async remind() {
-      const message = this.text;
-      const metadata = this.entity.getClientMetadata();
 
-      const post = {
-        message,
-        ...metadata,
-      };
-
-      return await remoteAction(
-        async () => {
-          this.setPosting(true);
-          try {
-            const data = await api.post(
-              `api/v2/newsfeed/remind/${this.entity.guid}`,
-              post,
-            );
-            if (data.guid) {
-              const resp = await getSingle(data.guid);
-              return ActivityModel.create(resp.activity);
-            }
-          } catch (e) {
-            this.clear(false);
-          }
-          return false;
-        },
-        '',
-        0,
-        false,
-      );
-    },
     /**
      * Submit post
      */
@@ -443,6 +414,9 @@ export default function ({ props, newsfeed }) {
       if (this.posting) {
         return;
       }
+
+      // parse tags from text
+      this.parseTags();
 
       // Plus Monetize?
       if (
@@ -477,7 +451,8 @@ export default function ({ props, newsfeed }) {
       if (
         !this.attachment.hasAttachment &&
         !this.text &&
-        (!this.embed.meta || !this.embed.meta.url)
+        (!this.embed.meta || !this.embed.meta.url) &&
+        !this.isRemind
       ) {
         showError(i18n.t('capture.nothingToPost'));
         return false;
@@ -507,6 +482,11 @@ export default function ({ props, newsfeed }) {
           : this.wire_threshold.min;
       }
 
+      // add remind
+      if (this.isRemind) {
+        newPost.remind_guid = this.entity.guid;
+      }
+
       if (this.postToPermaweb) {
         if (this.paywalled) {
           showError(i18n.t('permaweb.cannotMonetize'));
@@ -530,7 +510,7 @@ export default function ({ props, newsfeed }) {
         newPost = Object.assign(newPost, this.embed.meta);
       }
 
-      if (props.route.params && props.route.params.group) {
+      if (props.route?.params && props.route.params.group) {
         newPost.container_guid = props.route.params.group.guid;
         this.group = props.route.params.group;
         // remove the group to avoid reuse it on future posts
@@ -560,9 +540,15 @@ export default function ({ props, newsfeed }) {
           }
           return ActivityModel.create(response.activity);
         }
+      } catch (e) {
+        console.log(e);
       } finally {
         this.setPosting(false);
       }
+    },
+    setRemindEntity(entity) {
+      this.entity = entity;
+      this.isRemind = true;
     },
     async saveMembsershipMonetize(support_tier) {
       this.wire_threshold = { support_tier };

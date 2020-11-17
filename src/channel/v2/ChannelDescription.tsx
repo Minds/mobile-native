@@ -20,8 +20,8 @@ type PropsType = {
 const ChannelDescription = (props: PropsType) => {
   const navigation = useNavigation();
   const theme = ThemedStyles.style;
-  const backgroundColor = ThemedStyles.getColor('secondary_background');
-  const startColor = backgroundColor + '00';
+  const backgroundColor = ThemedStyles.getColor('primary_background');
+  const startColor = (ThemedStyles.theme ? '#242A30' : '#F5F5F5') + '00';
   const endColor = backgroundColor + 'FF';
 
   const renderRevealedFooter = useCallback(

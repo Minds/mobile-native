@@ -7,11 +7,9 @@ import { useLegacyStores } from '../../common/hooks/use-stores';
 import Button from '../../common/components/Button';
 import Wrapper from './common/Wrapper';
 import { CheckBox } from 'react-native-elements';
-import LabeledComponent from '../../common/components/LabeledComponent';
 import { AppStackParamList } from '../../navigation/NavigationTypes';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
-import MindsSwitch from '../../common/components/MindsSwitch';
 
 type PlusMonetizeScreenRouteProp = RouteProp<AppStackParamList, 'PlusMonetize'>;
 type PlusMonetizeScreenNavigationProp = StackNavigationProp<
@@ -27,12 +25,8 @@ type PropsType = {
 const createPlusMonetizeStore = () => {
   const store = {
     agreedTerms: false,
-    exclusivity: '48hrs' as '48hrs' | 'always',
     setAgreedTerms() {
       this.agreedTerms = !this.agreedTerms;
-    },
-    setExclusivity(exclusivity) {
-      this.exclusivity = exclusivity;
     },
   };
   return store;
@@ -46,15 +40,14 @@ const PlusMonetizeScreen = observer(({ route, navigation }: PropsType) => {
   const localStore = useLocalStore(createPlusMonetizeStore);
 
   const save = useCallback(() => {
-    const exclusivity =
-      localStore.exclusivity === '48hrs' ? 48 * 60 * 60 : null;
+    const exclusivity = null;
     store.savePlusMonetize(exclusivity);
-  }, [store, localStore]);
+  }, [store]);
 
   const onComplete = useCallback(
     (success: any) => {
       if (success) {
-        user.me.togglePro();
+        user.me.togglePlus();
       }
     },
     [user],
@@ -116,17 +109,6 @@ const PlusMonetizeScreen = observer(({ route, navigation }: PropsType) => {
           checked={localStore.agreedTerms}
           onPress={localStore.setAgreedTerms}
         />
-        <LabeledComponent
-          label={i18n.t('monetize.plusMonetize.exclusivity')}
-          labelStyle={theme.fontL}>
-          <MindsSwitch
-            leftText={i18n.t('monetize.plusMonetize.hrs')}
-            rightText={i18n.t('monetize.plusMonetize.always')}
-            leftValue={'48hrs'}
-            rightValue={'always'}
-            onSelectedValueChange={localStore.setExclusivity}
-          />
-        </LabeledComponent>
       </View>
     </Wrapper>
   );

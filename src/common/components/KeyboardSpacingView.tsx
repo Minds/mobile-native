@@ -1,15 +1,18 @@
-import React, { useEffect } from 'react';
-import { Keyboard, ViewProps } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Keyboard, StatusBar, View, ViewProps } from 'react-native';
 import { mix, useTransition } from 'react-native-redash';
 import Animated from 'react-native-reanimated';
 import { observer, useLocalStore } from 'mobx-react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 interface PropsType extends ViewProps {
   children: React.ReactNode;
   enabled?: boolean;
   onKeyboardShown?: (height: number) => void;
 }
+
+export const screenRealHeightContext = React.createContext<number>(0);
 
 /**
  * This components leaves room for the keyboard adding a padding bellow it
@@ -23,6 +26,7 @@ export default observer(function KeyboardSpacingView({
   ...otherProps
 }: PropsType) {
   const insets = useSafeAreaInsets();
+  const heightContext = React.useContext(screenRealHeightContext);
   const store = useLocalStore(
     ({ enabled: enabledProp }) => ({
       shown: false,
@@ -31,7 +35,7 @@ export default observer(function KeyboardSpacingView({
         if (enabledProp) {
           store.shown = true;
         }
-        store.height = e.endCoordinates.height;
+        store.height = heightContext - e.endCoordinates.screenY;
         if (onKeyboardShown) {
           onKeyboardShown(store.height);
         }
@@ -63,3 +67,23 @@ export default observer(function KeyboardSpacingView({
     </Animated.View>
   );
 });
+
+/**
+ * Screen height provider
+ * It detects the real height of the screen to implement a workaround
+ * for the incorrect keyboard height detection in some devices
+ */
+export const ScreenHeightProvider = ({ children }) => {
+  const [height, setHeight] = useState(0);
+  return (
+    <View
+      style={ThemedStyles.style.flexContainer}
+      onLayout={({ nativeEvent }) =>
+        setHeight(nativeEvent.layout.height + (StatusBar.currentHeight || 0))
+      }>
+      <screenRealHeightContext.Provider value={height}>
+        {children}
+      </screenRealHeightContext.Provider>
+    </View>
+  );
+};
