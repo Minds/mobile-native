@@ -511,6 +511,7 @@
   "settings": {
     "submit": "Submit",
     "blockedChannels": "Blocked Channels",
+    "noBlockedChannels": "You don't have any blocked Channels",
     "currentPassword": "Current Password",
     "disableChannelConfirm": "Your account will be disabled. Are you sure you want to proceed?",
     "deleteChannelConfirm": "Your account and all data related to it will be deleted permanently. Are you sure you want to proceed?",
@@ -1093,5 +1094,6 @@
     "cannotMonetize": "Cannot post monetized posts to permaweb",
     "viewOnPermaweb": "Permaweb"
   },
-  "help": "Help"
+  "help": "Help",
+  "unblock":"Unblock"
 }

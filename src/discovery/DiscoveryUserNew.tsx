@@ -102,7 +102,7 @@ class DiscoveryUser extends Component<PropsType> {
         onPress={this._navToChannel}
         {...otherProps}>
         <Image source={this.state.source} style={styles.avatar} />
-        <View style={CS.flexContainerCenter}>
+        <View>
           <Text style={[styles.body, styles.title, CS.colorPrimaryText]}>
             {row.item.name}
           </Text>

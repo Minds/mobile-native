@@ -252,6 +252,11 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
     return this;
   }
 
+  noSync(): FeedStore {
+    this.feedsService.noSync();
+    return this;
+  }
+
   /**
    * Set limit for the feeds service
    * @param {integer} limit
