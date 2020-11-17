@@ -223,6 +223,9 @@ const createChannelStore = () => {
      */
     async loadFromGuidOrUsername(guidOrUsername: string) {
       const channel = await channelsService.get(guidOrUsername);
+      if (!channel) {
+        return;
+      }
       if (this.isNsfw(channel)) {
         NavigationService.goBack();
         showNotification(i18n.t('nsfw.notSafeChannel'));
@@ -239,8 +242,10 @@ const createChannelStore = () => {
         undefined,
         true,
       );
-      this.setChannel(channel);
-      await sessionService.loadUser(channel);
+      if (channel) {
+        this.setChannel(channel);
+        await sessionService.loadUser(channel);
+      }
     },
     setIsUploading(uploading: boolean) {
       this.uploading = uploading;

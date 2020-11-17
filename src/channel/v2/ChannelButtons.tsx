@@ -1,11 +1,10 @@
 import React, { useCallback, useRef } from 'react';
-import { View, StyleSheet, Platform } from 'react-native';
+import { View, Platform } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { useNavigation } from '@react-navigation/native';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import { observer } from 'mobx-react';
 import type { NativeStackNavigationProp } from 'react-native-screens/native-stack';
-import Button from '../../common/components/Button';
 import i18n from '../../common/services/i18n.service';
 import sessionService from '../../common/services/session.service';
 import type { AppStackParamList } from '../../navigation/NavigationTypes';
@@ -21,9 +20,13 @@ import type { GestureResponderEvent } from 'react-native';
 import { ChannelStoreType } from './createChannelStore';
 import { SupportTiersType } from '../../wire/WireTypes';
 
+import Subscribe from './buttons/Subscribe';
+import Edit from './buttons/Edit';
+import Join from './buttons/Join';
+
 type ButtonsType = 'edit' | 'more' | 'wire' | 'subscribe' | 'message' | 'join';
 
-type PropsType = {
+export type ChannelButtonsPropsType = {
   store: ChannelStoreType;
   onEditPress: (ev: GestureResponderEvent) => void;
   notShow?: Array<ButtonsType>;
@@ -65,13 +68,12 @@ const check = {
 /**
  * Channel buttons
  */
-const ChannelButtons = observer((props: PropsType) => {
+const ChannelButtons = observer((props: ChannelButtonsPropsType) => {
   const menuRef = useRef<any>();
   const theme = ThemedStyles.style;
   const navigation = useNavigation<
     NativeStackNavigationProp<AppStackParamList>
   >();
-  const subscriptionText = '+ ' + i18n.t('channel.subscribe');
 
   const openMessenger = useCallback(() => {
     if (!props.store.channel) return null;
@@ -81,15 +83,6 @@ const ChannelButtons = observer((props: PropsType) => {
       },
     });
   }, [navigation, props.store.channel]);
-
-  const join = useCallback(() => {
-    if (props.store.channel) {
-      navigation.push('JoinMembershipScreen', {
-        user: props.store.channel,
-        tiers: props.store.tiers,
-      });
-    }
-  }, [navigation, props.store.channel, props.store.tiers]);
 
   const openWire = useCallback(() => {
     navigation.push('WireFab', {
@@ -110,15 +103,7 @@ const ChannelButtons = observer((props: PropsType) => {
       style={[theme.rowJustifyEnd, theme.marginRight2x, props.containerStyle]}>
       {shouldShow('edit') && (
         <View style={isIos ? undefined : theme.paddingTop2x}>
-          <Button
-            color={ThemedStyles.getColor('secondary_background')}
-            text={i18n.t('channel.editChannel')}
-            textStyle={isIos ? theme.fontL : theme.fontM}
-            containerStyle={styles.button}
-            textColor={ThemedStyles.getColor('primary_text')}
-            onPress={props.onEditPress}
-            inverted
-          />
+          <Edit {...props} />
         </View>
       )}
       {shouldShow('message') && (
@@ -149,36 +134,13 @@ const ChannelButtons = observer((props: PropsType) => {
         />
       )}
       {shouldShow('join') && (
-        <Button
-          color={
-            showSubscribe
-              ? ThemedStyles.getColor('secondary_background')
-              : ThemedStyles.getColor('green')
-          }
-          text={i18n.t('join')}
-          textStyle={[
-            isIos ? theme.fontL : theme.fontM,
-            !ThemedStyles.theme && !showSubscribe
-              ? null
-              : theme.colorPrimaryText,
-          ]}
-          containerStyle={styles.button}
-          textColor="white"
-          onPress={join}
-          inverted
+        <Join
+          showSubscribe={showSubscribe}
+          navigation={navigation}
+          {...props}
         />
       )}
-      {showSubscribe && (
-        <Button
-          color={ThemedStyles.getColor('green')}
-          text={subscriptionText}
-          textStyle={isIos ? theme.fontL : theme.fontM}
-          containerStyle={styles.button}
-          textColor="white"
-          onPress={props.store.channel.toggleSubscription}
-          inverted
-        />
-      )}
+      {showSubscribe && <Subscribe {...props} />}
       <ChannelMoreMenu
         channel={props.store.channel}
         ref={menuRef}
@@ -189,14 +151,3 @@ const ChannelButtons = observer((props: PropsType) => {
 });
 
 export default ChannelButtons;
-
-const styles = StyleSheet.create({
-  button: {
-    padding: Platform.select({ ios: 8, android: 6 }),
-    marginLeft: 5,
-    shadowOpacity: 0.25,
-    shadowRadius: 2,
-    shadowOffset: { width: 0, height: 2 },
-    shadowColor: '#000',
-  },
-});
