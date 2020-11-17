@@ -71,12 +71,18 @@ const ChannelHeader = observer((props: PropsType) => {
     }
   }, [props.navigation, props.store]);
 
-  const tabs: Array<TabType<ChannelTabType>> = [
-    { id: 'feed', title: i18n.t('feed') },
-    { id: 'memberships', title: i18n.t('settings.otherOptions.b1') },
-    // { id: 'shop', title: 'Shop' },
-    { id: 'about', title: i18n.t('about') },
-  ];
+  const tabs: Array<TabType<ChannelTabType>> = channel.isOwner()
+    ? [
+        { id: 'feed', title: i18n.t('feed') },
+        { id: 'memberships', title: i18n.t('settings.otherOptions.b1') },
+        // { id: 'shop', title: 'Shop' },
+        { id: 'about', title: i18n.t('about') },
+      ]
+    : [
+        { id: 'feed', title: i18n.t('feed') },
+        // { id: 'shop', title: 'Shop' },
+        { id: 'about', title: i18n.t('about') },
+      ];
 
   const screen = () => {
     switch (props.store.tab) {
