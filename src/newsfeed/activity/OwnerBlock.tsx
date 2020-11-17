@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   View,
   ViewStyle,
+  Platform,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
 
@@ -146,14 +147,9 @@ class OwnerBlock extends PureComponent<PropsType> {
     ) : null;
 
     return (
-      <View>
+      <View style={this.props.containerStyle}>
         {remind}
-        <View
-          style={[
-            styles.container,
-            theme.borderPrimary,
-            this.props.containerStyle,
-          ]}>
+        <View style={[styles.container, theme.borderPrimary]}>
           {this.props.leftToolbar}
           <DebouncedTouchableOpacity onPress={this._navToChannel}>
             <FastImage source={avatarSrc} style={styles.avatar} />
@@ -223,7 +219,7 @@ export default withSearchResultStore(OwnerBlock);
 
 const styles = StyleSheet.create({
   remindIcon: {
-    paddingTop: 3,
+    paddingTop: Platform.select({ android: 3, ios: 1 }),
     paddingRight: 5,
   },
   container: {
