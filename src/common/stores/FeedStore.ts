@@ -252,7 +252,7 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
     return this;
   }
 
-  noSync(): FeedStore {
+  noSync(): FeedStore<T> {
     this.feedsService.noSync();
     return this;
   }
