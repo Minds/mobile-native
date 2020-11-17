@@ -2,7 +2,7 @@
 import { waitForElement, waitForAndType, tapElement, waitForAndTap } from './helpers/waitFor';
 import { capturePoster, deletePost } from './actions/capturePoster';
 
-describe('Comment Flow', () => {
+describe.skip('Comment Flow', () => {
   beforeEach(async () => {
     await device.launchApp({
       newInstance: true,

@@ -37,6 +37,7 @@ export default class MessengerTabIconNew extends Component<Props> {
             name="chat-bubble-outline"
             size={26}
             style={[styles.button, theme.colorIcon]}
+            testID="MessengerButton"
           />
           {this.props.messengerList.unread ? (
             <FAIcon

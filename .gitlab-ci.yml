@@ -1,5 +1,6 @@
 stages:
   - test
+  - e2e
   - build
   - i18n
   - deploy
@@ -19,6 +20,33 @@ test:jest:
     - 'yarn prettier --check "./src/**/*.{ts,tsx,js,json}" "./*.{tsx,ts}"'
     - yarn tsc
     - yarn test
+
+# e2e test
+# e2e:detox:
+#  image: circleci/android:api-28-node
+#  variables:
+#    ANDROID_COMPILE_SDK: "28"
+#  stage: e2e
+#  cache:
+#    key: ${CI_COMMIT_REF_SLUG}
+#    paths:
+#      - node_modules/
+#      - .jest/cache/
+#  before_script:
+#    - wget --quiet --output-document=android-wait-for-emulator https://raw.githubusercontent.com/travis-ci/travis-cookbooks/0f497eb71291b52a703143c5cd63a217c8766dc9/community-cookbooks/android-sdk/files/default/android-wait-for-emulator
+#    - chmod +x android-wait-for-emulator
+#    - echo y | ${ANDROID_HOME}/tools/bin/sdkmanager "system-images;android-${ANDROID_COMPILE_SDK};google_apis_playstore;x86"
+#    - echo y | ${ANDROID_HOME}/tools/bin/sdkmanager --update
+#    - echo no | ${ANDROID_HOME}/tools/bin/avdmanager create avd -k "system-images;android-${ANDROID_COMPILE_SDK};google_apis_playstore;x86" -n test
+#    - emulator @test -no-window -no-audio 
+#    - ./android-wait-for-emulator
+#    - yarn global add detox-cli
+#    - yarn install --frozen-lockfile
+#    - detox build
+#    - yarn react-native start
+#
+#  script:
+#    - detox test -c android.emu.release
 
 # Upload new terms to poeditor
 i18n:upload:
