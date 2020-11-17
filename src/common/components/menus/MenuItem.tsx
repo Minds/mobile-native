@@ -45,16 +45,23 @@ export default function ({
     containerItemStyle,
   ];
 
+  // icon is element?
+  const isIconElement = item.icon && !('name' in item.icon);
+
   // ListItem Chevron Style
-  const chevronStyle = item.noIcon
-    ? undefined
-    : {
-        ...theme.colorIcon,
-        size: 24,
-        type: 'ionicon',
-        name: 'chevron-forward',
-        ...item.icon,
-      };
+  let chevronStyle: undefined | object;
+  if (!item.noIcon && !isIconElement) {
+    chevronStyle = {
+      ...theme.colorIcon,
+      size: 24,
+      type: 'ionicon',
+      name: 'chevron-forward',
+    };
+
+    if (item.icon && !isIconElement) {
+      chevronStyle = { ...chevronStyle, ...item.icon };
+    }
+  }
 
   return (
     <ListItem
@@ -68,6 +75,7 @@ export default function ({
         </ListItem.Title>
       </ListItem.Content>
       {chevronStyle && <ListItem.Chevron {...chevronStyle} />}
+      {isIconElement && item.icon}
     </ListItem>
   );
 }
