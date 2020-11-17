@@ -270,7 +270,10 @@ export default function ({ props, newsfeed }) {
       }
     },
     parseTags() {
-      this.text.match(hashRegex).forEach((v) => this.addTag(v.trim()));
+      const result = this.text.match(hashRegex);
+      if (result) {
+        result.forEach((v) => this.addTag(v.trim()));
+      }
     },
     /**
      * Set posting
