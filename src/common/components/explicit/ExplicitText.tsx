@@ -74,10 +74,6 @@ export default class ExplicitText extends Component<PropsType, StateType> {
     const theme = ThemedStyles.style;
     const entity = this.props.entity;
 
-    if (this.props.entity.remind_deleted) {
-      return null;
-    }
-
     let title: string =
       entity.title && !entity.perma_url
         ? entities.decodeHTML(entity.title).trim()
