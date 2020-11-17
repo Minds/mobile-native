@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, MutableRefObject } from 'react';
+import React, { useEffect, useCallback } from 'react';
 
 import { View } from 'react-native';
 import DiscoveryUserNew from '../../discovery/DiscoveryUserNew';
@@ -20,11 +20,6 @@ type PropsType = {
 const SearchResultComponent = observer(
   ({ navigation, localStore }: PropsType) => {
     const theme = ThemedStyles.style;
-    const { user } = useLegacyStores();
-
-    useEffect(() => {
-      localStore.init(user);
-    }, [localStore, user]);
 
     const renderUser = useCallback(
       (user, index) => {

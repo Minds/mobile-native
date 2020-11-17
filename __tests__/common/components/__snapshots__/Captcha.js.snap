@@ -36,7 +36,7 @@ exports[`renders correctly 1`] = `
     onStartShouldSetResponder={[Function]}
     style={
       Object {
-        "backgroundColor": "#202527",
+        "backgroundColor": "#1A2025",
         "bottom": 0,
         "height": 1334,
         "left": 0,
@@ -124,7 +124,7 @@ exports[`renders correctly 1`] = `
               "width": "100%",
             },
             Object {
-              "backgroundColor": "#252E31",
+              "backgroundColor": "#242A30",
             },
           ]
         }
@@ -189,7 +189,7 @@ exports[`renders correctly 1`] = `
               undefined,
               undefined,
               Object {
-                "backgroundColor": "#202527",
+                "backgroundColor": "#1A2025",
                 "borderColor": "#404a4e",
               },
             ]
@@ -218,12 +218,12 @@ exports[`renders correctly 1`] = `
                   style={
                     Array [
                       Object {
-                        "color": "#AEB0B8",
                         "fontFamily": "Roboto",
                         "fontSize": 16,
                         "fontWeight": "600",
                         "marginBottom": 5,
                       },
+                      undefined,
                       undefined,
                     ]
                   }
@@ -238,7 +238,7 @@ exports[`renders correctly 1`] = `
               autofocus={true}
               containerStyle={
                 Object {
-                  "backgroundColor": "#202527",
+                  "backgroundColor": "#1A2025",
                   "borderColor": "#404a4e",
                 }
               }
@@ -254,9 +254,9 @@ exports[`renders correctly 1`] = `
                   Array [
                     Object {
                       "borderWidth": 0,
-                      "height": 32,
                       "marginBottom": 7,
-                      "padding": 0,
+                      "paddingHorizontal": 0,
+                      "paddingVertical": 8,
                     },
                     undefined,
                     undefined,

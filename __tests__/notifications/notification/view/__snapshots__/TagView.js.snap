@@ -26,9 +26,12 @@ exports[`renders correctly activity 1`] = `
   </View>
   <Text
     style={
-      Object {
-        "fontSize": 11,
-      }
+      Array [
+        Object {
+          "fontSize": 11,
+        },
+        undefined,
+      ]
     }
   >
     Invalid date
@@ -62,9 +65,12 @@ exports[`renders correctly comment 1`] = `
   </View>
   <Text
     style={
-      Object {
-        "fontSize": 11,
-      }
+      Array [
+        Object {
+          "fontSize": 11,
+        },
+        undefined,
+      ]
     }
   >
     Invalid date

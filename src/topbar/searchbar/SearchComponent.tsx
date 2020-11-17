@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { observer } from 'mobx-react';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -28,6 +28,10 @@ const SearchComponent = observer((props: Props) => {
   const { user } = useLegacyStores();
   const localStore = useStores().searchBar;
   const inputRef = useRef<TextInput>(null);
+
+  useEffect(() => {
+    localStore.init(user);
+  });
 
   /**
    * On modal show focus input
@@ -61,8 +65,8 @@ const SearchComponent = observer((props: Props) => {
         </Text>
         <Modal
           isVisible={user.searching}
-          backdropColor={ThemedStyles.getColor('secondary_background')}
-          backdropOpacity={0.9}
+          backdropColor="#000000"
+          backdropOpacity={0.5}
           useNativeDriver={true}
           onBackdropPress={user.toggleSearching}
           animationInTiming={100}
@@ -72,8 +76,8 @@ const SearchComponent = observer((props: Props) => {
           animationOut="fadeOut"
           animationIn="fadeIn"
           style={styles.modal}>
-          <SafeAreaView>
-            <View style={[theme.backgroundSecondary, styles.body, border]}>
+          <SafeAreaView style={theme.backgroundPrimary}>
+            <View style={[styles.body, border]}>
               <View
                 style={[
                   styles.header,

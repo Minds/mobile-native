@@ -51,7 +51,8 @@ exports[`DiscoveryTagsManager component should render correctly 1`] = `
     </ScrollView>
   }
   doneText="Done"
-  height={500}
+  height={1110.6000000000001}
+  noOverlay={true}
   onCancel={[Function]}
   onDone={[Function]}
   show={false}

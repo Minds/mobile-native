@@ -135,7 +135,7 @@ class ThemedStylesStore {
       this.defaultScreenOptions.headerTopInsetEnabled = false;
     }
 
-    this.style = StyleSheet.create(buildStyle(theme));
+    this.style = StyleSheet.create<ThemedStyle>(buildStyle(theme));
   }
 }
 

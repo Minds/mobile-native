@@ -8,7 +8,7 @@ import { Text, TextStyle } from 'react-native';
 import colors from '../../styles/Colors';
 import openUrlService from '../services/open-url.service';
 
-const hashRegex = new RegExp(
+export const hashRegex = new RegExp(
   [
     '([^&]|\\B|^)', // Start of string, and word bounday. Not if preceeded by & symbol
     '#', //

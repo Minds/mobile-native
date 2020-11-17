@@ -74,6 +74,7 @@ const createLocalStore = () => ({
       const error = (e && e.message) || 'Unknown server error';
       this.setInProgress(false);
       this.setError(error);
+      throw e;
     }
   },
   joinAction(TFA = undefined, retry = false) {
@@ -102,6 +103,7 @@ const createLocalStore = () => ({
       const error = (e && e.message) || 'Unknown server error';
       this.setError(error);
       logService.exception(e);
+      throw e;
     } finally {
       this.setInProgress(false);
     }

@@ -3,15 +3,20 @@
 exports[`notification component renders correctly for every type 1`] = `
 <View
   style={
-    Object {
-      "alignItems": "center",
-      "flexDirection": "row",
-      "flexWrap": "wrap",
-      "paddingBottom": 16,
-      "paddingLeft": 8,
-      "paddingRight": 8,
-      "paddingTop": 16,
-    }
+    Array [
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+        "paddingBottom": 16,
+        "paddingLeft": 8,
+        "paddingRight": 8,
+        "paddingTop": 16,
+      },
+      undefined,
+      undefined,
+      undefined,
+    ]
   }
 >
   <Image
@@ -30,11 +35,15 @@ exports[`notification component renders correctly for every type 1`] = `
       }
     }
     style={
-      Object {
-        "borderRadius": 18,
-        "height": 36,
-        "width": 36,
-      }
+      Array [
+        Object {
+          "borderRadius": 18,
+          "height": 36,
+          "width": 36,
+        },
+        undefined,
+        undefined,
+      ]
     }
   />
   <View
@@ -74,9 +83,12 @@ exports[`notification component renders correctly for every type 1`] = `
     </View>
     <Text
       style={
-        Object {
-          "fontSize": 11,
-        }
+        Array [
+          Object {
+            "fontSize": 11,
+          },
+          undefined,
+        ]
       }
     >
       Invalid date
@@ -88,15 +100,20 @@ exports[`notification component renders correctly for every type 1`] = `
 exports[`notification component renders correctly for every type 2`] = `
 <View
   style={
-    Object {
-      "alignItems": "center",
-      "flexDirection": "row",
-      "flexWrap": "wrap",
-      "paddingBottom": 16,
-      "paddingLeft": 8,
-      "paddingRight": 8,
-      "paddingTop": 16,
-    }
+    Array [
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+        "paddingBottom": 16,
+        "paddingLeft": 8,
+        "paddingRight": 8,
+        "paddingTop": 16,
+      },
+      undefined,
+      undefined,
+      undefined,
+    ]
   }
 >
   <Image
@@ -115,11 +132,15 @@ exports[`notification component renders correctly for every type 2`] = `
       }
     }
     style={
-      Object {
-        "borderRadius": 18,
-        "height": 36,
-        "width": 36,
-      }
+      Array [
+        Object {
+          "borderRadius": 18,
+          "height": 36,
+          "width": 36,
+        },
+        undefined,
+        undefined,
+      ]
     }
   />
   <View
@@ -159,9 +180,12 @@ exports[`notification component renders correctly for every type 2`] = `
     </View>
     <Text
       style={
-        Object {
-          "fontSize": 11,
-        }
+        Array [
+          Object {
+            "fontSize": 11,
+          },
+          undefined,
+        ]
       }
     >
       Invalid date
@@ -173,15 +197,20 @@ exports[`notification component renders correctly for every type 2`] = `
 exports[`notification component renders correctly for every type 3`] = `
 <View
   style={
-    Object {
-      "alignItems": "center",
-      "flexDirection": "row",
-      "flexWrap": "wrap",
-      "paddingBottom": 16,
-      "paddingLeft": 8,
-      "paddingRight": 8,
-      "paddingTop": 16,
-    }
+    Array [
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+        "paddingBottom": 16,
+        "paddingLeft": 8,
+        "paddingRight": 8,
+        "paddingTop": 16,
+      },
+      undefined,
+      undefined,
+      undefined,
+    ]
   }
 >
   <Image
@@ -200,11 +229,15 @@ exports[`notification component renders correctly for every type 3`] = `
       }
     }
     style={
-      Object {
-        "borderRadius": 18,
-        "height": 36,
-        "width": 36,
-      }
+      Array [
+        Object {
+          "borderRadius": 18,
+          "height": 36,
+          "width": 36,
+        },
+        undefined,
+        undefined,
+      ]
     }
   />
   <View
@@ -244,9 +277,12 @@ exports[`notification component renders correctly for every type 3`] = `
     </View>
     <Text
       style={
-        Object {
-          "fontSize": 11,
-        }
+        Array [
+          Object {
+            "fontSize": 11,
+          },
+          undefined,
+        ]
       }
     >
       Invalid date
@@ -258,15 +294,20 @@ exports[`notification component renders correctly for every type 3`] = `
 exports[`notification component renders correctly for every type 4`] = `
 <View
   style={
-    Object {
-      "alignItems": "center",
-      "flexDirection": "row",
-      "flexWrap": "wrap",
-      "paddingBottom": 16,
-      "paddingLeft": 8,
-      "paddingRight": 8,
-      "paddingTop": 16,
-    }
+    Array [
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+        "paddingBottom": 16,
+        "paddingLeft": 8,
+        "paddingRight": 8,
+        "paddingTop": 16,
+      },
+      undefined,
+      undefined,
+      undefined,
+    ]
   }
 >
   <Image
@@ -285,11 +326,15 @@ exports[`notification component renders correctly for every type 4`] = `
       }
     }
     style={
-      Object {
-        "borderRadius": 18,
-        "height": 36,
-        "width": 36,
-      }
+      Array [
+        Object {
+          "borderRadius": 18,
+          "height": 36,
+          "width": 36,
+        },
+        undefined,
+        undefined,
+      ]
     }
   />
   <View
@@ -352,9 +397,12 @@ exports[`notification component renders correctly for every type 4`] = `
     </View>
     <Text
       style={
-        Object {
-          "fontSize": 11,
-        }
+        Array [
+          Object {
+            "fontSize": 11,
+          },
+          undefined,
+        ]
       }
     >
       Invalid date
@@ -366,15 +414,20 @@ exports[`notification component renders correctly for every type 4`] = `
 exports[`notification component renders correctly for every type 5`] = `
 <View
   style={
-    Object {
-      "alignItems": "center",
-      "flexDirection": "row",
-      "flexWrap": "wrap",
-      "paddingBottom": 16,
-      "paddingLeft": 8,
-      "paddingRight": 8,
-      "paddingTop": 16,
-    }
+    Array [
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+        "paddingBottom": 16,
+        "paddingLeft": 8,
+        "paddingRight": 8,
+        "paddingTop": 16,
+      },
+      undefined,
+      undefined,
+      undefined,
+    ]
   }
 >
   <Image
@@ -393,11 +446,15 @@ exports[`notification component renders correctly for every type 5`] = `
       }
     }
     style={
-      Object {
-        "borderRadius": 18,
-        "height": 36,
-        "width": 36,
-      }
+      Array [
+        Object {
+          "borderRadius": 18,
+          "height": 36,
+          "width": 36,
+        },
+        undefined,
+        undefined,
+      ]
     }
   />
   <View
@@ -465,9 +522,12 @@ exports[`notification component renders correctly for every type 5`] = `
     </View>
     <Text
       style={
-        Object {
-          "fontSize": 11,
-        }
+        Array [
+          Object {
+            "fontSize": 11,
+          },
+          undefined,
+        ]
       }
     >
       Invalid date
@@ -479,15 +539,20 @@ exports[`notification component renders correctly for every type 5`] = `
 exports[`notification component renders correctly for every type 6`] = `
 <View
   style={
-    Object {
-      "alignItems": "center",
-      "flexDirection": "row",
-      "flexWrap": "wrap",
-      "paddingBottom": 16,
-      "paddingLeft": 8,
-      "paddingRight": 8,
-      "paddingTop": 16,
-    }
+    Array [
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+        "paddingBottom": 16,
+        "paddingLeft": 8,
+        "paddingRight": 8,
+        "paddingTop": 16,
+      },
+      undefined,
+      undefined,
+      undefined,
+    ]
   }
 >
   <Image
@@ -506,11 +571,15 @@ exports[`notification component renders correctly for every type 6`] = `
       }
     }
     style={
-      Object {
-        "borderRadius": 18,
-        "height": 36,
-        "width": 36,
-      }
+      Array [
+        Object {
+          "borderRadius": 18,
+          "height": 36,
+          "width": 36,
+        },
+        undefined,
+        undefined,
+      ]
     }
   />
   <View
@@ -574,9 +643,12 @@ exports[`notification component renders correctly for every type 6`] = `
     </View>
     <Text
       style={
-        Object {
-          "fontSize": 11,
-        }
+        Array [
+          Object {
+            "fontSize": 11,
+          },
+          undefined,
+        ]
       }
     >
       Invalid date
@@ -588,15 +660,20 @@ exports[`notification component renders correctly for every type 6`] = `
 exports[`notification component renders correctly for every type 7`] = `
 <View
   style={
-    Object {
-      "alignItems": "center",
-      "flexDirection": "row",
-      "flexWrap": "wrap",
-      "paddingBottom": 16,
-      "paddingLeft": 8,
-      "paddingRight": 8,
-      "paddingTop": 16,
-    }
+    Array [
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+        "paddingBottom": 16,
+        "paddingLeft": 8,
+        "paddingRight": 8,
+        "paddingTop": 16,
+      },
+      undefined,
+      undefined,
+      undefined,
+    ]
   }
 >
   <Image
@@ -615,11 +692,15 @@ exports[`notification component renders correctly for every type 7`] = `
       }
     }
     style={
-      Object {
-        "borderRadius": 18,
-        "height": 36,
-        "width": 36,
-      }
+      Array [
+        Object {
+          "borderRadius": 18,
+          "height": 36,
+          "width": 36,
+        },
+        undefined,
+        undefined,
+      ]
     }
   />
   <View
@@ -661,9 +742,12 @@ exports[`notification component renders correctly for every type 7`] = `
     </View>
     <Text
       style={
-        Object {
-          "fontSize": 11,
-        }
+        Array [
+          Object {
+            "fontSize": 11,
+          },
+          undefined,
+        ]
       }
     >
       Invalid date
@@ -675,15 +759,20 @@ exports[`notification component renders correctly for every type 7`] = `
 exports[`notification component renders correctly for every type 8`] = `
 <View
   style={
-    Object {
-      "alignItems": "center",
-      "flexDirection": "row",
-      "flexWrap": "wrap",
-      "paddingBottom": 16,
-      "paddingLeft": 8,
-      "paddingRight": 8,
-      "paddingTop": 16,
-    }
+    Array [
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+        "paddingBottom": 16,
+        "paddingLeft": 8,
+        "paddingRight": 8,
+        "paddingTop": 16,
+      },
+      undefined,
+      undefined,
+      undefined,
+    ]
   }
 >
   <Image
@@ -702,11 +791,15 @@ exports[`notification component renders correctly for every type 8`] = `
       }
     }
     style={
-      Object {
-        "borderRadius": 18,
-        "height": 36,
-        "width": 36,
-      }
+      Array [
+        Object {
+          "borderRadius": 18,
+          "height": 36,
+          "width": 36,
+        },
+        undefined,
+        undefined,
+      ]
     }
   />
   <View
@@ -729,15 +822,20 @@ exports[`notification component renders correctly for every type 8`] = `
 exports[`notification component renders correctly for every type 9`] = `
 <View
   style={
-    Object {
-      "alignItems": "center",
-      "flexDirection": "row",
-      "flexWrap": "wrap",
-      "paddingBottom": 16,
-      "paddingLeft": 8,
-      "paddingRight": 8,
-      "paddingTop": 16,
-    }
+    Array [
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+        "paddingBottom": 16,
+        "paddingLeft": 8,
+        "paddingRight": 8,
+        "paddingTop": 16,
+      },
+      undefined,
+      undefined,
+      undefined,
+    ]
   }
 >
   <Image
@@ -756,11 +854,15 @@ exports[`notification component renders correctly for every type 9`] = `
       }
     }
     style={
-      Object {
-        "borderRadius": 18,
-        "height": 36,
-        "width": 36,
-      }
+      Array [
+        Object {
+          "borderRadius": 18,
+          "height": 36,
+          "width": 36,
+        },
+        undefined,
+        undefined,
+      ]
     }
   />
   <View
@@ -811,9 +913,12 @@ exports[`notification component renders correctly for every type 9`] = `
     </View>
     <Text
       style={
-        Object {
-          "fontSize": 11,
-        }
+        Array [
+          Object {
+            "fontSize": 11,
+          },
+          undefined,
+        ]
       }
     >
       Invalid date
@@ -825,15 +930,20 @@ exports[`notification component renders correctly for every type 9`] = `
 exports[`notification component renders correctly for every type 10`] = `
 <View
   style={
-    Object {
-      "alignItems": "center",
-      "flexDirection": "row",
-      "flexWrap": "wrap",
-      "paddingBottom": 16,
-      "paddingLeft": 8,
-      "paddingRight": 8,
-      "paddingTop": 16,
-    }
+    Array [
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+        "paddingBottom": 16,
+        "paddingLeft": 8,
+        "paddingRight": 8,
+        "paddingTop": 16,
+      },
+      undefined,
+      undefined,
+      undefined,
+    ]
   }
 >
   <Image
@@ -852,11 +962,15 @@ exports[`notification component renders correctly for every type 10`] = `
       }
     }
     style={
-      Object {
-        "borderRadius": 18,
-        "height": 36,
-        "width": 36,
-      }
+      Array [
+        Object {
+          "borderRadius": 18,
+          "height": 36,
+          "width": 36,
+        },
+        undefined,
+        undefined,
+      ]
     }
   />
   <View
@@ -896,9 +1010,12 @@ exports[`notification component renders correctly for every type 10`] = `
     </View>
     <Text
       style={
-        Object {
-          "fontSize": 11,
-        }
+        Array [
+          Object {
+            "fontSize": 11,
+          },
+          undefined,
+        ]
       }
     >
       Invalid date
@@ -910,15 +1027,20 @@ exports[`notification component renders correctly for every type 10`] = `
 exports[`notification component renders correctly for every type 11`] = `
 <View
   style={
-    Object {
-      "alignItems": "center",
-      "flexDirection": "row",
-      "flexWrap": "wrap",
-      "paddingBottom": 16,
-      "paddingLeft": 8,
-      "paddingRight": 8,
-      "paddingTop": 16,
-    }
+    Array [
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+        "paddingBottom": 16,
+        "paddingLeft": 8,
+        "paddingRight": 8,
+        "paddingTop": 16,
+      },
+      undefined,
+      undefined,
+      undefined,
+    ]
   }
 >
   <Image
@@ -937,11 +1059,15 @@ exports[`notification component renders correctly for every type 11`] = `
       }
     }
     style={
-      Object {
-        "borderRadius": 18,
-        "height": 36,
-        "width": 36,
-      }
+      Array [
+        Object {
+          "borderRadius": 18,
+          "height": 36,
+          "width": 36,
+        },
+        undefined,
+        undefined,
+      ]
     }
   />
   <View
@@ -980,9 +1106,12 @@ exports[`notification component renders correctly for every type 11`] = `
     </Text>
     <Text
       style={
-        Object {
-          "fontSize": 11,
-        }
+        Array [
+          Object {
+            "fontSize": 11,
+          },
+          undefined,
+        ]
       }
     >
       Invalid date
@@ -994,15 +1123,20 @@ exports[`notification component renders correctly for every type 11`] = `
 exports[`notification component renders correctly for every type 12`] = `
 <View
   style={
-    Object {
-      "alignItems": "center",
-      "flexDirection": "row",
-      "flexWrap": "wrap",
-      "paddingBottom": 16,
-      "paddingLeft": 8,
-      "paddingRight": 8,
-      "paddingTop": 16,
-    }
+    Array [
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+        "paddingBottom": 16,
+        "paddingLeft": 8,
+        "paddingRight": 8,
+        "paddingTop": 16,
+      },
+      undefined,
+      undefined,
+      undefined,
+    ]
   }
 >
   <Image
@@ -1021,11 +1155,15 @@ exports[`notification component renders correctly for every type 12`] = `
       }
     }
     style={
-      Object {
-        "borderRadius": 18,
-        "height": 36,
-        "width": 36,
-      }
+      Array [
+        Object {
+          "borderRadius": 18,
+          "height": 36,
+          "width": 36,
+        },
+        undefined,
+        undefined,
+      ]
     }
   />
   <View
@@ -1051,9 +1189,12 @@ exports[`notification component renders correctly for every type 12`] = `
     </View>
     <Text
       style={
-        Object {
-          "fontSize": 11,
-        }
+        Array [
+          Object {
+            "fontSize": 11,
+          },
+          undefined,
+        ]
       }
     >
       Invalid date
@@ -1065,15 +1206,20 @@ exports[`notification component renders correctly for every type 12`] = `
 exports[`notification component renders correctly for every type 13`] = `
 <View
   style={
-    Object {
-      "alignItems": "center",
-      "flexDirection": "row",
-      "flexWrap": "wrap",
-      "paddingBottom": 16,
-      "paddingLeft": 8,
-      "paddingRight": 8,
-      "paddingTop": 16,
-    }
+    Array [
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+        "paddingBottom": 16,
+        "paddingLeft": 8,
+        "paddingRight": 8,
+        "paddingTop": 16,
+      },
+      undefined,
+      undefined,
+      undefined,
+    ]
   }
 >
   <Image
@@ -1092,11 +1238,15 @@ exports[`notification component renders correctly for every type 13`] = `
       }
     }
     style={
-      Object {
-        "borderRadius": 18,
-        "height": 36,
-        "width": 36,
-      }
+      Array [
+        Object {
+          "borderRadius": 18,
+          "height": 36,
+          "width": 36,
+        },
+        undefined,
+        undefined,
+      ]
     }
   />
   <View
@@ -1142,9 +1292,12 @@ exports[`notification component renders correctly for every type 13`] = `
     </View>
     <Text
       style={
-        Object {
-          "fontSize": 11,
-        }
+        Array [
+          Object {
+            "fontSize": 11,
+          },
+          undefined,
+        ]
       }
     >
       Invalid date
@@ -1156,15 +1309,20 @@ exports[`notification component renders correctly for every type 13`] = `
 exports[`notification component renders correctly for every type 14`] = `
 <View
   style={
-    Object {
-      "alignItems": "center",
-      "flexDirection": "row",
-      "flexWrap": "wrap",
-      "paddingBottom": 16,
-      "paddingLeft": 8,
-      "paddingRight": 8,
-      "paddingTop": 16,
-    }
+    Array [
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+        "paddingBottom": 16,
+        "paddingLeft": 8,
+        "paddingRight": 8,
+        "paddingTop": 16,
+      },
+      undefined,
+      undefined,
+      undefined,
+    ]
   }
 >
   <Image
@@ -1183,11 +1341,15 @@ exports[`notification component renders correctly for every type 14`] = `
       }
     }
     style={
-      Object {
-        "borderRadius": 18,
-        "height": 36,
-        "width": 36,
-      }
+      Array [
+        Object {
+          "borderRadius": 18,
+          "height": 36,
+          "width": 36,
+        },
+        undefined,
+        undefined,
+      ]
     }
   />
   <View
@@ -1223,9 +1385,12 @@ exports[`notification component renders correctly for every type 14`] = `
     </View>
     <Text
       style={
-        Object {
-          "fontSize": 11,
-        }
+        Array [
+          Object {
+            "fontSize": 11,
+          },
+          undefined,
+        ]
       }
     >
       Invalid date
@@ -1237,15 +1402,20 @@ exports[`notification component renders correctly for every type 14`] = `
 exports[`notification component renders correctly for every type 15`] = `
 <View
   style={
-    Object {
-      "alignItems": "center",
-      "flexDirection": "row",
-      "flexWrap": "wrap",
-      "paddingBottom": 16,
-      "paddingLeft": 8,
-      "paddingRight": 8,
-      "paddingTop": 16,
-    }
+    Array [
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+        "paddingBottom": 16,
+        "paddingLeft": 8,
+        "paddingRight": 8,
+        "paddingTop": 16,
+      },
+      undefined,
+      undefined,
+      undefined,
+    ]
   }
 >
   <Image
@@ -1264,11 +1434,15 @@ exports[`notification component renders correctly for every type 15`] = `
       }
     }
     style={
-      Object {
-        "borderRadius": 18,
-        "height": 36,
-        "width": 36,
-      }
+      Array [
+        Object {
+          "borderRadius": 18,
+          "height": 36,
+          "width": 36,
+        },
+        undefined,
+        undefined,
+      ]
     }
   />
   <View
@@ -1300,9 +1474,12 @@ exports[`notification component renders correctly for every type 15`] = `
     </View>
     <Text
       style={
-        Object {
-          "fontSize": 11,
-        }
+        Array [
+          Object {
+            "fontSize": 11,
+          },
+          undefined,
+        ]
       }
     >
       Invalid date
@@ -1314,15 +1491,20 @@ exports[`notification component renders correctly for every type 15`] = `
 exports[`notification component renders correctly for every type 16`] = `
 <View
   style={
-    Object {
-      "alignItems": "center",
-      "flexDirection": "row",
-      "flexWrap": "wrap",
-      "paddingBottom": 16,
-      "paddingLeft": 8,
-      "paddingRight": 8,
-      "paddingTop": 16,
-    }
+    Array [
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+        "paddingBottom": 16,
+        "paddingLeft": 8,
+        "paddingRight": 8,
+        "paddingTop": 16,
+      },
+      undefined,
+      undefined,
+      undefined,
+    ]
   }
 >
   <Image
@@ -1341,11 +1523,15 @@ exports[`notification component renders correctly for every type 16`] = `
       }
     }
     style={
-      Object {
-        "borderRadius": 18,
-        "height": 36,
-        "width": 36,
-      }
+      Array [
+        Object {
+          "borderRadius": 18,
+          "height": 36,
+          "width": 36,
+        },
+        undefined,
+        undefined,
+      ]
     }
   />
   <View
@@ -1393,9 +1579,12 @@ exports[`notification component renders correctly for every type 16`] = `
     </View>
     <Text
       style={
-        Object {
-          "fontSize": 11,
-        }
+        Array [
+          Object {
+            "fontSize": 11,
+          },
+          undefined,
+        ]
       }
     >
       Invalid date
@@ -1407,15 +1596,20 @@ exports[`notification component renders correctly for every type 16`] = `
 exports[`notification component renders correctly for every type 17`] = `
 <View
   style={
-    Object {
-      "alignItems": "center",
-      "flexDirection": "row",
-      "flexWrap": "wrap",
-      "paddingBottom": 16,
-      "paddingLeft": 8,
-      "paddingRight": 8,
-      "paddingTop": 16,
-    }
+    Array [
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+        "paddingBottom": 16,
+        "paddingLeft": 8,
+        "paddingRight": 8,
+        "paddingTop": 16,
+      },
+      undefined,
+      undefined,
+      undefined,
+    ]
   }
 >
   <Image
@@ -1434,11 +1628,15 @@ exports[`notification component renders correctly for every type 17`] = `
       }
     }
     style={
-      Object {
-        "borderRadius": 18,
-        "height": 36,
-        "width": 36,
-      }
+      Array [
+        Object {
+          "borderRadius": 18,
+          "height": 36,
+          "width": 36,
+        },
+        undefined,
+        undefined,
+      ]
     }
   />
   <View
@@ -1464,9 +1662,12 @@ exports[`notification component renders correctly for every type 17`] = `
     </View>
     <Text
       style={
-        Object {
-          "fontSize": 11,
-        }
+        Array [
+          Object {
+            "fontSize": 11,
+          },
+          undefined,
+        ]
       }
     >
       Invalid date
@@ -1478,15 +1679,20 @@ exports[`notification component renders correctly for every type 17`] = `
 exports[`notification component renders correctly for every type 18`] = `
 <View
   style={
-    Object {
-      "alignItems": "center",
-      "flexDirection": "row",
-      "flexWrap": "wrap",
-      "paddingBottom": 16,
-      "paddingLeft": 8,
-      "paddingRight": 8,
-      "paddingTop": 16,
-    }
+    Array [
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+        "paddingBottom": 16,
+        "paddingLeft": 8,
+        "paddingRight": 8,
+        "paddingTop": 16,
+      },
+      undefined,
+      undefined,
+      undefined,
+    ]
   }
 >
   <Image
@@ -1505,11 +1711,15 @@ exports[`notification component renders correctly for every type 18`] = `
       }
     }
     style={
-      Object {
-        "borderRadius": 18,
-        "height": 36,
-        "width": 36,
-      }
+      Array [
+        Object {
+          "borderRadius": 18,
+          "height": 36,
+          "width": 36,
+        },
+        undefined,
+        undefined,
+      ]
     }
   />
   <View
@@ -1535,9 +1745,12 @@ exports[`notification component renders correctly for every type 18`] = `
     </View>
     <Text
       style={
-        Object {
-          "fontSize": 11,
-        }
+        Array [
+          Object {
+            "fontSize": 11,
+          },
+          undefined,
+        ]
       }
     >
       Invalid date
@@ -1549,15 +1762,20 @@ exports[`notification component renders correctly for every type 18`] = `
 exports[`notification component renders correctly for every type 19`] = `
 <View
   style={
-    Object {
-      "alignItems": "center",
-      "flexDirection": "row",
-      "flexWrap": "wrap",
-      "paddingBottom": 16,
-      "paddingLeft": 8,
-      "paddingRight": 8,
-      "paddingTop": 16,
-    }
+    Array [
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+        "paddingBottom": 16,
+        "paddingLeft": 8,
+        "paddingRight": 8,
+        "paddingTop": 16,
+      },
+      undefined,
+      undefined,
+      undefined,
+    ]
   }
 >
   <Image
@@ -1576,11 +1794,15 @@ exports[`notification component renders correctly for every type 19`] = `
       }
     }
     style={
-      Object {
-        "borderRadius": 18,
-        "height": 36,
-        "width": 36,
-      }
+      Array [
+        Object {
+          "borderRadius": 18,
+          "height": 36,
+          "width": 36,
+        },
+        undefined,
+        undefined,
+      ]
     }
   />
   <View
@@ -1626,9 +1848,12 @@ exports[`notification component renders correctly for every type 19`] = `
     </View>
     <Text
       style={
-        Object {
-          "fontSize": 11,
-        }
+        Array [
+          Object {
+            "fontSize": 11,
+          },
+          undefined,
+        ]
       }
     >
       Invalid date
@@ -1640,15 +1865,20 @@ exports[`notification component renders correctly for every type 19`] = `
 exports[`notification component renders correctly for every type 20`] = `
 <View
   style={
-    Object {
-      "alignItems": "center",
-      "flexDirection": "row",
-      "flexWrap": "wrap",
-      "paddingBottom": 16,
-      "paddingLeft": 8,
-      "paddingRight": 8,
-      "paddingTop": 16,
-    }
+    Array [
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+        "paddingBottom": 16,
+        "paddingLeft": 8,
+        "paddingRight": 8,
+        "paddingTop": 16,
+      },
+      undefined,
+      undefined,
+      undefined,
+    ]
   }
 >
   <Image
@@ -1667,11 +1897,15 @@ exports[`notification component renders correctly for every type 20`] = `
       }
     }
     style={
-      Object {
-        "borderRadius": 18,
-        "height": 36,
-        "width": 36,
-      }
+      Array [
+        Object {
+          "borderRadius": 18,
+          "height": 36,
+          "width": 36,
+        },
+        undefined,
+        undefined,
+      ]
     }
   />
   <View
@@ -1707,9 +1941,12 @@ exports[`notification component renders correctly for every type 20`] = `
     </View>
     <Text
       style={
-        Object {
-          "fontSize": 11,
-        }
+        Array [
+          Object {
+            "fontSize": 11,
+          },
+          undefined,
+        ]
       }
     >
       Invalid date
@@ -1721,15 +1958,20 @@ exports[`notification component renders correctly for every type 20`] = `
 exports[`notification component renders correctly for every type 21`] = `
 <View
   style={
-    Object {
-      "alignItems": "center",
-      "flexDirection": "row",
-      "flexWrap": "wrap",
-      "paddingBottom": 16,
-      "paddingLeft": 8,
-      "paddingRight": 8,
-      "paddingTop": 16,
-    }
+    Array [
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+        "paddingBottom": 16,
+        "paddingLeft": 8,
+        "paddingRight": 8,
+        "paddingTop": 16,
+      },
+      undefined,
+      undefined,
+      undefined,
+    ]
   }
 >
   <Image
@@ -1748,11 +1990,15 @@ exports[`notification component renders correctly for every type 21`] = `
       }
     }
     style={
-      Object {
-        "borderRadius": 18,
-        "height": 36,
-        "width": 36,
-      }
+      Array [
+        Object {
+          "borderRadius": 18,
+          "height": 36,
+          "width": 36,
+        },
+        undefined,
+        undefined,
+      ]
     }
   />
   <View
@@ -1784,9 +2030,12 @@ exports[`notification component renders correctly for every type 21`] = `
     </View>
     <Text
       style={
-        Object {
-          "fontSize": 11,
-        }
+        Array [
+          Object {
+            "fontSize": 11,
+          },
+          undefined,
+        ]
       }
     >
       Invalid date
@@ -1798,15 +2047,20 @@ exports[`notification component renders correctly for every type 21`] = `
 exports[`notification component renders correctly for every type 22`] = `
 <View
   style={
-    Object {
-      "alignItems": "center",
-      "flexDirection": "row",
-      "flexWrap": "wrap",
-      "paddingBottom": 16,
-      "paddingLeft": 8,
-      "paddingRight": 8,
-      "paddingTop": 16,
-    }
+    Array [
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+        "paddingBottom": 16,
+        "paddingLeft": 8,
+        "paddingRight": 8,
+        "paddingTop": 16,
+      },
+      undefined,
+      undefined,
+      undefined,
+    ]
   }
 >
   <Image
@@ -1825,11 +2079,15 @@ exports[`notification component renders correctly for every type 22`] = `
       }
     }
     style={
-      Object {
-        "borderRadius": 18,
-        "height": 36,
-        "width": 36,
-      }
+      Array [
+        Object {
+          "borderRadius": 18,
+          "height": 36,
+          "width": 36,
+        },
+        undefined,
+        undefined,
+      ]
     }
   />
   <View
@@ -1857,9 +2115,12 @@ exports[`notification component renders correctly for every type 22`] = `
     </View>
     <Text
       style={
-        Object {
-          "fontSize": 11,
-        }
+        Array [
+          Object {
+            "fontSize": 11,
+          },
+          undefined,
+        ]
       }
     >
       Invalid date
@@ -1871,15 +2132,20 @@ exports[`notification component renders correctly for every type 22`] = `
 exports[`notification component renders correctly for every type 23`] = `
 <View
   style={
-    Object {
-      "alignItems": "center",
-      "flexDirection": "row",
-      "flexWrap": "wrap",
-      "paddingBottom": 16,
-      "paddingLeft": 8,
-      "paddingRight": 8,
-      "paddingTop": 16,
-    }
+    Array [
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+        "paddingBottom": 16,
+        "paddingLeft": 8,
+        "paddingRight": 8,
+        "paddingTop": 16,
+      },
+      undefined,
+      undefined,
+      undefined,
+    ]
   }
 >
   <Image
@@ -1898,11 +2164,15 @@ exports[`notification component renders correctly for every type 23`] = `
       }
     }
     style={
-      Object {
-        "borderRadius": 18,
-        "height": 36,
-        "width": 36,
-      }
+      Array [
+        Object {
+          "borderRadius": 18,
+          "height": 36,
+          "width": 36,
+        },
+        undefined,
+        undefined,
+      ]
     }
   />
   <View
@@ -1928,9 +2198,12 @@ exports[`notification component renders correctly for every type 23`] = `
     </View>
     <Text
       style={
-        Object {
-          "fontSize": 11,
-        }
+        Array [
+          Object {
+            "fontSize": 11,
+          },
+          undefined,
+        ]
       }
     >
       Invalid date
@@ -1942,15 +2215,20 @@ exports[`notification component renders correctly for every type 23`] = `
 exports[`notification component renders correctly for every type 24`] = `
 <View
   style={
-    Object {
-      "alignItems": "center",
-      "flexDirection": "row",
-      "flexWrap": "wrap",
-      "paddingBottom": 16,
-      "paddingLeft": 8,
-      "paddingRight": 8,
-      "paddingTop": 16,
-    }
+    Array [
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+        "paddingBottom": 16,
+        "paddingLeft": 8,
+        "paddingRight": 8,
+        "paddingTop": 16,
+      },
+      undefined,
+      undefined,
+      undefined,
+    ]
   }
 >
   <Image
@@ -1969,11 +2247,15 @@ exports[`notification component renders correctly for every type 24`] = `
       }
     }
     style={
-      Object {
-        "borderRadius": 18,
-        "height": 36,
-        "width": 36,
-      }
+      Array [
+        Object {
+          "borderRadius": 18,
+          "height": 36,
+          "width": 36,
+        },
+        undefined,
+        undefined,
+      ]
     }
   />
   <View
@@ -1999,9 +2281,12 @@ exports[`notification component renders correctly for every type 24`] = `
     </View>
     <Text
       style={
-        Object {
-          "fontSize": 11,
-        }
+        Array [
+          Object {
+            "fontSize": 11,
+          },
+          undefined,
+        ]
       }
     >
       Invalid date
@@ -2013,15 +2298,20 @@ exports[`notification component renders correctly for every type 24`] = `
 exports[`notification component renders correctly for every type 25`] = `
 <View
   style={
-    Object {
-      "alignItems": "center",
-      "flexDirection": "row",
-      "flexWrap": "wrap",
-      "paddingBottom": 16,
-      "paddingLeft": 8,
-      "paddingRight": 8,
-      "paddingTop": 16,
-    }
+    Array [
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+        "paddingBottom": 16,
+        "paddingLeft": 8,
+        "paddingRight": 8,
+        "paddingTop": 16,
+      },
+      undefined,
+      undefined,
+      undefined,
+    ]
   }
 >
   <Image
@@ -2040,11 +2330,15 @@ exports[`notification component renders correctly for every type 25`] = `
       }
     }
     style={
-      Object {
-        "borderRadius": 18,
-        "height": 36,
-        "width": 36,
-      }
+      Array [
+        Object {
+          "borderRadius": 18,
+          "height": 36,
+          "width": 36,
+        },
+        undefined,
+        undefined,
+      ]
     }
   />
   <View
@@ -2070,9 +2364,12 @@ exports[`notification component renders correctly for every type 25`] = `
     </View>
     <Text
       style={
-        Object {
-          "fontSize": 11,
-        }
+        Array [
+          Object {
+            "fontSize": 11,
+          },
+          undefined,
+        ]
       }
     >
       Invalid date
@@ -2084,15 +2381,20 @@ exports[`notification component renders correctly for every type 25`] = `
 exports[`notification component renders correctly for every type 26`] = `
 <View
   style={
-    Object {
-      "alignItems": "center",
-      "flexDirection": "row",
-      "flexWrap": "wrap",
-      "paddingBottom": 16,
-      "paddingLeft": 8,
-      "paddingRight": 8,
-      "paddingTop": 16,
-    }
+    Array [
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+        "paddingBottom": 16,
+        "paddingLeft": 8,
+        "paddingRight": 8,
+        "paddingTop": 16,
+      },
+      undefined,
+      undefined,
+      undefined,
+    ]
   }
 >
   <Image
@@ -2111,11 +2413,15 @@ exports[`notification component renders correctly for every type 26`] = `
       }
     }
     style={
-      Object {
-        "borderRadius": 18,
-        "height": 36,
-        "width": 36,
-      }
+      Array [
+        Object {
+          "borderRadius": 18,
+          "height": 36,
+          "width": 36,
+        },
+        undefined,
+        undefined,
+      ]
     }
   />
   <View
@@ -2152,9 +2458,12 @@ exports[`notification component renders correctly for every type 26`] = `
     </View>
     <Text
       style={
-        Object {
-          "fontSize": 11,
-        }
+        Array [
+          Object {
+            "fontSize": 11,
+          },
+          undefined,
+        ]
       }
     >
       Invalid date
@@ -2166,15 +2475,20 @@ exports[`notification component renders correctly for every type 26`] = `
 exports[`notification component renders correctly for every type 27`] = `
 <View
   style={
-    Object {
-      "alignItems": "center",
-      "flexDirection": "row",
-      "flexWrap": "wrap",
-      "paddingBottom": 16,
-      "paddingLeft": 8,
-      "paddingRight": 8,
-      "paddingTop": 16,
-    }
+    Array [
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+        "paddingBottom": 16,
+        "paddingLeft": 8,
+        "paddingRight": 8,
+        "paddingTop": 16,
+      },
+      undefined,
+      undefined,
+      undefined,
+    ]
   }
 >
   <Image
@@ -2193,11 +2507,15 @@ exports[`notification component renders correctly for every type 27`] = `
       }
     }
     style={
-      Object {
-        "borderRadius": 18,
-        "height": 36,
-        "width": 36,
-      }
+      Array [
+        Object {
+          "borderRadius": 18,
+          "height": 36,
+          "width": 36,
+        },
+        undefined,
+        undefined,
+      ]
     }
   />
   <View
@@ -2229,9 +2547,12 @@ exports[`notification component renders correctly for every type 27`] = `
     </View>
     <Text
       style={
-        Object {
-          "fontSize": 11,
-        }
+        Array [
+          Object {
+            "fontSize": 11,
+          },
+          undefined,
+        ]
       }
     >
       Invalid date
@@ -2243,15 +2564,20 @@ exports[`notification component renders correctly for every type 27`] = `
 exports[`notification component renders correctly for every type 28`] = `
 <View
   style={
-    Object {
-      "alignItems": "center",
-      "flexDirection": "row",
-      "flexWrap": "wrap",
-      "paddingBottom": 16,
-      "paddingLeft": 8,
-      "paddingRight": 8,
-      "paddingTop": 16,
-    }
+    Array [
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+        "paddingBottom": 16,
+        "paddingLeft": 8,
+        "paddingRight": 8,
+        "paddingTop": 16,
+      },
+      undefined,
+      undefined,
+      undefined,
+    ]
   }
 >
   <Image
@@ -2270,11 +2596,15 @@ exports[`notification component renders correctly for every type 28`] = `
       }
     }
     style={
-      Object {
-        "borderRadius": 18,
-        "height": 36,
-        "width": 36,
-      }
+      Array [
+        Object {
+          "borderRadius": 18,
+          "height": 36,
+          "width": 36,
+        },
+        undefined,
+        undefined,
+      ]
     }
   />
   <View
@@ -2312,9 +2642,12 @@ exports[`notification component renders correctly for every type 28`] = `
     </View>
     <Text
       style={
-        Object {
-          "fontSize": 11,
-        }
+        Array [
+          Object {
+            "fontSize": 11,
+          },
+          undefined,
+        ]
       }
     >
       Invalid date
