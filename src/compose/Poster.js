@@ -23,6 +23,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import BottomBar from './BottomBar';
 import MediaPreview from './MediaPreview';
 import discardMessage from './discardMessage';
+import Tags from '../common/components/Tags';
 
 const { width } = Dimensions.get('window');
 
@@ -142,12 +143,12 @@ export default observer(function (props) {
               placeholderTextColor={ThemedStyles.getColor('tertiary_text')}
               onChangeText={props.store.setText}
               textAlignVertical="top"
-              value={props.store.text}
               multiline={true}
               selectTextOnFocus={false}
               underlineColorAndroid="transparent"
-              testID="PostInput"
-            />
+              testID="PostInput">
+              <Tags>{props.store.text}</Tags>
+            </TextInput>
           </>
         )}
         <MediaPreview store={props.store} />

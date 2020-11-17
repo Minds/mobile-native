@@ -19,6 +19,7 @@ import { CommonActions } from '@react-navigation/native';
 import logService from '../common/services/log.service';
 import { runInAction } from 'mobx';
 import { Image, Platform } from 'react-native';
+import { hashRegex } from '../common/components/Tags';
 
 /**
  * Display an error message to the user.
@@ -268,6 +269,9 @@ export default function ({ props, newsfeed }) {
         this.tags.splice(index, 1);
       }
     },
+    parseTags() {
+      this.text.match(hashRegex).forEach((v) => this.addTag(v.trim()));
+    },
     /**
      * Set posting
      * @param {boolean} value
@@ -410,6 +414,9 @@ export default function ({ props, newsfeed }) {
       if (this.posting) {
         return;
       }
+
+      // parse tags from text
+      this.parseTags();
 
       // Plus Monetize?
       if (
