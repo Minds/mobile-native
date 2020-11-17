@@ -33,6 +33,7 @@ import type FeedStore from '../../common/stores/FeedStore';
 import sessionService from '../../common/services/session.service';
 import NavigationService from '../../navigation/NavigationService';
 import { showNotification } from '../../../AppMessages';
+import DeletedRemind from './DeletedRemind';
 
 const FONT_THRESHOLD = 300;
 
@@ -250,7 +251,6 @@ export default class Activity extends Component<PropsType> {
         testID="ActivityView">
         <Pinned entity={this.props.entity} />
         {this.showOwner()}
-
         {showNSFW ? (
           <ExplicitOverlay entity={this.props.entity} />
         ) : (
@@ -262,6 +262,7 @@ export default class Activity extends Component<PropsType> {
                 ? message
                 : undefined}
               {this.showRemind()}
+              {this.props.entity.remind_deleted && <DeletedRemind />}
               <MediaView
                 ref={(o) => {
                   this.mediaView = o;

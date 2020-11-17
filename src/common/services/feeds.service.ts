@@ -294,7 +294,11 @@ export default class FeedsService {
 
     const params = {
       ...this.params,
-      ...{ limit: 150, as_activities: this.asActivities ? 1 : 0 },
+      ...{
+        limit: 150,
+        hide_reminds: false,
+        as_activities: this.asActivities ? 1 : 0,
+      },
     };
 
     // For iOS and play store force safe content

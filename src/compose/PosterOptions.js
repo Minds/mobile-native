@@ -176,6 +176,8 @@ export default observer(
       ? store.wire_threshold.support_tier?.name || 'Plus'
       : '';
 
+    const showMonetize = !props.store.portraitMode && !props.store.isRemind;
+
     const showPermaweb =
       sessionService.getUser().plus &&
       !store.isEdit &&
@@ -210,7 +212,7 @@ export default observer(
             onPress={onSchedulePress}
           />
         )}
-        {!props.store.portraitMode && (
+        {showMonetize && (
           <Item
             title={i18n.t('monetize.title')}
             description={monetizeDesc}
