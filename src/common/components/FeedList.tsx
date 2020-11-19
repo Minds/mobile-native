@@ -233,7 +233,6 @@ export default class FeedList<T> extends Component<PropsType> {
    * Refresh feed data
    */
   refresh = () => {
-    console.log('refresh')
     this.props.feedStore.refresh();
     if (this.props.afterRefresh) {
       this.props.afterRefresh();
