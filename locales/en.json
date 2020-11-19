@@ -214,6 +214,7 @@
     "tagsDescription": "Tagging your post will make your content more easily discoverable.",
     "couldNotLoad": "The media from {{domain}} could not be loaded.",
     "maxHashtags": "Sorry, your post cannot contain more than {{maxHashtags}} hashtags.",
+    "duplicateHashtagas": "You have some duplicate hashtags",
     "schedule": "Schedule Post",
     "post": "Post",
     "remind": "Remind",
