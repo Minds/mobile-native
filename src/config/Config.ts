@@ -3,15 +3,14 @@ import { Platform } from 'react-native';
 
 import DeviceInfo from 'react-native-device-info';
 
-// export const MINDS_URI = 'https://www.minds.com/';
-// export const MINDS_URI = 'http://dev.minds.io/';
+// Send staging cookie to api
+export const MINDS_STAGING = false;
 
-// remember to update deeplink uri on AndroidManifest.xml !!!
-// export const MINDS_URI = 'http://172.16.2.61:8080/';
+// network timeout time
+export const NETWORK_TIMEOUT = 15000;
+
 export const MINDS_URI = 'https://www.minds.com/';
 export const MINDS_API_URI = 'https://www.minds.com/';
-
-export const NETWORK_TIMEOUT = 15000;
 
 export const CONECTIVITY_CHECK_URI = 'https://www.minds.com/';
 export const CONECTIVITY_CHECK_INTERVAL = 10000;
