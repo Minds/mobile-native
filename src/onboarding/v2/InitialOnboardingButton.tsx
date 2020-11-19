@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import React, { useEffect, useRef } from 'react';
 import { View } from 'react-native';
 import MenuItem from '../../common/components/menus/MenuItem';
@@ -9,6 +9,8 @@ import { Tooltip, Text } from 'react-native-elements';
 import { useDimensions } from '@react-native-community/hooks';
 import useOnboardingProgress from './useOnboardingProgress';
 import { observer } from 'mobx-react';
+
+let shownOnce = false;
 
 /**
  * Initial onboarding button
@@ -22,10 +24,25 @@ export default observer(function InitialOnboardingButton() {
   // get onboarding progress
   const progressStore = useOnboardingProgress();
 
+  useFocusEffect(
+    React.useCallback(() => {
+      if (progressStore.result && !progressStore.loading) {
+        progressStore.fetch();
+      }
+      // reload in 3 seconds (the post check has some delay)
+      setTimeout(() => {
+        if (progressStore && progressStore.result && !progressStore.loading) {
+          progressStore.fetch();
+        }
+      }, 3000);
+    }, [progressStore]),
+  );
+
   useEffect(() => {
     let t;
-    if (!progressStore.result?.is_completed) {
+    if (!progressStore.result?.is_completed && !shownOnce) {
       t = setTimeout(() => {
+        shownOnce = true;
         tooltipRef.current?.toggleTooltip();
       }, 2000);
     }
