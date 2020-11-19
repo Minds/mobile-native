@@ -29,7 +29,6 @@ import { showNotification } from '../../AppMessages';
 import validatorService from '../common/services/validator.service';
 import Captcha from '../common/components/Captcha';
 import authService, { registerParams } from './AuthService';
-import sessionService from '../common/services/session.service';
 import apiService from '../common/services/api.service';
 import delay from '../common/helpers/delay';
 import logService from '../common/services/log.service';
@@ -153,6 +152,11 @@ export default observer(function RegisterScreen(props: PropsType) {
     togglePromotions() {
       store.exclusivePromotions = !store.exclusivePromotions;
     },
+    emailInputBlur() {
+      if (!validatorService.email(store.email)) {
+        this.showErrors = true;
+      }
+    },
   }));
 
   const theme = ThemedStyles.style;
@@ -193,6 +197,7 @@ export default observer(function RegisterScreen(props: PropsType) {
             : undefined
         }
         noBottomBorder
+        onBlur={store.emailInputBlur}
       />
       <View>
         {!!store.password && store.focused && (
@@ -228,9 +233,14 @@ export default observer(function RegisterScreen(props: PropsType) {
     </View>
   );
 
+  const setting = {
+    ...shadowOptLocal,
+    style: [theme.marginBottom6x],
+  };
+
   const inputsWithShadow = Platform.select({
     ios: inputs,
-    android: <BoxShadow setting={shadowOptLocal}>{inputs}</BoxShadow>, // Android fallback for shadows
+    android: <BoxShadow setting={setting}>{inputs}</BoxShadow>, // Android fallback for shadows
   });
 
   return (
