@@ -44,7 +44,7 @@ type PropsType = {
 };
 
 const shadowOptLocal = Object.assign({}, shadowOpt);
-shadowOptLocal.height = 245;
+shadowOptLocal.height = 270;
 
 const validatorText = { color: LIGHT_THEME.primary_text };
 
@@ -235,7 +235,7 @@ export default observer(function RegisterScreen(props: PropsType) {
 
   const setting = {
     ...shadowOptLocal,
-    style: [theme.marginBottom6x],
+    style: {},
   };
 
   const inputsWithShadow = Platform.select({
