@@ -1,21 +1,26 @@
 //@ts-nocheck
 import React, { Component } from 'react';
-
+import { StyleSheet } from 'react-native';
 import { observer, inject } from 'mobx-react';
-
-import { MINDS_CDN_URI } from '../config/Config';
-
 import { ListItem } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import Button from '../common/components/Button';
+import abbrev from '../common/helpers/abbrev';
+import { MINDS_CDN_URI } from '../config/Config';
+import { FLAG_JOIN } from '../common/Permissions';
 import i18n from '../common/services/i18n.service';
 import { CommonStyle as CS } from '../styles/Common';
-import { FLAG_JOIN } from '../common/Permissions';
-import ThemedStyles from '../styles/ThemedStyles';
+import ListItemButton from '../common/components/ListItemButton';
+import type GroupModel from './GroupModel';
+
+type PropsType = {
+  group: GroupModel;
+  onPress?: () => void;
+};
 
 @inject('groupView')
 @observer
-class GroupsListItem extends Component {
+class GroupsListItem extends Component<PropsType> {
   state = {
     source: null,
   };
@@ -53,17 +58,15 @@ class GroupsListItem extends Component {
     const button = this.getButton();
     return (
       <ListItem
-        containerStyle={[
-          CS.noBorderBottom,
-          ThemedStyles.style.backgroundSecondary,
-        ]}
+        containerStyle={styles.container}
         title={this.props.group.name}
+        titleStyle={[styles.title, CS.colorPrimaryText]}
         keyExtractor={(item) => item.rowKey}
         leftAvatar={this.state.source}
         subtitle={i18n.t('groups.listMembersCount', {
-          count: this.props.group['members:count'],
+          count: abbrev(this.props.group['members:count']),
         })}
-        subtitleStyle={ThemedStyles.style.colorSecondaryText}
+        subtitleStyle={[styles.subtitle, CS.colorSecondaryText]}
         onPress={this._onPress}
         hideChevron={!button}
         rightIcon={button}
@@ -84,10 +87,26 @@ class GroupsListItem extends Component {
    * Get button
    */
   getButton = () => {
-    return this.props.group['is:member'] ? (
-      <Button text="Leave" onPress={this.leave} />
-    ) : (
-      <Button text="Join" onPress={this.join} />
+    return this.props.group['is:member']
+      ? this.getLeaveButton()
+      : this.getJoinButton();
+  };
+
+  getJoinButton = () => {
+    return (
+      <ListItemButton
+        onPress={this.join}
+        testID={`suggestedGroup${this.props.index}`}>
+        <Icon name="add" size={26} style={CS.colorActionNew} />
+      </ListItemButton>
+    );
+  };
+
+  getLeaveButton = () => {
+    return (
+      <ListItemButton onPress={this.leave}>
+        <Icon name="check" size={26} style={CS.colorDone} />
+      </ListItemButton>
     );
   };
 
@@ -97,15 +116,28 @@ class GroupsListItem extends Component {
   join = () => {
     if (!this.props.group.can(FLAG_JOIN, true)) return;
     this.props.groupView.setGroup(this.props.group);
-    this.props.groupView.join(this.props.group.guid);
+    this.props.groupView.join();
   };
   /**
    * Leave the group
    */
   leave = () => {
     this.props.groupView.setGroup(this.props.group);
-    this.props.groupView.leave(this.props.group.guid);
+    this.props.groupView.leave();
   };
 }
 
 export default GroupsListItem;
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: 'transparent',
+  },
+  title: {
+    fontSize: 17,
+    fontWeight: '500',
+  },
+  subtitle: {
+    fontSize: 14,
+  },
+});

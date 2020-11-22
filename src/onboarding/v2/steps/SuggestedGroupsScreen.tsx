@@ -5,7 +5,7 @@ import CenteredLoading from '../../../common/components/CenteredLoading';
 import i18n from '../../../common/services/i18n.service';
 import FeedStore from '../../../common/stores/FeedStore';
 import type GroupModel from '../../../groups/GroupModel';
-import GroupsListItemNew from '../../../groups/GroupsListItemNew';
+import GroupsListItem from '../../../groups/GroupsListItem';
 import NavigationService from '../../../navigation/NavigationService';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import ModalContainer from './ModalContainer';
@@ -45,7 +45,7 @@ export default observer(function SuggestedGroupsScreen() {
         <ScrollView style={theme.flexContainer}>
           {listStore.loading && <CenteredLoading />}
           {listStore.entities.slice().map((group) => (
-            <GroupsListItemNew group={group} key={group.guid} />
+            <GroupsListItem group={group} key={group.guid} />
           ))}
         </ScrollView>
       </View>
