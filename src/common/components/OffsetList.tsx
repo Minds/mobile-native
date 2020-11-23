@@ -10,7 +10,6 @@ import {
 import ThemedStyles from '../../styles/ThemedStyles';
 import useApiFetch from '../hooks/useApiFetch';
 import i18n from '../services/i18n.service';
-import CenteredLoading from './CenteredLoading';
 
 type PropsType = {
   header?: React.ComponentType<any> | React.ReactElement;
@@ -56,7 +55,7 @@ export default observer(function OffsetList<T>(props: PropsType) {
   );
 
   const onFetchMore = useCallback(
-    () => result && setOffset(result['load-next']),
+    () => result && result['load-next'] && setOffset(result['load-next']),
     [result],
   );
 

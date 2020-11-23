@@ -55,16 +55,7 @@ export const DiscoverySearchList = observer((props: Props) => {
           );
           break;
         case 'group':
-          entity = (
-            <GroupsListItem
-              group={row.item}
-              onPress={() =>
-                props.navigation.push('GroupView', {
-                  group: row.item.toPlainObject(),
-                })
-              }
-            />
-          );
+          entity = <GroupsListItem group={row.item} />;
           break;
         default:
           entity = (

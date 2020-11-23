@@ -1,131 +1,85 @@
-//@ts-nocheck
-import React, { Component } from 'react';
+import React, { useCallback } from 'react';
 import { StyleSheet } from 'react-native';
-import { observer, inject } from 'mobx-react';
+import { observer } from 'mobx-react';
 import { ListItem } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import abbrev from '../common/helpers/abbrev';
-import { MINDS_CDN_URI } from '../config/Config';
 import { FLAG_JOIN } from '../common/Permissions';
 import i18n from '../common/services/i18n.service';
 import { CommonStyle as CS } from '../styles/Common';
 import ListItemButton from '../common/components/ListItemButton';
-import type GroupModel from './GroupModel';
+import GroupModel from './GroupModel';
+import ThemedStyles from '../styles/ThemedStyles';
+import { useNavigation } from '@react-navigation/native';
 
 type PropsType = {
   group: GroupModel;
-  onPress?: () => void;
+  onPress?: Function;
+  hideButton?: boolean;
+  index?: number;
+  noNavigate?: boolean;
 };
 
-@inject('groupView')
-@observer
-class GroupsListItem extends Component<PropsType> {
-  state = {
-    source: null,
-  };
+type ButtonPropsType = {
+  group: GroupModel;
+  index?: number;
+};
 
-  /**
-   * Derive state from props
-   * @param {object} nextProps
-   * @param {object} prevState
-   */
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.group && prevState.group !== nextProps.group) {
-      return {
-        source: {
-          rounded: true,
-          size: 45,
-          source: {
-            uri:
-              MINDS_CDN_URI +
-              'fs/v1/avatars/' +
-              nextProps.group.guid +
-              '/small/' +
-              nextProps.group.icontime,
-          },
-        },
-      };
+const Button = observer(({ group, index }: ButtonPropsType) => {
+  const theme = ThemedStyles.style;
+  const isMember = group['is:member'];
+  let onPress, iconName, style;
+  if (isMember) {
+    onPress = () => group.leave();
+    iconName = 'check';
+    style = theme.colorDone;
+  } else {
+    onPress = group.can(FLAG_JOIN, true) ? () => group.join() : () => {};
+    iconName = 'add';
+    style = theme.colorActionNew;
+  }
+  return (
+    <ListItemButton onPress={onPress} testID={`suggestedGroup${index}`}>
+      <Icon name={iconName} size={26} style={style} />
+    </ListItemButton>
+  );
+});
+
+const GroupsListItem = observer((props: PropsType) => {
+  const navigation = useNavigation();
+  const theme = ThemedStyles.style;
+  const group = GroupModel.checkOrCreate(props.group);
+  const avatarSource = group.getAvatar();
+
+  const _onPress = useCallback(() => {
+    if (!props.noNavigate) {
+      navigation.navigate('GroupView', {
+        group: group,
+        scrollToBottom: true,
+      });
     }
+  }, [group, navigation, props.noNavigate]);
 
+  if (!group) {
     return null;
   }
 
-  /**
-   * Render
-   */
-  render() {
-    const button = this.getButton();
-    return (
-      <ListItem
-        containerStyle={styles.container}
-        title={this.props.group.name}
-        titleStyle={[styles.title, CS.colorPrimaryText]}
-        keyExtractor={(item) => item.rowKey}
-        leftAvatar={this.state.source}
-        subtitle={i18n.t('groups.listMembersCount', {
-          count: abbrev(this.props.group['members:count']),
-        })}
-        subtitleStyle={[styles.subtitle, CS.colorSecondaryText]}
-        onPress={this._onPress}
-        hideChevron={!button}
-        rightIcon={button}
-      />
-    );
-  }
-
-  /**
-   * On press
-   */
-  _onPress = () => {
-    if (this.props.onPress) {
-      this.props.onPress(this.props.group);
-    }
-  };
-
-  /**
-   * Get button
-   */
-  getButton = () => {
-    return this.props.group['is:member']
-      ? this.getLeaveButton()
-      : this.getJoinButton();
-  };
-
-  getJoinButton = () => {
-    return (
-      <ListItemButton
-        onPress={this.join}
-        testID={`suggestedGroup${this.props.index}`}>
-        <Icon name="add" size={26} style={CS.colorActionNew} />
-      </ListItemButton>
-    );
-  };
-
-  getLeaveButton = () => {
-    return (
-      <ListItemButton onPress={this.leave}>
-        <Icon name="check" size={26} style={CS.colorDone} />
-      </ListItemButton>
-    );
-  };
-
-  /**
-   * Join the group
-   */
-  join = () => {
-    if (!this.props.group.can(FLAG_JOIN, true)) return;
-    this.props.groupView.setGroup(this.props.group);
-    this.props.groupView.join();
-  };
-  /**
-   * Leave the group
-   */
-  leave = () => {
-    this.props.groupView.setGroup(this.props.group);
-    this.props.groupView.leave();
-  };
-}
+  return (
+    <ListItem
+      containerStyle={styles.container}
+      title={group.name}
+      titleStyle={[styles.title, theme.colorPrimaryText]}
+      leftAvatar={avatarSource}
+      subtitle={i18n.t('groups.listMembersCount', {
+        count: abbrev(group['members:count']),
+      })}
+      subtitleStyle={[styles.subtitle, CS.colorSecondaryText]}
+      onPress={_onPress}>
+      {!props.hideButton && <Button index={props.index} group={group} />}
+    </ListItem>
+  );
+});
 
 export default GroupsListItem;
 
