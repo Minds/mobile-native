@@ -23,7 +23,7 @@ const ChannelTopBar = observer(
     return (
       <View
         style={[
-          theme.rowJustifySpaceBetween,
+          theme.rowJustifyStart,
           cleanTop,
           // theme.paddingTop2x,
           theme.paddingBottom,
@@ -37,7 +37,7 @@ const ChannelTopBar = observer(
         />
         <TextInput
           placeholder="Search Channel"
-          style={[theme.colorPrimaryText, theme.halfWidth]}
+          style={[theme.colorPrimaryText, theme.flexContainer]}
           placeholderTextColor={ThemedStyles.getColor('primary_text')}
           value={store.channelSearch}
           onChangeText={store.setChannelSearch}
