@@ -24,8 +24,6 @@ import RNBootSplash from 'react-native-bootsplash';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import * as Sentry from '@sentry/react-native';
-import imageCacheStorageService from './src/common/services/image-cache.storage.service';
-
 import NavigationService, {
   setTopLevelNavigator,
 } from './src/navigation/NavigationService';
@@ -148,7 +146,6 @@ sessionService.onLogin(async () => {
     feedsStorage.removeOlderThan(30);
     commentStorageService.removeOlderThan(30);
     portraitContentService.removeOlderThan(3);
-    imageCacheStorageService.removeOlderThan(3);
   }, 30000);
 });
 

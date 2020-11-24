@@ -16,7 +16,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import settingsStore from '../../settings/SettingsStore';
 import ThemedStyles from '../../styles/ThemedStyles';
 import connectivityService from '../services/connectivity.service';
-import imageCacheStorageService from '../services/image-cache.storage.service';
 import RetryableImage from './RetryableImage';
 
 interface SmartImageProps {
@@ -65,10 +64,6 @@ export default observer(function (props: SmartImageProps) {
       store.progress = undefined;
       store.retries = 0;
 
-      if (props.source.uri) {
-        imageCacheStorageService.addCache(props.source.uri);
-      }
-
       if (props.onLoadEnd) {
         props.onLoadEnd();
       }
@@ -94,20 +89,20 @@ export default observer(function (props: SmartImageProps) {
       store.error = false;
       store.retries++;
     },
-    showImageIfCacheExists() {
+    async showImageIfCacheExists() {
       if (!props.source.uri) {
         return;
       }
 
-      imageCacheStorageService
-        .checkCacheExists(props.source.uri)
-        .then((cached) => {
-          if (!cached) {
-            return;
-          }
+      const cached = await FastImage.getCachePath({
+        uri: props.source.uri,
+      });
 
-          this.showImage();
-        });
+      if (!cached) {
+        return;
+      }
+
+      this.showImage();
     },
   }));
 
@@ -118,7 +113,11 @@ export default observer(function (props: SmartImageProps) {
   }, [props.imageVisible]);
 
   useEffect(() => {
-    store.showImageIfCacheExists();
+    try {
+      store.showImageIfCacheExists();
+    } catch (e) {
+      console.error(e);
+    }
   }, []);
 
   const showOverlayTransition = useTimingTransition(store.showOverlay, {
@@ -191,7 +190,9 @@ export default observer(function (props: SmartImageProps) {
           retry={2}
           key={store.retries}
           onError={store.setError}
-          source={props.source}
+          source={{
+            uri: `${props.source.uri}?test=${Math.random()}`
+          }}
           onLoadEnd={store.onLoadEnd}
           onProgress={store.onProgress}
         />

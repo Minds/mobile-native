@@ -10924,9 +10924,9 @@ react-native-exception-handler@^2.10.8:
   resolved "https://registry.yarnpkg.com/react-native-exception-handler/-/react-native-exception-handler-2.10.8.tgz#1a7f846592d888d23adaf797e31802585f1d9ff0"
   integrity sha512-ZN+jwpADRkCUNdad/50k0mZdMoICGrGdtaxgvRU+pNcWRRBAXJhuo4+jY0eQaoVpx1ghycGE6tBu9ka8gL2NOQ==
 
-react-native-fast-image@DylanVann/react-native-fast-image#e94e6fee66e1c60c6e8602eee20d7d5456b79a41:
-  version "8.0.0"
-  resolved "https://codeload.github.com/DylanVann/react-native-fast-image/tar.gz/e94e6fee66e1c60c6e8602eee20d7d5456b79a41"
+react-native-fast-image@msantang78/react-native-fast-image:
+  version "8.3.4"
+  resolved "https://codeload.github.com/msantang78/react-native-fast-image/tar.gz/9fa7998e1beaa464eda538e78d06cdc52e40afa2"
 
 react-native-file-type@^0.0.8:
   version "0.0.8"
