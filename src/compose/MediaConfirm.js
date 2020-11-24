@@ -47,17 +47,21 @@ export default observer(function (props) {
           theme.backgroundSecondary,
           isImage ? styles.floating : null,
         ]}>
-        <Text
-          onPress={props.store.editImage}
-          style={[
-            theme.fontXL,
-            theme.colorSecondaryText,
-            theme.fontSemibold,
-            theme.marginLeft3x,
-            styles.text,
-          ]}>
-          {i18n.t('edit')}
-        </Text>
+        {isImage ? (
+          <Text
+            onPress={props.store.editImage}
+            style={[
+              theme.fontXL,
+              theme.colorSecondaryText,
+              theme.fontSemibold,
+              theme.marginLeft3x,
+              styles.text,
+            ]}>
+            {i18n.t('edit')}
+          </Text>
+        ) : (
+          <View />
+        )}
         <Text
           onPress={props.store.acceptMedia}
           style={[
