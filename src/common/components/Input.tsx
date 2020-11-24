@@ -45,6 +45,7 @@ export interface PropsType {
  * Form input
  */
 export default class Input extends Component<PropsType> {
+  timeoutCleanup = null;
   /**
    * State
    */
@@ -62,8 +63,20 @@ export default class Input extends Component<PropsType> {
   }
 
   componentDidMount() {
-    if (this.inputRef.current && this.props.autofocus) {
-      this.inputRef.current.focus();
+    this.shouldAutofocus();
+  }
+
+  shouldAutofocus() {
+    this.timeoutCleanup = setTimeout(() => {
+      if (this.inputRef.current && this.props.autofocus) {
+        this.inputRef.current.focus();
+      }
+    }, 300);
+  }
+
+  componentWillUnmount() {
+    if (this.timeoutCleanup && typeof this.timeoutCleanup === 'function') {
+      this.timeoutCleanup();
     }
   }
 

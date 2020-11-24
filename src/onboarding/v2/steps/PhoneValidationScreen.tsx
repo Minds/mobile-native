@@ -76,6 +76,7 @@ export default observer(function PhoneValidationScreen() {
               ]}
               localStore={phoneValidationStore}
               bottomStore={true}
+              autoFocus
             />
           </LabeledComponent>
           <View
