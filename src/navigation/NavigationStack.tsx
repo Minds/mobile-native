@@ -630,6 +630,7 @@ const RootStack = function (props) {
     <RootStackNav.Navigator
       initialRouteName={initial}
       mode="modal"
+      keyboardHandlingEnabled={false}
       // @ts-ignore
       screenOptions={{
         headerShown: false,
