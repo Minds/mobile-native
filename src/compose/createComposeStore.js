@@ -20,6 +20,7 @@ import logService from '../common/services/log.service';
 import { runInAction } from 'mobx';
 import { Image, Platform } from 'react-native';
 import { hashRegex } from '../common/components/Tags';
+import _ from 'lodash';
 
 /**
  * Display an error message to the user.
@@ -251,13 +252,15 @@ export default function ({ props, newsfeed }) {
      */
     addTag(tag) {
       if (this.tags.length === hashtagService.maxHashtags) {
-        return;
+        this.maxHashtagsError();
+        return false;
       }
       if (this.tags.some((t) => t === tag)) {
-        return;
+        return false;
       }
 
       this.tags.push(tag);
+      return true;
     },
     /**
      * Remove a tag
@@ -270,10 +273,31 @@ export default function ({ props, newsfeed }) {
       }
     },
     parseTags() {
-      const result = this.text.match(hashRegex);
+      let result = this.text.match(hashRegex);
       if (result) {
-        result.forEach((v) => this.addTag(v.trim()));
+        result = result.map((v) => v.trim().slice(1));
+
+        // text tags has duplicates?
+        if (_.uniq(result).length !== result.length) {
+          showError(i18n.t('capture.duplicateHashtagas'));
+          return false;
+        }
+
+        // text tags already in other tags?
+        if (_.difference(result, this.tags).length !== result.length) {
+          showError(i18n.t('capture.duplicateHashtagas'));
+          return false;
+        }
+
+        if (this.tags.length + result.length <= hashtagService.maxHashtags) {
+          this.tags.push(...result);
+          return true;
+        } else {
+          this.maxHashtagsError();
+          return false;
+        }
       }
+      return true;
     },
     /**
      * Set posting
@@ -419,7 +443,9 @@ export default function ({ props, newsfeed }) {
       }
 
       // parse tags from text
-      this.parseTags();
+      if (!this.parseTags()) {
+        return false;
+      }
 
       // Plus Monetize?
       if (
@@ -463,11 +489,7 @@ export default function ({ props, newsfeed }) {
 
       // check hashtag limit
       if (this.tags.length > hashtagService.maxHashtags) {
-        showError(
-          i18n.t('capture.maxHashtags', {
-            maxHashtags: hashtagService.maxHashtags,
-          }),
-        );
+        this.maxHashtagsError();
         return false;
       }
 
@@ -590,6 +612,13 @@ export default function ({ props, newsfeed }) {
     },
     togglePostToPermaweb() {
       this.postToPermaweb = !this.postToPermaweb;
+    },
+    maxHashtagsError() {
+      showError(
+        i18n.t('capture.maxHashtags', {
+          maxHashtags: hashtagService.maxHashtags,
+        }),
+      );
     },
   };
 }
