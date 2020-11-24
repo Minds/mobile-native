@@ -84,6 +84,16 @@ export default class ExplicitText extends Component<PropsType, StateType> {
       message = '';
     }
 
+    // remove xml tags
+    if (entity.type === 'object' && entity.subtype === 'video') {
+      if (title.length) {
+        title = title.replace(/<[^>]*>/g, '');
+      }
+      if (message.length) {
+        message = message.replace(/<[^>]*>/g, '');
+      }
+    }
+
     let body: Element | null = null;
     let moreLess: JSX.Element | null = null;
     let explicitToggle = null;
