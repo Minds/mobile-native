@@ -26,6 +26,7 @@ type PropsType = {
   hideItems?: boolean;
   ListEmptyComponent?: React.ReactNode;
   onRefresh?: () => void;
+  afterRefresh?: () => void;
 };
 
 /**
@@ -233,8 +234,8 @@ export default class FeedList<T> extends Component<PropsType> {
    */
   refresh = () => {
     this.props.feedStore.refresh();
-    if (this.props.onRefresh) {
-      this.props.onRefresh();
+    if (this.props.afterRefresh) {
+      this.props.afterRefresh();
     }
   };
 

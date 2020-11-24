@@ -135,7 +135,7 @@ class NewsfeedScreen extends Component<PropsType> {
         header={header}
         feedStore={newsfeed.feedStore}
         navigation={this.props.navigation}
-        onRefresh={this.refreshPortrait}
+        afterRefresh={this.refreshPortrait}
         {...additionalProps}
       />
     );
