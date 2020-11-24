@@ -878,7 +878,7 @@
     "6": "Other",
     "safe": "Safe",
     "notSafe": "Not Safe",
-    "notSafeChannel": "This channel is not Safe",
+    "notSafeChannel": "This channel is not safe for work and cannot be accessed via iOS",
     "categories": "NSFW Categories",
     "description1": "If this post contains content that is NSFW (Not Safe for Work)  it is your responsibility to tag it accordingly.",
     "description2": "See guidelines for further information.",
