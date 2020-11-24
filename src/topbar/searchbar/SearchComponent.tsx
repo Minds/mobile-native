@@ -109,7 +109,7 @@ const SearchComponent = observer((props: Props) => {
                     testID="searchInput"
                     style={[styles.textInput, theme.colorPrimaryText]}
                     selectTextOnFocus={true}
-                    onSubmitEditing={() => localStore.searchDiscovery}
+                    onSubmitEditing={() => localStore.searchDiscovery()}
                   />
                 </View>
                 <Icon
