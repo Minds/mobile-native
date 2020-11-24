@@ -78,9 +78,10 @@ export default observer(function (props) {
         this.suggested = s;
       },
       add() {
-        postStore.addTag(localStore.text);
-        localStore.history.add(localStore.text);
-        localStore.text = '';
+        if (postStore.addTag(localStore.text)) {
+          localStore.history.add(localStore.text);
+          localStore.text = '';
+        }
       },
       addString(tag) {
         postStore.addTag(tag);
