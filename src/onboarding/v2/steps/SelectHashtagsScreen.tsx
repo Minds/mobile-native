@@ -20,7 +20,7 @@ export default observer(function SelectHashtagsScreen() {
 
   React.useEffect(() => {
     hashtag.loadSuggested();
-  });
+  }, [hashtag]);
 
   const backgroundColor = ThemedStyles.getColor('primary_background');
   const startColor = backgroundColor + '00';
@@ -69,9 +69,9 @@ const styles = StyleSheet.create({
   },
   hashtag: {
     backgroundColor: '#00000050',
-    margin: 10,
-    padding: 10,
-    borderRadius: 20,
+    margin: 8,
+    padding: 12,
+    borderRadius: 25,
     borderWidth: 1,
     borderColor: '#979797',
   },
