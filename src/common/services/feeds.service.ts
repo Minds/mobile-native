@@ -316,6 +316,9 @@ export default class FeedsService {
     const response = await apiService.get(this.endpoint, params, this);
 
     if (response.entities && response.entities.length) {
+      if (response.entities.length < params.limit) {
+        this.endReached = true;
+      }
       if (more) {
         this.feed = this.params.sync
           ? this.feed.concat(response.entities)
