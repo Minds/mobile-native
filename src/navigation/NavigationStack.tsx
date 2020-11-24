@@ -245,11 +245,6 @@ export const InternalStack = () => {
         options={WalletOptions}
       />
       <InternalStackNav.Screen
-        name="BoostConsole"
-        component={BoostConsoleScreen}
-        options={hideHeader}
-      />
-      <InternalStackNav.Screen
         name="GroupsList"
         component={GroupsListScreen}
         options={{ title: i18n.t('discovery.groups') }}
@@ -516,6 +511,11 @@ const AppStack = function () {
         name="Referrals"
         component={ReferralsScreen}
         options={{ title: i18n.t('settings.referrals') }}
+      />
+      <AppStackNav.Screen
+        name="BoostConsole"
+        component={BoostConsoleScreen}
+        options={{ title: i18n.t('boost') }}
       />
       <AppStackNav.Screen
         name="Other"

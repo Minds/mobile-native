@@ -44,6 +44,10 @@ export default function ({ navigation }) {
       screen: 'Referrals',
       params: {},
     },
+    {
+      title: i18n.t('boost'),
+      screen: 'BoostConsole',
+    },
   ];
 
   if (!user.plus) {
