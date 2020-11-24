@@ -29,9 +29,15 @@ export default observer(function OnboardingScreen() {
   // reload data when we return to the screen
   useFocusEffect(
     React.useCallback(() => {
-      if (progressStore.result && !progressStore.loading) {
+      if (progressStore && progressStore.result && !progressStore.loading) {
         progressStore.fetch();
       }
+      // reload in 3 seconds (the post check has some delay)
+      setTimeout(() => {
+        if (progressStore && progressStore.result && !progressStore.loading) {
+          progressStore.fetch();
+        }
+      }, 3000);
     }, [progressStore]),
   );
 

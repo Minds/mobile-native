@@ -9,9 +9,9 @@ import abbrev from '../common/helpers/abbrev';
 import { MINDS_CDN_URI } from '../config/Config';
 import { FLAG_JOIN } from '../common/Permissions';
 import i18n from '../common/services/i18n.service';
-import { CommonStyle as CS } from '../styles/Common';
 import ListItemButton from '../common/components/ListItemButton';
 import type GroupModel from './GroupModel';
+import ThemedStyles from '../styles/ThemedStyles';
 
 type PropsType = {
   group: GroupModel;
@@ -56,17 +56,18 @@ class GroupsListItemNew extends Component<PropsType> {
    */
   render() {
     const button = this.getButton();
+    const theme = ThemedStyles.style;
     return (
       <ListItem
         containerStyle={styles.container}
         title={this.props.group.name}
-        titleStyle={[styles.title, CS.colorPrimaryText]}
+        titleStyle={[styles.title, theme.colorPrimaryText]}
         keyExtractor={(item) => item.rowKey}
         leftAvatar={this.state.source}
         subtitle={i18n.t('groups.listMembersCount', {
           count: abbrev(this.props.group['members:count']),
         })}
-        subtitleStyle={[styles.subtitle, CS.colorSecondaryText]}
+        subtitleStyle={[styles.subtitle, theme.colorSecondaryText]}
         onPress={this._onPress}
         hideChevron={!button}
         rightIcon={button}
@@ -97,7 +98,7 @@ class GroupsListItemNew extends Component<PropsType> {
       <ListItemButton
         onPress={this.join}
         testID={`suggestedGroup${this.props.index}`}>
-        <Icon name="add" size={26} style={CS.colorActionNew} />
+        <Icon name="add" size={26} style={ThemedStyles.style.colorIcon} />
       </ListItemButton>
     );
   };
@@ -105,7 +106,7 @@ class GroupsListItemNew extends Component<PropsType> {
   getLeaveButton = () => {
     return (
       <ListItemButton onPress={this.leave}>
-        <Icon name="check" size={26} style={CS.colorDone} />
+        <Icon name="check" size={26} style={ThemedStyles.style.colorLink} />
       </ListItemButton>
     );
   };

@@ -288,7 +288,7 @@ const createChannelStore = () => {
               isBanner ? 1500 : 1024,
               isBanner ? 600 : 1024,
             );
-        promise
+        await promise
           .then(async (response: customImagePromise) => {
             let file: CustomImage;
             if (response !== false && !Array.isArray(response)) {

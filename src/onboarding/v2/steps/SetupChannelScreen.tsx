@@ -77,16 +77,16 @@ export default observer(function SetupChannelScreen() {
         {
           title: i18n.t('takePhoto'),
           titleStyle: theme.fontXXL,
-          onPress: () => {
-            channelStore.upload('avatar', true);
+          onPress: async () => {
+            await channelStore.upload('avatar', true);
             store.hidePicker();
           },
         },
         {
           title: i18n.t('uploadPhoto'),
           titleStyle: theme.fontXXL,
-          onPress: () => {
-            channelStore.upload('avatar', false);
+          onPress: async () => {
+            await channelStore.upload('avatar', false);
             store.hidePicker();
           },
         },
