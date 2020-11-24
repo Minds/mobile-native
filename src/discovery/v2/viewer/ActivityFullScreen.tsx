@@ -232,7 +232,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
   });
 
   return (
-    <View style={[window, theme.flexContainer, theme.backgroundSecondary]}>
+    <View style={[window, theme.flexContainer, theme.backgroundPrimary]}>
       <View style={theme.flexContainer}>
         {ownerBlockShadow}
         <ScrollView
