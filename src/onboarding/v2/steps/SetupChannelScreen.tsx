@@ -1,5 +1,5 @@
 import { observer, useLocalStore } from 'mobx-react';
-import React, { useMemo } from 'react';
+import React, { useRef } from 'react';
 import {
   Image,
   ImageSourcePropType,
@@ -71,36 +71,33 @@ export default observer(function SetupChannelScreen() {
     },
   }));
 
-  const avatarOptions: Array<Array<ItemType>> = useMemo(
-    () => [
-      [
-        {
-          title: i18n.t('takePhoto'),
-          titleStyle: theme.fontXXL,
-          onPress: async () => {
-            await channelStore.upload('avatar', true);
-            store.hidePicker();
-          },
+  const avatarOptions: Array<Array<ItemType>> = useRef([
+    [
+      {
+        title: i18n.t('takePhoto'),
+        titleStyle: theme.fontXXL,
+        onPress: async () => {
+          await channelStore.upload('avatar', true);
+          store.hidePicker();
         },
-        {
-          title: i18n.t('uploadPhoto'),
-          titleStyle: theme.fontXXL,
-          onPress: async () => {
-            await channelStore.upload('avatar', false);
-            store.hidePicker();
-          },
+      },
+      {
+        title: i18n.t('uploadPhoto'),
+        titleStyle: theme.fontXXL,
+        onPress: async () => {
+          await channelStore.upload('avatar', false);
+          store.hidePicker();
         },
-      ],
-      [
-        {
-          title: i18n.t('cancel'),
-          titleStyle: theme.colorSecondaryText,
-          onPress: store.hidePicker,
-        },
-      ],
+      },
     ],
-    [theme.fontXXL, theme.colorSecondaryText, store, channelStore],
-  );
+    [
+      {
+        title: i18n.t('cancel'),
+        titleStyle: theme.colorSecondaryText,
+        onPress: store.hidePicker,
+      },
+    ],
+  ]).current;
 
   return (
     <ModalContainer

@@ -1,5 +1,6 @@
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import React, { useEffect, useRef } from 'react';
+import moment from 'moment-timezone';
 import { View } from 'react-native';
 import MenuItem from '../../common/components/menus/MenuItem';
 import i18n from '../../common/services/i18n.service';
@@ -9,6 +10,7 @@ import { Tooltip, Text } from 'react-native-elements';
 import { useDimensions } from '@react-native-community/hooks';
 import useOnboardingProgress from './useOnboardingProgress';
 import { observer } from 'mobx-react';
+import SettingsStore from '../../settings/SettingsStore';
 
 let shownOnce = false;
 
@@ -26,6 +28,13 @@ export default observer(function InitialOnboardingButton() {
 
   useFocusEffect(
     React.useCallback(() => {
+      if (
+        SettingsStore.ignoreOnboarding &&
+        SettingsStore.ignoreOnboarding.isAfter(moment())
+      ) {
+        return;
+      }
+
       if (progressStore.result && !progressStore.loading) {
         progressStore.fetch();
       }
@@ -65,7 +74,12 @@ export default observer(function InitialOnboardingButton() {
       }),
   };
 
-  if (!progressStore.result || progressStore.result.is_completed) {
+  if (
+    !progressStore.result ||
+    progressStore.result.is_completed ||
+    (SettingsStore.ignoreOnboarding &&
+      SettingsStore.ignoreOnboarding.isAfter(moment()))
+  ) {
     return null;
   }
 

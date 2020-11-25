@@ -1,13 +1,19 @@
 import { useDimensions } from '@react-native-community/hooks';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import { observer } from 'mobx-react';
-import React from 'react';
+import { observer, useLocalStore } from 'mobx-react';
+import moment from 'moment-timezone';
+import React, { useRef } from 'react';
 import { View, Text } from 'react-native';
 import * as Progress from 'react-native-progress';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import BottomButtonOptions, {
+  ItemType,
+} from '../../common/components/BottomButtonOptions';
 import CenteredLoading from '../../common/components/CenteredLoading';
 
 import MenuItem from '../../common/components/menus/MenuItem';
 import i18n from '../../common/services/i18n.service';
+import SettingsStore from '../../settings/SettingsStore';
 import ThemedStyles from '../../styles/ThemedStyles';
 import useOnboardingProgress from './useOnboardingProgress';
 
@@ -26,6 +32,17 @@ export default observer(function OnboardingScreen() {
   const navigation = useNavigation();
   const progressStore = useOnboardingProgress();
 
+  const store = useLocalStore(() => ({
+    showMenu: false,
+    saving: false,
+    showPicker() {
+      store.showMenu = true;
+    },
+    hidePicker() {
+      store.showMenu = false;
+    },
+  }));
+
   // reload data when we return to the screen
   useFocusEffect(
     React.useCallback(() => {
@@ -41,7 +58,7 @@ export default observer(function OnboardingScreen() {
     }, [progressStore]),
   );
 
-  const stepsMapping: { [name: string]: StepDefinition } = {
+  const stepsMapping: { [name: string]: StepDefinition } = useRef({
     VerifyEmailStep: {
       title: i18n.t('onboarding.verifyEmailAddress'),
       screen: 'VerifyEmail',
@@ -74,7 +91,29 @@ export default observer(function OnboardingScreen() {
           text: 'Just landed on Planet Minds 🚀',
         }),
     },
-  };
+  }).current;
+
+  const dismissOptions: Array<Array<ItemType>> = useRef([
+    [
+      {
+        title: i18n.t('onboarding.hidePanel'),
+        titleStyle: theme.fontXXL,
+        onPress: async () => {
+          const m = moment().add(2, 'days');
+          SettingsStore.setIgnoreOnboarding(m);
+          store.hidePicker();
+          navigation.goBack();
+        },
+      },
+    ],
+    [
+      {
+        title: i18n.t('cancel'),
+        titleStyle: theme.colorSecondaryText,
+        onPress: store.hidePicker,
+      },
+    ],
+  ]).current;
 
   const steps = progressStore.result
     ? progressStore.result.steps.map((s) =>
@@ -116,17 +155,24 @@ export default observer(function OnboardingScreen() {
     ) : (
       <>
         <View style={[theme.padding4x, theme.marginVertical2x]}>
-          <Text
+          <View
             style={[
-              theme.fontXXL,
-              theme.colorPrimaryText,
-              theme.bold,
+              theme.rowJustifySpaceBetween,
+              theme.alignCenter,
               theme.marginBottom3x,
             ]}>
-            {progressStore.result?.id === 'OngoingOnboardingGroup'
-              ? i18n.t('onboarding.improveExperience')
-              : i18n.t('onboarding.completeToEarn')}
-          </Text>
+            <Text style={[theme.fontXXL, theme.colorPrimaryText, theme.bold]}>
+              {progressStore.result?.id === 'OngoingOnboardingGroup'
+                ? i18n.t('onboarding.improveExperience')
+                : i18n.t('onboarding.completeToEarn')}
+            </Text>
+            <Icon
+              name="more-vert"
+              size={26}
+              style={theme.colorPrimaryText}
+              onPress={store.showPicker}
+            />
+          </View>
           <Progress.Bar
             color={ThemedStyles.getColor('link')}
             unfilledColor={ThemedStyles.getColor('secondary_text')}
@@ -136,6 +182,7 @@ export default observer(function OnboardingScreen() {
             height={8}
           />
         </View>
+        <BottomButtonOptions list={dismissOptions} isVisible={store.showMenu} />
         {steps.map((item) =>
           item ? (
             <MenuItem
