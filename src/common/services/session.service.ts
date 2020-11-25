@@ -105,7 +105,7 @@ class SessionService {
     }
   }
 
-  async loadUser(user) {
+  async loadUser(user?: UserModel) {
     if (user) {
       getStores().user.setUser(user);
       // we update the user without wait
