@@ -111,6 +111,7 @@ import SuggestedChannelsScreen from '../onboarding/v2/steps/SuggestedChannelsScr
 import SuggestedGroupsScreen from '../onboarding/v2/steps/SuggestedGroupsScreen';
 import BoostChannelScreen from '../boost/v2/BoostChannelScreen';
 import BoostPostScreen from '../boost/v2/BoostPostScreen';
+import ConnectionTestScreen from '../connection-test/ConnectionTestScreen';
 
 const isIos = Platform.OS === 'ios';
 
@@ -255,6 +256,7 @@ export const InternalStack = () => {
       <InternalStackNav.Screen name="Onboarding" component={OnboardingScreen} />
 
       <InternalStackNav.Screen name="Settings" component={SettingsScreen} />
+      <InternalStackNav.Screen name="Test" component={ConnectionTestScreen} />
     </InternalStackNav.Navigator>
   );
 };
