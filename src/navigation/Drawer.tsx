@@ -179,22 +179,6 @@ const getOptionsList = (navigation) => {
         });
       },
     },
-    {
-      name: 'Testing',
-      icon: (
-        <Icon
-          name="settings"
-          size={ICON_SIZE}
-          style={[theme.colorIcon, styles.icon]}
-        />
-      ),
-      onPress: () => {
-        navigation.navigate('Tabs', {
-          screen: 'CaptureTab',
-          params: { screen: 'Test' },
-        });
-      },
-    },
   ];
 
   return list;

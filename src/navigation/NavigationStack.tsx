@@ -259,7 +259,6 @@ export const InternalStack = () => {
       <InternalStackNav.Screen name="Onboarding" component={OnboardingScreen} />
 
       <InternalStackNav.Screen name="Settings" component={SettingsScreen} />
-      <InternalStackNav.Screen name="Test" component={ConnectionTestScreen} />
     </InternalStackNav.Navigator>
   );
 };

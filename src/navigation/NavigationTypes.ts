@@ -22,7 +22,6 @@ export type InternalStackParamList = {
   Analytics: {};
   Onboarding: {};
   InitialOnboarding: {};
-  Test: {};
 };
 
 export type RootStackParamList = {
