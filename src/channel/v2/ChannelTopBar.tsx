@@ -1,11 +1,13 @@
 import React from 'react';
-import { StyleSheet, TextInput, View } from 'react-native';
+import { TextInput, View } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import type { ChannelStoreType } from './createChannelStore';
 import ChannelButtons from './ChannelButtons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { observer } from 'mobx-react';
+
+import { styles as headerStyles } from '../../topbar/Topbar';
 
 type PropsType = {
   navigation: any;
@@ -23,22 +25,31 @@ const ChannelTopBar = observer(
     return (
       <View
         style={[
+          headerStyles.container,
+          headerStyles.shadow,
           theme.rowJustifyStart,
+          theme.alignCenter,
           cleanTop,
           // theme.paddingTop2x,
           theme.paddingBottom,
           theme.backgroundPrimary,
         ]}>
         <MIcon
-          size={36}
+          size={45}
           name="chevron-left"
-          style={[styles.backIcon, theme.colorIcon, theme.centered]}
+          style={[theme.colorIcon, theme.centered]}
           onPress={navigation.goBack}
         />
         <TextInput
           placeholder="Search Channel"
-          style={[theme.colorPrimaryText, theme.flexContainer]}
-          placeholderTextColor={ThemedStyles.getColor('primary_text')}
+          style={[
+            theme.fontL,
+            theme.flexContainer,
+            theme.colorSecondaryText,
+            theme.paddingLeft3x,
+            theme.paddingVertical2x,
+          ]}
+          placeholderTextColor={ThemedStyles.getColor('tertiary_text')}
           value={store.channelSearch}
           onChangeText={store.setChannelSearch}
           returnKeyType={'search'}
@@ -46,35 +57,27 @@ const ChannelTopBar = observer(
         />
         {store.channelSearch.length > 0 && (
           <MIcon
-            size={18}
+            size={25}
             name="close-circle-outline"
-            style={[styles.backIcon, theme.colorIcon, theme.centered]}
+            style={[theme.colorIcon, theme.centered]}
             onPress={store.clearSearch}
           />
         )}
         {!hideButtons && (
           <ChannelButtons
+            iconSize={25}
             store={store}
             onEditPress={() =>
               navigation.push('EditChannelScreen', { store: store })
             }
             notShow={['edit', 'join', 'subscribe']}
             containerStyle={theme.centered}
-            iconsStyle={theme.paddingLeft4x}
+            iconsStyle={[theme.paddingLeft4x, theme.colorSecondaryText]}
           />
         )}
       </View>
     );
   },
 );
-
-const styles = StyleSheet.create({
-  backIcon: {
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
-    shadowOffset: { height: 3, width: 0 },
-    elevation: 4,
-  },
-});
 
 export default ChannelTopBar;
