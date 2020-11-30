@@ -30,16 +30,9 @@ import ThumbDownAction from '../newsfeed/activity/actions/ThumbDownAction';
 import ThumbUpAction from '../newsfeed/activity/actions/ThumbUpAction';
 import OwnerBlock from '../newsfeed/activity/OwnerBlock';
 import shareService from '../share/ShareService';
-import commentsStoreProvider from '../comments/CommentsStoreProvider';
-import CommentList from '../comments/CommentList';
-import CenteredLoading from '../common/components/CenteredLoading';
-import logService from '../common/services/log.service';
-import i18n from '../common/services/i18n.service';
-import { FLAG_VIEW } from '../common/Permissions';
+import colors from '../styles/Colors';
+import { CommonStyle as CS } from '../styles/Common';
 import ThemedStyles from '../styles/ThemedStyles';
-import { ComponentsStyle } from '../styles/Components';
-import BlogActionSheet from './BlogActionSheet';
-import Lock from '../wire/v2/lock/Lock';
 
 import BlogViewHTML from './BlogViewHTML';
 
