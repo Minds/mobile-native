@@ -74,6 +74,7 @@ export default observer(function PhoneValidationScreen() {
                 theme.border0x,
                 styles.input,
               ]}
+              inputWrapperStyle={styles.inputWrapperStyle}
               localStore={phoneValidationStore}
               bottomStore={true}
             />
@@ -116,5 +117,9 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     marginTop: 100,
+  },
+  inputWrapperStyle: {
+    flexDirection: 'row',
+    alignItems: 'stretch',
   },
 });
