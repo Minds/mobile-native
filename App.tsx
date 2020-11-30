@@ -22,7 +22,6 @@ import { Provider, observer } from 'mobx-react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import ShareMenu from 'react-native-share-menu';
-import * as Sentry from '@sentry/react-native';
 import NavigationService, {
   setTopLevelNavigator,
 } from './src/navigation/NavigationService';

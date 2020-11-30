@@ -1,16 +1,15 @@
 //@ts-nocheck
 import React, { PureComponent } from 'react';
 
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 
 import { Avatar } from 'react-native-elements';
 
 import FastImage from 'react-native-fast-image';
-import SmartImage from '../common/components/SmartImage';
 import formatDate from '../common/helpers/date';
+import { CommonStyle as CS } from '../styles/Common';
 import { FLAG_VIEW } from '../common/Permissions';
 import Actions from '../newsfeed/activity/Actions';
-import { CommonStyle as CS } from '../styles/Common';
 import ThemedStyles from '../styles/ThemedStyles';
 import type BlogModel from './BlogModel';
 import BlogActionSheet from './BlogActionSheet';
