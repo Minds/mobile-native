@@ -13,7 +13,6 @@ import { observer } from 'mobx-react';
 import SearchComponent from './searchbar/SearchComponent';
 import ThemedStyles from '../styles/ThemedStyles';
 import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
-import EmailConfirmation from './EmailConfirmation';
 import BannerInfo from './BannerInfo';
 import FastImage from 'react-native-fast-image';
 import { useStores } from '../common/hooks/use-stores';
@@ -109,7 +108,6 @@ export const Topbar = observer((props: PropsType) => {
                 </View>
               </View>
             </View>
-            <EmailConfirmation />
             <BannerInfo />
           </View>
         );
