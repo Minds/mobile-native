@@ -1,4 +1,4 @@
-import { ImageURISource } from 'react-native';
+import { Source } from 'react-native-fast-image';
 import CommentModel from '../../comments/CommentModel';
 import ActivityModel from '../../newsfeed/ActivityModel';
 import mindsService from '../services/minds.service';
@@ -7,7 +7,7 @@ import mediaProxyUrl from './media-proxy-url';
 const getVideoThumb = (
   entity?: ActivityModel | CommentModel,
   size?: number,
-): ImageURISource | undefined => {
+): Pick<Source, 'uri'> | undefined => {
   const source = entity
     ? mindsService.settings && mindsService.settings.cinemr_url
       ? {

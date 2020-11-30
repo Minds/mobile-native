@@ -537,7 +537,7 @@ class MindsVideo extends Component<PropsType, StateType> {
     const dataSaverEnabled = !ignoreDataSaver && settingsStore.dataSaverEnabled;
     const posterSource = getVideoThumb(entity, 1024);
     const thumbnailSource =
-      entity && dataSaverEnabled && getVideoThumb(entity, 16);
+      (entity && dataSaverEnabled) ? getVideoThumb(entity, 16) : undefined;
 
     if (this.state.active || !posterSource) {
       return (
