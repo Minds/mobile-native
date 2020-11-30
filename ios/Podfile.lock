@@ -255,8 +255,8 @@ PODS:
     - React
   - react-native-image-picker (2.3.3):
     - React
-  - react-native-netinfo (4.7.0):
-    - React
+  - react-native-netinfo (5.9.9):
+    - React-Core
   - react-native-notifications (2.0.6):
     - React
   - react-native-randombytes (3.5.3):
@@ -378,8 +378,8 @@ PODS:
     - React
   - RNReanimated (1.9.0):
     - React
-  - RNScreens (2.9.0):
-    - React
+  - RNScreens (2.15.0):
+    - React-Core
   - RNSentry (1.6.3):
     - React
     - Sentry (~> 5.1.8)
@@ -756,7 +756,7 @@ SPEC CHECKSUMS:
   react-native-camera: 55e1afb6d585314ca96ea5504e6b1ba7583c1d21
   react-native-cameraroll: dbda741db5dadcdcf738e55a1fd565c307943bca
   react-native-image-picker: 3d3f85baabca60a00b75fb8facc1376db7bbdafa
-  react-native-netinfo: ddaca8bbb9e6e914b1a23787ccb879bc642931c9
+  react-native-netinfo: 0212ce8604e88edf686f1481b925b17a42a52449
   react-native-notifications: 163ddedac6fcc8d850ea15b06abdadcacdff00f1
   react-native-randombytes: 3638d24759d67c68f6ccba60c52a7a8a8faa6a23
   react-native-safe-area-context: 955ecfce672683b495d9294d2f154a9ad1d9796b
@@ -791,7 +791,7 @@ SPEC CHECKSUMS:
   RNPermissions: 477d88d0be7ecb0a7b344e4d5fbb0352de104626
   RNPhotoEditor: f00eb35b43ce3650b743fab6fce333ccde26b384
   RNReanimated: b5ccb50650ba06f6e749c7c329a1bc3ae0c88b43
-  RNScreens: c526239bbe0e957b988dacc8d75ac94ec9cb19da
+  RNScreens: 2ad555d4d9fa10b91bb765ca07fe9b29d59573f0
   RNSentry: ae1e005e4f2655775475445a9c49c1d343e8e3a7
   RNShare: 8b171d4b43c1d886917fdd303bf7a4b87167b05c
   RNSharedElement: 00b1a1420d213a34459bb9a5aacabb38107d7948
@@ -819,4 +819,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: ccd7495510034e0f284e0fc6f5c905fec133aa8f
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.3
