@@ -1,6 +1,7 @@
 //@ts-nocheck
 import { observable, action, computed } from 'mobx';
 import connectivityService from '../common/services/connectivity.service';
+import moment, { Moment } from 'moment-timezone';
 
 import storageService from '../common/services/storage.service';
 import { getStores } from '../../AppStores';
@@ -9,10 +10,11 @@ import ThemedStyles from '../styles/ThemedStyles';
 /**
  * Store for the values held in Settings.
  */
-class SettingsStore {
+export class SettingsStore {
   @observable appLog = true;
   @observable leftHanded = null;
   @observable ignoreBestLanguage = '';
+  @observable ignoreOnboarding: Moment | false = false;
   @observable dataSaverMode = false;
   @observable dataSaverModeDisablesOnWiFi = false;
 
@@ -49,6 +51,7 @@ class SettingsStore {
       'Theme',
       'IgnoreBestLanguage',
       'ComposerMode',
+      'IgnoreOnboarding',
       'DataSaverMode',
       'DataSaverModeDisablesOnWiFi',
     ]);
@@ -61,8 +64,9 @@ class SettingsStore {
     if (!data) {
       ThemedStyles.theme = 0;
       ThemedStyles.init();
-      return;
+      return this;
     }
+
     this.leftHanded = data[0][1];
     this.appLog = data[1][1];
     this.creatorNsfw = data[2][1] || [];
@@ -70,6 +74,7 @@ class SettingsStore {
     this.useHashtags = data[4][1] === null ? true : data[4][1];
     this.ignoreBestLanguage = data[6][1] || '';
     this.composerMode = data[7][1] || 'photo';
+    this.ignoreOnboarding = data[8][1] ? moment(data[8][1]) : false;
     this.dataSaverMode = data[8][1] || false;
     this.dataSaverModeDisablesOnWiFi = data[9][1] || false;
 
@@ -141,21 +146,34 @@ class SettingsStore {
     this.useHashtags = value;
   }
 
+  /**
+   *
+   * @param value moment | false
+   */
   @action
+  setIgnoreOnboarding(value: Moment | false) {
+    storageService.setItem(
+      'IgnoreOnboarding',
+      value ? value.format('x') : false,
+    );
+    this.ignoreOnboarding = value;
+  }
+
   /**
    * Set data saver mode
    * @param {boolean} value
    */
+  @action
   setDataSaverMode(value: boolean) {
     storageService.setItem('DataSaverMode', value);
     this.dataSaverMode = value;
   }
 
-  @action
   /**
    * Set data saver mode on a Wi-Fi connection
    * @param {boolean} value
    */
+  @action
   setDataSaverModeDisablesOnWiFi(value: boolean) {
     storageService.setItem('DataSaverModeDisablesOnWiFi', value);
     this.dataSaverModeDisablesOnWiFi = value;

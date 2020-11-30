@@ -23,6 +23,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import BottomBar from './BottomBar';
 import MediaPreview from './MediaPreview';
 import discardMessage from './discardMessage';
+import Tags from '../common/components/Tags';
 
 const { width } = Dimensions.get('window');
 
@@ -37,15 +38,16 @@ export default observer(function (props) {
 
   // On post press
   const onPost = useCallback(async () => {
+    if (props.store.attachment.uploading) {
+      return;
+    }
     const isEdit = props.store.isEdit;
-    const entity = await (props.store.isRemind
-      ? props.store.remind()
-      : props.store.submit());
+    const entity = await props.store.submit();
 
     if (entity) {
       props.store.onPost(entity, isEdit);
     }
-  }, [props]);
+  }, [props.store]);
 
   // On press back
   const onPressBack = useCallback(() => {
@@ -87,11 +89,17 @@ export default observer(function (props) {
     ? i18n.t('description')
     : i18n.t('capture.placeholder');
 
-  const rightButton = props.store.attachment.uploading ? undefined : props.store
-      .isEdit ? (
+  const rightButton = props.store.isEdit ? (
     i18n.t('save')
   ) : (
-    <IonIcon name="send" size={27} style={theme.colorPrimaryText} />
+    <IonIcon
+      name="send"
+      size={27}
+      style={[
+        theme.colorPrimaryText,
+        props.store.attachment.uploading ? theme.opacity25 : null,
+      ]}
+    />
   );
 
   useEffect(() => {
@@ -107,39 +115,42 @@ export default observer(function (props) {
         contentContainerStyle={styles.bodyContainer}>
         <TopBar
           containerStyle={theme.paddingLeft}
-          backIconSize={38}
-          backIconName="window-close"
+          backIconSize={45}
           rightText={rightButton}
           onPressRight={onPost}
           onPressBack={onPressBack}
           store={props.store}
         />
-        {props.store.attachment.hasAttachment && (
-          <TitleInput store={props.store} />
+        {!props.store.noText && (
+          <>
+            {props.store.attachment.hasAttachment && (
+              <TitleInput store={props.store} />
+            )}
+            <TextInput
+              style={[
+                theme.fullWidth,
+                theme.colorPrimaryText,
+                fontSize,
+                theme.paddingHorizontal4x,
+                theme.marginTop4x,
+                styles.input,
+                { height: localStore.height },
+              ]}
+              onContentSizeChange={localStore.onSizeChange}
+              ref={inputRef}
+              scrollEnabled={false}
+              placeholder={placeholder}
+              placeholderTextColor={ThemedStyles.getColor('tertiary_text')}
+              onChangeText={props.store.setText}
+              textAlignVertical="top"
+              multiline={true}
+              selectTextOnFocus={false}
+              underlineColorAndroid="transparent"
+              testID="PostInput">
+              <Tags>{props.store.text}</Tags>
+            </TextInput>
+          </>
         )}
-        <TextInput
-          style={[
-            theme.fullWidth,
-            theme.colorPrimaryText,
-            fontSize,
-            theme.paddingHorizontal4x,
-            theme.marginTop4x,
-            styles.input,
-            { height: localStore.height },
-          ]}
-          onContentSizeChange={localStore.onSizeChange}
-          ref={inputRef}
-          scrollEnabled={false}
-          placeholder={placeholder}
-          placeholderTextColor={ThemedStyles.getColor('tertiary_text')}
-          onChangeText={props.store.setText}
-          textAlignVertical="top"
-          value={props.store.text}
-          multiline={true}
-          selectTextOnFocus={false}
-          underlineColorAndroid="transparent"
-          testID="PostInput"
-        />
         <MediaPreview store={props.store} />
         {props.store.isRemind && <RemindPreview entity={props.store.entity} />}
         {props.store.isEdit && props.store.entity.remind_object && (

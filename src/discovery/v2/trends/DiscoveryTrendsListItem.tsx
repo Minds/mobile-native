@@ -34,9 +34,15 @@ export const DiscoveryTrendsListItem = observer((props: Props) => {
 
   const onPress = (): void => {
     if (data.entity) {
-      navigation.push('Activity', {
-        entity: data.entity,
-      });
+      if (data.entity.subtype === 'blog') {
+        navigation.push('BlogView', {
+          blog: data.entity,
+        });
+      } else {
+        navigation.push('Activity', {
+          entity: data.entity,
+        });
+      }
     } else {
       return goToSearch();
     }

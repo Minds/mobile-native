@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, Text } from 'react-native';
+import { ScrollView, StyleSheet, Text } from 'react-native';
 import i18n from '../common/services/i18n.service';
 import sessionService from '../common/services/session.service';
 import { MINDS_URI } from '../config/Config';
@@ -22,7 +22,8 @@ const ReferralsScreen = ({ navigation }: ReferralsScreenProps) => {
     <ScrollView
       style={theme.flexContainer}
       contentContainerStyle={[theme.padding4x]}>
-      <Text style={[theme.fontXL, theme.marginBottom4x, { lineHeight: 25 }]}>
+      <Text
+        style={[theme.fontXL, theme.bold, theme.marginBottom4x, styles.title]}>
         {i18n.t('referrals.title')}
       </Text>
 
@@ -60,3 +61,7 @@ const ReferralsScreen = ({ navigation }: ReferralsScreenProps) => {
 };
 
 export default ReferralsScreen;
+
+const styles = StyleSheet.create({
+  title: { lineHeight: 25 },
+});

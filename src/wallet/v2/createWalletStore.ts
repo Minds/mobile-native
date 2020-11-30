@@ -18,6 +18,7 @@ import i18n from '../../common/services/i18n.service';
 import BlockchainApiService from '../../blockchain/BlockchainApiService';
 import { ChartTimespanType } from './currency-tabs/TokensChart';
 import sessionService from '../../common/services/session.service';
+import walletService, { WalletJoinResponse } from '../WalletService';
 
 const defaultStripeDetails = <StripeDetails>{
   hasAccount: false,
@@ -208,6 +209,7 @@ const createWalletStore = () => ({
 
         this.wallet.loaded = true;
       } else {
+        console.log('getTokenAccounts');
         console.error('No data');
       }
     } catch (e) {
@@ -222,6 +224,7 @@ const createWalletStore = () => ({
       const { account } = await api.get<any>('api/v2/payments/stripe/connect');
       this.setStripeAccount(account);
     } catch (e) {
+      console.log('loadStripeAccount');
       logService.exception(e);
     }
     return this.stripeDetails;
@@ -266,6 +269,7 @@ const createWalletStore = () => ({
         this.wallet.btc.address = response.address;
       }
     } catch (e) {
+      console.log('loadBtcAccount');
       logService.exception(e);
     }
   },
@@ -358,6 +362,23 @@ const createWalletStore = () => ({
     if (this.usdPayouts.length > 0) {
       this.usdPayoutsTotals = SUM_CENTS(this.usdPayouts);
     }
+  },
+  /**
+   * Join to wallet tokens
+   * @param {string} number
+   * @param {boolean} retry
+   */
+  join(numberToJoin: string, retry: boolean): Promise<WalletJoinResponse> {
+    return walletService.join(numberToJoin, retry);
+  },
+  /**
+   * Confirm join
+   * @param {string} number
+   * @param {string} code
+   * @param {string} secret
+   */
+  confirm(number, code, secret) {
+    return walletService.confirm(number, code, secret);
   },
   reset() {
     this.balance = 0;

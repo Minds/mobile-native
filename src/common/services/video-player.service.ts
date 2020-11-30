@@ -1,3 +1,5 @@
+import { action, observable } from 'mobx';
+
 /**
  * Video Player Service
  */
@@ -5,12 +7,12 @@ class VideoPlayerService {
   /**
    * current playing video player reference
    */
-  current: { pause: () => void } | null = null;
+  current: { pause: () => void; toggleVolume: () => void } | null = null;
 
   /**
    * current initial volume
    */
-  currentVolume = 0;
+  @observable currentVolume = 0;
 
   /**
    * Set current player reference
@@ -23,6 +25,11 @@ class VideoPlayerService {
     this.current = videoPlayerRef;
   }
 
+  /**
+   * Set the current volume to remember the option for the next video
+   * @param value
+   */
+  @action
   setVolume(value: number) {
     this.currentVolume = value;
   }

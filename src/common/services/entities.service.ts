@@ -30,6 +30,11 @@ class EntitiesService {
    */
   constructor() {
     setInterval(this.garbageCollector, 60000);
+
+    // delete the cache when activities are deleted
+    ActivityModel.events.on('deleteEntity', (activity) =>
+      this.deleteFromCache(activity.urn),
+    );
   }
 
   /**
@@ -140,13 +145,11 @@ class EntitiesService {
     }
 
     for (const feedItem of feed) {
-      if (!blockListService.has(feedItem.owner_guid)) {
-        const entity = this.getFromCache(feedItem.urn, false);
-        if (entity) {
-          entities.push(entity);
-        } else {
-          console.log('ENTITY MISSINNG ' + feedItem.urn);
-        }
+      const entity = this.getFromCache(feedItem.urn, false);
+      if (entity) {
+        entities.push(entity);
+      } else {
+        console.log('ENTITY MISSINNG ' + feedItem.urn);
       }
     }
 

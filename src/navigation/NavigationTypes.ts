@@ -19,6 +19,9 @@ export type InternalStackParamList = {
   BoostConsole: {};
   GroupsList: {};
   Settings: {};
+  Analytics: {};
+  Onboarding: {};
+  InitialOnboarding: {};
 };
 
 export type RootStackParamList = {
@@ -36,6 +39,13 @@ export type RootStackParamList = {
     onComplete: Function;
     pro?: boolean;
   };
+  VerifyEmail: {};
+  SelectHashtags: {};
+  SetupChannel: {};
+  VerifyUniqueness: {};
+  SuggestedChannel: {};
+  SuggestedGroups: {};
+  PhoneValidation: {};
 };
 
 export type AuthStackParamList = {
@@ -80,16 +90,26 @@ export type AppStackParamList = {
   };
   ActivityFullScreenNav: {};
   Newsfeed: {};
-  Capture: {};
+  Capture: {
+    portrait?: boolean;
+    noText?: boolean;
+    isRemind?: boolean;
+    entity?: any;
+    text?: string;
+    media?: any;
+    mode?: 'photo' | 'video' | 'text';
+  };
   Main: {};
   Account: {};
   Network: {};
   Security: {};
   Billing: {};
   Referrals: {};
+  BoostConsole: {};
   Other: {};
   SettingsEmail: {};
   MessengerSettingsScreen: {};
+  AutoplaySettingsScreen: {};
   SettingsPassword: {};
   SettingsNotifications: {};
   DataSaverScreen: {};
@@ -103,7 +123,6 @@ export type AppStackParamList = {
   AppInfo: {};
   LanguageScreen: {};
   NSFWScreen: {};
-  TFAScreen: {};
   DevicesScreen: {};
   TagSelector: {};
   NsfwSelector: {};

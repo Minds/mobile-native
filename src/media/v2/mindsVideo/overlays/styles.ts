@@ -16,6 +16,9 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  floatingVolume: {
+    opacity: 0.8,
+  },
   overlayContainerTransparent: {
     backgroundColor: 'transparent',
   },
@@ -51,7 +54,6 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     paddingLeft: 4,
     paddingRight: 4,
-    borderRadius: 3,
     backgroundColor: 'rgba(48,48,48,0.7)',
   },
   playContainer: {

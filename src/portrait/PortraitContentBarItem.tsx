@@ -1,11 +1,12 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import FastImage from 'react-native-fast-image';
 
 import ThemedStyles from '../styles/ThemedStyles';
 import excerpt from '../common/helpers/excerpt';
 import type { PortraitBarItem } from './createPortraitStore';
+import PressableScale from '../common/components/PressableScale';
 
 type PropsType = {
   item: PortraitBarItem;
@@ -26,13 +27,13 @@ export default observer(function PortraitContentBarItem(props: PropsType) {
         theme.backgroundTransparent,
         theme.centered,
       ]}>
-      <TouchableOpacity onPress={props.onPress} activeOpacity={0.5}>
+      <PressableScale onPress={props.onPress} activeOpacity={0.5}>
         <FastImage
           source={props.item.user.getAvatarSource()}
           style={styles.avatar}
         />
         {props.item.unseen ? <View style={styles.unseen} /> : null}
-      </TouchableOpacity>
+      </PressableScale>
       <Text style={[theme.fontM, styles.text, theme.colorSecondaryText]}>
         {excerpt(props.item.user.username, 10)}
       </Text>

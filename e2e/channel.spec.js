@@ -17,13 +17,15 @@ describe('Channel Flow', () => {
         photos: 'YES',
       },
     });
-    await waitForElement(by.id('usernameInput'));
     await login(process.env.loginUser, process.env.loginPass);
-    await waitForAndTap(by.id('AvatarButton'));
   });
 
   it('channel header should be render correctly', async () => {
     const beVisible = true;
+
+    await waitForAndTap(by.id('MenuTabButton'));
+    await waitForAndTap(by.id('MenuTabButton'));
+
     await waitForElement(by.id('SubscribersView'));
     await waitForElement(by.id('ViewsView'));
     await waitForElement(by.id('ChannelNameView'));
@@ -38,6 +40,9 @@ describe('Channel Flow', () => {
     const displayNameTest = "New Display Name";
     const replaceText = true;
 
+    await waitForAndTap(by.id('MenuTabButton'));
+    await waitForAndTap(by.id('MenuTabButton'));
+
     // new display name
     await waitForAndTap(by.id('EditButton'));
     await waitForAndType(by.id('ChannelNameTextInput'), displayNameTest, replaceText);
@@ -51,8 +56,12 @@ describe('Channel Flow', () => {
     await waitForElement(by.id('ChannelNameView'));
   });
 
-  it('should be able to create a post', async () => {
+  it.skip('should be able to create a post', async () => {
     const text = 'e2eTest';
+
+    await waitForAndTap(by.id('MenuTabButton'));
+
+    await waitForAndTap(by.id('MenuTabButton'));
 
     await waitForAndTap(by.id('captureFab'));
 
@@ -67,7 +76,12 @@ describe('Channel Flow', () => {
 
   });
 
-  it('should be move between tabs', async () => {
+  it('should be able to move between tabs', async () => {
+
+    await waitForAndTap(by.id('MenuTabButton'));
+
+    await waitForAndTap(by.id('MenuTabButton'));
+
     // wait for channelscreen
     await waitForElement(by.id('ChannelScreen'));
 

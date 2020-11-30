@@ -1,25 +1,15 @@
 import { ImageURISource } from 'react-native';
-import { decorate, observable, action } from 'mobx';
+import { decorate, observable } from 'mobx';
 import { MINDS_ASSETS_CDN_URI } from '../config/Config';
 import api from '../common/services/api.service';
-import BaseModel from '../common/BaseModel';
-import UserModel from '../channel/UserModel';
 import { LICENSES } from '../common/services/list-options.service';
+import ActivityModel from '../newsfeed/ActivityModel';
 
 /**
  * User model
  */
-export default class BlogModel extends BaseModel {
-  subtype?: string;
-  thumbnail_src?: string;
+export default class BlogModel extends ActivityModel {
   license: string = '';
-  reminds: number = 0;
-  impressions: number = 0;
-  'thumbs:down:count': number;
-  'thumbs:up:count': number;
-  'comments:count': number;
-  'thumbs:down:user_guids': Array<number>;
-  'thumbs:up:user_guids': Array<number>;
 
   /**
    * Get banner source
@@ -35,15 +25,6 @@ export default class BlogModel extends BaseModel {
   }
 
   /**
-   * Child models
-   */
-  childModels() {
-    return {
-      ownerObj: UserModel,
-    };
-  }
-
-  /**
    * Get the license text
    */
   getLicenseText(): string {
@@ -53,22 +34,6 @@ export default class BlogModel extends BaseModel {
     }
     return lic.text;
   }
-
-  /**
-   * Increment the comments counter
-   */
-  @action
-  incrementCommentsCounter() {
-    this['comments:count']++;
-  }
-
-  /**
-   * Decrement the comments counter
-   */
-  @action
-  decrementCommentsCounter() {
-    this['comments:count']--;
-  }
 }
 
 /**
@@ -76,9 +41,5 @@ export default class BlogModel extends BaseModel {
  */
 //@ts-ignore
 decorate(BlogModel, {
-  'thumbs:down:count': observable,
-  'thumbs:up:count': observable,
-  'thumbs:down:user_guids': observable,
-  'thumbs:up:user_guids': observable,
   description: observable,
 });

@@ -2,6 +2,7 @@
 
 exports[`Explicit overlay component renders correctly 1`] = `
 <View
+  pointerEvents="box-none"
   style={
     Array [
       undefined,
@@ -48,6 +49,7 @@ exports[`Explicit overlay component renders correctly 1`] = `
         undefined,
         undefined,
         undefined,
+        undefined,
       ]
     }
   >
@@ -57,11 +59,10 @@ exports[`Explicit overlay component renders correctly 1`] = `
           undefined,
           undefined,
           undefined,
-          undefined,
         ]
       }
     >
-      I'm over 18 years of age
+      Can't be shown on apps installed via the Store
     </Text>
   </TouchableOpacity>
 </View>
@@ -69,6 +70,7 @@ exports[`Explicit overlay component renders correctly 1`] = `
 
 exports[`Explicit overlay component should renders the etag 1`] = `
 <View
+  pointerEvents="box-none"
   style={
     Array [
       undefined,
@@ -115,6 +117,7 @@ exports[`Explicit overlay component should renders the etag 1`] = `
         undefined,
         undefined,
         undefined,
+        undefined,
       ]
     }
   >
@@ -124,11 +127,10 @@ exports[`Explicit overlay component should renders the etag 1`] = `
           undefined,
           undefined,
           undefined,
-          undefined,
         ]
       }
     >
-      I'm over 18 years of age
+      Can't be shown on apps installed via the Store
     </Text>
   </TouchableOpacity>
 </View>

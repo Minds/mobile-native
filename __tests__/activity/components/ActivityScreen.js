@@ -7,8 +7,14 @@ import { activitiesServiceFaker } from '../../../__mocks__/fake/ActivitiesFaker'
 import entitiesService from '../../../src/common/services/entities.service';
 import ActivityModel from '../../../src/newsfeed/ActivityModel';
 import { useNavigation } from '../../../__mocks__/@react-navigation/native';
+import { getStores } from '../../../AppStores';
+
+getStores.mockReturnValue({
+  newsfeed: {},
+});
 
 jest.mock('react-native-safe-area-context');
+jest.mock('react-native-material-menu');
 jest.mock('@react-navigation/native');
 jest.mock('react-native-gesture-handler');
 jest.mock('react-native-redash');

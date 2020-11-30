@@ -58,3 +58,17 @@ export interface Option {
   from_ts_ms?: number;
   from_ts_iso?: string;
 }
+
+export type SocialProfile = {
+  key: string;
+  value: string;
+};
+
+export interface SocialProfileMeta {
+  key: string;
+  label: string;
+  link: string;
+  icon: string;
+  customIcon?: boolean;
+  domain: string;
+}

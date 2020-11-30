@@ -50,8 +50,8 @@ const Controls = observer(({ localStore, entity, hideOverlay }: PropsType) => {
 
   const mustShow = Boolean(
     !hideOverlay &&
-      (localStore.showOverlay ||
-        (!localStore.forceHideOverlay && localStore.paused && entity)),
+      !localStore.forceHideOverlay &&
+      (localStore.showOverlay || (localStore.paused && entity)),
   );
 
   if (mustShow) {
@@ -84,7 +84,7 @@ const Controls = observer(({ localStore, entity, hideOverlay }: PropsType) => {
               />
             </View>
           </View>
-          {localStore.player && entity && (
+          {localStore.duration > 0 && entity && (
             <View style={styles.controlSettingsContainer}>
               <Tooltip
                 popover={sourceSelector}
@@ -104,7 +104,7 @@ const Controls = observer(({ localStore, entity, hideOverlay }: PropsType) => {
               </Tooltip>
             </View>
           )}
-          {localStore.player && (
+          {localStore.duration > 0 && (
             <View style={styles.controlBarContainer}>
               <Icon
                 onPress={localStore.toggleFullScreen}
@@ -133,7 +133,21 @@ const Controls = observer(({ localStore, entity, hideOverlay }: PropsType) => {
     );
   }
 
-  return null;
+  return !localStore.paused && !hideOverlay ? (
+    <View
+      style={[
+        theme.positionAbsoluteBottomRight,
+        theme.padding2x,
+        styles.floatingVolume,
+      ]}>
+      <Icon
+        onPress={localStore.toggleVolume}
+        name={localStore.volume === 0 ? 'ios-volume-mute' : 'ios-volume-high'}
+        size={iconSize}
+        color={Colors.light}
+      />
+    </View>
+  ) : null;
 });
 
 export default Controls;

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { AppStackParamList } from '../navigation/NavigationTypes';
-import { RouteProp, NavigationProp } from '@react-navigation/native';
+import { RouteProp } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { useLocalStore, observer } from 'mobx-react';
 import ActivityFullScreen from '../discovery/v2/viewer/ActivityFullScreen';
 import SingleEntityStore from '../common/stores/SingleEntityStore';
@@ -10,7 +11,10 @@ import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
 import CenteredLoading from '../common/components/CenteredLoading';
 
 export type ActivityRouteProp = RouteProp<AppStackParamList, 'Activity'>;
-type ActivityNavigationProp = NavigationProp<AppStackParamList, 'Activity'>;
+type ActivityNavigationProp = StackNavigationProp<
+  AppStackParamList,
+  'Activity'
+>;
 
 type PropsType = {
   route: ActivityRouteProp;
@@ -57,6 +61,13 @@ const ActivityScreen = observer((props: PropsType) => {
           ) {
             props.navigation.goBack();
             return;
+          }
+
+          // in case it is opened from a deeplink and it is a blog we should replace withs blog screen
+          if (store.entityStore.entity.subtype === 'blog') {
+            props.navigation.replace('BlogView', {
+              blog: store.entityStore.entity,
+            });
           }
         }
 

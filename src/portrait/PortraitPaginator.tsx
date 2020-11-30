@@ -1,38 +1,24 @@
 import React from 'react';
-import { TouchableOpacity, StyleSheet } from 'react-native';
-import { Pagination } from '@crowdlinker/react-native-pager';
+import { TouchableOpacity, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import type ActivityModel from '../newsfeed/ActivityModel';
+import { observer } from 'mobx-react';
 
 type PropsType = {
   store: {
     setIndex: (number) => void;
     index: number;
   };
-  pages: Array<React.ReactNode>;
-};
-
-const pagerAnimation = {
-  transform: [
-    {
-      scale: {
-        inputRange: [-2, -1, 0, 1, 2],
-        outputRange: [0.9, 0.9, 1, 0.9, 0.9],
-      },
-    },
-  ],
-  opacity: {
-    inputRange: [-2, -1, 0, 1, 2],
-    outputRange: [0.25, 0.25, 0.6, 0.15, 0.15],
-  },
+  activities: Array<ActivityModel>;
 };
 
 /**
  * Portrait paginator
  */
-export default function PortraitPaginator({ store, pages }: PropsType) {
+export default function PortraitPaginator({ store, activities }: PropsType) {
   const insets = useSafeAreaInsets();
 
-  if (pages.length === 1) {
+  if (activities.length === 1) {
     return null;
   }
 
@@ -41,22 +27,27 @@ export default function PortraitPaginator({ store, pages }: PropsType) {
     { marginTop: insets.top ? insets.top - 5 : 0 },
   ]);
   return (
-    <Pagination pageInterpolation={pagerAnimation} style={style}>
-      {React.Children.map(pages, (_, i) => (
-        <Marker i={i} onPress={store.setIndex} current={store.index} />
+    <View style={style}>
+      {activities.map((_, i) => (
+        <Marker key={i} i={i} onPress={store.setIndex} store={store} />
       ))}
-    </Pagination>
+    </View>
   );
 }
 
-function Marker({ i, onPress, current }) {
+const Marker = observer(({ i, onPress, store }) => {
   return (
-    <TouchableOpacity
-      onPress={() => onPress(i)}
-      style={[styles.marker, i > current ? styles.dark : styles.light]}
-    />
+    <TouchableOpacity onPress={() => onPress(i)} style={styles.markerContainer}>
+      <View
+        style={[
+          styles.marker,
+          i > store.index ? styles.dark : styles.light,
+          store.index === i ? styles.current : null,
+        ]}
+      />
+    </TouchableOpacity>
   );
-}
+});
 
 const styles = StyleSheet.create({
   light: {
@@ -65,7 +56,15 @@ const styles = StyleSheet.create({
   dark: {
     backgroundColor: '#000000',
   },
+  current: {
+    opacity: 0.9,
+  },
+  markerContainer: {
+    marginHorizontal: 3,
+    flex: 1,
+  },
   marker: {
+    opacity: 0.4,
     width: '100%',
     height: 5,
     borderRadius: 5,
@@ -81,6 +80,7 @@ const styles = StyleSheet.create({
   circlesContainer: {
     position: 'absolute',
     flexDirection: 'row',
+    justifyContent: 'space-between',
     top: 73,
     left: 0,
     height: 8,

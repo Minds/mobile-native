@@ -10,6 +10,9 @@ import connectivityService from './connectivity.service';
 import Colors from '../../styles/Colors';
 import boostedContentService from './boosted-content.service';
 import BaseModel from '../BaseModel';
+import { Platform } from 'react-native';
+import { GOOGLE_PLAY_STORE } from '../../config/Config';
+import _ from 'lodash';
 
 export type FeedRecordType = {
   owner_guid: string;
@@ -100,11 +103,9 @@ export default class FeedsService {
 
     const feedPage = this.feed.slice(this.offset, end);
 
-    const result: Array<any> = await entitiesService.getFromFeed(
-      feedPage,
-      this,
-      this.asActivities,
-    );
+    const result: Array<any> = this.params.sync
+      ? await entitiesService.getFromFeed(feedPage, this, this.asActivities)
+      : feedPage;
 
     if (!this.injectBoost) {
       return result;
@@ -234,6 +235,11 @@ export default class FeedsService {
     return this;
   }
 
+  noSync(): FeedsService {
+    this.params.sync = 0;
+    return this;
+  }
+
   /**
    * Set as activities
    * @param {boolean} asActivities
@@ -292,8 +298,17 @@ export default class FeedsService {
 
     const params = {
       ...this.params,
-      ...{ limit: 150, as_activities: this.asActivities ? 1 : 0 },
+      ...{
+        limit: 150,
+        hide_reminds: false,
+        as_activities: this.asActivities ? 1 : 0,
+      },
     };
+
+    // For iOS and play store force safe content
+    if (Platform.OS === 'ios' || GOOGLE_PLAY_STORE) {
+      params.nsfw = [];
+    }
 
     if (this.paginated && more) {
       params.from_timestamp = this.pagingToken;
@@ -301,8 +316,13 @@ export default class FeedsService {
     const response = await apiService.get(this.endpoint, params, this);
 
     if (response.entities && response.entities.length) {
+      if (response.entities.length < params.limit) {
+        this.endReached = true;
+      }
       if (more) {
-        this.feed = this.feed.concat(response.entities);
+        this.feed = this.params.sync
+          ? this.feed.concat(response.entities)
+          : _.difference(response.entities, this.feed);
       } else {
         this.feed = response.entities;
       }

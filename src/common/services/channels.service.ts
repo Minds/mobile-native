@@ -1,4 +1,3 @@
-//@ts-nocheck
 import apiService, { isApiForbidden } from './api.service';
 
 import UserModel from '../../channel/UserModel';
@@ -14,9 +13,9 @@ class ChannelsService {
    */
   async get(
     guidOrUsername: string,
-    defaultChannel?: UserModel | object = undefined,
+    defaultChannel?: UserModel | object,
     forceUpdate: boolean = false,
-  ): Promise<UserModel> {
+  ): Promise<UserModel | undefined> {
     const urn = `urn:channels:${guidOrUsername}`;
 
     const local = await entitiesStorage.read(urn);
@@ -26,7 +25,7 @@ class ChannelsService {
       return await this.fetch(guidOrUsername);
     }
 
-    const channel = UserModel.checkOrCreate(local || defaultChannel);
+    const channel = UserModel.create(local || defaultChannel);
 
     this.fetch(guidOrUsername, channel); // Update in the background
 
@@ -53,7 +52,7 @@ class ChannelsService {
    * on success is added or updated
    * @param {string} guidOrUsername
    */
-  async fetch(guidOrUsername: string, channel: UserModel) {
+  async fetch(guidOrUsername: string, channel?: UserModel) {
     try {
       const response: any = await apiService.get(
         `api/v1/channel/${guidOrUsername}`,

@@ -58,8 +58,8 @@ const createFabScreenStore = () => {
     },
     async getLastAmount() {
       const lastAmount = await storageService.getItem(lastAmountStorageKey);
-      this.amount = parseFloat(lastAmount);
-      console.log('amount', this.amount);
+      this.amount = parseFloat(lastAmount) || 0;
+      this.wire.setAmount(this.amount);
     },
     async setLastAmount(amount: string) {
       await storageService.setItem(lastAmountStorageKey, amount);

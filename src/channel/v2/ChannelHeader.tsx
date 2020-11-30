@@ -11,7 +11,6 @@ import { Icon } from 'react-native-elements';
 import IconM from 'react-native-vector-icons/MaterialIcons';
 import { observer } from 'mobx-react';
 import settingsStore from '../../settings/SettingsStore';
-
 import type { ChannelStoreType, ChannelTabType } from './createChannelStore';
 import { Image } from 'react-native-animatable';
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -20,7 +19,6 @@ import abbrev from '../../common/helpers/abbrev';
 import ChannelDescription from './ChannelDescription';
 import ChannelButtons from './ChannelButtons';
 import FeedFilter from '../../common/components/FeedFilter';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ChannelBadges from '../badges/ChannelBadges';
 import SmallCircleButton from '../../common/components/SmallCircleButton';
 import { FLAG_EDIT_CHANNEL } from '../../common/Permissions';
@@ -29,10 +27,13 @@ import TopbarTabbar, {
   TabType,
 } from '../../common/components/topbar-tabbar/TopbarTabbar';
 import AboutTab from './tabs/AboutTab';
+import TierManagementScreen from '../../common/components/tier-management/TierManagementScreen';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type PropsType = {
   store: ChannelStoreType;
   navigation: any;
+  route: any;
   hideButtons?: boolean;
   hideDescription?: boolean;
   hideTabs?: boolean;
@@ -41,7 +42,7 @@ type PropsType = {
 const bannerAspectRatio = 2.9;
 const { width } = Dimensions.get('window');
 const bannerHeight = width / bannerAspectRatio;
-const avatarSize = Math.round(0.7 * bannerHeight);
+const avatarSize = Math.min(180, Math.round(0.7 * bannerHeight));
 
 /**
  * Channel Header
@@ -59,11 +60,35 @@ const ChannelHeader = observer((props: PropsType) => {
   const _onBannerDownload = useCallback(() => setShowBanner(true), []);
   const canEdit = channel.isOwner() && channel.can(FLAG_EDIT_CHANNEL);
 
-  const tabs: Array<TabType<ChannelTabType>> = [
-    { id: 'feed', title: i18n.t('feed') },
-    // { id: 'shop', title: 'Shop' },
-    { id: 'about', title: i18n.t('about') },
-  ];
+  const navToSubscribers = useCallback(() => {
+    if (props.store.channel) {
+      props.navigation.push('Subscribers', {
+        guid: props.store.channel.guid,
+      });
+    }
+  }, [props.navigation, props.store]);
+
+  const navToSubscriptions = useCallback(() => {
+    if (props.store.channel) {
+      props.navigation.push('Subscribers', {
+        guid: props.store.channel.guid,
+        filter: 'subscriptions',
+      });
+    }
+  }, [props.navigation, props.store]);
+
+  const tabs: Array<TabType<ChannelTabType>> = channel.isOwner()
+    ? [
+        { id: 'feed', title: i18n.t('feed') },
+        { id: 'memberships', title: i18n.t('settings.otherOptions.b1') },
+        // { id: 'shop', title: 'Shop' },
+        { id: 'about', title: i18n.t('about') },
+      ]
+    : [
+        { id: 'feed', title: i18n.t('feed') },
+        // { id: 'shop', title: 'Shop' },
+        { id: 'about', title: i18n.t('about') },
+      ];
 
   const screen = () => {
     switch (props.store.tab) {
@@ -105,6 +130,13 @@ const ChannelHeader = observer((props: PropsType) => {
             <AboutTab store={props.store} navigation={props.navigation} />
           </ScrollView>
         );
+      case 'memberships':
+        return (
+          <TierManagementScreen
+            route={props.route}
+            navigation={props.navigation}
+          />
+        );
       default:
         return <View />;
     }
@@ -118,7 +150,7 @@ const ChannelHeader = observer((props: PropsType) => {
         style={styles.banner}
         source={channel.getBannerSource()}
         resizeMode="cover">
-        <View style={[styles.avatarContainer, theme.borderBackgroundPrimary]}>
+        <View style={[styles.avatarContainer, theme.borderBackgroundTertiary]}>
           <Image
             style={[styles.avatar, theme.borderPrimary]}
             source={channel.getAvatarSource()}
@@ -195,15 +227,17 @@ const ChannelHeader = observer((props: PropsType) => {
         @{channel.username}
       </Text>
       <View style={theme.paddingHorizontal4x}>
-        <Text>
-          <Text style={[theme.colorSecondaryText, theme.fontL]}>
+        <Text style={[theme.colorSecondaryText, theme.fontL]}>
+          <Text onPress={navToSubscribers} style={theme.colorSecondaryText}>
             {i18n.t('subscribers')}
             <Text> {abbrev(channel.subscribers_count, 0)}</Text>
+          </Text>
+          <Text onPress={navToSubscriptions} style={theme.colorSecondaryText}>
             {' · ' + i18n.t('subscriptions')}
             <Text> {abbrev(channel.subscriptions_count, 0)}</Text>
-            {' · ' + i18n.t('views')}
-            <Text> {abbrev(channel.impressions, 1)}</Text>
           </Text>
+          {' · ' + i18n.t('views')}
+          <Text> {abbrev(channel.impressions, 1)}</Text>
         </Text>
         {!!channel.city && (
           <View style={styles.location}>
@@ -290,7 +324,7 @@ const styles = StyleSheet.create({
     elevation: 10,
     width: avatarSize + 6,
     height: avatarSize + 6,
-    borderRadius: 53,
+    borderRadius: (avatarSize + 6) / 2,
     zIndex: 10000,
     shadowOpacity: 0.5,
     shadowRadius: 3,
@@ -300,7 +334,7 @@ const styles = StyleSheet.create({
   avatar: {
     width: avatarSize,
     height: avatarSize,
-    borderRadius: 50,
+    borderRadius: avatarSize / 2,
   },
   tapOverlayView: {
     position: 'absolute',

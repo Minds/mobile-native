@@ -29,7 +29,6 @@ import { showNotification } from '../../AppMessages';
 import validatorService from '../common/services/validator.service';
 import Captcha from '../common/components/Captcha';
 import authService, { registerParams } from './AuthService';
-import sessionService from '../common/services/session.service';
 import apiService from '../common/services/api.service';
 import delay from '../common/helpers/delay';
 import logService from '../common/services/log.service';
@@ -45,7 +44,7 @@ type PropsType = {
 };
 
 const shadowOptLocal = Object.assign({}, shadowOpt);
-shadowOptLocal.height = 245;
+shadowOptLocal.height = 270;
 
 const validatorText = { color: LIGHT_THEME.primary_text };
 
@@ -78,7 +77,6 @@ export default observer(function RegisterScreen(props: PropsType) {
           captcha,
         } as registerParams;
         await authService.register(params);
-        sessionService.setInitialScreen('OnboardingScreen');
         await apiService.clearCookies();
         await delay(100);
         try {
@@ -154,6 +152,11 @@ export default observer(function RegisterScreen(props: PropsType) {
     togglePromotions() {
       store.exclusivePromotions = !store.exclusivePromotions;
     },
+    emailInputBlur() {
+      if (!validatorService.email(store.email)) {
+        this.showErrors = true;
+      }
+    },
   }));
 
   const theme = ThemedStyles.style;
@@ -194,6 +197,7 @@ export default observer(function RegisterScreen(props: PropsType) {
             : undefined
         }
         noBottomBorder
+        onBlur={store.emailInputBlur}
       />
       <View>
         {!!store.password && store.focused && (
@@ -229,9 +233,14 @@ export default observer(function RegisterScreen(props: PropsType) {
     </View>
   );
 
+  const setting = {
+    ...shadowOptLocal,
+    style: {},
+  };
+
   const inputsWithShadow = Platform.select({
     ios: inputs,
-    android: <BoxShadow setting={shadowOptLocal}>{inputs}</BoxShadow>, // Android fallback for shadows
+    android: <BoxShadow setting={setting}>{inputs}</BoxShadow>, // Android fallback for shadows
   });
 
   return (

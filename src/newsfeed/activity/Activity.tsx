@@ -21,10 +21,9 @@ import formatDate from '../../common/helpers/date';
 import ActivityActionSheet from './ActivityActionSheet';
 import ActivityMetrics from './metrics/ActivityMetrics';
 import MediaView from '../../common/components/MediaView';
-import Translate from '../../common/components/Translate';
+import Translate from '../../common/components/translate/Translate';
 import ExplicitOverlay from '../../common/components/explicit/ExplicitOverlay';
-import LockV2 from '../../wire/v2/lock/Lock';
-import Lock from '../../wire/lock/Lock';
+import Lock from '../../wire/v2/lock/Lock';
 import { CommonStyle } from '../../styles/Common';
 import Pinned from '../../common/components/Pinned';
 import blockListService from '../../common/services/block-list.service';
@@ -32,10 +31,10 @@ import i18n from '../../common/services/i18n.service';
 import ActivityModel from '../ActivityModel';
 import ThemedStyles from '../../styles/ThemedStyles';
 import type FeedStore from '../../common/stores/FeedStore';
-import featuresService from '../../common/services/features.service';
 import sessionService from '../../common/services/session.service';
 import NavigationService from '../../navigation/NavigationService';
 import { showNotification } from '../../../AppMessages';
+import DeletedRemind from './DeletedRemind';
 
 const FONT_THRESHOLD = 300;
 
@@ -62,14 +61,11 @@ export default class Activity extends Component<PropsType> {
    * Disposer for autoplay reaction
    */
   autoPlayDispose: any;
-  /**
-   * Disposer for autoplay timeout
-   */
-  autoplayVideoTimeout: any;
+
   /**
    * Translate reference
    */
-  translate: Translate | null = null;
+  translate = React.createRef<typeof Translate>();
 
   /**
    * Remind reference
@@ -168,12 +164,7 @@ export default class Activity extends Component<PropsType> {
 
               // sound only for ActivityScreen (Full screen)
               const sound = state.name === 'Activity' ? true : undefined; // undefined to use the latest option from the video player service
-
-              this.autoplayVideoTimeout = setTimeout(() => {
-                if (this.props.entity.is_visible) {
-                  this.playVideo(sound);
-                }
-              }, 300);
+              this.playVideo(sound);
             }
           } else {
             // no longer visible we pause it
@@ -191,9 +182,6 @@ export default class Activity extends Component<PropsType> {
   componentWillUnmount() {
     if (this.autoPlayDispose) {
       this.autoPlayDispose();
-    }
-    if (this.autoplayVideoTimeout) {
-      clearTimeout(this.autoplayVideoTimeout);
     }
   }
 
@@ -224,10 +212,8 @@ export default class Activity extends Component<PropsType> {
       ? [theme.fontXL, theme.fontMedium]
       : theme.fontL;
 
-    const LockCmp = featuresService.has('paywall-2020') ? LockV2 : Lock;
-
     const lock = entity.paywall ? (
-      <LockCmp entity={entity} navigation={this.props.navigation} />
+      <Lock entity={entity} navigation={this.props.navigation} />
     ) : null;
 
     const message = (
@@ -240,7 +226,7 @@ export default class Activity extends Component<PropsType> {
               style={[styles.message, fontStyle]}
             />
             <Translate
-              ref={(r) => (this.translate = r)}
+              ref={this.translate}
               entity={entity}
               style={styles.message}
             />
@@ -257,20 +243,19 @@ export default class Activity extends Component<PropsType> {
 
     const borderBottom = this.props.isReminded
       ? []
-      : [theme.borderBottom8x, theme.borderBackgroundPrimary];
+      : [theme.borderBottom8x, theme.borderBackgroundTertiary];
 
     return (
       <TouchableOpacity
         delayPressIn={60}
         activeOpacity={0.8}
-        style={[styles.container, ...borderBottom, theme.backgroundSecondary]}
+        style={[styles.container, ...borderBottom, theme.backgroundPrimary]}
         onPress={this.navToActivity}
         onLongPress={this.copyText}
         onLayout={this.onLayout}
         testID="ActivityView">
         <Pinned entity={this.props.entity} />
         {this.showOwner()}
-
         {showNSFW ? (
           <ExplicitOverlay entity={this.props.entity} />
         ) : (
@@ -282,6 +267,7 @@ export default class Activity extends Component<PropsType> {
                 ? message
                 : undefined}
               {this.showRemind()}
+              {this.props.entity.remind_deleted && <DeletedRemind />}
               <MediaView
                 ref={(o) => {
                   this.mediaView = o;
@@ -377,8 +363,9 @@ export default class Activity extends Component<PropsType> {
    * Show translation
    */
   showTranslate = async () => {
-    if (this.translate) {
-      const lang = await this.translate.show();
+    if (this.translate.current) {
+      //@ts-ignore
+      const lang = await this.translate.current?.show();
       if (this.remind && lang) this.remind.showTranslate();
     } else {
       if (this.remind) this.remind.showTranslate();
@@ -441,7 +428,7 @@ export default class Activity extends Component<PropsType> {
         return (
           <View
             style={[
-              styles.blockedNoticeView,
+              theme.backgroundTertiary,
               theme.margin2x,
               theme.borderRadius2x,
               theme.padding2x,
@@ -546,9 +533,6 @@ const styles = StyleSheet.create({
   activitySpacer: {
     flex: 1,
     height: 70,
-  },
-  blockedNoticeView: {
-    backgroundColor: '#eee',
   },
   blockedNoticeDesc: {
     opacity: 0.7,

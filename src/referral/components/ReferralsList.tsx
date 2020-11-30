@@ -23,7 +23,7 @@ const ReferralsList = observer(({ navigation }: ReferralsListProps) => {
   );
   const [offset, setOffset] = useState('');
   const opts = {
-    limit: 2,
+    limit: 20,
     offset,
   };
   const { result, loading, error, fetch } = useApiFetch<Referral>(
@@ -97,7 +97,7 @@ const ReferralsList = observer(({ navigation }: ReferralsListProps) => {
             </Text>
           )}
 
-          {result?.referrals.map(_renderRow)}
+          {result?.referrals.filter((r) => r.prospect).map(_renderRow)}
         </View>
       )}
 

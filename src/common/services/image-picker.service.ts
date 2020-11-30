@@ -97,20 +97,58 @@ class ImagePickerService {
 
   /**
    * Show image picker selector
-   *
-   * @param {string} type   photo or video
    */
   async show(
     title: string,
     type: mediaType = 'photo',
     cropperCircleOverlay: boolean = false,
+    width,
+    height,
   ): Promise<customImagePromise> {
     // check permissions
     await this.checkGalleryPermissions();
 
     const opt = this.buildOptions(type, true, cropperCircleOverlay);
 
+    if (width) {
+      //@ts-ignore
+      opt.width = width;
+    }
+    if (height) {
+      //@ts-ignore
+      opt.height = height;
+    }
+
     return this.returnCustom(ImagePicker.openPicker(opt));
+  }
+
+  /**
+   * Show camera
+   */
+  async showCamera(
+    title: string,
+    type: mediaType = 'photo',
+    cropperCircleOverlay: boolean = false,
+    front: boolean = false,
+    width,
+    height,
+  ): Promise<customImagePromise> {
+    // check permissions
+    await this.checkCameraPermissions();
+
+    const opt = this.buildOptions(type, true, cropperCircleOverlay);
+
+    if (width) {
+      //@ts-ignore
+      opt.width = width;
+    }
+    if (height) {
+      //@ts-ignore
+      opt.height = height;
+    }
+    opt.useFrontCamera = front;
+
+    return this.returnCustom(ImagePicker.openCamera(opt));
   }
 
   async returnCustom(
@@ -127,23 +165,19 @@ class ImagePickerService {
         return response.map((image: PatchImage) =>
           Object.assign(
             {
-              uri:
-                Platform.OS === 'ios' && image.sourceURL
-                  ? image.sourceURL // fix images not show on ios
-                  : image.path,
+              uri: image.path,
+              sourceURL: image.sourceURL,
               type: image.mime,
             },
             image,
           ),
         );
       } else {
-        const uri =
-          Platform.OS === 'ios' && response.sourceURL
-            ? response.sourceURL // fix images not show on ios
-            : response.path;
+        const uri = response.path;
         return Object.assign(
           {
             uri,
+            sourceURL: response.sourceURL,
             type: response.mime,
           },
           response,
@@ -170,6 +204,7 @@ class ImagePickerService {
       mediaType: type,
       cropping: crop && type !== 'video',
       showCropGuidelines: false,
+      compressVideoPreset: 'Passthrough',
       cropperCircleOverlay,
     };
   }

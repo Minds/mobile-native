@@ -1,6 +1,5 @@
 //@ts-nocheck
 import { StyleSheet, Platform } from 'react-native';
-
 export interface ThemedStyle {
   width90: any;
   flexContainer: any;
@@ -35,6 +34,9 @@ export interface ThemedStyle {
   colorSeparator: any;
   colorAlert: any;
   colorTransparent: any;
+  backgroundPrimaryText: any;
+  backgroundSecondaryText: any;
+  backgroundTertiaryText: any;
   backgroundInfo: any;
   backgroundSuccess: any;
   backgroundDanger: any;
@@ -105,14 +107,22 @@ export interface ThemedStyle {
   borderTopHair: any;
   borderBottomHair: any;
   buttonBorder: any;
+  opacity100: any;
+  opacity75: any;
+  opacity50: any;
+  opacity25: any;
+  opacity0: any;
   listItemTitle: any;
   strikethrough: any;
   mindsSwitchBackgroundPrimary: any;
   mindsSwitchBackgroundSecondary: any;
   positionAbsolute: any;
+  positionAbsoluteTopLeft: any;
+  positionAbsoluteTopRight: any;
+  positionAbsoluteBottomRight: any;
+  positionAbsoluteBottomRight: any;
   [name: string]: any;
 }
-
 const repetitions = 8;
 const step = 5;
 
@@ -145,8 +155,24 @@ for (let index = 0; index <= repetitions; index++) {
   dynamicStyles[`borderRadius${post}`] = { borderRadius: index * 2 };
 }
 
-export const buildStyle = (theme): ThemedStyle => ({
+export const buildStyle = (theme) => ({
   ...dynamicStyles,
+  // opacity
+  opacity100: {
+    opacity: 1,
+  },
+  opacity75: {
+    opacity: 0.75,
+  },
+  opacity50: {
+    opacity: 0.5,
+  },
+  opacity25: {
+    opacity: 0.25,
+  },
+  opacity0: {
+    opacity: 0,
+  },
   // containers
   width90: {
     width: '90%',
@@ -228,6 +254,26 @@ export const buildStyle = (theme): ThemedStyle => ({
     bottom: 0,
     right: 0,
   },
+  positionAbsoluteTopLeft: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+  },
+  positionAbsoluteTopRight: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+  },
+  positionAbsoluteBottomLeft: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+  },
+  positionAbsoluteBottomRight: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+  },
   colorWhite: {
     color: '#FFFFFF',
   },
@@ -274,6 +320,15 @@ export const buildStyle = (theme): ThemedStyle => ({
     color: 'transparent',
   },
   // backgrounds
+  backgroundPrimaryText: {
+    backgroundColor: theme.primary_text,
+  },
+  backgroundSecondaryText: {
+    backgroundColor: theme.secondary_text,
+  },
+  backgroundTertiaryText: {
+    backgroundColor: theme.tertiary_text,
+  },
   backgroundInfo: {
     backgroundColor: theme.info_background,
   },
@@ -366,7 +421,6 @@ export const buildStyle = (theme): ThemedStyle => ({
   borderIcon: {
     borderColor: theme.icon,
   },
-
   // fonts
   fontXS: {
     fontSize: 10,
@@ -387,10 +441,10 @@ export const buildStyle = (theme): ThemedStyle => ({
     fontSize: 18,
   },
   fontXXL: {
-    fontSize: 24,
+    fontSize: 22,
   },
   fontXXXL: {
-    fontSize: 30,
+    fontSize: 28,
   },
 
   // text align

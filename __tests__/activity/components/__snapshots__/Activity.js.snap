@@ -45,7 +45,9 @@ exports[`Activity component renders correctly 1`] = `
           "__list": null,
           "allow_comments": true,
           "blocked": undefined,
+          "canary": false,
           "confirmEmail": [Function],
+          "disable_autoplay_videos": undefined,
           "email_confirmed": false,
           "eth_wallet": "",
           "founder": false,
@@ -140,7 +142,9 @@ exports[`Activity component renders correctly 1`] = `
           "__list": null,
           "allow_comments": true,
           "blocked": undefined,
+          "canary": false,
           "confirmEmail": [Function],
+          "disable_autoplay_videos": undefined,
           "email_confirmed": false,
           "eth_wallet": "",
           "founder": false,
@@ -242,7 +246,9 @@ exports[`Activity component renders correctly 1`] = `
                 "__list": null,
                 "allow_comments": true,
                 "blocked": undefined,
+                "canary": false,
                 "confirmEmail": [Function],
+                "disable_autoplay_videos": undefined,
                 "email_confirmed": false,
                 "eth_wallet": "",
                 "founder": false,
@@ -376,7 +382,9 @@ exports[`Activity component renders correctly 1`] = `
             "__list": null,
             "allow_comments": true,
             "blocked": undefined,
+            "canary": false,
             "confirmEmail": [Function],
+            "disable_autoplay_videos": undefined,
             "email_confirmed": false,
             "eth_wallet": "",
             "founder": false,
@@ -486,7 +494,9 @@ exports[`Activity component renders correctly 1`] = `
               "__list": null,
               "allow_comments": true,
               "blocked": undefined,
+              "canary": false,
               "confirmEmail": [Function],
+              "disable_autoplay_videos": undefined,
               "email_confirmed": false,
               "eth_wallet": "",
               "founder": false,
@@ -574,7 +584,7 @@ exports[`Activity component renders correctly 1`] = `
           ]
         }
       />
-      <Translate
+      <ForwardRef(ObserverForwardRef)
         entity={
           Object {
             "allow_comments": true,
@@ -600,7 +610,9 @@ exports[`Activity component renders correctly 1`] = `
               "__list": null,
               "allow_comments": true,
               "blocked": undefined,
+              "canary": false,
               "confirmEmail": [Function],
+              "disable_autoplay_videos": undefined,
               "email_confirmed": false,
               "eth_wallet": "",
               "founder": false,
@@ -704,7 +716,9 @@ exports[`Activity component renders correctly 1`] = `
           "__list": null,
           "allow_comments": true,
           "blocked": undefined,
+          "canary": false,
           "confirmEmail": [Function],
+          "disable_autoplay_videos": undefined,
           "email_confirmed": false,
           "eth_wallet": "",
           "founder": false,

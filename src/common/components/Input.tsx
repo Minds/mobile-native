@@ -1,32 +1,50 @@
 //@ts-nocheck
-import React, { Component, Props } from 'react';
+import React, { Component } from 'react';
 import {
   Text,
   View,
   StyleSheet,
   TouchableOpacity,
   TextInput,
+  TextStyle,
 } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import InfoPopup from './InfoPopup';
-import PhoneValidationComponent from './PhoneValidationComponent';
 
 import ThemedStyles from '../../styles/ThemedStyles';
+import PhoneValidationComponent from './phoneValidation/PhoneValidationComponent';
 
-type propsType = {
-  TFA: any;
-  TFAConfirmed: boolean;
-  inputType: string;
-  optional: boolean;
-  labelStyle: any;
-  info: any;
+export interface PropsType {
+  TFA?: any;
+  TFAConfirmed?: boolean;
+  inputType?: string;
+  optional?: boolean;
+  autofocus?: boolean;
+  dateFormat?: string;
+  labelStyle?: TextStyle | Array<TextStyle>;
+  placeholder?: string;
+  value?: string;
+  testID?: string;
+  keyboardType?: string;
+  editable?: boolean;
+  scrollEnabled?: boolean;
+  secureTextEntry?: boolean;
+  multiline?: boolean;
+  selectTextOnFocus?: boolean;
+  onChangeText?: (string) => void;
+  onFocus?: () => void;
+  onBlur?: () => void;
+  onEndEditing?: () => void;
+  onSubmitEditing?: () => void;
+  style?: any;
+  info?: string;
   error?: string;
-} & Props;
+}
 
 /**
  * Form input
  */
-export default class Input extends Component<propsType> {
+export default class Input extends Component<PropsType> {
   /**
    * State
    */
@@ -173,14 +191,21 @@ export default class Input extends Component<propsType> {
   render() {
     const theme = ThemedStyles.style;
     const optional = this.props.optional ? (
-      <Text style={[styles.optional]}>{'Optional'}</Text>
+      <Text style={[styles.optional, theme.colorSecondaryText]}>
+        {'Optional'}
+      </Text>
     ) : null;
 
     return (
       <View>
         <View style={styles.row}>
           <View style={styles.row}>
-            <Text style={[styles.label, this.props.labelStyle]}>
+            <Text
+              style={[
+                styles.label,
+                theme.colorSecondaryText,
+                this.props.labelStyle,
+              ]}>
               {this.props.placeholder}
             </Text>
             {this.props.info && <InfoPopup info={this.props.info} />}
@@ -207,7 +232,6 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   label: {
-    color: '#AEB0B8',
     fontSize: 16,
     fontWeight: '600',
     marginBottom: 5,
@@ -219,7 +243,6 @@ const styles = StyleSheet.create({
     paddingRight: 10,
   },
   optional: {
-    color: '#AEB0B8',
     fontSize: 14,
     fontFamily: 'Roboto-Italic',
   },

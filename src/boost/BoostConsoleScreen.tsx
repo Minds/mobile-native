@@ -72,14 +72,6 @@ export default class BoostConsoleScreen extends Component {
 
     const tabs = (
       <View>
-        <Text
-          style={[
-            theme.titleText,
-            theme.paddingLeft4x,
-            theme.paddingVertical2x,
-          ]}>
-          {i18n.t('boost')}
-        </Text>
         <BoostTabBar />
       </View>
     );
@@ -94,7 +86,11 @@ export default class BoostConsoleScreen extends Component {
         refreshing={this.props.boost.list.refreshing}
         onEndReached={this.loadFeed}
         onEndReachedThreshold={0}
-        style={[theme.backgroundSecondary, theme.flexContainer]}
+        style={[
+          theme.backgroundPrimary,
+          theme.flexContainer,
+          theme.marginTop3x,
+        ]}
       />
     );
   }

@@ -103,28 +103,27 @@ const PortraitContentBar = observer(
             navigation.push('ActivityFullScreenNav', {
               screen: 'PortraitViewerScreen',
               params: {
-                items: store.items,
                 index: row.index,
               },
             })
           }
         />
       ),
-      [navigation, store],
+      [navigation],
     );
 
     return (
       <View
         style={[
           theme.borderBottom8x,
-          theme.borderBackgroundPrimary,
+          theme.borderBackgroundTertiary,
           theme.fullWidth,
         ]}>
         <FlatList
           ref={portraitBarRef}
           contentContainerStyle={[
             theme.rowJustifyStart,
-            theme.backgroundSecondary,
+            theme.backgroundPrimary,
           ]}
           style={styles.bar}
           horizontal={true}

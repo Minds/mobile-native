@@ -5,7 +5,6 @@ import { useNavigation } from '@react-navigation/native';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import { observer } from 'mobx-react';
 import type { NativeStackNavigationProp } from 'react-native-screens/native-stack';
-import Button from '../../common/components/Button';
 import i18n from '../../common/services/i18n.service';
 import sessionService from '../../common/services/session.service';
 import type { AppStackParamList } from '../../navigation/NavigationTypes';
@@ -21,9 +20,13 @@ import type { GestureResponderEvent } from 'react-native';
 import { ChannelStoreType } from './createChannelStore';
 import { SupportTiersType } from '../../wire/WireTypes';
 
+import Subscribe from './buttons/Subscribe';
+import Edit from './buttons/Edit';
+import Join from './buttons/Join';
+
 type ButtonsType = 'edit' | 'more' | 'wire' | 'subscribe' | 'message' | 'join';
 
-type PropsType = {
+export type ChannelButtonsPropsType = {
   store: ChannelStoreType;
   onEditPress: (ev: GestureResponderEvent) => void;
   notShow?: Array<ButtonsType>;
@@ -38,17 +41,39 @@ const isSubscribedToTier = (tiers: SupportTiersType[]) =>
 
 const SIZE = 18;
 
+const check = {
+  wire: (store: ChannelStoreType) =>
+    !isIos &&
+    !store.channel!.blocked &&
+    !store.channel!.isOwner() &&
+    store.channel!.can(FLAG_WIRE),
+  more: () => true,
+  message: (store: ChannelStoreType) =>
+    !store.channel!.isOwner() &&
+    store.channel!.isSubscribed() &&
+    store.channel!.can(FLAG_MESSAGE),
+  edit: (store: ChannelStoreType) =>
+    store.channel!.isOwner() && store.channel?.can(FLAG_EDIT_CHANNEL),
+  join: (store: ChannelStoreType) =>
+    !store.channel!.isOwner() &&
+    store.tiers &&
+    store.tiers.length > 0 &&
+    !isSubscribedToTier(store.tiers),
+  subscribe: (store: ChannelStoreType) =>
+    !store.channel!.isOwner() &&
+    store.channel!.can(FLAG_SUBSCRIBE) &&
+    !store.channel!.subscribed,
+};
+
 /**
  * Channel buttons
  */
-const ChannelButtons = observer((props: PropsWithChildren<PropsType>) => {
+const ChannelButtons = observer((props: PropsWithChildren<ChannelButtonsPropsType>) => {
   const menuRef = useRef<any>();
   const theme = ThemedStyles.style;
   const navigation = useNavigation<
     NativeStackNavigationProp<AppStackParamList>
   >();
-  const subscriptionText = '+ ' + i18n.t('channel.subscribe');
-  const isTierSubscribed = isSubscribedToTier(props.store.tiers);
 
   const openMessenger = useCallback(() => {
     if (!props.store.channel) return null;
@@ -59,84 +84,31 @@ const ChannelButtons = observer((props: PropsWithChildren<PropsType>) => {
     });
   }, [navigation, props.store.channel]);
 
-  const join = useCallback(() => {
-    if (props.store.channel) {
-      navigation.push('JoinMembershipScreen', {
-        user: props.store.channel,
-        tiers: props.store.tiers,
-      });
-    }
-  }, [navigation, props.store.channel, props.store.tiers]);
-
   const openWire = useCallback(() => {
     navigation.push('WireFab', {
       owner: props.store.channel,
     });
   }, [navigation, props.store.channel]);
 
-  const openMore = useCallback(() => {
-    if (menuRef.current) {
-      menuRef.current.show();
-    }
-  }, [menuRef]);
-
   if (!props.store.channel) return null;
 
   const shouldShow = (button: ButtonsType) =>
-    !props.notShow || !props.notShow.includes(button);
+    !props.notShow ||
+    (!props.notShow.includes(button) && check[button](props.store));
 
-  const showWire =
-    !isIos &&
-    !props.store.channel.blocked &&
-    !props.store.channel.isOwner() &&
-    props.store.channel.can(FLAG_WIRE) &&
-    shouldShow('wire');
-
-  const showSubscribe =
-    !props.store.channel.isOwner() &&
-    props.store.channel.can(FLAG_SUBSCRIBE) &&
-    !props.store.channel.subscribed &&
-    shouldShow('subscribe');
-
-  const showMessage =
-    !props.store.channel.isOwner() &&
-    props.store.channel.isSubscribed() &&
-    props.store.channel.can(FLAG_MESSAGE) &&
-    shouldShow('message');
-
-  const showEdit =
-    props.store.channel.isOwner() &&
-    props.store.channel.can(FLAG_EDIT_CHANNEL) &&
-    shouldShow('edit');
-
-  const showJoin =
-    !props.store.channel.isOwner() &&
-    props.store.tiers &&
-    props.store.tiers.length > 0 &&
-    !isTierSubscribed &&
-    shouldShow('join');
-
-  const showMore = shouldShow('more');
+  const showSubscribe = shouldShow('subscribe');
 
   return (
     <View
       style={[theme.rowJustifyEnd, theme.marginRight2x, props.containerStyle]}>
       {props.children}
 
-      {showEdit && (
+      {shouldShow('edit') && (
         <View style={isIos ? undefined : theme.paddingTop2x}>
-          <Button
-            color={ThemedStyles.getColor('secondary_background')}
-            text={i18n.t('channel.editChannel')}
-            textStyle={isIos ? theme.fontL : theme.fontM}
-            containerStyle={styles.button}
-            textColor={ThemedStyles.getColor('primary_text')}
-            onPress={props.onEditPress}
-            inverted
-          />
+          <Edit {...props} />
         </View>
       )}
-      {showMessage && (
+      {shouldShow('message') && (
         <MIcon
           name="chat-bubble-outline"
           color={ThemedStyles.getColor('primary_text')}
@@ -145,7 +117,7 @@ const ChannelButtons = observer((props: PropsWithChildren<PropsType>) => {
           style={props.iconsStyle}
         />
       )}
-      {showWire && (
+      {shouldShow('wire') && (
         <MIcon
           name="attach-money"
           color={ThemedStyles.getColor('primary_text')}
@@ -154,64 +126,30 @@ const ChannelButtons = observer((props: PropsWithChildren<PropsType>) => {
           style={props.iconsStyle}
         />
       )}
-      {showMore && (
+      {shouldShow('more') && (
         <MIcon
           name="more-horiz"
           color={ThemedStyles.getColor('primary_text')}
           size={22}
-          onPress={openMore}
+          onPress={() => menuRef.current?.show()}
           style={[theme.paddingRight, props.iconsStyle]}
         />
       )}
-      {showJoin && (
-        <Button
-          color={
-            showSubscribe
-              ? ThemedStyles.getColor('secondary_background')
-              : ThemedStyles.getColor('green')
-          }
-          text={i18n.t('join')}
-          textStyle={[
-            isIos ? theme.fontL : theme.fontM,
-            !ThemedStyles.theme && !showSubscribe
-              ? null
-              : theme.colorPrimaryText,
-          ]}
-          containerStyle={styles.button}
-          textColor="white"
-          onPress={join}
-          inverted
+      {shouldShow('join') && (
+        <Join
+          showSubscribe={showSubscribe}
+          navigation={navigation}
+          {...props}
         />
       )}
-      {showSubscribe && (
-        <Button
-          color={ThemedStyles.getColor('green')}
-          text={subscriptionText}
-          textStyle={isIos ? theme.fontL : theme.fontM}
-          containerStyle={styles.button}
-          textColor="white"
-          onPress={props.store.channel.toggleSubscription}
-          inverted
-        />
-      )}
+      {showSubscribe && <Subscribe {...props} />}
       <ChannelMoreMenu
         channel={props.store.channel}
         ref={menuRef}
-        isSubscribedToTier={isTierSubscribed}
+        isSubscribedToTier={isSubscribedToTier(props.store.tiers)}
       />
     </View>
   );
 });
 
 export default ChannelButtons;
-
-const styles = StyleSheet.create({
-  button: {
-    padding: Platform.select({ ios: 8, android: 6 }),
-    marginLeft: 5,
-    shadowOpacity: 0.25,
-    shadowRadius: 2,
-    shadowOffset: { width: 0, height: 2 },
-    shadowColor: '#000',
-  },
-});

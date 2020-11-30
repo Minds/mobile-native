@@ -1,37 +1,86 @@
 //@ts-nocheck
 import React, { useCallback } from 'react';
-import { View, FlatList, Text, Linking } from 'react-native';
-import MenuItem from '../common/components/menus/MenuItem';
-import ThemedStyles from '../styles/ThemedStyles';
-import i18n from '../common/services/i18n.service';
+import { Linking, ScrollView, Text, View } from 'react-native';
 import authService from '../auth/AuthService';
-
-const keyExtractor = (item, index) => index.toString();
+import MenuItem from '../common/components/menus/MenuItem';
+import i18n from '../common/services/i18n.service';
+import sessionService from '../common/services/session.service';
+import ThemedStyles from '../styles/ThemedStyles';
 
 export default function ({ navigation }) {
   const theme = ThemedStyles.style;
 
-  const navToAccount = useCallback(() => navigation.push('Account'), [
-    navigation,
-  ]);
+  const user = sessionService.getUser();
 
-  const navToNetwork = useCallback(() => navigation.push('Network'), [
-    navigation,
-  ]);
+  const onComplete = useCallback(
+    (forPro: boolean) => {
+      return (success: any) => {
+        if (success) {
+          forPro ? user.togglePro() : user.togglePlus();
+        }
+      };
+    },
+    [user],
+  );
 
-  const navToSecurity = useCallback(() => navigation.push('Security'), [
-    navigation,
-  ]);
+  const itemsMapping = [
+    {
+      title: i18n.t('settings.account'),
+      screen: 'Account',
+      params: {},
+    },
+    {
+      title: i18n.t('settings.network'),
+      screen: 'Network',
+      params: {},
+    },
+    {
+      title: i18n.t('settings.security'),
+      screen: 'Security',
+      params: {},
+    },
+    {
+      title: i18n.t('settings.billing'),
+      screen: 'Billing',
+      params: {},
+    },
+    {
+      title: i18n.t('settings.referrals'),
+      screen: 'Referrals',
+      params: {},
+    },
+    {
+      title: i18n.t('boost'),
+      screen: 'BoostConsole',
+    },
+  ];
 
-  const navToBilling = useCallback(() => navigation.push('Billing'), [
-    navigation,
-  ]);
+  if (!user.plus) {
+    itemsMapping.push({
+      title: i18n.t('monetize.plus'),
+      screen: 'PlusScreen',
+      params: { onComplete: onComplete(false), pro: false },
+    });
+  }
 
-  const navToOther = useCallback(() => navigation.push('Other'), [navigation]);
+  if (!user.pro) {
+    itemsMapping.push({
+      title: i18n.t('monetize.pro'),
+      screen: 'PlusScreen',
+      params: { onComplete: onComplete(true), pro: true },
+    });
+  }
 
-  const navToReferrals = useCallback(() => navigation.push('Referrals'), [
-    navigation,
-  ]);
+  itemsMapping.push({
+    title: i18n.t('settings.other'),
+    screen: 'Other',
+    params: {},
+  });
+
+  const items = itemsMapping.map(({ title, screen, params }) => ({
+    title,
+    onPress: () => navigation.push(screen, params),
+  }));
 
   const setDarkMode = () => {
     if (ThemedStyles.theme) {
@@ -40,33 +89,6 @@ export default function ({ navigation }) {
       ThemedStyles.setDark();
     }
   };
-
-  const list = [
-    {
-      title: i18n.t('settings.account'),
-      onPress: navToAccount,
-    },
-    {
-      title: i18n.t('settings.network'),
-      onPress: navToNetwork,
-    },
-    {
-      title: i18n.t('settings.security'),
-      onPress: navToSecurity,
-    },
-    {
-      title: i18n.t('settings.billing'),
-      onPress: navToBilling,
-    },
-    {
-      title: i18n.t('settings.referrals'),
-      onPress: navToReferrals,
-    },
-    {
-      title: i18n.t('settings.other'),
-      onPress: navToOther,
-    },
-  ];
 
   const innerWrapper = [
     theme.borderTopHair,
@@ -100,28 +122,23 @@ export default function ({ navigation }) {
   };
 
   return (
-    <View style={[theme.flexContainer, theme.backgroundPrimary]}>
-      <View style={innerWrapper}>
-        <Text
-          style={[
-            theme.titleText,
-            theme.paddingLeft4x,
-            theme.paddingVertical2x,
-          ]}>
-          {i18n.t('moreScreen.settings')}
-        </Text>
-        <FlatList
-          data={list}
-          renderItem={MenuItem}
-          style={theme.backgroundPrimary}
-          keyExtractor={keyExtractor}
-        />
+    <ScrollView
+      style={[theme.flexContainer, theme.backgroundPrimary]}
+      contentContainerStyle={theme.paddingBottom4x}>
+      <Text
+        style={[theme.titleText, theme.paddingLeft4x, theme.paddingVertical2x]}>
+        {i18n.t('moreScreen.settings')}
+      </Text>
+      <View style={[innerWrapper, theme.backgroundPrimary]}>
+        {items.map((item) => (
+          <MenuItem item={item} />
+        ))}
       </View>
       <View style={[innerWrapper, theme.marginTop7x]}>
         <MenuItem item={themeChange} i={4} />
         <MenuItem item={help} i={5} />
         <MenuItem item={logOut} i={6} />
       </View>
-    </View>
+    </ScrollView>
   );
 }

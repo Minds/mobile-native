@@ -13,13 +13,16 @@ import type { SupportTiersType } from '../../wire/WireTypes';
 import NavigationService from '../../navigation/NavigationService';
 import i18n from '../../common/services/i18n.service';
 import { showNotification } from '../../../AppMessages';
+import { Platform } from 'react-native';
+
+type Entity = { guid: string; nsfw?: Array<string> } | UserModel;
 type InitialLoadParams = {
-  entity?: { guid: string } | UserModel;
+  entity?: Entity;
   guid?: string;
   username?: string;
 };
 
-export type ChannelTabType = 'feed' | 'shop' | 'about';
+export type ChannelTabType = 'feed' | 'shop' | 'about' | 'memberships';
 
 type FilterType = 'all' | 'images' | 'videos' | 'blogs';
 
@@ -51,6 +54,16 @@ const createChannelStore = () => {
     uploading: false,
     bannerProgress: 0,
     avatarProgress: 0,
+    channelSearch: '',
+    avatarPath: '',
+    setChannelSearch(channelSearch: string) {
+      this.channelSearch = channelSearch;
+    },
+    clearSearch() {
+      this.channelSearch = '';
+      this.feedStore.setParams({});
+      this.loadFeed(true);
+    },
     get esFeedfilter() {
       switch (this.filter) {
         case 'all':
@@ -79,6 +92,10 @@ const createChannelStore = () => {
      */
     async initialLoad(params: InitialLoadParams) {
       if (params.entity) {
+        if (this.isNsfw(params.entity)) {
+          NavigationService.goBack();
+          showNotification(i18n.t('nsfw.notSafeChannel'));
+        }
         this.loadFromEntity(params.entity);
         this.tiers =
           (await supportTiersService.getAllFromGuid(params.entity.guid)) || [];
@@ -128,6 +145,32 @@ const createChannelStore = () => {
         .setAsActivities(this.esFeedfilter !== 'blogs')
         .clear()
         .fetchRemoteOrLocal();
+    },
+    async searchInChannel() {
+      this.feedStore.clear();
+
+      if (!this.channel) {
+        return;
+      }
+
+      const params: any = {
+        period: '1y',
+        all: 1,
+        query: this.channelSearch,
+        sync: 1,
+        force_public: 1,
+      };
+
+      this.feedStore
+        .setEndpoint(
+          `api/v2/${this.endpoint}/${this.channel.guid}/${this.esFeedfilter}`,
+        )
+        .setAsActivities(this.esFeedfilter !== 'blogs')
+        .setLimit(12)
+        .setParams(params)
+        .fetchRemoteOrLocal();
+
+      return;
     },
     /**
      * Set channel
@@ -181,6 +224,13 @@ const createChannelStore = () => {
      */
     async loadFromGuidOrUsername(guidOrUsername: string) {
       const channel = await channelsService.get(guidOrUsername);
+      if (!channel) {
+        return;
+      }
+      if (this.isNsfw(channel)) {
+        NavigationService.goBack();
+        showNotification(i18n.t('nsfw.notSafeChannel'));
+      }
       if (this.checkBanned(channel)) return false;
       this.setChannel(channel);
       this.loadFeed();
@@ -193,8 +243,10 @@ const createChannelStore = () => {
         undefined,
         true,
       );
-      this.setChannel(channel);
-      await sessionService.loadUser(channel);
+      if (channel) {
+        this.setChannel(channel);
+        await sessionService.loadUser(channel);
+      }
     },
     setIsUploading(uploading: boolean) {
       this.uploading = uploading;
@@ -215,15 +267,33 @@ const createChannelStore = () => {
      * Upload Banner or Avatar
      * @param file
      * @param mediaType
+     * @param camera
      */
-    async upload(type: channelMediaType) {
-      if (!this.channel) {
-        return;
-      }
+    async upload(
+      type: channelMediaType,
+      camera = false,
+      onImageSelected?: (customImagePromise) => void,
+    ) {
+      const isBanner = type === 'banner';
 
       try {
-        imagePickerService
-          .show('', 'photo', type === 'avatar')
+        const promise = camera
+          ? imagePickerService.showCamera(
+              '',
+              'photo',
+              type === 'avatar',
+              true,
+              isBanner ? 1500 : 1024,
+              isBanner ? 600 : 1024,
+            )
+          : imagePickerService.show(
+              '',
+              'photo',
+              type === 'avatar',
+              isBanner ? 1500 : 1024,
+              isBanner ? 600 : 1024,
+            );
+        await promise
           .then(async (response: customImagePromise) => {
             let file: CustomImage;
             if (response !== false && !Array.isArray(response)) {
@@ -231,13 +301,16 @@ const createChannelStore = () => {
             } else {
               return false;
             }
+            if (onImageSelected) {
+              onImageSelected(file);
+            }
             this.setIsUploading(true);
             this.setProgress(0, type);
+            this.avatarPath = file.path || file.uri;
             await ChannelService.upload(
-              null,
               type,
               {
-                uri: file.uri,
+                uri: file.path || file.uri,
                 type: file.type,
                 name: file.filename || `${type}.jpg`,
               },
@@ -258,6 +331,7 @@ const createChannelStore = () => {
       } catch (error) {
         this.setProgress(0, type);
         this.setIsUploading(false);
+        this.avatarPath = '';
         throw error;
       }
     },
@@ -291,6 +365,14 @@ const createChannelStore = () => {
       } else {
         return 0;
       }
+    },
+    isNsfw(channel: Entity) {
+      return (
+        Platform.OS === 'ios' &&
+        channel.nsfw &&
+        channel.nsfw.length > 0 &&
+        channel.guid !== sessionService.getUser().guid
+      );
     },
   };
   return store;

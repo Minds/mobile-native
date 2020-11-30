@@ -19,6 +19,8 @@ import { CommonActions } from '@react-navigation/native';
 import logService from '../common/services/log.service';
 import { runInAction } from 'mobx';
 import { Image, Platform } from 'react-native';
+import { hashRegex } from '../common/components/Tags';
+import _ from 'lodash';
 
 /**
  * Display an error message to the user.
@@ -46,6 +48,7 @@ const DEFAULT_MONETIZE = {
 export default function ({ props, newsfeed }) {
   return {
     portraitMode: false,
+    noText: false,
     isRemind: false,
     isEdit: false,
     accessId: 2,
@@ -65,19 +68,15 @@ export default function ({ props, newsfeed }) {
     posting: false,
     group: null,
     postToPermaweb: false,
+    initialized: false,
     onScreenFocused() {
       const params = props.route.params;
-      if (
-        !params ||
-        (!params.entity &&
-          !params.mode &&
-          !params.media &&
-          !params.text &&
-          !params.portrait)
-      ) {
+      if (this.initialized || !params) {
         return;
       }
+      this.initialized = true;
 
+      this.noText = Boolean(params.noText);
       this.portraitMode = params.portrait;
       this.isRemind = params.isRemind;
       this.isEdit = params.isEdit;
@@ -88,6 +87,11 @@ export default function ({ props, newsfeed }) {
         : this.isRemind || this.isEdit
         ? 'text'
         : settingsStore.composerMode;
+
+      // if noText is enabled the first screen shouldn't be text.
+      if (this.mode === 'text' && this.noText) {
+        this.mode = 'photo';
+      }
 
       if (params.media) {
         this.mode = 'text';
@@ -112,6 +116,7 @@ export default function ({ props, newsfeed }) {
         isRemind: undefined,
         text: undefined,
         portrait: undefined,
+        noText: undefined,
       });
     },
     onPost(entity, isEdit) {
@@ -247,13 +252,15 @@ export default function ({ props, newsfeed }) {
      */
     addTag(tag) {
       if (this.tags.length === hashtagService.maxHashtags) {
-        return;
+        this.maxHashtagsError();
+        return false;
       }
       if (this.tags.some((t) => t === tag)) {
-        return;
+        return false;
       }
 
       this.tags.push(tag);
+      return true;
     },
     /**
      * Remove a tag
@@ -264,6 +271,33 @@ export default function ({ props, newsfeed }) {
       if (index !== -1) {
         this.tags.splice(index, 1);
       }
+    },
+    parseTags() {
+      let result = this.text.match(hashRegex);
+      if (result) {
+        result = result.map((v) => v.trim().slice(1));
+
+        // text tags has duplicates?
+        if (_.uniq(result).length !== result.length) {
+          showError(i18n.t('capture.duplicateHashtagas'));
+          return false;
+        }
+
+        // text tags already in other tags?
+        if (_.difference(result, this.tags).length !== result.length) {
+          showError(i18n.t('capture.duplicateHashtagas'));
+          return false;
+        }
+
+        if (this.tags.length + result.length <= hashtagService.maxHashtags) {
+          this.tags.push(...result);
+          return true;
+        } else {
+          this.maxHashtagsError();
+          return false;
+        }
+      }
+      return true;
     },
     /**
      * Set posting
@@ -385,6 +419,10 @@ export default function ({ props, newsfeed }) {
      * @param {object} media
      */
     async onMediaFromGallery(media) {
+      if (this.portraitMode && media.height < media.width) {
+        showError(i18n.t('capture.mediaPortraitError'));
+        return;
+      }
       this.mediaToConfirm = media;
       this.acceptMedia();
     },
@@ -395,46 +433,18 @@ export default function ({ props, newsfeed }) {
       this.attachment.attachMedia(this.mediaToConfirm, this.extra);
       this.mode = 'text';
     },
-    /**
-     * Remind
-     */
-    async remind() {
-      const message = this.text;
-      const metadata = this.entity.getClientMetadata();
 
-      const post = {
-        message,
-        ...metadata,
-      };
-
-      return await remoteAction(
-        async () => {
-          this.setPosting(true);
-          try {
-            const data = await api.post(
-              `api/v2/newsfeed/remind/${this.entity.guid}`,
-              post,
-            );
-            if (data.guid) {
-              const resp = await getSingle(data.guid);
-              return ActivityModel.create(resp.activity);
-            }
-          } catch (e) {
-            this.clear(false);
-          }
-          return false;
-        },
-        '',
-        0,
-        false,
-      );
-    },
     /**
      * Submit post
      */
     async submit() {
       if (this.posting) {
         return;
+      }
+
+      // parse tags from text
+      if (!this.parseTags()) {
+        return false;
       }
 
       // Plus Monetize?
@@ -470,7 +480,8 @@ export default function ({ props, newsfeed }) {
       if (
         !this.attachment.hasAttachment &&
         !this.text &&
-        (!this.embed.meta || !this.embed.meta.url)
+        (!this.embed.meta || !this.embed.meta.url) &&
+        !this.isRemind
       ) {
         showError(i18n.t('capture.nothingToPost'));
         return false;
@@ -478,11 +489,7 @@ export default function ({ props, newsfeed }) {
 
       // check hashtag limit
       if (this.tags.length > hashtagService.maxHashtags) {
-        showError(
-          i18n.t('capture.maxHashtags', {
-            maxHashtags: hashtagService.maxHashtags,
-          }),
-        );
+        this.maxHashtagsError();
         return false;
       }
 
@@ -498,6 +505,11 @@ export default function ({ props, newsfeed }) {
         newPost.wire_threshold = featuresService.has('paywall-2020')
           ? this.wire_threshold
           : this.wire_threshold.min;
+      }
+
+      // add remind
+      if (this.isRemind) {
+        newPost.remind_guid = this.entity.guid;
       }
 
       if (this.postToPermaweb) {
@@ -523,7 +535,7 @@ export default function ({ props, newsfeed }) {
         newPost = Object.assign(newPost, this.embed.meta);
       }
 
-      if (props.route.params && props.route.params.group) {
+      if (props.route?.params && props.route.params.group) {
         newPost.container_guid = props.route.params.group.guid;
         this.group = props.route.params.group;
         // remove the group to avoid reuse it on future posts
@@ -553,9 +565,15 @@ export default function ({ props, newsfeed }) {
           }
           return ActivityModel.create(response.activity);
         }
+      } catch (e) {
+        console.log(e);
       } finally {
         this.setPosting(false);
       }
+    },
+    setRemindEntity(entity) {
+      this.entity = entity;
+      this.isRemind = true;
     },
     async saveMembsershipMonetize(support_tier) {
       this.wire_threshold = { support_tier };
@@ -594,6 +612,13 @@ export default function ({ props, newsfeed }) {
     },
     togglePostToPermaweb() {
       this.postToPermaweb = !this.postToPermaweb;
+    },
+    maxHashtagsError() {
+      showError(
+        i18n.t('capture.maxHashtags', {
+          maxHashtags: hashtagService.maxHashtags,
+        }),
+      );
     },
   };
 }

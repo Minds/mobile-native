@@ -17,7 +17,7 @@ import i18n from '../../../common/services/i18n.service';
 
 import FloatingBackButton from '../../../common/components/FloatingBackButton';
 import ExplicitText from '../../../common/components/explicit/ExplicitText';
-import Translate from '../../../common/components/Translate';
+import Translate from '../../../common/components/translate/Translate';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Actions from '../../../newsfeed/activity/Actions';
 import Activity from '../../../newsfeed/activity/Activity';
@@ -73,7 +73,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
   const entity: ActivityModel = props.entity;
   const mediaRef = useRef<MediaView>(null);
   const remindRef = useRef<Activity>(null);
-  const translateRef = useRef<Translate>(null);
+  const translateRef = useRef<typeof Translate>(null);
   const commentsRef = useRef<any>(null);
   const navigation = useNavigation();
   const hasMedia = entity.hasMedia();
@@ -111,18 +111,23 @@ const ActivityFullScreen = observer((props: PropsType) => {
   }, [focused, props.forceAutoplay]);
 
   useEffect(() => {
-    let openComentsTimeOut: NodeJS.Timeout | null = null;
+    let openCommentsTimeOut: NodeJS.Timeout | null = null;
     if (route && (route.params?.focusedUrn || route.params?.scrollToBottom)) {
-      openComentsTimeOut = setTimeout(() => {
+      openCommentsTimeOut = setTimeout(() => {
         onPressComment();
+        // remove the values to avoid reopens (test fix)
+        navigation.setParams({
+          focusedUrn: undefined,
+          scrollToBottom: undefined,
+        });
       }, 100);
     }
     return () => {
-      if (openComentsTimeOut) {
-        clearTimeout(openComentsTimeOut);
+      if (openCommentsTimeOut) {
+        clearTimeout(openCommentsTimeOut);
       }
     };
-  }, [onPressComment, route]);
+  }, [navigation, onPressComment, route]);
 
   const isShortText =
     !hasMedia && !hasRemind && entity.text.length < TEXT_SHORT_THRESHOLD;
@@ -157,7 +162,8 @@ const ActivityFullScreen = observer((props: PropsType) => {
    */
   const onTranslate = useCallback(async () => {
     if (translateRef.current) {
-      const lang = await translateRef.current.show();
+      //@ts-ignore
+      const lang = await translateRef.current?.show();
       if (remindRef.current && lang) {
         remindRef.current.showTranslate();
       }
@@ -226,7 +232,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
   });
 
   return (
-    <View style={[window, theme.flexContainer, theme.backgroundSecondary]}>
+    <View style={[window, theme.flexContainer, theme.backgroundPrimary]}>
       <View style={theme.flexContainer}>
         {ownerBlockShadow}
         <ScrollView

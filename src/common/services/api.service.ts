@@ -2,7 +2,11 @@ import Cancelable from 'promise-cancelable';
 import { NativeModules } from 'react-native';
 
 import session from './session.service';
-import { MINDS_API_URI, NETWORK_TIMEOUT } from '../../config/Config';
+import {
+  MINDS_API_URI,
+  MINDS_STAGING,
+  NETWORK_TIMEOUT,
+} from '../../config/Config';
 
 import abortableFetch, { abort } from '../helpers/abortableFetch';
 import { Version } from '../../config/Version';
@@ -118,6 +122,10 @@ class ApiService {
       Pragma: 'no-cache',
       'App-Version': Version.VERSION,
     };
+
+    if (MINDS_STAGING) {
+      headers.Cookie = 'staging=1';
+    }
 
     if (session.token) {
       headers.Authorization = 'Bearer ' + session.token;

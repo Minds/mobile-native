@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
 import { View, StyleSheet, ScrollView, Text, Platform } from 'react-native';
 import ThemedStyles from '../../../styles/ThemedStyles';
-import { useSafeArea } from 'react-native-safe-area-context';
+import { useSafeArea, useSafeAreaInsets } from 'react-native-safe-area-context';
 import HeaderComponent from '../../../common/components/HeaderComponent';
 import UserNamesComponent from '../../../common/components/UserNamesComponent';
 import capitalize from '../../../common/helpers/capitalize';
@@ -146,13 +146,15 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
 
   const theme = ThemedStyles.style;
 
-  const insets = useSafeArea();
+  const insets = useSafeAreaInsets();
   const cleanTop = { marginTop: insets.top + (isIos ? 60 : 50) };
   const switchTextStyle = [styles.switchText, theme.colorPrimaryText];
 
   const complete = useCallback(() => {
     store.setLoading(false);
-    onComplete();
+    if (onComplete && typeof onComplete === 'function') {
+      onComplete();
+    }
     navigation.goBack();
   }, [navigation, onComplete, store]);
 

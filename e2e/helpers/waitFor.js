@@ -2,7 +2,9 @@ export const TIME = 10000;
 
 export const waitForElement = async (e, visible = true) => {
   if (visible) {
+    console.log(`waitFor element ${e} to be visible`);
     await waitFor(element(e)).toBeVisible().withTimeout(TIME);
+    console.log('found');
   } else {
     await waitFor(element(e)).toBeNotVisible().withTimeout(TIME);
   }
