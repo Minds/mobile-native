@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     padding: 0,
   },
   buttonContainer: {
-    marginTop: 100,
+    marginTop: 50,
   },
   inputWrapperStyle: {
     flexDirection: 'row',
