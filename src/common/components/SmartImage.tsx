@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import FastImage from 'react-native-fast-image';
+import FastImage, { ResizeMode } from 'react-native-fast-image';
 import ProgressCircle from 'react-native-progress/CircleSnail';
 import Animated from 'react-native-reanimated';
 import { mix, useTimingTransition } from 'react-native-redash';
@@ -26,7 +26,7 @@ interface SmartImageProps {
   style?: any;
   source: ImageURISource;
   onLoadEnd?: Function;
-  resizeMode?: FastImage.ResizeMode;
+  resizeMode?: ResizeMode;
   withoutDownloadButton?: boolean;
   imageVisible?: boolean;
 }
@@ -190,9 +190,7 @@ export default observer(function (props: SmartImageProps) {
           retry={2}
           key={store.retries}
           onError={store.setError}
-          source={{
-            uri: `${props.source.uri}?test=${Math.random()}`
-          }}
+          source={props.source}
           onLoadEnd={store.onLoadEnd}
           onProgress={store.onProgress}
         />
