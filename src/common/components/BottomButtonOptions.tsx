@@ -27,34 +27,37 @@ export default function BottomButtonOptions({ isVisible, list }: PropsType) {
       isVisible={isVisible}
       modalProps={{ style: theme.borderRadius5 }}>
       <View style={theme.paddingBottom}>
-        {list.map((plist) =>
-          plist.map((l, i) => (
-            <ListItem
-              key={i}
-              containerStyle={[
-                theme.backgroundPrimary,
-                theme.marginHorizontal3x,
-                theme.borderPrimary,
-                i < plist.length - 1 ? theme.borderBottomHair : null,
-                i === 0 ? styles.borderRadiusTop : null,
-                i === plist.length - 1 ? styles.borderRadiusBottom : null,
-              ]}
-              onPress={l.onPress}>
-              <ListItem.Content>
-                <ListItem.Title
-                  style={[
-                    theme.colorPrimaryText,
-                    isIOS ? theme.paddingVertical : null,
-                    theme.fontXL,
-                    theme.centered,
-                    l.titleStyle,
-                  ]}>
-                  {l.title}
-                </ListItem.Title>
-              </ListItem.Content>
-            </ListItem>
-          )),
-        )}
+        {list.map((plist) => (
+          <View style={theme.paddingBottom2x}>
+            {plist.map((l, i) => (
+              <ListItem
+                key={i}
+                underlayColor="transparent"
+                containerStyle={[
+                  theme.backgroundPrimary,
+                  theme.marginHorizontal3x,
+                  theme.borderPrimary,
+                  i < plist.length - 1 ? theme.borderBottomHair : null,
+                  i === 0 ? styles.borderRadiusTop : null,
+                  i === plist.length - 1 ? styles.borderRadiusBottom : null,
+                ]}
+                onPress={l.onPress}>
+                <ListItem.Content>
+                  <ListItem.Title
+                    style={[
+                      theme.colorPrimaryText,
+                      isIOS ? theme.paddingVertical : null,
+                      theme.fontXL,
+                      theme.centered,
+                      l.titleStyle,
+                    ]}>
+                    {l.title}
+                  </ListItem.Title>
+                </ListItem.Content>
+              </ListItem>
+            ))}
+          </View>
+        ))}
       </View>
     </BottomSheet>
   );
