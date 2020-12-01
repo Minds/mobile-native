@@ -9,6 +9,7 @@ import { extendObservable, computed } from 'mobx';
 import logService from '../common/services/log.service';
 import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import sessionService from '../common/services/session.service';
 
 export class PortraitBarItem {
   user: UserModel;
@@ -76,8 +77,22 @@ function createPortraitStore() {
             });
           }
 
+          const user = sessionService.getUser();
+
           const items = _.map(
-            _.groupBy(feedStore.entities, 'owner_guid'),
+            _.groupBy(
+              user.plus
+                ? feedStore.entities.filter(
+                    (a) =>
+                      a.paywall !== '1' ||
+                      (a.wire_threshold &&
+                        a.wire_threshold.support_tier &&
+                        a.wire_threshold.support_tier?.urn ===
+                          'urn:support-tier:730071191229833224/10000000025000000'),
+                  )
+                : feedStore.entities.filter((a) => a.paywall !== '1'),
+              'owner_guid',
+            ),
             (activities) =>
               new PortraitBarItem(activities[0].ownerObj, activities.reverse()),
           );
