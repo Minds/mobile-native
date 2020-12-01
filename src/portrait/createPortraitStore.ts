@@ -9,6 +9,7 @@ import { extendObservable, computed } from 'mobx';
 import logService from '../common/services/log.service';
 import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import { MINDS_GUID } from '../config/Config';
 
 export class PortraitBarItem {
   user: UserModel;
@@ -23,14 +24,15 @@ export class PortraitBarItem {
   }
 }
 
+const portraitEndpoint = 'api/v2/feeds/subscribed/activities';
+
 /**
  * Portrait store generator
  */
 function createPortraitStore() {
   const feedStore = new FeedStore();
 
-  feedStore.setEndpoint('api/v2/feeds/subscribed/activities').setLimit(150);
-
+  feedStore.setEndpoint(portraitEndpoint).setLimit(150);
   const joins = fromEvent<UserModel>(UserModel.events, 'toggleSubscription');
   let subscription$: Subscription | null = null;
 
@@ -52,7 +54,6 @@ function createPortraitStore() {
       try {
         feedStore.setParams({
           portrait: true,
-          hide_own_posts: true,
           to_timestamp: moment().subtract(2, 'days').unix(),
         });
 
@@ -62,6 +63,19 @@ function createPortraitStore() {
           portraitContentService.getSeen(),
           feedStore.fetchRemoteOrLocal(),
         ]);
+
+        // fallback to minds portrait
+        if (!feedStore.entities.length) {
+          feedStore.setEndpoint(
+            `api/v2/feeds/container/${MINDS_GUID}/activities`,
+          );
+          feedStore.setParams({
+            portrait: true,
+            to_timestamp: moment().subtract(30, 'days').unix(),
+          });
+          await feedStore.fetchRemoteOrLocal();
+          feedStore.setEndpoint(portraitEndpoint);
+        }
 
         if (feedStore.entities.length) {
           if (seenList) {
