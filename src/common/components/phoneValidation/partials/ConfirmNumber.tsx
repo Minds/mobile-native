@@ -52,7 +52,7 @@ const ConfirmNumber = observer(({ localStore, ...props }: PropsType) => {
   return (
     <View>
       {text}
-      <View style={[style.cols, style.form]}>
+      <View style={props.inputWrapperStyle || [style.cols, style.form]}>
         <TextInput
           style={props.inputStyles || defaultStyles}
           value={localStore.code}
