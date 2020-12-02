@@ -7,7 +7,6 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import abbrev from '../common/helpers/abbrev';
 import { FLAG_JOIN } from '../common/Permissions';
 import i18n from '../common/services/i18n.service';
-import { CommonStyle as CS } from '../styles/Common';
 import ListItemButton from '../common/components/ListItemButton';
 import GroupModel from './GroupModel';
 import ThemedStyles from '../styles/ThemedStyles';
@@ -33,11 +32,11 @@ const Button = observer(({ group, index }: ButtonPropsType) => {
   if (isMember) {
     onPress = () => group.leave();
     iconName = 'check';
-    style = theme.colorDone;
+    style = theme.colorLink;
   } else {
     onPress = group.can(FLAG_JOIN, true) ? () => group.join() : () => {};
     iconName = 'add';
-    style = theme.colorActionNew;
+    style = theme.colorIcon;
   }
   return (
     <ListItemButton onPress={onPress} testID={`suggestedGroup${index}`}>
@@ -74,7 +73,7 @@ const GroupsListItem = observer((props: PropsType) => {
       subtitle={i18n.t('groups.listMembersCount', {
         count: abbrev(group['members:count']),
       })}
-      subtitleStyle={[styles.subtitle, CS.colorSecondaryText]}
+      subtitleStyle={[styles.subtitle, theme.colorSecondaryText]}
       onPress={_onPress}>
       {!props.hideButton && <Button index={props.index} group={group} />}
     </ListItem>
