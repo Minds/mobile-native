@@ -2,10 +2,11 @@ import { useDimensions } from '@react-native-community/hooks';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { observer, useLocalStore } from 'mobx-react';
 import moment from 'moment-timezone';
-import React, { useRef } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { View, Text } from 'react-native';
 import * as Progress from 'react-native-progress';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { showNotification } from '../../../AppMessages';
 import BottomButtonOptions, {
   ItemType,
 } from '../../common/components/BottomButtonOptions';
@@ -15,7 +16,9 @@ import MenuItem from '../../common/components/menus/MenuItem';
 import i18n from '../../common/services/i18n.service';
 import SettingsStore from '../../settings/SettingsStore';
 import ThemedStyles from '../../styles/ThemedStyles';
-import useOnboardingProgress from './useOnboardingProgress';
+import useOnboardingProgress, {
+  OnboardingGroupState,
+} from './useOnboardingProgress';
 
 type StepDefinition = {
   screen: string;
@@ -30,7 +33,24 @@ export default observer(function OnboardingScreen() {
   const theme = ThemedStyles.style;
   const { width } = useDimensions().screen;
   const navigation = useNavigation();
-  const progressStore = useOnboardingProgress();
+  const onOnboardingCompleted = (message: string) => {
+    setTimeout(() => {
+      navigation.goBack();
+      showNotification(i18n.t(message), 'info');
+    }, 300);
+  };
+  const updateState = (
+    newData: OnboardingGroupState,
+    oldData: OnboardingGroupState,
+  ) => {
+    if (newData && oldData && newData.id !== oldData.id) {
+      onOnboardingCompleted('onboarding.onboardingCompleted');
+    } else if (newData && newData.is_completed) {
+      onOnboardingCompleted('onboarding.improvedExperience');
+    }
+    return newData;
+  };
+  const progressStore = useOnboardingProgress(updateState);
 
   const store = useLocalStore(() => ({
     showMenu: false,

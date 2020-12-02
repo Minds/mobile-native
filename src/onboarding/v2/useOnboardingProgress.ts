@@ -22,10 +22,11 @@ export type OnboardingGroupState = {
 /**
  * Onboarding progress hook
  */
-export default function useOnboardingProgress() {
+export default function useOnboardingProgress(updateState?: any) {
   const store = useApiFetch<OnboardingGroupState>('api/v3/onboarding', {
     persist: true,
     params: {},
+    updateState,
   });
 
   // setTimeout(() => {

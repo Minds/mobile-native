@@ -18,6 +18,7 @@ export type PhoneValidationPropsType = {
   onNext?: Function;
   textStyle?: any;
   localStore?: PhoneValidationStoreType;
+  inputWrapperStyle?: any;
 } & TextInputProps;
 
 const PhoneValidationComponent = observer((props: PhoneValidationPropsType) => {

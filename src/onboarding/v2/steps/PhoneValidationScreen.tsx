@@ -74,8 +74,10 @@ export default observer(function PhoneValidationScreen() {
                 theme.border0x,
                 styles.input,
               ]}
+              inputWrapperStyle={styles.inputWrapperStyle}
               localStore={phoneValidationStore}
               bottomStore={true}
+              autoFocus
             />
           </LabeledComponent>
           <View
@@ -115,6 +117,10 @@ const styles = StyleSheet.create({
     padding: 0,
   },
   buttonContainer: {
-    marginTop: 100,
+    marginTop: 50,
+  },
+  inputWrapperStyle: {
+    flexDirection: 'row',
+    alignItems: 'stretch',
   },
 });

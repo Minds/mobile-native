@@ -11,11 +11,11 @@ import FeedList from '../../../common/components/FeedList';
 
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { useDiscoveryV2SearchStore } from './DiscoveryV2SearchContext';
-import GroupsListItemNew from '../../../groups/GroupsListItemNew';
+import GroupsListItem from '../../../groups/GroupsListItem';
 import DiscoveryUser from '../../DiscoveryUserNew';
 import i18n from '../../../common/services/i18n.service';
 import type UserModel from '../../../channel/UserModel';
-import { useStores, useLegacyStores } from '../../../common/hooks/use-stores';
+import { useStores } from '../../../common/hooks/use-stores';
 
 interface Props {
   navigation: any;
@@ -55,16 +55,7 @@ export const DiscoverySearchList = observer((props: Props) => {
           );
           break;
         case 'group':
-          entity = (
-            <GroupsListItemNew
-              group={row.item}
-              onPress={() =>
-                props.navigation.push('GroupView', {
-                  group: row.item.toPlainObject(),
-                })
-              }
-            />
-          );
+          entity = <GroupsListItem group={row.item} />;
           break;
         default:
           entity = (
