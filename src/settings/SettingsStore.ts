@@ -56,7 +56,9 @@ export class SettingsStore {
     this.useHashtags = data[4][1] === null ? true : data[4][1];
     this.ignoreBestLanguage = data[6][1] || '';
     this.composerMode = data[7][1] || 'photo';
-    this.ignoreOnboarding = data[8][1] ? moment(data[8][1]) : false;
+    this.ignoreOnboarding = data[8][1]
+      ? moment(parseInt(data[8][1], 10))
+      : false;
 
     // set the initial value for hashtag
     getStores().hashtag.setAll(!this.useHashtags);

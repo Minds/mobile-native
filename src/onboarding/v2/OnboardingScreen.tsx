@@ -2,7 +2,7 @@ import { useDimensions } from '@react-native-community/hooks';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { observer, useLocalStore } from 'mobx-react';
 import moment from 'moment-timezone';
-import React, { useCallback, useRef } from 'react';
+import React, { useRef } from 'react';
 import { View, Text } from 'react-native';
 import * as Progress from 'react-native-progress';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -13,7 +13,9 @@ import BottomButtonOptions, {
 import CenteredLoading from '../../common/components/CenteredLoading';
 
 import MenuItem from '../../common/components/menus/MenuItem';
+import { useLegacyStores } from '../../common/hooks/use-stores';
 import i18n from '../../common/services/i18n.service';
+import sessionService from '../../common/services/session.service';
 import SettingsStore from '../../settings/SettingsStore';
 import ThemedStyles from '../../styles/ThemedStyles';
 import useOnboardingProgress, {
@@ -33,10 +35,11 @@ export default observer(function OnboardingScreen() {
   const theme = ThemedStyles.style;
   const { width } = useDimensions().screen;
   const navigation = useNavigation();
+  const { newsfeed } = useLegacyStores();
   const onOnboardingCompleted = (message: string) => {
     setTimeout(() => {
-      navigation.goBack();
-      showNotification(i18n.t(message), 'info');
+      navigation.navigate('Newsfeed');
+      showNotification(i18n.t(message), 'info', 4000);
     }, 300);
   };
   const updateState = (
@@ -45,9 +48,29 @@ export default observer(function OnboardingScreen() {
   ) => {
     if (newData && oldData && newData.id !== oldData.id) {
       onOnboardingCompleted('onboarding.onboardingCompleted');
+      const m = moment().add(2, 'hours');
+      SettingsStore.setIgnoreOnboarding(m);
+      // show old data (initial onboarding)
+      return oldData;
     } else if (newData && newData.is_completed) {
       onOnboardingCompleted('onboarding.improvedExperience');
     }
+
+    // Check for post created locally (the backend check takes too long)
+    if (newData.steps && newData.id === 'InitialOnboardingGroup') {
+      const step = newData.steps.find((s) => s.id === 'CreatePostStep');
+      if (
+        step &&
+        !step.is_completed &&
+        newsfeed.feedStore.entities[0] &&
+        newsfeed.feedStore.entities[0].owner_guid ===
+          sessionService.getUser().guid
+      ) {
+        step.is_completed = true;
+        newData.is_completed = !newData.steps.some((s) => !s.is_completed);
+      }
+    }
+
     return newData;
   };
   const progressStore = useOnboardingProgress(updateState);
@@ -69,12 +92,16 @@ export default observer(function OnboardingScreen() {
       if (progressStore && progressStore.result && !progressStore.loading) {
         progressStore.fetch();
       }
-      // reload in 3 seconds (the post check has some delay)
-      setTimeout(() => {
+      const interval = setInterval(() => {
         if (progressStore && progressStore.result && !progressStore.loading) {
           progressStore.fetch();
         }
       }, 3000);
+      return () => {
+        if (interval) {
+          clearInterval(interval);
+        }
+      };
     }, [progressStore]),
   );
 

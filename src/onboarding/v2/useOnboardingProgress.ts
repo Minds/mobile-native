@@ -29,19 +29,5 @@ export default function useOnboardingProgress(updateState?: any) {
     updateState,
   });
 
-  // setTimeout(() => {
-  //   store.setError(null);
-  //   store.setResult({
-  //     id: 'InitialOnboardingGroup',
-  //     completed_pct: 0.3,
-  //     steps: [
-  //       { id: 'VerifyEmailStep', is_completed: true },
-  //       { id: 'SuggestedHashtagsStep', is_completed: false },
-  //       { id: 'SetupChannelStep', is_completed: false },
-  //       { id: 'VerifyUniqueness', is_completed: false },
-  //       { id: 'CreatePostStep', is_completed: false },
-  //     ],
-  //   });
-  // }, 1000);
   return store;
 }
