@@ -75,8 +75,8 @@ export default class Input extends Component<PropsType> {
   }
 
   componentWillUnmount() {
-    if (this.timeoutCleanup && typeof this.timeoutCleanup === 'function') {
-      this.timeoutCleanup();
+    if (this.timeoutCleanup) {
+      clearTimeout(this.timeoutCleanup);
     }
   }
 

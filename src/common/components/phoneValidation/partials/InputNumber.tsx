@@ -30,8 +30,8 @@ const InputNumber = observer(({ localStore, ...props }: PropsType) => {
       }, 300);
     }
     return () => {
-      if (timeoutCleanup && typeof timeoutCleanup === 'function') {
-        timeoutCleanup();
+      if (timeoutCleanup) {
+        clearTimeout(timeoutCleanup);
       }
       localStore.setPhoneInputRef(null);
     };
