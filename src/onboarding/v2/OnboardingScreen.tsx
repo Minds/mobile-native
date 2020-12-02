@@ -2,10 +2,11 @@ import { useDimensions } from '@react-native-community/hooks';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { observer, useLocalStore } from 'mobx-react';
 import moment from 'moment-timezone';
-import React, { useRef } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { View, Text } from 'react-native';
 import * as Progress from 'react-native-progress';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { showNotification } from '../../../AppMessages';
 import BottomButtonOptions, {
   ItemType,
 } from '../../common/components/BottomButtonOptions';
@@ -15,7 +16,9 @@ import MenuItem from '../../common/components/menus/MenuItem';
 import i18n from '../../common/services/i18n.service';
 import SettingsStore from '../../settings/SettingsStore';
 import ThemedStyles from '../../styles/ThemedStyles';
-import useOnboardingProgress from './useOnboardingProgress';
+import useOnboardingProgress, {
+  OnboardingGroupState,
+} from './useOnboardingProgress';
 
 type StepDefinition = {
   screen: string;
@@ -30,7 +33,19 @@ export default observer(function OnboardingScreen() {
   const theme = ThemedStyles.style;
   const { width } = useDimensions().screen;
   const navigation = useNavigation();
-  const progressStore = useOnboardingProgress();
+  const updateState = useCallback(
+    (newData: OnboardingGroupState, oldData: OnboardingGroupState) => {
+      if (newData && oldData && newData.id !== oldData.id) {
+        setTimeout(() => {
+          navigation.goBack();
+          showNotification(i18n.t('onboarding.onboardingCompleted'), 'info');
+        }, 300);
+      }
+      return newData;
+    },
+    [navigation],
+  );
+  const progressStore = useOnboardingProgress(updateState);
 
   const store = useLocalStore(() => ({
     showMenu: false,
@@ -57,6 +72,15 @@ export default observer(function OnboardingScreen() {
       }, 3000);
     }, [progressStore]),
   );
+
+  // if completed go back to newsfeed
+  if (
+    progressStore &&
+    progressStore.result &&
+    progressStore.result.is_completed
+  ) {
+    navigation.goBack();
+  }
 
   const stepsMapping: { [name: string]: StepDefinition } = useRef({
     VerifyEmailStep: {

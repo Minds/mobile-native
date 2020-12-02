@@ -677,7 +677,8 @@
     "sent": "Verification code sent to",
     "connectWallet": "Connect Wallet",
     "connectBank": "Connect Bank",
-    "buyTokens": "Buy Tokens"
+    "buyTokens": "Buy Tokens",
+    "onboardingCompleted": "Now you can earn tokens"
   },
   "membership": {
     "noTokens": "It doesn't accept Tokens",
