@@ -1,5 +1,5 @@
 import { observer, useLocalStore } from 'mobx-react';
-import React, { useMemo } from 'react';
+import React, { useRef } from 'react';
 import {
   Image,
   ImageSourcePropType,
@@ -8,8 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import * as Progress from 'react-native-progress';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Button from '../../../common/components/Button';
 import InputContainer from '../../../common/components/InputContainer';
@@ -25,6 +24,8 @@ import BottomButtonOptions, {
   ItemType,
 } from '../../../common/components/BottomButtonOptions';
 import { showNotification } from '../../../../AppMessages';
+import sessionService from '../../../common/services/session.service';
+import { DotIndicator } from 'react-native-reanimated-indicators';
 const TouchableCustom = withPreventDoubleTap(TouchableOpacity);
 
 /**
@@ -35,8 +36,10 @@ export default observer(function SetupChannelScreen() {
   const user = useCurrentUser();
 
   const hasAvatar = user?.hasAvatar();
-  const avatar = user?.getAvatarSource() as ImageSourcePropType;
   const channelStore = useLocalStore(createChannelStore);
+  const avatar = (channelStore.uploading
+    ? { uri: channelStore.avatarPath }
+    : user?.getAvatarSource()) as ImageSourcePropType;
 
   const store = useLocalStore(() => ({
     name: user?.name || '',
@@ -71,36 +74,33 @@ export default observer(function SetupChannelScreen() {
     },
   }));
 
-  const avatarOptions: Array<Array<ItemType>> = useMemo(
-    () => [
-      [
-        {
-          title: i18n.t('takePhoto'),
-          titleStyle: theme.fontXXL,
-          onPress: () => {
-            channelStore.upload('avatar', true);
-            store.hidePicker();
-          },
+  const avatarOptions: Array<Array<ItemType>> = useRef([
+    [
+      {
+        title: i18n.t('takePhoto'),
+        titleStyle: theme.fontXXL,
+        onPress: async () => {
+          await channelStore.upload('avatar', true, () => store.hidePicker());
+          await sessionService.loadUser();
         },
-        {
-          title: i18n.t('uploadPhoto'),
-          titleStyle: theme.fontXXL,
-          onPress: () => {
-            channelStore.upload('avatar', false);
-            store.hidePicker();
-          },
+      },
+      {
+        title: i18n.t('uploadPhoto'),
+        titleStyle: theme.fontXXL,
+        onPress: async () => {
+          await channelStore.upload('avatar', false, () => store.hidePicker());
+          await sessionService.loadUser();
         },
-      ],
-      [
-        {
-          title: i18n.t('cancel'),
-          titleStyle: theme.colorSecondaryText,
-          onPress: store.hidePicker,
-        },
-      ],
+      },
     ],
-    [theme.fontXXL, theme.colorSecondaryText, store, channelStore],
-  );
+    [
+      {
+        title: i18n.t('cancel'),
+        titleStyle: theme.colorSecondaryText,
+        onPress: store.hidePicker,
+      },
+    ],
+  ]).current;
 
   return (
     <ModalContainer
@@ -158,25 +158,22 @@ export default observer(function SetupChannelScreen() {
                   styles.avatar,
                   theme.centered,
                 ]}>
-                <Icon
-                  name="add-sharp"
-                  size={32}
-                  style={[
-                    theme.centered,
-                    hasAvatar ? styles.icon : theme.colorBackgroundPrimary,
-                  ]}
-                />
+                {!channelStore.uploading && (
+                  <Icon
+                    name="add"
+                    size={32}
+                    style={
+                      hasAvatar ? styles.icon : theme.colorBackgroundPrimary
+                    }
+                  />
+                )}
               </View>
               {channelStore.uploading && channelStore.avatarProgress ? (
-                <View
-                  style={[
-                    styles.tapOverlayView,
-                    styles.avatar,
-                    styles.progress,
-                  ]}>
-                  <Progress.Pie
-                    progress={channelStore.avatarProgress}
-                    size={36}
+                <View style={[styles.tapOverlayView]}>
+                  <DotIndicator
+                    containerStyle={theme.centered}
+                    color={ThemedStyles.getColor('link')}
+                    scaleEnabled={true}
                   />
                 </View>
               ) : null}
@@ -229,9 +226,6 @@ const styles = StyleSheet.create({
     height: 70,
     width: 70,
     borderRadius: 35,
-  },
-  progress: {
-    opacity: 0.8,
   },
   overlay: {
     position: 'absolute',

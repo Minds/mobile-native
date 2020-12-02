@@ -55,6 +55,7 @@ const createChannelStore = () => {
     bannerProgress: 0,
     avatarProgress: 0,
     channelSearch: '',
+    avatarPath: '',
     setChannelSearch(channelSearch: string) {
       this.channelSearch = channelSearch;
     },
@@ -268,7 +269,11 @@ const createChannelStore = () => {
      * @param mediaType
      * @param camera
      */
-    async upload(type: channelMediaType, camera = false) {
+    async upload(
+      type: channelMediaType,
+      camera = false,
+      onImageSelected?: (customImagePromise) => void,
+    ) {
       const isBanner = type === 'banner';
 
       try {
@@ -288,7 +293,7 @@ const createChannelStore = () => {
               isBanner ? 1500 : 1024,
               isBanner ? 600 : 1024,
             );
-        promise
+        await promise
           .then(async (response: customImagePromise) => {
             let file: CustomImage;
             if (response !== false && !Array.isArray(response)) {
@@ -296,8 +301,12 @@ const createChannelStore = () => {
             } else {
               return false;
             }
+            if (onImageSelected) {
+              onImageSelected(file);
+            }
             this.setIsUploading(true);
             this.setProgress(0, type);
+            this.avatarPath = file.path || file.uri;
             await ChannelService.upload(
               type,
               {
@@ -322,6 +331,7 @@ const createChannelStore = () => {
       } catch (error) {
         this.setProgress(0, type);
         this.setIsUploading(false);
+        this.avatarPath = '';
         throw error;
       }
     },

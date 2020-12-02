@@ -1,5 +1,6 @@
 //@ts-nocheck
 import { observable, action } from 'mobx';
+import moment, { Moment } from 'moment-timezone';
 
 import storageService from '../common/services/storage.service';
 import { getStores } from '../../AppStores';
@@ -12,6 +13,7 @@ export class SettingsStore {
   @observable appLog = true;
   @observable leftHanded = null;
   @observable ignoreBestLanguage = '';
+  @observable ignoreOnboarding: Moment | false = false;
 
   consumerNsfw = [];
   creatorNsfw = [];
@@ -33,6 +35,7 @@ export class SettingsStore {
       'Theme',
       'IgnoreBestLanguage',
       'ComposerMode',
+      'IgnoreOnboarding',
     ]);
 
     // store theme changes
@@ -53,6 +56,7 @@ export class SettingsStore {
     this.useHashtags = data[4][1] === null ? true : data[4][1];
     this.ignoreBestLanguage = data[6][1] || '';
     this.composerMode = data[7][1] || 'photo';
+    this.ignoreOnboarding = data[8][1] ? moment(data[8][1]) : false;
 
     // set the initial value for hashtag
     getStores().hashtag.setAll(!this.useHashtags);
@@ -120,6 +124,19 @@ export class SettingsStore {
   setUseHashtags(value) {
     storageService.setItem('UseHashtags', value);
     this.useHashtags = value;
+  }
+
+  /**
+   *
+   * @param value moment | false
+   */
+  @action
+  setIgnoreOnboarding(value: Moment | false) {
+    storageService.setItem(
+      'IgnoreOnboarding',
+      value ? value.format('x') : false,
+    );
+    this.ignoreOnboarding = value;
   }
 }
 export default new SettingsStore();

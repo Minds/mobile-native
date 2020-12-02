@@ -84,6 +84,16 @@ export default class ExplicitText extends Component<PropsType, StateType> {
       message = '';
     }
 
+    // remove xml tags
+    if (entity.type === 'object' && entity.subtype === 'video') {
+      if (title.length) {
+        title = title.replace(/<[^>]*>/g, '');
+      }
+      if (message.length) {
+        message = message.replace(/<[^>]*>/g, '');
+      }
+    }
+
     let body: Element | null = null;
     let moreLess: JSX.Element | null = null;
     let explicitToggle = null;
@@ -123,20 +133,21 @@ export default class ExplicitText extends Component<PropsType, StateType> {
       </Tags>
     ) : null;
 
+    const paywalled = !!entity.paywall && !entity.isOwner();
+
     return (
-      <View
-        style={[styles.container, !!entity.paywall ? styles.paywalled : null]}>
+      <View style={[styles.container, paywalled ? styles.paywalled : null]}>
         {titleCmp}
         {body}
         {moreLess}
         {explicitToggle}
-        {!!entity.paywall && this.renderGradient()}
+        {paywalled && this.renderGradient()}
       </View>
     );
   }
 
   renderGradient() {
-    const backgroundColor = ThemedStyles.getColor('secondary_background');
+    const backgroundColor = ThemedStyles.getColor('primary_background');
     const startColor = backgroundColor + '00';
     const endColor = backgroundColor + 'FF';
     return (

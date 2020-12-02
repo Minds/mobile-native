@@ -80,6 +80,7 @@ export default class ActivityModel extends BaseModel {
   attachments?: {
     attachment_guid: string;
   };
+  type?: string;
   permaweb_id?: string;
   remind_deleted?: boolean;
   remind_users?: Array<UserModel>;

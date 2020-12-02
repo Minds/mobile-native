@@ -40,7 +40,7 @@ type PropsType = {
 const bannerAspectRatio = 2.9;
 const { width } = Dimensions.get('window');
 const bannerHeight = width / bannerAspectRatio;
-const avatarSize = Math.round(0.7 * bannerHeight);
+const avatarSize = Math.min(180, Math.round(0.7 * bannerHeight));
 
 /**
  * Channel Header
@@ -304,7 +304,7 @@ const styles = StyleSheet.create({
     elevation: 10,
     width: avatarSize + 6,
     height: avatarSize + 6,
-    borderRadius: 53,
+    borderRadius: (avatarSize + 6) / 2,
     zIndex: 10000,
     shadowOpacity: 0.5,
     shadowRadius: 3,
@@ -314,7 +314,7 @@ const styles = StyleSheet.create({
   avatar: {
     width: avatarSize,
     height: avatarSize,
-    borderRadius: 50,
+    borderRadius: avatarSize / 2,
   },
   tapOverlayView: {
     position: 'absolute',

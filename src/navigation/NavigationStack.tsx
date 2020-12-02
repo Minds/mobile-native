@@ -245,11 +245,6 @@ export const InternalStack = () => {
         options={WalletOptions}
       />
       <InternalStackNav.Screen
-        name="BoostConsole"
-        component={BoostConsoleScreen}
-        options={hideHeader}
-      />
-      <InternalStackNav.Screen
         name="GroupsList"
         component={GroupsListScreen}
         options={{ title: i18n.t('discovery.groups') }}
@@ -518,6 +513,11 @@ const AppStack = function () {
         options={{ title: i18n.t('settings.referrals') }}
       />
       <AppStackNav.Screen
+        name="BoostConsole"
+        component={BoostConsoleScreen}
+        options={{ title: i18n.t('boost') }}
+      />
+      <AppStackNav.Screen
         name="Other"
         component={OtherScreen}
         options={{ title: i18n.t('settings.other') }}
@@ -630,6 +630,7 @@ const RootStack = function (props) {
     <RootStackNav.Navigator
       initialRouteName={initial}
       mode="modal"
+      keyboardHandlingEnabled={false}
       // @ts-ignore
       screenOptions={{
         headerShown: false,

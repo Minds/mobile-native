@@ -49,7 +49,7 @@ export default class BoxShadow extends Component<PropsType> {
         opacity = 1,
         x = 0,
         y = 0,
-        style = {},
+        style,
       },
       children,
     } = this.props;

@@ -125,22 +125,6 @@ const getOptionsList = (navigation) => {
           });
         },
       },
-      {
-        name: i18n.t('boost'),
-        icon: (
-          <Icon
-            name="trending-up"
-            size={ICON_SIZE}
-            style={[theme.colorIcon, styles.icon]}
-          />
-        ),
-        onPress: () => {
-          navigation.navigate('Tabs', {
-            screen: 'CaptureTab',
-            params: { screen: 'BoostConsole' },
-          });
-        },
-      },
     ];
   }
 

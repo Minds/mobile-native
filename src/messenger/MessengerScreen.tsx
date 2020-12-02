@@ -104,15 +104,6 @@ class MessengerScreen extends Component {
             <Text style={ComponentsStyle.emptyComponentMessage}>
               {i18n.t('messenger.noMessages')}
             </Text>
-            <Text
-              style={ComponentsStyle.emptyComponentLink}
-              onPress={() =>
-                this.props.navigation.navigate('Discovery', {
-                  type: 'channels',
-                })
-              }>
-              {i18n.t('findChannels')}
-            </Text>
           </View>
         </View>
       );
