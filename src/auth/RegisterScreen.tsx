@@ -153,6 +153,7 @@ export default observer(function RegisterScreen(props: PropsType) {
       store.exclusivePromotions = !store.exclusivePromotions;
     },
     emailInputBlur() {
+      store.email = store.email.trim();
       if (!validatorService.email(store.email)) {
         this.showErrors = true;
       }
