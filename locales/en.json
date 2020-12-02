@@ -678,7 +678,8 @@
     "connectWallet": "Connect Wallet",
     "connectBank": "Connect Bank",
     "buyTokens": "Buy Tokens",
-    "onboardingCompleted": "Now you can earn tokens"
+    "onboardingCompleted": "Now you can earn tokens",
+    "improvedExperience": "Your feed should be livelier!"
   },
   "membership": {
     "noTokens": "It doesn't accept Tokens",

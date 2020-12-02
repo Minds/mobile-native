@@ -33,17 +33,25 @@ export default observer(function OnboardingScreen() {
   const theme = ThemedStyles.style;
   const { width } = useDimensions().screen;
   const navigation = useNavigation();
+  const onOnboardingCompleted = useCallback(
+    (message: string) => {
+      setTimeout(() => {
+        navigation.goBack();
+        showNotification(i18n.t(message), 'info');
+      }, 300);
+    },
+    [navigation],
+  );
   const updateState = useCallback(
     (newData: OnboardingGroupState, oldData: OnboardingGroupState) => {
       if (newData && oldData && newData.id !== oldData.id) {
-        setTimeout(() => {
-          navigation.goBack();
-          showNotification(i18n.t('onboarding.onboardingCompleted'), 'info');
-        }, 300);
+        onOnboardingCompleted('onboarding.onboardingCompleted');
+      } else if (newData && newData.is_completed) {
+        onOnboardingCompleted('onboarding.improvedExperience');
       }
       return newData;
     },
-    [navigation],
+    [onOnboardingCompleted],
   );
   const progressStore = useOnboardingProgress(updateState);
 
@@ -72,15 +80,6 @@ export default observer(function OnboardingScreen() {
       }, 3000);
     }, [progressStore]),
   );
-
-  // if completed go back to newsfeed
-  if (
-    progressStore &&
-    progressStore.result &&
-    progressStore.result.is_completed
-  ) {
-    navigation.goBack();
-  }
 
   const stepsMapping: { [name: string]: StepDefinition } = useRef({
     VerifyEmailStep: {
