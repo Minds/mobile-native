@@ -118,7 +118,7 @@ export const Topbar = observer((props: PropsType) => {
 
 export default Topbar;
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   container: {
     height: Platform.select({ ios: 110, android: 70 }),
     display: 'flex',
