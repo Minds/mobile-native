@@ -9,13 +9,14 @@ import ChannelBadges from '../../badges/ChannelBadges';
 import CenteredLoading from '../../../common/components/CenteredLoading';
 import abbrev from '../../../common/helpers/abbrev';
 import SocialLinks from '../../../common/components/SocialLinks';
+import Tags from '../../../common/components/Tags';
 
 type PropsType = {
   store: ChannelStoreType;
   navigation: any;
 };
 
-const AboutTab = observer(({ store }: PropsType) => {
+const AboutTab = observer(({ store, navigation }: PropsType) => {
   const theme = ThemedStyles.style;
   const localStore = useLocalStore(() => ({
     groupCount: 0,
@@ -50,7 +51,7 @@ const AboutTab = observer(({ store }: PropsType) => {
   return (
     <View style={[theme.paddingLeft4x, theme.paddingTop2x]}>
       <LabeledComponent label={i18n.t('channel.edit.bio')}>
-        <Text>{store.channel?.briefdescription}</Text>
+        <Tags navigation={navigation}>{store.channel?.briefdescription}</Tags>
       </LabeledComponent>
       <LabeledComponent
         label={i18n.t('channel.edit.hashtags')}
