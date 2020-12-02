@@ -4,150 +4,33 @@ exports[`activity metrics component renders correctly 1`] = `
 <View
   style={
     Array [
-      Object {
-        "flexDirection": "row",
-        "justifyContent": "center",
-      },
+      undefined,
+      undefined,
     ]
   }
 >
+  <Text
+    style={
+      Array [
+        undefined,
+        undefined,
+        undefined,
+      ]
+    }
+  >
+    20 Views · 
+    3 years ago
+  </Text>
   <View
     style={
       Array [
         Object {
+          "alignItems": "center",
           "flexDirection": "row",
-          "justifyContent": "flex-start",
-        },
-        Object {
-          "borderRadius": 8,
-        },
-        Object {
-          "borderWidth": 1,
-        },
-        Object {
-          "borderWidth": 0.5,
-        },
-        Object {
-          "borderColor": "#cccccc",
-        },
-        Object {
-          "paddingLeft": 5,
-        },
-        Object {
-          "paddingRight": 5,
         },
         undefined,
-        Object {
-          "borderBottomLeftRadius": 0,
-          "borderBottomRightRadius": 0,
-          "borderBottomWidth": 0,
-          "paddingVertical": 2,
-        },
       ]
     }
-  >
-    <View
-      style={
-        Array [
-          Object {
-            "flexDirection": "row",
-            "justifyContent": "center",
-          },
-          Object {
-            "alignItems": "center",
-          },
-        ]
-      }
-    >
-      <Text
-        style={
-          Object {
-            "alignItems": "center",
-            "fontSize": 11,
-          }
-        }
-      >
-        2e-17
-         
-        <Text
-          allowFontScaling={false}
-          style={
-            Array [
-              Object {
-                "color": undefined,
-                "fontSize": 12,
-              },
-              undefined,
-              Object {
-                "fontFamily": "Ionicons",
-                "fontStyle": "normal",
-                "fontWeight": "normal",
-              },
-              Object {},
-            ]
-          }
-        >
-          
-        </Text>
-      </Text>
-    </View>
-    <View
-      style={
-        Array [
-          Object {
-            "flexDirection": "row",
-            "justifyContent": "center",
-          },
-          Object {
-            "alignItems": "center",
-          },
-        ]
-      }
-    >
-      <Text
-        style={
-          Array [
-            Object {
-              "alignItems": "center",
-              "fontSize": 11,
-            },
-          ]
-        }
-      >
-         · 
-      </Text>
-      <Text
-        style={
-          Object {
-            "alignItems": "center",
-            "fontSize": 11,
-          }
-        }
-      >
-        20
-         
-        <Text
-          allowFontScaling={false}
-          style={
-            Array [
-              Object {
-                "color": undefined,
-                "fontSize": 12,
-              },
-              undefined,
-              Object {
-                "fontFamily": "Material Design Icons",
-                "fontStyle": "normal",
-                "fontWeight": "normal",
-              },
-              Object {},
-            ]
-          }
-        >
-          󰈈
-        </Text>
-      </Text>
-    </View>
-  </View>
+  />
 </View>
 `;
