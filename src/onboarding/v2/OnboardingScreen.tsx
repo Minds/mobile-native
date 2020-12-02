@@ -33,26 +33,23 @@ export default observer(function OnboardingScreen() {
   const theme = ThemedStyles.style;
   const { width } = useDimensions().screen;
   const navigation = useNavigation();
-  const onOnboardingCompleted = useCallback(
-    (message: string) => {
-      setTimeout(() => {
-        navigation.goBack();
-        showNotification(i18n.t(message), 'info');
-      }, 300);
-    },
-    [navigation],
-  );
-  const updateState = useCallback(
-    (newData: OnboardingGroupState, oldData: OnboardingGroupState) => {
-      if (newData && oldData && newData.id !== oldData.id) {
-        onOnboardingCompleted('onboarding.onboardingCompleted');
-      } else if (newData && newData.is_completed) {
-        onOnboardingCompleted('onboarding.improvedExperience');
-      }
-      return newData;
-    },
-    [onOnboardingCompleted],
-  );
+  const onOnboardingCompleted = (message: string) => {
+    setTimeout(() => {
+      navigation.goBack();
+      showNotification(i18n.t(message), 'info');
+    }, 300);
+  };
+  const updateState = (
+    newData: OnboardingGroupState,
+    oldData: OnboardingGroupState,
+  ) => {
+    if (newData && oldData && newData.id !== oldData.id) {
+      onOnboardingCompleted('onboarding.onboardingCompleted');
+    } else if (newData && newData.is_completed) {
+      onOnboardingCompleted('onboarding.improvedExperience');
+    }
+    return newData;
+  };
   const progressStore = useOnboardingProgress(updateState);
 
   const store = useLocalStore(() => ({
