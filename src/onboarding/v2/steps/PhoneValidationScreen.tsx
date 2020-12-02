@@ -77,6 +77,7 @@ export default observer(function PhoneValidationScreen() {
               inputWrapperStyle={styles.inputWrapperStyle}
               localStore={phoneValidationStore}
               bottomStore={true}
+              autoFocus
             />
           </LabeledComponent>
           <View
