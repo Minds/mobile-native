@@ -43,6 +43,8 @@ import {
 } from 'react-native-gesture-handler';
 import ActivityIndicator from '../common/components/ActivityIndicator';
 import KeyboardSpacingView from '../common/components/KeyboardSpacingView';
+import storageService from '../common/services/storage.service';
+import debounce from '../common/helpers/debounce';
 
 const TouchableOpacity =
   Platform.OS === 'ios' ? TouchableOpacityIos : TouchableOpacityAndroid;
@@ -71,10 +73,17 @@ type StateType = {
   };
 };
 
+type SavedTextInput = {
+  parentPath: string;
+  text: string;
+};
+
 const isIOS = Platform.OS === 'ios';
 const inputStyle = isIOS
   ? { marginTop: 3, paddingVertical: 2 }
   : { marginTop: 2, paddingVertical: 2 };
+
+const SAVED_INPUT_KEY = 'commentListTextInput';
 
 /**
  * Comment List Component
@@ -124,6 +133,7 @@ class CommentList extends React.Component<PropsType, StateType> {
       this._keyboardDidHide,
     );
     this.props.store.setEntity(this.props.entity);
+    this.loadSavedInput();
     this.loadComments();
   }
 
@@ -146,7 +156,22 @@ class CommentList extends React.Component<PropsType, StateType> {
     Keyboard.dismiss();
     if (!store.saving) {
       await store.post(this.props.entity);
+      storageService.removeItem(SAVED_INPUT_KEY);
       if (!this.props.parent) this.scrollToBottom();
+    }
+  };
+
+  loadSavedInput = async () => {
+    if (this.props.store) {
+      const savedText: SavedTextInput = await storageService.getItem(
+        SAVED_INPUT_KEY,
+      );
+      if (
+        savedText &&
+        this.props.store.getParentPath() === savedText.parentPath
+      ) {
+        this.setText(savedText.text);
+      }
     }
   };
 
@@ -221,6 +246,12 @@ class CommentList extends React.Component<PropsType, StateType> {
    */
   setText = (text: string) => {
     this.props.store.setText(text);
+    debounce(async () => {
+      storageService.setItem(SAVED_INPUT_KEY, {
+        parentPath: this.props.store.getParentPath(),
+        text,
+      });
+    }, 400)();
   };
 
   /**
