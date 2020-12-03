@@ -195,10 +195,6 @@ class ApiService {
   async post<T extends ApiResponse>(url: string, body: any = {}): Promise<T> {
     const headers = this.buildHeaders();
 
-    if (MINDS_STAGING) {
-      body.staging = '1';
-    }
-
     let response = await abortableFetch(MINDS_API_URI + this.buildUrl(url), {
       method: 'POST',
       body: JSON.stringify(body),
@@ -217,10 +213,6 @@ class ApiService {
   async put<T extends ApiResponse>(url: string, body: any = {}): Promise<T> {
     const headers = this.buildHeaders();
 
-    if (MINDS_STAGING) {
-      body.staging = '1';
-    }
-
     let response = await abortableFetch(MINDS_API_URI + this.buildUrl(url), {
       method: 'PUT',
       body: JSON.stringify(body),
@@ -238,10 +230,6 @@ class ApiService {
    */
   async delete<T extends ApiResponse>(url: string, body: any = {}): Promise<T> {
     const headers = this.buildHeaders();
-
-    if (MINDS_STAGING) {
-      body.staging = '1';
-    }
 
     let response = await abortableFetch(MINDS_API_URI + this.buildUrl(url), {
       method: 'DELETE',
@@ -314,10 +302,6 @@ class ApiService {
   ) {
     var formData = new FormData();
     formData.append('file', file);
-
-    if (MINDS_STAGING) {
-      data.staging = '1';
-    }
 
     for (var key in data) {
       formData.append(key, data[key]);
