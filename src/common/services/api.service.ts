@@ -139,12 +139,16 @@ class ApiService {
    * @param {string} url
    * @param {any} params
    */
-  buildUrl(url, params = {}) {
+  buildUrl(url, params: any = {}) {
     if (!params) {
       params = {};
     }
 
-    params['cb'] = Date.now(); //bust the cache every time
+    params.cb = Date.now(); //bust the cache every time
+
+    if (MINDS_STAGING) {
+      params.staging = '1';
+    }
 
     const paramsString = this.getParamsString(params);
     const sep = url.indexOf('?') > -1 ? '&' : '?';
@@ -188,11 +192,12 @@ class ApiService {
    * @param {string} url
    * @param {object} body
    */
-  async post<T extends ApiResponse>(
-    url: string,
-    body: object = {},
-  ): Promise<T> {
+  async post<T extends ApiResponse>(url: string, body: any = {}): Promise<T> {
     const headers = this.buildHeaders();
+
+    if (MINDS_STAGING) {
+      body.staging = '1';
+    }
 
     let response = await abortableFetch(MINDS_API_URI + this.buildUrl(url), {
       method: 'POST',
@@ -209,8 +214,12 @@ class ApiService {
    * @param {string} url
    * @param {object} body
    */
-  async put<T extends ApiResponse>(url: string, body: object = {}): Promise<T> {
+  async put<T extends ApiResponse>(url: string, body: any = {}): Promise<T> {
     const headers = this.buildHeaders();
+
+    if (MINDS_STAGING) {
+      body.staging = '1';
+    }
 
     let response = await abortableFetch(MINDS_API_URI + this.buildUrl(url), {
       method: 'PUT',
@@ -227,11 +236,12 @@ class ApiService {
    * @param {string} url
    * @param {object} body
    */
-  async delete<T extends ApiResponse>(
-    url: string,
-    body: object = {},
-  ): Promise<T> {
+  async delete<T extends ApiResponse>(url: string, body: any = {}): Promise<T> {
     const headers = this.buildHeaders();
+
+    if (MINDS_STAGING) {
+      body.staging = '1';
+    }
 
     let response = await abortableFetch(MINDS_API_URI + this.buildUrl(url), {
       method: 'DELETE',
@@ -299,11 +309,16 @@ class ApiService {
   upload(
     url: string,
     file: any,
-    data: object | null = null,
+    data: any | null = null,
     progress: (event: Event) => any,
   ) {
     var formData = new FormData();
     formData.append('file', file);
+
+    if (MINDS_STAGING) {
+      data.staging = '1';
+    }
+
     for (var key in data) {
       formData.append(key, data[key]);
     }
