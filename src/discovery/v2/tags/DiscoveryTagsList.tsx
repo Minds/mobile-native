@@ -6,15 +6,14 @@ import {
   StyleSheet,
   SectionList,
   SectionListData,
-  TouchableHighlight,
 } from 'react-native';
 import { ComponentsStyle } from '../../../styles/Components';
 import ThemedStyles from '../../../styles/ThemedStyles';
-import { Icon } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import DiscoveryV2Store, { TDiscoveryTagsTag } from '../DiscoveryV2Store';
 import i18n from '../../../common/services/i18n.service';
+import MenuItem from '../../../common/components/menus/MenuItem';
 
 interface Props {
   type: 'your' | 'trending';
@@ -37,13 +36,6 @@ export const DiscoveryTagsList = observer(({ plus, store, type }: Props) => {
     store.loadTags(plus);
   }, [store, plus]);
 
-  const onPress = (data): void => {
-    navigation.push('DiscoverySearch', {
-      query: '#' + data.value,
-      plus: plus,
-    });
-  };
-
   const EmptyPartial = () => {
     return store.loading || store.refreshing ? (
       <View />
@@ -60,31 +52,42 @@ export const DiscoveryTagsList = observer(({ plus, store, type }: Props) => {
     );
   };
 
-  const ItemPartial = ({ item, index }) => {
+  const renderItem = ({ item }) => {
+    const theme = ThemedStyles.style;
+    let postsCount = item.posts_count
+      ? `${item.posts_count} ${i18n.t('discovery.posts')}`
+      : '';
+    const votesCount = item.votes_count
+      ? `${item.votes_count} ${i18n.t('discovery.votes')}`
+      : '';
     return (
-      <TouchableHighlight
-        underlayColor="transparent"
-        onPress={() => onPress(item)}>
-        <View
-          style={[
-            styles.container,
-            ThemedStyles.style.paddingVertical3x,
-            index === 0 ? ThemedStyles.style.paddingTop0x : null,
-            ThemedStyles.style.borderPrimary,
-            ThemedStyles.style.paddingHorizontal4x,
-          ]}>
-          <View style={[styles.body]}>
-            <Text style={styles.title}>#{item.value}</Text>
-          </View>
-          <Icon
-            type="material-community"
-            color={ThemedStyles.getColor('tertiary_text')}
-            name="chevron-right"
-            size={32}
-            style={styles.centered}
-          />
-        </View>
-      </TouchableHighlight>
+      <MenuItem
+        item={{
+          onPress: () =>
+            navigation.push('DiscoverySearch', {
+              query: '#' + item.value,
+              plus: plus,
+            }),
+          title: (
+            <Text style={styles.title}>
+              #{item.value}
+              {(postsCount !== '' || votesCount !== '') && (
+                <Text
+                  style={[
+                    theme.colorSecondaryText,
+                    theme.fontM,
+                    theme.fontNormal,
+                  ]}>
+                  {`\n${postsCount || ''} ${
+                    postsCount && votesCount ? '·' : ''
+                  } ${votesCount || ''}`}
+                </Text>
+              )}
+            </Text>
+          ),
+        }}
+        containerItemStyle={theme.backgroundPrimary}
+      />
     );
   };
 
@@ -99,9 +102,6 @@ export const DiscoveryTagsList = observer(({ plus, store, type }: Props) => {
           ThemedStyles.style.backgroundPrimary,
           ThemedStyles.style.padding4x,
         ]}>
-        {/* <Text style={[ThemedStyles.style.colorTertiaryText]}>
-          {info.section.title.toUpperCase()}
-        </Text> */}
         <View style={ThemedStyles.style.flexContainer} />
         <Text
           onPress={() => store.setShowManageTags(true)}
@@ -137,7 +137,7 @@ export const DiscoveryTagsList = observer(({ plus, store, type }: Props) => {
   return (
     <View style={ThemedStyles.style.flexContainer}>
       <SectionList
-        renderItem={ItemPartial}
+        renderItem={renderItem}
         renderSectionHeader={SectionHeaderPatrial}
         ListEmptyComponent={EmptyPartial}
         onRefresh={onRefresh}
@@ -164,7 +164,6 @@ const styles = StyleSheet.create({
   centered: {
     alignSelf: 'center',
   },
-  body: { flex: 1, paddingRight: 10 },
   title: {
     fontWeight: 'bold',
     fontSize: 16,
@@ -172,5 +171,8 @@ const styles = StyleSheet.create({
   thumbnail: {
     width: 100,
     height: 100,
+  },
+  newLine: {
+    fontSize: 5,
   },
 });
