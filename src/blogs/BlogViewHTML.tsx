@@ -172,7 +172,7 @@ export default class BlogViewHTML extends PureComponent {
     style: {
       height: Dimensions.get('window').height,
       flex: 0,
-      opacity: 0,
+      //opacity: 0, removed for https://gitlab.com/minds/mobile-native/-/issues/2878
     },
     html: { html: '' },
   };
