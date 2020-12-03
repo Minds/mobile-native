@@ -18,8 +18,7 @@ import {
 
 import ExplicitImage from './explicit/ExplicitImage';
 import domain from '../helpers/domain';
-import MindsVideo from '../../media/MindsVideo';
-import MindsVideoV2 from '../../media/v2/mindsVideo/MindsVideo';
+import MindsVideo from '../../media/v2/mindsVideo/MindsVideo';
 import mediaProxyUrl from '../helpers/media-proxy-url';
 import download from '../services/download.service';
 
@@ -31,7 +30,6 @@ import { showMessage } from 'react-native-flash-message';
 import Colors from '../../styles/Colors';
 import type ActivityModel from 'src/newsfeed/ActivityModel';
 import { MindsVideoStoreType } from '../../media/v2/mindsVideo/createMindsVideoStore';
-import featuresService from '../services/features.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 
 type PropsType = {
@@ -121,20 +119,13 @@ export default class MediaView extends Component<PropsType> {
       aspectRatio = this.state.width / this.state.height;
     }
 
-    const MindsVideoComponent = featuresService.has('mindsVideo-2020') ? (
-      <MindsVideoV2
+    const MindsVideoComponent = (
+      <MindsVideo
         entity={this.props.entity}
         onStoreCreated={(store: MindsVideoStoreType) =>
           (this.videoPlayer = store)
         }
         hideOverlay={this.props.hideOverlay}
-      />
-    ) : (
-      <MindsVideo
-        entity={this.props.entity}
-        ref={(o) => {
-          this.videoPlayer = o;
-        }}
       />
     );
 

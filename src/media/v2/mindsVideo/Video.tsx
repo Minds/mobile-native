@@ -44,6 +44,7 @@ const ExpoVideo = observer(
         onPlaybackStatusUpdate={localStore.updatePlaybackCallback}
         onLoadStart={localStore.onLoadStart}
         onLoad={localStore.onVideoLoad}
+        shouldPlay={!localStore.paused}
         onError={localStore.onError}
         source={source}
         usePoster={!!thumb_uri}
@@ -53,7 +54,7 @@ const ExpoVideo = observer(
         useNativeControls={false}
         style={theme.flexContainer}
         ref={playbackObject}
-        volume={localStore.initialVolume || 0}
+        volume={localStore.volume}
         onReadyForDisplay={onReadyForDisplay}
       />
     );
