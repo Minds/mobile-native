@@ -69,17 +69,21 @@ export const DiscoveryTagsList = observer(({ plus, store, type }: Props) => {
               plus: plus,
             }),
           title: (
-            <View style={[theme.flexColumn, theme.paddingRight2x]}>
-              <Text style={styles.title}>#{item.value}</Text>
+            <Text style={styles.title}>
+              #{item.value}
               {(postsCount !== '' || votesCount !== '') && (
-                <Text style={styles.newLine} />
+                <Text
+                  style={[
+                    theme.colorSecondaryText,
+                    theme.fontM,
+                    theme.fontNormal,
+                  ]}>
+                  {`\n${postsCount || ''} ${
+                    postsCount && votesCount ? '·' : ''
+                  } ${votesCount || ''}`}
+                </Text>
               )}
-              <Text style={[theme.colorSecondaryText, theme.fontM]}>
-                {`${postsCount || ''} ${postsCount && votesCount ? '·' : ''} ${
-                  votesCount || ''
-                }`}
-              </Text>
-            </View>
+            </Text>
           ),
         }}
         containerItemStyle={theme.backgroundPrimary}
