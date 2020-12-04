@@ -19,6 +19,7 @@ export class SettingsStore {
   creatorNsfw = [];
   useHashtag = true;
   composerMode = 'photo';
+  swipeAnimShown = false;
 
   /**
    * Initializes local variables with their correct values as stored locally.
@@ -36,6 +37,7 @@ export class SettingsStore {
       'IgnoreBestLanguage',
       'ComposerMode',
       'IgnoreOnboarding',
+      'SwipeAnimShown',
     ]);
 
     // store theme changes
@@ -59,6 +61,8 @@ export class SettingsStore {
     this.ignoreOnboarding = data[8][1]
       ? moment(parseInt(data[8][1], 10))
       : false;
+
+    this.swipeAnimShown = data[9][1];
 
     // set the initial value for hashtag
     getStores().hashtag.setAll(!this.useHashtags);
@@ -111,6 +115,14 @@ export class SettingsStore {
   setLeftHanded(value) {
     storageService.setItem('LeftHanded', value);
     this.leftHanded = value;
+  }
+  /**
+   * Set swipe animation shown
+   * @param value
+   */
+  setSwipeAnimShown(value: boolean) {
+    storageService.setItem('SwipeAnimShown', value);
+    this.swipeAnimShown = value;
   }
 
   setCreatorNsfw(value) {
