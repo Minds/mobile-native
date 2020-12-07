@@ -27,7 +27,7 @@ export default function formatDate(
 
   switch (format) {
     case 'date':
-      options = 'MMM DD, YYYY';
+      options = 'MMM Do, YYYY';
       break;
     case 'nameDay':
       if (date.isSame(moment().subtract(1, 'day'), 'day')) {
