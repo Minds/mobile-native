@@ -120,7 +120,7 @@ export default class MediaView extends Component<PropsType> {
 
   getVideo() {
     const custom_data = this.props.entity.custom_data;
-    let aspectRatio = 1;
+    let aspectRatio = 16 / 9;
 
     if (custom_data && custom_data.height && custom_data.height !== '0') {
       aspectRatio =
