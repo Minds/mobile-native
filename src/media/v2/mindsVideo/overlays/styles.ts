@@ -1,5 +1,9 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import Colors from '../../../../styles/Colors';
+
+export const iconSize = Platform.select({ ios: 30, android: 26 });
+export const iconResSize = Platform.select({ ios: 28, android: 24 });
+export const playSize = Platform.select({ ios: 58, android: 48 })!;
 
 export const styles = StyleSheet.create({
   overlayContainer: {
@@ -51,5 +55,11 @@ export const styles = StyleSheet.create({
     paddingLeft: 4,
     paddingRight: 4,
     backgroundColor: 'rgba(48,48,48,0.7)',
+  },
+  playContainer: {
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    width: playSize,
+    height: playSize,
+    borderRadius: playSize / 2,
   },
 });

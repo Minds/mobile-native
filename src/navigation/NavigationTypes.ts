@@ -101,6 +101,7 @@ export type AppStackParamList = {
   };
   Main: {};
   Account: {};
+  Network: {};
   Security: {};
   Billing: {};
   Referrals: {};
@@ -111,6 +112,7 @@ export type AppStackParamList = {
   AutoplaySettingsScreen: {};
   SettingsPassword: {};
   SettingsNotifications: {};
+  DataSaverScreen: {};
   BlockedChannels: {};
   TierManagementScreen: {};
   DeleteChannel: {};

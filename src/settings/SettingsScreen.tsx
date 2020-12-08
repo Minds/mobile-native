@@ -30,6 +30,11 @@ export default function ({ navigation }) {
       params: {},
     },
     {
+      title: i18n.t('settings.network'),
+      screen: 'Network',
+      params: {},
+    },
+    {
       title: i18n.t('settings.security'),
       screen: 'Security',
       params: {},

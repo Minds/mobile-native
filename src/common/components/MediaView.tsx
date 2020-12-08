@@ -1,38 +1,37 @@
 //@ts-nocheck
+import { observer } from 'mobx-react';
 import React, { Component } from 'react';
 
-import { observer } from 'mobx-react';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import { SharedElement } from 'react-navigation-shared-element';
-
 import {
-  Text,
-  StyleSheet,
-  TouchableOpacity,
   Alert,
-  View,
-  Dimensions,
   Clipboard,
+  Dimensions,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
   ViewStyle,
 } from 'react-native';
-
-import ExplicitImage from './explicit/ExplicitImage';
-import domain from '../helpers/domain';
+import { showMessage } from 'react-native-flash-message';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { SharedElement } from 'react-navigation-shared-element';
+import type ActivityModel from 'src/newsfeed/ActivityModel';
 import MindsVideo from '../../media/MindsVideo';
+import { MindsVideoStoreType } from '../../media/v2/mindsVideo/createMindsVideoStore';
 import MindsVideoV2 from '../../media/v2/mindsVideo/MindsVideo';
+import Colors from '../../styles/Colors';
+import ThemedStyles from '../../styles/ThemedStyles';
+import domain from '../helpers/domain';
 import mediaProxyUrl from '../helpers/media-proxy-url';
+import testID from '../helpers/testID';
 import download from '../services/download.service';
+import featuresService from '../services/features.service';
+import i18n from '../services/i18n.service';
+import logService from '../services/log.service';
 
 import openUrlService from '../services/open-url.service';
-import logService from '../services/log.service';
-import testID from '../helpers/testID';
-import i18n from '../services/i18n.service';
-import { showMessage } from 'react-native-flash-message';
-import Colors from '../../styles/Colors';
-import type ActivityModel from 'src/newsfeed/ActivityModel';
-import { MindsVideoStoreType } from '../../media/v2/mindsVideo/createMindsVideoStore';
-import featuresService from '../services/features.service';
-import ThemedStyles from '../../styles/ThemedStyles';
+
+import ExplicitImage from './explicit/ExplicitImage';
 
 type PropsType = {
   entity: ActivityModel;
@@ -42,6 +41,7 @@ type PropsType = {
   autoHeight?: boolean;
   onPress?: () => void;
   hideOverlay?: boolean;
+  ignoreDataSaver?: boolean;
 };
 /**
  * Activity
@@ -82,7 +82,12 @@ export default class MediaView extends Component<PropsType> {
       case 'image':
       case 'batch':
         source = this.props.entity.getThumbSource('xlarge');
-        return this.getImage(source);
+        return this.getImage(
+          source,
+          // do not show a thumbnail for GIFs
+          !this.props.entity.isGif() &&
+          mediaProxyUrl(source, 30),
+        );
       case 'video':
         return this.getVideo();
     }
@@ -95,9 +100,13 @@ export default class MediaView extends Component<PropsType> {
             : mediaProxyUrl(this.props.entity.thumbnail_src),
       };
 
+      const thumbnail = {
+        uri: mediaProxyUrl(this.props.entity.thumbnail_src, 30),
+      };
+
       return (
         <View style={styles.richMediaContainer}>
-          {source.uri ? this.getImage(source) : null}
+          {source.uri ? this.getImage(source, thumbnail) : null}
           <TouchableOpacity style={styles.richMedia} onPress={this.openLink}>
             <Text style={styles.title}>{title}</Text>
             <Text style={styles.domain}>
@@ -124,6 +133,7 @@ export default class MediaView extends Component<PropsType> {
     const MindsVideoComponent = featuresService.has('mindsVideo-2020') ? (
       <MindsVideoV2
         entity={this.props.entity}
+        ignoreDataSaver={this.props.ignoreDataSaver}
         onStoreCreated={(store: MindsVideoStoreType) =>
           (this.videoPlayer = store)
         }
@@ -132,6 +142,7 @@ export default class MediaView extends Component<PropsType> {
     ) : (
       <MindsVideo
         entity={this.props.entity}
+        ignoreDataSaver={this.props.ignoreDataSaver}
         ref={(o) => {
           this.videoPlayer = o;
         }}
@@ -256,8 +267,9 @@ export default class MediaView extends Component<PropsType> {
   /**
    * Get image with autoheight or Touchable fixed height
    * @param {object} source
+   * @param {object} thumbnail
    */
-  getImage(source) {
+  getImage(source, thumbnail?) {
     this.source = source;
     const autoHeight = this.props.autoHeight;
     const custom_data = this.props.entity.custom_data;
@@ -318,10 +330,11 @@ export default class MediaView extends Component<PropsType> {
           {...testID('Posted Image')}>
           <ExplicitImage
             source={source}
+            thumbnail={thumbnail}
             entity={this.props.entity}
             onLoad={this.onLoadImage}
-            // loadingIndicator="placeholder"
             onError={this.imageError}
+            ignoreDataSaver={this.props.ignoreDataSaver}
           />
         </TouchableOpacity>
       </SharedElement>

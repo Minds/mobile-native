@@ -42,8 +42,17 @@ exports[`Media view component renders correctly 1`] = `
                 Array [
                   "xlarge",
                 ],
+                Array [
+                  "small",
+                ],
               ],
               "results": Array [
+                Object {
+                  "type": "return",
+                  "value": Object {
+                    "uri": "www.something.com",
+                  },
+                },
                 Object {
                   "type": "return",
                   "value": Object {
@@ -54,6 +63,17 @@ exports[`Media view component renders correctly 1`] = `
             },
             "guid": "activityguid0",
             "hasThumbnails": [MockFunction],
+            "isGif": [MockFunction] {
+              "calls": Array [
+                Array [],
+              ],
+              "results": Array [
+                Object {
+                  "type": "return",
+                  "value": false,
+                },
+              ],
+            },
             "mature": false,
             "message": "Message",
             "ownerObj": Object {
@@ -80,6 +100,11 @@ exports[`Media view component renders correctly 1`] = `
         onError={[Function]}
         onLoad={[Function]}
         source={
+          Object {
+            "uri": "www.something.com",
+          }
+        }
+        thumbnail={
           Object {
             "uri": "www.something.com",
           }

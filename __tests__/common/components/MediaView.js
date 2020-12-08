@@ -22,6 +22,8 @@ describe('Media view component', () => {
     entity.getThumbSource.mockReturnValue({ uri: 'www.something.com' });
     entity.hasThumbnails = jest.fn();
     entity.hasThumbnails.mockReturnValue(false);
+    entity.isGif = jest.fn();
+    entity.isGif.mockReturnValue(false);
     screen = shallow(<MediaView entity={entity} />);
   });
 
@@ -47,7 +49,7 @@ describe('Media view component', () => {
     expect(screen.find('ExplicitOverlay')).toHaveLength(0);
   });
 
-  it('sholdnt show overlay if press', async () => {
+  it("shouldn't show overlay if press", async () => {
     let mockResponse = activitiesServiceFaker().load(1);
     entity = mockResponse.activities[0];
     entity.custom_data = [{ height: 50, width: 20 }];

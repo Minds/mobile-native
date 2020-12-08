@@ -10,7 +10,6 @@ import ImageCard from '../media/ImageCard';
 import { Text, StyleSheet, View } from 'react-native';
 
 import Activity from '../newsfeed/activity/Activity';
-import FastImage from 'react-native-fast-image';
 import ActivityModel from '../newsfeed/ActivityModel';
 import BlogModel from '../blogs/BlogModel';
 import UserModel from '../channel/UserModel';

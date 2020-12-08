@@ -13,6 +13,7 @@ import AnalyticsScreen from '../analytics/AnalyticsScreen';
 import LoginScreen from '../auth/LoginScreen';
 import ForgotScreen from '../auth/ForgotScreen';
 import ReferralsScreen from '../referral/ReferralsScreen';
+import DataSaverScreen from '../settings/screens/DataSaverScreen';
 import TabsScreen from '../tabs/TabsScreen';
 import NotificationsScreen from '../notifications/NotificationsScreen';
 import ActivityScreen from '../newsfeed/ActivityScreen';
@@ -185,6 +186,13 @@ const AccountScreenOptions = (navigation) => [
   {
     title: i18n.t('settings.accountOptions.7'),
     onPress: () => navigation.push('AutoplaySettingsScreen'),
+  },
+];
+
+const NetworkScreenOptions = (navigation) => [
+  {
+    title: i18n.t('settings.networkOptions.1'),
+    onPress: () => navigation.push('DataSaverScreen'),
   },
 ];
 
@@ -496,6 +504,14 @@ const AppStack = function () {
         initialParams={{ options: AccountScreenOptions }}
       />
       <AppStackNav.Screen
+        name="Network"
+        component={OptionsDrawer}
+        options={{
+          title: i18n.t('settings.network'),
+        }}
+        initialParams={{ options: NetworkScreenOptions }}
+      />
+      <AppStackNav.Screen
         name="Security"
         component={OptionsDrawer}
         options={{ title: i18n.t('settings.security') }}
@@ -536,6 +552,11 @@ const AppStack = function () {
         name="SettingsNotifications"
         component={NotificationsSettingsScreen}
         options={{ title: i18n.t('settings.pushNotification') }}
+      />
+      <AppStackNav.Screen
+        name="DataSaverScreen"
+        component={DataSaverScreen}
+        options={{ title: i18n.t('settings.networkOptions.1') }}
       />
       <AppStackNav.Screen
         name="BlockedChannels"

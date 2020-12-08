@@ -14,6 +14,7 @@ exports[`Messenger setup component should renders correctly with entity 1`] = `
     ]
   }
 >
+  <View />
   <View
     accessible={true}
     focusable={true}

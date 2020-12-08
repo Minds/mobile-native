@@ -23,6 +23,7 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
     transcoding: false,
     error: false,
     inProgress: false,
+    showThumbnail: true,
     loaded: false,
     video: { uri: '', headers: undefined },
     showOverlay: false,
@@ -56,6 +57,9 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
     },
     setShowOverlay(showOverlay: boolean) {
       this.showOverlay = showOverlay;
+    },
+    setShowThumbnail(showThumbnail: boolean) {
+      this.showThumbnail = showThumbnail;
     },
     setVideo(video: any) {
       this.video = video;
@@ -224,6 +228,7 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
       }
 
       this.setShowOverlay(false);
+      this.setShowThumbnail(false);
 
       if (Array.isArray(this.sources)) {
         this.video = {

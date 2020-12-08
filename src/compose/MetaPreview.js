@@ -10,6 +10,7 @@ import {
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import FastImage from 'react-native-fast-image';
 import { observer } from 'mobx-react';
+import SmartImage from '../../src/common/components/SmartImage';
 
 import ThemedStyles from '../styles/ThemedStyles';
 import mediaProxyUrl from '../common/helpers/media-proxy-url';
@@ -24,8 +25,8 @@ const thumbSize = PixelRatio.getPixelSizeForLayoutSize(imgSize);
  */
 export default observer(function (props) {
   const theme = ThemedStyles.style;
-
   const source = { uri: mediaProxyUrl(props.meta.thumbnail, thumbSize) };
+  const thumbnail = { uri: mediaProxyUrl(props.meta.thumbnail, 30) };
 
   return (
     <View style={[styles.container, theme.paddingHorizontal4x]}>
@@ -43,10 +44,11 @@ export default observer(function (props) {
           theme.borderPrimary,
           theme.borderRadius2x,
         ]}>
-        <FastImage
+        <SmartImage
           style={styles.thumbnail}
           threshold={150}
           source={source}
+          thumbnail={thumbnail}
           resizeMode={FastImage.resizeMode.cover}
         />
         <View style={[styles.metaContainer, theme.padding]}>

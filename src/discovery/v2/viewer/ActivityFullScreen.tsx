@@ -243,7 +243,8 @@ const ActivityFullScreen = observer((props: PropsType) => {
                     ref={mediaRef}
                     entity={entity}
                     navigation={navigation}
-                    autoHeight={true}
+                    autoHeight
+                    ignoreDataSaver
                   />
                 </View>
               ) : (
