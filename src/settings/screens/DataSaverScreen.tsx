@@ -51,7 +51,7 @@ export default observer(function DataSaverScreen() {
                 ? settingsStore.dataSaverModeDisablesOnWiFi
                 : false
             }
-            onPress={setDataSaverModeDisablesOnWiFi}
+            onSyncPress={setDataSaverModeDisablesOnWiFi}
             disabled={!settingsStore.dataSaverMode}
           />
         </View>
