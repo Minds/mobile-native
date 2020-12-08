@@ -85,8 +85,7 @@ export default class MediaView extends Component<PropsType> {
         return this.getImage(
           source,
           // do not show a thumbnail for GIFs
-          !this.props.entity.isGif() &&
-          mediaProxyUrl(source, 30),
+          !this.props.entity.isGif() && mediaProxyUrl(source, 30),
         );
       case 'video':
         return this.getVideo();

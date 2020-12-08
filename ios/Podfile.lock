@@ -243,13 +243,13 @@ PODS:
     - React-cxxreact (= 0.63.3)
     - React-jsi (= 0.63.3)
   - React-jsinspector (0.63.3)
-  - react-native-camera (3.33.0):
+  - react-native-camera (3.39.0):
     - React
-    - react-native-camera/RCT (= 3.33.0)
-    - react-native-camera/RN (= 3.33.0)
-  - react-native-camera/RCT (3.33.0):
+    - react-native-camera/RCT (= 3.39.0)
+    - react-native-camera/RN (= 3.39.0)
+  - react-native-camera/RCT (3.39.0):
     - React
-  - react-native-camera/RN (3.33.0):
+  - react-native-camera/RN (3.39.0):
     - React
   - react-native-cameraroll (1.4.0):
     - React
@@ -342,20 +342,20 @@ PODS:
     - React
   - RNBootSplash (2.2.5):
     - React
-  - RNCAsyncStorage (1.11.0):
+  - RNCAsyncStorage (1.12.0):
     - React
   - RNCMaskedView (0.1.10):
     - React
   - RNConvertPhAsset (1.0.3):
     - React
-  - RNDateTimePicker (2.6.0):
+  - RNDateTimePicker (2.6.2):
     - React
   - RNDeviceInfo (5.6.5):
     - React
-  - RNFastImage (8.0.0):
-    - React
-    - SDWebImage (~> 5.0)
-    - SDWebImageWebPCoder (~> 0.2.3)
+  - RNFastImage (8.3.4):
+    - React-Core
+    - SDWebImage (~> 5.8)
+    - SDWebImageWebPCoder (~> 0.6.1)
   - RNFS (2.16.6):
     - React
   - RNGestureHandler (1.8.0):
@@ -369,7 +369,7 @@ PODS:
     - React-Core
     - React-RCTImage
     - TOCropViewController
-  - RNLocalize (1.4.0):
+  - RNLocalize (1.4.1):
     - React
   - RNPermissions (2.2.0):
     - React
@@ -380,9 +380,9 @@ PODS:
     - React
   - RNScreens (2.15.0):
     - React-Core
-  - RNSentry (1.6.3):
+  - RNSentry (1.7.2):
     - React
-    - Sentry (~> 5.1.8)
+    - Sentry (~> 5.2.0)
   - RNShare (2.0.0):
     - React
   - RNSharedElement (0.7.0):
@@ -393,16 +393,16 @@ PODS:
     - React
   - RNVectorIcons (7.1.0):
     - React
-  - SDWebImage (5.8.4):
-    - SDWebImage/Core (= 5.8.4)
-  - SDWebImage/Core (5.8.4)
-  - SDWebImageWebPCoder (0.2.5):
+  - SDWebImage (5.10.0):
+    - SDWebImage/Core (= 5.10.0)
+  - SDWebImage/Core (5.10.0)
+  - SDWebImageWebPCoder (0.6.1):
     - libwebp (~> 1.0)
-    - SDWebImage/Core (~> 5.0)
-  - Sentry (5.1.10):
-    - Sentry/Core (= 5.1.10)
-  - Sentry/Core (5.1.10)
-  - TOCropViewController (2.5.4)
+    - SDWebImage/Core (~> 5.7)
+  - Sentry (5.2.2):
+    - Sentry/Core (= 5.2.2)
+  - Sentry/Core (5.2.2)
+  - TOCropViewController (2.5.5)
   - UMAppLoader (1.3.0)
   - UMBarCodeScannerInterface (5.3.0)
   - UMCameraInterface (5.3.0)
@@ -753,7 +753,7 @@ SPEC CHECKSUMS:
   React-jsi: df07aa95b39c5be3e41199921509bfa929ed2b9d
   React-jsiexecutor: b56c03e61c0dd5f5801255f2160a815f4a53d451
   React-jsinspector: 8e68ffbfe23880d3ee9bafa8be2777f60b25cbe2
-  react-native-camera: 55e1afb6d585314ca96ea5504e6b1ba7583c1d21
+  react-native-camera: 3940f67a49eaf736525a3e730653fcb98e1525dd
   react-native-cameraroll: dbda741db5dadcdcf738e55a1fd565c307943bca
   react-native-image-picker: 3d3f85baabca60a00b75fb8facc1376db7bbdafa
   react-native-netinfo: 0212ce8604e88edf686f1481b925b17a42a52449
@@ -778,30 +778,30 @@ SPEC CHECKSUMS:
   ReactNativeExceptionHandler: 8025d98049c25f186835a3af732dd7c9974d6dce
   rn-update-apk: 276b95ff7f22c7659e0325352552d5179a0218b8
   RNBootSplash: b3836aa90c5bec690c6cd3c9ab355fcf98d0fe1d
-  RNCAsyncStorage: d059c3ee71738c39834a627476322a5a8cd5bf36
+  RNCAsyncStorage: 2a692bcb9b69b76a2f1a95f33db057129700af64
   RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f
   RNConvertPhAsset: 9b366b8a1abc194b76572712c6f7dd89c9e4e37f
-  RNDateTimePicker: e386ff4ef3300964ed0cad97ce6f206e0effbfdb
+  RNDateTimePicker: 968ccf716b3b6aee07849641966005924de5c0f9
   RNDeviceInfo: c5f8f3a456adcbba405ace475254b08febc4c095
-  RNFastImage: c104f15f04c4f68bd65c9645cc27900bbacd9cc7
+  RNFastImage: d4870d58f5936111c56218dbd7fcfc18e65b58ff
   RNFS: 2bd9eb49dc82fa9676382f0585b992c424cd59df
   RNGestureHandler: 7a5833d0f788dbd107fbb913e09aa0c1ff333c39
   RNImageCropPicker: 16951bc02411f50c4d197488ed6406a23dc3b5f1
-  RNLocalize: b6df30cc25ae736d37874f9bce13351db2f56796
+  RNLocalize: 49634a6a605dcdeb319e9c42a5c2f1aec508694b
   RNPermissions: 477d88d0be7ecb0a7b344e4d5fbb0352de104626
   RNPhotoEditor: f00eb35b43ce3650b743fab6fce333ccde26b384
   RNReanimated: b5ccb50650ba06f6e749c7c329a1bc3ae0c88b43
   RNScreens: 2ad555d4d9fa10b91bb765ca07fe9b29d59573f0
-  RNSentry: ae1e005e4f2655775475445a9c49c1d343e8e3a7
+  RNSentry: 2d4a0e18c6dfe93b647c360e0d15c9391d24e9d1
   RNShare: 8b171d4b43c1d886917fdd303bf7a4b87167b05c
   RNSharedElement: 00b1a1420d213a34459bb9a5aacabb38107d7948
   RNShareMenu: 7749fe038181a5d66b71afc76b32b8f8069a58cd
   RNSVG: ce9d996113475209013317e48b05c21ee988d42e
   RNVectorIcons: bc69e6a278b14842063605de32bec61f0b251a59
-  SDWebImage: cf6922231e95550934da2ada0f20f2becf2ceba9
-  SDWebImageWebPCoder: 947093edd1349d820c40afbd9f42acb6cdecd987
-  Sentry: 8715e88b813bde9ad37aead365d5b04ac7302153
-  TOCropViewController: 2a1ae1242600b1f2d996fd91a5268b2309a33b5c
+  SDWebImage: 9169792e9eec3e45bba2a0c02f74bf8bd922d1ee
+  SDWebImageWebPCoder: d0dac55073088d24b2ac1b191a71a8f8d0adac21
+  Sentry: 8fa58a051237554f22507fb483b9a1de0171a2dc
+  TOCropViewController: da59f531f8ac8a94ef6d6c0fc34009350f9e8bfe
   UMAppLoader: 5db5dc03176c6238da9c8b3657a370137882a4ad
   UMBarCodeScannerInterface: 017672479f93de88d94c3a50dfb66b5348b65989
   UMCameraInterface: 22bd2c4bf15dcf68530368fa5704af7490818457

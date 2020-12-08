@@ -22,7 +22,6 @@ import CenteredLoading from '../common/components/CenteredLoading';
 import SmartImage from '../common/components/SmartImage';
 import formatDate from '../common/helpers/date';
 import { FLAG_VIEW } from '../common/Permissions';
-import featuresService from '../common/services/features.service';
 import i18n from '../common/services/i18n.service';
 import logService from '../common/services/log.service';
 import RemindAction from '../newsfeed/activity/actions/RemindAction';
@@ -33,6 +32,8 @@ import shareService from '../share/ShareService';
 import colors from '../styles/Colors';
 import { CommonStyle as CS } from '../styles/Common';
 import ThemedStyles from '../styles/ThemedStyles';
+import Lock from '../wire/v2/lock/Lock';
+import BlogActionSheet from './BlogActionSheet';
 
 import BlogViewHTML from './BlogViewHTML';
 

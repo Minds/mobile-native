@@ -26,12 +26,7 @@ export const styles = StyleSheet.create({
     color: Colors.darkGreyed,
   },
   videoIcon: {
-    position: 'relative',
-    alignSelf: 'center',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    top: 0,
+    paddingLeft: 3,
   },
   textShadow: {
     textShadowColor: 'rgba(0, 0, 0, 0.45)',

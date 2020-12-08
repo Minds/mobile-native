@@ -93,7 +93,7 @@ export default observer(function (props: SmartImageProps) {
       if (!props.source.uri) {
         return;
       }
-
+      //@ts-ignore
       const cached = await FastImage.getCachePath({
         uri: props.source.uri,
       });
@@ -110,7 +110,7 @@ export default observer(function (props: SmartImageProps) {
     if (props.imageVisible) {
       store.showImage(props.imageVisible);
     }
-  }, [props.imageVisible]);
+  }, [props.imageVisible, store]);
 
   useEffect(() => {
     try {
