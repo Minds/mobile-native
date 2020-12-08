@@ -67,92 +67,98 @@ const check = {
 /**
  * Channel buttons
  */
-const ChannelButtons = observer((props: PropsWithChildren<ChannelButtonsPropsType>) => {
-  const menuRef = useRef<any>();
-  const theme = ThemedStyles.style;
-  const navigation = useNavigation<
-    NativeStackNavigationProp<AppStackParamList>
-  >();
+const ChannelButtons = observer(
+  (props: PropsWithChildren<ChannelButtonsPropsType>) => {
+    const menuRef = useRef<any>();
+    const theme = ThemedStyles.style;
+    const navigation = useNavigation<
+      NativeStackNavigationProp<AppStackParamList>
+    >();
 
-  const SIZE = props.iconSize || 18;
+    const SIZE = props.iconSize || 18;
 
-  const openMessenger = useCallback(() => {
+    const openMessenger = useCallback(() => {
+      if (!props.store.channel) return null;
+      navigation.push('Conversation', {
+        conversation: {
+          guid: props.store.channel.guid + ':' + sessionService.guid,
+        },
+      });
+    }, [navigation, props.store.channel]);
+
+    const openWire = useCallback(() => {
+      navigation.push('WireFab', {
+        owner: props.store.channel,
+      });
+    }, [navigation, props.store.channel]);
+
     if (!props.store.channel) return null;
-    navigation.push('Conversation', {
-      conversation: {
-        guid: props.store.channel.guid + ':' + sessionService.guid,
-      },
-    });
-  }, [navigation, props.store.channel]);
 
-  const openWire = useCallback(() => {
-    navigation.push('WireFab', {
-      owner: props.store.channel,
-    });
-  }, [navigation, props.store.channel]);
+    const shouldShow = (button: ButtonsType) =>
+      !props.notShow ||
+      (!props.notShow.includes(button) && check[button](props.store));
 
-  if (!props.store.channel) return null;
+    const showSubscribe = shouldShow('subscribe');
 
-  const shouldShow = (button: ButtonsType) =>
-    !props.notShow ||
-    (!props.notShow.includes(button) && check[button](props.store));
+    return (
+      <View
+        style={[
+          theme.rowJustifyEnd,
+          theme.marginRight2x,
+          props.containerStyle,
+        ]}>
+        {props.children}
 
-  const showSubscribe = shouldShow('subscribe');
-
-  return (
-    <View
-      style={[theme.rowJustifyEnd, theme.marginRight2x, props.containerStyle]}>
-      {props.children}
-
-      {shouldShow('edit') && (
-        <SmallCircleButton
-          name="edit"
-          type="material"
-          onPress={props.onEditPress}
+        {shouldShow('edit') && (
+          <SmallCircleButton
+            name="edit"
+            type="material"
+            onPress={props.onEditPress}
+          />
+          // <View style={theme.paddingTop2x}>
+          //   <Edit {...props} />
+          // </View>
+        )}
+        {shouldShow('message') && (
+          <MIcon
+            name="chat-bubble-outline"
+            size={SIZE}
+            onPress={openMessenger}
+            style={props.iconsStyle}
+          />
+        )}
+        {shouldShow('wire') && (
+          <MIcon
+            name="attach-money"
+            size={SIZE}
+            onPress={openWire}
+            style={props.iconsStyle}
+          />
+        )}
+        {shouldShow('more') && (
+          <MIcon
+            name="more-horiz"
+            size={22}
+            onPress={() => menuRef.current?.show()}
+            style={[theme.paddingRight, props.iconsStyle]}
+          />
+        )}
+        {shouldShow('join') && (
+          <Join
+            showSubscribe={showSubscribe}
+            navigation={navigation}
+            {...props}
+          />
+        )}
+        {showSubscribe && <Subscribe {...props} />}
+        <ChannelMoreMenu
+          channel={props.store.channel}
+          ref={menuRef}
+          isSubscribedToTier={isSubscribedToTier(props.store.tiers)}
         />
-        // <View style={theme.paddingTop2x}>
-        //   <Edit {...props} />
-        // </View>
-      )}
-      {shouldShow('message') && (
-        <MIcon
-          name="chat-bubble-outline"
-          size={SIZE}
-          onPress={openMessenger}
-          style={props.iconsStyle}
-        />
-      )}
-      {shouldShow('wire') && (
-        <MIcon
-          name="attach-money"
-          size={SIZE}
-          onPress={openWire}
-          style={props.iconsStyle}
-        />
-      )}
-      {shouldShow('more') && (
-        <MIcon
-          name="more-horiz"
-          size={22}
-          onPress={() => menuRef.current?.show()}
-          style={[theme.paddingRight, props.iconsStyle]}
-        />
-      )}
-      {shouldShow('join') && (
-        <Join
-          showSubscribe={showSubscribe}
-          navigation={navigation}
-          {...props}
-        />
-      )}
-      {showSubscribe && <Subscribe {...props} />}
-      <ChannelMoreMenu
-        channel={props.store.channel}
-        ref={menuRef}
-        isSubscribedToTier={isSubscribedToTier(props.store.tiers)}
-      />
-    </View>
-  );
-});
+      </View>
+    );
+  },
+);
 
 export default ChannelButtons;
