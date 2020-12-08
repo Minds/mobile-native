@@ -281,7 +281,9 @@
     "blogs": "Blogs",
     "groups": "Groups",
     "addTags": "Add tags to personalize your feed",
-    "selectTags": "Select tags"
+    "selectTags": "Select tags",
+    "posts": "posts",
+    "votes": "votes"
   },
   "groups": {
     "ongoingGathering": "Ongoing gathering",
@@ -684,7 +686,9 @@
     "sent": "Verification code sent to",
     "connectWallet": "Connect Wallet",
     "connectBank": "Connect Bank",
-    "buyTokens": "Buy Tokens"
+    "buyTokens": "Buy Tokens",
+    "onboardingCompleted": "Now you can earn tokens",
+    "improvedExperience": "Your feed should be livelier!"
   },
   "membership": {
     "noTokens": "It doesn't accept Tokens",

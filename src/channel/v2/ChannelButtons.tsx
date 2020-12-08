@@ -5,7 +5,6 @@ import { useNavigation } from '@react-navigation/native';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import { observer } from 'mobx-react';
 import type { NativeStackNavigationProp } from 'react-native-screens/native-stack';
-import i18n from '../../common/services/i18n.service';
 import sessionService from '../../common/services/session.service';
 import type { AppStackParamList } from '../../navigation/NavigationTypes';
 import {
@@ -23,6 +22,7 @@ import { SupportTiersType } from '../../wire/WireTypes';
 import Subscribe from './buttons/Subscribe';
 import Edit from './buttons/Edit';
 import Join from './buttons/Join';
+import SmallCircleButton from '../../common/components/SmallCircleButton';
 
 type ButtonsType = 'edit' | 'more' | 'wire' | 'subscribe' | 'message' | 'join';
 
@@ -32,14 +32,13 @@ export type ChannelButtonsPropsType = {
   notShow?: Array<ButtonsType>;
   containerStyle?: any;
   iconsStyle?: any;
+  iconSize?: number;
 };
 
 const isIos = Platform.OS === 'ios';
 
 const isSubscribedToTier = (tiers: SupportTiersType[]) =>
   tiers.some((tier) => typeof tier.subscription_urn === 'string');
-
-const SIZE = 18;
 
 const check = {
   wire: (store: ChannelStoreType) =>
@@ -75,6 +74,8 @@ const ChannelButtons = observer((props: PropsWithChildren<ChannelButtonsPropsTyp
     NativeStackNavigationProp<AppStackParamList>
   >();
 
+  const SIZE = props.iconSize || 18;
+
   const openMessenger = useCallback(() => {
     if (!props.store.channel) return null;
     navigation.push('Conversation', {
@@ -104,14 +105,18 @@ const ChannelButtons = observer((props: PropsWithChildren<ChannelButtonsPropsTyp
       {props.children}
 
       {shouldShow('edit') && (
-        <View style={isIos ? undefined : theme.paddingTop2x}>
-          <Edit {...props} />
-        </View>
+        <SmallCircleButton
+          name="edit"
+          type="material"
+          onPress={props.onEditPress}
+        />
+        // <View style={theme.paddingTop2x}>
+        //   <Edit {...props} />
+        // </View>
       )}
       {shouldShow('message') && (
         <MIcon
           name="chat-bubble-outline"
-          color={ThemedStyles.getColor('primary_text')}
           size={SIZE}
           onPress={openMessenger}
           style={props.iconsStyle}
@@ -120,7 +125,6 @@ const ChannelButtons = observer((props: PropsWithChildren<ChannelButtonsPropsTyp
       {shouldShow('wire') && (
         <MIcon
           name="attach-money"
-          color={ThemedStyles.getColor('primary_text')}
           size={SIZE}
           onPress={openWire}
           style={props.iconsStyle}
@@ -129,7 +133,6 @@ const ChannelButtons = observer((props: PropsWithChildren<ChannelButtonsPropsTyp
       {shouldShow('more') && (
         <MIcon
           name="more-horiz"
-          color={ThemedStyles.getColor('primary_text')}
           size={22}
           onPress={() => menuRef.current?.show()}
           style={[theme.paddingRight, props.iconsStyle]}

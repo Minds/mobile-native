@@ -146,7 +146,7 @@ exports[`Activity screen component renders correctly  1`] = `
             Object {
               "flex": 1,
               "flexWrap": "wrap",
-              "marginLeft": 8,
+              "marginLeft": 10,
               "paddingRight": 36,
             }
           }
@@ -154,7 +154,7 @@ exports[`Activity screen component renders correctly  1`] = `
           <View
             style={
               Object {
-                "flexDirection": "row",
+                "flexDirection": "column",
               }
             }
           >
@@ -174,7 +174,7 @@ exports[`Activity screen component renders correctly  1`] = `
                     Object {
                       "color": "#444",
                       "fontFamily": "Roboto",
-                      "fontSize": 16,
+                      "fontSize": 17,
                       "fontWeight": "bold",
                     },
                     undefined,
@@ -184,20 +184,6 @@ exports[`Activity screen component renders correctly  1`] = `
                 
               </Text>
             </View>
-          </View>
-          <View>
-            <Text
-              numberOfLines={1}
-              style={
-                Array [
-                  undefined,
-                  undefined,
-                  undefined,
-                ]
-              }
-            >
-              3 years ago
-            </Text>
           </View>
         </View>
         <View>
@@ -630,6 +616,38 @@ exports[`Activity screen component renders correctly  1`] = `
               </View>
             </Modal>
           </View>
+        </View>
+        <View
+          style={
+            Array [
+              undefined,
+              undefined,
+            ]
+          }
+        >
+          <Text
+            style={
+              Array [
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+          >
+            
+            3 years ago
+          </Text>
+          <View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                },
+                undefined,
+              ]
+            }
+          />
         </View>
       </View>
     </RCTScrollView>

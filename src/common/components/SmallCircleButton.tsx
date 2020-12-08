@@ -6,7 +6,9 @@ import type { StyleProp, GestureResponderEvent, ViewStyle } from 'react-native';
 
 type PropsType = {
   name: string;
+  type?: string;
   style?: StyleProp<ViewStyle>;
+  size?: number;
   onPress: (event: GestureResponderEvent) => void;
 };
 
@@ -16,10 +18,10 @@ const SmallCircleButton = (props: PropsType) => {
       raised
       reverse
       name={props.name}
-      type="material-community"
+      type={props.type || 'material-community'}
       color={ThemedStyles.getColor('secondary_background')}
       reverseColor={ThemedStyles.getColor('icon')}
-      size={13}
+      size={props.size || 16}
       onPress={props.onPress}
       containerStyle={props.style}
     />

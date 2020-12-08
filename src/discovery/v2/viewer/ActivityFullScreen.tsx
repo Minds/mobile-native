@@ -35,6 +35,7 @@ import { showNotification } from '../../../../AppMessages';
 import { AppStackParamList } from '../../../navigation/NavigationTypes';
 import CommentsBottomPopup from '../../../comments/CommentsBottomPopup';
 import BoxShadow from '../../../common/components/BoxShadow';
+import ActivityMetrics from '../../../newsfeed/activity/metrics/ActivityMetrics';
 
 type ActivityRoute = RouteProp<AppStackParamList, 'Activity'>;
 
@@ -199,21 +200,8 @@ const ActivityFullScreen = observer((props: PropsType) => {
             onTranslate={onTranslate}
           />
         </View>
-      }>
-      <View style={theme.rowJustifyStart}>
-        <Text
-          numberOfLines={1}
-          style={[theme.fontM, theme.colorSecondaryText, theme.paddingRight]}>
-          {formatDate(entity.time_created, 'friendly')}
-          {!!entity.edited && (
-            <Text style={[theme.fontS, theme.colorSecondaryText]}>
-              {' '}
-              · {i18n.t('edited').toUpperCase()}
-            </Text>
-          )}
-        </Text>
-      </View>
-    </OwnerBlock>
+      }
+    />
   );
 
   const shadowOpt = {
@@ -303,6 +291,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
               )}
             </>
           )}
+          <ActivityMetrics entity={props.entity} />
         </ScrollView>
         {!store.contentFit && (
           <LinearGradient

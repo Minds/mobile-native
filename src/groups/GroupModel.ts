@@ -1,6 +1,6 @@
 import { observable, decorate, action, runInAction } from 'mobx';
 import BaseModel from '../common/BaseModel';
-import { GOOGLE_PLAY_STORE } from '../config/Config';
+import { GOOGLE_PLAY_STORE, MINDS_CDN_URI } from '../config/Config';
 import groupsService from './GroupsService';
 
 /**
@@ -11,6 +11,7 @@ export default class GroupModel extends BaseModel {
   @observable mature_visibility = false;
   name!: string;
   nsfw: Array<number> = [];
+  icontime: any;
 
   @action
   toggleMatureVisibility() {
@@ -47,6 +48,16 @@ export default class GroupModel extends BaseModel {
     } catch (error) {
       runInAction(() => (this['is:member'] = true));
     }
+  }
+
+  getAvatar(size = 'small') {
+    return {
+      rounded: true,
+      size: 45,
+      source: {
+        uri: `${MINDS_CDN_URI}fs/v1/avatars/${this.guid}/${size}/${this.icontime}`,
+      },
+    };
   }
 }
 

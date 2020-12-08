@@ -281,11 +281,11 @@ export default class Activity extends Component<PropsType> {
                 ? message
                 : undefined}
             </View>
+            <ActivityMetrics entity={this.props.entity} />
             {this.showActions()}
             {this.renderScheduledMessage()}
             {this.renderPendingMessage()}
             {this.renderActivitySpacer()}
-            {/* {this.renderActivityMetrics()} */}
           </>
         )}
       </TouchableOpacity>
@@ -297,17 +297,6 @@ export default class Activity extends Component<PropsType> {
    */
   renderActivitySpacer = () => {
     return this.props.isLast ? <View style={styles.activitySpacer} /> : null;
-  };
-
-  /**
-   * Render entity metrics
-   */
-  renderActivityMetrics = () => {
-    return !this.props.hideTabs &&
-      !this.props.entity.isScheduled() &&
-      !this.props.entity.isPending() ? (
-      <ActivityMetrics entity={this.props.entity} />
-    ) : null;
   };
 
   /**
@@ -394,25 +383,8 @@ export default class Activity extends Component<PropsType> {
         entity={this.props.entity}
         navigation={this.props.navigation}
         rightToolbar={this.props.hideTabs ? null : rightToolbar}
-        storeUserTap={this.props.storeUserTap}>
-        <View style={theme.rowJustifyStart}>
-          <Text
-            numberOfLines={1}
-            style={[
-              styles.timestamp,
-              CommonStyle.paddingRight,
-              theme.colorTertiaryText,
-            ]}>
-            {formatDate(this.props.entity.time_created, 'friendly')}
-            {!!this.props.entity.edited && (
-              <Text style={[theme.fontS, theme.colorSecondaryText]}>
-                {' '}
-                · {i18n.t('edited').toUpperCase()}
-              </Text>
-            )}
-          </Text>
-        </View>
-      </OwnerBlock>
+        storeUserTap={this.props.storeUserTap}
+      />
     );
   }
 

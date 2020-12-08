@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import IconM from 'react-native-vector-icons/MaterialIcons';
+import McIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { observer } from 'mobx-react';
 import settingsStore from '../../settings/SettingsStore';
 import type { ChannelStoreType, ChannelTabType } from './createChannelStore';
@@ -177,6 +178,7 @@ const ChannelHeader = observer((props: PropsType) => {
               props.navigation.push('EditChannelScreen', { store: props.store })
             }
             notShow={['message', 'wire', 'more']}
+            iconsStyle={theme.colorSecondaryText}
             containerStyle={styles.buttonsMarginContainer}>
             {!showBanner && settingsStore.dataSaverEnabled && (
               <Icon
@@ -236,7 +238,7 @@ const ChannelHeader = observer((props: PropsType) => {
             {' · ' + i18n.t('subscriptions')}
             <Text> {abbrev(channel.subscriptions_count, 0)}</Text>
           </Text>
-          {' · ' + i18n.t('views')}
+          {' · '} <McIcon name="eye" size={17} />
           <Text> {abbrev(channel.impressions, 1)}</Text>
         </Text>
         {!!channel.city && (
@@ -275,7 +277,7 @@ const styles = StyleSheet.create({
   },
   bannerSmallButton: {
     position: 'absolute',
-    top: 8,
+    top: 5,
     left: 5,
   },
   avatarSmallButton: {

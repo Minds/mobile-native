@@ -69,13 +69,11 @@ export default class ActivityModel extends BaseModel {
   thumbnail_src?: string;
   dontPin?: boolean;
   boosted?: boolean;
-  wire_threshold?:
-    | {
-        type: 'token' | 'money';
-        min: number;
-      }
-    | { support_tier: SupportTiersType }
-    | null;
+  wire_threshold?: {
+    type: 'token' | 'money';
+    min: number;
+    support_tier: SupportTiersType;
+  } | null;
   _preview?: boolean;
   attachments?: {
     attachment_guid: string;

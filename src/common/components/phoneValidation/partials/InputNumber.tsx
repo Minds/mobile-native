@@ -23,10 +23,19 @@ const InputNumber = observer(({ localStore, ...props }: PropsType) => {
 
   useEffect(() => {
     localStore.setPhoneInputRef(phoneInput);
+    let timeoutCleanup: any = null;
+    if (props.autoFocus) {
+      timeoutCleanup = setTimeout(() => {
+        localStore.phoneInputRef?.current?.focus();
+      }, 300);
+    }
     return () => {
+      if (timeoutCleanup) {
+        clearTimeout(timeoutCleanup);
+      }
       localStore.setPhoneInputRef(null);
     };
-  }, [phoneInput, localStore]);
+  }, [phoneInput, localStore, props.autoFocus]);
 
   const joinAction = useCallback(
     (retry = false) => {
