@@ -1,6 +1,6 @@
 //@ts-nocheck
-import { observer } from 'mobx-react';
 import React, { Component } from 'react';
+import { observer } from 'mobx-react';
 
 import {
   Alert,
@@ -12,26 +12,24 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import { showMessage } from 'react-native-flash-message';
+
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { SharedElement } from 'react-navigation-shared-element';
-import type ActivityModel from 'src/newsfeed/ActivityModel';
-import MindsVideo from '../../media/MindsVideo';
-import { MindsVideoStoreType } from '../../media/v2/mindsVideo/createMindsVideoStore';
-import MindsVideoV2 from '../../media/v2/mindsVideo/MindsVideo';
-import Colors from '../../styles/Colors';
-import ThemedStyles from '../../styles/ThemedStyles';
-import domain from '../helpers/domain';
-import mediaProxyUrl from '../helpers/media-proxy-url';
-import testID from '../helpers/testID';
-import download from '../services/download.service';
-import featuresService from '../services/features.service';
-import i18n from '../services/i18n.service';
-import logService from '../services/log.service';
-
-import openUrlService from '../services/open-url.service';
 
 import ExplicitImage from './explicit/ExplicitImage';
+import domain from '../helpers/domain';
+import MindsVideo from '../../media/v2/mindsVideo/MindsVideo';
+import mediaProxyUrl from '../helpers/media-proxy-url';
+import download from '../services/download.service';
+
+import openUrlService from '../services/open-url.service';
+import logService from '../services/log.service';
+import i18n from '../services/i18n.service';
+import { showMessage } from 'react-native-flash-message';
+import Colors from '../../styles/Colors';
+import type ActivityModel from 'src/newsfeed/ActivityModel';
+import { MindsVideoStoreType } from '../../media/v2/mindsVideo/createMindsVideoStore';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 type PropsType = {
   entity: ActivityModel;
@@ -85,7 +83,7 @@ export default class MediaView extends Component<PropsType> {
         return this.getImage(
           source,
           // do not show a thumbnail for GIFs
-          !this.props.entity.isGif() && mediaProxyUrl(source, 30),
+          !this.props.entity.isGif() && mediaProxyUrl(source, 128),
         );
       case 'video':
         return this.getVideo();
@@ -100,7 +98,7 @@ export default class MediaView extends Component<PropsType> {
       };
 
       const thumbnail = {
-        uri: mediaProxyUrl(this.props.entity.thumbnail_src, 30),
+        uri: mediaProxyUrl(this.props.entity.thumbnail_src, 128),
       };
 
       return (
@@ -129,22 +127,14 @@ export default class MediaView extends Component<PropsType> {
       aspectRatio = this.state.width / this.state.height;
     }
 
-    const MindsVideoComponent = featuresService.has('mindsVideo-2020') ? (
-      <MindsVideoV2
+    const MindsVideoComponent = (
+      <MindsVideo
         entity={this.props.entity}
         ignoreDataSaver={this.props.ignoreDataSaver}
         onStoreCreated={(store: MindsVideoStoreType) =>
           (this.videoPlayer = store)
         }
         hideOverlay={this.props.hideOverlay}
-      />
-    ) : (
-      <MindsVideo
-        entity={this.props.entity}
-        ignoreDataSaver={this.props.ignoreDataSaver}
-        ref={(o) => {
-          this.videoPlayer = o;
-        }}
       />
     );
 
@@ -175,10 +165,7 @@ export default class MediaView extends Component<PropsType> {
    */
   runDownload = async () => {
     try {
-      const result = await download.downloadToGallery(
-        this.source.uri,
-        this.props.entity,
-      );
+      await download.downloadToGallery(this.source.uri, this.props.entity);
       Alert.alert(i18n.t('success'), i18n.t('imageAdded'));
     } catch (e) {
       Alert.alert(i18n.t('errorDownloading'));
@@ -326,7 +313,7 @@ export default class MediaView extends Component<PropsType> {
           onLongPress={this.imageLongPress}
           style={[styles.imageContainer, { aspectRatio }]}
           activeOpacity={1}
-          {...testID('Posted Image')}>
+          testID="Posted Image">
           <ExplicitImage
             source={source}
             thumbnail={thumbnail}
@@ -347,6 +334,7 @@ export default class MediaView extends Component<PropsType> {
     const media = this.showMedia();
 
     // dereference to force re render on change (mobx)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const paywall = this.props.entity.paywall;
 
     if (!media) return null;

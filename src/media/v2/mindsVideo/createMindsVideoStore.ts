@@ -5,6 +5,7 @@ import _ from 'lodash';
 import featuresService from '../../../common/services/features.service';
 import apiService from '../../../common/services/api.service';
 import videoPlayerService from '../../../common/services/video-player.service';
+import { runInAction } from 'mobx';
 
 export type Source = {
   src: string;
@@ -237,29 +238,23 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
         };
       }
 
-      this.setPaused(false);
+      runInAction(() => {
+        this.setPaused(false);
+        this.volume = sound ? 1 : 0;
+      });
 
-      this.volume = sound ? 1 : 0;
       if (this.initialVolume === null) {
         this.initialVolume = this.volume;
       }
 
       // set as the current player in the service
       videoPlayerService.setCurrent(this);
-
-      // this.player?.playAsync();
-      this.player?.setStatusAsync({
-        progressUpdateIntervalMillis: 500,
-        shouldPlay: true,
-        volume: this.volume,
-      });
     },
     pause() {
       this.setPaused(true);
       if (videoPlayerService.current === this) {
         videoPlayerService.clear();
       }
-      this.player?.pauseAsync();
     },
     setPlayer(player: Video) {
       this.player = player;

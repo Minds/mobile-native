@@ -1,10 +1,7 @@
 import React, { PureComponent } from 'react';
 import { StyleSheet, View, Image } from 'react-native';
 
-import MindsVideo from '../media/MindsVideo';
-import MindsVideoV2 from '../media/v2/mindsVideo/MindsVideo';
-
-import featuresService from '../common/services/features.service';
+import MindsVideo from '../media/v2/mindsVideo/MindsVideo';
 
 type PropsType = {
   uri: string;
@@ -37,9 +34,7 @@ export default class CapturePreview extends PureComponent<PropsType> {
       case 'video/quicktime':
       case 'video/x-m4v':
       case 'video':
-        const MindsVideoComponent = featuresService.has('mindsVideo-2020') ? (
-          <MindsVideoV2 video={{ uri: this.props.uri }} />
-        ) : (
+        const MindsVideoComponent = (
           <MindsVideo video={{ uri: this.props.uri }} />
         );
 
