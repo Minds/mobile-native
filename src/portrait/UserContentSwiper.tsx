@@ -82,6 +82,7 @@ const UserContentSwiper = observer((props: PropsType) => {
   return (
     <View style={ThemedStyles.style.flexContainer}>
       <PortraitActivity
+        hasPaginator={activities.length > 1}
         key={`activity${store.index}`}
         entity={activities[store.index]}
         forceAutoplay

@@ -78,7 +78,7 @@ class OwnerBlock extends PureComponent<PropsType> {
   };
 
   get group() {
-    if (!this.props.entity.containerObj) {
+    if (!this.props.entity.containerObj || this.props.children) {
       return null;
     }
 
@@ -145,9 +145,14 @@ class OwnerBlock extends PureComponent<PropsType> {
       channel.name && channel.name !== channel.username ? channel.name : '';
 
     return (
-      <View style={this.props.containerStyle}>
+      <View
+        style={[
+          styles.mainContainer,
+          theme.borderPrimary,
+          this.props.containerStyle,
+        ]}>
         {remind}
-        <View style={[styles.container, theme.borderPrimary]}>
+        <View style={styles.container}>
           {this.props.leftToolbar}
           <DebouncedTouchableOpacity onPress={this._navToChannel}>
             <FastImage source={avatarSrc} style={styles.avatar} />
@@ -180,8 +185,8 @@ class OwnerBlock extends PureComponent<PropsType> {
                 </Text>
               </DebouncedTouchableOpacity>
               {this.group}
+              {this.props.children}
             </View>
-            {this.props.children}
           </View>
           <ChannelBadges
             size={20}
@@ -202,13 +207,15 @@ const styles = StyleSheet.create({
     paddingTop: Platform.select({ android: 3, ios: 1 }),
     paddingRight: 5,
   },
+  mainContainer: {
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
   container: {
     display: 'flex',
     paddingHorizontal: 20,
     paddingVertical: 13,
     alignItems: 'center',
     flexDirection: 'row',
-    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   avatar: {
     height: 37,
@@ -230,9 +237,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
   groupContainer: {
-    alignContent: 'center',
     paddingTop: 3,
-    flex: 1,
   },
   groupName: {
     fontFamily: 'Roboto',

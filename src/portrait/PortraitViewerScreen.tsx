@@ -13,7 +13,6 @@ import {
   Extrapolate,
 } from '@crowdlinker/react-native-pager';
 
-import { StatusBar } from 'react-native';
 import { useDimensions } from '@react-native-community/hooks';
 import ThemedStyles from '../styles/ThemedStyles';
 import MetadataService from '../common/services/metadata.service';
@@ -126,7 +125,7 @@ const PortraitViewerScreen = observer((props: PropsType) => {
   const { width, height } = useDimensions().window;
 
   const pagerStyle: any = {
-    height: height - (StatusBar.currentHeight || 0),
+    height,
     width,
     backgroundColor: ThemedStyles.theme
       ? 'black'
