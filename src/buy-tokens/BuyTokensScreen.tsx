@@ -1,34 +1,64 @@
 import React, { useState } from 'react';
-import { ScrollView, View, StyleSheet } from 'react-native';
+import { ScrollView, View, StyleSheet, Pressable } from 'react-native';
 import ThemedStyles from '../styles/ThemedStyles';
 import Button from '../common/components/Button';
 import Modal from 'react-native-modal';
 import { WebView } from 'react-native-webview';
-import { Text } from 'react-native-animatable';
+import { Text } from 'react-native-elements';
+import { CheckBox } from 'react-native-elements';
+
+type PaymentMethod = 'card' | 'bank' | 'crypto';
+type PaymentOption = { type: PaymentMethod; name: string };
 
 const styles = StyleSheet.create({
   optionsContainer: {
-    borderWidth: 1,
-    borderColor: 'green',
     height: 70,
   },
   option: {
-    borderColor: 'red',
-    borderWidth: 1,
     flexGrow: 1,
     flexBasis: 0,
     alignItems: 'center',
     justifyContent: 'center',
   },
+  firstOption: {
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
+  },
+  lastOption: {
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 10,
+  },
+  learMoreLink: {
+    fontSize: 15,
+    textDecorationLine: 'underline',
+    fontWeight: 'bold',
+  },
+  disabledButton: {
+    backgroundColor: '#cccccc',
+    color: '#cccccc',
+  },
 });
+
+const paymentMethodsList: PaymentOption[] = [
+  { type: 'card', name: 'Card' },
+  { type: 'bank', name: 'Bank' },
+  { type: 'crypto', name: 'Crypto' },
+];
 
 const modalInjectedScript =
   'window.ReactNativeWebView.postMessage(Math.max(document.body.offsetHeight, document.body.scrollHeight));';
 
 export default function () {
-  const [isModalVisible, setModalVisible] = useState(false);
   const theme = ThemedStyles.style;
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod | null>(
+    null,
+  );
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [aggressTerms, setAggressTerms] = useState(false);
+  const canBuyTokens = !!paymentMethod && aggressTerms;
+
   const toggleModal = () => setModalVisible(!isModalVisible);
+  const toggleAgreesTerms = () => setAggressTerms(!aggressTerms);
 
   return (
     <>
@@ -71,17 +101,61 @@ export default function () {
           style={[
             theme.flexContainer,
             theme.rowJustifySpaceBetween,
+            theme.marginBottom5x,
             styles.optionsContainer,
           ]}>
-          <View style={styles.option}>
-            <Text>Card</Text>
-          </View>
-          <View style={styles.option}>
-            <Text>Bank</Text>
-          </View>
-          <View style={styles.option}>
-            <Text>Crypto</Text>
-          </View>
+          {paymentMethodsList.map(({ type, name }, index) => (
+            <Pressable
+              style={[
+                theme.borderPrimary,
+                styles.option,
+                index === 0 ? styles.firstOption : '',
+                index === 1
+                  ? [theme.borderTop2x, theme.borderBottom2x]
+                  : theme.border2x,
+                index === 2 ? styles.lastOption : '',
+                paymentMethod === type ? theme.backgroundSecondary : '',
+              ]}
+              onPress={() => setPaymentMethod(type)}>
+              <Text>{name}</Text>
+            </Pressable>
+          ))}
+        </View>
+        <View style={[theme.flexContainer, theme.rowStretch]}>
+          <Text>
+            {'Deliver Estimate: '}
+            <Text>{`1-2 ${
+              paymentMethod === 'bank' ? 'days' : 'minutes'
+            }`}</Text>
+          </Text>
+        </View>
+        <View>
+          <CheckBox
+            checked={aggressTerms}
+            onPress={toggleAgreesTerms}
+            containerStyle={[theme.checkbox]}
+            title={
+              <Text style={[theme.colorPrimaryText, theme.marginLeft3x]}>
+                {'I have read and accept the '}
+                <Text style={theme.link} onPress={() => {}}>
+                  Terms Of Sale
+                </Text>
+                {' for the Minds Token.'}
+              </Text>
+            }
+          />
+        </View>
+        <View style={[theme.flexContainer, theme.rowJustifySpaceBetween]}>
+          <Text style={styles.learMoreLink}>Learn more about tokens</Text>
+          <Button
+            text="Buy Tokens"
+            containerStyle={[
+              theme.alignCenter,
+              !canBuyTokens ? styles.disabledButton : '',
+            ]}
+            onPress={toggleModal}
+            disabled={!canBuyTokens}
+          />
         </View>
       </ScrollView>
     </>
