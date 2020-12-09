@@ -65,7 +65,7 @@ const ViewerScreen = observer((props: PropsType) => {
   const translationX = width * 0.13;
 
   const pagerStyle: any = {
-    height: height - (StatusBar.currentHeight || 0),
+    height,
     width,
     backgroundColor: ThemedStyles.theme
       ? 'black'
