@@ -13,6 +13,7 @@ import type CommentModel from '../../../comments/CommentModel';
 import SmartImage from '../../../common/components/SmartImage';
 import getVideoThumb from '../../../common/helpers/get-video-thumbnail';
 import videoPlayerService from '../../../common/services/video-player.service';
+import { DATA_SAVER_THUMB_RES } from '../../../config/Config';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
 import settingsStore from '../../../settings/SettingsStore';
 import ThemedStyles from '../../../styles/ThemedStyles';
@@ -56,7 +57,7 @@ const MindsVideo = observer((props: PropsType) => {
   const posterSource = useRef(getVideoThumb(props.entity, 1024)).current;
   const thumbnailSource = useRef(
     props.entity && dataSaverEnabled
-      ? getVideoThumb(props.entity, 16)
+      ? getVideoThumb(props.entity, DATA_SAVER_THUMB_RES)
       : undefined,
   ).current;
 

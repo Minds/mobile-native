@@ -352,7 +352,7 @@ PODS:
     - React
   - RNDeviceInfo (5.6.5):
     - React
-  - RNFastImage (8.3.4):
+  - RNFastImage (8.3.5):
     - React-Core
     - SDWebImage (~> 5.8)
     - SDWebImageWebPCoder (~> 0.6.1)
@@ -783,7 +783,7 @@ SPEC CHECKSUMS:
   RNConvertPhAsset: 9b366b8a1abc194b76572712c6f7dd89c9e4e37f
   RNDateTimePicker: 968ccf716b3b6aee07849641966005924de5c0f9
   RNDeviceInfo: c5f8f3a456adcbba405ace475254b08febc4c095
-  RNFastImage: d4870d58f5936111c56218dbd7fcfc18e65b58ff
+  RNFastImage: 811ade1ec186fa437ff92bd189dd6721c0ed11d9
   RNFS: 2bd9eb49dc82fa9676382f0585b992c424cd59df
   RNGestureHandler: 7a5833d0f788dbd107fbb913e09aa0c1ff333c39
   RNImageCropPicker: 16951bc02411f50c4d197488ed6406a23dc3b5f1
