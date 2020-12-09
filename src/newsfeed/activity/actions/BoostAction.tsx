@@ -40,13 +40,9 @@ export default class BoostAction extends PureComponent<PropsType> {
           <View style={[theme.rowJustifyStart, theme.centered]}>
             <Icon
               name="trending-up"
-              style={[theme.fontS, theme.colorSecondaryText]}
+              style={theme.colorSecondaryText}
+              size={21}
             />
-            <Text
-              style={[styles.text, theme.colorSecondaryText]}
-              numberOfLines={1}>
-              {i18n.t('boost')}
-            </Text>
           </View>
         </TouchableHighlightCustom>
       </View>
