@@ -110,6 +110,7 @@ import PhoneValidationScreen from '../onboarding/v2/steps/PhoneValidationScreen'
 import AutoplaySettingsScreen from '../settings/screens/AutoplaySettingsScreen';
 import SuggestedChannelsScreen from '../onboarding/v2/steps/SuggestedChannelsScreen';
 import SuggestedGroupsScreen from '../onboarding/v2/steps/SuggestedGroupsScreen';
+import BoostChannelScreen from '../boost/v2/BoostChannelScreen';
 
 const isIos = Platform.OS === 'ios';
 
@@ -712,6 +713,11 @@ const RootStack = function (props) {
           <RootStackNav.Screen
             name="PhoneValidation"
             component={PhoneValidationScreen}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen
+            name="BoostChannelScreen"
+            component={BoostChannelScreen}
             options={modalOptions}
           />
         </Fragment>

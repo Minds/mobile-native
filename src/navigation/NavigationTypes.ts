@@ -35,6 +35,7 @@ export type RootStackParamList = {
     onComplete: Function;
     tiers?: Array<SupportTiersType>;
   };
+  BoostChannelScreen: {};
   PlusScreen: {
     onComplete: Function;
     pro?: boolean;
@@ -88,6 +89,7 @@ export type AppStackParamList = {
     onComplete?: Function;
     tiers?: Array<SupportTiersType>;
   };
+  BoostChannelScreen: {};
   ActivityFullScreenNav: {};
   Newsfeed: {};
   Capture: {

@@ -121,6 +121,7 @@ export interface ThemedStyle {
   positionAbsoluteTopRight: any;
   positionAbsoluteBottomRight: any;
   positionAbsoluteBottomRight: any;
+  backgroundPrimaryDarker: any;
   [name: string]: any;
 }
 const repetitions = 8;
@@ -367,6 +368,9 @@ export const buildStyle = (theme) => ({
   },
   backgroundPrimary: {
     backgroundColor: theme.primary_background,
+  },
+  backgroundPrimaryDarker: {
+    backgroundColor: theme.primary_background_darker,
   },
   backgroundSecondary: {
     backgroundColor: theme.secondary_background,

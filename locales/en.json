@@ -188,7 +188,9 @@
       "8": "Appeals on Boost decision",
       "12": "Onchain payment failed",
       "13": "Original post removed"
-    }
+    },
+    "boostChannel": "Boost Channel",
+    "boostPost": "Boost Post"
   },
   "translate": {
     "from": "translated from",
