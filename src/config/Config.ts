@@ -31,6 +31,10 @@ export const MINDS_ASSETS_CDN_URI = 'https://cdn-assets.minds.com/';
 // export const MINDS_CDN_URI = 'http://dev.minds.io/';
 
 export const BLOCKCHAIN_URI = 'https://www.minds.com/api/v2/blockchain/proxy/';
+
+export const BLOCKCHAIN_TOKEN_ADDRESS =
+  '0xb26631c6dda06ad89b93c71400d25692de89c068';
+
 // export const BLOCKCHAIN_URI = 'http://localhost:9545';
 export const MINDS_LINK_URI = 'https://www.minds.com/';
 export const CODE_PUSH_TOKEN = '';
