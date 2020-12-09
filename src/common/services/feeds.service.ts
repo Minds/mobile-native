@@ -111,30 +111,16 @@ export default class FeedsService {
       return result;
     }
 
-    this.injectBoosted(3, result, end);
-    this.injectBoosted(8, result, end);
-    this.injectBoosted(16, result, end);
-    this.injectBoosted(24, result, end);
-    this.injectBoosted(32, result, end);
-    this.injectBoosted(40, result, end);
-
-    return result;
-  }
-
-  /**
-   * Inject boost at given position
-   *
-   * @param {number} position
-   * @param {Array<ActivityModel>} entities
-   * @param {number} end
-   */
-  injectBoosted(position: number, entities: Array<BaseModel>, end: number) {
-    if (this.offset <= position && end >= position) {
-      const boost = boostedContentService.fetch();
-      if (boost) {
-        entities.splice(position + this.offset, 0, boost);
+    for (let i = this.offset; i < this.offset + result.length; i++) {
+      if ((i > 0 && i % 5 === 0) || i === 2) {
+        const boost = boostedContentService.fetch();
+        if (boost) {
+          result.splice(i, 0, boost);
+        }
       }
     }
+
+    return result;
   }
 
   /**
