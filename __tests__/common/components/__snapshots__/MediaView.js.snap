@@ -97,7 +97,7 @@ exports[`Media view component renders correctly 1`] = `
         }
         thumbnail={
           Object {
-            "uri": "www.something.com",
+            "uri": "https://cdn.minds.com/api/v3/media/proxy?size=96&src=www.something.com",
           }
         }
       />
