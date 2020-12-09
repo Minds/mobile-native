@@ -22,6 +22,7 @@ export class SettingsStore {
   creatorNsfw = [];
   useHashtag = true;
   composerMode = 'photo';
+  swipeAnimShown = false;
 
   @computed
   get dataSaverEnabled() {
@@ -54,6 +55,7 @@ export class SettingsStore {
       'IgnoreOnboarding',
       'DataSaverMode',
       'DataSaverModeDisablesOnWiFi',
+      'SwipeAnimShown',
     ]);
 
     // store theme changes
@@ -79,6 +81,8 @@ export class SettingsStore {
       : false;
     this.dataSaverMode = data[9][1] || false;
     this.dataSaverModeDisablesOnWiFi = data[10][1] || false;
+
+    this.swipeAnimShown = data[10][1];
 
     // set the initial value for hashtag
     getStores().hashtag.setAll(!this.useHashtags);
@@ -131,6 +135,14 @@ export class SettingsStore {
   setLeftHanded(value) {
     storageService.setItem('LeftHanded', value);
     this.leftHanded = value;
+  }
+  /**
+   * Set swipe animation shown
+   * @param value
+   */
+  setSwipeAnimShown(value: boolean) {
+    storageService.setItem('SwipeAnimShown', value);
+    this.swipeAnimShown = value;
   }
 
   setCreatorNsfw(value) {
