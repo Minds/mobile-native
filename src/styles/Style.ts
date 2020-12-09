@@ -18,6 +18,7 @@ export interface ThemedStyle {
   rowStretch: any;
   alignCenter: any;
   alignEnd: any;
+  alignSelfEnd: any;
   centered: any;
   colorWhite: any;
   colorBlack: any;
@@ -121,7 +122,7 @@ export interface ThemedStyle {
   positionAbsoluteTopRight: any;
   positionAbsoluteBottomRight: any;
   positionAbsoluteBottomRight: any;
-  backgroundPrimaryDarker: any;
+  backgroundPrimaryHighlight: any;
   [name: string]: any;
 }
 const repetitions = 8;
@@ -241,6 +242,9 @@ export const buildStyle = (theme) => ({
   },
   alignEnd: {
     alignItems: 'flex-end',
+  },
+  alignSelfEnd: {
+    alignSelf: 'flex-end',
   },
   centered: {
     alignContent: 'center',
@@ -369,8 +373,8 @@ export const buildStyle = (theme) => ({
   backgroundPrimary: {
     backgroundColor: theme.primary_background,
   },
-  backgroundPrimaryDarker: {
-    backgroundColor: theme.primary_background_darker,
+  backgroundPrimaryHighlight: {
+    backgroundColor: theme.primary_background_highlight,
   },
   backgroundSecondary: {
     backgroundColor: theme.secondary_background,

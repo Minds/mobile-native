@@ -1,7 +1,9 @@
-const createBoostStore = () => {
+import { Wallet, WalletCurrency } from '../../wallet/v2/WalletTypes';
+
+const createBoostStore = ({ wallet }: { wallet: Wallet }) => {
   const store = {
-    type: null,
     payment: 'tokens' as 'tokens' | 'onchain',
+    selectedPaymentMethod: wallet.offchain as WalletCurrency,
     amountViews: '1000',
     amountTokens: '1',
     target: null,
@@ -42,6 +44,17 @@ const createBoostStore = () => {
           this.amountViews = (aT * this.rates.onchain).toString();
         }
       }
+    },
+    get paymentMethods() {
+      return [wallet.onchain, wallet.offchain];
+    },
+    setPaymentMethod(walletCurrency: WalletCurrency) {
+      this.payment =
+        walletCurrency.label === 'Off-chain' ? 'tokens' : 'onchain';
+      this.selectedPaymentMethod = walletCurrency;
+    },
+    getMethodKey(walletCurrency: WalletCurrency) {
+      return walletCurrency.label;
     },
   };
   return store;

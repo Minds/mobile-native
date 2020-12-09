@@ -16,7 +16,7 @@ const BoostInput = observer(({ localStore }: PropsType) => {
     keyboardType: 'decimal-pad',
     selectTextOnFocus: true,
     style: theme.paddingVertical0x,
-    containerStyle: theme.backgroundPrimaryDarker,
+    containerStyle: theme.backgroundPrimaryHighlight,
     labelStyle: theme.marginBottom0x,
   };
   return (
@@ -39,6 +39,7 @@ const BoostInput = observer(({ localStore }: PropsType) => {
           theme.textRight,
           theme.paddingRight4x,
           theme.marginTop3x,
+          theme.marginBottom6x,
           theme.colorSecondaryText,
         ]}>
         1 token = 1000 views

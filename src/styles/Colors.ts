@@ -22,7 +22,7 @@ export default colors;
 export const LIGHT_THEME = {
   name: 'LIGHT',
   primary_background: '#FFFFFF',
-  primary_background_darker: '#E8E9E9',
+  primary_background_highlight: '#F8FAFA',
   secondary_background: '#F6F7F7',
   tertiary_background: '#E3E4E9',
   primary_text: '#43434D',
@@ -53,7 +53,7 @@ export const LIGHT_THEME = {
 export const DARK_THEME = {
   name: 'DARK',
   primary_background: '#242A30',
-  primary_background_darker: '#1E242A',
+  primary_background_highlight: '#1E242A',
   secondary_background: '#1A2025',
   tertiary_background: '#404E53',
   primary_text: '#FFFFFF',
