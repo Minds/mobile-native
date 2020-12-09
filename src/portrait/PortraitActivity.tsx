@@ -201,6 +201,7 @@ const PortraitActivity = observer((props: PropsType) => {
                     entity={entity}
                     navigation={navigation}
                     autoHeight={true}
+                    ignoreDataSaver={true}
                   />
                 </View>
               ) : (
