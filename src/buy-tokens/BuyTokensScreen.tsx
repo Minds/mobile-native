@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { ScrollView, View, StyleSheet, Pressable } from 'react-native';
 import ThemedStyles from '../styles/ThemedStyles';
 import Button from '../common/components/Button';
-import Modal from 'react-native-modal';
-import { WebView } from 'react-native-webview';
 import { Text } from 'react-native-elements';
 import { CheckBox } from 'react-native-elements';
+import { ThemedStyle } from '../styles/Style';
+import UniswapWidget from './uniswap-widget/UniswapWidget';
 
 type PaymentMethod = 'card' | 'bank' | 'crypto';
 type PaymentOption = { type: PaymentMethod; name: string };
@@ -37,6 +37,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#cccccc',
     color: '#cccccc',
   },
+  closeButton: {
+    zIndex: 999,
+    position: 'absolute',
+    right: -10,
+    top: -10,
+  },
 });
 
 const paymentMethodsList: PaymentOption[] = [
@@ -45,50 +51,48 @@ const paymentMethodsList: PaymentOption[] = [
   { type: 'crypto', name: 'Crypto' },
 ];
 
-const modalInjectedScript =
-  'window.ReactNativeWebView.postMessage(Math.max(document.body.offsetHeight, document.body.scrollHeight));';
+const buildButtonStyles = (theme: ThemedStyle, position: number) => {
+  switch (position) {
+    case 0:
+      return [styles.firstOption, theme.border2x];
+    case 1:
+      return [theme.borderTop2x, theme.borderBottom2x];
+    case 2:
+      return [styles.lastOption, theme.border2x];
+    default:
+      return [];
+  }
+};
 
 export default function () {
   const theme = ThemedStyles.style;
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod | null>(
     null,
   );
-  const [isModalVisible, setModalVisible] = useState(false);
+  const [showUniswapWidget, setShowUniswapWidget] = useState(false);
   const [aggressTerms, setAggressTerms] = useState(false);
   const canBuyTokens = !!paymentMethod && aggressTerms;
 
-  const toggleModal = () => setModalVisible(!isModalVisible);
+  const toggleUniswapModal = () => setShowUniswapWidget(!showUniswapWidget);
   const toggleAgreesTerms = () => setAggressTerms(!aggressTerms);
+
+  const handleOptionSelection = (newType: PaymentMethod) => {
+    setPaymentMethod((prevType) => {
+      const isDeselection = prevType === newType;
+      return isDeselection ? null : newType;
+    });
+  };
+
+  const handleBuy = () => {
+    if (paymentMethod === 'crypto') {
+      toggleUniswapModal();
+    } else {
+      console.log('transak');
+    }
+  };
 
   return (
     <>
-      <Modal
-        isVisible={isModalVisible}
-        coverScreen={false}
-        onBackButtonPress={toggleModal}>
-        <View
-          style={[
-            theme.flexContainer,
-            theme.justifyCenter,
-            theme.borderRadius2x,
-          ]}>
-          <Button
-            text="Close"
-            style={[theme.padding2x]}
-            onPress={toggleModal}
-          />
-          <WebView
-            source={{
-              uri:
-                //TODO: this has to be dynamic
-                'https://app.uniswap.org/#/swap?outputCurrency=0xb26631c6dda06ad89b93c71400d25692de89c068',
-            }}
-            bounces={true}
-            scrollEnabled={false}
-            injectedJavaScript={modalInjectedScript}
-          />
-        </View>
-      </Modal>
       <ScrollView
         style={[theme.flexContainer, theme.backgroundPrimary]}
         contentContainerStyle={theme.padding4x}>
@@ -109,14 +113,10 @@ export default function () {
               style={[
                 theme.borderPrimary,
                 styles.option,
-                index === 0 ? styles.firstOption : '',
-                index === 1
-                  ? [theme.borderTop2x, theme.borderBottom2x]
-                  : theme.border2x,
-                index === 2 ? styles.lastOption : '',
+                ...buildButtonStyles(theme, index),
                 paymentMethod === type ? theme.backgroundSecondary : '',
               ]}
-              onPress={() => setPaymentMethod(type)}>
+              onPress={() => handleOptionSelection(type)}>
               <Text>{name}</Text>
             </Pressable>
           ))}
@@ -153,11 +153,16 @@ export default function () {
               theme.alignCenter,
               !canBuyTokens ? styles.disabledButton : '',
             ]}
-            onPress={toggleModal}
+            onPress={handleBuy}
             disabled={!canBuyTokens}
           />
         </View>
       </ScrollView>
+      <UniswapWidget
+        isVisible={showUniswapWidget}
+        onBackButtonPress={toggleUniswapModal}
+        onCloseButtonPress={toggleUniswapModal}
+      />
     </>
   );
 }
