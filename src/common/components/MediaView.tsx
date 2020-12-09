@@ -30,6 +30,7 @@ import Colors from '../../styles/Colors';
 import type ActivityModel from 'src/newsfeed/ActivityModel';
 import { MindsVideoStoreType } from '../../media/v2/mindsVideo/createMindsVideoStore';
 import ThemedStyles from '../../styles/ThemedStyles';
+import { DATA_SAVER_THUMB_RES } from '../../config/Config';
 
 type PropsType = {
   entity: ActivityModel;
@@ -83,7 +84,9 @@ export default class MediaView extends Component<PropsType> {
         return this.getImage(
           source,
           // do not show a thumbnail for GIFs
-          !this.props.entity.isGif() && mediaProxyUrl(source, 128),
+          !this.props.entity.isGif()
+            ? { uri: mediaProxyUrl(source.uri, DATA_SAVER_THUMB_RES) }
+            : null,
         );
       case 'video':
         return this.getVideo();
@@ -98,7 +101,10 @@ export default class MediaView extends Component<PropsType> {
       };
 
       const thumbnail = {
-        uri: mediaProxyUrl(this.props.entity.thumbnail_src, 128),
+        uri: mediaProxyUrl(
+          this.props.entity.thumbnail_src,
+          DATA_SAVER_THUMB_RES,
+        ),
       };
 
       return (
@@ -259,6 +265,12 @@ export default class MediaView extends Component<PropsType> {
     this.source = source;
     const autoHeight = this.props.autoHeight;
     const custom_data = this.props.entity.custom_data;
+
+    console.log(
+      '\n-----\n' + this.props.entity.ownerObj.name,
+      '\n' + source.uri,
+      '\n' + thumbnail.uri,
+    );
 
     if (this.state.imageLoadFailed) {
       let height = 200;

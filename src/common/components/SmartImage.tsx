@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import {
   Image,
   ImageURISource,
+  Platform,
   StyleSheet,
   TouchableOpacity,
   View,
@@ -29,7 +30,10 @@ interface SmartImageProps {
   resizeMode?: ResizeMode;
   withoutDownloadButton?: boolean;
   imageVisible?: boolean;
+  thumbBlurRadius?: number;
 }
+
+const defaultBlur = Platform.select({ android: 1, ios: 4 });
 
 /**
  * Fast-image wrapper with retry and connectivity awareness
@@ -202,7 +206,7 @@ export default observer(function (props: SmartImageProps) {
         store.showOverlay && props.thumbnail && (
           <Image
             key={`thumbnail:${store.retries}`}
-            blurRadius={5}
+            blurRadius={props.thumbBlurRadius || defaultBlur}
             style={props.style}
             source={props.thumbnail}
           />
