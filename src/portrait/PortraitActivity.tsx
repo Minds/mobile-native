@@ -147,7 +147,7 @@ const PortraitActivity = observer((props: PropsType) => {
 
   const shadowOpt = {
     width: window.width,
-    height: 70,
+    height: 70 + (props.hasPaginator ? 26 : 0),
     color: '#000',
     border: 5,
     opacity: 0.15,
