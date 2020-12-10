@@ -13,11 +13,11 @@ import {
   Extrapolate,
 } from '@crowdlinker/react-native-pager';
 
-import { useDimensions } from '@react-native-community/hooks';
 import ThemedStyles from '../styles/ThemedStyles';
 import MetadataService from '../common/services/metadata.service';
 import UserContentSwiper from './UserContentSwiper';
 import { useStores } from '../common/hooks/use-stores';
+import { useSafeAreaFrame } from 'react-native-safe-area-context';
 
 type ActivityFullScreenRouteProp = RouteProp<
   ActivityFullScreenParamList,
@@ -122,7 +122,7 @@ const PortraitViewerScreen = observer((props: PropsType) => {
     }, [portraitStore]),
   );
 
-  const { width, height } = useDimensions().window;
+  const { width, height } = useSafeAreaFrame();
 
   const pagerStyle: any = {
     height,

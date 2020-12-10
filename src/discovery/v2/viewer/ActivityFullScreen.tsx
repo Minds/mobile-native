@@ -1,5 +1,5 @@
 import React, { useRef, useCallback, useEffect } from 'react';
-import { View, Text, StyleSheet, Platform, Clipboard } from 'react-native';
+import { View, StyleSheet, Platform, Clipboard } from 'react-native';
 import { useDimensions } from '@react-native-community/hooks';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { useFocus } from '@crowdlinker/react-native-pager';
@@ -12,7 +12,6 @@ import MediaView from '../../../common/components/MediaView';
 import OwnerBlock from '../../../newsfeed/activity/OwnerBlock';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import ActivityActionSheet from '../../../newsfeed/activity/ActivityActionSheet';
-import formatDate from '../../../common/helpers/date';
 import i18n from '../../../common/services/i18n.service';
 
 import FloatingBackButton from '../../../common/components/FloatingBackButton';

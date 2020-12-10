@@ -169,7 +169,6 @@ class Comment extends Component<PropsType> {
                 entity={comment}
                 style={styles.media}
                 onPress={this.navToImage}
-                width={Dimensions.get('window').width - 60}
               />
             </View>
           )}
