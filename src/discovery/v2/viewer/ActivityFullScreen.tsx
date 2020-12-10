@@ -83,7 +83,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
     paddingBottom: insets.bottom - 10,
   });
   const { current: cleanTop } = useRef({
-    paddingTop: insets.top || 10,
+    paddingTop: insets.top - 10 || 2,
   });
 
   const onPressComment = useCallback(() => {
