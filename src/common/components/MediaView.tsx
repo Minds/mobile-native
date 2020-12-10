@@ -27,7 +27,7 @@ import logService from '../services/log.service';
 import i18n from '../services/i18n.service';
 import { showMessage } from 'react-native-flash-message';
 import Colors from '../../styles/Colors';
-import type ActivityModel from 'src/newsfeed/ActivityModel';
+import type ActivityModel from '../../newsfeed/ActivityModel';
 import { MindsVideoStoreType } from '../../media/v2/mindsVideo/createMindsVideoStore';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { DATA_SAVER_THUMB_RES } from '../../config/Config';
@@ -41,6 +41,7 @@ type PropsType = {
   onPress?: () => void;
   hideOverlay?: boolean;
   ignoreDataSaver?: boolean;
+  width?: number;
 };
 /**
  * Activity
@@ -48,7 +49,9 @@ type PropsType = {
 @observer
 export default class MediaView extends Component<PropsType> {
   _currentThumbnail = 0;
-  videoPlayer: MindsVideo | MindsVideoStoreType | null = null;
+  videoPlayer: MindsVideoStoreType | null = null;
+
+  source?: { uri: string } | undefined;
 
   static defaultProps = {
     width: Dimensions.get('window').width,
@@ -170,6 +173,7 @@ export default class MediaView extends Component<PropsType> {
    * Download the media to the gallery
    */
   runDownload = async () => {
+    if (!this.source) return;
     try {
       await download.downloadToGallery(this.source.uri, this.props.entity);
       Alert.alert(i18n.t('success'), i18n.t('imageAdded'));
@@ -221,23 +225,25 @@ export default class MediaView extends Component<PropsType> {
   }
 
   imageError = (err) => {
-    logService.log('[MediaView] Image error: ' + this.source.uri, err);
+    logService.log('[MediaView] Image error: ' + this.source?.uri, err);
     this.setState({ imageLoadFailed: true });
   };
 
   imageLongPress = () => {
     if (this.props.entity.perma_url) {
       setTimeout(async () => {
-        await Clipboard.setString(this.props.entity.perma_url);
-        showMessage({
-          floating: true,
-          position: 'top',
-          message: i18n.t('linkCopied'),
-          duration: 1300,
-          backgroundColor: '#FFDD63DD',
-          color: Colors.dark,
-          type: 'info',
-        });
+        if (this.props.entity.perma_url) {
+          await Clipboard.setString(this.props.entity.perma_url);
+          showMessage({
+            floating: true,
+            position: 'top',
+            message: i18n.t('linkCopied'),
+            duration: 1300,
+            backgroundColor: '#FFDD63DD',
+            color: Colors.dark,
+            type: 'info',
+          });
+        }
       }, 100);
     } else {
       this.download();
@@ -263,28 +269,10 @@ export default class MediaView extends Component<PropsType> {
    */
   getImage(source, thumbnail?) {
     this.source = source;
-    const autoHeight = this.props.autoHeight;
     const custom_data = this.props.entity.custom_data;
-
-    console.log(
-      '\n-----\n' + this.props.entity.ownerObj.name,
-      '\n' + source.uri,
-      '\n' + thumbnail.uri,
-    );
 
     if (this.state.imageLoadFailed) {
       let height = 200;
-
-      if (
-        !autoHeight &&
-        custom_data &&
-        custom_data[0] &&
-        custom_data[0].height &&
-        custom_data[0].height !== '0'
-      ) {
-        let ratio = custom_data[0].height / custom_data[0].width;
-        height = this.props.width * ratio;
-      }
 
       let text = (
         <Text style={styles.imageLoadErrorText}>{i18n.t('errorMedia')}</Text>
