@@ -190,13 +190,6 @@ const AccountScreenOptions = (navigation) => [
   },
 ];
 
-const NetworkScreenOptions = (navigation) => [
-  {
-    title: i18n.t('settings.networkOptions.1'),
-    onPress: () => navigation.push('DataSaverScreen'),
-  },
-];
-
 const SecurityScreenOptions = (navigation) => [
   {
     title: i18n.t('settings.securityOptions.2'),
@@ -498,14 +491,6 @@ const AppStack = function () {
           title: i18n.t('settings.account'),
         }}
         initialParams={{ options: AccountScreenOptions }}
-      />
-      <AppStackNav.Screen
-        name="Network"
-        component={OptionsDrawer}
-        options={{
-          title: i18n.t('settings.network'),
-        }}
-        initialParams={{ options: NetworkScreenOptions }}
       />
       <AppStackNav.Screen
         name="Security"

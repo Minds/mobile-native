@@ -30,8 +30,8 @@ export default function ({ navigation }) {
       params: {},
     },
     {
-      title: i18n.t('settings.network'),
-      screen: 'Network',
+      title: i18n.t('settings.networkOptions.1'),
+      screen: 'DataSaverScreen',
       params: {},
     },
     {

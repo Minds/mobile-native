@@ -146,7 +146,7 @@ const ChannelHeader = observer((props: PropsType) => {
   const Background: any = showBanner ? ImageBackground : View;
 
   return (
-    <View style={[styles.container, cleanTop]}>
+    <View style={styles.container}>
       <Background
         style={styles.banner}
         source={channel.getBannerSource()}

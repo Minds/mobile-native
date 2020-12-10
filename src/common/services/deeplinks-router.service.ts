@@ -74,7 +74,9 @@ class DeeplinksRouter {
   }
 
   cleanUrl(url) {
-    return url.replace(/^(http(s)?(:\/\/))?(www\.)?[a-zA-Z0-9-_\.]+\//, '');
+    return url
+      .replace(/^(http(s)?(:\/\/))?(www\.)?[a-zA-Z0-9-_\.]+\//, '')
+      .replace('mindsapp://', '');
   }
 
   /**
