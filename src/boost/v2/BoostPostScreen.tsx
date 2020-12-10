@@ -1,3 +1,4 @@
+import { RouteProp } from '@react-navigation/native';
 import { observer, useLocalStore } from 'mobx-react';
 import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
@@ -11,24 +12,34 @@ import BoostHeader from './BoostHeader';
 import createBoostStore from './createBoostStore';
 import NewsfeedBoostTab from './NewsfeedBoostTab';
 import OfferBoostTab from './OfferBoostTab';
+import { RootStackParamList } from '../../navigation/NavigationTypes';
 
 type BoostTabType = 'newsfeed' | 'offer';
 
-const tabs: Array<TabType<BoostTabType>> = [
-  { id: 'newsfeed', title: i18n.t('boosts.tabNewsfeed') },
-  { id: 'offer', title: i18n.t('boosts.tabOffers') },
-];
+type BoostPostScreenRouteProp = RouteProp<
+  RootStackParamList,
+  'BoostPostScreen'
+>;
 
-const BoostPostScreen = observer(() => {
+type PropsType = {
+  route: BoostPostScreenRouteProp;
+};
+
+const BoostPostScreen = observer(({ route }: PropsType) => {
   const theme = ThemedStyles.style;
   const [tab, setTab] = useState<BoostTabType>('newsfeed');
   const wallet = useStores().wallet;
   const localStore = useLocalStore(createBoostStore, {
     wallet: wallet.wallet,
+    entity: route.params.entity,
   });
   useEffect(() => {
     wallet.loadOffchainAndReceiver();
   }, [wallet]);
+  const tabs: Array<TabType<BoostTabType>> = [
+    { id: 'newsfeed', title: i18n.t('boosts.tabNewsfeed') },
+    { id: 'offer', title: i18n.t('boosts.tabOffers') },
+  ];
   const renderTab = () => {
     switch (tab) {
       case 'newsfeed':
@@ -41,7 +52,7 @@ const BoostPostScreen = observer(() => {
   return (
     <View style={[theme.flexContainer, theme.backgroundPrimary]}>
       <BoostHeader title={i18n.t('boosts.boostPost')} />
-      <View style={theme.marginTop7x}>
+      <View style={theme.marginTop4x}>
         <TopbarTabbar tabs={tabs} onChange={setTab} current={tab} />
       </View>
       {renderTab()}

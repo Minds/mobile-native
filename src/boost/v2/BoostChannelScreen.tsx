@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { useStores } from '../../common/hooks/__mocks__/use-stores';
 import i18n from '../../common/services/i18n.service';
+import sessionService from '../../common/services/session.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import BoostButton from './BoostButton';
 import BoostHeader from './BoostHeader';
@@ -15,6 +16,7 @@ const BoostChannelScreen = observer(() => {
   const wallet = useStores().wallet;
   const localStore = useLocalStore(createBoostStore, {
     wallet: wallet.wallet,
+    entity: sessionService.getUser(),
   });
   useEffect(() => {
     wallet.loadOffchainAndReceiver();
@@ -26,7 +28,7 @@ const BoostChannelScreen = observer(() => {
         <BoostInput localStore={localStore} />
         <BoostPayment localStore={localStore} />
       </View>
-      <BoostButton localStore={localStore} boostType={'channel'} />
+      <BoostButton localStore={localStore} />
     </View>
   );
 });

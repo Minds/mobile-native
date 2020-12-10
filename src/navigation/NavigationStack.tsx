@@ -27,7 +27,6 @@ import BlogsListScreen from '../blogs/BlogsListScreen';
 import BlogsViewScreen from '../blogs/BlogsViewScreen';
 import FabScreenV2 from '../wire/v2/FabScreen';
 import ViewImageScreen from '../media/ViewImageScreen';
-import BoostScreen from '../boost/creator/BoostScreen';
 import BlockchainWalletScreen from '../blockchain/wallet/BlockchainWalletScreen';
 import BlockchainWalletModalScreen from '../blockchain/wallet/modal/BlockchainWalletModalScreen';
 import BlockchainWalletImportScreen from '../blockchain/wallet/import/BlockchainWalletImportScreen';
@@ -369,11 +368,6 @@ const AppStack = function () {
         component={EmailConfirmationScreen}
       />
       <AppStackNav.Screen name="Update" component={UpdatingScreen} />
-      <AppStackNav.Screen
-        name="Boost"
-        component={BoostScreen}
-        options={{ gestureEnabled: false }}
-      />
       <AppStackNav.Screen
         name="Notifications"
         component={NotificationsScreen}

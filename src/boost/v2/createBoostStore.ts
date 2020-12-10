@@ -1,35 +1,27 @@
-import UserModel from '../../channel/UserModel';
-import ActivityModel from '../../newsfeed/ActivityModel';
+import { showNotification } from '../../../AppMessages';
+import BlockchainBoostService from '../../blockchain/services/BlockchainBoostService';
+import Web3Service from '../../blockchain/services/Web3Service';
+import type UserModel from '../../channel/UserModel';
+import apiService from '../../common/services/api.service';
+import i18n from '../../common/services/i18n.service';
+import NavigationService from '../../navigation/NavigationService';
+import type ActivityModel from '../../newsfeed/ActivityModel';
 import { Wallet, WalletCurrency } from '../../wallet/v2/WalletTypes';
 
-/**
- *
- * example post
- * https://www.minds.com/api/v2/boost/prepare/1183558312603938816?
- * response: {"status":"success","guid":"1183558605666807808","checksum":"77be3b34b4314092808b8e704f2f7861"}
- *
- * https://www.minds.com/api/v2/boost/activity/1183558312603938816/968187695744425997
- * params: {"guid":"1183558605666807808","bidType":"tokens","impressions":5000,"categories":[],"priority":null,"paymentMethod":{"method":"offchain","address":"offchain"},"checksum":"77be3b34b4314092808b8e704f2f7861"}
- *
- * example channel
- * https://www.minds.com/api/v2/boost/prepare/968187695744425997?
- * response {"status":"success","guid":"1183559893827186688","checksum":"d3430d3c251b9596fb27ae4d645e3c09"}
- *
- * https://www.minds.com/api/v2/boost/user/968187695744425997/0
- * params: {"guid":"1183559893827186688","bidType":"tokens","impressions":1000,"categories":[],"priority":null,"paymentMethod":{"method":"offchain","address":"offchain"},"checksum":"d3430d3c251b9596fb27ae4d645e3c09"}
- */
+export type boostType = 'channel' | 'post' | 'offer';
 
 const createBoostStore = ({
   wallet,
-  guid,
-  boostType,
+  entity,
 }: {
   wallet: Wallet;
-  guid: string;
-  boostType: string;
+  entity: UserModel | ActivityModel;
 }) => {
   const store = {
+    boostType: 'channel' as boostType,
+    loading: false,
     payment: 'tokens' as 'tokens' | 'onchain',
+    boostOfferTarget: null as UserModel | null,
     selectedPaymentMethod: wallet.offchain as WalletCurrency,
     amountViews: '1000',
     amountTokens: '1',
@@ -72,8 +64,21 @@ const createBoostStore = ({
         }
       }
     },
+    setBoostType(value: boostType) {
+      this.boostType = value;
+    },
     get paymentMethods() {
       return [wallet.onchain, wallet.offchain];
+    },
+    get buttonText() {
+      switch (this.boostType) {
+        case 'channel':
+          return i18n.t('boosts.boostChannel');
+        case 'post':
+          return i18n.t('boosts.boostPost');
+        case 'offer':
+          return i18n.t('boosts.boostOffer');
+      }
     },
     setPaymentMethod(walletCurrency: WalletCurrency) {
       this.payment =
@@ -82,6 +87,113 @@ const createBoostStore = ({
     },
     getMethodKey(walletCurrency: WalletCurrency) {
       return walletCurrency.label;
+    },
+    setBoostOfferTarget(target: UserModel) {
+      this.boostOfferTarget = target;
+    },
+    async prepare() {
+      const { guid, checksum } =
+        <any>await apiService.get(`api/v2/boost/prepare/${entity.guid}`) || {};
+
+      if (!guid) {
+        throw new Error(i18n.t('boosts.errorCanNotGenerate'));
+      }
+
+      return { guid, checksum };
+    },
+    async buildPaymentMethod(guid, checksum) {
+      if (this.payment === 'onchain') {
+        return {
+          method: 'onchain',
+          txHash:
+            this.boostType !== 'offer'
+              ? await BlockchainBoostService.create(
+                  guid,
+                  this.amountTokens,
+                  checksum,
+                )
+              : await BlockchainBoostService.createPeer(
+                  this.boostOfferTarget?.eth_wallet,
+                  guid,
+                  this.amountTokens,
+                  checksum,
+                ),
+          address: this.selectedPaymentMethod.address,
+        };
+      } else {
+        return {
+          method: 'offchain',
+          address: 'offchain',
+        };
+      }
+    },
+    get endpoint() {
+      if (this.boostType === 'post') {
+        const type = 'type' in entity && entity.type ? entity.type : 'activity';
+        return `api/v2/boost/${type}/${entity.guid}/${entity.owner_guid}`;
+      } else {
+        return `api/v2/boost/user/${entity.guid}/0`;
+      }
+    },
+    async boostPostOrChannel({ guid, checksum }) {
+      try {
+        await apiService.post(this.endpoint, {
+          guid,
+          bidType: 'tokens',
+          impressions: this.amountViews,
+          paymentMethod: await this.buildPaymentMethod(guid, checksum),
+          checksum,
+        });
+        this.loading = false;
+      } catch (err) {
+        throw err;
+      }
+    },
+    async boostOffer({ guid, checksum }) {
+      try {
+        const amount = Web3Service.web3.utils
+          .toWei(`${this.amountTokens}`, 'ether')
+          .toString();
+        await apiService.post(
+          `api/v2/boost/peer/${entity.guid}/${entity.owner_guid}`,
+          {
+            guid,
+            currency: 'tokens',
+            paymentMethod: await this.buildPaymentMethod(guid, checksum),
+            bid: amount,
+            destination: this.boostOfferTarget?.guid,
+            scheduleTs: this.scheduleTs,
+            postToFacebook: this.postToFacebook ? 1 : null,
+            checksum,
+          },
+        );
+        this.loading = false;
+      } catch (err) {
+        throw err;
+      }
+    },
+    async makeBoost() {
+      try {
+        const response = await this.prepare();
+        switch (this.boostType) {
+          case 'channel':
+          case 'post':
+            await this.boostPostOrChannel(response);
+            break;
+          case 'offer':
+            await this.boostOffer(response);
+            break;
+        }
+        NavigationService.goBack();
+      } catch (err) {
+        showNotification(err.message, 'danger');
+      } finally {
+        this.loading = false;
+      }
+    },
+    boost() {
+      this.makeBoost();
+      this.loading = true;
     },
   };
   return store;

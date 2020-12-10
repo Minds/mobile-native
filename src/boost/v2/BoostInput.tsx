@@ -17,7 +17,7 @@ const BoostInput = observer(({ localStore }: PropsType) => {
     selectTextOnFocus: true,
     style: theme.paddingVertical0x,
     containerStyle: theme.backgroundPrimaryHighlight,
-    labelStyle: theme.marginBottom0x,
+    labelStyle: [theme.marginBottom0x, theme.fontM],
   };
   return (
     <View>
@@ -38,7 +38,7 @@ const BoostInput = observer(({ localStore }: PropsType) => {
         style={[
           theme.textRight,
           theme.paddingRight4x,
-          theme.marginTop3x,
+          theme.marginTop2x,
           theme.marginBottom6x,
           theme.colorSecondaryText,
         ]}>

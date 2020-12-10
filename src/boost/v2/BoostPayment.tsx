@@ -6,6 +6,7 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import { BoostStoreType } from './createBoostStore';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { WalletCurrency } from '../../wallet/v2/WalletTypes';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 type PropsType = {
   localStore: BoostStoreType;
@@ -34,7 +35,9 @@ const BoostPayment = observer(({ localStore }: PropsType) => {
       </Text>
       <TouchableOpacity
         style={[
-          theme.padding4x,
+          theme.rowJustifySpaceBetween,
+          theme.paddingVertical3x,
+          theme.paddingHorizontal4x,
           theme.backgroundPrimaryHighlight,
           theme.borderPrimary,
           theme.borderTop,
@@ -44,6 +47,11 @@ const BoostPayment = observer(({ localStore }: PropsType) => {
           selectorRef.current?.show(localStore.selectedPaymentMethod.label)
         }>
         {getMethodLabel(localStore.selectedPaymentMethod)}
+        <Icon
+          name="menu-down"
+          size={24}
+          color={ThemedStyles.getColor('icon')}
+        />
       </TouchableOpacity>
       <Selector
         ref={selectorRef}

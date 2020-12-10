@@ -1,21 +1,20 @@
+import { observer } from 'mobx-react';
 import React from 'react';
 import Button from '../../common/components/Button';
-import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { BoostStoreType } from './createBoostStore';
 
 type PropsType = {
   localStore: BoostStoreType;
-  boostType: 'channel' | 'post' | 'offer';
 };
 
-const BoostButton = ({ localStore, boostType }: PropsType) => {
+const BoostButton = observer(({ localStore }: PropsType) => {
   const theme = ThemedStyles.style;
 
   return (
     <Button
-      onPress={() => false}
-      text={i18n.t('boosts.boostChannel')}
+      onPress={localStore.boost}
+      text={localStore.buttonText}
       containerStyle={[
         theme.backgroundPrimary,
         theme.paddingVertical2x,
@@ -28,8 +27,9 @@ const BoostButton = ({ localStore, boostType }: PropsType) => {
         theme.alignSelfEnd,
       ]}
       textStyle={[theme.buttonText, theme.colorPrimaryText, theme.bold]}
+      loading={localStore.loading}
     />
   );
-};
+});
 
 export default BoostButton;
