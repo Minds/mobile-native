@@ -111,6 +111,7 @@ import AutoplaySettingsScreen from '../settings/screens/AutoplaySettingsScreen';
 import SuggestedChannelsScreen from '../onboarding/v2/steps/SuggestedChannelsScreen';
 import SuggestedGroupsScreen from '../onboarding/v2/steps/SuggestedGroupsScreen';
 import BoostChannelScreen from '../boost/v2/BoostChannelScreen';
+import BoostPostScreen from '../boost/v2/BoostPostScreen';
 
 const isIos = Platform.OS === 'ios';
 
@@ -718,6 +719,11 @@ const RootStack = function (props) {
           <RootStackNav.Screen
             name="BoostChannelScreen"
             component={BoostChannelScreen}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen
+            name="BoostPostScreen"
+            component={BoostPostScreen}
             options={modalOptions}
           />
         </Fragment>

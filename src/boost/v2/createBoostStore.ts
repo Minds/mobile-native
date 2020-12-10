@@ -1,6 +1,33 @@
+import UserModel from '../../channel/UserModel';
+import ActivityModel from '../../newsfeed/ActivityModel';
 import { Wallet, WalletCurrency } from '../../wallet/v2/WalletTypes';
 
-const createBoostStore = ({ wallet }: { wallet: Wallet }) => {
+/**
+ *
+ * example post
+ * https://www.minds.com/api/v2/boost/prepare/1183558312603938816?
+ * response: {"status":"success","guid":"1183558605666807808","checksum":"77be3b34b4314092808b8e704f2f7861"}
+ *
+ * https://www.minds.com/api/v2/boost/activity/1183558312603938816/968187695744425997
+ * params: {"guid":"1183558605666807808","bidType":"tokens","impressions":5000,"categories":[],"priority":null,"paymentMethod":{"method":"offchain","address":"offchain"},"checksum":"77be3b34b4314092808b8e704f2f7861"}
+ *
+ * example channel
+ * https://www.minds.com/api/v2/boost/prepare/968187695744425997?
+ * response {"status":"success","guid":"1183559893827186688","checksum":"d3430d3c251b9596fb27ae4d645e3c09"}
+ *
+ * https://www.minds.com/api/v2/boost/user/968187695744425997/0
+ * params: {"guid":"1183559893827186688","bidType":"tokens","impressions":1000,"categories":[],"priority":null,"paymentMethod":{"method":"offchain","address":"offchain"},"checksum":"d3430d3c251b9596fb27ae4d645e3c09"}
+ */
+
+const createBoostStore = ({
+  wallet,
+  guid,
+  boostType,
+}: {
+  wallet: Wallet;
+  guid: string;
+  boostType: string;
+}) => {
   const store = {
     payment: 'tokens' as 'tokens' | 'onchain',
     selectedPaymentMethod: wallet.offchain as WalletCurrency,

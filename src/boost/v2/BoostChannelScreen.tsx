@@ -1,7 +1,6 @@
 import { observer, useLocalStore } from 'mobx-react';
 import React, { useEffect } from 'react';
 import { View } from 'react-native';
-import Button from '../../common/components/Button';
 import { useStores } from '../../common/hooks/__mocks__/use-stores';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';

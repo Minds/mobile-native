@@ -1,11 +1,10 @@
 import React, { PureComponent } from 'react';
 
-import { Text, View, StyleSheet, TouchableHighlight } from 'react-native';
+import { View, TouchableHighlight } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
-import i18n from '../../../common/services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import ActivityModel from '../../../newsfeed/ActivityModel';
 
@@ -53,18 +52,8 @@ export default class BoostAction extends PureComponent<PropsType> {
    * Open boost screen
    */
   openBoost = () => {
-    this.props.navigation.push('Boost', { entity: this.props.entity });
+    this.props.navigation.push('BoostPostScreen', {
+      entity: this.props.entity,
+    });
   };
 }
-
-const styles = StyleSheet.create({
-  text: {
-    fontFamily: 'Roboto',
-    fontSize: 12,
-    textAlignVertical: 'center',
-    lineHeight: 21,
-    letterSpacing: 1,
-    marginLeft: 3,
-    fontWeight: '500',
-  },
-});
