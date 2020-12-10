@@ -6,6 +6,7 @@ import { Text } from 'react-native-elements';
 import { CheckBox } from 'react-native-elements';
 import { ThemedStyle } from '../styles/Style';
 import UniswapWidget from './uniswap-widget/UniswapWidget';
+import TransakWidget from './transak-widget/TransakWidget';
 
 type PaymentMethod = 'card' | 'bank' | 'crypto';
 type PaymentOption = { type: PaymentMethod; name: string };
@@ -70,10 +71,12 @@ export default function () {
     null,
   );
   const [showUniswapWidget, setShowUniswapWidget] = useState(false);
+  const [showTransakWidget, setShowTransakWidget] = useState(false);
   const [aggressTerms, setAggressTerms] = useState(false);
   const canBuyTokens = !!paymentMethod && aggressTerms;
 
   const toggleUniswapModal = () => setShowUniswapWidget(!showUniswapWidget);
+  const toggleTransakModal = () => setShowTransakWidget(!showTransakWidget);
   const toggleAgreesTerms = () => setAggressTerms(!aggressTerms);
 
   const handleOptionSelection = (newType: PaymentMethod) => {
@@ -87,7 +90,7 @@ export default function () {
     if (paymentMethod === 'crypto') {
       toggleUniswapModal();
     } else {
-      console.log('transak');
+      toggleTransakModal();
     }
   };
 
@@ -160,8 +163,13 @@ export default function () {
       </ScrollView>
       <UniswapWidget
         isVisible={showUniswapWidget}
-        onBackButtonPress={toggleUniswapModal}
         onCloseButtonPress={toggleUniswapModal}
+      />
+      <TransakWidget
+        onOrderSuccessFull={console.log}
+        onError={console.error}
+        isVisible={showTransakWidget}
+        onCloseButtonPress={toggleTransakModal}
       />
     </>
   );
