@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: 'transparent',
     height: imgSize,
+    paddingTop: 10,
     position: 'relative',
     borderRadius: 1,
   },

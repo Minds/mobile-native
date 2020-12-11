@@ -36,7 +36,7 @@ exports[`Activity screen component renders correctly  1`] = `
               "shadowRadius": 2.22,
             },
             Object {
-              "paddingTop": 10,
+              "paddingTop": -10,
             },
           ],
         ]

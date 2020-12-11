@@ -5,6 +5,7 @@ import {
   View,
   Dimensions,
   Keyboard,
+  Platform,
 } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 
@@ -134,7 +135,9 @@ export default observer(function (props) {
                 theme.paddingHorizontal4x,
                 theme.marginTop4x,
                 styles.input,
-                { height: localStore.height },
+                Platform.OS === 'ios'
+                  ? fontSize
+                  : [fontSize, { height: localStore.height }],
               ]}
               onContentSizeChange={localStore.onSizeChange}
               ref={inputRef}
