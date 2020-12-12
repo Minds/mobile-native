@@ -20,6 +20,12 @@ const getUniSwapURL = (action: UniswapAction) => {
   }
 };
 
+/**
+ * The Uniswap Widget supports to action options:
+ * swap => opens standard tokens swap
+ * add => opens uniswap pool
+ *
+ */
 export default function ({
   isVisible,
   onCloseButtonPress,
