@@ -1,12 +1,18 @@
-import React, { useState } from 'react';
-import { ScrollView, View, StyleSheet, Pressable } from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { ScrollView, View, StyleSheet, Pressable, Linking } from 'react-native';
 import ThemedStyles from '../styles/ThemedStyles';
 import Button from '../common/components/Button';
 import { Text } from 'react-native-elements';
 import { CheckBox } from 'react-native-elements';
 import { ThemedStyle } from '../styles/Style';
 import UniswapWidget from './uniswap-widget/UniswapWidget';
-import TransakWidget from './transak-widget/TransakWidget';
+import TransakWidget, {
+  TransakOrderProcessed,
+} from './transak-widget/TransakWidget';
+import OrderReportModal, {
+  OrderReport,
+} from './order-report-modal/OrderReportModal';
+import { startCase as _startCase } from 'lodash';
 
 type PaymentMethod = 'card' | 'bank' | 'crypto';
 type PaymentOption = { type: PaymentMethod; name: string };
@@ -73,11 +79,14 @@ export default function () {
   const [showUniswapWidget, setShowUniswapWidget] = useState(false);
   const [showTransakWidget, setShowTransakWidget] = useState(false);
   const [aggressTerms, setAggressTerms] = useState(false);
+  const [orderReport, setOrderReport] = useState<OrderReport | null>(null);
+  const [showOrderReport, setShowOrderReport] = useState(true);
   const canBuyTokens = !!paymentMethod && aggressTerms;
 
   const toggleUniswapModal = () => setShowUniswapWidget(!showUniswapWidget);
   const toggleTransakModal = () => setShowTransakWidget(!showTransakWidget);
   const toggleAgreesTerms = () => setAggressTerms(!aggressTerms);
+  const toggleOrderReportModal = () => setShowOrderReport(!showOrderReport);
 
   const handleOptionSelection = (newType: PaymentMethod) => {
     setPaymentMethod((prevType) => {
@@ -86,6 +95,24 @@ export default function () {
     });
   };
 
+  const handleTransakOrderProcessed = useCallback(
+    (order: TransakOrderProcessed) => {
+      const { cryptoAmount, fiatAmount, fiatCurrency, paymentOptionId } = order;
+      console.log(_startCase(paymentOptionId));
+      setOrderReport({
+        fiatAmount,
+        fiatCurrency,
+        tokenAmount: cryptoAmount,
+        paymentMethod: _startCase(paymentOptionId),
+      });
+    },
+    [],
+  );
+
+  const handleTransakError = useCallback((data) => {
+    console.error(data);
+  }, []);
+
   const handleBuy = () => {
     if (paymentMethod === 'crypto') {
       toggleUniswapModal();
@@ -93,6 +120,13 @@ export default function () {
       toggleTransakModal();
     }
   };
+
+  useEffect(() => {
+    if (orderReport) {
+      setShowTransakWidget(false);
+      setShowOrderReport(true);
+    }
+  }, [orderReport]);
 
   return (
     <>
@@ -140,7 +174,13 @@ export default function () {
             title={
               <Text style={[theme.colorPrimaryText, theme.marginLeft3x]}>
                 {'I have read and accept the '}
-                <Text style={theme.link} onPress={() => {}}>
+                <Text
+                  style={theme.link}
+                  onPress={() => {
+                    Linking.openURL(
+                      'https://cdn-assets.minds.com/front/dist/assets/documents/TermsOfSale-v0.1.pdf',
+                    );
+                  }}>
                   Terms Of Sale
                 </Text>
                 {' for the Minds Token.'}
@@ -166,11 +206,18 @@ export default function () {
         onCloseButtonPress={toggleUniswapModal}
       />
       <TransakWidget
-        onOrderSuccessFull={console.log}
-        onError={console.error}
         isVisible={showTransakWidget}
+        onOrderProcessed={handleTransakOrderProcessed}
+        onError={handleTransakError}
         onCloseButtonPress={toggleTransakModal}
       />
+      {orderReport && (
+        <OrderReportModal
+          isVisible={showOrderReport}
+          onCloseButtonPress={toggleOrderReportModal}
+          report={orderReport}
+        />
+      )}
     </>
   );
 }
