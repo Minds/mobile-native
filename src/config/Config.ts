@@ -31,14 +31,7 @@ export const MINDS_ASSETS_CDN_URI = 'https://cdn-assets.minds.com/';
 // export const MINDS_CDN_URI = 'http://dev.minds.io/';
 
 export const BLOCKCHAIN_URI = 'https://www.minds.com/api/v2/blockchain/proxy/';
-
-export const BLOCKCHAIN_TOKEN_ADDRESS =
-  '0xb26631c6dda06ad89b93c71400d25692de89c068';
-
-// TODO: MOVE THIS TO .ENV OR ENV ANY EXISTING CONFIG SERVICE. THIS IS MY PERSONAL TEST ACCOUNT INFO
 export const TRANSAK_API_KEY = '3c11f1ca-4808-4856-8666-65041bd2a027';
-export const TRANSAK_PARTNER_API_SECRET =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBUElfS0VZIjoiM2MxMWYxY2EtNDgwOC00ODU2LTg2NjYtNjUwNDFiZDJhMDI3IiwiaWF0IjoxNjA3NTE1OTQ0fQ.__oHW9LkM4UVq94sDjrpB_Uqj-XS93hfJDnnjGzExMs';
 
 // export const BLOCKCHAIN_URI = 'http://localhost:9545';
 export const MINDS_LINK_URI = 'https://www.minds.com/';
