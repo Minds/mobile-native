@@ -13,6 +13,7 @@ import createBoostStore from './createBoostStore';
 import NewsfeedBoostTab from './NewsfeedBoostTab';
 import OfferBoostTab from './OfferBoostTab';
 import { RootStackParamList } from '../../navigation/NavigationTypes';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type BoostTabType = 'newsfeed' | 'offer';
 
@@ -27,6 +28,10 @@ type PropsType = {
 
 const BoostPostScreen = observer(({ route }: PropsType) => {
   const theme = ThemedStyles.style;
+  const insets = useSafeAreaInsets();
+  const cleanTop = insets.top
+    ? { marginTop: insets.top + 50 }
+    : { marginTop: 50 };
   const [tab, setTab] = useState<BoostTabType>('newsfeed');
   const wallet = useStores().wallet;
   const localStore = useLocalStore(createBoostStore, {
@@ -50,7 +55,7 @@ const BoostPostScreen = observer(({ route }: PropsType) => {
     }
   };
   return (
-    <View style={[theme.flexContainer, theme.backgroundPrimary]}>
+    <View style={[theme.flexContainer, theme.backgroundPrimary, cleanTop]}>
       <BoostHeader title={i18n.t('boosts.boostPost')} />
       <View style={theme.marginTop4x}>
         <TopbarTabbar tabs={tabs} onChange={setTab} current={tab} />
