@@ -23,6 +23,7 @@ export type InternalStackParamList = {
   Onboarding: {};
   InitialOnboarding: {};
   BuyTokens: {};
+  Earn: {};
 };
 
 export type RootStackParamList = {
