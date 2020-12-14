@@ -3,7 +3,7 @@ import Pusher from 'pusher-js/react-native';
 import WebviewModal from '../../common/components/WebviewModal';
 import { TRANSAK_API_KEY } from '../../config/Config';
 
-const pusher = new Pusher('1d9ffac87de599c61283', { cluster: 'ap2' }); // Transak Public API;
+const pusher = new Pusher('1d9ffac87de599c61283', { cluster: 'ap2' }); // Transak Public API
 const partnerOrderId = '23487492'; // Can be any number. It is required for the iframe to work properly
 const channelName = `${TRANSAK_API_KEY}_${partnerOrderId}`;
 
