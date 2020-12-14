@@ -49,7 +49,6 @@
     "hermes-engine": "0.5.2-rc1",
     "i18n-js": "^3.2.2",
     "jest-circus": "^26.6.1",
-    "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
     "lottie-ios": "3.1.8",
     "lottie-react-native": "^3.5.0",
