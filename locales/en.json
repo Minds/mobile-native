@@ -635,15 +635,14 @@
     "tooLong": "Video duration must be less than {{minutes}} minutes"
   },
   "onboarding": {
-    "startEarning":"Start earning tokens",
-    "improveExperience":"Improve your experience",
-    "joinGroup":"Join a group",
-    "hidePanel": "Hide this panel",
-    "subscribeToChannel":"Subscribe to a channel",
-    "completeToEarn":"Complete to earn tokens",
-    "tooltipInitial1":"To get most from Minds",
-    "tooltipInitial2":"please complete these steps",
-    "verifyEmailAddress":"Verify email address",
+    "startEarning": "Start earning tokens",
+    "improveExperience": "Improve your experience",
+    "joinGroup": "Join a group",
+    "subscribeToChannel": "Subscribe to a channel",
+    "completeToEarn": "Complete to earn tokens",
+    "tooltipInitial1": "To get most from Minds",
+    "tooltipInitial2": "please complete these steps",
+    "verifyEmailAddress": "Verify email address",
     "selectTags": "Select tags",
     "setupChannel":"Setup channel",
     "verifyUniqueness":"Verify uniqueness",
@@ -979,7 +978,7 @@
   "save": "Save",
   "edit": "Edit",
   "goback": "Go back",
-  "quote":"Quote",
+  "quote": "Quote",
   "copy": "Copy",
   "yes": "Yes",
   "no": "No",
@@ -1084,22 +1083,22 @@
   "title": "Title",
   "filter": "Filter",
   "captcha": "Enter the characters above",
-  "startFreeTrial":"Start free trial",
+  "startFreeTrial": "Start free trial",
   "visibility": "Visibility",
   "about": "About",
-  "takePhoto":"Take a photo",
+  "takePhoto": "Take a photo",
   "uploadPhoto": "Upload a photo",
-  "verify":"Verify",
-  "other":"Other",
+  "verify": "Verify",
+  "other": "Other",
   "purchase": "Purchase",
   "verification": "Verification",
   "uploadFailed": "Upload failed",
   "imageViewer": "View image",
-  "remindedBy":"Reminded by",
-  "postReminded":"Post has been reminded",
-  "remindRemoved":"Remind has been removed",
-  "deletedRemind":"This reminded content is unavailable. It may have been deleted or you do not have permission to view it",
-  "undoRemind":"Undo remind",
+  "remindedBy": "Reminded by",
+  "postReminded": "Post has been reminded",
+  "remindRemoved": "Remind has been removed",
+  "deletedRemind": "This reminded content is unavailable. It may have been deleted or you do not have permission to view it",
+  "undoRemind": "Undo remind",
   "permaweb": {
     "title": "Permaweb",
     "description": "Posting to permaweb",
@@ -1109,5 +1108,40 @@
     "viewOnPermaweb": "Permaweb"
   },
   "help": "Help",
-  "unblock":"Unblock"
+  "unblock": "Unblock",
+  "buyTokensScreen": {
+    "title": "Buy Tokens",
+    "paymentMethod": "Payment Method",
+    "deliverEstimate": "Delivery Estimate: 1-2 {{estimate}}",
+    "terms": "I have read and accept the &{link}& for the Minds Token.",
+    "linkText": "Terms Of Sale",
+    "learnMore": "Learn more about tokens",
+    "buy": "Buy Tokens"
+  },
+  "earnScreen": {
+    "pool": {
+      "title": "Pool",
+      "description": "Receive a multiplier on your daily token rewards by staking your MINDS and the equivalent amount of ETH on Uniswap."
+    },
+    "transfer": {
+      "title": "Transfer",
+      "description": "Receive a multiplier on your daily token rewards by holding your MINDS on-chain. The multiplier increases over time and as your balance grows."
+    },
+    "create": {
+      "title": "Create",
+      "description": "Post content that receives engagement from the community, such as votes, comments, subscribers, tips or reminds. Upgrade to Minds+ or Pro to unlock cash rewards."
+    },
+    "curate": {
+      "title": "Curate",
+      "description": "Help tag or report content through the Minds jury system. Bet tokens on which channels will grow and gain trust."
+    },
+    "develop": {
+      "title": "Develop",
+      "description": "Submit successful merge requests or create Gitlab issues that result in a successful merge request."
+    },
+    "refer": {
+      "title": "Refer",
+      "description": "Get your contacts to sign up for Minds through your referral link or any of your content."
+    }
+  }
 }
