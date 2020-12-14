@@ -142,7 +142,6 @@
     "@testing-library/jest-native": "^3.3.0",
     "@testing-library/react-native": "^7.0.2",
     "@types/jest": "^24.0.24",
-    "@types/jsonwebtoken": "^8.5.0",
     "@types/react-native": "^0.63.25",
     "@types/react-native-snap-carousel": "^3.8.1",
     "@types/react-test-renderer": "16.9.1",
