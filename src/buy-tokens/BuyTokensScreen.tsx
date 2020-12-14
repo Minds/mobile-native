@@ -5,7 +5,7 @@ import Button from '../common/components/Button';
 import { Text } from 'react-native-elements';
 import { CheckBox } from 'react-native-elements';
 import { ThemedStyle } from '../styles/Style';
-import UniswapWidget from './uniswap-widget/UniswapWidget';
+import UniswapWidget from '../common/components/uniswap-widget/UniswapWidget';
 import TransakWidget, {
   TransakOrderProcessed,
 } from './transak-widget/TransakWidget';
@@ -13,6 +13,7 @@ import OrderReportModal, {
   OrderReport,
 } from './order-report-modal/OrderReportModal';
 import { startCase as _startCase } from 'lodash';
+import i18n from '../common/services/i18n.service';
 
 type PaymentMethod = 'card' | 'bank' | 'crypto';
 type PaymentOption = { type: PaymentMethod; name: string };
@@ -98,7 +99,6 @@ export default function () {
   const handleTransakOrderProcessed = useCallback(
     (order: TransakOrderProcessed) => {
       const { cryptoAmount, fiatAmount, fiatCurrency, paymentOptionId } = order;
-      console.log(_startCase(paymentOptionId));
       setOrderReport({
         fiatAmount,
         fiatCurrency,
@@ -135,7 +135,7 @@ export default function () {
         contentContainerStyle={theme.padding4x}>
         <View style={[theme.alignCenter]}>
           <Text style={[theme.marginBottom5x, theme.fontXXL, theme.bold]}>
-            Payment Method
+            {i18n.t('buyTokensScreen.paymentMethod')}
           </Text>
         </View>
         <View
@@ -160,10 +160,9 @@ export default function () {
         </View>
         <View style={[theme.flexContainer, theme.rowStretch]}>
           <Text>
-            {'Deliver Estimate: '}
-            <Text>{`1-2 ${
-              paymentMethod === 'bank' ? 'days' : 'minutes'
-            }`}</Text>
+            {i18n.t('buyTokensScreen.deliverEstimate', {
+              estimate: paymentMethod === 'bank' ? 'days' : 'minutes',
+            })}
           </Text>
         </View>
         <View>
@@ -173,25 +172,33 @@ export default function () {
             containerStyle={[theme.checkbox]}
             title={
               <Text style={[theme.colorPrimaryText, theme.marginLeft3x]}>
-                {'I have read and accept the '}
-                <Text
-                  style={theme.link}
-                  onPress={() => {
-                    Linking.openURL(
-                      'https://cdn-assets.minds.com/front/dist/assets/documents/TermsOfSale-v0.1.pdf',
-                    );
-                  }}>
-                  Terms Of Sale
-                </Text>
-                {' for the Minds Token.'}
+                {i18n.to(
+                  'buyTokensScreen.terms',
+                  {},
+                  {
+                    link: (
+                      <Text
+                        style={theme.link}
+                        onPress={() => {
+                          Linking.openURL(
+                            'https://cdn-assets.minds.com/front/dist/assets/documents/TermsOfSale-v0.1.pdf',
+                          );
+                        }}>
+                        {i18n.t('buyTokensScreen.linkText')}
+                      </Text>
+                    ),
+                  },
+                )}
               </Text>
             }
           />
         </View>
         <View style={[theme.flexContainer, theme.rowJustifySpaceBetween]}>
-          <Text style={styles.learMoreLink}>Learn more about tokens</Text>
+          <Text style={styles.learMoreLink}>
+            {i18n.t('buyTokensScreen.learnMore')}
+          </Text>
           <Button
-            text="Buy Tokens"
+            text={i18n.t('buyTokensScreen.buy')}
             containerStyle={[
               theme.alignCenter,
               !canBuyTokens ? styles.disabledButton : '',
