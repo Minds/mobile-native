@@ -1,6 +1,6 @@
 import React from 'react';
-import { BLOCKCHAIN_TOKEN_ADDRESS } from '../../config/Config';
-import WebviewModal from '../../common/components/WebviewModal';
+import { BLOCKCHAIN_TOKEN_ADDRESS } from '../../../config/Config';
+import WebviewModal from '../WebviewModal';
 
 type UniswapAction = 'swap' | 'add';
 
