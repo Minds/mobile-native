@@ -5,7 +5,7 @@ import CloseableModal, {
   CloseableModalProps,
 } from '../../common/components/CloseableModal';
 import ThemedStyles from '../../styles/ThemedStyles';
-
+import i18n from '../../common/services/i18n.service';
 export interface OrderReport {
   tokenAmount: number;
   paymentMethod: string;
@@ -32,13 +32,13 @@ export default function ({ report, ...modalProps }: Props) {
       <View
         style={[theme.flexContainer, theme.padding8x, theme.backgroundPrimary]}>
         <Text style={[theme.marginBottom5x, theme.fontXL]}>
-          Thank you. We've received your order for{' '}
-          {String(tokenAmount).slice(0, 6)} Minds tokens.
+          {i18n.t('orderReport.thanksMessage', {
+            tokenAmount: String(tokenAmount).slice(0, 6),
+          })}
         </Text>
         <Text
           style={[theme.marginBottom8x, theme.fontL, theme.colorSecondaryText]}>
-          It normally takes a few minutes for your order to be delivered. You
-          will receive a confirmation email once your order is processed.
+          {i18n.t('orderReport.processDuration')}
         </Text>
         <View
           style={[
@@ -50,15 +50,21 @@ export default function ({ report, ...modalProps }: Props) {
             styles.wrap,
           ]}>
           <View>
-            <Text style={theme.colorSecondaryText}>Payment Method</Text>
+            <Text style={theme.colorSecondaryText}>
+              {i18n.t('orderReport.paymentMethod')}
+            </Text>
             <Text style={theme.fontXL}>{paymentMethod}</Text>
           </View>
           <View>
-            <Text style={theme.colorSecondaryText}>Token Amount</Text>
+            <Text style={theme.colorSecondaryText}>
+              {i18n.t('orderReport.tokenAmount')}
+            </Text>
             <Text style={theme.fontXL}>{String(tokenAmount).slice(0, 6)}</Text>
           </View>
           <View style={theme.paddingTop5x}>
-            <Text style={theme.colorSecondaryText}>Total Payment</Text>
+            <Text style={theme.colorSecondaryText}>
+              {i18n.t('orderReport.totalPayment')}
+            </Text>
             <Text style={theme.fontXL}>
               {fiatAmount} {fiatCurrency}
             </Text>
