@@ -13,6 +13,10 @@ import ShareMenu from 'react-native-share-menu';
 import renderer from 'react-test-renderer';
 jest.mock('react-native-reanimated', () => require('react-native-reanimated/mock'));
 
+jest.mock(
+  '../src/buy-tokens/transak-widget/TransakWidget',
+  () => 'TransakWidget',
+);
 
 // mock backhandler
 BackHandler.addEventListener = jest.fn();
