@@ -12,7 +12,7 @@ const BoostHeader = ({ title }: PropsType) => {
   return (
     <ImageBackground
       style={styles.banner}
-      source={require('../../assets/boostBG_1x.jpg')}
+      source={require('../../assets/boostBG.png')}
       resizeMode="cover">
       <View style={styles.textContainer}>
         <Text style={styles.title}>{title}</Text>
@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
   banner: {
     aspectRatio: bannerAspectRatio,
     width: '100%',
+    borderWidth: 0,
   },
   switchText: {
     fontFamily: 'Roboto-Medium',
