@@ -2,12 +2,11 @@ stages:
   - test
   - e2e
   - build
-  - i18n
   - deploy
 
 # Spec test
 test:jest:
-  image: node:10.16.3
+  image: node:12.13.0
   stage: test
   cache:
     key: ${CI_COMMIT_REF_SLUG}
@@ -38,7 +37,7 @@ test:jest:
 #    - echo y | ${ANDROID_HOME}/tools/bin/sdkmanager "system-images;android-${ANDROID_COMPILE_SDK};google_apis_playstore;x86"
 #    - echo y | ${ANDROID_HOME}/tools/bin/sdkmanager --update
 #    - echo no | ${ANDROID_HOME}/tools/bin/avdmanager create avd -k "system-images;android-${ANDROID_COMPILE_SDK};google_apis_playstore;x86" -n test
-#    - emulator @test -no-window -no-audio 
+#    - emulator @test -no-window -no-audio
 #    - ./android-wait-for-emulator
 #    - yarn global add detox-cli
 #    - yarn install --frozen-lockfile
