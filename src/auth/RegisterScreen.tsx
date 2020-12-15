@@ -33,6 +33,7 @@ import apiService from '../common/services/api.service';
 import delay from '../common/helpers/delay';
 import logService from '../common/services/log.service';
 import FitScrollView from '../common/components/FitScrollView';
+import sessionService from '../common/services/session.service';
 
 export type WalletScreenNavigationProp = StackNavigationProp<
   AuthStackParamList,
@@ -79,6 +80,7 @@ export default observer(function RegisterScreen(props: PropsType) {
         await authService.register(params);
         await apiService.clearCookies();
         await delay(100);
+        sessionService.setInitialScreen('SelectHashtags');
         try {
           await authService.login(store.username, store.password);
           i18n.setLocaleBackend();

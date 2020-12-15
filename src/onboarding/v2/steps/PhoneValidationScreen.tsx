@@ -40,7 +40,7 @@ export default observer(function PhoneValidationScreen() {
     },
   }));
 
-  const textStyle = [theme.colorPrimaryText, theme.marginBottom6x];
+  const textStyle = [theme.colorPrimaryText, theme.marginBottom4x];
 
   return (
     <ModalContainer
@@ -51,7 +51,7 @@ export default observer(function PhoneValidationScreen() {
           <Text style={textStyle}>{`${i18n.t('onboarding.sent')} ${
             phoneValidationStore.phone
           }`}</Text>
-          <TouchableOpacity onPress={store.send} style={theme.marginBottom2x}>
+          <TouchableOpacity onPress={store.send}>
             <Text style={textStyle}>{i18n.t('onboarding.resend')}</Text>
           </TouchableOpacity>
         </View>
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     padding: 0,
   },
   buttonContainer: {
-    marginTop: 50,
+    marginTop: 40,
   },
   inputWrapperStyle: {
     flexDirection: 'row',

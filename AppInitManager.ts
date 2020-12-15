@@ -126,6 +126,9 @@ export default class AppInitManager {
     try {
       NavigationService.navigate(sessionService.initialScreen);
 
+      // return to default init screen
+      sessionService.setInitialScreen('Tabs');
+
       // handle deep link (if the app is opened by one)
       if (this.deepLinkUrl) {
         deeplinkService.navigate(this.deepLinkUrl);

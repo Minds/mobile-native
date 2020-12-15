@@ -15,6 +15,7 @@ import TopbarTabbar from '../../common/components/topbar-tabbar/TopbarTabbar';
 import { DiscoveryTagsList } from './tags/DiscoveryTagsList';
 import FeedList from '../../common/components/FeedList';
 import DiscoveryTagsManager from './tags/DiscoveryTagsManager';
+import InitialOnboardingButton from '../../onboarding/v2/InitialOnboardingButton';
 
 interface Props {
   navigation: BottomTabNavigationProp<TabParamList>;
@@ -75,6 +76,7 @@ export const DiscoveryV2Screen = observer((props: Props) => {
   return (
     <View style={ThemedStyles.style.flexContainer}>
       <View style={ThemedStyles.style.backgroundPrimary}>
+        <InitialOnboardingButton />
         <TopbarTabbar
           current={store.activeTabId}
           onChange={(tabId) => {
