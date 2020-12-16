@@ -22,6 +22,7 @@ describe('Download service', () => {
   it('should call camera roll', async () => {
     // call tested method
     Platform.OS = 'ios';
+    permissions.checkMediaLibrary.mockReturnValue(true);
     await service.downloadToGallery('url');
     expect(CameraRoll.saveToCameraRoll).toHaveBeenCalled();
   });
