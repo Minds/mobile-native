@@ -112,7 +112,12 @@ export const DiscoveryTrendsListItem = observer((props: Props) => {
 
   const RichPartialThumbnail = () => {
     const entity = data.entity;
-    const image = { uri: entity.thumbnail_src };
+    const uri = entity.thumbnail_src.startsWith('//')
+      ? `https:${entity.thumbnail_src}`
+      : entity.thumbnail_src;
+    const image = { uri };
+
+    console.log(entity.guid, image);
 
     return (
       <SmartImage
