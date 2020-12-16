@@ -179,7 +179,6 @@ export default observer(
     const showMonetize = !props.store.portraitMode && !props.store.isRemind;
 
     const showPermaweb =
-      sessionService.getUser().plus &&
       !store.isEdit &&
       !store.group &&
       !store.isRemind &&
@@ -248,7 +247,7 @@ export default observer(
     return (
       <BottomSheet
         ref={sheetRef}
-        snapPoints={[0, 500]}
+        snapPoints={[0, 550]}
         renderContent={renderInner}
         enabledInnerScrolling={true}
         enabledContentTapInteraction={true}
