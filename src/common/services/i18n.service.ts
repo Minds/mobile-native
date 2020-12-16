@@ -195,6 +195,19 @@ class I18nService {
     i18n.locale = locale;
     moment.locale(locale);
 
+    if (locale === 'en') {
+      moment.updateLocale('en', {
+        relativeTime: {
+          s: 'a few secs',
+          ss: '%d secs',
+          m: 'a min',
+          mm: '%d mins',
+          h: 'an hr',
+          hh: '%d hrs',
+        },
+      });
+    }
+
     // update observable to fire app reload
     this.locale = locale;
 

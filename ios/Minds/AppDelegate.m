@@ -104,6 +104,16 @@ static void InitializeFlipper(UIApplication *application) {
                      restorationHandler:restorationHandler];
 }
 
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+  return [RCTLinkingManager
+           application:application openURL:url
+           sourceApplication:sourceApplication
+           annotation:annotation
+         ];
+}
+
 // Required to register for notifications
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
   [RNNotifications didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];

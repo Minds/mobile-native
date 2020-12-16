@@ -19,36 +19,38 @@ exports[`Activity screen component renders correctly  1`] = `
     <View
       style={
         Array [
+          Object {
+            "borderBottomWidth": 0.5,
+          },
           undefined,
-          Object {
-            "borderBottomWidth": 0,
-            "shadowColor": "#000",
-            "shadowOffset": Object {
-              "height": 1,
-              "width": 0,
+          Array [
+            undefined,
+            Object {
+              "borderBottomWidth": 0,
+              "shadowColor": "#000",
+              "shadowOffset": Object {
+                "height": 1,
+                "width": 0,
+              },
+              "shadowOpacity": 0.22,
+              "shadowRadius": 2.22,
             },
-            "shadowOpacity": 0.22,
-            "shadowRadius": 2.22,
-          },
-          Object {
-            "paddingTop": 10,
-          },
+            Object {
+              "paddingTop": -10,
+            },
+          ],
         ]
       }
     >
       <View
         style={
-          Array [
-            Object {
-              "alignItems": "center",
-              "borderBottomWidth": 0.5,
-              "display": "flex",
-              "flexDirection": "row",
-              "paddingHorizontal": 20,
-              "paddingVertical": 13,
-            },
-            undefined,
-          ]
+          Object {
+            "alignItems": "center",
+            "display": "flex",
+            "flexDirection": "row",
+            "paddingHorizontal": 20,
+            "paddingVertical": 13,
+          }
         }
       >
         <Text
@@ -145,9 +147,8 @@ exports[`Activity screen component renders correctly  1`] = `
           style={
             Object {
               "flex": 1,
-              "flexWrap": "wrap",
               "marginLeft": 10,
-              "paddingRight": 36,
+              "paddingRight": 5,
             }
           }
         >
@@ -177,6 +178,7 @@ exports[`Activity screen component renders correctly  1`] = `
                       "fontSize": 17,
                       "fontWeight": "bold",
                     },
+                    undefined,
                     undefined,
                   ]
                 }
@@ -635,19 +637,8 @@ exports[`Activity screen component renders correctly  1`] = `
             }
           >
             
-            3 years ago
+            Mar 25th, 2018
           </Text>
-          <View
-            style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                },
-                undefined,
-              ]
-            }
-          />
         </View>
       </View>
     </RCTScrollView>

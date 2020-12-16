@@ -4,9 +4,9 @@ import CameraRoll from '@react-native-community/cameraroll';
 
 import RNFS from 'react-native-fs';
 import i18nService from './i18n.service';
-import { ActivityEntity } from '../../types/Common';
 import { showNotification } from '../../../AppMessages';
 import permissionsService from './permissions.service';
+import type ActivityModel from '../../newsfeed/ActivityModel';
 
 /**
  * Download Service
@@ -17,7 +17,7 @@ class DownloadService {
    * @param {url} string
    * @param {object} entity
    */
-  async downloadToGallery(url: string, entity: ActivityEntity) {
+  async downloadToGallery(url: string, entity: ActivityModel) {
     try {
       if (Platform.OS === 'ios') {
         return CameraRoll.saveToCameraRoll(url);
@@ -56,7 +56,7 @@ class DownloadService {
    * Check if entity has gif flag
    * @param {object} entity
    */
-  isGif(entity: ActivityEntity): boolean {
+  isGif(entity: ActivityModel): boolean {
     let isGif = false;
     if (entity && entity.custom_data && Array.isArray(entity.custom_data)) {
       if (entity.custom_data.length > 0) {

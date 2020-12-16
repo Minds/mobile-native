@@ -17,7 +17,7 @@ type PropsType = {
   navigation: any;
 };
 
-const getLockType = (support_tier: SupportTiersType): LockType => {
+export const getLockType = (support_tier: SupportTiersType): LockType => {
   let type: LockType = support_tier.public ? 'members' : 'paywall';
 
   if (mindsService.settings.plus.support_tier_urn === support_tier.urn) {
@@ -56,6 +56,10 @@ const Lock = observer(({ entity }: PropsType) => {
     entity.unlockOrPay();
   }, [entity]);
 
+  if (entity.isOwner() || entity.hasVideo()) {
+    return null;
+  }
+
   const theme = ThemedStyles.style;
   const wire_threshold = entity.wire_threshold;
   const support_tier: SupportTiersType | null =
@@ -81,10 +85,6 @@ const Lock = observer(({ entity }: PropsType) => {
         wire_threshold.type === 'money' ? 'prefix' : 'suffix',
       )} to @${entity.ownerObj.username}`;
     }
-  }
-
-  if (entity.isOwner() || entity.hasVideo()) {
-    return <LockTag type={lockType} />;
   }
 
   const button = entity.hasVideo() ? null : (
@@ -114,7 +114,6 @@ const Lock = observer(({ entity }: PropsType) => {
           {message}
         </Text>
         {button}
-        <LockTag type={lockType} />
       </View>
     );
   }
@@ -141,7 +140,6 @@ const Lock = observer(({ entity }: PropsType) => {
         {message}
       </Text>
       {button}
-      <LockTag type={lockType} />
     </View>
   );
 });

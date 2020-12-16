@@ -3,11 +3,10 @@ import React, { Component } from 'react';
 
 import { Text, Image, View, StyleSheet } from 'react-native';
 
-import { observer, inject } from 'mobx-react';
+import { observer } from 'mobx-react';
 
-import Icon from 'react-native-vector-icons/Ionicons';
 import { MINDS_CDN_URI } from '../config/Config';
-import MindsVideo from './MindsVideo';
+import MindsVideo from './v2/mindsVideo/MindsVideo';
 import formatDate from '../common/helpers/date';
 
 /**

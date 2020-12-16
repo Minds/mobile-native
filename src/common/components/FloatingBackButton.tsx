@@ -7,6 +7,7 @@ import ThemedStyles from '../../styles/ThemedStyles';
 type PropsType = {
   onPress: () => void;
   style?: StyleProp<ViewStyle>;
+  size?: number;
 };
 
 const FloatingBackButton = (props: PropsType) => {
@@ -14,7 +15,7 @@ const FloatingBackButton = (props: PropsType) => {
   const iconStyle = { top: insets.top || 5 };
   return (
     <MIcon
-      size={45}
+      size={props.size || 45}
       name="chevron-left"
       style={[
         styles.backIcon,

@@ -13,10 +13,10 @@ import withPreventDoubleTap from '../../common/components/PreventDoubleTap';
 import ThemedStyles from '../../styles/ThemedStyles';
 import type ActivityModel from '../ActivityModel';
 import i18nService from '../../common/services/i18n.service';
-import { Icon } from 'react-native-elements';
 import IconMa from 'react-native-vector-icons/MaterialIcons';
 import { SearchResultStoreType } from '../../topbar/searchbar/createSearchResultStore';
 import { withSearchResultStore } from '../../common/hooks/withStores';
+import ChannelBadges from '../../channel/badges/ChannelBadges';
 const DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
 
 type PropsType = {
@@ -78,7 +78,7 @@ class OwnerBlock extends PureComponent<PropsType> {
   };
 
   get group() {
-    if (!this.props.entity.containerObj) {
+    if (!this.props.entity.containerObj || this.props.children) {
       return null;
     }
 
@@ -141,10 +141,18 @@ class OwnerBlock extends PureComponent<PropsType> {
       </View>
     ) : null;
 
+    const name =
+      channel.name && channel.name !== channel.username ? channel.name : '';
+
     return (
-      <View style={this.props.containerStyle}>
+      <View
+        style={[
+          styles.mainContainer,
+          theme.borderPrimary,
+          this.props.containerStyle,
+        ]}>
         {remind}
-        <View style={[styles.container, theme.borderPrimary]}>
+        <View style={styles.container}>
           {this.props.leftToolbar}
           <DebouncedTouchableOpacity onPress={this._navToChannel}>
             <FastImage source={avatarSrc} style={styles.avatar} />
@@ -156,10 +164,20 @@ class OwnerBlock extends PureComponent<PropsType> {
                 style={[theme.rowJustifyStart, theme.alignCenter]}>
                 <Text
                   numberOfLines={1}
-                  style={[styles.username, theme.colorPrimaryText]}>
-                  {channel.name || channel.username}
-                  {channel.name && (
-                    <Text style={[theme.colorSecondaryText, theme.fontLight]}>
+                  style={[
+                    styles.username,
+                    theme.colorPrimaryText,
+                    theme.flexContainer,
+                  ]}>
+                  {name || channel.username}
+                  {Boolean(name) && (
+                    <Text
+                      numberOfLines={1}
+                      style={[
+                        styles.username,
+                        theme.colorSecondaryText,
+                        theme.fontLight,
+                      ]}>
                       {' '}
                       @{channel.username}
                     </Text>
@@ -167,29 +185,14 @@ class OwnerBlock extends PureComponent<PropsType> {
                 </Text>
               </DebouncedTouchableOpacity>
               {this.group}
+              {this.props.children}
             </View>
-            {this.props.children}
           </View>
-          {this.props.entity.boosted ? (
-            <View style={[theme.rowJustifyStart, theme.centered]}>
-              <Icon
-                type="ionicon"
-                name="md-trending-up"
-                size={18}
-                style={theme.marginRight}
-                color={ThemedStyles.getColor('tertiary_text')}
-              />
-
-              <Text
-                style={[
-                  theme.marginRight2x,
-                  theme.colorTertiaryText,
-                  theme.fontS,
-                ]}>
-                {i18nService.t('boosted').toUpperCase()}
-              </Text>
-            </View>
-          ) : undefined}
+          <ChannelBadges
+            size={20}
+            channel={this.props.entity.ownerObj}
+            iconStyle={theme.colorLink}
+          />
           {rightToolbar}
         </View>
       </View>
@@ -204,13 +207,15 @@ const styles = StyleSheet.create({
     paddingTop: Platform.select({ android: 3, ios: 1 }),
     paddingRight: 5,
   },
+  mainContainer: {
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
   container: {
     display: 'flex',
     paddingHorizontal: 20,
     paddingVertical: 13,
     alignItems: 'center',
     flexDirection: 'row',
-    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   avatar: {
     height: 37,
@@ -219,8 +224,7 @@ const styles = StyleSheet.create({
   },
   body: {
     marginLeft: 10,
-    paddingRight: 36,
-    flexWrap: 'wrap',
+    paddingRight: 5,
     flex: 1,
   },
   nameContainer: {
@@ -233,9 +237,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
   groupContainer: {
-    alignContent: 'center',
     paddingTop: 3,
-    flex: 1,
   },
   groupName: {
     fontFamily: 'Roboto',

@@ -135,7 +135,7 @@ export default observer(function OnboardingScreen() {
       screen: '',
       onPress: () =>
         navigation.navigate('Capture', {
-          text: 'Just landed on Planet Minds 🚀',
+          mode: 'text',
         }),
     },
   }).current;

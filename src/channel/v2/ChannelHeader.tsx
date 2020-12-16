@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   View,
   Text,
@@ -7,10 +7,11 @@ import {
   Dimensions,
   ScrollView,
 } from 'react-native';
+import { Icon } from 'react-native-elements';
 import IconM from 'react-native-vector-icons/MaterialIcons';
 import McIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { observer } from 'mobx-react';
-
+import settingsStore from '../../settings/SettingsStore';
 import type { ChannelStoreType, ChannelTabType } from './createChannelStore';
 import { Image } from 'react-native-animatable';
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -28,6 +29,7 @@ import TopbarTabbar, {
 } from '../../common/components/topbar-tabbar/TopbarTabbar';
 import AboutTab from './tabs/AboutTab';
 import TierManagementScreen from '../../common/components/tier-management/TierManagementScreen';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type PropsType = {
   store: ChannelStoreType;
@@ -52,7 +54,11 @@ const ChannelHeader = observer((props: PropsType) => {
     return null;
   }
   const channel = props.store.channel;
+  const [showBanner, setShowBanner] = useState(!settingsStore.dataSaverEnabled);
+  const insets = useSafeAreaInsets();
+  const cleanTop = insets.top ? { marginTop: insets.top } : null;
 
+  const _onBannerDownload = useCallback(() => setShowBanner(true), []);
   const canEdit = channel.isOwner() && channel.can(FLAG_EDIT_CHANNEL);
 
   const navToSubscribers = useCallback(() => {
@@ -137,9 +143,11 @@ const ChannelHeader = observer((props: PropsType) => {
     }
   };
 
+  const Background: any = showBanner ? ImageBackground : View;
+
   return (
-    <View style={[styles.container]}>
-      <ImageBackground
+    <View style={styles.container}>
+      <Background
         style={styles.banner}
         source={channel.getBannerSource()}
         resizeMode="cover">
@@ -170,16 +178,28 @@ const ChannelHeader = observer((props: PropsType) => {
               props.navigation.push('EditChannelScreen', { store: props.store })
             }
             notShow={['message', 'wire', 'more']}
-            containerStyle={styles.buttonsMarginContainer}
             iconsStyle={theme.colorSecondaryText}
-          />
+            containerStyle={styles.buttonsMarginContainer}>
+            {!showBanner && settingsStore.dataSaverEnabled && (
+              <Icon
+                raised
+                reverse
+                name="file-download"
+                type="material"
+                color={ThemedStyles.getColor('secondary_background')}
+                reverseColor={ThemedStyles.getColor('primary_text')}
+                size={15}
+                onPress={_onBannerDownload}
+              />
+            )}
+          </ChannelButtons>
         )}
         {props.store.uploading && props.store.bannerProgress ? (
           <View style={styles.tapOverlayView}>
             <Progress.Pie progress={props.store.bannerProgress} size={36} />
           </View>
         ) : null}
-      </ImageBackground>
+      </Background>
       {canEdit && (
         <SmallCircleButton
           name="camera"

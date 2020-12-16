@@ -2,13 +2,11 @@ import 'react-native';
 import React from 'react';
 import { Text, Dimensions, TouchableOpacity } from 'react-native';
 import { shallow } from 'enzyme';
-import MindsVideo from '../../../src/media/MindsVideo';
 import MindsVideoV2 from '../../../src/media/v2/mindsVideo/MindsVideo';
 import MediaView from '../../../src/common/components/MediaView';
 
 import { activitiesServiceFaker } from '../../../__mocks__/fake/ActivitiesFaker';
 
-jest.mock('../../../src/media/MindsVideo', () => 'MindsVideo');
 jest.mock('../../../src/media/v2/mindsVideo/MindsVideo', () => 'MindsVideoV2');
 
 describe('Media view component', () => {
@@ -22,6 +20,8 @@ describe('Media view component', () => {
     entity.getThumbSource.mockReturnValue({ uri: 'www.something.com' });
     entity.hasThumbnails = jest.fn();
     entity.hasThumbnails.mockReturnValue(false);
+    entity.isGif = jest.fn();
+    entity.isGif.mockReturnValue(false);
     screen = shallow(<MediaView entity={entity} />);
   });
 
@@ -47,7 +47,7 @@ describe('Media view component', () => {
     expect(screen.find('ExplicitOverlay')).toHaveLength(0);
   });
 
-  it('sholdnt show overlay if press', async () => {
+  it("shouldn't show overlay if press", async () => {
     let mockResponse = activitiesServiceFaker().load(1);
     entity = mockResponse.activities[0];
     entity.custom_data = [{ height: 50, width: 20 }];

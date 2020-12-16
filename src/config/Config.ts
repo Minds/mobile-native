@@ -9,6 +9,8 @@ export const MINDS_STAGING = false;
 // network timeout time
 export const NETWORK_TIMEOUT = 15000;
 
+export const DATA_SAVER_THUMB_RES = 96;
+
 export const MINDS_URI = 'https://www.minds.com/';
 export const MINDS_API_URI = 'https://www.minds.com/';
 
