@@ -25,6 +25,7 @@ import Topbar from '../topbar/Topbar';
 import { InternalStack } from '../navigation/NavigationStack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import TopShadow from '../common/components/TopShadow';
+import AuthService from '../auth/AuthService';
 
 const isIOS = Platform.OS === 'ios';
 
@@ -143,7 +144,7 @@ const Tabs = observer(function ({ navigation }) {
     <View style={theme.flexContainer}>
       <Topbar navigation={navigation} />
       <Tab.Navigator
-        initialRouteName="Newsfeed"
+        initialRouteName={AuthService.justRegistered ? 'Discovery' : 'Newsfeed'}
         tabBar={(props) => <TabBar {...props} />}
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused }) => {
