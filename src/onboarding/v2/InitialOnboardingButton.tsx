@@ -75,7 +75,8 @@ export default observer(function InitialOnboardingButton() {
     !progressStore.result ||
     progressStore.result.is_completed ||
     (SettingsStore.ignoreOnboarding &&
-      SettingsStore.ignoreOnboarding.isAfter(moment()))
+      SettingsStore.ignoreOnboarding.isAfter(moment())) ||
+    progressStore.result.id === 'OngoingOnboardingGroup' // disable ongoing onboarding temporarily
   ) {
     return null;
   }

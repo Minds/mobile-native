@@ -39,7 +39,7 @@ describe('Boosted content service', () => {
     // should fetch the feed
     expect(boostedContentService.feedsService.setEndpoint).toBeCalledWith('api/v2/boost/feed');
     expect(boostedContentService.feedsService.setOffset).toBeCalledWith(0);
-    expect(boostedContentService.feedsService.setLimit).toBeCalledWith(12);
+    expect(boostedContentService.feedsService.setLimit).toBeCalledWith(24);
     expect(boostedContentService.feedsService.fetchLocal).toBeCalled();
 
     // should fetch the boosts entities
@@ -81,7 +81,7 @@ describe('Boosted content service', () => {
     // should fetch the feed
     expect(boostedContentService.feedsService.setEndpoint).toBeCalledWith('api/v2/boost/feed');
     expect(boostedContentService.feedsService.setOffset).toBeCalledWith(0);
-    expect(boostedContentService.feedsService.setLimit).toBeCalledWith(12);
+    expect(boostedContentService.feedsService.setLimit).toBeCalledWith(24);
     expect(boostedContentService.feedsService.fetchLocal).toBeCalled();
 
     // blocked should be called

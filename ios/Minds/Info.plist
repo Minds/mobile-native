@@ -28,10 +28,10 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>minds</string>
+			<string>com.minds.mobile</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>minds</string>
+				<string>mindsapp</string>
 			</array>
 		</dict>
 	</array>

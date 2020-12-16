@@ -60,6 +60,8 @@ type validateParams = {
  * Auth Services
  */
 class AuthService {
+  justRegistered = false;
+
   /**
    * Login user
    * @param username
@@ -89,6 +91,7 @@ class AuthService {
    * Logout user
    */
   async logout(): Promise<boolean> {
+    this.justRegistered = false;
     try {
       await api.delete('api/v2/oauth/token');
       session.logout();
@@ -166,8 +169,17 @@ class AuthService {
    * Register user and returns UserModel
    * @param params
    */
-  register(params: registerParams): Promise<RegisterResponse> {
-    return api.post<RegisterResponse>('api/v1/register', params);
+  async register(params: registerParams): Promise<RegisterResponse> {
+    try {
+      const response = await api.post<RegisterResponse>(
+        'api/v1/register',
+        params,
+      );
+      this.justRegistered = true;
+      return response;
+    } catch (error) {
+      throw error;
+    }
   }
   /**
    * Request to reset password, returns suceed or fail

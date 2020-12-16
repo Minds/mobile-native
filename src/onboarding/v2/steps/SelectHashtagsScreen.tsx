@@ -2,6 +2,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { observer } from 'mobx-react';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { showNotification } from '../../../../AppMessages';
 import Button from '../../../common/components/Button';
 import TagSelect from '../../../common/components/TagSelect';
 import { useLegacyStores } from '../../../common/hooks/use-stores';
@@ -21,6 +22,14 @@ export default observer(function SelectHashtagsScreen() {
   React.useEffect(() => {
     hashtag.loadSuggested();
   }, [hashtag]);
+
+  const onPress = () => {
+    if (hashtag.suggested.filter((s) => s.selected).length >= 3) {
+      NavigationService.goBack();
+    } else {
+      showNotification(i18n.t('onboarding.selectThreeTags'), 'warning');
+    }
+  };
 
   const backgroundColor = ThemedStyles.getColor('primary_background');
   const startColor = backgroundColor + '00';
@@ -47,7 +56,7 @@ export default observer(function SelectHashtagsScreen() {
         />
         {gradient}
         <Button
-          onPress={NavigationService.goBack}
+          onPress={onPress}
           text={i18n.t('done')}
           containerStyle={[
             theme.transparentButton,

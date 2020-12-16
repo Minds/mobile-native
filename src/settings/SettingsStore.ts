@@ -1,5 +1,6 @@
 //@ts-nocheck
-import { observable, action } from 'mobx';
+import { observable, action, computed } from 'mobx';
+import connectivityService from '../common/services/connectivity.service';
 import moment, { Moment } from 'moment-timezone';
 
 import storageService from '../common/services/storage.service';
@@ -14,11 +15,27 @@ export class SettingsStore {
   @observable leftHanded = null;
   @observable ignoreBestLanguage = '';
   @observable ignoreOnboarding: Moment | false = false;
+  @observable dataSaverMode = false;
+  @observable dataSaverModeDisablesOnWiFi = false;
 
   consumerNsfw = [];
   creatorNsfw = [];
   useHashtag = true;
   composerMode = 'photo';
+  swipeAnimShown = false;
+
+  @computed
+  get dataSaverEnabled() {
+    let dataSaverEnabled = this.dataSaverMode;
+    if (
+      this.dataSaverModeDisablesOnWiFi &&
+      connectivityService.connectionInfo.type === 'wifi'
+    ) {
+      dataSaverEnabled = false;
+    }
+
+    return dataSaverEnabled;
+  }
 
   /**
    * Initializes local variables with their correct values as stored locally.
@@ -36,6 +53,9 @@ export class SettingsStore {
       'IgnoreBestLanguage',
       'ComposerMode',
       'IgnoreOnboarding',
+      'DataSaverMode',
+      'DataSaverModeDisablesOnWiFi',
+      'SwipeAnimShown',
     ]);
 
     // store theme changes
@@ -59,6 +79,10 @@ export class SettingsStore {
     this.ignoreOnboarding = data[8][1]
       ? moment(parseInt(data[8][1], 10))
       : false;
+    this.dataSaverMode = data[9][1] || false;
+    this.dataSaverModeDisablesOnWiFi = data[10][1] || false;
+
+    this.swipeAnimShown = data[10][1];
 
     // set the initial value for hashtag
     getStores().hashtag.setAll(!this.useHashtags);
@@ -112,6 +136,14 @@ export class SettingsStore {
     storageService.setItem('LeftHanded', value);
     this.leftHanded = value;
   }
+  /**
+   * Set swipe animation shown
+   * @param value
+   */
+  setSwipeAnimShown(value: boolean) {
+    storageService.setItem('SwipeAnimShown', value);
+    this.swipeAnimShown = value;
+  }
 
   setCreatorNsfw(value) {
     storageService.setItem('CreatorNsfw', value);
@@ -139,6 +171,26 @@ export class SettingsStore {
       value ? value.format('x') : false,
     );
     this.ignoreOnboarding = value;
+  }
+
+  /**
+   * Set data saver mode
+   * @param {boolean} value
+   */
+  @action
+  setDataSaverMode(value: boolean) {
+    storageService.setItem('DataSaverMode', value);
+    this.dataSaverMode = value;
+  }
+
+  /**
+   * Set data saver mode on a Wi-Fi connection
+   * @param {boolean} value
+   */
+  @action
+  setDataSaverModeDisablesOnWiFi(value: boolean) {
+    storageService.setItem('DataSaverModeDisablesOnWiFi', value);
+    this.dataSaverModeDisablesOnWiFi = value;
   }
 }
 export default new SettingsStore();

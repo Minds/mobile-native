@@ -539,6 +539,7 @@
     "other": "Other",
     "referrals": "Referrals",
     "account": "Account",
+    "network": "Network",
     "security": "Security",
     "billing": "Billing",
     "invalidPassword": "Incorrect password",
@@ -564,6 +565,9 @@
     "addTier": "Add Tier",
     "noTiers": "You don't have any tier",
     "payment": "Payment",
+    "dataSaverDisableOnWifi": "Disable on Wi-Fi",
+    "dataSaverDescription": "When Data Saver is turned on, videos won't load in advance to help you use less data.",
+    "dataSaverDisableOnWiFiDescription": "When enabled, Data Saver mode will automatically disable when a Wi-Fi connection is detected.",
     "reportedContent": {
       "action": {
         "actionNSFW": "marked NSFW",
@@ -592,6 +596,9 @@
       "5": "NSFW Content",
       "6": "Messenger",
       "7": "Autoplay Videos"
+    },
+    "networkOptions": {
+      "1": "Data Saver"
     },
     "securityOptions": {
       "1": "Two-factor authentication (2FA)",
@@ -646,6 +653,7 @@
     "resendEmail":"Resend verification email",
     "couldntLoadStatus":"Couldn't load your onboarding status",
     "hashtagDescription":"Select at least three tags that are of interest to you. This will allow you to discover relevant content.",
+    "selectThreeTags":"Select at least three tags",
     "chooseAvatar": "Choose an avatar",
     "earnTokens": "Earn tokens for your activity",
     "weDontStorePhone": "We do not store your phone number on our servers.",

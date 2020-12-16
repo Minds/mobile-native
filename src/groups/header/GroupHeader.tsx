@@ -9,6 +9,7 @@ import { debounce } from 'lodash';
 import FastImage from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import ActionSheet from 'react-native-actionsheet';
+import SmartImage from '../../common/components/SmartImage';
 
 import { MINDS_CDN_URI, MINDS_LINK_URI } from '../../config/Config';
 import abbrev from '../../common/helpers/abbrev';
@@ -313,7 +314,7 @@ export default class GroupHeader extends Component {
     const actionSheet = group['is:owner'] ? this.getActionSheet() : null;
     return (
       <View>
-        <FastImage
+        <SmartImage
           source={iurl}
           style={styles.banner}
           resizeMode={FastImage.resizeMode.cover}

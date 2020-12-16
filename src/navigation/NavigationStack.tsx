@@ -13,6 +13,7 @@ import AnalyticsScreen from '../analytics/AnalyticsScreen';
 import LoginScreen from '../auth/LoginScreen';
 import ForgotScreen from '../auth/ForgotScreen';
 import ReferralsScreen from '../referral/ReferralsScreen';
+import DataSaverScreen from '../settings/screens/DataSaverScreen';
 import TabsScreen from '../tabs/TabsScreen';
 import NotificationsScreen from '../notifications/NotificationsScreen';
 import ActivityScreen from '../newsfeed/ActivityScreen';
@@ -536,6 +537,11 @@ const AppStack = function () {
         name="SettingsNotifications"
         component={NotificationsSettingsScreen}
         options={{ title: i18n.t('settings.pushNotification') }}
+      />
+      <AppStackNav.Screen
+        name="DataSaverScreen"
+        component={DataSaverScreen}
+        options={{ title: i18n.t('settings.networkOptions.1') }}
       />
       <AppStackNav.Screen
         name="BlockedChannels"

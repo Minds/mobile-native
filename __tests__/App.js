@@ -3,7 +3,6 @@ import React from 'react';
 import App from '../App';
 import sqliteStorageProviderService from '../src/common/services/sqlite-storage-provider.service';
 import logService from '../src/common/services/log.service';
-import MindsVideo from '../src/media/MindsVideo';
 import MindsVideoV2 from '../src/media/v2/mindsVideo/MindsVideo';
 import {
   BackHandler,
@@ -21,7 +20,6 @@ jest.mock('../src/common/services/sqlite-storage-provider.service')
 jest.mock('../src/common/services/log.service', () => {});
 jest.mock('../src/common/services/push.service');
 
-jest.mock('../src/media/MindsVideo', () => 'MindsVideo');
 jest.mock('../src/media/v2/mindsVideo/MindsVideo', () => 'MindsVideoV2');
 
 // use the web3 mock to prevent syntax error from node_tar

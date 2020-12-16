@@ -14,6 +14,7 @@ import {
 import * as entities from 'entities';
 
 import ExplicitText from '../../common/components/explicit/ExplicitText';
+import settingsStore from '../../settings/SettingsStore';
 import OwnerBlock from './OwnerBlock';
 import Actions from './Actions';
 import formatDate from '../../common/helpers/date';
@@ -154,7 +155,11 @@ export default class Activity extends Component<PropsType> {
         if (type === 'video') {
           if (visible) {
             const user = sessionService.getUser();
-            if (user.plus && !user.disable_autoplay_videos) {
+            if (
+              user.plus &&
+              !user.disable_autoplay_videos &&
+              !settingsStore.dataSaverEnabled
+            ) {
               const state = NavigationService.getCurrentState();
 
               // sound only for ActivityScreen (Full screen)

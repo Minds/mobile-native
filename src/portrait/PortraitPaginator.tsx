@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, StyleSheet, View } from 'react-native';
+import { TouchableOpacity, StyleSheet, View, Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type ActivityModel from '../newsfeed/ActivityModel';
 import { observer } from 'mobx-react';
@@ -24,7 +24,7 @@ export default function PortraitPaginator({ store, activities }: PropsType) {
 
   const style = StyleSheet.flatten([
     styles.circlesContainer,
-    { marginTop: insets.top ? insets.top - 5 : 0 },
+    { marginTop: insets.top ? insets.top : 0 },
   ]);
   return (
     <View style={style}>
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    top: 73,
+    top: Platform.select({ ios: 10, android: 20 }),
     left: 0,
     height: 8,
     width: '100%',

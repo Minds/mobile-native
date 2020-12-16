@@ -10,10 +10,10 @@ import {
 
 import ActivityFullScreen from './ActivityFullScreen';
 import type FeedStore from '../../../common/stores/FeedStore';
-import { StatusBar } from 'react-native';
-import { useDimensions } from '@react-native-community/hooks';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import SwipeAnimation from '../../../common/components/animations/SwipeAnimation';
+import SettingsStore from '../../../settings/SettingsStore';
+import { useSafeAreaFrame } from 'react-native-safe-area-context';
 
 type ActivityFullScreenRouteProp = RouteProp<
   ActivityFullScreenParamList,
@@ -26,6 +26,8 @@ type PropsType = {
 
 const ViewerScreen = observer((props: PropsType) => {
   const feedStore = props.route.params.feed as FeedStore;
+  const showAnim = !SettingsStore.swipeAnimShown;
+  const { width, height } = useSafeAreaFrame();
   const store = useLocalStore(() => ({
     index: props.route.params.current || 0,
     setIndex(v) {
@@ -53,14 +55,16 @@ const ViewerScreen = observer((props: PropsType) => {
     return () => {
       feedStore.viewed.clearViewed();
       feedStore.metadataService?.popSource();
+      if (!SettingsStore.swipeAnimShown) {
+        SettingsStore.setSwipeAnimShown(true);
+      }
     };
   }, [feedStore, store]);
 
-  const { width, height } = useDimensions().window;
   const translationX = width * 0.13;
 
   const pagerStyle: any = {
-    height: height - (StatusBar.currentHeight || 0),
+    height,
     width,
     backgroundColor: ThemedStyles.theme
       ? 'black'
@@ -110,7 +114,7 @@ const ViewerScreen = observer((props: PropsType) => {
           <ActivityFullScreen key={i} entity={e} />
         ))}
       </Pager>
-      <SwipeAnimation style={swipeStyle} autoPlay={true} />
+      {showAnim && <SwipeAnimation style={swipeStyle} autoPlay={true} />}
     </PagerProvider>
   );
 });

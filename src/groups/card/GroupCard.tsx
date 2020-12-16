@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 
 import { Text, Image, View, StyleSheet } from 'react-native';
+import SmartImage from '../../common/components/SmartImage';
 
 import { MINDS_CDN_URI } from '../../config/Config';
 import abbrev from '../../common/helpers/abbrev';
@@ -46,7 +47,7 @@ export default class GroupCard extends Component {
 
     return (
       <View>
-        <FastImage
+        <SmartImage
           source={iurl}
           style={styles.banner}
           resizeMode={FastImage.resizeMode.cover}

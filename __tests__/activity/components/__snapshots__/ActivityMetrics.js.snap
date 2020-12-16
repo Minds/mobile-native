@@ -18,19 +18,8 @@ exports[`activity metrics component renders correctly 1`] = `
       ]
     }
   >
-    20 Views · 
-    3 years ago
+    20 views · 
+    Mar 25th, 2018
   </Text>
-  <View
-    style={
-      Array [
-        Object {
-          "alignItems": "center",
-          "flexDirection": "row",
-        },
-        undefined,
-      ]
-    }
-  />
 </View>
 `;
