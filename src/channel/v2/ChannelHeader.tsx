@@ -238,7 +238,7 @@ const ChannelHeader = observer((props: PropsType) => {
             {' · ' + i18n.t('subscriptions')}
             <Text> {abbrev(channel.subscriptions_count, 0)}</Text>
           </Text>
-          {' · '} <McIcon name="eye" size={17} />
+          {' · '} <McIcon name="eye" size={17} style={theme.colorPrimaryText} />
           <Text> {abbrev(channel.impressions, 1)}</Text>
         </Text>
         {!!channel.city && (
