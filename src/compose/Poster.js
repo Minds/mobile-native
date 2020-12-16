@@ -6,6 +6,7 @@ import {
   Dimensions,
   Keyboard,
   Platform,
+  InteractionManager,
 } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 
@@ -104,9 +105,11 @@ export default observer(function (props) {
   );
 
   useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
+    InteractionManager.runAfterInteractions(() => {
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
+    });
   }, [inputRef]);
 
   return (
