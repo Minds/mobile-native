@@ -5,8 +5,8 @@ import CameraRoll from '@react-native-community/cameraroll';
 import RNFS from 'react-native-fs';
 import i18nService from './i18n.service';
 import { showNotification } from '../../../AppMessages';
-import permissionsService from './permissions.service';
 import type ActivityModel from '../../newsfeed/ActivityModel';
+import imagePickerService from './image-picker.service';
 
 /**
  * Download Service
@@ -19,17 +19,11 @@ class DownloadService {
    */
   async downloadToGallery(url: string, entity: ActivityModel) {
     try {
-      if (Platform.OS === 'ios') {
-        return CameraRoll.saveToCameraRoll(url);
-      } else {
-        let hasPermission = await permissionsService.checkWriteExternalStorage(
-          true,
-        );
-        if (!hasPermission) {
-          hasPermission = await permissionsService.writeExternalStorage();
-        }
-
-        if (hasPermission) {
+      const hasPermission = await imagePickerService.checkGalleryPermissions();
+      if (hasPermission) {
+        if (Platform.OS === 'ios') {
+          return CameraRoll.saveToCameraRoll(url);
+        } else {
           const type = this.isGif(entity) ? 'gif' : 'jpg';
           const filePath = `${RNFS.CachesDirectoryPath}/${entity.guid}.${type}`;
           const download = RNFS.downloadFile({
