@@ -48,36 +48,36 @@ test:jest:
 #    - detox test -c android.emu.release
 
 # Upload new terms to poeditor
-i18n:upload:
-  image: node:10.16.3
-  stage: i18n
-  cache:
-    key: ${CI_COMMIT_REF_SLUG}
-    paths:
-      - node_modules/
-  before_script:
-    - yarn install --frozen-lockfile
-  script:
-    - yarn locale upload --poeditor-key=${CI_POEDITOR_KEY} --overwrite=1
-  only:
-    refs:
-      - /^release-*/
+# i18n:upload:
+#   image: node:10.16.3
+#   stage: i18n
+#   cache:
+#     key: ${CI_COMMIT_REF_SLUG}
+#     paths:
+#       - node_modules/
+#   before_script:
+#     - yarn install --frozen-lockfile
+#   script:
+#     - yarn locale upload --poeditor-key=${CI_POEDITOR_KEY} --overwrite=1
+#   only:
+#     refs:
+#       - /^release-*/
 
 # Upload new terms and remove the deleted
-i18n:uploadsync:
-  image: node:10.16.3
-  stage: i18n
-  cache:
-    key: ${CI_COMMIT_REF_SLUG}
-    paths:
-      - node_modules/
-  before_script:
-    - yarn install --frozen-lockfile
-  script:
-    - yarn locale upload --poeditor-key=${CI_POEDITOR_KEY} --overwrite=1 --sync_terms=1
-  only:
-    refs:
-      - master
+# i18n:uploadsync:
+#   image: node:10.16.3
+#   stage: i18n
+#   cache:
+#     key: ${CI_COMMIT_REF_SLUG}
+#     paths:
+#       - node_modules/
+#   before_script:
+#     - yarn install --frozen-lockfile
+#   script:
+#     - yarn locale upload --poeditor-key=${CI_POEDITOR_KEY} --overwrite=1 --sync_terms=1
+#   only:
+#     refs:
+#       - master
 
 # Web dev version using cache and without sentry maps upload
 # build:android:
