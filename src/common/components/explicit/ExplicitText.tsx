@@ -85,7 +85,7 @@ export default class ExplicitText extends Component<PropsType, StateType> {
     }
 
     // remove xml tags
-    if (entity.type === 'object' && entity.subtype === 'video') {
+    if (entity.custom_type === 'video' || entity.subtype === 'video') {
       if (title.length) {
         title = title.replace(/<[^>]*>/g, '');
       }
