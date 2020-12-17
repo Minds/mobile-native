@@ -179,7 +179,6 @@ export default observer(
     const showMonetize = !props.store.portraitMode && !props.store.isRemind;
 
     const showPermaweb =
-      sessionService.getUser().plus &&
       !store.isEdit &&
       !store.group &&
       !store.isRemind &&
@@ -228,13 +227,11 @@ export default observer(
             testID="permawebButton"
           />
         )}
-        {hasAttachment && (
-          <Item
-            title="License"
-            description={getLicenseText(license)}
-            onPress={onLicensePress}
-          />
-        )}
+        <Item
+          title="License"
+          description={getLicenseText(license)}
+          onPress={onLicensePress}
+        />
         {!store.group && (
           <Item
             title="Visibility"
@@ -248,7 +245,7 @@ export default observer(
     return (
       <BottomSheet
         ref={sheetRef}
-        snapPoints={[0, 500]}
+        snapPoints={[0, 550]}
         renderContent={renderInner}
         enabledInnerScrolling={true}
         enabledContentTapInteraction={true}
