@@ -124,7 +124,9 @@ export default class AppInitManager {
     }
 
     try {
-      NavigationService.navigate(sessionService.initialScreen);
+      NavigationService.navigate(sessionService.initialScreen, {
+        initial: true,
+      });
 
       // return to default init screen
       sessionService.setInitialScreen('Tabs');
