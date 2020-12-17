@@ -104,6 +104,38 @@ const getOptionsList = (navigation) => {
         });
       },
     },
+    {
+      name: 'Earn',
+      icon: (
+        <Icon
+          name="attach-money"
+          size={ICON_SIZE}
+          style={[theme.colorIcon, styles.icon]}
+        />
+      ),
+      onPress: () => {
+        navigation.navigate('Tabs', {
+          screen: 'CaptureTab',
+          params: { screen: 'Earn' },
+        });
+      },
+    },
+    {
+      name: 'Buy Tokens',
+      icon: (
+        <Icon
+          name="shopping-cart"
+          size={ICON_SIZE}
+          style={[theme.colorIcon, styles.icon]}
+        />
+      ),
+      onPress: () => {
+        navigation.navigate('Tabs', {
+          screen: 'CaptureTab',
+          params: { screen: 'BuyTokens' },
+        });
+      },
+    },
   ];
 
   if (featuresService.has('crypto')) {

@@ -22,6 +22,8 @@ export type InternalStackParamList = {
   Analytics: {};
   Onboarding: {};
   InitialOnboarding: {};
+  BuyTokens: {};
+  Earn: {};
 };
 
 export type RootStackParamList = {

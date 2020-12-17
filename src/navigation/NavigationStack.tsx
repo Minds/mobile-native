@@ -110,6 +110,8 @@ import PhoneValidationScreen from '../onboarding/v2/steps/PhoneValidationScreen'
 import AutoplaySettingsScreen from '../settings/screens/AutoplaySettingsScreen';
 import SuggestedChannelsScreen from '../onboarding/v2/steps/SuggestedChannelsScreen';
 import SuggestedGroupsScreen from '../onboarding/v2/steps/SuggestedGroupsScreen';
+import BuyTokensScreen from '../buy-tokens/BuyTokensScreen';
+import EarnScreen from '../earn/EarnScreen';
 
 const isIos = Platform.OS === 'ios';
 
@@ -254,6 +256,8 @@ export const InternalStack = () => {
       <InternalStackNav.Screen name="Onboarding" component={OnboardingScreen} />
 
       <InternalStackNav.Screen name="Settings" component={SettingsScreen} />
+      <InternalStackNav.Screen name="BuyTokens" component={BuyTokensScreen} />
+      <InternalStackNav.Screen name="Earn" component={EarnScreen} />
     </InternalStackNav.Navigator>
   );
 };
