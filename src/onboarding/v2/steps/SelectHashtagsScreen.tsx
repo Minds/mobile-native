@@ -14,14 +14,38 @@ import ModalContainer from './ModalContainer';
 /**
  * Verify Email Modal Screen
  */
-export default observer(function SelectHashtagsScreen() {
+export default observer(function SelectHashtagsScreen({ navigation, route }) {
   const theme = ThemedStyles.style;
 
   const { hashtag } = useLegacyStores();
 
   React.useEffect(() => {
     hashtag.loadSuggested();
-  }, [hashtag]);
+    let unsubscribe;
+
+    // prevent leaving the screen if it is the initial screen
+    if (route && route.params && route.params.initial) {
+      unsubscribe = navigation.addListener('beforeRemove', (e) => {
+        if (hashtag.suggested.filter((s) => s.selected).length >= 3) {
+          return;
+        }
+        showNotification(i18n.t('onboarding.selectThreeTags'), 'warning');
+        // Prevent default behavior of leaving the screen
+        e.preventDefault();
+      });
+    }
+
+    return () => {
+      if (unsubscribe) {
+        unsubscribe();
+      }
+      if (route && route.params && route.params.initial) {
+        navigation.navigate('Tabs', {
+          screen: 'Discovery',
+        });
+      }
+    };
+  }, [hashtag, navigation, route]);
 
   const onPress = () => {
     if (hashtag.suggested.filter((s) => s.selected).length >= 3) {

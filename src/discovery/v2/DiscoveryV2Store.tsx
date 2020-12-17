@@ -20,6 +20,7 @@ export default class DiscoveryV2Store {
   @observable tags: TDiscoveryTagsTag[] = [];
   @observable trendingTags: TDiscoveryTagsTag[] = [];
   @observable loading = false;
+  @observable loadingTags = false;
   @observable refreshing = false;
   @observable showManageTags = false;
   boostFeed: FeedStore;
@@ -104,7 +105,7 @@ export default class DiscoveryV2Store {
    */
   @action
   async loadTags(plus?: boolean): Promise<void> {
-    this.loading = true;
+    this.loadingTags = true;
     try {
       const params = plus
         ? { plus: 1, as_activities: 1 }
@@ -118,7 +119,7 @@ export default class DiscoveryV2Store {
     } catch (err) {
       console.log(err);
     } finally {
-      this.loading = false;
+      this.loadingTags = false;
     }
   }
 
@@ -138,9 +139,12 @@ export default class DiscoveryV2Store {
   }
 
   @action
-  async refreshTrends(plus: boolean | undefined = undefined): Promise<void> {
+  async refreshTrends(
+    plus: boolean | undefined = undefined,
+    clean = true,
+  ): Promise<void> {
     this.refreshing = true;
-    this.setTrends([]);
+    if (clean) this.setTrends([]);
     await this.loadTrends(plus);
     this.refreshing = false;
   }

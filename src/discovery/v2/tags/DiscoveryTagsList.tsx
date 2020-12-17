@@ -37,7 +37,7 @@ export const DiscoveryTagsList = observer(({ plus, store, type }: Props) => {
   }, [store, plus]);
 
   const EmptyPartial = () => {
-    return store.loading || store.refreshing ? (
+    return store.loadingTags || store.refreshing ? (
       <View />
     ) : (
       <View>
@@ -141,7 +141,7 @@ export const DiscoveryTagsList = observer(({ plus, store, type }: Props) => {
         renderSectionHeader={SectionHeaderPatrial}
         ListEmptyComponent={EmptyPartial}
         onRefresh={onRefresh}
-        refreshing={store.loading}
+        refreshing={store.loadingTags}
         sections={[
           {
             title: title,
