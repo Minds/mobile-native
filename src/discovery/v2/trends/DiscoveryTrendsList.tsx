@@ -9,6 +9,7 @@ import Button from '../../../common/components/Button';
 import FeedList from '../../../common/components/FeedList';
 import { useNavigation } from '@react-navigation/native';
 import type DiscoveryV2Store from '../DiscoveryV2Store';
+import CenteredLoading from '../../../common/components/CenteredLoading';
 
 type PropsType = {
   plus?: boolean;
@@ -44,8 +45,11 @@ export const DiscoveryTrendsList = observer(({ plus, store }: PropsType) => {
   }, [store.refreshing, listRef]);
 
   const EmptyPartial = () => {
-    return store.loading || store.refreshing ? (
-      <View />
+    return store.loading ||
+      store.refreshing ||
+      store.allFeed.loading ||
+      store.allFeed.refreshing ? (
+      <CenteredLoading />
     ) : (
       <View style={[ComponentsStyle.emptyComponentContainer, theme.flexColumn]}>
         <Text style={ComponentsStyle.emptyComponentMessage}>
@@ -60,7 +64,8 @@ export const DiscoveryTrendsList = observer(({ plus, store }: PropsType) => {
   };
 
   const onRefresh = () => {
-    store.refreshTrends(plus);
+    store.refreshTrends(plus, false);
+    store.allFeed.refresh();
   };
 
   const header = (

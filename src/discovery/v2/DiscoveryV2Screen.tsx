@@ -25,6 +25,7 @@ interface Props {
  * Discovery Feed Screen
  */
 export const DiscoveryV2Screen = observer((props: Props) => {
+  const theme = ThemedStyles.style;
   const [shouldRefreshOnTabPress, setShouldRefreshOnTabPress] = useState(false);
   const store = useDiscoveryV2Store();
   const navigation = props.navigation;
@@ -74,8 +75,8 @@ export const DiscoveryV2Screen = observer((props: Props) => {
   };
 
   return (
-    <View style={ThemedStyles.style.flexContainer}>
-      <View style={ThemedStyles.style.backgroundPrimary}>
+    <View style={theme.flexContainer}>
+      <View style={[theme.backgroundPrimary, theme.paddingTop]}>
         <InitialOnboardingButton />
         <TopbarTabbar
           current={store.activeTabId}
@@ -90,7 +91,7 @@ export const DiscoveryV2Screen = observer((props: Props) => {
           ]}
         />
       </View>
-      <View style={ThemedStyles.style.flexContainer}>{screen()}</View>
+      <View style={theme.flexContainer}>{screen()}</View>
       <DiscoveryTagsManager
         show={store.showManageTags}
         onCancel={closeManageTags}
