@@ -1,9 +1,10 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { ScrollView, View, StyleSheet, Pressable, Linking } from 'react-native';
+import { autorun } from 'mobx';
+import { observer, useLocalStore } from 'mobx-react';
 import ThemedStyles from '../styles/ThemedStyles';
 import Button from '../common/components/Button';
-import { Text } from 'react-native-elements';
-import { CheckBox } from 'react-native-elements';
+import { Text, CheckBox } from 'react-native-elements';
 import { ThemedStyle } from '../styles/Style';
 import UniswapWidget from '../common/components/uniswap-widget/UniswapWidget';
 import TransakWidget, {
@@ -17,6 +18,194 @@ import i18n from '../common/services/i18n.service';
 
 type PaymentMethod = 'card' | 'bank' | 'crypto';
 type PaymentOption = { type: PaymentMethod; name: string };
+
+type Store = {
+  paymentMethod: string | null;
+  orderReport: OrderReport | null;
+  showOrderReport: boolean;
+  showUniswapWidget: boolean;
+  showTransakWidget: boolean;
+  aggressTerms: boolean;
+  setPaymentMethod: (paymentMethod: PaymentMethod | null) => void;
+  setOrderReport: (orderReport: OrderReport) => void;
+  setShowOrderReport: (show: boolean) => void;
+  setShowUniswapWidget: (show: boolean) => void;
+  setShowTransakWidget: (show: boolean) => void;
+  setAggressTerms: (agrees: boolean) => void;
+  handleTransakOrderProcessed: (order: TransakOrderProcessed) => void;
+  handleTransakError: (error: any) => void;
+  handleOptionSelection: (newType: PaymentMethod) => void;
+};
+
+export default observer(() => {
+  const theme = ThemedStyles.style;
+  const store = useLocalStore<Store>(createStore);
+  const canBuyTokens = !!store.paymentMethod && store.aggressTerms;
+
+  useEffect(() => {
+    autorun(() => {
+      if (store.orderReport) {
+        store.setShowTransakWidget(false);
+        store.setShowOrderReport(true);
+      }
+    });
+  }, [store]);
+
+  return (
+    <>
+      <ScrollView
+        style={[theme.flexContainer, theme.backgroundPrimary]}
+        contentContainerStyle={theme.padding4x}>
+        <View style={[theme.alignCenter]}>
+          <Text style={[theme.marginBottom5x, theme.fontXXL, theme.bold]}>
+            {i18n.t('buyTokensScreen.paymentMethod')}
+          </Text>
+        </View>
+        <View
+          style={[
+            theme.flexContainer,
+            theme.rowJustifySpaceBetween,
+            theme.marginBottom5x,
+            styles.optionsContainer,
+          ]}>
+          {paymentMethodsList.map(({ type, name }, index) => (
+            <Pressable
+              style={[
+                theme.borderPrimary,
+                styles.option,
+                ...buildButtonStyles(theme, index),
+                store.paymentMethod === type ? theme.backgroundSecondary : '',
+              ]}
+              onPress={() => store.handleOptionSelection(type)}>
+              <Text>{name}</Text>
+            </Pressable>
+          ))}
+        </View>
+        <View style={[theme.flexContainer, theme.rowStretch]}>
+          <Text>
+            {i18n.t('buyTokensScreen.deliverEstimate', {
+              estimate: store.paymentMethod === 'bank' ? 'days' : 'minutes',
+            })}
+          </Text>
+        </View>
+        <View>
+          <CheckBox
+            checked={store.aggressTerms}
+            onPress={() => store.setAggressTerms(!store.aggressTerms)}
+            containerStyle={[theme.checkbox]}
+            title={
+              <Text style={[theme.colorPrimaryText, theme.marginLeft3x]}>
+                {i18n.to(
+                  'buyTokensScreen.terms',
+                  {},
+                  {
+                    link: (
+                      <Text
+                        style={theme.link}
+                        onPress={() => {
+                          Linking.openURL(
+                            'https://cdn-assets.minds.com/front/dist/assets/documents/TermsOfSale-v0.1.pdf',
+                          );
+                        }}>
+                        {i18n.t('buyTokensScreen.linkText')}
+                      </Text>
+                    ),
+                  },
+                )}
+              </Text>
+            }
+          />
+        </View>
+        <View style={[theme.flexContainer, theme.rowJustifySpaceBetween]}>
+          <Text style={styles.learMoreLink}>
+            {i18n.t('buyTokensScreen.learnMore')}
+          </Text>
+          <Button
+            text={i18n.t('buyTokensScreen.buy')}
+            containerStyle={[
+              theme.alignCenter,
+              !canBuyTokens ? styles.disabledButton : '',
+            ]}
+            onPress={() => {
+              if (store.paymentMethod === 'crypto') {
+                store.setShowUniswapWidget(!store.showUniswapWidget);
+              } else {
+                store.setShowTransakWidget(!store.showTransakWidget);
+              }
+            }}
+            disabled={!canBuyTokens}
+          />
+        </View>
+      </ScrollView>
+      <UniswapWidget
+        isVisible={store.showUniswapWidget}
+        onCloseButtonPress={() =>
+          store.setShowUniswapWidget(!store.showUniswapWidget)
+        }
+      />
+      <TransakWidget
+        isVisible={store.showTransakWidget}
+        onOrderProcessed={store.handleTransakOrderProcessed}
+        onError={store.handleTransakError}
+        onCloseButtonPress={() =>
+          store.setShowTransakWidget(!store.showTransakWidget)
+        }
+      />
+      {store.orderReport && (
+        <OrderReportModal
+          isVisible={store.showOrderReport}
+          onCloseButtonPress={() =>
+            store.setShowOrderReport(!store.showOrderReport)
+          }
+          report={store.orderReport}
+        />
+      )}
+    </>
+  );
+});
+
+const createStore = (): Store => ({
+  paymentMethod: null,
+  orderReport: null,
+  showOrderReport: false,
+  showUniswapWidget: false,
+  showTransakWidget: false,
+  aggressTerms: false,
+  setPaymentMethod(paymentMethod: PaymentMethod | null) {
+    this.paymentMethod = paymentMethod;
+  },
+  setOrderReport(orderReport: OrderReport) {
+    this.orderReport = orderReport;
+  },
+  setShowOrderReport(show: boolean) {
+    this.showOrderReport = show;
+  },
+  setShowUniswapWidget(show: boolean) {
+    this.showUniswapWidget = show;
+  },
+  setShowTransakWidget(show: boolean) {
+    this.showTransakWidget = show;
+  },
+  setAggressTerms(agrees: boolean) {
+    this.aggressTerms = agrees;
+  },
+  handleTransakOrderProcessed(order: TransakOrderProcessed) {
+    const { cryptoAmount, fiatAmount, fiatCurrency, paymentOptionId } = order;
+    this.setOrderReport({
+      fiatAmount,
+      fiatCurrency,
+      tokenAmount: cryptoAmount,
+      paymentMethod: _startCase(paymentOptionId),
+    });
+  },
+  handleOptionSelection(newType: PaymentMethod) {
+    const isDeselection = this.paymentMethod === newType;
+    this.setPaymentMethod(isDeselection ? null : newType);
+  },
+  handleTransakError(data) {
+    console.error(data);
+  },
+});
 
 const styles = StyleSheet.create({
   optionsContainer: {
@@ -71,160 +260,3 @@ const buildButtonStyles = (theme: ThemedStyle, position: number) => {
       return [];
   }
 };
-
-export default function () {
-  const theme = ThemedStyles.style;
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod | null>(
-    null,
-  );
-  const [showUniswapWidget, setShowUniswapWidget] = useState(false);
-  const [showTransakWidget, setShowTransakWidget] = useState(false);
-  const [aggressTerms, setAggressTerms] = useState(false);
-  const [orderReport, setOrderReport] = useState<OrderReport | null>(null);
-  const [showOrderReport, setShowOrderReport] = useState(true);
-  const canBuyTokens = !!paymentMethod && aggressTerms;
-
-  const toggleUniswapModal = () => setShowUniswapWidget(!showUniswapWidget);
-  const toggleTransakModal = () => setShowTransakWidget(!showTransakWidget);
-  const toggleAgreesTerms = () => setAggressTerms(!aggressTerms);
-  const toggleOrderReportModal = () => setShowOrderReport(!showOrderReport);
-
-  const handleOptionSelection = (newType: PaymentMethod) => {
-    setPaymentMethod((prevType) => {
-      const isDeselection = prevType === newType;
-      return isDeselection ? null : newType;
-    });
-  };
-
-  const handleTransakOrderProcessed = useCallback(
-    (order: TransakOrderProcessed) => {
-      const { cryptoAmount, fiatAmount, fiatCurrency, paymentOptionId } = order;
-      setOrderReport({
-        fiatAmount,
-        fiatCurrency,
-        tokenAmount: cryptoAmount,
-        paymentMethod: _startCase(paymentOptionId),
-      });
-    },
-    [],
-  );
-
-  const handleTransakError = useCallback((data) => {
-    console.error(data);
-  }, []);
-
-  const handleBuy = () => {
-    if (paymentMethod === 'crypto') {
-      toggleUniswapModal();
-    } else {
-      toggleTransakModal();
-    }
-  };
-
-  useEffect(() => {
-    if (orderReport) {
-      setShowTransakWidget(false);
-      setShowOrderReport(true);
-    }
-  }, [orderReport]);
-
-  return (
-    <>
-      <ScrollView
-        style={[theme.flexContainer, theme.backgroundPrimary]}
-        contentContainerStyle={theme.padding4x}>
-        <View style={[theme.alignCenter]}>
-          <Text style={[theme.marginBottom5x, theme.fontXXL, theme.bold]}>
-            {i18n.t('buyTokensScreen.paymentMethod')}
-          </Text>
-        </View>
-        <View
-          style={[
-            theme.flexContainer,
-            theme.rowJustifySpaceBetween,
-            theme.marginBottom5x,
-            styles.optionsContainer,
-          ]}>
-          {paymentMethodsList.map(({ type, name }, index) => (
-            <Pressable
-              style={[
-                theme.borderPrimary,
-                styles.option,
-                ...buildButtonStyles(theme, index),
-                paymentMethod === type ? theme.backgroundSecondary : '',
-              ]}
-              onPress={() => handleOptionSelection(type)}>
-              <Text>{name}</Text>
-            </Pressable>
-          ))}
-        </View>
-        <View style={[theme.flexContainer, theme.rowStretch]}>
-          <Text>
-            {i18n.t('buyTokensScreen.deliverEstimate', {
-              estimate: paymentMethod === 'bank' ? 'days' : 'minutes',
-            })}
-          </Text>
-        </View>
-        <View>
-          <CheckBox
-            checked={aggressTerms}
-            onPress={toggleAgreesTerms}
-            containerStyle={[theme.checkbox]}
-            title={
-              <Text style={[theme.colorPrimaryText, theme.marginLeft3x]}>
-                {i18n.to(
-                  'buyTokensScreen.terms',
-                  {},
-                  {
-                    link: (
-                      <Text
-                        style={theme.link}
-                        onPress={() => {
-                          Linking.openURL(
-                            'https://cdn-assets.minds.com/front/dist/assets/documents/TermsOfSale-v0.1.pdf',
-                          );
-                        }}>
-                        {i18n.t('buyTokensScreen.linkText')}
-                      </Text>
-                    ),
-                  },
-                )}
-              </Text>
-            }
-          />
-        </View>
-        <View style={[theme.flexContainer, theme.rowJustifySpaceBetween]}>
-          <Text style={styles.learMoreLink}>
-            {i18n.t('buyTokensScreen.learnMore')}
-          </Text>
-          <Button
-            text={i18n.t('buyTokensScreen.buy')}
-            containerStyle={[
-              theme.alignCenter,
-              !canBuyTokens ? styles.disabledButton : '',
-            ]}
-            onPress={handleBuy}
-            disabled={!canBuyTokens}
-          />
-        </View>
-      </ScrollView>
-      <UniswapWidget
-        isVisible={showUniswapWidget}
-        onCloseButtonPress={toggleUniswapModal}
-      />
-      <TransakWidget
-        isVisible={showTransakWidget}
-        onOrderProcessed={handleTransakOrderProcessed}
-        onError={handleTransakError}
-        onCloseButtonPress={toggleTransakModal}
-      />
-      {orderReport && (
-        <OrderReportModal
-          isVisible={showOrderReport}
-          onCloseButtonPress={toggleOrderReportModal}
-          report={orderReport}
-        />
-      )}
-    </>
-  );
-}
