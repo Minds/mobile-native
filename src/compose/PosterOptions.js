@@ -227,13 +227,11 @@ export default observer(
             testID="permawebButton"
           />
         )}
-        {hasAttachment && (
-          <Item
-            title="License"
-            description={getLicenseText(license)}
-            onPress={onLicensePress}
-          />
-        )}
+        <Item
+          title="License"
+          description={getLicenseText(license)}
+          onPress={onLicensePress}
+        />
         {!store.group && (
           <Item
             title="Visibility"
