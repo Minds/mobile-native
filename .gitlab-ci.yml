@@ -114,7 +114,7 @@ test:jest:
 
 # Web version (Higher version code)
 build:androidproduction:
-  image: circleci/android:api-28-node
+  image: circleci/android:api-29-node
   stage: build
   before_script:
     - export ANDROID_SDK_HOME=$CI_PROJECT_DIR
