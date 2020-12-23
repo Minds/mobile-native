@@ -57,7 +57,13 @@ export default observer(() => {
         style={[theme.flexContainer, theme.backgroundPrimary]}
         contentContainerStyle={theme.padding4x}>
         <View style={[theme.alignCenter]}>
-          <Text style={[theme.marginBottom5x, theme.fontXXL, theme.bold]}>
+          <Text
+            style={[
+              theme.colorPrimaryText,
+              theme.marginBottom5x,
+              theme.fontXXL,
+              theme.bold,
+            ]}>
             {i18n.t('buyTokensScreen.paymentMethod')}
           </Text>
         </View>
@@ -77,12 +83,12 @@ export default observer(() => {
                 store.paymentMethod === type ? theme.backgroundSecondary : '',
               ]}
               onPress={() => store.handleOptionSelection(type)}>
-              <Text>{name}</Text>
+              <Text style={theme.colorPrimaryText}>{name}</Text>
             </Pressable>
           ))}
         </View>
         <View style={[theme.flexContainer, theme.rowStretch]}>
-          <Text>
+          <Text style={theme.colorPrimaryText}>
             {i18n.t('buyTokensScreen.deliverEstimate', {
               estimate: store.paymentMethod === 'bank' ? 'days' : 'minutes',
             })}
@@ -117,7 +123,7 @@ export default observer(() => {
           />
         </View>
         <View style={[theme.flexContainer, theme.rowJustifySpaceBetween]}>
-          <Text style={styles.learMoreLink}>
+          <Text style={[theme.colorPrimaryText, styles.learMoreLink]}>
             {i18n.t('buyTokensScreen.learnMore')}
           </Text>
           <Button
