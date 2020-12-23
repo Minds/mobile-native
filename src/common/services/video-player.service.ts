@@ -1,4 +1,6 @@
 import { action, observable } from 'mobx';
+import SystemSetting from 'react-native-system-setting';
+import { MindsVideoStoreType } from '../../media/v2/mindsVideo/createMindsVideoStore';
 
 /**
  * Video Player Service
@@ -7,12 +9,21 @@ class VideoPlayerService {
   /**
    * current playing video player reference
    */
-  current: { pause: () => void; toggleVolume: () => void } | null = null;
+  current: MindsVideoStoreType | null = null;
 
   /**
    * current initial volume
    */
   @observable currentVolume = 0;
+
+  constructor() {
+    SystemSetting.addVolumeListener((data) => {
+      // if available enable current video audio
+      if (this.current && !this.current.paused && data.value > 0) {
+        this.current.setVolume(1);
+      }
+    });
+  }
 
   /**
    * Set current player reference
