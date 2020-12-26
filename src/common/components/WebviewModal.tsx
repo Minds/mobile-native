@@ -2,9 +2,6 @@ import React from 'react';
 import WebView from 'react-native-webview';
 import CloseableModal, { CloseableModalProps } from './CloseableModal';
 
-const modalInjectedScript =
-  'window.ReactNativeWebView.postMessage(Math.max(document.body.offsetHeight, document.body.scrollHeight));';
-
 type Props = CloseableModalProps & {
   uri: string;
 };
@@ -27,7 +24,9 @@ export default function ({
         }}
         bounces={true}
         scrollEnabled={false}
-        injectedJavaScript={modalInjectedScript}
+        javaScriptEnabled={true}
+        domStorageEnabled={true}
+        startInLoadingState={true}
       />
     </CloseableModal>
   );
