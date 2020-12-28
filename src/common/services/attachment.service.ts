@@ -24,6 +24,7 @@ class AttachmentService {
     };
 
     const progress = (e) => {
+      if (!e.lengthComputable) return;
       let pct = e.loaded / e.total;
       if (onProgress) {
         onProgress(pct);
