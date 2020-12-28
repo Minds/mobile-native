@@ -11,7 +11,6 @@ import {
 import { observer, useLocalStore } from 'mobx-react';
 
 import IonIcon from 'react-native-vector-icons/Ionicons';
-import { KeyboardAccessoryView } from 'react-native-keyboard-accessory';
 
 import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
@@ -26,6 +25,7 @@ import BottomBar from './BottomBar';
 import MediaPreview from './MediaPreview';
 import discardMessage from './discardMessage';
 import Tags from '../common/components/Tags';
+import KeyboardSpacingView from '../common/components/KeyboardSpacingView';
 
 const { width } = Dimensions.get('window');
 
@@ -112,6 +112,8 @@ export default observer(function (props) {
     });
   }, [inputRef]);
 
+  const showBottomBar = !optionsRef.current || !optionsRef.current.opened;
+
   return (
     <View style={styles.container}>
       <ScrollView
@@ -170,21 +172,19 @@ export default observer(function (props) {
           />
         )}
       </ScrollView>
+      {showBottomBar && (
+        <KeyboardSpacingView
+          style={[theme.backgroundPrimary, styles.bottomBarContainer]}>
+          <BottomBar
+            store={props.store}
+            onOptions={() => {
+              Keyboard.dismiss();
+              optionsRef.current.show();
+            }}
+          />
+        </KeyboardSpacingView>
+      )}
       <PosterOptions ref={optionsRef} store={props.store} />
-      <KeyboardAccessoryView
-        hideBorder={true}
-        animateOn="all"
-        alwaysVisible
-        style={[theme.backgroundPrimary, styles.bottomBarContainer]}
-        avoidKeyboard>
-        <BottomBar
-          store={props.store}
-          onOptions={() => {
-            Keyboard.dismiss();
-            optionsRef.current.show();
-          }}
-        />
-      </KeyboardAccessoryView>
     </View>
   );
 });
