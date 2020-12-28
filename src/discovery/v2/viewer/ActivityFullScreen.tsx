@@ -205,7 +205,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
 
   const shadowOpt = {
     width: window.width,
-    height: 70,
+    height: 70 + (entity.remind_users ? 42 : 0),
     color: '#000',
     border: 5,
     opacity: 0.15,
