@@ -166,6 +166,9 @@ export default observer(
         sheetRef.current.snapTo(1);
         sheetRef.current.snapTo(1);
       },
+      get opened() {
+        return localStore.opened;
+      },
     }));
 
     const showSchedule =
@@ -189,7 +192,12 @@ export default observer(
       : null;
 
     const renderInner = () => (
-      <View style={[theme.backgroundSecondary, theme.fullHeight]}>
+      <View
+        style={[
+          theme.backgroundSecondary,
+          theme.fullHeight,
+          { elevation: 13 },
+        ]}>
         <Item
           title="Tag"
           description={tags.slice(0, 4).map((t) => `#${t} `)}
@@ -252,12 +260,7 @@ export default observer(
         renderHeader={() => (
           <Header onPress={onHeaderPress} opened={localStore.opened} />
         )}
-        style={[
-          ThemedStyles.style.backgroundSecondary,
-          // keyboard.keyboardShown
-          //   ? { bottom: keyboard.keyboardHeight }
-          //   : null,
-        ]}
+        style={ThemedStyles.style.backgroundAlert}
         onOpenEnd={onOpenEnd}
         onCloseEnd={onCloseEnd}
       />

@@ -54,20 +54,14 @@ const styles = StyleSheet.create({
     zIndex: 9999,
     opacity: 1,
     position: 'absolute',
-    top: Platform.select({
-      ios: 20,
-      android: 16,
-    }),
+    top: 20,
     left: 18,
   },
   unread: {
     zIndex: 9999,
     opacity: 1,
     position: 'absolute',
-    top: Platform.select({
-      ios: 22.5,
-      android: 18.5,
-    }),
+    top: 22.5,
     left: 20,
   },
 });

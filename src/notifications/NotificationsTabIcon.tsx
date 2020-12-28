@@ -1,7 +1,7 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import { StyleSheet, View, Platform, ColorValue } from 'react-native';
+import { StyleSheet, View, ColorValue } from 'react-native';
 
 import { observer, inject } from 'mobx-react';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
@@ -37,7 +37,7 @@ class NotificationIcon extends Component<PropsType> {
             />
             <FAIcon
               name="circle"
-              size={11}
+              size={10}
               color="#E02020"
               style={styles.unread}
             />
@@ -60,20 +60,14 @@ const styles = StyleSheet.create({
     zIndex: 9999,
     opacity: 1,
     position: 'absolute',
-    top: Platform.select({
-      ios: 23,
-      android: 16,
-    }),
+    top: 23,
     left: 16,
   },
   unread: {
     zIndex: 9999,
     opacity: 1,
     position: 'absolute',
-    top: Platform.select({
-      ios: 25,
-      android: 18,
-    }),
+    top: 25.5,
     left: 18,
   },
 });
