@@ -3,6 +3,7 @@ import { Text, View } from 'react-native';
 import { observer } from 'mobx-react';
 import { Icon } from 'react-native-elements';
 import moment from 'moment-timezone';
+import _ from 'lodash';
 
 import ThemedStyles from '../../../styles/ThemedStyles';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
@@ -31,7 +32,9 @@ export default class ActivityMetrics extends Component<PropsType> {
     const theme = ThemedStyles.style;
 
     const support_tier: SupportTiersType | null =
-      entity.wire_threshold && 'support_tier' in entity.wire_threshold
+      entity.wire_threshold &&
+      _.isObject(entity.wire_threshold) &&
+      'support_tier' in entity.wire_threshold
         ? entity.wire_threshold.support_tier
         : null;
 
