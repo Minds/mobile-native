@@ -19,7 +19,7 @@ export default function () {
       }
 
       const uri = payload.params[0];
-      Linking.openURL('metamask://wc?uri=' + uri);
+      Linking.openURL(uri);
     });
 
     // Subscribe to accounts change
