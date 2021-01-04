@@ -78,6 +78,8 @@ PODS:
   - Permission-PhotoLibrary (2.2.0):
     - RNPermissions
   - RCTRequired (0.63.3)
+  - RCTSystemSetting (1.7.6):
+    - React
   - RCTTypeSafety (0.63.3):
     - FBLazyVector (= 0.63.3)
     - Folly (= 2020.01.13.00)
@@ -350,8 +352,8 @@ PODS:
     - React
   - RNDateTimePicker (2.6.2):
     - React
-  - RNDeviceInfo (5.6.5):
-    - React
+  - RNDeviceInfo (7.3.1):
+    - React-Core
   - RNFastImage (8.3.5):
     - React-Core
     - SDWebImage (~> 5.8)
@@ -448,6 +450,7 @@ DEPENDENCIES:
   - Permission-Microphone (from `../node_modules/react-native-permissions/ios/Microphone.podspec`)
   - Permission-PhotoLibrary (from `../node_modules/react-native-permissions/ios/PhotoLibrary.podspec`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
+  - RCTSystemSetting (from `../node_modules/react-native-system-setting`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
   - React (from `../node_modules/react-native/`)
   - React-callinvoker (from `../node_modules/react-native/ReactCommon/callinvoker`)
@@ -579,6 +582,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-permissions/ios/PhotoLibrary.podspec"
   RCTRequired:
     :path: "../node_modules/react-native/Libraries/RCTRequired"
+  RCTSystemSetting:
+    :path: "../node_modules/react-native-system-setting"
   RCTTypeSafety:
     :path: "../node_modules/react-native/Libraries/TypeSafety"
   React:
@@ -744,6 +749,7 @@ SPEC CHECKSUMS:
   Permission-Microphone: 06462b9d979ada12095bcff8d5ee1aeeeaf20b5d
   Permission-PhotoLibrary: e3ff899f87a3eda29427c142ca93837e8802d228
   RCTRequired: 48884c74035a0b5b76dbb7a998bd93bcfc5f2047
+  RCTSystemSetting: 5107b7350d63b3f7b42a1277d07e4e5d9df879be
   RCTTypeSafety: edf4b618033c2f1c5b7bc3d90d8e085ed95ba2ab
   React: f36e90f3ceb976546e97df3403e37d226f79d0e3
   React-callinvoker: 18874f621eb96625df7a24a7dc8d6e07391affcd
@@ -782,7 +788,7 @@ SPEC CHECKSUMS:
   RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f
   RNConvertPhAsset: 9b366b8a1abc194b76572712c6f7dd89c9e4e37f
   RNDateTimePicker: 968ccf716b3b6aee07849641966005924de5c0f9
-  RNDeviceInfo: c5f8f3a456adcbba405ace475254b08febc4c095
+  RNDeviceInfo: 6ecb1d1c87d20e4c62354be0348de23362824dcd
   RNFastImage: 811ade1ec186fa437ff92bd189dd6721c0ed11d9
   RNFS: 2bd9eb49dc82fa9676382f0585b992c424cd59df
   RNGestureHandler: 7a5833d0f788dbd107fbb913e09aa0c1ff333c39
