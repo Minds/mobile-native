@@ -28,6 +28,10 @@ const ReceiverSettings = ({ navigation, walletStore }: PropsType) => {
           title: i18n.t('wallet.alternateReceiver'),
           onPress: () => navigation.push('BlockchainWallet', {}),
         },
+        {
+          title: i18n.t('wallet.validateAddress'),
+          onPress: () => navigation.push('ValidateAddressScreen', {}),
+        },
       ]
     : [
         {
@@ -49,8 +53,9 @@ const ReceiverSettings = ({ navigation, walletStore }: PropsType) => {
         {i18n.t('wallet.receiverAddresses').toUpperCase()}
       </Text>
       <View style={innerWrapper}>
-        <MenuItem item={receiverSettingsOptions[0]} />
-        <MenuItem item={receiverSettingsOptions[1]} />
+        {receiverSettingsOptions.map((item) => (
+          <MenuItem item={item} />
+        ))}
       </View>
     </View>
   );

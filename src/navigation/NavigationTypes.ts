@@ -191,6 +191,7 @@ export type AppStackParamList = {
   ReceiverAddressScreen: {
     walletStore: WalletStoreType;
   };
+  ValidateAddressScreen: {};
   LearnMoreScreen: {};
   BtcAddressScreen: {
     walletStore: WalletStoreType;

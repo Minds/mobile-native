@@ -702,6 +702,7 @@
     "cash": "Cash",
     "activeAddress": "Mobile Receiver Address (Active)",
     "alternateReceiver": "Alternate receiver address",
+    "validateAddress": "Validate Address",
     "createAddress": "Create a new address (Recommended)",
     "transferToOnchain": "Transfer to On-chain",
     "usePrivateKey": "Use your private key",

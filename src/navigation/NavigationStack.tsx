@@ -112,6 +112,7 @@ import SuggestedChannelsScreen from '../onboarding/v2/steps/SuggestedChannelsScr
 import SuggestedGroupsScreen from '../onboarding/v2/steps/SuggestedGroupsScreen';
 import BuyTokensScreen from '../buy-tokens/BuyTokensScreen';
 import EarnScreen from '../earn/EarnScreen';
+import ValidateAddressScreen from '../wallet/v2/address/ValidateAddressScreen';
 
 const isIos = Platform.OS === 'ios';
 
@@ -464,6 +465,17 @@ const AppStack = function () {
         component={ReceiverAddressScreen}
         options={{
           title: 'Receiver Address',
+          headerStyle: {
+            backgroundColor: ThemedStyles.getColor('primary_background'),
+          },
+          headerHideShadow: true,
+        }}
+      />
+      <AppStackNav.Screen
+        name="ValidateAddressScreen"
+        component={ValidateAddressScreen}
+        options={{
+          title: 'Validate Address',
           headerStyle: {
             backgroundColor: ThemedStyles.getColor('primary_background'),
           },
