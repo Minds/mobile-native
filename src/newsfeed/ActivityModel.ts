@@ -22,6 +22,7 @@ import type GroupModel from '../groups/GroupModel';
 import { SupportTiersType } from '../wire/WireTypes';
 import mindsService from '../common/services/minds.service';
 import NavigationService from '../navigation/NavigationService';
+import { showNotification } from '../../AppMessages';
 
 type Thumbs = Record<ThumbSize, string> | Record<ThumbSize, string>[];
 
@@ -283,8 +284,9 @@ export default class ActivityModel extends BaseModel {
   }
 
   @action
-  toggleMatureVisibility() {
+  toggleMatureVisibility = () => {
     if (GOOGLE_PLAY_STORE || Platform.OS === 'ios') {
+      showNotification(i18n.t('activity.notSafeComment'));
       return;
     }
     this.mature_visibility = !this.mature_visibility;
@@ -292,7 +294,7 @@ export default class ActivityModel extends BaseModel {
     if (this.remind_object && this.remind_object) {
       this.remind_object.mature_visibility = this.mature_visibility;
     }
-  }
+  };
 
   @action
   setVisible(value: boolean) {

@@ -31,6 +31,10 @@ import type ActivityModel from '../../newsfeed/ActivityModel';
 import { MindsVideoStoreType } from '../../media/v2/mindsVideo/createMindsVideoStore';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { DATA_SAVER_THUMB_RES } from '../../config/Config';
+import SmartImage from './SmartImage';
+import FastImage from 'react-native-fast-image';
+
+const imgSize = 75;
 
 type PropsType = {
   entity: ActivityModel;
@@ -42,6 +46,7 @@ type PropsType = {
   hideOverlay?: boolean;
   ignoreDataSaver?: boolean;
   width?: number;
+  smallEmbed?: boolean;
 };
 /**
  * Activity
@@ -67,6 +72,7 @@ export default class MediaView extends Component<PropsType> {
    * Show activity media
    */
   showMedia() {
+    const theme = ThemedStyles.style;
     let source;
     let title =
       this.props.entity.title && this.props.entity.title.length > 200
@@ -110,7 +116,33 @@ export default class MediaView extends Component<PropsType> {
         ),
       };
 
-      return (
+      return this.props.smallEmbed ? (
+        <View
+          style={[
+            theme.rowJustifyStart,
+            theme.borderHair,
+            theme.borderPrimary,
+            theme.borderRadius,
+          ]}>
+          <SmartImage
+            style={styles.thumbnail}
+            threshold={150}
+            source={source}
+            thumbnail={thumbnail}
+            resizeMode={FastImage.resizeMode.cover}
+          />
+          <TouchableOpacity
+            style={[theme.padding2x, theme.flexContainer]}
+            onPress={this.openLink}>
+            <Text numberOfLines={2} style={styles.title}>
+              {title}
+            </Text>
+            <Text style={styles.domain}>
+              {domain(this.props.entity.perma_url)}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      ) : (
         <View style={styles.richMediaContainer}>
           {source.uri ? this.getImage(source, thumbnail) : null}
           <TouchableOpacity style={styles.richMedia} onPress={this.openLink}>
@@ -267,7 +299,7 @@ export default class MediaView extends Component<PropsType> {
    * @param {object} source
    * @param {object} thumbnail
    */
-  getImage(source, thumbnail?) {
+  getImage(source, thumbnail?, mode = 'cover') {
     this.source = source;
     const custom_data = this.props.entity.custom_data;
 
@@ -315,6 +347,8 @@ export default class MediaView extends Component<PropsType> {
           activeOpacity={1}
           testID="Posted Image">
           <ExplicitImage
+            resizeMode={mode}
+            style={this.props.style}
             source={source}
             thumbnail={thumbnail}
             entity={this.props.entity}
@@ -452,5 +486,10 @@ const styles = StyleSheet.create({
   },
   licenseIcon: {
     paddingRight: 2,
+  },
+  thumbnail: {
+    width: imgSize,
+    height: imgSize,
+    borderRadius: 2,
   },
 });

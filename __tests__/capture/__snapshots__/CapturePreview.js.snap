@@ -12,7 +12,7 @@ exports[`cature preview component should renders correctly for image 1`] = `
   }
 >
   <Image
-    resizeMode="contain"
+    resizeMode="cover"
     source={
       Object {
         "uri": "file://someimage.jpg",

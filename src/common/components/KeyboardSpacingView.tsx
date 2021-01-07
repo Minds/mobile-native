@@ -16,6 +16,7 @@ import ThemedStyles from '../../styles/ThemedStyles';
 interface PropsType extends ViewProps {
   children: React.ReactNode;
   enabled?: boolean;
+  noInset?: boolean;
   onKeyboardShown?: (height: number) => void;
 }
 
@@ -30,6 +31,7 @@ export default observer(function KeyboardSpacingView({
   style,
   enabled = true,
   onKeyboardShown,
+  noInset,
   ...otherProps
 }: PropsType) {
   const insets = useSafeAreaInsets();
@@ -55,7 +57,11 @@ export default observer(function KeyboardSpacingView({
   );
 
   const transition = useTransition(store.shown, { duration: 200 });
-  const paddingBottom = mix(transition, insets.bottom, store.height);
+  const paddingBottom = mix(
+    transition,
+    noInset ? 0 : insets.bottom,
+    store.height,
+  );
 
   useEffect(() => {
     const eventShow = Platform.select({

@@ -694,6 +694,7 @@ exports[`Activity screen component renders correctly  1`] = `
               undefined,
               undefined,
               undefined,
+              undefined,
             ]
           }
           testID="Thumb up activity button"
@@ -726,6 +727,7 @@ exports[`Activity screen component renders correctly  1`] = `
           onPress={[Function]}
           style={
             Array [
+              undefined,
               undefined,
               undefined,
               undefined,
@@ -918,29 +920,144 @@ exports[`Activity screen component renders correctly  1`] = `
       </View>
     </View>
   </View>
-  <BottomSheet
-    callbackNode={
-      Array [
-        Array [
-          1,
-        ],
-      ]
+  <CommentBottomSheet
+    commentsStore={
+      CommentsStore {
+        "attachment": AttachmentStore {
+          "cancelOrDelete": [Function],
+          "fileName": null,
+          "guid": "",
+          "transcoding": false,
+        },
+        "comments": Array [],
+        "embed": RichEmbedStore {
+          "_richEmbedFetchTimer": null,
+          "clearRichEmbedAction": [Function],
+          "richEmbedUrl": "",
+          "setRichEmbedPromise": null,
+        },
+        "entity": Object {
+          "allow_comments": true,
+          "attachment_guid": false,
+          "blurb": false,
+          "comments:count": undefined,
+          "containerObj": undefined,
+          "container_guid": "activityguid0",
+          "custom_data": false,
+          "custom_type": false,
+          "description": "Congratulations! ",
+          "edited": "",
+          "entity_guid": "",
+          "getLockType": [Function],
+          "guid": "activityguid0",
+          "impressions": 0,
+          "isOwner": [Function],
+          "is_visible": false,
+          "mature": false,
+          "mature_visibility": false,
+          "message": "Message",
+          "ownerObj": Object {
+            "__list": null,
+            "allow_comments": true,
+            "blocked": undefined,
+            "canary": false,
+            "confirmEmail": [Function],
+            "disable_autoplay_videos": undefined,
+            "email_confirmed": false,
+            "eth_wallet": "",
+            "founder": false,
+            "groupsCount": 0,
+            "guid": "824853017709780997",
+            "impressions": undefined,
+            "isOwner": [Function],
+            "is_admin": false,
+            "last_accepted_tos": 0,
+            "mature": false,
+            "mature_visibility": false,
+            "mode": 0,
+            "nsfw": Array [],
+            "onchain_booster": 0,
+            "pending_subscribe": false,
+            "permissions": Object {},
+            "plus": false,
+            "pro": false,
+            "rewards": false,
+            "subscribed": undefined,
+            "subscribers_count": undefined,
+            "subscriptions_count": 0,
+            "subtype": false,
+            "tags": Array [],
+            "time_created": "1522036284",
+            "type": "user",
+            "urn": "",
+            "username": "",
+            "verified": false,
+            "wire_rewards": undefined,
+          },
+          "owner_guid": "824853017709780997",
+          "parent_guid": "838106762591510528",
+          "paywall": "",
+          "paywall_unlocked": false,
+          "perma_url": false,
+          "permissions": Object {},
+          "pinned": false,
+          "reminds": 0,
+          "rowKey": "something0",
+          "shouldBeBlured": [MockFunction] {
+            "calls": Array [
+              Array [],
+              Array [],
+            ],
+            "results": Array [
+              Object {
+                "type": "return",
+                "value": undefined,
+              },
+              Object {
+                "type": "return",
+                "value": undefined,
+              },
+            ],
+          },
+          "subtype": "",
+          "thumbnail_src": false,
+          "thumbs:down:count": undefined,
+          "thumbs:down:user_guids": undefined,
+          "thumbs:up:count": undefined,
+          "thumbs:up:user_guids": undefined,
+          "time_created": "1522036284",
+          "title": "TITLE",
+          "type": "activity",
+          "urn": "",
+          "username": "",
+          "wire_totals": Object {
+            "tokens": 1000000000000000000,
+          },
+        },
+        "errorLoadingNext": false,
+        "errorLoadingPrevious": false,
+        "focusedUrn": null,
+        "guid": "",
+        "level": 0,
+        "loadNext": "",
+        "loadPrevious": "",
+        "loaded": false,
+        "loadingNext": false,
+        "loadingPrevious": false,
+        "mature": 0,
+        "onAttachedMedia": [Function],
+        "parent": null,
+        "post": [Function],
+        "refreshing": false,
+        "reversed": true,
+        "saving": false,
+        "selectMediaType": [Function],
+        "showInput": false,
+        "socketRoomName": "",
+        "text": "",
+      }
     }
-    enabledContentGestureInteraction={false}
-    enabledContentTapInteraction={false}
-    enabledHeaderGestureInteraction={true}
-    enabledInnerScrolling={false}
-    initialSnap={0}
-    onCloseEnd={[Function]}
-    renderContent={[Function]}
-    renderHeader={[Function]}
-    snapPoints={
-      Array [
-        0,
-        760.3799999999999,
-        1160.58,
-      ]
-    }
+    hideContent={false}
   />
 </View>
 `;

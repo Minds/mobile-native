@@ -24,7 +24,7 @@ export default class CapturePreview extends PureComponent<PropsType> {
       default:
         body = (
           <Image
-            resizeMode="contain"
+            resizeMode="cover"
             source={{ uri: this.props.uri }}
             style={styles.preview}
           />

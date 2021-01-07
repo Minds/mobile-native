@@ -21,7 +21,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Actions from '../../../newsfeed/activity/Actions';
 import Activity from '../../../newsfeed/activity/Activity';
 
-import CommentsStore from '../../../comments/CommentsStore';
+import CommentsStore from '../../../comments/v2/CommentsStore';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import sessionService from '../../../common/services/session.service';
 import videoPlayerService from '../../../common/services/video-player.service';
@@ -32,9 +32,10 @@ import LockV2 from '../../../wire/v2/lock/Lock';
 import Lock from '../../../wire/lock/Lock';
 import { showNotification } from '../../../../AppMessages';
 import { AppStackParamList } from '../../../navigation/NavigationTypes';
-import CommentsBottomPopup from '../../../comments/CommentsBottomPopup';
 import BoxShadow from '../../../common/components/BoxShadow';
 import ActivityMetrics from '../../../newsfeed/activity/metrics/ActivityMetrics';
+import CommentBottomSheet from '../../../comments/v2/CommentBottomSheet';
+import type BottomSheet from '@gorhom/bottom-sheet';
 
 type ActivityRoute = RouteProp<AppStackParamList, 'Activity'>;
 
@@ -43,15 +44,23 @@ const TEXT_MEDIUM_THRESHOLD = 300;
 
 type PropsType = {
   entity: ActivityModel;
+  showCommentsOnFocus?: boolean;
   forceAutoplay?: boolean;
 };
 
 const ActivityFullScreen = observer((props: PropsType) => {
   // Local store
   const store = useLocalStore(() => ({
-    comments: new CommentsStore(),
+    comments: new CommentsStore(props.entity),
+    displayComment: !props.showCommentsOnFocus,
     scrollViewHeight: 0,
     contentHeight: 0,
+    showComments() {
+      store.displayComment = true;
+    },
+    hideComments() {
+      store.displayComment = false;
+    },
     onContentSizeChange(width, height) {
       store.contentHeight = height;
     },
@@ -74,7 +83,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
   const mediaRef = useRef<MediaView>(null);
   const remindRef = useRef<Activity>(null);
   const translateRef = useRef<typeof Translate>(null);
-  const commentsRef = useRef<any>(null);
+  const commentsRef = useRef<BottomSheet>(null);
   const navigation = useNavigation();
   const hasMedia = entity.hasMedia();
   const hasRemind = !!entity.remind_object;
@@ -87,13 +96,21 @@ const ActivityFullScreen = observer((props: PropsType) => {
   });
 
   const onPressComment = useCallback(() => {
-    if (commentsRef.current?.open) {
-      commentsRef.current.open();
+    if (commentsRef.current?.expand) {
+      commentsRef.current.expand();
     }
   }, [commentsRef]);
 
   useEffect(() => {
+    let time: any;
     if (focused) {
+      if (props.showCommentsOnFocus) {
+        time = setTimeout(() => {
+          if (store) {
+            store.showComments();
+          }
+        }, 500);
+      }
       const user = sessionService.getUser();
 
       // if we have some video playing we pause it and reset the current video
@@ -107,8 +124,16 @@ const ActivityFullScreen = observer((props: PropsType) => {
       }
     } else {
       mediaRef.current?.pauseVideo();
+      if (props.showCommentsOnFocus) {
+        store.hideComments();
+      }
     }
-  }, [focused, props.forceAutoplay]);
+    return () => {
+      if (time) {
+        clearTimeout(time);
+      }
+    };
+  }, [focused, props.forceAutoplay, props.showCommentsOnFocus, store]);
 
   useEffect(() => {
     let openCommentsTimeOut: NodeJS.Timeout | null = null;
@@ -306,10 +331,10 @@ const ActivityFullScreen = observer((props: PropsType) => {
           onPressComment={onPressComment}
         />
       </View>
-      <CommentsBottomPopup
-        entity={entity}
-        commentsStore={store.comments}
+      <CommentBottomSheet
         ref={commentsRef}
+        hideContent={Boolean(!store.displayComment)}
+        commentsStore={store.comments}
       />
     </View>
   );

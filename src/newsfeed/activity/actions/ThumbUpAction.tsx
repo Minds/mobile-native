@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TouchableOpacity } from 'react-native';
+import { StyleProp, TouchableOpacity, ViewStyle } from 'react-native';
 import { observer } from 'mobx-react';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -19,6 +19,7 @@ type PropsType = {
   entity: ActivityModel;
   size: number;
   orientation: 'column' | 'row';
+  containerStyle?: StyleProp<ViewStyle>;
 };
 
 /**
@@ -68,6 +69,7 @@ class ThumbUpAction extends Component<PropsType> {
           theme.paddingHorizontal3x,
           theme.paddingVertical4x,
           theme.alignCenter,
+          this.props.containerStyle,
         ]}
         onPress={this.toggleThumb}
         {...testID(`Thumb ${this.direction} activity button`)}>
