@@ -52,9 +52,9 @@ const ActivityFullScreen = observer((props: PropsType) => {
   // Local store
   const store = useLocalStore(() => ({
     comments: new CommentsStore(props.entity),
-    displayComment: !props.showCommentsOnFocus,
     scrollViewHeight: 0,
     contentHeight: 0,
+    displayComment: !props.showCommentsOnFocus,
     showComments() {
       store.displayComment = true;
     },

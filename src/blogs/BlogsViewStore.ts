@@ -1,12 +1,15 @@
 import { observable, action } from 'mobx';
 import blogService from './BlogsService';
 import BlogModel from './BlogModel';
+import CommentsStore from '../comments/v2/CommentsStore';
 
 /**
  * Blogs View Store
  */
 class BlogsViewStore {
   @observable.ref blog: BlogModel | null = null;
+
+  comments: CommentsStore | null = null;
 
   /**
    * Load blog
@@ -37,6 +40,7 @@ class BlogsViewStore {
   @action
   async setBlog(blog) {
     const instance = BlogModel.checkOrCreate(blog);
+    this.comments = new CommentsStore(blog);
 
     // if the blog is paywalled we try to unlock it
     if (instance.paywall) {
