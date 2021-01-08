@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import {
   Text,
-  ActivityIndicator,
   TouchableOpacity,
   TextStyle,
   ViewStyle,
@@ -10,6 +9,7 @@ import {
   TouchableOpacityProps,
   Platform,
 } from 'react-native';
+import { DotIndicator } from 'react-native-reanimated-indicators';
 
 import ThemedStyles from '../../styles/ThemedStyles';
 
@@ -73,7 +73,8 @@ export default class Button extends Component<PropsType> {
     let background = ThemedStyles.getColor(
       active ? 'active' : 'primary_background',
     );
-    let mainColor = color || transparent ? '#FFFFFF' : ThemedStyles.getColor('primary_text');
+    let mainColor =
+      color || transparent ? '#FFFFFF' : ThemedStyles.getColor('primary_text');
 
     if (inverted !== undefined) {
       background = mainColor;
@@ -112,7 +113,11 @@ export default class Button extends Component<PropsType> {
 
     const fontSize = { fontSize: large ? 19 : small ? 16 : xSmall ? 14 : 17 };
     const body = loading ? (
-      <ActivityIndicator color={mainColor} />
+      <DotIndicator
+        containerStyle={[theme.rowJustifyCenter, theme.padding2x]}
+        color={mainColor}
+        scaleEnabled={true}
+      />
     ) : (
       <Text style={[fontSize, { color: textColor || mainColor }, textStyle]}>
         {' '}

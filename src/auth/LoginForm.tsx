@@ -148,9 +148,8 @@ export default class LoginForm extends Component<PropsType, StateType> {
             onPress={this.props.onRegisterPress}
             text={i18n.t('auth.createChannel')}
             containerStyle={[theme.fullWidth, theme.marginTop6x]}
-            loading={this.state.inProgress}
             disabled={this.state.inProgress}
-            testID="loginButton"
+            testID="registerButton"
             transparent
             large
           />
