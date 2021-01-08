@@ -69,8 +69,8 @@ export const DiscoveryTagsList = observer(({ plus, store, type }: Props) => {
               plus: plus,
             }),
           title: (
-            <Text style={styles.title}>
-              #{item.value}
+            <>
+              <Text style={styles.title}>#{item.value}</Text>
               {(postsCount !== '' || votesCount !== '') && (
                 <Text
                   style={[
@@ -83,7 +83,7 @@ export const DiscoveryTagsList = observer(({ plus, store, type }: Props) => {
                   } ${votesCount || ''}`}
                 </Text>
               )}
-            </Text>
+            </>
           ),
         }}
         containerItemStyle={theme.backgroundPrimary}
@@ -167,12 +167,13 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: 'bold',
     fontSize: 16,
+    lineHeight: 38,
   },
   thumbnail: {
     width: 100,
     height: 100,
   },
-  newLine: {
-    fontSize: 5,
+  paddingTop: {
+    paddingTop: 8,
   },
 });

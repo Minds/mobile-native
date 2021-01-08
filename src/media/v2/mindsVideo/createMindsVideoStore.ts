@@ -15,7 +15,7 @@ export type Source = {
 const createMindsVideoStore = ({ entity, autoplay }) => {
   const store = {
     initialVolume: <number | null>null,
-    volume: 1,
+    volume: videoPlayerService.currentVolume,
     sources: null as Array<Source> | null,
     source: 0,
     currentTime: 0,

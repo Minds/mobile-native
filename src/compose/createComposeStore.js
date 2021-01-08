@@ -277,18 +277,6 @@ export default function ({ props, newsfeed }) {
       if (result) {
         result = result.map((v) => v.trim().slice(1));
 
-        // text tags has duplicates?
-        if (_.uniq(result).length !== result.length) {
-          showError(i18n.t('capture.duplicateHashtagas'));
-          return false;
-        }
-
-        // text tags already in other tags?
-        if (_.difference(result, this.tags).length !== result.length) {
-          showError(i18n.t('capture.duplicateHashtagas'));
-          return false;
-        }
-
         if (this.tags.length + result.length <= hashtagService.maxHashtags) {
           this.tags.push(...result);
           return true;

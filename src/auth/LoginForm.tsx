@@ -129,16 +129,12 @@ export default class LoginForm extends Component<PropsType, StateType> {
           <Button
             onPress={() => this.onLoginPress()}
             text={i18n.t('auth.login')}
-            containerStyle={[
-              theme.transparentButton,
-              theme.paddingVertical3x,
-              loginMargin,
-              theme.fullWidth,
-            ]}
-            textStyle={theme.buttonText}
+            containerStyle={[loginMargin, theme.fullWidth]}
             loading={this.state.inProgress}
             disabled={this.state.inProgress}
             accessibilityLabel="loginButton"
+            transparent
+            large
           />
           <View style={theme.marginTop4x}>
             <Text
@@ -151,17 +147,12 @@ export default class LoginForm extends Component<PropsType, StateType> {
           <Button
             onPress={this.props.onRegisterPress}
             text={i18n.t('auth.createChannel')}
-            containerStyle={[
-              theme.transparentButton,
-              theme.paddingVertical3x,
-              theme.fullWidth,
-              theme.marginTop6x,
-              styles.lightButton,
-            ]}
-            textStyle={theme.buttonText}
+            containerStyle={[theme.fullWidth, theme.marginTop6x]}
             loading={this.state.inProgress}
             disabled={this.state.inProgress}
             testID="loginButton"
+            transparent
+            large
           />
         </View>
       </View>
