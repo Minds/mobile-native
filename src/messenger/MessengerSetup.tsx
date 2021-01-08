@@ -195,15 +195,11 @@ export default class MessengerSetup extends Component<PropsType> {
         {body}
         <View style={theme.padding4x}>
           <Button
-            containerStyle={[
-              theme.transparentButton,
-              theme.paddingVertical3x,
-              theme.fullWidth,
-              theme.marginTop6x,
-            ]}
-            textStyle={theme.buttonText}
+            containerStyle={[theme.fullWidth, theme.marginTop6x]}
             loading={this.props.messengerList.unlocking}
             {...buttonProps}
+            transparent
+            large
           />
         </View>
       </View>
