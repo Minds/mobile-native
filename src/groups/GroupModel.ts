@@ -52,7 +52,6 @@ export default class GroupModel extends BaseModel {
   }
 
   getAvatar(size = 'small') {
-    console.log(this);
     return {
       rounded: true,
       size: 45,
