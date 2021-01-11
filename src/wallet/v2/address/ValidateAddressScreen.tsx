@@ -1,3 +1,4 @@
+import Web3 from 'web3';
 import React from 'react';
 import { View } from 'react-native';
 import WalletConnector from '../../../common/components/wallet-connector/WalletConnector';
@@ -5,25 +6,35 @@ import apiService from '../../../common/services/api.service';
 import sessionService from '../../../common/services/session.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
 
+function str2ab(str) {
+  var buf = new ArrayBuffer(str.length * 2); // 2 bytes for each char
+  var bufView = new Uint8Array(buf);
+  for (var i = 0, strLen = str.length; i < strLen; i++) {
+    bufView[i] = str.charCodeAt(i);
+  }
+  return bufView;
+}
+
 export default function ValidateAddressScreen() {
   const theme = ThemedStyles.style;
   const props = {
-    onConnect: async (connector: any) => {
+    onConnect: async (provider: any) => {
       try {
         const msg = JSON.stringify({
           user_guid: sessionService.getUser().guid,
           unix_ts: Date.now() / 1000,
         });
-        connector
-          .signPersonalMessage([msg, connector.accounts[0]])
+        const web3 = new Web3(provider);
+        const hashMessage = web3.eth.accounts.hashMessage(msg);
+        provider.connector
+          .signPersonalMessage([msg, provider.connector.accounts[0]])
           .then((signature) => {
             // Returns signature.
-            console.log('ValidateAddressScreen signMessage result', signature);
             apiService
               .post('api/v3/blockchain/unique-onchain/validate', {
                 signature,
                 payload: msg,
-                address: connector.accounts[0],
+                address: provider.connector.accounts[0],
               })
               .then((postResult) => {
                 console.log('postResult', postResult);

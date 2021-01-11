@@ -11,7 +11,6 @@ import Modal from 'react-native-modal';
 import Button from '../../../common/components/Button';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import ThemedStyles from '../../../styles/ThemedStyles';
-import sessionService from '../../services/session.service';
 
 type Props = {
   onConnect?: Function;
@@ -72,7 +71,7 @@ export default function ({
 
       web3Provider.on('connect', () => {
         console.log('web3Provider connect', onConnect);
-        onConnect && onConnect(web3Provider.connector);
+        onConnect && onConnect(web3Provider);
       });
 
       web3Provider.on('disconnect', (code: number, reason: string) => {
@@ -80,7 +79,6 @@ export default function ({
       });
 
       await web3Provider.enable();
-      console.log('web3Provider.enable()');
     };
 
     walletConnectInit();
