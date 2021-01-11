@@ -27,13 +27,12 @@ jest.mock('reanimated-bottom-sheet', () => 'BottomSheet');
 
 jest.mock('../../../src/newsfeed/NewsfeedService');
 jest.mock('../../../src/newsfeed/activity/Activity', () => 'Activity');
-jest.mock('../../../src/comments/CommentList', () => 'CommentList');
 jest.mock(
   '../../../src/common/components/CenteredLoading',
   () => 'CenteredLoading',
 );
-jest.mock('../../../src/comments/CommentsStore');
-jest.mock('../../../src/comments/CommentsStoreProvider');
+// jest.mock('../../../src/comments/CommentsStore');
+// jest.mock('../../../src/comments/CommentsStoreProvider');
 jest.mock('../../../src/common/services/entities.service');
 jest.mock('../../../src/navigation/NavigationService');
 jest.mock('../../../src/common/hooks/use-stores');
@@ -76,7 +75,7 @@ describe('Activity screen component', () => {
       });
 
       // should show the activity
-      expect(toJSON()).toMatchSnapshot();
+      await expect(toJSON()).toMatchSnapshot();
 
       done();
     } catch (e) {

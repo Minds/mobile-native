@@ -14,7 +14,6 @@ import keychain from '../../keychain/KeychainStore';
 import blockchainTransaction from '../../blockchain/transaction-modal/BlockchainTransactionStore';
 import blockchainWallet from '../../blockchain/wallet/BlockchainWalletStore';
 import blockchainWalletSelector from '../../blockchain/wallet/BlockchainWalletSelectorStore';
-import capture from '../../capture/CaptureStore';
 import hashtag from '../../common/stores/HashtagStore';
 import groupsBar from '../../groups/GroupsBarStore';
 import SubscriptionRequestStore from '../../channel/subscription/SubscriptionRequestStore';
@@ -48,7 +47,6 @@ export function createClassStores() {
     blockchainWallet: new blockchainWallet(),
     blockchainWalletSelector: new blockchainWalletSelector(),
     channelSubscribersStore: new channelSubscribersStore(),
-    capture: new capture(),
     hashtag: new hashtag(),
     groupsBar: new groupsBar(),
     reportstore: new reportStore(),

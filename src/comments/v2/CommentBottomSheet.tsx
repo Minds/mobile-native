@@ -60,10 +60,10 @@ const CustomBackground = ({ style }: BottomSheetBackgroundProps) => {
 type PropsType = {
   commentsStore: CommentsStore;
   hideContent: boolean;
+  title?: string;
 };
 
 const Stack = createStackNavigator();
-const hideHeader = { headerShown: false };
 
 const ScreenReplyComment = () => {
   const route = useRoute<any>();
@@ -112,8 +112,10 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
         <Stack.Navigator screenOptions={screenOptions} headerMode="none">
           <Stack.Screen
             name="Comments"
-            options={hideHeader}
             component={ScreenComment}
+            initialParams={{
+              title: props.title || '',
+            }}
           />
           <Stack.Screen name="ReplyComment" component={ScreenReplyComment} />
         </Stack.Navigator>

@@ -9,13 +9,27 @@ import NavigationService from '../../navigation/NavigationService';
 import ThemedStyles from '../../styles/ThemedStyles';
 import Comment from './Comment';
 import type CommentsStore from './CommentsStore';
-import i18nService from '../../common/services/i18n.service';
+import i18n from '../../common/services/i18n.service';
+import { useRoute } from '@react-navigation/native';
+import GroupModel from '../../groups/GroupModel';
 
 export default observer(function CommentListHeader(props: {
   store: CommentsStore;
 }) {
+  const route = useRoute<any>();
   const user = sessionService.getUser();
   const theme = ThemedStyles.style;
+
+  const title =
+    route.params && route.params.title
+      ? route.params.title
+      : i18n.t('comments.comments');
+
+  const placeHolder =
+    props.store.entity instanceof GroupModel
+      ? 'messenger.typeYourMessage'
+      : 'activity.typeComment';
+
   return (
     <View
       style={[
@@ -55,7 +69,7 @@ export default observer(function CommentListHeader(props: {
             theme.paddingLeft3x,
             theme.marginBottom3x,
           ]}>
-          Comments
+          {title}
         </Text>
       )}
       <TouchableOpacity
@@ -70,9 +84,7 @@ export default observer(function CommentListHeader(props: {
         ]}>
         <FastImage source={user.getAvatarSource()} style={styles.avatar} />
         <Text style={[theme.fontL, theme.colorSecondaryText]}>
-          {i18nService.t(
-            props.store.parent ? 'activity.typeReply' : 'activity.typeComment',
-          )}
+          {i18n.t(props.store.parent ? 'activity.typeReply' : placeHolder)}
         </Text>
       </TouchableOpacity>
     </View>

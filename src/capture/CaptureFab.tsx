@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     // backgroundColor:'#4690DF',
     bottom: 8,
-    zIndex: 1000,
+    // zIndex: 1,
     right: 8,
   },
   leftSide: {

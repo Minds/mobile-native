@@ -18,6 +18,7 @@ import type CommentsStore from './CommentsStore';
 import { action, observable } from 'mobx';
 import MediaPreview from './MediaPreview';
 import MetaPreview from '../../compose/MetaPreview';
+import GroupModel from '../../groups/GroupModel';
 
 const { height } = Dimensions.get('window');
 
@@ -41,6 +42,11 @@ const CommentInput = observer(() => {
   if (!provider.store || !provider.store.showInput) {
     return null;
   }
+
+  const placeHolder =
+    provider.store.entity instanceof GroupModel
+      ? i18n.t('messenger.typeYourMessage')
+      : i18n.t('activity.typeComment');
 
   return (
     <KeyboardSpacingView
@@ -100,7 +106,7 @@ const CommentInput = observer(() => {
               multiline={true}
               scrollEnabled={true}
               placeholderTextColor={ThemedStyles.getColor('tertiary_text')}
-              placeholder={i18n.t('activity.typeComment')}
+              placeholder={placeHolder}
               underlineColorAndroid="transparent"
               onChangeText={provider.store.setText}
               value={provider.store.text}
