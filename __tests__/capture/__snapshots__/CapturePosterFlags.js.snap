@@ -624,11 +624,11 @@ exports[`cature poster flags component should renders correctly for props false 
                   Array [
                     undefined,
                     undefined,
-                    undefined,
-                    undefined,
                     Object {
-                      "backgroundColor": "#5DBAC0",
-                      "borderRadius": 36,
+                      "backgroundColor": "#242A30",
+                      "borderRadius": 21,
+                      "paddingHorizontal": 21,
+                      "paddingVertical": 10,
                     },
                     undefined,
                   ]
@@ -639,7 +639,10 @@ exports[`cature poster flags component should renders correctly for props false 
                   style={
                     Array [
                       Object {
-                        "color": "white",
+                        "fontSize": 17,
+                      },
+                      Object {
+                        "color": "#FFFFFF",
                       },
                       undefined,
                     ]
@@ -1553,11 +1556,11 @@ exports[`cature poster flags component should renders correctly for props true 1
                   Array [
                     undefined,
                     undefined,
-                    undefined,
-                    undefined,
                     Object {
-                      "backgroundColor": "#5DBAC0",
-                      "borderRadius": 36,
+                      "backgroundColor": "#242A30",
+                      "borderRadius": 21,
+                      "paddingHorizontal": 21,
+                      "paddingVertical": 10,
                     },
                     undefined,
                   ]
@@ -1568,7 +1571,10 @@ exports[`cature poster flags component should renders correctly for props true 1
                   style={
                     Array [
                       Object {
-                        "color": "white",
+                        "fontSize": 17,
+                      },
+                      Object {
+                        "color": "#FFFFFF",
                       },
                       undefined,
                     ]
