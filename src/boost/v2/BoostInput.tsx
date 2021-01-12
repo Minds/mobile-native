@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Platform, Text, View } from 'react-native';
 import InputContainer from '../../common/components/InputContainer';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -12,12 +12,18 @@ type PropsType = {
 
 const BoostInput = observer(({ localStore }: PropsType) => {
   const theme = ThemedStyles.style;
+  const vPadding =
+    Platform.OS === 'android'
+      ? theme.paddingVertical0x
+      : theme.paddingVertical2x;
+  const marginB =
+    Platform.OS === 'android' ? theme.marginBottom0x : theme.marginBottom2x;
   const commonProps = {
     keyboardType: 'decimal-pad',
     selectTextOnFocus: true,
-    style: theme.paddingVertical0x,
+    style: vPadding,
     containerStyle: theme.backgroundPrimaryHighlight,
-    labelStyle: [theme.marginBottom0x, theme.fontM],
+    labelStyle: [marginB, theme.fontM],
   };
   return (
     <View>

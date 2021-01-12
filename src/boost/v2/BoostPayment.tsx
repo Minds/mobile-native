@@ -4,9 +4,10 @@ import i18n from '../../common/services/i18n.service';
 import Selector from '../../common/components/Selector';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { BoostStoreType } from './createBoostStore';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { WalletCurrency } from '../../wallet/v2/WalletTypes';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { style } from '../../common/components/phoneValidation/partials/styles';
 
 type PropsType = {
   localStore: BoostStoreType;
@@ -17,7 +18,7 @@ const BoostPayment = observer(({ localStore }: PropsType) => {
   const selectorRef = useRef<Selector>(null);
 
   const getMethodLabel = (method: WalletCurrency) => (
-    <Text style={theme.fontL}>
+    <Text style={[theme.fontL, theme.centered]}>
       {method.label === 'Off-chain' ? 'Off-chain' : 'On-Chain'}{' '}
       <Text style={theme.colorSecondaryText}>({method.balance} tokens)</Text>
     </Text>
@@ -29,14 +30,13 @@ const BoostPayment = observer(({ localStore }: PropsType) => {
         style={[
           theme.colorSecondaryText,
           theme.marginBottom3x,
-          theme.paddingLeft3x,
+          theme.paddingLeft4x,
         ]}>
         {i18n.t('boosts.paymentMethod')}
       </Text>
       <TouchableOpacity
         style={[
-          theme.rowJustifySpaceBetween,
-          theme.paddingVertical3x,
+          styles.touchable,
           theme.paddingHorizontal4x,
           theme.backgroundPrimaryHighlight,
           theme.borderPrimary,
@@ -51,6 +51,7 @@ const BoostPayment = observer(({ localStore }: PropsType) => {
           name="menu-down"
           size={24}
           color={ThemedStyles.getColor('icon')}
+          style={theme.centered}
         />
       </TouchableOpacity>
       <Selector
@@ -65,6 +66,14 @@ const BoostPayment = observer(({ localStore }: PropsType) => {
       />
     </View>
   );
+});
+
+const styles = StyleSheet.create({
+  touchable: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    height: 60,
+  },
 });
 
 export default BoostPayment;

@@ -1,6 +1,6 @@
 import { observer, useLocalStore } from 'mobx-react';
 import React, { useEffect } from 'react';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useStores } from '../../common/hooks/__mocks__/use-stores';
 import i18n from '../../common/services/i18n.service';
@@ -27,7 +27,7 @@ const BoostChannelScreen = observer(() => {
     wallet.loadOffchainAndReceiver();
   }, [wallet]);
   return (
-    <View style={[theme.flexContainer, theme.backgroundPrimary, cleanTop]}>
+    <View style={[styles.container, theme.backgroundPrimary, cleanTop]}>
       <BoostHeader title={i18n.t('boosts.boostChannel')} />
       <View style={[theme.flexContainer, theme.marginTop7x]}>
         <BoostInput localStore={localStore} />
@@ -36,6 +36,15 @@ const BoostChannelScreen = observer(() => {
       <BoostButton localStore={localStore} />
     </View>
   );
+});
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
+    overflow: 'hidden',
+  },
 });
 
 export default BoostChannelScreen;

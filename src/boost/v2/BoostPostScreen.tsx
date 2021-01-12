@@ -1,7 +1,7 @@
 import { RouteProp } from '@react-navigation/native';
 import { observer, useLocalStore } from 'mobx-react';
 import React, { useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import TopbarTabbar, {
   TabType,
 } from '../../common/components/topbar-tabbar/TopbarTabbar';
@@ -31,7 +31,7 @@ const BoostPostScreen = observer(({ route }: PropsType) => {
   const insets = useSafeAreaInsets();
   const cleanTop = insets.top
     ? { marginTop: insets.top + 50 }
-    : { marginTop: 50 };
+    : { marginTop: 30 };
   const [tab, setTab] = useState<BoostTabType>('newsfeed');
   const wallet = useStores().wallet;
   const localStore = useLocalStore(createBoostStore, {
@@ -55,7 +55,7 @@ const BoostPostScreen = observer(({ route }: PropsType) => {
     }
   };
   return (
-    <View style={[theme.flexContainer, theme.backgroundPrimary, cleanTop]}>
+    <View style={[styles.container, theme.backgroundPrimary, cleanTop]}>
       <BoostHeader title={i18n.t('boosts.boostPost')} />
       <View style={theme.marginTop4x}>
         <TopbarTabbar tabs={tabs} onChange={setTab} current={tab} />
@@ -63,6 +63,15 @@ const BoostPostScreen = observer(({ route }: PropsType) => {
       {renderTab()}
     </View>
   );
+});
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
+    overflow: 'hidden',
+  },
 });
 
 export default BoostPostScreen;
