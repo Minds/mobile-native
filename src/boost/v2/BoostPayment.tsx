@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
   touchable: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    height: 60,
+    height: 50,
   },
 });
 

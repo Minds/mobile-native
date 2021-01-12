@@ -26,7 +26,12 @@ const BoostButton = observer(({ localStore }: PropsType) => {
         theme.border,
         theme.alignSelfEnd,
       ]}
-      textStyle={[theme.buttonText, theme.colorPrimaryText, theme.bold]}
+      textStyle={[
+        theme.buttonText,
+        theme.colorPrimaryText,
+        theme.bold,
+        theme.fontLM,
+      ]}
       loading={localStore.loading}
     />
   );
