@@ -1,5 +1,5 @@
 import { Source } from 'react-native-fast-image';
-import CommentModel from '../../comments/CommentModel';
+import CommentModel from '../../comments/v2/CommentModel';
 import ActivityModel from '../../newsfeed/ActivityModel';
 import mindsService from '../services/minds.service';
 import mediaProxyUrl from './media-proxy-url';

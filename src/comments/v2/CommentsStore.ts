@@ -1,7 +1,4 @@
-//@ts-nocheck
 import { observable, action, runInAction } from 'mobx';
-
-import { Platform } from 'react-native';
 
 import {
   getComments,
@@ -9,20 +6,22 @@ import {
   updateComment,
   deleteComment,
   getComment,
-} from './CommentsService';
+} from '../CommentsService';
 
-import Comment from './Comment';
 import CommentModel from './CommentModel';
-import socket from '../common/services/socket.service';
-import session from '../common/services/session.service';
-import AttachmentStore from '../common/stores/AttachmentStore';
-import attachmentService from '../common/services/attachment.service';
-import { toggleExplicit } from '../newsfeed/NewsfeedService';
-import RichEmbedStore from '../common/stores/RichEmbedStore';
-import logService from '../common/services/log.service';
-import NavigationService from '../navigation/NavigationService';
-import BaseModel from '../common/BaseModel';
-import { isNetworkFail } from '../common/helpers/abortableFetch';
+import socket from '../../common/services/socket.service';
+import session from '../../common/services/session.service';
+import AttachmentStore from '../../common/stores/AttachmentStore';
+import attachmentService from '../../common/services/attachment.service';
+import { toggleExplicit } from '../../newsfeed/NewsfeedService';
+import RichEmbedStore from '../../common/stores/RichEmbedStore';
+import logService from '../../common/services/log.service';
+import NavigationService from '../../navigation/NavigationService';
+import { isNetworkFail } from '../../common/helpers/abortableFetch';
+import type ActivityModel from '../../newsfeed/ActivityModel';
+import type BlogModel from '../../blogs/BlogModel';
+import type GroupModel from '../../groups/GroupModel';
+import { showNotification } from '../../../AppMessages';
 
 const COMMENTS_PAGE_SIZE = 6;
 
@@ -30,7 +29,7 @@ const COMMENTS_PAGE_SIZE = 6;
  * Comments Store
  */
 export default class CommentsStore {
-  @observable.shallow comments = [];
+  @observable.shallow comments: Array<CommentModel> = [];
   @observable refreshing = false;
   @observable loaded = false;
   @observable saving = false;
@@ -38,6 +37,7 @@ export default class CommentsStore {
   @observable mature = 0;
   @observable loadingPrevious = false;
   @observable loadingNext = false;
+  @observable showInput = false;
 
   @observable errorLoadingPrevious = false;
   @observable errorLoadingNext = false;
@@ -50,18 +50,20 @@ export default class CommentsStore {
   // embed store
   embed = new RichEmbedStore();
 
-  entity = null;
+  entity: ActivityModel | BlogModel | GroupModel;
   guid = '';
   reversed = true;
   loadNext = '';
   loadPrevious = '';
   socketRoomName = '';
+  edit?: CommentModel;
 
   // parent for reply
-  parent = null;
+  parent: CommentModel | null = null;
 
-  constructor() {
+  constructor(entity) {
     this.focusedUrn = this.getFocuedUrn();
+    this.entity = entity;
   }
 
   getParentPath() {
@@ -74,6 +76,18 @@ export default class CommentsStore {
   toggleMature = () => {
     this.mature = this.mature ? 0 : 1;
   };
+
+  @action
+  setShowInput(value: boolean, edit?: CommentModel) {
+    this.showInput = value;
+    if (this.edit && !edit) {
+      this.text = '';
+    }
+    this.edit = edit;
+    if (edit) {
+      this.text = edit.description || '';
+    }
+  }
 
   /**
    * Set the entity
@@ -121,7 +135,9 @@ export default class CommentsStore {
    * Load Comments
    */
   @action
-  async loadComments(guid, descending = true) {
+  async loadComments(descending = true) {
+    const guid = this.entity.entity_guid || this.entity.guid;
+
     if (this.cantLoadMore(guid, descending)) {
       return;
     }
@@ -135,7 +151,6 @@ export default class CommentsStore {
       this.loadingNext = true;
     }
 
-    this.include_offset = '';
     const parent_path = this.getParentPath();
 
     try {
@@ -157,6 +172,7 @@ export default class CommentsStore {
 
       this.checkListen(response);
     } catch (err) {
+      console.log(err);
       if (descending) {
         this.setErrorLoadingPrevious(true);
       } else {
@@ -280,10 +296,10 @@ export default class CommentsStore {
    * @param {string} text
    */
   @action
-  setText(text) {
+  setText = (text) => {
     this.text = text;
     this.embed.richEmbedCheck(text);
-  }
+  };
 
   /**
    * Set comments array from response
@@ -304,9 +320,6 @@ export default class CommentsStore {
 
     if (response.comments) {
       const comments = CommentModel.createMany(response.comments);
-
-      // check and build child comments store if necessary
-      comments.forEach((c) => c.buildCommentsStore(this.parent));
 
       if (descending) {
         comments.reverse().forEach((c) => this.comments.unshift(c));
@@ -329,13 +342,18 @@ export default class CommentsStore {
   /**
    * Post comment
    */
-  async post(entity: BaseModel) {
+  post = async () => {
+    if (this.edit) {
+      return this.updateComment();
+    }
+
     this.saving = true;
 
     const comment = {
       comment: this.text,
       mature: this.mature,
       parent_path: this.getParentPath(),
+      attachment_guid: <string | undefined>undefined,
     };
 
     if (this.attachment.guid) {
@@ -347,13 +365,14 @@ export default class CommentsStore {
     }
 
     // Add client metada if available
-    Object.assign(comment, entity.getClientMetadata());
+    Object.assign(comment, this.entity.getClientMetadata());
 
     try {
-      const data = await postComment(this.guid, comment);
+      const data: any = await postComment(this.guid, comment);
 
       this.pushComment(data.comment);
       this.setText('');
+      this.setShowInput(false);
       this.embed.clearRichEmbedAction();
       this.attachment.clear();
 
@@ -362,11 +381,11 @@ export default class CommentsStore {
       }
     } catch (err) {
       logService.exception('[CommentsStore] post', err);
-      alert('Error sending comment');
+      showNotification('Error sending comment');
     } finally {
       this.saving = false;
     }
-  }
+  };
 
   /**
    * Clear comments
@@ -379,8 +398,10 @@ export default class CommentsStore {
     this.loadPrevious = '';
     this.socketRoomName = '';
     this.loaded = false;
-    this.loading = false;
-    this.errorLoading = false;
+    this.loadingNext = false;
+    this.loadingPrevious = false;
+    this.errorLoadingNext = false;
+    this.errorLoadingPrevious = false;
     this.saving = false;
     this.text = '';
   }
@@ -389,7 +410,7 @@ export default class CommentsStore {
    * Refresh
    */
   @action
-  refresh(guid) {
+  refresh() {
     this.refreshing = true;
     this.clearComments();
   }
@@ -404,19 +425,25 @@ export default class CommentsStore {
 
   /**
    * Update comment
-   * @param {objecft} comment
    * @param {string} description
    */
   @action
-  async updateComment(comment, description) {
+  async updateComment() {
+    if (!this.edit) return;
+
     this.saving = true;
 
     try {
-      await updateComment(comment.guid, description);
-      this.setCommentDescription(comment, description);
+      await updateComment(this.edit.guid, this.text);
+      this.setCommentDescription(this.edit, this.text);
+      this.setText('');
+      this.edit = undefined;
+      this.setShowInput(false);
     } catch (err) {
       logService.exception('[CommentsStore] updateComment', err);
-      alert('Oops there was an error updating the comment\nPlease try again.');
+      showNotification(
+        'Oops there was an error updating the comment\nPlease try again.',
+      );
     } finally {
       this.saving = false;
     }
@@ -467,17 +494,6 @@ export default class CommentsStore {
   }
 
   /**
-   * Delete attachment
-   */
-  async deleteAttachment() {
-    const attachment = this.attachment;
-    // delete
-    const result = await attachment.delete();
-
-    if (result === false) alert('caught error deleting the file');
-  }
-
-  /**
    * Attach a video
    */
   async video() {
@@ -486,7 +502,7 @@ export default class CommentsStore {
       if (response) this.onAttachedMedia(response);
     } catch (e) {
       logService.exception(e);
-      alert(e.message);
+      showNotification(e.message);
     }
   }
 
@@ -499,7 +515,7 @@ export default class CommentsStore {
       if (response) this.onAttachedMedia(response);
     } catch (e) {
       logService.exception(e);
-      alert(e.message);
+      showNotification(e.message);
     }
   }
 
@@ -510,10 +526,10 @@ export default class CommentsStore {
     const attachment = this.attachment;
 
     try {
-      const result = await attachment.attachMedia(response);
+      await attachment.attachMedia(response);
     } catch (err) {
       logService.exception('[CommentsStore] onAttachedMedia', err);
-      alert('Oops caught upload error.');
+      showNotification('Oops caught upload error.');
     }
   };
 
@@ -535,30 +551,29 @@ export default class CommentsStore {
       if (response) this.onAttachedMedia(response);
     } catch (err) {
       logService.exception('[CommentsStore] selectMediaType', err);
-      alert('Oops there was an error selecting the media.');
+      showNotification('Oops there was an error selecting the media.');
     }
   };
 
   /**
    * Open gallery
    */
-  async gallery(actionSheet) {
-    if (Platform.OS == 'ios') {
-      try {
-        const response = await attachmentService.gallery('mixed', false);
+  async gallery(fn?: () => void) {
+    try {
+      const response = await attachmentService.gallery('mixed', false);
 
-        // nothing selected
-        if (!response) return;
+      if (fn) fn();
 
-        const result = await this.attachment.attachMedia(response);
+      // nothing selected
+      if (!response) return;
 
-        if (result === false) alert('caught upload error');
-      } catch (err) {
-        logService.exception('[CommentsStore] gallery', err);
-        alert('Caught a gallery error');
+      const result = await this.attachment.attachMedia(response);
+
+      if (!result) {
+        showNotification('caught upload error', 'warning', 3000, 'top');
       }
-    } else {
-      actionSheet.show();
+    } catch (err) {
+      logService.exception('[CommentsStore] gallery', err);
     }
   }
 
@@ -574,7 +589,7 @@ export default class CommentsStore {
       let value = !comment.mature;
       return toggleExplicit(guid, value)
         .then(
-          action((response) => {
+          action(() => {
             comment.mature = value;
             this.comments[index] = comment;
           }),
@@ -597,9 +612,7 @@ export default class CommentsStore {
   async delete(guid) {
     let index = this.comments.findIndex((x) => x.guid == guid);
     if (index >= 0) {
-      let entity = this.comments[index];
-
-      const result = await deleteComment(guid);
+      await deleteComment(guid);
 
       if (this.entity.decrementCommentsCounter) {
         this.entity.decrementCommentsCounter();

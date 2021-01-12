@@ -13,7 +13,11 @@
   "activity": {
     "loadEarlier": "LOAD EARLIER",
     "loadLater": "LOAD LATER",
-    "typeComment": "Type your comment...",
+    "notSafeComment": "This comment is not safe for work and cannot be accessed via iOS",
+    "explicitComment": "The comment is marked as Explicit",
+    "typeComment": "Add your comment",
+    "typeReply": "Add your reply",
+    "replyTo": "Reply to @{{user}}",
     "error": "SORRY, WE COULDN'T LOAD THE ACTIVITY",
     "tryAgain": "PLEASE TRY AGAIN LATER",
     "remindBlocked": "This remind is not available because you blocked",
@@ -970,7 +974,7 @@
   "downloading": "Downloading",
   "confirm18": "I'm over 18 years of age",
   "postCantBeShown": "Can't be shown on apps installed via the Store",
-  "readMore": "Read More",
+  "readMore": "Show More",
   "showLess": "Show less",
   "featureUnavailablePlatform": "This feature is currently unavailable on your platform",
   "continue": "Continue",
@@ -1069,6 +1073,10 @@
   "rememberTomorrow": "Remind me later",
   "enableComments": "Enable comments",
   "disableComments": "Disable comments",
+  "viewRepliesComments": {
+    "one":   "View 1 reply",
+    "other": "View {{count}} replies"
+  },
   "noInternet": "No Internet Connection",
   "cantReachServer": "Can't reach the server",
   "showingStored": "Showing stored data",

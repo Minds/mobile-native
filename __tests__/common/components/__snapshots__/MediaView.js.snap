@@ -90,6 +90,7 @@ exports[`Media view component renders correctly 1`] = `
         }
         onError={[Function]}
         onLoad={[Function]}
+        resizeMode="cover"
         source={
           Object {
             "uri": "www.something.com",

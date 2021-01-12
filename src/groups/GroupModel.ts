@@ -12,6 +12,7 @@ export default class GroupModel extends BaseModel {
   name!: string;
   nsfw: Array<number> = [];
   icontime: any;
+  entity_guid?: string;
 
   @action
   toggleMatureVisibility() {
@@ -59,6 +60,22 @@ export default class GroupModel extends BaseModel {
       },
     };
   }
+
+  /**
+   * Increment the comments counter
+   */
+  @action
+  incrementCommentsCounter() {
+    this['comments:count']++;
+  }
+
+  /**
+   * Decrement the comments counter
+   */
+  @action
+  decrementCommentsCounter() {
+    this['comments:count']--;
+  }
 }
 
 /**
@@ -70,4 +87,5 @@ decorate(GroupModel, {
   name: observable,
   'is:member': observable,
   'members:count': observable,
+  'comments:count': observable,
 });

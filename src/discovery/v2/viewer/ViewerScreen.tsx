@@ -111,7 +111,7 @@ const ViewerScreen = observer((props: PropsType) => {
         pageInterpolation={stackConfig}
         initialIndex={store.index}>
         {feedStore.entities.map((e, i) => (
-          <ActivityFullScreen key={i} entity={e} />
+          <ActivityFullScreen key={i} entity={e} showCommentsOnFocus={true} />
         ))}
       </Pager>
       {showAnim && <SwipeAnimation style={swipeStyle} autoPlay={true} />}

@@ -24,14 +24,14 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Actions from '../newsfeed/activity/Actions';
 import Activity from '../newsfeed/activity/Activity';
 
-import CommentsStore from '../comments/CommentsStore';
+import CommentsStore from '../comments/v2/CommentsStore';
 import sessionService from '../common/services/session.service';
 import videoPlayerService from '../common/services/video-player.service';
 import ExplicitOverlay from '../common/components/explicit/ExplicitOverlay';
 
 import LockV2 from '../wire/v2/lock/Lock';
 import { AppStackParamList } from '../navigation/NavigationTypes';
-import CommentsBottomPopup from '../comments/CommentsBottomPopup';
+import CommentBottomSheet from '../comments/v2/CommentBottomSheet';
 import BoxShadow from '../common/components/BoxShadow';
 import formatDate from '../common/helpers/date';
 import i18nService from '../common/services/i18n.service';
@@ -54,7 +54,14 @@ const PortraitActivity = observer((props: PropsType) => {
 
   // Local store
   const store = useLocalStore(() => ({
-    comments: new CommentsStore(),
+    comments: new CommentsStore(props.entity),
+    displayComment: false,
+    showComments() {
+      store.displayComment = true;
+    },
+    hideComments() {
+      store.displayComment = false;
+    },
     toggleVolume() {
       videoPlayerService.current?.toggleVolume();
     },
@@ -83,13 +90,19 @@ const PortraitActivity = observer((props: PropsType) => {
   });
 
   const onPressComment = useCallback(() => {
-    if (commentsRef.current?.open) {
-      commentsRef.current.open();
+    if (commentsRef.current?.expand) {
+      commentsRef.current.expand();
     }
   }, [commentsRef]);
 
   useEffect(() => {
+    let time: any;
     if (focused) {
+      time = setTimeout(() => {
+        if (store) {
+          store.showComments();
+        }
+      }, 500);
       const user = sessionService.getUser();
 
       // if we have some video playing we pause it and reset the current video
@@ -103,8 +116,14 @@ const PortraitActivity = observer((props: PropsType) => {
       }
     } else {
       mediaRef.current?.pauseVideo();
+      store.hideComments();
     }
-  }, [focused, props.forceAutoplay]);
+    return () => {
+      if (time) {
+        clearTimeout(time);
+      }
+    };
+  }, [focused, props.forceAutoplay, store]);
 
   const showNSFW = entity.shouldBeBlured() && !entity.mature_visibility;
 
@@ -256,10 +275,10 @@ const PortraitActivity = observer((props: PropsType) => {
         />
       </View>
       {!showNSFW && tappingArea}
-      <CommentsBottomPopup
-        entity={entity}
+      <CommentBottomSheet
         commentsStore={store.comments}
         ref={commentsRef}
+        hideContent={Boolean(!store.displayComment)}
       />
     </View>
   );

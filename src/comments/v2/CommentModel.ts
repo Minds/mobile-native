@@ -1,46 +1,27 @@
-//@ts-nocheck
-import { action, observable, decorate } from 'mobx';
+import { observable, decorate } from 'mobx';
 
-import ActivityModel from '../newsfeed/ActivityModel';
-import commentsStoreProvider from '../comments/CommentsStoreProvider';
-import { MINDS_CDN_URI } from '../config/Config';
+import ActivityModel from '../../newsfeed/ActivityModel';
+import { MINDS_CDN_URI } from '../../config/Config';
 
-import api from '../common/services/api.service';
+import api from '../../common/services/api.service';
 
 /**
  * Comment model
  */
 export default class CommentModel extends ActivityModel {
-  @observable expanded = false;
   entity_guid: string = '';
+  child_path?: string;
+  replies_count = 0;
   focused?: boolean;
-  attachments?: {
-    attachment_guid: string;
-  };
-
-  /**
-   * Store for child comments
-   */
-  comments = null;
+  attachment_guid?: string;
+  _guid: string = '';
+  can_reply?: boolean;
+  parent_guid_l2?: string;
 
   /**
    * The parent comment
    */
   parent = null;
-
-  @action
-  toggleExpanded() {
-    this.expanded = !this.expanded;
-    this.buildCommentsStore();
-  }
-
-  buildCommentsStore(parent) {
-    if (this.expanded && !this.comments) {
-      this.comments = commentsStoreProvider.get();
-      this.comments.setParent(this);
-      this.parent = parent;
-    }
-  }
 
   /**
    * Get the activity thumb source
@@ -61,6 +42,7 @@ export default class CommentModel extends ActivityModel {
           (this.attachment_guid || this.entity_guid) +
           '/' +
           size,
+        headers: api.buildHeaders(),
       };
     }
     return {
@@ -70,6 +52,7 @@ export default class CommentModel extends ActivityModel {
         (this.attachment_guid || this.guid) +
         '/' +
         size,
+      headers: api.buildHeaders(),
     };
   }
 }

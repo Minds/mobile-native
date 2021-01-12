@@ -156,10 +156,15 @@ const renderHTML = function (props) {
     </html>`;
 };
 
+type PropsType = {
+  html: string;
+  onHeightUpdated: () => void;
+};
+
 /**
  * Blog view html
  */
-export default class BlogViewHTML extends PureComponent {
+export default class BlogViewHTML extends PureComponent<PropsType> {
   /**
    * @var all allowed origins
    */

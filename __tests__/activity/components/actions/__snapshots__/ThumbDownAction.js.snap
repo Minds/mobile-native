@@ -9,6 +9,7 @@ exports[`Thumb action component renders correctly 1`] = `
       undefined,
       undefined,
       undefined,
+      undefined,
     ]
   }
   testID="Thumb down activity button"

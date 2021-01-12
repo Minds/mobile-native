@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import type { MindsVideoStoreType } from '../createMindsVideoStore';
 import Icon from 'react-native-vector-icons/Ionicons';
 import type ActivityModel from '../../../../newsfeed/ActivityModel';
-import type CommentModel from '../../../../comments/CommentModel';
+import type CommentModel from '../../../../comments/v2/CommentModel';
 import { View, TouchableWithoutFeedback, Text } from 'react-native';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 import ProgressBar from '../ProgressBar';
