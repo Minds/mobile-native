@@ -115,7 +115,7 @@ export default class AttachmentStore {
       this.guid = result.guid;
     } catch (err) {
       this.clear();
-      showNotification(i18n.t('uploadFailed'));
+      showNotification(err.message || i18n.t('uploadFailed'));
     } finally {
       this.setUploading(false);
     }
