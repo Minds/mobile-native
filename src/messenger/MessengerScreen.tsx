@@ -23,6 +23,7 @@ import ErrorLoading from '../common/components/ErrorLoading';
 import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
 import ActivityIndicator from '../common/components/ActivityIndicator';
+import MessengerSetup from './MessengerSetup';
 
 /**
  * Messenger Conversation List Screen
@@ -45,24 +46,16 @@ class MessengerScreen extends Component {
     // // load data on enter
     this.disposeEnter = this.props.navigation.addListener('focus', () => {
       this.props.messengerList.loadList(true);
-      //this.setState({ active: true });
     });
-
-    // hidde on leave
-    // this.disposeLeave = this.props.navigation.onLeaveScreen('Messenger', (s) => {
-    //   this.setState({ active: false });
-    // });
   }
 
   /**
    * Dispose reactions of navigation store on unmount
    */
   componentWillUnmount() {
-    // this.props.messengerList.unlisten();
     if (this.disposeEnter) {
       this.disposeEnter();
     }
-    //this.disposeLeave();
   }
 
   searchDebouncer = _.debounce((search) => {
@@ -96,6 +89,11 @@ class MessengerScreen extends Component {
 
     let empty;
 
+    // show setup !configured yet
+    if (!this.props.messengerList.configured) {
+      return <MessengerSetup navigation={this.props.navigation} />;
+    }
+
     if (messengerList.loaded && !messengerList.refreshing) {
       empty = (
         <View style={ComponentsStyle.emptyComponentContainer}>
@@ -116,12 +114,6 @@ class MessengerScreen extends Component {
       <View style={[styles.container, theme.backgroundPrimary]}>
         <View
           style={[theme.rowJustifyStart, theme.alignCenter, theme.marginTop2x]}>
-          {/* <MIcon
-            size={45}
-            name="chevron-left"
-            style={[styles.backIcon, theme.colorIcon]}
-            onPress={this.props.navigation.goBack}
-          /> */}
           <SearchView
             placeholder={i18n.t('discovery.search')}
             onChangeText={this.searchChange}
@@ -137,7 +129,6 @@ class MessengerScreen extends Component {
           keyExtractor={(item) => item.guid}
           onRefresh={this.refresh}
           onEndReached={this.loadMore}
-          // onEndReachedThreshold={0.01}
           ListFooterComponent={footer}
           refreshing={messengerList.refreshing}
           style={styles.listView}
@@ -206,7 +197,6 @@ export default MessengerScreen;
 // styles
 const styles = StyleSheet.create({
   listView: {
-    //paddingTop: 20,
     flex: 1,
   },
   loading: {

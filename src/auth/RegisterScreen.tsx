@@ -324,17 +324,12 @@ export default observer(function RegisterScreen(props: PropsType) {
               <Button
                 onPress={store.onRegisterPress}
                 text={i18n.t('auth.createChannel')}
-                containerStyle={[
-                  theme.transparentButton,
-                  theme.paddingVertical3x,
-                  theme.fullWidth,
-                  theme.marginTop1x,
-                  styles.lightButton,
-                ]}
-                textStyle={theme.buttonText}
+                containerStyle={[theme.fullWidth, theme.marginTop1x]}
                 loading={store.inProgress}
                 disabled={store.inProgress}
                 testID="registerButton"
+                large
+                transparent
               />
             </View>
           </FitScrollView>
