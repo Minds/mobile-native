@@ -1,7 +1,6 @@
-import { useOnFocus } from '@crowdlinker/react-native-pager';
 import { observer } from 'mobx-react';
 import React, { useEffect, useState } from 'react';
-import { Alert, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, Platform, Text, TouchableOpacity, View } from 'react-native';
 import InputContainer from '../../common/components/InputContainer';
 import UserTypeahead from '../../common/components/user-typeahead/UserTypeahead';
 import i18n from '../../common/services/i18n.service';
@@ -36,12 +35,17 @@ const OfferBoostTab = observer(({ localStore }: PropsType) => {
     }
   };
 
+  const vPadding =
+    Platform.OS === 'android' ? theme.paddingVertical0x : theme.paddingVertical;
+  const marginB =
+    Platform.OS === 'android' ? theme.marginBottom0x : theme.marginBottom;
+
   const commonProps = {
     keyboardType: 'decimal-pad',
     selectTextOnFocus: true,
-    style: theme.paddingVertical0x,
+    style: vPadding,
     containerStyle: theme.backgroundPrimaryHighlight,
-    labelStyle: [theme.marginBottom0x, theme.fontM],
+    labelStyle: [marginB, theme.fontM],
   };
   return (
     <View style={[theme.flexContainer, theme.marginTop5x]}>
@@ -72,7 +76,7 @@ const OfferBoostTab = observer(({ localStore }: PropsType) => {
             theme.borderBottom,
           ]}
           onPress={() => setSearching(true)}>
-          <Text style={[theme.fontM, theme.colorSecondaryText]}>
+          <Text style={[theme.fontM, theme.colorSecondaryText, marginB]}>
             {i18n.t('boosts.targetChannel')}
           </Text>
           <Text style={theme.fontL}>
