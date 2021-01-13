@@ -83,6 +83,10 @@ const ScreenReplyComment = () => {
 };
 
 const CommentBottomSheet = (props: PropsType, ref: any) => {
+  const { current: focusedUrn } = React.useRef(
+    props.commentsStore.getFocuedUrn(),
+  );
+
   const screenOptions = React.useMemo<StackNavigationOptions>(
     () => ({
       ...TransitionPresets.SlideFromRightIOS,
@@ -117,7 +121,11 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
               title: props.title || '',
             }}
           />
-          <Stack.Screen name="ReplyComment" component={ScreenReplyComment} />
+          <Stack.Screen
+            name="ReplyComment"
+            component={ScreenReplyComment}
+            initialParams={{ focusedUrn }}
+          />
         </Stack.Navigator>
       )}
     </BottomSheet>,
