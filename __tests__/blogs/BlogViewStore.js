@@ -1,16 +1,17 @@
 import blogsService from '../../src/blogs/BlogsService';
 import BlogsViewStore from '../../src/blogs/BlogsViewStore';
 import BlogModel from '../../src/blogs/BlogModel';
-import { whenWithTimeout } from 'mobx-utils';
+import NavigationService from '../../src/navigation/NavigationService';
 
 jest.mock('../../src/blogs/BlogsService');
 jest.mock('../../src/blogs/BlogModel');
+jest.mock('../../src/navigation/NavigationService');
 
 //mock blog
 BlogModel.checkOrCreate = jest.fn();
 
 // we return the same array converted to strings as a model representation
-BlogModel.checkOrCreate.mockImplementation(r => r);
+BlogModel.checkOrCreate.mockImplementation((r) => r);
 
 /**
  * Tests
@@ -20,11 +21,12 @@ describe('blogs view store', () => {
 
   beforeEach(() => {
     store = new BlogsViewStore();
+
+    NavigationService.getCurrentState.mockReturnValue({});
   });
 
   it('should call blogs service loadEntity and update the blog', async (done) => {
-
-    const fakeData = {blog: {}};
+    const fakeData = { blog: {} };
 
     blogsService.loadEntity.mockResolvedValue(fakeData);
 
@@ -60,8 +62,7 @@ describe('blogs view store', () => {
   });
 
   it('should checkOrCreate blog model when setBlog is called', async (done) => {
-
-    const fake ={guid:1};
+    const fake = { guid: 1 };
 
     try {
       // tested method

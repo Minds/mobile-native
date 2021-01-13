@@ -512,20 +512,16 @@ exports[`blog list screen component should renders correctly 1`] = `
           style={
             Array [
               Object {
-                "borderBottomColor": "#EEE",
+                "borderBottomWidth": 0.5,
+                "borderTopWidth": 0.5,
                 "display": "flex",
                 "flexDirection": "row",
                 "paddingLeft": 0,
                 "paddingRight": 0,
                 "paddingTop": 0,
-                "shadowColor": "black",
-                "shadowOffset": Object {
-                  "height": 0.5,
-                },
-                "shadowOpacity": 0.1,
-                "shadowRadius": 0.5,
               },
               Object {},
+              undefined,
             ]
           }
         >
@@ -544,7 +540,7 @@ exports[`blog list screen component should renders correctly 1`] = `
                 Object {
                   "alignItems": "center",
                   "borderBottomColor": "transparent",
-                  "borderBottomWidth": 2,
+                  "borderBottomWidth": 4,
                   "flex": 1,
                   "flexDirection": "column",
                   "padding": 5,
@@ -573,7 +569,7 @@ exports[`blog list screen component should renders correctly 1`] = `
                 Object {
                   "alignItems": "center",
                   "borderBottomColor": "transparent",
-                  "borderBottomWidth": 2,
+                  "borderBottomWidth": 4,
                   "flex": 1,
                   "flexDirection": "column",
                   "padding": 5,

@@ -94,6 +94,7 @@ export default class Selector extends Component<PropsType> {
 
     const modal = (
       <Modal
+        backdropColor={ThemedStyles.getColor('primary_background_highlight')}
         isVisible={this.state.show}
         backdropOpacity={this.props.backdropOpacity}>
         <View style={[styles.container]}>

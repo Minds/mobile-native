@@ -66,6 +66,7 @@ const GroupsListItem = observer((props: PropsType) => {
 
   return (
     <ListItem
+      underlayColor={ThemedStyles.getColor('secondary_background')}
       containerStyle={styles.container}
       title={group.name}
       titleStyle={[styles.title, theme.colorPrimaryText]}

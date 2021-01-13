@@ -2,7 +2,7 @@ import { Audio, ResizeMode, Video, VideoReadyForDisplayEvent } from 'expo-av';
 import { toJS } from 'mobx';
 import { observer } from 'mobx-react';
 import React, { useEffect, useRef } from 'react';
-import type CommentModel from '../../../comments/CommentModel';
+import type CommentModel from '../../../comments/v2/CommentModel';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { MindsVideoStoreType } from './createMindsVideoStore';

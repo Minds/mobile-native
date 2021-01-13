@@ -3,7 +3,6 @@ import React, { PureComponent } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import ToolbarItem from './ToolbarItem';
-import ThemedStyles from '../../../styles/ThemedStyles';
 
 /**
  * Toolbar component
@@ -39,7 +38,7 @@ export default class Toolbar extends PureComponent {
    * Render
    */
   render() {
-    const { disableBorder, options } = this.props;
+    const { disableBorder, options, containerStyle } = this.props;
 
     const calcStyle = {};
 
@@ -69,7 +68,7 @@ export default class Toolbar extends PureComponent {
     });
 
     return (
-      <View style={[styles.container, calcStyle]}>
+      <View style={[styles.container, calcStyle, containerStyle]}>
         <View style={styles.topbar}>{buttons}</View>
       </View>
     );
@@ -84,13 +83,8 @@ const styles = StyleSheet.create({
     paddingTop: 0,
     paddingLeft: 0,
     paddingRight: 0,
-    borderBottomColor: '#EEE',
-    shadowColor: 'black',
-    shadowOpacity: 0.1,
-    shadowRadius: StyleSheet.hairlineWidth,
-    shadowOffset: {
-      height: StyleSheet.hairlineWidth,
-    },
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   topbar: {
     flex: 1,

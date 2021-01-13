@@ -172,7 +172,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     paddingRight: 4,
-    marginRight: 5,
+    marginRight: 15,
   },
   scale0: {
     transform: [{ scale: 0 }],

@@ -9,7 +9,7 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import type CommentModel from '../../../comments/CommentModel';
+import type CommentModel from '../../../comments/v2/CommentModel';
 import SmartImage from '../../../common/components/SmartImage';
 import getVideoThumb from '../../../common/helpers/get-video-thumbnail';
 import videoPlayerService from '../../../common/services/video-player.service';

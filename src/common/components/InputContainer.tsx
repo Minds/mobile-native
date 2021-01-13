@@ -47,7 +47,7 @@ export default InputContainer;
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 12,
+    paddingTop: 10,
   },
   input: {
     paddingVertical: 8,

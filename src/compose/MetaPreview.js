@@ -29,7 +29,12 @@ export default observer(function (props) {
   const thumbnail = { uri: mediaProxyUrl(props.meta.thumbnail, 30) };
 
   return (
-    <View style={[styles.container, theme.paddingHorizontal4x]}>
+    <View
+      style={[
+        styles.container,
+        theme.paddingHorizontal4x,
+        props.containerStyle,
+      ]}>
       {!props.isEdit && (
         <TouchableOpacity
           onPress={props.onRemove}
@@ -43,6 +48,7 @@ export default observer(function (props) {
           theme.borderHair,
           theme.borderPrimary,
           theme.borderRadius2x,
+          theme.backgroundPrimary,
         ]}>
         <SmartImage
           style={styles.thumbnail}
@@ -90,7 +96,7 @@ const styles = StyleSheet.create({
   removeRichEmbed: {
     zIndex: 10000,
     position: 'absolute',
-    bottom: 8,
+    bottom: 0,
     left: 28,
     width: 30,
     height: 30,

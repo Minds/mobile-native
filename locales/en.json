@@ -13,7 +13,11 @@
   "activity": {
     "loadEarlier": "LOAD EARLIER",
     "loadLater": "LOAD LATER",
-    "typeComment": "Type your comment...",
+    "notSafeComment": "This comment is not safe for work and cannot be accessed via iOS",
+    "explicitComment": "The comment is marked as Explicit",
+    "typeComment": "Add your comment",
+    "typeReply": "Add your reply",
+    "replyTo": "Reply to @{{user}}",
     "error": "SORRY, WE COULDN'T LOAD THE ACTIVITY",
     "tryAgain": "PLEASE TRY AGAIN LATER",
     "remindBlocked": "This remind is not available because you blocked",
@@ -171,11 +175,11 @@
     "offers": "Offers",
     "sidebars": "Sidebars",
     "feedsDescription": "Your content will appear on newsfeeds across the site.",
-    "offersDescription": "Your content will be shared to a specific channel in exchange for USD or tokens or rewards.",
+    "offersDescription": "Your content will be shared to a specific channel in exchange for USD or tokens.",
     "sidebarsDescription": "Your content will display on the sidebars throughout the site.",
     "tabNewsfeed": "Newsfeed",
     "tabSidebar": "Sidebar",
-    "tabOffers": "Offers",
+    "tabOffers": "Offer",
     "rejectionReasons": {
       "0": "Illegal",
       "1": "Explicit",
@@ -188,7 +192,12 @@
       "8": "Appeals on Boost decision",
       "12": "Onchain payment failed",
       "13": "Original post removed"
-    }
+    },
+    "boostChannel": "Boost Channel",
+    "boostPost": "Boost Post",
+    "boostOffer": "Make Offer",
+    "paymentMethod": "PAYMENT METHOD",
+    "targetChannel": "Target Channel"
   },
   "translate": {
     "from": "translated from",
@@ -970,7 +979,7 @@
   "downloading": "Downloading",
   "confirm18": "I'm over 18 years of age",
   "postCantBeShown": "Can't be shown on apps installed via the Store",
-  "readMore": "Read More",
+  "readMore": "Show More",
   "showLess": "Show less",
   "featureUnavailablePlatform": "This feature is currently unavailable on your platform",
   "continue": "Continue",
@@ -1069,6 +1078,10 @@
   "rememberTomorrow": "Remind me later",
   "enableComments": "Enable comments",
   "disableComments": "Disable comments",
+  "viewRepliesComments": {
+    "one":   "View 1 reply",
+    "other": "View {{count}} replies"
+  },
   "noInternet": "No Internet Connection",
   "cantReachServer": "Can't reach the server",
   "showingStored": "Showing stored data",

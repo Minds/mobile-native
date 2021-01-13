@@ -182,7 +182,7 @@ exports[`renders correctly 1`] = `
             Array [
               undefined,
               Object {
-                "paddingTop": 12,
+                "paddingTop": 10,
               },
               undefined,
               undefined,

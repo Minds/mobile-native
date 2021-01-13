@@ -8,6 +8,7 @@ import type { ComposeStoreType } from '../compose/useComposeStore';
 import type ActivityModel from '../newsfeed/ActivityModel';
 import type { SupportTiersType } from '../wire/WireTypes';
 import type { PortraitBarItem } from '../portrait/createPortraitStore';
+import type BlogModel from '../blogs/BlogModel';
 
 export type DrawerParamList = {
   Tabs: {};
@@ -35,6 +36,8 @@ export type RootStackParamList = {
     onComplete: Function;
     tiers?: Array<SupportTiersType>;
   };
+  BoostChannelScreen: {};
+  BoostPostScreen: { entity: ActivityModel };
   PlusScreen: {
     onComplete: Function;
     pro?: boolean;
@@ -88,6 +91,8 @@ export type AppStackParamList = {
     onComplete?: Function;
     tiers?: Array<SupportTiersType>;
   };
+  BoostChannelScreen: {};
+  BoostPostScreen: { entity: ActivityModel };
   ActivityFullScreenNav: {};
   Newsfeed: {};
   Capture: {
@@ -170,7 +175,12 @@ export type AppStackParamList = {
   Subscribers: {};
   GroupView: {};
   BlogList: {};
-  BlogView: {};
+  BlogView: {
+    blog?: BlogModel;
+    slug?: string;
+    guid?: string;
+    scrollToBottom?: boolean;
+  };
   WireFab: {};
   WalletHistory: {};
   ViewImage: {};

@@ -27,8 +27,8 @@ export default function BottomButtonOptions({ isVisible, list }: PropsType) {
       isVisible={isVisible}
       modalProps={{ style: theme.borderRadius5 }}>
       <View style={theme.paddingBottom}>
-        {list.map((plist) => (
-          <View style={theme.paddingBottom2x}>
+        {list.map((plist, indx) => (
+          <View style={theme.paddingBottom2x} key={`${indx}c`}>
             {plist.map((l, i) => (
               <ListItem
                 key={i}

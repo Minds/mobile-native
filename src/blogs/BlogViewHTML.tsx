@@ -156,10 +156,15 @@ const renderHTML = function (props) {
     </html>`;
 };
 
+type PropsType = {
+  html: string;
+  onHeightUpdated: () => void;
+};
+
 /**
  * Blog view html
  */
-export default class BlogViewHTML extends PureComponent {
+export default class BlogViewHTML extends PureComponent<PropsType> {
   /**
    * @var all allowed origins
    */
@@ -172,7 +177,7 @@ export default class BlogViewHTML extends PureComponent {
     style: {
       height: Dimensions.get('window').height,
       flex: 0,
-      opacity: 0,
+      //opacity: 0, removed for https://gitlab.com/minds/mobile-native/-/issues/2878
     },
     html: { html: '' },
   };
