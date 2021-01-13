@@ -36,6 +36,8 @@ export type RootStackParamList = {
     onComplete: Function;
     tiers?: Array<SupportTiersType>;
   };
+  BoostChannelScreen: {};
+  BoostPostScreen: { entity: ActivityModel };
   PlusScreen: {
     onComplete: Function;
     pro?: boolean;
@@ -89,6 +91,8 @@ export type AppStackParamList = {
     onComplete?: Function;
     tiers?: Array<SupportTiersType>;
   };
+  BoostChannelScreen: {};
+  BoostPostScreen: { entity: ActivityModel };
   ActivityFullScreenNav: {};
   Newsfeed: {};
   Capture: {

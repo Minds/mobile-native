@@ -27,7 +27,6 @@ import BlogsListScreen from '../blogs/BlogsListScreen';
 import BlogsViewScreen from '../blogs/BlogsViewScreen';
 import FabScreenV2 from '../wire/v2/FabScreen';
 import ViewImageScreen from '../media/ViewImageScreen';
-import BoostScreen from '../boost/creator/BoostScreen';
 import BlockchainWalletScreen from '../blockchain/wallet/BlockchainWalletScreen';
 import BlockchainWalletModalScreen from '../blockchain/wallet/modal/BlockchainWalletModalScreen';
 import BlockchainWalletImportScreen from '../blockchain/wallet/import/BlockchainWalletImportScreen';
@@ -110,6 +109,8 @@ import PhoneValidationScreen from '../onboarding/v2/steps/PhoneValidationScreen'
 import AutoplaySettingsScreen from '../settings/screens/AutoplaySettingsScreen';
 import SuggestedChannelsScreen from '../onboarding/v2/steps/SuggestedChannelsScreen';
 import SuggestedGroupsScreen from '../onboarding/v2/steps/SuggestedGroupsScreen';
+import BoostChannelScreen from '../boost/v2/BoostChannelScreen';
+import BoostPostScreen from '../boost/v2/BoostPostScreen';
 
 const isIos = Platform.OS === 'ios';
 
@@ -360,11 +361,6 @@ const AppStack = function () {
         component={EmailConfirmationScreen}
       />
       <AppStackNav.Screen name="Update" component={UpdatingScreen} />
-      <AppStackNav.Screen
-        name="Boost"
-        component={BoostScreen}
-        options={{ gestureEnabled: false }}
-      />
       <AppStackNav.Screen
         name="Notifications"
         component={NotificationsScreen}
@@ -697,6 +693,16 @@ const RootStack = function (props) {
           <RootStackNav.Screen
             name="PhoneValidation"
             component={PhoneValidationScreen}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen
+            name="BoostChannelScreen"
+            component={BoostChannelScreen}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen
+            name="BoostPostScreen"
+            component={BoostPostScreen}
             options={modalOptions}
           />
         </Fragment>

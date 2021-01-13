@@ -3,6 +3,7 @@ import React, { useCallback, useState, useRef } from 'react';
 import { View, Text } from 'react-native-animatable';
 import ThemedStyles from '../../styles/ThemedStyles';
 import Selector from '../../common/components/Selector';
+import { TextStyle } from 'react-native';
 
 type PropsType = {
   data: Array<any>;
@@ -12,6 +13,8 @@ type PropsType = {
   selectTitle?: string;
   label: string;
   selected: any;
+  textStyle?: TextStyle;
+  backdropOpacity?: number;
 };
 
 const InputSelector = (props: PropsType) => {
@@ -65,6 +68,8 @@ const InputSelector = (props: PropsType) => {
         data={props.data}
         valueExtractor={props.valueExtractor}
         keyExtractor={props.keyExtractor}
+        textStyle={props.textStyle}
+        backdropOpacity={props.backdropOpacity}
       />
     </View>
   );

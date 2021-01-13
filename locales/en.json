@@ -175,11 +175,11 @@
     "offers": "Offers",
     "sidebars": "Sidebars",
     "feedsDescription": "Your content will appear on newsfeeds across the site.",
-    "offersDescription": "Your content will be shared to a specific channel in exchange for USD or tokens or rewards.",
+    "offersDescription": "Your content will be shared to a specific channel in exchange for USD or tokens.",
     "sidebarsDescription": "Your content will display on the sidebars throughout the site.",
     "tabNewsfeed": "Newsfeed",
     "tabSidebar": "Sidebar",
-    "tabOffers": "Offers",
+    "tabOffers": "Offer",
     "rejectionReasons": {
       "0": "Illegal",
       "1": "Explicit",
@@ -192,7 +192,12 @@
       "8": "Appeals on Boost decision",
       "12": "Onchain payment failed",
       "13": "Original post removed"
-    }
+    },
+    "boostChannel": "Boost Channel",
+    "boostPost": "Boost Post",
+    "boostOffer": "Make Offer",
+    "paymentMethod": "PAYMENT METHOD",
+    "targetChannel": "Target Channel"
   },
   "translate": {
     "from": "translated from",
