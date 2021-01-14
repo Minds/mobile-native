@@ -9,6 +9,7 @@ import api from '../../common/services/api.service';
  * Comment model
  */
 export default class CommentModel extends ActivityModel {
+  expanded: boolean = false;
   entity_guid: string = '';
   child_path?: string;
   replies_count = 0;
