@@ -20,6 +20,8 @@ import type CommentsStore from './CommentsStore';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import i18n from '../common/services/i18n.service';
 import { useValue } from 'react-native-redash';
+import { IS_FROM_STORE } from '../config/Config';
+import DisabledStoreFeature from '../common/components/DisabledStoreFeature';
 
 type PropsType = {
   entity: ActivityModel | GroupModel | BlogModel;
@@ -105,13 +107,17 @@ const CommentsBottomPopup = observer(
       () =>
         store.showing ? (
           <Animated.View style={[backgroundColor, { height: animatedSize }]}>
-            <CommentList
-              entity={props.entity}
-              scrollToBottom={true}
-              store={props.commentsStore}
-              route={route}
-              navigation={navigation}
-            />
+            {IS_FROM_STORE ? (
+              <DisabledStoreFeature style={theme.flexContainer} />
+            ) : (
+              <CommentList
+                entity={props.entity}
+                scrollToBottom={true}
+                store={props.commentsStore}
+                route={route}
+                navigation={navigation}
+              />
+            )}
           </Animated.View>
         ) : null,
       [

@@ -917,7 +917,7 @@
   "add": "Añadir",
   "downloading": "Descargando",
   "confirm18": "Soy mayor de 18 años de edad",
-  "postCantBeShown": "Esta publicación no puede mostrarse.",
+  "postCantBeShown": "No puede mostrarse en la app instalada desde el store",
   "readMore": "Leer más",
   "showLess": "Mostrar menos",
   "featureUnavailablePlatform": "Esta funcionalidad no está actualmente disponible en tu plataforma",

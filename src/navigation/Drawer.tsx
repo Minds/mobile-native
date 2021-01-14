@@ -21,6 +21,7 @@ import ThemedStyles from '../styles/ThemedStyles';
 import abbrev from '../common/helpers/abbrev';
 import featuresService from '../common/services/features.service';
 import sessionService from '../common/services/session.service';
+import { IS_FROM_STORE } from '../config/Config';
 
 const ICON_SIZE = 23;
 
@@ -57,20 +58,22 @@ const getOptionsList = (navigation) => {
         navigation.navigate('Newsfeed');
       },
     },
-    {
-      name: i18n.t('discovery.title'),
-      icon: (
-        <IconFo
-          name="hash"
-          size={ICON_SIZE - 4}
-          style={[theme.colorIcon, styles.icon]}
-        />
-      ),
-      onPress: () => {
-        navigation.navigate('Discovery');
-      },
-    },
-    featuresService.has('plus-2020')
+    !IS_FROM_STORE
+      ? {
+          name: i18n.t('discovery.title'),
+          icon: (
+            <IconFo
+              name="hash"
+              size={ICON_SIZE - 4}
+              style={[theme.colorIcon, styles.icon]}
+            />
+          ),
+          onPress: () => {
+            navigation.navigate('Discovery');
+          },
+        }
+      : null,
+    featuresService.has('plus-2020') && !IS_FROM_STORE
       ? {
           name: i18n.t('wire.lock.plus'),
           icon: (

@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback } from 'react';
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 import { observer } from 'mobx-react';
 
 import SearchView from '../../../common/components/SearchView';
@@ -17,6 +17,8 @@ import isIphoneX from '../../../common/helpers/isIphoneX';
 import { DiscoverySearchList } from './DiscoverySearchList';
 import { useDiscoveryV2SearchStore } from './DiscoveryV2SearchContext';
 import TopbarTabbar from '../../../common/components/topbar-tabbar/TopbarTabbar';
+import { GOOGLE_PLAY_STORE } from '../../../config/Config';
+import DisabledStoreFeature from '../../../common/components/DisabledStoreFeature';
 
 interface Props {
   route: RouteProp<AppStackParamList, 'DiscoverySearch'>;
@@ -104,10 +106,14 @@ export const DiscoverySearchScreen = observer((props: Props) => {
   return (
     <View style={theme.flexContainer}>
       <DiscoverySearchHeader />
-      <DiscoverySearchList
-        navigation={navigation}
-        style={theme.flexContainer}
-      />
+      {GOOGLE_PLAY_STORE ? (
+        <DisabledStoreFeature style={theme.flexContainer} />
+      ) : (
+        <DiscoverySearchList
+          navigation={navigation}
+          style={theme.flexContainer}
+        />
+      )}
     </View>
   );
 });
