@@ -8,43 +8,54 @@ export default function () {
   const theme = ThemedStyles.style;
 
   const walletConnectInit = async () => {
-    const web3Provider = new WalletConnectProvider({
-      infuraId: '27e484dcd9e3efcfd25a83a78777cdf1',
-      qrcode: false,
-    });
+    try {
+      const provider = new WalletConnectProvider({
+        infuraId: '27e484dcd9e3efcfd25a83a78777cdf1',
+        qrcode: false,
+      });
 
-    web3Provider.connector.on('display_uri', (err, payload) => {
-      if (err) {
-        return;
-      }
+      (provider.wc as any)._clientMeta = {
+        description: 'Minds',
+        url: 'https://www.minds.com',
+        icons: [
+          'https://cdn.minds.com/icon/100000000000000519/large/1589923649',
+        ],
+        name: 'Minds',
+      };
 
-      const uri = payload.params[0];
-      Linking.openURL(uri);
-    });
+      provider.connector.on('display_uri', (err, payload) => {
+        if (err) {
+          return;
+        }
 
-    // Subscribe to accounts change
-    web3Provider.on('accountsChanged', (accounts: string[]) => {
-      console.log('accountsChanged');
-      console.log(accounts);
-    });
+        const uri = payload.params[0];
+        Linking.openURL(uri);
+      });
 
-    // Subscribe to chainId change
-    web3Provider.on('chainChanged', (chainId: number) => {
-      console.log('accountsChanged');
-      console.log(chainId);
-    });
+      provider.on('accountsChanged', (accounts: string[]) => {
+        console.log('accounts =>', accounts);
+      });
 
-    // Subscribe to session connection
-    web3Provider.on('connect', () => {
-      console.log('connect');
-    });
+      // Subscribe to chainId change
+      provider.on('chainChanged', (chainId: number) => {
+        console.log('chainId =>', chainId);
+      });
 
-    // Subscribe to session disconnection
-    web3Provider.on('disconnect', (code: number, reason: string) => {
-      console.log(code, reason);
-    });
+      // Subscribe to session connection
+      provider.on('connect', (_, payload) => {
+        console.log('connect');
+        console.log('connect payload =>', payload);
+      });
 
-    await web3Provider.enable();
+      // Subscribe to session disconnection
+      provider.on('disconnect', (code: number, reason: string) => {
+        console.log(code, reason);
+      });
+
+      await provider.enable();
+    } catch (error) {
+      console.log('error =>', error);
+    }
   };
 
   return (
