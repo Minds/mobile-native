@@ -15,7 +15,6 @@ import { MINDS_CDN_URI, MINDS_LINK_URI } from '../../config/Config';
 import abbrev from '../../common/helpers/abbrev';
 import Toolbar from '../../common/components/toolbar/Toolbar';
 import { CommonStyle } from '../../styles/Common';
-import CenteredLoading from '../../common/components/CenteredLoading';
 import SearchView from '../../common/components/SearchView';
 import i18n from '../../common/services/i18n.service';
 import { FLAG_JOIN } from '../../common/Permissions';
@@ -74,39 +73,22 @@ export default class GroupHeader extends Component {
     const store = this.props.store;
     const group = store.group;
 
-    if (store.saving) return <CenteredLoading />;
+    const buttonProps = {
+      onPress: !group['is:member'] ? store.join : store.leave,
+      text: i18n.t(!group['is:member'] ? 'join' : 'leave'),
+    };
 
-    if (!group['is:member']) {
-      return (
-        <Button
-          onPress={store.join}
-          accessibilityLabel={i18n.t('groups.subscribeMessage')}
-          containerStyle={[
-            CommonStyle.rowJustifyCenter,
-            CommonStyle.marginLeft,
-          ]}
-          textStyle={[CommonStyle.marginLeft, CommonStyle.marginRight]}
-          icon="ios-flash"
-          text={i18n.t('join')}
-          loading={store.saving}
-        />
-      );
-    } else {
-      return (
-        <Button
-          onPress={store.leave}
-          accessibilityLabel={i18n.t('groups.leaveMessage')}
-          containerStyle={[
-            CommonStyle.rowJustifyCenter,
-            CommonStyle.marginLeft,
-          ]}
-          textStyle={[CommonStyle.marginLeft, CommonStyle.marginRight]}
-          icon="ios-flash"
-          text={i18n.t('leave')}
-          loading={store.saving}
-        />
-      );
-    }
+    return (
+      <Button
+        {...buttonProps}
+        accessibilityLabel={i18n.t('groups.subscribeMessage')}
+        containerStyle={CommonStyle.marginLeft}
+        textStyle={[CommonStyle.marginLeft, CommonStyle.marginRight]}
+        loading={store.saving}
+        disabled={store.saving}
+        xSmall
+      />
+    );
   }
 
   /**
