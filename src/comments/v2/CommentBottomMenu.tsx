@@ -18,6 +18,7 @@ import i18n from '../../common/services/i18n.service';
 import type GroupModel from '../../groups/GroupModel';
 import type ActivityModel from '../../newsfeed/ActivityModel';
 import sessionService from '../../common/services/session.service';
+import { TouchableOpacity } from '@gorhom/bottom-sheet';
 
 type PropsType = {
   comment: CommentModel;
@@ -160,17 +161,12 @@ export default observer(function CommentBottomMenu({
   ]);
 
   return (
-    <>
-      <Icon
-        name="more-vert"
-        onPress={localStore.show}
-        size={18}
-        style={theme.colorTertiaryText}
-      />
+    <TouchableOpacity onPress={localStore.show}>
+      <Icon name="more-vert" size={18} style={theme.colorTertiaryText} />
       <BottomButtonOptions
         list={dismissOptions}
         isVisible={localStore.showMenu}
       />
-    </>
+    </TouchableOpacity>
   );
 });
