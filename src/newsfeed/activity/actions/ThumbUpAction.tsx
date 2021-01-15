@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleProp, TouchableOpacity, ViewStyle } from 'react-native';
+import { StyleProp, ViewStyle } from 'react-native';
 import { observer } from 'mobx-react';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -11,6 +11,7 @@ import { FLAG_VOTE } from '../../../common/Permissions';
 import remoteAction from '../../../common/RemoteAction';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
+import { TouchableOpacity } from '@gorhom/bottom-sheet';
 
 // prevent double tap in touchable
 const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
