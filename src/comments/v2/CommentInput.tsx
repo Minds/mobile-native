@@ -131,6 +131,7 @@ const CommentInput = observer(() => {
               </TouchableOpacity>
               {!provider.store.edit && (
                 <TouchableOpacity
+                  hitSlop={{ top: 10, bottom: 10, left: 0, right: 0 }}
                   onPress={() => {
                     provider.store?.gallery(() => ref.current?.focus());
                   }}

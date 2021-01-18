@@ -160,6 +160,6 @@ const styles = StyleSheet.create({
   groupName: {
     fontFamily: 'Roboto',
     fontSize: 15,
-    marginTop: 3,
+    marginTop: 1,
   },
 });

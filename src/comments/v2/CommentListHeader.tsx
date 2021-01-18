@@ -1,7 +1,7 @@
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
 import Icon from 'react-native-vector-icons/Feather';
 import { observer } from 'mobx-react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import sessionService from '../../common/services/session.service';
@@ -21,6 +21,13 @@ export default observer(function CommentListHeader(props: {
   const user = sessionService.getUser();
   const theme = ThemedStyles.style;
   const bottomSheet = useBottomSheet();
+  useEffect(() => {
+    if (props.store.parent && props.store.parent['comments:count'] === 0) {
+      props.store.setShowInput(true);
+    } else if (props.store.entity['comments:count'] === 0) {
+      props.store.setShowInput(true);
+    }
+  }, [props.store]);
   const title =
     route.params && route.params.title
       ? route.params.title
@@ -70,6 +77,7 @@ export default observer(function CommentListHeader(props: {
               comment={props.store.parent}
               store={props.store}
               hideReply
+              isHeader
             />
           </View>
         </View>
