@@ -570,11 +570,7 @@ export default class CommentsStore {
       // nothing selected
       if (!response) return;
 
-      const result = await this.attachment.attachMedia(response);
-
-      if (!result) {
-        showNotification('caught upload error', 'warning', 3000, 'top');
-      }
+      await this.attachment.attachMedia(response);
     } catch (err) {
       logService.exception('[CommentsStore] gallery', err);
     }
