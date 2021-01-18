@@ -30,6 +30,10 @@ class Web3Service {
     return { address, privateKey };
   }
 
+  setProvider(provider: any) {
+    this.web3 = new Web3(provider);
+  }
+
   getAddressFromPK(privateKey) {
     if (!privateKey) {
       return null;
