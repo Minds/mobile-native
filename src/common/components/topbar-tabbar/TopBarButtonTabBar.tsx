@@ -20,23 +20,17 @@ type PropsType<T> = {
  */
 function TopBarButtonTabBar<T>(props: PropsType<T>) {
   const theme = ThemedStyles.style;
-  const tabStyle = [styles.button, theme.marginHorizontal3x];
 
   return (
-    <View style={theme.rowJustifyStart}>
+    <View style={[theme.rowJustifyStart, theme.paddingLeft]}>
       {props.tabs.map((tab, i) => (
         <Button
           onPress={() => props.onChange(tab.id)}
           key={i}
           text={tab.title}
-          textStyle={[
-            theme.fontMedium,
-            props.current !== tab.id ? theme.colorTertiaryText : null,
-          ]}
-          containerStyle={[
-            tabStyle,
-            props.current !== tab.id ? theme.backgroundTransparent : null,
-          ]}
+          containerStyle={theme.marginHorizontal}
+          active={tab.id === props.current}
+          xSmall
         />
       ))}
     </View>
@@ -44,9 +38,3 @@ function TopBarButtonTabBar<T>(props: PropsType<T>) {
 }
 
 export default TopBarButtonTabBar;
-
-const styles = StyleSheet.create({
-  button: {
-    paddingVertical: 8,
-  },
-});

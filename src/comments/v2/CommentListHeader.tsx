@@ -12,6 +12,7 @@ import type CommentsStore from './CommentsStore';
 import i18n from '../../common/services/i18n.service';
 import { useRoute } from '@react-navigation/native';
 import GroupModel from '../../groups/GroupModel';
+import { useBottomSheet } from '@gorhom/bottom-sheet';
 
 export default observer(function CommentListHeader(props: {
   store: CommentsStore;
@@ -19,7 +20,7 @@ export default observer(function CommentListHeader(props: {
   const route = useRoute<any>();
   const user = sessionService.getUser();
   const theme = ThemedStyles.style;
-
+  const bottomSheet = useBottomSheet();
   const title =
     route.params && route.params.title
       ? route.params.title
@@ -30,6 +31,14 @@ export default observer(function CommentListHeader(props: {
       ? 'messenger.typeYourMessage'
       : 'activity.typeComment';
 
+  const titleStyles = [theme.fontMedium, theme.paddingLeft3x];
+
+  const closeButton = (
+    <TouchableOpacity style={styles.iconContainer} onPress={bottomSheet.close}>
+      <Icon name={'x'} size={24} style={theme.colorSecondaryText} />
+    </TouchableOpacity>
+  );
+
   return (
     <View
       style={[
@@ -39,15 +48,18 @@ export default observer(function CommentListHeader(props: {
       ]}>
       {props.store.parent ? (
         <View>
-          <TouchableOpacity
-            onPress={NavigationService.goBack}
-            style={theme.paddingHorizontal2x}>
-            <Icon
-              name={'arrow-left'}
-              size={28}
-              style={theme.colorSecondaryText}
-            />
-          </TouchableOpacity>
+          <View style={theme.rowJustifySpaceBetween}>
+            <TouchableOpacity
+              onPress={NavigationService.goBack}
+              style={theme.paddingHorizontal2x}>
+              <Icon
+                name={'arrow-left'}
+                size={28}
+                style={theme.colorSecondaryText}
+              />
+            </TouchableOpacity>
+            {closeButton}
+          </View>
           <View
             style={[
               styles.headerCommentContainer,
@@ -62,15 +74,21 @@ export default observer(function CommentListHeader(props: {
           </View>
         </View>
       ) : (
-        <Text
-          style={[
-            theme.fontXL,
-            theme.fontMedium,
-            theme.paddingLeft3x,
-            theme.marginBottom3x,
-          ]}>
-          {title}
-        </Text>
+        <View style={theme.rowJustifySpaceBetween}>
+          <View
+            style={[
+              theme.rowJustifyStart,
+              theme.marginBottom3x,
+              theme.alignEnd,
+            ]}>
+            <Text style={[theme.fontXL, ...titleStyles]}>{title}</Text>
+            <Text
+              style={[theme.fontLM, theme.colorSecondaryText, ...titleStyles]}>
+              {props.store.entity['comments:count']}
+            </Text>
+          </View>
+          {closeButton}
+        </View>
       )}
       <TouchableOpacity
         onPress={() => props.store.setShowInput(true)}
@@ -96,6 +114,10 @@ const styles = StyleSheet.create({
     marginTop: 15,
     borderTopWidth: StyleSheet.hairlineWidth,
     overflow: 'scroll',
+  },
+  iconContainer: {
+    paddingRight: 30,
+    paddingTop: 2,
   },
   avatar: {
     height: 37,

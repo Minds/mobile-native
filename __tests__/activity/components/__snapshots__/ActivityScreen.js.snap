@@ -444,7 +444,7 @@ exports[`Activity screen component renders correctly  1`] = `
                 onStartShouldSetResponder={[Function]}
                 style={
                   Object {
-                    "backgroundColor": "black",
+                    "backgroundColor": "#1E242A",
                     "bottom": 0,
                     "height": 1334,
                     "left": 0,

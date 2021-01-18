@@ -2,189 +2,101 @@
 
 exports[`LoginScreen component should renders correctly 1`] = `
 <View>
-  <View
+  <RCTScrollView
     accessible={true}
     focusable={true}
     onClick={[Function]}
+    onContentSizeChange={[Function]}
+    onLayout={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
     onResponderTerminate={[Function]}
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
+    scrollEnabled={false}
   >
     <View>
-      <View
-        style={
-          Array [
-            Object {
-              "height": 190.57142857142858,
-              "justifyContent": "flex-end",
-              "width": "100%",
-            },
-            Object {
-              "height": undefined,
-            },
-          ]
-        }
-      >
-        <Image
-          resizeMode="contain"
-          source={1}
-          style={
-            Array [
-              Object {
-                "alignSelf": "center",
-                "height": 118.64775,
-                "width": "43%",
-              },
-              Object {
-                "opacity": undefined,
-                "transform": Array [
-                  Object {
-                    "translateY": undefined,
-                  },
-                ],
-              },
-            ]
-          }
-        />
-      </View>
-      <Text
-        style={
-          Array [
-            undefined,
-            undefined,
-            undefined,
-            Object {
-              "paddingVertical": 74.11111111111111,
-            },
-          ]
-        }
-        testID="loginscreentext"
-      >
-        Login
-      </Text>
       <View>
         <View
           style={
-            Object {
-              "backgroundColor": "#00000000",
-              "elevation": 6,
-              "overflow": "visible",
-              "shadowColor": "#000",
-              "shadowOffset": Object {
-                "height": 0,
-                "width": 0,
+            Array [
+              Object {
+                "height": 190.57142857142858,
+                "justifyContent": "flex-end",
+                "width": "100%",
               },
-              "shadowOpacity": 0.8,
-              "shadowRadius": 20,
-              "zIndex": 999,
-            }
+              Object {
+                "height": undefined,
+              },
+            ]
           }
         >
-          <View
+          <Image
+            resizeMode="contain"
+            source={1}
             style={
               Array [
-                undefined,
                 Object {
-                  "paddingTop": 12,
+                  "alignSelf": "center",
+                  "height": 118.64775,
+                  "width": "43%",
                 },
-                undefined,
-                undefined,
-                null,
-                undefined,
                 Object {
-                  "backgroundColor": "rgba(0,0,0,0.25)",
-                  "borderColor": "rgba(255,255,255,0.30)",
+                  "opacity": undefined,
+                  "transform": Array [
+                    Object {
+                      "translateY": undefined,
+                    },
+                  ],
                 },
               ]
             }
+          />
+        </View>
+        <Text
+          style={
+            Array [
+              undefined,
+              undefined,
+              undefined,
+              Object {
+                "paddingVertical": 74.11111111111111,
+              },
+            ]
+          }
+          testID="loginscreentext"
+        >
+          Login
+        </Text>
+        <View>
+          <View
+            style={
+              Object {
+                "backgroundColor": "#00000000",
+                "elevation": 6,
+                "overflow": "visible",
+                "shadowColor": "#000",
+                "shadowOffset": Object {
+                  "height": 0,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.8,
+                "shadowRadius": 20,
+                "zIndex": 999,
+              }
+            }
           >
-            <View>
-              <View
-                style={
-                  Object {
-                    "flexDirection": "row",
-                    "justifyContent": "space-between",
-                    "width": "100%",
-                  }
-                }
-              >
-                <View
-                  style={
-                    Object {
-                      "flexDirection": "row",
-                      "justifyContent": "space-between",
-                      "width": "100%",
-                    }
-                  }
-                >
-                  <Text
-                    style={
-                      Array [
-                        Object {
-                          "fontFamily": "Roboto",
-                          "fontSize": 16,
-                          "fontWeight": "600",
-                          "marginBottom": 5,
-                        },
-                        undefined,
-                        undefined,
-                      ]
-                    }
-                  >
-                    Username
-                  </Text>
-                </View>
-              </View>
-              <TextInput
-                allowFontScaling={true}
-                autoCapitalize="none"
-                containerStyle={
-                  Object {
-                    "backgroundColor": "rgba(0,0,0,0.25)",
-                    "borderColor": "rgba(255,255,255,0.30)",
-                  }
-                }
-                onChangeText={[Function]}
-                placeholder=""
-                placeholderTextColor="#444"
-                rejectResponderTermination={true}
-                returnKeyType="done"
-                style={
-                  Array [
-                    undefined,
-                    Array [
-                      Object {
-                        "borderWidth": 0,
-                        "marginBottom": 7,
-                        "paddingHorizontal": 0,
-                        "paddingVertical": 8,
-                      },
-                      undefined,
-                      undefined,
-                      undefined,
-                    ],
-                  ]
-                }
-                testID="usernameInput"
-                underlineColorAndroid="transparent"
-                value=""
-              />
-            </View>
-          </View>
-          <View>
             <View
               style={
                 Array [
                   undefined,
                   Object {
-                    "paddingTop": 12,
+                    "paddingTop": 10,
                   },
                   undefined,
                   undefined,
-                  undefined,
+                  null,
                   undefined,
                   Object {
                     "backgroundColor": "rgba(0,0,0,0.25)",
@@ -226,7 +138,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                         ]
                       }
                     >
-                      Password
+                      Username
                     </Text>
                   </View>
                 </View>
@@ -244,7 +156,6 @@ exports[`LoginScreen component should renders correctly 1`] = `
                   placeholderTextColor="#444"
                   rejectResponderTermination={true}
                   returnKeyType="done"
-                  secureTextEntry={true}
                   style={
                     Array [
                       undefined,
@@ -261,149 +172,244 @@ exports[`LoginScreen component should renders correctly 1`] = `
                       ],
                     ]
                   }
-                  testID="userPasswordInput"
+                  testID="usernameInput"
                   underlineColorAndroid="transparent"
                   value=""
                 />
               </View>
             </View>
-            <Text
-              allowFontScaling={false}
-              onPress={[Function]}
-              style={
-                Array [
-                  Object {
-                    "color": undefined,
-                    "fontSize": 25,
-                  },
+            <View>
+              <View
+                style={
                   Array [
                     undefined,
                     Object {
-                      "top": 26,
+                      "paddingTop": 10,
                     },
-                  ],
-                  Object {
-                    "fontFamily": "Ionicons",
-                    "fontStyle": "normal",
-                    "fontWeight": "normal",
-                  },
-                  Object {},
-                ]
-              }
-            >
-              
-            </Text>
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    Object {
+                      "backgroundColor": "rgba(0,0,0,0.25)",
+                      "borderColor": "rgba(255,255,255,0.30)",
+                    },
+                  ]
+                }
+              >
+                <View>
+                  <View
+                    style={
+                      Object {
+                        "flexDirection": "row",
+                        "justifyContent": "space-between",
+                        "width": "100%",
+                      }
+                    }
+                  >
+                    <View
+                      style={
+                        Object {
+                          "flexDirection": "row",
+                          "justifyContent": "space-between",
+                          "width": "100%",
+                        }
+                      }
+                    >
+                      <Text
+                        style={
+                          Array [
+                            Object {
+                              "fontFamily": "Roboto",
+                              "fontSize": 16,
+                              "fontWeight": "600",
+                              "marginBottom": 5,
+                            },
+                            undefined,
+                            undefined,
+                          ]
+                        }
+                      >
+                        Password
+                      </Text>
+                    </View>
+                  </View>
+                  <TextInput
+                    allowFontScaling={true}
+                    autoCapitalize="none"
+                    containerStyle={
+                      Object {
+                        "backgroundColor": "rgba(0,0,0,0.25)",
+                        "borderColor": "rgba(255,255,255,0.30)",
+                      }
+                    }
+                    onChangeText={[Function]}
+                    placeholder=""
+                    placeholderTextColor="#444"
+                    rejectResponderTermination={true}
+                    returnKeyType="done"
+                    secureTextEntry={true}
+                    style={
+                      Array [
+                        undefined,
+                        Array [
+                          Object {
+                            "borderWidth": 0,
+                            "marginBottom": 7,
+                            "paddingHorizontal": 0,
+                            "paddingVertical": 8,
+                          },
+                          undefined,
+                          undefined,
+                          undefined,
+                        ],
+                      ]
+                    }
+                    testID="userPasswordInput"
+                    underlineColorAndroid="transparent"
+                    value=""
+                  />
+                </View>
+              </View>
+              <Text
+                allowFontScaling={false}
+                onPress={[Function]}
+                style={
+                  Array [
+                    Object {
+                      "color": undefined,
+                      "fontSize": 25,
+                    },
+                    Array [
+                      undefined,
+                      Object {
+                        "top": 26,
+                      },
+                    ],
+                    Object {
+                      "fontFamily": "Ionicons",
+                      "fontStyle": "normal",
+                      "fontWeight": "normal",
+                    },
+                    Object {},
+                  ]
+                }
+              >
+                
+              </Text>
+            </View>
           </View>
-        </View>
-        <View
-          style={
-            Array [
-              undefined,
-              undefined,
-            ]
-          }
-        >
           <View
-            accessibilityLabel="loginButton"
-            disabled={false}
-            onPress={[Function]}
             style={
               Array [
                 undefined,
                 undefined,
-                undefined,
-                undefined,
-                Object {
-                  "backgroundColor": "#5DBAC0",
-                  "borderRadius": 36,
-                },
-                Array [
-                  undefined,
-                  undefined,
-                  Object {
-                    "marginTop": 24.254545454545454,
-                  },
-                  undefined,
-                ],
               ]
             }
-            text="Login"
           >
-            <Text
-              style={
-                Array [
-                  Object {
-                    "color": "white",
-                  },
-                  undefined,
-                ]
-              }
-            >
-               
-              Login
-               
-            </Text>
-          </View>
-          <View>
-            <Text
+            <View
+              accessibilityLabel="loginButton"
+              disabled={false}
               onPress={[Function]}
               style={
                 Array [
                   undefined,
                   undefined,
-                  undefined,
+                  Object {
+                    "backgroundColor": "rgba(0,0,0,0.40)",
+                    "borderColor": "rgba(255,255,255,0.60)",
+                    "borderRadius": 21,
+                    "paddingHorizontal": 23,
+                    "paddingVertical": 10,
+                  },
+                  Array [
+                    Object {
+                      "marginTop": 24.254545454545454,
+                    },
+                    undefined,
+                  ],
                 ]
               }
+              text="Login"
             >
-              Forgot your password?
-            </Text>
-          </View>
-          <View />
-          <View
-            disabled={false}
-            onPress={[Function]}
-            style={
-              Array [
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                Object {
-                  "backgroundColor": "#5DBAC0",
-                  "borderRadius": 36,
-                },
-                Array [
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  Object {
-                    "borderColor": "rgba(255,255,255,0.20)",
-                  },
-                ],
-              ]
-            }
-            testID="loginButton"
-            text="Join Minds"
-          >
-            <Text
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "fontSize": 19,
+                    },
+                    Object {
+                      "color": "#FFFFFF",
+                    },
+                    undefined,
+                  ]
+                }
+              >
+                 
+                Login
+                 
+              </Text>
+            </View>
+            <View>
+              <Text
+                onPress={[Function]}
+                style={
+                  Array [
+                    undefined,
+                    undefined,
+                    undefined,
+                  ]
+                }
+              >
+                Forgot your password?
+              </Text>
+            </View>
+            <View />
+            <View
+              disabled={false}
+              onPress={[Function]}
               style={
                 Array [
-                  Object {
-                    "color": "white",
-                  },
                   undefined,
+                  undefined,
+                  Object {
+                    "backgroundColor": "rgba(0,0,0,0.40)",
+                    "borderColor": "rgba(255,255,255,0.60)",
+                    "borderRadius": 21,
+                    "paddingHorizontal": 23,
+                    "paddingVertical": 10,
+                  },
+                  Array [
+                    undefined,
+                    undefined,
+                  ],
                 ]
               }
+              testID="registerButton"
+              text="Join Minds"
             >
-               
-              Join Minds
-               
-            </Text>
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "fontSize": 19,
+                    },
+                    Object {
+                      "color": "#FFFFFF",
+                    },
+                    undefined,
+                  ]
+                }
+              >
+                 
+                Join Minds
+                 
+              </Text>
+            </View>
           </View>
         </View>
       </View>
     </View>
-  </View>
+  </RCTScrollView>
 </View>
 `;

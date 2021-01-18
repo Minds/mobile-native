@@ -2,6 +2,8 @@ import React, { forwardRef } from 'react';
 import BottomSheet, {
   BottomSheetBackdropProps,
   BottomSheetBackgroundProps,
+  TouchableOpacity,
+  useBottomSheet,
 } from '@gorhom/bottom-sheet';
 import Animated, { Extrapolate, interpolate } from 'react-native-reanimated';
 import { Dimensions, View } from 'react-native';
@@ -17,37 +19,65 @@ import {
 } from '@react-navigation/stack';
 import { useRoute } from '@react-navigation/native';
 import CommentInput from './CommentInput';
+import { observer, useLocalStore } from 'mobx-react';
+
+const BottomSheetLocalStore = () => ({
+  isOpen: 1,
+  setOpen(isOpen: number) {
+    if (this.isOpen !== isOpen) {
+      this.isOpen = isOpen;
+    }
+  },
+});
+
+type BackdropProps = {
+  localStore: ReturnType<typeof BottomSheetLocalStore>;
+} & BottomSheetBackdropProps;
 
 const { height: windowHeight } = Dimensions.get('window');
 
 const snapPoints = [-150, windowHeight * 0.85];
 
-const CustomBackdrop = ({ animatedIndex, style }: BottomSheetBackdropProps) => {
-  // animated variables
-  const animatedOpacity = React.useMemo(
-    () =>
-      interpolate(animatedIndex, {
-        inputRange: [0, 1],
-        outputRange: [0, 0.8],
-        extrapolate: Extrapolate.CLAMP,
-      }),
-    [animatedIndex],
-  );
+const CustomBackdrop = observer(
+  ({ animatedIndex, style, localStore }: BackdropProps) => {
+    const theme = ThemedStyles.style;
+    // animated variables
+    const animatedOpacity = React.useMemo(
+      () =>
+        interpolate(animatedIndex, {
+          inputRange: [0, 1],
+          outputRange: [0, 0.8],
+          extrapolate: Extrapolate.CLAMP,
+        }),
+      [animatedIndex],
+    );
 
-  // styles
-  const containerStyle = React.useMemo(
-    () => [
-      style,
-      ThemedStyles.style.backgroundSecondary,
-      {
-        opacity: animatedOpacity,
-      },
-    ],
-    [style, animatedOpacity],
-  );
+    // styles
+    const containerStyle = React.useMemo(
+      () => [
+        style,
+        ThemedStyles.style.backgroundSecondary,
+        {
+          opacity: animatedOpacity,
+        },
+      ],
+      [style, animatedOpacity],
+    );
 
-  return <Animated.View style={containerStyle} pointerEvents="box-none" />;
-};
+    if (localStore.isOpen === 1) {
+      return (
+        <Animated.View style={containerStyle} pointerEvents="box-none">
+          <TouchableOpacity
+            onPress={useBottomSheet().close}
+            style={[theme.fullHeight, theme.fullWidth]}
+          />
+        </Animated.View>
+      );
+    }
+
+    return <Animated.View style={containerStyle} pointerEvents="box-none" />;
+  },
+);
 
 /**
  * Custom background
@@ -83,6 +113,11 @@ const ScreenReplyComment = () => {
 };
 
 const CommentBottomSheet = (props: PropsType, ref: any) => {
+  const localStore = useLocalStore(BottomSheetLocalStore);
+  const { current: focusedUrn } = React.useRef(
+    props.commentsStore.getFocuedUrn(),
+  );
+
   const screenOptions = React.useMemo<StackNavigationOptions>(
     () => ({
       ...TransitionPresets.SlideFromRightIOS,
@@ -99,15 +134,20 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
     [props.commentsStore],
   );
 
+  const Backdrop = (bottomSheetBackdropProps: BottomSheetBackdropProps) => (
+    <CustomBackdrop {...bottomSheetBackdropProps} localStore={localStore} />
+  );
+
   return [
     <BottomSheet
       ref={ref}
       index={0}
+      onChange={localStore.setOpen}
       containerHeight={windowHeight + 10}
       snapPoints={snapPoints}
       handleComponent={Handle}
       backgroundComponent={CustomBackground}
-      backdropComponent={CustomBackdrop}>
+      backdropComponent={Backdrop}>
       {!props.hideContent && ( // we disable the navigator until the screen is focused (for the post swiper)
         <Stack.Navigator screenOptions={screenOptions} headerMode="none">
           <Stack.Screen
@@ -117,7 +157,11 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
               title: props.title || '',
             }}
           />
-          <Stack.Screen name="ReplyComment" component={ScreenReplyComment} />
+          <Stack.Screen
+            name="ReplyComment"
+            component={ScreenReplyComment}
+            initialParams={{ focusedUrn }}
+          />
         </Stack.Navigator>
       )}
     </BottomSheet>,

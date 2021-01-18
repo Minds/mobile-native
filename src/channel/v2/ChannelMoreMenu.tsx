@@ -16,6 +16,9 @@ import { MINDS_URI } from '../../config/Config';
 const getOptions = (channel: UserModel, isSubscribedToTier: boolean) => {
   let options = [i18n.t('cancel')];
   options.push(i18n.t('channel.share'));
+  if (channel.isOwner()) {
+    options.push(i18n.t('boosts.boostChannel'));
+  }
   if (channel.isSubscribed()) {
     options.push(i18n.t('channel.unsubscribe'));
   }
@@ -70,6 +73,9 @@ const ChannelMoreMenu = (props: PropsType, ref: any) => {
             i18n.t('channel.share'),
             MINDS_URI + props.channel.username,
           );
+          break;
+        case i18n.t('boosts.boostChannel'):
+          navigation.navigate('BoostChannelScreen', {});
           break;
       }
     },

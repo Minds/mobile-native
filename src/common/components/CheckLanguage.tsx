@@ -47,8 +47,7 @@ export default observer(function CheckLanguage() {
           </Text>
           <Button
             text={`Switch to ${lang.name}`}
-            containerStyle={[theme.padding2x, theme.marginBottom2x]}
-            textStyle={theme.fontL}
+            containerStyle={theme.marginBottom2x}
             onPress={() => i18n.setLocale(i18n.bestLocale)}
           />
         </View>

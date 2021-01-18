@@ -24,7 +24,7 @@ exports[`LoginForm component should renders correctly 1`] = `
         Array [
           undefined,
           Object {
-            "paddingTop": 12,
+            "paddingTop": 10,
           },
           undefined,
           undefined,
@@ -116,7 +116,7 @@ exports[`LoginForm component should renders correctly 1`] = `
           Array [
             undefined,
             Object {
-              "paddingTop": 12,
+              "paddingTop": 10,
             },
             undefined,
             undefined,
@@ -247,15 +247,14 @@ exports[`LoginForm component should renders correctly 1`] = `
         Array [
           undefined,
           undefined,
-          undefined,
-          undefined,
           Object {
-            "backgroundColor": "#5DBAC0",
-            "borderRadius": 36,
+            "backgroundColor": "rgba(0,0,0,0.40)",
+            "borderColor": "rgba(255,255,255,0.60)",
+            "borderRadius": 21,
+            "paddingHorizontal": 23,
+            "paddingVertical": 10,
           },
           Array [
-            undefined,
-            undefined,
             Object {
               "marginTop": 24.254545454545454,
             },
@@ -269,7 +268,10 @@ exports[`LoginForm component should renders correctly 1`] = `
         style={
           Array [
             Object {
-              "color": "white",
+              "fontSize": 19,
+            },
+            Object {
+              "color": "#FFFFFF",
             },
             undefined,
           ]
@@ -301,31 +303,30 @@ exports[`LoginForm component should renders correctly 1`] = `
         Array [
           undefined,
           undefined,
-          undefined,
-          undefined,
           Object {
-            "backgroundColor": "#5DBAC0",
-            "borderRadius": 36,
+            "backgroundColor": "rgba(0,0,0,0.40)",
+            "borderColor": "rgba(255,255,255,0.60)",
+            "borderRadius": 21,
+            "paddingHorizontal": 23,
+            "paddingVertical": 10,
           },
           Array [
             undefined,
             undefined,
-            undefined,
-            undefined,
-            Object {
-              "borderColor": "rgba(255,255,255,0.20)",
-            },
           ],
         ]
       }
-      testID="loginButton"
+      testID="registerButton"
       text="Join Minds"
     >
       <Text
         style={
           Array [
             Object {
-              "color": "white",
+              "fontSize": 19,
+            },
+            Object {
+              "color": "#FFFFFF",
             },
             undefined,
           ]

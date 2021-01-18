@@ -324,7 +324,7 @@ class ApiService {
       xhr.setRequestHeader('Accept', 'application/json');
       xhr.setRequestHeader('Content-Type', 'multipart/form-data;');
       xhr.onload = () => {
-        if (xhr.status === 200) {
+        if (xhr.status === 200 || xhr.status === 403) {
           let response: ApiResponse;
           try {
             response = JSON.parse(xhr.responseText);
@@ -334,7 +334,7 @@ class ApiService {
               message: 'Error parsing server response',
             };
           }
-          if (response.status === 'error') {
+          if (response.status === 'error' || xhr.status === 403) {
             return reject(response);
           }
           resolve(response);

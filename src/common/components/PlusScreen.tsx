@@ -281,9 +281,9 @@ const PlusScreen = observer(({ navigation, route }: PropsType) => {
                 ? i18n.t('startFreeTrial')
                 : i18n.t(`monetize.${texts}Join`)
             }
-            containerStyle={[theme.paddingVertical2x, styles.buttonRight]}
+            containerStyle={styles.buttonRight}
             loading={localStore.loading}
-            textStyle={[theme.fontMedium, theme.fontL]}
+            action
           />
         </View>
       )}

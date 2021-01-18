@@ -68,19 +68,19 @@ export default class ForgotPassword extends PureComponent<PropsType> {
             accessibilityLabel="usernameInput"
           />
         )}
-        <View style={[theme.rowJustifyEnd, theme.marginTop4x]}>
+        <View
+          style={[
+            theme.rowJustifyEnd,
+            theme.marginTop4x,
+            theme.paddingRight2x,
+          ]}>
           <Button
             onPress={() => this.onPressBack()}
             text={i18n.t('goback')}
-            containerStyle={[
-              theme.transparentButton,
-              theme.paddingVertical3x,
-              theme.paddingHorizontal3x,
-              theme.marginTop1x,
-              styles.lightButton,
-            ]}
-            textStyle={theme.buttonText}
+            containerStyle={theme.marginTop1x}
             accessibilityLabel="backButton"
+            large
+            transparent
           />
           {!this.state.sent && (
             <Button
@@ -89,16 +89,10 @@ export default class ForgotPassword extends PureComponent<PropsType> {
               loading={this.state.sending}
               loadingRight={true}
               disable={this.state.sending || this.state.sent}
-              containerStyle={[
-                theme.transparentButton,
-                theme.paddingVertical3x,
-                theme.paddingHorizontal3x,
-                theme.marginTop1x,
-                theme.marginLeft2x,
-                styles.lightButton,
-              ]}
-              textStyle={theme.buttonText}
+              containerStyle={[theme.marginTop1x, theme.marginLeft2x]}
               accessibilityLabel="continueButton"
+              large
+              transparent
             />
           )}
         </View>

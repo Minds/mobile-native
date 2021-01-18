@@ -18,6 +18,7 @@ import { useNavigation } from '@react-navigation/native';
 import ThumbUpAction from '../../newsfeed/activity/actions/ThumbUpAction';
 import ThumbDownAction from '../../newsfeed/activity/actions/ThumbDownAction';
 import MediaView from '../../common/components/MediaView';
+import { LIGHT_THEME } from '../../styles/Colors';
 
 type PropsType = {
   comment: CommentModel;
@@ -108,7 +109,12 @@ export default observer(function Comment(props: PropsType) {
   }, [navigation, props.comment, props.store.entity]);
 
   return (
-    <View style={[styles.container, theme.borderPrimary]}>
+    <View
+      style={[
+        styles.container,
+        theme.borderPrimary,
+        props.comment.focused ? styles.focused : null,
+      ]}>
       <CommentHeader entity={props.comment} navigation={navigation} />
 
       {!mature ? (
@@ -245,5 +251,9 @@ const styles = StyleSheet.create({
   linear: {
     height: 52,
     width: '100%',
+  },
+  focused: {
+    borderLeftColor: LIGHT_THEME.link,
+    borderLeftWidth: 4,
   },
 });
