@@ -1,6 +1,7 @@
 import React from 'react';
 import { observer, useLocalStore } from 'mobx-react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { TouchableOpacity } from '@gorhom/bottom-sheet';
 
 import BottomButtonOptions, {
   ItemType,
@@ -8,7 +9,6 @@ import BottomButtonOptions, {
 import type CommentsStore from './CommentsStore';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
-import { TouchableOpacity } from '@gorhom/bottom-sheet';
 import { StyleProp, ViewStyle } from 'react-native';
 
 type PropsType = {
