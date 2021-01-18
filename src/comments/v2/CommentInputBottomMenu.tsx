@@ -9,9 +9,11 @@ import type CommentsStore from './CommentsStore';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
+import { StyleProp, ViewStyle } from 'react-native';
 
 type PropsType = {
   store: CommentsStore;
+  containerStyle?: StyleProp<ViewStyle>;
   afterSelected: () => void;
   beforeSelect: () => void;
 };
@@ -22,6 +24,7 @@ type PropsType = {
 export default observer(function CommentInputBottomMenu({
   store,
   afterSelected,
+  containerStyle,
   beforeSelect,
 }: PropsType) {
   const theme = ThemedStyles.style;
