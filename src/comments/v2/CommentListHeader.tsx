@@ -77,6 +77,7 @@ export default observer(function CommentListHeader(props: {
               comment={props.store.parent}
               store={props.store}
               hideReply
+              isHeader
             />
           </View>
         </View>
