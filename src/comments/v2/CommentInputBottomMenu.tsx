@@ -24,7 +24,6 @@ type PropsType = {
 export default observer(function CommentInputBottomMenu({
   store,
   afterSelected,
-  containerStyle,
   beforeSelect,
 }: PropsType) {
   const theme = ThemedStyles.style;
@@ -61,8 +60,11 @@ export default observer(function CommentInputBottomMenu({
     const openGallery: ItemType = {
       title: i18n.t('capture.attach'),
       onPress: () => {
-        localStore.hide();
-        store.gallery(afterSelected);
+        const fn = () => {
+          localStore.hide();
+          afterSelected();
+        };
+        store.gallery(fn);
       },
     };
 
