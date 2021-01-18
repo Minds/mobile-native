@@ -12,13 +12,13 @@ import KeyboardSpacingView from '../../common/components/KeyboardSpacingView';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import Icon from 'react-native-vector-icons/Ionicons';
-import IconMC from 'react-native-vector-icons/MaterialIcons';
 import { observer } from 'mobx-react';
 import type CommentsStore from './CommentsStore';
 import { action, observable } from 'mobx';
 import MediaPreview from './MediaPreview';
 import MetaPreview from '../../compose/MetaPreview';
 import GroupModel from '../../groups/GroupModel';
+import CommentInputBottomMenu from './CommentInputBottomMenu';
 
 const { height } = Dimensions.get('window');
 
@@ -38,6 +38,9 @@ const CommentInput = observer(() => {
   const theme = ThemedStyles.style;
   const ref = React.useRef<TextInput>(null);
   const provider = React.useContext(CommentInputContext);
+
+  const afterSelected = () => ref.current?.focus();
+  const beforeSelect = () => ref.current?.blur();
 
   if (!provider.store || !provider.store.showInput) {
     return null;
@@ -130,19 +133,11 @@ const CommentInput = observer(() => {
                 />
               </TouchableOpacity>
               {!provider.store.edit && (
-                <TouchableOpacity
-                  hitSlop={{ top: 10, bottom: 10, left: 0, right: 0 }}
-                  onPress={() => {
-                    provider.store?.gallery(() => ref.current?.focus());
-                  }}
-                  style={styles.sendIconCont}
-                  testID="PostCommentButton">
-                  <IconMC
-                    name="more-vert"
-                    size={19}
-                    style={[theme.colorSecondaryText, theme.paddingLeft2x]}
-                  />
-                </TouchableOpacity>
+                <CommentInputBottomMenu
+                  store={provider.store}
+                  afterSelected={afterSelected}
+                  beforeSelect={beforeSelect}
+                />
               )}
             </View>
           </View>
