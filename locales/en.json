@@ -242,7 +242,9 @@
     "allowMinds": "Enable access so you can take photos and record videos to share on Minds",
     "blockedMinds": "You have blocked access to your camera and microphone. Please go to your device settings to enable.",
     "noHashtags": "Sorry, Plus monetized posts must have hashtags.",
-    "noExternalLinks": "Sorry, Plus monetized posts mustn't have external links."
+    "noExternalLinks": "Sorry, Plus monetized posts mustn't have external links.",
+    "attach": "Photo & Video Library",
+    "takePhoto": "Camera"
   },
   "channel": {
     "editChannel": "Edit Channel",
@@ -1021,7 +1023,7 @@
   "errorMessage": "Sorry, it looks like there was an error.",
   "error": "Error",
   "reply": "Reply",
-  "setExplicit": "Set explicit",
+  "setExplicit": "Mark as explicit",
   "report": "Report",
   "removeExplicit": "Remove explicit",
   "members": "Members",

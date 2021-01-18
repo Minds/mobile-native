@@ -509,9 +509,12 @@ export default class CommentsStore {
   /**
    * Attach a photo
    */
-  async photo() {
+  async photo(fn?: () => void) {
     try {
       const response = await attachmentService.photo();
+
+      if (fn) fn();
+
       if (response) this.onAttachedMedia(response);
     } catch (e) {
       logService.exception(e);
