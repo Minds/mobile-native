@@ -22,7 +22,7 @@ import CommentInput from './CommentInput';
 import { observer, useLocalStore } from 'mobx-react';
 
 const BottomSheetLocalStore = () => ({
-  isOpen: 1,
+  isOpen: 0,
   setOpen(isOpen: number) {
     if (this.isOpen !== isOpen) {
       this.isOpen = isOpen;

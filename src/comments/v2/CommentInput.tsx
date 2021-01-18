@@ -121,10 +121,15 @@ const CommentInput = observer(() => {
                 styles.input,
               ]}
             />
-            <View style={theme.rowJustifyStart}>
+            <View
+              style={[
+                theme.rowJustifyStart,
+                styles.sendIconCont,
+                theme.alignCenter,
+              ]}>
               <TouchableOpacity
                 onPress={provider.store.post}
-                style={styles.sendIconCont}
+                style={theme.paddingRight2x}
                 testID="PostCommentButton">
                 <Icon
                   name="md-send"
@@ -135,6 +140,7 @@ const CommentInput = observer(() => {
               {!provider.store.edit && (
                 <CommentInputBottomMenu
                   store={provider.store}
+                  containerStyle={styles.sendIconCont}
                   afterSelected={afterSelected}
                   beforeSelect={beforeSelect}
                 />

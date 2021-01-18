@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleProp, ViewStyle } from 'react-native';
+import { StyleProp, ViewStyle, TouchableOpacity } from 'react-native';
 import { observer } from 'mobx-react';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -11,7 +11,6 @@ import { FLAG_VOTE } from '../../../common/Permissions';
 import remoteAction from '../../../common/RemoteAction';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
-import { TouchableOpacity } from '@gorhom/bottom-sheet';
 
 // prevent double tap in touchable
 const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
@@ -21,6 +20,7 @@ type PropsType = {
   size: number;
   orientation: 'column' | 'row';
   containerStyle?: StyleProp<ViewStyle>;
+  touchableComponent?: React.ComponentClass;
 };
 
 /**
@@ -63,8 +63,10 @@ class ThumbUpAction extends Component<PropsType> {
         : theme.colorIcon
       : CS.colorLightGreyed;
 
+    const Touchable = this.props.touchableComponent || TouchableOpacityCustom;
+
     return (
-      <TouchableOpacityCustom
+      <Touchable
         style={[
           theme.rowJustifyCenter,
           theme.paddingHorizontal3x,
@@ -86,7 +88,7 @@ class ThumbUpAction extends Component<PropsType> {
             testID={`Thumb ${this.direction} count`}
           />
         ) : undefined}
-      </TouchableOpacityCustom>
+      </Touchable>
     );
   }
 

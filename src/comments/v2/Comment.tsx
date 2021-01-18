@@ -157,11 +157,13 @@ export default observer(function Comment(props: PropsType) {
               containerStyle={theme.rowJustifyStart}
               entity={props.comment}
               size={16}
+              touchableComponent={TouchableOpacity}
             />
             <ThumbDownAction
               containerStyle={theme.rowJustifyStart}
               entity={props.comment}
               size={16}
+              touchableComponent={TouchableOpacity}
             />
             {canReply && <ReplyAction size={16} onPressReply={reply} />}
             <View style={theme.flexContainer} />
