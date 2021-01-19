@@ -22,6 +22,7 @@ import type ActivityModel from '../../newsfeed/ActivityModel';
 import type BlogModel from '../../blogs/BlogModel';
 import type GroupModel from '../../groups/GroupModel';
 import { showNotification } from '../../../AppMessages';
+import i18n from '../../common/services/i18n.service';
 
 const COMMENTS_PAGE_SIZE = 6;
 
@@ -343,6 +344,11 @@ export default class CommentsStore {
    * Post comment
    */
   post = async () => {
+    if (this.attachment.uploading) {
+      showNotification(i18n.t('uploading'), 'info', 3000, 'top');
+      return;
+    }
+
     if (this.edit) {
       return this.updateComment();
     }
