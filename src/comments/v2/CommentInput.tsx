@@ -39,7 +39,7 @@ const CommentInput = observer(() => {
   const ref = React.useRef<TextInput>(null);
   const provider = React.useContext(CommentInputContext);
 
-  const afterSelected = () => ref.current?.focus();
+  const afterSelected = () => setTimeout(() => ref.current?.focus(), 400);
   const beforeSelect = () => ref.current?.blur();
 
   if (!provider.store || !provider.store.showInput) {
