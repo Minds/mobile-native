@@ -200,6 +200,7 @@ export default observer(function SetupChannelScreen() {
       <BottomButtonOptions
         list={avatarOptions}
         isVisible={store.showAvatarPicker}
+        onPressClose={store.hidePicker}
       />
     </ModalContainer>
   );
