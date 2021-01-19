@@ -70,7 +70,7 @@ export default observer(function MediaPreview({
             theme.positionAbsolute,
             styles.overlay,
           ]}
-          color={ThemedStyles.getColor('primary_text')}
+          color="white"
           scaleEnabled={true}
         />
       )}
@@ -86,7 +86,8 @@ export default observer(function MediaPreview({
 
 const styles = StyleSheet.create({
   overlay: {
-    backgroundColor: '#00000060',
+    backgroundColor: '#00000090',
+    borderRadius: 15,
   },
   close: {
     position: 'absolute',
@@ -108,6 +109,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 2,
     elevation: 16,
+    zIndex: 1000,
   },
   preview: {
     flex: 1,
