@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, Text } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import Web3 from 'web3';
 import Button from '../common/components/Button';
@@ -14,12 +14,16 @@ type Store = {
   chainId: number | null;
   accounts: string[] | null;
   address: string | null;
+  formattedResult: Record<string, any> | null;
   setWeb3: (newValue: Store['web3']) => void;
   setProvider: (newValue: Store['provider']) => void;
   setConnected: (newValue: Store['connected']) => void;
+  setFormattedResult: (newValue: Store['formattedResult']) => void;
   setChainId: (newValue: Store['chainId']) => void;
   setAccounts: (newValue: Store['accounts']) => void;
   setAddress: (newValue: Store['address']) => void;
+  sendTestTransaction: () => Promise<void>;
+  signTestMessage: () => Promise<void>;
   resetConnection: () => void;
 };
 
@@ -46,13 +50,32 @@ export default observer(() => {
     <ScrollView
       style={[theme.flexContainer, theme.backgroundPrimary]}
       contentContainerStyle={theme.paddingBottom4x}>
-      {store.connected ? (
+      {store.connected && store.web3 ? (
         <>
-          <Text>Connected</Text>
-          <Text>{`Accounts: ${JSON.stringify(store.accounts)}`}</Text>
-          <Text>{`Chain ID: ${JSON.stringify(store.chainId)}`}</Text>
-          <Text>{`Address: ${JSON.stringify(store.address)}`}</Text>
+          <View style={[theme.centered, theme.marginVertical3x]}>
+            <Text>Connected</Text>
+          </View>
+          <Button
+            containerStyle={[theme.marginBottom3x]}
+            onPress={store.sendTestTransaction}
+            text="Send Test Transaction"
+          />
+          <Button
+            containerStyle={[theme.marginBottom3x]}
+            onPress={store.signTestMessage}
+            text="Sign Message"
+          />
           <Button onPress={store.resetConnection} text="Disconnect" />
+          {store.formattedResult && (
+            <View style={[theme.marginVertical6x]}>
+              {Object.keys(store.formattedResult).map((key) => (
+                <View key={key}>
+                  <Text>{`${key}:`}</Text>
+                  <Text>{store.formattedResult![key].toString()}</Text>
+                </View>
+              ))}
+            </View>
+          )}
         </>
       ) : (
         <Button
@@ -79,11 +102,15 @@ const createStore = (): Store => ({
   chainId: null,
   accounts: null,
   address: null,
+  formattedResult: null,
   setWeb3(newValue: Store['web3']) {
     this.web3 = newValue;
   },
   setProvider(newValue: Store['provider']) {
     this.provider = newValue;
+  },
+  setFormattedResult(newValue: Store['formattedResult']) {
+    this.formattedResult = newValue;
   },
   setConnected(newValue: Store['connected']) {
     this.connected = newValue;
@@ -97,7 +124,51 @@ const createStore = (): Store => ({
   setAddress(newValue: Store['address']) {
     this.address = newValue;
   },
+  async sendTestTransaction() {
+    if (!this.web3 || !this.address) {
+      return;
+    }
+
+    try {
+      const tx = {
+        to: '0x2E7F4dD3acD226DdAe10246a45337F815CF6B3ff',
+        from: this.address,
+        value: '1000000000000000000',
+      };
+
+      await this.web3.eth.sendTransaction(tx);
+    } catch (error) {
+      console.log('error =>', error);
+    }
+  },
+  async signTestMessage() {
+    if (!this.web3 || !this.address) {
+      return;
+    }
+
+    try {
+      const message = 'Hello World';
+      const result = await this.web3.eth.sign(message, this.address);
+
+      console.log('formatted', {
+        method: 'personal_sign',
+        address: this.address,
+        valid: true,
+        result,
+      });
+
+      this.setFormattedResult({
+        method: 'personal_sign',
+        address: this.address,
+        valid: true,
+        result,
+      });
+    } catch (error) {
+      console.log('error =>', error);
+    }
+  },
   resetConnection() {
+    this.provider?.close();
     this.setConnected(false);
     this.setProvider(null);
     this.setChainId(null);
