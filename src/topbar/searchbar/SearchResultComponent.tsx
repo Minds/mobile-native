@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useCallback } from 'react';
 
 import { View } from 'react-native';
 import DiscoveryUserNew from '../../discovery/DiscoveryUserNew';
@@ -9,7 +9,6 @@ import { observer } from 'mobx-react';
 import SuggestedSearch from './SuggestedSearch';
 import SearchHistory from './SearchHistory';
 import MenuItem from '../../common/components/menus/MenuItem';
-import { useLegacyStores } from '../../common/hooks/use-stores';
 import { SearchResultStoreType } from './createSearchResultStore';
 
 type PropsType = {

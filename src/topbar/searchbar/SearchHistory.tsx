@@ -3,7 +3,7 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import i18n from '../../common/services/i18n.service';
 import { useLegacyStores } from '../../common/hooks/use-stores';
-import { useKeyboard } from '@react-native-community/hooks';
+import { useDimensions, useKeyboard } from '@react-native-community/hooks';
 import { SearchResultStoreType } from './createSearchResultStore';
 
 type PropsType = {
@@ -11,23 +11,32 @@ type PropsType = {
   renderItem: (item, index) => Element | null;
 };
 
+export function useKeyboardHeight() {
+  const keyboard = useKeyboard();
+  const window = useDimensions().window;
+  const isLarge = window.height > 700;
+
+  return {
+    height: keyboard.keyboardShown
+      ? keyboard.keyboardHeight + window.height * (isLarge ? 0.1 : 0.01)
+      : '90%',
+  };
+}
+
 const SearchHistory = ({ localStore, renderItem }: PropsType) => {
   const theme = ThemedStyles.style;
+  const scrollHeight = useKeyboardHeight();
   const textStyle = [theme.subTitleText, theme.colorSecondaryText, theme.fontM];
   const { user } = useLegacyStores();
-  const keyboard = useKeyboard();
-
   const clearSearchHistory = async () => {
     user.searchBarClearHistory();
     localStore.setHistory([]);
   };
 
-  const scrollHeight = {
-    height: keyboard.keyboardShown ? keyboard.keyboardHeight : '90%',
-  };
-
   return (
-    <ScrollView keyboardShouldPersistTaps="handled" style={scrollHeight}>
+    <ScrollView
+      keyboardShouldPersistTaps="handled"
+      style={[scrollHeight, theme.paddingBottom]}>
       <View style={[styles.row, theme.marginBottom3x]}>
         <Text style={textStyle}>{i18n.t('searchBar.searchHistory')}</Text>
         <Text style={textStyle} onPress={clearSearchHistory}>
