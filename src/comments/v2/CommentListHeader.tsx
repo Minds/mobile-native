@@ -22,9 +22,11 @@ export default observer(function CommentListHeader(props: {
   const theme = ThemedStyles.style;
   const bottomSheet = useBottomSheet();
   useEffect(() => {
-    if (props.store.parent && props.store.parent['comments:count'] === 0) {
-      props.store.setShowInput(true);
-    } else if (props.store.entity['comments:count'] === 0) {
+    if (
+      props.store.focusedUrn &&
+      ((props.store.parent && props.store.parent['comments:count'] === 0) ||
+        props.store.entity['comments:count'] === 0)
+    ) {
       props.store.setShowInput(true);
     }
   }, [props.store]);
