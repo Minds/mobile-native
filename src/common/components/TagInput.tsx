@@ -3,19 +3,9 @@ import React, { Component } from 'react';
 
 import { observer } from 'mobx-react';
 
-import {
-  TextInput,
-  View,
-  Text,
-  StyleSheet,
-  Platform,
-  TouchableOpacity,
-  KeyboardAvoidingView,
-  ScrollView,
-} from 'react-native';
+import { TextInput, View, Text, StyleSheet, ScrollView } from 'react-native';
 
 import { Icon } from 'react-native-elements';
-import { CommonStyle } from '../../styles/Common';
 import i18nService from '../services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 
