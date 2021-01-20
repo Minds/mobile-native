@@ -4,6 +4,7 @@ import React from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { DotIndicator } from 'react-native-reanimated-indicators';
 
 import type AttachmentStore from '../../common/stores/AttachmentStore';
 import MindsVideo from '../../media/v2/mindsVideo/MindsVideo';
@@ -62,6 +63,17 @@ export default observer(function MediaPreview({
   return (
     <View style={[styles.wrapper, aspect]} pointerEvents="box-none">
       {body}
+      {attachment.uploading && (
+        <DotIndicator
+          containerStyle={[
+            theme.centered,
+            theme.positionAbsolute,
+            styles.overlay,
+          ]}
+          color="white"
+          scaleEnabled={true}
+        />
+      )}
       <Icon
         name="close-circle-sharp"
         size={32}
@@ -73,6 +85,10 @@ export default observer(function MediaPreview({
 });
 
 const styles = StyleSheet.create({
+  overlay: {
+    backgroundColor: '#00000090',
+    borderRadius: 15,
+  },
   close: {
     position: 'absolute',
     top: -15,
@@ -93,6 +109,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 2,
     elevation: 16,
+    zIndex: 1000,
   },
   preview: {
     flex: 1,
