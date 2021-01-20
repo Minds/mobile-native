@@ -21,13 +21,7 @@ export default observer(function CommentListHeader(props: {
   const user = sessionService.getUser();
   const theme = ThemedStyles.style;
   const bottomSheet = useBottomSheet();
-  useEffect(() => {
-    if (props.store.parent && props.store.parent['comments:count'] === 0) {
-      props.store.setShowInput(true);
-    } else if (props.store.entity['comments:count'] === 0) {
-      props.store.setShowInput(true);
-    }
-  }, [props.store]);
+
   const title =
     route.params && route.params.title
       ? route.params.title
