@@ -55,6 +55,10 @@ class ApiService {
     // check status
     if (response.status) {
       if (response.status === 401) {
+        let message = `User logout: ${response.url}, STATUS: ${
+          response.status
+        }\n ${response.text()}`;
+        Sentry.captureMessage(message);
         session.logout();
         throw new UserError('Session lost');
       }
