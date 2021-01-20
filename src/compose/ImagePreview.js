@@ -16,7 +16,7 @@ export default observer(function (props) {
   let aspectRatio = Platform.select({
     ios: props.image.width / props.image.height,
     android:
-      props.image.pictureOrientation > 2
+      props.image.pictureOrientation > 2 || !props.image.pictureOrientation
         ? props.image.width / props.image.height
         : props.image.height / props.image.width,
   });
