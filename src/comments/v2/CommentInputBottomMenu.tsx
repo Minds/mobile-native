@@ -18,6 +18,8 @@ type PropsType = {
   beforeSelect: () => void;
 };
 
+const slop = { top: 10, bottom: 10, left: 0, right: 10 };
+
 /**
  * Comments options menu
  */
@@ -97,11 +99,12 @@ export default observer(function CommentInputBottomMenu({
   }, [afterSelected, localStore, store.mature, theme.colorSecondaryText]);
 
   return (
-    <TouchableOpacity onPress={localStore.show}>
+    <TouchableOpacity onPress={localStore.show} hitSlop={slop}>
       <Icon name="more-vert" size={18} style={theme.colorTertiaryText} />
       <BottomButtonOptions
         list={dismissOptions}
         isVisible={localStore.showMenu}
+        onPressClose={localStore.hide}
       />
     </TouchableOpacity>
   );

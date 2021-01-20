@@ -229,7 +229,11 @@ export default observer(function OnboardingScreen() {
             height={8}
           />
         </View>
-        <BottomButtonOptions list={dismissOptions} isVisible={store.showMenu} />
+        <BottomButtonOptions
+          list={dismissOptions}
+          isVisible={store.showMenu}
+          onPressClose={store.hidePicker}
+        />
         {steps.map((item) =>
           item ? (
             <MenuItem

@@ -166,6 +166,7 @@ export default observer(function CommentBottomMenu({
       <BottomButtonOptions
         list={dismissOptions}
         isVisible={localStore.showMenu}
+        onPressClose={localStore.hide}
       />
     </TouchableOpacity>
   );

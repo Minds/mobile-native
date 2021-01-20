@@ -1,7 +1,9 @@
 import React from 'react';
 import { Platform, StyleProp, StyleSheet, TextStyle } from 'react-native';
 import { View } from 'react-native-animatable';
-import { BottomSheet, ListItem } from 'react-native-elements';
+import { ListItem } from 'react-native-elements';
+import Modal from 'react-native-modal';
+import { DARK_THEME } from '../../styles/Colors';
 import ThemedStyles from '../../styles/ThemedStyles';
 
 export type ItemType = {
@@ -13,19 +15,33 @@ export type ItemType = {
 export interface PropsType {
   list: Array<Array<ItemType>>;
   isVisible: boolean;
+  onPressClose?: () => void;
 }
 
 const isIOS = Platform.OS === 'ios';
 /**
  * Bottom options menu
  */
-export default function BottomButtonOptions({ isVisible, list }: PropsType) {
+export default function BottomButtonOptions({
+  isVisible,
+  list,
+  onPressClose,
+}: PropsType) {
   const theme = ThemedStyles.style;
 
   return (
-    <BottomSheet
+    <Modal
+      avoidKeyboard={true}
+      onBackdropPress={onPressClose}
       isVisible={isVisible}
-      modalProps={{ style: theme.borderRadius5 }}>
+      backdropColor={DARK_THEME.secondary_background}
+      backdropOpacity={0.5}
+      useNativeDriver={true}
+      style={[theme.fullWidth, theme.margin0x, theme.justifyEnd]}
+      animationInTiming={100}
+      animationOutTiming={100}
+      animationOut="fadeOut"
+      animationIn="fadeIn">
       <View style={theme.paddingBottom}>
         {list.map((plist, indx) => (
           <View style={theme.paddingBottom2x} key={`${indx}c`}>
@@ -59,7 +75,7 @@ export default function BottomButtonOptions({ isVisible, list }: PropsType) {
           </View>
         ))}
       </View>
-    </BottomSheet>
+    </Modal>
   );
 }
 
