@@ -106,6 +106,7 @@
     "react-native-safe-area-context": "^3.1.4",
     "react-native-safe-area-view": "^1.1.1",
     "react-native-screens": "^2.15.0",
+    "react-native-set-soft-input-mode": "^1.1.0",
     "react-native-share": "^2.0.0",
     "react-native-share-menu": "^5.0.1",
     "react-native-shared-element": "^0.7.0",

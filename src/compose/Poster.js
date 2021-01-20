@@ -172,6 +172,7 @@ export default observer(function (props) {
           />
         )}
       </ScrollView>
+      <PosterOptions ref={optionsRef} store={props.store} />
       {showBottomBar && (
         <KeyboardSpacingView
           style={[theme.backgroundPrimary, styles.bottomBarContainer]}>
@@ -184,7 +185,6 @@ export default observer(function (props) {
           />
         </KeyboardSpacingView>
       )}
-      <PosterOptions ref={optionsRef} store={props.store} />
     </View>
   );
 });
