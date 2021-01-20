@@ -8,10 +8,12 @@ import {
   Text,
   Platform,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+import SoftInputMode from 'react-native-set-soft-input-mode';
+
 import KeyboardSpacingView from '../../common/components/KeyboardSpacingView';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
-import Icon from 'react-native-vector-icons/Ionicons';
 import { observer } from 'mobx-react';
 import type CommentsStore from './CommentsStore';
 import { action, observable } from 'mobx';
@@ -38,6 +40,13 @@ const CommentInput = observer(() => {
   const theme = ThemedStyles.style;
   const ref = React.useRef<TextInput>(null);
   const provider = React.useContext(CommentInputContext);
+
+  React.useEffect(() => {
+    if (Platform.OS === 'android') {
+      SoftInputMode.set(SoftInputMode.ADJUST_RESIZE);
+      return () => SoftInputMode.set(SoftInputMode.ADJUST_PAN);
+    }
+  }, []);
 
   const afterSelected = () => ref.current?.focus();
   const beforeSelect = () => ref.current?.blur();

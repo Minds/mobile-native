@@ -12076,6 +12076,11 @@ react-native-scrollable-mixin@^1.0.1:
   resolved "https://registry.yarnpkg.com/react-native-scrollable-mixin/-/react-native-scrollable-mixin-1.0.1.tgz#34a32167b64248594154fd0d6a8b03f22740548e"
   integrity sha1-NKMhZ7ZCSFlBVP0NaosD8idAVI4=
 
+react-native-set-soft-input-mode@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-set-soft-input-mode/-/react-native-set-soft-input-mode-1.1.0.tgz#0bc0c5265dab5105c631bfc00c0fef186b1935c7"
+  integrity sha512-xB/U7EQPUwFsUtJ78x3DRjmrezMf4oZVpfr6NOLawSWDvh8HxiDfBx8LsvRQmpC/g8k8veVfqVmVTQ8wYPdqqA==
+
 react-native-share-menu@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/react-native-share-menu/-/react-native-share-menu-5.0.1.tgz#50b8e13425286ae253482fa9cebed49a11ae648e"
