@@ -93,7 +93,7 @@ import BillingScreen from '../settings/screens/BillingScreen';
 import RecurringPayments from '../settings/screens/RecurringPayments';
 import ReportedContentScreen from '../report/ReportedContentScreen';
 import AppInfoScreen from '../settings/screens/AppInfoScreen';
-import WalletScreen from '../wallet/v2/WalletScreen';
+import WalletScreen from '../wallet/v3/WalletScreen';
 import ModalTransition from './ModalTransition';
 import AuthTransition from './AuthTransition';
 import VideoBackground from '../common/components/VideoBackground';

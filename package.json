@@ -72,6 +72,7 @@
     "react-native-bottom-sheet": "^1.0.3",
     "react-native-camera": "^3.18.0",
     "react-native-chart-kit": "^5.6.0",
+    "react-native-collapsible": "^1.5.3",
     "react-native-convert-ph-asset": "^1.0.3",
     "react-native-device-info": "^7.3.1",
     "react-native-device-log": "Minds/react-native-device-log#74f06b09c6656aa228a9a3a474c714d82abf509e",
