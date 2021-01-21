@@ -13,7 +13,11 @@
   "activity": {
     "loadEarlier": "CARGAR ANTERIOR",
     "loadLater": "CARGAR SIGUIENTES",
-    "typeComment": "Escribe tu comentario...",
+    "notSafeComment": "Este comentario no es seguro para el trabajo y no se puede acceder en iOS",
+    "explicitComment": "El comentario está marcado como explícito",
+    "typeComment": "Agregar tu comentario",
+    "typeReply": "Añadir tu respuesta",
+    "replyTo": "Responder a @{{user}}",
     "error": "PERDÓN, NO SE PUEDE CARGAR LA ACTIVIDAD",
     "tryAgain": "POR FAVOR INTENTA MAS TARDE",
     "remindBlocked": "Este remind no esta disponible porque bloqueaste a",
@@ -145,7 +149,7 @@
     "cost": "COSTO",
     "howManyViewsDoYouWant": "CUANTAS VISTAS TU QUIERES?",
     "whatIsYourOffer": "CUAL ES TU OFERTA?",
-    "targetDescription": "Buscar el canal que quieres impulsar.",
+    "targetDescription": "Buscar el canal que quieres promover.",
     "youDontHaveBoosts": "No tienes ningún boost",
     "youCantSelectYourself": "No puedes hacer un p2p a ti mismo",
     "tapToChangeChannel": "TOCA PARA CAMBIAR CANAL",
@@ -171,11 +175,11 @@
     "offers": "Ofertas",
     "sidebars": "Barras Laterales",
     "feedsDescription": "Tu contenido va a aparecer en la sección de noticias atravesando el sitio.",
-    "offersDescription": "Tu contenido será compartido a un canal específico a cambio de USD o tokens o recompensas.",
+    "offersDescription": "Su contenido será compartido en un canal específico a cambio de USD o tokens.",
     "sidebarsDescription": "Su contenido se mostrará en las barras laterales de todo el sitio.",
     "tabNewsfeed": "Noticias",
     "tabSidebar": "Barra Lateral",
-    "tabOffers": "Ofertas",
+    "tabOffers": "Oferta",
     "rejectionReasons": {
       "0": "Ilegal",
       "1": "Explícito",
@@ -188,7 +192,12 @@
       "8": "Apelar la decición del Boost",
       "12": "Pago OnChain fallido",
       "13": "Publicación original removida"
-    }
+    },
+    "boostChannel": "Promocionar Canal",
+    "boostPost": "Promocionar Publicación",
+    "boostOffer": "Hacer Oferta",
+    "paymentMethod": "METODO DE PAGO",
+    "targetChannel": "Canal de destino"
   },
   "translate": {
     "from": "traducido desde",
@@ -204,6 +213,7 @@
   "capture": {
     "licenseDescription": "Seleccione su tipo de licencia deseada. Esto puede cambiarse en cualquier momento después de publicar.",
     "pupularLicenses": "Licencias populares",
+    "mediaPortraitError": "El medio seleccionado no es vertical",
     "otherLicenses": "Otras licencias",
     "paywallLabel": "Contribución mensual mínima ({{currency}})",
     "paywallDescription": "Monetizar publicación poniéndola a disposición de tus usuarios que soporten tu canal.",
@@ -213,6 +223,7 @@
     "tagsDescription": "Etiquetar tu publicación hará que tu contenido sea más fácil de descubrir.",
     "couldNotLoad": "La media desde {{domain}} no pudo ser cargada.",
     "maxHashtags": "Lo siento, tu post no puede tener más de {{maxHashtags}} etiquetas.",
+    "duplicateHashtagas": "Tienes algunos tags duplicados",
     "schedule": "Programar post",
     "post": "Post",
     "remind": "Recordar",
@@ -228,10 +239,12 @@
     "text": "Texto",
     "postOptions": "Opciones",
     "retake": "Retake",
-    "allowMinds": "Permite el acceso para poder comenzar a tomar Fotos y Videos.",
+    "allowMinds": "Habilita el acceso para que puedas tomar fotos y grabar vídeos para compartir en Minds",
     "blockedMinds": "Ha bloqueado el acceso a su cámara y micrófono. Por favor, vaya a la configuración de su dispositivo para habilitarlo.",
     "noHashtags": "Lo siento, las publicaciones monetizadas Plus deben tener hashtags.",
-    "noExternalLinks": "Lo sentimos, las publicaciones monetizadas Plus no deben tener enlaces externos."
+    "noExternalLinks": "Lo sentimos, las publicaciones monetizadas Plus no deben tener enlaces externos.",
+    "attach": "Biblioteca de fotos y vídeos",
+    "takePhoto": "Cámara"
   },
   "channel": {
     "editChannel": "Cambia la configuración de tu canal",
@@ -279,7 +292,9 @@
     "blogs": "Blogs",
     "groups": "Grupos",
     "addTags": "Añade etiquetas para personalizar tu feed",
-    "selectTags": "Seleccionar etiquetas"
+    "selectTags": "Seleccionar etiquetas",
+    "posts": "publicaciones",
+    "votes": "votos"
   },
   "groups": {
     "ongoingGathering": "Reunión en curso",
@@ -320,7 +335,7 @@
     "checkCredentials": "Por favor verifica tus credenciales",
     "errorCreatingKeys": "Error creando las llaves de encriptación",
     "messenger": "Mensajero",
-    "noMessages": "Tu no tienes ningún mensaje",
+    "noMessages": "Buscar a alguien para enviar un mensaje",
     "logoutMessage": "Quieres salir del Messenger?",
     "changeKeyMessage": "Cambiar tu contraseña de encriptación causara que tus mensajes previos sean ilegibles",
     "notEncryptedMessage": "Hola @{{user}} al parecer tu no has configurado tu contraseña para el chat encriptado aún. Te recomendamos que tu uses una contraseña diferente a la de tu cuenta para mayor seguridad.",
@@ -416,6 +431,9 @@
     "referral_pending": "Referido Pendiente",
     "referral_complete": "Referido Completado"
   },
+  "plus": {
+    "freeTrialDesciption": "Comience su prueba gratuita durante 7 días"
+  },
   "payments": {
     "confirmDeleteCard": "Quieres borrar esta tarjeta?"
   },
@@ -507,6 +525,7 @@
   "settings": {
     "submit": "Enviar",
     "blockedChannels": "Canales Bloqueados",
+    "noBlockedChannels": "No tienes ningún canal bloqueado",
     "currentPassword": "Contraseña actual",
     "disableChannelConfirm": "Tu cuenta sera desactivada. Estás seguro que deseas proceder?",
     "deleteChannelConfirm": "Tu cuenta y todos tus datos relacionados serán borrados permanentemente. Estás seguro que deseas proceder?",
@@ -531,6 +550,7 @@
     "other": "Otros",
     "referrals": "Referencias",
     "account": "Cuenta",
+    "network": "Red",
     "security": "Seguridad",
     "billing": "Facturación",
     "invalidPassword": "Contraseña incorrecta",
@@ -556,6 +576,9 @@
     "addTier": "Agregar Nivel",
     "noTiers": "No tienes ningún nivel de suscripción",
     "payment": "Pago",
+    "dataSaverDisableOnWifi": "Desactivar en Wi-Fi",
+    "dataSaverDescription": "Cuando el salvador de datos está activado, los vídeos no se cargarán por adelantado para ayudarte a usar menos datos.",
+    "dataSaverDisableOnWiFiDescription": "Cuando está activado, el modo Ahorro de Datos se desactivará automáticamente cuando se detecte una conexión Wi-Fi.",
     "reportedContent": {
       "action": {
         "actionNSFW": "marcado NSFW",
@@ -578,11 +601,15 @@
     },
     "accountOptions": {
       "1": "Dirección de email",
-      "2": "Mostrar idioma",
+      "2": "Idioma",
       "3": "Contraseña",
       "4": "Notificaciones",
       "5": "Contenido NSFW",
-      "6": "Mensajero"
+      "6": "Mensajero",
+      "7": "Videos de reproducción automática"
+    },
+    "networkOptions": {
+      "1": "Ahorrador de datos"
     },
     "securityOptions": {
       "1": "Autenticación en dos pasos (2FA)",
@@ -602,6 +629,12 @@
       "c2": "Borrar Canal",
       "d": "INFO",
       "d1": "App"
+    },
+    "autoplay": {
+      "description": "Controla si los vídeos de tu feed se reproducen automáticamente.",
+      "enable": "Activar reproducción automática de vídeo",
+      "saved": "Cambios guardados",
+      "notPlus": "Esta función está disponible para usuarios Plus."
     }
   },
   "comingSoon": {
@@ -613,6 +646,25 @@
     "tooLong": "La duración del video debe ser menor a {{minutes}} minutos"
   },
   "onboarding": {
+    "startEarning": "Empieza a ganar tokens",
+    "improveExperience": "Mejora tu experiencia",
+    "joinGroup": "Unirse a un grupo",
+    "hidePanel": "Ocultar este panel",
+    "subscribeToChannel": "Suscríbete a un canal",
+    "completeToEarn": "Completa para ganar tokens",
+    "tooltipInitial1": "Para obtener más de Minds",
+    "tooltipInitial2": "por favor, completa estos pasos",
+    "verifyEmailAddress": "Confirma tu dirección de correo electrónico",
+    "selectTags": "Seleccionar etiquetas",
+    "setupChannel": "Configurar canal",
+    "verifyUniqueness": "Verificar unicidad",
+    "setContentPreferences": "Preferencia de contenido",
+    "verifyEmailDescription1": "Se ha enviado un correo electrónico de verificación a {{email}} con un enlace de verificación.",
+    "verifyEmailDescription2": "Por favor, comprueba tu carpeta de spam si no la encuentras. De lo contrario, puedes volver a enviarlo.",
+    "resendEmail": "Reenviar el correo de verificación",
+    "couldntLoadStatus": "No se pudo cargar su estado",
+    "hashtagDescription": "Selecciona al menos tres tags que te interesen. Esto te permitirá descubrir contenido relevante.",
+    "selectThreeTags": "Selecciona al menos tres tags",
     "chooseAvatar": "Elige un avatar",
     "earnTokens": "Gana tokens por tu actividad",
     "weDontStorePhone": "No almacenamos tu número de teléfono en nuestros servers.",
@@ -640,7 +692,15 @@
     "numberConfirmed": "Tu número ha sido validado",
     "phoneNumberTooltip": "Tu número de teléfono móvil puede ser usado para seguridad adicional de tu cuenta, identificación única y para ayudar a tus amigos a encontrarte. Estos datos son privados y cifrados.",
     "dateofBirthTooltip": "Por favor, introduzca su fecha de nacimiento para confirmar su edad y ayudarnos a mejorar nuestras recomendaciones.",
-    "locationTooltip": "Por favor, introduce tu ciudad para ayudarnos a conectarte con los canales de tu área. No rastreamos tu ubicación exacta."
+    "locationTooltip": "Por favor, introduce tu ciudad para ayudarnos a conectarte con los canales de tu área. No rastreamos tu ubicación exacta.",
+    "send": "Enviar el código de verificación",
+    "resend": "Reenviar el código",
+    "sent": "Código de verificación enviado",
+    "connectWallet": "Conectar a cartera",
+    "connectBank": "Conectar con el Banco",
+    "buyTokens": "Comprar Tokens",
+    "onboardingCompleted": "Ahora puedes ganar tokens",
+    "improvedExperience": "¡Tu feed debería estar más animada!"
   },
   "membership": {
     "noTokens": "No acepta tokens",
@@ -683,7 +743,7 @@
       "bankInfoDescription": "Añade los detalles de tu cuenta bancaria donde se depositan las recompensas mensuales en USD",
       "add": "Añade tus datos bancarios",
       "leave": "Dejar el Programa de Monetización",
-      "leaveDescription": "Por razones de seguridad, no puedes volver a unirte al programa de monetización",
+      "leaveDescription": "Por razones de seguridad, no podrá volver a unirse al programa de monetización",
       "leaveButton": "Dejar el Programa de Monetización",
       "confirmLeave": "¿Estás seguro? No podrás volver a unirte.",
       "sure": "Si, estoy seguro",
@@ -842,6 +902,7 @@
     "6": "Otros",
     "safe": "Seguro",
     "notSafe": "No seguro",
+    "notSafeChannel": "Este canal no es seguro para el trabajo y no se puede acceder en iOS",
     "categories": "Categorías NSFW",
     "description1": "Si esta publicación contiene contenido que es NSFW (no seguro para el trabajo), es su responsabilidad etiquetarla en consecuencia.",
     "description2": "Consulte las directrices para obtener más información.",
@@ -917,8 +978,8 @@
   "add": "Añadir",
   "downloading": "Descargando",
   "confirm18": "Soy mayor de 18 años de edad",
-  "postCantBeShown": "No puede mostrarse en la app instalada desde el store",
-  "readMore": "Leer más",
+  "postCantBeShown": "No se puede mostrar en aplicaciones instaladas en la tienda",
+  "readMore": "Mostrar Más",
   "showLess": "Mostrar menos",
   "featureUnavailablePlatform": "Esta funcionalidad no está actualmente disponible en tu plataforma",
   "continue": "Continuar",
@@ -927,6 +988,7 @@
   "save": "Guardar",
   "edit": "Editar",
   "goback": "Regresar",
+  "quote": "Cita",
   "copy": "Copiar",
   "yes": "Si",
   "no": "Nu",
@@ -959,7 +1021,7 @@
   "errorMessage": "Ups! Parece que ha ocurrido un error.",
   "error": "Error",
   "reply": "Responder",
-  "setExplicit": "Explícito",
+  "setExplicit": "Marcar como explícito",
   "report": "Reportar",
   "removeExplicit": "Desmarcar Explícito",
   "members": "Miembros",
@@ -1016,6 +1078,10 @@
   "rememberTomorrow": "Recuerdame más tarde",
   "enableComments": "Activar comentarios",
   "disableComments": "Desactivar comentarios",
+  "viewRepliesComments": {
+    "one": "Ver 1 respuesta",
+    "other": "Ver {{count}} respuestas"
+  },
   "noInternet": "Sin conexión a internet",
   "cantReachServer": "No puedo conectarme al servidor",
   "showingStored": "Mostrando datos guardados",
@@ -1031,14 +1097,23 @@
   "title": "Título",
   "filter": "Filtro",
   "captcha": "Introduzca los caracteres de arriba",
+  "startFreeTrial": "Iniciar prueba gratuita",
   "visibility": "Visibilidad",
   "about": "Acerca de",
+  "takePhoto": "Tomar una foto",
+  "uploadPhoto": "Subir una foto",
+  "uploading": "Subiendo, por favor espera",
+  "verify": "Verificar",
+  "other": "Otros",
   "purchase": "Comprar",
   "verification": "Verificación",
   "uploadFailed": "Error al subir",
   "imageViewer": "Ver Imagen",
-  "verify": "Verificar",
-  "other": "Otros",
+  "remindedBy": "Recordado por",
+  "postReminded": "La publicación ha sido recordada",
+  "remindRemoved": "Republicación eliminada",
+  "deletedRemind": "Este contenido recordado no está disponible. Puede que haya sido eliminado o que no tenga permiso para verlo",
+  "undoRemind": "Deshacer recordatorio",
   "permaweb": {
     "title": "Permaweb",
     "description": "Publicando en permaweb",
@@ -1047,5 +1122,6 @@
     "cannotMonetize": "No se pueden hacer publicaciones monetizadas en permaweb",
     "viewOnPermaweb": "Permaweb"
   },
-  "help": "Ayuda"
+  "help": "Ayuda",
+  "unblock": "Desbloquear"
 }
