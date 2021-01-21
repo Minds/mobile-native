@@ -25,6 +25,7 @@ export default class TabIcon extends Component<PropsType> {
     let icon;
     switch (name) {
       case 'plus':
+      case 'user':
         return (
           <EvilIcons
             name={name}

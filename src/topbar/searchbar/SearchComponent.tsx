@@ -18,6 +18,8 @@ import SearchResult from './SearchResultComponent';
 import Modal from 'react-native-modal';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { useLegacyStores, useStores } from '../../common/hooks/use-stores';
+import { IS_FROM_STORE } from '../../config/Config';
+import DisabledStoreFeature from '../../common/components/DisabledStoreFeature';
 
 interface Props {
   navigation: any;
@@ -123,10 +125,16 @@ const SearchComponent = observer((props: Props) => {
                   ]}
                 />
               </View>
-              <SearchResult
-                navigation={props.navigation}
-                localStore={localStore}
-              />
+              {IS_FROM_STORE ? (
+                <DisabledStoreFeature
+                  style={[styles.height, theme.backgroundPrimary]}
+                />
+              ) : (
+                <SearchResult
+                  navigation={props.navigation}
+                  localStore={localStore}
+                />
+              )}
             </View>
           </SafeAreaView>
         </Modal>
@@ -138,6 +146,9 @@ const SearchComponent = observer((props: Props) => {
 export default SearchComponent;
 
 const styles = StyleSheet.create({
+  height: {
+    height: 200,
+  },
   button: {
     paddingHorizontal: 10,
   },
