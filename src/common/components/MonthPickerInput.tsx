@@ -9,7 +9,7 @@ import moment from 'moment-timezone';
 type PropsType = {
   minimumDate: Date;
   maximumDate: Date;
-  containerStyle: any;
+  containerStyle?: any;
 };
 
 const MonthPickerInput = observer((props: PropsType) => {
@@ -52,8 +52,8 @@ const MonthPickerInput = observer((props: PropsType) => {
         <MonthPicker
           onChange={localStore.onValueChange}
           value={localStore.date}
-          minimumDate={new Date()}
-          maximumDate={new Date(2025, 5)}
+          minimumDate={props.minimumDate}
+          maximumDate={props.maximumDate}
         />
       )}
     </View>
