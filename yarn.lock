@@ -1279,10 +1279,10 @@
     pouchdb-collections "^1.0.1"
     tiny-queue "^0.2.1"
 
-"@gorhom/bottom-sheet@2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@gorhom/bottom-sheet/-/bottom-sheet-2.0.1.tgz#5db4444a7725254a7d5cac48cd021ba484958732"
-  integrity sha512-7gdo9P4jgGFnw7m0tP3NpZCQD6mylFG833s6zwRvtq8jFUUOL9pbT7hdkbr9jBNUvSNNsvWAVplp4Cwnipj1Sw==
+"@gorhom/bottom-sheet@2.0.4":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@gorhom/bottom-sheet/-/bottom-sheet-2.0.4.tgz#c1dd9a29924b86d574531af8075c742819a5fa84"
+  integrity sha512-s06szJw7G6+cmt2RV7V24KHGUL4NnnQ8RkvTRcUrgoBxwE9qw/kPctaK23T1pzb10o1NZQ6QrXeqHbduNLwTdQ==
   dependencies:
     "@gorhom/portal" "^0.1.4"
     invariant "^2.2.4"
