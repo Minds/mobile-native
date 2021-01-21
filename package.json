@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@crowdlinker/react-native-pager": "^0.2.3",
-    "@gorhom/bottom-sheet": "2.0.1",
+    "@gorhom/bottom-sheet": "2.0.4",
     "@react-native-community/art": "^1.1.2",
     "@react-native-community/async-storage": "^1.8.0",
     "@react-native-community/cameraroll": "1.4.0",
