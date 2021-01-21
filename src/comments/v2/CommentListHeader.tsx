@@ -13,6 +13,7 @@ import i18n from '../../common/services/i18n.service';
 import { useRoute } from '@react-navigation/native';
 import GroupModel from '../../groups/GroupModel';
 import { useBottomSheet } from '@gorhom/bottom-sheet';
+import { GOOGLE_PLAY_STORE } from '../../config/Config';
 
 export default observer(function CommentListHeader(props: {
   store: CommentsStore;
@@ -92,21 +93,23 @@ export default observer(function CommentListHeader(props: {
           {closeButton}
         </View>
       )}
-      <TouchableOpacity
-        onPress={() => props.store.setShowInput(true)}
-        style={[
-          theme.rowJustifyStart,
-          theme.borderTopHair,
-          theme.borderPrimary,
-          theme.paddingTop2x,
-          theme.paddingBottom2x,
-          theme.alignCenter,
-        ]}>
-        <FastImage source={user.getAvatarSource()} style={styles.avatar} />
-        <Text style={[theme.fontL, theme.colorSecondaryText]}>
-          {i18n.t(props.store.parent ? 'activity.typeReply' : placeHolder)}
-        </Text>
-      </TouchableOpacity>
+      {!GOOGLE_PLAY_STORE && (
+        <TouchableOpacity
+          onPress={() => props.store.setShowInput(true)}
+          style={[
+            theme.rowJustifyStart,
+            theme.borderTopHair,
+            theme.borderPrimary,
+            theme.paddingTop2x,
+            theme.paddingBottom2x,
+            theme.alignCenter,
+          ]}>
+          <FastImage source={user.getAvatarSource()} style={styles.avatar} />
+          <Text style={[theme.fontL, theme.colorSecondaryText]}>
+            {i18n.t(props.store.parent ? 'activity.typeReply' : placeHolder)}
+          </Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 });
