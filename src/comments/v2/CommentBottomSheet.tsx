@@ -22,7 +22,7 @@ import CommentInput from './CommentInput';
 import { observer, useLocalStore } from 'mobx-react';
 
 const BottomSheetLocalStore = () => ({
-  isOpen: 1,
+  isOpen: 0,
   setOpen(isOpen: number) {
     if (this.isOpen !== isOpen) {
       this.isOpen = isOpen;
@@ -102,7 +102,6 @@ const ScreenReplyComment = () => {
     s.setParent(route.params.comment);
     return s;
   }, [route.params.comment, route.params.entity]);
-
   React.useEffect(() => {
     if (route.params.open) {
       store.setShowInput(true);
@@ -117,6 +116,21 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
   const { current: focusedUrn } = React.useRef(
     props.commentsStore.getFocuedUrn(),
   );
+  const route = useRoute<any>();
+
+  React.useEffect(() => {
+    if (
+      (props.commentsStore.parent &&
+        props.commentsStore.parent['comments:count'] === 0) ||
+      (route.params.open && props.commentsStore.entity['comments:count'] === 0)
+    ) {
+      setTimeout(() => {
+        if (props?.commentsStore) {
+          props.commentsStore.setShowInput(true);
+        }
+      }, 500);
+    }
+  }, []);
 
   const screenOptions = React.useMemo<StackNavigationOptions>(
     () => ({

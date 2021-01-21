@@ -55,10 +55,9 @@ export default observer(function OffsetList<T>(props: PropsType) {
     },
   );
 
-  const onFetchMore = useCallback(
-    () => result && result['load-next'] && setOffset(result['load-next']),
-    [result],
-  );
+  const onFetchMore = useCallback(() => {
+    !loading && result && result['load-next'] && setOffset(result['load-next']);
+  }, [result]);
 
   const keyExtractor = (item, index: any) => `${item.urn}${index}`;
 

@@ -67,11 +67,13 @@ const AboutTab = observer(({ store, navigation }: PropsType) => {
         <Text>{store.channel?.dob}</Text>
       </LabeledComponent>
       <LabeledComponent label={i18n.t('channel.badges')}>
-        <ChannelBadges
-          channel={store.channel}
-          size={16}
-          iconStyle={theme.colorPrimaryText}
-        />
+        <View style={theme.rowJustifyStart}>
+          <ChannelBadges
+            channel={store.channel}
+            size={16}
+            iconStyle={theme.colorPrimaryText}
+          />
+        </View>
       </LabeledComponent>
       <LabeledComponent
         label={i18n.t('discovery.groups')}

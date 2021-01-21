@@ -8,17 +8,19 @@ import {
   Text,
   Platform,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+import SoftInputMode from 'react-native-set-soft-input-mode';
+
 import KeyboardSpacingView from '../../common/components/KeyboardSpacingView';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
-import Icon from 'react-native-vector-icons/Ionicons';
-import IconMC from 'react-native-vector-icons/MaterialIcons';
 import { observer } from 'mobx-react';
 import type CommentsStore from './CommentsStore';
 import { action, observable } from 'mobx';
 import MediaPreview from './MediaPreview';
 import MetaPreview from '../../compose/MetaPreview';
 import GroupModel from '../../groups/GroupModel';
+import CommentInputBottomMenu from './CommentInputBottomMenu';
 
 const { height } = Dimensions.get('window');
 
@@ -38,6 +40,16 @@ const CommentInput = observer(() => {
   const theme = ThemedStyles.style;
   const ref = React.useRef<TextInput>(null);
   const provider = React.useContext(CommentInputContext);
+
+  React.useEffect(() => {
+    if (Platform.OS === 'android') {
+      SoftInputMode.set(SoftInputMode.ADJUST_RESIZE);
+      return () => SoftInputMode.set(SoftInputMode.ADJUST_PAN);
+    }
+  }, []);
+
+  const afterSelected = () => setTimeout(() => ref.current?.focus(), 400);
+  const beforeSelect = () => ref.current?.blur();
 
   if (!provider.store || !provider.store.showInput) {
     return null;
@@ -118,10 +130,15 @@ const CommentInput = observer(() => {
                 styles.input,
               ]}
             />
-            <View style={theme.rowJustifyStart}>
+            <View
+              style={[
+                theme.rowJustifyStart,
+                styles.sendIconCont,
+                theme.alignCenter,
+              ]}>
               <TouchableOpacity
                 onPress={provider.store.post}
-                style={styles.sendIconCont}
+                style={theme.paddingRight2x}
                 testID="PostCommentButton">
                 <Icon
                   name="md-send"
@@ -130,18 +147,12 @@ const CommentInput = observer(() => {
                 />
               </TouchableOpacity>
               {!provider.store.edit && (
-                <TouchableOpacity
-                  onPress={() => {
-                    provider.store?.gallery(() => ref.current?.focus());
-                  }}
-                  style={styles.sendIconCont}
-                  testID="PostCommentButton">
-                  <IconMC
-                    name="more-vert"
-                    size={19}
-                    style={[theme.colorSecondaryText, theme.paddingLeft2x]}
-                  />
-                </TouchableOpacity>
+                <CommentInputBottomMenu
+                  store={provider.store}
+                  containerStyle={styles.sendIconCont}
+                  afterSelected={afterSelected}
+                  beforeSelect={beforeSelect}
+                />
               )}
             </View>
           </View>

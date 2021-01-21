@@ -50,11 +50,13 @@ const CommentsAction = observer((props: PropsType) => {
       props.navigation.push('BlogView', {
         blog: props.entity,
         scrollToBottom: true,
+        open: true,
       });
     } else {
       props.navigation.push('Activity', {
         entity: props.entity,
         scrollToBottom: true,
+        open: true,
       });
     }
   }, [props, route]);

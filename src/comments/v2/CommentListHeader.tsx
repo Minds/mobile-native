@@ -21,6 +21,7 @@ export default observer(function CommentListHeader(props: {
   const user = sessionService.getUser();
   const theme = ThemedStyles.style;
   const bottomSheet = useBottomSheet();
+
   const title =
     route.params && route.params.title
       ? route.params.title
@@ -48,7 +49,7 @@ export default observer(function CommentListHeader(props: {
       ]}>
       {props.store.parent ? (
         <View>
-          <View style={theme.rowJustifySpaceBetween}>
+          <View style={[theme.rowJustifySpaceBetween, theme.alignCenter]}>
             <TouchableOpacity
               onPress={NavigationService.goBack}
               style={theme.paddingHorizontal2x}>
@@ -70,17 +71,18 @@ export default observer(function CommentListHeader(props: {
               comment={props.store.parent}
               store={props.store}
               hideReply
+              isHeader
             />
           </View>
         </View>
       ) : (
-        <View style={theme.rowJustifySpaceBetween}>
-          <View
-            style={[
-              theme.rowJustifyStart,
-              theme.marginBottom3x,
-              theme.alignEnd,
-            ]}>
+        <View
+          style={[
+            theme.rowJustifySpaceBetween,
+            theme.marginBottom3x,
+            theme.alignCenter,
+          ]}>
+          <View style={[theme.rowJustifyStart, theme.alignCenter]}>
             <Text style={[theme.fontXL, ...titleStyles]}>{title}</Text>
             <Text
               style={[theme.fontLM, theme.colorSecondaryText, ...titleStyles]}>
@@ -117,7 +119,6 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     paddingRight: 30,
-    paddingTop: 2,
   },
   avatar: {
     height: 37,

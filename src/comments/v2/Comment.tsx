@@ -24,6 +24,7 @@ type PropsType = {
   comment: CommentModel;
   store: CommentsStore;
   hideReply?: boolean;
+  isHeader?: boolean;
 };
 
 /**
@@ -43,18 +44,26 @@ export default observer(function Comment(props: PropsType) {
     props.comment.parent_guid_l2 === '0' &&
     !props.hideReply;
 
-  const backgroundColor = ThemedStyles.getColor('primary_background');
+  const backgroundColor = ThemedStyles.getColor(
+    props.isHeader ? 'secondary_background' : 'primary_background',
+  );
   const startColor = (ThemedStyles.theme ? '#242A30' : '#F5F5F5') + '00';
   const endColor = backgroundColor + 'FF';
 
   const renderRevealedFooter = React.useCallback(
     (handlePress) => {
       return (
-        <Text
-          style={[theme.fontL, theme.bold, theme.marginTop3x, theme.textCenter]}
-          onPress={handlePress}>
-          {i18n.t('showLess')}
-        </Text>
+        <TouchableOpacity onPress={handlePress}>
+          <Text
+            style={[
+              theme.fontL,
+              theme.bold,
+              theme.marginTop3x,
+              theme.textCenter,
+            ]}>
+            {i18n.t('showLess')}
+          </Text>
+        </TouchableOpacity>
       );
     },
     [theme],
@@ -75,8 +84,7 @@ export default observer(function Comment(props: PropsType) {
               theme.bold,
               theme.textCenter,
               theme.marginTop2x,
-            ]}
-            onPress={handlePress}>
+            ]}>
             {i18n.t('readMore')}
           </Text>
         </TouchableOpacity>
@@ -149,11 +157,13 @@ export default observer(function Comment(props: PropsType) {
               containerStyle={theme.rowJustifyStart}
               entity={props.comment}
               size={16}
+              touchableComponent={TouchableOpacity}
             />
             <ThumbDownAction
               containerStyle={theme.rowJustifyStart}
               entity={props.comment}
               size={16}
+              touchableComponent={TouchableOpacity}
             />
             {canReply && <ReplyAction size={16} onPressReply={reply} />}
             <View style={theme.flexContainer} />
