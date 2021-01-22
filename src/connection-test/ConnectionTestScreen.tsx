@@ -168,7 +168,6 @@ const createStore = (): Store => ({
     }
   },
   resetConnection() {
-    this.provider?.close();
     this.setConnected(false);
     this.setProvider(null);
     this.setChainId(null);
