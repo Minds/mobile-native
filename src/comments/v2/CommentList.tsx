@@ -10,6 +10,8 @@ import CommentListHeader from './CommentListHeader';
 import LoadMore from './LoadMore';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { CommentInputContext } from './CommentInput';
+import { GOOGLE_PLAY_STORE } from '../../config/Config';
+import DisabledStoreFeature from '../../common/components/DisabledStoreFeature';
 
 // types
 type PropsType = {
@@ -50,10 +52,12 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
         // open focused if necessary
         const focused = props.store.comments.find((c) => c.expanded);
         if (focused) {
-          navigation.push('ReplyComment', {
-            comment: focused,
-            entity: props.store.entity,
-          });
+          if (!GOOGLE_PLAY_STORE) {
+            navigation.push('ReplyComment', {
+              comment: focused,
+              entity: props.store.entity,
+            });
+          }
         } else {
           const index = props.store.comments.findIndex((c) => c.focused);
           if (index && index > 0) {
@@ -93,16 +97,29 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
   return (
     <View style={[theme.flexContainer, theme.backgroundPrimary]}>
       <CommentListHeader store={props.store} />
-      <BottomSheetFlatList
-        ref={ref}
-        data={props.store.comments.slice()}
-        ListHeaderComponent={Header}
-        ListFooterComponent={Footer}
-        keyExtractor={keyExtractor}
-        renderItem={renderItem}
-        style={[theme.flexContainer, theme.backgroundPrimary]}
-        contentContainerStyle={[theme.backgroundPrimary, theme.paddingBottom3x]}
-      />
+      {GOOGLE_PLAY_STORE ? (
+        <DisabledStoreFeature
+          style={[
+            theme.backgroundPrimary,
+            theme.flexContainer,
+            theme.padding4x,
+          ]}
+        />
+      ) : (
+        <BottomSheetFlatList
+          ref={ref}
+          data={props.store.comments.slice()}
+          ListHeaderComponent={Header}
+          ListFooterComponent={Footer}
+          keyExtractor={keyExtractor}
+          renderItem={renderItem}
+          style={[theme.flexContainer, theme.backgroundPrimary]}
+          contentContainerStyle={[
+            theme.backgroundPrimary,
+            theme.paddingBottom3x,
+          ]}
+        />
+      )}
     </View>
   );
 };

@@ -20,6 +20,7 @@ import {
 import { useRoute } from '@react-navigation/native';
 import CommentInput from './CommentInput';
 import { observer, useLocalStore } from 'mobx-react';
+import { GOOGLE_PLAY_STORE } from '../../config/Config';
 
 const BottomSheetLocalStore = () => ({
   isOpen: 0,
@@ -120,9 +121,11 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
 
   React.useEffect(() => {
     if (
-      (props.commentsStore.parent &&
+      !GOOGLE_PLAY_STORE &&
+      ((props.commentsStore.parent &&
         props.commentsStore.parent['comments:count'] === 0) ||
-      (route.params.open && props.commentsStore.entity['comments:count'] === 0)
+        (route.params.open &&
+          props.commentsStore.entity['comments:count'] === 0))
     ) {
       setTimeout(() => {
         if (props?.commentsStore) {

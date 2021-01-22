@@ -323,6 +323,7 @@ class ApiService {
       xhr.setRequestHeader('Authorization', `Bearer ${session.token}`);
       xhr.setRequestHeader('Accept', 'application/json');
       xhr.setRequestHeader('Content-Type', 'multipart/form-data;');
+      xhr.setRequestHeader('App-Version', Version.VERSION);
       xhr.onload = () => {
         if (xhr.status === 200 || xhr.status === 403) {
           let response: ApiResponse;
