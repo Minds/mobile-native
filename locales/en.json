@@ -725,6 +725,8 @@
     "walletActions": "WALLET ACTIONS",
     "walletBalance": "Wallet balance",
     "transactionsEmpty": "Your transaction list is empty",
+    "unpaid": "Unpaid",
+    "total": "Total",
     "withdraw": {
       "errorOnlyOnceDay": "You may only withdraw once a day",
       "errorWithdrawing": "Error withdrawing tokens",

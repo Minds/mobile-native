@@ -16,7 +16,10 @@ import {
 import UsdSettings from '../../v2/address/UsdSettings';
 import i18n from '../../../common/services/i18n.service';
 import TransactionsListCash from '../../v2/TransactionList/TransactionsListCash';
-import UsdEarnings from '../../v2/earnings/UsdEarnings';
+import UsdEarnings from './UsdEarnings';
+import Button from '../../../common/components/Button';
+import PaidButton from './PaidButton';
+import ConnectBankButton from './ConnectBankButton';
 
 type PropsType = {
   walletStore: WalletStoreType;
@@ -87,7 +90,16 @@ const UsdTab = observer(
     }
 
     const mainBody = (
-      <View style={theme.paddingTop4x}>
+      <View style={theme.paddingTop5x}>
+        <View
+          style={[
+            theme.rowJustifyStart,
+            theme.paddingLeft2x,
+            theme.marginBottom5x,
+          ]}>
+          <PaidButton containerStyle={theme.marginRight2x} />
+          <ConnectBankButton />
+        </View>
         <TopBarButtonTabBar
           tabs={options}
           current={store.option}

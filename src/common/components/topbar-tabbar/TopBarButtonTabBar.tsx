@@ -25,16 +25,37 @@ function TopBarButtonTabBar<T>(props: PropsType<T>) {
     <View style={[theme.rowJustifyStart, theme.paddingLeft]}>
       {props.tabs.map((tab, i) => (
         <Button
+          borderless
           onPress={() => props.onChange(tab.id)}
           key={i}
           text={tab.title}
-          containerStyle={theme.marginHorizontal}
-          active={tab.id === props.current}
-          xSmall
+          containerStyle={[
+            styles.buttonContainer,
+            tab.id === props.current
+              ? theme.backgroundLink
+              : theme.backgroundTransparent,
+          ]}
+          textStyle={[
+            styles.text,
+            tab.id !== props.current ? theme.colorSecondaryText : {},
+          ]}
         />
       ))}
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  buttonContainer: {
+    paddingVertical: 5,
+    paddingHorizontal: 15,
+    borderRadius: 15,
+    marginHorizontal: 5,
+  },
+  text: {
+    color: '#FFFFFF',
+    fontSize: 15,
+  },
+});
 
 export default TopBarButtonTabBar;
