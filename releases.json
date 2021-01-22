@@ -1,6 +1,30 @@
 {
   "versions": [
     {
+      "version": "4.8.0",
+      "href": "https://cdn-assets.minds.com/android/Minds-stable-4-8-0.apk",
+      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.8.0",
+      "changelog": [
+        "Comments and boost screen redesign",
+        "Bug fixing"
+      ],
+      "unstable": false,
+      "hashes": [
+        {
+          "type": "md5",
+          "value": "ce6b2b023ae4e74efb48f007f6277b4b"
+        },
+        {
+          "type": "sha256",
+          "value": "baf15bbfc0d8218a5d6bbe0af3df1740f8fb59ef9b4753ca1ff7a3278c00401d"
+        },
+        {
+          "type": "sha512",
+          "value": "3f2bfad2e387d4ba0683273324d7ade53900876d5ee1b77d5a2b33f642ae89371b7d1d0c9c84b85b5bfcf9184eb1c900b6b95b6a5bf0d467d23249009ed0e779"
+        }
+      ]
+    },
+    {
       "version": "4.7.1",
       "href": "https://cdn-assets.minds.com/android/Minds-stable-4-7-1.apk",
       "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.7.1",
