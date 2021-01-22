@@ -24,6 +24,7 @@ class EmailConfirmation extends Component<Props> {
   send = async () => {
     if (await emailConfirmationService.send()) {
       Alert.alert(i18n.t('emailConfirm.sent'));
+      this.dismiss();
     } else {
       Alert.alert(i18n.t('pleaseTryAgain'));
     }

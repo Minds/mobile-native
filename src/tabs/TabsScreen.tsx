@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Dimensions,
   PlatformIOSStatic,
+  Text,
 } from 'react-native';
 
 import NewsfeedScreen from '../newsfeed/NewsfeedScreen';
@@ -25,11 +26,15 @@ import Topbar from '../topbar/Topbar';
 import { InternalStack } from '../navigation/NavigationStack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import TopShadow from '../common/components/TopShadow';
+import { IS_FROM_STORE } from '../config/Config';
+import i18n from '../common/services/i18n.service';
+import sessionService from '../common/services/session.service';
 
 const isIOS = Platform.OS === 'ios';
 
 export type TabParamList = {
   Newsfeed: {};
+  User: {};
   Discovery: {};
   Messenger: {};
   Notifications: {};
@@ -50,6 +55,19 @@ const shadowOpt = {
 const isPad = (Platform as PlatformIOSStatic).isPad;
 
 const Tab = createBottomTabNavigator<TabParamList>();
+
+const Discovery = IS_FROM_STORE
+  ? () => {
+      const theme = ThemedStyles.style;
+      return (
+        <View style={[theme.flexContainer, theme.centered, theme.padding4x]}>
+          <Text style={[theme.fontXL, theme.textCenter]}>
+            {i18n.t('postCantBeShown')}
+          </Text>
+        </View>
+      );
+    }
+  : DiscoveryV2Screen;
 
 const TabBar = ({ state, descriptors, navigation }) => {
   const focusedOptions = descriptors[state.routes[state.index].key].options;
@@ -134,10 +152,47 @@ const Tabs = observer(function ({ navigation }) {
     () => navigation.push('Capture', { mode: 'video', start: true }),
     [navigation],
   );
+  const navToChannel = useCallback(
+    () => navigation.push('Channel', { entity: sessionService.getUser() }),
+    [navigation],
+  );
 
   if (gatheringService.inGatheringScreen) {
     return null;
   }
+
+  const messenger = (
+    <Tab.Screen
+      name="Messenger"
+      component={MessengerScreen}
+      options={{ tabBarTestID: 'Messenger tab button' }}
+    />
+  );
+
+  const discovery = (
+    <Tab.Screen
+      name="Discovery"
+      component={Discovery}
+      options={{ tabBarTestID: 'Discovery tab button' }}
+    />
+  );
+
+  const lastTab = IS_FROM_STORE ? (
+    <Tab.Screen
+      name="User"
+      component={() => <View />}
+      options={{
+        tabBarTestID: 'CaptureTabButton',
+        tabBarButton: (props) => (
+          <TouchableOpacity {...props} onPress={navToChannel} />
+        ),
+      }}
+    />
+  ) : (
+    messenger
+  );
+
+  const secondTab = IS_FROM_STORE ? messenger : discovery;
 
   return (
     <View style={theme.flexContainer}>
@@ -159,6 +214,10 @@ const Tabs = observer(function ({ navigation }) {
               case 'Newsfeed':
                 iconName = 'home';
                 iconsize = 28;
+                break;
+              case 'User':
+                iconName = 'user';
+                iconsize = 42;
                 break;
               case 'Discovery':
                 iconName = 'hashtag';
@@ -183,11 +242,7 @@ const Tabs = observer(function ({ navigation }) {
           component={NewsfeedScreen}
           options={{ tabBarTestID: 'Menu tab button' }}
         />
-        <Tab.Screen
-          name="Discovery"
-          component={DiscoveryV2Screen}
-          options={{ tabBarTestID: 'Discovery tab button' }}
-        />
+        {secondTab}
         <Tab.Screen
           name="CaptureTab"
           component={InternalStack}
@@ -207,11 +262,7 @@ const Tabs = observer(function ({ navigation }) {
           component={NotificationsScreen}
           options={{ tabBarTestID: 'Notifications tab button' }}
         />
-        <Tab.Screen
-          name="Messenger"
-          component={MessengerScreen}
-          options={{ tabBarTestID: 'Messenger tab button' }}
-        />
+        {lastTab}
       </Tab.Navigator>
     </View>
   );
