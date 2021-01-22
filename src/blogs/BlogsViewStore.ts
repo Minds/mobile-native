@@ -40,7 +40,7 @@ class BlogsViewStore {
   @action
   async setBlog(blog) {
     const instance = BlogModel.checkOrCreate(blog);
-    this.comments = new CommentsStore(blog);
+    this.comments = new CommentsStore(instance);
 
     // if the blog is paywalled we try to unlock it
     if (instance.paywall) {
