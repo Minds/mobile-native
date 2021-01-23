@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import {
   WalletScreenNavigationProp,
   WalletScreenRouteProp,
@@ -11,8 +11,8 @@ import AccordionSet, {
   AccordionDataType,
   RenderFunction,
 } from '../../../common/components/AccordionSet';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { observer } from 'mobx-react';
+import AccordionHeader from './AccordionHeader';
 
 type PropsType = {
   navigation: WalletScreenNavigationProp;
@@ -20,24 +20,9 @@ type PropsType = {
   route: WalletScreenRouteProp;
 };
 
-const HeaderComponent: RenderFunction = (
-  content: AccordionDataType,
-  index: number,
-  isActive: boolean,
-) => {
-  const theme = ThemedStyles.style;
-  return (
-    <View style={theme.rowJustifySpaceBetween}>
-      <Text>{content.title}</Text>
-      <Text>{content.subtitle}</Text>
-      <Icon
-        name={`chevron-${isActive ? 'up' : 'down'}`}
-        size={14}
-        color={ThemedStyles.getColor('secondary_text')}
-      />
-    </View>
-  );
-};
+const renderHeader = (content, index, isActive) => (
+  <AccordionHeader content={content} isActive={isActive} />
+);
 
 const ContentComponent: RenderFunction = (content: AccordionDataType) =>
   content.children;
@@ -54,6 +39,7 @@ const UsdEarnings = observer(({ walletStore, navigation }: PropsType) => {
           <Text>minds pro</Text>
         </View>
       ),
+      tooltip: 'tooltip aksjdgh asldkasljkd gasdlkjgahs dlkjagsd lkasjgd alksjdgasd',
     },
     {
       title: 'Minds+',
@@ -71,7 +57,7 @@ const UsdEarnings = observer(({ walletStore, navigation }: PropsType) => {
       contentContainerStyle={[theme.paddingTop4x, theme.paddingHorizontal3x]}>
       <AccordionSet
         data={accordionData}
-        headerComponent={HeaderComponent}
+        headerComponent={renderHeader}
         contentComponent={ContentComponent}
       />
     </ScrollView>

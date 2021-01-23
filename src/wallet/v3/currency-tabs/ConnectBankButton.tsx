@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const ConnectBankButton = () => {
   const theme = ThemedStyles.style;
-  const isConnected = false;
+  const isConnected = true;
   const buttonChildren = isConnected ? (
     <Text style={[theme.colorSecondaryText, theme.fontL]}>***6155</Text>
   ) : (

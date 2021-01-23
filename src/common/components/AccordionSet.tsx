@@ -1,6 +1,7 @@
 import React from 'react';
-import { useLocalStore } from 'mobx-react';
+import { observer, useLocalStore } from 'mobx-react';
 import Accordion from 'react-native-collapsible/Accordion';
+import { TouchableOpacity } from 'react-native';
 
 export type AccordionDataType = {
   title: string;
@@ -22,7 +23,7 @@ type PropsType = {
   contentComponent: RenderFunction;
 };
 
-const AccordionSet = (props: PropsType) => {
+const AccordionSet = observer((props: PropsType) => {
   const localStore = useLocalStore(() => ({
     activeSections: [] as Array<number>,
     setActiveSections(index: number) {
@@ -39,8 +40,9 @@ const AccordionSet = (props: PropsType) => {
       renderHeader={props.headerComponent}
       renderContent={props.contentComponent}
       onChange={localStore.onChange}
+      touchableComponent={TouchableOpacity}
     />
   );
-};
+});
 
 export default AccordionSet;
