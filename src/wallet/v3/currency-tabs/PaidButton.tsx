@@ -10,7 +10,7 @@ type PropsType = {
 
 const PaidButton = (props: PropsType) => {
   const theme = ThemedStyles.style;
-  const textStyles = [theme.colorPrimaryText, theme.fontM];
+  const textStyles = [theme.colorPrimaryText, theme.fontM, theme.fontMedium];
   const children = {
     childrenButton1: (
       <Text style={[textStyles]}>

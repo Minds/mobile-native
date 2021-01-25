@@ -86,7 +86,7 @@ const WalletScreen = observer((props: PropsType) => {
       <Text style={[theme.fontXXXL, theme.bold, theme.paddingLeft4x]}>
         {i18n.t('wallet.wallet')}
       </Text>
-      <View style={theme.paddingTop4x}>
+      <View style={theme.paddingTop3x}>
         <TopbarTabbar
           titleStyle={theme.fontXL}
           tabs={tabs}

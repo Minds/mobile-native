@@ -55,6 +55,8 @@ const styles = StyleSheet.create({
   text: {
     color: '#FFFFFF',
     fontSize: 15,
+    fontWeight: '500',
+    fontFamily: 'Roboto-Medium',
   },
 });
 
