@@ -136,7 +136,8 @@ export default observer(function Comment(props: PropsType) {
                 <Tags
                   navigation={navigation}
                   style={theme.fontL}
-                  selectable={true}>
+                  selectable={true}
+                  touchableComponent={TouchableOpacity}>
                   {entities.decodeHTML(props.comment.description)}
                 </Tags>
               </ReadMore>

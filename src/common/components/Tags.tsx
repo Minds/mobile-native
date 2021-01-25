@@ -3,7 +3,7 @@ import _ from 'lodash';
 
 import React, { PureComponent } from 'react';
 
-import { Text, TextStyle } from 'react-native';
+import { Text, TextStyle, TouchableOpacity } from 'react-native';
 
 import colors from '../../styles/Colors';
 import openUrlService from '../services/open-url.service';
@@ -26,6 +26,7 @@ type PropsType = {
   selectable?: boolean;
   navigation: any;
   style?: TextStyle | Array<TextStyle>;
+  touchableComponent?: React.ComponentClass;
 };
 
 /**
@@ -99,18 +100,19 @@ export default class Tags extends PureComponent<PropsType> {
    * full url
    */
   parseUrl = (str) => {
+    const Touch = this.props.touchableComponent || TouchableOpacity;
     const url = /(^|\b)(\b(?:https?|http|ftp):\/\/[-A-Z0-9à-œ+&@#\/%?=~_|!:,.;\(\)]*[-A-Z0-9à-œ+&@#\/%=~_|])/gim;
 
     return this.replaceRegular(str, url, (i, content) => {
       return (
-        <Text
-          key={i}
-          style={[this.props.style, this.styles]}
+        <Touch
           onPress={() => {
             this.navToURL(content);
           }}>
-          {content}
-        </Text>
+          <Text key={i} style={[this.props.style, this.styles]}>
+            {content}
+          </Text>
+        </Touch>
       );
     });
   };
@@ -119,18 +121,19 @@ export default class Tags extends PureComponent<PropsType> {
    * url .com .org .net
    */
   parseShortUrl = (str) => {
+    const Touch = this.props.touchableComponent || TouchableOpacity;
     const url = /(^|\b)([-A-Z0-9à-œ+&@#\/%?=~_|!:,.;]+\.(?:com|org|net)\/[-A-Z0-9à-œ+&@#\/%=~_|\(\)]*)/gim;
 
     return this.replaceRegular(str, url, (i, content) => {
       return (
-        <Text
-          key={i}
-          style={[this.props.style, this.styles]}
+        <Touch
           onPress={() => {
             this.navToURL(content);
           }}>
-          {content}
-        </Text>
+          <Text key={i} style={[this.props.style, this.styles]}>
+            {content}
+          </Text>
+        </Touch>
       );
     });
   };
@@ -139,18 +142,19 @@ export default class Tags extends PureComponent<PropsType> {
    * url starting with www
    */
   parseWwwUrl = (str) => {
+    const Touch = this.props.touchableComponent || TouchableOpacity;
     const url = /(^|\b)(www\.[-A-Z0-9à-œ+&@#\/%?=~_|!:,.;]*[-A-Z0-9à-œ+&@#\/%=~_|\(\)]*)/gim;
 
     return this.replaceRegular(str, url, (i, content) => {
       return (
-        <Text
-          key={i}
-          style={[this.props.style, this.styles]}
+        <Touch
           onPress={() => {
             this.navToURL('http://' + content);
           }}>
-          {content}
-        </Text>
+          <Text key={i} style={[this.props.style, this.styles]}>
+            {content}
+          </Text>
+        </Touch>
       );
     });
   };
@@ -159,16 +163,17 @@ export default class Tags extends PureComponent<PropsType> {
    * #tags
    */
   parseHash = (str) => {
+    const Touch = this.props.touchableComponent || TouchableOpacity;
     return this.replaceRegular(str, hashRegex, (i, content) => {
       return (
-        <Text
-          key={i}
-          style={[this.props.style, this.styles]}
+        <Touch
           onPress={() => {
             this.navToDiscovery(`#${content}`);
           }}>
-          #{content}
-        </Text>
+          <Text key={i} style={[this.props.style, this.styles]}>
+            #{content}
+          </Text>
+        </Touch>
       );
     });
   };
@@ -177,18 +182,19 @@ export default class Tags extends PureComponent<PropsType> {
    * @tags
    */
   parseUser = (str) => {
+    const Touch = this.props.touchableComponent || TouchableOpacity;
     const hash = /(^|\s|\B)@(\w*[a-zA-Z_]+\w*)/gim;
 
     return this.replaceRegular(str, hash, (i, content) => {
       return (
-        <Text
-          key={i}
-          style={[this.props.style, this.styles]}
+        <Touch
           onPress={() => {
             this.navToChannel(content);
           }}>
-          @{content}
-        </Text>
+          <Text key={i} style={[this.props.style, this.styles]}>
+            @{content}
+          </Text>
+        </Touch>
       );
     });
   };
