@@ -1,7 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View, ViewStyle } from 'react-native';
+import { StyleSheet, View, ViewStyle } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
-import i18n from '../services/i18n.service';
 import Button from './Button';
 
 type PropsType = {
@@ -50,6 +49,7 @@ const styles = StyleSheet.create({
     paddingRight: 10,
   },
   rightButton: {
+    borderLeftWidth: 0,
     borderTopLeftRadius: 0,
     borderBottomLeftRadius: 0,
     paddingLeft: 10,
