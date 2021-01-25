@@ -39,7 +39,11 @@ const UsdEarnings = observer(({ walletStore, navigation }: PropsType) => {
           <Text>minds pro</Text>
         </View>
       ),
-      tooltip: 'tooltip aksjdgh asldkasljkd gasdlkjgahs dlkjagsd lkasjgd alksjdgasd',
+      tooltip: {
+        title: 'Minds Pro earnings Minds Pro earnings Minds Pro earnings',
+        width: 200,
+        height: 80,
+      },
     },
     {
       title: 'Minds+',

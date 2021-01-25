@@ -7,7 +7,11 @@ export type AccordionDataType = {
   title: string;
   children: React.ReactElement<{}>;
   subtitle?: string;
-  tooltip?: string;
+  tooltip?: {
+    title: string;
+    width: number;
+    height: number;
+  };
 };
 
 export type RenderFunction = (
