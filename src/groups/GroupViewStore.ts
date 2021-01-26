@@ -87,10 +87,17 @@ class GroupViewStore {
    * Load feed
    */
   async loadFeed() {
-    this.feed
+    await this.feed
       .setEndpoint(`api/v2/feeds/container/${this.group.guid}/activities`)
       .setLimit(12)
       .fetchRemoteOrLocal();
+    this.setEntitiesContainerObj();
+  }
+
+  setEntitiesContainerObj() {
+    this.feed.entities.forEach(
+      (activity: ActivityModel) => (activity.containerObj = this.group),
+    );
   }
 
   /**
