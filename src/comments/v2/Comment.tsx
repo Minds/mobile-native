@@ -34,10 +34,7 @@ export default observer(function Comment(props: PropsType) {
   const navigation = useNavigation<any>();
   const theme = ThemedStyles.style;
 
-  const mature =
-    props.comment.mature &&
-    !props.comment.mature_visibility &&
-    !props.comment.isOwner();
+  const mature = props.comment.mature && !props.comment.mature_visibility;
 
   const canReply =
     props.comment.can_reply &&
@@ -125,7 +122,7 @@ export default observer(function Comment(props: PropsType) {
       ]}>
       <CommentHeader entity={props.comment} navigation={navigation} />
 
-      {!mature ? (
+      {!mature || props.comment.isOwner() ? (
         <>
           <View style={[styles.body, theme.flexContainer]}>
             {!!props.comment.description && (
@@ -149,6 +146,13 @@ export default observer(function Comment(props: PropsType) {
                   smallEmbed
                   // onPress={this.navToImage}
                 />
+              </View>
+            )}
+            {mature && (
+              <View style={theme.marginTop3x}>
+                <Text style={[theme.font, theme.colorTertiaryText]}>
+                  {i18n.t('activity.explicitComment')}
+                </Text>
               </View>
             )}
           </View>
@@ -184,7 +188,7 @@ export default observer(function Comment(props: PropsType) {
           )}
         </>
       ) : (
-        //mature
+        // mature
         <View>
           <TouchableOpacity
             onPress={() => props.comment.toggleMatureVisibility()}

@@ -19,6 +19,8 @@ export interface ThemedStyle {
   alignCenter: any;
   alignEnd: any;
   alignSelfEnd: any;
+  alignSelfStart: any;
+  alignSelfCenter: any;
   centered: any;
   colorWhite: any;
   colorBlack: any;
@@ -245,6 +247,12 @@ export const buildStyle = (theme) => ({
   },
   alignSelfEnd: {
     alignSelf: 'flex-end',
+  },
+  alignSelfStart: {
+    alignSelf: 'flex-start',
+  },
+  alignSelfCenter: {
+    alignSelf: 'center',
   },
   centered: {
     alignContent: 'center',

@@ -21,6 +21,8 @@ import MediaPreview from './MediaPreview';
 import MetaPreview from '../../compose/MetaPreview';
 import GroupModel from '../../groups/GroupModel';
 import CommentInputBottomMenu from './CommentInputBottomMenu';
+import preventDoubleTap from '../../common/components/PreventDoubleTap';
+import { DotIndicator } from 'react-native-reanimated-indicators';
 
 const { height } = Dimensions.get('window');
 
@@ -30,6 +32,8 @@ class StoreProvider {
   setStore = (s: CommentsStore) => (this.store = s);
 }
 const storeProvider = new StoreProvider();
+
+const Touchable = preventDoubleTap(TouchableOpacity);
 
 export const CommentInputContext = React.createContext(storeProvider);
 
@@ -68,7 +72,7 @@ const CommentInput = observer(() => {
       pointerEvents="box-none">
       <View style={[theme.justifyEnd, theme.flexContainer]}>
         <View style={theme.flexContainer}>
-          <TouchableOpacity
+          <Touchable
             style={[
               theme.flexContainer,
               theme.backgroundBlack,
@@ -116,6 +120,7 @@ const CommentInput = observer(() => {
               ref={ref}
               autoFocus={true}
               multiline={true}
+              editable={!provider.store.saving}
               scrollEnabled={true}
               placeholderTextColor={ThemedStyles.getColor('tertiary_text')}
               placeholder={placeHolder}
@@ -130,31 +135,39 @@ const CommentInput = observer(() => {
                 styles.input,
               ]}
             />
-            <View
-              style={[
-                theme.rowJustifyStart,
-                styles.sendIconCont,
-                theme.alignCenter,
-              ]}>
-              <TouchableOpacity
-                onPress={provider.store.post}
-                style={theme.paddingRight2x}
-                testID="PostCommentButton">
-                <Icon
-                  name="md-send"
-                  size={18}
-                  style={theme.colorSecondaryText}
-                />
-              </TouchableOpacity>
-              {!provider.store.edit && (
-                <CommentInputBottomMenu
-                  store={provider.store}
-                  containerStyle={styles.sendIconCont}
-                  afterSelected={afterSelected}
-                  beforeSelect={beforeSelect}
-                />
-              )}
-            </View>
+            {!provider.store.saving ? (
+              <View
+                style={[
+                  theme.rowJustifyStart,
+                  styles.sendIconCont,
+                  theme.alignCenter,
+                ]}>
+                <Touchable
+                  onPress={provider.store.post}
+                  style={theme.paddingRight2x}
+                  testID="PostCommentButton">
+                  <Icon
+                    name="md-send"
+                    size={18}
+                    style={theme.colorSecondaryText}
+                  />
+                </Touchable>
+                {!provider.store.edit && (
+                  <CommentInputBottomMenu
+                    store={provider.store}
+                    containerStyle={styles.sendIconCont}
+                    afterSelected={afterSelected}
+                    beforeSelect={beforeSelect}
+                  />
+                )}
+              </View>
+            ) : (
+              <DotIndicator
+                containerStyle={[theme.alignSelfCenter, theme.justifyEnd]}
+                color={ThemedStyles.getColor('primary_text')}
+                scaleEnabled={true}
+              />
+            )}
           </View>
         </View>
       </View>
