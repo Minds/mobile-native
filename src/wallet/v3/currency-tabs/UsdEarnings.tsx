@@ -13,6 +13,7 @@ import AccordionSet, {
 } from '../../../common/components/AccordionSet';
 import { observer } from 'mobx-react';
 import AccordionHeader from './AccordionHeader';
+import AccordionContent from './AccordionContent';
 
 type PropsType = {
   navigation: WalletScreenNavigationProp;
@@ -20,8 +21,13 @@ type PropsType = {
   route: WalletScreenRouteProp;
 };
 
-const renderHeader = (content, index, isActive) => (
-  <AccordionHeader content={content} isActive={isActive} />
+const renderHeader = (content: AccordionDataType, index, isActive) => (
+  <AccordionHeader
+    title={content.title}
+    subtitle={content.subtitle}
+    tooltip={content.tooltip}
+    isActive={isActive}
+  />
 );
 
 const ContentComponent: RenderFunction = (content: AccordionDataType) =>
@@ -34,11 +40,7 @@ const UsdEarnings = observer(({ walletStore, navigation }: PropsType) => {
     {
       title: 'Minds Pro',
       subtitle: '$100',
-      children: (
-        <View>
-          <Text>minds pro</Text>
-        </View>
-      ),
+      children: <AccordionContent />,
       tooltip: {
         title: 'Minds Pro earnings Minds Pro earnings Minds Pro earnings',
         width: 200,
@@ -48,17 +50,12 @@ const UsdEarnings = observer(({ walletStore, navigation }: PropsType) => {
     {
       title: 'Minds+',
       subtitle: '$0.35',
-      children: (
-        <View>
-          <Text>minds plus</Text>
-        </View>
-      ),
+      children: <AccordionContent />,
     },
   ];
 
   return (
-    <ScrollView
-      contentContainerStyle={[theme.paddingTop4x, theme.paddingHorizontal3x]}>
+    <ScrollView contentContainerStyle={theme.paddingTop4x}>
       <AccordionSet
         data={accordionData}
         headerComponent={renderHeader}

@@ -1,7 +1,6 @@
 //@ts-nocheck
 import { StyleSheet, Platform } from 'react-native';
 export interface ThemedStyle {
-  width90: any;
   flexContainer: any;
   flexContainerCenter: any;
   flexColumn: any;
@@ -130,6 +129,12 @@ const step = 5;
 
 const dynamicStyles = {};
 
+for (let index = 1; index <= 20; index++) {
+  let value = step * index;
+  dynamicStyles[`width${value}`] = { width: `${value}%` };
+  dynamicStyles[`height${value}`] = { height: `${value}%` };
+}
+
 for (let index = 0; index <= repetitions; index++) {
   let value = step * index;
   const post = index === 1 ? '' : `${index}x`;
@@ -176,9 +181,6 @@ export const buildStyle = (theme) => ({
     opacity: 0,
   },
   // containers
-  width90: {
-    width: '90%',
-  },
   flexContainer: {
     flex: 1,
   },
