@@ -89,6 +89,11 @@ const AccordionContent = () => {
 
   const titleStyle = [theme.colorSecondaryText, theme.fontNormal, theme.fontL];
   const infoStyle = [theme.fontMedium, theme.alignSelfEnd, theme.fontL];
+  const paddingPointsView = [
+    theme.rowJustifyStart,
+    theme.paddingLeft4x,
+    theme.paddingTop5x,
+  ];
 
   return (
     <View
@@ -102,17 +107,13 @@ const AccordionContent = () => {
       ]}>
       {data.map((row) => {
         return (
-          <View
-            style={[
-              theme.rowJustifyStart,
-              theme.paddingLeft4x,
-              theme.paddingTop5x,
-            ]}>
+          <View style={paddingPointsView}>
             <View style={[theme.rowStretch, theme.flexContainer]}>
               <Text style={titleStyle}>{row.title}</Text>
               {row.tooltip && (
                 <View style={styles.tooltipContainer}>
                   <Tooltip
+                    skipAndroidStatusBar={true}
                     withOverlay={false}
                     containerStyle={theme.borderRadius}
                     width={row.tooltip.width}
@@ -152,12 +153,7 @@ const AccordionContent = () => {
       {summary.map((row) => {
         totalSummaryPoints += row.points;
         return (
-          <View
-            style={[
-              theme.rowJustifyStart,
-              theme.paddingLeft4x,
-              theme.paddingTop5x,
-            ]}>
+          <View style={paddingPointsView}>
             <View
               style={[
                 theme.rowJustifySpaceBetween,
@@ -176,12 +172,7 @@ const AccordionContent = () => {
           </View>
         );
       })}
-      <View
-        style={[
-          theme.rowJustifyStart,
-          theme.paddingLeft4x,
-          theme.paddingTop5x,
-        ]}>
+      <View style={paddingPointsView}>
         <View style={[theme.rowJustifySpaceBetween, theme.flexContainer]}>
           <Text style={titleStyle}>Total Points</Text>
           <Text style={infoStyle}>{totalSummaryPoints} </Text>

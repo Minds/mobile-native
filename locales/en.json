@@ -726,7 +726,10 @@
     "walletBalance": "Wallet balance",
     "transactionsEmpty": "Your transaction list is empty",
     "unpaid": "Unpaid",
+    "unpaidEarnings": "Unpaid earnings",
     "total": "Total",
+    "totalPaidout": "Total paid out",
+    "alltime": "All-time earnings",
     "withdraw": {
       "errorOnlyOnceDay": "You may only withdraw once a day",
       "errorWithdrawing": "Error withdrawing tokens",

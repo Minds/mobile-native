@@ -26,6 +26,7 @@ const AccordionHeader = ({ title, subtitle, tooltip, isActive }: PropsType) => {
         {tooltip && (
           <View style={styles.tooltipContainer}>
             <Tooltip
+              skipAndroidStatusBar={true}
               withOverlay={false}
               containerStyle={theme.borderRadius}
               width={tooltip.width}

@@ -6,6 +6,7 @@ import ThemedStyles from '../../../styles/ThemedStyles';
 
 type PropsType = {
   containerStyle?: ViewStyle | Array<ViewStyle>;
+  onPress?: () => void;
 };
 
 const PaidButton = (props: PropsType) => {
@@ -26,7 +27,11 @@ const PaidButton = (props: PropsType) => {
     ),
   };
   return (
-    <SegmentedButton containerStyle={props.containerStyle} {...children} />
+    <SegmentedButton
+      containerStyle={props.containerStyle}
+      {...children}
+      onPress={props.onPress}
+    />
   );
 };
 

@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 import TopBarButtonTabBar, {
   ButtonTabType,
 } from '../../../common/components/topbar-tabbar/TopBarButtonTabBar';
@@ -20,6 +20,9 @@ import UsdEarnings from './UsdEarnings';
 import Button from '../../../common/components/Button';
 import PaidButton from './PaidButton';
 import ConnectBankButton from './ConnectBankButton';
+import { Tooltip } from 'react-native-elements';
+import { useDimensions } from '@react-native-community/hooks';
+import PaidInfo from './PaidInfo';
 
 type PropsType = {
   walletStore: WalletStoreType;
@@ -30,8 +33,12 @@ type PropsType = {
 
 const createStore = () => ({
   option: 'settings' as UsdOptions,
+  showTooltip: false,
   setOption(option: UsdOptions) {
     this.option = option;
+  },
+  toggleTooltip() {
+    this.showTooltip = !this.showTooltip;
   },
 });
 
@@ -41,6 +48,8 @@ const createStore = () => ({
 const UsdTab = observer(
   ({ walletStore, navigation, route, bottomStore }: PropsType) => {
     const store = useLocalStore(createStore);
+    const tooltipRef = useRef<any>();
+    const screen = useDimensions().screen;
     const theme = ThemedStyles.style;
 
     const options: Array<ButtonTabType<UsdOptions>> = [
@@ -97,9 +106,25 @@ const UsdTab = observer(
             theme.paddingLeft2x,
             theme.marginBottom5x,
           ]}>
-          <PaidButton containerStyle={theme.marginRight2x} />
+          <Tooltip
+            ref={tooltipRef}
+            closeOnlyOnBackdropPress={true}
+            skipAndroidStatusBar={true}
+            toggleOnPress={false}
+            withOverlay={false}
+            containerStyle={theme.borderRadius}
+            width={screen.width - 20}
+            height={250}
+            backgroundColor={ThemedStyles.getColor('secondary_background')}
+            popover={<PaidInfo />}>
+            <PaidButton
+              containerStyle={theme.marginRight2x}
+              onPress={() => tooltipRef.current.toggleTooltip()}
+            />
+          </Tooltip>
           <ConnectBankButton />
         </View>
+
         <TopBarButtonTabBar
           tabs={options}
           current={store.option}

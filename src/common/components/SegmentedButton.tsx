@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, ViewStyle } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import ThemedStyles from '../../styles/ThemedStyles';
 import Button from './Button';
 
@@ -7,6 +8,7 @@ type PropsType = {
   containerStyle?: ViewStyle | Array<ViewStyle>;
   childrenButton1: React.ReactNode;
   childrenButton2?: React.ReactNode;
+  onPress?: () => void;
 };
 
 const SegmentedButton = (props: PropsType) => {
@@ -20,7 +22,9 @@ const SegmentedButton = (props: PropsType) => {
       : ThemedStyles.getColor('primary_border'),
   };
   return (
-    <View style={[theme.rowJustifyStart, props.containerStyle]}>
+    <TouchableOpacity
+      style={[theme.rowJustifyStart, props.containerStyle]}
+      onPress={props.onPress}>
       <Button
         containerStyle={[
           buttonStyle,
@@ -33,7 +37,7 @@ const SegmentedButton = (props: PropsType) => {
           {props.childrenButton2}
         </Button>
       )}
-    </View>
+    </TouchableOpacity>
   );
 };
 
