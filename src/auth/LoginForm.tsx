@@ -91,6 +91,8 @@ export default class LoginForm extends Component<PropsType, StateType> {
           style={theme.colorWhite}
           placeholder={i18n.t('auth.username')}
           onChangeText={this.setUsername}
+          autoCompleteType="username"
+          textContentType="username"
           value={this.state.username}
           testID="usernameInput"
           noBottomBorder
@@ -102,6 +104,8 @@ export default class LoginForm extends Component<PropsType, StateType> {
             style={theme.colorWhite}
             placeholder={i18n.t('auth.password')}
             secureTextEntry={this.state.hidePassword}
+            autoCompleteType="password"
+            textContentType="password"
             onChangeText={this.setPassword}
             value={this.state.password}
             testID="userPasswordInput"

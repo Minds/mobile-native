@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   TextInput,
   TextStyle,
+  TextInputProps,
 } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import InfoPopup from './InfoPopup';
@@ -14,7 +15,7 @@ import InfoPopup from './InfoPopup';
 import ThemedStyles from '../../styles/ThemedStyles';
 import PhoneValidationComponent from './phoneValidation/PhoneValidationComponent';
 
-export interface PropsType {
+export interface PropsType extends TextInputProps {
   TFA?: any;
   TFAConfirmed?: boolean;
   inputType?: string;
