@@ -18,7 +18,7 @@ const AccordionHeader = ({ title, subtitle, tooltip, isActive }: PropsType) => {
       style={[
         theme.rowJustifySpaceBetween,
         theme.paddingVertical2x,
-        theme.paddingRight3x,
+        theme.paddingRight6x,
         theme.paddingLeft4x,
       ]}>
       <View style={[theme.flexContainer, theme.rowJustifyStart]}>
