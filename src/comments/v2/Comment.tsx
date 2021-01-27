@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
   },
   body: {
     paddingVertical: 0,
-    paddingLeft: 65,
+    paddingLeft: 63,
     paddingRight: 20,
   },
   actionsContainer: {
