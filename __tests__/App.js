@@ -27,6 +27,13 @@ jest.mock('web3');
 
 //mock packages
 jest.mock('react-native-share-menu');
+jest.mock('@gorhom/bottom-sheet', () => {
+  const react = require('react-native');
+
+  return {
+    BottomSheetFlatList: react.FlatList,
+  };
+});
 jest.mock('react-native-notifications');
 jest.mock('react-navigation-shared-element', () => ({
   createSharedElementStackNavigator: jest.fn(),
