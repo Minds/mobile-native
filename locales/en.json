@@ -835,7 +835,11 @@
       "fail": "Something went wrong",
       "finish": "Finish adding your bank details to start receiving cash payouts",
       "complete": "Complete bank details"
-    }
+    },
+    "date": "Date",
+    "today": "Today",
+    "todayEstimate": "Today’s estimate",
+    "payout": "Payout"
   },
   "analytics": {
     "title": "Analytics",

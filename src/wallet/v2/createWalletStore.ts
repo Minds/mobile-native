@@ -363,6 +363,18 @@ const createWalletStore = () => ({
       this.usdPayoutsTotals = SUM_CENTS(this.usdPayouts);
     }
   },
+  async loadRewards(date: Date) {
+    try {
+      let rewards = <any>await api.get('api/v3/rewards/', {
+        date: date.toISOString(),
+      });
+      const prices = <any>await api.get('api/v3/blockchain/token-prices');
+      return { rewards, prices };
+    } catch (e) {
+      logService.exception(e);
+      return false;
+    }
+  },
   /**
    * Join to wallet tokens
    * @param {string} number

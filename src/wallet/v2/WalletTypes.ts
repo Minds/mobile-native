@@ -1,6 +1,10 @@
 import { CurrencyType } from '../../types/Payment';
 
-export type TokensOptions = 'overview' | 'transactions' | 'settings';
+export type TokensOptions =
+  | 'overview'
+  | 'transactions'
+  | 'settings'
+  | 'earnings';
 export type UsdOptions = 'earnings' | 'transactions' | 'settings';
 
 export interface StripeDetails {

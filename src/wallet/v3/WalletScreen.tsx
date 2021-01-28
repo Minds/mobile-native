@@ -6,7 +6,7 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import { observer } from 'mobx-react';
 
 import TopbarTabbar from '../../common/components/topbar-tabbar/TopbarTabbar';
-import TokensTab from '../v2/currency-tabs/TokensTab';
+import TokensTab from './currency-tabs/TokensTab';
 import type { CurrencyType } from '../../types/Payment';
 import type { TabType } from '../../common/components/topbar-tabbar/TopbarTabbar';
 import type { WalletStoreType } from '../v2/createWalletStore';

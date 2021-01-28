@@ -1,5 +1,9 @@
 import React from 'react';
 import { View, StyleProp, TextStyle, StyleSheet } from 'react-native';
+import {
+  NativeViewGestureHandler,
+  ScrollView,
+} from 'react-native-gesture-handler';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import Button from '../Button';
 
@@ -23,24 +27,28 @@ function TopBarButtonTabBar<T>(props: PropsType<T>) {
 
   return (
     <View style={[theme.rowJustifyStart, theme.paddingLeft]}>
-      {props.tabs.map((tab, i) => (
-        <Button
-          borderless
-          onPress={() => props.onChange(tab.id)}
-          key={i}
-          text={tab.title}
-          containerStyle={[
-            styles.buttonContainer,
-            tab.id === props.current
-              ? theme.backgroundLink
-              : theme.backgroundTransparent,
-          ]}
-          textStyle={[
-            styles.text,
-            tab.id !== props.current ? theme.colorSecondaryText : {},
-          ]}
-        />
-      ))}
+      <NativeViewGestureHandler>
+        <ScrollView horizontal>
+          {props.tabs.map((tab, i) => (
+            <Button
+              borderless
+              onPress={() => props.onChange(tab.id)}
+              key={i}
+              text={tab.title}
+              containerStyle={[
+                styles.buttonContainer,
+                tab.id === props.current
+                  ? theme.backgroundLink
+                  : theme.backgroundTransparent,
+              ]}
+              textStyle={[
+                styles.text,
+                tab.id !== props.current ? theme.colorSecondaryText : {},
+              ]}
+            />
+          ))}
+        </ScrollView>
+      </NativeViewGestureHandler>
     </View>
   );
 }
