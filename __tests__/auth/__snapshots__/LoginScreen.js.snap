@@ -146,6 +146,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                 <TextInput
                   allowFontScaling={true}
                   autoCapitalize="none"
+                  autoCompleteType="username"
                   containerStyle={
                     Object {
                       "backgroundColor": "rgba(0,0,0,0.25)",
@@ -174,6 +175,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                     ]
                   }
                   testID="usernameInput"
+                  textContentType="username"
                   underlineColorAndroid="transparent"
                   value=""
                 />
@@ -238,6 +240,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                   <TextInput
                     allowFontScaling={true}
                     autoCapitalize="none"
+                    autoCompleteType="password"
                     containerStyle={
                       Object {
                         "backgroundColor": "rgba(0,0,0,0.25)",
@@ -267,6 +270,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                       ]
                     }
                     testID="userPasswordInput"
+                    textContentType="password"
                     underlineColorAndroid="transparent"
                     value=""
                   />

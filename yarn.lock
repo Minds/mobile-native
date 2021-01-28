@@ -1279,10 +1279,10 @@
     pouchdb-collections "^1.0.1"
     tiny-queue "^0.2.1"
 
-"@gorhom/bottom-sheet@2.0.4":
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/@gorhom/bottom-sheet/-/bottom-sheet-2.0.4.tgz#c1dd9a29924b86d574531af8075c742819a5fa84"
-  integrity sha512-s06szJw7G6+cmt2RV7V24KHGUL4NnnQ8RkvTRcUrgoBxwE9qw/kPctaK23T1pzb10o1NZQ6QrXeqHbduNLwTdQ==
+"@gorhom/bottom-sheet@2.0.5":
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/@gorhom/bottom-sheet/-/bottom-sheet-2.0.5.tgz#aeae862b16492114ff6fcc7cf877331a41ac1bdc"
+  integrity sha512-clF7QX0GWEx0e0ZdTFSoXmreKQMKhkafPn7cud2c0EWKoz61s3MGs0rwJfSHaYoodlKB9mBn6+C5SWx+UW3rUg==
   dependencies:
     "@gorhom/portal" "^0.1.4"
     invariant "^2.2.4"
@@ -12066,10 +12066,10 @@ react-native-safe-modules@^1.0.0:
   dependencies:
     dedent "^0.6.0"
 
-react-native-screens@^2.15.0:
-  version "2.15.0"
-  resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-2.15.0.tgz#9b97c1881c4fcdf304bf363f0013225901625f44"
-  integrity sha512-qTSQPy0WKHtlb8xt5gY0Gt6sdvfQUQAnFSqgsggW9UEvySbkHzpqOrOYNA79Ca8oXO0dCFwp6X8buIiDefa7+Q==
+react-native-screens@^2.17.1:
+  version "2.17.1"
+  resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-2.17.1.tgz#c3c0ac750af48741c5b1635511e6af2a27b74309"
+  integrity sha512-B4gD5e4csvlVwlhf+RNqjQZ9mHTwe/iL3rXondgZxnKz4oW0QAmtLnLRKOrYVxoaJaF9Fy7jhjo//24/472APQ==
 
 react-native-scrollable-mixin@^1.0.1:
   version "1.0.1"
