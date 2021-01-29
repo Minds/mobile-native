@@ -6,7 +6,7 @@ import { TouchableOpacity } from 'react-native';
 export type AccordionDataType = {
   title: string;
   children: React.ReactElement<{}>;
-  subtitle?: string;
+  subtitle?: string | React.ReactNode;
   tooltip?: {
     title: string;
     width: number;

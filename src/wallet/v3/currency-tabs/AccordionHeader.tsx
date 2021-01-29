@@ -6,13 +6,21 @@ import ThemedStyles from '../../../styles/ThemedStyles';
 
 type PropsType = {
   title: string;
-  subtitle?: string;
+  subtitle?: string | React.ReactNode;
   tooltip: any;
   isActive: boolean;
 };
 
 const AccordionHeader = ({ title, subtitle, tooltip, isActive }: PropsType) => {
   const theme = ThemedStyles.style;
+
+  const SubTitle = subtitle ? (
+    typeof subtitle === 'string' ? (
+      <Text style={[theme.fontLM, theme.flexContainer]}>{subtitle}</Text>
+    ) : (
+      subtitle
+    )
+  ) : null;
   return (
     <View
       style={[
@@ -38,7 +46,7 @@ const AccordionHeader = ({ title, subtitle, tooltip, isActive }: PropsType) => {
           </View>
         )}
       </View>
-      <Text style={[theme.fontLM, theme.flexContainer]}>{subtitle}</Text>
+      {SubTitle}
       <Icon
         name={`chevron-${isActive ? 'up' : 'down'}`}
         size={21}

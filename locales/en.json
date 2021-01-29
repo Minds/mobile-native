@@ -839,7 +839,10 @@
     "date": "Date",
     "today": "Today",
     "todayEstimate": "Today’s estimate",
-    "payout": "Payout"
+    "payout": "Payout",
+    "engagement": "Engagement",
+    "holding": "Holding",
+    "liquidity": "Liquidity"
   },
   "analytics": {
     "title": "Analytics",

@@ -1,19 +1,18 @@
 import { observer, useLocalStore } from 'mobx-react';
 import React, { useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { View } from 'react-native';
 import CenteredLoading from '../../../common/components/CenteredLoading';
 import DatePicker from '../../../common/components/DatePicker';
-import i18n from '../../../common/services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { WalletStoreType } from '../../v2/createWalletStore';
-import MindsTokens from './MindsTokens';
+import MindsScores from './MindsScores';
 import Payout from './Payout';
 
 type PropsType = {
   walletStore: WalletStoreType;
 };
 
-type Reward = {
+export type Reward = {
   user_guid: string;
   date: string;
   date_iso8601: string;
@@ -48,45 +47,49 @@ type PricesType = {
   minds: string;
 };
 
+const createLocalStore = ({ walletStore }) => ({
+  selectedDate: new Date(),
+  rewards: {} as RewardsType,
+  prices: {} as PricesType,
+  loading: true,
+  get isToday() {
+    return this.selectedDate.toDateString() === new Date().toDateString();
+  },
+  setLoading(loading) {
+    this.loading = loading;
+  },
+  onConfirm(date: Date) {
+    this.selectedDate = date;
+  },
+  setRewards(
+    response:
+      | false
+      | {
+          rewards: RewardsType;
+          prices: PricesType;
+        },
+  ) {
+    if (response) {
+      this.rewards = response.rewards;
+      this.prices = response.prices;
+    }
+  },
+  setPrices(prices: PricesType) {
+    this.prices = prices;
+  },
+  async loadRewards(date: Date) {
+    this.setLoading(true);
+    const response = await walletStore.loadRewards(date);
+    this.setRewards(response);
+    this.setLoading(false);
+  },
+});
+
+export type TokensEarningsStore = ReturnType<typeof createLocalStore>;
+
 const TokensEarnings = observer(({ walletStore }: PropsType) => {
   const theme = ThemedStyles.style;
-  const localStore = useLocalStore(() => ({
-    selectedDate: new Date(),
-    rewards: {} as RewardsType,
-    prices: {} as PricesType,
-    loading: true,
-    get isToday() {
-      return this.selectedDate.toDateString() === new Date().toDateString();
-    },
-    setLoading(loading) {
-      this.loading = loading;
-    },
-    onConfirm(date: Date) {
-      this.selectedDate = date;
-    },
-    setRewards(
-      response:
-        | false
-        | {
-            rewards: RewardsType;
-            prices: PricesType;
-          },
-    ) {
-      if (response) {
-        this.rewards = response.rewards;
-        this.prices = response.prices;
-      }
-    },
-    setPrices(prices: PricesType) {
-      this.prices = prices;
-    },
-    async loadRewards(date: Date) {
-      this.setLoading(true);
-      const response = await walletStore.loadRewards(date);
-      this.setRewards(response);
-      this.setLoading(false);
-    },
-  }));
+  const localStore = useLocalStore(createLocalStore, { walletStore });
   useEffect(() => {
     localStore.loadRewards(localStore.selectedDate);
   }, [localStore, localStore.selectedDate, walletStore]);
@@ -94,6 +97,8 @@ const TokensEarnings = observer(({ walletStore }: PropsType) => {
   if (localStore.loading) {
     return <CenteredLoading />;
   }
+
+  console.log(localStore.rewards);
 
   return (
     <View style={theme.paddingTop5x}>
@@ -107,6 +112,7 @@ const TokensEarnings = observer(({ walletStore }: PropsType) => {
         mindsPrice={localStore.prices.minds}
         isToday={localStore.isToday}
       />
+      <MindsScores store={localStore} />
     </View>
   );
 });

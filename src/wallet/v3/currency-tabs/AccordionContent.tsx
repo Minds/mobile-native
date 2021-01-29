@@ -2,6 +2,7 @@ import React from 'react';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { StyleSheet, Text, View } from 'react-native';
 import { Tooltip } from 'react-native-elements';
+import { Reward } from './TokensEarnings';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 type AccordionContentData = {
@@ -21,17 +22,17 @@ type AccordionContentSummary = {
 };
 
 type PropsType = {
-  data: AccordionContentData[];
-  sumary: AccordionContentSummary[];
+  data: Reward;
+  type: 'minds' | 'cash';
 };
 
-const AccordionContent = () => {
+const AccordionContent = ({ data, type }: PropsType) => {
   const theme = ThemedStyles.style;
 
-  const data: AccordionContentData[] = [
+  const processedData: AccordionContentData[] = [
     {
       title: 'Your Score',
-      info: '200 points',
+      info: `${data.score} points`,
       tooltip: {
         title: 'Minds Pro earnings Minds Pro earnings Minds Pro earnings',
         width: 200,
@@ -40,7 +41,7 @@ const AccordionContent = () => {
     },
     {
       title: 'Total network score',
-      info: '40000 points',
+      info: `${data.alltime_summary.score} points`,
       tooltip: {
         title: 'Minds Pro earnings Minds Pro earnings Minds Pro earnings',
         width: 200,
@@ -49,7 +50,7 @@ const AccordionContent = () => {
     },
     {
       title: 'Your percentage',
-      info: '0.5%',
+      info: `${data.share_pct}%`,
       tooltip: {
         title: 'Minds Pro earnings Minds Pro earnings Minds Pro earnings',
         width: 200,
@@ -57,8 +58,9 @@ const AccordionContent = () => {
       },
     },
     {
-      title: 'Cash reward',
-      info: '$0.35 (0.5% of $5)',
+      title: type === 'minds' ? 'Token reward' : 'Cash reward',
+      info:
+        type === 'minds' ? `${data.token_amount} MINDS` : '$0.35 (0.5% of $5)',
       tooltip: {
         title: 'Minds Pro earnings Minds Pro earnings Minds Pro earnings',
         width: 200,
@@ -105,7 +107,7 @@ const AccordionContent = () => {
         theme.borderTop,
         theme.borderBottom,
       ]}>
-      {data.map((row) => {
+      {processedData.map((row) => {
         return (
           <View style={paddingPointsView}>
             <View style={[theme.rowStretch, theme.flexContainer]}>
