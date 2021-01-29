@@ -128,18 +128,29 @@ const createStore = (): Store => ({
     if (!this.web3 || !this.address) {
       return;
     }
+    const tx = {
+      to: this.address,
+      from: this.address,
+      value: this.web3.utils.toWei('0.00001', 'ether'),
+    };
 
-    try {
-      const tx = {
-        to: this.address,
-        from: this.address,
-        value: this.web3.utils.toWei('0.00001', 'ether'),
-      };
-
-      await this.web3.eth.sendTransaction(tx);
-    } catch (error) {
-      console.log('error =>', error);
-    }
+    this.web3.eth
+      .sendTransaction(tx)
+      .once('transactionHash', (hash: any) => {
+        console.log('hash =>', hash);
+      })
+      .once('receipt', (receipt: any) => {
+        console.log('receipt =>', receipt);
+        this.setFormattedResult({
+          method: 'send_transaction',
+          address: this.address,
+          valid: true,
+          result: receipt,
+        });
+      })
+      .once('error', (error: any) => {
+        console.log('error =>', error);
+      });
   },
   async signTestMessage() {
     if (!this.web3 || !this.address) {
