@@ -6,6 +6,7 @@ import Button from '../common/components/Button';
 import ThemedStyles from '../styles/ThemedStyles';
 import { observer, useLocalStore } from 'mobx-react';
 import { getConnector } from '../blockchain/services/WalletConnectService';
+import WalletConnectModal from '../common/components/wallet-connect-modal/WalletConnectModal';
 
 type Store = {
   web3: Web3 | null;
@@ -78,18 +79,21 @@ export default observer(() => {
           )}
         </>
       ) : (
-        <Button
-          onPress={startConnection}
-          text="Connect"
-          containerStyle={[
-            theme.transparentButton,
-            theme.paddingVertical3x,
-            theme.fullWidth,
-            theme.marginTop,
-            theme.borderPrimary,
-          ]}
-          textStyle={theme.buttonText}
-        />
+        <>
+          <Button
+            onPress={startConnection}
+            text="Connect"
+            containerStyle={[
+              theme.transparentButton,
+              theme.paddingVertical3x,
+              theme.fullWidth,
+              theme.marginTop,
+              theme.borderPrimary,
+            ]}
+            textStyle={theme.buttonText}
+          />
+          <WalletConnectModal onWalletSelect={() => {}} />
+        </>
       )}
     </ScrollView>
   );

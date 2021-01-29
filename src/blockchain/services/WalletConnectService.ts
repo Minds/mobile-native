@@ -1,5 +1,11 @@
 import WalletConnectProvider from '@walletconnect/web3-provider';
-import { Linking } from 'react-native';
+import { IMobileRegistryEntry } from '@walletconnect/types';
+import { Linking, Platform } from 'react-native';
+
+type ConnectToWalletProps = {
+  provider: WalletConnectProvider;
+  wallet?: IMobileRegistryEntry;
+};
 
 const MINDS_METADATA = {
   description: 'Minds',
@@ -8,7 +14,7 @@ const MINDS_METADATA = {
   name: 'Minds',
 };
 
-export const getConnector = async () => {
+export const getConnector = async (wallet?: IMobileRegistryEntry) => {
   const provider = new WalletConnectProvider({
     infuraId: '612f7850f87540d4a0c41796284ef45f',
     clientMeta: MINDS_METADATA,
@@ -16,13 +22,14 @@ export const getConnector = async () => {
     chainId: 4,
   });
 
-  return connectToWallet(provider);
+  return connectToWallet({ provider, wallet });
 };
 
-const connectToWallet = async (provider: WalletConnectProvider) => {
+const connectToWallet = async ({ provider, wallet }: ConnectToWalletProps) => {
   const triggerConnection = new Promise<WalletConnectProvider>((resolve) => {
     provider.connector.on('display_uri', (_, payload) => {
-      Linking.openURL(payload.params[0]);
+      const uri = payload.params[0];
+      makeAccessRequest(uri, wallet);
     });
 
     provider.on('connect', async () => {
@@ -32,4 +39,27 @@ const connectToWallet = async (provider: WalletConnectProvider) => {
 
   await provider.enable();
   return triggerConnection;
+};
+
+const makeAccessRequest = (uri: string, wallet?: IMobileRegistryEntry) => {
+  switch (Platform.OS) {
+    case 'ios':
+      Linking.openURL(formatIOSMobile(uri, wallet!));
+      return;
+    case 'android':
+    default:
+      Linking.openURL(uri);
+      return;
+  }
+};
+
+const formatIOSMobile = (uri: string, entry: IMobileRegistryEntry) => {
+  const encodedUri: string = encodeURIComponent(uri);
+  return entry.universalLink
+    ? `${entry.universalLink}/wc?uri=${encodedUri}`
+    : entry.deepLink
+    ? `${entry.deepLink}${
+        entry.deepLink.endsWith(':') ? '//' : '/'
+      }wc?uri=${encodedUri}`
+    : '';
 };
