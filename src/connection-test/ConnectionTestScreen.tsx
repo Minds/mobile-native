@@ -131,9 +131,9 @@ const createStore = (): Store => ({
 
     try {
       const tx = {
-        to: '0x2E7F4dD3acD226DdAe10246a45337F815CF6B3ff',
+        to: this.address,
         from: this.address,
-        value: '1000000000000000000',
+        value: this.web3.utils.toWei('0.00001', 'ether'),
       };
 
       await this.web3.eth.sendTransaction(tx);

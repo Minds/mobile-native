@@ -10,9 +10,10 @@ const MINDS_METADATA = {
 
 export const getConnector = async () => {
   const provider = new WalletConnectProvider({
-    infuraId: '27e484dcd9e3efcfd25a83a78777cdf1',
+    infuraId: '612f7850f87540d4a0c41796284ef45f',
     clientMeta: MINDS_METADATA,
     qrcode: false,
+    chainId: 4,
   });
 
   return connectToWallet(provider);
