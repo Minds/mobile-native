@@ -1,6 +1,6 @@
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import { IMobileRegistryEntry } from '@walletconnect/types';
-import { Linking, Platform } from 'react-native';
+import { Linking } from 'react-native';
 
 type ConnectToWalletProps = {
   provider: WalletConnectProvider;
@@ -42,18 +42,14 @@ const connectToWallet = async ({ provider, wallet }: ConnectToWalletProps) => {
 };
 
 const makeAccessRequest = (uri: string, wallet?: IMobileRegistryEntry) => {
-  switch (Platform.OS) {
-    case 'ios':
-      Linking.openURL(formatIOSMobile(uri, wallet!));
-      return;
-    case 'android':
-    default:
-      Linking.openURL(uri);
-      return;
+  if (wallet) {
+    Linking.openURL(formatWalletURL(uri, wallet));
   }
+
+  Linking.openURL(uri);
 };
 
-const formatIOSMobile = (uri: string, entry: IMobileRegistryEntry) => {
+const formatWalletURL = (uri: string, entry: IMobileRegistryEntry) => {
   const encodedUri: string = encodeURIComponent(uri);
   return entry.universalLink
     ? `${entry.universalLink}/wc?uri=${encodedUri}`
