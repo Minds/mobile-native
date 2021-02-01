@@ -1,6 +1,7 @@
 import React from 'react';
 import { ScrollView, Text, View } from 'react-native';
 import WalletConnectProvider from '@walletconnect/web3-provider';
+import { IMobileRegistryEntry } from '@walletconnect/types';
 import Web3 from 'web3';
 import Button from '../common/components/Button';
 import ThemedStyles from '../styles/ThemedStyles';
@@ -32,9 +33,9 @@ export default observer(() => {
   const theme = ThemedStyles.style;
   const store = useLocalStore<Store>(createStore);
 
-  const startConnection = async () => {
+  const startConnection = async (wallet?: IMobileRegistryEntry) => {
     try {
-      const provider = await getConnector();
+      const provider = await getConnector(wallet);
       const web3 = new Web3(provider as any);
       store.setWeb3(web3);
       store.setProvider(provider);
@@ -79,21 +80,11 @@ export default observer(() => {
           )}
         </>
       ) : (
-        <>
-          <Button
-            onPress={startConnection}
-            text="Connect"
-            containerStyle={[
-              theme.transparentButton,
-              theme.paddingVertical3x,
-              theme.fullWidth,
-              theme.marginTop,
-              theme.borderPrimary,
-            ]}
-            textStyle={theme.buttonText}
-          />
-          <WalletConnectModal onWalletSelect={() => {}} />
-        </>
+        <WalletConnectModal
+          onWalletSelect={(wallet) => {
+            startConnection(wallet);
+          }}
+        />
       )}
     </ScrollView>
   );
