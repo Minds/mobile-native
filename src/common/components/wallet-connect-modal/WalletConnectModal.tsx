@@ -8,12 +8,13 @@ import {
 } from 'react-native';
 import Modal from 'react-native-modal';
 import { IMobileRegistryEntry } from '@walletconnect/types';
+import { isIOS } from '@walletconnect/utils';
 import Button from '../Button';
 import { Wallets, Logos } from './registry';
 import ThemedStyles from '../../../styles/ThemedStyles';
 
 type Props = {
-  onWalletSelect: (wallet: IMobileRegistryEntry) => void;
+  onWalletSelect: (wallet?: IMobileRegistryEntry) => void;
 };
 
 const styles = StyleSheet.create({
@@ -78,20 +79,35 @@ export default function ({ onWalletSelect }: Props) {
         </View>
       </Modal>
 
-      <Button
-        onPress={() => {
-          setModalVisible(true);
-        }}
-        text="Open Modal"
-        containerStyle={[
-          theme.transparentButton,
-          theme.paddingVertical3x,
-          theme.fullWidth,
-          theme.marginTop,
-          theme.borderPrimary,
-        ]}
-        textStyle={theme.buttonText}
-      />
+      {isIOS() ? (
+        <Button
+          onPress={() => {
+            setModalVisible(true);
+          }}
+          text="Choose Wallet"
+          containerStyle={[
+            theme.transparentButton,
+            theme.paddingVertical3x,
+            theme.fullWidth,
+            theme.marginTop,
+            theme.borderPrimary,
+          ]}
+          textStyle={theme.buttonText}
+        />
+      ) : (
+        <Button
+          onPress={() => onWalletSelect()}
+          text="Connect"
+          containerStyle={[
+            theme.transparentButton,
+            theme.paddingVertical3x,
+            theme.fullWidth,
+            theme.marginTop,
+            theme.borderPrimary,
+          ]}
+          textStyle={theme.buttonText}
+        />
+      )}
     </>
   );
 }

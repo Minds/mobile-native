@@ -1,7 +1,7 @@
 const registry = require('@walletconnect/mobile-registry/registry.json');
-import { Wallet } from '../../../blockchain/services/WalletConnectService';
+import { IMobileRegistryEntry } from '@walletconnect/types';
 
-export const Wallets: Wallet[] = registry.slice(0, 5);
+export const Wallets: IMobileRegistryEntry[] = registry.slice(0, 5);
 
 export const Logos = {
   Rainbow: require('@walletconnect/mobile-registry/logos/rainbow.png'),

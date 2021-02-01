@@ -44,6 +44,7 @@ const connectToWallet = async ({ provider, wallet }: ConnectToWalletProps) => {
 const makeAccessRequest = (uri: string, wallet?: IMobileRegistryEntry) => {
   if (wallet) {
     Linking.openURL(formatWalletURL(uri, wallet));
+    return;
   }
 
   Linking.openURL(uri);
