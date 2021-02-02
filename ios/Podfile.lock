@@ -3,7 +3,7 @@ PODS:
   - Crypto (0.1.0):
     - React
   - DoubleConversion (1.1.6)
-  - EXAV (8.6.0):
+  - EXAV (9.0.0):
     - UMCore
     - UMFileSystemInterface
     - UMPermissionsInterface
@@ -78,6 +78,8 @@ PODS:
   - Permission-PhotoLibrary (2.2.0):
     - RNPermissions
   - RCTRequired (0.63.3)
+  - RCTSilentSwitch (0.1.0):
+    - React
   - RCTSystemSetting (1.7.6):
     - React
   - RCTTypeSafety (0.63.3):
@@ -380,7 +382,7 @@ PODS:
     - React
   - RNReanimated (1.9.0):
     - React
-  - RNScreens (2.15.0):
+  - RNScreens (2.17.1):
     - React-Core
   - RNSentry (1.7.2):
     - React
@@ -450,6 +452,7 @@ DEPENDENCIES:
   - Permission-Microphone (from `../node_modules/react-native-permissions/ios/Microphone.podspec`)
   - Permission-PhotoLibrary (from `../node_modules/react-native-permissions/ios/PhotoLibrary.podspec`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
+  - RCTSilentSwitch (from `../node_modules/react-native-silent-switch`)
   - RCTSystemSetting (from `../node_modules/react-native-system-setting`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
   - React (from `../node_modules/react-native/`)
@@ -582,6 +585,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-permissions/ios/PhotoLibrary.podspec"
   RCTRequired:
     :path: "../node_modules/react-native/Libraries/RCTRequired"
+  RCTSilentSwitch:
+    :path: "../node_modules/react-native-silent-switch"
   RCTSystemSetting:
     :path: "../node_modules/react-native-system-setting"
   RCTTypeSafety:
@@ -725,7 +730,7 @@ SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   Crypto: 523c2f143c741d3f61371c811c0983ee9c7d18ec
   DoubleConversion: cde416483dac037923206447da6e1454df403714
-  EXAV: 1f679b57367f8889b5ea15067413c9e2d95039fb
+  EXAV: 5fd81d380626cfea59d68c4a9b34c46232fb679c
   EXConstants: f486f6b4a36b86e47ab258d4d2b7b2699786fdce
   EXErrorRecovery: 16696fe023fb46a32c3b09033abc361cfcf150a7
   EXFileSystem: afe9b1fd937d30270bf5108ba44e2f4a1d1ad694
@@ -749,6 +754,7 @@ SPEC CHECKSUMS:
   Permission-Microphone: 06462b9d979ada12095bcff8d5ee1aeeeaf20b5d
   Permission-PhotoLibrary: e3ff899f87a3eda29427c142ca93837e8802d228
   RCTRequired: 48884c74035a0b5b76dbb7a998bd93bcfc5f2047
+  RCTSilentSwitch: bc3867bfe1d9bd19391d15ce0d27f208b6731e52
   RCTSystemSetting: 5107b7350d63b3f7b42a1277d07e4e5d9df879be
   RCTTypeSafety: edf4b618033c2f1c5b7bc3d90d8e085ed95ba2ab
   React: f36e90f3ceb976546e97df3403e37d226f79d0e3
@@ -797,7 +803,7 @@ SPEC CHECKSUMS:
   RNPermissions: 477d88d0be7ecb0a7b344e4d5fbb0352de104626
   RNPhotoEditor: f00eb35b43ce3650b743fab6fce333ccde26b384
   RNReanimated: b5ccb50650ba06f6e749c7c329a1bc3ae0c88b43
-  RNScreens: 2ad555d4d9fa10b91bb765ca07fe9b29d59573f0
+  RNScreens: b6c9607e6fe47c1b6e2f1910d2acd46dd7ecea3a
   RNSentry: 2d4a0e18c6dfe93b647c360e0d15c9391d24e9d1
   RNShare: 8b171d4b43c1d886917fdd303bf7a4b87167b05c
   RNSharedElement: 00b1a1420d213a34459bb9a5aacabb38107d7948
