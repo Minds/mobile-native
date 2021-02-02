@@ -40,6 +40,9 @@ class VideoPlayerService {
   };
 
   constructor() {
+    SystemSetting.getVolume().then(
+      (value) => (this.currentSystemVolume = value),
+    );
     SilentSwitch.addEventListener((silent) => {
       this.setIsSilent(silent);
       const v = silent ? 0 : 1;

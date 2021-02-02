@@ -192,15 +192,11 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
           if (status.isPlaying) {
             this.setDuration(status.durationMillis || 0);
             videoPlayerService.enableVolumeListener();
-          } else if (
-            isIOS &&
-            !this.paused &&
-            !status.didJustFinish &&
-            !status.durationMillis
-          ) {
+          } else if (isIOS && !this.paused && !status.didJustFinish) {
             // fix ios autoplay
             this.player?.setStatusAsync({
               shouldPlay: true,
+              volume: this.volume,
             });
           }
 
