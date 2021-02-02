@@ -156,7 +156,6 @@ export default class Activity extends Component<PropsType> {
           if (visible) {
             const user = sessionService.getUser();
             if (
-              user.plus &&
               !user.disable_autoplay_videos &&
               !settingsStore.dataSaverEnabled
             ) {

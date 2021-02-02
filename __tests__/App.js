@@ -27,6 +27,7 @@ jest.mock('web3');
 
 //mock packages
 jest.mock('react-native-share-menu');
+jest.mock('react-native-silent-switch');
 jest.mock('@gorhom/bottom-sheet', () => {
   const react = require('react-native');
 

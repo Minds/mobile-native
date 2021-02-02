@@ -1,16 +1,20 @@
-import attachmentService from '../../../common/services/attachment.service';
-import logService from '../../../common/services/log.service';
+import { Platform } from 'react-native';
 import type { AVPlaybackStatus, Video } from 'expo-av';
 import _ from 'lodash';
+import { runInAction } from 'mobx';
+
+import attachmentService from '../../../common/services/attachment.service';
+import logService from '../../../common/services/log.service';
 import featuresService from '../../../common/services/features.service';
 import apiService from '../../../common/services/api.service';
 import videoPlayerService from '../../../common/services/video-player.service';
-import { runInAction } from 'mobx';
 
 export type Source = {
   src: string;
   size: number;
 };
+
+const isIOS = Platform.OS === 'ios';
 
 const createMindsVideoStore = ({ entity, autoplay }) => {
   const store = {
@@ -187,11 +191,22 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
 
           if (status.isPlaying) {
             this.setDuration(status.durationMillis || 0);
+            videoPlayerService.enableVolumeListener();
+          } else if (
+            isIOS &&
+            !this.paused &&
+            !status.didJustFinish &&
+            !status.durationMillis
+          ) {
+            // fix ios autoplay
+            this.player?.setStatusAsync({
+              shouldPlay: true,
+            });
           }
 
-          if (status.didJustFinish && !status.isLooping) {
-            this.onVideoEnd();
-          }
+          // if (status.didJustFinish && !status.isLooping) {
+          //  this.onVideoEnd();
+          // }
         }
       }
     },
@@ -251,10 +266,10 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
       videoPlayerService.setCurrent(this);
     },
     pause() {
-      this.setPaused(true);
       if (videoPlayerService.current === this) {
         videoPlayerService.clear();
       }
+      this.setPaused(true);
     },
     setPlayer(player: Video) {
       this.player = player;

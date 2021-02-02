@@ -1,4 +1,4 @@
-import { Audio, ResizeMode, Video, VideoReadyForDisplayEvent } from 'expo-av';
+import { ResizeMode, Video, VideoReadyForDisplayEvent } from 'expo-av';
 import { toJS } from 'mobx';
 import { observer } from 'mobx-react';
 import React, { useEffect, useRef } from 'react';
@@ -24,12 +24,6 @@ const ExpoVideo = observer(
 
     useEffect(() => {
       if (!localStore.player && playbackObject.current) {
-        Audio.setAudioModeAsync({
-          playsInSilentModeIOS: true,
-          interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
-          shouldDuckAndroid: false,
-          interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
-        });
         localStore.setPlayer(playbackObject.current);
       }
     }, [localStore]);

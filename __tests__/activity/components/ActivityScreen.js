@@ -19,6 +19,7 @@ getStores.mockReturnValue({
 
 jest.mock('react-native-safe-area-context');
 jest.mock('react-native-material-menu');
+jest.mock('react-native-silent-switch');
 jest.mock('@react-navigation/native');
 jest.mock('react-native-gesture-handler');
 jest.mock('react-native-redash');
