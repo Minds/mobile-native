@@ -5,10 +5,10 @@ import {
   StyleSheet,
   Image,
   TouchableHighlight,
+  Platform,
 } from 'react-native';
 import Modal from 'react-native-modal';
 import { IMobileRegistryEntry } from '@walletconnect/types';
-import { isIOS } from '@walletconnect/utils';
 import Button from '../Button';
 import { Wallets, Logos } from './registry';
 import ThemedStyles from '../../../styles/ThemedStyles';
@@ -79,7 +79,7 @@ export default function ({ onWalletSelect }: Props) {
         </View>
       </Modal>
 
-      {isIOS() ? (
+      {Platform.OS === 'ios' ? (
         <Button
           onPress={() => {
             setModalVisible(true);
