@@ -2,6 +2,7 @@ import React from 'react';
 import { ScrollView, Text, View } from 'react-native';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import { IMobileRegistryEntry } from '@walletconnect/types';
+import { convertUtf8ToHex } from '@walletconnect/utils';
 import Web3 from 'web3';
 import Button from '../common/components/Button';
 import ThemedStyles from '../styles/ThemedStyles';
@@ -51,7 +52,7 @@ export default observer(() => {
   return (
     <ScrollView
       style={[theme.flexContainer, theme.backgroundPrimary]}
-      contentContainerStyle={theme.paddingBottom4x}>
+      contentContainerStyle={theme.padding4x}>
       {store.connected && store.web3 ? (
         <>
           <View style={[theme.centered, theme.marginVertical3x]}>
@@ -154,7 +155,10 @@ const createStore = (): Store => ({
 
     try {
       const message = 'Hello World';
-      const result = await this.web3.eth.sign(message, this.address);
+
+      const params = [convertUtf8ToHex(message), this.address];
+      console.log(params);
+      const result = await this.provider?.connector.signPersonalMessage(params);
 
       console.log('formatted', {
         method: 'personal_sign',
