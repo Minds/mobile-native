@@ -1,49 +1,77 @@
 import React from 'react';
 import { ScrollView, Text, View } from 'react-native';
-import WalletConnectProvider from '@walletconnect/web3-provider';
-import { IMobileRegistryEntry } from '@walletconnect/types';
-import { convertUtf8ToHex } from '@walletconnect/utils';
-import Web3 from 'web3';
+
 import Button from '../common/components/Button';
 import ThemedStyles from '../styles/ThemedStyles';
-import { observer, useLocalStore } from 'mobx-react';
-import { getConnector } from '../blockchain/services/WalletConnectService';
+import { observer } from 'mobx-react';
 import WalletConnectModal from '../common/components/wallet-connect-modal/WalletConnectModal';
-
-type Store = {
-  web3: Web3 | null;
-  provider: WalletConnectProvider | null;
-  connected: boolean;
-  chainId: number | null;
-  accounts: string[] | null;
-  address: string | null;
-  formattedResult: Record<string, any> | null;
-  setWeb3: (newValue: Store['web3']) => void;
-  setProvider: (newValue: Store['provider']) => void;
-  setConnected: (newValue: Store['connected']) => void;
-  setFormattedResult: (newValue: Store['formattedResult']) => void;
-  setChainId: (newValue: Store['chainId']) => void;
-  setAccounts: (newValue: Store['accounts']) => void;
-  setAddress: (newValue: Store['address']) => void;
-  sendTestTransaction: () => Promise<void>;
-  signTestMessage: () => Promise<void>;
-  resetConnection: () => void;
-};
+import useWalletConnect from '../blockchain/walletconnect/useWalletConnect';
+import { convertUtf8ToHex } from '@walletconnect/utils';
 
 export default observer(() => {
   const theme = ThemedStyles.style;
-  const store = useLocalStore<Store>(createStore);
+  const store = useWalletConnect();
 
-  const startConnection = async (wallet?: IMobileRegistryEntry) => {
+  const startConnection = async (wallet) => {
+    console.log('connectiong toooo', wallet);
+
     try {
-      const provider = await getConnector(wallet);
-      const web3 = new Web3(provider as any);
-      store.setWeb3(web3);
-      store.setProvider(provider);
-      store.setConnected(true);
-      store.setAccounts(provider.accounts);
-      store.setAddress(provider.accounts[0]);
-      store.setChainId(provider.chainId);
+      store
+        .connect(wallet)
+        .then(() => console.log('CONNECTED ' + store.address));
+    } catch (error) {
+      console.log('error =>', error);
+    }
+  };
+  const sendTestTransaction = async () => {
+    if (!store.web3 || !store.address) {
+      return;
+    }
+    const tx = {
+      to: store.address,
+      from: store.address,
+      value: store.web3.utils.toWei('0.00001', 'ether'),
+    };
+
+    store.web3.eth
+      .sendTransaction(tx)
+      .once('transactionHash', (hash: any) => {
+        console.log('hash =>', hash);
+      })
+      .once('receipt', (receipt: any) => {
+        console.log('receipt =>', receipt);
+      })
+      .once('error', (error: any) => {
+        console.log('error =>', error);
+      });
+  };
+  const signTestMessage = async () => {
+    if (!store.web3 || !store.address) {
+      return;
+    }
+
+    try {
+      const message = 'Hello World';
+
+      const params = [convertUtf8ToHex(message), store.address];
+      console.log(params);
+      const result = await store.provider?.connector.signPersonalMessage(
+        params,
+      );
+
+      console.log('formatted', {
+        method: 'personal_sign',
+        address: store.address,
+        valid: true,
+        result,
+      });
+
+      // this.setFormattedResult({
+      //   method: 'personal_sign',
+      //   address: this.address,
+      //   valid: true,
+      //   result,
+      // });
     } catch (error) {
       console.log('error =>', error);
     }
@@ -60,25 +88,15 @@ export default observer(() => {
           </View>
           <Button
             containerStyle={[theme.marginBottom3x]}
-            onPress={store.sendTestTransaction}
+            onPress={sendTestTransaction}
             text="Send Test Transaction"
           />
           <Button
             containerStyle={[theme.marginBottom3x]}
-            onPress={store.signTestMessage}
+            onPress={signTestMessage}
             text="Sign Message"
           />
           <Button onPress={store.resetConnection} text="Disconnect" />
-          {store.formattedResult && (
-            <View style={[theme.marginVertical6x]}>
-              {Object.keys(store.formattedResult).map((key) => (
-                <View key={key}>
-                  <Text>{`${key}:`}</Text>
-                  <Text>{store.formattedResult![key].toString()}</Text>
-                </View>
-              ))}
-            </View>
-          )}
         </>
       ) : (
         <WalletConnectModal
@@ -89,99 +107,4 @@ export default observer(() => {
       )}
     </ScrollView>
   );
-});
-
-const createStore = (): Store => ({
-  web3: null,
-  provider: null,
-  connected: false,
-  chainId: null,
-  accounts: null,
-  address: null,
-  formattedResult: null,
-  setWeb3(newValue: Store['web3']) {
-    this.web3 = newValue;
-  },
-  setProvider(newValue: Store['provider']) {
-    this.provider = newValue;
-  },
-  setFormattedResult(newValue: Store['formattedResult']) {
-    this.formattedResult = newValue;
-  },
-  setConnected(newValue: Store['connected']) {
-    this.connected = newValue;
-  },
-  setChainId(newValue: Store['chainId']) {
-    this.chainId = newValue;
-  },
-  setAccounts(newValue: Store['accounts']) {
-    this.accounts = newValue;
-  },
-  setAddress(newValue: Store['address']) {
-    this.address = newValue;
-  },
-  async sendTestTransaction() {
-    if (!this.web3 || !this.address) {
-      return;
-    }
-    const tx = {
-      to: this.address,
-      from: this.address,
-      value: this.web3.utils.toWei('0.00001', 'ether'),
-    };
-
-    this.web3.eth
-      .sendTransaction(tx)
-      .once('transactionHash', (hash: any) => {
-        console.log('hash =>', hash);
-      })
-      .once('receipt', (receipt: any) => {
-        console.log('receipt =>', receipt);
-        this.setFormattedResult({
-          method: 'send_transaction',
-          address: this.address,
-          valid: true,
-          result: receipt,
-        });
-      })
-      .once('error', (error: any) => {
-        console.log('error =>', error);
-      });
-  },
-  async signTestMessage() {
-    if (!this.web3 || !this.address) {
-      return;
-    }
-
-    try {
-      const message = 'Hello World';
-
-      const params = [convertUtf8ToHex(message), this.address];
-      console.log(params);
-      const result = await this.provider?.connector.signPersonalMessage(params);
-
-      console.log('formatted', {
-        method: 'personal_sign',
-        address: this.address,
-        valid: true,
-        result,
-      });
-
-      this.setFormattedResult({
-        method: 'personal_sign',
-        address: this.address,
-        valid: true,
-        result,
-      });
-    } catch (error) {
-      console.log('error =>', error);
-    }
-  },
-  resetConnection() {
-    this.setConnected(false);
-    this.setProvider(null);
-    this.setChainId(null);
-    this.setAccounts(null);
-    this.setAddress(null);
-  },
 });
