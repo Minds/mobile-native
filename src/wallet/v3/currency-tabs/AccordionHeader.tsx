@@ -30,7 +30,7 @@ const AccordionHeader = ({ title, subtitle, tooltip, isActive }: PropsType) => {
         theme.paddingLeft4x,
       ]}>
       <View style={[theme.flexContainer, theme.rowJustifyStart]}>
-        <Text style={theme.fontLM}>{title}</Text>
+        <Text style={[theme.fontLM, theme.fontMedium]}>{title}</Text>
         {tooltip && (
           <View style={styles.tooltipContainer}>
             <Tooltip

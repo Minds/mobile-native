@@ -121,6 +121,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     fontFamily: 'Roboto-Medium',
     borderRadius: 20,
+    overflow: 'hidden',
   },
 });
 

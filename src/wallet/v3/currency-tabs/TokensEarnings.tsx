@@ -4,7 +4,10 @@ import { View } from 'react-native';
 import CenteredLoading from '../../../common/components/CenteredLoading';
 import DatePicker from '../../../common/components/DatePicker';
 import ThemedStyles from '../../../styles/ThemedStyles';
-import { WalletStoreType } from '../../v2/createWalletStore';
+import {
+  WalletStoreType,
+  ContributionMetric,
+} from '../../v2/createWalletStore';
 import MindsScores from './MindsScores';
 import Payout from './Payout';
 
@@ -24,6 +27,10 @@ export type Reward = {
   token_amount: string;
   tokenomics_version: number;
   alltime_summary: {
+    score: string;
+    token_amount: string;
+  };
+  global_summary: {
     score: string;
     token_amount: string;
   };
@@ -51,6 +58,8 @@ const createLocalStore = ({ walletStore }) => ({
   selectedDate: new Date(),
   rewards: {} as RewardsType,
   prices: {} as PricesType,
+  contributionScores: [] as ContributionMetric[],
+  liquidityPositions: {} as any,
   loading: true,
   get isToday() {
     return this.selectedDate.toDateString() === new Date().toDateString();
@@ -67,11 +76,15 @@ const createLocalStore = ({ walletStore }) => ({
       | {
           rewards: RewardsType;
           prices: PricesType;
+          contributionScores: ContributionMetric[];
+          liquidityPositions: any;
         },
   ) {
     if (response) {
       this.rewards = response.rewards;
       this.prices = response.prices;
+      this.contributionScores = response.contributionScores;
+      this.liquidityPositions = response.liquidityPositions;
     }
   },
   setPrices(prices: PricesType) {
@@ -97,8 +110,6 @@ const TokensEarnings = observer(({ walletStore }: PropsType) => {
   if (localStore.loading) {
     return <CenteredLoading />;
   }
-
-  console.log(localStore.rewards);
 
   return (
     <View style={theme.paddingTop5x}>

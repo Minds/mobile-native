@@ -4,6 +4,8 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Tooltip } from 'react-native-elements';
 import { Reward } from './TokensEarnings';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { format } from './MindsTokens';
+import i18n from '../../../common/services/i18n.service';
 
 type AccordionContentData = {
   title: string;
@@ -23,78 +25,85 @@ type AccordionContentSummary = {
 
 type PropsType = {
   data: Reward;
-  type: 'minds' | 'cash';
+  summary?: React.ReactElement;
 };
 
-const AccordionContent = ({ data, type }: PropsType) => {
+export const Container = ({ style = {}, children }) => {
+  const theme = ThemedStyles.style;
+  const paddingPointsView = [
+    theme.rowJustifyStart,
+    theme.paddingLeft4x,
+    theme.paddingTop3x,
+    style,
+  ];
+  return <View style={paddingPointsView}>{children}</View>;
+};
+
+export const Row = ({ style = {}, children }) => {
+  const theme = ThemedStyles.style;
+  const rowView = [theme.rowStretch, theme.flexContainer, style];
+  return <View style={rowView}>{children}</View>;
+};
+
+export const Title = ({ style = {}, children }) => {
+  const theme = ThemedStyles.style;
+  const titleStyle = [
+    theme.colorSecondaryText,
+    theme.fontNormal,
+    theme.fontL,
+    style,
+  ];
+  return <Text style={titleStyle}>{children}</Text>;
+};
+
+export const Info = ({ style = {}, children }) => {
+  const theme = ThemedStyles.style;
+  const infoStyle = [theme.fontMedium, theme.alignSelfEnd, theme.fontL, style];
+  return <Text style={infoStyle}>{children}</Text>;
+};
+
+const AccordionContent = ({ data, summary }: PropsType) => {
   const theme = ThemedStyles.style;
 
   const processedData: AccordionContentData[] = [
     {
       title: 'Your Score',
-      info: `${data.score} points`,
+      info: `${format(data.score, false)} points`,
       tooltip: {
-        title: 'Minds Pro earnings Minds Pro earnings Minds Pro earnings',
+        title: i18n.t(`wallet.tokens.tooltips.${data.reward_type}Score`),
         width: 200,
         height: 80,
       },
     },
     {
-      title: 'Total network score',
-      info: `${data.alltime_summary.score} points`,
+      title: 'Network score',
+      info: `${format(data.global_summary.score, false)} points`,
       tooltip: {
-        title: 'Minds Pro earnings Minds Pro earnings Minds Pro earnings',
+        title: i18n.t(`wallet.tokens.tooltips.${data.reward_type}Total`),
         width: 200,
         height: 80,
       },
     },
     {
-      title: 'Your percentage',
-      info: `${data.share_pct}%`,
+      title: 'Your share',
+      info: `${format(data.share_pct * 100)}%`,
       tooltip: {
-        title: 'Minds Pro earnings Minds Pro earnings Minds Pro earnings',
+        title: i18n.t(`wallet.tokens.tooltips.${data.reward_type}Percentage`),
         width: 200,
         height: 80,
       },
     },
     {
-      title: type === 'minds' ? 'Token reward' : 'Cash reward',
-      info:
-        type === 'minds' ? `${data.token_amount} MINDS` : '$0.35 (0.5% of $5)',
+      title: 'Reward',
+      info: `${format(parseFloat(data.token_amount))} (${format(
+        data.share_pct * 100,
+      )}% of ${format(parseFloat(data.global_summary.token_amount))})`,
       tooltip: {
-        title: 'Minds Pro earnings Minds Pro earnings Minds Pro earnings',
+        title: i18n.t(`wallet.tokens.tooltips.${data.reward_type}Reward`),
         width: 200,
         height: 80,
       },
     },
-  ];
-
-  const summary: AccordionContentSummary[] = [
-    {
-      concept: 'Comments',
-      count: 1,
-      points: 10,
-    },
-    {
-      concept: 'Page Views',
-      count: 100,
-      points: 30,
-    },
-    {
-      concept: 'Check-ins',
-      count: 3,
-      points: 20,
-    },
-  ];
-
-  let totalSummaryPoints = 0;
-
-  const titleStyle = [theme.colorSecondaryText, theme.fontNormal, theme.fontL];
-  const infoStyle = [theme.fontMedium, theme.alignSelfEnd, theme.fontL];
-  const paddingPointsView = [
-    theme.rowJustifyStart,
-    theme.paddingLeft4x,
-    theme.paddingTop5x,
   ];
 
   return (
@@ -109,9 +118,9 @@ const AccordionContent = ({ data, type }: PropsType) => {
       ]}>
       {processedData.map((row) => {
         return (
-          <View style={paddingPointsView}>
-            <View style={[theme.rowStretch, theme.flexContainer]}>
-              <Text style={titleStyle}>{row.title}</Text>
+          <Container>
+            <Row>
+              <Title>{row.title}</Title>
               {row.tooltip && (
                 <View style={styles.tooltipContainer}>
                   <Tooltip
@@ -132,11 +141,11 @@ const AccordionContent = ({ data, type }: PropsType) => {
                   </Tooltip>
                 </View>
               )}
-            </View>
-            <View style={[theme.rowStretch, theme.flexContainer]}>
-              <Text style={infoStyle}>{row.info}</Text>
-            </View>
-          </View>
+            </Row>
+            <Row>
+              <Info>{row.info}</Info>
+            </Row>
+          </Container>
         );
       })}
       <Text
@@ -152,37 +161,7 @@ const AccordionContent = ({ data, type }: PropsType) => {
         ]}>
         Summary
       </Text>
-      {summary.map((row) => {
-        totalSummaryPoints += row.points;
-        return (
-          <View style={paddingPointsView}>
-            <View
-              style={[
-                theme.rowJustifySpaceBetween,
-                theme.flexContainer,
-                theme.marginRight6x,
-              ]}>
-              <Text style={titleStyle}>{row.concept}</Text>
-              <Text style={titleStyle}>{row.count}</Text>
-            </View>
-            <View style={[theme.rowStretch, theme.flexContainer]}>
-              <Text style={[...infoStyle, theme.bold]}>
-                {row.points}{' '}
-                <Text style={[theme.colorSecondaryText]}>points</Text>
-              </Text>
-            </View>
-          </View>
-        );
-      })}
-      <View style={paddingPointsView}>
-        <View style={[theme.rowJustifySpaceBetween, theme.flexContainer]}>
-          <Text style={titleStyle}>Total Points</Text>
-          <Text style={infoStyle}>{totalSummaryPoints} </Text>
-        </View>
-        <View style={theme.flexContainer}>
-          <Text style={titleStyle}>points</Text>
-        </View>
-      </View>
+      {summary && summary}
     </View>
   );
 };

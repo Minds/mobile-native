@@ -11,9 +11,35 @@ import AccordionHeader from './AccordionHeader';
 import { TokensEarningsStore } from './TokensEarnings';
 import MindsTokens from './MindsTokens';
 import AccordionContent from './AccordionContent';
+import EngagementSummary from './EngagementSummary';
+import HoldingSummary from './HoldingSummary';
+import LiquiditySummary from './LiquiditySummary';
 
 type PropsType = {
   store: TokensEarningsStore;
+};
+
+const Sumary = (props: any) => {
+  switch (props.reward.reward_type) {
+    case 'engagement':
+      return (
+        <EngagementSummary
+          contributionScores={props.contributionScores}
+          reward={props.reward}
+        />
+      );
+    case 'holding':
+      return <HoldingSummary reward={props.reward} />;
+    case 'liquidity':
+      return (
+        <LiquiditySummary
+          liquidityPositions={props.liquidityPositions}
+          reward={props.reward}
+        />
+      );
+    default:
+      return <></>;
+  }
 };
 
 const renderHeader = (content: AccordionDataType, index, isActive) => (
@@ -39,13 +65,24 @@ const MindsScores = observer(({ store }: PropsType) => {
     title: i18n.t(`wallet.${reward.reward_type}`),
     subtitle: (
       <MindsTokens
-        minds={reward.token_amount.substring(0, 5)}
+        minds={reward.token_amount}
         mindsPrice={store.prices.minds}
       />
     ),
-    children: <AccordionContent data={reward} type={'minds'} />,
+    children: (
+      <AccordionContent
+        data={reward}
+        summary={
+          <Sumary
+            reward={reward}
+            contributionScores={store.contributionScores}
+            liquidityPositions={store.liquidityPositions}
+          />
+        }
+      />
+    ),
     tooltip: {
-      title: 'Minds Pro earnings Minds Pro earnings Minds Pro earnings',
+      title: i18n.t(`wallet.tokens.tooltips.${reward.reward_type}`),
       width: 200,
       height: 80,
     },

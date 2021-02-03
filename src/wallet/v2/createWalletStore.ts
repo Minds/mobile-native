@@ -19,6 +19,17 @@ import BlockchainApiService from '../../blockchain/BlockchainApiService';
 import { ChartTimespanType } from './currency-tabs/TokensChart';
 import sessionService from '../../common/services/session.service';
 import walletService, { WalletJoinResponse } from '../WalletService';
+import moment from 'moment';
+
+const getStartOfDayUnixTs = (date: Date) =>
+  Number(moment(date).utc().startOf('day').format('X'));
+
+export type ContributionMetric = {
+  id: string;
+  label: string;
+  amount: string;
+  score: number;
+};
 
 const defaultStripeDetails = <StripeDetails>{
   hasAccount: false,
@@ -365,11 +376,29 @@ const createWalletStore = () => ({
   },
   async loadRewards(date: Date) {
     try {
+      const dateTs = getStartOfDayUnixTs(date);
       let rewards = <any>await api.get('api/v3/rewards/', {
         date: date.toISOString(),
       });
       const prices = <any>await api.get('api/v3/blockchain/token-prices');
-      return { rewards, prices };
+      const response = <any>await api.get('api/v2/blockchain/contributions', {
+        from: dateTs,
+        to: dateTs + 1,
+      });
+      const liquidityPositions = <any>await api.get(
+        'api/v3/blockchain/liquidity-positions',
+        {
+          timestamp: dateTs,
+        },
+      );
+      const contributionScores: ContributionMetric[] = [];
+      Object.keys(response.contributions[0].metrics).forEach((key) => {
+        const metric = response.contributions[0].metrics[key];
+        metric.id = key;
+        metric.label = metric.metric;
+        contributionScores.push(metric);
+      });
+      return { rewards, prices, contributionScores, liquidityPositions };
     } catch (e) {
       logService.exception(e);
       return false;
