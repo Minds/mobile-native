@@ -10,18 +10,35 @@ import AccordionSet, {
   AccordionDataType,
   RenderFunction,
 } from '../../../common/components/AccordionSet';
-import { getFriendlyLabel } from '../../v2/earnings/UsdEarnings';
 import MindsTokens, { format } from './MindsTokens';
 import { Earnings } from '../../v2/WalletTypes';
 import AccordionContent, { AccordionContentData } from './AccordionContent';
 import AccordionHeader from './AccordionHeader';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import CenteredLoading from '../../../common/components/CenteredLoading';
+import capitalize from '../../../common/helpers/capitalize';
 
 type PropsType = {
   localStore: TokensEarningsStore;
   walletStore: WalletStoreType;
   currencyType: EarningsCurrencyType;
+};
+
+export const getFriendlyLabel = (id: string): string => {
+  switch (id) {
+    case 'wire':
+      return 'Minds Pay';
+    case 'wire-all':
+      return 'Memberships & Tips';
+    case 'partner':
+      return 'Revenue Share';
+    case 'plus':
+      return 'Minds+ Content';
+    case 'wire_referral':
+      return 'Minds Pay Commissions';
+  }
+
+  return capitalize(id);
 };
 
 const getProcessedData = (earning: Earnings): AccordionContentData[] =>
