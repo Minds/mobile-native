@@ -111,6 +111,7 @@ import SuggestedChannelsScreen from '../onboarding/v2/steps/SuggestedChannelsScr
 import SuggestedGroupsScreen from '../onboarding/v2/steps/SuggestedGroupsScreen';
 import BoostChannelScreen from '../boost/v2/BoostChannelScreen';
 import BoostPostScreen from '../boost/v2/BoostPostScreen';
+import { topBarButtonTabBarRef } from '../common/components/topbar-tabbar/TopBarButtonTabBar';
 
 const isIos = Platform.OS === 'ios';
 
@@ -269,7 +270,7 @@ const MainScreen = () => {
       gestureHandlerProps={{
         hitSlop: { left: 0, width: dimensions.width },
         //@ts-ignore
-        waitFor: portraitBarRef,
+        waitFor: [portraitBarRef, topBarButtonTabBarRef],
       }}
       drawerType="slide"
       drawerContent={Drawer}

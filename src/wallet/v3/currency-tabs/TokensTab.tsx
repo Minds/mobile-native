@@ -14,9 +14,11 @@ import TransactionsListTokens from '../../v2/TransactionList/TransactionsListTok
 import ReceiverSettings from '../../v2/address/ReceiverSettings';
 import { WalletScreenNavigationProp } from '../../v2/WalletScreen';
 import i18n from '../../../common/services/i18n.service';
+import TokensRewards from './TokensRewards';
 import TokensEarnings from './TokensEarnings';
 
 const options: Array<ButtonTabType<TokensOptions>> = [
+  { id: 'rewards', title: 'Rewards' },
   { id: 'earnings', title: 'Earnings' },
   { id: 'overview', title: 'Overview' },
   { id: 'transactions', title: 'Transactions' },
@@ -30,7 +32,7 @@ type PropsType = {
 };
 
 const createStore = (walletStore: WalletStoreType) => ({
-  option: walletStore.initialTab || ('earnings' as TokensOptions),
+  option: walletStore.initialTab || ('rewards' as TokensOptions),
   setOption(option: TokensOptions) {
     this.option = option;
   },
@@ -46,6 +48,9 @@ const TokensTab = observer(
 
     let body;
     switch (store.option) {
+      case 'rewards':
+        body = <TokensRewards walletStore={walletStore} />;
+        break;
       case 'earnings':
         body = <TokensEarnings walletStore={walletStore} />;
         break;

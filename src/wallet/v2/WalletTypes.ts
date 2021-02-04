@@ -1,6 +1,7 @@
 import { CurrencyType } from '../../types/Payment';
 
 export type TokensOptions =
+  | 'rewards'
   | 'overview'
   | 'transactions'
   | 'settings'

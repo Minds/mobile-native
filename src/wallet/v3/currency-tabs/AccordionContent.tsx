@@ -2,12 +2,9 @@ import React from 'react';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { StyleSheet, Text, View } from 'react-native';
 import { Tooltip } from 'react-native-elements';
-import { Reward } from './TokensEarnings';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { format } from './MindsTokens';
-import i18n from '../../../common/services/i18n.service';
 
-type AccordionContentData = {
+export type AccordionContentData = {
   title: string;
   info: string;
   tooltip?: {
@@ -17,14 +14,8 @@ type AccordionContentData = {
   };
 };
 
-type AccordionContentSummary = {
-  concept: string;
-  count: number;
-  points: number;
-};
-
 type PropsType = {
-  data: Reward;
+  data: AccordionContentData[];
   summary?: React.ReactElement;
 };
 
@@ -65,47 +56,6 @@ export const Info = ({ style = {}, children }) => {
 const AccordionContent = ({ data, summary }: PropsType) => {
   const theme = ThemedStyles.style;
 
-  const processedData: AccordionContentData[] = [
-    {
-      title: 'Your Score',
-      info: `${format(data.score, false)} points`,
-      tooltip: {
-        title: i18n.t(`wallet.tokens.tooltips.${data.reward_type}Score`),
-        width: 200,
-        height: 80,
-      },
-    },
-    {
-      title: 'Network score',
-      info: `${format(data.global_summary.score, false)} points`,
-      tooltip: {
-        title: i18n.t(`wallet.tokens.tooltips.${data.reward_type}Total`),
-        width: 200,
-        height: 80,
-      },
-    },
-    {
-      title: 'Your share',
-      info: `${format(data.share_pct * 100)}%`,
-      tooltip: {
-        title: i18n.t(`wallet.tokens.tooltips.${data.reward_type}Percentage`),
-        width: 200,
-        height: 80,
-      },
-    },
-    {
-      title: 'Reward',
-      info: `${format(parseFloat(data.token_amount))} (${format(
-        data.share_pct * 100,
-      )}% of ${format(parseFloat(data.global_summary.token_amount))})`,
-      tooltip: {
-        title: i18n.t(`wallet.tokens.tooltips.${data.reward_type}Reward`),
-        width: 200,
-        height: 80,
-      },
-    },
-  ];
-
   return (
     <View
       style={[
@@ -116,7 +66,7 @@ const AccordionContent = ({ data, summary }: PropsType) => {
         theme.borderTop,
         theme.borderBottom,
       ]}>
-      {processedData.map((row) => {
+      {data.map((row) => {
         return (
           <Container>
             <Row>
@@ -148,19 +98,21 @@ const AccordionContent = ({ data, summary }: PropsType) => {
           </Container>
         );
       })}
-      <Text
-        style={[
-          theme.fontLM,
-          theme.fontMedium,
-          theme.marginLeft4x,
-          theme.paddingTop3x,
-          theme.borderPrimary,
-          theme.borderTop,
-          theme.marginTop7x,
-          theme.width80,
-        ]}>
-        Summary
-      </Text>
+      {summary && (
+        <Text
+          style={[
+            theme.fontLM,
+            theme.fontMedium,
+            theme.marginLeft4x,
+            theme.paddingTop3x,
+            theme.borderPrimary,
+            theme.borderTop,
+            theme.marginTop7x,
+            theme.width80,
+          ]}>
+          Summary
+        </Text>
+      )}
       {summary && summary}
     </View>
   );

@@ -11,28 +11,34 @@ type PropsType = {
   reward: Reward;
 };
 
+const ContributionScores = ({ metric }: { metric: ContributionMetric }) => {
+  const theme = ThemedStyles.style;
+  return (
+    <Container>
+      <Row>
+        <Title>{metric.label}</Title>
+      </Row>
+      <Row>
+        <Title style={theme.width25}>{format(metric.amount, false)}</Title>
+        <Info style={[theme.bold, theme.width75]}>
+          {format(metric.score, false)}{' '}
+          <Text style={[theme.colorSecondaryText]}>points</Text>
+        </Info>
+      </Row>
+    </Container>
+  );
+};
+
 const EngagementSummary = ({ contributionScores, reward }: PropsType) => {
   const theme = ThemedStyles.style;
+  const metrics = contributionScores.map((metric) => (
+    <ContributionScores metric={metric} />
+  ));
 
   return (
     <>
-      {contributionScores.map((row) => {
-        return (
-          <Container>
-            <Row>
-              <Title>{row.label}</Title>
-            </Row>
-            <Row>
-              <Title style={theme.width25}>{format(row.amount, false)}</Title>
-              <Info style={[theme.bold, theme.width75]}>
-                {format(row.score, false)}{' '}
-                <Text style={[theme.colorSecondaryText]}>points</Text>
-              </Info>
-            </Row>
-          </Container>
-        );
-      })}
-      <Container style={theme.marginTop4x}>
+      {metrics}
+      <Container style={contributionScores.length ? theme.marginTop4x : {}}>
         <Row>
           <Title>Total Points</Title>
         </Row>

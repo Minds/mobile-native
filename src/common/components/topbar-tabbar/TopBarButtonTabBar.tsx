@@ -1,9 +1,6 @@
 import React from 'react';
 import { View, StyleProp, TextStyle, StyleSheet } from 'react-native';
-import {
-  NativeViewGestureHandler,
-  ScrollView,
-} from 'react-native-gesture-handler';
+import { ScrollView } from 'react-native-gesture-handler';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import Button from '../Button';
 
@@ -20,6 +17,11 @@ type PropsType<T> = {
 };
 
 /**
+ * TopBarButtonTabBar Ref
+ */
+export const topBarButtonTabBarRef = React.createRef<ScrollView>();
+
+/**
  * Tab bar
  */
 function TopBarButtonTabBar<T>(props: PropsType<T>) {
@@ -27,28 +29,26 @@ function TopBarButtonTabBar<T>(props: PropsType<T>) {
 
   return (
     <View style={[theme.rowJustifyStart, theme.paddingLeft]}>
-      <NativeViewGestureHandler>
-        <ScrollView horizontal>
-          {props.tabs.map((tab, i) => (
-            <Button
-              borderless
-              onPress={() => props.onChange(tab.id)}
-              key={i}
-              text={tab.title}
-              containerStyle={[
-                styles.buttonContainer,
-                tab.id === props.current
-                  ? theme.backgroundLink
-                  : theme.backgroundTransparent,
-              ]}
-              textStyle={[
-                styles.text,
-                tab.id !== props.current ? theme.colorSecondaryText : {},
-              ]}
-            />
-          ))}
-        </ScrollView>
-      </NativeViewGestureHandler>
+      <ScrollView horizontal ref={topBarButtonTabBarRef}>
+        {props.tabs.map((tab, i) => (
+          <Button
+            borderless
+            onPress={() => props.onChange(tab.id)}
+            key={i}
+            text={tab.title}
+            containerStyle={[
+              styles.buttonContainer,
+              tab.id === props.current
+                ? theme.backgroundLink
+                : theme.backgroundTransparent,
+            ]}
+            textStyle={[
+              styles.text,
+              tab.id !== props.current ? theme.colorSecondaryText : {},
+            ]}
+          />
+        ))}
+      </ScrollView>
     </View>
   );
 }

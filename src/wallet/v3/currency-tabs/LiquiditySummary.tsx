@@ -1,7 +1,7 @@
 import React from 'react';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { View } from 'react-native';
-import { Reward } from './TokensEarnings';
+import { Reward } from './TokensRewards';
 import { format } from './MindsTokens';
 import { Container, Info, Row, Title } from './AccordionContent';
 

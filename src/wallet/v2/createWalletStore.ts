@@ -31,6 +31,11 @@ export type ContributionMetric = {
   score: number;
 };
 
+export type PricesType = {
+  eth: string;
+  minds: string;
+};
+
 const defaultStripeDetails = <StripeDetails>{
   hasAccount: false,
   hasBank: false,
@@ -113,6 +118,7 @@ const createWalletStore = () => ({
   usdPayouts: [],
   usdEarningsTotal: 0,
   usdPayoutsTotals: 0,
+  prices: { minds: '0', eth: '0' } as PricesType,
   /**
    * Set currency tab
    * @param currency
@@ -345,6 +351,8 @@ const createWalletStore = () => ({
         },
       );
 
+      console.log('EARNINGS', response);
+
       if (response.earnings) {
         this.usdEarnings = response.earnings;
       }
@@ -380,25 +388,31 @@ const createWalletStore = () => ({
       let rewards = <any>await api.get('api/v3/rewards/', {
         date: date.toISOString(),
       });
-      const prices = <any>await api.get('api/v3/blockchain/token-prices');
+      if (this.prices.minds === '0') {
+        const prices = <any>await api.get('api/v3/blockchain/token-prices');
+        this.prices.minds = prices.minds;
+        this.prices.eth = prices.eth;
+      }
       const response = <any>await api.get('api/v2/blockchain/contributions', {
         from: dateTs,
         to: dateTs + 1,
       });
+      const contributionScores: ContributionMetric[] = [];
+      if (response.contributions && response.contributions.length > 0) {
+        Object.keys(response.contributions[0].metrics).forEach((key) => {
+          const metric = response.contributions[0].metrics[key];
+          metric.id = key;
+          metric.label = metric.metric;
+          contributionScores.push(metric);
+        });
+      }
       const liquidityPositions = <any>await api.get(
         'api/v3/blockchain/liquidity-positions',
         {
           timestamp: dateTs,
         },
       );
-      const contributionScores: ContributionMetric[] = [];
-      Object.keys(response.contributions[0].metrics).forEach((key) => {
-        const metric = response.contributions[0].metrics[key];
-        metric.id = key;
-        metric.label = metric.metric;
-        contributionScores.push(metric);
-      });
-      return { rewards, prices, contributionScores, liquidityPositions };
+      return { rewards, contributionScores, liquidityPositions };
     } catch (e) {
       logService.exception(e);
       return false;

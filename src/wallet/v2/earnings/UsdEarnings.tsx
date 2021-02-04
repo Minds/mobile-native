@@ -64,16 +64,18 @@ const buildMonthOptions = (numberOfMonths: number = 6): Option[] => {
   return months;
 };
 
-const getFriendlyLabel = (id: string): string => {
+export const getFriendlyLabel = (id: string): string => {
   switch (id) {
     case 'wire':
       return 'Minds Pay';
     case 'wire-all':
       return 'Memberships & Tips';
     case 'partner':
-      return 'Minds Pro';
+      return 'Revenue Share';
     case 'plus':
       return 'Minds+ Content';
+    case 'wire_referral':
+      return 'Minds Pay Commissions';
   }
 
   return capitalize(id);

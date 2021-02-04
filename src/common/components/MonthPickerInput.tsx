@@ -1,6 +1,6 @@
 import { observer, useLocalStore } from 'mobx-react';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MonthPicker from 'react-native-month-year-picker';
@@ -10,6 +10,7 @@ type PropsType = {
   minimumDate: Date;
   maximumDate: Date;
   containerStyle?: any;
+  onConfirm(date: Date): void;
 };
 
 const MonthPickerInput = observer((props: PropsType) => {
@@ -30,22 +31,24 @@ const MonthPickerInput = observer((props: PropsType) => {
       const selectedDate = newDate || this.date;
       this.closePicker();
       this.setDate(selectedDate);
+      props.onConfirm(selectedDate);
     },
   }));
 
   return (
-    <View style={[theme.rowJustifySpaceBetween, props.containerStyle]}>
+    <TouchableOpacity
+      style={[theme.rowJustifySpaceBetween, props.containerStyle]}
+      onPress={localStore.openPicker}>
       <View>
         <Text style={[styles.label, theme.colorSecondaryText]}>Month</Text>
-        <Text style={[theme.fontLM]}>
+        <Text style={[theme.fontLM, theme.fontMedium]}>
           {moment(localStore.date).format('MM-YYYY')}
         </Text>
       </View>
       <Icon
         name="calendar"
-        size={24}
+        size={21}
         color={ThemedStyles.getColor('secondary_text')}
-        onPress={localStore.openPicker}
         style={theme.centered}
       />
       {localStore.showPicker && (
@@ -56,7 +59,7 @@ const MonthPickerInput = observer((props: PropsType) => {
           maximumDate={props.maximumDate}
         />
       )}
-    </View>
+    </TouchableOpacity>
   );
 });
 

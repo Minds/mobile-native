@@ -1,99 +1,32 @@
 import { observer, useLocalStore } from 'mobx-react';
-import React, { useEffect } from 'react';
-import { View } from 'react-native';
-import CenteredLoading from '../../../common/components/CenteredLoading';
-import DatePicker from '../../../common/components/DatePicker';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
+import MonthPickerInput from '../../../common/components/MonthPickerInput';
 import ThemedStyles from '../../../styles/ThemedStyles';
-import {
-  WalletStoreType,
-  ContributionMetric,
-} from '../../v2/createWalletStore';
-import MindsScores from './MindsScores';
-import Payout from './Payout';
+import { WalletStoreType } from '../../v2/createWalletStore';
+import moment from 'moment';
+import EarningsOverview from './EarningsOverview';
 
 type PropsType = {
   walletStore: WalletStoreType;
 };
 
-export type Reward = {
-  user_guid: string;
-  date: string;
-  date_iso8601: string;
-  date_unixts: number;
-  reward_type: 'engagement' | 'holding' | 'liquidity';
-  score: string;
-  share_pct: number;
-  multiplier: number;
-  token_amount: string;
-  tokenomics_version: number;
-  alltime_summary: {
-    score: string;
-    token_amount: string;
-  };
-  global_summary: {
-    score: string;
-    token_amount: string;
-  };
-};
-
-type RewardsType = {
-  date: string;
-  date_iso8601: string;
-  date_unixts: number;
-  engagement: Reward;
-  holding: Reward;
-  liquidity: Reward;
-  total: { daily: string; alltime: string };
-  user_guid: string;
-  eth: string;
-  minds: string;
-};
-
-type PricesType = {
-  eth: string;
-  minds: string;
-};
-
 const createLocalStore = ({ walletStore }) => ({
   selectedDate: new Date(),
-  rewards: {} as RewardsType,
-  prices: {} as PricesType,
-  contributionScores: [] as ContributionMetric[],
-  liquidityPositions: {} as any,
   loading: true,
-  get isToday() {
-    return this.selectedDate.toDateString() === new Date().toDateString();
-  },
   setLoading(loading) {
     this.loading = loading;
   },
   onConfirm(date: Date) {
     this.selectedDate = date;
   },
-  setRewards(
-    response:
-      | false
-      | {
-          rewards: RewardsType;
-          prices: PricesType;
-          contributionScores: ContributionMetric[];
-          liquidityPositions: any;
-        },
-  ) {
-    if (response) {
-      this.rewards = response.rewards;
-      this.prices = response.prices;
-      this.contributionScores = response.contributionScores;
-      this.liquidityPositions = response.liquidityPositions;
-    }
-  },
-  setPrices(prices: PricesType) {
-    this.prices = prices;
-  },
-  async loadRewards(date: Date) {
+  async loadEarnings(date: Date) {
     this.setLoading(true);
-    const response = await walletStore.loadRewards(date);
-    this.setRewards(response);
+    const from = moment(date).utc().startOf('month').unix();
+    await walletStore.loadEarnings(
+      from,
+      moment.unix(from).utc().add(1, 'month').unix(),
+    );
     this.setLoading(false);
   },
 });
@@ -103,29 +36,27 @@ export type TokensEarningsStore = ReturnType<typeof createLocalStore>;
 const TokensEarnings = observer(({ walletStore }: PropsType) => {
   const theme = ThemedStyles.style;
   const localStore = useLocalStore(createLocalStore, { walletStore });
-  useEffect(() => {
-    localStore.loadRewards(localStore.selectedDate);
-  }, [localStore, localStore.selectedDate, walletStore]);
-
-  if (localStore.loading) {
-    return <CenteredLoading />;
-  }
 
   return (
     <View style={theme.paddingTop5x}>
-      <DatePicker
-        onConfirm={localStore.onConfirm}
+      <MonthPickerInput
+        minimumDate={moment().subtract(6, 'months').toDate()}
         maximumDate={new Date()}
-        date={localStore.selectedDate}
+        containerStyle={[styles.container, theme.borderPrimary]}
+        onConfirm={localStore.onConfirm}
       />
-      <Payout
-        minds={localStore.rewards.total.daily}
-        mindsPrice={localStore.prices.minds}
-        isToday={localStore.isToday}
-      />
-      <MindsScores store={localStore} />
+      <EarningsOverview localStore={localStore} walletStore={walletStore} />
     </View>
   );
+});
+
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: 20,
+    paddingVertical: 15,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+  },
 });
 
 export default TokensEarnings;
