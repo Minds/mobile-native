@@ -52,7 +52,9 @@ const TokensTab = observer(
         body = <TokensRewards walletStore={walletStore} />;
         break;
       case 'earnings':
-        body = <TokensEarnings walletStore={walletStore} />;
+        body = (
+          <TokensEarnings walletStore={walletStore} currencyType="tokens" />
+        );
         break;
       case 'overview':
         body = (

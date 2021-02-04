@@ -2,12 +2,14 @@ import React from 'react';
 import { StyleSheet, Text, TextStyle } from 'react-native';
 import abbrev from '../../../common/helpers/abbrev';
 import ThemedStyles from '../../../styles/ThemedStyles';
+import { EarningsCurrencyType } from '../../v2/createWalletStore';
 
 type PropsType = {
   textStyles?: TextStyle | TextStyle[];
   secondaryTextStyle?: TextStyle | TextStyle[];
   minds: string;
   mindsPrice: string;
+  currencyType?: EarningsCurrencyType;
 };
 
 export const format = (number: number | string, decimals = true) => {
@@ -32,17 +34,25 @@ const MindsTokens = ({
   secondaryTextStyle,
   minds,
   mindsPrice,
+  currencyType,
 }: PropsType) => {
+  const isTokens = !currencyType || currencyType === 'tokens';
   const theme = ThemedStyles.style;
   const mindsPriceF = parseFloat(mindsPrice);
-  const mindsF = parseFloat(minds);
-  const cash = mindsPriceF * mindsF;
+  let mindsF = parseFloat(minds);
+  const cash = isTokens ? mindsPriceF * mindsF : mindsF;
+  mindsF = isTokens ? mindsF : mindsF / mindsPriceF;
   return (
     <Text style={[styles.minds, textStyles]}>
-      {format(mindsF)} MINDS{' '}
-      <Text style={[styles.cash, theme.colorSecondaryText, secondaryTextStyle]}>
-        (${format(cash)})
-      </Text>
+      {isTokens ? ' ' : '$'}
+      {format(mindsF)}
+      {isTokens ? ' MINDS ' : ''}
+      {isTokens && (
+        <Text
+          style={[styles.cash, theme.colorSecondaryText, secondaryTextStyle]}>
+          (${format(cash)})
+        </Text>
+      )}
     </Text>
   );
 };

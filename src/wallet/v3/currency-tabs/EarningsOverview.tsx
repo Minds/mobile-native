@@ -1,6 +1,9 @@
 import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
-import { WalletStoreType } from '../../v2/createWalletStore';
+import {
+  EarningsCurrencyType,
+  WalletStoreType,
+} from '../../v2/createWalletStore';
 import { TokensEarningsStore } from './TokensEarnings';
 import { ScrollView } from 'react-native-gesture-handler';
 import AccordionSet, {
@@ -18,6 +21,7 @@ import CenteredLoading from '../../../common/components/CenteredLoading';
 type PropsType = {
   localStore: TokensEarningsStore;
   walletStore: WalletStoreType;
+  currencyType: EarningsCurrencyType;
 };
 
 const getProcessedData = (earning: Earnings): AccordionContentData[] =>
@@ -38,36 +42,41 @@ const renderHeader = (content: AccordionDataType, index, isActive) => (
 const ContentComponent: RenderFunction = (content: AccordionDataType) =>
   content.children;
 
-const EarningsOverview = observer(({ localStore, walletStore }: PropsType) => {
-  const theme = ThemedStyles.style;
-  useEffect(() => {
-    localStore.loadEarnings(localStore.selectedDate);
-  }, [localStore, localStore.selectedDate, walletStore]);
+const EarningsOverview = observer(
+  ({ localStore, walletStore, currencyType }: PropsType) => {
+    const theme = ThemedStyles.style;
+    useEffect(() => {
+      localStore.loadEarnings(localStore.selectedDate);
+    }, [localStore, localStore.selectedDate, walletStore]);
 
-  if (localStore.loading) {
-    return <CenteredLoading />;
-  }
-  const accordionData: Array<AccordionDataType> = walletStore.usdEarnings.map(
-    (earning) => ({
-      title: getFriendlyLabel(earning.id),
-      subtitle: (
-        <MindsTokens
-          minds={earning.amount_usd.toString()}
-          mindsPrice={walletStore.prices.minds}
+    if (localStore.loading) {
+      return <CenteredLoading />;
+    }
+    const accordionData: Array<AccordionDataType> = walletStore.usdEarnings.map(
+      (earning) => ({
+        title: getFriendlyLabel(earning.id),
+        subtitle: (
+          <MindsTokens
+            minds={(
+              earning.amount_usd / parseFloat(walletStore.prices.minds)
+            ).toString()}
+            mindsPrice={walletStore.prices.minds}
+            currencyType={currencyType}
+          />
+        ),
+        children: <AccordionContent data={getProcessedData(earning)} />,
+      }),
+    );
+    return (
+      <ScrollView contentContainerStyle={theme.paddingTop4x}>
+        <AccordionSet
+          data={accordionData}
+          headerComponent={renderHeader}
+          contentComponent={ContentComponent}
         />
-      ),
-      children: <AccordionContent data={getProcessedData(earning)} />,
-    }),
-  );
-  return (
-    <ScrollView contentContainerStyle={theme.paddingTop4x}>
-      <AccordionSet
-        data={accordionData}
-        headerComponent={renderHeader}
-        contentComponent={ContentComponent}
-      />
-    </ScrollView>
-  );
-});
+      </ScrollView>
+    );
+  },
+);
 
 export default EarningsOverview;

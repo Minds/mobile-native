@@ -24,6 +24,8 @@ import moment from 'moment';
 const getStartOfDayUnixTs = (date: Date) =>
   Number(moment(date).utc().startOf('day').format('X'));
 
+export type EarningsCurrencyType = 'tokens' | 'usd';
+
 export type ContributionMetric = {
   id: string;
   label: string;

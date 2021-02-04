@@ -3,12 +3,16 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import MonthPickerInput from '../../../common/components/MonthPickerInput';
 import ThemedStyles from '../../../styles/ThemedStyles';
-import { WalletStoreType } from '../../v2/createWalletStore';
+import {
+  EarningsCurrencyType,
+  WalletStoreType,
+} from '../../v2/createWalletStore';
 import moment from 'moment';
 import EarningsOverview from './EarningsOverview';
 
 type PropsType = {
   walletStore: WalletStoreType;
+  currencyType: EarningsCurrencyType;
 };
 
 const createLocalStore = ({ walletStore }) => ({
@@ -33,7 +37,7 @@ const createLocalStore = ({ walletStore }) => ({
 
 export type TokensEarningsStore = ReturnType<typeof createLocalStore>;
 
-const TokensEarnings = observer(({ walletStore }: PropsType) => {
+const TokensEarnings = observer(({ walletStore, currencyType }: PropsType) => {
   const theme = ThemedStyles.style;
   const localStore = useLocalStore(createLocalStore, { walletStore });
 
@@ -45,7 +49,11 @@ const TokensEarnings = observer(({ walletStore }: PropsType) => {
         containerStyle={[styles.container, theme.borderPrimary]}
         onConfirm={localStore.onConfirm}
       />
-      <EarningsOverview localStore={localStore} walletStore={walletStore} />
+      <EarningsOverview
+        localStore={localStore}
+        walletStore={walletStore}
+        currencyType={currencyType}
+      />
     </View>
   );
 });
