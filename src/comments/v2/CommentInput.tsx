@@ -64,6 +64,18 @@ const CommentInput = observer(() => {
       ? i18n.t('messenger.typeYourMessage')
       : i18n.t('activity.typeComment');
 
+  let bottomPadding = {};
+  if (provider.store.parent || provider.store.edit) {
+    bottomPadding = {
+      paddingBottom:
+        provider.store.text.length >= 300
+          ? 30
+          : provider.store.text.length >= 150
+          ? 15
+          : 0,
+    };
+  }
+
   return (
     <KeyboardSpacingView
       noInset={true}
@@ -115,6 +127,7 @@ const CommentInput = observer(() => {
               theme.rowJustifyStart,
               theme.alignEnd,
               theme.paddingHorizontal4x,
+              bottomPadding,
             ]}>
             <TextInput
               ref={ref}
