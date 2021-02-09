@@ -364,12 +364,10 @@ export default class GroupViewScreen extends Component {
       return null;
     }
 
-    console.log('this.state.conversationIsOpen', this.state.conversationIsOpen);
     const showPosterFab =
       this.props.groupView.tab === 'feed' &&
       group.can(FLAG_CREATE_POST) &&
       !this.state.conversationIsOpen;
-    console.log('showPosterFab', showPosterFab);
 
     const memberActionSheet = this.state.memberActions ? (
       <ActionSheet
