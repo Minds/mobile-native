@@ -107,6 +107,7 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
         />
       ) : (
         <BottomSheetFlatList
+          focusHook={useFocusEffect}
           ref={ref}
           data={props.store.comments.slice()}
           ListHeaderComponent={Header}

@@ -22,7 +22,7 @@ import Actions from '../../../newsfeed/activity/Actions';
 import Activity from '../../../newsfeed/activity/Activity';
 
 import CommentsStore from '../../../comments/v2/CommentsStore';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import { ScrollView } from 'react-native-gesture-handler';
 import sessionService from '../../../common/services/session.service';
 import videoPlayerService from '../../../common/services/video-player.service';
 import ExplicitOverlay from '../../../common/components/explicit/ExplicitOverlay';
@@ -36,6 +36,7 @@ import BoxShadow from '../../../common/components/BoxShadow';
 import ActivityMetrics from '../../../newsfeed/activity/metrics/ActivityMetrics';
 import CommentBottomSheet from '../../../comments/v2/CommentBottomSheet';
 import type BottomSheet from '@gorhom/bottom-sheet';
+import { TouchableOpacity } from '@gorhom/bottom-sheet';
 
 type ActivityRoute = RouteProp<AppStackParamList, 'Activity'>;
 
@@ -120,7 +121,9 @@ const ActivityFullScreen = observer((props: PropsType) => {
         ((user.plus && !user.disable_autoplay_videos) || props.forceAutoplay) &&
         mediaRef.current
       ) {
-        mediaRef.current.playVideo(false);
+        mediaRef.current.playVideo(
+          !videoPlayerService.isSilent ? true : undefined,
+        );
       }
     } else {
       mediaRef.current?.pauseVideo();

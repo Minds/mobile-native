@@ -21,7 +21,7 @@ import ThemedStyles from '../styles/ThemedStyles';
 import abbrev from '../common/helpers/abbrev';
 import featuresService from '../common/services/features.service';
 import sessionService from '../common/services/session.service';
-import { IS_FROM_STORE } from '../config/Config';
+import { GOOGLE_PLAY_STORE } from '../config/Config';
 
 const ICON_SIZE = 23;
 
@@ -58,7 +58,7 @@ const getOptionsList = (navigation) => {
         navigation.navigate('Newsfeed');
       },
     },
-    !IS_FROM_STORE
+    !GOOGLE_PLAY_STORE
       ? {
           name: i18n.t('discovery.title'),
           icon: (
@@ -73,7 +73,7 @@ const getOptionsList = (navigation) => {
           },
         }
       : null,
-    featuresService.has('plus-2020') && !IS_FROM_STORE
+    featuresService.has('plus-2020') && !GOOGLE_PLAY_STORE
       ? {
           name: i18n.t('wire.lock.plus'),
           icon: (

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
 import { ChannelStoreType } from '../createChannelStore';
 import { Text, View } from 'react-native';
+import moment from 'moment-timezone';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import LabeledComponent from '../../../common/components/LabeledComponent';
 import i18n from '../../../common/services/i18n.service';
@@ -57,6 +58,15 @@ const AboutTab = observer(({ store, navigation }: PropsType) => {
         label={i18n.t('channel.edit.hashtags')}
         wrapperStyle={margin}>
         <Text>{`#${tags}`}</Text>
+      </LabeledComponent>
+      <LabeledComponent label={i18n.t('joined')} wrapperStyle={margin}>
+        <Text>
+          {store.channel?.time_created
+            ? moment(parseInt(store.channel.time_created, 10) * 1000).format(
+                'MMM Y',
+              )
+            : ''}
+        </Text>
       </LabeledComponent>
       <LabeledComponent label={i18n.t('channel.edit.location')}>
         <Text>{store.channel?.city}</Text>

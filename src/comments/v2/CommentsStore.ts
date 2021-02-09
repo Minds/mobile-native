@@ -297,9 +297,12 @@ export default class CommentsStore {
    * @param {string} text
    */
   @action
-  setText = (text) => {
+  setText = (text: string, mature?: number) => {
     this.text = text;
     this.embed.richEmbedCheck(text);
+    if (mature !== undefined) {
+      this.mature = mature;
+    }
   };
 
   /**
@@ -356,7 +359,7 @@ export default class CommentsStore {
     this.saving = true;
 
     const comment = {
-      comment: this.text,
+      comment: this.text.trim(),
       mature: this.mature,
       parent_path: this.getParentPath(),
       attachment_guid: <string | undefined>undefined,
@@ -377,7 +380,7 @@ export default class CommentsStore {
       const data: any = await postComment(this.guid, comment);
 
       this.pushComment(data.comment);
-      this.setText('');
+      this.setText('', 0);
       this.setShowInput(false);
       this.embed.clearRichEmbedAction();
       this.attachment.clear();

@@ -1,11 +1,5 @@
 import React, { PureComponent } from 'react';
-import {
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-  Platform,
-} from 'react-native';
+import { Text, StyleSheet, View, Platform } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import moment from 'moment-timezone';
 
@@ -14,6 +8,7 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import type CommentModel from './CommentModel';
 import ChannelBadges from '../../channel/badges/ChannelBadges';
 import formatDate from '../../common/helpers/date';
+import { TouchableOpacity } from '@gorhom/bottom-sheet';
 const DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
 
 type PropsType = {
