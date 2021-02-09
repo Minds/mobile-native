@@ -327,16 +327,18 @@ export default class GroupHeader extends Component {
                 ]}
                 onPress={this.share}
               />
-              <Icon
-                name="chat-bubble"
-                size={26}
-                style={[
-                  theme.paddingRight,
-                  theme.marginRight,
-                  theme.colorSecondaryText,
-                ]}
-                onPress={this.props.onPressComment}
-              />
+              {!this.props.store.group.conversationDisabled && (
+                <Icon
+                  name="chat-bubble"
+                  size={26}
+                  style={[
+                    theme.paddingRight,
+                    theme.marginRight,
+                    theme.colorSecondaryText,
+                  ]}
+                  onPress={this.props.onPressComment}
+                />
+              )}
               {/* {group.can(FLAG_JOIN_GATHERING) && this.getGatheringButton()} */}
               {group.can(FLAG_JOIN) && this.getActionButton()}
             </View>
