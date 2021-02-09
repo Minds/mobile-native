@@ -7,7 +7,6 @@ import FastImage from 'react-native-fast-image';
 import sessionService from '../../common/services/session.service';
 import NavigationService from '../../navigation/NavigationService';
 import ThemedStyles from '../../styles/ThemedStyles';
-import Comment from './Comment';
 import type CommentsStore from './CommentsStore';
 import i18n from '../../common/services/i18n.service';
 import { useRoute } from '@react-navigation/native';
@@ -62,19 +61,6 @@ export default observer(function CommentListHeader(props: {
             </TouchableOpacity>
             {closeButton}
           </View>
-          <View
-            style={[
-              styles.headerCommentContainer,
-              theme.borderPrimary,
-              theme.backgroundSecondary,
-            ]}>
-            <Comment
-              comment={props.store.parent}
-              store={props.store}
-              hideReply
-              isHeader
-            />
-          </View>
         </View>
       ) : (
         <View
@@ -115,11 +101,6 @@ export default observer(function CommentListHeader(props: {
 });
 
 const styles = StyleSheet.create({
-  headerCommentContainer: {
-    marginTop: 15,
-    borderTopWidth: StyleSheet.hairlineWidth,
-    overflow: 'scroll',
-  },
   iconContainer: {
     paddingRight: 30,
   },

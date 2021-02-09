@@ -2,7 +2,7 @@ import React from 'react';
 import { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import Comment from './Comment';
 import type CommentsStore from './CommentsStore';
@@ -87,8 +87,27 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
   );
 
   const Header = React.useCallback(() => {
-    return <LoadMore store={props.store} />;
-  }, [props.store]);
+    return (
+      <>
+        <LoadMore store={props.store} />
+        {props.store.parent && (
+          <View
+            style={[
+              styles.headerCommentContainer,
+              theme.borderPrimary,
+              theme.backgroundSecondary,
+            ]}>
+            <Comment
+              comment={props.store.parent}
+              store={props.store}
+              hideReply
+              isHeader
+            />
+          </View>
+        )}
+      </>
+    );
+  }, [props.store, theme.backgroundSecondary, theme.borderPrimary]);
 
   const Footer = React.useCallback(() => {
     return <LoadMore store={props.store} next={true} />;
@@ -126,5 +145,12 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
 };
 
 const keyExtractor = (item) => item.guid;
+
+const styles = StyleSheet.create({
+  headerCommentContainer: {
+    borderTopWidth: StyleSheet.hairlineWidth,
+    overflow: 'scroll',
+  },
+});
 
 export default observer(CommentList);
