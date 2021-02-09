@@ -22,12 +22,13 @@ import CommentInput from './CommentInput';
 import { observer, useLocalStore } from 'mobx-react';
 import { GOOGLE_PLAY_STORE } from '../../config/Config';
 
-const BottomSheetLocalStore = () => ({
+const BottomSheetLocalStore = ({ onChange }) => ({
   isOpen: 0,
   setOpen(isOpen: number) {
     if (this.isOpen !== isOpen) {
       this.isOpen = isOpen;
     }
+    onChange && onChange(isOpen);
   },
 });
 
@@ -92,6 +93,7 @@ type PropsType = {
   commentsStore: CommentsStore;
   hideContent: boolean;
   title?: string;
+  onChange?: (isOpen: number) => void;
 };
 
 const Stack = createStackNavigator();
@@ -113,7 +115,9 @@ const ScreenReplyComment = () => {
 };
 
 const CommentBottomSheet = (props: PropsType, ref: any) => {
-  const localStore = useLocalStore(BottomSheetLocalStore);
+  const localStore = useLocalStore(BottomSheetLocalStore, {
+    onChange: props.onChange,
+  });
   const { current: focusedUrn } = React.useRef(
     props.commentsStore.getFocuedUrn(),
   );
