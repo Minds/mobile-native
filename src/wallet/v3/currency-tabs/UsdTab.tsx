@@ -109,13 +109,17 @@ const UsdTab = observer(
             width={screen.width - 20}
             height={250}
             backgroundColor={ThemedStyles.getColor('secondary_background')}
-            popover={<PaidInfo />}>
+            popover={<PaidInfo walletStore={walletStore} />}>
             <PaidButton
               containerStyle={theme.marginRight2x}
               onPress={() => tooltipRef.current.toggleTooltip()}
+              walletStore={walletStore}
             />
           </Tooltip>
-          <ConnectBankButton />
+          <ConnectBankButton
+            walletStore={walletStore}
+            navigation={navigation}
+          />
         </View>
 
         <TopBarButtonTabBar

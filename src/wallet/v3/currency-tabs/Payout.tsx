@@ -22,7 +22,7 @@ const Payout = ({ minds, mindsPrice, isToday }: PropsType) => {
         </Text>*/}
       </View>
       <MindsTokens
-        minds={minds}
+        value={minds}
         mindsPrice={mindsPrice}
         textStyles={[theme.centered, theme.flexContainer]}
       />
@@ -33,7 +33,7 @@ const Payout = ({ minds, mindsPrice, isToday }: PropsType) => {
         {i18n.t('wallet.usd.earnings')}
       </Text>
       <MindsTokens
-        minds={minds}
+        value={minds}
         mindsPrice={mindsPrice}
         textStyles={theme.flexContainer}
       />

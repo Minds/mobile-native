@@ -3,10 +3,12 @@ import { Text, ViewStyle } from 'react-native';
 import SegmentedButton from '../../../common/components/SegmentedButton';
 import i18n from '../../../common/services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
+import { WalletStoreType } from '../../v2/createWalletStore';
 
 type PropsType = {
   containerStyle?: ViewStyle | Array<ViewStyle>;
   onPress?: () => void;
+  walletStore: WalletStoreType;
 };
 
 const PaidButton = (props: PropsType) => {
@@ -16,13 +18,13 @@ const PaidButton = (props: PropsType) => {
     childrenButton1: (
       <Text style={[textStyles]}>
         <Text style={theme.colorSecondaryText}>{i18n.t('wallet.unpaid')}</Text>{' '}
-        $105.00
+        {props.walletStore.stripeDetails.pendingBalanceSplit}
       </Text>
     ),
     childrenButton2: (
       <Text style={textStyles}>
         <Text style={theme.colorSecondaryText}>{i18n.t('wallet.total')}</Text>{' '}
-        $165.00
+        {props.walletStore.stripeDetails.totalPaidOutSplit}
       </Text>
     ),
   };

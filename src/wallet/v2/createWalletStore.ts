@@ -243,7 +243,6 @@ const createWalletStore = () => ({
       const { account } = await api.get<any>('api/v2/payments/stripe/connect');
       this.setStripeAccount(account);
     } catch (e) {
-      console.log('loadStripeAccount');
       logService.exception(e);
     }
     return this.stripeDetails;
@@ -352,8 +351,6 @@ const createWalletStore = () => ({
           to: to,
         },
       );
-
-      console.log('EARNINGS', response);
 
       if (response.earnings) {
         this.usdEarnings = response.earnings;

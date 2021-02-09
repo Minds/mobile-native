@@ -107,7 +107,7 @@ const MindsScores = observer(({ store, prices }: PropsType) => {
   const accordionData: Array<AccordionDataType> = scores.map((reward) => ({
     title: i18n.t(`wallet.${reward.reward_type}`),
     subtitle: (
-      <MindsTokens minds={reward.token_amount} mindsPrice={prices.minds} />
+      <MindsTokens value={reward.token_amount} mindsPrice={prices.minds} />
     ),
     children: (
       <AccordionContent

@@ -58,6 +58,7 @@ export interface Wallet {
 
 export interface BaseEarning {
   amount_cents: number;
+  amount_tokens: string;
   amount_usd: number;
   currency: CurrencyType;
   id: string;

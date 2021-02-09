@@ -2,26 +2,17 @@ import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import i18n from '../../../common/services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
+import { WalletStoreType } from '../../v2/createWalletStore';
 
-const PaidInfo = () => {
+type PropsType = {
+  walletStore: WalletStoreType;
+};
+
+const PaidInfo = ({ walletStore }: PropsType) => {
   const theme = ThemedStyles.style;
-  const unpaidEarnings = '95.00';
-  const monthPaidOuts = [
-    {
-      month: 'December 2020',
-      total: 35,
-    },
-    {
-      month: 'November 2020',
-      total: 35,
-    },
-    {
-      month: 'October 2020',
-      total: 35,
-    },
-  ];
-  let totalPaidOuts = 0;
-  const allTimeEarnings = '195.00';
+  const unpaidEarnings = walletStore.stripeDetails.pendingBalanceSplit;
+  const totalPaidOuts = walletStore.stripeDetails.totalPaidOutSplit;
+  const allTimeEarnings = unpaidEarnings + totalPaidOuts;
   const viewPadding = [theme.paddingLeft3x, theme.paddingTop3x];
   const titleStyle = [
     theme.colorSecondaryText,
@@ -35,19 +26,6 @@ const PaidInfo = () => {
         <View style={viewPadding}>
           <Text style={titleStyle}>{i18n.t('wallet.unpaidEarnings')}</Text>
           <Text style={earningStyle}>${unpaidEarnings}</Text>
-          {monthPaidOuts.map((paidOut) => {
-            totalPaidOuts += paidOut.total;
-            return (
-              <View style={[theme.rowStretch, theme.marginBottom]}>
-                <Text style={[styles.month, theme.colorSecondaryText]}>
-                  {paidOut.month}
-                </Text>
-                <Text style={[styles.month, theme.flexContainer]}>
-                  ${paidOut.total}
-                </Text>
-              </View>
-            );
-          })}
         </View>
         <View
           style={[

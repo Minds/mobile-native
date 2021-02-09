@@ -7,7 +7,7 @@ import { EarningsCurrencyType } from '../../v2/createWalletStore';
 type PropsType = {
   textStyles?: TextStyle | TextStyle[];
   secondaryTextStyle?: TextStyle | TextStyle[];
-  minds: string;
+  value: string;
   mindsPrice: string;
   currencyType?: EarningsCurrencyType;
 };
@@ -32,16 +32,15 @@ export const format = (number: number | string, decimals = true) => {
 const MindsTokens = ({
   textStyles,
   secondaryTextStyle,
-  minds,
+  value,
   mindsPrice,
   currencyType,
 }: PropsType) => {
   const isTokens = !currencyType || currencyType === 'tokens';
   const theme = ThemedStyles.style;
   const mindsPriceF = parseFloat(mindsPrice);
-  let mindsF = parseFloat(minds);
+  const mindsF = parseFloat(value);
   const cash = isTokens ? mindsPriceF * mindsF : mindsF;
-  mindsF = isTokens ? mindsF : mindsF / mindsPriceF;
   return (
     <Text style={[styles.minds, textStyles]}>
       {isTokens ? ' ' : '$'}

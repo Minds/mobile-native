@@ -41,11 +41,21 @@ export const getFriendlyLabel = (id: string): string => {
   return capitalize(id);
 };
 
-const getProcessedData = (earning: Earnings): AccordionContentData[] =>
-  earning.items.map((data) => ({
-    title: getFriendlyLabel(data.id),
-    info: `${format(data.amount_usd)} MINDS`,
-  }));
+const getProcessedData = (
+  earning: Earnings,
+  currencyType: EarningsCurrencyType,
+): AccordionContentData[] =>
+  earning.items.map((data) => {
+    const isTokens = !currencyType || currencyType === 'tokens';
+    const value = isTokens ? data.amount_tokens : data.amount_usd;
+    const formattedValue = value ? format(value) : 0;
+    return {
+      title: getFriendlyLabel(data.id),
+      info: `${isTokens ? '' : '$'}${formattedValue} ${
+        isTokens ? 'MINDS' : ''
+      }`,
+    };
+  });
 
 const renderHeader = (content: AccordionDataType, index, isActive) => (
   <AccordionHeader
@@ -69,21 +79,29 @@ const EarningsOverview = observer(
     if (localStore.loading) {
       return <CenteredLoading />;
     }
-    const accordionData: Array<AccordionDataType> = walletStore.usdEarnings.map(
-      (earning) => ({
-        title: getFriendlyLabel(earning.id),
-        subtitle: (
-          <MindsTokens
-            minds={(
-              earning.amount_usd / parseFloat(walletStore.prices.minds)
-            ).toString()}
-            mindsPrice={walletStore.prices.minds}
-            currencyType={currencyType}
-          />
-        ),
-        children: <AccordionContent data={getProcessedData(earning)} />,
-      }),
-    );
+    const accordionData: Array<AccordionDataType> = walletStore.usdEarnings
+      .filter((earning) => earning.id !== null)
+      .map((earning) => {
+        const value =
+          currencyType === 'tokens'
+            ? earning.amount_tokens || 0
+            : earning.amount_usd > 0
+            ? earning.amount_usd
+            : 0;
+        return {
+          title: getFriendlyLabel(earning.id),
+          subtitle: (
+            <MindsTokens
+              value={value.toString()}
+              mindsPrice={walletStore.prices.minds}
+              currencyType={currencyType}
+            />
+          ),
+          children: (
+            <AccordionContent data={getProcessedData(earning, currencyType)} />
+          ),
+        };
+      });
     return (
       <ScrollView contentContainerStyle={theme.paddingTop4x}>
         <AccordionSet
