@@ -222,7 +222,6 @@ dependencies {
     implementation project(':reactnativenotifications')
 
 
-    implementation project(':rn-apk')
     implementation 'com.google.firebase:firebase-core:16.0.7'
     implementation 'com.google.firebase:firebase-messaging:17.3.3' // IMPORTANT: fix the crash when the app receives a push notification
 
@@ -241,7 +240,6 @@ dependencies {
 
     implementation project(':react-native-fs')
     implementation project(':react-native-minds-encryption')
-    implementation project(':react-native-video-exoplayer')
     implementation project(':react-native-exception-handler')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     // implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"

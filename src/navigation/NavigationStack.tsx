@@ -27,10 +27,6 @@ import BlogsListScreen from '../blogs/BlogsListScreen';
 import BlogsViewScreen from '../blogs/BlogsViewScreen';
 import FabScreenV2 from '../wire/v2/FabScreen';
 import ViewImageScreen from '../media/ViewImageScreen';
-import BlockchainWalletScreen from '../blockchain/wallet/BlockchainWalletScreen';
-import BlockchainWalletModalScreen from '../blockchain/wallet/modal/BlockchainWalletModalScreen';
-import BlockchainWalletImportScreen from '../blockchain/wallet/import/BlockchainWalletImportScreen';
-import BlockchainWalletDetailsScreen from '../blockchain/wallet/details/BlockchainWalletDetailsScreen';
 import ReportScreen from '../report/ReportScreen';
 import NotSupportedScreen from '../static-views/NotSupportedScreen';
 // import OnboardingScreen from '../onboarding/OnboardingScreen';
@@ -413,7 +409,7 @@ const AppStack = function () {
           },
         }}
       />
-      <AppStackNav.Screen
+      {/* <AppStackNav.Screen
         name="BlockchainWallet"
         component={BlockchainWalletScreen}
         options={BlockchainWalletScreen.navigationOptions}
@@ -425,7 +421,7 @@ const AppStack = function () {
       <AppStackNav.Screen
         name="BlockchainWalletDetails"
         component={BlockchainWalletDetailsScreen}
-      />
+      /> */}
       <AppStackNav.Screen
         name="Report"
         component={ReportScreen}
@@ -653,10 +649,10 @@ const RootStack = function (props) {
             component={JoinMembershipScreen}
             options={modalOptions}
           />
-          <RootStackNav.Screen
+          {/* <RootStackNav.Screen
             name="BlockchainWalletModal"
             component={BlockchainWalletModalScreen}
-          />
+          /> */}
           <RootStackNav.Screen
             name="PlusScreen"
             component={PlusScreen}

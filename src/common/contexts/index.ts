@@ -10,10 +10,6 @@ import wire from '../../wire/WireStore';
 import groups from '../../groups/GroupsStore';
 import groupView from '../../groups/GroupViewStore';
 import channelSubscribersStore from '../../channel/subscribers/ChannelSubscribersStore';
-import keychain from '../../keychain/KeychainStore';
-import blockchainTransaction from '../../blockchain/transaction-modal/BlockchainTransactionStore';
-import blockchainWallet from '../../blockchain/wallet/BlockchainWalletStore';
-import blockchainWalletSelector from '../../blockchain/wallet/BlockchainWalletSelectorStore';
 import hashtag from '../../common/stores/HashtagStore';
 import groupsBar from '../../groups/GroupsBarStore';
 import SubscriptionRequestStore from '../../channel/subscription/SubscriptionRequestStore';
@@ -42,10 +38,6 @@ export function createClassStores() {
     boost: new boost(),
     groups: new groups(),
     groupView: new groupView(),
-    keychain: new keychain(),
-    blockchainTransaction: new blockchainTransaction(),
-    blockchainWallet: new blockchainWallet(),
-    blockchainWalletSelector: new blockchainWalletSelector(),
     channelSubscribersStore: new channelSubscribersStore(),
     hashtag: new hashtag(),
     groupsBar: new groupsBar(),

@@ -3,7 +3,6 @@ import { WalletScreenNavigationProp } from '../WalletScreen';
 import { View, Text, StyleSheet } from 'react-native';
 import { WalletStoreType } from '../createWalletStore';
 import ThemedStyles from '../../../styles/ThemedStyles';
-import MenuItem from '../../../common/components/menus/MenuItem';
 import i18n from '../../../common/services/i18n.service';
 
 type PropsType = {
@@ -11,46 +10,46 @@ type PropsType = {
   walletStore: WalletStoreType;
 };
 
-const ReceiverSettings = ({ navigation, walletStore }: PropsType) => {
+const ReceiverSettings = () => {
   const theme = ThemedStyles.style;
   const innerWrapper = [theme.borderBottomHair, theme.borderPrimary];
 
-  const receiverSettingsOptions = walletStore.wallet.receiver.address
-    ? [
-        {
-          title: i18n.t('wallet.activeAddress'),
-          onPress: () =>
-            navigation.push('ReceiverAddressScreen', {
-              walletStore: walletStore,
-            }),
-        },
-        {
-          title: i18n.t('wallet.alternateReceiver'),
-          onPress: () => navigation.push('BlockchainWallet', {}),
-        },
-      ]
-    : [
-        {
-          title: i18n.t('wallet.createAddress'),
-          onPress: () => {
-            if (!walletStore.wallet.receiver.address) {
-              walletStore.createOnchain(true);
-            }
-          },
-        },
-        {
-          title: i18n.t('wallet.usePrivateKey'),
-          onPress: () => true,
-        },
-      ];
+  // const receiverSettingsOptions = walletStore.wallet.receiver.address
+  //   ? [
+  //       {
+  //         title: i18n.t('wallet.activeAddress'),
+  //         onPress: () =>
+  //           navigation.push('ReceiverAddressScreen', {
+  //             walletStore: walletStore,
+  //           }),
+  //       },
+  //       {
+  //         title: i18n.t('wallet.alternateReceiver'),
+  //         onPress: () => navigation.push('BlockchainWallet', {}),
+  //       },
+  //     ]
+  //   : [
+  //       {
+  //         title: i18n.t('wallet.createAddress'),
+  //         onPress: () => {
+  //           if (!walletStore.wallet.receiver.address) {
+  //             walletStore.createOnchain(true);
+  //           }
+  //         },
+  //       },
+  //       {
+  //         title: i18n.t('wallet.usePrivateKey'),
+  //         onPress: () => true,
+  //       },
+  //     ];
   return (
     <View style={theme.paddingTop4x}>
       <Text style={[theme.colorSecondaryText, styles.subTitle]}>
         {i18n.t('wallet.receiverAddresses').toUpperCase()}
       </Text>
       <View style={innerWrapper}>
-        <MenuItem item={receiverSettingsOptions[0]} />
-        <MenuItem item={receiverSettingsOptions[1]} />
+        {/* <MenuItem item={receiverSettingsOptions[0]} />
+        <MenuItem item={receiverSettingsOptions[1]} /> */}
       </View>
     </View>
   );

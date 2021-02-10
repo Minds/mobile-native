@@ -9,7 +9,6 @@ export default class SessionStorage implements ISessionStorage {
   async loadFromStorage() {
     const data = await AsyncStorage.getItem(WC_NAMESPACE);
     if (data) {
-      console.log(data);
       this.session = JSON.parse(data);
     } else {
       console.log('NO SESSION STORED');

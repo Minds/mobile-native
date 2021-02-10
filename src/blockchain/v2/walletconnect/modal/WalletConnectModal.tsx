@@ -1,21 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   View,
   Text,
   StyleSheet,
   Image,
   TouchableHighlight,
-  Platform,
 } from 'react-native';
 import Modal from 'react-native-modal';
-import { IMobileRegistryEntry } from '@walletconnect/types';
-import Button from '../Button';
 import { Wallets, Logos } from './registry';
-import ThemedStyles from '../../../styles/ThemedStyles';
-
-type Props = {
-  onWalletSelect: (wallet?: IMobileRegistryEntry) => void;
-};
+import ThemedStyles from '../../../../styles/ThemedStyles';
+import useWalletConnect from '../useWalletConnect';
+import { observer } from 'mobx-react';
 
 const styles = StyleSheet.create({
   modalBody: {
@@ -29,17 +24,17 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function ({ onWalletSelect }: Props) {
+export default observer(function () {
+  const store = useWalletConnect();
+
   const theme = ThemedStyles.style;
-  const [modalVisible, setModalVisible] = useState(false);
-  const hideModal = () => setModalVisible(false);
 
   return (
     <>
       <Modal
-        isVisible={modalVisible}
-        onBackdropPress={hideModal}
-        onBackButtonPress={hideModal}
+        isVisible={store.modalVisible}
+        onBackdropPress={store.hideModal}
+        onBackButtonPress={store.hideModal}
         backdropOpacity={0.1}
         avoidKeyboard={true}
         animationInTiming={150}>
@@ -58,7 +53,7 @@ export default function ({ onWalletSelect }: Props) {
             <TouchableHighlight
               activeOpacity={0.9}
               underlayColor="#transparent"
-              onPress={() => onWalletSelect(wallet)}>
+              onPress={() => store.setSelectedWallet(wallet)}>
               <View
                 style={[
                   theme.rowJustifySpaceBetween,
@@ -78,36 +73,6 @@ export default function ({ onWalletSelect }: Props) {
           ))}
         </View>
       </Modal>
-
-      {Platform.OS === 'ios' ? (
-        <Button
-          onPress={() => {
-            setModalVisible(true);
-          }}
-          text="Choose Wallet"
-          containerStyle={[
-            theme.transparentButton,
-            theme.paddingVertical3x,
-            theme.fullWidth,
-            theme.marginTop,
-            theme.borderPrimary,
-          ]}
-          textStyle={theme.buttonText}
-        />
-      ) : (
-        <Button
-          onPress={() => onWalletSelect()}
-          text="Connect"
-          containerStyle={[
-            theme.transparentButton,
-            theme.paddingVertical3x,
-            theme.fullWidth,
-            theme.marginTop,
-            theme.borderPrimary,
-          ]}
-          textStyle={theme.buttonText}
-        />
-      )}
     </>
   );
-}
+});

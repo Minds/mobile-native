@@ -5,7 +5,6 @@ import token from '../common/helpers/token';
 import number from '../common/helpers/number';
 import TokensStore from './tokens/TokensStore';
 import storageService from '../common/services/storage.service';
-import web3Service from '../blockchain/services/Web3Service';
 import type { ApiResponse } from '../common/services/api.service';
 
 interface WalletResponse extends ApiResponse {
@@ -66,7 +65,8 @@ class WalletStore {
           address.label.toLowerCase() !== 'offchain' &&
           address.address !== ''
         ) {
-          address.ethBalance = await web3Service.getBalance(address.address);
+          //TODO: Balance now is now in the server response
+          // address.ethBalance = await web3Service.getBalance(address.address);
         }
       });
     }

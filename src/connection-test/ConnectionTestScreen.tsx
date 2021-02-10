@@ -1,28 +1,31 @@
 import React from 'react';
-import { ScrollView, Text, View } from 'react-native';
-
+import { Linking, ScrollView, Text, View } from 'react-native';
 import Button from '../common/components/Button';
 import ThemedStyles from '../styles/ThemedStyles';
 import { observer } from 'mobx-react';
-import WalletConnectModal from '../common/components/wallet-connect-modal/WalletConnectModal';
-import useWalletConnect from '../blockchain/walletconnect/useWalletConnect';
-import { convertUtf8ToHex } from '@walletconnect/utils';
+import useWalletConnect from '../blockchain/v2/walletconnect/useWalletConnect';
+// import { convertUtf8ToHex } from '@walletconnect/utils';
+import BlockchainBoostService from '../blockchain/v2/services/BlockchainBoostService';
 
 export default observer(() => {
   const theme = ThemedStyles.style;
   const store = useWalletConnect();
 
-  const startConnection = async (wallet) => {
-    console.log('connectiong toooo', wallet);
-
+  const startConnection = async () => {
     try {
-      store
-        .connect(wallet)
-        .then(() => console.log('CONNECTED ' + store.address));
+      const r = await store.connect();
+      console.log('response', r);
+      console.log('CONNECTED ' + store.address);
+      console.log(store.selectedWallet);
     } catch (error) {
       console.log('error =>', error);
     }
   };
+
+  React.useEffect(() => {
+    startConnection();
+  }, []);
+
   const sendTestTransaction = async () => {
     if (!store.web3 || !store.address) {
       return;
@@ -32,6 +35,15 @@ export default observer(() => {
       from: store.address,
       value: store.web3.utils.toWei('0.00001', 'ether'),
     };
+
+    const registry = require('@walletconnect/mobile-registry/registry.json');
+
+    const r = registry.find(
+      (d) => d.shortName === store.provider?.walletMeta.name,
+    );
+    if (r) {
+      Linking.openURL(`${r.deepLink}${r.deepLink.endsWith(':') ? '//' : '/'}`);
+    }
 
     store.web3.eth
       .sendTransaction(tx)
@@ -51,20 +63,25 @@ export default observer(() => {
     }
 
     try {
-      const message = 'Hello World';
+      const bs = new BlockchainBoostService(store.web3, store);
+      bs.create('11111', '1', 'checksum', store.address)
+        .then(() => console.log('OK'))
+        .catch((err) => console.log('ERR ', err));
 
-      const params = [convertUtf8ToHex(message), store.address];
-      console.log(params);
-      const result = await store.provider?.connector.signPersonalMessage(
-        params,
-      );
+      // const message = 'Hello World';
 
-      console.log('formatted', {
-        method: 'personal_sign',
-        address: store.address,
-        valid: true,
-        result,
-      });
+      // const params = [convertUtf8ToHex(message), store.address];
+      // console.log(params);
+      // const result = await store.provider?.connector.signPersonalMessage(
+      //   params,
+      // );
+
+      // console.log('formatted', {
+      //   method: 'personal_sign',
+      //   address: store.address,
+      //   valid: true,
+      //   result,
+      // });
 
       // this.setFormattedResult({
       //   method: 'personal_sign',
@@ -99,11 +116,9 @@ export default observer(() => {
           <Button onPress={store.resetConnection} text="Disconnect" />
         </>
       ) : (
-        <WalletConnectModal
-          onWalletSelect={(wallet) => {
-            startConnection(wallet);
-          }}
-        />
+        <View style={[theme.centered, theme.marginVertical3x]}>
+          <Text>Not Connected</Text>
+        </View>
       )}
     </ScrollView>
   );

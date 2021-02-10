@@ -1,80 +1,77 @@
-import blockchainWithdrawService from '../../../src/blockchain/services/BlockchainWithdrawService';
-import web3Service from '../../../src/blockchain/services/Web3Service';
-
+import BlockchainWithdrawService from '../../../src/blockchain/v2/services/BlockchainWithdrawService';
+import { createStore } from '../../../src/blockchain/v2/walletconnect/WalletConnectContext';
 jest.mock('web3');
-jest.mock('../../../src/blockchain/services/Web3Service');
 
 /**
  * Blockchain withdraw service
  */
 describe('blockchain withdraw service', () => {
-
   const fakeWithdrawContract = {
     methods: {
-      request: jest.fn()
-    }
-  }
+      request: jest.fn(),
+    },
+  };
+
+  let wc, blockchainWithdrawService;
 
   beforeEach(() => {
-    web3Service.getContract.mockClear();
-    web3Service.web3.utils.fromWei.mockClear();
-    web3Service.web3.utils.toWei.mockClear();
-    web3Service.getContract.mockResolvedValue(fakeWithdrawContract);
-    web3Service.sendSignedContractMethodWithValue.mockClear();
-  });
+    wc = createStore();
+    wc.init();
+    wc.web3.utils.fromWei.mockClear();
+    wc.web3.utils.toWei.mockClear();
 
-  it('should return the withdraw contract', async () => {
-
-    const contract = await blockchainWithdrawService.getContract();
-
-    // should return the contract
-    expect(contract).toBe(fakeWithdrawContract);
-
-    // should fetch boost contract from web3 service
-    expect(web3Service.getContract).toBeCalledWith('withdraw');
+    blockchainWithdrawService = new BlockchainWithdrawService(wc.web3, wc);
+    blockchainWithdrawService.getContract = jest.fn();
+    blockchainWithdrawService.getContract.mockResolvedValue(
+      fakeWithdrawContract,
+    );
+    blockchainWithdrawService.sendContractMethodWithValue = jest.fn();
   });
 
   it('should request a withdraw', async () => {
-
     const amount = 1,
-      fakeFormatedToWei = 100,
-      fakeFormatedFromWei = 101,
+      fakeFormattedToWei = 100,
+      fakeFormattedFromWei = 101,
       fakeGuid = 'guid',
       withdrawRequest = 'withdrawRequest',
       fakeCurrentAddress = '0xCurrentAddress',
       fakeResult = {
-        transactionHash: '0x444444444'
+        transactionHash: '0x444444444',
       };
 
-    web3Service.web3.utils.toWei.mockReturnValue(fakeFormatedToWei);
-    web3Service.web3.utils.fromWei.mockReturnValue(fakeFormatedFromWei);
-    web3Service.getCurrentWalletAddress.mockReturnValue(fakeCurrentAddress);
-    web3Service.sendSignedContractMethodWithValue.mockReturnValue(fakeResult);
+    wc.web3.utils.toWei.mockReturnValue(fakeFormattedToWei);
+    wc.web3.utils.fromWei.mockReturnValue(fakeFormattedFromWei);
+    blockchainWithdrawService.sendContractMethodWithValue.mockReturnValue(
+      fakeResult,
+    );
     fakeWithdrawContract.methods.request.mockResolvedValue(withdrawRequest);
 
     // create the boost
-    const result = await blockchainWithdrawService.request(fakeGuid, amount, 'message');
+    const result = await blockchainWithdrawService.request(
+      fakeGuid,
+      amount,
+      fakeCurrentAddress,
+    );
 
     // should format the amount to ether
-    expect(web3Service.web3.utils.toWei).toBeCalledWith(amount.toString(), 'ether');
+    expect(wc.web3.utils.toWei).toBeCalledWith(amount.toString(), 'ether');
     // should format gas price
-    expect(web3Service.web3.utils.toWei).toHaveBeenLastCalledWith('1', 'Gwei');
+    expect(wc.web3.utils.toWei).toHaveBeenLastCalledWith('1', 'Gwei');
 
     // should call request method of the contract
-    expect(fakeWithdrawContract.methods.request).toBeCalledWith(fakeGuid, fakeFormatedToWei);
+    expect(fakeWithdrawContract.methods.request).toBeCalledWith(
+      fakeGuid,
+      fakeFormattedToWei,
+    );
 
     // should call sendSignedContractMethod
-    expect(web3Service.sendSignedContractMethodWithValue).toBeCalledWith(
-      withdrawRequest,
-      167839 * fakeFormatedToWei,
-      `Request a withdrawal of ${amount} Minds Tokens. ${fakeFormatedFromWei.toString()} ETH will be transferred to cover the gas fee. If you send a low amount of gas fee, your withdrawal may fail. message`
-    );
+    expect(blockchainWithdrawService.sendContractMethodWithValue).toBeCalled();
     // should return the tx hash, address, amount and gas
     expect(result).toEqual({
       address: fakeCurrentAddress,
-      amount: fakeFormatedToWei.toString(),
+      amount: fakeFormattedToWei.toString(),
       tx: fakeResult.transactionHash,
-      gas: (167839 * fakeFormatedToWei).toString(),
+      gas: (167839 * fakeFormattedToWei).toString(),
     });
   });
 });
