@@ -27,6 +27,7 @@
 		9FA0FC0762B1C421F6E19F09 /* libPods-Minds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F9CAD41FEA6A92D564F263D /* libPods-Minds.a */; };
 		A50188A89F8B46A8A07DF06C /* Roboto-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 09A1906E337F47559DC79E93 /* Roboto-BoldItalic.ttf */; };
 		B080D11FCFB44B31B8AA0E13 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 37DF9BB306F046229D6C90DA /* libz.tbd */; };
+		D772600C25C8556D0070DEFC /* mute.caf in Resources */ = {isa = PBXBuildFile; fileRef = D772600B25C8556D0070DEFC /* mute.caf */; };
 		D7BBF56124F5D6E4005E4A2C /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7BBF56024F5D6E4005E4A2C /* ShareViewController.swift */; };
 		D7BBF56424F5D94F005E4A2C /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7BBF56324F5D94F005E4A2C /* File.swift */; };
 		D7DB58C425102B5600F160CB /* sticker6.png in Resources */ = {isa = PBXBuildFile; fileRef = D7DB58C225102B5600F160CB /* sticker6.png */; };
@@ -136,6 +137,7 @@
 		CB3378F9EB6781ED5A558E01 /* libPods-Minds-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Minds-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1320EAA0C19D5CCC50D9B4C /* Pods-Minds-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Minds-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-Minds-tvOSTests/Pods-Minds-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D72521D82367A1FF00F95DC2 /* Minds.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Minds.entitlements; path = Minds/Minds.entitlements; sourceTree = "<group>"; };
+		D772600B25C8556D0070DEFC /* mute.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = mute.caf; path = "../node_modules/react-native-silent-switch/mute.caf"; sourceTree = "<group>"; };
 		D7BBF55924F5D076005E4A2C /* Share-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Share-Bridging-Header.h"; sourceTree = "<group>"; };
 		D7BBF56024F5D6E4005E4A2C /* ShareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShareViewController.swift; path = "../../node_modules/react-native-share-menu/ios/ShareViewController.swift"; sourceTree = "<group>"; };
 		D7BBF56224F5D94E005E4A2C /* Minds-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Minds-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -298,6 +300,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				D772600B25C8556D0070DEFC /* mute.caf */,
 				13B07FAE1A68108700A75B9A /* Minds */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* MindsTests */,
@@ -538,6 +541,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D772600C25C8556D0070DEFC /* mute.caf in Resources */,
 				28B61F20242C070D00550028 /* BootSplash.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				F5974A9182A84FDFBB21A8F3 /* Roboto-Black.ttf in Resources */,

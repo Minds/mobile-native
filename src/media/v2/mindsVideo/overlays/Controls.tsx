@@ -22,6 +22,8 @@ type SourceSelectorPropsType = {
   localStore: MindsVideoStoreType;
 };
 
+const hitSlop = { top: 20, bottom: 20, right: 20, left: 20 };
+
 const SourceSelector = ({ localStore }: SourceSelectorPropsType) => {
   const theme = ThemedStyles.style;
   if (!localStore.sources) {
@@ -65,6 +67,7 @@ const Controls = observer(({ localStore, entity, hideOverlay }: PropsType) => {
 
     return (
       <TouchableWithoutFeedback
+        hitSlop={hitSlop}
         style={styles.overlayContainer}
         onPress={localStore.openControlOverlay}>
         <View style={styles.overlayContainer}>
@@ -115,16 +118,19 @@ const Controls = observer(({ localStore, entity, hideOverlay }: PropsType) => {
               />
               {progressBar}
               <View style={[theme.padding, theme.rowJustifySpaceEvenly]}>
-                <Icon
-                  onPress={localStore.toggleVolume}
-                  name={
-                    localStore.volume === 0
-                      ? 'ios-volume-mute'
-                      : 'ios-volume-high'
-                  }
-                  size={iconSize}
-                  color={Colors.light}
-                />
+                <TouchableWithoutFeedback
+                  hitSlop={hitSlop}
+                  onPress={localStore.toggleVolume}>
+                  <Icon
+                    name={
+                      localStore.volume === 0
+                        ? 'ios-volume-mute'
+                        : 'ios-volume-high'
+                    }
+                    size={iconSize}
+                    color={Colors.light}
+                  />
+                </TouchableWithoutFeedback>
               </View>
             </View>
           )}

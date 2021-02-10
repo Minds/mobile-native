@@ -5,9 +5,15 @@ import {
 } from 'react-native-screens/native-stack';
 import { useDimensions } from '@react-native-community/hooks';
 import { createSharedElementStackNavigator } from 'react-navigation-shared-element';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import {
+  createDrawerNavigator,
+  DrawerNavigationOptions,
+} from '@react-navigation/drawer';
 import { Platform, StatusBar, View } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
+import {
+  createStackNavigator,
+  StackNavigationOptions,
+} from '@react-navigation/stack';
 import AnalyticsScreen from '../analytics/AnalyticsScreen';
 
 import LoginScreen from '../auth/LoginScreen';
@@ -134,12 +140,24 @@ const FullScreenPostStack = () => (
     <FullScreenPostStackNav.Screen
       name="ActivityFullScreen"
       component={ViewerScreen}
-      options={{ stackAnimation: 'none', ...hideHeader, title: '' }}
+      options={
+        {
+          stackAnimation: 'none',
+          ...hideHeader,
+          title: '',
+        } as StackNavigationOptions
+      }
     />
     <FullScreenPostStackNav.Screen
       name="PortraitViewerScreen"
       component={PortraitViewerScreen}
-      options={{ stackAnimation: 'none', ...hideHeader, title: '' }}
+      options={
+        {
+          stackAnimation: 'none',
+          ...hideHeader,
+          title: '',
+        } as StackNavigationOptions
+      }
     />
     <FullScreenPostStackNav.Screen
       name="ViewImage"
@@ -275,7 +293,7 @@ const MainScreen = () => {
       <DrawerNav.Screen
         name="Tabs"
         component={TabsScreen}
-        options={hideHeader}
+        options={hideHeader as DrawerNavigationOptions}
       />
     </DrawerNav.Navigator>
   );

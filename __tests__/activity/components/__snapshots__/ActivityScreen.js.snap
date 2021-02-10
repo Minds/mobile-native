@@ -502,7 +502,7 @@ exports[`Activity screen component renders correctly  1`] = `
                   <Text
                     style={
                       Object {
-                        "color": "#fff",
+                        "color": "#242424",
                         "marginBottom": 30,
                       }
                     }

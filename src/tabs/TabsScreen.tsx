@@ -26,7 +26,7 @@ import Topbar from '../topbar/Topbar';
 import { InternalStack } from '../navigation/NavigationStack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import TopShadow from '../common/components/TopShadow';
-import { IS_FROM_STORE } from '../config/Config';
+import { GOOGLE_PLAY_STORE } from '../config/Config';
 import i18n from '../common/services/i18n.service';
 import sessionService from '../common/services/session.service';
 
@@ -56,7 +56,7 @@ const isPad = (Platform as PlatformIOSStatic).isPad;
 
 const Tab = createBottomTabNavigator<TabParamList>();
 
-const Discovery = IS_FROM_STORE
+const Discovery = GOOGLE_PLAY_STORE
   ? () => {
       const theme = ThemedStyles.style;
       return (
@@ -177,7 +177,7 @@ const Tabs = observer(function ({ navigation }) {
     />
   );
 
-  const lastTab = IS_FROM_STORE ? (
+  const lastTab = GOOGLE_PLAY_STORE ? (
     <Tab.Screen
       name="User"
       component={() => <View />}
@@ -192,7 +192,7 @@ const Tabs = observer(function ({ navigation }) {
     messenger
   );
 
-  const secondTab = IS_FROM_STORE ? messenger : discovery;
+  const secondTab = GOOGLE_PLAY_STORE ? messenger : discovery;
 
   return (
     <View style={theme.flexContainer}>
