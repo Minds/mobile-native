@@ -124,7 +124,6 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
             />
           </View>
         )}
-        <LoadMore store={props.store} />
         {!GOOGLE_PLAY_STORE && (
           <TouchableOpacity
             onPress={() => props.store.setShowInput(true)}
@@ -135,6 +134,7 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
             </Text>
           </TouchableOpacity>
         )}
+        <LoadMore store={props.store} />
       </>
     );
   }, [
