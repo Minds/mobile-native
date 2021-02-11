@@ -18,7 +18,6 @@ import {
 import reportService from './ReportService';
 
 import colors from '../styles/Colors';
-import { CommonStyle as CS } from '../styles/Common';
 import i18n from '../common/services/i18n.service';
 
 import mindsService from '../common/services/minds.service';
@@ -220,10 +219,12 @@ export default class ReportScreen extends Component {
    * Render reasons list
    */
   renderReasons() {
+    const theme = ThemedStyles.style;
+
     if (this.state.reason && this.state.reason.value == 10) {
       return (
         <Text
-          style={[CS.fontL, CS.padding2x, CS.textCenter]}
+          style={[theme.fontL, theme.padding2x, theme.textCenter]}
           onPress={this.mailToCopyright}>
           {i18n.t('reports.DMCA')}
         </Text>
@@ -246,7 +247,7 @@ export default class ReportScreen extends Component {
               : this.selectReason(reason)
           }>
           <View style={styles.reasonItemLabelContainer}>
-            <View style={{ flexDirection: 'row', alignItems: 'stretch' }}>
+            <View style={theme.rowStretch}>
               <Text style={styles.reasonItemLabel}>{reason.label}</Text>
             </View>
           </View>
@@ -275,11 +276,18 @@ export default class ReportScreen extends Component {
   render() {
     if (!this.state.reasons) return <CenteredLoading />;
 
+    const theme = ThemedStyles.style;
+
     const noteInput = (
       <TextInput
         multiline={true}
         numberOfLines={4}
-        style={[CS.padding2x, CS.margin, CS.borderBottom, CS.borderGreyed]}
+        style={[
+          theme.padding2x,
+          theme.margin,
+          theme.borderBottom,
+          theme.colorPrimaryText,
+        ]}
         placeholder={i18n.t('reports.explain')}
         returnKeyType="done"
         autoFocus={true}
@@ -292,14 +300,19 @@ export default class ReportScreen extends Component {
 
     return (
       <ScrollView
-        style={[CS.flexContainer, ThemedStyles.style.backgroundSecondary]}>
+        style={[theme.flexContainer, ThemedStyles.style.backgroundSecondary]}>
         {this.state.reason && (
           <Text
-            style={[CS.fontM, CS.backgroundPrimary, CS.colorWhite, CS.padding]}>
+            style={[
+              theme.fontM,
+              theme.backgroundPrimary,
+              theme.colorWhite,
+              theme.padding,
+            ]}>
             {this.state.reason.label}
           </Text>
         )}
-        <View style={CS.flexContainer}>
+        <View style={theme.flexContainer}>
           {!this.state.requireNote && this.renderReasons()}
 
           {this.state.requireNote && noteInput}
