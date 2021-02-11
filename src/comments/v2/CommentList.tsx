@@ -89,7 +89,6 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
   const Header = React.useCallback(() => {
     return (
       <>
-        <LoadMore store={props.store} />
         {props.store.parent && (
           <View
             style={[
@@ -105,6 +104,7 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
             />
           </View>
         )}
+        <LoadMore store={props.store} />
       </>
     );
   }, [props.store, theme.backgroundSecondary, theme.borderPrimary]);
