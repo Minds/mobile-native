@@ -2,7 +2,7 @@ import React from 'react';
 import { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import Comment from './Comment';
 import type CommentsStore from './CommentsStore';
@@ -12,6 +12,10 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { CommentInputContext } from './CommentInput';
 import { GOOGLE_PLAY_STORE } from '../../config/Config';
 import DisabledStoreFeature from '../../common/components/DisabledStoreFeature';
+import sessionService from '../../common/services/session.service';
+import GroupModel from '../../groups/GroupModel';
+import FastImage from 'react-native-fast-image';
+import i18n from '../../common/services/i18n.service';
 
 // types
 type PropsType = {
@@ -34,6 +38,22 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
   const ref = React.useRef<any>(null);
   const provider = React.useContext(CommentInputContext);
   const navigation = useNavigation<any>();
+  const user = sessionService.getUser();
+
+  const placeHolder =
+    props.store.entity instanceof GroupModel
+      ? 'messenger.typeYourMessage'
+      : 'activity.typeComment';
+
+  const touchableStyles = [
+    theme.rowJustifyStart,
+    theme.borderTopHair,
+    theme.borderBottomHair,
+    theme.borderPrimary,
+    theme.paddingTop2x,
+    theme.paddingBottom2x,
+    theme.alignCenter,
+  ];
 
   useFocusEffect(
     React.useCallback(() => {
@@ -105,9 +125,28 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
           </View>
         )}
         <LoadMore store={props.store} />
+        {!GOOGLE_PLAY_STORE && (
+          <TouchableOpacity
+            onPress={() => props.store.setShowInput(true)}
+            style={touchableStyles}>
+            <FastImage source={user.getAvatarSource()} style={styles.avatar} />
+            <Text style={[theme.fontL, theme.colorSecondaryText]}>
+              {i18n.t(props.store.parent ? 'activity.typeReply' : placeHolder)}
+            </Text>
+          </TouchableOpacity>
+        )}
       </>
     );
-  }, [props.store, theme.backgroundSecondary, theme.borderPrimary]);
+  }, [
+    placeHolder,
+    props.store,
+    theme.backgroundSecondary,
+    theme.borderPrimary,
+    theme.colorSecondaryText,
+    theme.fontL,
+    touchableStyles,
+    user,
+  ]);
 
   const Footer = React.useCallback(() => {
     return <LoadMore store={props.store} next={true} />;
@@ -150,6 +189,13 @@ const styles = StyleSheet.create({
   headerCommentContainer: {
     borderTopWidth: StyleSheet.hairlineWidth,
     overflow: 'scroll',
+  },
+  avatar: {
+    height: 37,
+    width: 37,
+    borderRadius: 18.5,
+    marginRight: 15,
+    marginLeft: 15,
   },
 });
 
