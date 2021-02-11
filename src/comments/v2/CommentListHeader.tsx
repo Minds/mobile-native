@@ -18,7 +18,7 @@ export default observer(function CommentListHeader(props: {
   store: CommentsStore;
 }) {
   const route = useRoute<any>();
-  const user = sessionService.getUser();
+
   const theme = ThemedStyles.style;
   const bottomSheet = useBottomSheet();
 
@@ -26,11 +26,6 @@ export default observer(function CommentListHeader(props: {
     route.params && route.params.title
       ? route.params.title
       : i18n.t('comments.comments');
-
-  const placeHolder =
-    props.store.entity instanceof GroupModel
-      ? 'messenger.typeYourMessage'
-      : 'activity.typeComment';
 
   const titleStyles = [theme.fontMedium, theme.paddingLeft3x];
 
@@ -49,7 +44,12 @@ export default observer(function CommentListHeader(props: {
       ]}>
       {props.store.parent ? (
         <View>
-          <View style={[theme.rowJustifySpaceBetween, theme.alignCenter]}>
+          <View
+            style={[
+              theme.rowJustifySpaceBetween,
+              theme.alignCenter,
+              theme.marginBottom3x,
+            ]}>
             <TouchableOpacity
               onPress={NavigationService.goBack}
               style={theme.paddingHorizontal2x}>
@@ -79,23 +79,6 @@ export default observer(function CommentListHeader(props: {
           {closeButton}
         </View>
       )}
-      {!GOOGLE_PLAY_STORE && (
-        <TouchableOpacity
-          onPress={() => props.store.setShowInput(true)}
-          style={[
-            theme.rowJustifyStart,
-            theme.borderTopHair,
-            theme.borderPrimary,
-            theme.paddingTop2x,
-            theme.paddingBottom2x,
-            theme.alignCenter,
-          ]}>
-          <FastImage source={user.getAvatarSource()} style={styles.avatar} />
-          <Text style={[theme.fontL, theme.colorSecondaryText]}>
-            {i18n.t(props.store.parent ? 'activity.typeReply' : placeHolder)}
-          </Text>
-        </TouchableOpacity>
-      )}
     </View>
   );
 });
@@ -103,12 +86,5 @@ export default observer(function CommentListHeader(props: {
 const styles = StyleSheet.create({
   iconContainer: {
     paddingRight: 30,
-  },
-  avatar: {
-    height: 37,
-    width: 37,
-    borderRadius: 18.5,
-    marginRight: 15,
-    marginLeft: 15,
   },
 });
