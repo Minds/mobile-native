@@ -1,19 +1,16 @@
 import React, { useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, View, Text } from 'react-native';
+import { ScrollView, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import UniswapWidget from '../common/components/uniswap-widget/UniswapWidget';
 import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
 
-const styles = StyleSheet.create({
-  container: {
-    flexWrap: 'wrap',
-  },
-});
-
-export default function () {
+export default function ({ navigation }) {
   const theme = ThemedStyles.style;
   const [showUniswapWidget, setShowUniswapWidget] = useState(false);
   const toggleUniswapWidget = () => setShowUniswapWidget(!showUniswapWidget);
+
+  const navToVideoCapture = () =>
+    navigation.push('Capture', { mode: 'text', start: true });
 
   const boxStyles = [
     theme.fullWidth,
@@ -25,6 +22,33 @@ export default function () {
   const titleStyles = [theme.fontXXL, theme.bold, theme.marginBottom2x];
   const descriptionStyles = [theme.fontL, theme.colorSecondaryText];
 
+  const earnBoxes = [
+    {
+      name: 'pool',
+      onPress: toggleUniswapWidget,
+    },
+    {
+      name: 'transfer',
+      onPress: toggleUniswapWidget,
+    },
+    {
+      name: 'create',
+      onPress: navToVideoCapture,
+    },
+    {
+      name: 'curate',
+      onPress: toggleUniswapWidget,
+    },
+    {
+      name: 'develop',
+      onPress: toggleUniswapWidget,
+    },
+    {
+      name: 'refer',
+      onPress: toggleUniswapWidget,
+    },
+  ];
+
   return (
     <>
       <ScrollView
@@ -33,42 +57,16 @@ export default function () {
           theme.padding6x,
           styles.container,
         ]}>
-        <Pressable style={boxStyles} onPress={toggleUniswapWidget}>
-          <Text style={titleStyles}>{i18n.t('earnScreen.pool.title')}</Text>
-          <Text style={descriptionStyles}>
-            {i18n.t('earnScreen.pool.description')}
-          </Text>
-        </Pressable>
-        <View style={boxStyles}>
-          <Text style={titleStyles}>{i18n.t('earnScreen.transfer.title')}</Text>
-          <Text style={descriptionStyles}>
-            {i18n.t('earnScreen.transfer.description')}
-          </Text>
-        </View>
-        <View style={boxStyles}>
-          <Text style={titleStyles}>{i18n.t('earnScreen.create.title')}</Text>
-          <Text style={descriptionStyles}>
-            {i18n.t('earnScreen.create.description')}
-          </Text>
-        </View>
-        <View style={boxStyles}>
-          <Text style={titleStyles}>{i18n.t('earnScreen.curate.title')}</Text>
-          <Text style={descriptionStyles}>
-            {i18n.t('earnScreen.curate.description')}
-          </Text>
-        </View>
-        <View style={boxStyles}>
-          <Text style={titleStyles}>{i18n.t('earnScreen.develop.title')}</Text>
-          <Text style={descriptionStyles}>
-            {i18n.t('earnScreen.develop.description')}
-          </Text>
-        </View>
-        <View style={boxStyles}>
-          <Text style={titleStyles}>{i18n.t('earnScreen.refer.title')}</Text>
-          <Text style={descriptionStyles}>
-            {i18n.t('earnScreen.refer.description')}
-          </Text>
-        </View>
+        {earnBoxes.map((box) => (
+          <TouchableOpacity style={boxStyles} onPress={box.onPress}>
+            <Text style={titleStyles}>
+              {i18n.t(`earnScreen.${box.name}.title`)}
+            </Text>
+            <Text style={descriptionStyles}>
+              {i18n.t(`earnScreen.${box.name}.description`)}
+            </Text>
+          </TouchableOpacity>
+        ))}
       </ScrollView>
       <UniswapWidget
         isVisible={showUniswapWidget}
@@ -78,3 +76,9 @@ export default function () {
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flexWrap: 'wrap',
+  },
+});
