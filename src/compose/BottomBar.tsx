@@ -42,6 +42,14 @@ export default function BottomBar(props) {
           navigation.navigate('MonetizeSelector', { store: props.store })
         }
       />
+      <FIcon
+        name="hash"
+        size={27}
+        style={iconStyle}
+        onPress={() =>
+          navigation.navigate('TagSelector', { store: props.store })
+        }
+      />
       <View style={theme.flexContainer} />
       <IconMC
         name="cog"

@@ -18,7 +18,7 @@ import SearchResult from './SearchResultComponent';
 import Modal from 'react-native-modal';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { useLegacyStores, useStores } from '../../common/hooks/use-stores';
-import { IS_FROM_STORE } from '../../config/Config';
+import { GOOGLE_PLAY_STORE } from '../../config/Config';
 import DisabledStoreFeature from '../../common/components/DisabledStoreFeature';
 
 interface Props {
@@ -125,7 +125,7 @@ const SearchComponent = observer((props: Props) => {
                   ]}
                 />
               </View>
-              {IS_FROM_STORE ? (
+              {GOOGLE_PLAY_STORE ? (
                 <DisabledStoreFeature
                   style={[styles.height, theme.backgroundPrimary]}
                 />

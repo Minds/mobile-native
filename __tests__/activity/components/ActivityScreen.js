@@ -19,11 +19,20 @@ getStores.mockReturnValue({
 
 jest.mock('react-native-safe-area-context');
 jest.mock('react-native-material-menu');
+jest.mock('react-native-silent-switch');
 jest.mock('@react-navigation/native');
 jest.mock('react-native-gesture-handler');
 jest.mock('react-native-redash');
 jest.mock('../../../src/common/components/KeyboardSpacingView');
 jest.mock('reanimated-bottom-sheet', () => 'BottomSheet');
+jest.mock('@gorhom/bottom-sheet', () => {
+  const react = require('react-native');
+
+  return {
+    BottomSheetFlatList: react.FlatList,
+    TouchableOpacity: react.TouchableOpacity,
+  };
+});
 
 jest.mock('../../../src/newsfeed/NewsfeedService');
 jest.mock('../../../src/newsfeed/activity/Activity', () => 'Activity');

@@ -26,6 +26,8 @@ type PropsType = {
   entity: ActivityModel | BlogModel | GroupModel;
 };
 
+const hitSlop = { top: 10, bottom: 10, left: 10, right: 10 };
+
 /**
  * Comments options menu
  */
@@ -102,7 +104,8 @@ export default observer(function CommentBottomMenu({
         title: i18n.t('edit'),
         onPress: () => {
           localStore.hide();
-          store.setShowInput(true, comment);
+          // we delay showing the input to prevent the keyboard to be hidden
+          setTimeout(() => store.setShowInput(true, comment), 300);
         },
       });
 
@@ -161,7 +164,7 @@ export default observer(function CommentBottomMenu({
   ]);
 
   return (
-    <TouchableOpacity onPress={localStore.show}>
+    <TouchableOpacity onPress={localStore.show} hitSlop={hitSlop}>
       <Icon name="more-vert" size={18} style={theme.colorTertiaryText} />
       <BottomButtonOptions
         list={dismissOptions}
