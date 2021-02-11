@@ -59,6 +59,7 @@ export default class GroupViewScreen extends Component {
   state = {
     memberActions: null,
     member: null,
+    conversationIsOpen: false,
   };
 
   commentsRef;
@@ -285,7 +286,12 @@ export default class GroupViewScreen extends Component {
    * Open comments popup
    */
   openComments = () => {
+    this.setState({ conversationIsOpen: true });
     this.commentsRef.current?.expand();
+  };
+
+  onChange = (isOpen: number) => {
+    this.setState({ conversationIsOpen: isOpen === 1 });
   };
 
   /**
@@ -359,7 +365,9 @@ export default class GroupViewScreen extends Component {
     }
 
     const showPosterFab =
-      this.props.groupView.tab === 'feed' && group.can(FLAG_CREATE_POST);
+      this.props.groupView.tab === 'feed' &&
+      group.can(FLAG_CREATE_POST) &&
+      !this.state.conversationIsOpen;
 
     const memberActionSheet = this.state.memberActions ? (
       <ActionSheet
@@ -411,6 +419,7 @@ export default class GroupViewScreen extends Component {
             ref={this.commentsRef}
             hideContent={false}
             commentsStore={this.props.groupView.comments}
+            onChange={this.onChange}
           />
         )}
       </View>

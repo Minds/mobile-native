@@ -63,4 +63,5 @@ export default class CommentModel extends ActivityModel {
  */
 decorate(CommentModel, {
   replies_count: observable,
+  description: observable,
 });
