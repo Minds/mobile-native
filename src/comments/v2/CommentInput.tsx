@@ -65,6 +65,11 @@ const CommentInput = observer(() => {
       ? i18n.t('messenger.typeYourMessage')
       : i18n.t('activity.typeComment');
 
+  const inputMaxHeight = {
+    maxHeight:
+      height * 0.4 - (provider.store.parent || provider.store.edit ? 50 : 0),
+  };
+
   return (
     <KeyboardSpacingView
       noInset={true}
@@ -135,6 +140,7 @@ const CommentInput = observer(() => {
                 theme.colorPrimaryText,
                 theme.fontL,
                 styles.input,
+                inputMaxHeight,
               ]}
             />
             {!provider.store.saving ? (
