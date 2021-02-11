@@ -1,10 +1,4 @@
-import React, {
-  useRef,
-  useCallback,
-  useState,
-  useEffect,
-  forwardRef,
-} from 'react';
+import React, { useState } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
 import { View, Text, StyleSheet } from 'react-native';
 import TopBarButtonTabBar, {
@@ -25,7 +19,6 @@ import { WalletScreenNavigationProp } from '../WalletScreen';
 import i18n from '../../../common/services/i18n.service';
 import PhoneValidationComponent from '../../../common/components/phoneValidation/PhoneValidationComponent';
 import createLocalStore from '../../../common/components/phoneValidation/createLocalStore';
-import KeyboardSpacingView from '../../../common/components/KeyboardSpacingView';
 
 const options: Array<ButtonTabType<TokensOptions>> = [
   { id: 'overview', title: 'Overview' },
@@ -80,12 +73,11 @@ const PhoneValidator = observer(({ bottomStore }: PhoneValidatorPropsType) => {
   return (
     <View>
       <Text style={[theme.padding4x, theme.colorSecondaryText]}>{msg}</Text>
-      <KeyboardSpacingView
+      <View
         style={[
           theme.backgroundPrimary,
           theme.borderPrimary,
-          styles.inputWraper,
-          theme.paddingBottom2x,
+          styles.inputWrapper,
         ]}>
         <Text style={[theme.colorSecondaryText]}>{label}</Text>
         <PhoneValidationComponent
@@ -94,7 +86,7 @@ const PhoneValidator = observer(({ bottomStore }: PhoneValidatorPropsType) => {
           bottomStore={bottomStore}
           localStore={localStore}
         />
-      </KeyboardSpacingView>
+      </View>
     </View>
   );
 });
@@ -225,7 +217,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     padding: 0,
   },
-  inputWraper: {
+  inputWrapper: {
     padding: 15,
     borderBottomWidth: 1,
     borderTopWidth: 1,
