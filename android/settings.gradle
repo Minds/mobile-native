@@ -11,15 +11,10 @@ project(':tipsi-stripe').projectDir = new File(rootProject.projectDir, '../node_
 
 include ':react-native-screens'
 project(':react-native-screens').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-screens/android')
-include ':rn-apk'
-project(':rn-apk').projectDir = new File(rootProject.projectDir, '../node_modules/rn-apk/android')
-
 include ':react-native-fs'
 project(':react-native-fs').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-fs/android')
 include ':react-native-minds-encryption'
 project(':react-native-minds-encryption').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-minds-encryption/android')
-include ':react-native-video-exoplayer'
-project(':react-native-video-exoplayer').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-video/android')
 include ':react-native-exception-handler'
 project(':react-native-exception-handler').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-exception-handler/android')
 include ':reactnativenotifications'

@@ -14,6 +14,7 @@ import NewsfeedBoostTab from './NewsfeedBoostTab';
 import OfferBoostTab from './OfferBoostTab';
 import { RootStackParamList } from '../../navigation/NavigationTypes';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import useWalletConnect from '../../blockchain/v2/walletconnect/useWalletConnect';
 
 type BoostTabType = 'newsfeed' | 'offer';
 
@@ -34,7 +35,9 @@ const BoostPostScreen = observer(({ route }: PropsType) => {
     : { marginTop: 30 };
   const [tab, setTab] = useState<BoostTabType>('newsfeed');
   const wallet = useStores().wallet;
+  const wc = useWalletConnect();
   const localStore = useLocalStore(createBoostStore, {
+    wc,
     wallet: wallet.wallet,
     entity: route.params.entity,
   });

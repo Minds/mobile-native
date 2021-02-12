@@ -1,10 +1,7 @@
-import { runInAction } from 'mobx';
-
 import type { CurrencyType } from '../../types/Payment';
 import api from '../../common/services/api.service';
 import toFriendlyCrypto from '../../common/helpers/toFriendlyCrypto';
 import logService from '../../common/services/log.service';
-import web3Service from '../../blockchain/services/Web3Service';
 import number from '../../common/helpers/number';
 import type {
   StripeDetails,
@@ -12,13 +9,30 @@ import type {
   TokensOptions,
   Earnings,
 } from './WalletTypes';
-import BlockchainWalletService from '../../blockchain/wallet/BlockchainWalletService';
-import { UserError } from '../../common/UserError';
+// import BlockchainWalletService from '../../blockchain/wallet/BlockchainWalletService';
 import i18n from '../../common/services/i18n.service';
-import BlockchainApiService from '../../blockchain/BlockchainApiService';
+// import BlockchainApiService from '../../blockchain/BlockchainApiService';
 import { ChartTimespanType } from './currency-tabs/TokensChart';
 import sessionService from '../../common/services/session.service';
 import walletService, { WalletJoinResponse } from '../WalletService';
+import moment from 'moment';
+
+const getStartOfDayUnixTs = (date: Date) =>
+  Number(moment(date).utc().startOf('day').format('X'));
+
+export type EarningsCurrencyType = 'tokens' | 'usd';
+
+export type ContributionMetric = {
+  id: string;
+  label: string;
+  amount: string;
+  score: number;
+};
+
+export type PricesType = {
+  eth: string;
+  minds: string;
+};
 
 const defaultStripeDetails = <StripeDetails>{
   hasAccount: false,
@@ -102,6 +116,7 @@ const createWalletStore = () => ({
   usdPayouts: [],
   usdEarningsTotal: 0,
   usdPayoutsTotals: 0,
+  prices: { minds: '0', eth: '0' } as PricesType,
   /**
    * Set currency tab
    * @param currency
@@ -117,44 +132,44 @@ const createWalletStore = () => ({
   setInitialTab(value?: TokensOptions) {
     this.initialTab = value;
   },
-  /**
-   * Create on-chain address
-   * @param setAsReceiver if true sets the address as receiver into the server
-   */
-  async createOnchain(setAsReceiver: boolean = false) {
-    try {
-      const address: string = await BlockchainWalletService.create();
-      if (!address) {
-        throw new Error('Empty Address');
-      }
+  // /**
+  //  * Create on-chain address
+  //  * @param setAsReceiver if true sets the address as receiver into the server
+  //  */
+  // async createOnchain(setAsReceiver: boolean = false) {
+  //   try {
+  //     const address: string = await BlockchainWalletService.create();
+  //     if (!address) {
+  //       throw new Error('Empty Address');
+  //     }
 
-      if (setAsReceiver) {
-        await BlockchainApiService.setWallet(address);
-      }
+  //     if (setAsReceiver) {
+  //       await BlockchainApiService.setWallet(address);
+  //     }
 
-      // update wallet observables as an atomic action
-      runInAction(() => {
-        if (setAsReceiver) {
-          this.wallet.receiver.address = address;
-        }
-        if (!this.wallet.onchain.address) {
-          this.wallet.onchain.address = address;
-        }
-        if (!this.wallet.eth.address) {
-          this.wallet.eth.address = address;
-        }
-      });
-    } catch (err) {
-      console.log(err);
-      if (err.message) {
-        if (err.message === 'E_INVALID_PASSWORD_CHALLENGE_OUTCOME') {
-          return;
-        }
-      }
-      // show a warning for the user
-      throw new UserError(i18n.t('blockchain.errorCreatingWallet'));
-    }
-  },
+  //     // update wallet observables as an atomic action
+  //     runInAction(() => {
+  //       if (setAsReceiver) {
+  //         this.wallet.receiver.address = address;
+  //       }
+  //       if (!this.wallet.onchain.address) {
+  //         this.wallet.onchain.address = address;
+  //       }
+  //       if (!this.wallet.eth.address) {
+  //         this.wallet.eth.address = address;
+  //       }
+  //     });
+  //   } catch (err) {
+  //     console.log(err);
+  //     if (err.message) {
+  //       if (err.message === 'E_INVALID_PASSWORD_CHALLENGE_OUTCOME') {
+  //         return;
+  //       }
+  //     }
+  //     // show a warning for the user
+  //     throw new UserError(i18n.t('blockchain.errorCreatingWallet'));
+  //   }
+  // },
   /**
    * Load wallet data
    */
@@ -200,10 +215,10 @@ const createWalletStore = () => ({
           } else if (address.label === 'Receiver' && address.address) {
             this.wallet.receiver.balance = toFriendlyCrypto(address.balance);
             this.wallet.receiver.address = address.address;
-            this.wallet.eth.balance = number(
-              await web3Service.getBalance(address.address),
-              3,
-            );
+            // this.wallet.eth.balance = number(
+            //   await web3Service.getBalance(address.address),
+            //   3,
+            // );
           }
         });
 
@@ -224,7 +239,6 @@ const createWalletStore = () => ({
       const { account } = await api.get<any>('api/v2/payments/stripe/connect');
       this.setStripeAccount(account);
     } catch (e) {
-      console.log('loadStripeAccount');
       logService.exception(e);
     }
     return this.stripeDetails;
@@ -361,6 +375,42 @@ const createWalletStore = () => ({
 
     if (this.usdPayouts.length > 0) {
       this.usdPayoutsTotals = SUM_CENTS(this.usdPayouts);
+    }
+  },
+  async loadRewards(date: Date) {
+    try {
+      const dateTs = getStartOfDayUnixTs(date);
+      let rewards = <any>await api.get('api/v3/rewards/', {
+        date: date.toISOString(),
+      });
+      if (this.prices.minds === '0') {
+        const prices = <any>await api.get('api/v3/blockchain/token-prices');
+        this.prices.minds = prices.minds;
+        this.prices.eth = prices.eth;
+      }
+      const response = <any>await api.get('api/v2/blockchain/contributions', {
+        from: dateTs,
+        to: dateTs + 1,
+      });
+      const contributionScores: ContributionMetric[] = [];
+      if (response.contributions && response.contributions.length > 0) {
+        Object.keys(response.contributions[0].metrics).forEach((key) => {
+          const metric = response.contributions[0].metrics[key];
+          metric.id = key;
+          metric.label = metric.metric;
+          contributionScores.push(metric);
+        });
+      }
+      const liquidityPositions = <any>await api.get(
+        'api/v3/blockchain/liquidity-positions',
+        {
+          timestamp: dateTs,
+        },
+      );
+      return { rewards, contributionScores, liquidityPositions };
+    } catch (e) {
+      logService.exception(e);
+      return false;
     }
   },
   /**

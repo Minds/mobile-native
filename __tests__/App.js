@@ -50,11 +50,6 @@ jest.mock('@react-navigation/bottom-tabs');
 jest.mock('react-native-screens/native-stack');
 jest.mock('react-native-file-share-intent');
 
-//mock i18n
-jest.mock('react-native-video');
-
-jest.mock('../src/keychain/KeychainModalScreen', () => 'KeychainModalScreen');
-
 jest.mock('../src/common/services/translation.service');
 jest.mock('../src/common/helpers/abortableFetch');
 jest.mock('../src/tos/TosModal', () => 'TosModal');

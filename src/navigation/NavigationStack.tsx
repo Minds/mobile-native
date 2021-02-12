@@ -33,10 +33,6 @@ import BlogsListScreen from '../blogs/BlogsListScreen';
 import BlogsViewScreen from '../blogs/BlogsViewScreen';
 import FabScreenV2 from '../wire/v2/FabScreen';
 import ViewImageScreen from '../media/ViewImageScreen';
-import BlockchainWalletScreen from '../blockchain/wallet/BlockchainWalletScreen';
-import BlockchainWalletModalScreen from '../blockchain/wallet/modal/BlockchainWalletModalScreen';
-import BlockchainWalletImportScreen from '../blockchain/wallet/import/BlockchainWalletImportScreen';
-import BlockchainWalletDetailsScreen from '../blockchain/wallet/details/BlockchainWalletDetailsScreen';
 import ReportScreen from '../report/ReportScreen';
 import NotSupportedScreen from '../static-views/NotSupportedScreen';
 // import OnboardingScreen from '../onboarding/OnboardingScreen';
@@ -99,7 +95,7 @@ import BillingScreen from '../settings/screens/BillingScreen';
 import RecurringPayments from '../settings/screens/RecurringPayments';
 import ReportedContentScreen from '../report/ReportedContentScreen';
 import AppInfoScreen from '../settings/screens/AppInfoScreen';
-import WalletScreen from '../wallet/v2/WalletScreen';
+import WalletScreen from '../wallet/v3/WalletScreen';
 import ModalTransition from './ModalTransition';
 import AuthTransition from './AuthTransition';
 import VideoBackground from '../common/components/VideoBackground';
@@ -119,6 +115,8 @@ import BoostChannelScreen from '../boost/v2/BoostChannelScreen';
 import BoostPostScreen from '../boost/v2/BoostPostScreen';
 import BuyTokensScreen from '../buy-tokens/BuyTokensScreen';
 import EarnScreen from '../earn/EarnScreen';
+import { topBarButtonTabBarRef } from '../common/components/topbar-tabbar/TopBarButtonTabBar';
+import ExportLegacyWallet from '../settings/screens/ExportLegacyWallet';
 
 const isIos = Platform.OS === 'ios';
 
@@ -291,7 +289,7 @@ const MainScreen = () => {
       gestureHandlerProps={{
         hitSlop: { left: 0, width: dimensions.width },
         //@ts-ignore
-        waitFor: portraitBarRef,
+        waitFor: [portraitBarRef, topBarButtonTabBarRef],
       }}
       drawerType="slide"
       drawerContent={Drawer}
@@ -318,6 +316,11 @@ const AppStack = function () {
         name="ActivityFullScreenNav"
         component={FullScreenPostStack}
         options={{ stackAnimation: 'none', ...hideHeader }}
+      />
+      <AppStackNav.Screen
+        name="ExportLegacyWallet"
+        component={ExportLegacyWallet}
+        options={{ title: 'Export Wallet' }}
       />
       <AppStackNav.Screen
         name="Capture"
@@ -433,7 +436,7 @@ const AppStack = function () {
           },
         }}
       />
-      <AppStackNav.Screen
+      {/* <AppStackNav.Screen
         name="BlockchainWallet"
         component={BlockchainWalletScreen}
         options={BlockchainWalletScreen.navigationOptions}
@@ -445,7 +448,7 @@ const AppStack = function () {
       <AppStackNav.Screen
         name="BlockchainWalletDetails"
         component={BlockchainWalletDetailsScreen}
-      />
+      /> */}
       <AppStackNav.Screen
         name="Report"
         component={ReportScreen}
@@ -673,10 +676,10 @@ const RootStack = function (props) {
             component={JoinMembershipScreen}
             options={modalOptions}
           />
-          <RootStackNav.Screen
+          {/* <RootStackNav.Screen
             name="BlockchainWalletModal"
             component={BlockchainWalletModalScreen}
-          />
+          /> */}
           <RootStackNav.Screen
             name="PlusScreen"
             component={PlusScreen}

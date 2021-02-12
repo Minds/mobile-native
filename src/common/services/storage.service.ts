@@ -18,7 +18,7 @@ class StorageService {
    * @param {string} key
    * @return {any}
    */
-  async getItem(key) {
+  async getItem(key, secretAttemp: string = '') {
     let value = await AsyncStorage.getItem(`${STORAGE_KEY_PREFIX}${key}`);
 
     if (value === null) {
@@ -26,7 +26,7 @@ class StorageService {
       return null;
     }
 
-    value = await this._decryptIfNeeded(value, key);
+    value = await this._decryptIfNeeded(value, key, secretAttemp);
 
     return JSON.parse(value);
   }
@@ -36,7 +36,7 @@ class StorageService {
    *
    * @param {any} value
    */
-  async _decryptIfNeeded(value, key) {
+  async _decryptIfNeeded(value, key, secretAttemp) {
     if (value.startsWith(CRYPTO_AES_PREFIX)) {
       const keychain = await AsyncStorage.getItem(
         `${STORAGE_KEY_KEYCHAIN_PREFIX}${key}`,
@@ -44,7 +44,7 @@ class StorageService {
 
       let output = null;
       try {
-        let secret = await KeychainService.getSecret(keychain);
+        let secret = await KeychainService.getSecret(keychain, secretAttemp);
 
         if (secret) {
           output = CryptoJS.AES.decrypt(
@@ -75,6 +75,7 @@ class StorageService {
     value: any | null = null,
     encrypt: boolean = false,
     keychain: string = '',
+    secretAttemp: string = '',
   ) {
     let rawValue = JSON.stringify(value);
 
@@ -83,7 +84,7 @@ class StorageService {
         throw new Error('E_INVALID_KEYCHAIN');
       }
 
-      let secret = await KeychainService.getSecret(keychain);
+      let secret = await KeychainService.getSecret(keychain, secretAttemp);
 
       if (!secret) {
         throw new Error('E_NO_SECRET');

@@ -10,6 +10,7 @@ import Withdraw from './tokens/Withdraw';
 import { BottomOptionsStoreType } from '../../../common/components/BottomOptionPopup';
 import i18n from '../../../common/services/i18n.service';
 import TokensChart from './TokensChart';
+import useWalletConnect from '../../../blockchain/v2/walletconnect/useWalletConnect';
 
 type PropsType = {
   walletStore: WalletStoreType;
@@ -19,6 +20,7 @@ type PropsType = {
 
 const TokensOverview = observer(
   ({ walletStore, bottomStore, navigation }: PropsType) => {
+    const wc = useWalletConnect();
     const theme = ThemedStyles.style;
     const balanceStyle = [
       theme.fontL,
@@ -33,7 +35,11 @@ const TokensOverview = observer(
           bottomStore.show(
             i18n.t('wallet.withdraw.title'),
             i18n.t('wallet.withdraw.transfer'),
-            <Withdraw walletStore={walletStore} bottomStore={bottomStore} />,
+            <Withdraw
+              walletStore={walletStore}
+              bottomStore={bottomStore}
+              wc={wc}
+            />,
           );
         },
         noIcon: true,

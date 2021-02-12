@@ -25,6 +25,7 @@ import feedsStorage from './src/common/services/sql/feeds.storage';
 import translationService from './src/common/services/translation.service';
 import badgeService from './src/common/services/badge.service';
 import { getStores } from './AppStores';
+import { showMessageForPrivateKey } from './src/blockchain/ExportOldWallet';
 
 /**
  * App initialization manager
@@ -154,6 +155,10 @@ export default class AppInitManager {
       commentStorageService.removeOlderThan(30);
       portraitContentService.removeOlderThan(3);
     }, 30000);
+
+    setTimeout(() => {
+      showMessageForPrivateKey();
+    }, 10000);
   };
 
   /**

@@ -25,6 +25,7 @@ export type InternalStackParamList = {
   InitialOnboarding: {};
   BuyTokens: {};
   Earn: {};
+  Test: {};
 };
 
 export type RootStackParamList = {
@@ -76,6 +77,7 @@ export type ActivityFullScreenParamList = {
 };
 
 export type AppStackParamList = {
+  ExportLegacyWallet: {};
   Fab: {
     disableThresholdCheck?: boolean;
     owner: UserModel;
@@ -86,6 +88,7 @@ export type AppStackParamList = {
     };
     walletStore?: WalletStoreType;
     options?: Function;
+    showBottomStore?: 'withdrawal'; // add | for more;
   };
   JoinMembershipScreen: {
     user?: UserModel;

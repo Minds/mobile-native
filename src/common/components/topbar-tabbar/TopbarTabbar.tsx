@@ -6,6 +6,7 @@ import {
   StyleProp,
   TextStyle,
   StyleSheet,
+  ViewStyle,
 } from 'react-native';
 import ThemedStyles from '../../../styles/ThemedStyles';
 
@@ -21,6 +22,8 @@ type PropsType<T> = {
   onChange: (id: T) => void;
   titleStyle?: StyleProp<TextStyle>;
   subtitleStyle?: StyleProp<TextStyle>;
+  tabStyle?: StyleProp<ViewStyle>;
+  containerStyle?: StyleProp<ViewStyle>;
 };
 
 /**
@@ -41,6 +44,7 @@ function TopbarTabbar<T>(props: PropsType<T>) {
         theme.borderBottom,
         theme.borderPrimary,
         theme.paddingHorizontal2x,
+        props.containerStyle,
       ]}>
       {props.tabs.map((tab, i) => (
         <TouchableOpacity
@@ -48,6 +52,7 @@ function TopbarTabbar<T>(props: PropsType<T>) {
           key={i}
           style={[
             tabStyle,
+            props.tabStyle,
             tab.id === props.current
               ? theme.borderTab
               : theme.borderTransparent,

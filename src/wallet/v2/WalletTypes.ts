@@ -1,6 +1,11 @@
 import { CurrencyType } from '../../types/Payment';
 
-export type TokensOptions = 'overview' | 'transactions' | 'settings';
+export type TokensOptions =
+  | 'rewards'
+  | 'overview'
+  | 'transactions'
+  | 'settings'
+  | 'earnings';
 export type UsdOptions = 'earnings' | 'transactions' | 'settings';
 
 export interface StripeDetails {
@@ -53,6 +58,7 @@ export interface Wallet {
 
 export interface BaseEarning {
   amount_cents: number;
+  amount_tokens: string;
   amount_usd: number;
   currency: CurrencyType;
   id: string;

@@ -25,7 +25,7 @@ export default class Selector extends Component<PropsType> {
 
   flatListRef = React.createRef<FlatList<any>>();
 
-  show = (item) => {
+  show = (item?) => {
     this.setState({ show: true, selected: item });
 
     // SCROLL TO INDEX IF SELECTED

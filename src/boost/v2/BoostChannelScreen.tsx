@@ -2,6 +2,7 @@ import { observer, useLocalStore } from 'mobx-react';
 import React, { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import useWalletConnect from '../../blockchain/v2/walletconnect/useWalletConnect';
 import { useStores } from '../../common/hooks/__mocks__/use-stores';
 import i18n from '../../common/services/i18n.service';
 import sessionService from '../../common/services/session.service';
@@ -19,7 +20,9 @@ const BoostChannelScreen = observer(() => {
     ? { marginTop: insets.top + 50 }
     : { marginTop: 50 };
   const wallet = useStores().wallet;
+  const wc = useWalletConnect();
   const localStore = useLocalStore(createBoostStore, {
+    wc,
     wallet: wallet.wallet,
     entity: sessionService.getUser(),
   });

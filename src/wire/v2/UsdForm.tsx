@@ -48,7 +48,17 @@ const UsdForm = observer(({ store }: propsType) => {
       <LabeledComponent label="Repeat Payment Monthly">
         <CheckBox
           containerStyle={[theme.checkbox, styles.checkbox]}
-          title={<Text style={[theme.colorPrimaryText]}>Repeat ?</Text>}
+          title={
+            <Text
+              style={[
+                theme.colorPrimaryText,
+                theme.fontMedium,
+                theme.paddingLeft,
+                theme.fontL,
+              ]}>
+              Repeat ?
+            </Text>
+          }
           checked={store.wire.recurring}
           onPress={store.setRepeat}
         />
@@ -59,7 +69,7 @@ const UsdForm = observer(({ store }: propsType) => {
 
 const styles = StyleSheet.create({
   label: {
-    fontSize: 13,
+    fontSize: 16,
     marginBottom: 10,
   },
   input: {

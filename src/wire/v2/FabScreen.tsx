@@ -9,20 +9,21 @@ import {
   Platform,
 } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
-import { useSafeArea } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import HeaderComponent from '../../common/components/HeaderComponent';
-import { useLegacyStores } from '../../common/hooks/use-stores';
 import UserNamesComponent from '../../common/components/UserNamesComponent';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import HeaderTabsComponent from '../../common/components/HeaderTabsComponent';
 import TokensForm from './TokensForm';
 import UsdForm from './UsdForm';
-import type WireStore from '../WireStore';
+import WireStore from '../WireStore';
 import i18n from '../../common/services/i18n.service';
 import logService from '../../common/services/log.service';
 import api from '../../common/services/api.service';
 import toFriendlyCrypto from '../../common/helpers/toFriendlyCrypto';
 import storageService from '../../common/services/storage.service';
+import useWalletConnect from '../../blockchain/v2/walletconnect/useWalletConnect';
+import { WCStore } from '../../blockchain/v2/walletconnect/WalletConnectContext';
 
 const isIos = Platform.OS === 'ios';
 
@@ -30,24 +31,18 @@ type tabType = 'tokens' | 'usd' | 'eth';
 
 const lastAmountStorageKey = 'lastTipAmount';
 
-const createFabScreenStore = () => {
+const createFabScreenStore = ({ wc }: { wc: WCStore }) => {
   const store = {
+    wc,
     loaded: false,
-    wire: {} as WireStore,
+    wire: new WireStore(),
     tab: 'tokens' as tabType,
     card: '' as any,
     onComplete: (() => true) as Function | undefined,
     goBack: (() => true) as Function | undefined,
     amount: 0,
-    recurring: false,
     walletBalance: 0,
-    initialLoad(
-      wire: WireStore,
-      owner: any,
-      onComplete: Function | undefined,
-      goBack,
-    ) {
-      this.wire = wire;
+    initialLoad(owner: any, onComplete: Function | undefined, goBack) {
       this.wire.setOwner(owner);
       this.wire.setCurrency('tokens');
       this.setAmount(0);
@@ -68,7 +63,6 @@ const createFabScreenStore = () => {
       this.card = card;
     },
     setRepeat() {
-      this.recurring = !this.recurring;
       this.wire.setRecurring(!this.wire.recurring);
     },
     setTab(tab: tabType) {
@@ -116,7 +110,7 @@ const createFabScreenStore = () => {
     },
     async send() {
       try {
-        let done = await this.wire.send();
+        let done = await this.wire.send(this.wc);
 
         if (!done) {
           return;
@@ -158,8 +152,8 @@ const createFabScreenStore = () => {
 export type FabScreenStore = ReturnType<typeof createFabScreenStore>;
 
 const FabScreen = observer(({ route, navigation }) => {
-  const { wire } = useLegacyStores();
-  const store = useLocalStore(createFabScreenStore);
+  const wc = useWalletConnect();
+  const store = useLocalStore(createFabScreenStore, { wc });
 
   const tabList = [
     {
@@ -179,18 +173,13 @@ const FabScreen = observer(({ route, navigation }) => {
 
   useEffect(() => {
     if (!store.loaded) {
-      store.initialLoad(
-        wire,
-        owner,
-        route.params?.onComplete,
-        navigation.goBack,
-      );
+      store.initialLoad(owner, route.params?.onComplete, navigation.goBack);
     }
-  }, [store, wire, owner, route, navigation]);
+  }, [store, owner, route, navigation]);
 
   const theme = ThemedStyles.style;
 
-  const insets = useSafeArea();
+  const insets = useSafeAreaInsets();
   const cleanTop = insets.top ? { marginTop: insets.top } : null;
 
   return (

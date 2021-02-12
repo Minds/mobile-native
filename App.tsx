@@ -26,8 +26,6 @@ import NavigationService, {
   setTopLevelNavigator,
 } from './src/navigation/NavigationService';
 import { Audio } from 'expo-av';
-
-import KeychainModalScreen from './src/keychain/KeychainModalScreen';
 import NavigationStack from './src/navigation/NavigationStack';
 import { getStores } from './AppStores';
 import './AppErrors';
@@ -47,6 +45,7 @@ import { YellowBox } from 'react-native';
 import receiveShareService from './src/common/services/receive-share.service';
 import AppInitManager from './AppInitManager';
 import { ScreenHeightProvider } from './src/common/components/KeyboardSpacingView';
+import { WCContextProvider } from './src/blockchain/v2/walletconnect/WalletConnectContext';
 YellowBox.ignoreWarnings(['']);
 
 const stores = getStores();
@@ -210,10 +209,12 @@ class App extends Component<Props, State> {
                       'secondary_background',
                     )}
                   />
-                  <NavigationStack
-                    key={ThemedStyles.theme + i18n.locale}
-                    isLoggedIn={isLoggedIn}
-                  />
+                  <WCContextProvider>
+                    <NavigationStack
+                      key={ThemedStyles.theme + i18n.locale}
+                      isLoggedIn={isLoggedIn}
+                    />
+                  </WCContextProvider>
                   <AppMessages />
                 </ErrorBoundary>
               </Provider>
@@ -223,13 +224,9 @@ class App extends Component<Props, State> {
       </SafeAreaProvider>
     );
 
-    const keychainModal = (
-      <KeychainModalScreen key="keychainModal" keychain={stores.keychain} />
-    );
-
     const tosModal = <TosModal user={stores.user} key="tosModal" />;
 
-    return [app, keychainModal, tosModal];
+    return [app, tosModal];
   }
 }
 
