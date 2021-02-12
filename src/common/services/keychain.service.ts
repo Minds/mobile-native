@@ -2,8 +2,6 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import CryptoJS from 'crypto-js';
 
-import { getStores } from '../../../AppStores';
-
 const STORAGE_KEY_PREFIX = '@MindsKeychainChallenge:';
 
 const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
@@ -59,12 +57,10 @@ async function challengeKeychainFromSecret(keychain, secretAttempt) {
   }
 }
 
-const MAX_ATTEMPS = 3;
-
 class KeychainService {
   unlocked = {};
 
-  async getSecret(keychain) {
+  async getSecret(keychain, secretAttempt) {
     if (!keychain) {
       throw new Error('E_INVALID_KEYCHAIN');
     }
@@ -79,43 +75,28 @@ class KeychainService {
     let secret;
 
     if (await isKeychainInStorage(keychain)) {
-      let attempts = -1;
-
-      while (attempts < MAX_ATTEMPS) {
-        attempts++;
-
-        try {
-          const secretAttempt = await getStores().keychain.waitForUnlock(
-            keychain,
-            true,
-            attempts,
-          );
-          await new Promise((r) => setTimeout(r, 500)); // Modals have a "cooldown"
-
-          if (!secretAttempt) {
-            break;
-          }
-
-          secret = await challengeKeychainFromSecret(keychain, secretAttempt);
-        } catch (e) {}
-
-        if (secret) {
+      try {
+        if (!secretAttempt) {
           break;
         }
+
+        secret = await challengeKeychainFromSecret(keychain, secretAttempt);
+      } catch (e) {}
+
+      if (secret) {
+        break;
       }
 
       if (!secret) {
         throw new Error('E_INVALID_PASSWORD_CHALLENGE_OUTCOME');
       }
     } else {
-      secret = await getStores().keychain.waitForUnlock(keychain, false);
-
-      if (!secret) {
+      secret = secretAttempt;
+      if (!secretAttempt) {
         throw new Error('E_INVALID_SECRET');
       }
 
-      await saveKeychainToStorage(keychain, secret);
-      await new Promise((r) => setTimeout(r, 500)); // Modals have a "cooldown"
+      await saveKeychainToStorage(keychain, secretAttempt);
     }
 
     this.storeToCache(keychain, secret);
