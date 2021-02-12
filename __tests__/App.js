@@ -13,6 +13,11 @@ jest.mock('react-native-reanimated', () =>
   require('react-native-reanimated/mock'),
 );
 
+jest.mock(
+  '../src/buy-tokens/transak-widget/TransakWidget',
+  () => 'TransakWidget',
+);
+
 // mock backhandler
 BackHandler.addEventListener = jest.fn();
 jest.mock('../src/common/services/sqlite-storage-provider.service');
