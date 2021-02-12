@@ -1,8 +1,9 @@
 import { observer, useLocalStore } from 'mobx-react';
 import React, { useEffect } from 'react';
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 import CenteredLoading from '../../../common/components/CenteredLoading';
 import DatePicker from '../../../common/components/DatePicker';
+import i18n from '../../../common/services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import {
   WalletStoreType,
@@ -100,6 +101,14 @@ const TokensRewards = observer(({ walletStore }: PropsType) => {
 
   if (localStore.loading) {
     return <CenteredLoading />;
+  }
+
+  if (!localStore.rewards || !localStore.rewards.total) {
+    return (
+      <Text style={[theme.fontXL, theme.centered, theme.padding5x]}>
+        {i18n.t('discovery.nothingToShow')}
+      </Text>
+    );
   }
 
   return (

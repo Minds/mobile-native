@@ -713,6 +713,8 @@
   },
   "wallet": {
     "wallet": "Wallet",
+    "connect":"Connect Wallet",
+    "reconnect":"Reconnect Wallet",
     "cash": "Cash",
     "activeAddress": "Mobile Receiver Address (Active)",
     "alternateReceiver": "Alternate receiver address",
@@ -761,7 +763,7 @@
         "plusScore": "Your score for engagement on your content submissions to Minds+.",
         "plusTotal": "Total network score for engagement on all content submissions to Minds+.",
         "plusPercentage": "Your score divided by the total network score.",
-        "plusReward": "Your estimated token reward based on your percent share.", 
+        "plusReward": "Your estimated token reward based on your percent share.",
         "plusActivity": "Your account's activity level to determine your multiplier",
         "proPageviews": "Your total earnings for registered pageviews on your content or channel",
         "proReferrals": "Your total earning for active users you have referred."
