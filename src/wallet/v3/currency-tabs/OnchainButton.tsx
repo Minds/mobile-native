@@ -1,3 +1,4 @@
+import { observer } from 'mobx-react';
 import React from 'react';
 import { Text, ViewStyle } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -14,7 +15,7 @@ type PropsType = {
   onchainStore: any;
 };
 
-const OnchainButton = (props: PropsType) => {
+const OnchainButton = observer((props: PropsType) => {
   const theme = ThemedStyles.style;
   const textStyles = [theme.colorPrimaryText, theme.fontM, theme.fontMedium];
   const hasReceiver =
@@ -55,6 +56,6 @@ const OnchainButton = (props: PropsType) => {
       onPress={props.onPress}
     />
   );
-};
+});
 
 export default OnchainButton;
