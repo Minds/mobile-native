@@ -26,14 +26,16 @@ export const StoresProvider = ({ children }) => {
     portrait: useLocalStore(createPortraitStore),
   };
 
-  sessionService.onLogout(() => {
-    for (const id in stores) {
-      if (stores[id].reset) {
-        logService.info(`Reseting store ${id}`);
-        stores[id].reset();
+  React.useEffect(() => {
+    return sessionService.onLogout(() => {
+      for (const id in stores) {
+        if (stores[id].reset) {
+          logService.info(`Reseting store ${id}`);
+          stores[id].reset();
+        }
       }
-    }
-  });
+    });
+  }, []);
 
   return (
     <storesContext.Provider value={stores}>{children}</storesContext.Provider>

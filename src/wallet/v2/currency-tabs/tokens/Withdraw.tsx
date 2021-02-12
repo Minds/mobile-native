@@ -9,10 +9,12 @@ import type { WalletStoreType } from '../../createWalletStore';
 import type { BottomOptionsStoreType } from '../../../../common/components/BottomOptionPopup';
 import CenteredLoading from '../../../../common/components/CenteredLoading';
 import createWithdrawStore from './createWithdrawStore';
+import type { WCStore } from '../../../../blockchain/v2/walletconnect/WalletConnectContext';
 
 type PropsType = {
   walletStore: WalletStoreType;
   bottomStore: BottomOptionsStoreType;
+  wc: WCStore;
 };
 
 /**

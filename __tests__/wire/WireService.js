@@ -1,18 +1,20 @@
-import api from '../../src/common/services/api.service';
-import BlockchainWireService from '../../src/blockchain/services/BlockchainWireService';
-import BlockchainTokenService from '../../src/blockchain/services/BlockchainTokenService';
-import BlockchainWalletService from '../../src/blockchain/wallet/BlockchainWalletService';
-import WireService from '../../src/wire/WireService';
+// TODO: reimplement this test
 
-jest.mock('../../src/common/services/api.service');
-jest.mock('../../src/blockchain/services/BlockchainWireService');
-jest.mock('../../src/blockchain/services/BlockchainTokenService');
-jest.mock('../../src/blockchain/wallet/BlockchainWalletService');
+// import api from '../../src/common/services/api.service';
+// import BlockchainWireService from '../../src/blockchain/services/BlockchainWireService';
+// import BlockchainTokenService from '../../src/blockchain/services/BlockchainTokenService';
+// import BlockchainWalletService from '../../src/blockchain/wallet/BlockchainWalletService';
+// import WireService from '../../src/wire/WireService';
+
+// jest.mock('../../src/common/services/api.service');
+// jest.mock('../../src/blockchain/services/BlockchainWireService');
+// jest.mock('../../src/blockchain/services/BlockchainTokenService');
+// jest.mock('../../src/blockchain/wallet/BlockchainWalletService');
 
 /**
  * Wire service
  */
-describe('wire service', () => {
+describe.only('wire service', () => {
 
   beforeEach(() => {
     api.get.mockClear();

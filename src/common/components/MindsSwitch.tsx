@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React from 'react';
 import { observer, useLocalStore } from 'mobx-react';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
@@ -8,16 +8,18 @@ type PropsType = {
   rightText: string;
   leftValue: any;
   rightValue: any;
+  initialValue: any;
   onSelectedValueChange: Function;
 };
 
 const createMindsSwitchStore = ({
   leftValue,
   rightValue,
+  initialValue,
   onSelectedValueChange,
 }) => {
   const store = {
-    selectedValue: leftValue,
+    selectedValue: initialValue,
     selectedValueChange() {
       this.selectedValue =
         this.selectedValue === leftValue ? rightValue : leftValue;
@@ -36,6 +38,7 @@ const MindsSwitch = observer(
     rightText,
     leftValue,
     rightValue,
+    initialValue,
     onSelectedValueChange,
   }: PropsType) => {
     const theme = ThemedStyles.style;
@@ -43,6 +46,7 @@ const MindsSwitch = observer(
     const localStore = useLocalStore(createMindsSwitchStore, {
       leftValue,
       rightValue,
+      initialValue,
       onSelectedValueChange,
     });
     return (
@@ -52,6 +56,7 @@ const MindsSwitch = observer(
             theme.rowJustifyStart,
             theme.mindsSwitchBackgroundPrimary,
             theme.border,
+            theme.borderRadius2x,
             theme.borderPrimary,
           ]}
           activeOpacity={0.65}

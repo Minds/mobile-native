@@ -42,7 +42,7 @@ const HeaderTabsComponent = observer(({ store, tabList }: PropsType) => {
             onPress={() => store.setTab(name)}
             style={[
               tabStyle,
-              tab === name ? theme.borderLink : theme.borderBackgroundSecondary,
+              tab === name ? theme.borderLink : theme.borderBackgroundPrimary,
             ]}>
             <Text style={theme.fontL}>{label}</Text>
           </TouchableOpacity>

@@ -17,7 +17,6 @@ import CenteredLoading from './CenteredLoading';
 import MenuItem from './menus/MenuItem';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Colors from '../../styles/Colors';
-import { useLegacyStores } from '../hooks/use-stores';
 import { UserError } from '../UserError';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -26,6 +25,7 @@ import Button from './Button';
 import mindsService from '../services/minds.service';
 import UserModel from '../../channel/UserModel';
 import entitiesService from '../services/entities.service';
+import WireStore from '../../wire/WireStore';
 
 const isIos = Platform.OS === 'ios';
 
@@ -34,6 +34,7 @@ type payMethod = 'tokens' | 'usd';
 
 const createPlusStore = () => {
   const store = {
+    wire: new WireStore(),
     loaded: false,
     loading: false,
     method: 'tokens' as payMethod,
@@ -146,7 +147,6 @@ const PlusScreen = observer(({ navigation, route }: PropsType) => {
   const localStore = useLocalStore(createPlusStore);
   const theme = ThemedStyles.style;
   const insets = useSafeArea();
-  const { wire } = useLegacyStores();
   const { onComplete, pro } = route.params;
 
   const switchTextStyle = [styles.switchText, theme.colorPrimaryText];
@@ -166,14 +166,14 @@ const PlusScreen = observer(({ navigation, route }: PropsType) => {
         if (localStore.selectedOption === '0') {
           complete(false);
         }
-        wire.setAmount(parseFloat(localStore.selectedOption));
-        wire.setCurrency(currency);
-        wire.setOwner(localStore.owner);
-        wire.setRecurring(localStore.monthly);
+        localStore.wire.setAmount(parseFloat(localStore.selectedOption));
+        localStore.wire.setCurrency(currency);
+        localStore.wire.setOwner(localStore.owner);
+        localStore.wire.setRecurring(localStore.monthly);
         if (currency === 'usd') {
-          wire.setPaymentMethodId(localStore.card.id);
+          localStore.wire.setPaymentMethodId(localStore.card.id);
         }
-        const done = await wire.send();
+        const done = await localStore.wire.send();
         if (!done) {
           throw new UserError(i18n.t('boosts.errorPayment'));
         }
@@ -185,7 +185,7 @@ const PlusScreen = observer(({ navigation, route }: PropsType) => {
         localStore.setLoading(false);
       }
     },
-    [complete, wire, localStore],
+    [complete, localStore],
   );
 
   const confirmSend = useCallback(async () => {
