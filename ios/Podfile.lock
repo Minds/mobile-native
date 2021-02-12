@@ -257,7 +257,7 @@ PODS:
     - React
   - react-native-cameraroll (1.4.0):
     - React
-  - react-native-image-picker (2.3.3):
+  - react-native-month-year-picker (1.6.3):
     - React
   - react-native-netinfo (5.9.9):
     - React-Core
@@ -270,11 +270,6 @@ PODS:
   - react-native-slider (3.0.3):
     - React
   - react-native-sqlite-storage (4.1.0):
-    - React
-  - react-native-video (5.0.2):
-    - React
-    - react-native-video/Video (= 5.0.2)
-  - react-native-video/Video (5.0.2):
     - React
   - react-native-webview (8.2.1):
     - React
@@ -467,14 +462,13 @@ DEPENDENCIES:
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - react-native-camera (from `../node_modules/react-native-camera`)
   - "react-native-cameraroll (from `../node_modules/@react-native-community/cameraroll`)"
-  - react-native-image-picker (from `../node_modules/react-native-image-picker`)
+  - react-native-month-year-picker (from `../node_modules/react-native-month-year-picker`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-notifications (from `../node_modules/react-native-notifications`)
   - react-native-randombytes (from `../node_modules/react-native-randombytes`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - "react-native-slider (from `../node_modules/@react-native-community/slider`)"
   - react-native-sqlite-storage (from `../node_modules/react-native-sqlite-storage`)
-  - react-native-video (from `../node_modules/react-native-video`)
   - react-native-webview (from `../node_modules/react-native-webview`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
@@ -526,15 +520,14 @@ DEPENDENCIES:
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
-  https://cdn.cocoapods.org/:
-    - boost-for-react-native
-    - SDWebImage
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - libwebp
     - SDWebImage
     - SDWebImageWebPCoder
     - Sentry
     - TOCropViewController
+  trunk:
+    - boost-for-react-native
 
 EXTERNAL SOURCES:
   Crypto:
@@ -613,8 +606,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-camera"
   react-native-cameraroll:
     :path: "../node_modules/@react-native-community/cameraroll"
-  react-native-image-picker:
-    :path: "../node_modules/react-native-image-picker"
+  react-native-month-year-picker:
+    :path: "../node_modules/react-native-month-year-picker"
   react-native-netinfo:
     :path: "../node_modules/@react-native-community/netinfo"
   react-native-notifications:
@@ -627,8 +620,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/slider"
   react-native-sqlite-storage:
     :path: "../node_modules/react-native-sqlite-storage"
-  react-native-video:
-    :path: "../node_modules/react-native-video"
   react-native-webview:
     :path: "../node_modules/react-native-webview"
   React-RCTActionSheet:
@@ -769,14 +760,13 @@ SPEC CHECKSUMS:
   React-jsinspector: 8e68ffbfe23880d3ee9bafa8be2777f60b25cbe2
   react-native-camera: 3940f67a49eaf736525a3e730653fcb98e1525dd
   react-native-cameraroll: dbda741db5dadcdcf738e55a1fd565c307943bca
-  react-native-image-picker: 3d3f85baabca60a00b75fb8facc1376db7bbdafa
+  react-native-month-year-picker: 4b69d519ca43309719577a155051eb966df7c191
   react-native-netinfo: 0212ce8604e88edf686f1481b925b17a42a52449
   react-native-notifications: 163ddedac6fcc8d850ea15b06abdadcacdff00f1
   react-native-randombytes: 3638d24759d67c68f6ccba60c52a7a8a8faa6a23
   react-native-safe-area-context: 955ecfce672683b495d9294d2f154a9ad1d9796b
   react-native-slider: e99fc201cefe81270fc9d81714a7a0f5e566b168
   react-native-sqlite-storage: f06bfba10f67f989c00b6a699b9c2b80a816edbe
-  react-native-video: d01ed7ff1e38fa7dcc6c15c94cf505e661b7bfd0
   react-native-webview: 160ac8d6bb974e2933f2de6bb7464a8e934ff31d
   React-RCTActionSheet: 53ea72699698b0b47a6421cb1c8b4ab215a774aa
   React-RCTAnimation: 1befece0b5183c22ae01b966f5583f42e69a83c2
@@ -833,4 +823,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: ccd7495510034e0f284e0fc6f5c905fec133aa8f
 
-COCOAPODS: 1.7.5
+COCOAPODS: 1.9.3
