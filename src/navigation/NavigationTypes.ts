@@ -75,7 +75,7 @@ export type ActivityFullScreenParamList = {
 };
 
 export type AppStackParamList = {
-  ExportLegacyWallet: {},
+  ExportLegacyWallet: {};
   Fab: {
     disableThresholdCheck?: boolean;
     owner: UserModel;

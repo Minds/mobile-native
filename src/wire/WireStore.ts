@@ -195,7 +195,7 @@ class WireStore {
       }
       this.stopSending();
     } catch (e) {
-      console.log(e)
+      console.log(e);
       this.stopSending();
       throw e;
     }
