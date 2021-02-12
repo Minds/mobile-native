@@ -63,8 +63,6 @@ const AccordionContent = ({ data, summary }: PropsType) => {
         theme.marginTop,
         theme.paddingBottom5x,
         theme.borderPrimary,
-        theme.borderTop,
-        theme.borderBottom,
       ]}>
       {data.map((row) => {
         return (
