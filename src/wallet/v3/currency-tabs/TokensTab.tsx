@@ -83,9 +83,7 @@ const TokensTab = observer(
         );
         break;
       case 'settings':
-        body = (
-          <ReceiverSettings navigation={navigation} walletStore={walletStore} />
-        );
+        body = <ReceiverSettings />;
         break;
     }
 
