@@ -84,6 +84,7 @@ export type AppStackParamList = {
     };
     walletStore?: WalletStoreType;
     options?: Function;
+    showBottomStore?: 'withdrawal'; // add | for more;
   };
   JoinMembershipScreen: {
     user?: UserModel;
