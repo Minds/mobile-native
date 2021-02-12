@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
 import { StyleSheet, Text, View } from 'react-native';
 import TopBarButtonTabBar, {
@@ -16,6 +16,9 @@ import { WalletScreenNavigationProp } from '../../v2/WalletScreen';
 import i18n from '../../../common/services/i18n.service';
 import TokensRewards from './TokensRewards';
 import TokensEarnings from './TokensEarnings';
+import { useDimensions } from '@react-native-community/hooks';
+import { Tooltip } from 'react-native-elements';
+import BalanceInfo from './BalanceInfo';
 
 const options: Array<ButtonTabType<TokensOptions>> = [
   { id: 'rewards', title: 'Rewards' },
@@ -45,6 +48,8 @@ const TokensTab = observer(
   ({ walletStore, navigation, bottomStore }: PropsType) => {
     const store = useLocalStore(createStore, walletStore);
     const theme = ThemedStyles.style;
+    const tooltipRef = useRef<any>();
+    const screen = useDimensions().screen;
 
     let body;
     switch (store.option) {
@@ -96,9 +101,23 @@ const TokensTab = observer(
               theme.paddingLeft2x,
               theme.marginBottom5x,
             ]}>
-            <Text style={[styles.minds, theme.mindsSwitchBackgroundSecondary]}>
-              {walletStore.balance} MINDS
-            </Text>
+            <Tooltip
+              ref={tooltipRef}
+              closeOnlyOnBackdropPress={true}
+              skipAndroidStatusBar={true}
+              toggleOnPress={false}
+              withOverlay={false}
+              containerStyle={theme.borderRadius}
+              width={screen.width - 20}
+              height={250}
+              backgroundColor={ThemedStyles.getColor('secondary_background')}
+              popover={<BalanceInfo walletStore={walletStore} />}>
+              <Text
+                onPress={() => tooltipRef.current.toggleTooltip()}
+                style={[styles.minds, theme.mindsSwitchBackgroundSecondary]}>
+                {walletStore.balance} MINDS
+              </Text>
+            </Tooltip>
           </View>
 
           <TopBarButtonTabBar
