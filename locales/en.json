@@ -728,6 +728,11 @@
     "walletActions": "WALLET ACTIONS",
     "walletBalance": "Wallet balance",
     "transactionsEmpty": "Your transaction list is empty",
+    "unpaid": "Unpaid",
+    "unpaidEarnings": "Unpaid earnings",
+    "total": "Total",
+    "totalPaidout": "Total paid out",
+    "alltime": "All-time earnings",
     "withdraw": {
       "errorOnlyOnceDay": "You may only withdraw once a day",
       "errorWithdrawing": "Error withdrawing tokens",
@@ -750,7 +755,18 @@
       "leaveButton": "Leave Monetization Program",
       "confirmLeave": "Are you sure? You won't be able to rejoin.",
       "sure": "Yes, I'm sure",
-      "earnings": "Earnings"
+      "earnings": "Earnings",
+      "tooltips": {
+        "proTitle": "Summary of your earnings through your Minds Pro membership.",
+        "plusTitle": "Summary of your earnings through your Minds+ membership.",
+        "plusScore": "Your score for engagement on your content submissions to Minds+.",
+        "plusTotal": "Total network score for engagement on all content submissions to Minds+.",
+        "plusPercentage": "Your score divided by the total network score.",
+        "plusReward": "Your estimated token reward based on your percent share.", 
+        "plusActivity": "Your account's activity level to determine your multiplier",
+        "proPageviews": "Your total earnings for registered pageviews on your content or channel",
+        "proReferrals": "Your total earning for active users you have referred."
+      }
     },
     "transactions": {
       "transaction": "Transaction",
@@ -833,6 +849,42 @@
       "fail": "Something went wrong",
       "finish": "Finish adding your bank details to start receiving cash payouts",
       "complete": "Complete bank details"
+    },
+    "date": "Date",
+    "today": "Today",
+    "todayEstimate": "Today’s estimate",
+    "payout": "Payout",
+    "engagement": "Engagement",
+    "holding": "Holding",
+    "liquidity": "Liquidity",
+    "tokens": {
+      "tooltips": {
+        "todayEstimate": "Your estimated token payout for today's contribution.",
+        "prevDateEarnings": "Your token payout for this date.",
+        "nextPayout": "Countdown until your next token payout is issued.",
+        "engagement": "Summary of your token rewards for engagement on your content.",
+        "holding": "Summary of your token rewards for holding tokens on-chain.",
+        "liquidity": "Summary of your token rewards for providing liquidity.",
+        "engagementScore": "Your score for referrals and engagement on your content and channel.",
+        "engagementTotal": "Total network score for all referrals and engagement on the app.",
+        "engagementPercentage": "Your score divided by the total network score.",
+        "engagementReward": "Your estimated token reward based on your percent share.",
+        "engagementActivity": "Your account's activity level to determine your multiplier.",
+        "holdingScore": "Your score for holding your tokens on-chain.",
+        "holdingTotal": "Total network score for holding tokens on-chain.",
+        "holdingPercentage": "Your score divided by the total network score.",
+        "holdingReward": "Your estimated token reward based on your percent share.",
+        "holdingBalance": "Your current on-chain token balance.",
+        "holdingDuration": "The number of consecutive days you have held tokens on-chain",
+        "holdingMultiplier": "Your score multiplier as determined by duration.",
+        "liquidityScore": "Your score for providing liquidity.",
+        "liquidityTotal": "Total network score for providing liquidity.",
+        "liquidityPercentage": "Your score divided by the total network score.",
+        "liquidityReward": "Your estimated token reward based on your percent share.",
+        "liquidityBalance": "Your current liquidity position.",
+        "liquidityDuration": "The number of consecutive days you have provided liquidity.",
+        "liquidityMultiplier": "Your score multiplier as determined by duration."
+      }
     }
   },
   "analytics": {

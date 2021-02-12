@@ -95,7 +95,7 @@ import BillingScreen from '../settings/screens/BillingScreen';
 import RecurringPayments from '../settings/screens/RecurringPayments';
 import ReportedContentScreen from '../report/ReportedContentScreen';
 import AppInfoScreen from '../settings/screens/AppInfoScreen';
-import WalletScreen from '../wallet/v2/WalletScreen';
+import WalletScreen from '../wallet/v3/WalletScreen';
 import ModalTransition from './ModalTransition';
 import AuthTransition from './AuthTransition';
 import VideoBackground from '../common/components/VideoBackground';
@@ -113,6 +113,7 @@ import SuggestedChannelsScreen from '../onboarding/v2/steps/SuggestedChannelsScr
 import SuggestedGroupsScreen from '../onboarding/v2/steps/SuggestedGroupsScreen';
 import BoostChannelScreen from '../boost/v2/BoostChannelScreen';
 import BoostPostScreen from '../boost/v2/BoostPostScreen';
+import { topBarButtonTabBarRef } from '../common/components/topbar-tabbar/TopBarButtonTabBar';
 import ExportLegacyWallet from '../settings/screens/ExportLegacyWallet';
 
 const isIos = Platform.OS === 'ios';
@@ -284,7 +285,7 @@ const MainScreen = () => {
       gestureHandlerProps={{
         hitSlop: { left: 0, width: dimensions.width },
         //@ts-ignore
-        waitFor: portraitBarRef,
+        waitFor: [portraitBarRef, topBarButtonTabBarRef],
       }}
       drawerType="slide"
       drawerContent={Drawer}
