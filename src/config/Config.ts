@@ -4,7 +4,7 @@ import { Platform } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 
 // Send staging cookie to api
-export const MINDS_STAGING = true;
+export const MINDS_STAGING = false;
 
 // network timeout time
 export const NETWORK_TIMEOUT = 15000;
