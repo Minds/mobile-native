@@ -15,17 +15,23 @@ import OrderReportModal, {
 } from './order-report-modal/OrderReportModal';
 import { startCase as _startCase } from 'lodash';
 import i18n from '../common/services/i18n.service';
+import mindsService from '../common/services/minds.service';
 
 type PaymentMethod = 'card' | 'bank' | 'crypto';
 type PaymentOption = { type: PaymentMethod; name: string };
 
 type Store = {
+  transakApiKey: string;
+  tokenAddress: string;
   paymentMethod: string | null;
   orderReport: OrderReport | null;
   showOrderReport: boolean;
   showUniswapWidget: boolean;
   showTransakWidget: boolean;
   aggressTerms: boolean;
+  setTransakApiKey: (transakApiKey: string) => void;
+  setTokenAddress: (tokenAddress: string) => void;
+  setKeys: (transakApiKey: string, tokenAddress: string) => void;
   setPaymentMethod: (paymentMethod: PaymentMethod | null) => void;
   setOrderReport: (orderReport: OrderReport) => void;
   setShowOrderReport: (show: boolean) => void;
@@ -41,6 +47,18 @@ export default observer(() => {
   const theme = ThemedStyles.style;
   const store = useLocalStore<Store>(createStore);
   const canBuyTokens = !!store.paymentMethod && store.aggressTerms;
+
+  useEffect(() => {
+    const getSettings = async () => {
+      const settings = await mindsService.getSettings();
+      store.setKeys(
+        settings.blockchain.transak.api_key,
+        settings.blockchain.token.address,
+      );
+    };
+
+    getSettings();
+  }, [store]);
 
   useEffect(() => {
     autorun(() => {
@@ -148,6 +166,7 @@ export default observer(() => {
         onCloseButtonPress={() =>
           store.setShowUniswapWidget(!store.showUniswapWidget)
         }
+        tokenAddress={store.tokenAddress}
       />
       <TransakWidget
         isVisible={store.showTransakWidget}
@@ -156,6 +175,7 @@ export default observer(() => {
         onCloseButtonPress={() =>
           store.setShowTransakWidget(!store.showTransakWidget)
         }
+        transakApiKey={store.transakApiKey}
       />
       {store.orderReport && (
         <OrderReportModal
@@ -171,12 +191,24 @@ export default observer(() => {
 });
 
 const createStore = (): Store => ({
+  transakApiKey: '',
+  tokenAddress: '',
   paymentMethod: null,
   orderReport: null,
   showOrderReport: false,
   showUniswapWidget: false,
   showTransakWidget: false,
   aggressTerms: false,
+  setTransakApiKey(transakApiKey) {
+    this.transakApiKey = transakApiKey;
+  },
+  setTokenAddress(tokenAddress) {
+    this.tokenAddress = tokenAddress;
+  },
+  setKeys(transakApiKey, tokenAddress) {
+    this.transakApiKey = transakApiKey;
+    this.tokenAddress = tokenAddress;
+  },
   setPaymentMethod(paymentMethod: PaymentMethod | null) {
     this.paymentMethod = paymentMethod;
   },

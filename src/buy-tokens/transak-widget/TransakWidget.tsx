@@ -1,21 +1,15 @@
 import React, { useEffect } from 'react';
 import Pusher from 'pusher-js/react-native';
 import WebviewModal from '../../common/components/WebviewModal';
-import { TRANSAK_API_KEY } from '../../config/Config';
 
 const pusher = new Pusher('1d9ffac87de599c61283', { cluster: 'ap2' }); // Transak Public API
 const partnerOrderId = Math.floor(10000000 + Math.random() * 90000000); // Can be any number. It is required for the iframe to work properly
-const channelName = `${TRANSAK_API_KEY}_${partnerOrderId}`;
 
 // TODO: Replace this based upon environment config
 const getTransakDomain = (isProdEnvironment: boolean) =>
   isProdEnvironment
     ? 'https://global.transak.com'
     : 'https://staging-global.transak.com';
-
-const transakURL = `${getTransakDomain(
-  false,
-)}?apiKey=${TRANSAK_API_KEY}&partnerOrderId=${partnerOrderId}&defaultCryptoCurrency=ETH`;
 
 export interface TransakOrderProcessed {
   id: string;
@@ -35,6 +29,7 @@ type Props = {
   onOrderProcessed: (response: TransakOrderProcessed) => void;
   onError: (response) => void;
   onCloseButtonPress: () => void;
+  transakApiKey: string;
 };
 
 export default function ({
@@ -42,7 +37,13 @@ export default function ({
   onOrderProcessed,
   onCloseButtonPress,
   onError,
+  transakApiKey,
 }: Props) {
+  const channelName = `${transakApiKey}_${partnerOrderId}`;
+  const transakURL = `${getTransakDomain(
+    false,
+  )}?apiKey=${transakApiKey}&partnerOrderId=${partnerOrderId}&defaultCryptoCurrency=ETH`;
+
   useEffect(() => {
     const channel = pusher.subscribe(channelName);
 
@@ -57,7 +58,7 @@ export default function ({
     return () => {
       pusher.unsubscribe(channelName);
     };
-  }, [onOrderProcessed, onError]);
+  }, [onOrderProcessed, onError, channelName]);
 
   return (
     <WebviewModal

@@ -1,5 +1,4 @@
 import React from 'react';
-import { BLOCKCHAIN_TOKEN_ADDRESS } from '../../../config/Config';
 import WebviewModal from '../WebviewModal';
 
 type UniswapAction = 'swap' | 'add';
@@ -8,15 +7,16 @@ type Props = {
   isVisible: boolean;
   action?: UniswapAction;
   onCloseButtonPress: () => void;
+  tokenAddress: string;
 };
 
-const getUniSwapURL = (action: UniswapAction) => {
+const getUniSwapURL = (action: UniswapAction, tokenAddress) => {
   const baseURL = 'https://app.uniswap.org/#';
 
   if (action === 'swap') {
-    return `${baseURL}/${action}?outputCurrency=${BLOCKCHAIN_TOKEN_ADDRESS}`;
+    return `${baseURL}/${action}?outputCurrency=${tokenAddress}`;
   } else {
-    return `${baseURL}/${action}/ETH/${BLOCKCHAIN_TOKEN_ADDRESS}`;
+    return `${baseURL}/${action}/ETH/${tokenAddress}`;
   }
 };
 
@@ -30,11 +30,12 @@ export default function ({
   isVisible,
   onCloseButtonPress,
   action = 'swap',
+  tokenAddress,
 }: Props) {
   return (
     <WebviewModal
       isVisible={isVisible}
-      uri={getUniSwapURL(action)}
+      uri={getUniSwapURL(action, tokenAddress)}
       onCloseButtonPress={onCloseButtonPress}
     />
   );
