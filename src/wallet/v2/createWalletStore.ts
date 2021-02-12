@@ -1,10 +1,7 @@
-import { runInAction } from 'mobx';
-
 import type { CurrencyType } from '../../types/Payment';
 import api from '../../common/services/api.service';
 import toFriendlyCrypto from '../../common/helpers/toFriendlyCrypto';
 import logService from '../../common/services/log.service';
-import web3Service from '../../blockchain/services/Web3Service';
 import number from '../../common/helpers/number';
 import type {
   StripeDetails,
@@ -12,10 +9,9 @@ import type {
   TokensOptions,
   Earnings,
 } from './WalletTypes';
-import BlockchainWalletService from '../../blockchain/wallet/BlockchainWalletService';
-import { UserError } from '../../common/UserError';
+// import BlockchainWalletService from '../../blockchain/wallet/BlockchainWalletService';
 import i18n from '../../common/services/i18n.service';
-import BlockchainApiService from '../../blockchain/BlockchainApiService';
+// import BlockchainApiService from '../../blockchain/BlockchainApiService';
 import { ChartTimespanType } from './currency-tabs/TokensChart';
 import sessionService from '../../common/services/session.service';
 import walletService, { WalletJoinResponse } from '../WalletService';
@@ -117,44 +113,44 @@ const createWalletStore = () => ({
   setInitialTab(value?: TokensOptions) {
     this.initialTab = value;
   },
-  /**
-   * Create on-chain address
-   * @param setAsReceiver if true sets the address as receiver into the server
-   */
-  async createOnchain(setAsReceiver: boolean = false) {
-    try {
-      const address: string = await BlockchainWalletService.create();
-      if (!address) {
-        throw new Error('Empty Address');
-      }
+  // /**
+  //  * Create on-chain address
+  //  * @param setAsReceiver if true sets the address as receiver into the server
+  //  */
+  // async createOnchain(setAsReceiver: boolean = false) {
+  //   try {
+  //     const address: string = await BlockchainWalletService.create();
+  //     if (!address) {
+  //       throw new Error('Empty Address');
+  //     }
 
-      if (setAsReceiver) {
-        await BlockchainApiService.setWallet(address);
-      }
+  //     if (setAsReceiver) {
+  //       await BlockchainApiService.setWallet(address);
+  //     }
 
-      // update wallet observables as an atomic action
-      runInAction(() => {
-        if (setAsReceiver) {
-          this.wallet.receiver.address = address;
-        }
-        if (!this.wallet.onchain.address) {
-          this.wallet.onchain.address = address;
-        }
-        if (!this.wallet.eth.address) {
-          this.wallet.eth.address = address;
-        }
-      });
-    } catch (err) {
-      console.log(err);
-      if (err.message) {
-        if (err.message === 'E_INVALID_PASSWORD_CHALLENGE_OUTCOME') {
-          return;
-        }
-      }
-      // show a warning for the user
-      throw new UserError(i18n.t('blockchain.errorCreatingWallet'));
-    }
-  },
+  //     // update wallet observables as an atomic action
+  //     runInAction(() => {
+  //       if (setAsReceiver) {
+  //         this.wallet.receiver.address = address;
+  //       }
+  //       if (!this.wallet.onchain.address) {
+  //         this.wallet.onchain.address = address;
+  //       }
+  //       if (!this.wallet.eth.address) {
+  //         this.wallet.eth.address = address;
+  //       }
+  //     });
+  //   } catch (err) {
+  //     console.log(err);
+  //     if (err.message) {
+  //       if (err.message === 'E_INVALID_PASSWORD_CHALLENGE_OUTCOME') {
+  //         return;
+  //       }
+  //     }
+  //     // show a warning for the user
+  //     throw new UserError(i18n.t('blockchain.errorCreatingWallet'));
+  //   }
+  // },
   /**
    * Load wallet data
    */
@@ -200,10 +196,10 @@ const createWalletStore = () => ({
           } else if (address.label === 'Receiver' && address.address) {
             this.wallet.receiver.balance = toFriendlyCrypto(address.balance);
             this.wallet.receiver.address = address.address;
-            this.wallet.eth.balance = number(
-              await web3Service.getBalance(address.address),
-              3,
-            );
+            // this.wallet.eth.balance = number(
+            //   await web3Service.getBalance(address.address),
+            //   3,
+            // );
           }
         });
 

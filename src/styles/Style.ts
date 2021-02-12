@@ -501,18 +501,22 @@ export const buildStyle = (theme) => ({
   },
   fontThin: {
     fontWeight: '200',
+    fontFamily: 'Roboto-Thin',
   },
   fontHairline: {
     fontWeight: '100',
+    fontFamily: 'Roboto-Thin',
   },
   fontLight: {
     fontWeight: '300',
+    fontFamily: 'Roboto-Light',
   },
   fontNormal: {
     fontWeight: '400',
   },
   fontMedium: {
     fontWeight: '500',
+    fontFamily: 'Roboto-Medium',
   },
   fontSemibold: {
     fontWeight: '600',

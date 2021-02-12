@@ -138,18 +138,6 @@ const TokensTab = observer(
             : undefined,
           noIcon: !user.hasRewards(),
         },
-        {
-          title: i18n.t('wallet.addOnchainAddress'),
-          onPress: () => {
-            if (!walletStore.wallet.receiver.address) {
-              walletStore.createOnchain(true);
-            }
-          },
-          icon: walletStore.wallet.receiver.address
-            ? { name: 'md-checkmark', type: 'ionicon' }
-            : undefined,
-          noIcon: !walletStore.wallet.receiver.address,
-        },
       ];
     }
 
@@ -182,9 +170,7 @@ const TokensTab = observer(
         );
         break;
       case 'settings':
-        body = (
-          <ReceiverSettings navigation={navigation} walletStore={walletStore} />
-        );
+        body = <ReceiverSettings />;
         break;
     }
 

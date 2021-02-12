@@ -23,6 +23,7 @@ export type InternalStackParamList = {
   Analytics: {};
   Onboarding: {};
   InitialOnboarding: {};
+  Test: {};
 };
 
 export type RootStackParamList = {
@@ -74,6 +75,7 @@ export type ActivityFullScreenParamList = {
 };
 
 export type AppStackParamList = {
+  ExportLegacyWallet: {};
   Fab: {
     disableThresholdCheck?: boolean;
     owner: UserModel;

@@ -53,6 +53,10 @@ export default function ({ navigation }) {
       title: i18n.t('boost'),
       screen: 'BoostConsole',
     },
+    {
+      title: i18n.t('blockchain.exportLegacyWallet'),
+      screen: 'ExportLegacyWallet',
+    },
   ];
 
   if (!user.plus) {
