@@ -20,6 +20,7 @@ import UsdTab from './currency-tabs/UsdTab';
 import i18n from '../../common/services/i18n.service';
 import { useStores } from '../../common/hooks/use-stores';
 import Withdraw from '../v2/currency-tabs/tokens/Withdraw';
+import useWalletConnect from '../../blockchain/v2/walletconnect/useWalletConnect';
 
 export type WalletScreenRouteProp = RouteProp<AppStackParamList, 'Fab'>;
 export type WalletScreenNavigationProp = StackNavigationProp<
@@ -37,6 +38,7 @@ type PropsType = {
  */
 const WalletScreen = observer((props: PropsType) => {
   const theme = ThemedStyles.style;
+  const wc = useWalletConnect();
 
   const store: WalletStoreType = useStores().wallet;
   const bottomStore: BottomOptionsStoreType = useBottomOption();
@@ -45,9 +47,9 @@ const WalletScreen = observer((props: PropsType) => {
     bottomStore.show(
       i18n.t('wallet.withdraw.title'),
       i18n.t('wallet.withdraw.transfer'),
-      <Withdraw walletStore={store} bottomStore={bottomStore} />,
+      <Withdraw walletStore={store} bottomStore={bottomStore} wc={wc} />,
     );
-  }, [bottomStore, store]);
+  }, [bottomStore, store, wc]);
 
   const tabs: Array<TabType<CurrencyType>> = [
     {

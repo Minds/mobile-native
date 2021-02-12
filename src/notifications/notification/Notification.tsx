@@ -114,9 +114,6 @@ export default class Notification extends Component<PropsType> {
 
     const entity = this.props.entity;
 
-    console.log('entity.notification_view', entity.notification_view);
-    console.log('entity', entity.entity);
-
     const body = this.getBody(entity);
 
     const avatarSrc = {
