@@ -114,6 +114,7 @@ import SuggestedGroupsScreen from '../onboarding/v2/steps/SuggestedGroupsScreen'
 import BoostChannelScreen from '../boost/v2/BoostChannelScreen';
 import BoostPostScreen from '../boost/v2/BoostPostScreen';
 import ConnectionTestScreen from '../connection-test/ConnectionTestScreen';
+import ExportLegacyWallet from '../settings/screens/ExportLegacyWallet';
 
 const isIos = Platform.OS === 'ios';
 
@@ -312,6 +313,11 @@ const AppStack = function () {
         name="ActivityFullScreenNav"
         component={FullScreenPostStack}
         options={{ stackAnimation: 'none', ...hideHeader }}
+      />
+      <AppStackNav.Screen
+        name="ExportLegacyWallet"
+        component={ExportLegacyWallet}
+        options={{ title: 'Export Wallet' }}
       />
       <AppStackNav.Screen
         name="Capture"

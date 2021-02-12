@@ -87,6 +87,9 @@
     "failedToLoginNewAccount": "The login with your new account has failed, please try to log in the login screen"
   },
   "blockchain": {
+    "exportLegacyWallet":"Export legacy wallets",
+    "exportLegacy1":"You have the private keys of at least one wallet in the app.",
+    "exportLegacy2":"Please store it if you don't want to lose access to them.",
     "boostCreate": "Network Boost for {{tokensAmount}} Minds Tokens. {{message}}",
     "boostPeerCreate": "Channel Boost for {{tokensAmount}} Minds Tokens to {{receiver}}. {{message}}",
     "tokenApprove": "Approve {{address}} to spend {{tokensAmount}} tokens in the future. {{message}}",

@@ -77,15 +77,11 @@ class KeychainService {
     if (await isKeychainInStorage(keychain)) {
       try {
         if (!secretAttempt) {
-          break;
+          throw new Error('Missing passord');
         }
 
         secret = await challengeKeychainFromSecret(keychain, secretAttempt);
       } catch (e) {}
-
-      if (secret) {
-        break;
-      }
 
       if (!secret) {
         throw new Error('E_INVALID_PASSWORD_CHALLENGE_OUTCOME');
