@@ -23,6 +23,7 @@ import GroupModel from '../../groups/GroupModel';
 import CommentInputBottomMenu from './CommentInputBottomMenu';
 import preventDoubleTap from '../../common/components/PreventDoubleTap';
 import { DotIndicator } from 'react-native-reanimated-indicators';
+import { CHAR_LIMIT } from '../../config/Config';
 
 const { height } = Dimensions.get('window');
 
@@ -63,6 +64,11 @@ const CommentInput = observer(() => {
     provider.store.entity instanceof GroupModel
       ? i18n.t('messenger.typeYourMessage')
       : i18n.t('activity.typeComment');
+
+  const inputMaxHeight = {
+    maxHeight:
+      height * 0.4 - (provider.store.parent || provider.store.edit ? 50 : 0),
+  };
 
   return (
     <KeyboardSpacingView
@@ -127,39 +133,46 @@ const CommentInput = observer(() => {
               underlineColorAndroid="transparent"
               onChangeText={provider.store.setText}
               value={provider.store.text}
+              maxLength={CHAR_LIMIT}
               // onBlur={() => provider.store?.setShowInput(false)}
               style={[
                 theme.fullWidth,
                 theme.colorPrimaryText,
                 theme.fontL,
                 styles.input,
+                inputMaxHeight,
               ]}
             />
             {!provider.store.saving ? (
-              <View
-                style={[
-                  theme.rowJustifyStart,
-                  styles.sendIconCont,
-                  theme.alignCenter,
-                ]}>
-                <Touchable
-                  onPress={provider.store.post}
-                  style={theme.paddingRight2x}
-                  testID="PostCommentButton">
-                  <Icon
-                    name="md-send"
-                    size={18}
-                    style={theme.colorSecondaryText}
-                  />
-                </Touchable>
-                {!provider.store.edit && (
-                  <CommentInputBottomMenu
-                    store={provider.store}
-                    containerStyle={styles.sendIconCont}
-                    afterSelected={afterSelected}
-                    beforeSelect={beforeSelect}
-                  />
-                )}
+              <View>
+                <View
+                  style={[
+                    theme.rowJustifySpaceBetween,
+                    styles.sendIconCont,
+                    theme.alignCenter,
+                  ]}>
+                  <Touchable
+                    onPress={provider.store.post}
+                    style={theme.paddingRight2x}
+                    testID="PostCommentButton">
+                    <Icon
+                      name="md-send"
+                      size={18}
+                      style={theme.colorSecondaryText}
+                    />
+                  </Touchable>
+                  {!provider.store.edit && (
+                    <CommentInputBottomMenu
+                      store={provider.store}
+                      containerStyle={styles.sendIconCont}
+                      afterSelected={afterSelected}
+                      beforeSelect={beforeSelect}
+                    />
+                  )}
+                </View>
+                <Text style={[theme.fontXS, theme.colorSecondaryText]}>
+                  {provider.store.text.length} / {CHAR_LIMIT}
+                </Text>
               </View>
             ) : (
               <DotIndicator

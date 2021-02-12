@@ -194,7 +194,8 @@
       "7": "Spam",
       "8": "Appeals on Boost decision",
       "12": "Onchain payment failed",
-      "13": "Original post removed"
+      "13": "Original post removed",
+      "14": "High Boost backlog"
     },
     "boostChannel": "Boost Channel",
     "boostPost": "Boost Post",

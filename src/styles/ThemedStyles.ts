@@ -128,6 +128,7 @@ class ThemedStylesStore {
         ios: 'default',
         android: 'fade',
       }),
+      screenOrientation: 'portrait',
     };
 
     // Fix for the header's extra padding on android

@@ -153,7 +153,7 @@ const getTypeStringAndIcon = (
       avatar = <AvatarIcon name="arrow-right" />;
       typeString = (
         <Text style={textColor}>
-          {i18n.t('wallet.transaction.transaction')}
+          {i18n.t('wallet.transactions.transaction')}
         </Text>
       );
       break;

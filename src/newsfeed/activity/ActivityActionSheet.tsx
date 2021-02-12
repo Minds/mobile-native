@@ -214,7 +214,12 @@ export default class ActivityActionSheet extends Component<
       }
 
       // if can delete
-      if (entity.isOwner() || sessionService.getUser().isAdmin()) {
+      const containerObj = entity.containerObj;
+      if (
+        entity.isOwner() ||
+        sessionService.getUser().isAdmin() ||
+        (containerObj && containerObj['is:owner'])
+      ) {
         options.push(this.deleteOption);
       }
     }

@@ -9,6 +9,9 @@ export const MINDS_STAGING = false;
 // network timeout time
 export const NETWORK_TIMEOUT = 15000;
 
+// comments char limit
+export const CHAR_LIMIT = 1500;
+
 export const DATA_SAVER_THUMB_RES = 96;
 
 export const MINDS_URI = 'https://www.minds.com/';
