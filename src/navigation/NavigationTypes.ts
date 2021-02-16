@@ -52,6 +52,7 @@ export type RootStackParamList = {
   SuggestedChannel: {};
   SuggestedGroups: {};
   PhoneValidation: {};
+  WalletWithdrawal: {};
 };
 
 export type AuthStackParamList = {

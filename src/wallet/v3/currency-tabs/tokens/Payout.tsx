@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import i18n from '../../../common/services/i18n.service';
-import ThemedStyles from '../../../styles/ThemedStyles';
-import MindsTokens from './MindsTokens';
+import i18n from '../../../../common/services/i18n.service';
+import ThemedStyles from '../../../../styles/ThemedStyles';
+import MindsTokens from '../MindsTokens';
 
 type PropsType = {
   minds: string;

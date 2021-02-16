@@ -6,7 +6,7 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import { observer } from 'mobx-react';
 
 import TopbarTabbar from '../../common/components/topbar-tabbar/TopbarTabbar';
-import TokensTab from './currency-tabs/TokensTab';
+import TokensTab from './currency-tabs/tokens/TokensTab';
 import type { CurrencyType } from '../../types/Payment';
 import type { TabType } from '../../common/components/topbar-tabbar/TopbarTabbar';
 import type { WalletStoreType } from '../v2/createWalletStore';
@@ -16,7 +16,7 @@ import BottomOptionPopup, {
   BottomOptionsStoreType,
   useBottomOption,
 } from '../../common/components/BottomOptionPopup';
-import UsdTab from './currency-tabs/UsdTab';
+import UsdTab from './currency-tabs/cash/UsdTab';
 import i18n from '../../common/services/i18n.service';
 import { useStores } from '../../common/hooks/use-stores';
 import Withdraw from '../v2/currency-tabs/tokens/Withdraw';

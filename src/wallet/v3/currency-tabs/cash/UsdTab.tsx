@@ -3,25 +3,25 @@ import { observer, useLocalStore } from 'mobx-react';
 import { View } from 'react-native';
 import TopBarButtonTabBar, {
   ButtonTabType,
-} from '../../../common/components/topbar-tabbar/TopBarButtonTabBar';
-import { UsdOptions } from '../../v2/WalletTypes';
-import ThemedStyles from '../../../styles/ThemedStyles';
-import type { WalletStoreType } from '../../v2/createWalletStore';
+} from '../../../../common/components/topbar-tabbar/TopBarButtonTabBar';
+import { UsdOptions } from '../../../v2/WalletTypes';
+import ThemedStyles from '../../../../styles/ThemedStyles';
+import type { WalletStoreType } from '../../../v2/createWalletStore';
 import { ScrollView } from 'react-native-gesture-handler';
-import type { BottomOptionsStoreType } from '../../../common/components/BottomOptionPopup';
+import type { BottomOptionsStoreType } from '../../../../common/components/BottomOptionPopup';
 import {
   WalletScreenRouteProp,
   WalletScreenNavigationProp,
-} from '../WalletScreen';
-import UsdSettings from '../../v2/address/UsdSettings';
-import i18n from '../../../common/services/i18n.service';
-import TransactionsListCash from '../../v2/TransactionList/TransactionsListCash';
+} from '../../WalletScreen';
+import UsdSettings from '../../../v2/address/UsdSettings';
+import i18n from '../../../../common/services/i18n.service';
+import TransactionsListCash from '../../../v2/TransactionList/TransactionsListCash';
 import PaidButton from './PaidButton';
 import ConnectBankButton from './ConnectBankButton';
 import { Tooltip } from 'react-native-elements';
 import { useDimensions } from '@react-native-community/hooks';
 import PaidInfo from './PaidInfo';
-import TokensEarnings from './TokensEarnings';
+import Earnings from '../Earnings';
 
 type PropsType = {
   walletStore: WalletStoreType;
@@ -60,7 +60,7 @@ const UsdTab = observer(
     let body;
     switch (store.option) {
       case 'earnings':
-        body = <TokensEarnings walletStore={walletStore} currencyType="usd" />;
+        body = <Earnings walletStore={walletStore} currencyType="usd" />;
         break;
       case 'transactions':
         //TODO: filter are not implemented in the backend change the first string to the corresponding values after

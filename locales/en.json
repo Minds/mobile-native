@@ -886,7 +886,8 @@
         "liquidityBalance": "Your current liquidity position.",
         "liquidityDuration": "The number of consecutive days you have provided liquidity.",
         "liquidityMultiplier": "Your score multiplier as determined by duration."
-      }
+      },
+      "completeToTransfer": "Please complete the following before transferring MINDS tokens on-chain."
     }
   },
   "analytics": {

@@ -1,14 +1,14 @@
 import { observer, useLocalStore } from 'mobx-react';
 import React, { useEffect } from 'react';
 import { Text, View } from 'react-native';
-import CenteredLoading from '../../../common/components/CenteredLoading';
-import DatePicker from '../../../common/components/DatePicker';
-import i18n from '../../../common/services/i18n.service';
-import ThemedStyles from '../../../styles/ThemedStyles';
+import CenteredLoading from '../../../../common/components/CenteredLoading';
+import DatePicker from '../../../../common/components/DatePicker';
+import i18n from '../../../../common/services/i18n.service';
+import ThemedStyles from '../../../../styles/ThemedStyles';
 import {
   WalletStoreType,
   ContributionMetric,
-} from '../../v2/createWalletStore';
+} from '../../../v2/createWalletStore';
 import MindsScores from './MindsScores';
 import Payout from './Payout';
 

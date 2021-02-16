@@ -1,9 +1,9 @@
 import React from 'react';
 import { Text, ViewStyle } from 'react-native';
-import SegmentedButton from '../../../common/components/SegmentedButton';
-import i18n from '../../../common/services/i18n.service';
-import ThemedStyles from '../../../styles/ThemedStyles';
-import { WalletStoreType } from '../../v2/createWalletStore';
+import SegmentedButton from '../../../../common/components/SegmentedButton';
+import i18n from '../../../../common/services/i18n.service';
+import ThemedStyles from '../../../../styles/ThemedStyles';
+import { WalletStoreType } from '../../../v2/createWalletStore';
 
 type PropsType = {
   containerStyle?: ViewStyle | Array<ViewStyle>;

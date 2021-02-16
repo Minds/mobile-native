@@ -4,7 +4,7 @@ import {
   EarningsCurrencyType,
   WalletStoreType,
 } from '../../v2/createWalletStore';
-import { TokensEarningsStore } from './TokensEarnings';
+import { TokensEarningsStore } from './Earnings';
 import { ScrollView } from 'react-native-gesture-handler';
 import AccordionSet, {
   AccordionDataType,

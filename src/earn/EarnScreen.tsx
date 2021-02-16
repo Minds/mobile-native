@@ -12,6 +12,8 @@ export default function ({ navigation }) {
   const navToVideoCapture = () =>
     navigation.push('Capture', { mode: 'text', start: true });
 
+  const openWithdrawal = () => navigation.navigate('WalletWithdrawal');
+
   const boxStyles = [
     theme.fullWidth,
     theme.border,
@@ -29,7 +31,7 @@ export default function ({ navigation }) {
     },
     {
       name: 'transfer',
-      onPress: toggleUniswapWidget,
+      onPress: openWithdrawal,
     },
     {
       name: 'create',

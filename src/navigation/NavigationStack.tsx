@@ -117,6 +117,7 @@ import BuyTokensScreen from '../buy-tokens/BuyTokensScreen';
 import EarnScreen from '../earn/EarnScreen';
 import { topBarButtonTabBarRef } from '../common/components/topbar-tabbar/TopBarButtonTabBar';
 import ExportLegacyWallet from '../settings/screens/ExportLegacyWallet';
+import Withdrawal from '../wallet/v3/currency-tabs/tokens/widthdrawal/Withdrawal';
 
 const isIos = Platform.OS === 'ios';
 
@@ -728,6 +729,11 @@ const RootStack = function (props) {
           <RootStackNav.Screen
             name="BoostPostScreen"
             component={BoostPostScreen}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen
+            name="WalletWithdrawal"
+            component={Withdrawal}
             options={modalOptions}
           />
         </Fragment>
