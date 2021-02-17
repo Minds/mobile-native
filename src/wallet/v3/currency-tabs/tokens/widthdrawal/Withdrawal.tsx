@@ -1,9 +1,10 @@
 import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import React from 'react';
-import { ImageBackground, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import useWalletConnect from '../../../../../blockchain/v2/walletconnect/useWalletConnect';
+import ModalHeader from '../../../../../common/components/ModalHeader';
 import { useStores } from '../../../../../common/hooks/use-stores';
 import i18n from '../../../../../common/services/i18n.service';
 import sessionService from '../../../../../common/services/session.service';
@@ -13,19 +14,6 @@ import Setup from './Setup';
 import WithdrawalInput from './WithdrawalInput';
 
 const bannerAspectRatio = 3.5;
-
-const Header = () => {
-  return (
-    <ImageBackground
-      style={styles.banner}
-      source={require('../../../../../assets/withdrawalbg.jpg')}
-      resizeMode="cover">
-      <View style={styles.textContainer}>
-        <Text style={styles.title}>{i18n.t('wallet.transferToOnchain')}</Text>
-      </View>
-    </ImageBackground>
-  );
-};
 
 const Withdrawal = observer(() => {
   const theme = ThemedStyles.style;
@@ -40,7 +28,10 @@ const Withdrawal = observer(() => {
     : { marginTop: 50 };
   return (
     <View style={[styles.container, theme.backgroundPrimary, cleanTop]}>
-      <Header />
+      <ModalHeader
+        source={require('../../../../../assets/withdrawalbg.jpg')}
+        title={i18n.t('wallet.transferToOnchain')}
+      />
       {showSetup && (
         <Setup navigation={navigation} user={user} walletStore={walletStore} />
       )}

@@ -3,12 +3,12 @@ import React, { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import useWalletConnect from '../../blockchain/v2/walletconnect/useWalletConnect';
-import { useStores } from '../../common/hooks/__mocks__/use-stores';
+import ModalHeader from '../../common/components/ModalHeader';
+import { useStores } from '../../common/hooks/use-stores';
 import i18n from '../../common/services/i18n.service';
 import sessionService from '../../common/services/session.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import BoostButton from './BoostButton';
-import BoostHeader from './BoostHeader';
 import BoostInput from './BoostInput';
 import BoostPayment from './BoostPayment';
 import createBoostStore from './createBoostStore';
@@ -31,7 +31,10 @@ const BoostChannelScreen = observer(() => {
   }, [wallet]);
   return (
     <View style={[styles.container, theme.backgroundPrimary, cleanTop]}>
-      <BoostHeader title={i18n.t('boosts.boostChannel')} />
+      <ModalHeader
+        title={i18n.t('boosts.boostChannel')}
+        source={require('../../assets/boostBG.png')}
+      />
       <View style={[theme.flexContainer, theme.marginTop7x]}>
         <BoostInput localStore={localStore} />
         <BoostPayment localStore={localStore} />

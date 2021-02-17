@@ -8,13 +8,13 @@ import TopbarTabbar, {
 import { useStores } from '../../common/hooks/use-stores';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
-import BoostHeader from './BoostHeader';
 import createBoostStore from './createBoostStore';
 import NewsfeedBoostTab from './NewsfeedBoostTab';
 import OfferBoostTab from './OfferBoostTab';
 import { RootStackParamList } from '../../navigation/NavigationTypes';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import useWalletConnect from '../../blockchain/v2/walletconnect/useWalletConnect';
+import ModalHeader from '../../common/components/ModalHeader';
 
 type BoostTabType = 'newsfeed' | 'offer';
 
@@ -59,7 +59,10 @@ const BoostPostScreen = observer(({ route }: PropsType) => {
   };
   return (
     <View style={[styles.container, theme.backgroundPrimary, cleanTop]}>
-      <BoostHeader title={i18n.t('boosts.boostPost')} />
+      <ModalHeader
+        title={i18n.t('boosts.boostPost')}
+        source={require('../../assets/boostBG.png')}
+      />
       <View style={theme.marginTop4x}>
         <TopbarTabbar tabs={tabs} onChange={setTab} current={tab} />
       </View>
