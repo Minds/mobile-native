@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Text, View } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -19,8 +19,6 @@ import BottomOptionPopup, {
 import UsdTab from './currency-tabs/cash/UsdTab';
 import i18n from '../../common/services/i18n.service';
 import { useStores } from '../../common/hooks/use-stores';
-import Withdraw from '../v2/currency-tabs/tokens/Withdraw';
-import useWalletConnect from '../../blockchain/v2/walletconnect/useWalletConnect';
 
 export type WalletScreenRouteProp = RouteProp<AppStackParamList, 'Fab'>;
 export type WalletScreenNavigationProp = StackNavigationProp<
@@ -38,18 +36,9 @@ type PropsType = {
  */
 const WalletScreen = observer((props: PropsType) => {
   const theme = ThemedStyles.style;
-  const wc = useWalletConnect();
 
   const store: WalletStoreType = useStores().wallet;
   const bottomStore: BottomOptionsStoreType = useBottomOption();
-
-  const showWithdrawal = useCallback(() => {
-    bottomStore.show(
-      i18n.t('wallet.withdraw.title'),
-      i18n.t('wallet.withdraw.transfer'),
-      <Withdraw walletStore={store} bottomStore={bottomStore} wc={wc} />,
-    );
-  }, [bottomStore, store, wc]);
 
   const tabs: Array<TabType<CurrencyType>> = [
     {
@@ -65,16 +54,6 @@ const WalletScreen = observer((props: PropsType) => {
   useEffect(() => {
     store.loadWallet();
   }, [store]);
-
-  useEffect(() => {
-    if (props.route?.params?.showBottomStore) {
-      switch (props.route.params.showBottomStore) {
-        case 'withdrawal':
-          showWithdrawal();
-          break;
-      }
-    }
-  });
 
   let body;
   if (store.wallet.loaded) {

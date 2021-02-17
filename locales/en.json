@@ -887,7 +887,10 @@
         "liquidityDuration": "The number of consecutive days you have provided liquidity.",
         "liquidityMultiplier": "Your score multiplier as determined by duration."
       },
-      "completeToTransfer": "Please complete the following before transferring MINDS tokens on-chain."
+      "completeToTransfer": "Please complete the following before transferring MINDS tokens on-chain.",
+      "tokenAmount": "Amount",
+      "transferRequest": "You can request to transfer up to 999 tokens from your rewards to your on-chain wallet below. You may only transfer once per day.",
+      "transferNote": "Note: a small amount of ETH will be charged to cover the transaction fee."
     }
   },
   "analytics": {

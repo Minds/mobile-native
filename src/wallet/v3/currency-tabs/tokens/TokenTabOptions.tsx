@@ -31,6 +31,13 @@ const TokenTabOptions = observer(() => {
         navigation.navigate('WalletWithdrawal');
       },
     });
+    actions[0].push({
+      title: i18n.t('buyTokensScreen.title'),
+      onPress: () => {
+        localStore.hide();
+        navigation.navigate('BuyTokens');
+      },
+    });
     actions.push([
       {
         title: i18n.t('cancel'),
