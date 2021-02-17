@@ -118,6 +118,7 @@ import EarnScreen from '../earn/EarnScreen';
 import { topBarButtonTabBarRef } from '../common/components/topbar-tabbar/TopBarButtonTabBar';
 import ExportLegacyWallet from '../settings/screens/ExportLegacyWallet';
 import Withdrawal from '../wallet/v3/currency-tabs/tokens/widthdrawal/Withdrawal';
+import EarnModal from '../earn/EarnModal';
 
 const isIos = Platform.OS === 'ios';
 
@@ -734,6 +735,11 @@ const RootStack = function (props) {
           <RootStackNav.Screen
             name="WalletWithdrawal"
             component={Withdrawal}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen
+            name="EarnModal"
+            component={EarnModal}
             options={modalOptions}
           />
         </Fragment>

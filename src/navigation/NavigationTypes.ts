@@ -53,6 +53,7 @@ export type RootStackParamList = {
   SuggestedGroups: {};
   PhoneValidation: {};
   WalletWithdrawal: {};
+  EarnModal: {};
 };
 
 export type AuthStackParamList = {
@@ -89,7 +90,6 @@ export type AppStackParamList = {
     };
     walletStore?: WalletStoreType;
     options?: Function;
-    showBottomStore?: 'withdrawal'; // add | for more;
   };
   JoinMembershipScreen: {
     user?: UserModel;

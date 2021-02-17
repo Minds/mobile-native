@@ -1198,29 +1198,31 @@
     "buy": "Buy Tokens"
   },
   "earnScreen": {
+    "title": "Earn",
+    "increase": "Increase your earnings",
+    "resources": {
+      "title": "Resources",
+      "rewards": "How rewards are calculated",
+      "tokens": "How to use tokens",
+      "earnings": "Track your earnings",
+      "analytics": "View token analytics"
+    },
     "pool": {
-      "title": "Pool",
-      "description": "Receive a multiplier on your daily token rewards by staking your MINDS and the equivalent amount of ETH on Uniswap."
+      "title": "Add liquidity"
     },
     "transfer": {
-      "title": "Transfer",
-      "description": "Receive a multiplier on your daily token rewards by holding your MINDS on-chain. The multiplier increases over time and as your balance grows."
+      "title": "Transfer on-chain"
     },
     "create": {
-      "title": "Create",
-      "description": "Post content that receives engagement from the community, such as votes, comments, subscribers, tips or reminds. Upgrade to Minds+ or Pro to unlock cash rewards."
-    },
-    "curate": {
-      "title": "Curate",
-      "description": "Help tag or report content through the Minds jury system. Bet tokens on which channels will grow and gain trust."
-    },
-    "develop": {
-      "title": "Develop",
-      "description": "Submit successful merge requests or create Gitlab issues that result in a successful merge request."
+      "title": "Create content"
     },
     "refer": {
-      "title": "Refer",
-      "description": "Get your contacts to sign up for Minds through your referral link or any of your content."
+      "title": "Refer"
+    },
+    "unlock": {
+      "title": "Unlock revenue-sharing",
+      "mindsPlus": "Upgrade to Minds+",
+      "pro": "Upgrade to Minds Pro"
     }
   },
   "orderReport": {
