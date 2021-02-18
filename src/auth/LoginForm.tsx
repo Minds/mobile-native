@@ -91,6 +91,8 @@ export default class LoginForm extends Component<PropsType, StateType> {
           style={theme.colorWhite}
           placeholder={i18n.t('auth.username')}
           onChangeText={this.setUsername}
+          autoCompleteType="username"
+          textContentType="username"
           value={this.state.username}
           testID="usernameInput"
           noBottomBorder
@@ -102,6 +104,8 @@ export default class LoginForm extends Component<PropsType, StateType> {
             style={theme.colorWhite}
             placeholder={i18n.t('auth.password')}
             secureTextEntry={this.state.hidePassword}
+            autoCompleteType="password"
+            textContentType="password"
             onChangeText={this.setPassword}
             value={this.state.password}
             testID="userPasswordInput"
@@ -129,16 +133,12 @@ export default class LoginForm extends Component<PropsType, StateType> {
           <Button
             onPress={() => this.onLoginPress()}
             text={i18n.t('auth.login')}
-            containerStyle={[
-              theme.transparentButton,
-              theme.paddingVertical3x,
-              loginMargin,
-              theme.fullWidth,
-            ]}
-            textStyle={theme.buttonText}
+            containerStyle={[loginMargin, theme.fullWidth]}
             loading={this.state.inProgress}
             disabled={this.state.inProgress}
             accessibilityLabel="loginButton"
+            transparent
+            large
           />
           <View style={theme.marginTop4x}>
             <Text
@@ -151,17 +151,11 @@ export default class LoginForm extends Component<PropsType, StateType> {
           <Button
             onPress={this.props.onRegisterPress}
             text={i18n.t('auth.createChannel')}
-            containerStyle={[
-              theme.transparentButton,
-              theme.paddingVertical3x,
-              theme.fullWidth,
-              theme.marginTop6x,
-              styles.lightButton,
-            ]}
-            textStyle={theme.buttonText}
-            loading={this.state.inProgress}
+            containerStyle={[theme.fullWidth, theme.marginTop6x]}
             disabled={this.state.inProgress}
-            testID="loginButton"
+            testID="registerButton"
+            transparent
+            large
           />
         </View>
       </View>

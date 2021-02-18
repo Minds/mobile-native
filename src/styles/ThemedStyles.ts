@@ -128,6 +128,7 @@ class ThemedStylesStore {
         ios: 'default',
         android: 'fade',
       }),
+      screenOrientation: 'portrait',
     };
 
     // Fix for the header's extra padding on android
@@ -135,7 +136,7 @@ class ThemedStylesStore {
       this.defaultScreenOptions.headerTopInsetEnabled = false;
     }
 
-    this.style = StyleSheet.create(buildStyle(theme));
+    this.style = StyleSheet.create<ThemedStyle>(buildStyle(theme));
   }
 }
 

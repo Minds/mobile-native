@@ -22,6 +22,7 @@ import type GroupModel from '../groups/GroupModel';
 import { SupportTiersType } from '../wire/WireTypes';
 import mindsService from '../common/services/minds.service';
 import NavigationService from '../navigation/NavigationService';
+import { showNotification } from '../../AppMessages';
 
 type Thumbs = Record<ThumbSize, string> | Record<ThumbSize, string>[];
 
@@ -69,19 +70,19 @@ export default class ActivityModel extends BaseModel {
   thumbnail_src?: string;
   dontPin?: boolean;
   boosted?: boolean;
-  wire_threshold?:
-    | {
-        type: 'token' | 'money';
-        min: number;
-      }
-    | { support_tier: SupportTiersType }
-    | null;
+  wire_threshold?: {
+    type: 'token' | 'money';
+    min: number;
+    support_tier: SupportTiersType;
+  } | null;
   _preview?: boolean;
   attachments?: {
     attachment_guid: string;
   };
-
+  type?: string;
   permaweb_id?: string;
+  remind_deleted?: boolean;
+  remind_users?: Array<UserModel>;
 
   /**
    * Mature visibility flag
@@ -208,8 +209,10 @@ export default class ActivityModel extends BaseModel {
 
     // fallback to old behavior
     if (this.paywall || this.paywall_unlocked) {
+      const guid = this.entity_guid === '' ? this.guid : this.entity_guid;
+      const unlock = this.isOwner() ? '?unlock_paywall=1' : '';
       return {
-        uri: MINDS_URI + 'fs/v1/thumbnail/' + this.entity_guid,
+        uri: MINDS_URI + 'fs/v1/thumbnail/' + guid + unlock,
         headers: api.buildHeaders(),
       };
     }
@@ -281,8 +284,9 @@ export default class ActivityModel extends BaseModel {
   }
 
   @action
-  toggleMatureVisibility() {
+  toggleMatureVisibility = () => {
     if (GOOGLE_PLAY_STORE || Platform.OS === 'ios') {
+      showNotification(i18n.t('activity.notSafeComment'));
       return;
     }
     this.mature_visibility = !this.mature_visibility;
@@ -290,7 +294,7 @@ export default class ActivityModel extends BaseModel {
     if (this.remind_object && this.remind_object) {
       this.remind_object.mature_visibility = this.mature_visibility;
     }
-  }
+  };
 
   @action
   setVisible(value: boolean) {
@@ -450,6 +454,17 @@ export default class ActivityModel extends BaseModel {
   async deleteEntity() {
     try {
       await deleteItem(this.guid);
+      this.removeFromList();
+      ActivityModel.events.emit('deleteEntity', this);
+    } catch (err) {
+      logService.exception('[ActivityModel]', err);
+      throw err;
+    }
+  }
+
+  async deleteRemind() {
+    try {
+      await api.delete(`api/v3/newsfeed/${this.urn}`);
       this.removeFromList();
       ActivityModel.events.emit('deleteEntity', this);
     } catch (err) {

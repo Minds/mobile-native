@@ -1,26 +1,24 @@
 import { observer } from 'mobx-react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   SectionList,
   SectionListData,
-  TouchableHighlight,
 } from 'react-native';
 import { ComponentsStyle } from '../../../styles/Components';
-import { useDiscoveryV2Store } from '../DiscoveryV2Context';
 import ThemedStyles from '../../../styles/ThemedStyles';
-import { Icon } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { DiscoveryTagsManager } from './DiscoveryTagsManager';
-import { TDiscoveryTagsTag } from '../DiscoveryV2Store';
+import DiscoveryV2Store, { TDiscoveryTagsTag } from '../DiscoveryV2Store';
 import i18n from '../../../common/services/i18n.service';
+import MenuItem from '../../../common/components/menus/MenuItem';
 
 interface Props {
   type: 'your' | 'trending';
   plus?: boolean;
+  store: DiscoveryV2Store;
 }
 
 /**
@@ -31,25 +29,15 @@ const keyExtractor = (item) => String(item.value);
 /**
  * Discovery List Item
  */
-export const DiscoveryTagsList = observer((props: Props) => {
-  const discoveryV2 = useDiscoveryV2Store();
+export const DiscoveryTagsList = observer(({ plus, store, type }: Props) => {
   const navigation = useNavigation<StackNavigationProp<any>>();
 
-  const [showManageTags, setShowManageTags] = useState(false);
-
   useEffect(() => {
-    discoveryV2.loadTags(props.plus);
-  }, [discoveryV2, props]);
-
-  const onPress = (data): void => {
-    navigation.push('DiscoverySearch', {
-      query: '#' + data.value,
-      plus: props.plus,
-    });
-  };
+    store.loadTags(plus);
+  }, [store, plus]);
 
   const EmptyPartial = () => {
-    return discoveryV2.loading || discoveryV2.refreshing ? (
+    return store.loadingTags || store.refreshing ? (
       <View />
     ) : (
       <View>
@@ -64,39 +52,47 @@ export const DiscoveryTagsList = observer((props: Props) => {
     );
   };
 
-  const ItemPartial = ({ item, index }) => {
+  const renderItem = ({ item }) => {
+    const theme = ThemedStyles.style;
+    let postsCount = item.posts_count
+      ? `${item.posts_count} ${i18n.t('discovery.posts')}`
+      : '';
+    const votesCount = item.votes_count
+      ? `${item.votes_count} ${i18n.t('discovery.votes')}`
+      : '';
     return (
-      <TouchableHighlight
-        underlayColor="transparent"
-        onPress={() => onPress(item)}>
-        <View
-          style={[
-            styles.container,
-            ThemedStyles.style.paddingVertical3x,
-            index === 0 ? ThemedStyles.style.paddingTop0x : null,
-            ThemedStyles.style.borderPrimary,
-            ThemedStyles.style.paddingHorizontal4x,
-          ]}>
-          <View style={[styles.body]}>
-            <Text style={styles.title}>#{item.value}</Text>
-          </View>
-          <Icon
-            type="material-community"
-            color={ThemedStyles.getColor('tertiary_text')}
-            name="chevron-right"
-            size={32}
-            style={styles.centered}
-          />
-        </View>
-      </TouchableHighlight>
+      <MenuItem
+        item={{
+          onPress: () =>
+            navigation.push('DiscoverySearch', {
+              query: '#' + item.value,
+              plus: plus,
+            }),
+          title: (
+            <>
+              <Text style={styles.title}>#{item.value}</Text>
+              {(postsCount !== '' || votesCount !== '') && (
+                <Text
+                  style={[
+                    theme.colorSecondaryText,
+                    theme.fontM,
+                    theme.fontNormal,
+                  ]}>
+                  {`\n${postsCount || ''} ${
+                    postsCount && votesCount ? '·' : ''
+                  } ${votesCount || ''}`}
+                </Text>
+              )}
+            </>
+          ),
+        }}
+        containerItemStyle={theme.backgroundPrimary}
+      />
     );
   };
 
   const SectionHeaderPatrial = (info: { section: SectionListData<any> }) => {
-    if (
-      info.section.data.length === 0 &&
-      (discoveryV2.loading || discoveryV2.refreshing)
-    ) {
+    if (info.section.data.length === 0 && (store.loading || store.refreshing)) {
       return null;
     }
     return (
@@ -106,12 +102,9 @@ export const DiscoveryTagsList = observer((props: Props) => {
           ThemedStyles.style.backgroundPrimary,
           ThemedStyles.style.padding4x,
         ]}>
-        {/* <Text style={[ThemedStyles.style.colorTertiaryText]}>
-          {info.section.title.toUpperCase()}
-        </Text> */}
         <View style={ThemedStyles.style.flexContainer} />
         <Text
-          onPress={() => setShowManageTags(true)}
+          onPress={() => store.setShowManageTags(true)}
           style={[ThemedStyles.style.colorTertiaryText]}>
           Manage Tags
         </Text>
@@ -119,24 +112,20 @@ export const DiscoveryTagsList = observer((props: Props) => {
     );
   };
 
-  const closeManageTags = () => {
-    setShowManageTags(false);
-  };
-
   const onRefresh = () => {
-    discoveryV2.refreshTags();
+    store.refreshTags();
   };
 
   let tags: TDiscoveryTagsTag[] = [];
   let title = i18n.t('other');
 
-  switch (props.type) {
+  switch (type) {
     case 'your':
-      tags = [...discoveryV2.tags.slice()];
+      tags = [...store.tags.slice()];
       title = i18n.t('discovery.yourTags');
       break;
     case 'trending':
-      tags = [...discoveryV2.trendingTags.slice()];
+      tags = [...store.trendingTags.slice()];
       title = i18n.t('discovery.trendingTags');
       break;
   }
@@ -148,11 +137,11 @@ export const DiscoveryTagsList = observer((props: Props) => {
   return (
     <View style={ThemedStyles.style.flexContainer}>
       <SectionList
-        renderItem={ItemPartial}
+        renderItem={renderItem}
         renderSectionHeader={SectionHeaderPatrial}
         ListEmptyComponent={EmptyPartial}
         onRefresh={onRefresh}
-        refreshing={discoveryV2.loading}
+        refreshing={store.loadingTags}
         sections={[
           {
             title: title,
@@ -160,12 +149,6 @@ export const DiscoveryTagsList = observer((props: Props) => {
           },
         ]}
         keyExtractor={keyExtractor}
-      />
-
-      <DiscoveryTagsManager
-        show={showManageTags}
-        onCancel={closeManageTags}
-        onDone={closeManageTags}
       />
     </View>
   );
@@ -181,13 +164,16 @@ const styles = StyleSheet.create({
   centered: {
     alignSelf: 'center',
   },
-  body: { flex: 1, paddingRight: 10 },
   title: {
     fontWeight: 'bold',
     fontSize: 16,
+    lineHeight: 38,
   },
   thumbnail: {
     width: 100,
     height: 100,
+  },
+  paddingTop: {
+    paddingTop: 8,
   },
 });

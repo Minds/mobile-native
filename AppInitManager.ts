@@ -124,12 +124,13 @@ export default class AppInitManager {
     }
 
     try {
-      NavigationService.navigate(sessionService.initialScreen);
+      NavigationService.navigate(sessionService.initialScreen, {
+        initial: true,
+      });
 
-      // check onboarding progress and navigate if necessary
-      getStores().onboarding.getProgress(
-        sessionService.initialScreen !== 'OnboardingScreen',
-      );
+      // return to default init screen
+      sessionService.setInitialScreen('Tabs');
+
       // handle deep link (if the app is opened by one)
       if (this.deepLinkUrl) {
         deeplinkService.navigate(this.deepLinkUrl);

@@ -5,19 +5,18 @@ import {
   TouchableOpacity,
   View,
   ViewStyle,
+  Platform,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
 
 import withPreventDoubleTap from '../../common/components/PreventDoubleTap';
 import ThemedStyles from '../../styles/ThemedStyles';
 import type ActivityModel from '../ActivityModel';
-import number from '../../common/helpers/number';
 import i18nService from '../../common/services/i18n.service';
-import { Icon } from 'react-native-elements';
 import IconMa from 'react-native-vector-icons/MaterialIcons';
 import { SearchResultStoreType } from '../../topbar/searchbar/createSearchResultStore';
 import { withSearchResultStore } from '../../common/hooks/withStores';
-import ChannelBadge from '../../common/components/ChannelBadge';
+import ChannelBadges from '../../channel/badges/ChannelBadges';
 const DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
 
 type PropsType = {
@@ -79,7 +78,7 @@ class OwnerBlock extends PureComponent<PropsType> {
   };
 
   get group() {
-    if (!this.props.entity.containerObj) {
+    if (!this.props.entity.containerObj || this.props.children) {
       return null;
     }
 
@@ -88,10 +87,10 @@ class OwnerBlock extends PureComponent<PropsType> {
         onPress={this._navToGroup}
         style={styles.groupContainer}>
         <Text
-          style={[styles.groupName, ThemedStyles.style.colorPrimaryText]}
+          style={[styles.groupName, ThemedStyles.style.colorSecondaryText]}
           lineBreakMode="tail"
           numberOfLines={1}>
-          {'>'} {this.props.entity.containerObj.name}
+          {this.props.entity.containerObj.name}
         </Text>
       </DebouncedTouchableOpacity>
     );
@@ -107,79 +106,95 @@ class OwnerBlock extends PureComponent<PropsType> {
 
     const avatarSrc = channel.getAvatarSource();
 
-    const showMetrics =
-      !this.props.entity.boosted && this.props.entity.impressions > 0;
+    // Remind header
+    const remind = this.props.entity.remind_users ? (
+      <View
+        style={[
+          theme.paddingVertical2x,
+          theme.paddingHorizontal4x,
+          theme.borderBottomHair,
+          theme.borderPrimary,
+          theme.rowJustifyStart,
+        ]}>
+        <IconMa
+          name="repeat"
+          size={15}
+          style={[theme.colorIconActive, styles.remindIcon]}
+        />
+        <Text>
+          <Text style={theme.colorSecondaryText}>
+            {i18nService.t('remindedBy')}{' '}
+          </Text>
+          {this.props.entity.remind_users.map((u) => (
+            <Text
+              onPress={() => {
+                if (!this.props.navigation) return;
+                this.props.navigation.push('Channel', {
+                  guid: u.guid,
+                  entity: u,
+                });
+              }}>
+              {u.username}
+            </Text>
+          ))}
+        </Text>
+      </View>
+    ) : null;
+
+    const name =
+      channel.name && channel.name !== channel.username ? channel.name : '';
 
     return (
       <View
         style={[
-          styles.container,
+          styles.mainContainer,
           theme.borderPrimary,
           this.props.containerStyle,
         ]}>
-        {this.props.leftToolbar}
-        <DebouncedTouchableOpacity onPress={this._navToChannel}>
-          <FastImage source={avatarSrc} style={styles.avatar} />
-        </DebouncedTouchableOpacity>
-        <View style={styles.body}>
-          <View style={styles.nameContainer}>
-            <DebouncedTouchableOpacity
-              onPress={this._navToChannel}
-              style={[theme.rowJustifyStart, theme.alignCenter]}>
-              {!!this.props.entity.remind_object && (
-                <IconMa
-                  name="repeat"
-                  size={16}
-                  style={[theme.colorIconActive, theme.marginRight]}
-                />
-              )}
-              <Text
-                numberOfLines={1}
-                style={[styles.username, ThemedStyles.style.colorPrimaryText]}>
-                {channel.username}
-              </Text>
-              {
-                //@ts-ignore
-                <ChannelBadge channel={channel} />
-              }
-            </DebouncedTouchableOpacity>
-            {this.group}
+        {remind}
+        <View style={styles.container}>
+          {this.props.leftToolbar}
+          <DebouncedTouchableOpacity onPress={this._navToChannel}>
+            <FastImage source={avatarSrc} style={styles.avatar} />
+          </DebouncedTouchableOpacity>
+          <View style={styles.body}>
+            <View style={styles.nameContainer}>
+              <DebouncedTouchableOpacity
+                onPress={this._navToChannel}
+                style={[theme.rowJustifyStart, theme.alignCenter]}>
+                <Text
+                  numberOfLines={1}
+                  style={[
+                    styles.username,
+                    theme.colorPrimaryText,
+                    theme.flexContainer,
+                  ]}>
+                  {name || channel.username}
+                  {Boolean(name) && (
+                    <Text
+                      numberOfLines={1}
+                      style={[
+                        styles.username,
+                        theme.colorSecondaryText,
+                        theme.fontLight,
+                      ]}>
+                      {' '}
+                      @{channel.username}
+                    </Text>
+                  )}
+                </Text>
+              </DebouncedTouchableOpacity>
+              {this.group}
+              {this.props.children}
+            </View>
           </View>
-          {this.props.children}
+          <ChannelBadges
+            size={20}
+            channel={this.props.entity.ownerObj}
+            iconStyle={theme.colorLink}
+          />
+          {rightToolbar}
         </View>
-        {showMetrics ? (
-          <Text
-            numberOfLines={1}
-            style={[
-              theme.marginRight2x,
-              theme.colorSecondaryText,
-              theme.fontM,
-            ]}>
-            {number(this.props.entity.impressions, 0)}{' '}
-            {i18nService.t('views').toLowerCase()}
-          </Text>
-        ) : undefined}
-        {this.props.entity.boosted ? (
-          <View style={[theme.rowJustifyStart, theme.centered]}>
-            <Icon
-              type="ionicon"
-              name="md-trending-up"
-              size={18}
-              style={theme.marginRight}
-              color={ThemedStyles.getColor('tertiary_text')}
-            />
-
-            <Text
-              style={[
-                theme.marginRight2x,
-                theme.colorTertiaryText,
-                theme.fontS,
-              ]}>
-              {i18nService.t('boosted').toUpperCase()}
-            </Text>
-          </View>
-        ) : undefined}
-        {rightToolbar}
       </View>
     );
   }
@@ -188,13 +203,19 @@ class OwnerBlock extends PureComponent<PropsType> {
 export default withSearchResultStore(OwnerBlock);
 
 const styles = StyleSheet.create({
+  remindIcon: {
+    paddingTop: Platform.select({ android: 3, ios: 1 }),
+    paddingRight: 5,
+  },
+  mainContainer: {
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
   container: {
     display: 'flex',
     paddingHorizontal: 20,
     paddingVertical: 13,
     alignItems: 'center',
     flexDirection: 'row',
-    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   avatar: {
     height: 37,
@@ -202,26 +223,24 @@ const styles = StyleSheet.create({
     borderRadius: 18.5,
   },
   body: {
-    marginLeft: 8,
-    paddingRight: 36,
-    flexWrap: 'wrap',
+    marginLeft: 10,
+    paddingRight: 5,
     flex: 1,
   },
   nameContainer: {
-    flexDirection: 'row',
+    flexDirection: 'column',
   },
   username: {
     fontWeight: 'bold',
     fontFamily: 'Roboto',
     color: '#444',
-    fontSize: 16,
+    fontSize: 17,
   },
   groupContainer: {
-    marginLeft: 4,
-    flex: 1,
+    paddingTop: 3,
   },
   groupName: {
-    fontWeight: 'bold',
     fontFamily: 'Roboto',
+    fontSize: 15,
   },
 });

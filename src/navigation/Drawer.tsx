@@ -21,6 +21,7 @@ import ThemedStyles from '../styles/ThemedStyles';
 import abbrev from '../common/helpers/abbrev';
 import featuresService from '../common/services/features.service';
 import sessionService from '../common/services/session.service';
+import { GOOGLE_PLAY_STORE } from '../config/Config';
 
 const ICON_SIZE = 23;
 
@@ -57,20 +58,22 @@ const getOptionsList = (navigation) => {
         navigation.navigate('Newsfeed');
       },
     },
-    {
-      name: i18n.t('discovery.title'),
-      icon: (
-        <IconFo
-          name="hash"
-          size={ICON_SIZE - 4}
-          style={[theme.colorIcon, styles.icon]}
-        />
-      ),
-      onPress: () => {
-        navigation.navigate('Discovery');
-      },
-    },
-    featuresService.has('plus-2020')
+    !GOOGLE_PLAY_STORE
+      ? {
+          name: i18n.t('discovery.title'),
+          icon: (
+            <IconFo
+              name="hash"
+              size={ICON_SIZE - 4}
+              style={[theme.colorIcon, styles.icon]}
+            />
+          ),
+          onPress: () => {
+            navigation.navigate('Discovery');
+          },
+        }
+      : null,
+    featuresService.has('plus-2020') && !GOOGLE_PLAY_STORE
       ? {
           name: i18n.t('wire.lock.plus'),
           icon: (
@@ -122,22 +125,6 @@ const getOptionsList = (navigation) => {
           navigation.navigate('Tabs', {
             screen: 'CaptureTab',
             params: { screen: 'Wallet' },
-          });
-        },
-      },
-      {
-        name: i18n.t('boost'),
-        icon: (
-          <Icon
-            name="trending-up"
-            size={ICON_SIZE}
-            style={[theme.colorIcon, styles.icon]}
-          />
-        ),
-        onPress: () => {
-          navigation.navigate('Tabs', {
-            screen: 'CaptureTab',
-            params: { screen: 'BoostConsole' },
           });
         },
       },

@@ -1,26 +1,28 @@
 import React, { useEffect } from 'react';
 
-import { View, Text, StyleSheet, TextInputProps } from 'react-native';
+import { View, Text, TextInputProps } from 'react-native';
 
 import { observer, useLocalStore } from 'mobx-react';
-import stylesheet from '../../../onboarding/stylesheet';
 import { BottomOptionsStoreType } from '../BottomOptionPopup';
 import NumberConfirmed from './partials/NumberConfirmed';
 import InputNumber from './partials/InputNumber';
 import ConfirmNumber from './partials/ConfirmNumber';
 import createLocalStore, { PhoneValidationStoreType } from './createLocalStore';
+import ThemedStyles from '../../../styles/ThemedStyles';
 
 export type PhoneValidationPropsType = {
   TFA?: any;
   TFAConfirmed?: boolean;
-  bottomStore?: BottomOptionsStoreType;
+  bottomStore?: BottomOptionsStoreType | boolean;
   inputStyles?: any;
   onNext?: Function;
   textStyle?: any;
   localStore?: PhoneValidationStoreType;
+  inputWrapperStyle?: any;
 } & TextInputProps;
 
 const PhoneValidationComponent = observer((props: PhoneValidationPropsType) => {
+  const theme = ThemedStyles.style;
   const localStore = props.localStore || useLocalStore(createLocalStore);
 
   useEffect(() => {
@@ -46,7 +48,9 @@ const PhoneValidationComponent = observer((props: PhoneValidationPropsType) => {
       <View>{getFormPartial()}</View>
       {!!localStore.error && (
         <View>
-          <Text style={style.error}>{localStore.error}</Text>
+          <Text style={[theme.colorAlert, theme.alignCenter, theme.fontM]}>
+            {localStore.error}
+          </Text>
         </View>
       )}
     </View>
@@ -54,5 +58,3 @@ const PhoneValidationComponent = observer((props: PhoneValidationPropsType) => {
 });
 
 export default PhoneValidationComponent;
-
-const style = StyleSheet.create(stylesheet);

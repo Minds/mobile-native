@@ -1,11 +1,10 @@
 //@ts-nocheck
+import { observer } from 'mobx-react';
 import React, { Component } from 'react';
 
-import { Text, Image, View, StyleSheet } from 'react-native';
-
-import { observer } from 'mobx-react';
-
+import { Image, StyleSheet, Text, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
+import SmartImage from '../../common/components/SmartImage';
 
 /**
  * Channel Card
@@ -26,7 +25,7 @@ export default class ChannelCard extends Component {
 
     return (
       <View>
-        <FastImage
+        <SmartImage
           source={iurl}
           style={styles.banner}
           resizeMode={FastImage.resizeMode.cover}

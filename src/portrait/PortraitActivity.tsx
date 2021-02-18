@@ -1,11 +1,11 @@
 import React, { useRef, useCallback, useEffect } from 'react';
 import {
   View,
-  Text,
   StyleSheet,
   Platform,
   TouchableOpacity,
   useWindowDimensions,
+  Text,
 } from 'react-native';
 import { useDimensions } from '@react-native-community/hooks';
 import { RouteProp, useNavigation } from '@react-navigation/native';
@@ -18,29 +18,30 @@ import MediaView from '../common/components/MediaView';
 import OwnerBlock from '../newsfeed/activity/OwnerBlock';
 import ThemedStyles from '../styles/ThemedStyles';
 import ActivityActionSheet from '../newsfeed/activity/ActivityActionSheet';
-import formatDate from '../common/helpers/date';
-import i18n from '../common/services/i18n.service';
 
 import FloatingBackButton from '../common/components/FloatingBackButton';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Actions from '../newsfeed/activity/Actions';
 import Activity from '../newsfeed/activity/Activity';
 
-import CommentsStore from '../comments/CommentsStore';
+import CommentsStore from '../comments/v2/CommentsStore';
 import sessionService from '../common/services/session.service';
 import videoPlayerService from '../common/services/video-player.service';
 import ExplicitOverlay from '../common/components/explicit/ExplicitOverlay';
 
 import LockV2 from '../wire/v2/lock/Lock';
 import { AppStackParamList } from '../navigation/NavigationTypes';
-import CommentsBottomPopup from '../comments/CommentsBottomPopup';
+import CommentBottomSheet from '../comments/v2/CommentBottomSheet';
 import BoxShadow from '../common/components/BoxShadow';
+import formatDate from '../common/helpers/date';
+import i18nService from '../common/services/i18n.service';
 
 type ActivityRoute = RouteProp<AppStackParamList, 'Activity'>;
 
 type PropsType = {
   entity: ActivityModel;
   forceAutoplay?: boolean;
+  hasPaginator: boolean;
   onPressNext: () => void;
   onPressPrev: () => void;
 };
@@ -53,7 +54,14 @@ const PortraitActivity = observer((props: PropsType) => {
 
   // Local store
   const store = useLocalStore(() => ({
-    comments: new CommentsStore(),
+    comments: new CommentsStore(props.entity),
+    displayComment: false,
+    showComments() {
+      store.displayComment = true;
+    },
+    hideComments() {
+      store.displayComment = false;
+    },
     toggleVolume() {
       videoPlayerService.current?.toggleVolume();
     },
@@ -71,20 +79,30 @@ const PortraitActivity = observer((props: PropsType) => {
   const hasMedia = entity.hasMedia();
   const hasRemind = !!entity.remind_object;
   const { current: cleanBottom } = useRef({
-    paddingBottom: insets.bottom - 10,
+    paddingBottom: insets.bottom ? insets.bottom - 10 : 0,
   });
   const { current: cleanTop } = useRef({
-    paddingTop: insets.top || 10,
+    paddingTop: insets.top
+      ? insets.top + (props.hasPaginator ? 20 : 0)
+      : props.hasPaginator
+      ? 28
+      : 0,
   });
 
   const onPressComment = useCallback(() => {
-    if (commentsRef.current?.open) {
-      commentsRef.current.open();
+    if (commentsRef.current?.expand) {
+      commentsRef.current.expand();
     }
   }, [commentsRef]);
 
   useEffect(() => {
+    let time: any;
     if (focused) {
+      time = setTimeout(() => {
+        if (store) {
+          store.showComments();
+        }
+      }, 500);
       const user = sessionService.getUser();
 
       // if we have some video playing we pause it and reset the current video
@@ -98,8 +116,14 @@ const PortraitActivity = observer((props: PropsType) => {
       }
     } else {
       mediaRef.current?.pauseVideo();
+      store.hideComments();
     }
-  }, [focused, props.forceAutoplay]);
+    return () => {
+      if (time) {
+        clearTimeout(time);
+      }
+    };
+  }, [focused, props.forceAutoplay, store]);
 
   const showNSFW = entity.shouldBeBlured() && !entity.mature_visibility;
 
@@ -114,6 +138,7 @@ const PortraitActivity = observer((props: PropsType) => {
       containerStyle={[theme.backgroundPrimary, styles.header, cleanTop]}
       leftToolbar={
         <FloatingBackButton
+          size={35}
           onPress={navigation.goBack}
           style={[theme.colorPrimaryText, styles.backButton]}
         />
@@ -131,7 +156,7 @@ const PortraitActivity = observer((props: PropsType) => {
           {!!entity.edited && (
             <Text style={[theme.fontS, theme.colorSecondaryText]}>
               {' '}
-              · {i18n.t('edited').toUpperCase()}
+              · {i18nService.t('edited').toUpperCase()}
             </Text>
           )}
         </Text>
@@ -141,7 +166,7 @@ const PortraitActivity = observer((props: PropsType) => {
 
   const shadowOpt = {
     width: window.width,
-    height: 70,
+    height: 70 + (props.hasPaginator ? 26 : 0),
     color: '#000',
     border: 5,
     opacity: 0.15,
@@ -195,6 +220,7 @@ const PortraitActivity = observer((props: PropsType) => {
                     entity={entity}
                     navigation={navigation}
                     autoHeight={true}
+                    ignoreDataSaver={true}
                   />
                 </View>
               ) : (
@@ -249,10 +275,10 @@ const PortraitActivity = observer((props: PropsType) => {
         />
       </View>
       {!showNSFW && tappingArea}
-      <CommentsBottomPopup
-        entity={entity}
+      <CommentBottomSheet
         commentsStore={store.comments}
         ref={commentsRef}
+        hideContent={Boolean(!store.displayComment)}
       />
     </View>
   );
@@ -264,13 +290,13 @@ const styles = StyleSheet.create({
   backButton: {
     position: undefined,
     top: undefined,
-    width: 50,
+    width: 40,
+    height: 40,
     paddingTop: Platform.select({
-      ios: 5,
+      ios: 2,
       android: 0,
     }),
     marginLeft: -17,
-    marginRight: -5,
   },
   volume: {
     opacity: 0.8,

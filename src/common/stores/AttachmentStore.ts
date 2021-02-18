@@ -23,6 +23,8 @@ export default class AttachmentStore {
   guid = '';
   fileName = null;
   transcoding = false;
+  width: 1;
+  height: 1;
 
   /**
    * Attach media
@@ -88,6 +90,8 @@ export default class AttachmentStore {
     this.uri = media.uri;
     this.type = media.type;
     this.fileName = media.fileName;
+    this.width = media.width;
+    this.height = media.height;
 
     try {
       const uploadPromise = attachmentService.attachMedia(
@@ -111,7 +115,7 @@ export default class AttachmentStore {
       this.guid = result.guid;
     } catch (err) {
       this.clear();
-      showNotification(i18n.t('uploadFailed'));
+      showNotification(err.message || i18n.t('uploadFailed'));
     } finally {
       this.setUploading(false);
     }

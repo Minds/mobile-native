@@ -1,34 +1,79 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Thumb action component renders correctly 1`] = `
-<preventDoubleTap(TouchableOpacity)
-  onPress={[Function]}
-  style={
-    Array [
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-    ]
+<Menu
+  button={
+    <preventDoubleTap(TouchableOpacity)
+      onPress={[Function]}
+      style={
+        Array [
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+        ]
+      }
+      testID="Remind activity button"
+    >
+      <Icon
+        allowFontScaling={false}
+        name="repeat"
+        size={21}
+        style={
+          Array [
+            undefined,
+            undefined,
+          ]
+        }
+      />
+      <Counter
+        count={0}
+        size={15}
+      />
+    </preventDoubleTap(TouchableOpacity)>
   }
-  testID="Remind activity button"
 >
-  <Icon
-    allowFontScaling={false}
-    name="repeat"
-    size={21}
-    style={
+  <MenuItem
+    onPress={[Function]}
+    textStyle={
       Array [
         undefined,
-        Object {
-          "marginRight": 5,
-        },
+        undefined,
       ]
     }
-  />
-  <Counter
-    count={0}
-    size={15}
-  />
-</preventDoubleTap(TouchableOpacity)>
+  >
+    <Icon
+      allowFontScaling={false}
+      name="repeat"
+      size={15}
+      style={
+        Array [
+          undefined,
+        ]
+      }
+    />
+      Remind
+  </MenuItem>
+  <MenuItem
+    onPress={[Function]}
+    textStyle={
+      Array [
+        undefined,
+        undefined,
+      ]
+    }
+  >
+    <Icon
+      allowFontScaling={false}
+      name="edit"
+      size={15}
+      style={
+        Array [
+          undefined,
+        ]
+      }
+    />
+      Quote
+  </MenuItem>
+</Menu>
 `;

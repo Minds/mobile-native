@@ -15,12 +15,9 @@ import ActivityMetrics from '../../../src/newsfeed/activity/metrics/ActivityMetr
 import MediaView from '../../../src/common/components/MediaView';
 
 import ActivityModel from '../../../src/newsfeed/ActivityModel';
-import MindsVideo from '../../../src/media/MindsVideo';
 import MindsVideoV2 from '../../../src/media/v2/mindsVideo/MindsVideo';
 
-jest.mock('../../../src/media/MindsVideo', () => 'MindsVideo');
 jest.mock('../../../src/media/v2/mindsVideo/MindsVideo', () => 'MindsVideoV2');
-jest.mock('../../../src/common/components/Translate', () => 'Translate');
 jest.mock(
   '../../../src/common/components/explicit/ExplicitText',
   () => 'ExplicitText',

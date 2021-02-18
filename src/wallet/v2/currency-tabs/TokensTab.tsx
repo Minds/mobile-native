@@ -1,10 +1,4 @@
-import React, {
-  useRef,
-  useCallback,
-  useState,
-  useEffect,
-  forwardRef,
-} from 'react';
+import React, { useState } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
 import { View, Text, StyleSheet } from 'react-native';
 import TopBarButtonTabBar, {
@@ -83,7 +77,7 @@ const PhoneValidator = observer(({ bottomStore }: PhoneValidatorPropsType) => {
         style={[
           theme.backgroundPrimary,
           theme.borderPrimary,
-          styles.inputWraper,
+          styles.inputWrapper,
         ]}>
         <Text style={[theme.colorSecondaryText]}>{label}</Text>
         <PhoneValidationComponent
@@ -223,7 +217,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     padding: 0,
   },
-  inputWraper: {
+  inputWrapper: {
     padding: 15,
     borderBottomWidth: 1,
     borderTopWidth: 1,

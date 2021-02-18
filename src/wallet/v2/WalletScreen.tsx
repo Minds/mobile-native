@@ -119,7 +119,7 @@ const WalletScreen = observer((props: PropsType) => {
       </View>
       {body}
       <BottomOptionPopup
-        height={500}
+        height={600}
         title={bottomStore.title}
         show={bottomStore.visible}
         onCancel={bottomStore.hide}

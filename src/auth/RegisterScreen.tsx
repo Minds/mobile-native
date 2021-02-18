@@ -29,11 +29,12 @@ import { showNotification } from '../../AppMessages';
 import validatorService from '../common/services/validator.service';
 import Captcha from '../common/components/Captcha';
 import authService, { registerParams } from './AuthService';
-import sessionService from '../common/services/session.service';
 import apiService from '../common/services/api.service';
 import delay from '../common/helpers/delay';
 import logService from '../common/services/log.service';
 import FitScrollView from '../common/components/FitScrollView';
+import sessionService from '../common/services/session.service';
+import featuresService from '../common/services/features.service';
 
 export type WalletScreenNavigationProp = StackNavigationProp<
   AuthStackParamList,
@@ -45,7 +46,7 @@ type PropsType = {
 };
 
 const shadowOptLocal = Object.assign({}, shadowOpt);
-shadowOptLocal.height = 245;
+shadowOptLocal.height = 270;
 
 const validatorText = { color: LIGHT_THEME.primary_text };
 
@@ -78,9 +79,11 @@ export default observer(function RegisterScreen(props: PropsType) {
           captcha,
         } as registerParams;
         await authService.register(params);
-        sessionService.setInitialScreen('OnboardingScreen');
         await apiService.clearCookies();
         await delay(100);
+        if (featuresService.has('onboarding-october-2020')) {
+          sessionService.setInitialScreen('SelectHashtags');
+        }
         try {
           await authService.login(store.username, store.password);
           i18n.setLocaleBackend();
@@ -154,6 +157,12 @@ export default observer(function RegisterScreen(props: PropsType) {
     togglePromotions() {
       store.exclusivePromotions = !store.exclusivePromotions;
     },
+    emailInputBlur() {
+      store.email = store.email.trim();
+      if (!validatorService.email(store.email)) {
+        this.showErrors = true;
+      }
+    },
   }));
 
   const theme = ThemedStyles.style;
@@ -194,6 +203,7 @@ export default observer(function RegisterScreen(props: PropsType) {
             : undefined
         }
         noBottomBorder
+        onBlur={store.emailInputBlur}
       />
       <View>
         {!!store.password && store.focused && (
@@ -229,9 +239,14 @@ export default observer(function RegisterScreen(props: PropsType) {
     </View>
   );
 
+  const setting = {
+    ...shadowOptLocal,
+    style: {},
+  };
+
   const inputsWithShadow = Platform.select({
     ios: inputs,
-    android: <BoxShadow setting={shadowOptLocal}>{inputs}</BoxShadow>, // Android fallback for shadows
+    android: <BoxShadow setting={setting}>{inputs}</BoxShadow>, // Android fallback for shadows
   });
 
   return (
@@ -309,17 +324,12 @@ export default observer(function RegisterScreen(props: PropsType) {
               <Button
                 onPress={store.onRegisterPress}
                 text={i18n.t('auth.createChannel')}
-                containerStyle={[
-                  theme.transparentButton,
-                  theme.paddingVertical3x,
-                  theme.fullWidth,
-                  theme.marginTop1x,
-                  styles.lightButton,
-                ]}
-                textStyle={theme.buttonText}
+                containerStyle={[theme.fullWidth, theme.marginTop1x]}
                 loading={store.inProgress}
                 disabled={store.inProgress}
                 testID="registerButton"
+                large
+                transparent
               />
             </View>
           </FitScrollView>

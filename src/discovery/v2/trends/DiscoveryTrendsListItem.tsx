@@ -1,19 +1,20 @@
+import { useNavigation } from '@react-navigation/core';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react';
 import React from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableHighlight,
   Dimensions,
+  StyleSheet,
+  Text,
+  TouchableHighlight,
+  View,
 } from 'react-native';
-import ThemedStyles from '../../../styles/ThemedStyles';
-import FastImage from 'react-native-fast-image';
-import formatDate from '../../../common/helpers/date';
 import { Icon } from 'react-native-elements';
-import { useNavigation } from '@react-navigation/core';
-import { StackNavigationProp } from '@react-navigation/stack';
+import FastImage from 'react-native-fast-image';
+import SmartImage from '../../../common/components/SmartImage';
+import formatDate from '../../../common/helpers/date';
 import excerpt from '../../../common/helpers/excerpt';
+import ThemedStyles from '../../../styles/ThemedStyles';
 
 const DISCOVERY_TRENDING_MAX_LENGTH = 140;
 
@@ -21,6 +22,7 @@ interface Props {
   isHero: boolean;
   data: any;
 }
+
 /**
  * Discovery List Item
  */
@@ -32,9 +34,15 @@ export const DiscoveryTrendsListItem = observer((props: Props) => {
 
   const onPress = (): void => {
     if (data.entity) {
-      navigation.push('Activity', {
-        entity: data.entity,
-      });
+      if (data.entity.subtype === 'blog') {
+        navigation.push('BlogView', {
+          blog: data.entity,
+        });
+      } else {
+        navigation.push('Activity', {
+          entity: data.entity,
+        });
+      }
     } else {
       return goToSearch();
     }
@@ -104,15 +112,17 @@ export const DiscoveryTrendsListItem = observer((props: Props) => {
 
   const RichPartialThumbnail = () => {
     const entity = data.entity;
-    const image = { uri: entity.thumbnail_src };
+    const uri = entity.thumbnail_src.startsWith('//')
+      ? `https:${entity.thumbnail_src}`
+      : entity.thumbnail_src;
+    const image = { uri };
+
+    console.log(entity.guid, image);
 
     return (
-      <FastImage
+      <SmartImage
         source={image}
-        style={{
-          ...styles.thumbnail,
-          ...(isHero ? styles.heroThumbnail : null),
-        }}
+        style={[styles.thumbnail, isHero ? styles.heroThumbnail : null]}
         resizeMode={FastImage.resizeMode.cover}
       />
     );

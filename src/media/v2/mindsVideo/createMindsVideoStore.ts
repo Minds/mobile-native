@@ -1,7 +1,10 @@
-import attachmentService from '../../../common/services/attachment.service';
-import logService from '../../../common/services/log.service';
+import { Platform } from 'react-native';
 import type { AVPlaybackStatus, Video } from 'expo-av';
 import _ from 'lodash';
+import { runInAction } from 'mobx';
+
+import attachmentService from '../../../common/services/attachment.service';
+import logService from '../../../common/services/log.service';
 import featuresService from '../../../common/services/features.service';
 import apiService from '../../../common/services/api.service';
 import videoPlayerService from '../../../common/services/video-player.service';
@@ -11,10 +14,12 @@ export type Source = {
   size: number;
 };
 
+const isIOS = Platform.OS === 'ios';
+
 const createMindsVideoStore = ({ entity, autoplay }) => {
   const store = {
     initialVolume: <number | null>null,
-    volume: 1,
+    volume: videoPlayerService.currentVolume,
     sources: null as Array<Source> | null,
     source: 0,
     currentTime: 0,
@@ -23,6 +28,7 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
     transcoding: false,
     error: false,
     inProgress: false,
+    showThumbnail: true,
     loaded: false,
     video: { uri: '', headers: undefined },
     showOverlay: false,
@@ -56,6 +62,9 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
     },
     setShowOverlay(showOverlay: boolean) {
       this.showOverlay = showOverlay;
+    },
+    setShowThumbnail(showThumbnail: boolean) {
+      this.showThumbnail = showThumbnail;
     },
     setVideo(video: any) {
       this.video = video;
@@ -182,11 +191,18 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
 
           if (status.isPlaying) {
             this.setDuration(status.durationMillis || 0);
+            videoPlayerService.enableVolumeListener();
+          } else if (isIOS && !this.paused && !status.didJustFinish) {
+            // fix ios autoplay
+            this.player?.setStatusAsync({
+              shouldPlay: true,
+              volume: this.volume,
+            });
           }
 
-          if (status.didJustFinish && !status.isLooping) {
-            this.onVideoEnd();
-          }
+          // if (status.didJustFinish && !status.isLooping) {
+          //  this.onVideoEnd();
+          // }
         }
       }
     },
@@ -224,6 +240,7 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
       }
 
       this.setShowOverlay(false);
+      this.setShowThumbnail(false);
 
       if (Array.isArray(this.sources)) {
         this.video = {
@@ -232,29 +249,23 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
         };
       }
 
-      this.setPaused(false);
+      runInAction(() => {
+        this.setPaused(false);
+        this.volume = sound ? 1 : 0;
+      });
 
-      this.volume = sound ? 1 : 0;
       if (this.initialVolume === null) {
         this.initialVolume = this.volume;
       }
 
       // set as the current player in the service
       videoPlayerService.setCurrent(this);
-
-      // this.player?.playAsync();
-      this.player?.setStatusAsync({
-        progressUpdateIntervalMillis: 500,
-        shouldPlay: true,
-        volume: this.volume,
-      });
     },
     pause() {
-      this.setPaused(true);
       if (videoPlayerService.current === this) {
         videoPlayerService.clear();
       }
-      this.player?.pauseAsync();
+      this.setPaused(true);
     },
     setPlayer(player: Video) {
       this.player = player;

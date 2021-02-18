@@ -1,12 +1,17 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ViewStyle } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
-import Input from './Input';
+import Input, { PropsType as InputPropsType } from './Input';
 
-const InputContainer = (props) => {
+export interface PropsType extends InputPropsType {
+  noBottomBorder?: boolean;
+  containerStyle?: ViewStyle | Array<ViewStyle>;
+}
+
+const InputContainer = (props: PropsType) => {
   const theme = ThemedStyles.style;
-
   const { style, noBottomBorder, ...otherProps } = props;
+
   return (
     <View
       style={[
@@ -19,7 +24,13 @@ const InputContainer = (props) => {
         props.containerStyle,
       ]}>
       <Input
-        style={[styles.input, theme.paddingLeft0x, theme.fontXL, style]}
+        style={[
+          styles.input,
+          theme.paddingLeft0x,
+          theme.fontXL,
+          style,
+          // heightStyle,
+        ]}
         labelStyle={[
           theme.colorSecondaryText,
           theme.fontL,
@@ -36,11 +47,11 @@ export default InputContainer;
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 12,
+    paddingTop: 10,
   },
   input: {
-    padding: 0,
-    height: 32,
+    paddingVertical: 8,
+    paddingHorizontal: 0,
     marginBottom: 7,
     borderWidth: 0,
   },

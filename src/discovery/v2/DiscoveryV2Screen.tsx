@@ -9,11 +9,13 @@ import i18n from '../../common/services/i18n.service';
 import { DiscoveryTrendsList } from './trends/DiscoveryTrendsList';
 import { TabParamList } from '../../tabs/TabsScreen';
 import ThemedStyles from '../../styles/ThemedStyles';
-import { useDiscoveryV2Store } from './DiscoveryV2Context';
+import { useDiscoveryV2Store } from './useDiscoveryV2Store';
 import { TDiscoveryV2Tabs } from './DiscoveryV2Store';
 import TopbarTabbar from '../../common/components/topbar-tabbar/TopbarTabbar';
 import { DiscoveryTagsList } from './tags/DiscoveryTagsList';
 import FeedList from '../../common/components/FeedList';
+import DiscoveryTagsManager from './tags/DiscoveryTagsManager';
+import InitialOnboardingButton from '../../onboarding/v2/InitialOnboardingButton';
 
 interface Props {
   navigation: BottomTabNavigationProp<TabParamList>;
@@ -23,6 +25,7 @@ interface Props {
  * Discovery Feed Screen
  */
 export const DiscoveryV2Screen = observer((props: Props) => {
+  const theme = ThemedStyles.style;
   const [shouldRefreshOnTabPress, setShouldRefreshOnTabPress] = useState(false);
   const store = useDiscoveryV2Store();
   const navigation = props.navigation;
@@ -50,14 +53,19 @@ export const DiscoveryV2Screen = observer((props: Props) => {
     return unsubscribe;
   }, [store, navigation]);
 
+  const closeManageTags = () => {
+    store.setShowManageTags(false);
+    store.refreshTrends();
+  };
+
   const screen = () => {
     switch (store.activeTabId) {
       case 'foryou':
-        return <DiscoveryTrendsList />;
+        return <DiscoveryTrendsList store={store} />;
       case 'your-tags':
-        return <DiscoveryTagsList type="your" />;
+        return <DiscoveryTagsList type="your" store={store} />;
       case 'trending-tags':
-        return <DiscoveryTagsList type="trending" />;
+        return <DiscoveryTagsList type="trending" store={store} />;
       case 'boosts':
         store.boostFeed.fetchRemoteOrLocal();
         return <FeedList feedStore={store.boostFeed} navigation={navigation} />;
@@ -67,8 +75,9 @@ export const DiscoveryV2Screen = observer((props: Props) => {
   };
 
   return (
-    <View style={ThemedStyles.style.flexContainer}>
-      <View style={ThemedStyles.style.backgroundSecondary}>
+    <View style={theme.flexContainer}>
+      <View style={[theme.backgroundPrimary, theme.paddingTop]}>
+        <InitialOnboardingButton />
         <TopbarTabbar
           current={store.activeTabId}
           onChange={(tabId) => {
@@ -82,7 +91,12 @@ export const DiscoveryV2Screen = observer((props: Props) => {
           ]}
         />
       </View>
-      <View style={ThemedStyles.style.flexContainer}>{screen()}</View>
+      <View style={theme.flexContainer}>{screen()}</View>
+      <DiscoveryTagsManager
+        show={store.showManageTags}
+        onCancel={closeManageTags}
+        onDone={closeManageTags}
+      />
     </View>
   );
 });

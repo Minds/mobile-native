@@ -22,10 +22,11 @@ import { Provider, observer } from 'mobx-react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import ShareMenu from 'react-native-share-menu';
-
 import NavigationService, {
   setTopLevelNavigator,
 } from './src/navigation/NavigationService';
+import { Audio } from 'expo-av';
+
 import KeychainModalScreen from './src/keychain/KeychainModalScreen';
 import NavigationStack from './src/navigation/NavigationStack';
 import { getStores } from './AppStores';
@@ -128,6 +129,14 @@ class App extends Component<Props, State> {
     this.ShareReceiveListener = ShareMenu.addNewShareListener(
       receiveShareService.handle,
     );
+
+    // set global audio settings for the app
+    Audio.setAudioModeAsync({
+      playsInSilentModeIOS: true,
+      interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+      shouldDuckAndroid: false,
+      interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+    });
   }
 
   /**

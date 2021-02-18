@@ -54,6 +54,17 @@ exports[`Media view component renders correctly 1`] = `
             },
             "guid": "activityguid0",
             "hasThumbnails": [MockFunction],
+            "isGif": [MockFunction] {
+              "calls": Array [
+                Array [],
+              ],
+              "results": Array [
+                Object {
+                  "type": "return",
+                  "value": false,
+                },
+              ],
+            },
             "mature": false,
             "message": "Message",
             "ownerObj": Object {
@@ -79,9 +90,15 @@ exports[`Media view component renders correctly 1`] = `
         }
         onError={[Function]}
         onLoad={[Function]}
+        resizeMode="cover"
         source={
           Object {
             "uri": "www.something.com",
+          }
+        }
+        thumbnail={
+          Object {
+            "uri": "https://cdn.minds.com/api/v3/media/proxy?size=96&src=www.something.com",
           }
         }
       />

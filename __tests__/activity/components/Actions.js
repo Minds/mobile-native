@@ -17,13 +17,11 @@ import formatDate from '../../../src/common/helpers/date';
 import domain from '../../../src/common/helpers/domain';
 import MediaView from '../../../src/common/components/MediaView';
 import UserStore from '../../../src/auth/UserStore';
-import MindsVideo from '../../../src/media/MindsVideo';
 import MindsVideoV2 from '../../../src/media/v2/mindsVideo/MindsVideo';
 
 import featuresService from '../../../src/common/services/features.service';
 import { Provider } from 'mobx-react';
 
-jest.mock('../../../src/media/MindsVideo', () => 'MindsVideo');
 jest.mock('../../../src/media/v2/mindsVideo/MindsVideo', () => 'MindsVideoV2');
 jest.mock(
   '../../../src/newsfeed/activity/actions/ThumbUpAction',

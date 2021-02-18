@@ -13,13 +13,14 @@ import { observer } from 'mobx-react';
 import SearchComponent from './searchbar/SearchComponent';
 import ThemedStyles from '../styles/ThemedStyles';
 import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
-import EmailConfirmation from './EmailConfirmation';
 import BannerInfo from './BannerInfo';
 import FastImage from 'react-native-fast-image';
 import { useStores } from '../common/hooks/use-stores';
 import useCurrentUser from '../common/hooks/useCurrentUser';
 import intword from '../common/helpers/intword';
 import colors from '../styles/Colors';
+import featuresService from '../common/services/features.service';
+import EmailConfirmation from './EmailConfirmation';
 
 type PropsType = {
   navigation: any;
@@ -59,7 +60,7 @@ export const Topbar = observer((props: PropsType) => {
           paddingTop: insets && insets.top ? insets.top - 5 : 0,
         };
         return (
-          <View style={[theme.backgroundSecondary, styles.shadow]}>
+          <View style={[theme.backgroundPrimary, styles.shadow]}>
             <View
               style={[
                 styles.container,
@@ -109,7 +110,9 @@ export const Topbar = observer((props: PropsType) => {
                 </View>
               </View>
             </View>
-            <EmailConfirmation />
+            {!featuresService.has('onboarding-october-2020') && (
+              <EmailConfirmation />
+            )}
             <BannerInfo />
           </View>
         );
@@ -120,7 +123,7 @@ export const Topbar = observer((props: PropsType) => {
 
 export default Topbar;
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   container: {
     height: Platform.select({ ios: 110, android: 70 }),
     display: 'flex',
@@ -174,7 +177,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     paddingRight: 4,
-    marginRight: 5,
+    marginRight: 15,
   },
   scale0: {
     transform: [{ scale: 0 }],

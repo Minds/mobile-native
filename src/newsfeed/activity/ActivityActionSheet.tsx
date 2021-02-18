@@ -16,6 +16,7 @@ import sessionService from '../../common/services/session.service';
 import NavigationService from '../../navigation/NavigationService';
 import ThemedStyles from '../../styles/ThemedStyles';
 import type ActivityModel from '../ActivityModel';
+import { showNotification } from '../../../AppMessages';
 
 type PropsType = {
   entity: ActivityModel;
@@ -89,6 +90,16 @@ export default class ActivityActionSheet extends Component<
   getOptions() {
     let options = [i18n.t('cancel')];
     const entity = this.props.entity;
+
+    const reminded =
+      entity.remind_users &&
+      entity.remind_users.some(
+        (user) => user.guid === sessionService.getUser().guid,
+      );
+
+    if (reminded) {
+      options.push(i18n.t('undoRemind'));
+    }
 
     // TODO: remove feature flag
     if (featuresService.has('permissions')) {
@@ -203,7 +214,12 @@ export default class ActivityActionSheet extends Component<
       }
 
       // if can delete
-      if (entity.isOwner() || sessionService.getUser().isAdmin()) {
+      const containerObj = entity.containerObj;
+      if (
+        entity.isOwner() ||
+        sessionService.getUser().isAdmin() ||
+        (containerObj && containerObj['is:owner'])
+      ) {
         options.push(this.deleteOption);
       }
     }
@@ -250,6 +266,14 @@ export default class ActivityActionSheet extends Component<
    */
   async executeAction(option) {
     switch (option) {
+      case i18n.t('undoRemind'):
+        try {
+          await this.props.entity.deleteRemind();
+          showNotification(i18n.t('remindRemoved'), 'success');
+        } catch (error) {
+          showNotification(i18n.t('errorMessage'), 'warning');
+        }
+        break;
       case this.deleteOption:
         setTimeout(() => {
           Alert.alert(

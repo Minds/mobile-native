@@ -166,16 +166,22 @@ export default observer(
         sheetRef.current.snapTo(1);
         sheetRef.current.snapTo(1);
       },
+      get opened() {
+        return localStore.opened;
+      },
     }));
 
-    const showSchedule = props.store.isEdit ? time_created > Date.now() : true;
+    const showSchedule =
+      (props.store.isEdit ? time_created > Date.now() : true) &&
+      !props.store.portraitMode;
 
     const monetizeDesc = store.wire_threshold.support_tier?.urn
       ? store.wire_threshold.support_tier?.name || 'Plus'
       : '';
 
+    const showMonetize = !props.store.portraitMode && !props.store.isRemind;
+
     const showPermaweb =
-      sessionService.getUser().plus &&
       !store.isEdit &&
       !store.group &&
       !store.isRemind &&
@@ -186,7 +192,12 @@ export default observer(
       : null;
 
     const renderInner = () => (
-      <View style={[theme.backgroundSecondary, theme.fullHeight]}>
+      <View
+        style={[
+          theme.backgroundSecondary,
+          theme.fullHeight,
+          { elevation: 13 },
+        ]}>
         <Item
           title="Tag"
           description={tags.slice(0, 4).map((t) => `#${t} `)}
@@ -208,12 +219,14 @@ export default observer(
             onPress={onSchedulePress}
           />
         )}
-        <Item
-          title={i18n.t('monetize.title')}
-          description={monetizeDesc}
-          onPress={onMonetizePress}
-          testID="monetizeButton"
-        />
+        {showMonetize && (
+          <Item
+            title={i18n.t('monetize.title')}
+            description={monetizeDesc}
+            onPress={onMonetizePress}
+            testID="monetizeButton"
+          />
+        )}
         {showPermaweb && (
           <Item
             title={i18n.t('permaweb.title')}
@@ -222,13 +235,11 @@ export default observer(
             testID="permawebButton"
           />
         )}
-        {hasAttachment && (
-          <Item
-            title="License"
-            description={getLicenseText(license)}
-            onPress={onLicensePress}
-          />
-        )}
+        <Item
+          title="License"
+          description={getLicenseText(license)}
+          onPress={onLicensePress}
+        />
         {!store.group && (
           <Item
             title="Visibility"
@@ -242,19 +253,14 @@ export default observer(
     return (
       <BottomSheet
         ref={sheetRef}
-        snapPoints={[0, 500]}
+        snapPoints={[0, 550]}
         renderContent={renderInner}
         enabledInnerScrolling={true}
         enabledContentTapInteraction={true}
         renderHeader={() => (
           <Header onPress={onHeaderPress} opened={localStore.opened} />
         )}
-        style={[
-          ThemedStyles.style.backgroundSecondary,
-          // keyboard.keyboardShown
-          //   ? { bottom: keyboard.keyboardHeight }
-          //   : null,
-        ]}
+        style={ThemedStyles.style.backgroundAlert}
         onOpenEnd={onOpenEnd}
         onCloseEnd={onCloseEnd}
       />

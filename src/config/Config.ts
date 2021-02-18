@@ -3,18 +3,23 @@ import { Platform } from 'react-native';
 
 import DeviceInfo from 'react-native-device-info';
 
-// export const MINDS_URI = 'https://www.minds.com/';
-// export const MINDS_URI = 'http://dev.minds.io/';
+// Send staging cookie to api
+export const MINDS_STAGING = false;
 
-// remember to update deeplink uri on AndroidManifest.xml !!!
-// export const MINDS_URI = 'http://172.16.2.61:8080/';
+// network timeout time
+export const NETWORK_TIMEOUT = 15000;
+
+// comments char limit
+export const CHAR_LIMIT = 1500;
+
+export const DATA_SAVER_THUMB_RES = 96;
+
 export const MINDS_URI = 'https://www.minds.com/';
 export const MINDS_API_URI = 'https://www.minds.com/';
 
-export const NETWORK_TIMEOUT = 15000;
-
 export const CONECTIVITY_CHECK_URI = 'https://www.minds.com/';
 export const CONECTIVITY_CHECK_INTERVAL = 10000;
+export const MINDS_GUID = '100000000000000519';
 
 export const MINDS_URI_SETTINGS = {
   //basicAuth: 'crypto:ohms',
@@ -47,13 +52,31 @@ export const MINDS_FEATURES = {
   'mindsVideo-2020': true,
 };
 
+const redirectPages = [
+  'plus',
+  'token',
+  'help',
+  'canary',
+  'mobile',
+  'content-policy',
+  'jobs',
+  'upgrades',
+  'pro',
+  'pay',
+  'nodes',
+  'boost',
+  'rewards',
+  'youtube-migration',
+  'branding',
+  'localization',
+].map((p) => [p, 'Redirect']);
+
 /**
  * Deeplink to screen/params maping
  */
 export const MINDS_DEEPLINK = [
-  ['plus', 'Redirect'],
-  ['token', 'Redirect'],
-  ['help', 'Redirect'],
+  ...redirectPages,
+  ['settings/other/referrals', 'Referrals'],
   ['email-confirmation', 'EmailConfirmation'],
   ['groups/profile/:guid/feed', 'GroupView'],
   ['groups/profile/:guid', 'GroupView'],
@@ -74,3 +97,5 @@ export const DISABLE_PASSWORD_INPUTS = false;
 // IF TRUE COMMENT THE SMS PERMISSIONS IN ANDROID MANIFEST TOO!!!
 export const GOOGLE_PLAY_STORE =
   DeviceInfo.getBuildNumber() < 1050000000 && Platform.OS === 'android';
+
+export const IS_FROM_STORE = GOOGLE_PLAY_STORE || Platform.OS === 'ios';

@@ -1,6 +1,5 @@
 //@ts-nocheck
 import { StyleSheet, Platform } from 'react-native';
-
 export interface ThemedStyle {
   width90: any;
   flexContainer: any;
@@ -19,6 +18,9 @@ export interface ThemedStyle {
   rowStretch: any;
   alignCenter: any;
   alignEnd: any;
+  alignSelfEnd: any;
+  alignSelfStart: any;
+  alignSelfCenter: any;
   centered: any;
   colorWhite: any;
   colorBlack: any;
@@ -35,6 +37,9 @@ export interface ThemedStyle {
   colorSeparator: any;
   colorAlert: any;
   colorTransparent: any;
+  backgroundPrimaryText: any;
+  backgroundSecondaryText: any;
+  backgroundTertiaryText: any;
   backgroundInfo: any;
   backgroundSuccess: any;
   backgroundDanger: any;
@@ -105,6 +110,11 @@ export interface ThemedStyle {
   borderTopHair: any;
   borderBottomHair: any;
   buttonBorder: any;
+  opacity100: any;
+  opacity75: any;
+  opacity50: any;
+  opacity25: any;
+  opacity0: any;
   listItemTitle: any;
   strikethrough: any;
   mindsSwitchBackgroundPrimary: any;
@@ -114,9 +124,9 @@ export interface ThemedStyle {
   positionAbsoluteTopRight: any;
   positionAbsoluteBottomRight: any;
   positionAbsoluteBottomRight: any;
+  backgroundPrimaryHighlight: any;
   [name: string]: any;
 }
-
 const repetitions = 8;
 const step = 5;
 
@@ -149,8 +159,24 @@ for (let index = 0; index <= repetitions; index++) {
   dynamicStyles[`borderRadius${post}`] = { borderRadius: index * 2 };
 }
 
-export const buildStyle = (theme): ThemedStyle => ({
+export const buildStyle = (theme) => ({
   ...dynamicStyles,
+  // opacity
+  opacity100: {
+    opacity: 1,
+  },
+  opacity75: {
+    opacity: 0.75,
+  },
+  opacity50: {
+    opacity: 0.5,
+  },
+  opacity25: {
+    opacity: 0.25,
+  },
+  opacity0: {
+    opacity: 0,
+  },
   // containers
   width90: {
     width: '90%',
@@ -218,6 +244,15 @@ export const buildStyle = (theme): ThemedStyle => ({
   },
   alignEnd: {
     alignItems: 'flex-end',
+  },
+  alignSelfEnd: {
+    alignSelf: 'flex-end',
+  },
+  alignSelfStart: {
+    alignSelf: 'flex-start',
+  },
+  alignSelfCenter: {
+    alignSelf: 'center',
   },
   centered: {
     alignContent: 'center',
@@ -298,6 +333,15 @@ export const buildStyle = (theme): ThemedStyle => ({
     color: 'transparent',
   },
   // backgrounds
+  backgroundPrimaryText: {
+    backgroundColor: theme.primary_text,
+  },
+  backgroundSecondaryText: {
+    backgroundColor: theme.secondary_text,
+  },
+  backgroundTertiaryText: {
+    backgroundColor: theme.tertiary_text,
+  },
   backgroundInfo: {
     backgroundColor: theme.info_background,
   },
@@ -336,6 +380,9 @@ export const buildStyle = (theme): ThemedStyle => ({
   },
   backgroundPrimary: {
     backgroundColor: theme.primary_background,
+  },
+  backgroundPrimaryHighlight: {
+    backgroundColor: theme.primary_background_highlight,
   },
   backgroundSecondary: {
     backgroundColor: theme.secondary_background,
@@ -390,7 +437,6 @@ export const buildStyle = (theme): ThemedStyle => ({
   borderIcon: {
     borderColor: theme.icon,
   },
-
   // fonts
   fontXS: {
     fontSize: 10,
@@ -411,10 +457,10 @@ export const buildStyle = (theme): ThemedStyle => ({
     fontSize: 18,
   },
   fontXXL: {
-    fontSize: 24,
+    fontSize: 22,
   },
   fontXXXL: {
-    fontSize: 30,
+    fontSize: 28,
   },
 
   // text align

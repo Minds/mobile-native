@@ -8,7 +8,7 @@ import LoginForm from './LoginForm';
 import ThemedStyles from '../styles/ThemedStyles';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import BannerInfo from '../topbar/BannerInfo';
+import FitScrollView from '../common/components/FitScrollView';
 import DismissKeyboard from '../common/components/DismissKeyboard';
 import { useKeyboard } from '@react-native-community/hooks';
 import i18n from '../common/services/i18n.service';
@@ -33,7 +33,9 @@ export default function LoginScreen(props: PropsType) {
   return (
     <SafeAreaView style={theme.flexContainer}>
       <DismissKeyboard>
-        <View style={theme.flexContainer}>
+        <FitScrollView
+          style={theme.flexContainer}
+          keyboardShouldPersistTaps={true}>
           <View style={theme.flexColumnStretch}>
             <Animated.View style={[styles.bulb, { height: containerHeight }]}>
               <Animated.Image
@@ -48,7 +50,8 @@ export default function LoginScreen(props: PropsType) {
                 theme.textCenter,
                 theme.colorWhite,
                 titleMargin,
-              ]}>
+              ]}
+              testID="loginscreentext">
               {i18n.t('auth.login')}
             </Text>
 
@@ -57,7 +60,7 @@ export default function LoginScreen(props: PropsType) {
               onRegisterPress={() => props.navigation.push('Register')}
             />
           </View>
-        </View>
+        </FitScrollView>
       </DismissKeyboard>
     </SafeAreaView>
   );

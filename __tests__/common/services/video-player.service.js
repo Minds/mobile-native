@@ -1,26 +1,27 @@
-
 import videoPlayerService from '../../../src/common/services/video-player.service';
+import SystemSetting from 'react-native-system-setting';
+
+jest.mock('react-native-system-setting');
+jest.mock('react-native-silent-switch');
 
 const mockPlayerRef1 = {
-  pause: jest.fn()
-}
+  pause: jest.fn(),
+};
 
 const mockPlayerRef2 = {
-  pause: jest.fn()
-}
+  pause: jest.fn(),
+};
 
 /**
  * Tests
  */
 describe('Video player service', () => {
-
   beforeEach(() => {
     mockPlayerRef1.pause.mockClear();
     mockPlayerRef2.pause.mockClear();
   });
 
   it('should set the current ref', () => {
-
     expect(videoPlayerService.current).toBe(null);
 
     videoPlayerService.setCurrent(mockPlayerRef1);
@@ -29,7 +30,6 @@ describe('Video player service', () => {
   });
 
   it('should pause the previous video', () => {
-
     videoPlayerService.setCurrent(mockPlayerRef2);
 
     expect(videoPlayerService.current).toBe(mockPlayerRef2);

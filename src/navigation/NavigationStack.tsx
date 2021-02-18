@@ -5,14 +5,21 @@ import {
 } from 'react-native-screens/native-stack';
 import { useDimensions } from '@react-native-community/hooks';
 import { createSharedElementStackNavigator } from 'react-navigation-shared-element';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import {
+  createDrawerNavigator,
+  DrawerNavigationOptions,
+} from '@react-navigation/drawer';
 import { Platform, StatusBar, View } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
+import {
+  createStackNavigator,
+  StackNavigationOptions,
+} from '@react-navigation/stack';
 import AnalyticsScreen from '../analytics/AnalyticsScreen';
 
 import LoginScreen from '../auth/LoginScreen';
 import ForgotScreen from '../auth/ForgotScreen';
 import ReferralsScreen from '../referral/ReferralsScreen';
+import DataSaverScreen from '../settings/screens/DataSaverScreen';
 import TabsScreen from '../tabs/TabsScreen';
 import NotificationsScreen from '../notifications/NotificationsScreen';
 import ActivityScreen from '../newsfeed/ActivityScreen';
@@ -26,15 +33,13 @@ import BlogsListScreen from '../blogs/BlogsListScreen';
 import BlogsViewScreen from '../blogs/BlogsViewScreen';
 import FabScreenV2 from '../wire/v2/FabScreen';
 import ViewImageScreen from '../media/ViewImageScreen';
-import BoostScreen from '../boost/creator/BoostScreen';
 import BlockchainWalletScreen from '../blockchain/wallet/BlockchainWalletScreen';
 import BlockchainWalletModalScreen from '../blockchain/wallet/modal/BlockchainWalletModalScreen';
 import BlockchainWalletImportScreen from '../blockchain/wallet/import/BlockchainWalletImportScreen';
 import BlockchainWalletDetailsScreen from '../blockchain/wallet/details/BlockchainWalletDetailsScreen';
 import ReportScreen from '../report/ReportScreen';
-import MoreScreen from '../tabs/MoreScreen';
 import NotSupportedScreen from '../static-views/NotSupportedScreen';
-import OnboardingScreen from '../onboarding/OnboardingScreen';
+// import OnboardingScreen from '../onboarding/OnboardingScreen';
 import UpdatingScreen from '../update/UpdateScreen';
 import { DiscoverySearchScreen } from '../discovery/v2/search/DiscoverySearchScreen';
 // import Gathering from '../gathering/Gathering';
@@ -82,8 +87,8 @@ import Drawer from './Drawer';
 import OptionsDrawer from '../common/components/OptionsDrawer';
 import PasswordScreen from '../settings/screens/PasswordScreen';
 import NotificationsSettingsScreen from '../notifications/NotificationsSettingsScreen';
-import BlockedChannelsScreen from '../settings/screens/BlockedChannelsScreen';
-import TierManagementScreen from '../settings/screens/TierManagementScreen';
+import BlockedChannelsScreen from '../settings/screens/blocked/BlockedChannelsScreen';
+import TierManagementScreen from '../common/components/tier-management/TierManagementScreen';
 import DeleteChannelScreen from '../settings/screens/DeleteChannelScreen';
 import DeactivateChannelScreen from '../settings/screens/DeactivateChannelScreen';
 import LanguageScreen from '../settings/screens/LanguageScreen';
@@ -101,7 +106,17 @@ import VideoBackground from '../common/components/VideoBackground';
 import TransparentLayer from '../common/components/TransparentLayer';
 import PortraitViewerScreen from '../portrait/PortraitViewerScreen';
 import { portraitBarRef } from '../portrait/PortraitContentBar';
+import OnboardingScreen from '../onboarding/v2/OnboardingScreen';
+import VerifyEmailScreen from '../onboarding/v2/steps/VerifyEmailScreen';
+import SelectHashtagsScreen from '../onboarding/v2/steps/SelectHashtagsScreen';
+import SetupChannelScreen from '../onboarding/v2/steps/SetupChannelScreen';
+import VerifyUniquenessScreen from '../onboarding/v2/steps/VerifyUniquenessScreen';
+import PhoneValidationScreen from '../onboarding/v2/steps/PhoneValidationScreen';
 import AutoplaySettingsScreen from '../settings/screens/AutoplaySettingsScreen';
+import SuggestedChannelsScreen from '../onboarding/v2/steps/SuggestedChannelsScreen';
+import SuggestedGroupsScreen from '../onboarding/v2/steps/SuggestedGroupsScreen';
+import BoostChannelScreen from '../boost/v2/BoostChannelScreen';
+import BoostPostScreen from '../boost/v2/BoostPostScreen';
 
 const isIos = Platform.OS === 'ios';
 
@@ -128,12 +143,24 @@ const FullScreenPostStack = () => (
     <FullScreenPostStackNav.Screen
       name="ActivityFullScreen"
       component={ViewerScreen}
-      options={{ stackAnimation: 'none', ...hideHeader, title: '' }}
+      options={
+        {
+          stackAnimation: 'none',
+          ...hideHeader,
+          title: '',
+        } as StackNavigationOptions
+      }
     />
     <FullScreenPostStackNav.Screen
       name="PortraitViewerScreen"
       component={PortraitViewerScreen}
-      options={{ stackAnimation: 'none', ...hideHeader, title: '' }}
+      options={
+        {
+          stackAnimation: 'none',
+          ...hideHeader,
+          title: '',
+        } as StackNavigationOptions
+      }
     />
     <FullScreenPostStackNav.Screen
       name="ViewImage"
@@ -238,16 +265,12 @@ export const InternalStack = () => {
         options={WalletOptions}
       />
       <InternalStackNav.Screen
-        name="BoostConsole"
-        component={BoostConsoleScreen}
-        options={hideHeader}
-      />
-      <InternalStackNav.Screen
         name="GroupsList"
         component={GroupsListScreen}
         options={{ title: i18n.t('discovery.groups') }}
       />
-      <AppStackNav.Screen name="Analytics" component={AnalyticsScreen} />
+      <InternalStackNav.Screen name="Analytics" component={AnalyticsScreen} />
+      <InternalStackNav.Screen name="Onboarding" component={OnboardingScreen} />
 
       <InternalStackNav.Screen name="Settings" component={SettingsScreen} />
     </InternalStackNav.Navigator>
@@ -272,7 +295,7 @@ const MainScreen = () => {
       <DrawerNav.Screen
         name="Tabs"
         component={TabsScreen}
-        options={hideHeader}
+        options={hideHeader as DrawerNavigationOptions}
       />
     </DrawerNav.Navigator>
   );
@@ -357,11 +380,6 @@ const AppStack = function () {
       />
       <AppStackNav.Screen name="Update" component={UpdatingScreen} />
       <AppStackNav.Screen
-        name="Boost"
-        component={BoostScreen}
-        options={{ gestureEnabled: false }}
-      />
-      <AppStackNav.Screen
         name="Notifications"
         component={NotificationsScreen}
       />
@@ -427,11 +445,6 @@ const AppStack = function () {
       <AppStackNav.Screen
         name="Report"
         component={ReportScreen}
-        options={{ title: i18n.t('report') }}
-      />
-      <AppStackNav.Screen
-        name="More"
-        component={MoreScreen}
         options={{ title: i18n.t('report') }}
       />
       <AppStackNav.Screen name="NotSupported" component={NotSupportedScreen} />
@@ -515,6 +528,11 @@ const AppStack = function () {
         options={{ title: i18n.t('settings.referrals') }}
       />
       <AppStackNav.Screen
+        name="BoostConsole"
+        component={BoostConsoleScreen}
+        options={{ title: i18n.t('boost') }}
+      />
+      <AppStackNav.Screen
         name="Other"
         component={OtherScreen}
         options={{ title: i18n.t('settings.other') }}
@@ -533,6 +551,11 @@ const AppStack = function () {
         name="SettingsNotifications"
         component={NotificationsSettingsScreen}
         options={{ title: i18n.t('settings.pushNotification') }}
+      />
+      <AppStackNav.Screen
+        name="DataSaverScreen"
+        component={DataSaverScreen}
+        options={{ title: i18n.t('settings.networkOptions.1') }}
       />
       <AppStackNav.Screen
         name="BlockedChannels"
@@ -627,6 +650,7 @@ const RootStack = function (props) {
     <RootStackNav.Navigator
       initialRouteName={initial}
       mode="modal"
+      keyboardHandlingEnabled={false}
       // @ts-ignore
       screenOptions={{
         headerShown: false,
@@ -652,6 +676,51 @@ const RootStack = function (props) {
           <RootStackNav.Screen
             name="PlusScreen"
             component={PlusScreen}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen
+            name="VerifyEmail"
+            component={VerifyEmailScreen}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen
+            name="SelectHashtags"
+            component={SelectHashtagsScreen}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen
+            name="SetupChannel"
+            component={SetupChannelScreen}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen
+            name="VerifyUniqueness"
+            component={VerifyUniquenessScreen}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen
+            name="SuggestedChannel"
+            component={SuggestedChannelsScreen}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen
+            name="SuggestedGroups"
+            component={SuggestedGroupsScreen}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen
+            name="PhoneValidation"
+            component={PhoneValidationScreen}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen
+            name="BoostChannelScreen"
+            component={BoostChannelScreen}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen
+            name="BoostPostScreen"
+            component={BoostPostScreen}
             options={modalOptions}
           />
         </Fragment>

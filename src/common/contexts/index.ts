@@ -14,9 +14,7 @@ import keychain from '../../keychain/KeychainStore';
 import blockchainTransaction from '../../blockchain/transaction-modal/BlockchainTransactionStore';
 import blockchainWallet from '../../blockchain/wallet/BlockchainWalletStore';
 import blockchainWalletSelector from '../../blockchain/wallet/BlockchainWalletSelectorStore';
-import capture from '../../capture/CaptureStore';
 import hashtag from '../../common/stores/HashtagStore';
-import onboarding from '../../onboarding/OnboardingStore';
 import groupsBar from '../../groups/GroupsBarStore';
 import SubscriptionRequestStore from '../../channel/subscription/SubscriptionRequestStore';
 import reportStore from '../../report/ReportStore';
@@ -24,12 +22,13 @@ import wallet from '../../wallet/WalletStore';
 
 import sessionService from '../services/session.service';
 import logService from '../services/log.service';
+import DiscoveryV2Store from '../../discovery/v2/DiscoveryV2Store';
 
 /**
  * This is initialized by /src/AppStores.ts and uses MobXProviderContext
  * to pass through to the `inject` pattern or `useLegacyStores`
  */
-export function createLegacyStores() {
+export function createClassStores() {
   const stores = {
     subscriptionRequest: new SubscriptionRequestStore(),
     newsfeed: new newsfeed(),
@@ -48,11 +47,11 @@ export function createLegacyStores() {
     blockchainWallet: new blockchainWallet(),
     blockchainWalletSelector: new blockchainWalletSelector(),
     channelSubscribersStore: new channelSubscribersStore(),
-    capture: new capture(),
     hashtag: new hashtag(),
-    onboarding: new onboarding(),
     groupsBar: new groupsBar(),
     reportstore: new reportStore(),
+    discoveryV2Store: new DiscoveryV2Store(),
+    mindsPlusV2Store: new DiscoveryV2Store(),
     wallet: new wallet(),
   };
   sessionService.onLogout(() => {
@@ -66,4 +65,4 @@ export function createLegacyStores() {
   return stores;
 }
 
-export type TLegacyStores = ReturnType<typeof createLegacyStores>;
+export type TLegacyStores = ReturnType<typeof createClassStores>;

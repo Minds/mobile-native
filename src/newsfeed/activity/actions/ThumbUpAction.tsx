@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TouchableOpacity } from 'react-native';
+import { StyleProp, ViewStyle, TouchableOpacity } from 'react-native';
 import { observer } from 'mobx-react';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -19,6 +19,8 @@ type PropsType = {
   entity: ActivityModel;
   size: number;
   orientation: 'column' | 'row';
+  containerStyle?: StyleProp<ViewStyle>;
+  touchableComponent?: React.ComponentClass;
 };
 
 /**
@@ -61,13 +63,16 @@ class ThumbUpAction extends Component<PropsType> {
         : theme.colorIcon
       : CS.colorLightGreyed;
 
+    const Touchable = this.props.touchableComponent || TouchableOpacityCustom;
+
     return (
-      <TouchableOpacityCustom
+      <Touchable
         style={[
           theme.rowJustifyCenter,
           theme.paddingHorizontal3x,
           theme.paddingVertical4x,
           theme.alignCenter,
+          this.props.containerStyle,
         ]}
         onPress={this.toggleThumb}
         {...testID(`Thumb ${this.direction} activity button`)}>
@@ -83,7 +88,7 @@ class ThumbUpAction extends Component<PropsType> {
             testID={`Thumb ${this.direction} count`}
           />
         ) : undefined}
-      </TouchableOpacityCustom>
+      </Touchable>
     );
   }
 

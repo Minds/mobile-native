@@ -98,7 +98,7 @@ export default observer(function (props) {
           </View>
           <FloatingBackButton
             onPress={props.navigation.goBack}
-            style={theme.colorWhite}
+            style={[theme.colorWhite, theme.paddingLeft]}
           />
         </>
       ) : store.mode === 'confirm' ? (

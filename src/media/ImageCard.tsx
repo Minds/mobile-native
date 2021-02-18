@@ -6,6 +6,7 @@ import { Text, Image, View, Button, StyleSheet } from 'react-native';
 import { observer, inject } from 'mobx-react';
 
 import Icon from 'react-native-vector-icons/Ionicons';
+import SmartImage from '../common/components/SmartImage';
 import { MINDS_CDN_URI } from '../config/Config';
 import FastImage from 'react-native-fast-image';
 import formatDate from '../common/helpers/date';
@@ -36,7 +37,7 @@ export default class ImageCard extends Component {
 
     return (
       <View>
-        <FastImage
+        <SmartImage
           source={image}
           style={styles.banner}
           resizeMode={FastImage.resizeMode.cover}

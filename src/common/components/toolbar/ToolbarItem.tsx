@@ -11,7 +11,7 @@ import { CommonStyle } from '../../../styles/Common';
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import ThemedStyles from '../../../styles/ThemedStyles';
 
-DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
+const DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
 
 /**
  * Toolbar Item
@@ -115,8 +115,9 @@ export default class ToolbarItem extends PureComponent {
         </View>
       );
     }
+    let IconType;
 
-    if (iconType == 'ion') {
+    if (iconType === 'ion') {
       IconType = IonIcon;
     } else {
       IconType = Icon;
@@ -129,8 +130,6 @@ export default class ToolbarItem extends PureComponent {
     );
   }
 }
-
-const color = '#444';
 
 const styles = StyleSheet.create({
   subtext: {
@@ -149,7 +148,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     padding: 5,
-    borderBottomWidth: 2,
+    borderBottomWidth: 4,
     borderBottomColor: 'transparent',
   },
   badgeStyle: {

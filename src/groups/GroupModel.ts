@@ -1,6 +1,6 @@
 import { observable, decorate, action, runInAction } from 'mobx';
 import BaseModel from '../common/BaseModel';
-import { GOOGLE_PLAY_STORE } from '../config/Config';
+import { GOOGLE_PLAY_STORE, MINDS_CDN_URI } from '../config/Config';
 import groupsService from './GroupsService';
 
 /**
@@ -11,6 +11,8 @@ export default class GroupModel extends BaseModel {
   @observable mature_visibility = false;
   name!: string;
   nsfw: Array<number> = [];
+  icontime: any;
+  entity_guid?: string;
 
   @action
   toggleMatureVisibility() {
@@ -48,6 +50,32 @@ export default class GroupModel extends BaseModel {
       runInAction(() => (this['is:member'] = true));
     }
   }
+
+  getAvatar(size = 'small') {
+    return {
+      rounded: true,
+      size: 45,
+      source: {
+        uri: `${MINDS_CDN_URI}fs/v1/avatars/${this.guid}/${size}/${this.icontime}`,
+      },
+    };
+  }
+
+  /**
+   * Increment the comments counter
+   */
+  @action
+  incrementCommentsCounter() {
+    this['comments:count']++;
+  }
+
+  /**
+   * Decrement the comments counter
+   */
+  @action
+  decrementCommentsCounter() {
+    this['comments:count']--;
+  }
 }
 
 /**
@@ -59,4 +87,5 @@ decorate(GroupModel, {
   name: observable,
   'is:member': observable,
   'members:count': observable,
+  'comments:count': observable,
 });

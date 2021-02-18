@@ -60,16 +60,18 @@ export default class ChannelBadges extends PureComponent<PropsType> {
       );
     }
 
-    return <View style={[styles.view, this.props.style]}>{badges}</View>;
+    return <>{badges}</>;
   }
 }
 
 const styles = StyleSheet.create({
   view: {
     flexDirection: 'row',
-    alignItems: 'center',
+    backgroundColor: 'red',
+    alignItems: 'flex-end',
   },
   icon: {
     marginLeft: 5,
+    alignSelf: 'center',
   },
 });

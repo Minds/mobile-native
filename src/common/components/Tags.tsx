@@ -8,9 +8,9 @@ import { Text, TextStyle } from 'react-native';
 import colors from '../../styles/Colors';
 import openUrlService from '../services/open-url.service';
 
-const hashRegex = new RegExp(
+export const hashRegex = new RegExp(
   [
-    '([^&]|\\B|^)', // Start of string, and word bounday. Not if preceeded by & symbol
+    '([^&]|\\B|^)', // Start of string, and word boundary. Not if preceded by & symbol
     '#', //
     '([',
     '\\wÀ-ÿ', // All Latin words + accented characters
@@ -99,7 +99,7 @@ export default class Tags extends PureComponent<PropsType> {
    * full url
    */
   parseUrl = (str) => {
-    const url = /(^|\b)(\b(?:https?|http|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;\(\)]*[-A-Z0-9+&@#\/%=~_|])/gim;
+    const url = /(^|\b)(\b(?:https?|http|ftp):\/\/[-A-Z0-9à-œ+&@#\/%?=~_|!:,.;\(\)]*[-A-Z0-9à-œ+&@#\/%=~_|])/gim;
 
     return this.replaceRegular(str, url, (i, content) => {
       return (
@@ -119,7 +119,7 @@ export default class Tags extends PureComponent<PropsType> {
    * url .com .org .net
    */
   parseShortUrl = (str) => {
-    const url = /(^|\b)([-A-Z0-9+&@#\/%?=~_|!:,.;]+\.(?:com|org|net)\/[-A-Z0-9+&@#\/%=~_|\(\)]*)/gim;
+    const url = /(^|\b)([-A-Z0-9à-œ+&@#\/%?=~_|!:,.;]+\.(?:com|org|net)\/[-A-Z0-9à-œ+&@#\/%=~_|\(\)]*)/gim;
 
     return this.replaceRegular(str, url, (i, content) => {
       return (
@@ -139,7 +139,7 @@ export default class Tags extends PureComponent<PropsType> {
    * url starting with www
    */
   parseWwwUrl = (str) => {
-    const url = /(^|\b)(www\.[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|\(\)]*)/gim;
+    const url = /(^|\b)(www\.[-A-Z0-9à-œ+&@#\/%?=~_|!:,.;]*[-A-Z0-9à-œ+&@#\/%=~_|\(\)]*)/gim;
 
     return this.replaceRegular(str, url, (i, content) => {
       return (

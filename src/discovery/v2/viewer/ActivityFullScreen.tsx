@@ -1,5 +1,5 @@
 import React, { useRef, useCallback, useEffect } from 'react';
-import { View, Text, StyleSheet, Platform, Clipboard } from 'react-native';
+import { View, StyleSheet, Platform, Clipboard } from 'react-native';
 import { useDimensions } from '@react-native-community/hooks';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { useFocus } from '@crowdlinker/react-native-pager';
@@ -12,18 +12,17 @@ import MediaView from '../../../common/components/MediaView';
 import OwnerBlock from '../../../newsfeed/activity/OwnerBlock';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import ActivityActionSheet from '../../../newsfeed/activity/ActivityActionSheet';
-import formatDate from '../../../common/helpers/date';
 import i18n from '../../../common/services/i18n.service';
 
 import FloatingBackButton from '../../../common/components/FloatingBackButton';
 import ExplicitText from '../../../common/components/explicit/ExplicitText';
-import Translate from '../../../common/components/Translate';
+import Translate from '../../../common/components/translate/Translate';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Actions from '../../../newsfeed/activity/Actions';
 import Activity from '../../../newsfeed/activity/Activity';
 
-import CommentsStore from '../../../comments/CommentsStore';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import CommentsStore from '../../../comments/v2/CommentsStore';
+import { ScrollView } from 'react-native-gesture-handler';
 import sessionService from '../../../common/services/session.service';
 import videoPlayerService from '../../../common/services/video-player.service';
 import ExplicitOverlay from '../../../common/components/explicit/ExplicitOverlay';
@@ -33,8 +32,11 @@ import LockV2 from '../../../wire/v2/lock/Lock';
 import Lock from '../../../wire/lock/Lock';
 import { showNotification } from '../../../../AppMessages';
 import { AppStackParamList } from '../../../navigation/NavigationTypes';
-import CommentsBottomPopup from '../../../comments/CommentsBottomPopup';
 import BoxShadow from '../../../common/components/BoxShadow';
+import ActivityMetrics from '../../../newsfeed/activity/metrics/ActivityMetrics';
+import CommentBottomSheet from '../../../comments/v2/CommentBottomSheet';
+import type BottomSheet from '@gorhom/bottom-sheet';
+import { TouchableOpacity } from '@gorhom/bottom-sheet';
 
 type ActivityRoute = RouteProp<AppStackParamList, 'Activity'>;
 
@@ -43,15 +45,23 @@ const TEXT_MEDIUM_THRESHOLD = 300;
 
 type PropsType = {
   entity: ActivityModel;
+  showCommentsOnFocus?: boolean;
   forceAutoplay?: boolean;
 };
 
 const ActivityFullScreen = observer((props: PropsType) => {
   // Local store
   const store = useLocalStore(() => ({
-    comments: new CommentsStore(),
+    comments: new CommentsStore(props.entity),
     scrollViewHeight: 0,
     contentHeight: 0,
+    displayComment: !props.showCommentsOnFocus,
+    showComments() {
+      store.displayComment = true;
+    },
+    hideComments() {
+      store.displayComment = false;
+    },
     onContentSizeChange(width, height) {
       store.contentHeight = height;
     },
@@ -73,8 +83,8 @@ const ActivityFullScreen = observer((props: PropsType) => {
   const entity: ActivityModel = props.entity;
   const mediaRef = useRef<MediaView>(null);
   const remindRef = useRef<Activity>(null);
-  const translateRef = useRef<Translate>(null);
-  const commentsRef = useRef<any>(null);
+  const translateRef = useRef<typeof Translate>(null);
+  const commentsRef = useRef<BottomSheet>(null);
   const navigation = useNavigation();
   const hasMedia = entity.hasMedia();
   const hasRemind = !!entity.remind_object;
@@ -83,17 +93,25 @@ const ActivityFullScreen = observer((props: PropsType) => {
     paddingBottom: insets.bottom - 10,
   });
   const { current: cleanTop } = useRef({
-    paddingTop: insets.top || 10,
+    paddingTop: insets.top - 10 || 2,
   });
 
   const onPressComment = useCallback(() => {
-    if (commentsRef.current?.open) {
-      commentsRef.current.open();
+    if (commentsRef.current?.expand) {
+      commentsRef.current.expand();
     }
   }, [commentsRef]);
 
   useEffect(() => {
+    let time: any;
     if (focused) {
+      if (props.showCommentsOnFocus) {
+        time = setTimeout(() => {
+          if (store) {
+            store.showComments();
+          }
+        }, 500);
+      }
       const user = sessionService.getUser();
 
       // if we have some video playing we pause it and reset the current video
@@ -103,12 +121,22 @@ const ActivityFullScreen = observer((props: PropsType) => {
         ((user.plus && !user.disable_autoplay_videos) || props.forceAutoplay) &&
         mediaRef.current
       ) {
-        mediaRef.current.playVideo(false);
+        mediaRef.current.playVideo(
+          !videoPlayerService.isSilent ? true : undefined,
+        );
       }
     } else {
       mediaRef.current?.pauseVideo();
+      if (props.showCommentsOnFocus) {
+        store.hideComments();
+      }
     }
-  }, [focused, props.forceAutoplay]);
+    return () => {
+      if (time) {
+        clearTimeout(time);
+      }
+    };
+  }, [focused, props.forceAutoplay, props.showCommentsOnFocus, store]);
 
   useEffect(() => {
     let openCommentsTimeOut: NodeJS.Timeout | null = null;
@@ -162,7 +190,8 @@ const ActivityFullScreen = observer((props: PropsType) => {
    */
   const onTranslate = useCallback(async () => {
     if (translateRef.current) {
-      const lang = await translateRef.current.show();
+      //@ts-ignore
+      const lang = await translateRef.current?.show();
       if (remindRef.current && lang) {
         remindRef.current.showTranslate();
       }
@@ -198,26 +227,13 @@ const ActivityFullScreen = observer((props: PropsType) => {
             onTranslate={onTranslate}
           />
         </View>
-      }>
-      <View style={theme.rowJustifyStart}>
-        <Text
-          numberOfLines={1}
-          style={[theme.fontM, theme.colorSecondaryText, theme.paddingRight]}>
-          {formatDate(entity.time_created, 'friendly')}
-          {!!entity.edited && (
-            <Text style={[theme.fontS, theme.colorSecondaryText]}>
-              {' '}
-              · {i18n.t('edited').toUpperCase()}
-            </Text>
-          )}
-        </Text>
-      </View>
-    </OwnerBlock>
+      }
+    />
   );
 
   const shadowOpt = {
     width: window.width,
-    height: 70,
+    height: 70 + (entity.remind_users ? 42 : 0),
     color: '#000',
     border: 5,
     opacity: 0.15,
@@ -231,7 +247,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
   });
 
   return (
-    <View style={[window, theme.flexContainer, theme.backgroundSecondary]}>
+    <View style={[window, theme.flexContainer, theme.backgroundPrimary]}>
       <View style={theme.flexContainer}>
         {ownerBlockShadow}
         <ScrollView
@@ -254,7 +270,8 @@ const ActivityFullScreen = observer((props: PropsType) => {
                     ref={mediaRef}
                     entity={entity}
                     navigation={navigation}
-                    autoHeight={true}
+                    autoHeight
+                    ignoreDataSaver
                   />
                 </View>
               ) : (
@@ -301,6 +318,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
               )}
             </>
           )}
+          <ActivityMetrics entity={props.entity} />
         </ScrollView>
         {!store.contentFit && (
           <LinearGradient
@@ -316,10 +334,10 @@ const ActivityFullScreen = observer((props: PropsType) => {
           onPressComment={onPressComment}
         />
       </View>
-      <CommentsBottomPopup
-        entity={entity}
-        commentsStore={store.comments}
+      <CommentBottomSheet
         ref={commentsRef}
+        hideContent={Boolean(!store.displayComment)}
+        commentsStore={store.comments}
       />
     </View>
   );

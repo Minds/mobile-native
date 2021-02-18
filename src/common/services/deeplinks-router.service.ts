@@ -66,7 +66,7 @@ class DeeplinksRouter {
     if (!url) return;
     const route = this._getUrlRoute(url);
     if (route && route.screen !== 'Redirect') {
-      navigationService.navigate(route.screen, route.params);
+      navigationService.push(route.screen, route.params);
     } else {
       Linking.openURL(url.replace('https://www.', 'https://mobile.'));
     }
@@ -74,7 +74,9 @@ class DeeplinksRouter {
   }
 
   cleanUrl(url) {
-    return url.replace(/^(http(s)?(:\/\/))?(www\.)?[a-zA-Z0-9-_\.]+\//, '');
+    return url
+      .replace(/^(http(s)?(:\/\/))?(www\.)?[a-zA-Z0-9-_\.]+\//, '')
+      .replace('mindsapp://', '');
   }
 
   /**

@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { Text, TextInput, View } from 'react-native';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 import i18n from '../../../services/i18n.service';
 import { PhoneValidationPropsType } from '../PhoneValidationComponent';
-import stylesheet from '../../../../onboarding/stylesheet';
+import { style } from './styles';
 import { ComponentsStyle } from '../../../../styles/Components';
 import ListItemButton from '../../ListItemButton';
 import { observer } from 'mobx-react';
@@ -41,9 +41,9 @@ const ConfirmNumber = observer(({ localStore, ...props }: PropsType) => {
   );
 
   const defaultStyles = [
-    stylesheet.col,
-    stylesheet.colFirst,
-    stylesheet.phoneInput,
+    style.col,
+    style.colFirst,
+    style.phoneInput,
     ComponentsStyle.loginInputNew,
     theme.marginRight2x,
     theme.borderPrimary,
@@ -52,7 +52,7 @@ const ConfirmNumber = observer(({ localStore, ...props }: PropsType) => {
   return (
     <View>
       {text}
-      <View style={[style.cols, style.form]}>
+      <View style={props.inputWrapperStyle || [style.cols, style.form]}>
         <TextInput
           style={props.inputStyles || defaultStyles}
           value={localStore.code}
@@ -68,7 +68,5 @@ const ConfirmNumber = observer(({ localStore, ...props }: PropsType) => {
     </View>
   );
 });
-
-const style = StyleSheet.create(stylesheet);
 
 export default ConfirmNumber;

@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text } from 'react-native';
 import IconMC from 'react-native-vector-icons/MaterialCommunityIcons';
-import { ScrollView } from 'react-native-gesture-handler';
 
 // workaround for android
 import Tooltip from 'rne-modal-tooltip';

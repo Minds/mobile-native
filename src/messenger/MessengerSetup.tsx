@@ -9,16 +9,25 @@ import { CommonStyle } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
 import Colors from '../styles/Colors';
 import NavNextButton from '../common/components/NavNextButton';
+import Button from '../common/components/Button';
 import logService from '../common/services/log.service';
 import i18n from '../common/services/i18n.service';
 import ActivityIndicator from '../common/components/ActivityIndicator';
+import ThemedStyles from '../styles/ThemedStyles';
+import { showNotification } from '../../AppMessages';
+
+type PropsType = {
+  rekey?: boolean;
+  onDone?: Function;
+  navigation: any;
+};
 
 /**
  * Messenger setup
  */
 @inject('messengerList', 'user')
 @observer
-export default class MessengerSetup extends Component {
+export default class MessengerSetup extends Component<PropsType> {
   /**
    * password
    * (don't use state to prevent render the component when password change)
@@ -84,7 +93,7 @@ export default class MessengerSetup extends Component {
       this.handleOnDone(response);
     } catch (err) {
       logService.exception('[MessengerSetup]', err);
-      alert(i18n.t('errorMessage'));
+      showNotification(i18n.t('errorMessage'), 'danger');
     }
   };
 
@@ -95,8 +104,6 @@ export default class MessengerSetup extends Component {
   }
 
   renderUnlock() {
-    const unlocking = this.props.messengerList.unlocking;
-
     return (
       <View style={[CommonStyle.flexContainer, CommonStyle.padding2x]}>
         <View style={{ flexDirection: 'column', alignItems: 'stretch' }}>
@@ -127,8 +134,6 @@ export default class MessengerSetup extends Component {
   }
 
   renderOnboarding() {
-    const unlocking = this.props.messengerList.unlocking;
-
     const text = this.props.user.me.chat
       ? i18n.t('messenger.changeKeyMessage')
       : i18n.t('messenger.notEncryptedMessage', {
@@ -167,11 +172,38 @@ export default class MessengerSetup extends Component {
    * Render
    */
   render() {
+    const theme = ThemedStyles.style;
+    let body, buttonProps;
     if (this.props.user.me.chat && !this.props.rekey) {
-      return this.renderUnlock();
+      body = this.renderUnlock();
     } else {
-      return this.renderOnboarding();
+      body = this.renderOnboarding();
     }
+    if (this.props.user.me.chat && !this.props.rekey) {
+      buttonProps = {
+        onPress: this.unlock,
+        text: i18n.t('unlock').toUpperCase(),
+      };
+    } else {
+      buttonProps = {
+        onPress: this.setup,
+        text: i18n.t('setup').toUpperCase(),
+      };
+    }
+    return (
+      <View style={theme.flexContainer}>
+        {body}
+        <View style={theme.padding4x}>
+          <Button
+            containerStyle={[theme.fullWidth, theme.marginTop6x]}
+            loading={this.props.messengerList.unlocking}
+            {...buttonProps}
+            transparent
+            large
+          />
+        </View>
+      </View>
+    );
   }
 }
 

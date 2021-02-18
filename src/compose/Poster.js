@@ -5,11 +5,12 @@ import {
   View,
   Dimensions,
   Keyboard,
+  Platform,
+  InteractionManager,
 } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 
 import IonIcon from 'react-native-vector-icons/Ionicons';
-import { KeyboardAccessoryView } from 'react-native-keyboard-accessory';
 
 import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
@@ -23,6 +24,8 @@ import { ScrollView } from 'react-native-gesture-handler';
 import BottomBar from './BottomBar';
 import MediaPreview from './MediaPreview';
 import discardMessage from './discardMessage';
+import Tags from '../common/components/Tags';
+import KeyboardSpacingView from '../common/components/KeyboardSpacingView';
 
 const { width } = Dimensions.get('window');
 
@@ -37,15 +40,16 @@ export default observer(function (props) {
 
   // On post press
   const onPost = useCallback(async () => {
+    if (props.store.attachment.uploading) {
+      return;
+    }
     const isEdit = props.store.isEdit;
-    const entity = await (props.store.isRemind
-      ? props.store.remind()
-      : props.store.submit());
+    const entity = await props.store.submit();
 
     if (entity) {
       props.store.onPost(entity, isEdit);
     }
-  }, [props]);
+  }, [props.store]);
 
   // On press back
   const onPressBack = useCallback(() => {
@@ -87,18 +91,28 @@ export default observer(function (props) {
     ? i18n.t('description')
     : i18n.t('capture.placeholder');
 
-  const rightButton = props.store.attachment.uploading ? undefined : props.store
-      .isEdit ? (
+  const rightButton = props.store.isEdit ? (
     i18n.t('save')
   ) : (
-    <IonIcon name="send" size={27} style={theme.colorPrimaryText} />
+    <IonIcon
+      name="send"
+      size={27}
+      style={[
+        theme.colorPrimaryText,
+        props.store.attachment.uploading ? theme.opacity25 : null,
+      ]}
+    />
   );
 
   useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
+    InteractionManager.runAfterInteractions(() => {
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
+    });
   }, [inputRef]);
+
+  const showBottomBar = !optionsRef.current || !optionsRef.current.opened;
 
   return (
     <View style={styles.container}>
@@ -107,8 +121,7 @@ export default observer(function (props) {
         contentContainerStyle={styles.bodyContainer}>
         <TopBar
           containerStyle={theme.paddingLeft}
-          backIconSize={38}
-          backIconName="window-close"
+          backIconSize={45}
           rightText={rightButton}
           onPressRight={onPost}
           onPressBack={onPressBack}
@@ -127,7 +140,9 @@ export default observer(function (props) {
                 theme.paddingHorizontal4x,
                 theme.marginTop4x,
                 styles.input,
-                { height: localStore.height },
+                Platform.OS === 'ios'
+                  ? fontSize
+                  : [fontSize, { height: localStore.height }],
               ]}
               onContentSizeChange={localStore.onSizeChange}
               ref={inputRef}
@@ -136,12 +151,12 @@ export default observer(function (props) {
               placeholderTextColor={ThemedStyles.getColor('tertiary_text')}
               onChangeText={props.store.setText}
               textAlignVertical="top"
-              value={props.store.text}
               multiline={true}
               selectTextOnFocus={false}
               underlineColorAndroid="transparent"
-              testID="PostInput"
-            />
+              testID="PostInput">
+              <Tags>{props.store.text}</Tags>
+            </TextInput>
           </>
         )}
         <MediaPreview store={props.store} />
@@ -158,20 +173,18 @@ export default observer(function (props) {
         )}
       </ScrollView>
       <PosterOptions ref={optionsRef} store={props.store} />
-      <KeyboardAccessoryView
-        hideBorder={true}
-        animateOn="all"
-        alwaysVisible
-        style={[theme.backgroundPrimary, styles.bottomBarContainer]}
-        avoidKeyboard>
-        <BottomBar
-          store={props.store}
-          onOptions={() => {
-            Keyboard.dismiss();
-            optionsRef.current.show();
-          }}
-        />
-      </KeyboardAccessoryView>
+      {showBottomBar && (
+        <KeyboardSpacingView
+          style={[theme.backgroundPrimary, styles.bottomBarContainer]}>
+          <BottomBar
+            store={props.store}
+            onOptions={() => {
+              Keyboard.dismiss();
+              optionsRef.current.show();
+            }}
+          />
+        </KeyboardSpacingView>
+      )}
     </View>
   );
 });

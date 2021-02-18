@@ -12,7 +12,7 @@ type PropsType = {
   keyExtractor: Function;
   title?: string;
   onItemSelect: Function;
-  textStyle?: TextStyle;
+  textStyle?: TextStyle | TextStyle[];
   backdropOpacity?: number;
   children?: (onItemSelect: any) => any;
 };
@@ -49,8 +49,8 @@ export default class Selector extends Component<PropsType> {
   renderItem = ({ item }) => {
     const theme = ThemedStyles.style;
     const fontColor = this.isSelected(item)
-      ? styles.selectedColorFont
-      : styles.fontColor;
+      ? theme.colorLink
+      : theme.colorPrimaryText;
     return (
       <Touchable
         onPress={() => this.itemSelect(item)}
@@ -94,12 +94,13 @@ export default class Selector extends Component<PropsType> {
 
     const modal = (
       <Modal
+        backdropColor={ThemedStyles.getColor('primary_background_highlight')}
         isVisible={this.state.show}
         backdropOpacity={this.props.backdropOpacity}>
         <View style={[styles.container]}>
           <Text
             style={[
-              styles.fontColor,
+              theme.colorPrimaryText,
               theme.fontXXL,
               styles.marginBottom,
               theme.centered,
@@ -156,12 +157,6 @@ const styles = StyleSheet.create({
     width: 55,
     height: 55,
     zIndex: 1000,
-  },
-  fontColor: {
-    color: '#fff',
-  },
-  selectedColorFont: {
-    color: '#0085DD',
   },
   marginBottom: {
     marginBottom: 30,

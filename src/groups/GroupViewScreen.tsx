@@ -10,8 +10,6 @@ import {
   SafeAreaView,
 } from 'react-native';
 
-import { Header } from '@react-navigation/stack';
-
 import { observer, inject } from 'mobx-react';
 
 import ActionSheet from 'react-native-actionsheet';
@@ -25,9 +23,7 @@ import colors from '../styles/Colors';
 import Tags from '../common/components/Tags';
 import CaptureFab from '../capture/CaptureFab';
 import GroupHeader from './header/GroupHeader';
-import CommentList from '../comments/CommentList';
 import CenteredLoading from '../common/components/CenteredLoading';
-import commentsStoreProvider from '../comments/CommentsStoreProvider';
 import i18n from '../common/services/i18n.service';
 import FeedList from '../common/components/FeedList';
 import {
@@ -38,6 +34,8 @@ import {
 import ThemedStyles from '../styles/ThemedStyles';
 import sessionService from '../common/services/session.service';
 import ExplicitOverlay from '../common/components/explicit/ExplicitOverlay';
+import CommentsStore from '../comments/v2/CommentsStore';
+import CommentBottomSheet from '../comments/v2/CommentBottomSheet';
 
 /**
  * Groups view screen
@@ -61,7 +59,10 @@ export default class GroupViewScreen extends Component {
   state = {
     memberActions: null,
     member: null,
+    conversationIsOpen: false,
   };
+
+  commentsRef;
 
   /**
    * Disable navigation bar
@@ -70,13 +71,9 @@ export default class GroupViewScreen extends Component {
     header: null,
   };
 
-  /**
-   * Constructor
-   * @param {object} props
-   */
   constructor(props) {
     super(props);
-    this.comments = commentsStoreProvider.get();
+    this.commentsRef = React.createRef();
   }
 
   /**
@@ -193,6 +190,7 @@ export default class GroupViewScreen extends Component {
           styles={styles}
           ref={this.headerRefHandler}
           navigation={this.props.navigation}
+          onPressComment={this.openComments}
         />
         {this.getBackIcon()}
       </View>
@@ -224,17 +222,6 @@ export default class GroupViewScreen extends Component {
           />
         );
         break;
-      case 'conversation':
-        return (
-          <CommentList
-            header={header}
-            entity={group.group}
-            store={this.comments}
-            navigation={this.props.navigation}
-            route={this.props.route}
-            keyboardVerticalOffset={Header.HEIGHT - 65}
-          />
-        );
       case 'desc':
         const description = entities
           .decodeHTML(group.group.briefdescription)
@@ -293,6 +280,18 @@ export default class GroupViewScreen extends Component {
         this.ActionSheet.show();
       },
     );
+  };
+
+  /**
+   * Open comments popup
+   */
+  openComments = () => {
+    this.setState({ conversationIsOpen: true });
+    this.commentsRef.current?.expand();
+  };
+
+  onChange = (isOpen: number) => {
+    this.setState({ conversationIsOpen: isOpen === 1 });
   };
 
   /**
@@ -366,7 +365,9 @@ export default class GroupViewScreen extends Component {
     }
 
     const showPosterFab =
-      this.props.groupView.tab === 'feed' && group.can(FLAG_CREATE_POST);
+      this.props.groupView.tab === 'feed' &&
+      group.can(FLAG_CREATE_POST) &&
+      !this.state.conversationIsOpen;
 
     const memberActionSheet = this.state.memberActions ? (
       <ActionSheet
@@ -403,6 +404,7 @@ export default class GroupViewScreen extends Component {
 
     return (
       <View style={[theme.flexContainer, theme.backgroundSecondary]}>
+        {this.getList()}
         {showPosterFab && (
           <CaptureFab
             navigation={this.props.navigation}
@@ -410,8 +412,16 @@ export default class GroupViewScreen extends Component {
             route={this.props.route}
           />
         )}
-        {this.getList()}
         {memberActionSheet}
+        {this.props.groupView.comments && (
+          <CommentBottomSheet
+            title={i18n.t('conversation')}
+            ref={this.commentsRef}
+            hideContent={false}
+            commentsStore={this.props.groupView.comments}
+            onChange={this.onChange}
+          />
+        )}
       </View>
     );
   }
@@ -426,7 +436,8 @@ const styles = StyleSheet.create({
     width: 40,
   },
   headertextcontainer: {
-    padding: 8,
+    paddingBottom: 8,
+    paddingLeft: 15,
     paddingRight: 15,
     alignItems: 'stretch',
     flexDirection: 'column',
@@ -455,7 +466,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'stretch',
     width: '100%',
-    height: 190,
+    height: 170,
   },
   briefdescription: {
     fontSize: 12,
@@ -481,22 +492,23 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   avatarContainer: {
-    paddingLeft: 115,
+    paddingLeft: 135,
+    paddingTop: 5,
     height: 60,
     flexDirection: 'row',
   },
   avatar: {
-    position: 'absolute',
-    left: 15,
-    top: 135,
     height: 110,
     width: 110,
+    borderWidth: 3,
     borderRadius: 55,
   },
   userAvatar: {
-    borderRadius: 15,
-    height: 30,
-    width: 30,
+    borderRadius: 17,
+    height: 34,
+    width: 34,
     margin: 4,
+    borderWidth: 2,
+    marginLeft: -18,
   },
 });

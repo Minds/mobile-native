@@ -1,7 +1,7 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import { StyleSheet, View, Platform } from 'react-native';
+import { StyleSheet, View, ColorValue } from 'react-native';
 
 import { observer, inject } from 'mobx-react';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
@@ -9,19 +9,24 @@ import CIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import ThemedStyles from '../styles/ThemedStyles';
 
+interface PropsType {
+  color: ColorValue;
+  size?: number;
+}
+
 @inject('notifications')
 @observer
-class NotificationIcon extends Component {
+class NotificationIcon extends Component<PropsType> {
   /**
    * Render
    */
   render() {
-    ThemedStyles.getColor('link');
-    const tintColor = this.props.tintColor;
+    const color = this.props.color;
     const size = this.props.size || 24;
+
     return (
       <View style={styles.container}>
-        <CIcon name="bell" size={size} color={tintColor} />
+        <CIcon name="bell" size={size} color={color} />
         {this.props.notifications.unread ? (
           <>
             <FAIcon
@@ -32,7 +37,7 @@ class NotificationIcon extends Component {
             />
             <FAIcon
               name="circle"
-              size={11}
+              size={10}
               color="#E02020"
               style={styles.unread}
             />
@@ -55,20 +60,14 @@ const styles = StyleSheet.create({
     zIndex: 9999,
     opacity: 1,
     position: 'absolute',
-    top: Platform.select({
-      ios: 23,
-      android: 16,
-    }),
+    top: 23,
     left: 16,
   },
   unread: {
     zIndex: 9999,
     opacity: 1,
     position: 'absolute',
-    top: Platform.select({
-      ios: 25,
-      android: 18,
-    }),
+    top: 25.5,
     left: 18,
   },
 });

@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { observer } from 'mobx-react';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -18,6 +18,8 @@ import SearchResult from './SearchResultComponent';
 import Modal from 'react-native-modal';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { useLegacyStores, useStores } from '../../common/hooks/use-stores';
+import { GOOGLE_PLAY_STORE } from '../../config/Config';
+import DisabledStoreFeature from '../../common/components/DisabledStoreFeature';
 
 interface Props {
   navigation: any;
@@ -28,6 +30,10 @@ const SearchComponent = observer((props: Props) => {
   const { user } = useLegacyStores();
   const localStore = useStores().searchBar;
   const inputRef = useRef<TextInput>(null);
+
+  useEffect(() => {
+    localStore.init(user);
+  });
 
   /**
    * On modal show focus input
@@ -61,8 +67,8 @@ const SearchComponent = observer((props: Props) => {
         </Text>
         <Modal
           isVisible={user.searching}
-          backdropColor={ThemedStyles.getColor('secondary_background')}
-          backdropOpacity={0.9}
+          backdropColor="#000000"
+          backdropOpacity={0.5}
           useNativeDriver={true}
           onBackdropPress={user.toggleSearching}
           animationInTiming={100}
@@ -72,8 +78,8 @@ const SearchComponent = observer((props: Props) => {
           animationOut="fadeOut"
           animationIn="fadeIn"
           style={styles.modal}>
-          <SafeAreaView>
-            <View style={[theme.backgroundSecondary, styles.body, border]}>
+          <SafeAreaView style={theme.backgroundPrimary}>
+            <View style={[styles.body, border]}>
               <View
                 style={[
                   styles.header,
@@ -105,7 +111,7 @@ const SearchComponent = observer((props: Props) => {
                     testID="searchInput"
                     style={[styles.textInput, theme.colorPrimaryText]}
                     selectTextOnFocus={true}
-                    onSubmitEditing={() => localStore.searchDiscovery}
+                    onSubmitEditing={() => localStore.searchDiscovery()}
                   />
                 </View>
                 <Icon
@@ -119,10 +125,16 @@ const SearchComponent = observer((props: Props) => {
                   ]}
                 />
               </View>
-              <SearchResult
-                navigation={props.navigation}
-                localStore={localStore}
-              />
+              {GOOGLE_PLAY_STORE ? (
+                <DisabledStoreFeature
+                  style={[styles.height, theme.backgroundPrimary]}
+                />
+              ) : (
+                <SearchResult
+                  navigation={props.navigation}
+                  localStore={localStore}
+                />
+              )}
             </View>
           </SafeAreaView>
         </Modal>
@@ -134,6 +146,9 @@ const SearchComponent = observer((props: Props) => {
 export default SearchComponent;
 
 const styles = StyleSheet.create({
+  height: {
+    height: 200,
+  },
   button: {
     paddingHorizontal: 10,
   },

@@ -36,9 +36,12 @@ exports[`renders correctly for not owner and not subscribed 1`] = `
   </View>
   <Text
     style={
-      Object {
-        "fontSize": 11,
-      }
+      Array [
+        Object {
+          "fontSize": 11,
+        },
+        undefined,
+      ]
     }
   >
     Invalid date
@@ -82,9 +85,12 @@ exports[`renders correctly for owner and not subscribed 1`] = `
   </View>
   <Text
     style={
-      Object {
-        "fontSize": 11,
-      }
+      Array [
+        Object {
+          "fontSize": 11,
+        },
+        undefined,
+      ]
     }
   >
     Invalid date
@@ -128,9 +134,12 @@ exports[`renders correctly for owner and subscribed 1`] = `
   </View>
   <Text
     style={
-      Object {
-        "fontSize": 11,
-      }
+      Array [
+        Object {
+          "fontSize": 11,
+        },
+        undefined,
+      ]
     }
   >
     Invalid date
@@ -174,9 +183,12 @@ exports[`renders correctly for owner and subscribed 2`] = `
   </View>
   <Text
     style={
-      Object {
-        "fontSize": 11,
-      }
+      Array [
+        Object {
+          "fontSize": 11,
+        },
+        undefined,
+      ]
     }
   >
     Invalid date

@@ -2,7 +2,11 @@ import Cancelable from 'promise-cancelable';
 import { NativeModules } from 'react-native';
 
 import session from './session.service';
-import { MINDS_API_URI, NETWORK_TIMEOUT } from '../../config/Config';
+import {
+  MINDS_API_URI,
+  MINDS_STAGING,
+  NETWORK_TIMEOUT,
+} from '../../config/Config';
 
 import abortableFetch, { abort } from '../helpers/abortableFetch';
 import { Version } from '../../config/Version';
@@ -119,6 +123,10 @@ class ApiService {
       'App-Version': Version.VERSION,
     };
 
+    if (MINDS_STAGING) {
+      headers.Cookie = 'staging=1';
+    }
+
     if (session.token) {
       headers.Authorization = 'Bearer ' + session.token;
     }
@@ -131,12 +139,16 @@ class ApiService {
    * @param {string} url
    * @param {any} params
    */
-  buildUrl(url, params = {}) {
+  buildUrl(url, params: any = {}) {
     if (!params) {
       params = {};
     }
 
-    params['cb'] = Date.now(); //bust the cache every time
+    params.cb = Date.now(); //bust the cache every time
+
+    if (MINDS_STAGING) {
+      params.staging = '1';
+    }
 
     const paramsString = this.getParamsString(params);
     const sep = url.indexOf('?') > -1 ? '&' : '?';
@@ -180,10 +192,7 @@ class ApiService {
    * @param {string} url
    * @param {object} body
    */
-  async post<T extends ApiResponse>(
-    url: string,
-    body: object = {},
-  ): Promise<T> {
+  async post<T extends ApiResponse>(url: string, body: any = {}): Promise<T> {
     const headers = this.buildHeaders();
 
     let response = await abortableFetch(MINDS_API_URI + this.buildUrl(url), {
@@ -201,7 +210,7 @@ class ApiService {
    * @param {string} url
    * @param {object} body
    */
-  async put<T extends ApiResponse>(url: string, body: object = {}): Promise<T> {
+  async put<T extends ApiResponse>(url: string, body: any = {}): Promise<T> {
     const headers = this.buildHeaders();
 
     let response = await abortableFetch(MINDS_API_URI + this.buildUrl(url), {
@@ -219,10 +228,7 @@ class ApiService {
    * @param {string} url
    * @param {object} body
    */
-  async delete<T extends ApiResponse>(
-    url: string,
-    body: object = {},
-  ): Promise<T> {
+  async delete<T extends ApiResponse>(url: string, body: any = {}): Promise<T> {
     const headers = this.buildHeaders();
 
     let response = await abortableFetch(MINDS_API_URI + this.buildUrl(url), {
@@ -291,11 +297,12 @@ class ApiService {
   upload(
     url: string,
     file: any,
-    data: object | null = null,
+    data: any | null = null,
     progress: (event: Event) => any,
   ) {
     var formData = new FormData();
     formData.append('file', file);
+
     for (var key in data) {
       formData.append(key, data[key]);
     }
@@ -316,8 +323,9 @@ class ApiService {
       xhr.setRequestHeader('Authorization', `Bearer ${session.token}`);
       xhr.setRequestHeader('Accept', 'application/json');
       xhr.setRequestHeader('Content-Type', 'multipart/form-data;');
+      xhr.setRequestHeader('App-Version', Version.VERSION);
       xhr.onload = () => {
-        if (xhr.status === 200) {
+        if (xhr.status === 200 || xhr.status === 403) {
           let response: ApiResponse;
           try {
             response = JSON.parse(xhr.responseText);
@@ -327,7 +335,7 @@ class ApiService {
               message: 'Error parsing server response',
             };
           }
-          if (response.status === 'error') {
+          if (response.status === 'error' || xhr.status === 403) {
             return reject(response);
           }
           resolve(response);

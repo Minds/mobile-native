@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import FlashMessage, { showMessage } from 'react-native-flash-message';
-import { View, StyleSheet, Platform } from 'react-native';
+import { View, StyleSheet, Platform, Text } from 'react-native';
 
 import IconIon from 'react-native-vector-icons/Ionicons';
 import IconAnt from 'react-native-vector-icons/AntDesign';
@@ -136,6 +136,14 @@ const styles = StyleSheet.create({
     marginLeft: 0,
     marginRight: 0,
     marginBottom: 0,
+  },
+  messageHorizontalLine: {
+    marginLeft: -20,
+    marginRight: -20,
+  },
+  messageVerticalLine: {
+    marginTop: -10,
+    marginBottom: -14,
   },
 });
 

@@ -8,6 +8,7 @@ import type { ComposeStoreType } from '../compose/useComposeStore';
 import type ActivityModel from '../newsfeed/ActivityModel';
 import type { SupportTiersType } from '../wire/WireTypes';
 import type { PortraitBarItem } from '../portrait/createPortraitStore';
+import type BlogModel from '../blogs/BlogModel';
 
 export type DrawerParamList = {
   Tabs: {};
@@ -19,6 +20,9 @@ export type InternalStackParamList = {
   BoostConsole: {};
   GroupsList: {};
   Settings: {};
+  Analytics: {};
+  Onboarding: {};
+  InitialOnboarding: {};
 };
 
 export type RootStackParamList = {
@@ -32,10 +36,19 @@ export type RootStackParamList = {
     onComplete: Function;
     tiers?: Array<SupportTiersType>;
   };
+  BoostChannelScreen: {};
+  BoostPostScreen: { entity: ActivityModel };
   PlusScreen: {
     onComplete: Function;
     pro?: boolean;
   };
+  VerifyEmail: {};
+  SelectHashtags: {};
+  SetupChannel: {};
+  VerifyUniqueness: {};
+  SuggestedChannel: {};
+  SuggestedGroups: {};
+  PhoneValidation: {};
 };
 
 export type AuthStackParamList = {
@@ -78,6 +91,8 @@ export type AppStackParamList = {
     onComplete?: Function;
     tiers?: Array<SupportTiersType>;
   };
+  BoostChannelScreen: {};
+  BoostPostScreen: { entity: ActivityModel };
   ActivityFullScreenNav: {};
   Newsfeed: {};
   Capture: {
@@ -91,15 +106,18 @@ export type AppStackParamList = {
   };
   Main: {};
   Account: {};
+  Network: {};
   Security: {};
   Billing: {};
   Referrals: {};
+  BoostConsole: {};
   Other: {};
   SettingsEmail: {};
   MessengerSettingsScreen: {};
   AutoplaySettingsScreen: {};
   SettingsPassword: {};
   SettingsNotifications: {};
+  DataSaverScreen: {};
   BlockedChannels: {};
   TierManagementScreen: {};
   DeleteChannel: {};
@@ -157,7 +175,12 @@ export type AppStackParamList = {
   Subscribers: {};
   GroupView: {};
   BlogList: {};
-  BlogView: {};
+  BlogView: {
+    blog?: BlogModel;
+    slug?: string;
+    guid?: string;
+    scrollToBottom?: boolean;
+  };
   WireFab: {};
   WalletHistory: {};
   ViewImage: {};

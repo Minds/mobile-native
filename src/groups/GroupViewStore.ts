@@ -11,6 +11,7 @@ import logService from '../common/services/log.service';
 import entitiesService from '../common/services/entities.service';
 import GroupModel from './GroupModel';
 import FeedStore from '../common/stores/FeedStore';
+import CommentsStore from '../comments/v2/CommentsStore';
 
 /**
  * Groups store
@@ -30,6 +31,11 @@ class GroupViewStore {
    * Feed store
    */
   feed = new FeedStore(true);
+
+  /**
+   * Comments
+   */
+  comments = null;
 
   /**
    * Group
@@ -81,10 +87,17 @@ class GroupViewStore {
    * Load feed
    */
   async loadFeed() {
-    this.feed
+    await this.feed
       .setEndpoint(`api/v2/feeds/container/${this.group.guid}/activities`)
       .setLimit(12)
       .fetchRemoteOrLocal();
+    this.setEntitiesContainerObj();
+  }
+
+  setEntitiesContainerObj() {
+    this.feed.entities.forEach(
+      (activity: ActivityModel) => (activity.containerObj = this.group),
+    );
   }
 
   /**
@@ -276,6 +289,7 @@ class GroupViewStore {
   @action
   clear() {
     // this.list.clearList();
+    this.comments = null;
     this.feed.clear();
     this.members.clearList();
     this.group = null;
@@ -300,6 +314,9 @@ class GroupViewStore {
   setGroup(group) {
     this.group = GroupModel.checkOrCreate(group);
     this.setGuid(group.guid);
+    if (!this.comments) {
+      this.comments = new CommentsStore(group);
+    }
   }
 
   /**
@@ -332,6 +349,7 @@ class GroupViewStore {
     this.tab = 'feed';
     this.saving = false;
     this.loading = false;
+    this.comments = null;
   }
 }
 

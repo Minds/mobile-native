@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
 import { ChannelStoreType } from '../createChannelStore';
 import { Text, View } from 'react-native';
+import moment from 'moment-timezone';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import LabeledComponent from '../../../common/components/LabeledComponent';
 import i18n from '../../../common/services/i18n.service';
@@ -9,13 +10,14 @@ import ChannelBadges from '../../badges/ChannelBadges';
 import CenteredLoading from '../../../common/components/CenteredLoading';
 import abbrev from '../../../common/helpers/abbrev';
 import SocialLinks from '../../../common/components/SocialLinks';
+import Tags from '../../../common/components/Tags';
 
 type PropsType = {
   store: ChannelStoreType;
   navigation: any;
 };
 
-const AboutTab = observer(({ store }: PropsType) => {
+const AboutTab = observer(({ store, navigation }: PropsType) => {
   const theme = ThemedStyles.style;
   const localStore = useLocalStore(() => ({
     groupCount: 0,
@@ -50,12 +52,21 @@ const AboutTab = observer(({ store }: PropsType) => {
   return (
     <View style={[theme.paddingLeft4x, theme.paddingTop2x]}>
       <LabeledComponent label={i18n.t('channel.edit.bio')}>
-        <Text>{store.channel?.briefdescription}</Text>
+        <Tags navigation={navigation}>{store.channel?.briefdescription}</Tags>
       </LabeledComponent>
       <LabeledComponent
         label={i18n.t('channel.edit.hashtags')}
         wrapperStyle={margin}>
         <Text>{`#${tags}`}</Text>
+      </LabeledComponent>
+      <LabeledComponent label={i18n.t('joined')} wrapperStyle={margin}>
+        <Text>
+          {store.channel?.time_created
+            ? moment(parseInt(store.channel.time_created, 10) * 1000).format(
+                'MMM Y',
+              )
+            : ''}
+        </Text>
       </LabeledComponent>
       <LabeledComponent label={i18n.t('channel.edit.location')}>
         <Text>{store.channel?.city}</Text>
@@ -66,11 +77,13 @@ const AboutTab = observer(({ store }: PropsType) => {
         <Text>{store.channel?.dob}</Text>
       </LabeledComponent>
       <LabeledComponent label={i18n.t('channel.badges')}>
-        <ChannelBadges
-          channel={store.channel}
-          size={16}
-          iconStyle={theme.colorPrimaryText}
-        />
+        <View style={theme.rowJustifyStart}>
+          <ChannelBadges
+            channel={store.channel}
+            size={16}
+            iconStyle={theme.colorPrimaryText}
+          />
+        </View>
       </LabeledComponent>
       <LabeledComponent
         label={i18n.t('discovery.groups')}

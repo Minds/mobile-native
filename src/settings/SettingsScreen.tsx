@@ -1,12 +1,11 @@
 //@ts-nocheck
 import React, { useCallback } from 'react';
-import { Linking, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Linking, ScrollView, Text, View } from 'react-native';
 import authService from '../auth/AuthService';
 import MenuItem from '../common/components/menus/MenuItem';
 import i18n from '../common/services/i18n.service';
 import sessionService from '../common/services/session.service';
 import ThemedStyles from '../styles/ThemedStyles';
-import { TAB_BAR_HEIGHT } from '../tabs/TabsScreen';
 
 export default function ({ navigation }) {
   const theme = ThemedStyles.style;
@@ -31,6 +30,11 @@ export default function ({ navigation }) {
       params: {},
     },
     {
+      title: i18n.t('settings.networkOptions.1'),
+      screen: 'DataSaverScreen',
+      params: {},
+    },
+    {
       title: i18n.t('settings.security'),
       screen: 'Security',
       params: {},
@@ -44,6 +48,10 @@ export default function ({ navigation }) {
       title: i18n.t('settings.referrals'),
       screen: 'Referrals',
       params: {},
+    },
+    {
+      title: i18n.t('boost'),
+      screen: 'BoostConsole',
     },
   ];
 
@@ -116,7 +124,7 @@ export default function ({ navigation }) {
   return (
     <ScrollView
       style={[theme.flexContainer, theme.backgroundPrimary]}
-      contentContainerStyle={styles.container}>
+      contentContainerStyle={theme.paddingBottom4x}>
       <Text
         style={[theme.titleText, theme.paddingLeft4x, theme.paddingVertical2x]}>
         {i18n.t('moreScreen.settings')}
@@ -134,9 +142,3 @@ export default function ({ navigation }) {
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    paddingBottom: TAB_BAR_HEIGHT / 2,
-  },
-});

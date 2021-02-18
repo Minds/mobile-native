@@ -61,7 +61,11 @@ const ChannelScreen = observer((props: PropsType) => {
     return <CenteredLoading />;
   }
 
-  if (store.channel?.blocked) {
+  if (!store.channel) {
+    return null;
+  }
+
+  if (store.channel.blocked) {
     return (
       <BlockedChannel
         navigation={props.navigation}
@@ -73,14 +77,13 @@ const ChannelScreen = observer((props: PropsType) => {
 
   if (
     !sessionService.getUser().mature &&
-    store.channel &&
-    store.channel.guid !== sessionService.guid &&
+    !store.channel.isOwner() &&
     ((store.channel.nsfw && store.channel.nsfw.length > 0) ||
       store.channel.is_mature) &&
     !store.channel.mature_visibility
   ) {
     return (
-      <View style={[theme.backgroundSecondary, theme.flexContainer]}>
+      <View style={[theme.backgroundPrimary, theme.flexContainer]}>
         <ChannelTopBar
           navigation={props.navigation}
           store={store}
@@ -89,6 +92,7 @@ const ChannelScreen = observer((props: PropsType) => {
         <ChannelHeader
           store={store}
           navigation={props.navigation}
+          route={props.route}
           hideButtons
           hideDescription
           hideTabs
@@ -98,7 +102,7 @@ const ChannelScreen = observer((props: PropsType) => {
     );
   }
 
-  const emptyMessage = store.channel!.isOwner() ? (
+  const emptyMessage = store.channel.isOwner() ? (
     <View style={theme.centered}>
       <Text style={[theme.fontXL, theme.textCenter, theme.padding2x]}>
         {i18n.t('channel.createFirstPost')}
@@ -117,10 +121,16 @@ const ChannelScreen = observer((props: PropsType) => {
       <FeedList
         feedStore={store.feedStore}
         renderActivity={renderActivity}
-        header={<ChannelHeader store={store} navigation={props.navigation} />}
+        header={
+          <ChannelHeader
+            store={store}
+            navigation={props.navigation}
+            route={props.route}
+          />
+        }
         navigation={props.navigation}
         emptyMessage={emptyMessage}
-        style={[theme.backgroundSecondary, theme.flexContainer]}
+        style={[theme.backgroundPrimary, theme.flexContainer]}
         hideItems={store.tab !== 'feed'}
       />
     </>

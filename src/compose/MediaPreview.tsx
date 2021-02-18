@@ -54,8 +54,9 @@ export default observer(function MediaPreview(props: PropsType) {
     <>
       {props.store.attachment.uploading && (
         <Progress.Bar
+          indeterminate={true}
           progress={props.store.attachment.progress}
-          width={props.width}
+          width={width}
           color={ThemedStyles.getColor('green')}
           borderWidth={0}
           borderRadius={0}

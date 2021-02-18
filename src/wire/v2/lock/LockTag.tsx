@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import ThemedStyles from '../../../styles/ThemedStyles';
 import i18n from '../../../common/services/i18n.service';
 
 type PropsType = {
@@ -9,13 +8,13 @@ type PropsType = {
 };
 
 const LockTag = ({ type }: PropsType) => {
-  const theme = ThemedStyles.style;
   const lockIcon = <Icon name="lock" color="#FFFFFF" />;
 
-  const text = type !== 'paywall' ? i18n.t(`wire.lock.${type}`) : false;
+  const text =
+    type !== 'paywall' ? i18n.t(`wire.lock.${type}`).toUpperCase() : false;
 
   return (
-    <View style={[styles.wraper, theme.alignCenter, styles.bgGray]}>
+    <View style={styles.wrapper}>
       {type !== 'plus' && lockIcon}
       {text && (
         <Text style={[styles.text, type === 'members' ? styles.spacing : null]}>
@@ -27,18 +26,17 @@ const LockTag = ({ type }: PropsType) => {
 };
 
 const styles = StyleSheet.create({
-  wraper: {
-    position: 'absolute',
-    right: 0,
-    top: 0,
-    zIndex: 9,
-    paddingVertical: 2,
-    paddingHorizontal: 5,
+  wrapper: {
+    backgroundColor: '#73737C',
+    // paddingVertical: 1,
+    paddingHorizontal: 7,
     borderRadius: 2,
     marginRight: 5,
     marginTop: 5,
+    alignItems: 'center',
     flexDirection: 'row',
     shadowColor: '#000',
+    height: 20,
     shadowOffset: {
       width: 0,
       height: 1.5,
@@ -48,14 +46,8 @@ const styles = StyleSheet.create({
 
     elevation: 2,
   },
-  bgGray: {
-    backgroundColor: '#7D7D82',
-  },
-  bgRed: {
-    backgroundColor: '#E03C20',
-  },
   text: {
-    fontSize: 12,
+    fontSize: 13,
     fontFamily: 'Roboto-Black',
     color: '#FFFFFF',
   },

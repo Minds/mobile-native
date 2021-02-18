@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { observer } from 'mobx-react';
-import Icon from 'react-native-vector-icons/Ionicons';
-import McIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Icon } from 'react-native-elements';
+import moment from 'moment-timezone';
+import _ from 'lodash';
 
-import { CommonStyle } from '../../../styles/Common';
-import abbrev from '../../../common/helpers/abbrev';
-import token from '../../../common/helpers/token';
-import number from '../../../common/helpers/number';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
+import formatDate from '../../../common/helpers/date';
+import i18n from '../../../common/services/i18n.service';
+import i18nService from '../../../common/services/i18n.service';
+import abbrev from '../../../common/helpers/abbrev';
+import LockTag from '../../../wire/v2/lock/LockTag';
+import type { SupportTiersType } from '../../../wire/WireTypes';
+import { getLockType } from '../../../wire/v2/lock/Lock';
 
 type PropsType = {
   entity: ActivityModel;
@@ -25,52 +29,54 @@ export default class ActivityMetrics extends Component<PropsType> {
    */
   render() {
     const entity = this.props.entity;
+    const theme = ThemedStyles.style;
 
-    if (!entity.wire_totals) {
-      return <View />;
-    }
+    const support_tier: SupportTiersType | null =
+      entity.wire_threshold &&
+      _.isObject(entity.wire_threshold) &&
+      'support_tier' in entity.wire_threshold
+        ? entity.wire_threshold.support_tier
+        : null;
+
+    const lockType = support_tier ? getLockType(support_tier) : null;
+
+    const date = formatDate(
+      this.props.entity.time_created,
+
+      moment(parseInt(this.props.entity.time_created, 10) * 1000).isAfter(
+        moment().subtract(2, 'days'),
+      )
+        ? 'friendly'
+        : 'date',
+    );
 
     return (
-      <View style={[CommonStyle.rowJustifyCenter]}>
-        <View
-          style={[
-            CommonStyle.rowJustifyStart,
-            CommonStyle.borderRadius4x,
-            CommonStyle.border,
-            CommonStyle.borderHair,
-            CommonStyle.borderGreyed,
-            CommonStyle.paddingLeft,
-            CommonStyle.paddingRight,
-            ThemedStyles.style.backgroundTertiary,
-            styles.container,
-          ]}>
-          <View style={[CommonStyle.rowJustifyCenter, CommonStyle.alignCenter]}>
-            <Text style={styles.counter}>
-              {abbrev(token(entity.wire_totals.tokens), 0)}{' '}
-              <Icon name="ios-flash" />
+      <View style={[theme.rowJustifySpaceBetween, theme.padding2x]}>
+        <Text style={[theme.colorSecondaryText, theme.fontLM, theme.padding]}>
+          {entity.impressions > 0
+            ? abbrev(entity.impressions, 1) +
+              ` ${i18n.t('views').toLowerCase()} · `
+            : ''}
+          {date}
+        </Text>
+
+        {this.props.entity.boosted ? (
+          <View style={[theme.rowJustifyStart, theme.centered]}>
+            <Icon
+              type="ionicon"
+              name="md-trending-up"
+              size={18}
+              style={theme.marginRight}
+              color={ThemedStyles.getColor('link')}
+            />
+
+            <Text style={[theme.marginRight2x, theme.colorLink, theme.fontS]}>
+              {i18nService.t('boosted').toUpperCase()}
             </Text>
           </View>
-          <View style={[CommonStyle.rowJustifyCenter, CommonStyle.alignCenter]}>
-            <Text style={[styles.counter]}> · </Text>
-            <Text style={styles.counter}>
-              {number(entity.impressions, 0)} <McIcon name="eye" />
-            </Text>
-          </View>
-        </View>
+        ) : undefined}
+        {lockType !== null && <LockTag type={lockType} />}
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  counter: {
-    alignItems: 'center',
-    fontSize: 11,
-  },
-  container: {
-    paddingVertical: 2,
-    borderBottomWidth: 0,
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0,
-  },
-});

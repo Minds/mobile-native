@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Keyboard, StatusBar, View, ViewProps } from 'react-native';
+import {
+  Keyboard,
+  KeyboardEventName,
+  Platform,
+  StatusBar,
+  View,
+  ViewProps,
+} from 'react-native';
 import { mix, useTransition } from 'react-native-redash';
 import Animated from 'react-native-reanimated';
 import { observer, useLocalStore } from 'mobx-react';
@@ -9,6 +16,7 @@ import ThemedStyles from '../../styles/ThemedStyles';
 interface PropsType extends ViewProps {
   children: React.ReactNode;
   enabled?: boolean;
+  noInset?: boolean;
   onKeyboardShown?: (height: number) => void;
 }
 
@@ -23,6 +31,7 @@ export default observer(function KeyboardSpacingView({
   style,
   enabled = true,
   onKeyboardShown,
+  noInset,
   ...otherProps
 }: PropsType) {
   const insets = useSafeAreaInsets();
@@ -47,17 +56,29 @@ export default observer(function KeyboardSpacingView({
     { enabled },
   );
 
-  const transition = useTransition(store.shown);
-  const paddingBottom = mix(transition, insets.bottom, store.height);
+  const transition = useTransition(store.shown, { duration: 200 });
+  const paddingBottom = mix(
+    transition,
+    noInset ? 0 : insets.bottom,
+    store.height,
+  );
 
   useEffect(() => {
-    Keyboard.addListener('keyboardDidShow', store.show);
-    Keyboard.addListener('keyboardDidHide', store.hide);
+    const eventShow = Platform.select({
+      android: 'keyboardDidShow',
+      ios: 'keyboardWillShow',
+    }) as KeyboardEventName;
+    const eventHide = Platform.select({
+      android: 'keyboardDidHide',
+      ios: 'keyboardWillHide',
+    }) as KeyboardEventName;
+    Keyboard.addListener(eventShow, store.show);
+    Keyboard.addListener(eventHide, store.hide);
 
     // cleanup function
     return () => {
-      Keyboard.removeListener('keyboardDidShow', store.show);
-      Keyboard.removeListener('keyboardDidHide', store.hide);
+      Keyboard.removeListener(eventShow, store.show);
+      Keyboard.removeListener(eventHide, store.hide);
     };
   }, [store]);
 

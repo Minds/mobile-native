@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   View,
   Text,
@@ -7,9 +7,11 @@ import {
   Dimensions,
   ScrollView,
 } from 'react-native';
+import { Icon } from 'react-native-elements';
 import IconM from 'react-native-vector-icons/MaterialIcons';
+import McIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { observer } from 'mobx-react';
-
+import settingsStore from '../../settings/SettingsStore';
 import type { ChannelStoreType, ChannelTabType } from './createChannelStore';
 import { Image } from 'react-native-animatable';
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -26,10 +28,13 @@ import TopbarTabbar, {
   TabType,
 } from '../../common/components/topbar-tabbar/TopbarTabbar';
 import AboutTab from './tabs/AboutTab';
+import TierManagementScreen from '../../common/components/tier-management/TierManagementScreen';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type PropsType = {
   store: ChannelStoreType;
   navigation: any;
+  route: any;
   hideButtons?: boolean;
   hideDescription?: boolean;
   hideTabs?: boolean;
@@ -38,7 +43,7 @@ type PropsType = {
 const bannerAspectRatio = 2.9;
 const { width } = Dimensions.get('window');
 const bannerHeight = width / bannerAspectRatio;
-const avatarSize = Math.round(0.7 * bannerHeight);
+const avatarSize = Math.min(180, Math.round(0.7 * bannerHeight));
 
 /**
  * Channel Header
@@ -49,7 +54,11 @@ const ChannelHeader = observer((props: PropsType) => {
     return null;
   }
   const channel = props.store.channel;
+  const [showBanner, setShowBanner] = useState(!settingsStore.dataSaverEnabled);
+  const insets = useSafeAreaInsets();
+  const cleanTop = insets.top ? { marginTop: insets.top } : null;
 
+  const _onBannerDownload = useCallback(() => setShowBanner(true), []);
   const canEdit = channel.isOwner() && channel.can(FLAG_EDIT_CHANNEL);
 
   const navToSubscribers = useCallback(() => {
@@ -69,11 +78,18 @@ const ChannelHeader = observer((props: PropsType) => {
     }
   }, [props.navigation, props.store]);
 
-  const tabs: Array<TabType<ChannelTabType>> = [
-    { id: 'feed', title: i18n.t('feed') },
-    // { id: 'shop', title: 'Shop' },
-    { id: 'about', title: i18n.t('about') },
-  ];
+  const tabs: Array<TabType<ChannelTabType>> = channel.isOwner()
+    ? [
+        { id: 'feed', title: i18n.t('feed') },
+        { id: 'memberships', title: i18n.t('settings.otherOptions.b1') },
+        // { id: 'shop', title: 'Shop' },
+        { id: 'about', title: i18n.t('about') },
+      ]
+    : [
+        { id: 'feed', title: i18n.t('feed') },
+        // { id: 'shop', title: 'Shop' },
+        { id: 'about', title: i18n.t('about') },
+      ];
 
   const screen = () => {
     switch (props.store.tab) {
@@ -115,18 +131,27 @@ const ChannelHeader = observer((props: PropsType) => {
             <AboutTab store={props.store} navigation={props.navigation} />
           </ScrollView>
         );
+      case 'memberships':
+        return (
+          <TierManagementScreen
+            route={props.route}
+            navigation={props.navigation}
+          />
+        );
       default:
         return <View />;
     }
   };
 
+  const Background: any = showBanner ? ImageBackground : View;
+
   return (
-    <View style={[styles.container]}>
-      <ImageBackground
+    <View style={styles.container}>
+      <Background
         style={styles.banner}
         source={channel.getBannerSource()}
         resizeMode="cover">
-        <View style={[styles.avatarContainer, theme.borderBackgroundPrimary]}>
+        <View style={[styles.avatarContainer, theme.borderBackgroundTertiary]}>
           <Image
             style={[styles.avatar, theme.borderPrimary]}
             source={channel.getAvatarSource()}
@@ -153,15 +178,28 @@ const ChannelHeader = observer((props: PropsType) => {
               props.navigation.push('EditChannelScreen', { store: props.store })
             }
             notShow={['message', 'wire', 'more']}
-            containerStyle={styles.buttonsMarginContainer}
-          />
+            iconsStyle={theme.colorSecondaryText}
+            containerStyle={styles.buttonsMarginContainer}>
+            {!showBanner && settingsStore.dataSaverEnabled && (
+              <Icon
+                raised
+                reverse
+                name="file-download"
+                type="material"
+                color={ThemedStyles.getColor('secondary_background')}
+                reverseColor={ThemedStyles.getColor('primary_text')}
+                size={15}
+                onPress={_onBannerDownload}
+              />
+            )}
+          </ChannelButtons>
         )}
         {props.store.uploading && props.store.bannerProgress ? (
           <View style={styles.tapOverlayView}>
             <Progress.Pie progress={props.store.bannerProgress} size={36} />
           </View>
         ) : null}
-      </ImageBackground>
+      </Background>
       {canEdit && (
         <SmallCircleButton
           name="camera"
@@ -200,7 +238,7 @@ const ChannelHeader = observer((props: PropsType) => {
             {' · ' + i18n.t('subscriptions')}
             <Text> {abbrev(channel.subscriptions_count, 0)}</Text>
           </Text>
-          {' · ' + i18n.t('views')}
+          {' · '} <McIcon name="eye" size={17} style={theme.colorPrimaryText} />
           <Text> {abbrev(channel.impressions, 1)}</Text>
         </Text>
         {!!channel.city && (
@@ -239,7 +277,7 @@ const styles = StyleSheet.create({
   },
   bannerSmallButton: {
     position: 'absolute',
-    top: 8,
+    top: 5,
     left: 5,
   },
   avatarSmallButton: {
@@ -288,7 +326,7 @@ const styles = StyleSheet.create({
     elevation: 10,
     width: avatarSize + 6,
     height: avatarSize + 6,
-    borderRadius: 53,
+    borderRadius: (avatarSize + 6) / 2,
     zIndex: 10000,
     shadowOpacity: 0.5,
     shadowRadius: 3,
@@ -298,7 +336,7 @@ const styles = StyleSheet.create({
   avatar: {
     width: avatarSize,
     height: avatarSize,
-    borderRadius: 50,
+    borderRadius: avatarSize / 2,
   },
   tapOverlayView: {
     position: 'absolute',

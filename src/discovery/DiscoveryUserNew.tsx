@@ -18,7 +18,7 @@ type PropsType = {
     index: number;
     item: UserModel;
   };
-  navigation: any;
+  navigation?: any;
   onUserTap?: Function;
 };
 
@@ -93,7 +93,7 @@ class DiscoveryUser extends Component<PropsType> {
    * Render
    */
   render() {
-    const CS = ThemedStyles.style;
+    const theme = ThemedStyles.style;
     const { row, subscribe, ...otherProps } = this.props;
     const renderRightButton = !(subscribe === false);
     return (
@@ -102,11 +102,12 @@ class DiscoveryUser extends Component<PropsType> {
         onPress={this._navToChannel}
         {...otherProps}>
         <Image source={this.state.source} style={styles.avatar} />
-        <View style={CS.flexContainerCenter}>
-          <Text style={[styles.body, styles.title, CS.colorPrimaryText]}>
+        <View style={theme.flexContainer}>
+          <Text style={[styles.body, styles.title, theme.colorPrimaryText]}>
             {row.item.name}
           </Text>
-          <Text style={[styles.body, styles.subtitle, CS.colorSecondaryText]}>
+          <Text
+            style={[styles.body, styles.subtitle, theme.colorSecondaryText]}>
             @{row.item.username}
           </Text>
         </View>
@@ -122,6 +123,7 @@ const styles = {
   row: {
     flexDirection: 'row',
     alignItems: 'center',
+    flex: 1,
     flexWrap: 'wrap',
     paddingTop: 10,
     paddingLeft: 12,
@@ -131,7 +133,6 @@ const styles = {
   body: {
     marginLeft: 16,
     height: 22,
-    // flex: 1,
   },
   title: {
     fontSize: 17,

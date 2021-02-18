@@ -5,6 +5,8 @@ import blockListService from './block-list.service';
 
 // types
 import type ActivityModel from '../../newsfeed/ActivityModel';
+import sessionService from './session.service';
+import { Platform } from 'react-native';
 
 /**
  * Boosted content service
@@ -34,7 +36,7 @@ class BoostedContentService {
   load = async (): Promise<any> => {
     this.init();
     try {
-      const done = await this.feedsService!.setLimit(12)
+      const done = await this.feedsService!.setLimit(24)
         .setOffset(0)
         .setPaginated(false)
         .setEndpoint('api/v2/boost/feed')
@@ -57,6 +59,11 @@ class BoostedContentService {
   init() {
     if (!this.feedsService) {
       this.feedsService = new FeedsService();
+      setInterval(() => {
+        if (sessionService.isLoggedIn()) {
+          this.update();
+        }
+      }, 60000);
     }
   }
 
@@ -68,6 +75,10 @@ class BoostedContentService {
     const cloned = _.cloneDeep(boosts);
     return cloned.filter((e: ActivityModel) => {
       e.boosted = true;
+      // remove NSFW on iOS
+      if (Platform.OS === 'ios' && e.nsfw && e.nsfw.length) {
+        return false;
+      }
       return !blockListService.has(e.ownerObj.guid);
     });
   }

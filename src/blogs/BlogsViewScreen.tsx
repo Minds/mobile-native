@@ -1,50 +1,64 @@
-//@ts-nocheck
+import { inject, observer } from 'mobx-react';
 import React, { Component } from 'react';
 
 import {
-  View,
-  StyleSheet,
-  Dimensions,
-  Text,
-  SafeAreaView,
   Alert,
+  Dimensions,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
 } from 'react-native';
 
-import ActionSheet from 'react-native-actionsheet';
-
-import { Header } from '@react-navigation/stack';
-
-import { inject, observer } from 'mobx-react';
-
-import FastImage from 'react-native-fast-image';
 import { Icon } from 'react-native-elements';
+import FastImage from 'react-native-fast-image';
+import { ScrollView } from 'react-native-gesture-handler';
+import CommentBottomSheet from '../comments/v2/CommentBottomSheet';
+import CenteredLoading from '../common/components/CenteredLoading';
+import SmartImage from '../common/components/SmartImage';
+import formatDate from '../common/helpers/date';
+import { FLAG_VIEW } from '../common/Permissions';
+import i18n from '../common/services/i18n.service';
+import logService from '../common/services/log.service';
+import RemindAction from '../newsfeed/activity/actions/RemindAction';
+import ThumbDownAction from '../newsfeed/activity/actions/ThumbDownAction';
+import ThumbUpAction from '../newsfeed/activity/actions/ThumbUpAction';
+import CommentsAction from '../newsfeed/activity/actions/CommentsAction';
+import OwnerBlock from '../newsfeed/activity/OwnerBlock';
+import shareService from '../share/ShareService';
+import colors from '../styles/Colors';
+import ThemedStyles from '../styles/ThemedStyles';
+import Lock from '../wire/v2/lock/Lock';
+import BlogActionSheet from './BlogActionSheet';
 
 import BlogViewHTML from './BlogViewHTML';
-import OwnerBlock from '../newsfeed/activity/OwnerBlock';
-import formatDate from '../common/helpers/date';
-import { CommonStyle as CS } from '../styles/Common';
-import colors from '../styles/Colors';
-import ThumbUpAction from '../newsfeed/activity/actions/ThumbUpAction';
-import ThumbDownAction from '../newsfeed/activity/actions/ThumbDownAction';
-import RemindAction from '../newsfeed/activity/actions/RemindAction';
-import shareService from '../share/ShareService';
-import commentsStoreProvider from '../comments/CommentsStoreProvider';
-import CommentList from '../comments/CommentList';
-import CenteredLoading from '../common/components/CenteredLoading';
-import logService from '../common/services/log.service';
-import i18n from '../common/services/i18n.service';
-import { FLAG_VIEW } from '../common/Permissions';
-import ThemedStyles from '../styles/ThemedStyles';
+import type BlogsViewStore from './BlogsViewStore';
+import { AppStackParamList } from '../navigation/NavigationTypes';
+import { RouteProp } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { ComponentsStyle } from '../styles/Components';
-import BlogActionSheet from './BlogActionSheet';
-import Lock from '../wire/v2/lock/Lock';
+
+type BlogScreenRouteProp = RouteProp<AppStackParamList, 'BlogView'>;
+type BlogScreenNavigationProp = StackNavigationProp<
+  AppStackParamList,
+  'BlogView'
+>;
+
+type PropsType = {
+  blogsView: BlogsViewStore;
+  route: BlogScreenRouteProp;
+  navigation: BlogScreenNavigationProp;
+};
 
 /**
  * Blog View Screen
  */
 @inject('user', 'blogsView')
 @observer
-export default class BlogsViewScreen extends Component {
+export default class BlogsViewScreen extends Component<PropsType> {
+  listRef: any;
+  commentsRef: any;
+
   /**
    * Disable navigation bar
    */
@@ -54,7 +68,9 @@ export default class BlogsViewScreen extends Component {
 
   share = () => {
     const blog = this.props.blogsView.blog;
-    shareService.share(blog.title, blog.perma_url);
+    if (blog) {
+      shareService.share(blog.title, blog.perma_url);
+    }
   };
 
   state = {
@@ -68,9 +84,8 @@ export default class BlogsViewScreen extends Component {
   constructor(props) {
     super(props);
 
-    this.listRef = React.createRef(null);
-
-    this.comments = commentsStoreProvider.get();
+    this.listRef = React.createRef();
+    this.commentsRef = React.createRef();
   }
 
   /**
@@ -83,7 +98,7 @@ export default class BlogsViewScreen extends Component {
         if (params.blog._list && params.blog._list.metadataService) {
           params.blog._list.metadataService.pushSource('single');
         }
-        this.props.blogsView.setBlog(params.blog);
+        await this.props.blogsView.setBlog(params.blog);
 
         if (!params.blog.description) {
           await this.props.blogsView.loadBlog(params.blog.guid);
@@ -101,7 +116,7 @@ export default class BlogsViewScreen extends Component {
       }
 
       // check permissions
-      if (!this.props.blogsView.blog.can(FLAG_VIEW, true)) {
+      if (!this.props.blogsView.blog?.can(FLAG_VIEW, true)) {
         this.props.navigation.goBack();
         return;
       }
@@ -128,7 +143,7 @@ export default class BlogsViewScreen extends Component {
    */
   componentWillUnmount() {
     const blog = this.props.blogsView.blog;
-    if (blog._list && blog._list.metadataService) {
+    if (blog && blog._list && blog._list.metadataService) {
       blog._list.metadataService.popSource();
     }
     this.props.blogsView.reset();
@@ -147,22 +162,31 @@ export default class BlogsViewScreen extends Component {
   /**
    * Render blog
    */
-  getHeader() {
+  getBody() {
     const blog = this.props.blogsView.blog;
+    if (!blog) return null;
+
     const theme = ThemedStyles.style;
 
     const actions = !blog.paywall ? (
-      <View style={[CS.rowJustifyStart]}>
-        <RemindAction entity={blog} navigation={this.props.navigation} />
+      <View style={[theme.paddingHorizontal2x, theme.rowJustifySpaceBetween]}>
         <ThumbUpAction entity={blog} />
         <ThumbDownAction entity={blog} />
+        <CommentsAction
+          entity={blog}
+          navigation={this.props.navigation}
+          onPressComment={() => {
+            this.commentsRef.current.expand();
+          }}
+        />
+        <RemindAction entity={blog} />
       </View>
     ) : null;
     const image = blog.getBannerSource();
 
     return (
       <View style={[styles.screen, theme.backgroundSecondary]}>
-        <FastImage
+        <SmartImage
           source={image}
           resizeMode={FastImage.resizeMode.cover}
           style={styles.image}
@@ -198,10 +222,10 @@ export default class BlogsViewScreen extends Component {
             )}
             <Text
               style={[
-                CS.fontXS,
-                CS.paddingLeft,
-                CS.colorMedium,
-                CS.paddingRight2x,
+                theme.fontXS,
+                theme.paddingLeft,
+                theme.colorMedium,
+                theme.paddingRight2x,
               ]}>
               {blog.getLicenseText()}
             </Text>
@@ -226,35 +250,12 @@ export default class BlogsViewScreen extends Component {
     );
   }
 
-  getActionSheet() {
-    let options = [i18n.t('cancel')];
-    options.push(
-      this.props.blogsView.blog.allow_comments
-        ? i18n.t('disableComments')
-        : i18n.t('enableComments'),
-    );
-    return (
-      <ActionSheet
-        ref={(o) => (this.ActionSheet = o)}
-        options={options}
-        onPress={(i) => {
-          this.handleActionSheetSelection(options[i]);
-        }}
-        cancelButtonIndex={0}
-      />
-    );
-  }
-
-  async showActionSheet() {
-    this.ActionSheet.show();
-  }
-
   async handleActionSheetSelection(option) {
     switch (option) {
       case i18n.t('disableComments'):
       case i18n.t('enableComments'):
         try {
-          await this.props.blogsView.blog.toggleAllowComments();
+          await this.props.blogsView.blog?.toggleAllowComments();
         } catch (err) {
           console.error(err);
           this.showError();
@@ -269,7 +270,12 @@ export default class BlogsViewScreen extends Component {
     Alert.alert(
       i18n.t('sorry'),
       i18n.t('errorMessage') + '\n' + i18n.t('activity.tryAgain'),
-      [{ text: i18n.t('ok'), onPress: () => {} }],
+      [
+        {
+          text: i18n.t('ok'),
+          onPress: () => {},
+        },
+      ],
       { cancelable: false },
     );
   }
@@ -294,28 +300,29 @@ export default class BlogsViewScreen extends Component {
     }
 
     return (
-      <View style={[CS.flexContainer, theme.backgroundSecondary]}>
+      <View style={[theme.flexContainer, theme.backgroundSecondary]}>
         {!this.state.error ? (
-          <CommentList
-            header={this.getHeader()}
-            ref={this.listRef}
-            entity={this.props.blogsView.blog}
-            store={this.comments}
-            navigation={this.props.navigation}
-            route={this.props.route}
-            keyboardVerticalOffset={Header.HEIGHT - 65}
-          />
+          <>
+            <ScrollView ref={this.listRef}>{this.getBody()}</ScrollView>
+            {this.props.blogsView.comments && (
+              <CommentBottomSheet
+                ref={this.commentsRef}
+                hideContent={false}
+                commentsStore={this.props.blogsView.comments}
+              />
+            )}
+          </>
         ) : (
-          <View style={CS.flexColumnCentered}>
+          <View style={theme.flexColumnCentered}>
             <FastImage
               resizeMode={FastImage.resizeMode.contain}
               style={ComponentsStyle.logo}
               source={require('../assets/logos/logo.png')}
             />
-            <Text style={[CS.fontL, CS.colorDanger]}>
+            <Text style={[theme.fontL, theme.colorDanger]}>
               {i18n.t('blogs.error')}
             </Text>
-            <Text style={[CS.fontM]}>{i18n.t('activity.tryAgain')}</Text>
+            <Text style={[theme.fontM]}>{i18n.t('activity.tryAgain')}</Text>
           </View>
         )}
       </View>

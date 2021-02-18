@@ -9,12 +9,12 @@ import { debounce } from 'lodash';
 import FastImage from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import ActionSheet from 'react-native-actionsheet';
+import SmartImage from '../../common/components/SmartImage';
 
 import { MINDS_CDN_URI, MINDS_LINK_URI } from '../../config/Config';
 import abbrev from '../../common/helpers/abbrev';
 import Toolbar from '../../common/components/toolbar/Toolbar';
 import { CommonStyle } from '../../styles/Common';
-import CenteredLoading from '../../common/components/CenteredLoading';
 import SearchView from '../../common/components/SearchView';
 import i18n from '../../common/services/i18n.service';
 import { FLAG_JOIN } from '../../common/Permissions';
@@ -73,39 +73,22 @@ export default class GroupHeader extends Component {
     const store = this.props.store;
     const group = store.group;
 
-    if (store.saving) return <CenteredLoading />;
+    const buttonProps = {
+      onPress: !group['is:member'] ? store.join : store.leave,
+      text: i18n.t(!group['is:member'] ? 'join' : 'leave'),
+    };
 
-    if (!group['is:member']) {
-      return (
-        <Button
-          onPress={store.join}
-          accessibilityLabel={i18n.t('groups.subscribeMessage')}
-          containerStyle={[
-            CommonStyle.rowJustifyCenter,
-            CommonStyle.marginLeft,
-          ]}
-          textStyle={[CommonStyle.marginLeft, CommonStyle.marginRight]}
-          icon="ios-flash"
-          text={i18n.t('join')}
-          loading={store.saving}
-        />
-      );
-    } else {
-      return (
-        <Button
-          onPress={store.leave}
-          accessibilityLabel={i18n.t('groups.leaveMessage')}
-          containerStyle={[
-            CommonStyle.rowJustifyCenter,
-            CommonStyle.marginLeft,
-          ]}
-          textStyle={[CommonStyle.marginLeft, CommonStyle.marginRight]}
-          icon="ios-flash"
-          text={i18n.t('leave')}
-          loading={store.saving}
-        />
-      );
-    }
+    return (
+      <Button
+        {...buttonProps}
+        accessibilityLabel={i18n.t('groups.subscribeMessage')}
+        containerStyle={CommonStyle.marginLeft}
+        textStyle={[CommonStyle.marginLeft, CommonStyle.marginRight]}
+        loading={store.saving}
+        disabled={store.saving}
+        xSmall
+      />
+    );
   }
 
   /**
@@ -148,12 +131,12 @@ export default class GroupHeader extends Component {
    */
   renderToolbar() {
     const group = this.props.store.group;
-    const conversation = {
-      text: i18n.t('conversation').toUpperCase(),
-      icon: 'ios-chatboxes',
-      iconType: 'ion',
-      value: 'conversation',
-    };
+    // const conversation = {
+    //   text: i18n.t('conversation').toUpperCase(),
+    //   icon: 'ios-chatboxes',
+    //   iconType: 'ion',
+    //   value: 'conversation',
+    // };
     const typeOptions = [
       { text: i18n.t('feed').toUpperCase(), icon: 'list', value: 'feed' },
       {
@@ -168,12 +151,12 @@ export default class GroupHeader extends Component {
       },
     ];
 
-    if (group.conversationDisabled !== 1) {
-      typeOptions.push(conversation);
-    }
+    // if (group.conversationDisabled !== 1) {
+    //   typeOptions.push(conversation);
+    // }
 
     const searchBar =
-      this.props.store.tab == 'members' ? (
+      this.props.store.tab === 'members' ? (
         <SearchView
           containerStyle={[
             CommonStyle.flexContainer,
@@ -190,6 +173,7 @@ export default class GroupHeader extends Component {
           options={typeOptions}
           initial={this.props.store.tab}
           onChange={this.onTabChange}
+          containerStyle={ThemedStyles.style.borderPrimary}
         />
         {searchBar}
       </View>
@@ -237,7 +221,10 @@ export default class GroupHeader extends Component {
         <Image
           source={t.getAvatarSource()}
           key={t.guid}
-          style={styles.userAvatar}
+          style={[
+            styles.userAvatar,
+            ThemedStyles.style.borderBackgroundPrimary,
+          ]}
         />
       ));
     } else {
@@ -258,7 +245,7 @@ export default class GroupHeader extends Component {
           name="more-vert"
           onPress={() => this.showActionSheet()}
           size={26}
-          style={stylesheet.icon}
+          style={[stylesheet.icon, ThemedStyles.style.colorPrimaryText]}
         />
         <ActionSheet
           ref={(o) => (this.ActionSheet = o)}
@@ -313,12 +300,11 @@ export default class GroupHeader extends Component {
     const actionSheet = group['is:owner'] ? this.getActionSheet() : null;
     return (
       <View>
-        <FastImage
+        <SmartImage
           source={iurl}
           style={styles.banner}
           resizeMode={FastImage.resizeMode.cover}
         />
-        {actionSheet}
         <View style={styles.headertextcontainer}>
           <View style={styles.avatarContainer}>
             <View
@@ -333,20 +319,38 @@ export default class GroupHeader extends Component {
             <View style={styles.buttonscol}>
               <Icon
                 name="share"
-                size={28}
+                size={26}
                 style={[
                   theme.paddingRight,
                   theme.marginRight,
-                  theme.colorIconActive,
+                  theme.colorSecondaryText,
                 ]}
                 onPress={this.share}
               />
+              {!this.props.store.group.conversationDisabled && (
+                <Icon
+                  name="chat-bubble"
+                  size={26}
+                  style={[
+                    theme.paddingRight,
+                    theme.marginRight,
+                    theme.colorSecondaryText,
+                  ]}
+                  onPress={this.props.onPressComment}
+                />
+              )}
               {/* {group.can(FLAG_JOIN_GATHERING) && this.getGatheringButton()} */}
               {group.can(FLAG_JOIN) && this.getActionButton()}
             </View>
           </View>
+          {actionSheet}
         </View>
-        <Image source={avatar} style={styles.avatar} />
+        <View style={stylesheet.avatarContainer}>
+          <Image
+            source={avatar}
+            style={[styles.avatar, theme.borderBackgroundPrimary]}
+          />
+        </View>
         {this.renderToolbar()}
       </View>
     );
@@ -354,12 +358,24 @@ export default class GroupHeader extends Component {
 }
 
 const stylesheet = StyleSheet.create({
+  avatarContainer: {
+    position: 'absolute',
+    left: 15,
+    top: 115,
+    elevation: 10,
+    width: 112,
+    height: 112,
+    borderRadius: 55,
+    zIndex: 10000,
+    shadowOpacity: 0.5,
+    shadowRadius: 3,
+    shadowOffset: { width: 0, height: 2 },
+    shadowColor: '#000',
+  },
   rightToolbar: {
     alignSelf: 'flex-end',
-    bottom: 126,
+    bottom: 60,
     right: 10,
-  },
-  icon: {
-    color: '#888',
+    position: 'absolute',
   },
 });

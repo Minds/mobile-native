@@ -1,38 +1,40 @@
 //@ts-nocheck
 import React, { Component } from 'react';
-
 import { observer } from 'mobx-react';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import { SharedElement } from 'react-navigation-shared-element';
 
 import {
-  Text,
-  StyleSheet,
-  TouchableOpacity,
   Alert,
-  View,
-  Dimensions,
   Clipboard,
+  Dimensions,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
   ViewStyle,
 } from 'react-native';
 
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { SharedElement } from 'react-navigation-shared-element';
+
 import ExplicitImage from './explicit/ExplicitImage';
 import domain from '../helpers/domain';
-import MindsVideo from '../../media/MindsVideo';
-import MindsVideoV2 from '../../media/v2/mindsVideo/MindsVideo';
+import MindsVideo from '../../media/v2/mindsVideo/MindsVideo';
 import mediaProxyUrl from '../helpers/media-proxy-url';
 import download from '../services/download.service';
 
 import openUrlService from '../services/open-url.service';
 import logService from '../services/log.service';
-import testID from '../helpers/testID';
 import i18n from '../services/i18n.service';
 import { showMessage } from 'react-native-flash-message';
 import Colors from '../../styles/Colors';
-import type ActivityModel from 'src/newsfeed/ActivityModel';
+import type ActivityModel from '../../newsfeed/ActivityModel';
 import { MindsVideoStoreType } from '../../media/v2/mindsVideo/createMindsVideoStore';
-import featuresService from '../services/features.service';
 import ThemedStyles from '../../styles/ThemedStyles';
+import { DATA_SAVER_THUMB_RES } from '../../config/Config';
+import SmartImage from './SmartImage';
+import FastImage from 'react-native-fast-image';
+
+const imgSize = 75;
 
 type PropsType = {
   entity: ActivityModel;
@@ -42,6 +44,9 @@ type PropsType = {
   autoHeight?: boolean;
   onPress?: () => void;
   hideOverlay?: boolean;
+  ignoreDataSaver?: boolean;
+  width?: number;
+  smallEmbed?: boolean;
 };
 /**
  * Activity
@@ -49,7 +54,9 @@ type PropsType = {
 @observer
 export default class MediaView extends Component<PropsType> {
   _currentThumbnail = 0;
-  videoPlayer: MindsVideo | MindsVideoStoreType | null = null;
+  videoPlayer: MindsVideoStoreType | null = null;
+
+  source?: { uri: string } | undefined;
 
   static defaultProps = {
     width: Dimensions.get('window').width,
@@ -65,6 +72,7 @@ export default class MediaView extends Component<PropsType> {
    * Show activity media
    */
   showMedia() {
+    const theme = ThemedStyles.style;
     let source;
     let title =
       this.props.entity.title && this.props.entity.title.length > 200
@@ -82,7 +90,13 @@ export default class MediaView extends Component<PropsType> {
       case 'image':
       case 'batch':
         source = this.props.entity.getThumbSource('xlarge');
-        return this.getImage(source);
+        return this.getImage(
+          source,
+          // do not show a thumbnail for GIFs
+          !this.props.entity.isGif()
+            ? { uri: mediaProxyUrl(source.uri, DATA_SAVER_THUMB_RES) }
+            : null,
+        );
       case 'video':
         return this.getVideo();
     }
@@ -95,9 +109,42 @@ export default class MediaView extends Component<PropsType> {
             : mediaProxyUrl(this.props.entity.thumbnail_src),
       };
 
-      return (
+      const thumbnail = {
+        uri: mediaProxyUrl(
+          this.props.entity.thumbnail_src,
+          DATA_SAVER_THUMB_RES,
+        ),
+      };
+
+      return this.props.smallEmbed ? (
+        <View
+          style={[
+            theme.rowJustifyStart,
+            theme.borderHair,
+            theme.borderPrimary,
+            theme.borderRadius,
+          ]}>
+          <SmartImage
+            style={styles.thumbnail}
+            threshold={150}
+            source={source}
+            thumbnail={thumbnail}
+            resizeMode={FastImage.resizeMode.cover}
+          />
+          <TouchableOpacity
+            style={[theme.padding2x, theme.flexContainer]}
+            onPress={this.openLink}>
+            <Text numberOfLines={2} style={styles.title}>
+              {title}
+            </Text>
+            <Text style={styles.domain}>
+              {domain(this.props.entity.perma_url)}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      ) : (
         <View style={styles.richMediaContainer}>
-          {source.uri ? this.getImage(source) : null}
+          {source.uri ? this.getImage(source, thumbnail) : null}
           <TouchableOpacity style={styles.richMedia} onPress={this.openLink}>
             <Text style={styles.title}>{title}</Text>
             <Text style={styles.domain}>
@@ -112,7 +159,7 @@ export default class MediaView extends Component<PropsType> {
 
   getVideo() {
     const custom_data = this.props.entity.custom_data;
-    let aspectRatio = 1;
+    let aspectRatio = 16 / 9;
 
     if (custom_data && custom_data.height && custom_data.height !== '0') {
       aspectRatio =
@@ -121,20 +168,14 @@ export default class MediaView extends Component<PropsType> {
       aspectRatio = this.state.width / this.state.height;
     }
 
-    const MindsVideoComponent = featuresService.has('mindsVideo-2020') ? (
-      <MindsVideoV2
+    const MindsVideoComponent = (
+      <MindsVideo
         entity={this.props.entity}
+        ignoreDataSaver={this.props.ignoreDataSaver}
         onStoreCreated={(store: MindsVideoStoreType) =>
           (this.videoPlayer = store)
         }
         hideOverlay={this.props.hideOverlay}
-      />
-    ) : (
-      <MindsVideo
-        entity={this.props.entity}
-        ref={(o) => {
-          this.videoPlayer = o;
-        }}
       />
     );
 
@@ -164,11 +205,9 @@ export default class MediaView extends Component<PropsType> {
    * Download the media to the gallery
    */
   runDownload = async () => {
+    if (!this.source) return;
     try {
-      const result = await download.downloadToGallery(
-        this.source.uri,
-        this.props.entity,
-      );
+      await download.downloadToGallery(this.source.uri, this.props.entity);
       Alert.alert(i18n.t('success'), i18n.t('imageAdded'));
     } catch (e) {
       Alert.alert(i18n.t('errorDownloading'));
@@ -218,23 +257,25 @@ export default class MediaView extends Component<PropsType> {
   }
 
   imageError = (err) => {
-    logService.log('[MediaView] Image error: ' + this.source.uri, err);
+    logService.log('[MediaView] Image error: ' + this.source?.uri, err);
     this.setState({ imageLoadFailed: true });
   };
 
   imageLongPress = () => {
     if (this.props.entity.perma_url) {
       setTimeout(async () => {
-        await Clipboard.setString(this.props.entity.perma_url);
-        showMessage({
-          floating: true,
-          position: 'top',
-          message: i18n.t('linkCopied'),
-          duration: 1300,
-          backgroundColor: '#FFDD63DD',
-          color: Colors.dark,
-          type: 'info',
-        });
+        if (this.props.entity.perma_url) {
+          await Clipboard.setString(this.props.entity.perma_url);
+          showMessage({
+            floating: true,
+            position: 'top',
+            message: i18n.t('linkCopied'),
+            duration: 1300,
+            backgroundColor: '#FFDD63DD',
+            color: Colors.dark,
+            type: 'info',
+          });
+        }
       }, 100);
     } else {
       this.download();
@@ -256,25 +297,14 @@ export default class MediaView extends Component<PropsType> {
   /**
    * Get image with autoheight or Touchable fixed height
    * @param {object} source
+   * @param {object} thumbnail
    */
-  getImage(source) {
+  getImage(source, thumbnail?, mode = 'cover') {
     this.source = source;
-    const autoHeight = this.props.autoHeight;
     const custom_data = this.props.entity.custom_data;
 
     if (this.state.imageLoadFailed) {
       let height = 200;
-
-      if (
-        !autoHeight &&
-        custom_data &&
-        custom_data[0] &&
-        custom_data[0].height &&
-        custom_data[0].height !== '0'
-      ) {
-        let ratio = custom_data[0].height / custom_data[0].width;
-        height = this.props.width * ratio;
-      }
 
       let text = (
         <Text style={styles.imageLoadErrorText}>{i18n.t('errorMedia')}</Text>
@@ -315,13 +345,16 @@ export default class MediaView extends Component<PropsType> {
           onLongPress={this.imageLongPress}
           style={[styles.imageContainer, { aspectRatio }]}
           activeOpacity={1}
-          {...testID('Posted Image')}>
+          testID="Posted Image">
           <ExplicitImage
+            resizeMode={mode}
+            style={this.props.style}
             source={source}
+            thumbnail={thumbnail}
             entity={this.props.entity}
             onLoad={this.onLoadImage}
-            // loadingIndicator="placeholder"
             onError={this.imageError}
+            ignoreDataSaver={this.props.ignoreDataSaver}
           />
         </TouchableOpacity>
       </SharedElement>
@@ -335,6 +368,7 @@ export default class MediaView extends Component<PropsType> {
     const media = this.showMedia();
 
     // dereference to force re render on change (mobx)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const paywall = this.props.entity.paywall;
 
     if (!media) return null;
@@ -452,5 +486,10 @@ const styles = StyleSheet.create({
   },
   licenseIcon: {
     paddingRight: 2,
+  },
+  thumbnail: {
+    width: imgSize,
+    height: imgSize,
+    borderRadius: 2,
   },
 });

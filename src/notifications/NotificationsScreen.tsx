@@ -7,13 +7,11 @@ import { observer, inject } from 'mobx-react';
 
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 
-import { CommonStyle as CS } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
 import Notification from './notification/Notification';
 import NotificationsTopbar from './NotificationsTopbar';
 import ErrorBoundary from '../common/components/ErrorBoundary';
 import i18n from '../common/services/i18n.service';
-import Topbar from '../topbar/Topbar';
 import ThemedStyles from '../styles/ThemedStyles';
 import OnFocus from '../common/components/helper/OnFocus';
 import CenteredLoading from '../common/components/CenteredLoading';
@@ -75,6 +73,7 @@ class NotificationsScreen extends Component {
    * Render screen
    */
   render() {
+    const theme = ThemedStyles.style;
     const me = this.props.user.me;
     const list = this.props.notifications.list;
     let empty = null;
@@ -114,7 +113,7 @@ class NotificationsScreen extends Component {
     }
 
     return (
-      <View style={CS.flexContainer}>
+      <View style={theme.flexContainer}>
         <OnFocus onFocus={this.onFocus} />
         <FlatList
           data={list.entities.slice()}
@@ -134,7 +133,7 @@ class NotificationsScreen extends Component {
           stickyHeaderIndices={this.headerIndex}
           windowSize={8}
           refreshing={list.refreshing}
-          style={[ThemedStyles.style.backgroundPrimary, CS.flexContainer]}
+          style={[theme.backgroundPrimary, theme.flexContainer]}
         />
       </View>
     );
@@ -172,7 +171,7 @@ class NotificationsScreen extends Component {
     return (
       <ErrorBoundary
         message="Can't show this notification"
-        containerStyle={CS.hairLineBottom}>
+        containerStyle={ThemedStyles.style.hairLineBottom}>
         <Notification entity={entity} navigation={this.props.navigation} />
       </ErrorBoundary>
     );

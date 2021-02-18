@@ -1,18 +1,19 @@
 import { observer } from 'mobx-react';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { View, Text } from 'react-native';
 import { DiscoveryTrendsListItem } from './DiscoveryTrendsListItem';
 import { ComponentsStyle } from '../../../styles/Components';
-import { useDiscoveryV2Store } from '../DiscoveryV2Context';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import i18n from '../../../common/services/i18n.service';
 import Button from '../../../common/components/Button';
-import DiscoveryTagsManager from '../tags/DiscoveryTagsManager';
 import FeedList from '../../../common/components/FeedList';
 import { useNavigation } from '@react-navigation/native';
+import type DiscoveryV2Store from '../DiscoveryV2Store';
+import CenteredLoading from '../../../common/components/CenteredLoading';
 
 type PropsType = {
   plus?: boolean;
+  store: DiscoveryV2Store;
 };
 
 const ItemPartial = (item, index) => {
@@ -22,34 +23,33 @@ const ItemPartial = (item, index) => {
 /**
  * Discovery List Item
  */
-export const DiscoveryTrendsList = observer(({ plus }: PropsType) => {
+export const DiscoveryTrendsList = observer(({ plus, store }: PropsType) => {
   const theme = ThemedStyles.style;
-  const discoveryV2 = useDiscoveryV2Store();
   let listRef = useRef<FeedList<any>>(null);
-  const [showManageTags, setShowManageTags] = useState(false);
-
-  const closeManageTags = () => {
-    setShowManageTags(false);
-    discoveryV2.refreshTrends();
-  };
 
   const navigation = useNavigation();
 
   useEffect(() => {
-    discoveryV2.loadTags(plus);
-    discoveryV2.loadTrends(plus);
-    discoveryV2.allFeed.fetch();
-  }, [discoveryV2, plus]);
+    store.loadTags(plus);
+    store.loadTrends(plus);
+    if (plus) {
+      store.allFeed.setParams({ plus: true });
+    }
+    store.allFeed.fetch();
+  }, [store, plus]);
 
   useEffect(() => {
     if (listRef.current && listRef.current.listRef) {
       listRef.current.listRef.scrollToOffset({ offset: -65, animated: true });
     }
-  }, [discoveryV2.refreshing, listRef]);
+  }, [store.refreshing, listRef]);
 
   const EmptyPartial = () => {
-    return discoveryV2.loading || discoveryV2.refreshing ? (
-      <View />
+    return store.loading ||
+      store.refreshing ||
+      store.allFeed.loading ||
+      store.allFeed.refreshing ? (
+      <CenteredLoading />
     ) : (
       <View style={[ComponentsStyle.emptyComponentContainer, theme.flexColumn]}>
         <Text style={ComponentsStyle.emptyComponentMessage}>
@@ -57,20 +57,21 @@ export const DiscoveryTrendsList = observer(({ plus }: PropsType) => {
         </Text>
         <Button
           text={i18n.t('discovery.selectTags')}
-          onPress={() => setShowManageTags(true)}
+          onPress={() => store.setShowManageTags(true)}
         />
       </View>
     );
   };
 
   const onRefresh = () => {
-    discoveryV2.refreshTrends(plus);
+    store.refreshTrends(plus, false);
+    store.allFeed.refresh();
   };
 
   const header = (
     <View
       style={[theme.borderBottom8x, theme.borderPrimary, theme.marginBottom2x]}>
-      {discoveryV2.trends.map(ItemPartial)}
+      {store.trends.map(ItemPartial)}
     </View>
   );
 
@@ -78,20 +79,13 @@ export const DiscoveryTrendsList = observer(({ plus }: PropsType) => {
    * Render
    */
   return (
-    <View style={theme.flexContainer}>
-      <DiscoveryTagsManager
-        show={showManageTags}
-        onCancel={closeManageTags}
-        onDone={closeManageTags}
-      />
-      <FeedList
-        ref={listRef}
-        header={header}
-        feedStore={discoveryV2.allFeed}
-        emptyMessage={EmptyPartial}
-        navigation={navigation}
-        onRefresh={onRefresh}
-      />
-    </View>
+    <FeedList
+      ref={listRef}
+      header={header}
+      feedStore={store.allFeed}
+      emptyMessage={EmptyPartial}
+      navigation={navigation}
+      onRefresh={onRefresh}
+    />
   );
 });

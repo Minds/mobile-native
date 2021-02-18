@@ -9,6 +9,7 @@ import ActivityModel from './ActivityModel';
 import { FLAG_VIEW } from '../common/Permissions';
 import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
 import CenteredLoading from '../common/components/CenteredLoading';
+import type BlogModel from '../blogs/BlogModel';
 
 export type ActivityRouteProp = RouteProp<AppStackParamList, 'Activity'>;
 type ActivityNavigationProp = StackNavigationProp<
@@ -66,7 +67,7 @@ const ActivityScreen = observer((props: PropsType) => {
           // in case it is opened from a deeplink and it is a blog we should replace withs blog screen
           if (store.entityStore.entity.subtype === 'blog') {
             props.navigation.replace('BlogView', {
-              blog: store.entityStore.entity,
+              blog: store.entityStore.entity as BlogModel,
             });
           }
         }

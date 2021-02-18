@@ -10,6 +10,7 @@ import {
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import FastImage from 'react-native-fast-image';
 import { observer } from 'mobx-react';
+import SmartImage from '../../src/common/components/SmartImage';
 
 import ThemedStyles from '../styles/ThemedStyles';
 import mediaProxyUrl from '../common/helpers/media-proxy-url';
@@ -24,11 +25,16 @@ const thumbSize = PixelRatio.getPixelSizeForLayoutSize(imgSize);
  */
 export default observer(function (props) {
   const theme = ThemedStyles.style;
-
   const source = { uri: mediaProxyUrl(props.meta.thumbnail, thumbSize) };
+  const thumbnail = { uri: mediaProxyUrl(props.meta.thumbnail, 30) };
 
   return (
-    <View style={[styles.container, theme.paddingHorizontal4x]}>
+    <View
+      style={[
+        styles.container,
+        theme.paddingHorizontal4x,
+        props.containerStyle,
+      ]}>
       {!props.isEdit && (
         <TouchableOpacity
           onPress={props.onRemove}
@@ -42,11 +48,13 @@ export default observer(function (props) {
           theme.borderHair,
           theme.borderPrimary,
           theme.borderRadius2x,
+          theme.backgroundPrimary,
         ]}>
-        <FastImage
+        <SmartImage
           style={styles.thumbnail}
           threshold={150}
           source={source}
+          thumbnail={thumbnail}
           resizeMode={FastImage.resizeMode.cover}
         />
         <View style={[styles.metaContainer, theme.padding]}>
@@ -74,6 +82,7 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: 'transparent',
     height: imgSize,
+    paddingTop: 10,
     position: 'relative',
     borderRadius: 1,
   },
@@ -87,7 +96,7 @@ const styles = StyleSheet.create({
   removeRichEmbed: {
     zIndex: 10000,
     position: 'absolute',
-    bottom: 8,
+    bottom: 0,
     left: 28,
     width: 30,
     height: 30,

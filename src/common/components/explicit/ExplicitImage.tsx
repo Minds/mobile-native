@@ -1,24 +1,22 @@
 //@ts-nocheck
-import React, { Component } from 'react';
 import { observer } from 'mobx-react';
+import React, { Component } from 'react';
 import { View } from 'react-native';
-import FastImage from 'react-native-fast-image';
-import type { Source } from 'react-native-fast-image';
-import { createImageProgress } from 'react-native-image-progress';
-import ProgressCircle from 'react-native-progress/Circle';
-
-import ConnectivityAwareSmartImage from '../ConnectivityAwareSmartImage';
+import type { FastImageProperties, Source } from 'react-native-fast-image';
 import { CommonStyle } from '../../../styles/Common';
+import ThemedStyles from '../../../styles/ThemedStyles';
 import type BaseModel from '../../BaseModel';
 
-const ProgressFastImage = createImageProgress(FastImage);
+import SmartImage from '../SmartImage';
 
-type PropsType = {
+interface PropsType extends FastImageProperties {
   onLoadEnd: () => void;
   source: Source;
+  thumbnail?: Source;
   onError: (error: any) => void;
   entity?: BaseModel;
-};
+  ignoreDataSaver?: boolean;
+}
 
 @observer
 export default class ExplicitImage extends Component<
@@ -29,14 +27,8 @@ export default class ExplicitImage extends Component<
     ready: false,
   };
 
-  imageError = (event) => {
-    // bubble event up
-    this.props.onError && this.props.onError(event.nativeEvent.error);
-  };
-
   render() {
-    const loadingIndicator = this.props.loadingIndicator;
-
+    const theme = ThemedStyles.style;
     // do not show image if it is mature
     if (
       this.props.entity.shouldBeBlured() &&
@@ -45,7 +37,7 @@ export default class ExplicitImage extends Component<
       return (
         <View
           style={[
-            CommonStyle.positionAbsolute,
+            theme.positionAbsolute,
             this.props.imageStyle,
             CommonStyle.blackOverlay,
           ]}
@@ -61,28 +53,15 @@ export default class ExplicitImage extends Component<
       return <View />;
     }
 
-    switch (loadingIndicator) {
-      case undefined:
-        return (
-          <ConnectivityAwareSmartImage
-            source={this.props.source}
-            onLoadEnd={this.props.onLoadEnd}
-            onLoad={this.props.onLoad}
-            style={[CommonStyle.positionAbsolute, this.props.imageStyle]}
-          />
-        );
-      case 'progress':
-        return (
-          <ProgressFastImage
-            indicator={ProgressCircle}
-            threshold={150}
-            source={this.props.source}
-            onLoadEnd={this.props.onLoadEnd}
-            onLoad={this.props.onLoad}
-            onError={this.imageError}
-            style={[CommonStyle.positionAbsolute, this.props.imageStyle]}
-          />
-        );
-    }
+    return (
+      <SmartImage
+        {...this.props}
+        ignoreDataSaver={
+          this.props.ignoreDataSaver ||
+          (this.props.entity && this.props.entity.paywall)
+        }
+        style={[theme.positionAbsolute, this.props.style]}
+      />
+    );
   }
 }

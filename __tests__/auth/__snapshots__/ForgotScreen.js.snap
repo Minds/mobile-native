@@ -49,7 +49,7 @@ exports[`ForgotScreen component should renders correctly 1`] = `
           Array [
             undefined,
             Object {
-              "paddingTop": 12,
+              "paddingTop": 10,
             },
             undefined,
             undefined,
@@ -85,12 +85,12 @@ exports[`ForgotScreen component should renders correctly 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": "#AEB0B8",
                       "fontFamily": "Roboto",
                       "fontSize": 16,
                       "fontWeight": "600",
                       "marginBottom": 5,
                     },
+                    undefined,
                     Array [
                       undefined,
                       undefined,
@@ -133,9 +133,9 @@ exports[`ForgotScreen component should renders correctly 1`] = `
                 Array [
                   Object {
                     "borderWidth": 0,
-                    "height": 32,
                     "marginBottom": 7,
-                    "padding": 0,
+                    "paddingHorizontal": 0,
+                    "paddingVertical": 8,
                   },
                   undefined,
                   undefined,
@@ -153,6 +153,7 @@ exports[`ForgotScreen component should renders correctly 1`] = `
           Array [
             undefined,
             undefined,
+            undefined,
           ]
         }
       >
@@ -163,21 +164,14 @@ exports[`ForgotScreen component should renders correctly 1`] = `
             Array [
               undefined,
               undefined,
-              undefined,
-              undefined,
               Object {
-                "backgroundColor": "#5DBAC0",
-                "borderRadius": 36,
+                "backgroundColor": "rgba(0,0,0,0.40)",
+                "borderColor": "rgba(255,255,255,0.60)",
+                "borderRadius": 21,
+                "paddingHorizontal": 23,
+                "paddingVertical": 10,
               },
-              Array [
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                Object {
-                  "borderColor": "rgba(255,255,255,0.20)",
-                },
-              ],
+              undefined,
             ]
           }
           text="Go back"
@@ -186,7 +180,10 @@ exports[`ForgotScreen component should renders correctly 1`] = `
             style={
               Array [
                 Object {
-                  "color": "white",
+                  "fontSize": 19,
+                },
+                Object {
+                  "color": "#FFFFFF",
                 },
                 undefined,
               ]
@@ -206,21 +203,16 @@ exports[`ForgotScreen component should renders correctly 1`] = `
             Array [
               undefined,
               undefined,
-              undefined,
-              undefined,
               Object {
-                "backgroundColor": "#5DBAC0",
-                "borderRadius": 36,
+                "backgroundColor": "rgba(0,0,0,0.40)",
+                "borderColor": "rgba(255,255,255,0.60)",
+                "borderRadius": 21,
+                "paddingHorizontal": 23,
+                "paddingVertical": 10,
               },
               Array [
                 undefined,
                 undefined,
-                undefined,
-                undefined,
-                undefined,
-                Object {
-                  "borderColor": "rgba(255,255,255,0.20)",
-                },
               ],
             ]
           }
@@ -230,7 +222,10 @@ exports[`ForgotScreen component should renders correctly 1`] = `
             style={
               Array [
                 Object {
-                  "color": "white",
+                  "fontSize": 19,
+                },
+                Object {
+                  "color": "#FFFFFF",
                 },
                 undefined,
               ]

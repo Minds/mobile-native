@@ -13,7 +13,11 @@
   "activity": {
     "loadEarlier": "LOAD EARLIER",
     "loadLater": "LOAD LATER",
-    "typeComment": "Type your comment...",
+    "notSafeComment": "This comment is not safe for work and cannot be accessed via iOS",
+    "explicitComment": "The comment is marked as Explicit",
+    "typeComment": "Add your comment",
+    "typeReply": "Add your reply",
+    "replyTo": "Reply to @{{user}}",
     "error": "SORRY, WE COULDN'T LOAD THE ACTIVITY",
     "tryAgain": "PLEASE TRY AGAIN LATER",
     "remindBlocked": "This remind is not available because you blocked",
@@ -171,11 +175,11 @@
     "offers": "Offers",
     "sidebars": "Sidebars",
     "feedsDescription": "Your content will appear on newsfeeds across the site.",
-    "offersDescription": "Your content will be shared to a specific channel in exchange for USD or tokens or rewards.",
+    "offersDescription": "Your content will be shared to a specific channel in exchange for USD or tokens.",
     "sidebarsDescription": "Your content will display on the sidebars throughout the site.",
     "tabNewsfeed": "Newsfeed",
     "tabSidebar": "Sidebar",
-    "tabOffers": "Offers",
+    "tabOffers": "Offer",
     "rejectionReasons": {
       "0": "Illegal",
       "1": "Explicit",
@@ -187,8 +191,14 @@
       "7": "Spam",
       "8": "Appeals on Boost decision",
       "12": "Onchain payment failed",
-      "13": "Original post removed"
-    }
+      "13": "Original post removed",
+      "14": "High Boost backlog"
+    },
+    "boostChannel": "Boost Channel",
+    "boostPost": "Boost Post",
+    "boostOffer": "Make Offer",
+    "paymentMethod": "PAYMENT METHOD",
+    "targetChannel": "Target Channel"
   },
   "translate": {
     "from": "translated from",
@@ -214,6 +224,7 @@
     "tagsDescription": "Tagging your post will make your content more easily discoverable.",
     "couldNotLoad": "The media from {{domain}} could not be loaded.",
     "maxHashtags": "Sorry, your post cannot contain more than {{maxHashtags}} hashtags.",
+    "duplicateHashtagas": "You have some duplicate hashtags",
     "schedule": "Schedule Post",
     "post": "Post",
     "remind": "Remind",
@@ -232,7 +243,9 @@
     "allowMinds": "Enable access so you can take photos and record videos to share on Minds",
     "blockedMinds": "You have blocked access to your camera and microphone. Please go to your device settings to enable.",
     "noHashtags": "Sorry, Plus monetized posts must have hashtags.",
-    "noExternalLinks": "Sorry, Plus monetized posts mustn't have external links."
+    "noExternalLinks": "Sorry, Plus monetized posts mustn't have external links.",
+    "attach": "Photo & Video Library",
+    "takePhoto": "Camera"
   },
   "channel": {
     "editChannel": "Edit Channel",
@@ -280,7 +293,9 @@
     "blogs": "Blogs",
     "groups": "Groups",
     "addTags": "Add tags to personalize your feed",
-    "selectTags": "Select tags"
+    "selectTags": "Select tags",
+    "posts": "posts",
+    "votes": "votes"
   },
   "groups": {
     "ongoingGathering": "Ongoing gathering",
@@ -321,7 +336,7 @@
     "checkCredentials": "Please check your credentials",
     "errorCreatingKeys": "Error creating the encryptions keys",
     "messenger": "Messenger",
-    "noMessages": "You don't have any messages",
+    "noMessages": "Search for someone to message",
     "logoutMessage": "Do you want to logout from messenger?",
     "changeKeyMessage": "Changing your encryption password will cause your previous messages to be unreadable",
     "notEncryptedMessage": "Hey @{{user}}! It looks like you haven't setup your encrypted chat password yet. We recommend that you use a different password than your account password for added security.",
@@ -511,6 +526,7 @@
   "settings": {
     "submit": "Submit",
     "blockedChannels": "Blocked Channels",
+    "noBlockedChannels": "You don't have any blocked Channels",
     "currentPassword": "Current Password",
     "disableChannelConfirm": "Your account will be disabled. Are you sure you want to proceed?",
     "deleteChannelConfirm": "Your account and all data related to it will be deleted permanently. Are you sure you want to proceed?",
@@ -535,6 +551,7 @@
     "other": "Other",
     "referrals": "Referrals",
     "account": "Account",
+    "network": "Network",
     "security": "Security",
     "billing": "Billing",
     "invalidPassword": "Incorrect password",
@@ -560,6 +577,9 @@
     "addTier": "Add Tier",
     "noTiers": "You don't have any tier",
     "payment": "Payment",
+    "dataSaverDisableOnWifi": "Disable on Wi-Fi",
+    "dataSaverDescription": "When Data Saver is turned on, videos won't load in advance to help you use less data.",
+    "dataSaverDisableOnWiFiDescription": "When enabled, Data Saver mode will automatically disable when a Wi-Fi connection is detected.",
     "reportedContent": {
       "action": {
         "actionNSFW": "marked NSFW",
@@ -588,6 +608,9 @@
       "5": "NSFW Content",
       "6": "Messenger",
       "7": "Autoplay Videos"
+    },
+    "networkOptions": {
+      "1": "Data Saver"
     },
     "securityOptions": {
       "1": "Two-factor authentication (2FA)",
@@ -624,6 +647,25 @@
     "tooLong": "Video duration must be less than {{minutes}} minutes"
   },
   "onboarding": {
+    "startEarning":"Start earning tokens",
+    "improveExperience":"Improve your experience",
+    "joinGroup":"Join a group",
+    "hidePanel": "Hide this panel",
+    "subscribeToChannel":"Subscribe to a channel",
+    "completeToEarn":"Complete to earn tokens",
+    "tooltipInitial1":"To get most from Minds",
+    "tooltipInitial2":"please complete these steps",
+    "verifyEmailAddress":"Verify email address",
+    "selectTags": "Select tags",
+    "setupChannel":"Setup channel",
+    "verifyUniqueness":"Verify uniqueness",
+    "setContentPreferences":"Set content preferences",
+    "verifyEmailDescription1":"A verification email was sent to {{email}} with a verification link.",
+    "verifyEmailDescription2":"Please check your spam folder if you can’t find it. Otherwise, you can resend it.",
+    "resendEmail":"Resend verification email",
+    "couldntLoadStatus":"Couldn't load your onboarding status",
+    "hashtagDescription":"Select at least three tags that are of interest to you. This will allow you to discover relevant content.",
+    "selectThreeTags":"Select at least three tags",
     "chooseAvatar": "Choose an avatar",
     "earnTokens": "Earn tokens for your activity",
     "weDontStorePhone": "We do not store your phone number on our servers.",
@@ -648,10 +690,18 @@
     "infoLocation": "Location",
     "infoDateBirth": "Date of Birth",
     "groupTitle": "Groups",
-    "numberConfirmed": "Your number has beed validated",
+    "numberConfirmed": "Your number has been validated",
     "phoneNumberTooltip": "Your mobile number may be used for additional account security, unique identification and to help your friends find you. This data is private and encrypted.",
     "dateofBirthTooltip": "Please enter your birth date to confirm your age and help us improve our recommendations.",
-    "locationTooltip": "Please enter your city to help us connect you with channels in your area. We do not track your exact location."
+    "locationTooltip": "Please enter your city to help us connect you with channels in your area. We do not track your exact location.",
+    "send": "Send Verification Code",
+    "resend": "Resend Code",
+    "sent": "Verification code sent to",
+    "connectWallet": "Connect Wallet",
+    "connectBank": "Connect Bank",
+    "buyTokens": "Buy Tokens",
+    "onboardingCompleted": "Now you can earn tokens",
+    "improvedExperience": "Your feed should be livelier!"
   },
   "membership": {
     "noTokens": "It doesn't accept Tokens",
@@ -694,7 +744,7 @@
       "bankInfoDescription": "Add your bank account details where monthly USD rewards are deposited",
       "add": "Add your bank details",
       "leave": "Leave Monetization Program",
-      "leaveDescription": "For security reasons, you don't be able to rejoin the monetization program",
+      "leaveDescription": "For security reasons, you won't be able to rejoin the monetization program",
       "leaveButton": "Leave Monetization Program",
       "confirmLeave": "Are you sure? You won't be able to rejoin.",
       "sure": "Yes, I'm sure",
@@ -853,7 +903,7 @@
     "6": "Other",
     "safe": "Safe",
     "notSafe": "Not Safe",
-    "notSafeChannel": "This channel is not Safe",
+    "notSafeChannel": "This channel is not safe for work and cannot be accessed via iOS",
     "categories": "NSFW Categories",
     "description1": "If this post contains content that is NSFW (Not Safe for Work)  it is your responsibility to tag it accordingly.",
     "description2": "See guidelines for further information.",
@@ -932,7 +982,7 @@
   "downloading": "Downloading",
   "confirm18": "I'm over 18 years of age",
   "postCantBeShown": "Can't be shown on apps installed via the Store",
-  "readMore": "Read More",
+  "readMore": "Show More",
   "showLess": "Show less",
   "featureUnavailablePlatform": "This feature is currently unavailable on your platform",
   "continue": "Continue",
@@ -941,6 +991,7 @@
   "save": "Save",
   "edit": "Edit",
   "goback": "Go back",
+  "quote":"Quote",
   "copy": "Copy",
   "yes": "Yes",
   "no": "No",
@@ -973,7 +1024,7 @@
   "errorMessage": "Sorry, it looks like there was an error.",
   "error": "Error",
   "reply": "Reply",
-  "setExplicit": "Set explicit",
+  "setExplicit": "Mark as explicit",
   "report": "Report",
   "removeExplicit": "Remove explicit",
   "members": "Members",
@@ -1030,6 +1081,10 @@
   "rememberTomorrow": "Remind me later",
   "enableComments": "Enable comments",
   "disableComments": "Disable comments",
+  "viewRepliesComments": {
+    "one":   "View 1 reply",
+    "other": "View {{count}} replies"
+  },
   "noInternet": "No Internet Connection",
   "cantReachServer": "Can't reach the server",
   "showingStored": "Showing stored data",
@@ -1042,18 +1097,27 @@
   "copied": "Copied to clipboard",
   "close": "Close",
   "now": "Now",
+  "joined":"Joined",
   "title": "Title",
   "filter": "Filter",
   "captcha": "Enter the characters above",
   "startFreeTrial":"Start free trial",
   "visibility": "Visibility",
   "about": "About",
+  "takePhoto":"Take a photo",
+  "uploadPhoto": "Upload a photo",
+  "uploading": "Uploading media, please wait",
+  "verify":"Verify",
+  "other":"Other",
   "purchase": "Purchase",
   "verification": "Verification",
   "uploadFailed": "Upload failed",
   "imageViewer": "View image",
-  "verify": "Verify",
-  "other": "Other",
+  "remindedBy":"Reminded by",
+  "postReminded":"Post has been reminded",
+  "remindRemoved":"Remind has been removed",
+  "deletedRemind":"This reminded content is unavailable. It may have been deleted or you do not have permission to view it",
+  "undoRemind":"Undo remind",
   "permaweb": {
     "title": "Permaweb",
     "description": "Posting to permaweb",
@@ -1062,5 +1126,6 @@
     "cannotMonetize": "Cannot post monetized posts to permaweb",
     "viewOnPermaweb": "Permaweb"
   },
-  "help": "Help"
+  "help": "Help",
+  "unblock":"Unblock"
 }
