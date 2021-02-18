@@ -29,7 +29,7 @@ import { showNotification } from '../../../../AppMessages';
 const options: Array<ButtonTabType<TokensOptions>> = [
   { id: 'rewards', title: 'Rewards' },
   { id: 'earnings', title: 'Earnings' },
-  { id: 'overview', title: 'Overview' },
+  { id: 'overview', title: 'Balance' },
   { id: 'transactions', title: 'Transactions' },
   { id: 'settings', title: 'Settings' },
 ];

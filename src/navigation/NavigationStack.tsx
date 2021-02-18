@@ -57,7 +57,6 @@ import OtherScreen from '../settings/screens/OtherScreen';
 import EmailScreen from '../settings/screens/EmailScreen';
 import EditChannelStack from '../channel/v2/edit/EditChannelStack';
 import ReceiverAddressScreen from '../wallet/v2/address/ReceiverAddressScreen';
-import LearnMoreScreen from '../wallet/v2/LearnMoreScreen';
 import BtcReceiverAddressScreen from '../wallet/v2/address/BtcAddressScreen';
 import BankInfoScreen from '../wallet/v2/address/BankInfoScreen';
 import ViewerScreen from '../discovery/v2/viewer/ViewerScreen';
@@ -464,17 +463,6 @@ const AppStack = function () {
         name="TierScreen"
         component={TierScreen}
         options={{ title: 'Tier Management' }}
-      />
-      <AppStackNav.Screen
-        name="LearnMoreScreen"
-        component={LearnMoreScreen}
-        options={{
-          title: i18n.t('wallet.learnMore.title'),
-          headerStyle: {
-            backgroundColor: ThemedStyles.getColor('primary_background'),
-          },
-          headerHideShadow: true,
-        }}
       />
       <AppStackNav.Screen
         name="ReceiverAddressScreen"
