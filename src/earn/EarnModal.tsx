@@ -1,5 +1,11 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Linking,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import UniswapWidget from '../common/components/uniswap-widget/UniswapWidget';
 import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
@@ -8,6 +14,11 @@ import { observer, useLocalStore } from 'mobx-react';
 import createLocalStore from './createLocalStore';
 import ModalScreen from '../common/components/ModalScreen';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
+const linkTo = (dest: string) =>
+  Linking.openURL(`https://www.minds.com/${dest}`);
+
+const onComplete = () => true;
 
 type EarnItemPropsType = {
   content: { name: string; icon?: string; onPress: () => void };
@@ -65,10 +76,8 @@ export default observer(function ({ navigation }) {
     getSettings();
   }, [localStore]);
 
-  const navToVideoCapture = () => {
-    navigation.goBack();
-    navigation.push('Capture', { mode: 'text', start: true });
-  };
+  const navTo = (screen: string, options = {}) =>
+    navigation.navigate(screen, options);
 
   const openWithdrawal = () => navigation.navigate('WalletWithdrawal');
 
@@ -86,42 +95,47 @@ export default observer(function ({ navigation }) {
     {
       name: 'create',
       icon: 'plus-box',
-      onPress: navToVideoCapture,
+      onPress: () => navTo('Capture', { mode: 'text', start: true }),
     },
     {
       name: 'refer',
       icon: 'account-multiple',
-      onPress: () => false,
+      onPress: () => navTo('Referrals'),
     },
   ];
 
   const resourcesItems = [
     {
       name: 'resources.rewards',
-      onPress: localStore.toggleUniswapWidget,
+      onPress: () => linkTo('rewards'),
     },
     {
       name: 'resources.tokens',
-      onPress: localStore.toggleUniswapWidget,
+      onPress: () => linkTo('token'),
     },
     {
       name: 'resources.earnings',
-      onPress: localStore.toggleUniswapWidget,
+      onPress: () =>
+        navTo('Tabs', { screen: 'CaptureTab', params: { screen: 'Wallet' } }),
     },
     {
       name: 'resources.analytics',
-      onPress: localStore.toggleUniswapWidget,
+      onPress: () =>
+        navTo('Tabs', {
+          screen: 'CaptureTab',
+          params: { screen: 'Analytics' },
+        }),
     },
   ];
 
   const unlockItems = [
     {
       name: 'unlock.mindsPlus',
-      onPress: localStore.toggleUniswapWidget,
+      onPress: () => navTo('PlusScreen', { onComplete, pro: false }),
     },
     {
       name: 'unlock.pro',
-      onPress: localStore.toggleUniswapWidget,
+      onPress: () => navTo('PlusScreen', { onComplete, pro: true }),
     },
   ];
 

@@ -114,7 +114,6 @@ import SuggestedGroupsScreen from '../onboarding/v2/steps/SuggestedGroupsScreen'
 import BoostChannelScreen from '../boost/v2/BoostChannelScreen';
 import BoostPostScreen from '../boost/v2/BoostPostScreen';
 import BuyTokensScreen from '../buy-tokens/BuyTokensScreen';
-import EarnScreen from '../earn/EarnScreen';
 import { topBarButtonTabBarRef } from '../common/components/topbar-tabbar/TopBarButtonTabBar';
 import ExportLegacyWallet from '../settings/screens/ExportLegacyWallet';
 import Withdrawal from '../wallet/v3/currency-tabs/tokens/widthdrawal/Withdrawal';
@@ -276,7 +275,6 @@ export const InternalStack = () => {
 
       <InternalStackNav.Screen name="Settings" component={SettingsScreen} />
       <InternalStackNav.Screen name="BuyTokens" component={BuyTokensScreen} />
-      <InternalStackNav.Screen name="Earn" component={EarnScreen} />
     </InternalStackNav.Navigator>
   );
 };
