@@ -11,6 +11,7 @@ import { BottomOptionsStoreType } from '../../../common/components/BottomOptionP
 import i18n from '../../../common/services/i18n.service';
 import TokensChart from './TokensChart';
 import useWalletConnect from '../../../blockchain/v2/walletconnect/useWalletConnect';
+import { navToTokens } from '../../../buy-tokens/BuyTokensScreen';
 
 type PropsType = {
   walletStore: WalletStoreType;
@@ -45,7 +46,7 @@ const TokensOverview = observer(({ walletStore, bottomStore }: PropsType) => {
     },
     {
       title: i18n.t('wallet.leanMore'),
-      onPress: () => Linking.openURL('https://www.minds.com/token'),
+      onPress: navToTokens,
       noIcon: true,
     },
   ];

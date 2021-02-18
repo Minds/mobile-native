@@ -20,6 +20,10 @@ import mindsService from '../common/services/minds.service';
 type PaymentMethod = 'card' | 'bank' | 'crypto';
 type PaymentOption = { type: PaymentMethod; name: string };
 
+export const navToTokens = () => {
+  Linking.openURL('https://www.minds.com/token');
+};
+
 type Store = {
   transakApiKey: string;
   tokenAddress: string;
@@ -141,7 +145,9 @@ export default observer(() => {
           />
         </View>
         <View style={[theme.flexContainer, theme.rowJustifySpaceBetween]}>
-          <Text style={[theme.colorPrimaryText, styles.learMoreLink]}>
+          <Text
+            style={[theme.colorPrimaryText, styles.learMoreLink]}
+            onPress={navToTokens}>
             {i18n.t('buyTokensScreen.learnMore')}
           </Text>
           <Button
