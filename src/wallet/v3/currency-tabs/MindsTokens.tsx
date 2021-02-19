@@ -13,7 +13,9 @@ type PropsType = {
 };
 
 export const format = (number: number | string, decimals = true) => {
-  const temp: number = typeof number === 'string' ? parseFloat(number) : number;
+  let temp: number = typeof number === 'string' ? parseFloat(number) : number;
+  const isNegative = temp < 0;
+  temp = Math.abs(temp);
   let r = '';
   if (temp === 0) {
     r = '0';
@@ -26,7 +28,7 @@ export const format = (number: number | string, decimals = true) => {
   } else {
     r = abbrev(temp).toString();
   }
-  return r;
+  return isNegative ? `-${r}` : r;
 };
 
 const MindsTokens = ({
@@ -43,9 +45,16 @@ const MindsTokens = ({
   const cash = isTokens ? mindsPriceF * mindsF : mindsF;
   return (
     <Text style={[styles.minds, textStyles]}>
-      {isTokens ? ' ' : '$'}
+      {isTokens ? '' : '$'}
       {format(mindsF)}
-      {isTokens ? ' MINDS ' : ''}
+      {isTokens ? (
+        <Text style={[theme.colorSecondaryText, secondaryTextStyle]}>
+          {' '}
+          MINDS{' '}
+        </Text>
+      ) : (
+        ''
+      )}
       {isTokens && (
         <Text
           style={[styles.cash, theme.colorSecondaryText, secondaryTextStyle]}>

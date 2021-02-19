@@ -377,17 +377,20 @@ const createWalletStore = () => ({
       this.usdPayoutsTotals = SUM_CENTS(this.usdPayouts);
     }
   },
+  async loadPrices() {
+    if (this.prices.minds === '0') {
+      const prices = <any>await api.get('api/v3/blockchain/token-prices');
+      this.prices.minds = prices.minds;
+      this.prices.eth = prices.eth;
+    }
+  },
   async loadRewards(date: Date) {
     try {
       const dateTs = getStartOfDayUnixTs(date);
       let rewards = <any>await api.get('api/v3/rewards/', {
         date: date.toISOString(),
       });
-      if (this.prices.minds === '0') {
-        const prices = <any>await api.get('api/v3/blockchain/token-prices');
-        this.prices.minds = prices.minds;
-        this.prices.eth = prices.eth;
-      }
+      await this.loadPrices();
       const response = <any>await api.get('api/v2/blockchain/contributions', {
         from: dateTs,
         to: dateTs + 1,

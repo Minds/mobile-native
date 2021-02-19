@@ -29,7 +29,10 @@ function TopBarButtonTabBar<T>(props: PropsType<T>) {
 
   return (
     <View style={[theme.rowJustifyStart, theme.paddingLeft]}>
-      <ScrollView horizontal ref={topBarButtonTabBarRef}>
+      <ScrollView
+        horizontal
+        ref={topBarButtonTabBarRef}
+        snapToAlignment={'center'}>
         {props.tabs.map((tab, i) => (
           <Button
             borderless
