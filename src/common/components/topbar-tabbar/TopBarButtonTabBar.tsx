@@ -61,7 +61,6 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 15,
     borderRadius: 15,
-    marginHorizontal: 5,
   },
   text: {
     color: '#FFFFFF',
