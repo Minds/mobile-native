@@ -80,6 +80,10 @@ const Comparative = ({
 }) => {
   const theme = ThemedStyles.style;
 
+  if (parseFloat(comparative.total_diff) === 0) {
+    return null;
+  }
+
   return (
     <View style={theme.rowJustifyStart}>
       <Icon
@@ -111,11 +115,12 @@ const AmountInfo = ({ metrics }: { metrics: TokensMetrics }) => {
     case 'usd':
       body = (
         <MindsTokens
-          textStyles={styles.amountText}
+          textStyles={[styles.amountText, theme.colorPrimaryText]}
           secondaryTextStyle={styles.amountTextSecondary}
           mindsPrice={wallet.prices.minds}
           currencyType={'tokens'}
           value={metrics.total}
+          cashAsPrimary
         />
       );
       break;
