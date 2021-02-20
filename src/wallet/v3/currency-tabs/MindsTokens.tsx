@@ -10,6 +10,7 @@ type PropsType = {
   value: string;
   mindsPrice: string;
   currencyType?: EarningsCurrencyType;
+  cashAsPrimary?: boolean;
 };
 
 export const format = (number: number | string, decimals = true) => {
@@ -37,6 +38,7 @@ const MindsTokens = ({
   value,
   mindsPrice,
   currencyType,
+  cashAsPrimary,
 }: PropsType) => {
   const isTokens = !currencyType || currencyType === 'tokens';
   const theme = ThemedStyles.style;
@@ -57,8 +59,12 @@ const MindsTokens = ({
       )}
       {isTokens && (
         <Text
-          style={[styles.cash, theme.colorSecondaryText, secondaryTextStyle]}>
-          (${format(cash)})
+          style={[
+            styles.cash,
+            theme.colorSecondaryText,
+            cashAsPrimary ? textStyles : secondaryTextStyle,
+          ]}>
+          · ${format(cash)}
         </Text>
       )}
     </Text>
