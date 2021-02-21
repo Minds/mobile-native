@@ -17,6 +17,7 @@ import AccordionHeader from './AccordionHeader';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import CenteredLoading from '../../../common/components/CenteredLoading';
 import capitalize from '../../../common/helpers/capitalize';
+import toFriendlyCrypto from '../../../common/helpers/toFriendlyCrypto';
 
 type PropsType = {
   localStore: TokensEarningsStore;
@@ -47,7 +48,9 @@ const getProcessedData = (
 ): AccordionContentData[] =>
   earning.items.map((data) => {
     const isTokens = !currencyType || currencyType === 'tokens';
-    const value = isTokens ? data.amount_tokens : data.amount_usd;
+    const value = isTokens
+      ? toFriendlyCrypto(data.amount_tokens)
+      : data.amount_usd;
     const formattedValue = value ? format(value) : 0;
     return {
       title: getFriendlyLabel(data.id),
@@ -84,7 +87,7 @@ const EarningsOverview = observer(
       .map((earning) => {
         const value =
           currencyType === 'tokens'
-            ? earning.amount_tokens || 0
+            ? toFriendlyCrypto(earning.amount_tokens) || 0
             : earning.amount_usd > 0
             ? earning.amount_usd
             : 0;
