@@ -84,6 +84,8 @@ const Comparative = ({
     return null;
   }
 
+  const prcnt = (parseFloat(comparative.total_diff) / parseFloat(total)) * 100;
+
   return (
     <View style={theme.rowJustifyStart}>
       <Icon
@@ -94,12 +96,7 @@ const Comparative = ({
       <Text style={styles.comparativeText}>
         {format(comparative.total_diff)}{' '}
         <Text style={[styles.comparativeText, theme.colorSecondaryText]}>
-          (
-          {(
-            (parseFloat(comparative.total_diff) / parseFloat(total)) *
-            100
-          ).toPrecision(2)}
-          %)
+          ({Math.round((prcnt + Number.EPSILON) * 100) / 100}%)
         </Text>
       </Text>
     </View>
