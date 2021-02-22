@@ -718,7 +718,7 @@
     "reconnect":"Reconnect Wallet",
     "cash": "Cash",
     "activeAddress": "Mobile Receiver Address (Active)",
-    "alternateReceiver": "Alternate receiver address",
+    "alternateReceiver": "Change Address",
     "createAddress": "Create a new address (Recommended)",
     "transferToOnchain": "Transfer to On-chain",
     "usePrivateKey": "Use your private key",
@@ -824,7 +824,7 @@
       "description": "You can receive Bitcoin payments by linking your Bitcoin receiver address below.",
       "add": "Add bitcoin address",
       "current": "CURRENT RECEIVER ADDRESS",
-      "update": "Update Address",
+      "update": "Update Bitcoin Address",
       "error": "SORRY, WE COULDN'T SET YOUR ADDRESS"
     },
     "bank": {

@@ -134,7 +134,14 @@ const TokensTab = observer(
         );
         break;
       case 'settings':
-        body = <ReceiverSettings />;
+        body = (
+          <ReceiverSettings
+            navigation={navigation}
+            connectWallet={connectWallet}
+            onchainStore={onchainStore}
+            walletStore={walletStore}
+          />
+        );
         break;
     }
 
