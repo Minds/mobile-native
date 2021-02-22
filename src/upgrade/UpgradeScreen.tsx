@@ -77,9 +77,8 @@ const PlusScreen = observer(({ navigation, route }: PropsType) => {
 
   useEffect(() => {
     const init = async () => {
-      await wallet.loadPrices();
       if (!localStore.loaded) {
-        localStore.init(pro, wallet.prices.minds);
+        localStore.init(pro);
       }
     };
     init();

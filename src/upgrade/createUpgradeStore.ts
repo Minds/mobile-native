@@ -75,8 +75,8 @@ const createUpgradeStore = () => {
     get canHaveTrial(): boolean {
       return this.method === 'usd' && this.settings.yearly.can_have_trial;
     },
-    init(pro: boolean = false, mindsPrice: string) {
-      this.getSettings(pro, mindsPrice);
+    init(pro: boolean = false) {
+      this.getSettings(pro);
     },
     setMonthly(monthly: boolean) {
       this.monthly = monthly;
@@ -84,7 +84,7 @@ const createUpgradeStore = () => {
     setLoading(loading) {
       this.loading = loading;
     },
-    async getSettings(pro: boolean, mindsPrice: string) {
+    async getSettings(pro: boolean) {
       // update the settings
       await mindsService.update();
       // used to get costs for plus
