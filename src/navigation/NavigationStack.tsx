@@ -65,7 +65,7 @@ import PlusMonetizeScreen from '../compose/monetize/PlusMonetizeScreeen';
 import MembershipMonetizeScreeen from '../compose/monetize/MembershipMonetizeScreeen';
 import CustomMonetizeScreen from '../compose/monetize/CustomMonetizeScreeen';
 import TierScreen from '../settings/screens/TierScreen';
-import PlusScreen from '../common/components/PlusScreen';
+import UpgradeScreen from '../upgrade/UpgradeScreen';
 import PlusDiscoveryScreen from '../discovery/v2/PlusDiscoveryScreen';
 import featuresService from '../common/services/features.service';
 import JoinMembershipScreen from '../wire/v2/tiers/JoinMembershipScreen';
@@ -681,8 +681,8 @@ const RootStack = function (props) {
             component={BlockchainWalletModalScreen}
           /> */}
           <RootStackNav.Screen
-            name="PlusScreen"
-            component={PlusScreen}
+            name="UpgradeScreen"
+            component={UpgradeScreen}
             options={modalOptions}
           />
           <RootStackNav.Screen

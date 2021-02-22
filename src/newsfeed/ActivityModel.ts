@@ -397,7 +397,7 @@ export default class ActivityModel extends BaseModel {
 
     switch (lockType) {
       case 'plus':
-        NavigationService.push('PlusScreen', {
+        NavigationService.push('UpgradeScreen', {
           support_tier,
           entity: this,
           onComplete: (resultComplete: any) => {

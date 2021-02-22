@@ -41,7 +41,7 @@ export type RootStackParamList = {
   };
   BoostChannelScreen: {};
   BoostPostScreen: { entity: ActivityModel };
-  PlusScreen: {
+  UpgradeScreen: {
     onComplete: Function;
     pro?: boolean;
   };
@@ -212,7 +212,7 @@ export type AppStackParamList = {
     walletStore: WalletStoreType;
   };
   TierScreen: {};
-  PlusScreen: {
+  UpgradeScreen: {
     onComplete: Function;
     pro?: boolean;
   };
