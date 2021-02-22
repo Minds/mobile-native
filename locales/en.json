@@ -264,6 +264,7 @@
     "blocked": "Channel Blocked",
     "banned": "This channel is banned",
     "viewScheduled": "Scheduled",
+    "notExist": "Sorry, this channel doesn't appear to exist",
     "edit": {
       "bio": "Bio",
       "about": "About Info",
