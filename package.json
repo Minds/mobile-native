@@ -91,7 +91,7 @@
     "react-native-modal-datetime-picker": "^8.5.1",
     "react-native-month-year-picker": "^1.6.3",
     "react-native-navigation-bar-color": "^2.0.1",
-    "react-native-notifications": "Minds/react-native-notifications",
+    "react-native-notifications": "Minds/react-native-notifications#6955229ed2b7c44a75b151d727acf532fc4fd7ba",
     "react-native-permissions": "^2.2.0",
     "react-native-phone-input": "thegamenicorus/react-native-phone-input#6ab1a91a09ddd4272fe85e30ecedf092f0fcb1a7",
     "react-native-photo-editor": "^1.0.7",
