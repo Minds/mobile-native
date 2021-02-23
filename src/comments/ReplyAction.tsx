@@ -11,6 +11,7 @@ import { TouchableOpacity as TouchableGesture } from 'react-native-gesture-handl
 
 // prevent double tap in touchable
 const TouchableOpacityCustom = withPreventDoubleTap(
+  // @ts-ignore
   Platform.OS === 'ios' ? TouchableOpacity : TouchableGesture,
 );
 

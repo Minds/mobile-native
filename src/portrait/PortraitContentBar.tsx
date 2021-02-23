@@ -120,6 +120,7 @@ const PortraitContentBar = observer(
           theme.fullWidth,
         ]}>
         <FlatList
+          // @ts-ignore
           ref={portraitBarRef}
           contentContainerStyle={[
             theme.rowJustifyStart,
