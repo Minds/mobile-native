@@ -155,7 +155,7 @@
     "jest-expo": "^38.0.2",
     "jest-serializer-enzyme": "^1.0.0",
     "metro-react-native-babel-preset": "^0.58.0",
-    "prettier": "^2.0.2",
+    "prettier": "^2.2.1",
     "react-addons-test-utils": "^15.6.2",
     "react-dom": "^16.13.1",
     "react-test-renderer": "16.13.1",
