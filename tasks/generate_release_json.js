@@ -37,7 +37,7 @@ input.on('readable', () => {
     const v = {
       version: version,
       timestamp: (new Date()).timestamp,
-      href: 'https://cdn-assets.minds.com/mobile/' + filename,
+      href: 'https://cdn-assets.minds.com/android/' + filename,
       sourceHref: 'https://gitlab.com/minds/mobile-native/commits/v' + version,
       changelog: ['Changelog here'],
       unstable: false,

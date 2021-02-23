@@ -67,7 +67,37 @@ Run the tests
 
 You can use -c ios.sim.release for e2e test a production build
 
-### Custom Release
+### Building releases
+
+#### Setup your environment variables
+
+`export ANDROID_KEYSTORE=`
+
+`export KEYSTORE_PASSWORD=`
+
+`export SENTRY_ANDROID_PROPERTIES=`
+
+#### Build
+
+1) Build the app
+
+`cd android && fastlane assemble_build && cd ..`
+
+2) Push to s3
+
+`aws s3 cp android/app/build/outputs/apk/release/app-release.apk s3://minds-repo/android/Minds-stable-4-8-2.apk`
+
+3) Update the releases.json
+
+`yarn release-json android/app/build/outputs/apk/release/app-release.apk`
+
+4) Verify the release name is correct in ./releases.json
+
+6) Upload the releases.json changes
+
+`aws s3 cp releases.json s3://minds-repo/android/releases/releases.json`
+
+#### Custom Release
 
 Once the file is generated in the CI download the apk and run:
 
