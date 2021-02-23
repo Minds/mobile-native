@@ -1,16 +1,15 @@
 import React from 'react';
-import ThemedStyles from '../../../styles/ThemedStyles';
-import { View } from 'react-native';
+import ThemedStyles from '../../../../styles/ThemedStyles';
 import { Reward } from './TokensRewards';
-import { format } from './MindsTokens';
-import { Container, Info, Row, Title } from './AccordionContent';
+import { format } from '../MindsTokens';
+import { Container, Info, Row, Title } from '../AccordionContent';
+import { View } from 'react-native';
 
 type PropsType = {
-  liquidityPositions: any;
   reward: Reward;
 };
 
-const LiquiditySummary = ({ liquidityPositions, reward }: PropsType) => {
+const HoldingSummary = ({ reward }: PropsType) => {
   const theme = ThemedStyles.style;
 
   const progressBar = [
@@ -22,17 +21,11 @@ const LiquiditySummary = ({ liquidityPositions, reward }: PropsType) => {
     <>
       <Container>
         <Row>
-          <Title>Liquidity position</Title>
+          <Title>OnChain Tokens</Title>
         </Row>
         <Row>
-          <Info>
-            {format(liquidityPositions?.current_liquidity?.MINDS, false)}{' '}
-          </Info>
-          <Title style={theme.marginLeft3x}>tokens / </Title>
-          <Info>
-            {format(liquidityPositions?.current_liquidity?.USD, false)}{' '}
-          </Info>
-          <Title>USD</Title>
+          <Info>{format(reward.score, false)} </Info>
+          <Title style={theme.marginLeft3x}>tokens</Title>
         </Row>
       </Container>
       <Container>
@@ -52,4 +45,4 @@ const LiquiditySummary = ({ liquidityPositions, reward }: PropsType) => {
   );
 };
 
-export default LiquiditySummary;
+export default HoldingSummary;

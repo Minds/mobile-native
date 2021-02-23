@@ -8,7 +8,7 @@ import i18n from '../../../../common/services/i18n.service';
 import type { WalletStoreType } from '../../createWalletStore';
 import type { BottomOptionsStoreType } from '../../../../common/components/BottomOptionPopup';
 import CenteredLoading from '../../../../common/components/CenteredLoading';
-import createWithdrawStore from './createWithdrawStore';
+import createWithdrawStore from '../../../v3/currency-tabs/tokens/widthdrawal/createWithdrawStore';
 import type { WCStore } from '../../../../blockchain/v2/walletconnect/WalletConnectContext';
 
 type PropsType = {

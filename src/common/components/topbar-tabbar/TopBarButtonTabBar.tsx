@@ -1,5 +1,12 @@
 import React from 'react';
-import { View, StyleProp, TextStyle, StyleSheet } from 'react-native';
+import {
+  View,
+  StyleProp,
+  TextStyle,
+  StyleSheet,
+  Insets,
+  Platform,
+} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import Button from '../Button';
@@ -29,7 +36,14 @@ function TopBarButtonTabBar<T>(props: PropsType<T>) {
 
   return (
     <View style={[theme.rowJustifyStart, theme.paddingLeft]}>
-      <ScrollView horizontal ref={topBarButtonTabBarRef}>
+      <ScrollView
+        horizontal
+        ref={topBarButtonTabBarRef}
+        contentContainerStyle={
+          Platform.OS === 'android'
+            ? theme.paddingBottom
+            : theme.paddingBottom2x
+        }>
         {props.tabs.map((tab, i) => (
           <Button
             borderless
@@ -58,7 +72,6 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 15,
     borderRadius: 15,
-    marginHorizontal: 5,
   },
   text: {
     color: '#FFFFFF',

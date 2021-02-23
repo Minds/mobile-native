@@ -69,7 +69,7 @@ const PlusMonetizeScreen = observer(({ route, navigation }: PropsType) => {
             text={i18n.t('monetize.plusMonetize.upgrade')}
             textStyle={styles.title}
             onPress={() =>
-              navigation.push('PlusScreen', { onComplete, pro: false })
+              navigation.push('UpgradeScreen', { onComplete, pro: false })
             }
           />
         </View>

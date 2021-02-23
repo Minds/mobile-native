@@ -20,6 +20,10 @@ import mindsService from '../common/services/minds.service';
 type PaymentMethod = 'card' | 'bank' | 'crypto';
 type PaymentOption = { type: PaymentMethod; name: string };
 
+export const navToTokens = () => {
+  Linking.openURL('https://www.minds.com/token');
+};
+
 type Store = {
   transakApiKey: string;
   tokenAddress: string;
@@ -97,11 +101,22 @@ export default observer(() => {
               style={[
                 theme.borderPrimary,
                 styles.option,
-                ...buildButtonStyles(theme, index),
-                store.paymentMethod === type ? theme.backgroundSecondary : '',
+                ...buildButtonStyles(
+                  theme,
+                  index,
+                  store.paymentMethod === type,
+                ),
+                store.paymentMethod === type ? theme.backgroundLink : '',
               ]}
               onPress={() => store.handleOptionSelection(type)}>
-              <Text style={theme.colorPrimaryText}>{name}</Text>
+              <Text
+                style={
+                  store.paymentMethod === type
+                    ? theme.colorWhite
+                    : theme.colorPrimaryText
+                }>
+                {name}
+              </Text>
             </Pressable>
           ))}
         </View>
@@ -141,7 +156,9 @@ export default observer(() => {
           />
         </View>
         <View style={[theme.flexContainer, theme.rowJustifySpaceBetween]}>
-          <Text style={[theme.colorPrimaryText, styles.learMoreLink]}>
+          <Text
+            style={[theme.colorPrimaryText, styles.learMoreLink]}
+            onPress={navToTokens}>
             {i18n.t('buyTokensScreen.learnMore')}
           </Text>
           <Button
@@ -286,14 +303,18 @@ const paymentMethodsList: PaymentOption[] = [
   { type: 'crypto', name: 'Crypto' },
 ];
 
-const buildButtonStyles = (theme: ThemedStyle, position: number) => {
+const buildButtonStyles = (
+  theme: ThemedStyle,
+  position: number,
+  isSelected: boolean,
+) => {
   switch (position) {
     case 0:
-      return [styles.firstOption, theme.border2x];
+      return [styles.firstOption, isSelected ? {} : theme.border2x];
     case 1:
-      return [theme.borderTop2x, theme.borderBottom2x];
+      return isSelected ? [] : [theme.borderTop2x, theme.borderBottom2x];
     case 2:
-      return [styles.lastOption, theme.border2x];
+      return [styles.lastOption, isSelected ? {} : theme.border2x];
     default:
       return [];
   }

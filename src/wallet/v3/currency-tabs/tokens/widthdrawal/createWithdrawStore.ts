@@ -1,18 +1,17 @@
-import i18n from '../../../../common/services/i18n.service';
-import validatorService from '../../../../common/services/validator.service';
-import logService from '../../../../common/services/log.service';
-import api from '../../../../common/services/api.service';
-import BlockchainWithdrawService from '../../../../blockchain/v2/services/BlockchainWithdrawService';
-import { UserError } from '../../../../common/UserError';
-import sessionService from '../../../../common/services/session.service';
-import type { WalletStoreType } from '../../createWalletStore';
-import type { BottomOptionsStoreType } from '../../../../common/components/BottomOptionPopup';
-import type { WCStore } from '../../../../blockchain/v2/walletconnect/WalletConnectContext';
+import i18n from '../../../../../common/services/i18n.service';
+import validatorService from '../../../../../common/services/validator.service';
+import logService from '../../../../../common/services/log.service';
+import api from '../../../../../common/services/api.service';
+import BlockchainWithdrawService from '../../../../../blockchain/v2/services/BlockchainWithdrawService';
+import { UserError } from '../../../../../common/UserError';
+import sessionService from '../../../../../common/services/session.service';
+import type { WalletStoreType } from '../../../../v2/createWalletStore';
+import type { WCStore } from '../../../../../blockchain/v2/walletconnect/WalletConnectContext';
 
 const createWithdrawStore = (p: {
   walletStore: WalletStoreType;
-  bottomStore: BottomOptionsStoreType;
   wc: WCStore;
+  navigation: any;
 }) => {
   const store = {
     amount: p.walletStore.wallet.offchain.balance.toString(),
@@ -27,22 +26,19 @@ const createWithdrawStore = (p: {
     toggleAccept() {
       this.accept = !this.accept;
     },
+    async onPressTransfer() {
+      if (this.error || !this.canTransfer || this.inProgress) {
+        return;
+      }
+      try {
+        await this.withdraw();
+        p.navigation.goBack();
+      } catch (err) {
+        logService.exception(err);
+      }
+    },
     init() {
       this.getCanTransfer().then((v) => this.setCanTransfer(v));
-      p.bottomStore.setOnPressDone(async () => {
-        if (!this.accept) {
-          throw new UserError(i18n.t('auth.termsAcceptedError'), 'info');
-        }
-        if (this.error || !this.canTransfer || this.inProgress) {
-          return;
-        }
-        try {
-          await this.withdraw();
-          p.bottomStore.hide();
-        } catch (err) {
-          logService.exception(err);
-        }
-      });
     },
     setInProgress(value: boolean) {
       this.inProgress = value;

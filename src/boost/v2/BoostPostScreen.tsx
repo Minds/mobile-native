@@ -1,20 +1,19 @@
 import { RouteProp } from '@react-navigation/native';
 import { observer, useLocalStore } from 'mobx-react';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import TopbarTabbar, {
   TabType,
 } from '../../common/components/topbar-tabbar/TopbarTabbar';
 import { useStores } from '../../common/hooks/use-stores';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
-import BoostHeader from './BoostHeader';
 import createBoostStore from './createBoostStore';
 import NewsfeedBoostTab from './NewsfeedBoostTab';
 import OfferBoostTab from './OfferBoostTab';
 import { RootStackParamList } from '../../navigation/NavigationTypes';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import useWalletConnect from '../../blockchain/v2/walletconnect/useWalletConnect';
+import ModalScreen from '../../common/components/ModalScreen';
 
 type BoostTabType = 'newsfeed' | 'offer';
 
@@ -29,10 +28,6 @@ type PropsType = {
 
 const BoostPostScreen = observer(({ route }: PropsType) => {
   const theme = ThemedStyles.style;
-  const insets = useSafeAreaInsets();
-  const cleanTop = insets.top
-    ? { marginTop: insets.top + 50 }
-    : { marginTop: 30 };
   const [tab, setTab] = useState<BoostTabType>('newsfeed');
   const wallet = useStores().wallet;
   const wc = useWalletConnect();
@@ -58,23 +53,15 @@ const BoostPostScreen = observer(({ route }: PropsType) => {
     }
   };
   return (
-    <View style={[styles.container, theme.backgroundPrimary, cleanTop]}>
-      <BoostHeader title={i18n.t('boosts.boostPost')} />
+    <ModalScreen
+      title={i18n.t('boosts.boostPost')}
+      source={require('../../assets/boostBG.png')}>
       <View style={theme.marginTop4x}>
         <TopbarTabbar tabs={tabs} onChange={setTab} current={tab} />
       </View>
       {renderTab()}
-    </View>
+    </ModalScreen>
   );
-});
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    borderTopRightRadius: 10,
-    borderTopLeftRadius: 10,
-    overflow: 'hidden',
-  },
 });
 
 export default BoostPostScreen;

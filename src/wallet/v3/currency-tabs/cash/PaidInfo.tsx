@@ -1,17 +1,18 @@
 import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import i18n from '../../../common/services/i18n.service';
-import ThemedStyles from '../../../styles/ThemedStyles';
-import { WalletStoreType } from '../../v2/createWalletStore';
+import i18n from '../../../../common/services/i18n.service';
+import ThemedStyles from '../../../../styles/ThemedStyles';
+import { WalletStoreType } from '../../../v2/createWalletStore';
 
 type PropsType = {
   walletStore: WalletStoreType;
 };
 
-const BalanceInfo = ({ walletStore }: PropsType) => {
+const PaidInfo = ({ walletStore }: PropsType) => {
   const theme = ThemedStyles.style;
-  const offchain = walletStore.wallet.offchain.balance;
-  const onchain = walletStore.wallet.onchain.balance;
+  const unpaidEarnings = walletStore.stripeDetails.pendingBalanceSplit;
+  const totalPaidOuts = walletStore.stripeDetails.totalPaidOutSplit;
+  const allTimeEarnings = unpaidEarnings + totalPaidOuts;
   const viewPadding = [theme.paddingLeft3x, theme.paddingTop3x];
   const titleStyle = [
     theme.colorSecondaryText,
@@ -23,8 +24,8 @@ const BalanceInfo = ({ walletStore }: PropsType) => {
     <View style={styles.container}>
       <ScrollView>
         <View style={viewPadding}>
-          <Text style={titleStyle}>{i18n.t('blockchain.offchain')}</Text>
-          <Text style={earningStyle}>{offchain}</Text>
+          <Text style={titleStyle}>{i18n.t('wallet.unpaidEarnings')}</Text>
+          <Text style={earningStyle}>${unpaidEarnings}</Text>
         </View>
         <View
           style={[
@@ -33,8 +34,11 @@ const BalanceInfo = ({ walletStore }: PropsType) => {
             theme.marginTop3x,
             ...viewPadding,
           ]}>
-          <Text style={titleStyle}>{i18n.t('blockchain.onchain')}</Text>
-          <Text style={earningStyle}>{onchain}</Text>
+          <Text style={titleStyle}>{i18n.t('wallet.totalPaidout')}</Text>
+          <Text style={earningStyle}>${totalPaidOuts}</Text>
+
+          <Text style={titleStyle}>{i18n.t('wallet.alltime')}</Text>
+          <Text style={earningStyle}>${allTimeEarnings}</Text>
         </View>
       </ScrollView>
     </View>
@@ -55,4 +59,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BalanceInfo;
+export default PaidInfo;

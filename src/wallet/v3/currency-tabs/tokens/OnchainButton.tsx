@@ -3,14 +3,14 @@ import React from 'react';
 import { Text, ViewStyle } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import SegmentedButton from '../../../common/components/SegmentedButton';
-import i18n from '../../../common/services/i18n.service';
-import ThemedStyles from '../../../styles/ThemedStyles';
-import { WalletStoreType } from '../../v2/createWalletStore';
+import SegmentedButton from '../../../../common/components/SegmentedButton';
+import i18n from '../../../../common/services/i18n.service';
+import ThemedStyles from '../../../../styles/ThemedStyles';
+import { WalletStoreType } from '../../../v2/createWalletStore';
 import {
   UniqueOnChainStoreType,
   isConnected as isWalletConnected,
-} from '../useUniqueOnchain';
+} from '../../useUniqueOnchain';
 
 type PropsType = {
   containerStyle?: ViewStyle | Array<ViewStyle>;

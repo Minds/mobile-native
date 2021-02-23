@@ -29,15 +29,15 @@ import TopbarTabbar, {
 } from '../../common/components/topbar-tabbar/TopbarTabbar';
 import AboutTab from './tabs/AboutTab';
 import TierManagementScreen from '../../common/components/tier-management/TierManagementScreen';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type PropsType = {
-  store: ChannelStoreType;
+  store?: ChannelStoreType;
   navigation: any;
   route: any;
   hideButtons?: boolean;
   hideDescription?: boolean;
   hideTabs?: boolean;
+  channelName?: string;
 };
 
 const bannerAspectRatio = 2.9;
@@ -50,19 +50,19 @@ const avatarSize = Math.min(180, Math.round(0.7 * bannerHeight));
  */
 const ChannelHeader = observer((props: PropsType) => {
   const theme = ThemedStyles.style;
-  if (!props.store.channel) {
+  if (props.store && !props.store.channel) {
     return null;
   }
-  const channel = props.store.channel;
+  const channel = props.store?.channel;
   const [showBanner, setShowBanner] = useState(!settingsStore.dataSaverEnabled);
-  const insets = useSafeAreaInsets();
-  const cleanTop = insets.top ? { marginTop: insets.top } : null;
 
   const _onBannerDownload = useCallback(() => setShowBanner(true), []);
-  const canEdit = channel.isOwner() && channel.can(FLAG_EDIT_CHANNEL);
+  const canEdit = !channel
+    ? false
+    : channel.isOwner() && channel.can(FLAG_EDIT_CHANNEL);
 
   const navToSubscribers = useCallback(() => {
-    if (props.store.channel) {
+    if (props.store?.channel) {
       props.navigation.push('Subscribers', {
         guid: props.store.channel.guid,
       });
@@ -70,7 +70,7 @@ const ChannelHeader = observer((props: PropsType) => {
   }, [props.navigation, props.store]);
 
   const navToSubscriptions = useCallback(() => {
-    if (props.store.channel) {
+    if (props.store?.channel) {
       props.navigation.push('Subscribers', {
         guid: props.store.channel.guid,
         filter: 'subscriptions',
@@ -78,7 +78,7 @@ const ChannelHeader = observer((props: PropsType) => {
     }
   }, [props.navigation, props.store]);
 
-  const tabs: Array<TabType<ChannelTabType>> = channel.isOwner()
+  const tabs: Array<TabType<ChannelTabType>> = channel?.isOwner()
     ? [
         { id: 'feed', title: i18n.t('feed') },
         { id: 'memberships', title: i18n.t('settings.otherOptions.b1') },
@@ -92,7 +92,7 @@ const ChannelHeader = observer((props: PropsType) => {
       ];
 
   const screen = () => {
-    switch (props.store.tab) {
+    switch (props.store?.tab) {
       case 'feed':
         return (
           <View
@@ -147,76 +147,100 @@ const ChannelHeader = observer((props: PropsType) => {
 
   return (
     <View style={styles.container}>
-      <Background
-        style={styles.banner}
-        source={channel.getBannerSource()}
-        resizeMode="cover">
-        <View style={[styles.avatarContainer, theme.borderBackgroundTertiary]}>
-          <Image
-            style={[styles.avatar, theme.borderPrimary]}
-            source={channel.getAvatarSource()}
-            resizeMode="cover"
-          />
-          {canEdit && (
-            <SmallCircleButton
-              name="camera"
-              style={styles.avatarSmallButton}
-              onPress={() => props.store.upload('avatar')}
+      {props.store && channel && (
+        <Background
+          style={styles.banner}
+          source={channel.getBannerSource()}
+          resizeMode="cover">
+          <View
+            style={[styles.avatarContainer, theme.borderBackgroundTertiary]}>
+            <Image
+              style={[styles.avatar, theme.borderPrimary]}
+              source={channel.getAvatarSource()}
+              resizeMode="cover"
             />
-          )}
-          {props.store.uploading && props.store.avatarProgress ? (
-            <View
-              style={[styles.tapOverlayView, styles.wrappedAvatarOverlayView]}>
-              <Progress.Pie progress={props.store.avatarProgress} size={36} />
-            </View>
-          ) : null}
-        </View>
-        {!props.hideButtons && (
-          <ChannelButtons
-            store={props.store}
-            onEditPress={() =>
-              props.navigation.push('EditChannelScreen', { store: props.store })
-            }
-            notShow={['message', 'wire', 'more']}
-            iconsStyle={theme.colorSecondaryText}
-            containerStyle={styles.buttonsMarginContainer}>
-            {!showBanner && settingsStore.dataSaverEnabled && (
-              <Icon
-                raised
-                reverse
-                name="file-download"
-                type="material"
-                color={ThemedStyles.getColor('secondary_background')}
-                reverseColor={ThemedStyles.getColor('primary_text')}
-                size={15}
-                onPress={_onBannerDownload}
+            {canEdit && (
+              <SmallCircleButton
+                name="camera"
+                style={styles.avatarSmallButton}
+                onPress={() => props.store.upload('avatar')}
               />
             )}
-          </ChannelButtons>
-        )}
-        {props.store.uploading && props.store.bannerProgress ? (
-          <View style={styles.tapOverlayView}>
-            <Progress.Pie progress={props.store.bannerProgress} size={36} />
+            {props.store.uploading && props.store.avatarProgress ? (
+              <View
+                style={[
+                  styles.tapOverlayView,
+                  styles.wrappedAvatarOverlayView,
+                ]}>
+                <Progress.Pie progress={props.store.avatarProgress} size={36} />
+              </View>
+            ) : null}
           </View>
-        ) : null}
-      </Background>
+          {!props.hideButtons && (
+            <ChannelButtons
+              store={props.store}
+              onEditPress={() =>
+                props.navigation.push('EditChannelScreen', {
+                  store: props.store,
+                })
+              }
+              notShow={['message', 'wire', 'more']}
+              iconsStyle={theme.colorSecondaryText}
+              containerStyle={styles.buttonsMarginContainer}>
+              {!showBanner && settingsStore.dataSaverEnabled && (
+                <Icon
+                  raised
+                  reverse
+                  name="file-download"
+                  type="material"
+                  color={ThemedStyles.getColor('secondary_background')}
+                  reverseColor={ThemedStyles.getColor('primary_text')}
+                  size={15}
+                  onPress={_onBannerDownload}
+                />
+              )}
+            </ChannelButtons>
+          )}
+          {props.store &&
+          props.store.uploading &&
+          props.store.bannerProgress ? (
+            <View style={styles.tapOverlayView}>
+              <Progress.Pie progress={props.store.bannerProgress} size={36} />
+            </View>
+          ) : null}
+        </Background>
+      )}
+      {!channel && (
+        <View style={[theme.fullWidth, theme.height25]}>
+          <View
+            style={[styles.avatarContainer, theme.borderBackgroundTertiary]}>
+            <Image
+              style={[styles.avatar, theme.borderPrimary]}
+              source={require('./../../assets/logos/bulb.png')}
+              resizeMode="cover"
+            />
+          </View>
+        </View>
+      )}
       {canEdit && (
         <SmallCircleButton
           name="camera"
           style={styles.bannerSmallButton}
-          onPress={() => props.store.upload('banner')}
+          onPress={() => props.store?.upload('banner')}
         />
       )}
       <View
         style={[theme.rowJustifyCenter, theme.alignCenter, theme.paddingTop8x]}>
         <Text style={styles.name} numberOfLines={1}>
-          {channel.name}
+          {channel ? channel.name : props.channelName}
         </Text>
-        <ChannelBadges
-          channel={channel}
-          size={22}
-          iconStyle={theme.colorLink}
-        />
+        {channel && (
+          <ChannelBadges
+            channel={channel}
+            size={22}
+            iconStyle={theme.colorLink}
+          />
+        )}
       </View>
       <Text
         style={[
@@ -226,38 +250,43 @@ const ChannelHeader = observer((props: PropsType) => {
           theme.paddingBottom3x,
         ]}
         numberOfLines={1}>
-        @{channel.username}
+        @{channel ? channel.username : props.channelName}
       </Text>
-      <View style={theme.paddingHorizontal4x}>
-        <Text style={[theme.colorSecondaryText, theme.fontL]}>
-          <Text onPress={navToSubscribers} style={theme.colorSecondaryText}>
-            {i18n.t('subscribers')}
-            <Text> {abbrev(channel.subscribers_count, 0)}</Text>
+      {channel && (
+        <View style={theme.paddingHorizontal4x}>
+          <Text style={[theme.colorSecondaryText, theme.fontL]}>
+            <Text onPress={navToSubscribers} style={theme.colorSecondaryText}>
+              {i18n.t('subscribers')}
+              <Text> {abbrev(channel.subscribers_count, 0)}</Text>
+            </Text>
+            <Text onPress={navToSubscriptions} style={theme.colorSecondaryText}>
+              {' · ' + i18n.t('subscriptions')}
+              <Text> {abbrev(channel.subscriptions_count, 0)}</Text>
+            </Text>
+            {' · '}{' '}
+            <McIcon name="eye" size={17} style={theme.colorPrimaryText} />
+            <Text> {abbrev(channel.impressions, 1)}</Text>
           </Text>
-          <Text onPress={navToSubscriptions} style={theme.colorSecondaryText}>
-            {' · ' + i18n.t('subscriptions')}
-            <Text> {abbrev(channel.subscriptions_count, 0)}</Text>
-          </Text>
-          {' · '} <McIcon name="eye" size={17} style={theme.colorPrimaryText} />
-          <Text> {abbrev(channel.impressions, 1)}</Text>
-        </Text>
-        {!!channel.city && (
-          <View style={styles.location}>
-            <IconM
-              name="location-on"
-              style={theme.colorPrimaryText}
-              size={16}
-            />
-            <Text style={[theme.fontL, theme.paddingLeft]}>{channel.city}</Text>
-          </View>
-        )}
-        {!props.hideDescription && (
-          <View style={theme.paddingTop2x}>
-            <ChannelDescription channel={channel} />
-          </View>
-        )}
-      </View>
-      {!props.hideTabs && (
+          {!!channel.city && (
+            <View style={styles.location}>
+              <IconM
+                name="location-on"
+                style={theme.colorPrimaryText}
+                size={16}
+              />
+              <Text style={[theme.fontL, theme.paddingLeft]}>
+                {channel.city}
+              </Text>
+            </View>
+          )}
+          {!props.hideDescription && (
+            <View style={theme.paddingTop2x}>
+              <ChannelDescription channel={channel} />
+            </View>
+          )}
+        </View>
+      )}
+      {props.store && !props.hideTabs && (
         <>
           <TopbarTabbar
             tabs={tabs}
