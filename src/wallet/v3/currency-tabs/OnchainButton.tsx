@@ -7,12 +7,16 @@ import SegmentedButton from '../../../common/components/SegmentedButton';
 import i18n from '../../../common/services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { WalletStoreType } from '../../v2/createWalletStore';
+import {
+  UniqueOnChainStoreType,
+  isConnected as isWalletConnected,
+} from '../useUniqueOnchain';
 
 type PropsType = {
   containerStyle?: ViewStyle | Array<ViewStyle>;
   onPress?: () => void;
   walletStore: WalletStoreType;
-  onchainStore: any;
+  onchainStore: UniqueOnChainStoreType;
 };
 
 const OnchainButton = observer((props: PropsType) => {
@@ -22,10 +26,7 @@ const OnchainButton = observer((props: PropsType) => {
     props.walletStore.wallet.receiver &&
     props.walletStore.wallet.receiver.address;
 
-  const isConnected =
-    props.onchainStore.result !== null &&
-    props.onchainStore.result.address &&
-    props.onchainStore.result.unique;
+  const isConnected = isWalletConnected(props.onchainStore);
 
   const children: any = {};
 
