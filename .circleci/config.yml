@@ -39,11 +39,11 @@ commands:
       - restore_cache:
           key: brew-v1-{{ arch }}
       - run:
-          name: Install sentry cli for fastlane plugin
-          command: brew install getsentry/tools/sentry-cli
-      - run:
           name: Clone brew
           command: git -C "/usr/local/Homebrew/Library/Taps/homebrew/homebrew-core" fetch --unshallow
+      - run:
+          name: Install sentry cli for fastlane plugin
+          command: brew install getsentry/tools/sentry-cli
       - run:
           name: Update brew
           command: brew update
