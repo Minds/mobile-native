@@ -479,3 +479,20 @@ export interface OptionsEntity {
   available: boolean;
   selected: boolean;
 }
+
+export interface MetricsComparative {
+  increase: boolean;
+  offchain: string;
+  onchain: string;
+  total: string;
+  total_diff: string;
+}
+
+export interface TokensMetrics {
+  comparative: MetricsComparative;
+  format: 'usd' | 'token' | 'number' | 'points';
+  id: string;
+  offchain: string;
+  onchain: string;
+  total: string;
+}

@@ -62,7 +62,7 @@ export default function ({ navigation }) {
   if (!user.plus) {
     itemsMapping.push({
       title: i18n.t('monetize.plus'),
-      screen: 'PlusScreen',
+      screen: 'UpgradeScreen',
       params: { onComplete: onComplete(false), pro: false },
     });
   }
@@ -70,7 +70,7 @@ export default function ({ navigation }) {
   if (!user.pro) {
     itemsMapping.push({
       title: i18n.t('monetize.pro'),
-      screen: 'PlusScreen',
+      screen: 'UpgradeScreen',
       params: { onComplete: onComplete(true), pro: true },
     });
   }

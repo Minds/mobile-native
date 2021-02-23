@@ -16,20 +16,25 @@ class ChannelsService {
     defaultChannel?: UserModel | object,
     forceUpdate: boolean = false,
   ): Promise<UserModel | undefined> {
-    const urn = `urn:channels:${guidOrUsername}`;
+    try {
+      const urn = `urn:channels:${guidOrUsername}`;
 
-    const local = await entitiesStorage.read(urn);
+      const local = await entitiesStorage.read(urn);
 
-    if ((!local && !defaultChannel) || forceUpdate) {
-      // we fetch from the server
-      return await this.fetch(guidOrUsername);
+      if ((!local && !defaultChannel) || forceUpdate) {
+        // we fetch from the server
+
+        return await this.fetch(guidOrUsername);
+      }
+
+      const channel = UserModel.create(local || defaultChannel);
+
+      this.fetch(guidOrUsername, channel); // Update in the background
+
+      return channel;
+    } catch (err) {
+      console.log(err);
     }
-
-    const channel = UserModel.create(local || defaultChannel);
-
-    this.fetch(guidOrUsername, channel); // Update in the background
-
-    return channel;
   }
 
   /**

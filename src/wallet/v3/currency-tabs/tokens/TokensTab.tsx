@@ -3,33 +3,30 @@ import { observer, useLocalStore } from 'mobx-react';
 import { StyleSheet, Text, View } from 'react-native';
 import TopBarButtonTabBar, {
   ButtonTabType,
-} from '../../../common/components/topbar-tabbar/TopBarButtonTabBar';
-import { TokensOptions } from '../../v2/WalletTypes';
-import ThemedStyles from '../../../styles/ThemedStyles';
-import type { WalletStoreType } from '../../v2/createWalletStore';
-import TokensOverview from '../../v2/currency-tabs/TokensOverview';
+} from '../../../../common/components/topbar-tabbar/TopBarButtonTabBar';
+import { TokensOptions } from '../../../v2/WalletTypes';
+import ThemedStyles from '../../../../styles/ThemedStyles';
+import type { WalletStoreType } from '../../../v2/createWalletStore';
+import TokensOverview from '../../../v2/currency-tabs/TokensOverview';
 import { ScrollView } from 'react-native-gesture-handler';
-import type { BottomOptionsStoreType } from '../../../common/components/BottomOptionPopup';
-import TransactionsListTokens from '../../v2/TransactionList/TransactionsListTokens';
-import ReceiverSettings from '../../v2/address/ReceiverSettings';
-import { WalletScreenNavigationProp } from '../../v2/WalletScreen';
-import i18n from '../../../common/services/i18n.service';
+import type { BottomOptionsStoreType } from '../../../../common/components/BottomOptionPopup';
+import TransactionsListTokens from '../../../v2/TransactionList/TransactionsListTokens';
+import ReceiverSettings from '../../../v2/address/ReceiverSettings';
+import { WalletScreenNavigationProp } from '../../../v2/WalletScreen';
+import i18n from '../../../../common/services/i18n.service';
 import TokensRewards from './TokensRewards';
-import TokensEarnings from './TokensEarnings';
-import { useDimensions } from '@react-native-community/hooks';
-import { Tooltip } from 'react-native-elements';
-import BalanceInfo from './BalanceInfo';
-import useUniqueOnchain from '../useUniqueOnchain';
-import OnchainButton from './OnchainButton';
-import useWalletConnect from '../../../blockchain/v2/walletconnect/useWalletConnect';
-import sessionService from '../../../common/services/session.service';
-import apiService from '../../../common/services/api.service';
-import { showNotification } from '../../../../AppMessages';
+import TokensEarnings from '../Earnings';
+import TokenTopBar from './TokenTopBar';
+import useUniqueOnchain from '../../useUniqueOnchain';
+import useWalletConnect from '../../../../blockchain/v2/walletconnect/useWalletConnect';
+import sessionService from '../../../../common/services/session.service';
+import apiService from '../../../../common/services/api.service';
+import { showNotification } from '../../../../../AppMessages';
 
 const options: Array<ButtonTabType<TokensOptions>> = [
   { id: 'rewards', title: 'Rewards' },
   { id: 'earnings', title: 'Earnings' },
-  { id: 'overview', title: 'Overview' },
+  { id: 'overview', title: 'Balance' },
   { id: 'transactions', title: 'Transactions' },
   { id: 'settings', title: 'Settings' },
 ];
@@ -54,11 +51,8 @@ const TokensTab = observer(
   ({ walletStore, navigation, bottomStore }: PropsType) => {
     const store = useLocalStore(createStore, walletStore);
     const theme = ThemedStyles.style;
-    const tooltipRef = useRef<any>();
-    const screen = useDimensions().screen;
     const onchainStore = useUniqueOnchain();
     const wc = useWalletConnect();
-
     const connectWallet = React.useCallback(async () => {
       const msg = JSON.stringify({
         user_guid: sessionService.getUser().guid,
@@ -148,38 +142,11 @@ const TokensTab = observer(
     const mainBody = (
       <>
         <View style={theme.paddingTop5x}>
-          <View
-            style={[
-              theme.rowJustifyStart,
-              theme.paddingLeft2x,
-              theme.marginBottom5x,
-            ]}>
-            <Tooltip
-              ref={tooltipRef}
-              closeOnlyOnBackdropPress={true}
-              skipAndroidStatusBar={true}
-              toggleOnPress={false}
-              withOverlay={true}
-              overlayColor={'#00000015'}
-              containerStyle={theme.borderRadius}
-              width={screen.width - 20}
-              height={200}
-              backgroundColor={ThemedStyles.getColor('secondary_background')}
-              popover={<BalanceInfo walletStore={walletStore} />}>
-              <Text
-                onPress={() => tooltipRef.current.toggleTooltip()}
-                style={[styles.minds, theme.mindsSwitchBackgroundSecondary]}>
-                {walletStore.balance} MINDS
-              </Text>
-            </Tooltip>
-            <OnchainButton
-              containerStyle={theme.marginLeft3x}
-              walletStore={walletStore}
-              onPress={connectWallet}
-              onchainStore={onchainStore}
-            />
-          </View>
-
+          <TokenTopBar
+            walletStore={walletStore}
+            connectWallet={connectWallet}
+            onchainStore={onchainStore}
+          />
           <TopBarButtonTabBar
             tabs={options}
             current={store.option}
@@ -196,18 +163,5 @@ const TokensTab = observer(
     }
   },
 );
-
-const styles = StyleSheet.create({
-  minds: {
-    height: 40,
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    fontSize: 15,
-    fontWeight: '500',
-    fontFamily: 'Roboto-Medium',
-    borderRadius: 20,
-    overflow: 'hidden',
-  },
-});
 
 export default TokensTab;

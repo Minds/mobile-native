@@ -225,6 +225,7 @@ const createChannelStore = () => {
     async loadFromGuidOrUsername(guidOrUsername: string) {
       const channel = await channelsService.get(guidOrUsername);
       if (!channel) {
+        this.loaded = true;
         return;
       }
       if (this.isNsfw(channel)) {

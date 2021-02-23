@@ -1,5 +1,6 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text } from 'react-native';
+import { Linking, ScrollView, StyleSheet, Text } from 'react-native';
+import { navToTokens } from '../buy-tokens/BuyTokensScreen';
 import i18n from '../common/services/i18n.service';
 import sessionService from '../common/services/session.service';
 import { MINDS_URI } from '../config/Config';
@@ -37,7 +38,7 @@ const ReferralsScreen = ({ navigation }: ReferralsScreenProps) => {
       </Text>
       <Text
         style={[theme.colorLink, theme.marginBottom4x]}
-        onPress={() => navigation.push('LearnMoreScreen')}>
+        onPress={navToTokens}>
         {i18n.t('wallet.learnMore.title')}
       </Text>
 

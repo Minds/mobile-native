@@ -1,9 +1,9 @@
 import React from 'react';
-import ThemedStyles from '../../../styles/ThemedStyles';
+import ThemedStyles from '../../../../styles/ThemedStyles';
 import { Text } from 'react-native';
-import { ContributionMetric } from '../../v2/createWalletStore';
-import { format } from './MindsTokens';
-import { Container, Info, Row, Title } from './AccordionContent';
+import { ContributionMetric } from '../../../v2/createWalletStore';
+import { format } from '../MindsTokens';
+import { Container, Info, Row, Title } from '../AccordionContent';
 import { Reward } from './TokensRewards';
 
 type PropsType = {

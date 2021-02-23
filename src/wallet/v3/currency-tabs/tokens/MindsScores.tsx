@@ -4,17 +4,17 @@ import { ScrollView } from 'react-native';
 import AccordionSet, {
   AccordionDataType,
   RenderFunction,
-} from '../../../common/components/AccordionSet';
-import i18n from '../../../common/services/i18n.service';
-import ThemedStyles from '../../../styles/ThemedStyles';
-import AccordionHeader from './AccordionHeader';
+} from '../../../../common/components/AccordionSet';
+import i18n from '../../../../common/services/i18n.service';
+import ThemedStyles from '../../../../styles/ThemedStyles';
+import AccordionHeader from '../AccordionHeader';
 import { Reward, TokensRewardsStore } from './TokensRewards';
-import MindsTokens, { format } from './MindsTokens';
-import AccordionContent, { AccordionContentData } from './AccordionContent';
+import MindsTokens, { format } from '../MindsTokens';
+import AccordionContent, { AccordionContentData } from '../AccordionContent';
 import EngagementSummary from './EngagementSummary';
 import HoldingSummary from './HoldingSummary';
 import LiquiditySummary from './LiquiditySummary';
-import { PricesType } from '../../v2/createWalletStore';
+import { PricesType } from '../../../v2/createWalletStore';
 
 type PropsType = {
   store: TokensRewardsStore;

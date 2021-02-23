@@ -36,21 +36,23 @@ const MonthPickerInput = observer((props: PropsType) => {
   }));
 
   return (
-    <TouchableOpacity
-      style={[theme.rowJustifySpaceBetween, props.containerStyle]}
-      onPress={localStore.openPicker}>
-      <View>
-        <Text style={[styles.label, theme.colorSecondaryText]}>Month</Text>
-        <Text style={[theme.fontLM, theme.fontMedium]}>
-          {moment(localStore.date).format('MM-YYYY')}
-        </Text>
-      </View>
-      <Icon
-        name="calendar"
-        size={21}
-        color={ThemedStyles.getColor('secondary_text')}
-        style={theme.centered}
-      />
+    <>
+      <TouchableOpacity
+        style={[theme.rowJustifySpaceBetween, props.containerStyle]}
+        onPress={localStore.openPicker}>
+        <View>
+          <Text style={[styles.label, theme.colorSecondaryText]}>Month</Text>
+          <Text style={[theme.fontLM, theme.fontMedium]}>
+            {moment(localStore.date).format('MM-YYYY')}
+          </Text>
+        </View>
+        <Icon
+          name="calendar"
+          size={21}
+          color={ThemedStyles.getColor('secondary_text')}
+          style={theme.centered}
+        />
+      </TouchableOpacity>
       {localStore.showPicker && (
         <MonthPicker
           onChange={localStore.onValueChange}
@@ -59,7 +61,7 @@ const MonthPickerInput = observer((props: PropsType) => {
           maximumDate={props.maximumDate}
         />
       )}
-    </TouchableOpacity>
+    </>
   );
 });
 

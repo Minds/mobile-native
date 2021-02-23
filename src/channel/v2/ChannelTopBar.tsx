@@ -11,7 +11,7 @@ import { styles as headerStyles } from '../../topbar/Topbar';
 
 type PropsType = {
   navigation: any;
-  store: ChannelStoreType;
+  store?: ChannelStoreType;
   hideButtons?: boolean;
 };
 
@@ -40,22 +40,24 @@ const ChannelTopBar = observer(
           style={[theme.colorIcon, theme.centered]}
           onPress={navigation.goBack}
         />
-        <TextInput
-          placeholder="Search Channel"
-          style={[
-            theme.fontL,
-            theme.flexContainer,
-            theme.colorSecondaryText,
-            theme.paddingLeft3x,
-            theme.paddingVertical2x,
-          ]}
-          placeholderTextColor={ThemedStyles.getColor('tertiary_text')}
-          value={store.channelSearch}
-          onChangeText={store.setChannelSearch}
-          returnKeyType={'search'}
-          onSubmitEditing={store.searchInChannel}
-        />
-        {store.channelSearch.length > 0 && (
+        {store && (
+          <TextInput
+            placeholder="Search Channel"
+            style={[
+              theme.fontL,
+              theme.flexContainer,
+              theme.colorSecondaryText,
+              theme.paddingLeft3x,
+              theme.paddingVertical2x,
+            ]}
+            placeholderTextColor={ThemedStyles.getColor('tertiary_text')}
+            value={store.channelSearch}
+            onChangeText={store.setChannelSearch}
+            returnKeyType={'search'}
+            onSubmitEditing={store.searchInChannel}
+          />
+        )}
+        {store && store.channelSearch.length > 0 && (
           <MIcon
             size={25}
             name="close-circle-outline"
@@ -63,7 +65,7 @@ const ChannelTopBar = observer(
             onPress={store.clearSearch}
           />
         )}
-        {!hideButtons && (
+        {store && !hideButtons && (
           <ChannelButtons
             iconSize={25}
             store={store}

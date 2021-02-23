@@ -108,7 +108,7 @@ const getOptionsList = (navigation) => {
       },
     },
     {
-      name: 'Earn',
+      name: i18n.t('earnScreen.title'),
       icon: (
         <Icon
           name="attach-money"
@@ -117,10 +117,7 @@ const getOptionsList = (navigation) => {
         />
       ),
       onPress: () => {
-        navigation.navigate('Tabs', {
-          screen: 'CaptureTab',
-          params: { screen: 'Earn' },
-        });
+        navigation.navigate('EarnModal');
       },
     },
     {

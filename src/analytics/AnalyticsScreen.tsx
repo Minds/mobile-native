@@ -5,9 +5,15 @@ import TopbarTabbar from '../common/components/topbar-tabbar/TopbarTabbar';
 import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
 import DashboardTab from './tabs/dashboard/DashboardTab';
+import TokensTab from './tabs/tokens/TokensTab';
 import TrendingTab from './tabs/trending/TrendingTab';
 
-type TAnalyticsTabs = 'earnings' | 'engagement' | 'traffic' | 'trending';
+type TAnalyticsTabs =
+  | 'earnings'
+  | 'engagement'
+  | 'traffic'
+  | 'trending'
+  | 'tokens';
 
 interface AnalyticsScreenProps {
   navigation: any;
@@ -49,6 +55,8 @@ const AnalyticsScreen = observer(({ navigation }: AnalyticsScreenProps) => {
         );
       case 'trending':
         return <TrendingTab navigation={navigation} />;
+      case 'tokens':
+        return <TokensTab />;
       default:
         return <View />;
     }
@@ -64,6 +72,7 @@ const AnalyticsScreen = observer(({ navigation }: AnalyticsScreenProps) => {
         onChange={_onTabBarChange}
         tabs={[
           { id: 'traffic', title: i18n.t('analytics.traffic') },
+          { id: 'tokens', title: i18n.t('analytics.tokens.title') },
           { id: 'engagement', title: i18n.t('analytics.engagement') },
           { id: 'earnings', title: i18n.t('analytics.earnings') },
           { id: 'trending', title: i18n.t('analytics.trending.title') },

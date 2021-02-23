@@ -1,10 +1,10 @@
 import React from 'react';
 import { Text } from 'react-native';
-import Button from '../../../common/components/Button';
-import i18n from '../../../common/services/i18n.service';
-import ThemedStyles from '../../../styles/ThemedStyles';
+import Button from '../../../../common/components/Button';
+import i18n from '../../../../common/services/i18n.service';
+import ThemedStyles from '../../../../styles/ThemedStyles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { WalletStoreType } from '../../v2/createWalletStore';
+import { WalletStoreType } from '../../../v2/createWalletStore';
 
 type PropsType = {
   walletStore: WalletStoreType;

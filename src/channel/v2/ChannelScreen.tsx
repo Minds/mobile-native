@@ -14,6 +14,7 @@ import BlockedChannel from '../../common/components/BlockedChannel';
 import sessionService from '../../common/services/session.service';
 import ExplicitOverlay from '../../common/components/explicit/ExplicitOverlay';
 import ChannelTopBar from './ChannelTopBar';
+import UserNotFound from './UserNotFound';
 
 type PropsType = {
   navigation: any;
@@ -62,7 +63,7 @@ const ChannelScreen = observer((props: PropsType) => {
   }
 
   if (!store.channel) {
-    return null;
+    return <UserNotFound navigation={props.navigation} route={props.route} />;
   }
 
   if (store.channel.blocked) {
