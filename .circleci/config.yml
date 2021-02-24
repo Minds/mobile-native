@@ -36,15 +36,15 @@ commands:
   brew:
     description: 'Installs brew dependencies'
     steps:
-      - restore_cache:
-          key: brew-v1-{{ arch }}
+      # - restore_cache:
+      #     key: brew-v1-{{ arch }}
       - run:
           name: Install sentry cli for fastlane plugin
           command: brew install getsentry/tools/sentry-cli
-      - save_cache:
-          key: brew-v1-{{ arch }}
-          paths:
-            - /usr/local/Homebrew
+      # - save_cache:
+      #     key: brew-v1-{{ arch }}
+      #     paths:
+      #       - /usr/local/Homebrew
 
 jobs:
   test:
