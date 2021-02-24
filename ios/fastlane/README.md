@@ -16,6 +16,11 @@ or alternatively using `brew install fastlane`
 
 # Available Actions
 ## iOS
+### ios auth
+```
+fastlane ios auth
+```
+Authenticate with App Store Connect
 ### ios test
 ```
 fastlane ios test
