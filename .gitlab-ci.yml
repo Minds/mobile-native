@@ -18,7 +18,7 @@ test:jest:
   script:
     - 'yarn prettier --check "./src/**/*.{ts,tsx,js,json}" "./*.{tsx,ts}"'
     - yarn tsc
-    - yarn test
+    - yarn test --forceExit
 
 # e2e test
 # e2e:detox:
