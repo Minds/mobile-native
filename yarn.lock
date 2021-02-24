@@ -12387,10 +12387,10 @@ react-native-crypto@^2.0.1:
     public-encrypt "^4.0.0"
     randomfill "^1.0.3"
 
-react-native-device-info@^7.3.1:
-  version "7.4.0"
-  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-7.4.0.tgz#694deddfc6de0ff7268ff463d84693ee980c683c"
-  integrity sha512-n5mrUuwUcPXAspLZcAOE+Q087yq+Gfvo8+soZIg1l7rUZUrLNWlFxFgOo/DMPNZA5vcBSv1TSGFFdiAZVHalLw==
+react-native-device-info@7.3.1:
+  version "7.3.1"
+  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-7.3.1.tgz#6c4b0120d57872a2f7534332323306b386828a3d"
+  integrity sha512-RQP3etbmXsOlcaxHeHNug68nRli02S9iGC7TbaXpkvyyevIuRogfnrI71sWtqmlT91kdpYAOYKmNfRL9LOSKVw==
 
 react-native-elements@1.1.0:
   version "1.1.0"

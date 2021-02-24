@@ -19,7 +19,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>4.9.0</string>
 	<key>CFBundleVersion</key>
-	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<string>201907230270</string>
 	<key>HostAppBundleIdentifier</key>
 	<string>com.minds.mobile</string>
 	<key>HostAppURLScheme</key>
