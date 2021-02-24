@@ -14,7 +14,7 @@
 /**
  * Wire service
  */
-describe.only('wire service', () => {
+describe.skip('wire service', () => {
 
   beforeEach(() => {
     api.get.mockClear();

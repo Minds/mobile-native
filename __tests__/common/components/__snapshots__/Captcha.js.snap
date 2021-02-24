@@ -3,8 +3,11 @@
 exports[`renders correctly 1`] = `
 <Modal
   animationType="none"
+  deviceHeight={null}
+  deviceWidth={null}
   hardwareAccelerated={false}
   hideModalContentWhileAnimating={false}
+  onBackdropPress={[Function]}
   onModalHide={[Function]}
   onModalWillHide={[Function]}
   onModalWillShow={[Function]}
@@ -82,8 +85,11 @@ exports[`renders correctly 1`] = `
     }
   >
     <View
+      deviceHeight={null}
+      deviceWidth={null}
       forwardedRef={[Function]}
       hideModalContentWhileAnimating={false}
+      onBackdropPress={[Function]}
       onModalHide={[Function]}
       onModalWillHide={[Function]}
       onModalWillShow={[Function]}

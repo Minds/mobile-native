@@ -141,7 +141,7 @@ const TokensTab = observer(
 
     const mainBody = (
       <>
-        <View style={theme.paddingTop5x}>
+        <View style={{ ...theme.paddingTop5x }}>
           <TokenTopBar
             walletStore={walletStore}
             connectWallet={connectWallet}
