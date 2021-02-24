@@ -6,6 +6,7 @@ import logService from '../src/common/services/log.service';
 import MindsVideoV2 from '../src/media/v2/mindsVideo/MindsVideo';
 import { BackHandler } from 'react-native';
 import ShareMenu from 'react-native-share-menu';
+import SystemSetting from 'react-native-system-setting';
 
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
@@ -29,6 +30,12 @@ jest.mock('../src/comments/v2/CommentBottomSheet', () => 'CommentBottomSheet');
 
 // use the web3 mock to prevent syntax error from node_tar
 jest.mock('web3');
+
+jest.mock('react-native-system-setting', () => {
+  return {
+    getVolume: jest.fn(() => Promise.resolve())
+  }
+})
 
 //mock packages
 jest.mock('react-native-share-menu');

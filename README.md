@@ -67,7 +67,7 @@ Run the tests
 
 You can use -c ios.sim.release for e2e test a production build
 
-### Building releases
+### Building Android releases
 
 #### Setup your environment variables
 

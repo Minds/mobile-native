@@ -163,7 +163,7 @@ const ChannelHeader = observer((props: PropsType) => {
               <SmallCircleButton
                 name="camera"
                 style={styles.avatarSmallButton}
-                onPress={() => props.store.upload('avatar')}
+                onPress={() => props.store && props.store.upload('avatar')}
               />
             )}
             {props.store.uploading && props.store.avatarProgress ? (

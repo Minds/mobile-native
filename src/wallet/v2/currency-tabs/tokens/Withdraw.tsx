@@ -24,6 +24,7 @@ const Withdraw = observer((props: PropsType) => {
   const theme = ThemedStyles.style;
 
   // local store
+  // @ts-ignore
   const store = useLocalStore(createWithdrawStore, props);
 
   useEffect(() => {

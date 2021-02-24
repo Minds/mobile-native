@@ -35,15 +35,16 @@ function TopBarButtonTabBar<T>(props: PropsType<T>) {
   const theme = ThemedStyles.style;
 
   return (
-    <View style={[theme.rowJustifyStart, theme.paddingLeft]}>
+    <View style={[theme.rowJustifyStart]}>
       <ScrollView
         horizontal
         ref={topBarButtonTabBarRef}
-        contentContainerStyle={
+        contentContainerStyle={[
           Platform.OS === 'android'
             ? theme.paddingBottom
-            : theme.paddingBottom2x
-        }>
+            : theme.paddingBottom2x,
+          theme.paddingLeft2x,
+        ]}>
         {props.tabs.map((tab, i) => (
           <Button
             borderless

@@ -1,11 +1,7 @@
 import { useDimensions } from '@react-native-community/hooks';
 import { observer, useLocalStore } from 'mobx-react';
 import React, { useEffect } from 'react';
-import {
-  ScrollView,
-  Text,
-  View,
-} from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import ActivityIndicator from '../../../common/components/ActivityIndicator';
 import TopBarButtonTabBar, {
   ButtonTabType,
