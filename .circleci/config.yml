@@ -5,11 +5,11 @@ commands:
     steps:
       - run:
           name: set Ruby version
-          command: echo "ruby-2.7" > ~/.ruby-version
+          command: echo "ruby-2.6" > ~/.ruby-version
       - restore_cache:
           key: bundle-v1-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
       - run:
-          command: gem update --system && gem install bundler && bundle install
+          command: gem update --system && gem install bundler && bundle install && bundle update fastlane
           working_directory: ios
       - save_cache:
           key: bundle-v1-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
