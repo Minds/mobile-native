@@ -40,7 +40,7 @@ commands:
           key: brew-v1-{{ arch }}
       - run:
           name: Install sentry cli for fastlane plugin
-          command: brew install getsentry/tools/sentry-cli@5.58.0
+          command: brew install getsentry/tools/sentry-cli
       - run:
           name: Update brew
           command: brew update
@@ -85,7 +85,7 @@ jobs:
       - checkout
       - yarn
       - rubygems
-      - brew
+      #- brew
       - restore_cache:
           key: pods-v1-{{ checksum "ios/Podfile.lock" }}-{{ arch }}
       - run:
