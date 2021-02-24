@@ -5,7 +5,7 @@ commands:
     steps:
       - run:
           name: set Ruby version
-          command: echo "ruby-2.6" > ~/.ruby-version
+          command: echo "ruby-2.7" > ~/.ruby-version
       - restore_cache:
           key: bundle-v1-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
       - run:
