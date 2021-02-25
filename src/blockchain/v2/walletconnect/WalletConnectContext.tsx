@@ -94,7 +94,7 @@ export const createStore = (): WCStore => ({
   },
   setupProvider() {
     const provider = new WalletConnectProvider({
-      bridge: "https://bridge.walletconnect.org",
+      bridge: 'https://bridge.walletconnect.org',
       infuraId: 'b76cba91dc954ceebff27244923224b1',
       clientMeta: MINDS_METADATA,
       qrcode: false,
@@ -137,13 +137,14 @@ export const createStore = (): WCStore => ({
     } else {
       // If the provider is not connected then we recreate the provider
       if (!this.provider?.connector.connected) {
+        await this.resetConnection();
         this.setupProvider();
       }
     }
 
-    if (this.connected && this.accounts) {
-      return this.accounts;
-    }
+    // if (this.connected && this.accounts) {
+    //   return this.accounts;
+    // }
     const result = await this.provider?.enable();
     return result as string[];
   },
@@ -165,8 +166,8 @@ export const createStore = (): WCStore => ({
   setAddress(newValue: WCStore['address']) {
     this.address = newValue;
   },
-  resetConnection() {
-    this.provider?.disconnect();
+  async resetConnection() {
+    await this.provider?.disconnect();
     this.setConnected(false);
     this.setChainId(null);
     this.setAccounts(null);
