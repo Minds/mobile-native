@@ -56,6 +56,10 @@ export default abstract class ContractServiceAbstract {
         gas: latestBlock.gasLimit,
         value: value,
       });
+
+      if (!estimatedGas) {
+        estimatedGas = this.web3.utils.toBN(167839).toNumber();
+      }
     } catch (e) {
       logService.exception('[Web3Service]', e);
     }
@@ -64,7 +68,7 @@ export default abstract class ContractServiceAbstract {
 
     const settings = (await mindsService.getSettings()).blockchain;
 
-    const gasPriceGwei = settings.default_gas_price || 1;
+    const gasPriceGwei = settings.default_gas_price || 200;
 
     const tx = {
       nonce,

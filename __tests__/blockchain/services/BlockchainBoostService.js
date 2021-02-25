@@ -28,7 +28,7 @@ describe('blockchain boost service', () => {
 
   beforeEach(() => {
     wc = createStore();
-    wc.init();
+    wc.setupProvider();
 
     blockchainTokenService = new BlockchainTokenService(wc.web3, wc);
     blockchainBoostService = new BlockchainBoostService(wc.web3, wc);

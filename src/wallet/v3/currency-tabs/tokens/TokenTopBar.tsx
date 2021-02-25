@@ -43,7 +43,11 @@ const TokenTopBar = ({
         popover={<BalanceInfo walletStore={walletStore} />}>
         <Text
           onPress={() => tooltipRef.current.toggleTooltip()}
-          style={[styles.minds, theme.mindsSwitchBackgroundSecondary]}>
+          style={[
+            styles.minds,
+            theme.mindsSwitchBackgroundSecondary,
+            { height: 42 },
+          ]}>
           {walletStore.balance} MINDS
         </Text>
       </Tooltip>

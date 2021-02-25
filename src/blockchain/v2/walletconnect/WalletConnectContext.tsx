@@ -58,7 +58,7 @@ export type WCStore = {
   setAddress: (newValue: WCStore['address']) => void;
   resetConnection: () => void;
   connect: (IMobileRegistryEntry?) => Promise<string[]>;
-  init: () => void;
+  setupProvider: () => void;
   showModal: () => void;
   hideModal: () => void;
   setSelectedWallet: (wallet: IMobileRegistryEntry) => void;
@@ -92,7 +92,7 @@ export const createStore = (): WCStore => ({
   setSelectedWallet(wallet: IMobileRegistryEntry) {
     this.selectedWallet = wallet;
   },
-  init() {
+  setupProvider() {
     const provider = new WalletConnectProvider({
       infuraId: 'b76cba91dc954ceebff27244923224b1',
       clientMeta: MINDS_METADATA,
@@ -132,8 +132,14 @@ export const createStore = (): WCStore => ({
       }
     }
     if (!this.provider) {
-      this.init();
+      this.setupProvider();
+    } else {
+      // If the provider is not connected then we recreate the provider
+      if (!this.provider?.connector.connected) {
+        this.setupProvider();
+      }
     }
+
     if (this.connected && this.accounts) {
       return this.accounts;
     }

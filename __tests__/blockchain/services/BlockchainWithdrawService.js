@@ -16,7 +16,7 @@ describe('blockchain withdraw service', () => {
 
   beforeEach(() => {
     wc = createStore();
-    wc.init();
+    wc.setupProvider();
     wc.web3.utils.fromWei.mockClear();
     wc.web3.utils.toWei.mockClear();
 

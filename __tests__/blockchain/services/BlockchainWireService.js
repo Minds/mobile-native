@@ -16,7 +16,7 @@ describe('blockchain wire service', () => {
 
   beforeEach(() => {
     wc = createStore();
-    wc.init();
+    wc.setupProvider();
 
     blockchainTokenService = new BlockchainTokenService(wc.web3, wc);
     blockchainWireService = new BlockchainWireService(wc.web3, wc);

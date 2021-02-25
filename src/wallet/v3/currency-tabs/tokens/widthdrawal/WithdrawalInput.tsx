@@ -73,8 +73,8 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flex: 1,
     justifyContent: 'flex-end',
-    paddingRight: 20,
-    paddingBottom: 54,
+    paddingHorizontal: 20,
+    paddingVertical: 40,
   },
   text: {
     marginLeft: 25,

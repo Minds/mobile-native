@@ -13,7 +13,7 @@ describe('blockchain token service', () => {
 
   beforeEach(() => {
     wc = createStore();
-    wc.init();
+    wc.setupProvider();
 
     blockchainTokenService = new BlockchainTokenService(wc.web3, wc);
     fakeTokenContract.methods.approve.mockClear();

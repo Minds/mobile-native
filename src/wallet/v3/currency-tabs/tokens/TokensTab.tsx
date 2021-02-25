@@ -65,30 +65,37 @@ const TokensTab = observer(
         throw new Error('Connect the wallet first');
       }
 
-      wc.provider.connector
-        .signPersonalMessage([msg, wc.address])
-        .then((signature) => {
-          // Returns signature.
-          apiService
-            .post('api/v3/blockchain/unique-onchain/validate', {
-              signature,
-              payload: msg,
-              address: wc.address,
-            })
-            .then(() => {
-              setTimeout(() => {
-                // reload wallet
-                walletStore?.loadWallet();
-                // reload unique onchain
-                onchainStore?.fetch();
-              }, 1000);
+      try {
+        showNotification('Please complete the step in your wallet app', 'info');
+        wc.openWalletApp();
 
-              showNotification('Wallet connected');
-            })
-            .catch((error) => {
-              console.log('Request Failed', error);
-            });
-        });
+        const signature = await wc.provider.connector.signPersonalMessage([
+          msg,
+          wc.address,
+        ]);
+
+        try {
+          // Returns signature.
+          await apiService.post('api/v3/blockchain/unique-onchain/validate', {
+            signature,
+            payload: msg,
+            address: wc.address,
+          });
+
+          setTimeout(() => {
+            // reload wallet
+            walletStore?.loadWallet();
+            // reload unique onchain
+            onchainStore?.fetch();
+          }, 1000);
+
+          showNotification('Wallet connected');
+        } catch (error) {
+          throw 'Request Failed ' + error;
+        }
+      } catch (err) {
+        showNotification(err.toString(), 'danger');
+      }
     }, [onchainStore, walletStore, wc]);
 
     let body;
