@@ -25,6 +25,8 @@ const MINDS_METADATA = {
   name: 'Minds',
 };
 
+const DEEPLINK_DELAY_MS = 1500;
+
 export const WCContext = React.createContext<WCStore | null>(null);
 /**
  * Context provider
@@ -105,7 +107,10 @@ export const createStore = (): WCStore => ({
     this.setProvider(provider);
     // open wallet using deep linking
     this.provider?.connector.on('display_uri', (_, payload) => {
-      makeAccessRequest(payload.params[0], this.selectedWallet);
+      setTimeout(
+        () => makeAccessRequest(payload.params[0], this.selectedWallet),
+        DEEPLINK_DELAY_MS,
+      );
     });
 
     this.provider?.on('connect', async () => {
@@ -183,9 +188,11 @@ export const createStore = (): WCStore => ({
       (d) => d.shortName === this.provider?.walletMeta?.name,
     );
     if (wallet) {
-      Linking.openURL(
-        `${wallet.deepLink}${wallet.deepLink.endsWith(':') ? '//' : '/'}`,
-      );
+      setTimeout(() => {
+        Linking.openURL(
+          `${wallet.deepLink}${wallet.deepLink.endsWith(':') ? '//' : '/'}`,
+        );
+      }, DEEPLINK_DELAY_MS);
     }
   },
   /**
