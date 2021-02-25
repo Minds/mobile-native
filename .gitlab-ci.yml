@@ -169,22 +169,36 @@ build:androidproduction-playstore:
       - /^test-*/
 
 # Deploy Web/PlayStore versions to s3 and browserstack
-deploy:s3andbrowserstack:
-  image: minds/ci:latest
+
+.deploy_s3andbrowserstack: &deploy_s3andbrowserstack
   stage: deploy
+  image: minds/ci:latest
   script:
-    - echo "Upload Minds-$CI_COMMIT_REF_SLUG.apk"
-    - aws s3 cp Minds-$CI_COMMIT_REF_SLUG.apk s3://minds-repo/mobile/Minds-$CI_COMMIT_REF_SLUG.apk
-    - aws s3 cp Minds-$CI_COMMIT_REF_SLUG-play_store.apk s3://minds-repo/mobile/Minds-$CI_COMMIT_REF_SLUG-play_store.apk
-    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@Minds-$CI_COMMIT_REF_SLUG.apk"
-    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@Minds-$CI_COMMIT_REF_SLUG-play_store.apk"
+    - echo "Upload $APK_FILENAME"
+    - aws s3 cp $APK_FILENAME s3://minds-repo/mobile/$APK_FILENAME
+    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@$APK_FILENAME"
+
+deploy:s3andbrowserstack:oss:
+  <<: *deploy_s3andbrowserstack
+  variables:
+    APK_FILENAME: "Minds-$CI_COMMIT_REF_SLUG.apk"
   dependencies:
     - build:androidproduction
-    - build:androidproduction-playstore
   only:
     refs:
       - /^stable-*/
       - /^release-*/
+      - /^test-*/
+
+deploy:s3andbrowserstack:playstore:
+  <<: *deploy_s3andbrowserstack
+  variables:
+    APK_FILENAME: "Minds-$CI_COMMIT_REF_SLUG-play_store.apk"
+  dependencies:
+    - build:androidproduction-playstore
+  only:
+    refs:
+      - /^stable-*/
       - /^test-*/
 
 deploy:google_play:
