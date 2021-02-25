@@ -94,6 +94,7 @@ export const createStore = (): WCStore => ({
   },
   setupProvider() {
     const provider = new WalletConnectProvider({
+      bridge: "https://bridge.walletconnect.org",
       infuraId: 'b76cba91dc954ceebff27244923224b1',
       clientMeta: MINDS_METADATA,
       qrcode: false,
