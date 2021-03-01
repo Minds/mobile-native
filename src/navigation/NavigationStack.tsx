@@ -117,6 +117,7 @@ import { topBarButtonTabBarRef } from '../common/components/topbar-tabbar/TopBar
 import ExportLegacyWallet from '../settings/screens/ExportLegacyWallet';
 import Withdrawal from '../wallet/v3/currency-tabs/tokens/widthdrawal/Withdrawal';
 import EarnModal from '../earn/EarnModal';
+import RekeyScreen from '../settings/screens/RekeyScreen';
 
 const isIos = Platform.OS === 'ios';
 
@@ -582,6 +583,11 @@ const AppStack = function () {
       <AppStackNav.Screen
         name="MessengerSettingsScreen"
         component={MessengerSettingsScreen}
+        options={{ title: i18n.t('settings.accountOptions.6') }}
+      />
+      <AppStackNav.Screen
+        name="RekeyScreen"
+        component={RekeyScreen}
         options={{ title: i18n.t('settings.accountOptions.6') }}
       />
       <AppStackNav.Screen

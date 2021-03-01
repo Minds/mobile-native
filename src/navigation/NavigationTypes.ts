@@ -119,6 +119,7 @@ export type AppStackParamList = {
   Other: {};
   SettingsEmail: {};
   MessengerSettingsScreen: {};
+  RekeyScreen: {};
   AutoplaySettingsScreen: {};
   SettingsPassword: {};
   SettingsNotifications: {};

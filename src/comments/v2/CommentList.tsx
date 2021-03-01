@@ -1,8 +1,8 @@
 import React from 'react';
-import { BottomSheetFlatList } from '@gorhom/bottom-sheet';
+import { BottomSheetFlatList, TouchableOpacity } from '@gorhom/bottom-sheet';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import Comment from './Comment';
 import type CommentsStore from './CommentsStore';

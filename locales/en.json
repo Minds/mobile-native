@@ -347,7 +347,8 @@
     "onboardingText": "An additional password is required for messenger in order to ensure that your messages are private and fully encrypted.",
     "setupMessage1": "You only need to enter this encryption password once as long as you stay signed in.",
     "setupMessage2": "It is important so that no one other than you and the people you are communicating with can access the content of your messages.",
-    "setupMessage3": "By default the content of your messages is fully encrypted. For heightened security you may wish to go to your app settings and turn off push notifications in order to disallow metadata from being tracked."
+    "setupMessage3": "By default the content of your messages is fully encrypted. For heightened security you may wish to go to your app settings and turn off push notifications in order to disallow metadata from being tracked.",
+    "messengerRekey": "Change your encryption password"
   },
   "newsfeed": {
     "title": "Newsfeed",
