@@ -37,6 +37,8 @@ export default class ForgotScreen extends Component<PropsType> {
    */
   render() {
     const code = this.props.route.params && this.props.route.params.code;
+    const username =
+      this.props.route.params && this.props.route.params.username;
     const theme = ThemedStyles.style;
 
     return (
@@ -44,8 +46,12 @@ export default class ForgotScreen extends Component<PropsType> {
         style={theme.flexContainer}
         behavior={Platform.OS === 'ios' ? 'padding' : null}>
         <View style={[theme.flexContainer, theme.paddingTop4x]}>
-          {code ? (
-            <ResetPassword onBack={this.onForgotBack} />
+          {code && username ? (
+            <ResetPassword
+              onBack={this.onForgotBack}
+              code={code.replace('code=', '')}
+              username={username.replace('username=', '')}
+            />
           ) : (
             <ForgotPassword onBack={this.onForgotBack} />
           )}

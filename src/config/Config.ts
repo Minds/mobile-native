@@ -77,6 +77,7 @@ const redirectPages = [
  */
 export const MINDS_DEEPLINK = [
   ...redirectPages,
+  ['forgot-password;:username;:code', 'Forgot'],
   ['settings/other/referrals', 'Referrals'],
   ['email-confirmation', 'EmailConfirmation'],
   ['groups/profile/:guid/feed', 'GroupView'],
