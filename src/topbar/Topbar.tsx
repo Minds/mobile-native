@@ -7,7 +7,7 @@ import {
   Text,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import IconFa from 'react-native-vector-icons/FontAwesome5';
+import IconFA from 'react-native-vector-icons/FontAwesome5';
 
 import { observer } from 'mobx-react';
 import SearchComponent from './searchbar/SearchComponent';
@@ -101,7 +101,7 @@ export const Topbar = observer((props: PropsType) => {
                     ]}>
                     {intword(balance)}
                   </Text>
-                  <IconFa
+                  <IconFA
                     name="coins"
                     size={20}
                     style={theme.colorIcon}
