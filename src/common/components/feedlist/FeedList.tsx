@@ -19,7 +19,7 @@ import TileElement from '../../../newsfeed/TileElement';
 import Footer from './Footer';
 import useLoadNewPosts from './useLoadNewPosts';
 
-export type WrapperComponentProps<T> = {
+export type FeedListPropsType = {
   feedStore: FeedStore;
   renderTileActivity?: Function;
   renderActivity?: Function;
@@ -35,10 +35,14 @@ export type WrapperComponentProps<T> = {
   doNotCheckNewestPosts?: boolean;
 };
 
-type FeedListPropsType<T> = React.PropsWithChildren<WrapperComponentProps<T>>;
+export type WrapperComponentProps<T> = FeedListPropsType;
+
+type GenericFeedListPropsType<T> = React.PropsWithChildren<
+  WrapperComponentProps<T>
+>;
 
 const FeedList = observer(
-  forwardRef(<T extends object>(props: FeedListPropsType<T>, ref) => {
+  forwardRef(<T extends object>(props: GenericFeedListPropsType<T>, ref) => {
     const listRef = useRef<FlatList<T>>(null);
     const localStore = useLocalStore(createFeedListLocalStore);
     const theme = ThemedStyles.style;
