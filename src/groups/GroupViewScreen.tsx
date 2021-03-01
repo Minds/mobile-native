@@ -25,7 +25,7 @@ import CaptureFab from '../capture/CaptureFab';
 import GroupHeader from './header/GroupHeader';
 import CenteredLoading from '../common/components/CenteredLoading';
 import i18n from '../common/services/i18n.service';
-import FeedList from '../common/components/FeedList';
+import FeedList from '../common/components/feedlist/FeedList';
 import {
   FLAG_CREATE_POST,
   FLAG_APPOINT_MODERATOR,
@@ -34,7 +34,6 @@ import {
 import ThemedStyles from '../styles/ThemedStyles';
 import sessionService from '../common/services/session.service';
 import ExplicitOverlay from '../common/components/explicit/ExplicitOverlay';
-import CommentsStore from '../comments/v2/CommentsStore';
 import CommentBottomSheet from '../comments/v2/CommentBottomSheet';
 
 /**
@@ -204,7 +203,6 @@ export default class GroupViewScreen extends Component {
             navigation={this.props.navigation}
           />
         );
-        break;
       case 'members':
         return (
           <FlatList
@@ -221,7 +219,6 @@ export default class GroupViewScreen extends Component {
             removeClippedSubviews={false}
           />
         );
-        break;
       case 'desc':
         const description = entities
           .decodeHTML(group.group.briefdescription)
@@ -234,7 +231,6 @@ export default class GroupViewScreen extends Component {
             </View>
           </ScrollView>
         );
-        break;
     }
   }
 

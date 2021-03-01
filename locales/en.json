@@ -352,7 +352,8 @@
   "newsfeed": {
     "title": "Newsfeed",
     "designYourChannel": "Design your channel",
-    "empty": "Your newsfeed is empty"
+    "empty": "Your newsfeed is empty",
+    "newPosts": "See newest posts"
   },
   "comments": {
     "successRemoving": "Comment removed",

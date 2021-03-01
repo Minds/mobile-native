@@ -6,7 +6,9 @@ import { ComponentsStyle } from '../../../styles/Components';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import i18n from '../../../common/services/i18n.service';
 import Button from '../../../common/components/Button';
-import FeedList from '../../../common/components/FeedList';
+import FeedList, {
+  FeedListType,
+} from '../../../common/components/feedlist/FeedList';
 import { useNavigation } from '@react-navigation/native';
 import type DiscoveryV2Store from '../DiscoveryV2Store';
 import CenteredLoading from '../../../common/components/CenteredLoading';
@@ -25,7 +27,7 @@ const ItemPartial = (item, index) => {
  */
 export const DiscoveryTrendsList = observer(({ plus, store }: PropsType) => {
   const theme = ThemedStyles.style;
-  let listRef = useRef<FeedList<any>>(null);
+  let listRef = useRef<FeedListType<any>>(null);
 
   const navigation = useNavigation();
 
@@ -39,8 +41,13 @@ export const DiscoveryTrendsList = observer(({ plus, store }: PropsType) => {
   }, [store, plus]);
 
   useEffect(() => {
+    //@ts-ignore
     if (listRef.current && listRef.current.listRef) {
-      listRef.current.listRef.scrollToOffset({ offset: -65, animated: true });
+      //@ts-ignore
+      listRef.current.listRef.current.scrollToOffset({
+        offset: -65,
+        animated: true,
+      });
     }
   }, [store.refreshing, listRef]);
 

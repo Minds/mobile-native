@@ -13,6 +13,7 @@ import BaseModel from '../BaseModel';
 import { Platform } from 'react-native';
 import { GOOGLE_PLAY_STORE } from '../../config/Config';
 import _ from 'lodash';
+import sessionService from './session.service';
 
 export type FeedRecordType = {
   owner_guid: string;
@@ -84,6 +85,9 @@ export default class FeedsService {
    * @var {number}
    */
   fallbackIndex = -1;
+  fetchInProgress: boolean = false;
+  firstPost: any;
+  mostRecentPostTs: number = 0;
 
   /**
    * Get entities from the current page
@@ -274,6 +278,65 @@ export default class FeedsService {
       this.fallbackIndex = -1;
     }
   };
+
+  async checkForNewPosts(): Promise<boolean> {
+    if (this.params.algorithm && this.params.algorithm === 'top') {
+      return false;
+    }
+
+    if (this.mostRecentPostTs === 0) {
+      if (this.feed[0].entity?.time_created) {
+        this.mostRecentPostTs = this.feed[0].entity.time_created;
+      }
+    }
+
+    await this.fetchFirstPost();
+
+    if (this.firstPost && this.firstPost.time_created) {
+      if (
+        this.mostRecentPostTs &&
+        this.firstPost.time_created > this.mostRecentPostTs &&
+        sessionService.getUser().guid !== this.firstPost.owner_guid
+      ) {
+        this.mostRecentPostTs = this.firstPost.time_created;
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  async fetchFirstPost(): Promise<void> {
+    if (this.fetchInProgress || !this.endpoint) {
+      return;
+    }
+    this.fetchInProgress = true;
+    const endpoint = this.endpoint;
+
+    try {
+      const response: any = await apiService.get(this.endpoint, {
+        ...this.params,
+        ...{
+          limit: 1,
+        },
+      });
+      this.fetchInProgress = false;
+
+      if (this.endpoint !== endpoint) {
+        // Avoid race conditions if endpoint changes
+        return;
+      }
+
+      if (response && response.entities && response.entities.length) {
+        this.firstPost = response.entities[0].entity;
+        return;
+      }
+    } catch (e) {
+      console.log(e);
+      this.fetchInProgress = false;
+    }
+    return;
+  }
 
   /**
    * Fetch

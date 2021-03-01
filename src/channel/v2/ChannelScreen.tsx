@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback } from 'react';
 import { View, Text } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
-import FeedList from '../../common/components/FeedList';
+import FeedList from '../../common/components/feedlist/FeedList';
 import createChannelStore from './createChannelStore';
 import CenteredLoading from '../../common/components/CenteredLoading';
 import ChannelHeader from './ChannelHeader';

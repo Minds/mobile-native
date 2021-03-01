@@ -5,7 +5,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { View } from 'react-native';
 
-import FeedList from '../common/components/FeedList';
+import FeedList from '../common/components/feedlist/FeedList';
 import type { AppStackParamList } from '../navigation/NavigationTypes';
 import type MessengerListStore from '../messenger/MessengerListStore';
 import type UserStore from '../auth/UserStore';

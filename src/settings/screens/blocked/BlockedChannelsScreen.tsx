@@ -1,7 +1,7 @@
 import { observer, useLocalStore } from 'mobx-react';
 import React, { useCallback, useEffect } from 'react';
 import { Text, View } from 'react-native';
-import FeedList from '../../../common/components/FeedList';
+import FeedList from '../../../common/components/feedlist/FeedList';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import createBlockedChannelsStore from './createBlockedChannelsStore';
 import i18n from '../../../common/services/i18n.service';

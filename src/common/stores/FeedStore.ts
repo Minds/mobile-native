@@ -504,4 +504,8 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   setScheduledCount(count) {
     this.scheduledCount = count;
   }
+
+  checkNewPosts() {
+    return this.feedsService.checkForNewPosts();
+  }
 }

@@ -4,7 +4,8 @@ import NewsfeedService from './NewsfeedService';
 import ActivityModel from './ActivityModel';
 import FeedStore from '../common/stores/FeedStore';
 import UserModel from '../channel/UserModel';
-import type FeedList from '../common/components/FeedList';
+import { FeedListType } from '../common/components/feedlist/FeedList';
+import React from 'react';
 
 /**
  * News feed store
@@ -17,7 +18,7 @@ class NewsfeedStore<T> {
   /**
    * List reference
    */
-  listRef?: FeedList<T>;
+  listRef = React.createRef<FeedListType<T>>();
 
   service = new NewsfeedService();
 
@@ -47,15 +48,17 @@ class NewsfeedStore<T> {
    */
   scrollToTop() {
     if (this.listRef) {
-      this.listRef.scrollToTop(false);
+      //@ts-ignore
+      this.listRef.current.scrollToTop(false);
     }
   }
 
   /**
    * Set FeedList reference
    */
-  setListRef = (r: FeedList<T> | null) => {
+  setListRef = (r: FeedListType<T> | null) => {
     if (r) {
+      //@ts-ignore
       this.listRef = r;
     }
   };
@@ -77,7 +80,8 @@ class NewsfeedStore<T> {
 
     this.feedStore.prepend(model);
 
-    model.listRef = this.listRef?.listRef;
+    //@ts-ignore
+    model.listRef = this.listRef?.current.listRef;
   }
 
   @action

@@ -13,7 +13,7 @@ import { useDiscoveryV2Store } from './useDiscoveryV2Store';
 import { TDiscoveryV2Tabs } from './DiscoveryV2Store';
 import TopbarTabbar from '../../common/components/topbar-tabbar/TopbarTabbar';
 import { DiscoveryTagsList } from './tags/DiscoveryTagsList';
-import FeedList from '../../common/components/FeedList';
+import FeedList from '../../common/components/feedlist/FeedList';
 import DiscoveryTagsManager from './tags/DiscoveryTagsManager';
 import InitialOnboardingButton from '../../onboarding/v2/InitialOnboardingButton';
 

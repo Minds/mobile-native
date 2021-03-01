@@ -7,7 +7,7 @@ import { observer } from 'mobx-react';
 import Activity from '../../../newsfeed/activity/Activity';
 import { ComponentsStyle } from '../../../styles/Components';
 import ErrorBoundary from '../../../common/components/ErrorBoundary';
-import FeedList from '../../../common/components/FeedList';
+import FeedList from '../../../common/components/feedlist/FeedList';
 
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { useDiscoveryV2SearchStore } from './DiscoveryV2SearchContext';
