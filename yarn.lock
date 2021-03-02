@@ -12677,9 +12677,9 @@ react-native-shared-element@^0.7.0:
   resolved "https://registry.yarnpkg.com/react-native-shared-element/-/react-native-shared-element-0.7.0.tgz#c5e02eb372f6e38e48eb1030fd59be8f3d8c7a1f"
   integrity sha512-TJTGwQceABYete+vH3ahNSgzVzXz7X2SPv3thT91gdcFCrm7ht7IKXBXJiYjOA+4TfdqnGEAWkspCy80oEnOgw==
 
-react-native-silent-switch@SkilledApps/react-native-silent-switch:
+react-native-silent-switch@msantang78/react-native-silent-switch:
   version "0.1.0"
-  resolved "https://codeload.github.com/SkilledApps/react-native-silent-switch/tar.gz/7c842061fcd235076cbc38eee327cea063ea1e2e"
+  resolved "https://codeload.github.com/msantang78/react-native-silent-switch/tar.gz/b3f73678f4ad2dae8879e732b44275763afc8290"
 
 react-native-snap-carousel@^3.8.2:
   version "3.9.1"
