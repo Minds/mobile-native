@@ -38,22 +38,31 @@ export default observer(function OffsetList<T>(props: PropsType) {
 
   type ApiFetchType = FetchResponseType & T;
 
-  const { result, loading, error, fetch } = useApiFetch<ApiFetchType>(
-    props.fetchEndpoint,
-    {
-      params: opts,
-      updateState: (newData: ApiFetchType, oldData: ApiFetchType) =>
-        ({
-          ...newData,
-          [props.endpointData]: [
-            ...(oldData ? oldData[props.endpointData] : []),
-            ...(newData && newData[props.endpointData]
-              ? newData[props.endpointData]
-              : []),
-          ],
-        } as ApiFetchType),
-    },
-  );
+  const {
+    result,
+    loading,
+    error,
+    fetch,
+    setResult,
+  } = useApiFetch<ApiFetchType>(props.fetchEndpoint, {
+    params: opts,
+    updateState: (newData: ApiFetchType, oldData: ApiFetchType) =>
+      ({
+        ...newData,
+        [props.endpointData]: [
+          ...(oldData ? oldData[props.endpointData] : []),
+          ...(newData && newData[props.endpointData]
+            ? newData[props.endpointData]
+            : []),
+        ],
+      } as ApiFetchType),
+  });
+
+  const refresh = React.useCallback(() => {
+    setOffset('');
+    setResult(null);
+    fetch();
+  }, [fetch, setResult]);
 
   const onFetchMore = useCallback(() => {
     !loading && result && result['load-next'] && setOffset(result['load-next']);
@@ -92,6 +101,8 @@ export default observer(function OffsetList<T>(props: PropsType) {
       renderItem={props.renderItem}
       keyExtractor={keyExtractor}
       onEndReached={onFetchMore}
+      onRefresh={refresh}
+      refreshing={false}
       style={[
         ThemedStyles.style.flexContainer,
         ThemedStyles.style.backgroundPrimary,
