@@ -71,7 +71,6 @@ const SocialLinks = ({ socialLinks }: PropsType) => {
   return (
     <View style={theme.rowJustifyStart}>
       {parsedSocialLinks.map((socialLink) => {
-        console.log('social link', socialLink);
         const meta = getSocialProfileMeta(socialLink.key);
         return (
           <FaIcon
