@@ -1,7 +1,7 @@
 import React from 'react';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { SocialProfile, SocialProfileMeta } from '../../types/Common';
-import FaIcon from 'react-native-vector-icons/FontAwesome';
+import FaIcon from 'react-native-vector-icons/FontAwesome5';
 import { Linking, View } from 'react-native';
 
 const getSocialProfileMeta = (key: string): SocialProfileMeta => {
@@ -71,6 +71,7 @@ const SocialLinks = ({ socialLinks }: PropsType) => {
   return (
     <View style={theme.rowJustifyStart}>
       {parsedSocialLinks.map((socialLink) => {
+        console.log('social link', socialLink);
         const meta = getSocialProfileMeta(socialLink.key);
         return (
           <FaIcon
