@@ -7,7 +7,7 @@ import {
   Text,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import IconFA from 'react-native-vector-icons/FontAwesome5';
+import IconMI from 'react-native-vector-icons/MaterialIcons';
 
 import { observer } from 'mobx-react';
 import SearchComponent from './searchbar/SearchComponent';
@@ -32,9 +32,11 @@ export const Topbar = observer((props: PropsType) => {
 
   // dereference to react to observable changes
   const balance = wallet.balance;
+  const prices = wallet.prices;
 
   useEffect(() => {
     if (user) {
+      wallet.loadPrices();
       wallet.getTokenAccounts();
     }
   });
@@ -99,10 +101,10 @@ export const Topbar = observer((props: PropsType) => {
                       theme.paddingRight2x,
                       theme.paddingVertical2x,
                     ]}>
-                    {intword(balance)}
+                    {intword(balance * parseFloat(prices.minds))}
                   </Text>
-                  <IconFA
-                    name="coins"
+                  <IconMI
+                    name="attach-money"
                     size={20}
                     style={theme.colorIcon}
                     onPress={openWallet}
