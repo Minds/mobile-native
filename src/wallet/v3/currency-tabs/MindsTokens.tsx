@@ -26,6 +26,8 @@ export const format = (number: number | string, decimals = true) => {
     r = decimals ? temp.toFixed(2) : temp.toFixed(0);
   } else if (temp < 1000) {
     r = decimals ? temp.toFixed(1) : temp.toFixed(0);
+  } else if (temp < 1000000) {
+    r = temp.toFixed(0);
   } else {
     r = abbrev(temp).toString();
   }
