@@ -108,7 +108,7 @@
     "react-native-share": "^2.0.0",
     "react-native-share-menu": "^5.0.1",
     "react-native-shared-element": "^0.7.0",
-    "react-native-silent-switch": "SkilledApps/react-native-silent-switch",
+    "react-native-silent-switch": "msantang78/react-native-silent-switch",
     "react-native-snap-carousel": "^3.8.2",
     "react-native-sqlite-storage": "^4.1.0",
     "react-native-svg": "^12.1.0",
