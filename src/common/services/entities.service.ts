@@ -193,13 +193,13 @@ class EntitiesService {
           entity = defaultEntity;
         } else {
           // we fetch from the server
-          await this.fetch([urn], null, asActivities);
+          await this.fetch([urn], null, asActivities, (e) => (e.urn = urn));
           entity = this.getFromCache(urn, false);
         }
       }
     }
 
-    if (entity) this.fetch([urn], null, asActivities); // Update in the background
+    if (entity) this.fetch([urn], null, asActivities, (e) => (e.urn = urn)); // Update in the background
 
     return entity;
   }
@@ -215,6 +215,7 @@ class EntitiesService {
     urns: Array<string>,
     abortTag: any,
     asActivities: boolean = false,
+    transform?: (entity: any) => void,
   ): Promise<void> {
     try {
       const response: any = await apiService.get(
@@ -224,6 +225,9 @@ class EntitiesService {
       );
 
       for (const entity of response.entities) {
+        if (transform) {
+          transform(entity);
+        }
         this.addEntity(entity);
       }
 

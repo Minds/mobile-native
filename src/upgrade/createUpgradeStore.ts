@@ -98,7 +98,7 @@ const createUpgradeStore = () => {
         : mindsService.settings.handlers.plus;
 
       this.owner = (await entitiesService.single(
-        `urn:entity:${handler}`,
+        `urn:user:${handler}`,
       )) as UserModel;
 
       this.method = 'tokens';
