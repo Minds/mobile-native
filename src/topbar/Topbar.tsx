@@ -33,6 +33,7 @@ export const Topbar = observer((props: PropsType) => {
   // dereference to react to observable changes
   const balance = wallet.balance;
   const prices = wallet.prices;
+  const usdBalance = balance * parseFloat(prices.minds);
 
   useEffect(() => {
     if (user) {
@@ -61,6 +62,7 @@ export const Topbar = observer((props: PropsType) => {
         const cleanTop = {
           paddingTop: insets && insets.top ? insets.top - 5 : 0,
         };
+
         return (
           <View style={[theme.backgroundPrimary, styles.shadow]}>
             <View
@@ -101,8 +103,9 @@ export const Topbar = observer((props: PropsType) => {
                       theme.paddingRight2x,
                       theme.paddingVertical2x,
                     ]}>
-                    ${intword(balance * parseFloat(prices.minds))}
+                    {usdBalance > 0 && '$' + intword(usdBalance)}
                   </Text>
+
                   <IconFA
                     name="coins"
                     size={20}
