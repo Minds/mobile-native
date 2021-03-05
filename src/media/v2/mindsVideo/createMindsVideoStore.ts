@@ -44,6 +44,13 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
     },
     setSource(source: number) {
       this.source = source;
+
+      if (this.sources) {
+        this.video = {
+          uri: this.sources[this.source].src,
+          headers: apiService.buildHeaders(),
+        };
+      }
     },
     setSources(sources: Array<Source>) {
       this.sources = sources;

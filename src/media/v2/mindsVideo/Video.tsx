@@ -29,7 +29,6 @@ const ExpoVideo = observer(
     }, [localStore]);
     return (
       <Video
-        key={`video${localStore.source}`}
         onPlaybackStatusUpdate={localStore.updatePlaybackCallback}
         onLoadStart={localStore.onLoadStart}
         onLoad={localStore.onVideoLoad}
