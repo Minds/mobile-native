@@ -101,7 +101,7 @@ export const Topbar = observer((props: PropsType) => {
                       theme.paddingRight2x,
                       theme.paddingVertical2x,
                     ]}>
-                    ${intword(balance * parseFloat(prices.minds))}
+                    ${(balance * parseFloat(prices.minds)).toFixed(2)}
                   </Text>
                   <IconFA
                     name="coins"
@@ -174,7 +174,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   topbarRight: {
-    width: 50,
+    width: 75,
     justifyContent: 'flex-end',
     alignItems: 'center',
     flexDirection: 'row',
