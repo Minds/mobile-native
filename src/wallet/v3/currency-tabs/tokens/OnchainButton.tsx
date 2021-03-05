@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import { Text, ViewStyle } from 'react-native';
+import { StyleProp, Text, View, ViewStyle } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import SegmentedButton from '../../../../common/components/SegmentedButton';
@@ -17,6 +17,7 @@ type PropsType = {
   onPress?: () => void;
   walletStore: WalletStoreType;
   onchainStore: UniqueOnChainStoreType;
+  style: StyleProp<ViewStyle>;
 };
 
 const OnchainButton = observer((props: PropsType) => {
@@ -50,7 +51,18 @@ const OnchainButton = observer((props: PropsType) => {
     </Text>
   );
 
-  return (
+  return props.onchainStore.loading ? (
+    <View>
+      <Text
+        style={[
+          props.style,
+          theme.mindsSwitchBackgroundSecondary,
+          { marginLeft: 10 },
+        ]}>
+        ...
+      </Text>
+    </View>
+  ) : (
     <SegmentedButton
       containerStyle={props.containerStyle}
       {...children}

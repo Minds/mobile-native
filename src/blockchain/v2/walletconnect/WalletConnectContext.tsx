@@ -1,12 +1,17 @@
 import React from 'react';
 import WalletConnectProvider from '@walletconnect/web3-provider';
-import type { IMobileRegistryEntry } from '@walletconnect/types';
+import type {
+  IMobileRegistryEntry,
+  IPushSubscription,
+} from '@walletconnect/types';
 import Web3 from 'web3';
 import { useLocalStore } from 'mobx-react';
 import { makeAccessRequest } from './util';
 import { Linking, Platform } from 'react-native';
 import { when } from 'mobx';
 import WalletConnectModal from './modal/WalletConnectModal';
+import { showNotification } from '../../../../AppMessages';
+import pushService from '../../../common/services/push.service';
 
 let registry: Array<IMobileRegistryEntry> | null = null;
 
@@ -52,6 +57,7 @@ export type WCStore = {
   chainId: number | null;
   accounts: string[] | null;
   address: string | null;
+  connectionPoller: any;
   setWeb3: (newValue: WCStore['web3']) => void;
   setProvider: (newValue: WCStore['provider']) => void;
   setConnected: (newValue: WCStore['connected']) => void;
@@ -77,6 +83,7 @@ export const createStore = (): WCStore => ({
   address: null,
   modalVisible: false,
   selectedWallet: undefined,
+  connectionPoller: null,
   async showModal() {
     this.modalVisible = true;
 
@@ -95,63 +102,215 @@ export const createStore = (): WCStore => ({
     this.selectedWallet = wallet;
   },
   setupProvider() {
+    clearInterval(this.connectionPoller);
+
+    // Provider should have a clean slate
+    this.setProvider(null);
+    this.setWeb3(null);
+    this.setConnected(false);
+    this.setAccounts(null);
+    this.setAddress(null);
+    this.setChainId(null);
+
     const provider = new WalletConnectProvider({
+      infuraId: '708b51690a43476092936f9818f8c4fa',
       bridge: 'https://bridge.walletconnect.org',
-      infuraId: 'b76cba91dc954ceebff27244923224b1',
       clientMeta: MINDS_METADATA,
       qrcode: false,
-      chainId: 4,
+      chainId: 1,
+      pollingInterval: DEEPLINK_DELAY_MS,
     });
-    const web3 = new Web3(provider as any);
-    this.setWeb3(web3);
-    this.setProvider(provider);
+
+    this.connectionPoller = setInterval(() => {
+      provider.connector.sendCustomRequest({ method: 'ping' });
+
+      console.log(
+        '[WalletConnect.connectionPoller]',
+        provider.connected,
+        provider.connectCallbacks,
+        provider,
+      );
+    }, 5000);
+
     // open wallet using deep linking
-    this.provider?.connector.on('display_uri', (_, payload) => {
+    provider.connector.on('display_uri', (err, payload) => {
+      if (err) {
+        console.error('[WalletConnect]: display_uri', err);
+        return;
+      }
+      const uri = payload.params[0];
+      console.log('[WalletConnect]: display_uri payload', payload, uri);
       setTimeout(
-        () => makeAccessRequest(payload.params[0], this.selectedWallet),
+        () => makeAccessRequest(uri, this.selectedWallet),
         DEEPLINK_DELAY_MS,
       );
     });
 
-    this.provider?.on('connect', async () => {
+    provider.on('connect', async (err, payload) => {
+      console.log('[WalletConnect]: connect event', err, payload);
+
+      showNotification('Wallet successfully connected', 'info');
+
       this.setConnected(true);
-      this.setAccounts(provider.accounts);
-      this.setAddress(provider.accounts[0]);
       this.setChainId(provider.chainId);
+
+      const token = pushService.push.token;
+      const topic = provider.wc.clientId;
+      const bridge = provider.wc.bridge;
+
+      const subscribeOpts = {
+        topic,
+        webhook: 'https://webhook.site/211bb5c6-e245-419b-bf45-dbd9973ce3bb',
+      };
+
+      try {
+        // await fetch("https://webhook.site/211bb5c6-e245-419b-bf45-dbd9973ce3bb", {
+        //   method: "POST",
+        //   headers: {
+        //     Accept: "application/json",
+        //     "Content-Type": "application/json",
+        //   },
+        //   body: "Hello from the app, are you working?",
+        // });
+
+        const response = await fetch(
+          'https://bridge.walletconnect.org/subscribe',
+          {
+            method: 'POST',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(subscribeOpts),
+          },
+        );
+        console.log(subscribeOpts, response);
+      } catch (err) {
+        console.error('[WalletConnect]: bridge subscribe', err);
+      }
+
+      // const pushSubscription: IPushSubscription = {
+      //   bridge,
+      //   topic,
+      //   type: 'fcm',
+      //   token,
+      //   peerName: "",
+      //   language: "",
+      // };
+      // console.log(pushSubscription);
+
+      // try {
+      // const response = await fetch(`https://push.walletconnect.org/new`, {
+      //   method: "POST",
+      //   headers: {
+      //     Accept: "application/json",
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(pushSubscription),
+      // });
+      //   console.log(response);
+      // } catch (err) {
+      //   console.error('[WalletConnect.pushRegister]:', err);
+      // }
     });
-    this.provider?.on('accountsChanged', async (accounts: string[]) => {
+
+    provider.on('accountsChanged', async (accounts: string[]) => {
+      console.log('[WalletConnect]: accountsChanged');
       this.setAccounts(accounts);
       this.setAddress(accounts[0]);
     });
-    this.provider?.on('disconnect', async () => {
+
+    provider.on('message', async () => {
+      console.log('[WalletConnect]: message received');
+    });
+
+    provider.on('disconnect', async () => {
+      console.log('[WalletConnect]: disconnect event');
+
+      showNotification('Wallet was disconnected', 'warning');
+
+      this.setProvider(null);
+      this.setWeb3(null);
       this.setConnected(false);
       this.setAccounts(null);
       this.setAddress(null);
       this.setChainId(null);
     });
+
+    provider.connector.on('ping', async () => {
+      console.log('[WalletConnect]: ping');
+    });
+
+    provider.connector.on('session_update', async (err, payload) => {
+      console.log('[WalletConnect]: session updated', err, payload);
+    });
+
+    provider.connector.on('session_request', async (err, payload) => {
+      console.log('[WalletConnect]: session requested', err, payload);
+    });
+
+    provider.on('call_request', async () => {
+      console.log('[WalletConnect]: call request made');
+    });
+
+    provider.connector.on('wc_sessionRequest', async () => {
+      console.log('wc_sessionRequest');
+    });
+
+    provider.connector.on('eth_signTypedData', async () => {
+      console.log('eth_signTypedData');
+    });
+
+    const web3 = new Web3(provider as any);
+
+    this.setWeb3(web3);
+    this.setProvider(provider);
   },
   async connect() {
-    if (Platform.OS === 'ios' && !this.selectedWallet) {
-      await this.showModal();
-      if (!this.selectedWallet) {
-        throw new Error('No wallet selected');
-      }
-    }
-    if (!this.provider) {
-      this.setupProvider();
-    } else {
+    if (this.provider) {
+      console.log(this.provider);
       // If the provider is not connected then we recreate the provider
       if (!this.provider?.connector.connected) {
-        await this.resetConnection();
+        console.log(
+          '[WalletConnect.connect]: not connected, so we will resetup the provider',
+        );
+        //await this.resetConnection();
         this.setupProvider();
       }
+    } else {
+      if (Platform.OS === 'ios' && !this.selectedWallet) {
+        showNotification(
+          "WalletConnect doesn't work on iOS. Please use a desktop browser.",
+          'warning',
+        );
+        return [''];
+        // await this.showModal();
+        // if (!this.selectedWallet) {
+        //   throw new Error('No wallet selected');
+        // }
+      }
+      this.setupProvider();
     }
 
-    // if (this.connected && this.accounts) {
-    //   return this.accounts;
-    // }
-    const result = await this.provider?.enable();
-    return result as string[];
+    //await this.provider?.triggerConnect();
+
+    if (this.connected && this.accounts) {
+      console.log(
+        '[WalletConnect.connect]: We already have accounts so we will skip .enable()',
+      );
+      return this.accounts;
+    }
+
+    showNotification('Please connect your wallet', 'info', 0);
+
+    try {
+      const result = await this.provider?.enable();
+      return result as string[];
+    } catch (err) {
+      console.error(err);
+      showNotification(err.toString(), 'danger');
+    }
+    return [''];
   },
   setWeb3(newValue: WCStore['web3']) {
     this.web3 = newValue;
@@ -184,12 +343,14 @@ export const createStore = (): WCStore => ({
   openWalletApp() {
     const r = getRegistry();
 
-    const wallet = r.find(
-      (d) => d.shortName === this.provider?.walletMeta?.name,
-    );
-    if (wallet) {
+    let wallet = r.find((d) => d.shortName === this.provider?.walletMeta?.name);
+    if (!wallet && this.selectedWallet) {
+      wallet = this.selectedWallet;
+    }
+    if (wallet !== undefined) {
       setTimeout(() => {
         Linking.openURL(
+          // @ts-ignore - You are confused Mr. Linter ... there is an if statement above
           `${wallet.deepLink}${wallet.deepLink.endsWith(':') ? '//' : '/'}`,
         );
       }, DEEPLINK_DELAY_MS);

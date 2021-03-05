@@ -66,13 +66,24 @@ const TokensTab = observer(
       }
 
       try {
-        showNotification('Please complete the step in your wallet app', 'info');
+        onchainStore.setLoading(true);
+
+        showNotification(
+          'Please complete the step in your wallet app',
+          'info',
+          0,
+        );
         wc.openWalletApp();
+
+        console.log('[TokensTab.connectWallet]: requesting signature');
 
         const signature = await wc.provider.connector.signPersonalMessage([
           msg,
           wc.address,
         ]);
+        console.log('[TokensTab.connectWallet]: signature ' + signature);
+
+        onchainStore.setLoading(true);
 
         try {
           // Returns signature.
@@ -89,12 +100,15 @@ const TokensTab = observer(
             onchainStore?.fetch();
           }, 1000);
 
-          showNotification('Wallet connected');
+          showNotification('Your On-chain address is now setup and verified');
         } catch (error) {
           throw 'Request Failed ' + error;
         }
       } catch (err) {
+        console.error('There was an error', err);
         showNotification(err.toString(), 'danger');
+      } finally {
+        onchainStore.setLoading(false);
       }
     }, [onchainStore, walletStore, wc]);
 
