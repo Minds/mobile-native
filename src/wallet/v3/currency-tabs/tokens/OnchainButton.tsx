@@ -17,7 +17,7 @@ type PropsType = {
   onPress?: () => void;
   walletStore: WalletStoreType;
   onchainStore: UniqueOnChainStoreType;
-  style: StyleProp<ViewStyle>;
+  style?: StyleProp<ViewStyle>;
 };
 
 const OnchainButton = observer((props: PropsType) => {
