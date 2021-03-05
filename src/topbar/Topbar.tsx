@@ -7,7 +7,7 @@ import {
   Text,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import IconMI from 'react-native-vector-icons/MaterialIcons';
+import IconFA from 'react-native-vector-icons/FontAwesome5';
 
 import { observer } from 'mobx-react';
 import SearchComponent from './searchbar/SearchComponent';
@@ -101,10 +101,10 @@ export const Topbar = observer((props: PropsType) => {
                       theme.paddingRight2x,
                       theme.paddingVertical2x,
                     ]}>
-                    {intword(balance * parseFloat(prices.minds))}
+                    ${intword(balance * parseFloat(prices.minds))}
                   </Text>
-                  <IconMI
-                    name="attach-money"
+                  <IconFA
+                    name="coins"
                     size={20}
                     style={theme.colorIcon}
                     onPress={openWallet}
