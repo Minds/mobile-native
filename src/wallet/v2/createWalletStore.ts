@@ -215,10 +215,7 @@ const createWalletStore = () => ({
           } else if (address.label === 'Receiver' && address.address) {
             this.wallet.receiver.balance = toFriendlyCrypto(address.balance);
             this.wallet.receiver.address = address.address;
-            // this.wallet.eth.balance = number(
-            //   await web3Service.getBalance(address.address),
-            //   3,
-            // );
+            this.wallet.eth.balance = toFriendlyCrypto(address.ether_balance);
           }
         });
 
