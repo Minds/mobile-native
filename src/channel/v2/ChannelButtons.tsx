@@ -24,7 +24,14 @@ import Edit from './buttons/Edit';
 import Join from './buttons/Join';
 import SmallCircleButton from '../../common/components/SmallCircleButton';
 
-type ButtonsType = 'edit' | 'more' | 'wire' | 'subscribe' | 'message' | 'join';
+type ButtonsType =
+  | 'edit'
+  | 'more'
+  | 'wire'
+  | 'subscribe'
+  | 'message'
+  | 'join'
+  | 'boost';
 
 export type ChannelButtonsPropsType = {
   store: ChannelStoreType;
@@ -62,6 +69,7 @@ const check = {
     !store.channel!.isOwner() &&
     store.channel!.can(FLAG_SUBSCRIBE) &&
     !store.channel!.subscribed,
+  boost: (store: ChannelStoreType) => store.channel!.isOwner(),
 };
 
 /**
@@ -76,6 +84,10 @@ const ChannelButtons = observer(
     >();
 
     const SIZE = props.iconSize || 18;
+
+    const boostChannel = useCallback(() => {
+      navigation.navigate('BoostChannelScreen', {});
+    }, []);
 
     const openMessenger = useCallback(() => {
       if (!props.store.channel) return null;
@@ -109,6 +121,13 @@ const ChannelButtons = observer(
         ]}>
         {props.children}
 
+        {shouldShow('boost') && (
+          <SmallCircleButton
+            name="trending-up"
+            type="material"
+            onPress={boostChannel}
+          />
+        )}
         {shouldShow('edit') && (
           <SmallCircleButton
             name="edit"

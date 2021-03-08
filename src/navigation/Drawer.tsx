@@ -73,7 +73,7 @@ const getOptionsList = (navigation) => {
           name: i18n.t('moreScreen.wallet'),
           icon: (
             <IconMC
-              name="wallet"
+              name="bank"
               size={ICON_SIZE}
               style={[theme.colorIcon, styles.icon]}
             />
