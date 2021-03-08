@@ -201,10 +201,10 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
             videoPlayerService.enableVolumeListener();
           } else if (isIOS && !this.paused && !status.didJustFinish) {
             // fix ios autoplay
-            this.player?.setStatusAsync({
-              shouldPlay: true,
-              volume: this.volume,
-            });
+            // this.player?.setStatusAsync({
+            //   shouldPlay: true,
+            //   volume: this.volume,
+            // });
           }
 
           // if (status.didJustFinish && !status.isLooping) {
