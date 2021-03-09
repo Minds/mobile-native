@@ -50,7 +50,9 @@ export type RootStackParamList = {
   VerifyUniqueness: {};
   SuggestedChannel: {};
   SuggestedGroups: {};
-  PhoneValidation: {};
+  PhoneValidation: {
+    onComplete?: Function;
+  };
   WalletWithdrawal: {};
   EarnModal: {};
 };

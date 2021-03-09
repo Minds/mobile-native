@@ -21,6 +21,8 @@ const ICON_SIZE = 25;
 const getOptionsList = (navigation) => {
   const theme = ThemedStyles.style;
 
+  const hasRewards = sessionService.getUser().rewards;
+
   let list = [
     {
       name: i18n.t('newsfeed.title'),
@@ -109,10 +111,19 @@ const getOptionsList = (navigation) => {
         />
       ),
       onPress: () => {
-        navigation.navigate('Tabs', {
-          screen: 'CaptureTab',
-          params: { screen: 'BuyTokens' },
-        });
+        const navToBuyTokens = () => {
+          navigation.navigate('Tabs', {
+            screen: 'CaptureTab',
+            params: { screen: 'BuyTokens' },
+          });
+        };
+        if (!hasRewards) {
+          navigation.navigate('PhoneValidation', {
+            onComplete: navToBuyTokens,
+          });
+        } else {
+          navToBuyTokens();
+        }
       },
     },
   ];

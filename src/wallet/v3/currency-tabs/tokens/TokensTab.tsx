@@ -112,6 +112,18 @@ const TokensTab = observer(
       }
     }, [onchainStore, walletStore, wc]);
 
+    const mustVerify = !sessionService.getUser().rewards
+      ? () => {
+          const onComplete = () => {
+            connectWallet();
+          };
+          //@ts-ignore
+          navigation.navigate('PhoneValidation', {
+            onComplete,
+          });
+        }
+      : undefined;
+
     let body;
     switch (store.option) {
       case 'rewards':
@@ -152,7 +164,7 @@ const TokensTab = observer(
         body = (
           <ReceiverSettings
             navigation={navigation}
-            connectWallet={connectWallet}
+            connectWallet={mustVerify || connectWallet}
             onchainStore={onchainStore}
             walletStore={walletStore}
           />
@@ -165,7 +177,7 @@ const TokensTab = observer(
         <View style={{ ...theme.paddingTop5x }}>
           <TokenTopBar
             walletStore={walletStore}
-            connectWallet={connectWallet}
+            connectWallet={mustVerify || connectWallet}
             onchainStore={onchainStore}
           />
           <TopBarButtonTabBar

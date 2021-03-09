@@ -705,7 +705,8 @@
     "connectBank": "Connect Bank",
     "buyTokens": "Buy Tokens",
     "onboardingCompleted": "Now you can earn tokens",
-    "improvedExperience": "Your feed should be livelier!"
+    "improvedExperience": "Your feed should be livelier!",
+    "mustVerify": "Before you can start earning or purchase tokens, it is important that we can simply verify your uniqueness. The less tokens spammers take, the more that are left for you! To learn about how we keep your data private,"
   },
   "membership": {
     "noTokens": "It doesn't accept Tokens",
@@ -1273,5 +1274,6 @@
     "tokenAmount": "Token Amount",
     "totalPayment": "Total Payment"
   },
-  "points": "points"
+  "points": "points",
+  "clickHere": "click here"
 }

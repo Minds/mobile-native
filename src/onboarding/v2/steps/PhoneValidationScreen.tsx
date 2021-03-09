@@ -1,7 +1,13 @@
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { observer, useLocalStore } from 'mobx-react';
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Linking,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import DismissKeyboard from '../../../common/components/DismissKeyboard';
 import i18n from '../../../common/services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
@@ -18,6 +24,9 @@ type LabelText = 'onboarding.phoneNumber' | 'onboarding.confirmationCode';
 export default observer(function PhoneValidationScreen() {
   const theme = ThemedStyles.style;
   const navigation = useNavigation();
+  const route = useRoute<any>();
+  // if onComplete means that it come from buy tokens or somthing like that
+  const onComplete = route.params?.onComplete;
   const phoneValidationStore = useLocalStore(createPhoneValidationStore);
   const user = useLegacyStores().user;
 
@@ -27,8 +36,13 @@ export default observer(function PhoneValidationScreen() {
     async verify() {
       try {
         await phoneValidationStore.confirmAction(user);
-        navigation.goBack();
-        navigation.goBack();
+        if (onComplete) {
+          navigation.goBack();
+          onComplete();
+        } else {
+          navigation.goBack();
+          navigation.goBack();
+        }
       } catch (err) {}
     },
     async send() {
@@ -58,6 +72,18 @@ export default observer(function PhoneValidationScreen() {
       )}
       <DismissKeyboard>
         <View style={theme.flexContainer}>
+          {onComplete && (
+            <Text style={theme.padding4x}>
+              {i18n.t('onboarding.mustVerify')}{' '}
+              <Text
+                style={theme.colorLink}
+                onPress={() =>
+                  Linking.openURL('https://www.minds.com/p/privacy')
+                }>
+                {i18n.t('clickHere')}
+              </Text>
+            </Text>
+          )}
           <LabeledComponent
             label={i18n.t(store.labelText)}
             wrapperStyle={[
