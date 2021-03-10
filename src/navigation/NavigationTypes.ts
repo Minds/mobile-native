@@ -121,6 +121,7 @@ export type AppStackParamList = {
   MessengerSettingsScreen: {};
   RekeyScreen: {};
   AutoplaySettingsScreen: {};
+  BoostSettingsScreen: {};
   SettingsPassword: {};
   SettingsNotifications: {};
   DataSaverScreen: {};

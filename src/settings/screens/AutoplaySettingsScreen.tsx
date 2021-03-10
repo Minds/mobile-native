@@ -5,6 +5,7 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import { CheckBox } from 'react-native-elements';
 import { observer } from 'mobx-react';
 import sessionService from '../../common/services/session.service';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const AutoplaySettingsScreen = observer(() => {
   const theme = ThemedStyles.style;
@@ -14,8 +15,11 @@ const AutoplaySettingsScreen = observer(() => {
     user.toggleDisableAutoplayVideos();
   }, [user]);
 
+  const insets = useSafeAreaInsets();
+  const cleanTop = { paddingTop: insets.top };
+
   return (
-    <View style={theme.padding4x}>
+    <View style={[theme.padding4x, cleanTop]}>
       <Text style={[theme.colorSecondaryText, theme.marginBottom3x]}>
         {i18n.t('settings.autoplay.description')}
       </Text>

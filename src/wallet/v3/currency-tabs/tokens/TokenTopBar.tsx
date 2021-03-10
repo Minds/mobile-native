@@ -63,7 +63,6 @@ const TokenTopBar = ({
 
 const styles = StyleSheet.create({
   minds: {
-    height: 40,
     paddingHorizontal: 15,
     paddingVertical: 10,
     fontSize: 15,
@@ -72,7 +71,6 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   touchable: {
-    height: 42,
     borderRadius: 20,
   },
 });
