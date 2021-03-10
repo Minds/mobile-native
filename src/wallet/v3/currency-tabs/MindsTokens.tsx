@@ -62,7 +62,7 @@ const MindsTokens = ({
       {isTokens ? (
         <Text style={[theme.colorSecondaryText, secondaryTextStyle]}>
           {' '}
-          MINDS{' '}
+          tokens{' '}
         </Text>
       ) : (
         ''

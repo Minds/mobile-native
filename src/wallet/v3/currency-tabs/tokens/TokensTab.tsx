@@ -22,6 +22,7 @@ import useWalletConnect from '../../../../blockchain/v2/walletconnect/useWalletC
 import sessionService from '../../../../common/services/session.service';
 import apiService from '../../../../common/services/api.service';
 import { showNotification } from '../../../../../AppMessages';
+import PhoneValidator from './widthdrawal/PhoneValidator';
 
 const options: Array<ButtonTabType<TokensOptions>> = [
   { id: 'rewards', title: 'Rewards' },
@@ -44,6 +45,15 @@ const createStore = (walletStore: WalletStoreType) => ({
   },
 });
 
+const showPhoneValidator = (bottomStore: BottomOptionsStoreType) => {
+  bottomStore.show(
+    i18n.t('wallet.phoneVerification'),
+    i18n.t('send'),
+    <PhoneValidator bottomStore={bottomStore} />,
+  );
+};
+
+
 /**
  * Tokens tab
  */
@@ -54,8 +64,13 @@ const TokensTab = observer(
     const onchainStore = useUniqueOnchain();
     const wc = useWalletConnect();
     const connectWallet = React.useCallback(async () => {
+
+      const user = sessionService.getUser();
+
+      showPhoneValidator(bottomStore);
+
       const msg = JSON.stringify({
-        user_guid: sessionService.getUser().guid,
+        user_guid: user.guid,
         unix_ts: Date.now() / 1000,
       });
 

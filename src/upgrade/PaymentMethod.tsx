@@ -31,7 +31,7 @@ const PaymentMethod = ({ store }: PropsType) => {
         backgroundInactive={Colors.switchBackground}
         style={theme.marginHorizontal2x}
       />
-      <Text style={switchTextStyle}>MINDS</Text>
+      <Text style={switchTextStyle}>tokens</Text>
     </View>
   );
 };
