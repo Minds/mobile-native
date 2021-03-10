@@ -34,11 +34,6 @@ const LiquiditySummary = observer(
       store.setOptedOutLiquiditySpot(user?.liquidity_spot_opt_out);
     }, [user, isFocused, store]);
 
-    const progressBar = [
-      { flex: 1, width: `${(reward.multiplier / 3) * 100}%` },
-      theme.backgroundLink,
-    ];
-
     const increase = liquidityPositions?.yield_liquidity?.USD > 0;
 
     const yieldLiquidity = parseFloat(liquidityPositions?.yield_liquidity?.USD);
