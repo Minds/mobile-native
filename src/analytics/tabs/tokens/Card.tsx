@@ -24,13 +24,15 @@ const Card = ({ metrics, type }: PropsType) => {
         <Comparative comparative={metrics.comparative} total={metrics.total} />
       </View>
       <AmountInfo metrics={metrics} />
-      <Text style={theme.colorSecondaryText}>
-        On-chain{' '}
-        <Text style={theme.colorPrimaryText}>{format(metrics.onchain)}</Text>{' '}
-        MINDS · Off-chain{' '}
-        <Text style={theme.colorPrimaryText}>{format(metrics.offchain)}</Text>{' '}
-        MINDS
-      </Text>
+      {metrics.format !== 'points' && metrics.format !== 'usd' && (
+        <Text style={theme.colorSecondaryText}>
+          On-chain{' '}
+          <Text style={theme.colorPrimaryText}>{format(metrics.onchain)}</Text>{' '}
+          MINDS · Off-chain{' '}
+          <Text style={theme.colorPrimaryText}>{format(metrics.offchain)}</Text>{' '}
+          MINDS
+        </Text>
+      )}
     </View>
   );
 };
@@ -115,7 +117,7 @@ const AmountInfo = ({ metrics }: { metrics: TokensMetrics }) => {
           textStyles={[styles.amountText, theme.colorPrimaryText]}
           secondaryTextStyle={styles.amountTextSecondary}
           mindsPrice={wallet.prices.minds}
-          currencyType={'tokens'}
+          currencyType={metrics.format === 'token' ? 'tokens' : 'usd'}
           value={metrics.total}
           cashAsPrimary
         />

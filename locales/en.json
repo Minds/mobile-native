@@ -612,7 +612,8 @@
       "4": "Notifications",
       "5": "NSFW Content",
       "6": "Messenger",
-      "7": "Autoplay Videos"
+      "7": "Autoplay Videos",
+      "8": "Boosted Content"
     },
     "networkOptions": {
       "1": "Data Saver"
@@ -641,6 +642,22 @@
       "enable": "Enable video autoplay",
       "saved": "Changes Saved",
       "notPlus": "This feature is only available to Plus users."
+    },
+    "boost": {
+      "description": "Control how boost works across the site.",
+      "learn": "Learn more about",
+      "viewBoostedContent": "View Boosted Content",
+      "viewBoostedContentTooltip": "Minds+ users may hide Boosts from their newsfeed",
+      "boostAutoRotation": "Boost Auto-rotation",
+      "boostAutoRotationTooltip": "Enable/disable the Boost box on top of your feed from self-rotating",
+      "openContent": "Open Content",
+      "openContentTooltip": "Open may contain controversial content. By selecting Open, you acknowledge that you are willing to see controversial content.",
+      "liquiditySpot": "Liquidity Spot",
+      "liquiditySpotTooltip": "Minds Token liquidity providers are rewarded with boosted ad space relative to their % of the liquidity pool.",
+      "optIn": "Opt-in",
+      "optOut": "Opt-out",
+      "enable": "Enable",
+      "disable": "Disable"
     }
   },
   "comingSoon": {
@@ -1273,5 +1290,7 @@
     "tokenAmount": "Token Amount",
     "totalPayment": "Total Payment"
   },
-  "points": "points"
+  "points": "points",
+  "mindsPlusFeature": "Minds+ Feature",
+  "browserOnly": "Browser Only"
 }

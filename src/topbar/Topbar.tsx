@@ -177,7 +177,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   topbarRight: {
-    width: 50,
+    width: 75,
     justifyContent: 'flex-end',
     alignItems: 'center',
     flexDirection: 'row',

@@ -118,6 +118,7 @@ import ExportLegacyWallet from '../settings/screens/ExportLegacyWallet';
 import Withdrawal from '../wallet/v3/currency-tabs/tokens/widthdrawal/Withdrawal';
 import EarnModal from '../earn/EarnModal';
 import RekeyScreen from '../settings/screens/RekeyScreen';
+import BoostSettingsScreen from '../settings/screens/BoostSettingsScreen';
 
 const isIos = Platform.OS === 'ios';
 
@@ -204,6 +205,10 @@ const AccountScreenOptions = (navigation) => [
   {
     title: i18n.t('settings.accountOptions.7'),
     onPress: () => navigation.push('AutoplaySettingsScreen'),
+  },
+  {
+    title: i18n.t('settings.accountOptions.8'),
+    onPress: () => navigation.push('BoostSettingsScreen'),
   },
 ];
 
@@ -594,6 +599,11 @@ const AppStack = function () {
         name="AutoplaySettingsScreen"
         component={AutoplaySettingsScreen}
         options={{ title: i18n.t('settings.accountOptions.7') }}
+      />
+      <AppStackNav.Screen
+        name="BoostSettingsScreen"
+        component={BoostSettingsScreen}
+        options={{ title: i18n.t('settings.accountOptions.8') }}
       />
       <AppStackNav.Screen
         name="DevicesScreen"

@@ -21,13 +21,21 @@ export const format = (number: number | string, decimals = true) => {
   if (temp === 0) {
     r = '0';
   } else if (temp < 1) {
-    r = decimals ? temp.toFixed(4) : temp.toFixed(0);
+    r = temp.toLocaleString(undefined, {
+      maximumFractionDigits: decimals ? 4 : 0,
+    });
   } else if (temp < 100) {
-    r = decimals ? temp.toFixed(2) : temp.toFixed(0);
+    r = temp.toLocaleString(undefined, {
+      maximumFractionDigits: decimals ? 2 : 0,
+    });
   } else if (temp < 1000) {
-    r = decimals ? temp.toFixed(1) : temp.toFixed(0);
+    r = temp.toLocaleString(undefined, {
+      maximumFractionDigits: decimals ? 1 : 0,
+    });
   } else if (temp < 1000000) {
-    r = temp.toFixed(0);
+    r = temp.toLocaleString(undefined, {
+      maximumFractionDigits: 0,
+    });
   } else {
     r = abbrev(temp).toString();
   }
