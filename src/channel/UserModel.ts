@@ -48,6 +48,7 @@ export default class UserModel extends BaseModel {
   banned?: string;
   is_mature?: boolean;
   dob?: string;
+  liquidity_spot_opt_out?: boolean;
 
   tags: Array<string> = [];
   groupsCount: number = 0;
@@ -351,5 +352,10 @@ export default class UserModel extends BaseModel {
       this.disable_autoplay_videos = !this.disable_autoplay_videos;
       throw new UserError(err, 'danger');
     }
+  }
+  
+  @action
+  setLiquiditySpotOptOut(liquidity_spot_opt_out: boolean) {
+    this.liquidity_spot_opt_out = liquidity_spot_opt_out;
   }
 }

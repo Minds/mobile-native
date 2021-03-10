@@ -1,18 +1,36 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 import { View } from 'react-native';
 import { Reward } from './TokensRewards';
 import { format } from '../MindsTokens';
 import { Container, Info, Row, Title } from '../AccordionContent';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import useCurrentUser from '../../../../common/hooks/useCurrentUser';
+import NavigationService from '../../../../navigation/NavigationService';
+import { observer, useLocalStore } from 'mobx-react';
+import { useIsFocused } from "@react-navigation/native";
 
 type PropsType = {
   liquidityPositions: any;
   reward: Reward;
 };
 
-const LiquiditySummary = ({ liquidityPositions, reward }: PropsType) => {
+const LiquiditySummary = observer(({ liquidityPositions, reward }: PropsType) => {
   const theme = ThemedStyles.style;
+  const user = useCurrentUser();
+  const isFocused = useIsFocused();
+
+  const store = useLocalStore(() => ({
+    hasOptedOutLiquiditySpot: user?.liquidity_spot_opt_out,
+    setOptedOutLiquiditySpot(val) {
+      store.hasOptedOutLiquiditySpot = Boolean(val);
+    }
+  }));
+
+  useEffect(() => {
+    store.setOptedOutLiquiditySpot(user?.liquidity_spot_opt_out);
+  }, [ user, isFocused ]);
 
   const progressBar = [
     { flex: 1, width: `${(reward.multiplier / 3) * 100}%` },
@@ -79,9 +97,18 @@ const LiquiditySummary = ({ liquidityPositions, reward }: PropsType) => {
             <View style={progressBar} />
           </View>
         </Row>
+        </Container>
+        <Container>
+
+        <Row>
+          <TouchableOpacity onPress={() => NavigationService.navigate('BoostSettingsScreen')}>
+            <Title style={theme.colorLink}>
+              { user?.liquidity_spot_opt_out ? 'Opt-in to' : 'Opt-out of' } showing in liquidity spot</Title>
+          </TouchableOpacity>
+        </Row>
       </Container>
     </>
   );
-};
+});
 
 export default LiquiditySummary;

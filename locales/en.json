@@ -585,6 +585,7 @@
     "dataSaverDisableOnWifi": "Disable on Wi-Fi",
     "dataSaverDescription": "When Data Saver is turned on, videos won't load in advance to help you use less data.",
     "dataSaverDisableOnWiFiDescription": "When enabled, Data Saver mode will automatically disable when a Wi-Fi connection is detected.",
+    "saved": "Setting saved",
     "reportedContent": {
       "action": {
         "actionNSFW": "marked NSFW",
