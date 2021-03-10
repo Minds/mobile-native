@@ -125,11 +125,10 @@ const TokensTab = observer(() => {
       />
       <ScrollView
         contentContainerStyle={[
-          { 
-            paddingBottom: 120
-          }
-        ]}
-      >
+          {
+            paddingBottom: 120,
+          },
+        ]}>
         {body}
       </ScrollView>
     </View>

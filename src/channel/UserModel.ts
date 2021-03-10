@@ -353,7 +353,7 @@ export default class UserModel extends BaseModel {
       throw new UserError(err, 'danger');
     }
   }
-  
+
   @action
   setLiquiditySpotOptOut(liquidity_spot_opt_out: boolean) {
     this.liquidity_spot_opt_out = liquidity_spot_opt_out;

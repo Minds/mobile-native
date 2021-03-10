@@ -53,7 +53,6 @@ const showPhoneValidator = (bottomStore: BottomOptionsStoreType) => {
   );
 };
 
-
 /**
  * Tokens tab
  */
@@ -64,7 +63,6 @@ const TokensTab = observer(
     const onchainStore = useUniqueOnchain();
     const wc = useWalletConnect();
     const connectWallet = React.useCallback(async () => {
-
       const user = sessionService.getUser();
 
       showPhoneValidator(bottomStore);

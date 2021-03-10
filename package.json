@@ -7,7 +7,7 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "check-prettier": "yarn prettier --check \"./src/**/*.{ts,tsx,js,json}\" \"./*.{tsx,ts}\"",
+    "check-prettier": "yarn prettier --write \"./src/**/*.{ts,tsx,js,json}\" \"./*.{tsx,ts}\"",
     "push-locale": "cp locales/en.json ../l10n/mobile-native/Base.json",
     "pull-locale": "cd ../l10n; git pull origin master; cd -; cp ../l10n/mobile-native/locale/*.json locales/",
     "static-analysis": "tsc",
@@ -16,7 +16,7 @@
     "update-settings": "ts-node tasks/update-settings.js",
     "test": "jest --env=node --colors --verbose",
     "locale": "ts-node tasks/poeditor.js",
-    "preinstall": "git config core.hooksPath .githooks",
+    "preinstall": "git config core.hooksPath .git/hooks",
     "postinstall": "jetify; patch-package;",
     "release-json": "node tasks/generate_release_json.js"
   },
@@ -166,7 +166,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged"
+      "pre-commit": "sh .githooks/pre-commit && pretty-quick --staged"
     }
   }
 }
