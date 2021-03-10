@@ -67,12 +67,14 @@ const BoostSettingsScreen = observer(() => {
     setLiquiditySpot(val: boolean) {
       this.liquiditySpot = val;
       this.save({ liquidity_spot_opt_out: val ? 0 : 1 });
+
+      user.setLiquiditySpotOptOut(val ? false : true);
     },
     async showBoost(): Promise<void> {
       if (user.plus) {
         try {
           await apiService.delete('api/v1/plus/boost');
-          showNotification(i18n.t('Setting saved'), 'info');
+          showNotification(i18n.t('settings.saved'), 'info');
         } catch (e) {
           console.error(e);
         }
@@ -82,7 +84,7 @@ const BoostSettingsScreen = observer(() => {
       if (user.plus) {
         try {
           await apiService.put('api/v1/plus/boost');
-          showNotification(i18n.t('Setting saved'), 'info');
+          showNotification(i18n.t('settings.saved'), 'info');
         } catch (e) {
           console.error(e);
         }
@@ -91,7 +93,7 @@ const BoostSettingsScreen = observer(() => {
     async save(params) {
       try {
         await settingsService.submitSettings(params);
-        showNotification(i18n.t('Setting saved'), 'info');
+        showNotification(i18n.t('settings.saved'), 'info');
       } catch (err) {
         throw new UserError(err, 'danger');
       }
