@@ -28,9 +28,8 @@ const Card = ({ metrics, type }: PropsType) => {
         <Text style={theme.colorSecondaryText}>
           On-chain{' '}
           <Text style={theme.colorPrimaryText}>{format(metrics.onchain)}</Text>{' '}
-          MINDS · Off-chain{' '}
+          · Off-chain{' '}
           <Text style={theme.colorPrimaryText}>{format(metrics.offchain)}</Text>{' '}
-          MINDS
         </Text>
       )}
     </View>
