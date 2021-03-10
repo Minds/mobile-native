@@ -50,42 +50,46 @@ const LiquiditySummary = observer(
 
     return (
       <>
-        <Container>
-          <Row>
-            <Title>Provided Liquidity</Title>
-          </Row>
-          <Row>
-            <Info>${format(providedLiquidity, false)} </Info>
-          </Row>
-        </Container>
-        <Container>
-          <Row>
-            <Title>Liquidity position</Title>
-          </Row>
-          <Row>
-            <Info>
-              ${format(liquidityPositions?.current_liquidity?.USD, false)}{' '}
-            </Info>
-            <View style={[theme.rowJustifyStart, theme.centered]}>
-              <Icon
-                name={`arrow-${increase ? 'up' : 'down'}`}
-                size={20}
-                color={increase ? '#59B814' : '#e03c20'}
-              />
-              <Info style={theme.colorSecondaryText}>
-                ${format(yieldLiquidity, false)}{' '}
-              </Info>
-            </View>
-          </Row>
-        </Container>
-        <Container>
-          <Row>
-            <Title>Yield</Title>
-          </Row>
-          <Row>
-            <Info>{format(yieldLiquidityPrcnt, false)}%</Info>
-          </Row>
-        </Container>
+        {liquidityPositions && (
+          <View>
+            <Container>
+              <Row>
+                <Title>Provided Liquidity</Title>
+              </Row>
+              <Row>
+                <Info>${format(providedLiquidity, false)} </Info>
+              </Row>
+            </Container>
+            <Container>
+              <Row>
+                <Title>Liquidity position</Title>
+              </Row>
+              <Row>
+                <Info>
+                  ${format(liquidityPositions?.current_liquidity?.USD, false)}{' '}
+                </Info>
+                <View style={[theme.rowJustifyStart, theme.centered]}>
+                  <Icon
+                    name={`arrow-${increase ? 'up' : 'down'}`}
+                    size={20}
+                    color={increase ? '#59B814' : '#e03c20'}
+                  />
+                  <Info style={theme.colorSecondaryText}>
+                    ${format(yieldLiquidity, false)}{' '}
+                  </Info>
+                </View>
+              </Row>
+            </Container>
+            <Container>
+              <Row>
+                <Title>Yield</Title>
+              </Row>
+              <Row>
+                <Info>{format(yieldLiquidityPrcnt, false)}%</Info>
+              </Row>
+            </Container>
+          </View>
+        )}
         <Container>
           <Row>
             <Title>Time multiplier</Title>

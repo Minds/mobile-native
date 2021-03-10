@@ -73,13 +73,11 @@ const createLocalStore = ({ walletStore }) => ({
       | {
           rewards: RewardsType;
           contributionScores: ContributionMetric[];
-          liquidityPositions: any;
         },
   ) {
     if (response) {
       this.rewards = response.rewards;
       this.contributionScores = response.contributionScores;
-      this.liquidityPositions = response.liquidityPositions;
     }
   },
   async loadRewards(date: Date) {
@@ -87,6 +85,13 @@ const createLocalStore = ({ walletStore }) => ({
     const response = await walletStore.loadRewards(date);
     this.setRewards(response);
     this.setLoading(false);
+  },
+  setLiquidityPositions(liquidityPositions) {
+    this.liquidityPositions = liquidityPositions;
+  },
+  async loadLiquidityPositions() {
+    const liquidityPositions = await walletStore.loadLiquiditySummary();
+    this.setLiquidityPositions(liquidityPositions);
   },
 });
 
@@ -97,6 +102,7 @@ const TokensRewards = observer(({ walletStore }: PropsType) => {
   const localStore = useLocalStore(createLocalStore, { walletStore });
   useEffect(() => {
     localStore.loadRewards(localStore.selectedDate);
+    localStore.loadLiquidityPositions(); // Ideally we would only load when the accordian is opened
   }, [localStore, localStore.selectedDate, walletStore]);
 
   if (localStore.loading) {
