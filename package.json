@@ -18,7 +18,8 @@
     "locale": "ts-node tasks/poeditor.js",
     "preinstall": "git config core.hooksPath .git/hooks",
     "postinstall": "jetify; patch-package;",
-    "release-json": "node tasks/generate_release_json.js"
+    "release-json": "node tasks/generate_release_json.js",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@crowdlinker/react-native-pager": "^0.2.3",

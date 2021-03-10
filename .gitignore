@@ -69,3 +69,4 @@ coverage/
 sentry.properties
 
 !/.githooks
+!/.husky
