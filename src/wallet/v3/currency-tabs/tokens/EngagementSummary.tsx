@@ -56,7 +56,7 @@ const EngagementSummary = ({ contributionScores, reward }: PropsType) => {
           <Title>Activity Multiplier</Title>
         </Row>
         <Row>
-          <ActivityMultiplier activityLevel={parseInt(reward.multiplier)} />
+          <ActivityMultiplier multiplier={reward.multiplier} />
         </Row>
       </Container>
     </>

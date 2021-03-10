@@ -20,7 +20,13 @@ const ToolTipText = () => (
   </View>
 );
 
-const ActivityMultiplier = ({ activityLevel }) => {
+type PropsType = {
+  multiplier: any;
+};
+
+const ActivityMultiplier = ({ multiplier }: PropsType) => {
+  const activityLevel =
+    typeof multiplier === 'string' ? parseInt(multiplier) : multiplier;
   const tooltipRef = useRef<any>();
   const theme = ThemedStyles.style;
   const getLevelStyle = (level: number) => {
