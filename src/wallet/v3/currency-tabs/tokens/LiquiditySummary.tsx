@@ -17,6 +17,10 @@ type PropsType = {
   reward: Reward;
 };
 
+export const SummaryLabel = ({ style = {}, children }) => (
+  <Row style={[{ marginRight: -25 }, style]}>{children}</Row>
+);
+
 const LiquiditySummary = observer(
   ({ liquidityPositions, reward }: PropsType) => {
     const theme = ThemedStyles.style;
@@ -47,17 +51,17 @@ const LiquiditySummary = observer(
     return (
       <>
         <Container>
-          <Row>
+          <SummaryLabel>
             <Title>Provided Liquidity</Title>
-          </Row>
+          </SummaryLabel>
           <Row>
             <Info>${format(providedLiquidity, false)} </Info>
           </Row>
         </Container>
         <Container>
-          <Row>
+          <SummaryLabel>
             <Title>Liquidity position</Title>
-          </Row>
+          </SummaryLabel>
           <Row>
             <Info>
               ${format(liquidityPositions?.current_liquidity?.USD, false)}{' '}
@@ -75,17 +79,17 @@ const LiquiditySummary = observer(
           </Row>
         </Container>
         <Container>
-          <Row>
+          <SummaryLabel>
             <Title>Yield</Title>
-          </Row>
+          </SummaryLabel>
           <Row>
             <Info>{format(yieldLiquidityPrcnt, false)}%</Info>
           </Row>
         </Container>
         <Container>
-          <Row>
+          <SummaryLabel>
             <Title>Time multiplier</Title>
-          </Row>
+          </SummaryLabel>
           <Row>
             <TimeMultiplier multiplier={reward.multiplier} />
           </Row>

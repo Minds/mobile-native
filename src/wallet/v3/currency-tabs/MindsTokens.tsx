@@ -60,7 +60,8 @@ const MindsTokens = ({
       {isTokens ? '' : '$'}
       {format(mindsF)}
       {isTokens ? (
-        <Text style={[theme.colorSecondaryText, secondaryTextStyle]}>
+        <Text
+          style={[styles.cash, theme.colorSecondaryText, secondaryTextStyle]}>
           {' '}
           tokens{' '}
         </Text>

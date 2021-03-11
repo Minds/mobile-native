@@ -23,7 +23,7 @@ export const Container = ({ style = {}, children }) => {
   const theme = ThemedStyles.style;
   const paddingPointsView = [
     theme.rowJustifyStart,
-    theme.paddingLeft4x,
+    theme.paddingLeft5x,
     theme.paddingTop3x,
     style,
   ];
@@ -90,7 +90,7 @@ const AccordionContent = ({ data, summary }: PropsType) => {
                 </View>
               )}
             </Row>
-            <Row>
+            <Row style={theme.paddingRight5x}>
               <Info>{row.info}</Info>
             </Row>
           </Container>
@@ -101,7 +101,7 @@ const AccordionContent = ({ data, summary }: PropsType) => {
           style={[
             theme.fontLM,
             theme.fontMedium,
-            theme.marginLeft4x,
+            theme.marginLeft5x,
             theme.paddingTop3x,
             theme.borderPrimary,
             theme.borderTop,
