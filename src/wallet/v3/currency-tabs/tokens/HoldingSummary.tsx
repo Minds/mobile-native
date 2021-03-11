@@ -4,6 +4,7 @@ import { Reward } from './TokensRewards';
 import { format } from '../MindsTokens';
 import { Container, Info, Row, Title } from '../AccordionContent';
 import { View } from 'react-native';
+import TimeMultiplier from './multipliers/TimeMultiplier';
 
 type PropsType = {
   reward: Reward;
@@ -33,12 +34,7 @@ const HoldingSummary = ({ reward }: PropsType) => {
           <Title>Time multiplier</Title>
         </Row>
         <Row>
-          <Title style={theme.marginRight4x}>
-            {format(reward.multiplier, false)}
-          </Title>
-          <View style={[theme.width70, theme.backgroundPrimary]}>
-            <View style={progressBar} />
-          </View>
+          <TimeMultiplier multiplier={reward.multiplier} />
         </Row>
       </Container>
     </>

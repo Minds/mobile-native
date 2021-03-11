@@ -10,6 +10,7 @@ import useCurrentUser from '../../../../common/hooks/useCurrentUser';
 import NavigationService from '../../../../navigation/NavigationService';
 import { observer, useLocalStore } from 'mobx-react';
 import { useIsFocused } from '@react-navigation/native';
+import TimeMultiplier from './multipliers/TimeMultiplier';
 
 type PropsType = {
   liquidityPositions: any;
@@ -31,12 +32,7 @@ const LiquiditySummary = observer(
 
     useEffect(() => {
       store.setOptedOutLiquiditySpot(user?.liquidity_spot_opt_out);
-    }, [user, isFocused]);
-
-    const progressBar = [
-      { flex: 1, width: `${(reward.multiplier / 3) * 100}%` },
-      theme.backgroundLink,
-    ];
+    }, [user, isFocused, store]);
 
     const increase = liquidityPositions?.yield_liquidity?.USD > 0;
 
@@ -50,57 +46,48 @@ const LiquiditySummary = observer(
 
     return (
       <>
-        {liquidityPositions && (
-          <View>
-            <Container>
-              <Row>
-                <Title>Provided Liquidity</Title>
-              </Row>
-              <Row>
-                <Info>${format(providedLiquidity, false)} </Info>
-              </Row>
-            </Container>
-            <Container>
-              <Row>
-                <Title>Liquidity position</Title>
-              </Row>
-              <Row>
-                <Info>
-                  ${format(liquidityPositions?.current_liquidity?.USD, false)}{' '}
-                </Info>
-                <View style={[theme.rowJustifyStart, theme.centered]}>
-                  <Icon
-                    name={`arrow-${increase ? 'up' : 'down'}`}
-                    size={20}
-                    color={increase ? '#59B814' : '#e03c20'}
-                  />
-                  <Info style={theme.colorSecondaryText}>
-                    ${format(yieldLiquidity, false)}{' '}
-                  </Info>
-                </View>
-              </Row>
-            </Container>
-            <Container>
-              <Row>
-                <Title>Yield</Title>
-              </Row>
-              <Row>
-                <Info>{format(yieldLiquidityPrcnt, false)}%</Info>
-              </Row>
-            </Container>
-          </View>
-        )}
+        <Container>
+          <Row>
+            <Title>Provided Liquidity</Title>
+          </Row>
+          <Row>
+            <Info>${format(providedLiquidity, false)} </Info>
+          </Row>
+        </Container>
+        <Container>
+          <Row>
+            <Title>Liquidity position</Title>
+          </Row>
+          <Row>
+            <Info>
+              ${format(liquidityPositions?.current_liquidity?.USD, false)}{' '}
+            </Info>
+            <View style={[theme.rowJustifyStart, theme.centered]}>
+              <Icon
+                name={`arrow-${increase ? 'up' : 'down'}`}
+                size={20}
+                color={increase ? '#59B814' : '#e03c20'}
+              />
+              <Info style={theme.colorSecondaryText}>
+                ${format(yieldLiquidity, false)}{' '}
+              </Info>
+            </View>
+          </Row>
+        </Container>
+        <Container>
+          <Row>
+            <Title>Yield</Title>
+          </Row>
+          <Row>
+            <Info>{format(yieldLiquidityPrcnt, false)}%</Info>
+          </Row>
+        </Container>
         <Container>
           <Row>
             <Title>Time multiplier</Title>
           </Row>
           <Row>
-            <Title style={theme.marginRight4x}>
-              {format(reward.multiplier, false)}
-            </Title>
-            <View style={[theme.width70, theme.backgroundPrimary]}>
-              <View style={progressBar} />
-            </View>
+            <TimeMultiplier multiplier={reward.multiplier} />
           </Row>
         </Container>
         <Container>

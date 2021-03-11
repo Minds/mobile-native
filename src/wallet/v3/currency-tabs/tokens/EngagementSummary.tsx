@@ -5,6 +5,7 @@ import { ContributionMetric } from '../../../v2/createWalletStore';
 import { format } from '../MindsTokens';
 import { Container, Info, Row, Title } from '../AccordionContent';
 import { Reward } from './TokensRewards';
+import ActivityMultiplier from './multipliers/ActivityMultiplier';
 
 type PropsType = {
   contributionScores: ContributionMetric[];
@@ -52,10 +53,10 @@ const EngagementSummary = ({ contributionScores, reward }: PropsType) => {
       </Container>
       <Container>
         <Row>
-          <Title>Activity Level</Title>
+          <Title>Activity Multiplier</Title>
         </Row>
         <Row>
-          <Title>Core (x{reward.multiplier} multiplier)</Title>
+          <ActivityMultiplier multiplier={reward.multiplier} />
         </Row>
       </Container>
     </>

@@ -1,6 +1,6 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { observer, useLocalStore } from 'mobx-react';
-import { StyleSheet, Text, View } from 'react-native';
+import { View } from 'react-native';
 import TopBarButtonTabBar, {
   ButtonTabType,
 } from '../../../../common/components/topbar-tabbar/TopBarButtonTabBar';
@@ -22,7 +22,6 @@ import useWalletConnect from '../../../../blockchain/v2/walletconnect/useWalletC
 import sessionService from '../../../../common/services/session.service';
 import apiService from '../../../../common/services/api.service';
 import { showNotification } from '../../../../../AppMessages';
-import PhoneValidator from './widthdrawal/PhoneValidator';
 
 const options: Array<ButtonTabType<TokensOptions>> = [
   { id: 'rewards', title: 'Rewards' },
@@ -45,14 +44,6 @@ const createStore = (walletStore: WalletStoreType) => ({
   },
 });
 
-const showPhoneValidator = (bottomStore: BottomOptionsStoreType) => {
-  bottomStore.show(
-    i18n.t('wallet.phoneVerification'),
-    i18n.t('send'),
-    <PhoneValidator bottomStore={bottomStore} />,
-  );
-};
-
 /**
  * Tokens tab
  */
@@ -64,8 +55,6 @@ const TokensTab = observer(
     const wc = useWalletConnect();
     const connectWallet = React.useCallback(async () => {
       const user = sessionService.getUser();
-
-      showPhoneValidator(bottomStore);
 
       const msg = JSON.stringify({
         user_guid: user.guid,

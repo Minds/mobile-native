@@ -1,6 +1,6 @@
 import { observer, useLocalStore } from 'mobx-react';
 import React, { useEffect } from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import ActivityIndicator from '../../../common/components/ActivityIndicator';
 import TopBarButtonTabBar, {
   ButtonTabType,
@@ -123,16 +123,15 @@ const TokensTab = observer(() => {
         current={store.option}
         onChange={store.setOption}
       />
-      <ScrollView
-        contentContainerStyle={[
-          {
-            paddingBottom: 120,
-          },
-        ]}>
-        {body}
-      </ScrollView>
+      <ScrollView contentContainerStyle={styles.padding}>{body}</ScrollView>
     </View>
   );
+});
+
+const styles = StyleSheet.create({
+  padding: {
+    paddingBottom: 120,
+  },
 });
 
 export default TokensTab;
