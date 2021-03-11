@@ -41,7 +41,7 @@ export default function ({
 }: Props) {
   const channelName = `${transakApiKey}_${partnerOrderId}`;
   const transakURL = `${getTransakDomain(
-    false,
+    true,
   )}?apiKey=${transakApiKey}&partnerOrderId=${partnerOrderId}&defaultCryptoCurrency=ETH`;
 
   useEffect(() => {
