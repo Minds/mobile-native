@@ -5,6 +5,7 @@ import { format } from '../MindsTokens';
 import { Container, Info, Row, Title } from '../AccordionContent';
 import { View } from 'react-native';
 import TimeMultiplier from './multipliers/TimeMultiplier';
+import { SummaryLabel } from './LiquiditySummary';
 
 type PropsType = {
   reward: Reward;
@@ -13,26 +14,21 @@ type PropsType = {
 const HoldingSummary = ({ reward }: PropsType) => {
   const theme = ThemedStyles.style;
 
-  const progressBar = [
-    { flex: 1, width: `${(reward.multiplier / 3) * 100}%` },
-    theme.backgroundLink,
-  ];
-
   return (
     <>
       <Container>
-        <Row>
+        <SummaryLabel>
           <Title>OnChain Tokens</Title>
-        </Row>
+        </SummaryLabel>
         <Row>
           <Info>{format(reward.score, false)} </Info>
           <Title style={theme.marginLeft3x}>tokens</Title>
         </Row>
       </Container>
       <Container>
-        <Row>
+        <SummaryLabel>
           <Title>Time multiplier</Title>
-        </Row>
+        </SummaryLabel>
         <Row>
           <TimeMultiplier multiplier={reward.multiplier} />
         </Row>

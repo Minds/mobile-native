@@ -6,6 +6,7 @@ import { format } from '../MindsTokens';
 import { Container, Info, Row, Title } from '../AccordionContent';
 import { Reward } from './TokensRewards';
 import ActivityMultiplier from './multipliers/ActivityMultiplier';
+import { SummaryLabel } from './LiquiditySummary';
 
 type PropsType = {
   contributionScores: ContributionMetric[];
@@ -40,9 +41,9 @@ const EngagementSummary = ({ contributionScores, reward }: PropsType) => {
     <>
       {metrics}
       <Container style={contributionScores.length ? theme.marginTop4x : {}}>
-        <Row>
+        <SummaryLabel>
           <Title>Total Points</Title>
-        </Row>
+        </SummaryLabel>
         <Row>
           <Info>{format(reward.score, false)} </Info>
           <Title>
@@ -52,9 +53,9 @@ const EngagementSummary = ({ contributionScores, reward }: PropsType) => {
         </Row>
       </Container>
       <Container>
-        <Row>
+        <SummaryLabel>
           <Title>Activity Multiplier</Title>
-        </Row>
+        </SummaryLabel>
         <Row>
           <ActivityMultiplier multiplier={reward.multiplier} />
         </Row>
