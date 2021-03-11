@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Tooltip } from 'react-native-elements';
 import ThemedStyles from '../../../../../styles/ThemedStyles';
+import { format } from '../../MindsTokens';
 
 const ToolTipText = () => (
   <Text style={styles.tooltipTitle}>
@@ -44,7 +45,7 @@ const TimeMultiplier = ({ multiplier }: PropsType) => {
       onPress={() => tooltipRef.current.toggleTooltip()}>
       <View style={[styles.multiplierContainer, theme.backgroundPrimary]}>
         <View style={[styles.multiplierRow]}>
-          <Text style={theme.fontS}>{multiplier}.0</Text>
+          <Text style={theme.fontS}>{format(multiplier)}</Text>
           <View
             style={[
               theme.flexContainer,
@@ -69,7 +70,7 @@ const TimeMultiplier = ({ multiplier }: PropsType) => {
       </Tooltip>
       <View style={[styles.infoContainer, theme.backgroundTertiary]}>
         <Text style={styles.infoText}>
-          {calculateDaysFromMultiplier(multiplier)} / 365 days
+          {format(calculateDaysFromMultiplier(multiplier))} / 365 days
         </Text>
       </View>
     </TouchableOpacity>
@@ -84,12 +85,15 @@ const styles = StyleSheet.create({
   },
   multiplierContainer: {
     flex: 1,
+    justifyContent: 'center',
     paddingVertical: 5,
     paddingHorizontal: 10,
     borderBottomLeftRadius: 6,
     borderTopLeftRadius: 5,
   },
   multiplierRow: {
+    justifyContent: 'center',
+    alignItems: 'center',
     flex: 1,
     borderRadius: 2,
     flexDirection: 'row',
@@ -99,7 +103,8 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     flex: 1,
-    paddingVertical: 5,
+    alignItems: 'center',
+    padding: 5,
     borderBottomRightRadius: 6,
     borderTopRightRadius: 6,
   },
