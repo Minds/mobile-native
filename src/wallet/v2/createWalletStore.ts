@@ -216,6 +216,7 @@ const createWalletStore = () => ({
             this.wallet.receiver.balance = toFriendlyCrypto(address.balance);
             this.wallet.receiver.address = address.address;
             this.wallet.eth.balance = toFriendlyCrypto(address.ether_balance);
+            this.wallet.onchain.balance = this.wallet.receiver.balance;
           }
         });
 
