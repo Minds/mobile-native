@@ -28,7 +28,7 @@ const EarnItem = ({ content }: EarnItemPropsType) => {
   const theme = ThemedStyles.style;
 
   const body = content.icon ? (
-    <View style={theme.rowJustifyStart}>
+    <View style={[theme.rowJustifyStart, theme.alignCenter]}>
       <Icon
         name={content.icon}
         color={ThemedStyles.getColor('primary_text')}
