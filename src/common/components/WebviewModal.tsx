@@ -23,7 +23,7 @@ export default function ({
           uri,
         }}
         bounces={true}
-        scrollEnabled={false}
+        scrollEnabled={true}
         javaScriptEnabled={true}
         domStorageEnabled={true}
         startInLoadingState={true}
