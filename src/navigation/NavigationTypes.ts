@@ -9,6 +9,7 @@ import type ActivityModel from '../newsfeed/ActivityModel';
 import type { SupportTiersType } from '../wire/WireTypes';
 import type { PortraitBarItem } from '../portrait/createPortraitStore';
 import type BlogModel from '../blogs/BlogModel';
+import { TwoFactorStore } from '../auth/twoFactorAuth/createTwoFactorStore';
 
 export type DrawerParamList = {
   Tabs: {};
@@ -138,6 +139,13 @@ export type AppStackParamList = {
   LanguageScreen: {};
   NSFWScreen: {};
   DevicesScreen: {};
+  TwoFactorAuthSettingsScreen: {};
+  RecoveryCodesScreen: {
+    store: TwoFactorStore;
+  };
+  VerifyAuthAppScreen: {
+    store: TwoFactorStore;
+  };
   TagSelector: {};
   NsfwSelector: {};
   ScheduleSelector: {};

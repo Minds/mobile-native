@@ -1,9 +1,10 @@
 import React from 'react';
 import * as entities from 'entities';
-import { Alert, Clipboard } from 'react-native';
+import { Alert } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 import { showNotification } from '../../../AppMessages';
 

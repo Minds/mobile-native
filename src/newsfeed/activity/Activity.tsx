@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   View,
   LayoutChangeEvent,
-  Clipboard,
 } from 'react-native';
 
 import * as entities from 'entities';
@@ -35,6 +34,7 @@ import sessionService from '../../common/services/session.service';
 import NavigationService from '../../navigation/NavigationService';
 import { showNotification } from '../../../AppMessages';
 import DeletedRemind from './DeletedRemind';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 const FONT_THRESHOLD = 300;
 

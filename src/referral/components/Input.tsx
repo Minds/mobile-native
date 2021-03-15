@@ -1,6 +1,5 @@
 import React, { useCallback, useRef } from 'react';
 import {
-  Clipboard,
   StyleSheet,
   Text,
   TextInput,
@@ -10,6 +9,7 @@ import {
 import { showNotification } from '../../../AppMessages';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 interface InputProps {
   textToCopy: string;

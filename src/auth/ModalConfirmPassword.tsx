@@ -3,13 +3,10 @@ import React, { Component } from 'react';
 import {
   Text,
   View,
-  ScrollView,
   TextInput,
-  Alert,
   Button,
   KeyboardAvoidingView,
   Platform,
-  TouchableHighlight,
   StyleSheet,
 } from 'react-native';
 
@@ -17,13 +14,17 @@ import Modal from 'react-native-modal';
 
 import i18n from '../common/services/i18n.service';
 import authService from '../auth/AuthService';
-import { observer, inject } from 'mobx-react';
 import { ComponentsStyle } from '../styles/Components';
-import { CommonStyle } from '../styles/Common';
 import Colors from '../styles/Colors';
 import ThemedStyles from '../styles/ThemedStyles';
 
-export default class ModalConfirmPassword extends Component {
+type PropsType = {
+  onSuccess: Function;
+  close: Function;
+  isVisible: boolean;
+};
+
+export default class ModalConfirmPassword extends Component<PropsType> {
   state = {
     password: '',
     error: false,
