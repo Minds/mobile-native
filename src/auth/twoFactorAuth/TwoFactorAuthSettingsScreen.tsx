@@ -6,7 +6,7 @@ import ModalConfirmPassword from '../ModalConfirmPassword';
 import MenuItem from '../../common/components/menus/MenuItem';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
-import createTwoFactorStore from './createTwoFactorStore';
+import createTwoFactorStore, { Options } from './createTwoFactorStore';
 
 const TwoFactorAuthSettingsScreen = observer(() => {
   const theme = ThemedStyles.style;
@@ -15,21 +15,24 @@ const TwoFactorAuthSettingsScreen = observer(() => {
 
   const items = [
     {
-      onPress: localStore.showConfirmPasssword,
-      id: 'app',
-      enabled: true,
+      id: 'app' as Options,
+      enabled: localStore.appAuthEnabled,
     },
     {
-      onPress: localStore.showConfirmPasssword,
-      id: 'sms',
-      enabled: false,
+      id: 'sms' as Options,
+      enabled: localStore.smsAuthEnabled,
     },
   ];
 
-  const onConfirmPasswordSuccess = () =>
-    navigation.navigate('VerifyAuthAppScreen', {
+  const onConfirmPasswordSuccess = () => {
+    const screen =
+      localStore.selectedOption === 'app'
+        ? 'VerifyAuthAppScreen'
+        : 'VerifyPhoneNumberScreen';
+    navigation.navigate(screen, {
       store: localStore,
     });
+  };
 
   return (
     <View>
@@ -39,7 +42,7 @@ const TwoFactorAuthSettingsScreen = observer(() => {
       {items.map((item) => (
         <MenuItem
           item={{
-            onPress: item.onPress,
+            onPress: () => localStore.setSelected(item.id),
             title: <ItemTitle id={item.id} enabled={item.enabled} />,
           }}
         />

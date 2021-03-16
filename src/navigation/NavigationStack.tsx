@@ -122,6 +122,7 @@ import BoostSettingsScreen from '../settings/screens/BoostSettingsScreen';
 import TwoFactorAuthSettingsScreen from '../auth/twoFactorAuth/TwoFactorAuthSettingsScreen';
 import RecoveryCodesScreen from '../auth/twoFactorAuth/RecoveryCodesScreen';
 import VerifyAuthAppScreen from '../auth/twoFactorAuth/VerifyAuthAppScreen';
+import VerifyPhoneNumberScreen from '../auth/twoFactorAuth/VerifyPhoneNumberScreen';
 
 const isIos = Platform.OS === 'ios';
 
@@ -625,6 +626,11 @@ const AppStack = function () {
       <AppStackNav.Screen
         name="VerifyAuthAppScreen"
         component={VerifyAuthAppScreen}
+        options={{ title: i18n.t('settings.TFA') }}
+      />
+      <AppStackNav.Screen
+        name="VerifyPhoneNumberScreen"
+        component={VerifyPhoneNumberScreen}
         options={{ title: i18n.t('settings.TFA') }}
       />
       <AppStackNav.Screen

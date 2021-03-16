@@ -31,6 +31,14 @@ const VerifyAuthAppScreen = observer(({ route }: PropsType) => {
   const store = route.params.store;
   const navigation = useNavigation();
 
+  const onComplete = () => {
+    store.setLoading(false);
+    navigation.navigate('RecoveryCodesScreen', {
+      store: store,
+    });
+    showNotification(i18n.t('settings.TFAEnabled'));
+  };
+
   const onContinue = () => {
     if (store.appCode === '') {
       showNotification(
@@ -39,9 +47,8 @@ const VerifyAuthAppScreen = observer(({ route }: PropsType) => {
       );
       return;
     }
-    navigation.navigate('RecoveryCodesScreen', {
-      store: store,
-    });
+    store.setLoading(true);
+    store.submitCode(onComplete);
   };
 
   navigation.setOptions({
@@ -52,9 +59,14 @@ const VerifyAuthAppScreen = observer(({ route }: PropsType) => {
 
   useEffect(() => {
     const loadSecret = async () => {
-      store.setLoading(true);
-      await store.getSecret();
-      store.setLoading(false);
+      try {
+        store.setLoading(true);
+        await store.fetchSecret();
+      } catch (err) {
+        showNotification(err.message, 'warning');
+      } finally {
+        store.setLoading(false);
+      }
     };
     loadSecret();
   }, [store]);
