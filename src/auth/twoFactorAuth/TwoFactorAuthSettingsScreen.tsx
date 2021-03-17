@@ -25,6 +25,7 @@ const TwoFactorAuthSettingsScreen = observer(() => {
   ];
 
   const onConfirmPasswordSuccess = () => {
+    localStore.closeConfirmPasssword();
     const screen =
       localStore.selectedOption === 'app'
         ? 'VerifyAuthAppScreen'
@@ -42,14 +43,20 @@ const TwoFactorAuthSettingsScreen = observer(() => {
       {items.map((item) => (
         <MenuItem
           item={{
-            onPress: () => localStore.setSelected(item.id),
+            onPress: () => {
+              localStore.setSelected(item.id);
+              //onConfirmPasswordSuccess();
+            },
             title: <ItemTitle id={item.id} enabled={item.enabled} />,
           }}
         />
       ))}
       <MenuItem
         item={{
-          onPress: () => false,
+          onPress: () =>
+            navigation.navigate('DisableTFA', {
+              store: localStore,
+            }),
           title: i18n.t('settings.TFADisable'),
         }}
       />

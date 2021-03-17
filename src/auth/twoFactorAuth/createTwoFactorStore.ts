@@ -58,6 +58,17 @@ const createTwoFactorStore = () => ({
       logService.exception(err);
     }
   },
+  async disableTotp(onComplete: Function) {
+    try {
+      const response = <any>await apiService.delete('api/v3/security/totp', {
+        code: this.appCode,
+      });
+      console.log('DISABLE RESPONSE', response);
+      onComplete();
+    } catch (err) {
+      logService.exception(err);
+    }
+  },
   setLoading(loading: boolean) {
     this.loading = loading;
   },

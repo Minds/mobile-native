@@ -202,6 +202,8 @@ class ApiService {
       timeout: NETWORK_TIMEOUT,
     });
 
+    console.log('LOGIN RESPONSE', response);
+
     return await this.parseResponse<T>(response, url);
   }
 

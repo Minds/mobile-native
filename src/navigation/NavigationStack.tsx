@@ -123,6 +123,7 @@ import TwoFactorAuthSettingsScreen from '../auth/twoFactorAuth/TwoFactorAuthSett
 import RecoveryCodesScreen from '../auth/twoFactorAuth/RecoveryCodesScreen';
 import VerifyAuthAppScreen from '../auth/twoFactorAuth/VerifyAuthAppScreen';
 import VerifyPhoneNumberScreen from '../auth/twoFactorAuth/VerifyPhoneNumberScreen';
+import DisableTFA from '../auth/twoFactorAuth/DisableTFA';
 
 const isIos = Platform.OS === 'ios';
 
@@ -631,6 +632,11 @@ const AppStack = function () {
       <AppStackNav.Screen
         name="VerifyPhoneNumberScreen"
         component={VerifyPhoneNumberScreen}
+        options={{ title: i18n.t('settings.TFA') }}
+      />
+      <AppStackNav.Screen
+        name="DisableTFA"
+        component={DisableTFA}
         options={{ title: i18n.t('settings.TFA') }}
       />
       <AppStackNav.Screen

@@ -149,6 +149,9 @@ export type AppStackParamList = {
   VerifyPhoneNumberScreen: {
     store: TwoFactorStore;
   };
+  DisableTFA: {
+    store: TwoFactorStore;
+  };
   TagSelector: {};
   NsfwSelector: {};
   ScheduleSelector: {};
