@@ -57,7 +57,7 @@ const ChannelDescription = (props: PropsType) => {
       renderTruncatedFooter={renderTruncatedFooter}
       renderRevealedFooter={renderRevealedFooter}>
       <Tags
-        style={[theme.fontL, theme.colorSecondaryText]}
+        style={[theme.fontL, theme.colorSecondaryText]} // M.B. Needed to be able to style parsed tags text again. Not sure whether the android issue is ongoing or not.
         navigation={navigation}>
         {props.channel.briefdescription}
       </Tags>
