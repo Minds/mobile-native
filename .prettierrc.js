@@ -5,5 +5,7 @@ module.exports = {
   semi: true,
   bracketSpacing: true,
   trailingComma: 'all',
-  "endOfLine":"auto",
+
+  endOfLine: 'auto',
+  arrowParens: 'avoid',
 };
