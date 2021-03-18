@@ -27,6 +27,9 @@ exports[`renders correctly 1`] = `
           "color": "#FFFFFF",
         },
         undefined,
+        Object {
+          "fontWeight": "500",
+        },
       ]
     }
   >
