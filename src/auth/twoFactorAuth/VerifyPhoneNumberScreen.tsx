@@ -57,12 +57,15 @@ const VerifyPhoneNumberScreen = observer(({ route }: PropsType) => {
         this.labelText = 'onboarding.confirmationCode';
       } catch (err) {}
     },
+    get onContinue() {
+      return this.buttonText === 'confirm' ? this.verify : this.send;
+    },
   }));
 
   navigation.setOptions({
     headerRight: () => (
       <SaveButton
-        onPress={localStore.send}
+        onPress={localStore.onContinue}
         text={i18n.t('continue')}
         style={!phoneValidationStore.phone ? theme.colorSecondaryText : {}}
       />

@@ -59,7 +59,12 @@ export type RootStackParamList = {
 };
 
 export type AuthStackParamList = {
-  Login: {};
+  Login: {
+    username?: string;
+    password?: string;
+    tfa?: 'sms' | 'totp';
+    secret?: string;
+  };
   Forgot: {
     code?: string;
   };

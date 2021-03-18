@@ -1,9 +1,8 @@
-import Clipboard from '@react-native-clipboard/clipboard';
 import { Linking } from 'react-native';
-import { showNotification } from '../../../AppMessages';
 import apiService from '../../common/services/api.service';
 import logService from '../../common/services/log.service';
 import sessionService from '../../common/services/session.service';
+import authService, { TFA } from '../AuthService';
 export type Options = 'app' | 'sms';
 
 const createTwoFactorStore = () => ({
@@ -82,6 +81,22 @@ const createTwoFactorStore = () => ({
   setAuthDisabled() {
     this.appAuthEnabled = false;
     this.smsAuthEnabled = false;
+  },
+  async login(username: string, password: string, tfa: TFA, secret?: string) {
+    this.setLoading(true);
+    let headers: any = {
+      'X-MINDS-2FA-CODE': this.appCode,
+    };
+    if (tfa === 'sms') {
+      headers['X-MINDS-SMS-2FA-KEY'] = secret;
+    }
+    try {
+      authService.login(username, password, headers);
+    } catch (err) {
+      logService.exception(err);
+    } finally {
+      this.setLoading(false);
+    }
   },
 });
 

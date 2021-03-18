@@ -1,19 +1,11 @@
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
-import React, { useEffect } from 'react';
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import React from 'react';
+import { ScrollView, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { AppStackParamList } from '../../navigation/NavigationTypes';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import InputContainer from '../../common/components/InputContainer';
 import CenteredLoading from '../../common/components/CenteredLoading';
-import SaveButton from '../../common/components/SaveButton';
 import i18n from '../../common/services/i18n.service';
 import { showNotification } from '../../../AppMessages';
 
@@ -63,6 +55,7 @@ const DisableTFA = observer(({ route }: PropsType) => {
         placeholder={'Enter the six-digit code from the application'}
         onChangeText={store.setAppCode}
         value={store.appCode}
+        autoFocus
       />
       {store.appCode.length === 6 && (
         <TouchableOpacity

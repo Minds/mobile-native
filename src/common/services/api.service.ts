@@ -27,8 +27,13 @@ export interface ApiResponse {
  * Api Error
  */
 export class ApiError extends Error {
-  constructor(...args) {
+  errId: string = '';
+  headers: any = null;
+
+  constructor(errId?, headers?, ...args) {
     super(...args);
+    this.errId = errId;
+    this.headers = headers;
   }
 }
 
@@ -60,10 +65,11 @@ class ApiService {
       }
     }
 
-    let data, text;
+    let data, text, headers;
 
     try {
       // Convert from JSON
+      headers = response.headers;
       text = await response.text();
       data = JSON.parse(text);
     } catch (err) {
@@ -89,7 +95,8 @@ class ApiService {
     // Failed on API side
     if (data && data.status && data.status !== 'success') {
       const msg = data && data.message ? data.message : 'Server error';
-      throw new ApiError(msg);
+      const errId = data && data.errorId ? data.errorId : '';
+      throw new ApiError(errId, headers, msg);
     }
 
     return data;
@@ -115,12 +122,13 @@ class ApiService {
   /**
    * Build headers
    */
-  buildHeaders() {
+  buildHeaders(customHeaders: any = {}) {
     const headers: any = {
       'Content-Type': 'application/json',
       'Cache-Control': 'no-cache, no-store, must-revalidate',
       Pragma: 'no-cache',
       'App-Version': Version.VERSION,
+      ...customHeaders,
     };
 
     if (MINDS_STAGING) {
@@ -174,9 +182,10 @@ class ApiService {
     url: string,
     params: object = {},
     tag: any = null,
+    customHeaders: any = {},
   ): Promise<T> {
     // build headers
-    const headers = this.buildHeaders();
+    const headers = this.buildHeaders(customHeaders);
 
     const response = await abortableFetch(
       MINDS_API_URI + this.buildUrl(url, params),
@@ -192,8 +201,12 @@ class ApiService {
    * @param {string} url
    * @param {object} body
    */
-  async post<T extends ApiResponse>(url: string, body: any = {}): Promise<T> {
-    const headers = this.buildHeaders();
+  async post<T extends ApiResponse>(
+    url: string,
+    body: any = {},
+    customHeaders: any = {},
+  ): Promise<T> {
+    const headers = this.buildHeaders(customHeaders);
 
     let response = await abortableFetch(MINDS_API_URI + this.buildUrl(url), {
       method: 'POST',
@@ -201,8 +214,6 @@ class ApiService {
       headers,
       timeout: NETWORK_TIMEOUT,
     });
-
-    console.log('LOGIN RESPONSE', response);
 
     return await this.parseResponse<T>(response, url);
   }
@@ -230,8 +241,12 @@ class ApiService {
    * @param {string} url
    * @param {object} body
    */
-  async delete<T extends ApiResponse>(url: string, body: any = {}): Promise<T> {
-    const headers = this.buildHeaders();
+  async delete<T extends ApiResponse>(
+    url: string,
+    body: any = {},
+    customHeaders: any = {},
+  ): Promise<T> {
+    const headers = this.buildHeaders(customHeaders);
 
     let response = await abortableFetch(MINDS_API_URI + this.buildUrl(url), {
       method: 'DELETE',
