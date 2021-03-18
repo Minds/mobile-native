@@ -62,7 +62,7 @@ const getProcessedData = (data: Reward): AccordionContentData[] => [
   },
 ];
 
-const Sumary = (props: any) => {
+const Summary = (props: any) => {
   switch (props.reward.reward_type) {
     case 'engagement':
       return (
@@ -113,7 +113,7 @@ const MindsScores = observer(({ store, prices }: PropsType) => {
       <AccordionContent
         data={getProcessedData(reward)}
         summary={
-          <Sumary
+          <Summary
             reward={reward}
             contributionScores={store.contributionScores}
             liquidityPositions={store.liquidityPositions}

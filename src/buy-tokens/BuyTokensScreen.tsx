@@ -95,6 +95,9 @@ export default observer(() => {
             theme.rowJustifySpaceBetween,
             theme.marginBottom5x,
             styles.optionsContainer,
+            theme.border2x,
+            styles.buttonsContainer,
+            theme.borderPrimary,
           ]}>
           {paymentMethodsList.map(({ type, name }, index) => (
             <Pressable
@@ -272,14 +275,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  firstOption: {
-    borderTopLeftRadius: 10,
-    borderBottomLeftRadius: 10,
+  buttonsContainer: {
+    borderRadius: 10,
+    overflow: 'hidden',
   },
-  lastOption: {
-    borderTopRightRadius: 10,
-    borderBottomRightRadius: 10,
-  },
+  firstOption: {},
+  lastOption: {},
   learMoreLink: {
     fontSize: 15,
     textDecorationLine: 'underline',
@@ -298,8 +299,7 @@ const styles = StyleSheet.create({
 });
 
 const paymentMethodsList: PaymentOption[] = [
-  { type: 'card', name: 'Card' },
-  { type: 'bank', name: 'Bank' },
+  { type: 'card', name: 'Card / Bank' },
   { type: 'crypto', name: 'Crypto' },
 ];
 
@@ -310,11 +310,9 @@ const buildButtonStyles = (
 ) => {
   switch (position) {
     case 0:
-      return [styles.firstOption, isSelected ? {} : theme.border2x];
+      return [styles.firstOption];
     case 1:
-      return isSelected ? [] : [theme.borderTop2x, theme.borderBottom2x];
-    case 2:
-      return [styles.lastOption, isSelected ? {} : theme.border2x];
+      return [styles.lastOption];
     default:
       return [];
   }

@@ -1,7 +1,6 @@
-import { useDimensions } from '@react-native-community/hooks';
 import { observer, useLocalStore } from 'mobx-react';
 import React, { useEffect } from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import ActivityIndicator from '../../../common/components/ActivityIndicator';
 import TopBarButtonTabBar, {
   ButtonTabType,
@@ -43,7 +42,6 @@ const createStore = () => ({
 const TokensTab = observer(() => {
   const theme = ThemedStyles.style;
   const store = useLocalStore(createStore);
-  const { window } = useDimensions();
   const { wallet } = useStores();
 
   useEffect(() => {
@@ -118,17 +116,22 @@ const TokensTab = observer(() => {
       break;
   }
 
-  const scrollHeight = { maxHeight: window.height * 0.5 };
   return (
-    <View style={[theme.paddingTop5x]}>
+    <View style={[theme.paddingTop2x]}>
       <TopBarButtonTabBar
         tabs={options}
         current={store.option}
         onChange={store.setOption}
       />
-      <ScrollView style={scrollHeight}>{body}</ScrollView>
+      <ScrollView contentContainerStyle={styles.padding}>{body}</ScrollView>
     </View>
   );
+});
+
+const styles = StyleSheet.create({
+  padding: {
+    paddingBottom: 120,
+  },
 });
 
 export default TokensTab;

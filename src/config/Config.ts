@@ -51,6 +51,7 @@ export const MINDS_FEATURES = {
   channel: true,
   wallet: true,
   'mindsVideo-2020': true,
+  'onboarding-october-2020': true,
 };
 
 const redirectPages = [

@@ -216,6 +216,7 @@ const createWalletStore = () => ({
             this.wallet.receiver.balance = toFriendlyCrypto(address.balance);
             this.wallet.receiver.address = address.address;
             this.wallet.eth.balance = toFriendlyCrypto(address.ether_balance);
+            this.wallet.onchain.balance = this.wallet.receiver.balance;
           }
         });
 
@@ -401,15 +402,20 @@ const createWalletStore = () => ({
           contributionScores.push(metric);
         });
       }
-      const liquidityPositions = <any>await api.get(
-        'api/v3/blockchain/liquidity-positions',
-        {
-          timestamp: dateTs,
-        },
-      );
-      return { rewards, contributionScores, liquidityPositions };
+
+      return { rewards, contributionScores };
     } catch (e) {
       logService.exception(e);
+      return false;
+    }
+  },
+  async loadLiquiditySummary(date: Date) {
+    try {
+      const dateTs = getStartOfDayUnixTs(date);
+      return <any>await api.get('api/v3/blockchain/liquidity-positions', {
+        timestamp: dateTs,
+      });
+    } catch (err) {
       return false;
     }
   },

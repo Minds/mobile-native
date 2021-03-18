@@ -87,9 +87,9 @@
     "failedToLoginNewAccount": "The login with your new account has failed, please try to log in the login screen"
   },
   "blockchain": {
-    "exportLegacyWallet":"Export legacy wallets",
-    "exportLegacy1":"You have the private keys of at least one wallet in the app.",
-    "exportLegacy2":"Please store it if you don't want to lose access to them.",
+    "exportLegacyWallet": "Export legacy wallets",
+    "exportLegacy1": "You have the private keys of at least one wallet in the app.",
+    "exportLegacy2": "Please store it if you don't want to lose access to them.",
     "boostCreate": "Network Boost for {{tokensAmount}} Minds Tokens. {{message}}",
     "boostPeerCreate": "Channel Boost for {{tokensAmount}} Minds Tokens to {{receiver}}. {{message}}",
     "tokenApprove": "Approve {{address}} to spend {{tokensAmount}} tokens in the future. {{message}}",
@@ -585,6 +585,7 @@
     "dataSaverDisableOnWifi": "Disable on Wi-Fi",
     "dataSaverDescription": "When Data Saver is turned on, videos won't load in advance to help you use less data.",
     "dataSaverDisableOnWiFiDescription": "When enabled, Data Saver mode will automatically disable when a Wi-Fi connection is detected.",
+    "saved": "Setting saved",
     "reportedContent": {
       "action": {
         "actionNSFW": "marked NSFW",
@@ -612,7 +613,8 @@
       "4": "Notifications",
       "5": "NSFW Content",
       "6": "Messenger",
-      "7": "Autoplay Videos"
+      "7": "Autoplay Videos",
+      "8": "Boosted Content"
     },
     "networkOptions": {
       "1": "Data Saver"
@@ -641,6 +643,22 @@
       "enable": "Enable video autoplay",
       "saved": "Changes Saved",
       "notPlus": "This feature is only available to Plus users."
+    },
+    "boost": {
+      "description": "Control how boost works across the site.",
+      "learn": "Learn more about",
+      "viewBoostedContent": "View Boosted Content",
+      "viewBoostedContentTooltip": "Minds+ users may hide Boosts from their newsfeed",
+      "boostAutoRotation": "Boost Auto-rotation",
+      "boostAutoRotationTooltip": "Enable/disable the Boost box on top of your feed from self-rotating",
+      "openContent": "Open Content",
+      "openContentTooltip": "Open may contain controversial content. By selecting Open, you acknowledge that you are willing to see controversial content.",
+      "liquiditySpot": "Liquidity Spot",
+      "liquiditySpotTooltip": "Minds Token liquidity providers are rewarded with boosted ad space relative to their % of the liquidity pool.",
+      "optIn": "Opt-in",
+      "optOut": "Opt-out",
+      "enable": "Enable",
+      "disable": "Disable"
     }
   },
   "comingSoon": {
@@ -661,15 +679,15 @@
     "tooltipInitial2": "please complete these steps",
     "verifyEmailAddress": "Verify email address",
     "selectTags": "Select tags",
-    "setupChannel":"Setup channel",
-    "verifyUniqueness":"Verify uniqueness",
-    "setContentPreferences":"Set content preferences",
-    "verifyEmailDescription1":"A verification email was sent to {{email}} with a verification link.",
-    "verifyEmailDescription2":"Please check your spam folder if you can’t find it. Otherwise, you can resend it.",
-    "resendEmail":"Resend verification email",
-    "couldntLoadStatus":"Couldn't load your onboarding status",
-    "hashtagDescription":"Select at least three tags that are of interest to you. This will allow you to discover relevant content.",
-    "selectThreeTags":"Select at least three tags",
+    "setupChannel": "Setup channel",
+    "verifyUniqueness": "Verify uniqueness",
+    "setContentPreferences": "Set content preferences",
+    "verifyEmailDescription1": "A verification email was sent to {{email}} with a verification link.",
+    "verifyEmailDescription2": "Please check your spam folder if you can’t find it. Otherwise, you can resend it.",
+    "resendEmail": "Resend verification email",
+    "couldntLoadStatus": "Couldn't load your onboarding status",
+    "hashtagDescription": "Select at least three tags that are of interest to you. This will allow you to discover relevant content.",
+    "selectThreeTags": "Select at least three tags",
     "chooseAvatar": "Choose an avatar",
     "earnTokens": "Earn tokens for your activity",
     "weDontStorePhone": "We do not store your phone number on our servers.",
@@ -705,7 +723,8 @@
     "connectBank": "Connect Bank",
     "buyTokens": "Buy Tokens",
     "onboardingCompleted": "Now you can earn tokens",
-    "improvedExperience": "Your feed should be livelier!"
+    "improvedExperience": "Your feed should be livelier!",
+    "mustVerify": "Before you can start earning or purchase tokens, it is important that we can simply verify your uniqueness. The less tokens spammers take, the more that are left for you! To learn about how we keep your data private,"
   },
   "membership": {
     "noTokens": "It doesn't accept Tokens",
@@ -716,8 +735,8 @@
   },
   "wallet": {
     "wallet": "Wallet",
-    "connect":"Connect Wallet",
-    "reconnect":"Reconnect Wallet",
+    "connect": "Connect Wallet",
+    "reconnect": "Reconnect Wallet",
     "cash": "Cash",
     "activeAddress": "Mobile Receiver Address (Active)",
     "alternateReceiver": "Change Address",
@@ -1077,7 +1096,7 @@
     "status": "Status",
     "rewardsSignup": "Rewards Signup",
 
-    "description": "If your friend signs up for Minds within 24 hours of clicking the link you shared with them, they’ll be added to your pending referrals. Once they sign up for the rewards program by setting up their Minds wallet, the referral is complete and you’ll both get +1 added to your contribution scores!"
+    "description": "If your friend signs up for Minds within 24 hours of clicking the link you shared with them, they’ll be added to your pending referrals. Once they sign up for the rewards program by setting up their Minds wallet, the referral is complete and you’ll both get +10 added to your contribution scores!"
   },
   "add": "Add",
   "downloading": "Downloading",
@@ -1183,7 +1202,7 @@
   "enableComments": "Enable comments",
   "disableComments": "Disable comments",
   "viewRepliesComments": {
-    "one":   "View 1 reply",
+    "one": "View 1 reply",
     "other": "View {{count}} replies"
   },
   "noInternet": "No Internet Connection",
@@ -1198,7 +1217,7 @@
   "copied": "Copied to clipboard",
   "close": "Close",
   "now": "Now",
-  "joined":"Joined",
+  "joined": "Joined",
   "title": "Title",
   "filter": "Filter",
   "captcha": "Enter the characters above",
@@ -1208,8 +1227,8 @@
   "takePhoto": "Take a photo",
   "uploadPhoto": "Upload a photo",
   "uploading": "Uploading media, please wait",
-  "verify":"Verify",
-  "other":"Other",
+  "verify": "Verify",
+  "other": "Other",
   "purchase": "Purchase",
   "verification": "Verification",
   "uploadFailed": "Upload failed",
@@ -1273,5 +1292,8 @@
     "tokenAmount": "Token Amount",
     "totalPayment": "Total Payment"
   },
-  "points": "points"
+  "points": "points",
+  "mindsPlusFeature": "Minds+ Feature",
+  "browserOnly": "Browser Only",
+  "clickHere": "click here"
 }

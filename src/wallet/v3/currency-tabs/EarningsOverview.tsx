@@ -55,7 +55,7 @@ const getProcessedData = (
     return {
       title: getFriendlyLabel(data.id),
       info: `${isTokens ? '' : '$'}${formattedValue} ${
-        isTokens ? 'MINDS' : ''
+        isTokens ? 'tokens' : ''
       }`,
     };
   });

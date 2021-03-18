@@ -14,7 +14,7 @@ exports[`AnalyticsScreen component should render correctly 1`] = `
     Analytics
   </Text>
   <TopbarTabbar
-    current="engagement"
+    current="tokens"
     onChange={[Function]}
     tabs={
       Array [
@@ -42,11 +42,7 @@ exports[`AnalyticsScreen component should render correctly 1`] = `
     }
   />
   <View>
-    <Memo(wrappedComponent)
-      defaultMetric="votes_up"
-      key="engagement"
-      url="api/v2/analytics/dashboards/engagement"
-    />
+    <Memo(wrappedComponent) />
   </View>
 </View>
 `;

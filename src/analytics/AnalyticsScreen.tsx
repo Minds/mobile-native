@@ -21,7 +21,7 @@ interface AnalyticsScreenProps {
 
 const AnalyticsScreen = observer(({ navigation }: AnalyticsScreenProps) => {
   const theme = ThemedStyles.style;
-  const [activeTabId, setActiveTabId] = useState<TAnalyticsTabs>('engagement');
+  const [activeTabId, setActiveTabId] = useState<TAnalyticsTabs>('tokens');
   const _onTabBarChange = useCallback(
     (id: string) => setActiveTabId(id as TAnalyticsTabs),
     [],

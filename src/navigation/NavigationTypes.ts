@@ -50,7 +50,9 @@ export type RootStackParamList = {
   VerifyUniqueness: {};
   SuggestedChannel: {};
   SuggestedGroups: {};
-  PhoneValidation: {};
+  PhoneValidation: {
+    onComplete?: Function;
+  };
   WalletWithdrawal: {};
   EarnModal: {};
 };
@@ -121,6 +123,7 @@ export type AppStackParamList = {
   MessengerSettingsScreen: {};
   RekeyScreen: {};
   AutoplaySettingsScreen: {};
+  BoostSettingsScreen: {};
   SettingsPassword: {};
   SettingsNotifications: {};
   DataSaverScreen: {};

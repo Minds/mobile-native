@@ -47,7 +47,7 @@ const WithdrawalInput = observer((props: TypeProps) => {
         <Text style={[styles.balanceText, theme.colorPrimaryText]}>
           {balance}
         </Text>{' '}
-        MINDS
+        tokens
       </Text>
       <Text
         style={[theme.colorSecondaryText, styles.text, theme.marginBottom3x]}>

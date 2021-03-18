@@ -1,6 +1,6 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { observer, useLocalStore } from 'mobx-react';
-import { StyleSheet, Text, View } from 'react-native';
+import { View } from 'react-native';
 import TopBarButtonTabBar, {
   ButtonTabType,
 } from '../../../../common/components/topbar-tabbar/TopBarButtonTabBar';
@@ -54,8 +54,10 @@ const TokensTab = observer(
     const onchainStore = useUniqueOnchain();
     const wc = useWalletConnect();
     const connectWallet = React.useCallback(async () => {
+      const user = sessionService.getUser();
+
       const msg = JSON.stringify({
-        user_guid: sessionService.getUser().guid,
+        user_guid: user.guid,
         unix_ts: Date.now() / 1000,
       });
 
@@ -112,6 +114,18 @@ const TokensTab = observer(
       }
     }, [onchainStore, walletStore, wc]);
 
+    const mustVerify = !sessionService.getUser().rewards
+      ? () => {
+          const onComplete = () => {
+            connectWallet();
+          };
+          //@ts-ignore
+          navigation.navigate('PhoneValidation', {
+            onComplete,
+          });
+        }
+      : undefined;
+
     let body;
     switch (store.option) {
       case 'rewards':
@@ -152,7 +166,7 @@ const TokensTab = observer(
         body = (
           <ReceiverSettings
             navigation={navigation}
-            connectWallet={connectWallet}
+            connectWallet={mustVerify || connectWallet}
             onchainStore={onchainStore}
             walletStore={walletStore}
           />
@@ -165,7 +179,7 @@ const TokensTab = observer(
         <View style={{ ...theme.paddingTop5x }}>
           <TokenTopBar
             walletStore={walletStore}
-            connectWallet={connectWallet}
+            connectWallet={mustVerify || connectWallet}
             onchainStore={onchainStore}
           />
           <TopBarButtonTabBar

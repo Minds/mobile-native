@@ -24,10 +24,10 @@ const AccordionHeader = ({ title, subtitle, tooltip, isActive }: PropsType) => {
   return (
     <View
       style={[
-        theme.rowJustifySpaceBetween,
+        theme.rowJustifyStart,
         theme.paddingVertical2x,
         theme.paddingRight6x,
-        theme.paddingLeft4x,
+        theme.paddingLeft5x,
       ]}>
       <View style={[theme.flexContainer, theme.rowJustifyStart]}>
         <Text style={[theme.fontLM, theme.fontMedium]}>{title}</Text>
@@ -46,7 +46,7 @@ const AccordionHeader = ({ title, subtitle, tooltip, isActive }: PropsType) => {
           </View>
         )}
       </View>
-      {SubTitle}
+      <View style={[theme.flexContainer, theme.paddingLeft5x]}>{SubTitle}</View>
       <Icon
         name={`chevron-${isActive ? 'up' : 'down'}`}
         size={21}
