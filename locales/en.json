@@ -265,6 +265,8 @@
     "unblock": "Unblock channel",
     "report": "Report",
     "createFirstPost": "Create your first post",
+    "createFirstPostTitle": "Your feed is empty",
+    "createFirstPostSubTitle": "You’ll not turn many heads with an empty feed",
     "blocked": "Channel Blocked",
     "banned": "This channel is banned",
     "viewScheduled": "Scheduled",
