@@ -1,6 +1,12 @@
 import { observer, useLocalStore } from 'mobx-react';
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  ViewStyle,
+} from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -10,6 +16,7 @@ type PropsType = {
   date?: Date;
   maximumDate?: Date;
   onConfirm(date: Date): void;
+  containerStyle?: ViewStyle | ViewStyle[];
 };
 
 const DatePicker = observer((props: PropsType) => {
@@ -37,7 +44,7 @@ const DatePicker = observer((props: PropsType) => {
 
   return (
     <TouchableOpacity
-      style={[styles.container, theme.borderPrimary]}
+      style={[styles.container, theme.borderPrimary, props.containerStyle]}
       onPress={localStore.openPicker}>
       <View>
         <Text style={[theme.fontL, theme.colorSecondaryText]}>

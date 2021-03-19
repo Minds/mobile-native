@@ -102,7 +102,6 @@ const TokensRewards = observer(({ walletStore }: PropsType) => {
   const localStore = useLocalStore(createLocalStore, { walletStore });
   useEffect(() => {
     localStore.loadRewards(localStore.selectedDate);
-    localStore.loadLiquidityPositions(); // Ideally we would only load when the accordian is opened
   }, [localStore, localStore.selectedDate, walletStore]);
 
   if (localStore.loading) {
@@ -123,11 +122,13 @@ const TokensRewards = observer(({ walletStore }: PropsType) => {
         onConfirm={localStore.onConfirm}
         maximumDate={new Date()}
         date={localStore.selectedDate}
+        containerStyle={theme.paddingRight6x}
       />
       <Payout
         minds={localStore.rewards.total.daily}
         mindsPrice={walletStore.prices.minds}
         isToday={localStore.isToday}
+        store={localStore}
       />
       <MindsScores store={localStore} prices={walletStore.prices} />
     </View>
