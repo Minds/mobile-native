@@ -4,12 +4,13 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import i18n from '../../../../common/services/i18n.service';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 import MindsTokens from '../MindsTokens';
+import { TokensTabStore } from './createTokensTabStore';
 
 type PropsType = {
   minds: string;
   mindsPrice: string;
   isToday: boolean;
-  store: any;
+  store: TokensTabStore;
 };
 
 const Payout = ({ minds, mindsPrice, isToday, store }: PropsType) => {
@@ -17,7 +18,7 @@ const Payout = ({ minds, mindsPrice, isToday, store }: PropsType) => {
 
   const refresh = (
     <TouchableOpacity
-      onPress={() => store.loadRewards(store.selectedDate)}
+      onPress={() => store.loadRewards(store.rewardsSelectedDate)}
       style={theme.alignSelfCenter}>
       <Icon
         name="refresh"
