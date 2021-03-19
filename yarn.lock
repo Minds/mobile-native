@@ -12497,7 +12497,7 @@ react-native-file-type@^0.0.8:
     js-base64 "2.3.2"
     react-native-fs "2.11.15"
 
-react-native-flash-message@^0.1.15:
+react-native-flash-message@^0.1.23:
   version "0.1.23"
   resolved "https://registry.yarnpkg.com/react-native-flash-message/-/react-native-flash-message-0.1.23.tgz#50a17201a2d9d6b22a2f174a97b22c30bff15638"
   integrity sha512-T++KNGpIofXRqj3fT+/zJH/su1VgIjGcwiJerSvRsvEXwai1LdUl+O0tX7dz+Lgxi7yzswXKWcUQmY0dZrbG3g==

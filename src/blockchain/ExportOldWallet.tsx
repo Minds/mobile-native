@@ -58,9 +58,9 @@ export async function showMessageForPrivateKey() {
   }
   const theme = ThemedStyles.style;
   showMessage({
-    position: 'center',
+    position: 'top',
     message: '',
-    floating: true,
+    floating: false,
     duration: 0,
     //@ts-ignore
     renderCustomContent: () => (
@@ -115,7 +115,7 @@ export async function showMessageForPrivateKey() {
     ),
     color: ThemedStyles.getColor('primary_text'),
     titleStyle: ThemedStyles.style.fontXL,
-    backgroundColor: ThemedStyles.getColor('secondary_background'),
+    backgroundColor: ThemedStyles.getColor('tertiary_background'),
     type: 'default',
   });
 }
