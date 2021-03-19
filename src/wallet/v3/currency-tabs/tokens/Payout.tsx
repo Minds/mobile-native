@@ -3,15 +3,29 @@ import { StyleSheet, Text, View } from 'react-native';
 import i18n from '../../../../common/services/i18n.service';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 import MindsTokens from '../MindsTokens';
+import { TokensTabStore } from './createTokensTabStore';
 
 type PropsType = {
   minds: string;
   mindsPrice: string;
   isToday: boolean;
+  store: TokensTabStore;
 };
 
 const Payout = ({ minds, mindsPrice, isToday }: PropsType) => {
   const theme = ThemedStyles.style;
+
+  const refresh = (
+    <TouchableOpacity
+      onPress={() => store.loadRewards(store.rewardsSelectedDate)}
+      style={theme.alignSelfCenter}>
+      <Icon
+        name="refresh"
+        color={ThemedStyles.getColor('secondary_text')}
+        size={20}
+      />
+    </TouchableOpacity>
+  );
 
   const payout = isToday ? (
     <View style={[styles.container, theme.borderPrimary]}>
