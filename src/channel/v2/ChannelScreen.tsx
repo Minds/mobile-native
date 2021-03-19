@@ -126,7 +126,7 @@ const ChannelScreen = observer((props: PropsType) => {
 
       <Button
         onPress={() => props.navigation.navigate('Capture')}
-        text={'Create your first post'}
+        text={i18n.t('channel.createFirstPostAction')}
         large
         action
       />
