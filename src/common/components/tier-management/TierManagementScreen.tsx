@@ -61,7 +61,7 @@ const TierManagementScreen = observer(
             ? ThemedStyles.style.flexContainer
             : null
         }>
-        {localStore.support_tiers.length && (
+        {localStore.support_tiers.length > 0 && (
           <Header
             labelText={i18n.t('monetize.membershipMonetize.label')}
             onLinkPress={() => navToTierScreen(navigation, false, localStore)}
