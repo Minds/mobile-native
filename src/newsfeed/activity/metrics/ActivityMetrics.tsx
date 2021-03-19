@@ -51,8 +51,13 @@ export default class ActivityMetrics extends Component<PropsType> {
     );
 
     return (
-      <View style={[theme.rowJustifySpaceBetween, theme.padding2x]}>
-        <Text style={[theme.colorSecondaryText, theme.fontLM, theme.padding]}>
+      <View
+        style={[
+          theme.rowJustifySpaceBetween,
+          theme.padding2x,
+          { paddingLeft: 16 },
+        ]}>
+        <Text style={[theme.colorSecondaryText, theme.fontM, theme.padding]}>
           {entity.impressions > 0
             ? abbrev(entity.impressions, 1) +
               ` ${i18n.t('views').toLowerCase()} · `
