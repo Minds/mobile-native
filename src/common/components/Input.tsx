@@ -211,9 +211,9 @@ export default class Input extends Component<PropsType> {
     ) : null;
 
     return (
-      <View>
-        <View style={styles.row}>
-          <View style={styles.row}>
+      <View style={styles.container}>
+        <View>
+          <View>
             <Text
               style={[
                 styles.label,
@@ -240,6 +240,10 @@ export default class Input extends Component<PropsType> {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    paddingTop: 5,
+    paddingBottom: 10,
+  },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -247,8 +251,8 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 16,
-    fontWeight: '600',
-    marginBottom: 5,
+    fontWeight: '400',
+    marginBottom: 0,
     fontFamily: 'Roboto',
   },
   errorContainer: {
