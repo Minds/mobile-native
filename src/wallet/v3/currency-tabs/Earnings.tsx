@@ -41,7 +41,8 @@ const TokensEarnings = observer(
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 20,
+    paddingLeft: 20,
+    paddingRight: 30,
     paddingVertical: 15,
     borderTopWidth: 1,
     borderBottomWidth: 1,

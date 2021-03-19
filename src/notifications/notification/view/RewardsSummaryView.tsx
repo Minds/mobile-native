@@ -24,6 +24,7 @@ export default class RewardsSummaryView extends Component<PropsType> {
         entity={entity}>
         <View style={styles.bodyContents}>
           <Text>
+            🚀{' '}
             {i18n.t('notification.rewardsSummary', {
               amount: entity.params.amount,
             })}
