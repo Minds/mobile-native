@@ -36,7 +36,7 @@ export default class ModalConfirmPassword extends Component<PropsType> {
     });
     try {
       await authService.validatePassword(this.state.password);
-      this.props.onSuccess();
+      this.props.onSuccess(this.state.password);
     } catch (err) {
       this.setState({
         error: true,
@@ -57,7 +57,7 @@ export default class ModalConfirmPassword extends Component<PropsType> {
         <View style={[CS.flexContainer]}>
           <KeyboardAvoidingView
             style={CS.flexContainer}
-            behavior={Platform.OS == 'ios' ? 'padding' : null}>
+            behavior={Platform.OS === 'ios' ? 'padding' : null}>
             {msg}
             <View style={styles.textCotainer}>
               <Text>{i18n.t('auth.confirmpassword')}</Text>

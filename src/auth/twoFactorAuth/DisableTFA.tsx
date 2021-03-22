@@ -17,7 +17,7 @@ type PropsType = {
 
 const DisableTFA = observer(({ route }: PropsType) => {
   const theme = ThemedStyles.style;
-  const store = route.params.store;
+  const { store, password } = route.params;
   const navigation = useNavigation();
 
   const onComplete = () => {
@@ -27,7 +27,7 @@ const DisableTFA = observer(({ route }: PropsType) => {
   };
 
   const onPress = () => {
-    if (store.appCode === '') {
+    if (store.appAuthEnabled && store.appCode === '') {
       showNotification(
         "You must enter the your authentication app's code",
         'warning',
@@ -35,7 +35,7 @@ const DisableTFA = observer(({ route }: PropsType) => {
       return;
     }
     store.setLoading(true);
-    store.disableTotp(onComplete);
+    store.disable2fa(onComplete, password);
   };
 
   if (store.loading) {
@@ -48,16 +48,19 @@ const DisableTFA = observer(({ route }: PropsType) => {
         Are you sure you wish to disable two-factor authentication on your Minds
         account?
       </Text>
-      <InputContainer
-        containerStyle={theme.backgroundPrimaryHighlight}
-        labelStyle={theme.colorPrimaryText}
-        style={theme.colorPrimaryText}
-        placeholder={'Enter the six-digit code from the application'}
-        onChangeText={store.setAppCode}
-        value={store.appCode}
-        autoFocus
-      />
-      {store.appCode.length === 6 && (
+      {store.appAuthEnabled && (
+        <InputContainer
+          containerStyle={theme.backgroundPrimaryHighlight}
+          labelStyle={theme.colorPrimaryText}
+          style={theme.colorPrimaryText}
+          placeholder={'Enter the six-digit code from the application'}
+          onChangeText={store.setAppCode}
+          value={store.appCode}
+          autoFocus
+        />
+      )}
+      {(store.smsAuthEnabled ||
+        (store.appAuthEnabled && store.appCode.length === 6)) && (
         <TouchableOpacity
           onPress={onPress}
           style={[

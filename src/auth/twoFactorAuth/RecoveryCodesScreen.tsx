@@ -2,12 +2,12 @@ import { RouteProp, useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import ModalConfirmPassword from '../ModalConfirmPassword';
-import MenuItem from '../../common/components/menus/MenuItem';
-import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { AppStackParamList } from '../../navigation/NavigationTypes';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import SaveButton from '../../common/components/SaveButton';
+import i18n from '../../common/services/i18n.service';
+import { showNotification } from '../../../AppMessages';
 
 type RecoveryCodesRouteProp = RouteProp<
   AppStackParamList,
@@ -23,9 +23,21 @@ const RecoveryCodesScreen = observer(({ route }: PropsType) => {
 
   const store = route.params.store;
 
+  const navigation = useNavigation();
+
+  const onContinue = () => {
+    navigation.navigate('TwoFactorAuthSettingsScreen');
+    showNotification(i18n.t('settings.TFAEnabled'));
+  };
+  navigation.setOptions({
+    headerRight: () => (
+      <SaveButton onPress={onContinue} text={i18n.t('continue')} />
+    ),
+  });
+
   return (
     <View style={[theme.flexContainer, theme.paddingTop7x]}>
-      <Text style={styles.title}>1. Recovery codes</Text>
+      <Text style={styles.title}>2. Recovery codes</Text>
       <Text style={[styles.text, theme.colorSecondaryText]}>
         Recovery codes are used to access your account in the event you cannot
         receive two-factor authentication codes.
@@ -47,7 +59,7 @@ const RecoveryCodesScreen = observer(({ route }: PropsType) => {
           <Text style={styles.smallTitle}>Recovery codes</Text>
           <TouchableOpacity
             style={[theme.rowJustifyStart, theme.centered]}
-            onPress={() => false}>
+            onPress={store.copyRecoveryCode}>
             <Icon
               name="content-copy"
               color={ThemedStyles.getColor('primary_text')}
@@ -57,14 +69,7 @@ const RecoveryCodesScreen = observer(({ route }: PropsType) => {
           </TouchableOpacity>
         </View>
         <View style={styles.container}>
-          <Text style={styles.textCode}>
-            dff4d-e3b62 a7940-58cf9 bfbd7-757e5 93b14-c2e90 05233-724b1
-            0560f-87f28 3e539-9a4f3 ee6a2-4f6db
-          </Text>
-          <Text style={styles.textCode}>
-            71e75-21909 bb1d9-9e5ca e2441-5142f a105d-7db8c 2486c-a7dfe
-            163cb-5b2f9 32332-09c32 1b378-454b1
-          </Text>
+          <Text style={styles.textCode}>{store.recoveryCode}</Text>
         </View>
       </View>
     </View>

@@ -33,10 +33,10 @@ const VerifyAuthAppScreen = observer(({ route }: PropsType) => {
 
   const onComplete = () => {
     store.setLoading(false);
+    store.setAuthEnabled('app');
     navigation.navigate('RecoveryCodesScreen', {
       store: store,
     });
-    showNotification(i18n.t('settings.TFAEnabled'));
   };
 
   const onContinue = () => {

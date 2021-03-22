@@ -1,17 +1,26 @@
 import { useNavigation } from '@react-navigation/native';
 import { observer, useLocalStore } from 'mobx-react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import ModalConfirmPassword from '../ModalConfirmPassword';
 import MenuItem from '../../common/components/menus/MenuItem';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import createTwoFactorStore, { Options } from './createTwoFactorStore';
+import settingsService from '../../settings/SettingsService';
 
 const TwoFactorAuthSettingsScreen = observer(() => {
   const theme = ThemedStyles.style;
   const navigation = useNavigation();
   const localStore = useLocalStore(createTwoFactorStore);
+
+  useEffect(() => {
+    const getSettings = async () => {
+      const settings = await settingsService.getSettings();
+      localStore.has2fa(settings.channel.has2fa);
+    };
+    getSettings();
+  }, [localStore]);
 
   const items = [
     {
@@ -24,14 +33,17 @@ const TwoFactorAuthSettingsScreen = observer(() => {
     },
   ];
 
-  const onConfirmPasswordSuccess = () => {
+  const onConfirmPasswordSuccess = (password: string) => {
     localStore.closeConfirmPasssword();
     const screen =
       localStore.selectedOption === 'app'
         ? 'VerifyAuthAppScreen'
-        : 'VerifyPhoneNumberScreen';
+        : localStore.selectedOption === 'sms'
+        ? 'VerifyPhoneNumberScreen'
+        : 'DisableTFA';
     navigation.navigate(screen, {
       store: localStore,
+      password,
     });
   };
 
@@ -44,22 +56,23 @@ const TwoFactorAuthSettingsScreen = observer(() => {
         <MenuItem
           item={{
             onPress: () => {
+              if (localStore.has2faEnabled) {
+                return false;
+              }
               localStore.setSelected(item.id);
-              //onConfirmPasswordSuccess();
             },
             title: <ItemTitle id={item.id} enabled={item.enabled} />,
           }}
         />
       ))}
-      <MenuItem
-        item={{
-          onPress: () =>
-            navigation.navigate('DisableTFA', {
-              store: localStore,
-            }),
-          title: i18n.t('settings.TFADisable'),
-        }}
-      />
+      {localStore.has2faEnabled && (
+        <MenuItem
+          item={{
+            onPress: () => localStore.setSelected('disable'),
+            title: i18n.t('settings.TFADisable'),
+          }}
+        />
+      )}
       <ModalConfirmPassword
         isVisible={localStore.confirmPassword}
         onSuccess={onConfirmPasswordSuccess}

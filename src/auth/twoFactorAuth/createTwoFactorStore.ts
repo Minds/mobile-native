@@ -1,9 +1,12 @@
+import Clipboard from '@react-native-clipboard/clipboard';
 import { Linking } from 'react-native';
+import { showNotification } from '../../../AppMessages';
 import apiService from '../../common/services/api.service';
 import logService from '../../common/services/log.service';
 import sessionService from '../../common/services/session.service';
+import twoFactorAuthenticationService from '../../common/services/two-factor-authentication.service';
 import authService, { TFA } from '../AuthService';
-export type Options = 'app' | 'sms';
+export type Options = 'app' | 'sms' | 'disable';
 
 const createTwoFactorStore = () => ({
   loading: false,
@@ -13,6 +16,7 @@ const createTwoFactorStore = () => ({
   appCode: '',
   appAuthEnabled: false,
   smsAuthEnabled: false,
+  recoveryCode: '',
   showConfirmPasssword() {
     this.confirmPassword = true;
   },
@@ -29,14 +33,28 @@ const createTwoFactorStore = () => ({
   setAppCode(appCode: string) {
     this.appCode = appCode;
   },
+  has2fa(has2fa: { sms: boolean; totp: boolean }) {
+    if (has2fa.totp) {
+      this.appAuthEnabled = true;
+    } else if (has2fa.sms) {
+      this.smsAuthEnabled = true;
+    }
+  },
+  get has2faEnabled() {
+    return this.appAuthEnabled || this.smsAuthEnabled;
+  },
   copySecret() {
-    //Clipboard.setString(this.secret);
-    //showNotification('Secret copied to clipboard', 'success');
+    Clipboard.setString(this.secret);
+    showNotification('Secret copied to clipboard', 'success');
     Linking.openURL(
       `otpauth://totp/Minds.com?secret=${this.secret}&issuer=${
         sessionService.getUser().username
       }`,
     );
+  },
+  copyRecoveryCode() {
+    Clipboard.setString(this.recoveryCode);
+    showNotification('Recovery code copied to clipboard', 'success');
   },
   async fetchSecret() {
     const response = <any>await apiService.get('api/v3/security/totp/new');
@@ -51,18 +69,26 @@ const createTwoFactorStore = () => ({
         code: this.appCode,
         secret: this.secret,
       });
-      console.log('submitCODE RESPONSE', response);
-      onComplete();
+      if (response.recovery_code) {
+        this.recoveryCode = response.recovery_code;
+        onComplete();
+      }
     } catch (err) {
       logService.exception(err);
     }
   },
-  async disableTotp(onComplete: Function) {
+  async disable2fa(onComplete: Function, password: string) {
     try {
-      const response = <any>await apiService.delete('api/v3/security/totp', {
-        code: this.appCode,
-      });
-      console.log('DISABLE RESPONSE', response);
+      let response;
+      if (this.appAuthEnabled) {
+        response = <any>await apiService.delete('api/v3/security/totp', {
+          code: this.appCode,
+        });
+      } else {
+        response = await twoFactorAuthenticationService.remove(password);
+      }
+      this.appAuthEnabled = false;
+      this.smsAuthEnabled = false;
       onComplete();
     } catch (err) {
       logService.exception(err);
@@ -74,7 +100,7 @@ const createTwoFactorStore = () => ({
   setAuthEnabled(method: Options) {
     if (method === 'app') {
       this.appAuthEnabled = true;
-    } else {
+    } else if (method === 'sms') {
       this.smsAuthEnabled = true;
     }
   },
@@ -91,7 +117,7 @@ const createTwoFactorStore = () => ({
       headers['X-MINDS-SMS-2FA-KEY'] = secret;
     }
     try {
-      authService.login(username, password, headers);
+      await authService.login(username, password, headers);
     } catch (err) {
       logService.exception(err);
     } finally {

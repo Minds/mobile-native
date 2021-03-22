@@ -42,7 +42,7 @@ const TwoFactorTotpForm = observer(({ route }: PropsType) => {
         ]}>
         {i18n.t(`auth.${tfa}Desc`)}
       </Text>
-      <View style={[theme.margin6x, theme.flexContainer]}>
+      <View style={[theme.marginHorizontal6x, theme.flexContainer]}>
         <Button
           onPress={() => localStore.login(username!, password!, tfa!, secret!)}
           text={i18n.t('auth.login')}

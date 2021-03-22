@@ -156,6 +156,7 @@ export type AppStackParamList = {
   };
   DisableTFA: {
     store: TwoFactorStore;
+    password: string;
   };
   TagSelector: {};
   NsfwSelector: {};
