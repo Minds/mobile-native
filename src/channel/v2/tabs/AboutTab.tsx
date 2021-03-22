@@ -65,7 +65,7 @@ const AboutTab = observer(({ store, navigation }: PropsType) => {
         </LabeledComponent>
       )}
 
-      {channel?.tags.length && (
+      {channel?.tags.length > 0 && (
         <LabeledComponent
           label={i18n.t('channel.edit.hashtags')}
           wrapperStyle={margin}>
