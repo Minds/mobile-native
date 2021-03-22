@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 import { View } from 'react-native';
-import { Reward } from './TokensRewards';
 import { format } from '../MindsTokens';
 import { Container, Info, Row, Title } from '../AccordionContent';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -11,6 +10,7 @@ import NavigationService from '../../../../navigation/NavigationService';
 import { observer, useLocalStore } from 'mobx-react';
 import { useIsFocused } from '@react-navigation/native';
 import TimeMultiplier from './multipliers/TimeMultiplier';
+import { Reward } from './createTokensTabStore';
 
 type PropsType = {
   liquidityPositions: any;

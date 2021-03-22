@@ -22,12 +22,14 @@ import { Tooltip } from 'react-native-elements';
 import { useDimensions } from '@react-native-community/hooks';
 import PaidInfo from './PaidInfo';
 import Earnings from '../Earnings';
+import { TokensTabStore } from '../tokens/createTokensTabStore';
 
 type PropsType = {
   walletStore: WalletStoreType;
   bottomStore: BottomOptionsStoreType;
   navigation: WalletScreenNavigationProp;
   route: WalletScreenRouteProp;
+  tokensTabStore: TokensTabStore;
 };
 
 const createStore = () => ({
@@ -45,7 +47,13 @@ const createStore = () => ({
  * Usd tab
  */
 const UsdTab = observer(
-  ({ walletStore, navigation, route, bottomStore }: PropsType) => {
+  ({
+    walletStore,
+    navigation,
+    route,
+    bottomStore,
+    tokensTabStore,
+  }: PropsType) => {
     const store = useLocalStore(createStore);
     const tooltipRef = useRef<any>();
     const screen = useDimensions().screen;
@@ -60,7 +68,13 @@ const UsdTab = observer(
     let body;
     switch (store.option) {
       case 'earnings':
-        body = <Earnings walletStore={walletStore} currencyType="usd" />;
+        body = (
+          <Earnings
+            walletStore={walletStore}
+            currencyType="usd"
+            store={tokensTabStore}
+          />
+        );
         break;
       case 'transactions':
         //TODO: filter are not implemented in the backend change the first string to the corresponding values after

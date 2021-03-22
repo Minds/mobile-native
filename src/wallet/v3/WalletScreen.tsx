@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { Text, View } from 'react-native';
-import { RouteProp } from '@react-navigation/native';
+import { RouteProp, useFocusEffect } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import ThemedStyles from '../../styles/ThemedStyles';
-import { observer } from 'mobx-react';
+import { observer, useLocalStore } from 'mobx-react';
 
 import TopbarTabbar from '../../common/components/topbar-tabbar/TopbarTabbar';
 import TokensTab from './currency-tabs/tokens/TokensTab';
@@ -19,6 +19,7 @@ import BottomOptionPopup, {
 import UsdTab from './currency-tabs/cash/UsdTab';
 import i18n from '../../common/services/i18n.service';
 import { useStores } from '../../common/hooks/use-stores';
+import { createTokensTabStore } from './currency-tabs/tokens/createTokensTabStore';
 
 export type WalletScreenRouteProp = RouteProp<AppStackParamList, 'Fab'>;
 export type WalletScreenNavigationProp = StackNavigationProp<
@@ -40,6 +41,8 @@ const WalletScreen = observer((props: PropsType) => {
   const store: WalletStoreType = useStores().wallet;
   const bottomStore: BottomOptionsStoreType = useBottomOption();
 
+  const tokenTabStore = useLocalStore(createTokensTabStore, store);
+
   const tabs: Array<TabType<CurrencyType>> = [
     {
       id: 'tokens',
@@ -53,7 +56,20 @@ const WalletScreen = observer((props: PropsType) => {
 
   useEffect(() => {
     store.loadWallet();
-  }, [store]);
+  }, [store, tokenTabStore]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      tokenTabStore.loadRewards(tokenTabStore.rewardsSelectedDate);
+      tokenTabStore.loadLiquidityPositions();
+      tokenTabStore.loadEarnings(tokenTabStore.earningsSelectedDate);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [
+      tokenTabStore,
+      tokenTabStore.rewardsSelectedDate,
+      tokenTabStore.earningsSelectedDate,
+    ]),
+  );
 
   let body;
   if (store.wallet.loaded) {
@@ -64,6 +80,7 @@ const WalletScreen = observer((props: PropsType) => {
             walletStore={store}
             bottomStore={bottomStore}
             navigation={props.navigation}
+            store={tokenTabStore}
           />
         );
         break;
@@ -74,6 +91,7 @@ const WalletScreen = observer((props: PropsType) => {
             bottomStore={bottomStore}
             navigation={props.navigation}
             route={props.route}
+            tokensTabStore={tokenTabStore}
           />
         );
         break;
