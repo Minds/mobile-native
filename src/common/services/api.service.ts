@@ -30,10 +30,8 @@ export class ApiError extends Error {
   errId: string = '';
   headers: any = null;
 
-  constructor(errId?, headers?, ...args) {
+  constructor(...args) {
     super(...args);
-    this.errId = errId;
-    this.headers = headers;
   }
 }
 
@@ -96,7 +94,10 @@ class ApiService {
     if (data && data.status && data.status !== 'success') {
       const msg = data && data.message ? data.message : 'Server error';
       const errId = data && data.errorId ? data.errorId : '';
-      throw new ApiError(errId, headers, msg);
+      const apiError = new ApiError(msg);
+      apiError.errId = errId;
+      apiError.headers = headers;
+      throw apiError;
     }
 
     return data;
