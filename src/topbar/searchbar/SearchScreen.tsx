@@ -10,6 +10,7 @@ import SearchResultComponent from './SearchResultComponent';
 import { GOOGLE_PLAY_STORE } from '../../config/Config';
 import { observer } from 'mobx-react';
 import KeyboardSpacingView from '../../common/components/KeyboardSpacingView';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const SearchScreen = observer(() => {
   const theme = ThemedStyles.style;
@@ -17,17 +18,25 @@ const SearchScreen = observer(() => {
   const localStore = useStores().searchBar;
   const inputRef = useRef<TextInput>(null);
   const navigation = useNavigation();
+  const insets = useSafeAreaInsets();
+  const paddingTop = { paddingTop: insets.top };
+  const paddingBottom = { paddingBottom: insets.bottom };
   useEffect(() => {
     localStore.init(user);
   });
   return (
     <KeyboardSpacingView
-      style={[StyleSheet.absoluteFill, theme.backgroundPrimary]}>
+      style={[
+        StyleSheet.absoluteFill,
+        theme.backgroundPrimary,
+        paddingTop,
+        paddingBottom,
+      ]}>
       <View
         style={[
           styles.header,
           Platform.OS === 'android' ? theme.marginBottom : theme.marginBottom3x,
-          Platform.OS === 'android' ? theme.marginTop3x : theme.marginTop5x,
+          theme.marginTop3x,
         ]}>
         <View style={[theme.rowJustifyStart, theme.paddingLeft3x]}>
           <Icon
