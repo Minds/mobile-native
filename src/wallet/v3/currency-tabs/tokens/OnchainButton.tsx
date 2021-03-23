@@ -57,7 +57,7 @@ const OnchainButton = observer((props: PropsType) => {
         style={[
           props.style,
           theme.mindsSwitchBackgroundSecondary,
-          { marginLeft: 10 },
+          theme.marginLeft2x,
         ]}>
         ...
       </Text>
