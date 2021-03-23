@@ -6,6 +6,9 @@ exports[`activity metrics component renders correctly 1`] = `
     Array [
       undefined,
       undefined,
+      Object {
+        "paddingLeft": 16,
+      },
     ]
   }
 >
