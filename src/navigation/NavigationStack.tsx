@@ -119,6 +119,7 @@ import Withdrawal from '../wallet/v3/currency-tabs/tokens/widthdrawal/Withdrawal
 import EarnModal from '../earn/EarnModal';
 import RekeyScreen from '../settings/screens/RekeyScreen';
 import BoostSettingsScreen from '../settings/screens/BoostSettingsScreen';
+import SearchScreen from '../topbar/searchbar/SearchScreen';
 
 const isIos = Platform.OS === 'ios';
 
@@ -742,6 +743,7 @@ const RootStack = function (props) {
             component={EarnModal}
             options={modalOptions}
           />
+          <RootStackNav.Screen name="SearchScreen" component={SearchScreen} />
         </Fragment>
       ) : (
         <>
