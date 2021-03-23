@@ -64,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="10dp"
-                    android:text="This is embarrassing. We sincerely apologize for this."
+                    android:text="Sorry, that was an issue that closed the app"
                     android:textColor="#000" />
 
                 <LinearLayout
