@@ -32,7 +32,7 @@ const getProcessedData = (data: Reward): AccordionContentData[] => [
     },
   },
   {
-    title: 'Network score',
+    title: 'Network Score',
     info: `${format(data.global_summary.score, false)} points`,
     tooltip: {
       title: i18n.t(`wallet.tokens.tooltips.${data.reward_type}Total`),
@@ -41,7 +41,7 @@ const getProcessedData = (data: Reward): AccordionContentData[] => [
     },
   },
   {
-    title: 'Your share',
+    title: 'Your Share',
     info: `${format(data.share_pct * 100)}%`,
     tooltip: {
       title: i18n.t(`wallet.tokens.tooltips.${data.reward_type}Percentage`),
