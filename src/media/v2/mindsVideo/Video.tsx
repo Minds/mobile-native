@@ -42,7 +42,6 @@ const ExpoVideo = observer(
         style={theme.flexContainer}
         ref={playbackObject}
         volume={1}
-        isMuted={!localStore.volume}
         onReadyForDisplay={onReadyForDisplay}
       />
     );

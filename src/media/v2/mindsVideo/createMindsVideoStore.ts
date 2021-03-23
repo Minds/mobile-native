@@ -78,7 +78,8 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
     },
     setVolume(volume: number) {
       this.volume = volume;
-      this.player?.setVolumeAsync(volume);
+      // this.player?.setVolumeAsync(volume);
+      this.player?.setIsMutedAsync(!this.volume);
       videoPlayerService.setVolume(volume);
     },
     toggleVolume() {
@@ -255,6 +256,8 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
           headers: apiService.buildHeaders(),
         };
       }
+
+      await this.player?.setIsMutedAsync(!this.volume);
 
       runInAction(() => {
         this.setPaused(false);
