@@ -20,6 +20,7 @@ import UsdTab from './currency-tabs/cash/UsdTab';
 import i18n from '../../common/services/i18n.service';
 import { useStores } from '../../common/hooks/use-stores';
 import { createTokensTabStore } from './currency-tabs/tokens/createTokensTabStore';
+import TokenPrice from './TokenPrice';
 
 export type WalletScreenRouteProp = RouteProp<AppStackParamList, 'Fab'>;
 export type WalletScreenNavigationProp = StackNavigationProp<
@@ -101,9 +102,17 @@ const WalletScreen = observer((props: PropsType) => {
   }
   return (
     <View style={[theme.flexContainer, theme.paddingTop4x]}>
-      <Text style={[theme.fontXXXL, theme.bold, theme.paddingLeft4x]}>
-        {i18n.t('wallet.wallet')}
-      </Text>
+      <View
+        style={[
+          theme.rowJustifySpaceBetween,
+          theme.paddingHorizontal4x,
+          theme.alignCenter,
+        ]}>
+        <Text style={[theme.fontXXXL, theme.bold]}>
+          {i18n.t('wallet.wallet')}
+        </Text>
+        <TokenPrice />
+      </View>
       <View style={theme.paddingTop3x}>
         <TopbarTabbar
           titleStyle={theme.fontXL}
