@@ -1,7 +1,13 @@
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import React from 'react';
-import { ScrollView, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import {
+  Keyboard,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { AppStackParamList } from '../../navigation/NavigationTypes';
 import InputContainer from '../../common/components/InputContainer';
@@ -21,7 +27,6 @@ const DisableTFA = observer(({ route }: PropsType) => {
   const navigation = useNavigation();
 
   const onComplete = () => {
-    store.setLoading(false);
     navigation.goBack();
     showNotification(i18n.t('settings.TFADisabled'));
   };
@@ -43,7 +48,7 @@ const DisableTFA = observer(({ route }: PropsType) => {
   }
 
   return (
-    <ScrollView style={[theme.flexContainer]}>
+    <ScrollView style={[theme.flexContainer]} keyboardShouldPersistTaps>
       <Text style={[styles.text, theme.colorSecondaryText]}>
         Are you sure you wish to disable two-factor authentication on your Minds
         account?
@@ -56,7 +61,7 @@ const DisableTFA = observer(({ route }: PropsType) => {
           placeholder={'Enter the six-digit code from the application'}
           onChangeText={store.setAppCode}
           value={store.appCode}
-          autoFocus
+          keyboardType={'number-pad'}
         />
       )}
       {(store.smsAuthEnabled ||

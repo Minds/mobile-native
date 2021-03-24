@@ -1,6 +1,8 @@
 import Cancelable from 'promise-cancelable';
 import { NativeModules } from 'react-native';
 
+const LOGOUT_EXCEPTIONS = ['password/validate'];
+
 import session from './session.service';
 import {
   MINDS_API_URI,
@@ -43,6 +45,10 @@ export const isApiForbidden = function (err) {
   return err.status === 403;
 };
 
+const shouldLogout = (url: string) => {
+  return !LOGOUT_EXCEPTIONS.some((e) => url.includes(e));
+};
+
 /**
  * Api service
  */
@@ -58,8 +64,10 @@ class ApiService {
     // check status
     if (response.status) {
       if (response.status === 401) {
-        session.logout();
-        throw new UserError('Session lost');
+        if (shouldLogout(url)) {
+          session.logout();
+          throw new UserError('Session lost');
+        }
       }
     }
 

@@ -87,7 +87,8 @@
     "failedToLoginNewAccount": "The login with your new account has failed, please try to log in the login screen",
     "authCode": "Authentication code",
     "totpDesc": "Open the two-factor authentication app on your device to view your authentication code and verify your identity.",
-    "smsDesc": "Minds just sent a 6-digit authentication code to your phone."
+    "smsDesc": "Minds just sent a 6-digit authentication code to your phone.",
+    "confirmPasswordModal": "Please confirm your account password to continue"
   },
   "blockchain": {
     "exportLegacyWallet": "Export legacy wallets",

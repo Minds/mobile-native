@@ -57,6 +57,10 @@ export type RootStackParamList = {
   WalletWithdrawal: {};
   EarnModal: {};
   SearchScreen: {};
+  PasswordConfirmation: {
+    onConfirm: (password: string) => void;
+    title: string;
+  };
 };
 
 export type AuthStackParamList = {

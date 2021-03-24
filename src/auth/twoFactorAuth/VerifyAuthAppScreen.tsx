@@ -34,6 +34,7 @@ const VerifyAuthAppScreen = observer(({ route }: PropsType) => {
   const onComplete = () => {
     store.setLoading(false);
     store.setAuthEnabled('app');
+    store.setAppCode('');
     navigation.navigate('RecoveryCodesScreen', {
       store: store,
     });

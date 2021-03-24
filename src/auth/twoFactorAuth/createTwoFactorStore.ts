@@ -1,4 +1,3 @@
-import Clipboard from '@react-native-clipboard/clipboard';
 import { Linking } from 'react-native';
 import { showNotification } from '../../../AppMessages';
 import apiService from '../../common/services/api.service';
@@ -10,22 +9,15 @@ export type Options = 'app' | 'sms' | 'disable';
 
 const createTwoFactorStore = () => ({
   loading: false,
-  confirmPassword: false,
   selectedOption: 'app' as Options,
   secret: '',
   appCode: '',
   appAuthEnabled: false,
   smsAuthEnabled: false,
   recoveryCode: '',
-  showConfirmPasssword() {
-    this.confirmPassword = true;
-  },
-  closeConfirmPasssword() {
-    this.confirmPassword = false;
-  },
+  error: false,
   setSelected(option: Options) {
     this.selectedOption = option;
-    this.showConfirmPasssword();
   },
   setSecret(secret: string) {
     this.secret = secret;
@@ -79,6 +71,7 @@ const createTwoFactorStore = () => ({
   },
   async disable2fa(onComplete: Function, password: string) {
     try {
+      this.error = false;
       let response;
       if (this.appAuthEnabled) {
         response = <any>await apiService.delete('api/v3/security/totp', {
@@ -92,6 +85,11 @@ const createTwoFactorStore = () => ({
       onComplete();
     } catch (err) {
       logService.exception(err);
+      this.error = true;
+      showNotification(err.message, 'warning');
+    } finally {
+      this.setAppCode('');
+      this.setLoading(false);
     }
   },
   setLoading(loading: boolean) {
@@ -120,8 +118,10 @@ const createTwoFactorStore = () => ({
       await authService.login(username, password, headers);
     } catch (err) {
       logService.exception(err);
+      showNotification(err.message, 'warning');
     } finally {
       this.setLoading(false);
+      this.setAppCode('');
     }
   },
 });
