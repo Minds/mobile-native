@@ -3,13 +3,10 @@ import React, { Component } from 'react';
 import {
   Text,
   View,
-  ScrollView,
   TextInput,
-  Alert,
   Button,
   KeyboardAvoidingView,
   Platform,
-  TouchableHighlight,
   StyleSheet,
 } from 'react-native';
 
@@ -17,13 +14,18 @@ import Modal from 'react-native-modal';
 
 import i18n from '../common/services/i18n.service';
 import authService from '../auth/AuthService';
-import { observer, inject } from 'mobx-react';
 import { ComponentsStyle } from '../styles/Components';
-import { CommonStyle } from '../styles/Common';
 import Colors from '../styles/Colors';
 import ThemedStyles from '../styles/ThemedStyles';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-export default class ModalConfirmPassword extends Component {
+type PropsType = {
+  onSuccess: Function;
+  close: Function;
+  isVisible: boolean;
+};
+
+export default class ModalConfirmPassword extends Component<PropsType> {
   state = {
     password: '',
     error: false,
@@ -35,7 +37,10 @@ export default class ModalConfirmPassword extends Component {
     });
     try {
       await authService.validatePassword(this.state.password);
-      this.props.onSuccess();
+      this.props.onSuccess(this.state.password);
+      this.setState({
+        password: '',
+      });
     } catch (err) {
       this.setState({
         error: true,
@@ -53,10 +58,10 @@ export default class ModalConfirmPassword extends Component {
         isVisible={this.props.isVisible}
         backdropColor={ThemedStyles.getColor('primary_background')}
         backdropOpacity={1}>
-        <View style={[CS.flexContainer]}>
+        <SafeAreaView style={[CS.flexContainer]}>
           <KeyboardAvoidingView
             style={CS.flexContainer}
-            behavior={Platform.OS == 'ios' ? 'padding' : null}>
+            behavior={Platform.OS === 'ios' ? 'padding' : null}>
             {msg}
             <View style={styles.textCotainer}>
               <Text>{i18n.t('auth.confirmpassword')}</Text>
@@ -88,7 +93,7 @@ export default class ModalConfirmPassword extends Component {
               key={1}
             />
           </KeyboardAvoidingView>
-        </View>
+        </SafeAreaView>
       </Modal>
     );
   }

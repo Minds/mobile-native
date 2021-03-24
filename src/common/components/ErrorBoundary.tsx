@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 
-import { Text, Clipboard, View, ViewStyle } from 'react-native';
+import { Text, View, ViewStyle } from 'react-native';
 import { CommonStyle as CS } from '../../styles/Common';
 import logService from '../services/log.service';
 import i18n from '../services/i18n.service';
 import { showNotification } from '../../../AppMessages';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 type PropsType = {
   message: string;

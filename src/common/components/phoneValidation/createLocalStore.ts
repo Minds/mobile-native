@@ -63,7 +63,7 @@ const createLocalStore = () => ({
   canJoin() {
     return this.phoneInputRef?.current?.isValidNumber();
   },
-  async join(TFA = undefined, retry = false) {
+  async join(TFA = false, retry = false) {
     try {
       let { secret } = TFA
         ? await twoFactorAuthenticationService.authenticate(this.phone)
@@ -77,7 +77,7 @@ const createLocalStore = () => ({
       throw e;
     }
   },
-  joinAction(TFA = undefined, retry = false) {
+  joinAction(TFA = false, retry = false) {
     if (this.inProgress || (!retry && !this.canJoin())) {
       return null;
     }
@@ -86,7 +86,7 @@ const createLocalStore = () => ({
 
     return this.join(TFA, retry);
   },
-  async confirm(user, TFA = undefined) {
+  async confirm(user, TFA = false) {
     try {
       if (TFA) {
         await twoFactorAuthenticationService.check(
@@ -108,7 +108,7 @@ const createLocalStore = () => ({
       this.setInProgress(false);
     }
   },
-  confirmAction(user: UserStore, TFA = undefined) {
+  confirmAction(user: UserStore, TFA = false) {
     if (this.inProgress || !this.canConfirm || !user) {
       return null;
     }

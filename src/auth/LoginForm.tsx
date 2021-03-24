@@ -11,7 +11,7 @@ import {
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import authService from './AuthService';
+import authService, { TWO_FACTOR_ERROR } from './AuthService';
 
 import i18n from '../common/services/i18n.service';
 import logService from '../common/services/log.service';
@@ -20,6 +20,7 @@ import ThemedStyles from '../styles/ThemedStyles';
 import InputContainer from '../common/components/InputContainer';
 import BoxShadow from '../common/components/BoxShadow';
 import { styles, shadowOpt, icon } from './styles';
+import navigationService from '../navigation/NavigationService';
 
 type PropsType = {
   onLogin?: Function;
@@ -210,52 +211,45 @@ export default class LoginForm extends Component<PropsType, StateType> {
   onLoginPress() {
     this.setState({ msg: '', inProgress: true });
     // is two factor auth
-    if (this.state.twoFactorToken) {
-      authService
-        .twoFactorAuth(this.state.twoFactorToken, this.state.twoFactorCode)
-        .then(() => {
-          if (this.props.onLogin) {
-            this.props.onLogin();
-          }
-        })
-        .catch((err) => {
-          logService.exception('[LoginForm]', err);
-        });
-    } else {
-      authService
-        .login(this.state.username, this.state.password)
-        .then(() => {
-          this.props.onLogin && this.props.onLogin();
-        })
-        .catch((errJson) => {
-          LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
-          if (
-            errJson.error === 'invalid_grant' ||
-            errJson.error === 'invalid_client'
-          ) {
-            this.setState({
-              msg: i18n.t('auth.invalidGrant'),
-              inProgress: false,
-            });
-            return;
-          }
-
-          //TODO implement on backend and edit
-          if (errJson.error === 'two_factor') {
-            this.setState({
-              twoFactorToken: errJson.message,
-              inProgress: false,
-            });
-            return;
-          }
-
+    authService
+      .login(this.state.username, this.state.password)
+      .then(() => {
+        this.props.onLogin && this.props.onLogin();
+      })
+      .catch((errJson) => {
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+        if (
+          errJson.error === 'invalid_grant' ||
+          errJson.error === 'invalid_client'
+        ) {
           this.setState({
-            msg: errJson.message || 'Unknown error',
+            msg: i18n.t('auth.invalidGrant'),
             inProgress: false,
           });
+          return;
+        }
 
-          logService.exception('[LoginForm]', errJson);
+        if (errJson.errId && errJson.errId === TWO_FACTOR_ERROR) {
+          const tfa = errJson.headers.map['x-minds-sms-2fa-key']
+            ? 'sms'
+            : 'totp';
+          let params: any = {
+            tfa,
+            username: this.state.username,
+            password: this.state.password,
+          };
+          if (tfa === 'sms') {
+            params.secret = errJson.headers.map['x-minds-sms-2fa-key'];
+          }
+          navigationService.push('Login', params);
+        }
+
+        this.setState({
+          msg: errJson.message || 'Unknown error',
+          inProgress: false,
         });
-    }
+
+        logService.exception('[LoginForm]', errJson);
+      });
   }
 }

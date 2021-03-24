@@ -119,6 +119,11 @@ import Withdrawal from '../wallet/v3/currency-tabs/tokens/widthdrawal/Withdrawal
 import EarnModal from '../earn/EarnModal';
 import RekeyScreen from '../settings/screens/RekeyScreen';
 import BoostSettingsScreen from '../settings/screens/BoostSettingsScreen';
+import TwoFactorAuthSettingsScreen from '../auth/twoFactorAuth/TwoFactorAuthSettingsScreen';
+import RecoveryCodesScreen from '../auth/twoFactorAuth/RecoveryCodesScreen';
+import VerifyAuthAppScreen from '../auth/twoFactorAuth/VerifyAuthAppScreen';
+import VerifyPhoneNumberScreen from '../auth/twoFactorAuth/VerifyPhoneNumberScreen';
+import DisableTFA from '../auth/twoFactorAuth/DisableTFA';
 import SearchScreen from '../topbar/searchbar/SearchScreen';
 
 const isIos = Platform.OS === 'ios';
@@ -214,6 +219,10 @@ const AccountScreenOptions = (navigation) => [
 ];
 
 const SecurityScreenOptions = (navigation) => [
+  {
+    title: i18n.t('settings.securityOptions.1'),
+    onPress: () => navigation.push('TwoFactorAuthSettingsScreen'),
+  },
   {
     title: i18n.t('settings.securityOptions.2'),
     onPress: () => navigation.push('DevicesScreen'),
@@ -605,6 +614,31 @@ const AppStack = function () {
         name="BoostSettingsScreen"
         component={BoostSettingsScreen}
         options={{ title: i18n.t('settings.accountOptions.8') }}
+      />
+      <AppStackNav.Screen
+        name="TwoFactorAuthSettingsScreen"
+        component={TwoFactorAuthSettingsScreen}
+        options={{ title: i18n.t('settings.securityOptions.1') }}
+      />
+      <AppStackNav.Screen
+        name="RecoveryCodesScreen"
+        component={RecoveryCodesScreen}
+        options={{ title: i18n.t('settings.TFA') }}
+      />
+      <AppStackNav.Screen
+        name="VerifyAuthAppScreen"
+        component={VerifyAuthAppScreen}
+        options={{ title: i18n.t('settings.TFA') }}
+      />
+      <AppStackNav.Screen
+        name="VerifyPhoneNumberScreen"
+        component={VerifyPhoneNumberScreen}
+        options={{ title: i18n.t('settings.TFA') }}
+      />
+      <AppStackNav.Screen
+        name="DisableTFA"
+        component={DisableTFA}
+        options={{ title: i18n.t('settings.TFA') }}
       />
       <AppStackNav.Screen
         name="DevicesScreen"

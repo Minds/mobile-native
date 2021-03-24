@@ -4,6 +4,11 @@ import delay from '../common/helpers/delay';
 import logService from '../common/services/log.service';
 import type UserModel from '../channel/UserModel';
 
+export const TWO_FACTOR_ERROR =
+  'Minds::Core::Security::TwoFactor::TwoFactorRequiredException';
+
+export type TFA = 'sms' | 'totp';
+
 interface LoginResponse extends ApiResponse {
   access_token: string;
   token_type: string;
@@ -67,7 +72,11 @@ class AuthService {
    * @param username
    * @param password
    */
-  async login(username: string, password: string): Promise<LoginResponse> {
+  async login(
+    username: string,
+    password: string,
+    headers: any = {},
+  ): Promise<LoginResponse> {
     const params = {
       grant_type: 'password',
       client_id: 'mobile',
@@ -79,6 +88,7 @@ class AuthService {
     const data: LoginResponse = await api.post<LoginResponse>(
       'api/v2/oauth/token',
       params,
+      headers,
     );
 
     await api.clearCookies();
@@ -152,19 +162,6 @@ class AuthService {
     }
   }
 
-  async twoFactorAuth(token: string, code: string): Promise<TFAResponse> {
-    const params = {
-      token,
-      code,
-    } as tfaParams;
-
-    const data: TFAResponse = await api.post<TFAResponse>(
-      'api/v1/authenticate/two-factor',
-      params,
-    );
-
-    return data;
-  }
   /**
    * Register user and returns UserModel
    * @param params
