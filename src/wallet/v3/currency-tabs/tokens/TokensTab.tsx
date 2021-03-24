@@ -1,5 +1,5 @@
 import React from 'react';
-import { observer, useLocalStore } from 'mobx-react';
+import { observer } from 'mobx-react';
 import { View } from 'react-native';
 import TopBarButtonTabBar, {
   ButtonTabType,
@@ -22,8 +22,9 @@ import useWalletConnect from '../../../../blockchain/v2/walletconnect/useWalletC
 import sessionService from '../../../../common/services/session.service';
 import apiService from '../../../../common/services/api.service';
 import { showNotification } from '../../../../../AppMessages';
+import { TokensTabStore } from './createTokensTabStore';
 
-const options: Array<ButtonTabType<TokensOptions>> = [
+export const options: Array<ButtonTabType<TokensOptions>> = [
   { id: 'rewards', title: 'Rewards' },
   { id: 'earnings', title: 'Earnings' },
   { id: 'overview', title: 'Balance' },
@@ -35,21 +36,14 @@ type PropsType = {
   walletStore: WalletStoreType;
   bottomStore: BottomOptionsStoreType;
   navigation: WalletScreenNavigationProp;
+  store: TokensTabStore;
 };
-
-const createStore = (walletStore: WalletStoreType) => ({
-  option: walletStore.initialTab || ('rewards' as TokensOptions),
-  setOption(option: TokensOptions) {
-    this.option = option;
-  },
-});
 
 /**
  * Tokens tab
  */
 const TokensTab = observer(
-  ({ walletStore, navigation, bottomStore }: PropsType) => {
-    const store = useLocalStore(createStore, walletStore);
+  ({ walletStore, navigation, bottomStore, store }: PropsType) => {
     const theme = ThemedStyles.style;
     const onchainStore = useUniqueOnchain();
     const wc = useWalletConnect();
@@ -129,11 +123,15 @@ const TokensTab = observer(
     let body;
     switch (store.option) {
       case 'rewards':
-        body = <TokensRewards walletStore={walletStore} />;
+        body = <TokensRewards walletStore={walletStore} store={store} />;
         break;
       case 'earnings':
         body = (
-          <TokensEarnings walletStore={walletStore} currencyType="tokens" />
+          <TokensEarnings
+            walletStore={walletStore}
+            currencyType="tokens"
+            store={store}
+          />
         );
         break;
       case 'overview':

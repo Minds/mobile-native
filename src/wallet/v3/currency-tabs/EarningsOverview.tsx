@@ -1,10 +1,9 @@
 import { observer } from 'mobx-react';
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   EarningsCurrencyType,
   WalletStoreType,
 } from '../../v2/createWalletStore';
-import { TokensEarningsStore } from './Earnings';
 import { ScrollView } from 'react-native-gesture-handler';
 import AccordionSet, {
   AccordionDataType,
@@ -18,9 +17,10 @@ import ThemedStyles from '../../../styles/ThemedStyles';
 import CenteredLoading from '../../../common/components/CenteredLoading';
 import capitalize from '../../../common/helpers/capitalize';
 import toFriendlyCrypto from '../../../common/helpers/toFriendlyCrypto';
+import { TokensTabStore } from './tokens/createTokensTabStore';
 
 type PropsType = {
-  localStore: TokensEarningsStore;
+  localStore: TokensTabStore;
   walletStore: WalletStoreType;
   currencyType: EarningsCurrencyType;
 };
@@ -75,9 +75,6 @@ const ContentComponent: RenderFunction = (content: AccordionDataType) =>
 const EarningsOverview = observer(
   ({ localStore, walletStore, currencyType }: PropsType) => {
     const theme = ThemedStyles.style;
-    useEffect(() => {
-      localStore.loadEarnings(localStore.selectedDate);
-    }, [localStore, localStore.selectedDate, walletStore]);
 
     if (localStore.loading) {
       return <CenteredLoading />;

@@ -126,7 +126,7 @@ export interface ThemedStyle {
   backgroundPrimaryHighlight: any;
   [name: string]: any;
 }
-const repetitions = 8;
+const repetitions = 10;
 const step = 5;
 
 const dynamicStyles = {};

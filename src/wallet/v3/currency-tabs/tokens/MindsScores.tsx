@@ -8,16 +8,16 @@ import AccordionSet, {
 import i18n from '../../../../common/services/i18n.service';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 import AccordionHeader from '../AccordionHeader';
-import { Reward, TokensRewardsStore } from './TokensRewards';
 import MindsTokens, { format } from '../MindsTokens';
 import AccordionContent, { AccordionContentData } from '../AccordionContent';
 import EngagementSummary from './EngagementSummary';
 import HoldingSummary from './HoldingSummary';
 import LiquiditySummary from './LiquiditySummary';
 import { PricesType } from '../../../v2/createWalletStore';
+import { Reward, TokensTabStore } from './createTokensTabStore';
 
 type PropsType = {
-  store: TokensRewardsStore;
+  store: TokensTabStore;
   prices: PricesType;
 };
 
@@ -32,7 +32,7 @@ const getProcessedData = (data: Reward): AccordionContentData[] => [
     },
   },
   {
-    title: 'Network score',
+    title: 'Network Score',
     info: `${format(data.global_summary.score, false)} points`,
     tooltip: {
       title: i18n.t(`wallet.tokens.tooltips.${data.reward_type}Total`),
@@ -41,7 +41,7 @@ const getProcessedData = (data: Reward): AccordionContentData[] => [
     },
   },
   {
-    title: 'Your share',
+    title: 'Your Share',
     info: `${format(data.share_pct * 100)}%`,
     tooltip: {
       title: i18n.t(`wallet.tokens.tooltips.${data.reward_type}Percentage`),

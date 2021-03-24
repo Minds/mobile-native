@@ -144,9 +144,6 @@ export default class ActivityModel extends BaseModel {
       case 'batch':
         return true;
     }
-    if (this.perma_url) {
-      return true;
-    }
     return false;
   }
 

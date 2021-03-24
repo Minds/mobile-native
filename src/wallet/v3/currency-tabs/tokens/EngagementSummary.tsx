@@ -4,9 +4,9 @@ import { Text } from 'react-native';
 import { ContributionMetric } from '../../../v2/createWalletStore';
 import { format } from '../MindsTokens';
 import { Container, Info, Row, Title } from '../AccordionContent';
-import { Reward } from './TokensRewards';
 import ActivityMultiplier from './multipliers/ActivityMultiplier';
 import { SummaryLabel } from './LiquiditySummary';
+import { Reward } from './createTokensTabStore';
 
 type PropsType = {
   contributionScores: ContributionMetric[];

@@ -1,11 +1,10 @@
 import React from 'react';
 import ThemedStyles from '../../../../styles/ThemedStyles';
-import { Reward } from './TokensRewards';
 import { format } from '../MindsTokens';
 import { Container, Info, Row, Title } from '../AccordionContent';
-import { View } from 'react-native';
 import TimeMultiplier from './multipliers/TimeMultiplier';
 import { SummaryLabel } from './LiquiditySummary';
+import { Reward } from './createTokensTabStore';
 
 type PropsType = {
   reward: Reward;

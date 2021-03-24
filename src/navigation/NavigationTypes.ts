@@ -56,6 +56,7 @@ export type RootStackParamList = {
   };
   WalletWithdrawal: {};
   EarnModal: {};
+  SearchScreen: {};
 };
 
 export type AuthStackParamList = {

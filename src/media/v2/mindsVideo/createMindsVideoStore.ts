@@ -78,7 +78,8 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
     },
     setVolume(volume: number) {
       this.volume = volume;
-      this.player?.setVolumeAsync(volume);
+      // this.player?.setVolumeAsync(volume);
+      this.player?.setIsMutedAsync(!this.volume);
       videoPlayerService.setVolume(volume);
     },
     toggleVolume() {
@@ -201,10 +202,10 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
             videoPlayerService.enableVolumeListener();
           } else if (isIOS && !this.paused && !status.didJustFinish) {
             // fix ios autoplay
-            this.player?.setStatusAsync({
-              shouldPlay: true,
-              volume: this.volume,
-            });
+            // this.player?.setStatusAsync({
+            //   shouldPlay: true,
+            //   volume: this.volume,
+            // });
           }
 
           // if (status.didJustFinish && !status.isLooping) {
@@ -255,6 +256,8 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
           headers: apiService.buildHeaders(),
         };
       }
+
+      await this.player?.setIsMutedAsync(!this.volume);
 
       runInAction(() => {
         this.setPaused(false);

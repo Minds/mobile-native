@@ -124,6 +124,7 @@ import RecoveryCodesScreen from '../auth/twoFactorAuth/RecoveryCodesScreen';
 import VerifyAuthAppScreen from '../auth/twoFactorAuth/VerifyAuthAppScreen';
 import VerifyPhoneNumberScreen from '../auth/twoFactorAuth/VerifyPhoneNumberScreen';
 import DisableTFA from '../auth/twoFactorAuth/DisableTFA';
+import SearchScreen from '../topbar/searchbar/SearchScreen';
 
 const isIos = Platform.OS === 'ios';
 
@@ -776,6 +777,7 @@ const RootStack = function (props) {
             component={EarnModal}
             options={modalOptions}
           />
+          <RootStackNav.Screen name="SearchScreen" component={SearchScreen} />
         </Fragment>
       ) : (
         <>
