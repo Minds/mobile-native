@@ -37,14 +37,14 @@ const RecoveryCodesScreen = observer(({ route }: PropsType) => {
 
   return (
     <View style={[theme.flexContainer, theme.paddingTop7x]}>
-      <Text style={styles.title}>2. Recovery codes</Text>
-      <Text style={[styles.text, theme.colorSecondaryText]}>
-        Recovery codes are used to access your account in the event you cannot
-        receive two-factor authentication codes.
+      <Text style={styles.title}>
+        {i18n.t('settings.TFARecoveryCodesTitle')}
       </Text>
       <Text style={[styles.text, theme.colorSecondaryText]}>
-        Please make sure to store this information securely. If you lose it we
-        can not guarantee that you will regain access to your account
+        {i18n.t('settings.TFARecoveryCodesDesc')}
+      </Text>
+      <Text style={[styles.text, theme.colorSecondaryText]}>
+        {i18n.t('settings.TFARecoveryCodesBeSure')}
       </Text>
       <View
         style={[
@@ -56,7 +56,9 @@ const RecoveryCodesScreen = observer(({ route }: PropsType) => {
           theme.marginTop5x,
         ]}>
         <View style={theme.rowJustifySpaceBetween}>
-          <Text style={styles.smallTitle}>Recovery codes</Text>
+          <Text style={styles.smallTitle}>
+            {i18n.t('settings.TFARecoveryCodes')}
+          </Text>
           <TouchableOpacity
             style={[theme.rowJustifyStart, theme.centered]}
             onPress={store.copyRecoveryCode}>
@@ -65,7 +67,9 @@ const RecoveryCodesScreen = observer(({ route }: PropsType) => {
               color={ThemedStyles.getColor('primary_text')}
               size={14}
             />
-            <Text style={[styles.smallTitle, theme.marginLeft]}>Copy</Text>
+            <Text style={[styles.smallTitle, theme.marginLeft]}>
+              {i18n.t('copy')}
+            </Text>
           </TouchableOpacity>
         </View>
         <View style={styles.container}>

@@ -25,12 +25,14 @@ type ButtonTextType = 'onboarding.send' | 'confirm';
 type LabelText = 'onboarding.phoneNumber' | 'onboarding.confirmationCode';
 
 const getTitle = (step: ButtonTextType) => {
-  return step === 'confirm' ? '2. Confirm code' : '1. Phone number';
+  return i18n.t(
+    `settings.TFAVerifyPhoneTitle${step === 'confirm' ? '2' : '1'}`,
+  );
 };
 const getDesc = (step: ButtonTextType, phone?: string) => {
   return step === 'confirm'
-    ? `Verification code sent to ${phone}`
-    : 'This is the phone number where SMS verification codes will be sent each time you login.';
+    ? `${i18n.t('settings.TFAVerifyPhoneDesc2')} ${phone}`
+    : i18n.t('settings.TFAVerifyPhoneDesc1');
 };
 
 const VerifyPhoneNumberScreen = observer(({ route }: PropsType) => {

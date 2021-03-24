@@ -1,13 +1,7 @@
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import React from 'react';
-import {
-  Keyboard,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
+import { ScrollView, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { AppStackParamList } from '../../navigation/NavigationTypes';
 import InputContainer from '../../common/components/InputContainer';
@@ -50,15 +44,14 @@ const DisableTFA = observer(({ route }: PropsType) => {
   return (
     <ScrollView style={[theme.flexContainer]} keyboardShouldPersistTaps>
       <Text style={[styles.text, theme.colorSecondaryText]}>
-        Are you sure you wish to disable two-factor authentication on your Minds
-        account?
+        {i18n.t('settings.TFADisableDesc')}
       </Text>
       {store.appAuthEnabled && (
         <InputContainer
           containerStyle={theme.backgroundPrimaryHighlight}
           labelStyle={theme.colorPrimaryText}
           style={theme.colorPrimaryText}
-          placeholder={'Enter the six-digit code from the application'}
+          placeholder={i18n.t('settings.TFAEnterCode')}
           onChangeText={store.setAppCode}
           value={store.appCode}
           keyboardType={'number-pad'}
@@ -73,7 +66,7 @@ const DisableTFA = observer(({ route }: PropsType) => {
             theme.borderPrimary,
             theme.backgroundPrimaryHighlight,
           ]}>
-          <Text style={theme.fontL}>Yes, Disable 2FA</Text>
+          <Text style={theme.fontL}>{i18n.t('settings.TFADisableYes')}</Text>
         </TouchableOpacity>
       )}
     </ScrollView>
