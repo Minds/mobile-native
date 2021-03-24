@@ -8,7 +8,7 @@ const discardMessage = (confirm) => {
   const theme = ThemedStyles.style;
 
   showMessage({
-    position: 'center',
+    position: 'top',
     message: '',
     floating: true,
     duration: 0,
