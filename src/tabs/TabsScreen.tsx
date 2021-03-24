@@ -276,8 +276,8 @@ const styles = StyleSheet.create({
   tabBar: {
     shadowColor: '#000',
     shadowOffset: { width: 0, height: -1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
+    shadowOpacity: 0.4,
+    shadowRadius: 4,
     paddingTop: 10,
   },
 });
