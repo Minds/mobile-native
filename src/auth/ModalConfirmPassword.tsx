@@ -17,6 +17,7 @@ import authService from '../auth/AuthService';
 import { ComponentsStyle } from '../styles/Components';
 import Colors from '../styles/Colors';
 import ThemedStyles from '../styles/ThemedStyles';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type PropsType = {
   onSuccess: Function;
@@ -37,6 +38,9 @@ export default class ModalConfirmPassword extends Component<PropsType> {
     try {
       await authService.validatePassword(this.state.password);
       this.props.onSuccess(this.state.password);
+      this.setState({
+        password: '',
+      });
     } catch (err) {
       this.setState({
         error: true,
@@ -54,7 +58,7 @@ export default class ModalConfirmPassword extends Component<PropsType> {
         isVisible={this.props.isVisible}
         backdropColor={ThemedStyles.getColor('primary_background')}
         backdropOpacity={1}>
-        <View style={[CS.flexContainer]}>
+        <SafeAreaView style={[CS.flexContainer]}>
           <KeyboardAvoidingView
             style={CS.flexContainer}
             behavior={Platform.OS === 'ios' ? 'padding' : null}>
@@ -89,7 +93,7 @@ export default class ModalConfirmPassword extends Component<PropsType> {
               key={1}
             />
           </KeyboardAvoidingView>
-        </View>
+        </SafeAreaView>
       </Modal>
     );
   }

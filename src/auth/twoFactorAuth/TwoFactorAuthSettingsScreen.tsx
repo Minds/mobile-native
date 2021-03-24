@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { observer, useLocalStore } from 'mobx-react';
 import React, { useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Platform, StyleSheet, Text, View } from 'react-native';
 import ModalConfirmPassword from '../ModalConfirmPassword';
 import MenuItem from '../../common/components/menus/MenuItem';
 import i18n from '../../common/services/i18n.service';
@@ -63,6 +63,7 @@ const TwoFactorAuthSettingsScreen = observer(() => {
             },
             title: <ItemTitle id={item.id} enabled={item.enabled} />,
           }}
+          titleStyle={styles.titleContainer}
         />
       ))}
       {localStore.has2faEnabled && (
@@ -108,6 +109,10 @@ const ItemTitle = ({ id, enabled }) => {
 };
 
 const styles = StyleSheet.create({
+  titleContainer: {
+    marginTop: Platform.select({ ios: 20, android: 10 }),
+    paddingTop: 0,
+  },
   description: {
     fontSize: 15,
     paddingLeft: 21,
