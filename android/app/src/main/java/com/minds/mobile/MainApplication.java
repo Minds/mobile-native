@@ -8,7 +8,6 @@ import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactApplication;
-import com.masteratul.rn.testexception.RnTestExceptionHandlerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.reactnativecommunity.cameraroll.CameraRollPackage;
 import com.bitgo.randombytes.RandomBytesPackage;
