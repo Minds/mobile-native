@@ -1,3 +1,4 @@
+import Clipboard from '@react-native-clipboard/clipboard';
 import { Linking } from 'react-native';
 import { showNotification } from '../../../AppMessages';
 import apiService from '../../common/services/api.service';
