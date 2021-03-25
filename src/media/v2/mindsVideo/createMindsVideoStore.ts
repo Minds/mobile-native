@@ -128,12 +128,12 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
     },
     onLoadStart() {
       this.error = false;
-      this.inProgress = true;
+      //this.inProgress = true;
       this.loaded = false;
     },
     onLoadEnd() {
       this.error = false;
-      this.inProgress = false;
+      //this.inProgress = false;
     },
     /**
      * Called once the video has been loaded.
@@ -244,7 +244,11 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
             : entity.entity_guid || entity.guid,
         );
 
-        this.setSources(response.sources.filter((v) => v.type === 'video/mp4'));
+        this.setSources(
+          response.sources.filter(
+            (v) => ['video/mp4', 'video/hls'].indexOf(v.type) > -1,
+          ),
+        );
       }
 
       this.setShowOverlay(false);
