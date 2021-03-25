@@ -57,7 +57,7 @@ const ChannelDescription = (props: PropsType) => {
       renderTruncatedFooter={renderTruncatedFooter}
       renderRevealedFooter={renderRevealedFooter}>
       <Tags
-        // style={[theme.fontL, theme.colorSecondaryText]} disabled because of the android issue
+        style={[theme.fontL, theme.colorSecondaryText]}
         navigation={navigation}>
         {props.channel.briefdescription}
       </Tags>

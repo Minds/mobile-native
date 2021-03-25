@@ -127,7 +127,7 @@ export default observer(function Comment(props: PropsType) {
           <View style={[styles.body, theme.flexContainer]}>
             {!!props.comment.description && (
               <ReadMore
-                numberOfLines={4}
+                numberOfLines={6}
                 renderTruncatedFooter={renderTruncatedFooter}
                 renderRevealedFooter={renderRevealedFooter}>
                 <Tags
