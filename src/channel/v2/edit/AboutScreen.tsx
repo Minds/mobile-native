@@ -65,7 +65,8 @@ const AboutScreen = observer(({ route, navigation }: PropsType) => {
       dob: store.dob,
     });
     store.setLoaded(true);
-  }, [store, route]);
+    navigation.goBack();
+  }, [store, route.params.store, navigation]);
 
   useEffect(() => {
     const params = route.params;
