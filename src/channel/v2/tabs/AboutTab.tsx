@@ -11,6 +11,7 @@ import CenteredLoading from '../../../common/components/CenteredLoading';
 import abbrev from '../../../common/helpers/abbrev';
 import SocialLinks from '../../../common/components/SocialLinks';
 import Tags from '../../../common/components/Tags';
+import { useIsFocused } from '@react-navigation/core';
 
 type PropsType = {
   store: ChannelStoreType;
@@ -30,6 +31,9 @@ const AboutTab = observer(({ store, navigation }: PropsType) => {
   if (!store.channel) {
     return <View></View>;
   }
+
+  // re-render on focus (in case the user was edited)
+  useIsFocused();
 
   useEffect(() => {
     if (!localStore.loaded) {

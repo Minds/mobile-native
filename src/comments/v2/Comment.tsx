@@ -48,7 +48,7 @@ export default observer(function Comment(props: PropsType) {
   const endColor = backgroundColor + 'FF';
 
   const renderRevealedFooter = React.useCallback(
-    (handlePress) => {
+    handlePress => {
       return (
         <TouchableOpacity onPress={handlePress}>
           <Text
@@ -67,7 +67,7 @@ export default observer(function Comment(props: PropsType) {
   );
 
   const renderTruncatedFooter = React.useCallback(
-    (handlePress) => {
+    handlePress => {
       return (
         <TouchableOpacity onPress={handlePress} style={styles.touchable}>
           <LinearGradient
@@ -127,7 +127,7 @@ export default observer(function Comment(props: PropsType) {
           <View style={[styles.body, theme.flexContainer]}>
             {!!props.comment.description && (
               <ReadMore
-                numberOfLines={4}
+                numberOfLines={6}
                 renderTruncatedFooter={renderTruncatedFooter}
                 renderRevealedFooter={renderRevealedFooter}>
                 <Tags

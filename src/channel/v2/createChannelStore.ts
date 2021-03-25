@@ -142,7 +142,7 @@ const createChannelStore = () => {
           `api/v2/${this.endpoint}/${this.channel.guid}/${this.esFeedfilter}`,
         )
         .setIsTiled(filter === 'images' || filter === 'videos')
-        .setAsActivities(this.esFeedfilter !== 'blogs')
+        .setAsActivities(false)
         .clear()
         .fetchRemoteOrLocal();
     },
@@ -315,7 +315,7 @@ const createChannelStore = () => {
                 type: file.type,
                 name: file.filename || `${type}.jpg`,
               },
-              (e) => {
+              e => {
                 this.setProgress(e.loaded / e.total, type);
               },
             );
@@ -326,7 +326,7 @@ const createChannelStore = () => {
             this.setProgress(0, type);
             this.setIsUploading(false);
           })
-          .catch((err) => {
+          .catch(err => {
             throw err;
           });
       } catch (error) {

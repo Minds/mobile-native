@@ -144,9 +144,6 @@ export default class ActivityModel extends BaseModel {
       case 'batch':
         return true;
     }
-    if (this.perma_url) {
-      return true;
-    }
     return false;
   }
 
@@ -247,8 +244,7 @@ export default class ActivityModel extends BaseModel {
     }
 
     if (this.nsfw !== undefined) {
-      let res = [1, 2, 4].filter((nsfw) => this.nsfw!.indexOf(nsfw) > -1)
-        .length;
+      let res = [1, 2, 4].filter(nsfw => this.nsfw!.indexOf(nsfw) > -1).length;
       if (res) {
         return true;
       }

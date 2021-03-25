@@ -126,7 +126,7 @@ export interface ThemedStyle {
   backgroundPrimaryHighlight: any;
   [name: string]: any;
 }
-const repetitions = 8;
+const repetitions = 10;
 const step = 5;
 
 const dynamicStyles = {};
@@ -164,7 +164,7 @@ for (let index = 0; index <= repetitions; index++) {
   dynamicStyles[`borderRadius${post}`] = { borderRadius: index * 2 };
 }
 
-export const buildStyle = (theme) => ({
+export const buildStyle = theme => ({
   ...dynamicStyles,
   // opacity
   opacity100: {

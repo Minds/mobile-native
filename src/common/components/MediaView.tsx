@@ -4,7 +4,6 @@ import { observer } from 'mobx-react';
 
 import {
   Alert,
-  Clipboard,
   Dimensions,
   StyleSheet,
   Text,
@@ -12,6 +11,8 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
+
+import Clipboard from '@react-native-clipboard/clipboard';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { SharedElement } from 'react-navigation-shared-element';
@@ -256,7 +257,7 @@ export default class MediaView extends Component<PropsType> {
     this.videoPlayer?.setShowOverlay(showOverlay);
   }
 
-  imageError = (err) => {
+  imageError = err => {
     logService.log('[MediaView] Image error: ' + this.source?.uri, err);
     this.setState({ imageLoadFailed: true });
   };
@@ -285,7 +286,7 @@ export default class MediaView extends Component<PropsType> {
   /**
    * On image load handler
    */
-  onLoadImage = (e) => {
+  onLoadImage = e => {
     if (this.props.autoHeight) {
       this.setState({
         height: e.nativeEvent.height,

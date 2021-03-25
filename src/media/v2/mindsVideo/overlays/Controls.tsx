@@ -6,6 +6,7 @@ import type ActivityModel from '../../../../newsfeed/ActivityModel';
 import type CommentModel from '../../../../comments/v2/CommentModel';
 import { View, TouchableWithoutFeedback, Text } from 'react-native';
 import ThemedStyles from '../../../../styles/ThemedStyles';
+import withPreventDoubleTap from '../../../../common/components/PreventDoubleTap';
 import ProgressBar from '../ProgressBar';
 import { styles, iconSize, iconResSize, playSize } from './styles';
 import Colors from '../../../../styles/Colors';
@@ -21,6 +22,10 @@ type PropsType = {
 type SourceSelectorPropsType = {
   localStore: MindsVideoStoreType;
 };
+
+const DebouncedTouchableWithoutFeedback = withPreventDoubleTap(
+  TouchableWithoutFeedback,
+);
 
 const hitSlop = { top: 20, bottom: 20, right: 20, left: 20 };
 
@@ -66,7 +71,7 @@ const Controls = observer(({ localStore, entity, hideOverlay }: PropsType) => {
     const sourceSelector = <SourceSelector localStore={localStore} />;
 
     return (
-      <TouchableWithoutFeedback
+      <DebouncedTouchableWithoutFeedback
         hitSlop={hitSlop}
         style={styles.overlayContainer}
         onPress={localStore.openControlOverlay}>
@@ -118,7 +123,7 @@ const Controls = observer(({ localStore, entity, hideOverlay }: PropsType) => {
               />
               {progressBar}
               <View style={[theme.padding, theme.rowJustifySpaceEvenly]}>
-                <TouchableWithoutFeedback
+                <DebouncedTouchableWithoutFeedback
                   hitSlop={hitSlop}
                   onPress={localStore.toggleVolume}>
                   <Icon
@@ -130,12 +135,12 @@ const Controls = observer(({ localStore, entity, hideOverlay }: PropsType) => {
                     size={iconSize}
                     color={Colors.light}
                   />
-                </TouchableWithoutFeedback>
+                </DebouncedTouchableWithoutFeedback>
               </View>
             </View>
           )}
         </View>
-      </TouchableWithoutFeedback>
+      </DebouncedTouchableWithoutFeedback>
     );
   }
 

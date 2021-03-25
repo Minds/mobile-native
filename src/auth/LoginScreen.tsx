@@ -12,6 +12,9 @@ import FitScrollView from '../common/components/FitScrollView';
 import DismissKeyboard from '../common/components/DismissKeyboard';
 import { useKeyboard } from '@react-native-community/hooks';
 import i18n from '../common/services/i18n.service';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import { AuthStackParamList } from '../navigation/NavigationTypes';
+import TwoFactorTotpForm from './twoFactorAuth/TwoFactorTotpForm';
 
 const { height, width } = Dimensions.get('window');
 const LOGO_HEIGHT = height / 7;
@@ -21,8 +24,13 @@ type PropsType = {
   navigation: any;
 };
 
+export type LoginScreenRouteProp = RouteProp<AuthStackParamList, 'Login'>;
+
 export default function LoginScreen(props: PropsType) {
   const theme = ThemedStyles.style;
+
+  const route = useRoute<LoginScreenRouteProp>();
+  const tfa = route.params?.tfa || '';
 
   const keyboard = useKeyboard();
   const transition = useTransition(keyboard.keyboardShown);
@@ -55,10 +63,13 @@ export default function LoginScreen(props: PropsType) {
               {i18n.t('auth.login')}
             </Text>
 
-            <LoginForm
-              onForgot={() => props.navigation.push('Forgot')}
-              onRegisterPress={() => props.navigation.push('Register')}
-            />
+            {tfa === '' && (
+              <LoginForm
+                onForgot={() => props.navigation.push('Forgot')}
+                onRegisterPress={() => props.navigation.push('Register')}
+              />
+            )}
+            {tfa !== '' && <TwoFactorTotpForm route={route} />}
           </View>
         </FitScrollView>
       </DismissKeyboard>

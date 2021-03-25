@@ -28,6 +28,8 @@ import org.unimodules.core.interfaces.SingletonModule;
 
 import javax.annotation.Nullable;
 import java.lang.reflect.InvocationTargetException;
+import com.minds.mobile.CustomErrorScreen;
+import com.masteratul.exceptionhandler.ReactNativeExceptionHandlerModule;
 
 public class MainApplication extends Application implements ShareApplication, ReactApplication {
  private final ReactModuleRegistryProvider mModuleRegistryProvider = new ReactModuleRegistryProvider(new BasePackageList().getPackageList(), null);
@@ -74,6 +76,7 @@ public class MainApplication extends Application implements ShareApplication, Re
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
     initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
+    ReactNativeExceptionHandlerModule.replaceErrorScreenActivityClass(CustomErrorScreen.class);
   }
 
   /**

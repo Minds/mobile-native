@@ -18,6 +18,7 @@
 #import <UMReactNativeAdapter/UMNativeModulesProxy.h>
 #import <UMReactNativeAdapter/UMModuleRegistryAdapter.h>
 #import <RNShareMenu/ShareMenuManager.h>
+#import "ReactNativeExceptionHandler.h"
 
 @interface AppDelegate () <RCTBridgeDelegate>
 
@@ -69,6 +70,30 @@ static void InitializeFlipper(UIApplication *application) {
   [RNBootSplash initWithStoryboard:@"BootSplash" rootView:rootView];
 
   [RNNotifications startMonitorNotifications];
+
+  [ReactNativeExceptionHandler replaceNativeExceptionHandlerBlock:^(NSException *exception, NSString *readeableException){
+
+    //We create an alert box
+    UIAlertController* alert = [UIAlertController
+                                alertControllerWithTitle:@"An error occurred"
+                                message: @"Apologies..The app will close now \nPlease restart the app\n"
+                                preferredStyle:UIAlertControllerStyleAlert];
+
+    // We show the alert box using the rootViewController
+    [rootViewController presentViewController:alert animated:YES completion:nil];
+
+    // Hence we set a timer of 4 secs and then call the method releaseExceptionHold to quit the app after
+    // 4 secs of showing the popup
+    [NSTimer scheduledTimerWithTimeInterval:4.0
+                                     target:[ReactNativeExceptionHandler class]
+                                   selector:@selector(releaseExceptionHold)
+                                   userInfo:nil
+                                    repeats:NO];
+
+    // or  you can call
+    // [ReactNativeExceptionHandler releaseExceptionHold]; when you are done to release the UI lock.
+  }];
+
   return YES;
 }
 
@@ -122,6 +147,7 @@ static void InitializeFlipper(UIApplication *application) {
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
   [RNNotifications didFailToRegisterForRemoteNotificationsWithError:error];
 }
+
 
 static NSDictionary *arguments()
 {

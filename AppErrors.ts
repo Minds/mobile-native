@@ -78,10 +78,14 @@ if (!__DEV__) {
   /**
    * Native Errors
    */
-  setNativeExceptionHandler((exceptionString) => {
-    Sentry.captureException(new Error(exceptionString), {
-      logger: 'NativeExceptionHandler',
-    });
-    console.log(exceptionString);
-  });
+  setNativeExceptionHandler(
+    exceptionString => {
+      Sentry.captureException(new Error(exceptionString), {
+        logger: 'NativeExceptionHandler',
+      });
+      console.log(exceptionString);
+    },
+    true,
+    false,
+  );
 }

@@ -1,6 +1,5 @@
 import React, { useCallback, useRef } from 'react';
 import {
-  Clipboard,
   StyleSheet,
   Text,
   TextInput,
@@ -10,6 +9,7 @@ import {
 import { showNotification } from '../../../AppMessages';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 interface InputProps {
   textToCopy: string;
@@ -32,7 +32,7 @@ const Input = ({ textToCopy, label, style }: InputProps) => {
       <Text>{label}</Text>
       <View style={[theme.marginTop2x, styles.inputContainer]}>
         <TextInput
-          ref={(ref) => (_textInput.current = ref!)}
+          ref={ref => (_textInput.current = ref!)}
           selectTextOnFocus
           caretHidden
           textContentType={'URL'}

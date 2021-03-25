@@ -119,6 +119,13 @@ import Withdrawal from '../wallet/v3/currency-tabs/tokens/widthdrawal/Withdrawal
 import EarnModal from '../earn/EarnModal';
 import RekeyScreen from '../settings/screens/RekeyScreen';
 import BoostSettingsScreen from '../settings/screens/BoostSettingsScreen';
+import TwoFactorAuthSettingsScreen from '../auth/twoFactorAuth/TwoFactorAuthSettingsScreen';
+import RecoveryCodesScreen from '../auth/twoFactorAuth/RecoveryCodesScreen';
+import VerifyAuthAppScreen from '../auth/twoFactorAuth/VerifyAuthAppScreen';
+import VerifyPhoneNumberScreen from '../auth/twoFactorAuth/VerifyPhoneNumberScreen';
+import DisableTFA from '../auth/twoFactorAuth/DisableTFA';
+import SearchScreen from '../topbar/searchbar/SearchScreen';
+import PasswordConfirmScreen from '../auth/PasswordConfirmScreen';
 
 const isIos = Platform.OS === 'ios';
 
@@ -175,7 +182,7 @@ const FullScreenPostStack = () => (
   </FullScreenPostStackNav.Navigator>
 );
 
-const AccountScreenOptions = (navigation) => [
+const AccountScreenOptions = navigation => [
   {
     title: i18n.t('settings.accountOptions.1'),
     onPress: () => navigation.push('SettingsEmail'),
@@ -212,7 +219,11 @@ const AccountScreenOptions = (navigation) => [
   },
 ];
 
-const SecurityScreenOptions = (navigation) => [
+const SecurityScreenOptions = navigation => [
+  {
+    title: i18n.t('settings.securityOptions.1'),
+    onPress: () => navigation.push('TwoFactorAuthSettingsScreen'),
+  },
   {
     title: i18n.t('settings.securityOptions.2'),
     onPress: () => navigation.push('DevicesScreen'),
@@ -221,7 +232,7 @@ const SecurityScreenOptions = (navigation) => [
 
 let BillingScreenOptions;
 if (!isIos) {
-  BillingScreenOptions = (navigation) => [
+  BillingScreenOptions = navigation => [
     {
       title: i18n.t('settings.billingOptions.1'),
       onPress: () => navigation.push('PaymentMethods'),
@@ -232,7 +243,7 @@ if (!isIos) {
     },
   ];
 } else {
-  BillingScreenOptions = (navigation) => [
+  BillingScreenOptions = navigation => [
     {
       title: i18n.t('settings.billingOptions.2'),
       onPress: () => navigation.push('RecurringPayments'),
@@ -606,6 +617,31 @@ const AppStack = function () {
         options={{ title: i18n.t('settings.accountOptions.8') }}
       />
       <AppStackNav.Screen
+        name="TwoFactorAuthSettingsScreen"
+        component={TwoFactorAuthSettingsScreen}
+        options={{ title: i18n.t('settings.securityOptions.1') }}
+      />
+      <AppStackNav.Screen
+        name="RecoveryCodesScreen"
+        component={RecoveryCodesScreen}
+        options={{ title: i18n.t('settings.TFA') }}
+      />
+      <AppStackNav.Screen
+        name="VerifyAuthAppScreen"
+        component={VerifyAuthAppScreen}
+        options={{ title: i18n.t('settings.TFA') }}
+      />
+      <AppStackNav.Screen
+        name="VerifyPhoneNumberScreen"
+        component={VerifyPhoneNumberScreen}
+        options={{ title: i18n.t('settings.TFA') }}
+      />
+      <AppStackNav.Screen
+        name="DisableTFA"
+        component={DisableTFA}
+        options={{ title: i18n.t('settings.TFA') }}
+      />
+      <AppStackNav.Screen
         name="DevicesScreen"
         component={DevicesScreen}
         options={{ title: i18n.t('settings.securityOptions.2') }}
@@ -740,6 +776,12 @@ const RootStack = function (props) {
           <RootStackNav.Screen
             name="EarnModal"
             component={EarnModal}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen name="SearchScreen" component={SearchScreen} />
+          <RootStackNav.Screen
+            name="PasswordConfirmation"
+            component={PasswordConfirmScreen}
             options={modalOptions}
           />
         </Fragment>
