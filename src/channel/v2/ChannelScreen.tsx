@@ -15,6 +15,7 @@ import sessionService from '../../common/services/session.service';
 import ExplicitOverlay from '../../common/components/explicit/ExplicitOverlay';
 import ChannelTopBar from './ChannelTopBar';
 import UserNotFound from './UserNotFound';
+import ActivityModel from '../../newsfeed/ActivityModel';
 
 type PropsType = {
   navigation: any;
@@ -33,6 +34,13 @@ const ChannelScreen = observer((props: PropsType) => {
     if (params) {
       store.initialLoad(params);
     }
+
+    const p = (e) => store.channel?.isOwner() && store.feedStore.prepend(e);
+
+    ActivityModel.events.on('newPost', p);
+    return () => {
+      ActivityModel.events.removeListener('newPost', p);
+    };
   }, [props.route, store]);
 
   useFocusEffect(

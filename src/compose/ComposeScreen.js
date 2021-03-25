@@ -3,7 +3,6 @@ import { View, Text, StatusBar, StyleSheet } from 'react-native';
 import { observer } from 'mobx-react';
 import { useSafeArea } from 'react-native-safe-area-context';
 import { useIsFocused, useFocusEffect } from '@react-navigation/native';
-import { useLegacyStores } from '../common/hooks/use-stores';
 import FloatingBackButton from '../common/components/FloatingBackButton';
 import PermissionsCheck from './PermissionsCheck';
 
@@ -19,8 +18,7 @@ import i18nService from '../common/services/i18n.service';
  * @param {Object} props
  */
 export default observer(function (props) {
-  const stores = useLegacyStores();
-  const store = useComposeStore({ props, newsfeed: stores.newsfeed });
+  const store = useComposeStore(props);
   const insets = useSafeArea();
   const focused = useIsFocused();
 

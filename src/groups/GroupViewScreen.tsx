@@ -34,8 +34,8 @@ import {
 import ThemedStyles from '../styles/ThemedStyles';
 import sessionService from '../common/services/session.service';
 import ExplicitOverlay from '../common/components/explicit/ExplicitOverlay';
-import CommentsStore from '../comments/v2/CommentsStore';
 import CommentBottomSheet from '../comments/v2/CommentBottomSheet';
+import ActivityModel from '../newsfeed/ActivityModel';
 
 /**
  * Groups view screen
@@ -107,25 +107,22 @@ export default class GroupViewScreen extends Component {
     this.props.groupView.loadTopMembers();
   }
 
+  /**
+   * Prepend new posts
+   */
+  prepend = (entity: ActivityModel) => {
+    if (entity.containerObj?.guid === this.props.groupView.group.guid) {
+      this.props.groupView.prepend(entity);
+    }
+  };
+
   componentDidMount() {
     const params = this.props.route.params;
 
     // load data async
     this.initialLoad();
 
-    this.disposeEnter = this.props.navigation.addListener('focus', () => {
-      const params = this.props.route.params;
-
-      if (params && params.prepend) {
-        this.props.groupView.prepend(params.prepend);
-        // we clear the parameter to prevent prepend it again on goBack
-        this.props.navigation.setParams({ prepend: null });
-      }
-    });
-
-    if (params && params.prepend) {
-      this.props.groupView.prepend(params.prepend);
-    }
+    ActivityModel.events.on('newPost', this.prepend);
 
     if (params.tab && this.headerRef) {
       this.headerRef.onTabChange(params.tab);
@@ -143,6 +140,7 @@ export default class GroupViewScreen extends Component {
    * On component will unmount
    */
   componentWillUnmount() {
+    ActivityModel.events.removeListener('newPost', this.prepend);
     this.props.groupView.clear();
     if (this.disposeEnter) {
       this.disposeEnter();

@@ -29,7 +29,15 @@ class NewsfeedStore<T> {
 
     // we don't need to unsubscribe to the event because this stores is destroyed when the app is closed
     UserModel.events.on('toggleSubscription', this.onSubscriptionChange);
+    ActivityModel.events.on('newPost', this.onNewPost);
   }
+
+  /**
+   * On new post created
+   */
+  onNewPost = (entity: ActivityModel) => {
+    this.prepend(entity);
+  };
 
   /**
    * On subscription change
