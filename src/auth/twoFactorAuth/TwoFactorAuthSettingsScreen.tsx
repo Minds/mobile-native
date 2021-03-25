@@ -2,7 +2,6 @@ import { useNavigation } from '@react-navigation/native';
 import { observer, useLocalStore } from 'mobx-react';
 import React, { useEffect } from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
-import ModalConfirmPassword from '../ModalConfirmPassword';
 import MenuItem from '../../common/components/menus/MenuItem';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -34,7 +33,6 @@ const TwoFactorAuthSettingsScreen = observer(() => {
   ];
 
   const onConfirmPasswordSuccess = (password: string) => {
-    localStore.closeConfirmPasssword();
     const screen =
       localStore.selectedOption === 'app'
         ? 'VerifyAuthAppScreen'
@@ -44,6 +42,13 @@ const TwoFactorAuthSettingsScreen = observer(() => {
     navigation.navigate(screen, {
       store: localStore,
       password,
+    });
+  };
+
+  const confirmPassword = () => {
+    navigation.navigate('PasswordConfirmation', {
+      title: i18n.t('settings.TFA'),
+      onConfirm: onConfirmPasswordSuccess,
     });
   };
 
@@ -60,8 +65,10 @@ const TwoFactorAuthSettingsScreen = observer(() => {
                 return false;
               }
               localStore.setSelected(item.id);
+              confirmPassword();
             },
             title: <ItemTitle id={item.id} enabled={item.enabled} />,
+            noIcon: localStore.has2faEnabled,
           }}
           titleStyle={styles.titleContainer}
         />
@@ -69,16 +76,14 @@ const TwoFactorAuthSettingsScreen = observer(() => {
       {localStore.has2faEnabled && (
         <MenuItem
           item={{
-            onPress: () => localStore.setSelected('disable'),
+            onPress: () => {
+              localStore.setSelected('disable');
+              confirmPassword();
+            },
             title: i18n.t('settings.TFADisable'),
           }}
         />
       )}
-      <ModalConfirmPassword
-        isVisible={localStore.confirmPassword}
-        onSuccess={onConfirmPasswordSuccess}
-        close={localStore.closeConfirmPasssword}
-      />
     </View>
   );
 });

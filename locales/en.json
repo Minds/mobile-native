@@ -87,7 +87,8 @@
     "failedToLoginNewAccount": "The login with your new account has failed, please try to log in the login screen",
     "authCode": "Authentication code",
     "totpDesc": "Open the two-factor authentication app on your device to view your authentication code and verify your identity.",
-    "smsDesc": "Minds just sent a 6-digit authentication code to your phone."
+    "smsDesc": "Minds just sent a 6-digit authentication code to your phone.",
+    "confirmPasswordModal": "Please confirm your account password to continue"
   },
   "blockchain": {
     "exportLegacyWallet": "Export legacy wallets",
@@ -575,6 +576,19 @@
     "TFAEnabled": "2FA Enabled",
     "TFADisabled": "2FA Disabled",
     "TFADisable": "Disable 2FA",
+    "TFADisableYes": "Yes, Disable 2FA",
+    "TFADisableDesc": "Are you sure you wish to disable two-factor authentication on your Minds account?",
+    "TFAEnterCode": "Enter the six-digit code from the application",
+    "TFARecoveryCodes": "Recovery codes",
+    "TFARecoveryCodesTitle": "2. Recovery codes",
+    "TFARecoveryCodesDesc": "Recovery codes are used to access your account in the event you cannot receive two-factor authentication codes.",
+    "TFARecoveryCodesBeSure": "Please make sure to store this information securely. If you lose it we can not guarantee that you will regain access to your account",
+    "TFAVerifyTitle": "1. Verify with authenticator app",
+    "TFAVerifyDesc": "Enter the following two-factor secret into your authenticator app",
+    "TFAVerifyPhoneTitle1": "1. Phone number",
+    "TFAVerifyPhoneTitle2": "2. Confirm code",
+    "TFAVerifyPhoneDesc2": "Verification code sent to",
+    "TFAVerifyPhoneDesc1": "This is the phone number where SMS verification codes will be sent each time you login.",
     "TFAOptions": {
       "appTitle": "App",
       "appDescription": "Use an application on your phone to get two-factor authentication codes when prompted.",

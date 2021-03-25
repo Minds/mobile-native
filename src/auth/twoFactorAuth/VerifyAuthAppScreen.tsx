@@ -34,6 +34,7 @@ const VerifyAuthAppScreen = observer(({ route }: PropsType) => {
   const onComplete = () => {
     store.setLoading(false);
     store.setAuthEnabled('app');
+    store.setAppCode('');
     navigation.navigate('RecoveryCodesScreen', {
       store: store,
     });
@@ -77,9 +78,9 @@ const VerifyAuthAppScreen = observer(({ route }: PropsType) => {
 
   return (
     <ScrollView style={[theme.flexContainer, theme.paddingTop7x]}>
-      <Text style={styles.title}>1. Verify with authenticator app</Text>
+      <Text style={styles.title}>{i18n.t('settings.TFAVerifyTitle')}</Text>
       <Text style={[styles.text, theme.colorSecondaryText]}>
-        Enter the following two-factor secret into your authenticator app
+        {i18n.t('settings.TFAVerifyDesc')}
       </Text>
       <View
         style={[
@@ -96,14 +97,16 @@ const VerifyAuthAppScreen = observer(({ route }: PropsType) => {
             color={ThemedStyles.getColor('primary_text')}
             size={14}
           />
-          <Text style={[styles.smallTitle, theme.marginLeft]}>Copy</Text>
+          <Text style={[styles.smallTitle, theme.marginLeft]}>
+            {i18n.t('copy')}
+          </Text>
         </TouchableOpacity>
       </View>
       <InputContainer
         containerStyle={theme.backgroundPrimaryHighlight}
         labelStyle={theme.colorPrimaryText}
         style={theme.colorPrimaryText}
-        placeholder={'Enter the six-digit code from the application'}
+        placeholder={i18n.t('settings.TFAEnterCode')}
         onChangeText={store.setAppCode}
         value={store.appCode}
       />

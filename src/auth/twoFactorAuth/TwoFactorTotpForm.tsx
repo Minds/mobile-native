@@ -1,6 +1,6 @@
 import { observer, useLocalStore } from 'mobx-react';
 import React from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, Keyboard } from 'react-native';
 import Button from '../../common/components/Button';
 import InputContainer from '../../common/components/InputContainer';
 import i18n from '../../common/services/i18n.service';
@@ -21,6 +21,10 @@ const TwoFactorTotpForm = observer(({ route }: PropsType) => {
   const theme = ThemedStyles.style;
   const { username, password, tfa, secret } = route.params;
   const localStore = useLocalStore(createTwoFactorStore);
+  const onLoginPress = () => {
+    Keyboard.dismiss();
+    localStore.login(username!, password!, tfa!, secret!);
+  };
   return (
     <View style={theme.flexContainer}>
       <View style={styles.shadow}>
@@ -31,6 +35,7 @@ const TwoFactorTotpForm = observer(({ route }: PropsType) => {
           placeholder={i18n.t('auth.authCode')}
           onChangeText={localStore.setAppCode}
           value={localStore.appCode}
+          keyboardType={'number-pad'}
         />
       </View>
       <Text
@@ -44,7 +49,7 @@ const TwoFactorTotpForm = observer(({ route }: PropsType) => {
       </Text>
       <View style={[theme.marginHorizontal6x, theme.flexContainer]}>
         <Button
-          onPress={() => localStore.login(username!, password!, tfa!, secret!)}
+          onPress={onLoginPress}
           text={i18n.t('auth.login')}
           containerStyle={[loginMargin, theme.fullWidth]}
           loading={localStore.loading}

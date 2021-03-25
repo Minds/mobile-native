@@ -21,7 +21,6 @@ const DisableTFA = observer(({ route }: PropsType) => {
   const navigation = useNavigation();
 
   const onComplete = () => {
-    store.setLoading(false);
     navigation.goBack();
     showNotification(i18n.t('settings.TFADisabled'));
   };
@@ -43,20 +42,19 @@ const DisableTFA = observer(({ route }: PropsType) => {
   }
 
   return (
-    <ScrollView style={[theme.flexContainer]}>
+    <ScrollView style={[theme.flexContainer]} keyboardShouldPersistTaps>
       <Text style={[styles.text, theme.colorSecondaryText]}>
-        Are you sure you wish to disable two-factor authentication on your Minds
-        account?
+        {i18n.t('settings.TFADisableDesc')}
       </Text>
       {store.appAuthEnabled && (
         <InputContainer
           containerStyle={theme.backgroundPrimaryHighlight}
           labelStyle={theme.colorPrimaryText}
           style={theme.colorPrimaryText}
-          placeholder={'Enter the six-digit code from the application'}
+          placeholder={i18n.t('settings.TFAEnterCode')}
           onChangeText={store.setAppCode}
           value={store.appCode}
-          autoFocus
+          keyboardType={'number-pad'}
         />
       )}
       {(store.smsAuthEnabled ||
@@ -68,7 +66,7 @@ const DisableTFA = observer(({ route }: PropsType) => {
             theme.borderPrimary,
             theme.backgroundPrimaryHighlight,
           ]}>
-          <Text style={theme.fontL}>Yes, Disable 2FA</Text>
+          <Text style={theme.fontL}>{i18n.t('settings.TFADisableYes')}</Text>
         </TouchableOpacity>
       )}
     </ScrollView>
