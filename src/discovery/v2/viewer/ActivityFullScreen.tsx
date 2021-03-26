@@ -140,7 +140,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
   }, [focused, props.forceAutoplay, props.showCommentsOnFocus, store]);
 
   useEffect(() => {
-    let openCommentsTimeOut: NodeJS.Timeout | null = null;
+    let openCommentsTimeOut: number | null = null;
     if (route && (route.params?.focusedUrn || route.params?.scrollToBottom)) {
       openCommentsTimeOut = setTimeout(() => {
         onPressComment();

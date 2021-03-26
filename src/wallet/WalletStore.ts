@@ -37,7 +37,7 @@ class WalletStore {
   refreshing: boolean = false;
   loaded: boolean = false;
 
-  interval!: NodeJS.Timeout;
+  interval!: number;
 
   isOnboardingShown!: boolean;
 
@@ -60,7 +60,7 @@ class WalletStore {
     } = (await walletService.getBalances()) as WalletResponse;
 
     if (addresses && addresses.length > 0) {
-      addresses.forEach(async (address) => {
+      addresses.forEach(async address => {
         if (
           address.label.toLowerCase() !== 'offchain' &&
           address.address !== ''

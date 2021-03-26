@@ -7,6 +7,7 @@ import { createStore } from '../../../src/blockchain/v2/walletconnect/WalletConn
 
 jest.mock('web3');
 jest.mock('../../../src/common/services/minds.service');
+jest.mock('../../../src/blockchain/v2/walletconnect/modal/registry');
 
 /**
  * Blockchain token service

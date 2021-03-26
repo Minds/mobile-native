@@ -1,6 +1,7 @@
 import BlockchainWithdrawService from '../../../src/blockchain/v2/services/BlockchainWithdrawService';
 import { createStore } from '../../../src/blockchain/v2/walletconnect/WalletConnectContext';
 jest.mock('web3');
+jest.mock('../../../src/blockchain/v2/walletconnect/modal/registry');
 
 /**
  * Blockchain withdraw service
