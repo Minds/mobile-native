@@ -86,8 +86,10 @@
     "alreadyHaveAccount": "Already have an account? &{login}&",
     "failedToLoginNewAccount": "The login with your new account has failed, please try to log in the login screen",
     "authCode": "Authentication code",
+    "recoveryCode": "Recovery code",
     "totpDesc": "Open the two-factor authentication app on your device to view your authentication code and verify your identity.",
     "smsDesc": "Minds just sent a 6-digit authentication code to your phone.",
+    "recoveryDesc": "Enter your recovery code in case you lost access to your mobile device.",
     "confirmPasswordModal": "Please confirm your account password to continue"
   },
   "blockchain": {
@@ -589,6 +591,7 @@
     "TFAVerifyPhoneTitle2": "2. Confirm code",
     "TFAVerifyPhoneDesc2": "Verification code sent to",
     "TFAVerifyPhoneDesc1": "This is the phone number where SMS verification codes will be sent each time you login.",
+    "TFARecoveryCodeEnter": "Enter a two-factor recovery code",
     "TFAOptions": {
       "appTitle": "App",
       "appDescription": "Use an application on your phone to get two-factor authentication codes when prompted.",

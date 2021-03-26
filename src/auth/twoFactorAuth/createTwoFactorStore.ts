@@ -8,6 +8,9 @@ import twoFactorAuthenticationService from '../../common/services/two-factor-aut
 import authService, { TFA } from '../AuthService';
 export type Options = 'app' | 'sms' | 'disable';
 
+// Used to 'navigate' between forms inside loginscreen
+export type TwoFactorAuthSteps = 'login' | 'authCode' | 'recoveryCode';
+
 const createTwoFactorStore = () => ({
   loading: false,
   selectedOption: 'app' as Options,
@@ -17,6 +20,10 @@ const createTwoFactorStore = () => ({
   smsAuthEnabled: false,
   recoveryCode: '',
   error: false,
+  twoFactorAuthStep: 'login' as TwoFactorAuthSteps,
+  smsSecret: '',
+  username: '',
+  password: '',
   setSelected(option: Options) {
     this.selectedOption = option;
   },
@@ -93,6 +100,43 @@ const createTwoFactorStore = () => ({
       this.setLoading(false);
     }
   },
+  setRecoveryCode(recoveryCode: string) {
+    this.recoveryCode = recoveryCode;
+  },
+  handleBackButton() {
+    if (this.twoFactorAuthStep === 'authCode') {
+      this.twoFactorAuthStep = 'login';
+      return;
+    }
+    if (this.twoFactorAuthStep === 'recoveryCode') {
+      this.twoFactorAuthStep = 'authCode';
+      return;
+    }
+  },
+  handleVerify() {
+    if (this.twoFactorAuthStep === 'authCode') {
+      this.login();
+      return;
+    }
+    if (this.twoFactorAuthStep === 'recoveryCode') {
+      this.twoFactorAuthStep = 'authCode';
+      return;
+    }
+  },
+  showTwoFactorForm(secret: string, username: string, password: string) {
+    if (secret) {
+      this.smsSecret = secret;
+      this.smsAuthEnabled = true;
+    } else {
+      this.appAuthEnabled = true;
+    }
+    this.username = username;
+    this.password = password;
+    this.twoFactorAuthStep = 'authCode';
+  },
+  showRecoveryForm() {
+    this.twoFactorAuthStep = 'recoveryCode';
+  },
   setLoading(loading: boolean) {
     this.loading = loading;
   },
@@ -107,16 +151,16 @@ const createTwoFactorStore = () => ({
     this.appAuthEnabled = false;
     this.smsAuthEnabled = false;
   },
-  async login(username: string, password: string, tfa: TFA, secret?: string) {
+  async login() {
     this.setLoading(true);
     let headers: any = {
       'X-MINDS-2FA-CODE': this.appCode,
     };
-    if (tfa === 'sms') {
-      headers['X-MINDS-SMS-2FA-KEY'] = secret;
+    if (this.smsAuthEnabled) {
+      headers['X-MINDS-SMS-2FA-KEY'] = this.smsSecret;
     }
     try {
-      await authService.login(username, password, headers);
+      await authService.login(this.username, this.password, headers);
     } catch (err) {
       logService.exception(err);
       showNotification(err.message, 'warning');
