@@ -179,7 +179,7 @@ const ImageOverlay = ({
   );
 };
 
-const createSmartImageStore = (props) => {
+const createSmartImageStore = props => {
   const dataSaverEnabled = settingsStore.dataSaverEnabled;
   return {
     error: false,

@@ -28,7 +28,7 @@ const PlanOptions = observer(({ store, pro }: PropsType) => {
         ]}>
         SELECT PLAN
       </Text>
-      {(store.method === 'tokens' ? plans.tokens : plans.usd).map((plan) => (
+      {(store.method === 'tokens' ? plans.tokens : plans.usd).map(plan => (
         <MenuItem
           item={{
             onPress: () => store.setSelectedOption(plan),

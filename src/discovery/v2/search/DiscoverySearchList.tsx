@@ -39,7 +39,7 @@ export const DiscoverySearchList = observer((props: Props) => {
    * Render activity item
    */
   const ItemPartial = useCallback(
-    (row) => {
+    row => {
       let entity: Element;
 
       switch (row.item.type) {

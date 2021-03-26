@@ -81,7 +81,7 @@ export default class BoostConsoleScreen extends Component {
         ListEmptyComponent={empty}
         data={this.props.boost.list.entities.slice()}
         renderItem={this.renderBoost}
-        keyExtractor={(item) => item.rowKey}
+        keyExtractor={item => item.rowKey}
         onRefresh={this.refresh}
         refreshing={this.props.boost.list.refreshing}
         onEndReached={this.loadFeed}
@@ -112,7 +112,7 @@ export default class BoostConsoleScreen extends Component {
   /**
    * Render row
    */
-  renderBoost = (row) => {
+  renderBoost = row => {
     const boost = row.item;
     return <Boost boost={boost} navigation={this.props.navigation} />;
   };

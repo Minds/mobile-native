@@ -32,7 +32,7 @@ export default class Selector extends Component<PropsType> {
     setTimeout(() => {
       if (this.state.selected) {
         const itemToScrollTo = this.props.data.find(
-          (item) => this.props.keyExtractor(item) === this.state.selected,
+          item => this.props.keyExtractor(item) === this.state.selected,
         );
         this.flatListRef.current?.scrollToIndex({
           animated: false,
@@ -68,24 +68,24 @@ export default class Selector extends Component<PropsType> {
     );
   };
 
-  itemSelect = (item) => {
+  itemSelect = item => {
     this.props.onItemSelect(item);
     this.close();
   };
 
-  isSelected = (item) => {
+  isSelected = item => {
     return this.state.selected === this.keyExtractor(item);
   };
 
-  setSelected = (item) => {
+  setSelected = item => {
     this.setState({ selected: this.keyExtractor(item) });
   };
 
-  valueExtractor = (item) => {
+  valueExtractor = item => {
     return this.props.valueExtractor(item);
   };
 
-  keyExtractor = (item) => {
+  keyExtractor = item => {
     return this.props.keyExtractor(item);
   };
 

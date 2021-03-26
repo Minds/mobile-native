@@ -89,7 +89,7 @@ export default class SubscriptionTierCarousel extends PureComponent<PropsType> {
   /**
    * Renders a tier
    */
-  _renderItem = (row) => {
+  _renderItem = row => {
     const amount = row.item.amount || this.props.amount;
     const currency = row.item.currency || this.props.currency;
     const recurring = this.props.recurring;
@@ -124,7 +124,7 @@ export default class SubscriptionTierCarousel extends PureComponent<PropsType> {
   /**
    * Tier Selected
    */
-  onSelected = (index) => {
+  onSelected = index => {
     if (this.props.onTierSelected) {
       this.props.onTierSelected(this.rewards[index]);
     }
@@ -136,8 +136,7 @@ export default class SubscriptionTierCarousel extends PureComponent<PropsType> {
   render() {
     this.rewards = this.getRewards();
     let current = this.rewards.findIndex(
-      (r) =>
-        r.amount === this.props.amount && r.currency === this.props.currency,
+      r => r.amount === this.props.amount && r.currency === this.props.currency,
     );
 
     return (

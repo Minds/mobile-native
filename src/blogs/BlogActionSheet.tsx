@@ -160,7 +160,7 @@ export default class BlogActionSheet extends Component<PropsType, StateType> {
           style={theme.colorTertiaryText}
         />
         <ActionSheet
-          ref={(o) => (this.ActionSheet = o)}
+          ref={o => (this.ActionSheet = o)}
           title={i18n.t('actions')}
           options={this.state.options}
           onPress={this.handleSelection}

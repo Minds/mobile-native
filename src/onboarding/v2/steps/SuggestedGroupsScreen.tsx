@@ -44,7 +44,7 @@ export default observer(function SuggestedGroupsScreen() {
         </Text>
         <ScrollView style={theme.flexContainer}>
           {listStore.loading && <CenteredLoading />}
-          {listStore.entities.slice().map((group) => (
+          {listStore.entities.slice().map(group => (
             <GroupsListItem group={group} key={group.guid} noNavigate />
           ))}
         </ScrollView>

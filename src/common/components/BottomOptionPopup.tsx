@@ -42,7 +42,7 @@ const BottomOptionPopup = observer((props: PropsType) => {
   const ref = useRef<BottomSheet>(null);
 
   const store = useLocalStore(
-    (p) => ({
+    p => ({
       showing: false,
       close() {
         store.showing = false;

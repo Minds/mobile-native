@@ -71,14 +71,14 @@ export default observer(function VerifyUniquenessScreen() {
       title={i18n.t('onboarding.verifyUniqueness')}
       onPressBack={navigation.goBack}>
       <View style={theme.flexContainer}>
-        {steps.map((item) => (
+        {steps.map(item => (
           <MenuItem item={item} />
         ))}
 
         <LabeledComponent
           label={'OTHER'}
           labelStyle={[theme.marginTop5x, theme.marginLeft5x]}>
-          {other.map((item) => (
+          {other.map(item => (
             <MenuItem item={item} />
           ))}
         </LabeledComponent>

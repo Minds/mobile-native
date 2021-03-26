@@ -56,7 +56,7 @@ class EmailScreen extends Component {
   /**
    * Set email value
    */
-  setEmail = (email) => {
+  setEmail = email => {
     this.setState({ email, showConfirmNote: true });
   };
 
@@ -70,7 +70,7 @@ class EmailScreen extends Component {
 
     settingsService
       .submitSettings({ email: this.state.email })
-      .then((data) => {
+      .then(data => {
         this.props.navigation.goBack();
       })
       .finally(() => {

@@ -113,7 +113,7 @@ export default class MessengerSetup extends Component<PropsType> {
             underlineColorAndroid="transparent"
             placeholder={i18n.t('passwordPlaceholder')}
             secureTextEntry={true}
-            onChangeText={(password) => (this.password = password)}
+            onChangeText={password => (this.password = password)}
             testID="MessengerSetupText"
           />
         </View>
@@ -149,7 +149,7 @@ export default class MessengerSetup extends Component<PropsType> {
             underlineColorAndroid="transparent"
             placeholder={i18n.t('passwordPlaceholder')}
             secureTextEntry={true}
-            onChangeText={(password) => (this.password = password)}
+            onChangeText={password => (this.password = password)}
           />
           <TextInput
             style={[ComponentsStyle.passwordinput, CommonStyle.marginTop2x]}
@@ -157,7 +157,7 @@ export default class MessengerSetup extends Component<PropsType> {
             underlineColorAndroid="transparent"
             placeholder={i18n.t('passwordConmfirmPlaceholder')}
             secureTextEntry={true}
-            onChangeText={(password) => (this.confirm = password)}
+            onChangeText={password => (this.confirm = password)}
           />
         </View>
 

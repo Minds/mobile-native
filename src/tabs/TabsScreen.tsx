@@ -183,7 +183,7 @@ const Tabs = observer(function ({ navigation }) {
       component={() => <View />}
       options={{
         tabBarTestID: 'CaptureTabButton',
-        tabBarButton: (props) => (
+        tabBarButton: props => (
           <TouchableOpacity {...props} onPress={navToChannel} />
         ),
       }}
@@ -199,7 +199,7 @@ const Tabs = observer(function ({ navigation }) {
       <Topbar navigation={navigation} />
       <Tab.Navigator
         initialRouteName="Newsfeed"
-        tabBar={(props) => <TabBar {...props} />}
+        tabBar={props => <TabBar {...props} />}
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused }) => {
             const color = focused
@@ -248,7 +248,7 @@ const Tabs = observer(function ({ navigation }) {
           component={InternalStack}
           options={{
             tabBarTestID: 'CaptureTabButton',
-            tabBarButton: (props) => (
+            tabBarButton: props => (
               <TouchableOpacity
                 {...props}
                 onPress={navToCapture}

@@ -18,7 +18,7 @@ import { GOOGLE_PLAY_STORE } from '../config/Config';
 
 const ICON_SIZE = 25;
 
-const getOptionsList = (navigation) => {
+const getOptionsList = navigation => {
   const theme = ThemedStyles.style;
 
   const hasRewards = sessionService.getUser().rewards;

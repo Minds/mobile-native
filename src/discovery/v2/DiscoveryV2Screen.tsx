@@ -80,7 +80,7 @@ export const DiscoveryV2Screen = observer((props: Props) => {
         <InitialOnboardingButton />
         <TopbarTabbar
           current={store.activeTabId}
-          onChange={(tabId) => {
+          onChange={tabId => {
             store.setTabId(tabId as TDiscoveryV2Tabs);
           }}
           tabs={[

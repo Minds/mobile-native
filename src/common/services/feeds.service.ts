@@ -261,7 +261,7 @@ export default class FeedsService {
 
     if (this.fallbackAt) {
       index = this.feed.findIndex(
-        (r) =>
+        r =>
           r.entity &&
           r.entity.time_created &&
           parseInt(r.entity.time_created, 10) < this.fallbackAt,
@@ -426,7 +426,7 @@ export default class FeedsService {
    */
   async removeFromOwner(guid: string): Promise<void> {
     let count = this.feed.length;
-    this.feed = this.feed.filter((e) => !e.owner_guid || e.owner_guid !== guid);
+    this.feed = this.feed.filter(e => !e.owner_guid || e.owner_guid !== guid);
     count -= this.feed.length;
     this.offset -= count;
     await feedsStorage.save(this);

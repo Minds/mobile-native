@@ -15,7 +15,7 @@ export default function ActivityPlaceHolder() {
   const color = ThemedStyles.getColor('tertiary_background');
   const { width } = useDimensions().screen;
 
-  const animation = (props) => (
+  const animation = props => (
     <Fade {...props} style={theme.backgroundPrimary} />
   );
 

@@ -74,7 +74,7 @@ class ChannelSubscribers extends Component {
         <FlatList
           data={store.list.entities.slice()}
           renderItem={this.renderRow}
-          keyExtractor={(item) => item.guid}
+          keyExtractor={item => item.guid}
           onRefresh={this.refresh}
           refreshing={store.list.refreshing}
           onEndReached={this.loadFeed}
@@ -140,7 +140,7 @@ class ChannelSubscribers extends Component {
   /**
    * Render user row
    */
-  renderRow = (row) => {
+  renderRow = row => {
     return (
       <DiscoveryUser
         store={this.props.channelSubscribersStore}

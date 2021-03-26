@@ -166,7 +166,7 @@ class NotificationsScreen extends Component {
    * render row
    * @param {object} row
    */
-  renderRow = (row) => {
+  renderRow = row => {
     const entity = row.item;
     return (
       <ErrorBoundary

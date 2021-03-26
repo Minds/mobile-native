@@ -25,7 +25,7 @@ class VideoPlayerService {
 
   volumeListener: any = null;
 
-  volumeListenerFn = (data) => {
+  volumeListenerFn = data => {
     // if available enable current video audio
     if (this.current && !this.current.paused && data.value > 0) {
       if (Platform.OS === 'ios') {
@@ -40,10 +40,8 @@ class VideoPlayerService {
   };
 
   constructor() {
-    SystemSetting.getVolume().then(
-      (value) => (this.currentSystemVolume = value),
-    );
-    SilentSwitch.addEventListener((silent) => {
+    SystemSetting.getVolume().then(value => (this.currentSystemVolume = value));
+    SilentSwitch.addEventListener(silent => {
       this.setIsSilent(silent);
       const v = silent ? 0 : 1;
       if (this.current) {

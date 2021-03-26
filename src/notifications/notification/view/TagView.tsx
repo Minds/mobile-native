@@ -32,13 +32,13 @@ export default class TagView extends PureComponent<PropsType> {
         } else {
           entityService
             .getEntity(this.props.entity.params.parent.guid)
-            .then((entity) => {
+            .then(entity => {
               this.props.navigation.push('Activity', {
                 entity,
                 focusedUrn: this.props.entity.params.focusedCommentUrn,
               });
             })
-            .catch((err) => {
+            .catch(err => {
               logService.exception('[TagView]', err);
               throw 'Oops, an error has occurred navigating.';
             });

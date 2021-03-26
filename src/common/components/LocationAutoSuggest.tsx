@@ -115,7 +115,7 @@ const LocationAutoSuggest = observer((props: propsType) => {
   const theme = ThemedStyles.style;
 
   const setLocation = useCallback(
-    (value) => {
+    value => {
       store.setValue(value, false);
       store.setTapped(true);
       props.onChangeText(value);

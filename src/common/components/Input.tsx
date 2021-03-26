@@ -98,7 +98,7 @@ export default class Input extends Component<PropsType> {
   /**
    * Confirm date picker
    */
-  confirmDatePicker = (date) => {
+  confirmDatePicker = date => {
     let dateString = '';
     switch (this.props.dateFormat) {
       case 'ISOString':

@@ -117,7 +117,7 @@ export default class IssueReportScreen extends Component {
             editable={true}
             underlineColorAndroid="transparent"
             placeholder="Title"
-            onChangeText={(v) => this.setField('title', v)}
+            onChangeText={v => this.setField('title', v)}
           />
           {this.state.titleRequired && (
             <Text style={[CS.colorDanger, CS.fontS, CS.fontThin]}>
@@ -132,7 +132,7 @@ export default class IssueReportScreen extends Component {
             multiline={true}
             numberOfLines={5}
             placeholder="Description of the issue..."
-            onChangeText={(v) => this.setField('description', v)}
+            onChangeText={v => this.setField('description', v)}
           />
           {this.state.descriptionRequired && (
             <Text style={[CS.colorDanger, CS.fontS, CS.fontThin]}>
@@ -147,7 +147,7 @@ export default class IssueReportScreen extends Component {
             multiline={true}
             numberOfLines={5}
             placeholder="Steps to reproduce..."
-            onChangeText={(v) => this.setField('steps', v)}
+            onChangeText={v => this.setField('steps', v)}
           />
           {this.state.stepsRequired && (
             <Text style={[CS.colorDanger, CS.fontS, CS.fontThin]}>

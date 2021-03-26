@@ -33,7 +33,7 @@ export default function ({ entity, size = 21 }: PropsTypes) {
   const reminded =
     entity.remind_users &&
     entity.remind_users.some(
-      (user) => user.guid === sessionService.getUser().guid,
+      user => user.guid === sessionService.getUser().guid,
     );
 
   const color = reminded
@@ -74,7 +74,7 @@ export default function ({ entity, size = 21 }: PropsTypes) {
       .then(() => {
         showNotification(i18n.t('remindRemoved'), 'success');
       })
-      .catch((e) => {
+      .catch(e => {
         console.log(e);
         showNotification(i18n.t('errorMessage'), 'warning');
       });
@@ -91,13 +91,13 @@ export default function ({ entity, size = 21 }: PropsTypes) {
     }
     compose
       .submit()
-      .then((activity) => {
+      .then(activity => {
         // append the entity to the feed
         newsfeed.feedStore.prepend(activity);
 
         showNotification(i18n.t('postReminded'), 'success');
       })
-      .catch((e) => {
+      .catch(e => {
         console.log(e);
         showNotification(i18n.t('errorMessage'), 'warning');
       });

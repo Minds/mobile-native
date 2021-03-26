@@ -6,7 +6,7 @@ import ThemedStyle from '../../styles/ThemedStyles';
 import validatePassword from '../helpers/validatePassword';
 import i18n from '../services/i18n.service';
 
-const checked = (value) => {
+const checked = value => {
   return (
     <Icon
       size={25}

@@ -46,8 +46,8 @@ export default function () {
         onItemSelect={languageSelected}
         title={''}
         data={i18n.getSupportedLocales()}
-        valueExtractor={(item) => item.name}
-        keyExtractor={(item) => item.value}
+        valueExtractor={item => item.name}
+        keyExtractor={item => item.value}
       />
     </View>
   );

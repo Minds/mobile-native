@@ -20,7 +20,7 @@ import { ACCESS } from '../common/services/list-options.service';
  * Option
  * @param {Object} props
  */
-const Option = (props) => {
+const Option = props => {
   const onSelect = useCallback(() => {
     props.store.setAccessId(props.option.value);
   }, [props.store, props.option.value]);
@@ -61,7 +61,7 @@ export default observer(function (props) {
         store={store}
       />
       <ScrollView style={styles.body}>
-        {ACCESS.map((o) => (
+        {ACCESS.map(o => (
           <Option
             option={o}
             store={store}

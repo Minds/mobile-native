@@ -103,9 +103,9 @@ const TrendingTab = observer(({ navigation }: TrendingTabProps) => {
   try {
     rows = result.dashboard
       .metrics![0].visualisation.buckets!.filter(
-        (bucket) => !!bucket.values.entity,
+        bucket => !!bucket.values.entity,
       )
-      .map((bucket) => ({
+      .map(bucket => ({
         ...bucket,
         values: {
           ...bucket.values,
@@ -157,7 +157,7 @@ const TrendingTab = observer(({ navigation }: TrendingTabProps) => {
         </View>
       </View>
 
-      {rows.map((row) => (
+      {rows.map(row => (
         <TouchableOpacity
           key={row.key}
           activeOpacity={0.7}

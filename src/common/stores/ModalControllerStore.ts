@@ -28,7 +28,7 @@ export default class ModalControllerStore {
 
     NavigationService.navigate(this.route);
 
-    return await new Promise((resolve) => {
+    return await new Promise(resolve => {
       if (dispose) {
         dispose();
         dispose = void 0;
@@ -37,7 +37,7 @@ export default class ModalControllerStore {
       dispose = observe(
         this,
         'payload',
-        action((change) => {
+        action(change => {
           if (typeof change.newValue !== 'undefined') {
             dispose();
             dispose = void 0;

@@ -51,7 +51,7 @@ export default class TagSelect extends Component<PropsType> {
     this.props.onChange && this.props.onChange();
   }
 
-  toogleOne = (tag) => {
+  toogleOne = tag => {
     const hashstore = this.props.hashtag;
     this.props.onSelectOne &&
       this.props.onSelectOne(hashstore.hashtag !== tag.value ? tag.value : '');

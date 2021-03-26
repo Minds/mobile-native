@@ -38,7 +38,7 @@ const selectValueExtractor = (item: StripeCard) =>
   item.card_last4 +
   ' - Exp: ' +
   item.card_expires;
-const selectIdExtractor = (item) => item.id;
+const selectIdExtractor = item => item.id;
 
 /**
  * Stripe card selector v2
@@ -146,7 +146,7 @@ export default class StripeCardSelector extends React.PureComponent<
    * @param card
    */
   selectCard = async (card: StripeCard) => {
-    const index = this.state.cards.findIndex((c) => c === card);
+    const index = this.state.cards.findIndex(c => c === card);
     if (index < 0) return;
     this.setState({
       current: index,

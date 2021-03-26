@@ -24,8 +24,8 @@ interface DashboardTabProps {
   defaultMetric: string;
 }
 
-const valueExtractor = (item) => item.label;
-const keyExtractor = (item) => item.id;
+const valueExtractor = item => item.label;
+const keyExtractor = item => item.id;
 
 const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
   const { width } = useDimensions().window;
@@ -75,7 +75,7 @@ const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
       timespan: timespan ? timespan.id : '30d',
       metric: metric ? metric.id : defaultMetric,
       filter: Object.keys(filters)
-        .map((key) => `${key}::${filters[key]}`)
+        .map(key => `${key}::${filters[key]}`)
         .join(','),
     },
   });
@@ -98,7 +98,7 @@ const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
 
   try {
     const visualisation = result.dashboard.metrics!.find(
-      (p) => p.id === (metric ? metric.id : result.dashboard.metric),
+      p => p.id === (metric ? metric.id : result.dashboard.metric),
     )!.visualisation;
 
     if (visualisation) {
@@ -131,10 +131,10 @@ const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
         ? data.map((d, index) =>
             index % 2 ? moment(d.date).format('MM/DD') : '',
           )
-        : data.map((d) => moment(d.date).format('MM/DD')),
+        : data.map(d => moment(d.date).format('MM/DD')),
     datasets: [
       {
-        data: data.map((d) => d.value),
+        data: data.map(d => d.value),
       },
     ],
   };
@@ -142,15 +142,14 @@ const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
   const metricsKey = metric ? metric.id : result.dashboard.metric;
   const metricsLabel = metric
     ? metric.label
-    : result.dashboard.metrics!.find((p) => p.id === result.dashboard.metric)!
+    : result.dashboard.metrics!.find(p => p.id === result.dashboard.metric)!
         .label;
 
   const timeSpanKey = timespan ? timespan.id : result.dashboard.timespan;
   const timeSpanLabel = timespan
     ? timespan.label
-    : result.dashboard.timespans!.find(
-        (p) => p.id === result.dashboard.timespan,
-      )!.label;
+    : result.dashboard.timespans!.find(p => p.id === result.dashboard.timespan)!
+        .label;
 
   return (
     <View
@@ -164,7 +163,7 @@ const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
         data={result.dashboard.metrics!}
         valueExtractor={valueExtractor}
         keyExtractor={keyExtractor}>
-        {(show) => (
+        {show => (
           <Select onPress={() => show(metricsKey)} label={metricsLabel} />
         )}
       </Selector>
@@ -181,7 +180,7 @@ const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
           data={result.dashboard.timespans!}
           valueExtractor={valueExtractor}
           keyExtractor={keyExtractor}>
-          {(show) => (
+          {show => (
             <View style={theme.alignedCenterRow}>
               <TouchableOpacity
                 style={[theme.rowJustifyCenter, theme.alignCenter]}
@@ -200,14 +199,14 @@ const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
         </Selector>
 
         {result.dashboard.filters &&
-          result.dashboard.filters.map((filter) => (
+          result.dashboard.filters.map(filter => (
             <Selector
               key={filter.id}
               data={filter.options!}
               valueExtractor={valueExtractor}
               keyExtractor={keyExtractor}
               onItemSelect={_onFilterChange(filter.id)}>
-              {(show) => (
+              {show => (
                 <View style={theme.alignedCenterRow}>
                   <TouchableOpacity
                     style={[theme.rowJustifyCenter, theme.alignCenter]}

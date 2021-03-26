@@ -28,7 +28,7 @@ export default class BlogModel extends ActivityModel {
    * Get the license text
    */
   getLicenseText(): string {
-    const lic = LICENSES.find((license) => this.license === license.value);
+    const lic = LICENSES.find(license => this.license === license.value);
     if (!lic) {
       return '';
     }

@@ -43,7 +43,7 @@ export default class DeleteChannelScreen extends Component {
     );
   };
 
-  setPassword = (password) => {
+  setPassword = password => {
     this.setState({ password });
   };
 

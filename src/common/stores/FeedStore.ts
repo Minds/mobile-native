@@ -108,12 +108,12 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   @action
   addEntities(entities, replace = false) {
     if (replace) {
-      entities.forEach((entity) => {
+      entities.forEach(entity => {
         entity._list = this;
       });
       this.entities = entities;
     } else {
-      entities.forEach((entity) => {
+      entities.forEach(entity => {
         entity._list = this;
         this.entities.push(entity);
       });
@@ -180,7 +180,7 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
    * @param {BaseModel} entity
    */
   remove(entity) {
-    const index = this.entities.findIndex((e) => e === entity);
+    const index = this.entities.findIndex(e => e === entity);
     if (index < 0) return;
     this.removeIndex(index);
     if (entity.isScheduled()) {
@@ -195,7 +195,7 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   @action
   removeFromOwner(guid) {
     this.entities = this.entities.filter(
-      (e) => !e.ownerObj || e.ownerObj.guid !== guid,
+      e => !e.ownerObj || e.ownerObj.guid !== guid,
     );
     this.feedsService.removeFromOwner(guid);
 
@@ -211,7 +211,7 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
    * @param {BaseModel} entity
    */
   getIndex(entity) {
-    return this.entities.findIndex((e) => e === entity);
+    return this.entities.findIndex(e => e === entity);
   }
 
   /**

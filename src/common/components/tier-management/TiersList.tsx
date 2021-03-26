@@ -46,7 +46,7 @@ const TiersList = observer(
 
     return (
       <>
-        {tiers.map((tier) => (
+        {tiers.map(tier => (
           <MenuItem
             item={{
               onPress:

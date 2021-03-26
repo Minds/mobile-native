@@ -62,7 +62,7 @@ export default class ForgotPassword extends PureComponent<PropsType> {
             style={theme.colorWhite}
             placeholder={i18n.t('auth.username')}
             returnKeyType={'done'}
-            onChangeText={(value) => this.setState({ username: value })}
+            onChangeText={value => this.setState({ username: value })}
             autoCapitalize={'none'}
             value={this.state.username}
             accessibilityLabel="usernameInput"

@@ -77,7 +77,7 @@ const BankInfoScreen = observer(({ navigation, route }: PropsType) => {
         stripeAgree: localStore.stripeAgree,
       };
 
-      Object.keys(form).forEach((key) => {
+      Object.keys(form).forEach(key => {
         if (!localStore.validate(form, key)) {
           const msg = i18n.t('wallet.bank.check', {
             input: `${friendlyFormKeys[key]}`,
@@ -110,7 +110,7 @@ const BankInfoScreen = observer(({ navigation, route }: PropsType) => {
         routingNumber: walletStore.stripeDetails.routingNumber,
       };
 
-      Object.keys(form).forEach((key) => {
+      Object.keys(form).forEach(key => {
         if (!localStore.validate(form, key)) {
           const msg = i18n.t('wallet.bank.check', {
             input: `${friendlyFormKeys[key]}`,

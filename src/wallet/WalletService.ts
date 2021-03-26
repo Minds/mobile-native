@@ -17,7 +17,7 @@ class WalletService {
   getHistory(offset) {
     return api
       .get('api/v1/wallet/transactions', { offset: offset, limit: 12 })
-      .then((response) => {
+      .then(response => {
         return {
           entities: response.transactions,
           offset: response['load-next'],
@@ -79,7 +79,7 @@ class WalletService {
         to: Math.floor(+endDate / 1000),
         offset: offset,
       })
-      .then((data) => {
+      .then(data => {
         return {
           entities: data.transactions || [],
           offset: data['load-next'],
@@ -120,7 +120,7 @@ class WalletService {
         to: Math.floor(+endDate / 1000),
         offset: offset,
       })
-      .then((data) => {
+      .then(data => {
         return {
           entities: data.contributions || [],
           offset: data['load-next'],

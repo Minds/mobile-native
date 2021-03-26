@@ -104,7 +104,7 @@ class MessengerConversationStore {
 
   @action
   setMessages(msgs) {
-    msgs.forEach((m) => this.messages.push(MessageModel.create(m)));
+    msgs.forEach(m => this.messages.push(MessageModel.create(m)));
   }
 
   @action
@@ -149,7 +149,7 @@ class MessengerConversationStore {
     }
 
     this.invited = true;
-    this.invitable.forEach((participant) => {
+    this.invitable.forEach(participant => {
       messengerService.invite(participant.guid);
     });
   }
@@ -167,7 +167,7 @@ class MessengerConversationStore {
 
     return new Promise((resolve, reject) => {
       for (let guid in publickeys) {
-        crypto.encrypt(message, guid).then((success) => {
+        crypto.encrypt(message, guid).then(success => {
           encrypted[guid] = success;
           if (Object.keys(encrypted).length == Object.keys(publickeys).length) {
             resolve(encrypted);

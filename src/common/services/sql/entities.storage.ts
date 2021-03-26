@@ -75,7 +75,7 @@ export class EntitiesStorage {
 
       const entities = [];
 
-      rows.forEach((row) => {
+      rows.forEach(row => {
         entities.push(JSON.parse(row.data));
       });
 

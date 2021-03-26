@@ -34,14 +34,14 @@ export default class TokensStore {
         : walletService.getContributions;
 
     return fetchFn(from, to, this.list.offset)
-      .then((feed) => {
+      .then(feed => {
         this.list.setList(feed);
         this.loaded = true;
       })
       .finally(() => {
         this.loading = false;
       })
-      .catch((err) => {
+      .catch(err => {
         logService.exception('[TokensStore]', err);
       });
   }
