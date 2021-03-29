@@ -90,7 +90,7 @@ export default class AppInitManager {
   onLogin = async () => {
     const user = sessionService.getUser();
 
-    Sentry.configureScope((scope) => {
+    Sentry.configureScope(scope => {
       scope.setUser({ id: user.guid });
     });
 
