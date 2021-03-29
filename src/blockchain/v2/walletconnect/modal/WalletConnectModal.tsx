@@ -7,7 +7,7 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import Modal from 'react-native-modal';
-import { Wallets, Logos } from './registry';
+import { Wallets } from './registry';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 import useWalletConnect from '../useWalletConnect';
 import { observer } from 'mobx-react';
@@ -62,11 +62,8 @@ export default observer(function () {
                   theme.paddingHorizontal3x,
                 ]}>
                 <Text style={[theme.bold]}>{wallet.name}</Text>
-                {Logos[wallet.shortName] && (
-                  <Image
-                    style={[styles.icon]}
-                    source={Logos[wallet.shortName]}
-                  />
+                {wallet.logo && (
+                  <Image style={[styles.icon]} source={{ uri: wallet.logo }} />
                 )}
               </View>
             </TouchableHighlight>

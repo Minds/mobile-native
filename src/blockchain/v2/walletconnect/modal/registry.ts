@@ -1,12 +1,31 @@
-const registry = require('@walletconnect/mobile-registry/registry.json');
-import { IMobileRegistryEntry } from '@walletconnect/types';
+const registry = require('@walletconnect/registry-server/public/data/wallets.json');
+import {
+  IMobileRegistryEntry,
+  IAppRegistry,
+  IAppEntry,
+} from '@walletconnect/types';
 
-export const Wallets: IMobileRegistryEntry[] = registry.slice(0, 5);
+function formatMobileRegistryEntry(entry: IAppEntry): IMobileRegistryEntry {
+  return {
+    name: entry.name || '',
+    shortName: entry.metadata.shortName || '',
+    color: entry.metadata.colors.primary || '',
+    logo: entry.id ? getAppLogoUrl(entry.id) : '',
+    universalLink: entry.mobile.universal || '',
+    deepLink: entry.mobile.native || '',
+  };
+}
 
-export const Logos = {
-  Rainbow: require('@walletconnect/mobile-registry/logos/rainbow.png'),
-  MetaMask: require('@walletconnect/mobile-registry/logos/metamask.png'),
-  Argent: require('@walletconnect/mobile-registry/logos/argent.png'),
-  Trust: require('@walletconnect/mobile-registry/logos/trust.png'),
-  'Crypto.com': require('@walletconnect/mobile-registry/logos/crypto-defi.png'),
-};
+function formatMobileRegistry(registry: IAppRegistry): IMobileRegistryEntry[] {
+  return Object.values<any>(registry)
+    .filter(entry => !!entry.mobile.universal || !!entry.mobile.native)
+    .map(formatMobileRegistryEntry);
+}
+
+function getAppLogoUrl(id): string {
+  return 'https://registry.walletconnect.org/logo/md/' + id + '.jpeg';
+}
+
+const formattedRegistry = formatMobileRegistry(registry);
+
+export const Wallets: IMobileRegistryEntry[] = formattedRegistry.slice(0, 6);
