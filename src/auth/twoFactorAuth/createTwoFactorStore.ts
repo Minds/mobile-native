@@ -2,10 +2,11 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import { Linking } from 'react-native';
 import { showNotification } from '../../../AppMessages';
 import apiService from '../../common/services/api.service';
+import i18n from '../../common/services/i18n.service';
 import logService from '../../common/services/log.service';
 import sessionService from '../../common/services/session.service';
 import twoFactorAuthenticationService from '../../common/services/two-factor-authentication.service';
-import authService, { TFA } from '../AuthService';
+import authService from '../AuthService';
 export type Options = 'app' | 'sms' | 'disable';
 
 // Used to 'navigate' between forms inside loginscreen
@@ -119,7 +120,7 @@ const createTwoFactorStore = () => ({
       return;
     }
     if (this.twoFactorAuthStep === 'recoveryCode') {
-      this.twoFactorAuthStep = 'authCode';
+      this.useRecoveryCode();
       return;
     }
   },
@@ -167,6 +168,29 @@ const createTwoFactorStore = () => ({
     } finally {
       this.setLoading(false);
       this.setAppCode('');
+    }
+  },
+  async useRecoveryCode() {
+    this.setLoading(true);
+    sessionService.setRecoveryCodeUsed(true);
+    console.log('useRecoveryCode');
+    try {
+      const response = <any>await apiService.post(
+        'api/v3/security/totp/recovery',
+        {
+          username: this.username,
+          password: this.password,
+          recovery_code: this.recoveryCode,
+        },
+      );
+      if (!response.matches) {
+        throw new Error(i18n.t('auth.recoveryFail'));
+      }
+      await authService.login(this.username, this.password);
+    } catch (err) {
+      this.setLoading(false);
+      logService.exception(err);
+      showNotification(err.message, 'warning');
     }
   },
 });

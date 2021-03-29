@@ -1,9 +1,8 @@
-import { observer, usestore } from 'mobx-react';
+import { observer } from 'mobx-react';
 import React from 'react';
 import {
   View,
   Text,
-  StyleSheet,
   Dimensions,
   Keyboard,
   TouchableOpacity,
@@ -45,8 +44,10 @@ const TwoFactorTotpForm = observer(({ store }: PropsType) => {
           placeholder={i18n.t(
             `auth.${isAuthCodeStep ? 'auth' : 'recovery'}Code`,
           )}
-          onChangeText={store.setAppCode}
-          value={store.appCode}
+          onChangeText={
+            isAuthCodeStep ? store.setAppCode : store.setRecoveryCode
+          }
+          value={isAuthCodeStep ? store.appCode : store.recoveryCode}
           keyboardType={isAuthCodeStep ? 'number-pad' : 'default'}
         />
       </View>
@@ -69,7 +70,7 @@ const TwoFactorTotpForm = observer(({ store }: PropsType) => {
           transparent
           large
         />
-        {store.twoFactorAuthStep === 'authCode' && (
+        {store.twoFactorAuthStep === 'authCode' && store.appAuthEnabled && (
           <TouchableOpacity onPress={store.showRecoveryForm}>
             <Text
               style={[

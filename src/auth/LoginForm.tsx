@@ -20,7 +20,6 @@ import ThemedStyles from '../styles/ThemedStyles';
 import InputContainer from '../common/components/InputContainer';
 import BoxShadow from '../common/components/BoxShadow';
 import { styles, shadowOpt, icon } from './styles';
-import navigationService from '../navigation/NavigationService';
 import { TwoFactorStore } from './twoFactorAuth/createTwoFactorStore';
 
 type PropsType = {
@@ -34,8 +33,6 @@ type StateType = {
   username: string;
   password: string;
   msg: string;
-  twoFactorToken: string;
-  twoFactorCode: string;
   hidePassword: boolean;
   inProgress: boolean;
 };
@@ -55,8 +52,6 @@ export default class LoginForm extends Component<PropsType, StateType> {
     username: '',
     password: '',
     msg: '',
-    twoFactorToken: '',
-    twoFactorCode: '',
     language: '',
     hidePassword: true,
     inProgress: false,

@@ -61,6 +61,7 @@ export type RootStackParamList = {
     onConfirm: (password: string) => void;
     title: string;
   };
+  RecoveryCodeUsedScreen: {};
 };
 
 export type AuthStackParamList = {
