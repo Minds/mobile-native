@@ -2,11 +2,15 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import { Linking } from 'react-native';
 import { showNotification } from '../../../AppMessages';
 import apiService from '../../common/services/api.service';
+import i18n from '../../common/services/i18n.service';
 import logService from '../../common/services/log.service';
 import sessionService from '../../common/services/session.service';
 import twoFactorAuthenticationService from '../../common/services/two-factor-authentication.service';
-import authService, { TFA } from '../AuthService';
+import authService from '../AuthService';
 export type Options = 'app' | 'sms' | 'disable';
+
+// Used to 'navigate' between forms inside loginscreen
+export type TwoFactorAuthSteps = 'login' | 'authCode' | 'recoveryCode';
 
 const createTwoFactorStore = () => ({
   loading: false,
@@ -17,6 +21,10 @@ const createTwoFactorStore = () => ({
   smsAuthEnabled: false,
   recoveryCode: '',
   error: false,
+  twoFactorAuthStep: 'login' as TwoFactorAuthSteps,
+  smsSecret: '',
+  username: '',
+  password: '',
   setSelected(option: Options) {
     this.selectedOption = option;
   },
@@ -93,6 +101,43 @@ const createTwoFactorStore = () => ({
       this.setLoading(false);
     }
   },
+  setRecoveryCode(recoveryCode: string) {
+    this.recoveryCode = recoveryCode;
+  },
+  handleBackButton() {
+    if (this.twoFactorAuthStep === 'authCode') {
+      this.twoFactorAuthStep = 'login';
+      return;
+    }
+    if (this.twoFactorAuthStep === 'recoveryCode') {
+      this.twoFactorAuthStep = 'authCode';
+      return;
+    }
+  },
+  handleVerify() {
+    if (this.twoFactorAuthStep === 'authCode') {
+      this.login();
+      return;
+    }
+    if (this.twoFactorAuthStep === 'recoveryCode') {
+      this.useRecoveryCode();
+      return;
+    }
+  },
+  showTwoFactorForm(secret: string, username: string, password: string) {
+    if (secret) {
+      this.smsSecret = secret;
+      this.smsAuthEnabled = true;
+    } else {
+      this.appAuthEnabled = true;
+    }
+    this.username = username;
+    this.password = password;
+    this.twoFactorAuthStep = 'authCode';
+  },
+  showRecoveryForm() {
+    this.twoFactorAuthStep = 'recoveryCode';
+  },
   setLoading(loading: boolean) {
     this.loading = loading;
   },
@@ -107,22 +152,45 @@ const createTwoFactorStore = () => ({
     this.appAuthEnabled = false;
     this.smsAuthEnabled = false;
   },
-  async login(username: string, password: string, tfa: TFA, secret?: string) {
+  async login() {
     this.setLoading(true);
     let headers: any = {
       'X-MINDS-2FA-CODE': this.appCode,
     };
-    if (tfa === 'sms') {
-      headers['X-MINDS-SMS-2FA-KEY'] = secret;
+    if (this.smsAuthEnabled) {
+      headers['X-MINDS-SMS-2FA-KEY'] = this.smsSecret;
     }
     try {
-      await authService.login(username, password, headers);
+      await authService.login(this.username, this.password, headers);
     } catch (err) {
       logService.exception(err);
       showNotification(err.message, 'warning');
     } finally {
       this.setLoading(false);
       this.setAppCode('');
+    }
+  },
+  async useRecoveryCode() {
+    this.setLoading(true);
+    sessionService.setRecoveryCodeUsed(true);
+    console.log('useRecoveryCode');
+    try {
+      const response = <any>await apiService.post(
+        'api/v3/security/totp/recovery',
+        {
+          username: this.username,
+          password: this.password,
+          recovery_code: this.recoveryCode,
+        },
+      );
+      if (!response.matches) {
+        throw new Error(i18n.t('auth.recoveryFail'));
+      }
+      await authService.login(this.username, this.password);
+    } catch (err) {
+      this.setLoading(false);
+      logService.exception(err);
+      showNotification(err.message, 'warning');
     }
   },
 });

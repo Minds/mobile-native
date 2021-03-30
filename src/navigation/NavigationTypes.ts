@@ -61,15 +61,11 @@ export type RootStackParamList = {
     onConfirm: (password: string) => void;
     title: string;
   };
+  RecoveryCodeUsedScreen: {};
 };
 
 export type AuthStackParamList = {
-  Login: {
-    username?: string;
-    password?: string;
-    tfa?: 'sms' | 'totp';
-    secret?: string;
-  };
+  Login: {};
   Forgot: {
     code?: string;
   };

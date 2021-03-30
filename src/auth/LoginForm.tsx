@@ -20,20 +20,19 @@ import ThemedStyles from '../styles/ThemedStyles';
 import InputContainer from '../common/components/InputContainer';
 import BoxShadow from '../common/components/BoxShadow';
 import { styles, shadowOpt, icon } from './styles';
-import navigationService from '../navigation/NavigationService';
+import { TwoFactorStore } from './twoFactorAuth/createTwoFactorStore';
 
 type PropsType = {
   onLogin?: Function;
   onRegisterPress?: () => void;
   onForgot: Function;
+  store: TwoFactorStore;
 };
 
 type StateType = {
   username: string;
   password: string;
   msg: string;
-  twoFactorToken: string;
-  twoFactorCode: string;
   hidePassword: boolean;
   inProgress: boolean;
 };
@@ -53,8 +52,6 @@ export default class LoginForm extends Component<PropsType, StateType> {
     username: '',
     password: '',
     msg: '',
-    twoFactorToken: '',
-    twoFactorCode: '',
     language: '',
     hidePassword: true,
     inProgress: false,
@@ -164,16 +161,7 @@ export default class LoginForm extends Component<PropsType, StateType> {
   }
 
   /**
-   * Set two factor
-   * @param {string} value
-   */
-  setTwoFactor = (value) => {
-    const twoFactorCode = String(value).trim();
-    this.setState({ twoFactorCode });
-  };
-
-  /**
-   * Set two factor
+   * Set username
    * @param {string} value
    */
   setUsername = (value) => {
@@ -182,7 +170,7 @@ export default class LoginForm extends Component<PropsType, StateType> {
   };
 
   /**
-   * Set two factor
+   * Set pasword
    * @param {string} value
    */
   setPassword = (value) => {
@@ -191,7 +179,7 @@ export default class LoginForm extends Component<PropsType, StateType> {
   };
 
   /**
-   * Set two factor
+   * toggle
    * @param {string} value
    */
   toggleHidePassword = () => {
@@ -230,18 +218,12 @@ export default class LoginForm extends Component<PropsType, StateType> {
         }
 
         if (errJson.errId && errJson.errId === TWO_FACTOR_ERROR) {
-          const tfa = errJson.headers.map['x-minds-sms-2fa-key']
-            ? 'sms'
-            : 'totp';
-          let params: any = {
-            tfa,
-            username: this.state.username,
-            password: this.state.password,
-          };
-          if (tfa === 'sms') {
-            params.secret = errJson.headers.map['x-minds-sms-2fa-key'];
-          }
-          navigationService.push('Login', params);
+          this.props.store.showTwoFactorForm(
+            errJson.headers.map['x-minds-sms-2fa-key'],
+            this.state.username,
+            this.state.password,
+          );
+          return;
         }
 
         this.setState({
