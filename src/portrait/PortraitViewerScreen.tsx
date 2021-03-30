@@ -58,7 +58,7 @@ const stackConfig: iPageInterpolation = {
       },
     },
   ],
-  zIndex: (offset) => offset,
+  zIndex: offset => offset,
   opacity: {
     inputRange: [-1, 0, 1],
     outputRange: [0.5, 1, 0.5],
@@ -91,14 +91,14 @@ const PortraitViewerScreen = observer((props: PropsType) => {
       if (store.unseenMode) {
         const nextUnseen = store.items
           .slice(store.index + 1)
-          .findIndex((user) => user.unseen);
+          .findIndex(user => user.unseen);
 
         if (nextUnseen !== -1) {
           store.index = store.index + nextUnseen + 1;
         } else {
           const prevUnseen = store.items
             .slice(0, store.index)
-            .findIndex((user) => user.unseen);
+            .findIndex(user => user.unseen);
           if (prevUnseen !== -1) {
             store.index = prevUnseen;
           } else {

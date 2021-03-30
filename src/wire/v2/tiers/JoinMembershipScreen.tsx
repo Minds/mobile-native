@@ -44,8 +44,8 @@ type PropsType = {
   tiers?: Array<SupportTiersType>;
 };
 
-const selectValueExtractor = (item) => item.name;
-const selectIdExtractor = (item) => item.urn;
+const selectValueExtractor = item => item.name;
+const selectIdExtractor = item => item.urn;
 
 const createJoinMembershipStore = ({ tiers }) => {
   const store = {

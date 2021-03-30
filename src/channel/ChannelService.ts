@@ -91,13 +91,13 @@ class ChannelService {
         { offset: offset, limit: 12 },
         tag,
       )
-      .then((data) => {
+      .then(data => {
         return {
           entities: data.entities,
           offset: data['load-next'],
         };
       })
-      .catch((err) => {
+      .catch(err => {
         logService.exception('[ChannelService]', err);
         throw new Error(i18n.t('errorMessage'));
       });
@@ -114,13 +114,13 @@ class ChannelService {
         { offset: offset, limit: 12 },
         tag,
       )
-      .then((data) => {
+      .then(data => {
         return {
           entities: data.entities,
           offset: data['load-next'],
         };
       })
-      .catch((err) => {
+      .catch(err => {
         logService.exception('[ChannelService]', err);
         throw new Error(i18n.t('errorMessage'));
       });
@@ -133,13 +133,13 @@ class ChannelService {
 
     return api
       .get('api/v1/blog/owner/' + guid, { offset: offset, limit: 12 }, tag)
-      .then((data) => {
+      .then(data => {
         return {
           entities: data.entities,
           offset: data['load-next'],
         };
       })
-      .catch((err) => {
+      .catch(err => {
         logService.exception('[ChannelService]', err);
         throw new Error(i18n.t('errorMessage'));
       });

@@ -32,7 +32,7 @@ metadataService.setSource('portrait').setMedium('feed');
  */
 const UserContentSwiper = observer((props: PropsType) => {
   const activities = props.item.activities;
-  const firstUnseen = activities.findIndex((a) => !a.seen);
+  const firstUnseen = activities.findIndex(a => !a.seen);
 
   const store = useLocalStore(() => ({
     index: firstUnseen !== -1 ? firstUnseen : 0,
@@ -58,7 +58,7 @@ const UserContentSwiper = observer((props: PropsType) => {
     if (store.index < activities.length - 1) {
       if (
         props.unseenMode &&
-        !activities.slice(store.index).some((p) => p.seen) // there no seen posts ahead
+        !activities.slice(store.index).some(p => p.seen) // there no seen posts ahead
       ) {
         if (activities[store.index + 1].seen) {
           props.nextUser();

@@ -23,7 +23,7 @@ export class PushService {
         : require('./push/android-platform').default;
     this.push = new platform();
 
-    this.push.setOnNotificationOpened((notification) => {
+    this.push.setOnNotificationOpened(notification => {
       // get notification data
       const data = notification.getData();
       if (data.json) data.json = JSON.parse(data.json);
@@ -31,7 +31,7 @@ export class PushService {
       this.router.navigate(data);
     });
 
-    this.push.setOnInitialNotification((notification) => {
+    this.push.setOnInitialNotification(notification => {
       // get notification data
       const data = notification.getData();
       if (data.json) data.json = JSON.parse(data.json);

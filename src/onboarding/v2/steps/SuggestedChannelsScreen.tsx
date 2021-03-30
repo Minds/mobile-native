@@ -16,8 +16,8 @@ import ModalContainer from './ModalContainer';
 export default observer(function SuggestedChannelsScreen() {
   const theme = ThemedStyles.style;
   const suggestions = useApiFetch<Array<UserModel>>('api/v2/suggestions/user', {
-    updateState: (newData) =>
-      UserModel.createMany(newData.suggestions.map((e) => e.entity)),
+    updateState: newData =>
+      UserModel.createMany(newData.suggestions.map(e => e.entity)),
     params: {
       limit: 12,
       offset: 0,

@@ -35,7 +35,7 @@ import ThemedStyles from '../styles/ThemedStyles';
 import isIphoneX from '../common/helpers/isIphoneX';
 import ActivityIndicator from '../common/components/ActivityIndicator';
 
-const keyExtractor = (item) => item.rowKey;
+const keyExtractor = item => item.rowKey;
 
 /**
  * Messenger Conversation Screen
@@ -85,7 +85,7 @@ export default class ConversationScreen extends Component {
     if (this.props.messengerList.configured) {
       this.updateTopAvatar(conversation);
       // load conversation
-      this.store.load().then((conv) => {
+      this.store.load().then(conv => {
         // we send the conversation to update the topbar (in case we only receive the guid)
         this.updateTopAvatar(conv);
       });
@@ -170,7 +170,7 @@ export default class ConversationScreen extends Component {
   /**
    * Set list ref
    */
-  setRef = (c) => {
+  setRef = c => {
     this.list = c;
   };
 
@@ -270,7 +270,7 @@ export default class ConversationScreen extends Component {
    *
    * @param { string } text - the text to be checked
    */
-  textChanged = (text) => {
+  textChanged = text => {
     if (text.length > 180) {
       return;
     }
@@ -325,7 +325,7 @@ export default class ConversationScreen extends Component {
    * render row
    * @param {object} row
    */
-  renderMessage = (row) => {
+  renderMessage = row => {
     return (
       <Message
         message={row.item}

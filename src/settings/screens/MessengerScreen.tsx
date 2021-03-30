@@ -31,7 +31,7 @@ export default function () {
   /**
    * Save changes
    */
-  const save = async (val) => {
+  const save = async val => {
     try {
       await settingsService.submitSettings({
         allow_unsubscribed_contact: val ? 1 : 0,

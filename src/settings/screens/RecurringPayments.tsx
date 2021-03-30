@@ -24,7 +24,7 @@ const RecurringPayments = () => {
   }, [setSubscriptions, setLoading]);
 
   const cancel = useCallback(
-    async (id) => {
+    async id => {
       setLoading(true);
       await paymentService.cancelSubscriptions(id);
       setSubscriptions(await paymentService.subscriptions());

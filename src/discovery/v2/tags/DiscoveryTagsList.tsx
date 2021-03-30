@@ -24,7 +24,7 @@ interface Props {
 /**
  * Key extractor
  */
-const keyExtractor = (item) => String(item.value);
+const keyExtractor = item => String(item.value);
 
 /**
  * Discovery List Item

@@ -117,7 +117,7 @@ export default class BaseModel extends AbstractModel {
   update(data) {
     const childs = this.childModels();
 
-    Object.getOwnPropertyNames(this).forEach((key) => {
+    Object.getOwnPropertyNames(this).forEach(key => {
       if (data[key] !== undefined) {
         if (childs[key] && this[key] && this[key].update) {
           // we update the child model
@@ -313,9 +313,7 @@ export default class BaseModel extends AbstractModel {
     if (!this.permissions || !this.permissions.permissions) {
       allowed = false;
     } else {
-      allowed = this.permissions.permissions.some(
-        (item) => item === actionName,
-      );
+      allowed = this.permissions.permissions.some(item => item === actionName);
     }
 
     if (showAlert && !allowed) {

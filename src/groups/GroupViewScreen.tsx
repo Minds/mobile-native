@@ -161,7 +161,7 @@ export default class GroupViewScreen extends Component {
     this.props.groupView.memberRefresh();
   };
 
-  headerRefHandler = (ref) => (this.headerRef = ref);
+  headerRefHandler = ref => (this.headerRef = ref);
 
   getBackIcon() {
     return (
@@ -209,7 +209,7 @@ export default class GroupViewScreen extends Component {
             ListHeaderComponent={header}
             data={group.members.entities.slice()}
             renderItem={this.renderRow}
-            keyExtractor={(item) => item.guid}
+            keyExtractor={item => item.guid}
             onRefresh={this.refresh}
             refreshing={group.members.refreshing}
             onEndReached={this.loadMembers}
@@ -239,7 +239,7 @@ export default class GroupViewScreen extends Component {
   /**
    * Member menu on press
    */
-  memberMenuPress = (member) => {
+  memberMenuPress = member => {
     const group = this.props.groupView.group;
     const memberActions = [i18n.t('cancel')];
     const imOwner = group['is:owner'];
@@ -295,7 +295,7 @@ export default class GroupViewScreen extends Component {
   /**
    * Render user row
    */
-  renderRow = (row) => {
+  renderRow = row => {
     return (
       <GroupUser
         store={this.props.groupView}
@@ -308,7 +308,7 @@ export default class GroupViewScreen extends Component {
     );
   };
 
-  handleSelection = (option) => {
+  handleSelection = option => {
     let selected = this.state.memberActions[option];
 
     switch (selected) {
@@ -369,7 +369,7 @@ export default class GroupViewScreen extends Component {
 
     const memberActionSheet = this.state.memberActions ? (
       <ActionSheet
-        ref={(o) => (this.ActionSheet = o)}
+        ref={o => (this.ActionSheet = o)}
         title={truncate(this.state.member.name, { length: 25, separator: ' ' })}
         options={this.state.memberActions}
         onPress={this.handleSelection}

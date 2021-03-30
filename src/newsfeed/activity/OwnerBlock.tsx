@@ -125,7 +125,7 @@ class OwnerBlock extends PureComponent<PropsType> {
           <Text style={theme.colorSecondaryText}>
             {i18nService.t('remindedBy')}{' '}
           </Text>
-          {this.props.entity.remind_users.map((u) => (
+          {this.props.entity.remind_users.map(u => (
             <Text
               onPress={() => {
                 if (!this.props.navigation) return;

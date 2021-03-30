@@ -205,7 +205,7 @@ const BoostSettingsScreen = observer(() => {
           Boost
         </Text>
       </Text>
-      {items.map((item) => {
+      {items.map(item => {
         return (
           <View style={theme.marginBottom7x}>
             <View

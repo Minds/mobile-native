@@ -47,7 +47,7 @@ const ChannelMoreMenu = (props: PropsType, ref: any) => {
   >();
 
   const handleSelection = useCallback(
-    (option) => {
+    option => {
       let options = getOptions(props.channel, props.isSubscribedToTier);
       let selected = options[option];
       switch (selected) {

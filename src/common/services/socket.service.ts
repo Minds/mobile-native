@@ -16,7 +16,7 @@ export class SocketService {
   rooms = [];
 
   constructor() {
-    sessionService.onSession((token) => {
+    sessionService.onSession(token => {
       if (token) {
         this.setUp();
       } else if (this.socket) {
@@ -67,18 +67,18 @@ export class SocketService {
     });
 
     // registered
-    this.socket.on('registered', (guid) => {
+    this.socket.on('registered', guid => {
       this.registered = true;
       this.socket.emit('join', this.rooms);
     });
 
     // error
-    this.socket.on('error', (e) => {
+    this.socket.on('error', e => {
       //console.log('[ws]::error', e);
     });
 
     // rooms
-    this.socket.on('rooms', (rooms) => {
+    this.socket.on('rooms', rooms => {
       if (!this.registered) {
         return;
       }

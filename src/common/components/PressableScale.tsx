@@ -11,7 +11,7 @@ export default function PressableScale(props) {
   const { children, onPressIn, onPressOut, style, ...otherProps } = props;
   const transition = useTransition(pressed, springConfig);
   const onPressInCb = useCallback(
-    (e) => {
+    e => {
       setPressed(true);
       if (onPressIn) onPressIn(e);
     },
@@ -19,7 +19,7 @@ export default function PressableScale(props) {
   );
 
   const onPressOutCb = useCallback(
-    (e) => {
+    e => {
       setPressed(false);
       if (onPressOut) onPressOut(e);
     },

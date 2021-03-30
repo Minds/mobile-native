@@ -23,7 +23,7 @@ class AttachmentService {
       name: media.fileName || 'test',
     };
 
-    const progress = (e) => {
+    const progress = e => {
       if (!e.lengthComputable) return;
       let pct = e.loaded / e.total;
       if (onProgress) {
@@ -66,12 +66,12 @@ class AttachmentService {
           return status === 'success' ? { guid: response.lease.guid } : false;
         });
       // handle cancel
-      onCancel((cb) => {
+      onCancel(cb => {
         uploadPromise.cancel();
         cb();
       });
       resolve(uploadPromise);
-    }).catch((error) => {
+    }).catch(error => {
       if (error.name !== 'CancelationError') {
         logService.exception('[ApiService] upload', error);
         throw error;

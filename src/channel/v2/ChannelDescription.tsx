@@ -25,7 +25,7 @@ const ChannelDescription = (props: PropsType) => {
   const endColor = backgroundColor + 'FF';
 
   const renderRevealedFooter = useCallback(
-    (handlePress) => {
+    handlePress => {
       return (
         <Text
           style={[theme.fontL, theme.bold, theme.colorLink, theme.marginTop2x]}
@@ -38,7 +38,7 @@ const ChannelDescription = (props: PropsType) => {
   );
 
   const renderTruncatedFooter = useCallback(
-    (handlePress) => {
+    handlePress => {
       return (
         <TouchableOpacity onPress={handlePress} style={styles.touchable}>
           <LinearGradient

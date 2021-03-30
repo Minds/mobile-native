@@ -343,7 +343,7 @@ export const createStore = (): WCStore => ({
   openWalletApp() {
     const r = getRegistry();
 
-    let wallet = r.find((d) => d.shortName === this.provider?.walletMeta?.name);
+    let wallet = r.find(d => d.shortName === this.provider?.walletMeta?.name);
     if (!wallet && this.selectedWallet) {
       wallet = this.selectedWallet;
     }

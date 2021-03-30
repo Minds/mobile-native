@@ -30,7 +30,7 @@ export default class LicensePicker extends PureComponent {
   /**
    * Show selection
    */
-  licenseSelected = (value) => {
+  licenseSelected = value => {
     this.toggle(value);
     this.props.onLicenseSelected(value);
   };

@@ -315,7 +315,7 @@ const createChannelStore = () => {
                 type: file.type,
                 name: file.filename || `${type}.jpg`,
               },
-              (e) => {
+              e => {
                 this.setProgress(e.loaded / e.total, type);
               },
             );
@@ -326,7 +326,7 @@ const createChannelStore = () => {
             this.setProgress(0, type);
             this.setIsUploading(false);
           })
-          .catch((err) => {
+          .catch(err => {
             throw err;
           });
       } catch (error) {

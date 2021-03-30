@@ -21,7 +21,7 @@ const OfferBoostTab = observer(({ localStore }: PropsType) => {
     localStore.setBoostType('offer');
   }, [localStore]);
 
-  const selectTarget = (target) => {
+  const selectTarget = target => {
     if (target.guid === sessionService.getUser().guid) {
       Alert.alert(
         i18n.t('error'),

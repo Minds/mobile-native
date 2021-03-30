@@ -257,7 +257,7 @@ export default class MediaView extends Component<PropsType> {
     this.videoPlayer?.setShowOverlay(showOverlay);
   }
 
-  imageError = (err) => {
+  imageError = err => {
     logService.log('[MediaView] Image error: ' + this.source?.uri, err);
     this.setState({ imageLoadFailed: true });
   };
@@ -286,7 +286,7 @@ export default class MediaView extends Component<PropsType> {
   /**
    * On image load handler
    */
-  onLoadImage = (e) => {
+  onLoadImage = e => {
     if (this.props.autoHeight) {
       this.setState({
         height: e.nativeEvent.height,

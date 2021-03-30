@@ -35,7 +35,7 @@ const ChannelScreen = observer((props: PropsType) => {
       store.initialLoad(params);
     }
 
-    const p = (e) => store.channel?.isOwner() && store.feedStore.prepend(e);
+    const p = e => store.channel?.isOwner() && store.feedStore.prepend(e);
 
     ActivityModel.events.on('newPost', p);
     return () => {

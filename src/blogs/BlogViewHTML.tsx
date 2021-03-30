@@ -191,7 +191,7 @@ export default class BlogViewHTML extends PureComponent<PropsType> {
   /**
    * On event message =
    */
-  onMessage = (evt) => {
+  onMessage = evt => {
     let height = parseInt(evt.nativeEvent.data, 10);
 
     height += 30;
@@ -208,7 +208,7 @@ export default class BlogViewHTML extends PureComponent<PropsType> {
   /**
    * Set ref
    */
-  setRef = (ref) => {
+  setRef = ref => {
     this.webview = ref;
   };
 
@@ -220,7 +220,7 @@ export default class BlogViewHTML extends PureComponent<PropsType> {
   /**
    * On nav state change
    */
-  onStateChange = (event) => {
+  onStateChange = event => {
     if (event.url.indexOf('http') > -1) {
       this.webview.stopLoading();
       Linking.openURL(event.url);

@@ -56,7 +56,7 @@ export default class TagOptinModal extends Component {
           </View>
           <TagInput
             hideTags={true}
-            tags={this.props.hashtag.suggested.map((m) => m.value)}
+            tags={this.props.hashtag.suggested.map(m => m.value)}
             onTagDeleted={this.props.hashtag.deselect}
             onTagAdded={this.props.hashtag.create}
           />

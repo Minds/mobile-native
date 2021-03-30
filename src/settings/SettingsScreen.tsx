@@ -134,7 +134,7 @@ export default function ({ navigation }) {
         {i18n.t('moreScreen.settings')}
       </Text>
       <View style={[innerWrapper, theme.backgroundPrimary]}>
-        {items.map((item) => (
+        {items.map(item => (
           <MenuItem item={item} />
         ))}
       </View>

@@ -46,7 +46,7 @@ export const isApiForbidden = function (err) {
 };
 
 const shouldLogout = (url: string) => {
-  return !LOGOUT_EXCEPTIONS.some((e) => url.includes(e));
+  return !LOGOUT_EXCEPTIONS.some(e => url.includes(e));
 };
 
 /**
@@ -123,7 +123,7 @@ class ApiService {
    * Clear cookies
    */
   clearCookies() {
-    return new Promise((success) => {
+    return new Promise(success => {
       NativeModules.Networking.clearCookies(success);
     });
   }
@@ -175,7 +175,7 @@ class ApiService {
 
   getParamsString(params) {
     return Object.keys(params)
-      .map((k) => {
+      .map(k => {
         return encodeURIComponent(k) + '=' + encodeURIComponent(params[k]);
       })
       .join('&');
@@ -282,7 +282,7 @@ class ApiService {
       let xhr = new XMLHttpRequest();
 
       // handle cancel
-      onCancel((cb) => {
+      onCancel(cb => {
         xhr.abort();
         cb();
       });
@@ -305,7 +305,7 @@ class ApiService {
       };
 
       xhr.send(file);
-    }).catch((error) => {
+    }).catch(error => {
       if (error.name !== 'CancelationError') {
         logService.exception('[ApiService] upload', error);
         throw error;
@@ -337,7 +337,7 @@ class ApiService {
       let xhr = new XMLHttpRequest();
 
       // handle cancel
-      onCancel((cb) => {
+      onCancel(cb => {
         xhr.abort();
         cb();
       });
@@ -374,7 +374,7 @@ class ApiService {
       };
 
       xhr.send(formData);
-    }).catch((error) => {
+    }).catch(error => {
       if (error.name !== 'CancelationError') {
         logService.exception('[ApiService] upload', error);
         throw error;

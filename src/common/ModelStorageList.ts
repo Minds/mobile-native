@@ -183,7 +183,7 @@ export default class ModelStorageList {
   async getMany(guids) {
     try {
       const data = await AsyncStorage.multiGet(this._getKeys(guids));
-      return data.map((item) => JSON.parse(item[1]));
+      return data.map(item => JSON.parse(item[1]));
     } catch (err) {
       return false;
     }
@@ -217,7 +217,7 @@ export default class ModelStorageList {
   }
 
   _getKeys(guids) {
-    return guids.map((i) => this._getKeyGuid(i));
+    return guids.map(i => this._getKeyGuid(i));
   }
 
   get indexKey() {

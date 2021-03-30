@@ -87,7 +87,7 @@ export default class DiscoveryV2Store {
         'api/v3/discovery/trends',
         params,
       );
-      const trends = response.trends.filter((trend) => !!trend);
+      const trends = response.trends.filter(trend => !!trend);
       if (response.hero) {
         trends.unshift(response.hero);
       }
@@ -165,8 +165,8 @@ export default class DiscoveryV2Store {
   ): Promise<void> {
     this.tags = selected.slice();
     await apiService.post('api/v3/discovery/tags', {
-      selected: selected.map((tag) => tag.value),
-      deselected: deselected.map((tag) => tag.value),
+      selected: selected.map(tag => tag.value),
+      deselected: deselected.map(tag => tag.value),
     });
 
     // this.refreshTrends();

@@ -25,7 +25,7 @@ const InputSelector = (props: PropsType) => {
   let selectorRef = useRef(null);
 
   const selected = useCallback(
-    (item) => {
+    item => {
       const value = props.keyExtractor(item);
       setItem(value);
       props.onSelected(value);
@@ -34,8 +34,8 @@ const InputSelector = (props: PropsType) => {
   );
 
   const getValueOf = useCallback(
-    (key) => {
-      const item = props.data.find((item) => props.keyExtractor(item) === key);
+    key => {
+      const item = props.data.find(item => props.keyExtractor(item) === key);
       return props.valueExtractor(item);
     },
     [props],

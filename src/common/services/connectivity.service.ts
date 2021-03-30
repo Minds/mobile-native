@@ -52,7 +52,7 @@ class ConnectivityService {
    * Connectivity changes handler
    */
   @action
-  handleConnectivityChange = (connectionInfo) => {
+  handleConnectivityChange = connectionInfo => {
     this.connectionInfo = connectionInfo;
 
     if (this.connectionInfo.type != 'none') {
@@ -94,7 +94,7 @@ class ConnectivityService {
    * Check connectivity fetching only headers
    */
   checkInternet() {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       try {
         const xhr = new XMLHttpRequest();
         xhr.open('HEAD', CONECTIVITY_CHECK_URI, true);

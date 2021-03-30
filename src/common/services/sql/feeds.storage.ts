@@ -97,7 +97,7 @@ export class FeedsStorage {
    * @param {Array} data
    */
   map(data) {
-    return data.map((m) => ({
+    return data.map(m => ({
       urn: m.urn,
       timestamp: m.timestamp ? Math.floor(m.timestamp / 1000) : null,
       owner_guid: m.owner_guid,

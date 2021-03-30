@@ -189,7 +189,7 @@ const createWalletStore = () => ({
       // await this.loadOnchain();
 
       const tokenWallet = {};
-      tokenTypes.forEach((type) => {
+      tokenTypes.forEach(type => {
         tokenWallet[type] = this.wallet[type];
       });
       return tokenWallet;
@@ -209,7 +209,7 @@ const createWalletStore = () => ({
         this.balance = toFriendlyCrypto(response.balance);
         this.wallet.tokens.balance = toFriendlyCrypto(response.balance);
         this.wallet.limits.wire = toFriendlyCrypto(response.wireCap);
-        response.addresses.forEach(async (address) => {
+        response.addresses.forEach(async address => {
           if (address.address === 'offchain') {
             this.wallet.offchain.balance = toFriendlyCrypto(address.balance);
           } else if (address.label === 'Receiver' && address.address) {
@@ -395,7 +395,7 @@ const createWalletStore = () => ({
       });
       const contributionScores: ContributionMetric[] = [];
       if (response.contributions && response.contributions.length > 0) {
-        Object.keys(response.contributions[0].metrics).forEach((key) => {
+        Object.keys(response.contributions[0].metrics).forEach(key => {
           const metric = response.contributions[0].metrics[key];
           metric.id = key;
           metric.label = metric.metric;

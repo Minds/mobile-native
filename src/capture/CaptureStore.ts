@@ -28,17 +28,17 @@ class CaptureStore {
   async loadSuggestedTags() {
     const suggested = await hashtagService.getSuggested();
     this.suggestedTags = suggested;
-    this.suggestedTags.forEach((t) => (t.selected = false));
+    this.suggestedTags.forEach(t => (t.selected = false));
   }
 
   @computed
   get selectedSuggested() {
     const selectedSuggested = [...this.suggestedTags];
     // deselect all
-    selectedSuggested.forEach((t) => (t.selected = false));
+    selectedSuggested.forEach(t => (t.selected = false));
     // select
-    this.allTags.forEach((tag) => {
-      const suggested = selectedSuggested.find((s) => s.value == tag);
+    this.allTags.forEach(tag => {
+      const suggested = selectedSuggested.find(s => s.value == tag);
       if (suggested) this.setSelected(suggested, true);
     });
     return selectedSuggested;
@@ -68,7 +68,7 @@ class CaptureStore {
    * @param {string} tag
    */
   @action
-  deleteTag = (tag) => {
+  deleteTag = tag => {
     this.text = this.text.replace(
       new RegExp('(^|\\s)#' + tag.value + '(?!\\w)', 'gim'),
       ` ${tag.value}`,
@@ -80,7 +80,7 @@ class CaptureStore {
    * @param {string} tag
    */
   @action
-  addTag = (tag) => {
+  addTag = tag => {
     this.text += ` #${tag.value}`;
   };
 

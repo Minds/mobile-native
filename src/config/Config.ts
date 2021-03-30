@@ -71,7 +71,7 @@ const redirectPages = [
   'youtube-migration',
   'branding',
   'localization',
-].map((p) => [p, 'Redirect']);
+].map(p => [p, 'Redirect']);
 
 /**
  * Deeplink to screen/params maping

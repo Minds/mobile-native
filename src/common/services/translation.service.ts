@@ -90,7 +90,7 @@ class TranslationService {
 
     const languages = await this.getLanguages();
 
-    const language = languages.find((lang) => lang.language === query);
+    const language = languages.find(lang => lang.language === query);
 
     if (language) {
       return language.name;

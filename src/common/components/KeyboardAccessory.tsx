@@ -46,10 +46,10 @@ export default class KeyboardAccessory extends PureComponent {
         keyboardHideEvent = 'keyboardDidHide';
       }
 
-      this.keyboardShowListener = Keyboard.addListener(keyboardShowEvent, (e) =>
+      this.keyboardShowListener = Keyboard.addListener(keyboardShowEvent, e =>
         this.keyboardShow(e),
       );
-      this.keyboardHideListener = Keyboard.addListener(keyboardHideEvent, (e) =>
+      this.keyboardHideListener = Keyboard.addListener(keyboardHideEvent, e =>
         this.keyboardHide(e),
       );
     }

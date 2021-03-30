@@ -92,7 +92,7 @@ class App extends Component<Props, State> {
   /**
    * Handle app state changes
    */
-  handleAppStateChange = (nextState) => {
+  handleAppStateChange = nextState => {
     this.setState({ appState: nextState });
   };
 
@@ -170,7 +170,7 @@ class App extends Component<Props, State> {
   /**
    * Handle deeplink urls
    */
-  handleOpenURL = (event) => {
+  handleOpenURL = event => {
     if (event.url) {
       // the var can be cleaned so we check again
       if (!appInitManager.handlePasswordResetDeepLink()) {

@@ -1,18 +1,14 @@
 import 'react-native';
 import React from 'react';
 import App from '../App';
-import sqliteStorageProviderService from '../src/common/services/sqlite-storage-provider.service';
-import logService from '../src/common/services/log.service';
-import MindsVideoV2 from '../src/media/v2/mindsVideo/MindsVideo';
 import { BackHandler } from 'react-native';
-import ShareMenu from 'react-native-share-menu';
-import SystemSetting from 'react-native-system-setting';
 
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
 jest.mock('react-native-reanimated', () =>
   require('react-native-reanimated/mock'),
 );
+jest.mock('../src/blockchain/v2/walletconnect/modal/registry');
 
 jest.mock(
   '../src/buy-tokens/transak-widget/TransakWidget',
@@ -33,9 +29,9 @@ jest.mock('web3');
 
 jest.mock('react-native-system-setting', () => {
   return {
-    getVolume: jest.fn(() => Promise.resolve())
-  }
-})
+    getVolume: jest.fn(() => Promise.resolve()),
+  };
+});
 
 //mock packages
 jest.mock('react-native-share-menu');

@@ -6,7 +6,7 @@ import api from '../common/services/api.service';
 import { getSingle } from '../newsfeed/NewsfeedService';
 
 export function post(post) {
-  return api.post('api/v1/newsfeed', post).then((data) => {
+  return api.post('api/v1/newsfeed', post).then(data => {
     return {
       entity: data.activity,
     };

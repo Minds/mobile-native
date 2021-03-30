@@ -70,7 +70,7 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
         setTimeout(() => ref.current?.scrollToEnd(), 600);
       } else {
         // open focused if necessary
-        const focused = props.store.comments.find((c) => c.expanded);
+        const focused = props.store.comments.find(c => c.expanded);
         if (focused) {
           if (!GOOGLE_PLAY_STORE) {
             navigation.push('ReplyComment', {
@@ -79,7 +79,7 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
             });
           }
         } else {
-          const index = props.store.comments.findIndex((c) => c.focused);
+          const index = props.store.comments.findIndex(c => c.focused);
           if (index && index > 0) {
             setTimeout(() => {
               ref.current?.scrollToIndex({
@@ -183,7 +183,7 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
   );
 };
 
-const keyExtractor = (item) => item.guid;
+const keyExtractor = item => item.guid;
 
 const styles = StyleSheet.create({
   headerCommentContainer: {

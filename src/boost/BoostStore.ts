@@ -90,7 +90,7 @@ class BoostStore {
   }
 
   @action
-  setFilter = (filter) => {
+  setFilter = filter => {
     this.filter = filter;
     this.list.clearList();
     this.loadList();

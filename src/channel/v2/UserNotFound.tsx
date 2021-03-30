@@ -6,7 +6,7 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import ChannelHeader from './ChannelHeader';
 import ChannelTopBar from './ChannelTopBar';
 
-const UserNotFound = (props) => {
+const UserNotFound = props => {
   const theme = ThemedStyles.style;
   const params = props.route.params;
   return (

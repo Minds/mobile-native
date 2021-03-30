@@ -20,7 +20,7 @@ export default observer(function CheckLanguage() {
   ) {
     const lang = i18n
       .getSupportedLocales()
-      .find((l) => l.value === i18n.bestLocale);
+      .find(l => l.value === i18n.bestLocale);
     if (lang) {
       return (
         <View

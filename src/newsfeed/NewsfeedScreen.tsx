@@ -46,7 +46,7 @@ class NewsfeedScreen extends Component<PropsType> {
     this.props.navigation.navigate('Capture', {});
   };
 
-  refreshNewsfeed = (e) => {
+  refreshNewsfeed = e => {
     if (this.props.navigation.isFocused()) {
       this.props.newsfeed.scrollToTop();
       this.props.newsfeed.feedStore.refresh();

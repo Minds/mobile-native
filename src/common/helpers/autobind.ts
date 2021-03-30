@@ -38,7 +38,7 @@ function boundClass(target) {
     }
   }
 
-  keys.forEach((key) => {
+  keys.forEach(key => {
     // Ignore special case target method
     if (key === 'constructor') {
       return;

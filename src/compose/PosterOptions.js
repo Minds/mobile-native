@@ -39,7 +39,7 @@ const height = 83;
 /**
  * Header
  */
-const Header = (props) => (
+const Header = props => (
   <View style={[styles.headerContainer, ThemedStyles.style.borderPrimary]}>
     <View
       style={[
@@ -73,7 +73,7 @@ const Header = (props) => (
 /**
  * Item
  */
-const Item = (props) => {
+const Item = props => {
   return (
     <Touchable
       style={[styles.row, ThemedStyles.style.borderPrimary]}
@@ -200,7 +200,7 @@ export default observer(
         ]}>
         <Item
           title="Tag"
-          description={tags.slice(0, 4).map((t) => `#${t} `)}
+          description={tags.slice(0, 4).map(t => `#${t} `)}
           onPress={onTagPress}
         />
         <Item

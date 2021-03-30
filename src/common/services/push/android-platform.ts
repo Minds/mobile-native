@@ -14,12 +14,12 @@ export default class AndroidPlatfom extends AbstractPlatform {
    * Init push service
    */
   init() {
-    NotificationsAndroid.setNotificationReceivedListener((notification) => {
+    NotificationsAndroid.setNotificationReceivedListener(notification => {
       logService.log('Notification received', notification);
       //NotificationsAndroid.localNotification(notification.data);
     });
 
-    NotificationsAndroid.setRegistrationTokenUpdateListener((deviceToken) => {
+    NotificationsAndroid.setRegistrationTokenUpdateListener(deviceToken => {
       this.token = deviceToken;
       if (this.shouldRegister) {
         this.registerToken();
@@ -52,11 +52,11 @@ export default class AndroidPlatfom extends AbstractPlatform {
    */
   handleInitialNotification() {
     PendingNotifications.getInitialNotification()
-      .then((notification) => {
+      .then(notification => {
         if (notification && this.onInitialNotification)
           this.onInitialNotification(notification);
       })
-      .catch((err) => logService.exception('[PushService]', err));
+      .catch(err => logService.exception('[PushService]', err));
   }
   /**
    * Stop push notification service

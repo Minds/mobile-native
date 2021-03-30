@@ -54,7 +54,7 @@ const Networks = ({ referralLink }: NetworksProps) => {
         );
       },
     },
-  ].map((i) => {
+  ].map(i => {
     return (
       <Touchable key={i.key} onPress={i.onPress} style={theme.marginRight4x}>
         <IonIcon name={i.icon} color={i.color} size={25} />

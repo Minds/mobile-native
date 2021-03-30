@@ -111,7 +111,7 @@ class SessionService {
       // we update the user without wait
       getStores()
         .user.load(true)
-        .then((user) => {
+        .then(user => {
           if (user) sessionStorage.setUser(user);
         });
     } else {
@@ -260,7 +260,7 @@ class SessionService {
   onSession(fn) {
     return reaction(
       () => [this.userLoggedIn ? this.token : null],
-      async (args) => {
+      async args => {
         try {
           await fn(...args);
         } catch (error) {
@@ -279,7 +279,7 @@ class SessionService {
   onLogin(fn) {
     return reaction(
       () => (this.userLoggedIn ? this.token : null),
-      async (token) => {
+      async token => {
         if (token) {
           try {
             await fn(token);
@@ -300,7 +300,7 @@ class SessionService {
   onLogout(fn) {
     return reaction(
       () => (this.userLoggedIn ? this.token : null),
-      async (token) => {
+      async token => {
         if (!token) {
           try {
             await fn(token);

@@ -51,7 +51,7 @@ export default function ({
       onOrderProcessed(orderData);
     });
 
-    channel.bind('ORDER_FAILED', (orderData) => {
+    channel.bind('ORDER_FAILED', orderData => {
       onError(orderData);
     });
 

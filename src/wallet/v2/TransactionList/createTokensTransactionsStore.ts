@@ -73,7 +73,7 @@ const createTokensTransactionsStore = ({ wallet, user }: ParamsType) => {
         },
       );
       const list = groupBy(filteredEntities, 'date');
-      return Object.keys(list).map((v) => ({
+      return Object.keys(list).map(v => ({
         title: v,
         data: list[v],
       }));

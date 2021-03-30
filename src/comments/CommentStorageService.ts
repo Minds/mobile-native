@@ -130,7 +130,7 @@ export class CommentStorageService {
    * @param {Object} data
    */
   clean(data: Object) {
-    data.comments.forEach((comment) => {
+    data.comments.forEach(comment => {
       delete comment.luid;
       delete comment.body;
     });

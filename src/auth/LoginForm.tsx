@@ -167,7 +167,7 @@ export default class LoginForm extends Component<PropsType, StateType> {
    * Set two factor
    * @param {string} value
    */
-  setTwoFactor = (value) => {
+  setTwoFactor = value => {
     const twoFactorCode = String(value).trim();
     this.setState({ twoFactorCode });
   };
@@ -176,7 +176,7 @@ export default class LoginForm extends Component<PropsType, StateType> {
    * Set two factor
    * @param {string} value
    */
-  setUsername = (value) => {
+  setUsername = value => {
     const username = String(value).trim();
     this.setState({ username });
   };
@@ -185,7 +185,7 @@ export default class LoginForm extends Component<PropsType, StateType> {
    * Set two factor
    * @param {string} value
    */
-  setPassword = (value) => {
+  setPassword = value => {
     const password = String(value).trim();
     this.setState({ password });
   };
@@ -216,7 +216,7 @@ export default class LoginForm extends Component<PropsType, StateType> {
       .then(() => {
         this.props.onLogin && this.props.onLogin();
       })
-      .catch((errJson) => {
+      .catch(errJson => {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
         if (
           errJson.error === 'invalid_grant' ||

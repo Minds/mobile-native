@@ -182,7 +182,7 @@ const FullScreenPostStack = () => (
   </FullScreenPostStackNav.Navigator>
 );
 
-const AccountScreenOptions = (navigation) => [
+const AccountScreenOptions = navigation => [
   {
     title: i18n.t('settings.accountOptions.1'),
     onPress: () => navigation.push('SettingsEmail'),
@@ -219,7 +219,7 @@ const AccountScreenOptions = (navigation) => [
   },
 ];
 
-const SecurityScreenOptions = (navigation) => [
+const SecurityScreenOptions = navigation => [
   {
     title: i18n.t('settings.securityOptions.1'),
     onPress: () => navigation.push('TwoFactorAuthSettingsScreen'),
@@ -232,7 +232,7 @@ const SecurityScreenOptions = (navigation) => [
 
 let BillingScreenOptions;
 if (!isIos) {
-  BillingScreenOptions = (navigation) => [
+  BillingScreenOptions = navigation => [
     {
       title: i18n.t('settings.billingOptions.1'),
       onPress: () => navigation.push('PaymentMethods'),
@@ -243,7 +243,7 @@ if (!isIos) {
     },
   ];
 } else {
-  BillingScreenOptions = (navigation) => [
+  BillingScreenOptions = navigation => [
     {
       title: i18n.t('settings.billingOptions.2'),
       onPress: () => navigation.push('RecurringPayments'),

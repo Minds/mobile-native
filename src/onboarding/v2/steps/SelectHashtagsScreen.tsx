@@ -25,8 +25,8 @@ export default observer(function SelectHashtagsScreen({ navigation, route }) {
 
     // prevent leaving the screen if it is the initial screen
     if (route && route.params && route.params.initial) {
-      unsubscribe = navigation.addListener('beforeRemove', (e) => {
-        if (hashtag.suggested.filter((s) => s.selected).length >= 3) {
+      unsubscribe = navigation.addListener('beforeRemove', e => {
+        if (hashtag.suggested.filter(s => s.selected).length >= 3) {
           return;
         }
         showNotification(i18n.t('onboarding.selectThreeTags'), 'warning');
@@ -48,7 +48,7 @@ export default observer(function SelectHashtagsScreen({ navigation, route }) {
   }, [hashtag, navigation, route]);
 
   const onPress = () => {
-    if (hashtag.suggested.filter((s) => s.selected).length >= 3) {
+    if (hashtag.suggested.filter(s => s.selected).length >= 3) {
       NavigationService.goBack();
     } else {
       showNotification(i18n.t('onboarding.selectThreeTags'), 'warning');

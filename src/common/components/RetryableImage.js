@@ -10,7 +10,7 @@ export default function (props) {
   const [retries, setRetries] = useState(0);
 
   const errorHandler = useCallback(
-    (error) => {
+    error => {
       const maxRetries = props.retry || 3;
       if (retries < maxRetries) {
         setRetries(retries + 1);
