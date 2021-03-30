@@ -344,6 +344,8 @@ PODS:
     - React-Core
   - RNCAsyncStorage (1.12.1):
     - React-Core
+  - RNCClipboard (1.7.0):
+    - React-Core
   - RNCMaskedView (0.1.10):
     - React
   - RNConvertPhAsset (1.0.3):
@@ -487,6 +489,7 @@ DEPENDENCIES:
   - rn-update-apk (from `../node_modules/rn-update-apk`)
   - RNBootSplash (from `../node_modules/react-native-bootsplash`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
+  - "RNCClipboard (from `../node_modules/@react-native-clipboard/clipboard`)"
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
   - RNConvertPhAsset (from `../node_modules/react-native-convert-ph-asset`)
   - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
@@ -655,6 +658,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-bootsplash"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-community/async-storage"
+  RNCClipboard:
+    :path: "../node_modules/@react-native-clipboard/clipboard"
   RNCMaskedView:
     :path: "../node_modules/@react-native-community/masked-view"
   RNConvertPhAsset:
@@ -725,7 +730,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   Crypto: 523c2f143c741d3f61371c811c0983ee9c7d18ec
-  DoubleConversion: cde416483dac037923206447da6e1454df403714
+  DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
   EXApplication: e3c201e7b913d081bbd37bd3c5d0e2cdc21733b4
   EXAV: 398170ec4fb575be375f76b65a7218e097f89b30
   EXConstants: 54d0bf04319d1692c6c7bc03ca151ef7a71705a4
@@ -742,7 +747,7 @@ SPEC CHECKSUMS:
   FBLazyVector: 878b59e31113e289e275165efbe4b54fa614d43d
   FBReactNativeSpec: 7da9338acfb98d4ef9e5536805a0704572d33c2f
   Folly: b73c3869541e86821df3c387eb0af5f65addfab4
-  glog: 40a13f7840415b9a77023fbcae0f1e6f43192af3
+  glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
   iOSPhotoEditor: 0f36d2c064d2999b7f4cd20c9db679581d24f7bf
   libwebp: 946cb3063cea9236285f7e9a8505d806d30e07f3
   lottie-ios: 48fac6be217c76937e36e340e2d09cf7b10b7f5f
@@ -787,6 +792,7 @@ SPEC CHECKSUMS:
   rn-update-apk: c9ed556a751a89894351f2f029387fa215ca5658
   RNBootSplash: 14d30c2e1de7247d334540cb2c2d7f3c2acc6150
   RNCAsyncStorage: b03032fdbdb725bea0bd9e5ec5a7272865ae7398
+  RNCClipboard: 245417a78ab585e0d4d83926c28907e7b2bc24bd
   RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f
   RNConvertPhAsset: 9b366b8a1abc194b76572712c6f7dd89c9e4e37f
   RNDateTimePicker: 968ccf716b3b6aee07849641966005924de5c0f9

@@ -9,6 +9,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Dimensions,
+  Platform,
 } from 'react-native';
 
 import { inject, observer } from 'mobx-react';
@@ -210,6 +211,7 @@ export default class ConversationScreen extends Component {
     };
     return (
       <KeyboardSpacingView
+        enabled={Platform.OS === 'ios'}
         style={[styles.container, ThemedStyles.style.backgroundSecondary]}>
         <FlatList
           inverted={true}
