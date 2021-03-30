@@ -6,10 +6,13 @@ import {
   StyleSheet,
   TouchableOpacity,
   Linking,
+  Dimensions,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Button from '../../common/components/Button';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
+
+const wHeight = Dimensions.get('window').height;
 
 const RecoveryCodeUsedScreen = () => {
   const theme = ThemedStyles.style;
@@ -19,34 +22,25 @@ const RecoveryCodeUsedScreen = () => {
   const mailToMinds = () => Linking.openURL('mailto:support@example.com');
 
   return (
-    <View
-      style={[
-        theme.flexContainer,
-        theme.backgroundPrimary,
-        theme.paddingTop2x,
-      ]}>
+    <View style={[styles.mainContainer, theme.backgroundPrimary]}>
       <View style={theme.rowJustifyStart}>
-        <Text style={styles.header}>{i18n.t('settings.TFA')}</Text>
+        <Text style={styles.header}>{i18n.t('settings.TFADisabled')}</Text>
         <TouchableOpacity
           style={styles.closeContainer}
           onPress={navigation.goBack}>
-          <Icon
-            name={'close'}
-            color={ThemedStyles.getColor('secondary_text')}
-            size={24}
-          />
+          <Text style={styles.closeText}>{i18n.t('close')}</Text>
         </TouchableOpacity>
       </View>
       <Text style={[theme.marginTop6x, textStyle]}>
         {i18n.t('settings.TFARecoveryCodeUsedDesc')}
       </Text>
-      <Text style={[theme.marginTop2x, textStyle]}>
-        {i18n.t('settings.TFARecoveryCodeUsedEnable')}{' '}
-        <Text style={[textStyle, theme.colorLink]} onPress={navTo2fa}>
-          {i18n.t('settings.TFARecoveryCodeUsedSettings')}
-        </Text>
-      </Text>
-      <Text style={[theme.marginTop6x, textStyle]}>
+      <Button
+        text={i18n.t('settings.TFARecoveryCodeUsedEnable')}
+        action
+        containerStyle={theme.marginVertical7x}
+        onPress={navTo2fa}
+      />
+      <Text style={textStyle}>
         {i18n.t('settings.TFARecoveryCodeUsedContact')}{' '}
         <Text style={[textStyle, theme.colorLink]} onPress={mailToMinds}>
           {i18n.t('settings.TFARecoveryCodeUsedMailto')}
@@ -57,20 +51,34 @@ const RecoveryCodeUsedScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  mainContainer: {
+    marginTop: wHeight * 0.3,
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
+    flex: 1,
+    paddingTop: 23,
+  },
   header: {
-    flex: 11,
+    flex: 1,
     textAlign: 'center',
     fontSize: 22,
-    fontWeight: '700',
-    paddingLeft: 25,
+    fontWeight: '500',
+    fontFamily: 'Roboto-Medium',
   },
   closeContainer: {
-    flex: 1,
-    alignSelf: 'center',
-    paddingRight: 10,
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    marginRight: 19,
+  },
+  closeText: {
+    fontSize: 18,
+    fontWeight: '500',
+    fontFamily: 'Roboto-Medium',
+    paddingVertical: 2.5,
   },
   text: {
-    lineHeight: 22,
+    lineHeight: 20,
     fontSize: 16,
     paddingHorizontal: 20,
   },
