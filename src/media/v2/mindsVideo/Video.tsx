@@ -27,9 +27,9 @@ const ExpoVideo = observer(
         localStore.setPlayer(playbackObject.current);
       }
     }, [localStore]);
+
     return (
       <Video
-        key={`video${localStore.source}`}
         onPlaybackStatusUpdate={localStore.updatePlaybackCallback}
         onLoadStart={localStore.onLoadStart}
         onLoad={localStore.onVideoLoad}
@@ -41,7 +41,7 @@ const ExpoVideo = observer(
         useNativeControls={false}
         style={theme.flexContainer}
         ref={playbackObject}
-        volume={localStore.volume}
+        volume={1}
         onReadyForDisplay={onReadyForDisplay}
       />
     );

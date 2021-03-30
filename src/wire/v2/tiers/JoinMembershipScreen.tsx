@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
 import { View, StyleSheet, ScrollView, Text, Platform } from 'react-native';
 import ThemedStyles from '../../../styles/ThemedStyles';
-import { useSafeArea, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import HeaderComponent from '../../../common/components/HeaderComponent';
 import UserNamesComponent from '../../../common/components/UserNamesComponent';
 import capitalize from '../../../common/helpers/capitalize';
@@ -14,7 +14,6 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../../navigation/NavigationTypes';
 import Button from '../../../common/components/Button';
 import i18n from '../../../common/services/i18n.service';
-import { useLegacyStores } from '../../../common/hooks/use-stores';
 import { UserError } from '../../../common/UserError';
 import supportTiersService from '../../../common/services/support-tiers.service';
 import type { SupportTiersType } from '../../../wire/WireTypes';
@@ -25,6 +24,7 @@ import MenuItem, {
   MenuItemItem,
 } from '../../../common/components/menus/MenuItem';
 import { showNotification } from '../../../../AppMessages';
+import WireStore from '../../WireStore';
 
 const isIos = Platform.OS === 'ios';
 
@@ -48,8 +48,8 @@ const selectValueExtractor = (item) => item.name;
 const selectIdExtractor = (item) => item.urn;
 
 const createJoinMembershipStore = ({ tiers }) => {
-  console.log(tiers);
   const store = {
+    wire: new WireStore(),
     user: null as UserModel | null,
     card: '' as any,
     currentTier: tiers ? tiers[0] : (null as SupportTiersType | null),
@@ -117,7 +117,6 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
    * (new) Disable switch if tokens not valid payment
    * show input if tokens is selected payment
    */
-  const { wire } = useLegacyStores();
   const store = useLocalStore(createJoinMembershipStore, { tiers });
   const selectorRef = useRef<Selector>(null);
 
@@ -172,12 +171,12 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
       if (store.currentTier.usd === '0') {
         complete();
       }
-      wire.setAmount(parseFloat(store.currentTier.usd));
-      wire.setCurrency('usd');
-      wire.setOwner(store.user);
-      wire.setRecurring(store.currentTier.public);
-      wire.setPaymentMethodId(store.card.id);
-      const done = await wire.send();
+      store.wire.setAmount(parseFloat(store.currentTier.usd));
+      store.wire.setCurrency('usd');
+      store.wire.setOwner(store.user);
+      store.wire.setRecurring(store.currentTier.public);
+      store.wire.setPaymentMethodId(store.card.id);
+      const done = await store.wire.send();
 
       if (!done) {
         throw new UserError(i18n.t('boosts.errorPayment'));
@@ -189,7 +188,7 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
     } finally {
       store.setLoading(false);
     }
-  }, [store, complete, wire]);
+  }, [store, complete]);
 
   const payWithTokens = useCallback(async () => {
     if (!store.currentTier) {
@@ -199,11 +198,11 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
       if (store.currentTier.tokens === '0') {
         complete();
       }
-      wire.setAmount(parseFloat(store.currentTier.tokens));
-      wire.setCurrency('tokens');
-      wire.setOwner(store.user);
-      wire.setRecurring(store.currentTier.public);
-      const done = await wire.send();
+      store.wire.setAmount(parseFloat(store.currentTier.tokens));
+      store.wire.setCurrency('tokens');
+      store.wire.setOwner(store.user);
+      store.wire.setRecurring(store.currentTier.public);
+      const done = await store.wire.send();
       if (!done) {
         throw new UserError(i18n.t('boosts.errorPayment'));
       }
@@ -213,7 +212,7 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
     } finally {
       store.setLoading(false);
     }
-  }, [complete, wire, store]);
+  }, [complete, store]);
 
   const confirmSend = useCallback(async () => {
     if (!store.currentTier) {

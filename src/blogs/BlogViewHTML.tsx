@@ -11,6 +11,12 @@ const style = () => `
   <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700,800'>
   <style>
     body, html {
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
       margin: 0;
       padding: 0;
       /*padding-right: 4px;*/

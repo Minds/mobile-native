@@ -4,7 +4,6 @@ import { observer } from 'mobx-react';
 
 import {
   Alert,
-  Clipboard,
   Dimensions,
   StyleSheet,
   Text,
@@ -12,6 +11,8 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
+
+import Clipboard from '@react-native-clipboard/clipboard';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { SharedElement } from 'react-navigation-shared-element';

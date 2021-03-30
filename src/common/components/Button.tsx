@@ -12,8 +12,8 @@ import { DotIndicator } from 'react-native-reanimated-indicators';
 
 import ThemedStyles from '../../styles/ThemedStyles';
 
-interface PropsType extends TouchableOpacityProps {
-  text: string;
+export interface ButtonPropsType extends TouchableOpacityProps {
+  text?: string;
   loading?: boolean;
   onPress?: (ev: GestureResponderEvent) => void;
   textColor?: string;
@@ -30,12 +30,13 @@ interface PropsType extends TouchableOpacityProps {
   transparent?: boolean;
   action?: boolean;
   active?: boolean;
+  borderless?: boolean;
 }
 
 /**
  * Custom Button component
  */
-export default class Button extends Component<PropsType> {
+export default class Button extends Component<ButtonPropsType> {
   /**
    * Default props
    */
@@ -66,6 +67,7 @@ export default class Button extends Component<PropsType> {
       transparent,
       action,
       active,
+      borderless,
       ...extraProps
     } = this.props;
 
@@ -85,10 +87,12 @@ export default class Button extends Component<PropsType> {
       paddingHorizontal: large ? 23 : xSmall ? 16 : 21,
     };
 
-    const border = {
-      ...(action ? theme.borderLink : theme.borderPrimary),
-      ...theme.border,
-    };
+    const border = borderless
+      ? {}
+      : {
+          ...(action ? theme.borderLink : theme.borderPrimary),
+          ...theme.border,
+        };
 
     const transparentStyle = transparent
       ? {
@@ -118,10 +122,12 @@ export default class Button extends Component<PropsType> {
         scaleEnabled={true}
       />
     ) : (
-      <Text style={[fontSize, { color: textColor || mainColor }, textStyle]}>
-        {' '}
-        {this.props.text}{' '}
-      </Text>
+      this.props.text && (
+        <Text style={[fontSize, { color: textColor || mainColor }, textStyle]}>
+          {' '}
+          {this.props.text}{' '}
+        </Text>
+      )
     );
 
     const onButtonPress = loading ? undefined : onPress;

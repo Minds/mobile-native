@@ -6,7 +6,7 @@ import logService from '../log.service';
  * Abstract Platform
  */
 export default class AbstractPlatform {
-  token = null;
+  token: string = null;
 
   shouldRegister = false;
 

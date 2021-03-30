@@ -117,8 +117,6 @@ export const DiscoveryTrendsListItem = observer((props: Props) => {
       : entity.thumbnail_src;
     const image = { uri };
 
-    console.log(entity.guid, image);
-
     return (
       <SmartImage
         source={image}

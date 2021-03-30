@@ -2,6 +2,7 @@ import 'react-native-gesture-handler'; // fix ongesture handler error
 // import 'node-libs-react-native/globals';
 import 'mobx-react/batchingForReactNative';
 import './global';
+import crypto from 'crypto'; // DO NOT REMOVE!
 
 import { AppRegistry } from 'react-native';
 import App from './App';

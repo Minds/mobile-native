@@ -144,9 +144,6 @@ export default class ActivityModel extends BaseModel {
       case 'batch':
         return true;
     }
-    if (this.perma_url) {
-      return true;
-    }
     return false;
   }
 
@@ -397,7 +394,7 @@ export default class ActivityModel extends BaseModel {
 
     switch (lockType) {
       case 'plus':
-        NavigationService.push('PlusScreen', {
+        NavigationService.push('UpgradeScreen', {
           support_tier,
           entity: this,
           onComplete: (resultComplete: any) => {

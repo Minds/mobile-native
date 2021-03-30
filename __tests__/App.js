@@ -6,11 +6,17 @@ import logService from '../src/common/services/log.service';
 import MindsVideoV2 from '../src/media/v2/mindsVideo/MindsVideo';
 import { BackHandler } from 'react-native';
 import ShareMenu from 'react-native-share-menu';
+import SystemSetting from 'react-native-system-setting';
 
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
 jest.mock('react-native-reanimated', () =>
   require('react-native-reanimated/mock'),
+);
+
+jest.mock(
+  '../src/buy-tokens/transak-widget/TransakWidget',
+  () => 'TransakWidget',
 );
 
 // mock backhandler
@@ -24,6 +30,12 @@ jest.mock('../src/comments/v2/CommentBottomSheet', () => 'CommentBottomSheet');
 
 // use the web3 mock to prevent syntax error from node_tar
 jest.mock('web3');
+
+jest.mock('react-native-system-setting', () => {
+  return {
+    getVolume: jest.fn(() => Promise.resolve())
+  }
+})
 
 //mock packages
 jest.mock('react-native-share-menu');
@@ -44,11 +56,6 @@ jest.mock('@react-navigation/native');
 jest.mock('@react-navigation/bottom-tabs');
 jest.mock('react-native-screens/native-stack');
 jest.mock('react-native-file-share-intent');
-
-//mock i18n
-jest.mock('react-native-video');
-
-jest.mock('../src/keychain/KeychainModalScreen', () => 'KeychainModalScreen');
 
 jest.mock('../src/common/services/translation.service');
 jest.mock('../src/common/helpers/abortableFetch');

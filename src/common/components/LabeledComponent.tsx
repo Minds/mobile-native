@@ -28,7 +28,7 @@ const LabeledComponent: FunctionComponent<propsType> = ({
 
 const styles = StyleSheet.create({
   label: {
-    fontSize: 13,
+    fontSize: 16,
     marginBottom: 10,
   },
 });

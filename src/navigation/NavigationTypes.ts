@@ -9,6 +9,7 @@ import type ActivityModel from '../newsfeed/ActivityModel';
 import type { SupportTiersType } from '../wire/WireTypes';
 import type { PortraitBarItem } from '../portrait/createPortraitStore';
 import type BlogModel from '../blogs/BlogModel';
+import { TwoFactorStore } from '../auth/twoFactorAuth/createTwoFactorStore';
 
 export type DrawerParamList = {
   Tabs: {};
@@ -23,6 +24,8 @@ export type InternalStackParamList = {
   Analytics: {};
   Onboarding: {};
   InitialOnboarding: {};
+  BuyTokens: {};
+  Test: {};
 };
 
 export type RootStackParamList = {
@@ -38,7 +41,7 @@ export type RootStackParamList = {
   };
   BoostChannelScreen: {};
   BoostPostScreen: { entity: ActivityModel };
-  PlusScreen: {
+  UpgradeScreen: {
     onComplete: Function;
     pro?: boolean;
   };
@@ -48,11 +51,25 @@ export type RootStackParamList = {
   VerifyUniqueness: {};
   SuggestedChannel: {};
   SuggestedGroups: {};
-  PhoneValidation: {};
+  PhoneValidation: {
+    onComplete?: Function;
+  };
+  WalletWithdrawal: {};
+  EarnModal: {};
+  SearchScreen: {};
+  PasswordConfirmation: {
+    onConfirm: (password: string) => void;
+    title: string;
+  };
 };
 
 export type AuthStackParamList = {
-  Login: {};
+  Login: {
+    username?: string;
+    password?: string;
+    tfa?: 'sms' | 'totp';
+    secret?: string;
+  };
   Forgot: {
     code?: string;
   };
@@ -74,6 +91,7 @@ export type ActivityFullScreenParamList = {
 };
 
 export type AppStackParamList = {
+  ExportLegacyWallet: {};
   Fab: {
     disableThresholdCheck?: boolean;
     owner: UserModel;
@@ -114,7 +132,9 @@ export type AppStackParamList = {
   Other: {};
   SettingsEmail: {};
   MessengerSettingsScreen: {};
+  RekeyScreen: {};
   AutoplaySettingsScreen: {};
+  BoostSettingsScreen: {};
   SettingsPassword: {};
   SettingsNotifications: {};
   DataSaverScreen: {};
@@ -129,6 +149,20 @@ export type AppStackParamList = {
   LanguageScreen: {};
   NSFWScreen: {};
   DevicesScreen: {};
+  TwoFactorAuthSettingsScreen: {};
+  RecoveryCodesScreen: {
+    store: TwoFactorStore;
+  };
+  VerifyAuthAppScreen: {
+    store: TwoFactorStore;
+  };
+  VerifyPhoneNumberScreen: {
+    store: TwoFactorStore;
+  };
+  DisableTFA: {
+    store: TwoFactorStore;
+    password: string;
+  };
   TagSelector: {};
   NsfwSelector: {};
   ScheduleSelector: {};
@@ -199,7 +233,6 @@ export type AppStackParamList = {
   ReceiverAddressScreen: {
     walletStore: WalletStoreType;
   };
-  LearnMoreScreen: {};
   BtcAddressScreen: {
     walletStore: WalletStoreType;
   };
@@ -207,7 +240,7 @@ export type AppStackParamList = {
     walletStore: WalletStoreType;
   };
   TierScreen: {};
-  PlusScreen: {
+  UpgradeScreen: {
     onComplete: Function;
     pro?: boolean;
   };

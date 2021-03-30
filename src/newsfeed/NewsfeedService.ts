@@ -209,7 +209,7 @@ export function deleteItem(guid) {
 
 export async function getSingle(guid) {
   const result: any = await api.get('api/v2/entities', {
-    urns: `urn:entity:${guid}`,
+    urns: `urn:activity:${guid}`,
     as_activities: 1,
   });
 

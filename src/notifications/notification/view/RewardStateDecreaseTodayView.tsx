@@ -7,9 +7,7 @@ import NotificationBody from '../NotificationBody';
 /**
  * Custom Message Notification Component
  */
-export default class RewardsStateDecreaseTodayView extends Component<
-  PropsType
-> {
+export default class RewardsStateDecreaseTodayView extends Component<PropsType> {
   navToWallet = () => {
     this.props.navigation.push('Wallet');
   };

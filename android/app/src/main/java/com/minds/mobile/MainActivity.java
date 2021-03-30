@@ -5,14 +5,13 @@ import com.zoontek.rnbootsplash.RNBootSplash;
 import com.facebook.react.ReactActivity;
 
 // image picker imports
-import com.imagepicker.permissions.OnImagePickerPermissionsCallback;
 import com.facebook.react.modules.core.PermissionListener;
 
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactRootView;
 import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView;
 
-public class MainActivity extends ReactActivity implements OnImagePickerPermissionsCallback {
+public class MainActivity extends ReactActivity {
     private PermissionListener listener;
 
    /**
@@ -22,12 +21,6 @@ public class MainActivity extends ReactActivity implements OnImagePickerPermissi
     @Override
     protected String getMainComponentName() {
         return "Minds";
-    }
-
-    @Override
-    public void setPermissionListener(PermissionListener listener)
-    {
-        this.listener = listener;
     }
 
     @Override

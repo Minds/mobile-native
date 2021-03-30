@@ -68,6 +68,7 @@ export default function ({
       Component={component}
       onPress={item.onPress}
       containerStyle={containerStyle}
+      underlayColor="transparent"
       testID={testID}>
       <ListItem.Content>
         <ListItem.Title style={[theme.listItemTitle, titleStyle]}>

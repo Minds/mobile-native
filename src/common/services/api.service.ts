@@ -1,6 +1,8 @@
 import Cancelable from 'promise-cancelable';
 import { NativeModules } from 'react-native';
 
+const LOGOUT_EXCEPTIONS = ['password/validate'];
+
 import session from './session.service';
 import {
   MINDS_API_URI,
@@ -27,6 +29,9 @@ export interface ApiResponse {
  * Api Error
  */
 export class ApiError extends Error {
+  errId: string = '';
+  headers: any = null;
+
   constructor(...args) {
     super(...args);
   }
@@ -38,6 +43,10 @@ export const isApiError = function (err) {
 
 export const isApiForbidden = function (err) {
   return err.status === 403;
+};
+
+const shouldLogout = (url: string) => {
+  return !LOGOUT_EXCEPTIONS.some((e) => url.includes(e));
 };
 
 /**
@@ -55,15 +64,18 @@ class ApiService {
     // check status
     if (response.status) {
       if (response.status === 401) {
-        session.logout();
-        throw new UserError('Session lost');
+        if (shouldLogout(url)) {
+          session.logout();
+          throw new UserError('Session lost');
+        }
       }
     }
 
-    let data, text;
+    let data, text, headers;
 
     try {
       // Convert from JSON
+      headers = response.headers;
       text = await response.text();
       data = JSON.parse(text);
     } catch (err) {
@@ -89,7 +101,11 @@ class ApiService {
     // Failed on API side
     if (data && data.status && data.status !== 'success') {
       const msg = data && data.message ? data.message : 'Server error';
-      throw new ApiError(msg);
+      const errId = data && data.errorId ? data.errorId : '';
+      const apiError = new ApiError(msg);
+      apiError.errId = errId;
+      apiError.headers = headers;
+      throw apiError;
     }
 
     return data;
@@ -115,12 +131,13 @@ class ApiService {
   /**
    * Build headers
    */
-  buildHeaders() {
+  buildHeaders(customHeaders: any = {}) {
     const headers: any = {
       'Content-Type': 'application/json',
       'Cache-Control': 'no-cache, no-store, must-revalidate',
       Pragma: 'no-cache',
       'App-Version': Version.VERSION,
+      ...customHeaders,
     };
 
     if (MINDS_STAGING) {
@@ -174,9 +191,10 @@ class ApiService {
     url: string,
     params: object = {},
     tag: any = null,
+    customHeaders: any = {},
   ): Promise<T> {
     // build headers
-    const headers = this.buildHeaders();
+    const headers = this.buildHeaders(customHeaders);
 
     const response = await abortableFetch(
       MINDS_API_URI + this.buildUrl(url, params),
@@ -192,8 +210,12 @@ class ApiService {
    * @param {string} url
    * @param {object} body
    */
-  async post<T extends ApiResponse>(url: string, body: any = {}): Promise<T> {
-    const headers = this.buildHeaders();
+  async post<T extends ApiResponse>(
+    url: string,
+    body: any = {},
+    customHeaders: any = {},
+  ): Promise<T> {
+    const headers = this.buildHeaders(customHeaders);
 
     let response = await abortableFetch(MINDS_API_URI + this.buildUrl(url), {
       method: 'POST',
@@ -228,8 +250,12 @@ class ApiService {
    * @param {string} url
    * @param {object} body
    */
-  async delete<T extends ApiResponse>(url: string, body: any = {}): Promise<T> {
-    const headers = this.buildHeaders();
+  async delete<T extends ApiResponse>(
+    url: string,
+    body: any = {},
+    customHeaders: any = {},
+  ): Promise<T> {
+    const headers = this.buildHeaders(customHeaders);
 
     let response = await abortableFetch(MINDS_API_URI + this.buildUrl(url), {
       method: 'DELETE',

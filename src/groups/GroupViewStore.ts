@@ -154,7 +154,7 @@ class GroupViewStore {
    */
   async loadGroup(defaultGroup) {
     const group = await entitiesService.single(
-      `urn:entity:${defaultGroup.guid}`,
+      `urn:group:${defaultGroup.guid}`,
       GroupModel.checkOrCreate(defaultGroup),
     );
     this.setGroup(group);
@@ -163,7 +163,7 @@ class GroupViewStore {
   }
 
   async loadGroupByGuid(guid) {
-    const group = await entitiesService.single(`urn:entity:${guid}`);
+    const group = await entitiesService.single(`urn:group:${guid}`);
     this.setGroup(group);
   }
 

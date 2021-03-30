@@ -5,6 +5,7 @@ import i18n from '../common/services/i18n.service';
 import UserModel from '../channel/UserModel';
 
 import type { Currency } from './WireTypes';
+import type { WCStore } from '../blockchain/v2/walletconnect/WalletConnectContext';
 
 /**
  * Wire store
@@ -18,6 +19,7 @@ class WireStore {
   @observable showBtc: boolean = false;
   @observable showCardselector: boolean = false;
   @observable loaded: boolean = false;
+  @observable offchain: boolean = true;
   @observable errors: Array<string> = [];
   @observable paymentMethodId: string = '';
   guid: string | null = null;
@@ -26,6 +28,15 @@ class WireStore {
   setShowBtc = (value: boolean) => {
     this.showBtc = value;
   };
+
+  @action
+  setTokenType(value: boolean) {
+    this.offchain = value;
+    // disable recurring for onchain
+    if (!value) {
+      this.recurring = false;
+    }
+  }
 
   @action
   setShowCardselector = (value: boolean) => {
@@ -153,7 +164,7 @@ class WireStore {
    * Confirm and Send wire
    */
   @action
-  async send(): Promise<any> {
+  async send(wc?: WCStore): Promise<any> {
     if (this.sending) {
       return;
     }
@@ -169,18 +180,22 @@ class WireStore {
       this.sending = true;
 
       if (this.guid && this.owner) {
-        done = await wireService.send({
-          amount: this.amount,
-          guid: this.guid,
-          owner: this.owner,
-          recurring: this.recurring,
-          currency: this.currency,
-          paymentMethodId: this.paymentMethodId,
-        });
+        done = await wireService.send(
+          {
+            amount: this.amount,
+            guid: this.guid,
+            owner: this.owner,
+            recurring: this.recurring,
+            currency: this.currency,
+            offchain: this.offchain,
+            paymentMethodId: this.paymentMethodId,
+          },
+          wc,
+        );
       }
-
       this.stopSending();
     } catch (e) {
+      console.log(e);
       this.stopSending();
       throw e;
     }

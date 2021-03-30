@@ -37,7 +37,7 @@ const ActivityScreen = observer((props: PropsType) => {
           (params.entity.guid || params.entity.entity_guid)
         ) {
           const urn =
-            'urn:entity:' + (params.entity.guid || params.entity.entity_guid);
+            'urn:activity:' + (params.entity.guid || params.entity.entity_guid);
 
           const entity = ActivityModel.checkOrCreate(params.entity);
 
@@ -53,7 +53,7 @@ const ActivityScreen = observer((props: PropsType) => {
             params.entity._list.metadataService.pushSource('single');
           }
         } else {
-          const urn = 'urn:entity:' + params.guid;
+          const urn = 'urn:activity:' + params.guid;
           await store.entityStore.loadEntity(urn, undefined, false);
 
           if (

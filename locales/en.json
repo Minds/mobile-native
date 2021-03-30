@@ -84,9 +84,16 @@
     "createChannel": "Join Minds",
     "haveAccount": "Don't have an account?",
     "alreadyHaveAccount": "Already have an account? &{login}&",
-    "failedToLoginNewAccount": "The login with your new account has failed, please try to log in the login screen"
+    "failedToLoginNewAccount": "The login with your new account has failed, please try to log in the login screen",
+    "authCode": "Authentication code",
+    "totpDesc": "Open the two-factor authentication app on your device to view your authentication code and verify your identity.",
+    "smsDesc": "Minds just sent a 6-digit authentication code to your phone.",
+    "confirmPasswordModal": "Please confirm your account password to continue"
   },
   "blockchain": {
+    "exportLegacyWallet": "Export legacy wallets",
+    "exportLegacy1": "You have the private keys of at least one wallet in the app.",
+    "exportLegacy2": "Please store it if you don't want to lose access to them.",
     "boostCreate": "Network Boost for {{tokensAmount}} Minds Tokens. {{message}}",
     "boostPeerCreate": "Channel Boost for {{tokensAmount}} Minds Tokens to {{receiver}}. {{message}}",
     "tokenApprove": "Approve {{address}} to spend {{tokensAmount}} tokens in the future. {{message}}",
@@ -261,6 +268,7 @@
     "blocked": "Channel Blocked",
     "banned": "This channel is banned",
     "viewScheduled": "Scheduled",
+    "notExist": "Sorry, this channel doesn't appear to exist",
     "edit": {
       "bio": "Bio",
       "about": "About Info",
@@ -343,7 +351,8 @@
     "onboardingText": "An additional password is required for messenger in order to ensure that your messages are private and fully encrypted.",
     "setupMessage1": "You only need to enter this encryption password once as long as you stay signed in.",
     "setupMessage2": "It is important so that no one other than you and the people you are communicating with can access the content of your messages.",
-    "setupMessage3": "By default the content of your messages is fully encrypted. For heightened security you may wish to go to your app settings and turn off push notifications in order to disallow metadata from being tracked."
+    "setupMessage3": "By default the content of your messages is fully encrypted. For heightened security you may wish to go to your app settings and turn off push notifications in order to disallow metadata from being tracked.",
+    "messengerRekey": "Change your encryption password"
   },
   "newsfeed": {
     "title": "Newsfeed",
@@ -562,10 +571,30 @@
     "passwordFormatNumber": "At least 1 number",
     "passwordFormatNoSpaces": "Doesn't have spaces",
     "showMatureContent": "Always show mature content (+18)",
-    "TFA": "Two-factor authentication",
-    "TFAdescription": "Add an extra layer of security to your account by enabling 2FA",
-    "TFAEnabled": "You may disable 2FA at any point. If you’ve change mobile number, you will need to disable and re-enable 2FA",
+    "TFA": "2FA",
+    "TFAdescription": "Two-factor authentication adds an extra layer of security to your account. In addition to your username and password, you’ll need to enter a code that Minds sends to you via text or an app on your phone.",
+    "TFAEnabled": "2FA Enabled",
+    "TFADisabled": "2FA Disabled",
     "TFADisable": "Disable 2FA",
+    "TFADisableYes": "Yes, Disable 2FA",
+    "TFADisableDesc": "Are you sure you wish to disable two-factor authentication on your Minds account?",
+    "TFAEnterCode": "Enter the six-digit code from the application",
+    "TFARecoveryCodes": "Recovery codes",
+    "TFARecoveryCodesTitle": "2. Recovery codes",
+    "TFARecoveryCodesDesc": "Recovery codes are used to access your account in the event you cannot receive two-factor authentication codes.",
+    "TFARecoveryCodesBeSure": "Please make sure to store this information securely. If you lose it we can not guarantee that you will regain access to your account",
+    "TFAVerifyTitle": "1. Verify with authenticator app",
+    "TFAVerifyDesc": "Enter the following two-factor secret into your authenticator app",
+    "TFAVerifyPhoneTitle1": "1. Phone number",
+    "TFAVerifyPhoneTitle2": "2. Confirm code",
+    "TFAVerifyPhoneDesc2": "Verification code sent to",
+    "TFAVerifyPhoneDesc1": "This is the phone number where SMS verification codes will be sent each time you login.",
+    "TFAOptions": {
+      "appTitle": "App",
+      "appDescription": "Use an application on your phone to get two-factor authentication codes when prompted.",
+      "smsTitle": "SMS",
+      "smsDescription": "Minds will send you an SMS with a two-factor authentication code when prompted"
+    },
     "sessionsOpened": "You currently have {{amount}} opened sessions",
     "closeSessions": "CLOSE ALL SESSIONS",
     "subscriptionListEmpty": "You don't have any recurring subscription",
@@ -580,6 +609,7 @@
     "dataSaverDisableOnWifi": "Disable on Wi-Fi",
     "dataSaverDescription": "When Data Saver is turned on, videos won't load in advance to help you use less data.",
     "dataSaverDisableOnWiFiDescription": "When enabled, Data Saver mode will automatically disable when a Wi-Fi connection is detected.",
+    "saved": "Setting saved",
     "reportedContent": {
       "action": {
         "actionNSFW": "marked NSFW",
@@ -607,7 +637,8 @@
       "4": "Notifications",
       "5": "NSFW Content",
       "6": "Messenger",
-      "7": "Autoplay Videos"
+      "7": "Autoplay Videos",
+      "8": "Boosted Content"
     },
     "networkOptions": {
       "1": "Data Saver"
@@ -636,6 +667,22 @@
       "enable": "Enable video autoplay",
       "saved": "Changes Saved",
       "notPlus": "This feature is only available to Plus users."
+    },
+    "boost": {
+      "description": "Control how boost works across the site.",
+      "learn": "Learn more about",
+      "viewBoostedContent": "View Boosted Content",
+      "viewBoostedContentTooltip": "Minds+ users may hide Boosts from their newsfeed",
+      "boostAutoRotation": "Boost Auto-rotation",
+      "boostAutoRotationTooltip": "Enable/disable the Boost box on top of your feed from self-rotating",
+      "openContent": "Open Content",
+      "openContentTooltip": "Open may contain controversial content. By selecting Open, you acknowledge that you are willing to see controversial content.",
+      "liquiditySpot": "Liquidity Spot",
+      "liquiditySpotTooltip": "Minds Token liquidity providers are rewarded with boosted ad space relative to their % of the liquidity pool.",
+      "optIn": "Opt-in",
+      "optOut": "Opt-out",
+      "enable": "Enable",
+      "disable": "Disable"
     }
   },
   "comingSoon": {
@@ -647,25 +694,24 @@
     "tooLong": "Video duration must be less than {{minutes}} minutes"
   },
   "onboarding": {
-    "startEarning":"Start earning tokens",
-    "improveExperience":"Improve your experience",
-    "joinGroup":"Join a group",
-    "hidePanel": "Hide this panel",
-    "subscribeToChannel":"Subscribe to a channel",
-    "completeToEarn":"Complete to earn tokens",
-    "tooltipInitial1":"To get most from Minds",
-    "tooltipInitial2":"please complete these steps",
-    "verifyEmailAddress":"Verify email address",
+    "startEarning": "Start earning tokens",
+    "improveExperience": "Improve your experience",
+    "joinGroup": "Join a group",
+    "subscribeToChannel": "Subscribe to a channel",
+    "completeToEarn": "Complete to earn tokens",
+    "tooltipInitial1": "To get most from Minds",
+    "tooltipInitial2": "please complete these steps",
+    "verifyEmailAddress": "Verify email address",
     "selectTags": "Select tags",
-    "setupChannel":"Setup channel",
-    "verifyUniqueness":"Verify uniqueness",
-    "setContentPreferences":"Set content preferences",
-    "verifyEmailDescription1":"A verification email was sent to {{email}} with a verification link.",
-    "verifyEmailDescription2":"Please check your spam folder if you can’t find it. Otherwise, you can resend it.",
-    "resendEmail":"Resend verification email",
-    "couldntLoadStatus":"Couldn't load your onboarding status",
-    "hashtagDescription":"Select at least three tags that are of interest to you. This will allow you to discover relevant content.",
-    "selectThreeTags":"Select at least three tags",
+    "setupChannel": "Setup channel",
+    "verifyUniqueness": "Verify uniqueness",
+    "setContentPreferences": "Set content preferences",
+    "verifyEmailDescription1": "A verification email was sent to {{email}} with a verification link.",
+    "verifyEmailDescription2": "Please check your spam folder if you can’t find it. Otherwise, you can resend it.",
+    "resendEmail": "Resend verification email",
+    "couldntLoadStatus": "Couldn't load your onboarding status",
+    "hashtagDescription": "Select at least three tags that are of interest to you. This will allow you to discover relevant content.",
+    "selectThreeTags": "Select at least three tags",
     "chooseAvatar": "Choose an avatar",
     "earnTokens": "Earn tokens for your activity",
     "weDontStorePhone": "We do not store your phone number on our servers.",
@@ -701,7 +747,8 @@
     "connectBank": "Connect Bank",
     "buyTokens": "Buy Tokens",
     "onboardingCompleted": "Now you can earn tokens",
-    "improvedExperience": "Your feed should be livelier!"
+    "improvedExperience": "Your feed should be livelier!",
+    "mustVerify": "Before you can start earning or purchase tokens, it is important that we can simply verify your uniqueness. The less tokens spammers take, the more that are left for you! To learn about how we keep your data private,"
   },
   "membership": {
     "noTokens": "It doesn't accept Tokens",
@@ -712,9 +759,11 @@
   },
   "wallet": {
     "wallet": "Wallet",
+    "connect": "Connect Wallet",
+    "reconnect": "Reconnect Wallet",
     "cash": "Cash",
     "activeAddress": "Mobile Receiver Address (Active)",
-    "alternateReceiver": "Alternate receiver address",
+    "alternateReceiver": "Change Address",
     "createAddress": "Create a new address (Recommended)",
     "transferToOnchain": "Transfer to On-chain",
     "usePrivateKey": "Use your private key",
@@ -726,6 +775,11 @@
     "walletActions": "WALLET ACTIONS",
     "walletBalance": "Wallet balance",
     "transactionsEmpty": "Your transaction list is empty",
+    "unpaid": "Unpaid",
+    "unpaidEarnings": "Unpaid earnings",
+    "total": "Total",
+    "totalPaidout": "Total paid out",
+    "alltime": "All-time earnings",
     "withdraw": {
       "errorOnlyOnceDay": "You may only withdraw once a day",
       "errorWithdrawing": "Error withdrawing tokens",
@@ -748,7 +802,18 @@
       "leaveButton": "Leave Monetization Program",
       "confirmLeave": "Are you sure? You won't be able to rejoin.",
       "sure": "Yes, I'm sure",
-      "earnings": "Earnings"
+      "earnings": "Earnings",
+      "tooltips": {
+        "proTitle": "Summary of your earnings through your Minds Pro membership.",
+        "plusTitle": "Summary of your earnings through your Minds+ membership.",
+        "plusScore": "Your score for engagement on your content submissions to Minds+.",
+        "plusTotal": "Total network score for engagement on all content submissions to Minds+.",
+        "plusPercentage": "Your score divided by the total network score.",
+        "plusReward": "Your estimated token reward based on your percent share.",
+        "plusActivity": "Your account's activity level to determine your multiplier",
+        "proPageviews": "Your total earnings for registered pageviews on your content or channel",
+        "proReferrals": "Your total earning for active users you have referred."
+      }
     },
     "transactions": {
       "transaction": "Transaction",
@@ -804,7 +869,7 @@
       "description": "You can receive Bitcoin payments by linking your Bitcoin receiver address below.",
       "add": "Add bitcoin address",
       "current": "CURRENT RECEIVER ADDRESS",
-      "update": "Update Address",
+      "update": "Update Bitcoin Address",
       "error": "SORRY, WE COULDN'T SET YOUR ADDRESS"
     },
     "bank": {
@@ -831,6 +896,46 @@
       "fail": "Something went wrong",
       "finish": "Finish adding your bank details to start receiving cash payouts",
       "complete": "Complete bank details"
+    },
+    "date": "Date",
+    "today": "Today",
+    "todayEstimate": "Today’s estimate",
+    "payout": "Payout",
+    "engagement": "Engagement",
+    "holding": "Holding",
+    "liquidity": "Liquidity",
+    "tokens": {
+      "tooltips": {
+        "todayEstimate": "Your estimated token payout for today's contribution.",
+        "prevDateEarnings": "Your token payout for this date.",
+        "nextPayout": "Countdown until your next token payout is issued.",
+        "engagement": "Summary of your token rewards for engagement on your content.",
+        "holding": "Summary of your token rewards for holding tokens on-chain.",
+        "liquidity": "Summary of your token rewards for providing liquidity.",
+        "engagementScore": "Your score for referrals and engagement on your content and channel.",
+        "engagementTotal": "Total network score for all referrals and engagement on the app.",
+        "engagementPercentage": "Your score divided by the total network score.",
+        "engagementReward": "Your estimated token reward based on your percent share.",
+        "engagementActivity": "Your account's activity level to determine your multiplier.",
+        "holdingScore": "Your score for holding your tokens on-chain.",
+        "holdingTotal": "Total network score for holding tokens on-chain.",
+        "holdingPercentage": "Your score divided by the total network score.",
+        "holdingReward": "Your estimated token reward based on your percent share.",
+        "holdingBalance": "Your current on-chain token balance.",
+        "holdingDuration": "The number of consecutive days you have held tokens on-chain",
+        "holdingMultiplier": "Your score multiplier as determined by duration.",
+        "liquidityScore": "Your score for providing liquidity.",
+        "liquidityTotal": "Total network score for providing liquidity.",
+        "liquidityPercentage": "Your score divided by the total network score.",
+        "liquidityReward": "Your estimated token reward based on your percent share.",
+        "liquidityBalance": "Your current liquidity position.",
+        "liquidityDuration": "The number of consecutive days you have provided liquidity.",
+        "liquidityMultiplier": "Your score multiplier as determined by duration."
+      },
+      "completeToTransfer": "Please complete the following before transferring MINDS tokens on-chain.",
+      "tokenAmount": "Amount",
+      "transferRequest": "You can request to transfer up to 999 tokens from your rewards to your on-chain wallet below. You may only transfer once per day.",
+      "transferNote": "Note: a small amount of ETH will be charged to cover the transaction fee."
     }
   },
   "analytics": {
@@ -844,6 +949,45 @@
       "totalViews": "Total Views",
       "organic": "Organic",
       "pageViews": "Page Views"
+    },
+    "tokens": {
+      "title": "Tokens",
+      "labels": {
+        "LiquidityFees": "Fees (24h)",
+        "LiquidityTotal": "Total liquidity",
+        "LiquidityTradedVolume": "Traded volume (24h)",
+        "EngagementScore": "Engagement",
+        "HoldingScore": "Holding",
+        "LiquidityScore": "Liquidity",
+        "EmissionBreakDown": "Emission breakdown",
+        "CirculatingSupply": "Circulating supply",
+        "MarketCap": "Market cap",
+        "TokenHolders": "All-time token holders",
+        "TokensReclaimed": "Tokens reclaimed",
+        "TokensRewarded": "Tokens rewarded",
+        "TotalSupply": "Total Supply",
+        "TransactionsCount": "Transactions count",
+        "TransactionsUnique": "Active token users",
+        "TransactionsVolume": "Transactions volume"
+      },
+      "tooltips": {
+        "LiquidityFees": "Total fees earned by liquidity providers in the past 24 hours",
+        "LiquidityTotal": "Total liquidity pooled on Uniswap",
+        "LiquidityTradedVolume": "Total volume traded on Uniswap in the past 24 hours",
+        "EngagementScore": "The total number of points generated by the community for receiving engagement on their posts in the past 24 hours",
+        "HoldingScore": "The total number of points generated by the community for holding tokens on-chain in the past 24 hours",
+        "LiquidityScore": "The total number of points generated by the community for providing liquidity in the past 24 hours",
+        "EmissionBreakDown": "A summary of how many tokens are rewarded each day and how they are allocated",
+        "CirculatingSupply": "The number of tokens circulating in the community",
+        "MarketCap": "The circulating supply multiplied by the current market price of the token",
+        "TokenHolders": "The total number of users who have ever held a token",
+        "TokensReclaimed": "The total number of tokens reclaimed by Minds for providing services",
+        "TokensRewarded": "The total number of tokens rewarded to the community",
+        "TotalSupply": "The total number of tokens that can ever exist",
+        "TransactionsCount": "The total number of token transactions in the past 24 hours",
+        "TransactionsUnique": "The total number of unique users who have performed a token transaction in the past 24 hours",
+        "TransactionsVolume": "The total volume of tokens exchanged in the past 24 hours"
+      }
     }
   },
   "wire": {
@@ -976,7 +1120,7 @@
     "status": "Status",
     "rewardsSignup": "Rewards Signup",
 
-    "description": "If your friend signs up for Minds within 24 hours of clicking the link you shared with them, they’ll be added to your pending referrals. Once they sign up for the rewards program by setting up their Minds wallet, the referral is complete and you’ll both get +1 added to your contribution scores!"
+    "description": "If your friend signs up for Minds within 24 hours of clicking the link you shared with them, they’ll be added to your pending referrals. Once they sign up for the rewards program by setting up their Minds wallet, the referral is complete and you’ll both get +10 added to your contribution scores!"
   },
   "add": "Add",
   "downloading": "Downloading",
@@ -991,7 +1135,7 @@
   "save": "Save",
   "edit": "Edit",
   "goback": "Go back",
-  "quote":"Quote",
+  "quote": "Quote",
   "copy": "Copy",
   "yes": "Yes",
   "no": "No",
@@ -1082,7 +1226,7 @@
   "enableComments": "Enable comments",
   "disableComments": "Disable comments",
   "viewRepliesComments": {
-    "one":   "View 1 reply",
+    "one": "View 1 reply",
     "other": "View {{count}} replies"
   },
   "noInternet": "No Internet Connection",
@@ -1097,27 +1241,27 @@
   "copied": "Copied to clipboard",
   "close": "Close",
   "now": "Now",
-  "joined":"Joined",
+  "joined": "Joined",
   "title": "Title",
   "filter": "Filter",
   "captcha": "Enter the characters above",
-  "startFreeTrial":"Start free trial",
+  "startFreeTrial": "Start free trial",
   "visibility": "Visibility",
   "about": "About",
-  "takePhoto":"Take a photo",
+  "takePhoto": "Take a photo",
   "uploadPhoto": "Upload a photo",
   "uploading": "Uploading media, please wait",
-  "verify":"Verify",
-  "other":"Other",
+  "verify": "Verify",
+  "other": "Other",
   "purchase": "Purchase",
   "verification": "Verification",
   "uploadFailed": "Upload failed",
   "imageViewer": "View image",
-  "remindedBy":"Reminded by",
-  "postReminded":"Post has been reminded",
-  "remindRemoved":"Remind has been removed",
-  "deletedRemind":"This reminded content is unavailable. It may have been deleted or you do not have permission to view it",
-  "undoRemind":"Undo remind",
+  "remindedBy": "Reminded by",
+  "postReminded": "Post has been reminded",
+  "remindRemoved": "Remind has been removed",
+  "deletedRemind": "This reminded content is unavailable. It may have been deleted or you do not have permission to view it",
+  "undoRemind": "Undo remind",
   "permaweb": {
     "title": "Permaweb",
     "description": "Posting to permaweb",
@@ -1127,5 +1271,54 @@
     "viewOnPermaweb": "Permaweb"
   },
   "help": "Help",
-  "unblock":"Unblock"
+  "unblock": "Unblock",
+  "buyTokensScreen": {
+    "title": "Buy Tokens",
+    "paymentMethod": "Payment Method",
+    "deliverEstimate": "Delivery Estimate: 1-2 {{estimate}}",
+    "terms": "I have read and accept the &{link}& for the Minds Token.",
+    "linkText": "Terms Of Sale",
+    "learnMore": "Learn more about tokens",
+    "buy": "Continue"
+  },
+  "earnScreen": {
+    "title": "Earn",
+    "increase": "Increase your earnings",
+    "resources": {
+      "title": "Resources",
+      "rewards": "How rewards are calculated",
+      "tokens": "How to use tokens",
+      "earnings": "Track your earnings",
+      "analytics": "View token analytics"
+    },
+    "pool": {
+      "title": "Add liquidity"
+    },
+    "transfer": {
+      "title": "Transfer on-chain"
+    },
+    "create": {
+      "title": "Create content"
+    },
+    "refer": {
+      "title": "Refer"
+    },
+    "unlock": {
+      "title": "Unlock revenue-sharing",
+      "mindsPlus": "Upgrade to Minds+",
+      "pro": "Upgrade to Minds Pro"
+    }
+  },
+  "orderReport": {
+    "thanksMessage": "Thank you. We've received your order for {{tokenAmount}} Minds tokens.",
+    "processDuration": "It normally takes a few minutes for your order to be delivered. You will receive a confirmation email once your order is processed.",
+    "paymentMethod": "Payment Method",
+    "tokenAmount": "Token Amount",
+    "totalPayment": "Total Payment"
+  },
+  "points": "points",
+  "mindsPlusFeature": "Minds+ Feature",
+  "browserOnly": "Browser Only",
+  "clickHere": "click here",
+  "enabled": "Enabled"
 }

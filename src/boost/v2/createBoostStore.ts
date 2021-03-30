@@ -1,6 +1,8 @@
+import web3Util from 'web3-utils';
+
 import { showNotification } from '../../../AppMessages';
-import BlockchainBoostService from '../../blockchain/services/BlockchainBoostService';
-import Web3Service from '../../blockchain/services/Web3Service';
+import BlockchainBoostService from '../../blockchain/v2/services/BlockchainBoostService';
+import { WCStore } from '../../blockchain/v2/walletconnect/WalletConnectContext';
 import type UserModel from '../../channel/UserModel';
 import apiService from '../../common/services/api.service';
 import i18n from '../../common/services/i18n.service';
@@ -11,9 +13,11 @@ import { Wallet, WalletCurrency } from '../../wallet/v2/WalletTypes';
 export type boostType = 'channel' | 'post' | 'offer';
 
 const createBoostStore = ({
+  wc,
   wallet,
   entity,
 }: {
+  wc: WCStore;
   wallet: Wallet;
   entity: UserModel | ActivityModel;
 }) => {
@@ -103,22 +107,38 @@ const createBoostStore = ({
     },
     async buildPaymentMethod(guid, checksum) {
       if (this.payment === 'onchain') {
+        try {
+          await wc.connect();
+        } catch (error) {
+          throw new Error('Connect your wallet first');
+        }
+        if (!wc.web3 || !wc.address) {
+          throw new Error('Connect your wallet first');
+        }
+
+        if (!this.boostOfferTarget?.eth_wallet) {
+          throw new Error('This user does not have an on-chain account');
+        }
+
+        const boostService = new BlockchainBoostService(wc.web3, wc);
         return {
           method: 'onchain',
           txHash:
             this.boostType !== 'offer'
-              ? await BlockchainBoostService.create(
+              ? await boostService.create(
                   guid,
                   this.amountTokens,
                   checksum,
+                  wc.address,
                 )
-              : await BlockchainBoostService.createPeer(
+              : await boostService.createPeer(
                   this.boostOfferTarget?.eth_wallet,
                   guid,
                   this.amountTokens,
                   checksum,
+                  wc.address,
                 ),
-          address: this.selectedPaymentMethod.address,
+          address: wc.address,
         };
       } else {
         return {
@@ -151,7 +171,7 @@ const createBoostStore = ({
     },
     async boostOffer({ guid, checksum }) {
       try {
-        const amount = Web3Service.web3.utils
+        const amount = web3Util
           .toWei(`${this.amountTokens}`, 'ether')
           .toString();
         await apiService.post(

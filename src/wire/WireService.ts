@@ -1,15 +1,13 @@
-// @ts-nocheck
 import api from '../common/services/api.service';
 import i18n from '../common/services/i18n.service';
-import BlockchainWireService from '../blockchain/services/BlockchainWireService';
-import BlockchainTokenService from '../blockchain/services/BlockchainTokenService';
-import BlockchainWalletService from '../blockchain/wallet/BlockchainWalletService';
+import BlockchainWireService from '../blockchain/v2/services/BlockchainWireService';
+
 import type {
   WireRequest,
-  Payload,
-  PayloadOnchain,
+  PaymentMethod,
   TransactionPayload,
 } from './WireTypes';
+import { WCStore } from '../blockchain/v2/walletconnect/WalletConnectContext';
 
 /**
  * Wire Service
@@ -72,8 +70,8 @@ class WireService {
    * Send wire
    * @param {object} opts
    */
-  async send(opts: WireRequest): Promise<any> {
-    const payload = await this.getTransactionPayloads(opts);
+  async send(opts: WireRequest, wc?: WCStore): Promise<any> {
+    const payload = await this.getTransactionPayloads(opts, wc);
 
     if (!payload) {
       return;
@@ -97,65 +95,57 @@ class WireService {
    * Get transaction payloads
    * @param {object} opts
    */
-  async getTransactionPayloads(opts: WireRequest): Promise<TransactionPayload> {
-    let payload: Payload | PayloadOnchain | null = null;
-
+  async getTransactionPayloads(
+    opts: WireRequest,
+    wc?: WCStore,
+  ): Promise<TransactionPayload> {
+    let type: PaymentMethod | null = null;
     switch (opts.currency) {
       case 'tokens':
+        type = opts.offchain ? 'offchain' : 'onchain';
+        break;
       case 'eth':
-        payload = await BlockchainWalletService.selectCurrent(
-          i18n.t('wire.selectWalletMessage'),
-          {
-            signable: true,
-            offchain: opts.currency === 'tokens',
-            confirmTokenExchange: opts.amount,
-            currency: opts.currency,
-          },
-        );
-        break;
       case 'usd':
-        payload = { type: 'usd' };
+        type = opts.currency;
         break;
     }
 
-    if (!payload || payload.cancelled) {
-      return null;
-    }
-
-    switch (payload.type) {
-      case 'creditcard':
-        return {
-          method: payload.type,
-          address: 'offchain',
-          token: payload.token,
-        };
-
+    switch (type) {
       case 'offchain':
         return {
           method: 'offchain',
           address: 'offchain',
         };
-
       case 'onchain':
         if (!opts.owner.eth_wallet) {
           throw new Error(i18n.t('boosts.errorCantReceiveTokens'));
         }
-
-        if (opts.recurring) {
-          await BlockchainTokenService.increaseApproval(
-            (await BlockchainWireService.getContract()).options.address,
-            opts.amount * 11,
-            i18n.t('wire.preApproveMessage'),
-          );
+        if (!wc) {
+          throw new Error('A wallet connect store must be provided');
         }
 
+        try {
+          await wc?.connect();
+        } catch (error) {
+          console.log(error);
+          // if the user cancel the connection or it fails we return null
+          return null;
+        }
+
+        if (!wc.web3 || !wc?.address) {
+          throw new Error('You must connect a wallet first');
+        }
+
+        const wireService = new BlockchainWireService(wc.web3, wc);
+
         return {
-          method: payload.type,
-          address: (payload as PayloadOnchain).wallet.address,
+          method: type,
+          address: wc.address,
           receiver: opts.owner.eth_wallet,
-          txHash: await BlockchainWireService.create(
+          txHash: await wireService.create(
             opts.owner.eth_wallet,
             opts.amount,
+            wc.address,
           ),
         };
 
@@ -163,12 +153,30 @@ class WireService {
         if (!opts.owner.eth_wallet) {
           throw new Error(i18n.t('boosts.errorCantReceiveTokens'));
         }
+        if (!wc) {
+          throw new Error('A wallet connect store must be provided');
+        }
+
+        try {
+          await wc?.connect();
+        } catch (error) {
+          console.log(error);
+          // if the user cancel the connection or it fails we return null
+          return null;
+        }
+
+        if (!wc.web3 || !wc?.address) {
+          throw new Error('You must connect a wallet first');
+        }
+
+        const blockchainWireService = new BlockchainWireService(wc.web3, wc);
 
         return {
-          method: payload.type,
-          address: (payload as PayloadOnchain).wallet.address,
+          method: type,
+          address: wc.address,
           receiver: opts.owner.eth_wallet,
-          txHash: await BlockchainWireService.createEth(
+          txHash: await blockchainWireService.createEth(
+            wc.address,
             opts.owner.eth_wallet,
             opts.amount,
           ),
@@ -176,7 +184,7 @@ class WireService {
 
       case 'usd':
         return {
-          method: payload.type,
+          method: type,
           paymentMethodId: opts.paymentMethodId,
         };
     }

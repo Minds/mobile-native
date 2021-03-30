@@ -9,7 +9,6 @@ import { observer } from 'mobx-react';
 import SuggestedSearch from './SuggestedSearch';
 import SearchHistory from './SearchHistory';
 import MenuItem from '../../common/components/menus/MenuItem';
-import { useLegacyStores } from '../../common/hooks/use-stores';
 import { SearchResultStoreType } from './createSearchResultStore';
 
 type PropsType = {
@@ -29,7 +28,10 @@ const SearchResultComponent = observer(
             key={user.guid}
             //@ts-ignore
             testID={`suggestedUser${index}`}
-            onUserTap={(item) => localStore.searchBarItemTap(item)}
+            onUserTap={(item) => {
+              localStore.searchBarItemTap(item);
+              navigation.goBack();
+            }}
             subscribe={false}
             navigation={navigation}
           />
@@ -68,7 +70,8 @@ const SearchResultComponent = observer(
 
     // If have something to search, render suggested, else, search history
     return (
-      <View style={[theme.backgroundPrimary, theme.padding2x]}>
+      <View
+        style={[theme.backgroundPrimary, theme.padding2x, theme.flexContainer]}>
         {localStore.shouldShowSuggested && (
           <SuggestedSearch localStore={localStore} renderUser={renderUser} />
         )}

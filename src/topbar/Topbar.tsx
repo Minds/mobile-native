@@ -7,7 +7,7 @@ import {
   Text,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import IconFa from 'react-native-vector-icons/FontAwesome5';
+import IconFA from 'react-native-vector-icons/FontAwesome5';
 
 import { observer } from 'mobx-react';
 import SearchComponent from './searchbar/SearchComponent';
@@ -32,9 +32,12 @@ export const Topbar = observer((props: PropsType) => {
 
   // dereference to react to observable changes
   const balance = wallet.balance;
+  const prices = wallet.prices;
+  const usdBalance = balance * parseFloat(prices.minds);
 
   useEffect(() => {
     if (user) {
+      wallet.loadPrices();
       wallet.getTokenAccounts();
     }
   });
@@ -59,6 +62,7 @@ export const Topbar = observer((props: PropsType) => {
         const cleanTop = {
           paddingTop: insets && insets.top ? insets.top - 5 : 0,
         };
+
         return (
           <View style={[theme.backgroundPrimary, styles.shadow]}>
             <View
@@ -99,9 +103,10 @@ export const Topbar = observer((props: PropsType) => {
                       theme.paddingRight2x,
                       theme.paddingVertical2x,
                     ]}>
-                    {intword(balance)}
+                    {usdBalance > 0 && '$' + intword(usdBalance)}
                   </Text>
-                  <IconFa
+
+                  <IconFA
                     name="coins"
                     size={20}
                     style={theme.colorIcon}
@@ -172,7 +177,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   topbarRight: {
-    width: 50,
+    width: 75,
     justifyContent: 'flex-end',
     alignItems: 'center',
     flexDirection: 'row',

@@ -47,12 +47,12 @@ export default observer(function VerifyUniquenessScreen() {
   const otherMapping: Array<MappingItems> = [
     {
       title: i18n.t('monetize.plusHeader'),
-      screen: 'PlusScreen',
+      screen: 'UpgradeScreen',
       params: { onComplete: () => {}, pro: false },
     },
     {
       title: i18n.t('monetize.proHeader'),
-      screen: 'PlusScreen',
+      screen: 'UpgradeScreen',
       params: { onComplete: () => {}, pro: true },
     },
     /*{

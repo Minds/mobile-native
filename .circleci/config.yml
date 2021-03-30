@@ -9,7 +9,7 @@ commands:
       - restore_cache:
           key: bundle-v1-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
       - run:
-          command: gem update --system && gem install bundler && bundle install
+          command: gem update --system && gem install bundler && bundle install && bundle update fastlane
           working_directory: ios
       - save_cache:
           key: bundle-v1-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
@@ -36,18 +36,15 @@ commands:
   brew:
     description: 'Installs brew dependencies'
     steps:
-      - restore_cache:
-          key: brew-v1-{{ arch }}
+      # - restore_cache:
+      #     key: brew-v1-{{ arch }}
       - run:
           name: Install sentry cli for fastlane plugin
           command: brew install getsentry/tools/sentry-cli
-      - run:
-          name: Update brew
-          command: brew update
-      - save_cache:
-          key: brew-v1-{{ arch }}
-          paths:
-            - /usr/local/Homebrew
+      # - save_cache:
+      #     key: brew-v1-{{ arch }}
+      #     paths:
+      #       - /usr/local/Homebrew
 
 jobs:
   test:
@@ -77,7 +74,7 @@ jobs:
 
   ios-build:
     macos:
-      xcode: '11.1.0'
+      xcode: '12.4.0'
     working_directory: ~/mobile-native
     # use a --login shell so our "set Ruby version" command gets picked up for later steps
     shell: /bin/bash --login -o pipefail

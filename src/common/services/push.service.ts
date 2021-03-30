@@ -2,12 +2,14 @@ import { Platform } from 'react-native';
 
 import Router from './push/v2/router';
 import logService from './log.service';
+import type IosPlatfom from './push/ios-platform';
+import type AndroidPlatfom from './push/android-platform';
 
 /**
  * Push Service
  */
 export class PushService {
-  push;
+  push: IosPlatfom | AndroidPlatfom;
   router;
 
   /**

@@ -1,5 +1,5 @@
 import React, { useRef, useCallback, useEffect } from 'react';
-import { View, StyleSheet, Platform, Clipboard } from 'react-native';
+import { View, StyleSheet, Platform } from 'react-native';
 import { useDimensions } from '@react-native-community/hooks';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { useFocus } from '@crowdlinker/react-native-pager';
@@ -37,6 +37,7 @@ import ActivityMetrics from '../../../newsfeed/activity/metrics/ActivityMetrics'
 import CommentBottomSheet from '../../../comments/v2/CommentBottomSheet';
 import type BottomSheet from '@gorhom/bottom-sheet';
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 type ActivityRoute = RouteProp<AppStackParamList, 'Activity'>;
 

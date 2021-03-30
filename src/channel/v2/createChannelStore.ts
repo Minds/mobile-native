@@ -142,7 +142,7 @@ const createChannelStore = () => {
           `api/v2/${this.endpoint}/${this.channel.guid}/${this.esFeedfilter}`,
         )
         .setIsTiled(filter === 'images' || filter === 'videos')
-        .setAsActivities(this.esFeedfilter !== 'blogs')
+        .setAsActivities(false)
         .clear()
         .fetchRemoteOrLocal();
     },
@@ -225,6 +225,7 @@ const createChannelStore = () => {
     async loadFromGuidOrUsername(guidOrUsername: string) {
       const channel = await channelsService.get(guidOrUsername);
       if (!channel) {
+        this.loaded = true;
         return;
       }
       if (this.isNsfw(channel)) {

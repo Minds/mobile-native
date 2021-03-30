@@ -14,6 +14,7 @@ export type WireRequest = {
   currency: Currency;
   amount: number;
   recurring: boolean;
+  offchain: boolean;
   paymentMethodId?: string;
 };
 
@@ -37,7 +38,7 @@ export interface SupportTiersResponse extends ApiResponse {
   support_tiers: SupportTiersType[];
 }
 
-type PaymentMethod =
+export type PaymentMethod =
   | 'usd'
   | 'eth'
   | 'usd'
@@ -47,19 +48,6 @@ type PaymentMethod =
 
 export type Wallet = {
   address: string;
-};
-
-export type PayloadOnchain = {
-  type: 'onchain' | 'eth';
-  wallet: Wallet;
-  cancelled?: boolean;
-};
-
-export type Payload = {
-  type: PaymentMethod;
-  cancelled?: boolean;
-  address?: string;
-  token?: string;
 };
 
 export type TransactionPayload = {

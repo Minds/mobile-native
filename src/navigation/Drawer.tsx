@@ -1,50 +1,29 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  Image,
-  ScrollView,
-  StyleSheet,
-  Platform,
-} from 'react-native';
+import { View, Text, Image, StyleSheet, Platform } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import IconFo from 'react-native-vector-icons/Feather';
 import IconFa from 'react-native-vector-icons/FontAwesome5';
+import IconMC from 'react-native-vector-icons/MaterialCommunityIcons';
 import { ListItem } from 'react-native-elements';
 
 import testID from '../common/helpers/testID';
 import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
-import abbrev from '../common/helpers/abbrev';
 import featuresService from '../common/services/features.service';
 import sessionService from '../common/services/session.service';
 import { GOOGLE_PLAY_STORE } from '../config/Config';
 
-const ICON_SIZE = 23;
+const ICON_SIZE = 25;
 
 const getOptionsList = (navigation) => {
   const theme = ThemedStyles.style;
 
+  const hasRewards = sessionService.getUser().rewards;
+
   let list = [
-    /* Removed as per request in https://gitlab.com/minds/mobile-native/issues/1886
-    {
-      name: i18n.t('moreScreen.helpSupport'),
-      icon: (<Icon name='help-outline' size={ICON_SIZE} style={ theme.colorIcon }/>),
-      onPress: () => {
-        this.props.navigation.push('GroupView', { guid: '100000000000000681'});
-      }
-    },
-    {
-      name: i18n.t('moreScreen.invite'),
-      icon: (<Icon name='share' size={ICON_SIZE} style={ theme.colorIcon }/>),
-      onPress: () => {
-        shareService.invite(this.props.user.me.guid);
-      }
-    },
-    */
     {
       name: i18n.t('newsfeed.title'),
       icon: (
@@ -91,46 +70,63 @@ const getOptionsList = (navigation) => {
           },
         }
       : null,
+    featuresService.has('crypto')
+      ? {
+          name: i18n.t('moreScreen.wallet'),
+          icon: (
+            <IconMC
+              name="bank"
+              size={ICON_SIZE}
+              style={[theme.colorIcon, styles.icon]}
+            />
+          ),
+          onPress: () => {
+            navigation.navigate('Tabs', {
+              screen: 'CaptureTab',
+              params: { screen: 'Wallet' },
+            });
+          },
+        }
+      : null,
     {
-      name: i18n.t('discovery.groups'),
+      name: i18n.t('earnScreen.title'),
       icon: (
-        <IconFa
-          name="users"
-          size={ICON_SIZE - 4}
+        <Icon
+          name="attach-money"
+          size={ICON_SIZE}
           style={[theme.colorIcon, styles.icon]}
         />
       ),
       onPress: () => {
-        navigation.navigate('Tabs', {
-          screen: 'CaptureTab',
-          params: { screen: 'GroupsList' },
-        });
+        navigation.navigate('EarnModal');
+      },
+    },
+    {
+      name: 'Buy Tokens',
+      icon: (
+        <IconFa
+          name="coins"
+          size={ICON_SIZE}
+          style={[theme.colorIcon, styles.icon]}
+        />
+      ),
+      onPress: () => {
+        const navToBuyTokens = () => {
+          navigation.navigate('Tabs', {
+            screen: 'CaptureTab',
+            params: { screen: 'BuyTokens' },
+          });
+        };
+        if (!hasRewards) {
+          navigation.navigate('PhoneValidation', {
+            onComplete: navToBuyTokens,
+          });
+        } else {
+          navToBuyTokens();
+        }
       },
     },
   ];
-
-  if (featuresService.has('crypto')) {
-    list = [
-      ...list,
-      {
-        name: i18n.t('moreScreen.wallet'),
-        icon: (
-          <IconFa
-            name="coins"
-            size={ICON_SIZE}
-            style={[theme.colorIcon, styles.icon]}
-          />
-        ),
-        onPress: () => {
-          navigation.navigate('Tabs', {
-            screen: 'CaptureTab',
-            params: { screen: 'Wallet' },
-          });
-        },
-      },
-    ];
-  }
-
   list = [
     ...list,
     {
@@ -147,6 +143,22 @@ const getOptionsList = (navigation) => {
         navigation.navigate('Tabs', {
           screen: 'CaptureTab',
           params: { screen: 'Analytics' },
+        });
+      },
+    },
+    {
+      name: i18n.t('discovery.groups'),
+      icon: (
+        <IconMC
+          name="account-multiple"
+          size={ICON_SIZE - 4}
+          style={[theme.colorIcon, styles.icon]}
+        />
+      ),
+      onPress: () => {
+        navigation.navigate('Tabs', {
+          screen: 'CaptureTab',
+          params: { screen: 'GroupsList' },
         });
       },
     },
@@ -178,19 +190,6 @@ const getOptionsList = (navigation) => {
 export default function Drawer(props) {
   const channel = sessionService.getUser();
 
-  const navToSubscribers = () => {
-    props.navigation.push('Subscribers', {
-      guid: channel.guid,
-    });
-  };
-
-  const navToSubscriptions = () => {
-    props.navigation.push('Subscribers', {
-      guid: channel.guid,
-      filter: 'subscriptions',
-    });
-  };
-
   const navToChannel = () => {
     props.navigation.closeDrawer();
     props.navigation.push('Channel', { entity: channel });
@@ -200,54 +199,27 @@ export default function Drawer(props) {
   const avatar =
     channel && channel.getAvatarSource ? channel.getAvatarSource('medium') : {};
 
-  const subscribersStyle = [
-    theme.subTitleText,
-    theme.colorTertiaryText,
-    theme.fontNormal,
-    theme.marginTop3x,
-  ];
-
   return (
     <SafeAreaView style={[theme.flexContainer, theme.backgroundPrimary]}>
-      <ScrollView
-        style={[
-          theme.flexContainer,
-          theme.backgroundPrimary,
-          theme.marginTop11x,
-        ]}>
+      <View style={[theme.flexContainer, theme.backgroundPrimary]}>
         <View style={styles.headerContainer}>
           <TouchableOpacity onPress={navToChannel}>
             <Image source={avatar} style={styles.wrappedAvatar} />
           </TouchableOpacity>
-          <Text
-            style={[theme.titleText, theme.colorPrimaryText, theme.marginTop]}
-            onPress={navToChannel}>
-            {channel.name}
-          </Text>
-          <Text
-            onPress={navToChannel}
-            style={[
-              theme.subTitleText,
-              theme.colorSecondaryText,
-              theme.fontNormal,
-            ]}>
-            @{channel.username}
-          </Text>
-          <Text style={subscribersStyle}>
-            <Text onPress={navToSubscribers} style={subscribersStyle}>
-              <Text style={theme.colorPrimaryText}>
-                {abbrev(channel.subscribers_count, 0)}
-              </Text>{' '}
-              {i18n.t('subscribers')}
+          <View style={[theme.flexColumn, theme.marginLeft2x]}>
+            <Text
+              style={[styles.titleText, theme.colorPrimaryText]}
+              onPress={navToChannel}>
+              {channel.name || `@${channel.username}`}
             </Text>
-            {'   ·   '}
-            <Text onPress={navToSubscriptions} style={subscribersStyle}>
-              <Text style={theme.colorPrimaryText}>
-                {abbrev(channel.subscriptions_count, 0)}
-              </Text>{' '}
-              {i18n.t('subscriptions')}
-            </Text>
-          </Text>
+            {channel.name && (
+              <Text
+                onPress={navToChannel}
+                style={[styles.subTitleText, theme.colorSecondaryText]}>
+                @{channel.username}
+              </Text>
+            )}
+          </View>
         </View>
         <View style={styles.body}>
           {getOptionsList(props.navigation).map((l, i) =>
@@ -266,16 +238,26 @@ export default function Drawer(props) {
             ),
           )}
         </View>
-      </ScrollView>
+      </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  titleText: {
+    fontFamily: 'Roboto',
+    fontSize: Platform.select({ ios: 26, android: 24 }),
+    fontWeight: '700',
+  },
+  subTitleText: {
+    fontFamily: 'Roboto',
+    fontSize: Platform.select({ ios: 16, android: 15 }),
+    fontWeight: '400',
+  },
   headerContainer: {
-    flexDirection: 'column',
+    flexDirection: 'row',
     justifyContent: 'flex-start',
-    paddingTop: 23,
+    paddingTop: Platform.select({ ios: 33, android: 23 }),
     paddingLeft: 40,
     paddingBottom: 25,
     borderBottomWidth: StyleSheet.hairlineWidth,
@@ -285,7 +267,7 @@ const styles = StyleSheet.create({
     width: 30,
   },
   menuText: {
-    fontSize: Platform.select({ ios: 24, android: 22 }),
+    fontSize: Platform.select({ ios: 21, android: 19 }),
     fontWeight: '700',
     paddingLeft: 10,
   },
@@ -295,8 +277,8 @@ const styles = StyleSheet.create({
     borderRadius: 55,
   },
   body: {
-    paddingLeft: 24,
-    paddingTop: 40,
+    paddingLeft: Platform.select({ ios: 35, android: 25 }),
+    paddingTop: Platform.select({ ios: 50, android: 30 }),
   },
   container: {
     borderTopWidth: 0,
@@ -307,7 +289,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0,
     backgroundColor: 'transparent',
     paddingTop: 0,
-    paddingBottom: Platform.select({ ios: 37, android: 32 }),
-    //height:20
+    paddingBottom: Platform.select({ ios: 30, android: 25 }),
   },
 });

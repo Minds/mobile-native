@@ -86,7 +86,7 @@ const getTypeStringAndIcon = (
       avatar = <AvatarIcon name="trending-up" />;
       typeString = (
         <Text style={textColor}>{`${getTypeLabel(
-          entity.superType,
+          entity.contract,
           currency,
         )}ed Content`}</Text>
       );
@@ -98,9 +98,7 @@ const getTypeStringAndIcon = (
     case 'withdraw':
       avatar = <AvatarIcon name="arrow-right" />;
       typeString = (
-        <Text style={textColor}>
-          {getTypeLabel(entity.superType, currency)}
-        </Text>
+        <Text style={textColor}>{getTypeLabel(entity.contract, currency)}</Text>
       );
       break;
     case 'payout':
@@ -136,7 +134,7 @@ const getTypeStringAndIcon = (
       typeString = (
         <Text>
           <Text style={textColor}>{`${getTypeLabel(
-            entity.superType,
+            entity.contract,
             currency,
           )} ${otherUser.isSender ? 'from ' : 'to '}`}</Text>
           <Text
@@ -161,4 +159,4 @@ const getTypeStringAndIcon = (
   return { typeString, avatar };
 };
 
-export default Item;
+export default React.memo(Item);

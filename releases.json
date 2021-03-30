@@ -1,12 +1,73 @@
 {
   "versions": [
     {
+      "version": "4.9.1",
+      "href": "https://cdn-assets.minds.com/android/Minds-stable-4-9-1.apk",
+      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.9.1",
+      "changelog": ["Bug fixing"],
+      "unstable": false,
+      "hashes": [
+        {
+          "type": "md5",
+          "value": "4e667ba7b4c5985e35a5ecc85184b492"
+        },
+        {
+          "type": "sha256",
+          "value": "cfe9c4909a555a4544944ca3758d97bbf178fc3772f2f103014088446f776979"
+        },
+        {
+          "type": "sha512",
+          "value": "7a15a6f644731f0d8137942eef7336c8cf83abfc0d66d7d87e26520839457ea54673f2fe41483923aa137b8b4fc787e3641cd74024b0cb25c7dc9a0243351827"
+        }
+      ]
+    },
+    {
+      "version": "4.9.0",
+      "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-9-0.apk",
+      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.9.0",
+      "changelog": ["Changelog here"],
+      "unstable": false,
+      "hashes": [
+        {
+          "type": "md5",
+          "value": "b15445bab1cb64d97ee89cd0fc67860d"
+        },
+        {
+          "type": "sha256",
+          "value": "81934c74c56815400fce7c45ce9e7669b54256a5e792d73e19e19388434d6a09"
+        },
+        {
+          "type": "sha512",
+          "value": "7db6056d0febcf0773f02271434faebeaa23d3b677ee0b2e0751374870b4eef536853806de5746843c3e6585467ee7b3faddf5ffa0ec6b86cd570a0684702c20"
+        }
+      ]
+    },
+    {
+      "version": "4.8.2",
+      "href": "https://cdn-assets.minds.com/android/Minds-stable-4-8-2.apk",
+      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.8.2",
+      "changelog": ["Changelog here"],
+      "unstable": false,
+      "hashes": [
+        {
+          "type": "md5",
+          "value": "64c926619a11b49e73e5ab3ab1f8928f"
+        },
+        {
+          "type": "sha256",
+          "value": "602c32a79caa1037c2f42c3daec34b57b569914b3c7a7d4f05aa4b9a8b544035"
+        },
+        {
+          "type": "sha512",
+          "value": "4a4f56acff8a88f3750ba8c878fb8525033cf84ea1df7a80aa083a680c4978154ab289dfa57ddf650b0bcf580408c748a66b91976d5039852fc4539acb6d9d64"
+        }
+      ]
+    },
+    {
       "version": "4.8.1",
       "href": "https://cdn-assets.minds.com/android/Minds-stable-4-8-1.apk",
       "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.8.1",
-      "changelog": [
-        "Bug fixing"
-      ],
+      "changelog": ["Bug fixing"],
       "unstable": false,
       "hashes": [
         {
@@ -27,10 +88,7 @@
       "version": "4.8.0",
       "href": "https://cdn-assets.minds.com/android/Minds-stable-4-8-0.apk",
       "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.8.0",
-      "changelog": [
-        "Comments and boost screen redesign",
-        "Bug fixing"
-      ],
+      "changelog": ["Comments and boost screen redesign", "Bug fixing"],
       "unstable": false,
       "hashes": [
         {
@@ -51,10 +109,7 @@
       "version": "4.7.1",
       "href": "https://cdn-assets.minds.com/android/Minds-stable-4-7-1.apk",
       "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.7.1",
-      "changelog": [
-        "Fixes media upload errors",
-        "Email verification banner"
-      ],
+      "changelog": ["Fixes media upload errors", "Email verification banner"],
       "unstable": false,
       "hashes": [
         {
@@ -130,9 +185,7 @@
       "version": "4.5.1",
       "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-5-1.apk",
       "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.5.1",
-      "changelog": [
-        "Bug fixing"
-      ],
+      "changelog": ["Bug fixing"],
       "unstable": false,
       "hashes": [
         {
@@ -187,9 +240,7 @@
       "version": "4.4.2",
       "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-4-2.apk",
       "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.4.2",
-      "changelog": [
-        "Bug fixes"
-      ],
+      "changelog": ["Bug fixes"],
       "unstable": false,
       "hashes": [
         {
@@ -210,9 +261,7 @@
       "version": "4.4.1",
       "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-4-1.apk",
       "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.4.1",
-      "changelog": [
-        "Bug fixing"
-      ],
+      "changelog": ["Bug fixing"],
       "unstable": false,
       "hashes": [
         {
@@ -263,9 +312,7 @@
       "version": "4.2.1",
       "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-2-1.apk",
       "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.2.1",
-      "changelog": [
-        "Bug fixing"
-      ],
+      "changelog": ["Bug fixing"],
       "unstable": false,
       "hashes": [
         {
@@ -286,11 +333,7 @@
       "version": "4.2.0",
       "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-2-0.apk",
       "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.2.0",
-      "changelog": [
-        "Full-screen post swiper",
-        "New discovery",
-        "Bug fixing"
-      ],
+      "changelog": ["Full-screen post swiper", "New discovery", "Bug fixing"],
       "unstable": false,
       "hashes": [
         {
@@ -311,9 +354,7 @@
       "version": "4.1.1",
       "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-1-1.apk",
       "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.1.1",
-      "changelog": [
-        "Bug fixing"
-      ],
+      "changelog": ["Bug fixing"],
       "unstable": false,
       "hashes": [
         {
@@ -334,11 +375,7 @@
       "version": "4.1.0",
       "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-1-0.apk",
       "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.1.0",
-      "changelog": [
-        "New compose screen",
-        "Swipe navigation",
-        "Bug fixing"
-      ],
+      "changelog": ["New compose screen", "Swipe navigation", "Bug fixing"],
       "unstable": false,
       "hashes": [
         {
@@ -359,9 +396,7 @@
       "version": "4.0.3",
       "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-0-3.apk",
       "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.0.3",
-      "changelog": [
-        "Bug fixing"
-      ],
+      "changelog": ["Bug fixing"],
       "unstable": false,
       "hashes": [
         {
@@ -382,9 +417,7 @@
       "version": "4.0.2",
       "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-0-2.apk",
       "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.0.2",
-      "changelog": [
-        "Bug fixing"
-      ],
+      "changelog": ["Bug fixing"],
       "unstable": false,
       "hashes": [
         {
@@ -405,9 +438,7 @@
       "version": "4.0.1",
       "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-0-1.apk",
       "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.0.1",
-      "changelog": [
-        "Bug fixing"
-      ],
+      "changelog": ["Bug fixing"],
       "unstable": false,
       "hashes": [
         {
@@ -428,11 +459,7 @@
       "version": "4.0.0",
       "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-0-0.apk",
       "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.0.0",
-      "changelog": [
-        "Dark theme",
-        "Performance improvements",
-        "Bug fixes"
-      ],
+      "changelog": ["Dark theme", "Performance improvements", "Bug fixes"],
       "unstable": false,
       "hashes": [
         {
@@ -453,10 +480,7 @@
       "version": "3.15.1",
       "href": "https://cdn-assets.minds.com/mobile/Minds-stable-3-15-1.apk",
       "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v3.15.1",
-      "changelog": [
-        "New Onboarding",
-        "Bug fixes"
-      ],
+      "changelog": ["New Onboarding", "Bug fixes"],
       "unstable": false,
       "hashes": [
         {
@@ -477,10 +501,7 @@
       "version": "3.15.0",
       "href": "https://cdn-assets.minds.com/mobile/Minds-stable-3-15-0.apk",
       "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v3.15.0",
-      "changelog": [
-        "New login and register screens",
-        "Bug fixes"
-      ],
+      "changelog": ["New login and register screens", "Bug fixes"],
       "unstable": false,
       "hashes": [
         {
@@ -502,11 +523,7 @@
       "timestamp": 1576783681,
       "href": "https://cdn-assets.minds.com/android/minds-3_14_0.apk",
       "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v3.14.0",
-      "changelog": [
-        "Updated translations",
-        "Slovak added",
-        "Bug Fixes"
-      ],
+      "changelog": ["Updated translations", "Slovak added", "Bug Fixes"],
       "unstable": false,
       "hashes": [
         {
@@ -528,9 +545,7 @@
       "timestamp": 1576077180,
       "href": "https://cdn-assets.minds.com/android/minds-3_12_1.apk",
       "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v3.12.1",
-      "changelog": [
-        "Bug Fixes"
-      ],
+      "changelog": ["Bug Fixes"],
       "unstable": false,
       "hashes": [
         {
