@@ -6,6 +6,7 @@ const LOGOUT_EXCEPTIONS = ['password/validate'];
 import session from './session.service';
 import {
   MINDS_API_URI,
+  MINDS_CANARY,
   MINDS_STAGING,
   NETWORK_TIMEOUT,
 } from '../../config/Config';
@@ -143,6 +144,9 @@ class ApiService {
     if (MINDS_STAGING) {
       headers.Cookie = 'staging=1';
     }
+    if (MINDS_CANARY) {
+      headers.Cookie = 'canary=1';
+    }
 
     if (session.token) {
       headers.Authorization = 'Bearer ' + session.token;
@@ -165,6 +169,9 @@ class ApiService {
 
     if (MINDS_STAGING) {
       params.staging = '1';
+    }
+    if (MINDS_CANARY) {
+      params.canary = '1';
     }
 
     const paramsString = this.getParamsString(params);
