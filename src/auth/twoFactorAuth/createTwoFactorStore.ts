@@ -172,8 +172,6 @@ const createTwoFactorStore = () => ({
   },
   async useRecoveryCode() {
     this.setLoading(true);
-    sessionService.setRecoveryCodeUsed(true);
-    console.log('useRecoveryCode');
     try {
       const response = <any>await apiService.post(
         'api/v3/security/totp/recovery',
@@ -186,6 +184,7 @@ const createTwoFactorStore = () => ({
       if (!response.matches) {
         throw new Error(i18n.t('auth.recoveryFail'));
       }
+      sessionService.setRecoveryCodeUsed(true);
       await authService.login(this.username, this.password);
     } catch (err) {
       this.setLoading(false);
