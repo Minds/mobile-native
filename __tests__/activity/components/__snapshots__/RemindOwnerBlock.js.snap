@@ -34,6 +34,7 @@ exports[`Remind owner component renders correctly 1`] = `
             "App-Version": "3.8.0",
             "Cache-Control": "no-cache, no-store, must-revalidate",
             "Content-Type": "application/json",
+            "Cookie": "canary=1",
             "Pragma": "no-cache",
           },
           "uri": "https://cdn.minds.com/icon/824853017709780997/medium/undefined",
