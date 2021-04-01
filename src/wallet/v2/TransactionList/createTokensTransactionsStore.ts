@@ -36,6 +36,7 @@ const createTokensTransactionsStore = ({ wallet, user }: ParamsType) => {
       },
     },
     get list(): Array<SectionListEntities> {
+      // set runningTotal same value as balance
       runningTotal = wallet.balance;
       const filteredEntities = this.ledger.list.entities.filter(
         (entity: any, i) => {
