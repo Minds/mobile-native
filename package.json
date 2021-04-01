@@ -102,7 +102,7 @@
     "react-native-qrcode-svg": "^5.2.0",
     "react-native-randombytes": "^3.5.3",
     "react-native-read-more-text": "devbelieve365/react-native-read-more-text",
-    "react-native-reanimated": "1.9.0",
+    "react-native-reanimated": "^2.0.0",
     "react-native-reanimated-indicators": "^2.0.0",
     "react-native-redash": "^14.2.3",
     "react-native-safe-area-context": "^3.1.4",

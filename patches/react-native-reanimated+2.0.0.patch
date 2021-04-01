@@ -1,0 +1,12 @@
+diff --git a/node_modules/react-native-reanimated/RNReanimated.podspec b/node_modules/react-native-reanimated/RNReanimated.podspec
+index 6cdf6ac..2852ea0 100644
+--- a/node_modules/react-native-reanimated/RNReanimated.podspec
++++ b/node_modules/react-native-reanimated/RNReanimated.podspec
+@@ -85,6 +85,7 @@ Pod::Spec.new do |s|
+   s.dependency 'Yoga'
+   s.dependency 'DoubleConversion'
+   s.dependency 'glog'
++  s.dependency 'hermes-engine'
+ 
+   if reactVersion.match(/^0.62/)
+     s.dependency 'ReactCommon/callinvoker'
