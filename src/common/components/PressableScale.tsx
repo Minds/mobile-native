@@ -1,44 +1,51 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import { Pressable } from 'react-native';
-import Animated, { Easing } from 'react-native-reanimated';
-import { mix, useTransition } from 'react-native-redash';
-
-const springConfig = { duration: 100, easing: Easing.ease };
+import { View as MotiView, useAnimationState } from 'moti';
 
 export default function PressableScale(props) {
-  const [pressed, setPressed] = useState(false);
   // console.log(pressed)
   const { children, onPressIn, onPressOut, style, ...otherProps } = props;
-  const transition = useTransition(pressed, springConfig);
+
+  const scaleIn = useAnimationState({
+    from: {
+      scale: 0.8,
+      opacity: 0.7,
+    },
+    to: {
+      scale: 1,
+      opacity: 1,
+    },
+  });
+
   const onPressInCb = useCallback(
     e => {
-      setPressed(true);
+      scaleIn.transitionTo('from');
       if (onPressIn) onPressIn(e);
     },
-    [onPressIn],
+    [onPressIn, scaleIn],
   );
 
   const onPressOutCb = useCallback(
     e => {
-      setPressed(false);
+      scaleIn.transitionTo('to');
       if (onPressOut) onPressOut(e);
     },
-    [onPressOut],
+    [onPressOut, scaleIn],
   );
-
-  const v = mix(transition, 1, 0.85);
-
-  const scale = {
-    transform: [{ scale: v }],
-    opacity: v,
-  };
 
   return (
     <Pressable
       onPressIn={onPressInCb}
       onPressOut={onPressOutCb}
       {...otherProps}>
-      <Animated.View style={[scale, style]}>{children}</Animated.View>
+      <MotiView
+        state={scaleIn}
+        style={style}
+        transition={{
+          type: 'timing',
+        }}>
+        {children}
+      </MotiView>
     </Pressable>
   );
 }
