@@ -5,7 +5,10 @@ import BottomSheet, {
   TouchableOpacity,
   useBottomSheet,
 } from '@gorhom/bottom-sheet';
-import Animated, { Extrapolate, interpolate } from 'react-native-reanimated';
+import Animated, {
+  Extrapolate,
+  interpolateNode,
+} from 'react-native-reanimated';
 import { Dimensions, View } from 'react-native';
 
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -46,7 +49,7 @@ const CustomBackdrop = observer(
     // animated variables
     const animatedOpacity = React.useMemo(
       () =>
-        interpolate(animatedIndex, {
+        interpolateNode(animatedIndex, {
           inputRange: [0, 1],
           outputRange: [0, 0.8],
           extrapolate: Extrapolate.CLAMP,
