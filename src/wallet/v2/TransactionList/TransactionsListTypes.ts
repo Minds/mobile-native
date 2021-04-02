@@ -44,6 +44,7 @@ export interface ExtendedEntity extends Entity {
     int: number;
     frac: any;
   };
+  reward_type: string;
 }
 
 export type SectionListEntities = {

@@ -159,6 +159,11 @@ export default class AppInitManager {
     setTimeout(() => {
       showMessageForPrivateKey();
     }, 10000);
+
+    if (sessionService.recoveryCodeUsed) {
+      sessionService.setRecoveryCodeUsed(false);
+      NavigationService.navigate('RecoveryCodeUsedScreen');
+    }
   };
 
   /**

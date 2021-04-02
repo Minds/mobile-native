@@ -126,6 +126,7 @@ import VerifyPhoneNumberScreen from '../auth/twoFactorAuth/VerifyPhoneNumberScre
 import DisableTFA from '../auth/twoFactorAuth/DisableTFA';
 import SearchScreen from '../topbar/searchbar/SearchScreen';
 import PasswordConfirmScreen from '../auth/PasswordConfirmScreen';
+import RecoveryCodeUsedScreen from '../auth/twoFactorAuth/RecoveryCodeUsedScreen';
 
 const isIos = Platform.OS === 'ios';
 
@@ -774,6 +775,11 @@ const RootStack = function (props) {
           <RootStackNav.Screen
             name="PasswordConfirmation"
             component={PasswordConfirmScreen}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen
+            name="RecoveryCodeUsedScreen"
+            component={RecoveryCodeUsedScreen}
             options={modalOptions}
           />
         </Fragment>

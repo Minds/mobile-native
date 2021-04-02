@@ -41,6 +41,8 @@ class SessionService {
 
   @observable refreshingTokens = false;
 
+  recoveryCodeUsed = false;
+
   /**
    * Constructor
    * @param {object} sessionStorage
@@ -325,6 +327,10 @@ class SessionService {
    */
   clearMessengerKeys() {
     return sessionStorage.clearPrivateKey();
+  }
+
+  setRecoveryCodeUsed(used: boolean) {
+    this.recoveryCodeUsed = used;
   }
 }
 

@@ -135,6 +135,7 @@ class MessengerListStore {
         );
       } else {
         if (this.loaded && !this.offset && !reload) {
+          this.setLoading(false);
           return;
         }
         if (reload) this.offset = '';
