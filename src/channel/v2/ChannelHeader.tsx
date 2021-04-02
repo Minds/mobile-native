@@ -94,37 +94,41 @@ const ChannelHeader = observer((props: PropsType) => {
   const screen = () => {
     switch (props.store?.tab) {
       case 'feed':
-        return (
-          <View
-            style={[
-              styles.bottomBar,
-              theme.borderPrimary,
-              theme.paddingHorizontal4x,
-              theme.rowJustifySpaceBetween,
-            ]}>
-            {props.store.feedStore.scheduledCount > 0 ? (
-              <View
-                style={[
-                  theme.borderBottom,
-                  props.store.showScheduled
-                    ? theme.borderTab
-                    : theme.borderTransparent,
-                ]}>
-                <Text
-                  style={[theme.fontL, theme.colorSecondaryText]}
-                  onPress={props.store.toggleScheduled}>
-                  {i18n.t('channel.viewScheduled')}:{' '}
-                  <Text style={theme.colorPrimaryText}>
-                    {props.store.feedStore.scheduledCount}
+        if (props.store.feedStore.entities.length) {
+          return (
+            <View
+              style={[
+                styles.bottomBar,
+                theme.borderPrimary,
+                theme.paddingHorizontal4x,
+                theme.rowJustifySpaceBetween,
+              ]}>
+              {props.store.feedStore.scheduledCount > 0 ? (
+                <View
+                  style={[
+                    theme.borderBottom,
+                    props.store.showScheduled
+                      ? theme.borderTab
+                      : theme.borderTransparent,
+                  ]}>
+                  <Text
+                    style={[theme.fontL, theme.colorSecondaryText]}
+                    onPress={props.store.toggleScheduled}>
+                    {i18n.t('channel.viewScheduled')}:{' '}
+                    <Text style={theme.colorPrimaryText}>
+                      {props.store.feedStore.scheduledCount}
+                    </Text>
                   </Text>
-                </Text>
-              </View>
-            ) : (
-              <View />
-            )}
-            <FeedFilter store={props.store} />
-          </View>
-        );
+                </View>
+              ) : (
+                <View />
+              )}
+              <FeedFilter store={props.store} />
+            </View>
+          );
+        } else {
+          return null;
+        }
       case 'about':
         return (
           <ScrollView>
@@ -254,7 +258,12 @@ const ChannelHeader = observer((props: PropsType) => {
       </Text>
       {channel && (
         <View style={theme.paddingHorizontal4x}>
-          <Text style={[theme.colorSecondaryText, theme.fontL]}>
+          <Text
+            style={[
+              theme.colorSecondaryText,
+              theme.fontL,
+              styles.channelMetrics,
+            ]}>
             <Text onPress={navToSubscribers} style={theme.colorSecondaryText}>
               {i18n.t('subscribers')}
               <Text> {abbrev(channel.subscribers_count, 0)}</Text>
@@ -272,7 +281,7 @@ const ChannelHeader = observer((props: PropsType) => {
               <IconM
                 name="location-on"
                 style={theme.colorPrimaryText}
-                size={16}
+                size={19}
               />
               <Text style={[theme.fontL, theme.paddingLeft]}>
                 {channel.city}
@@ -280,7 +289,7 @@ const ChannelHeader = observer((props: PropsType) => {
             </View>
           )}
           {!props.hideDescription && (
-            <View style={theme.paddingTop2x}>
+            <View style={[theme.paddingTop3x, theme.paddingBottom2x]}>
               <ChannelDescription channel={channel} />
             </View>
           )}
@@ -301,6 +310,11 @@ const ChannelHeader = observer((props: PropsType) => {
 });
 
 const styles = StyleSheet.create({
+  channelMetrics: {
+    marginTop: 8,
+    marginBottom: 10,
+    textAlign: 'center',
+  },
   buttonsMarginContainer: {
     marginTop: 5,
   },
@@ -336,6 +350,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     width: '100%',
     textAlign: 'center',
+    marginTop: -2,
   },
   name: {
     fontSize: 22,

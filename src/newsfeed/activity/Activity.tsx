@@ -280,6 +280,7 @@ export default class Activity extends Component<PropsType> {
                 ? message
                 : undefined}
             </View>
+
             <ActivityMetrics entity={this.props.entity} />
             {this.showActions()}
             {this.renderScheduledMessage()}

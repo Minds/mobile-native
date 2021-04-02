@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Image, StyleSheet } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import FeedList from '../../common/components/FeedList';
 import createChannelStore from './createChannelStore';
@@ -16,6 +16,7 @@ import ExplicitOverlay from '../../common/components/explicit/ExplicitOverlay';
 import ChannelTopBar from './ChannelTopBar';
 import UserNotFound from './UserNotFound';
 import ActivityModel from '../../newsfeed/ActivityModel';
+import Button from '../../common/components/Button';
 
 type PropsType = {
   navigation: any;
@@ -112,15 +113,23 @@ const ChannelScreen = observer((props: PropsType) => {
   }
 
   const emptyMessage = store.channel.isOwner() ? (
-    <View style={theme.centered}>
-      <Text style={[theme.fontXL, theme.textCenter, theme.padding2x]}>
-        {i18n.t('channel.createFirstPost')}
+    <View style={[theme.centered, style.emptyContainer]}>
+      <Image
+        style={style.image}
+        source={require('../../assets/images/emptyFeed.png')}
+      />
+
+      <Text style={style.header}>{i18n.t('channel.createFirstPostTitle')}</Text>
+      <Text style={[theme.colorSecondaryText, style.subTitle]}>
+        {i18n.t('channel.createFirstPostSubTitle')}
       </Text>
-      <Text
-        style={[theme.fontXL, theme.textCenter, theme.padding2x]}
-        onPress={() => props.navigation.navigate('Capture')}>
-        {i18n.t('create')}
-      </Text>
+
+      <Button
+        onPress={() => props.navigation.navigate('Capture')}
+        text={i18n.t('channel.createFirstPostAction')}
+        large
+        action
+      />
     </View>
   ) : undefined;
 
@@ -144,6 +153,28 @@ const ChannelScreen = observer((props: PropsType) => {
       />
     </>
   );
+});
+
+const style = StyleSheet.create({
+  emptyContainer: {
+    paddingTop: 35,
+    paddingBottom: 100,
+  },
+  header: {
+    paddingTop: 32,
+    paddingBottom: 5,
+    fontSize: 22,
+    fontWeight: '600',
+  },
+  subTitle: {
+    fontSize: 16,
+    paddingBottom: 28,
+    paddingTop: 10,
+  },
+  image: {
+    width: 176,
+    height: 122,
+  },
 });
 
 export default ChannelScreen;

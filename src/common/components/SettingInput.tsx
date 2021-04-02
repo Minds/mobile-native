@@ -24,7 +24,7 @@ const SettingInput = ({ onError, ref, ...props }: PropsType) => {
     theme.borderPrimary,
   ];
 
-  const labelStyle = [theme.colorSecondaryText, theme.fontL, theme.paddingLeft];
+  const labelStyle = [theme.colorSecondaryText, theme.fontL];
 
   return (
     <View style={wrapperStyle}>
