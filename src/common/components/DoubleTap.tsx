@@ -8,8 +8,8 @@ import React from 'react';
  *
  * @param {Component} WrappedComponent
  */
-export default (Wrapped, delay = 300) => {
-  class DoubleTap extends React.PureComponent {
+const DoubleTap = (Wrapped, delay = 300) => {
+  class DoubleTapCmp extends React.PureComponent {
     lastTap = null;
     interval = null;
 
@@ -44,5 +44,7 @@ export default (Wrapped, delay = 300) => {
     }
   }
 
-  return DoubleTap;
+  return DoubleTapCmp;
 };
+
+export default DoubleTap;

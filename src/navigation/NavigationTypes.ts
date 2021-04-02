@@ -61,6 +61,7 @@ export type RootStackParamList = {
     onConfirm: (password: string) => void;
     title: string;
   };
+  ViewImage: {};
 };
 
 export type AuthStackParamList = {
@@ -217,7 +218,6 @@ export type AppStackParamList = {
   };
   WireFab: {};
   WalletHistory: {};
-  ViewImage: {};
   BlockchainWallet: {};
   Contributions: {};
   Transactions: {};
