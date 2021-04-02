@@ -60,8 +60,8 @@ const stackConfig: iPageInterpolation = {
   ],
   zIndex: offset => offset,
   opacity: {
-    inputRange: [-1, 0, 1],
-    outputRange: [0.5, 1, 0.5],
+    inputRange: [-1, -0.8, 0, 0.8, 1],
+    outputRange: [0, 0.5, 1, 0.5, 0],
   },
 };
 
