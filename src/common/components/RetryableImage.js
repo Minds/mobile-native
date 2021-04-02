@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react';
+import { Platform } from 'react-native';
 import FastImage from 'react-native-fast-image';
 
 /**
@@ -20,6 +21,11 @@ export default function (props) {
     },
     [props.retry, retries, onError],
   );
+
+  // solve crash on android due to an invalid url
+  if (Platform.OS === 'android' && props.source?.uri.indexOf('//', 8) !== -1) {
+    return null;
+  }
 
   return <FastImage key={retries} onError={errorHandler} {...otherProps} />;
 }
