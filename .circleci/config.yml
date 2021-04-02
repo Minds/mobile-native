@@ -1,4 +1,6 @@
 version: 2.1
+orbs:
+  node: circleci/node@4.2.1
 commands:
   rubygems:
     description: 'Installs RubyGems'
@@ -50,7 +52,7 @@ jobs:
   test:
     working_directory: ~/mobile-native
     docker:
-      - image: circleci/node:10
+      - image: circleci/node:12
     steps:
       - checkout
       - yarn
@@ -79,6 +81,8 @@ jobs:
     # use a --login shell so our "set Ruby version" command gets picked up for later steps
     shell: /bin/bash --login -o pipefail
     steps:
+      - node/install:
+        node-version: '14.16.0'
       - checkout
       - yarn
       - rubygems
@@ -122,6 +126,8 @@ jobs:
     # use a --login shell so our "set Ruby version" command gets picked up for later steps
     shell: /bin/bash --login -o pipefail
     steps:
+      - node/install:
+        node-version: '14.16.0'
       - checkout
       - run:
           name: Install detox
@@ -155,6 +161,8 @@ jobs:
     # use a --login shell so our "set Ruby version" command gets picked up for later steps
     shell: /bin/bash --login -o pipefail
     steps:
+      - node/install:
+        node-version: '14.16.0'
       - attach_workspace:
           at: /tmp/workspace
       - checkout
