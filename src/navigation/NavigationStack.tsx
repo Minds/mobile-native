@@ -441,15 +441,6 @@ const AppStack = function () {
         component={FabScreenV2}
         options={hideHeader}
       />
-      <AppStackNav.Screen
-        name="ViewImage"
-        component={ViewImageScreen}
-        options={{
-          headerStyle: {
-            backgroundColor: '#000',
-          },
-        }}
-      />
       {/* <AppStackNav.Screen
         name="BlockchainWallet"
         component={BlockchainWalletScreen}
@@ -714,6 +705,7 @@ const RootStack = function (props) {
             component={JoinMembershipScreen}
             options={modalOptions}
           />
+          <RootStackNav.Screen name="ViewImage" component={ViewImageScreen} />
           {/* <RootStackNav.Screen
             name="BlockchainWalletModal"
             component={BlockchainWalletModalScreen}
