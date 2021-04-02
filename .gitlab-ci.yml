@@ -232,6 +232,7 @@ release:production:
     name: 'Release JSON'
     paths:
       - releases.json
+      - android/fastlane/metadata/android/en-US/changelogs/default.txt
     expire_in: 7 days
     when: on_success
   when: manual

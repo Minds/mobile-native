@@ -75,7 +75,7 @@ input.on('readable', () => {
 
     // Write changelog for fastlane
     fs.writeFileSync(
-      `./android/fastlane/metadata/android/en-US/changelogs/${version.trim()}.txt`,
+      `./android/fastlane/metadata/android/en-US/changelogs/default.txt`,
       changelog.join('\n'),
     );
   }
