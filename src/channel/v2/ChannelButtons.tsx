@@ -45,7 +45,7 @@ export type ChannelButtonsPropsType = {
 const isIos = Platform.OS === 'ios';
 
 const isSubscribedToTier = (tiers: SupportTiersType[]) =>
-  tiers.some((tier) => typeof tier.subscription_urn === 'string');
+  tiers.some(tier => typeof tier.subscription_urn === 'string');
 
 const check = {
   wire: (store: ChannelStoreType) =>

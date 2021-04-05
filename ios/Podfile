@@ -8,12 +8,12 @@ install! 'cocoapods',
 
 $RNFirebaseAsStaticFramework = true
 
-platform :ios, '10.0'
+platform :ios, '11.0'
 
 target 'Minds' do
   config = use_native_modules!
 
-  use_react_native!(:path => config["reactNativePath"])
+  use_react_native!(:path => config["reactNativePath"], :hermes_enabled => true)
 
   use_unimodules!
 
@@ -52,9 +52,6 @@ target 'Minds' do
       end
     end
   end
-
-
-
 end
 
 target 'Minds-tvOS' do
@@ -69,6 +66,8 @@ end
 
 target 'Share' do
   use_react_native!
+  # config = use_native_modules!
+  # use_react_native!(:path => config["reactNativePath"], :hermes_enabled => false)
 
   pod 'RNShareMenu', :path => '../node_modules/react-native-share-menu'
   # Manually link packages here to keep your extension bundle size minimal

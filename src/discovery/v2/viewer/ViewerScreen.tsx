@@ -73,6 +73,10 @@ const ViewerScreen = observer((props: PropsType) => {
   };
 
   const stackConfig: iPageInterpolation = {
+    opacity: {
+      inputRange: [-1, -0.8, 0, 0.8, 1],
+      outputRange: [0, 1, 1, 1, 0],
+    },
     transform: [
       {
         // { perspective: 400 },
@@ -88,6 +92,7 @@ const ViewerScreen = observer((props: PropsType) => {
           inputRange: [-1, 0, 1],
           outputRange: [0.8, 1, 0.8],
         },
+
         translateX: {
           inputRange: [-1, -0.07, 0, 0.07, 1],
           outputRange: [

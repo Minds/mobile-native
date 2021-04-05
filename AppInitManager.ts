@@ -90,7 +90,7 @@ export default class AppInitManager {
   onLogin = async () => {
     const user = sessionService.getUser();
 
-    Sentry.configureScope((scope) => {
+    Sentry.configureScope(scope => {
       scope.setUser({ id: user.guid });
     });
 
@@ -159,6 +159,11 @@ export default class AppInitManager {
     setTimeout(() => {
       showMessageForPrivateKey();
     }, 10000);
+
+    if (sessionService.recoveryCodeUsed) {
+      sessionService.setRecoveryCodeUsed(false);
+      NavigationService.navigate('RecoveryCodeUsedScreen');
+    }
   };
 
   /**

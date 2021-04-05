@@ -53,7 +53,7 @@ const FeedFilter = observer((props: PropsType) => {
           )}
         </TouchableOpacity>
       }>
-      {['all', 'images', 'videos', 'blogs'].map((f) => (
+      {['all', 'images', 'videos', 'blogs'].map(f => (
         <MenuItem
           onPress={() => props.store.setFilter(f)}
           textStyle={theme.fontL}

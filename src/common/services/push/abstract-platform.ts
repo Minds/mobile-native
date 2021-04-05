@@ -27,7 +27,7 @@ export default class AbstractPlatform {
           service: service,
           token: this.token,
         })
-        .catch((err) => logService.exception('[PushService]', err));
+        .catch(err => logService.exception('[PushService]', err));
     } else {
       this.shouldRegister = true;
     }

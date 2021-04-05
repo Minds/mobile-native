@@ -18,7 +18,7 @@ export default function () {
     /**
      * Richembed check
      */
-    check: (text) => {
+    check: text => {
       const matches = Util.urlReSingle.exec(text);
 
       if (store._richEmbedFetchTimer) {

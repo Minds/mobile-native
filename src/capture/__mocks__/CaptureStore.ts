@@ -16,7 +16,7 @@ const mock = jest.fn().mockImplementation(() => {
     inlineHashtags: [],
     allTags: [],
     addTag: jest.fn(),
-    setText: jest.fn().mockImplementation((t) => (store.text = t)),
+    setText: jest.fn().mockImplementation(t => (store.text = t)),
     deleteTag: jest.fn(),
     socialNetworks: {
       facebook: false,

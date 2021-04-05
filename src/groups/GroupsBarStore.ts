@@ -27,7 +27,7 @@ class GroupsBarStore {
   @action
   setGroups(groups, replace = false, listen = true) {
     if (replace) this.groups = [];
-    groups.forEach((group) => {
+    groups.forEach(group => {
       if (listen) this.listenMarkers(group);
       this.groups.push(GroupModel.checkOrCreate(group));
     });
@@ -61,7 +61,7 @@ class GroupsBarStore {
    */
   async loadMarkers() {
     const markers = await groupsService.loadGroupMarkers();
-    markers.forEach((m) => this.handleMarker(m, false));
+    markers.forEach(m => this.handleMarker(m, false));
   }
 
   /**
@@ -70,7 +70,7 @@ class GroupsBarStore {
    * @param {Boolean} bringToFront
    */
   handleMarker(marker, bringToFront = true) {
-    this.groups.forEach((group) => {
+    this.groups.forEach(group => {
       if (group.guid == marker.entity_guid) {
         this.setGroupMarker(group, marker, bringToFront);
       }
@@ -99,14 +99,14 @@ class GroupsBarStore {
    * Unlisten all groups for markers
    */
   unlistenAll() {
-    this.groups.forEach((g) => this.unlistenMarkers(g));
+    this.groups.forEach(g => this.unlistenMarkers(g));
   }
 
   /**
    * Handle socket message
    * @param {Object} marker
    */
-  handleMessage = (marker) => {
+  handleMessage = marker => {
     this.handleMarker(JSON.parse(marker));
   };
 
@@ -117,7 +117,7 @@ class GroupsBarStore {
    */
   @action
   async markAsRead(group, markerType) {
-    const myGroup = this.groups.find((g) => g.guid === group.guid);
+    const myGroup = this.groups.find(g => g.guid === group.guid);
     if (!myGroup) return;
     await groupsService.markAsRead({
       entity_guid: group.guid,
@@ -155,7 +155,7 @@ class GroupsBarStore {
     group.markers_muted = marker.disabled;
 
     if (bringToFront) {
-      const index = this.groups.findIndex((g) => g === group);
+      const index = this.groups.findIndex(g => g === group);
 
       // move to the first place
       this.groups.unshift(this.groups.splice(index, 1)[0]);

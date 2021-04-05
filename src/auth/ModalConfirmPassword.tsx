@@ -79,7 +79,7 @@ export default class ModalConfirmPassword extends Component<PropsType> {
               returnKeyType={'done'}
               placeholderTextColor="#444"
               underlineColorAndroid="transparent"
-              onChangeText={(value) => this.setState({ password: value })}
+              onChangeText={value => this.setState({ password: value })}
               value={this.state.password}
               key={2}
             />

@@ -115,6 +115,9 @@ exports[`Messenger setup component should render correctly for setup 1`] = `
               "color": "#FFFFFF",
             },
             undefined,
+            Object {
+              "fontWeight": "500",
+            },
           ]
         }
       >
@@ -243,6 +246,9 @@ exports[`Messenger setup component should render correctly for unlock 1`] = `
               "color": "#FFFFFF",
             },
             undefined,
+            Object {
+              "fontWeight": "500",
+            },
           ]
         }
       >

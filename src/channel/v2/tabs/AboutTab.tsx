@@ -28,7 +28,10 @@ const AboutTab = observer(({ store, navigation }: PropsType) => {
       this.loaded = true;
     },
   }));
-  if (!store.channel) {
+
+  const { channel } = store;
+
+  if (!channel) {
     return <View></View>;
   }
 
@@ -49,67 +52,82 @@ const AboutTab = observer(({ store, navigation }: PropsType) => {
     return <CenteredLoading />;
   }
 
-  const tags = store.channel?.tags.join(' #');
-
+  const tags = channel?.tags.join(' #');
   const margin = theme.marginVertical3x;
+  const hasBadges =
+    channel.pro || channel.plus || channel.verified || channel.founder;
 
   return (
     <View style={[theme.paddingLeft4x, theme.paddingTop2x]}>
-      <LabeledComponent label={i18n.t('channel.edit.bio')}>
-        <Tags navigation={navigation}>{store.channel?.briefdescription}</Tags>
-      </LabeledComponent>
-      <LabeledComponent
-        label={i18n.t('channel.edit.hashtags')}
-        wrapperStyle={margin}>
-        <Text>{`#${tags}`}</Text>
-      </LabeledComponent>
+      {channel?.briefdescription !== '' && (
+        <LabeledComponent label={i18n.t('channel.edit.bio')}>
+          <Tags navigation={navigation}>{channel?.briefdescription}</Tags>
+        </LabeledComponent>
+      )}
+
+      {channel?.tags.length > 0 && (
+        <LabeledComponent
+          label={i18n.t('channel.edit.hashtags')}
+          wrapperStyle={margin}>
+          <Text>{`#${tags}`}</Text>
+        </LabeledComponent>
+      )}
+
       <LabeledComponent label={i18n.t('joined')} wrapperStyle={margin}>
         <Text>
-          {store.channel?.time_created
-            ? moment(parseInt(store.channel.time_created, 10) * 1000).format(
-                'MMM Y',
-              )
+          {channel?.time_created
+            ? moment(parseInt(channel.time_created, 10) * 1000).format('MMM Y')
             : ''}
         </Text>
       </LabeledComponent>
-      <LabeledComponent label={i18n.t('channel.edit.location')}>
-        <Text>{store.channel?.city}</Text>
-      </LabeledComponent>
-      <LabeledComponent
-        label={i18n.t('channel.edit.dob')}
-        wrapperStyle={margin}>
-        <Text>{store.channel?.dob}</Text>
-      </LabeledComponent>
-      <LabeledComponent label={i18n.t('channel.badges')}>
-        <View style={theme.rowJustifyStart}>
-          <ChannelBadges
-            channel={store.channel}
-            size={16}
-            iconStyle={theme.colorPrimaryText}
-          />
-        </View>
-      </LabeledComponent>
+
+      {channel?.dob && (
+        <LabeledComponent
+          label={i18n.t('channel.edit.dob')}
+          wrapperStyle={margin}>
+          <Text>{channel?.dob}</Text>
+        </LabeledComponent>
+      )}
+
+      {hasBadges && (
+        <LabeledComponent label={i18n.t('channel.badges')}>
+          <View style={theme.rowJustifyStart}>
+            <ChannelBadges
+              channel={channel}
+              size={16}
+              iconStyle={theme.colorPrimaryText}
+            />
+          </View>
+        </LabeledComponent>
+      )}
+
       <LabeledComponent
         label={i18n.t('discovery.groups')}
         wrapperStyle={margin}>
         <Text>{localStore.groupCount}</Text>
       </LabeledComponent>
+
       <LabeledComponent label={i18n.t('subscribers')}>
-        <Text>{store.channel.subscribers_count}</Text>
+        <Text>{channel.subscribers_count}</Text>
       </LabeledComponent>
+
       <LabeledComponent label={i18n.t('views')} wrapperStyle={margin}>
-        <Text>{abbrev(store.channel.impressions, 1)}</Text>
+        <Text>{abbrev(channel.impressions, 1)}</Text>
       </LabeledComponent>
+
       <LabeledComponent
         label={i18n.t('subscriptions')}
         wrapperStyle={theme.marginBottom2x}>
-        <Text>{store.channel.subscriptions_count}</Text>
+        <Text>{channel.subscriptions_count}</Text>
       </LabeledComponent>
-      <LabeledComponent
-        label={i18n.t('channel.edit.links')}
-        wrapperStyle={theme.marginBottom2x}>
-        <SocialLinks socialLinks={store.channel.social_profiles} />
-      </LabeledComponent>
+
+      {channel.social_profiles!.length > 0 && (
+        <LabeledComponent
+          label={i18n.t('channel.edit.links')}
+          wrapperStyle={theme.marginBottom2x}>
+          <SocialLinks socialLinks={channel.social_profiles} />
+        </LabeledComponent>
+      )}
     </View>
   );
 });

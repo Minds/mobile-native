@@ -5,6 +5,7 @@ import DeviceInfo from 'react-native-device-info';
 
 // Send staging cookie to api
 export const MINDS_STAGING = false;
+export const MINDS_CANARY = false;
 
 // network timeout time
 export const NETWORK_TIMEOUT = 15000;
@@ -71,7 +72,7 @@ const redirectPages = [
   'youtube-migration',
   'branding',
   'localization',
-].map((p) => [p, 'Redirect']);
+].map(p => [p, 'Redirect']);
 
 /**
  * Deeplink to screen/params maping

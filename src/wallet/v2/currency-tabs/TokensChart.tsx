@@ -59,10 +59,10 @@ const TokensChart = observer(({ timespan }: PropsType) => {
   }
 
   const chartData = {
-    labels: data.map((d) => moment(d.date).format('MM/DD')),
+    labels: data.map(d => moment(d.date).format('MM/DD')),
     datasets: [
       {
-        data: data.map((d) => d.value),
+        data: data.map(d => d.value),
       },
     ],
   };

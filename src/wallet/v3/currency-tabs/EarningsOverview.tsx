@@ -46,7 +46,7 @@ const getProcessedData = (
   earning: Earnings,
   currencyType: EarningsCurrencyType,
 ): AccordionContentData[] =>
-  earning.items.map((data) => {
+  earning.items.map(data => {
     const isTokens = !currencyType || currencyType === 'tokens';
     const value = isTokens
       ? toFriendlyCrypto(data.amount_tokens)
@@ -80,8 +80,8 @@ const EarningsOverview = observer(
       return <CenteredLoading />;
     }
     const accordionData: Array<AccordionDataType> = walletStore.usdEarnings
-      .filter((earning) => earning.id !== null)
-      .map((earning) => {
+      .filter(earning => earning.id !== null)
+      .map(earning => {
         const value =
           currencyType === 'tokens'
             ? toFriendlyCrypto(earning.amount_tokens) || 0

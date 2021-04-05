@@ -11,7 +11,7 @@ export class BlockListService {
   @observable blocked: Map<string, undefined> = new Map();
 
   constructor() {
-    sessionService.onSession(async (token) => {
+    sessionService.onSession(async token => {
       if (token) {
         await this.loadFromStorage();
         this.fetch();
@@ -28,7 +28,7 @@ export class BlockListService {
   async loadFromStorage() {
     const guids = await storageService.getItem('@minds:blocked');
     if (guids) {
-      guids.forEach((g) => this.blocked.set(g, undefined));
+      guids.forEach(g => this.blocked.set(g, undefined));
     }
   }
 
@@ -41,7 +41,7 @@ export class BlockListService {
 
       if (response.guids) {
         this.blocked.clear();
-        response.guids.forEach((g) => this.blocked.set(g, undefined));
+        response.guids.forEach(g => this.blocked.set(g, undefined));
       }
 
       storageService.setItem('@minds:blocked', response.guids); // save to storage

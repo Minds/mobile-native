@@ -6,6 +6,7 @@ const LOGOUT_EXCEPTIONS = ['password/validate'];
 import session from './session.service';
 import {
   MINDS_API_URI,
+  MINDS_CANARY,
   MINDS_STAGING,
   NETWORK_TIMEOUT,
 } from '../../config/Config';
@@ -46,7 +47,7 @@ export const isApiForbidden = function (err) {
 };
 
 const shouldLogout = (url: string) => {
-  return !LOGOUT_EXCEPTIONS.some((e) => url.includes(e));
+  return !LOGOUT_EXCEPTIONS.some(e => url.includes(e));
 };
 
 /**
@@ -123,7 +124,7 @@ class ApiService {
    * Clear cookies
    */
   clearCookies() {
-    return new Promise((success) => {
+    return new Promise(success => {
       NativeModules.Networking.clearCookies(success);
     });
   }
@@ -142,6 +143,9 @@ class ApiService {
 
     if (MINDS_STAGING) {
       headers.Cookie = 'staging=1';
+    }
+    if (MINDS_CANARY) {
+      headers.Cookie = 'canary=1';
     }
 
     if (session.token) {
@@ -166,6 +170,9 @@ class ApiService {
     if (MINDS_STAGING) {
       params.staging = '1';
     }
+    if (MINDS_CANARY) {
+      params.canary = '1';
+    }
 
     const paramsString = this.getParamsString(params);
     const sep = url.indexOf('?') > -1 ? '&' : '?';
@@ -175,7 +182,7 @@ class ApiService {
 
   getParamsString(params) {
     return Object.keys(params)
-      .map((k) => {
+      .map(k => {
         return encodeURIComponent(k) + '=' + encodeURIComponent(params[k]);
       })
       .join('&');
@@ -282,7 +289,7 @@ class ApiService {
       let xhr = new XMLHttpRequest();
 
       // handle cancel
-      onCancel((cb) => {
+      onCancel(cb => {
         xhr.abort();
         cb();
       });
@@ -305,7 +312,7 @@ class ApiService {
       };
 
       xhr.send(file);
-    }).catch((error) => {
+    }).catch(error => {
       if (error.name !== 'CancelationError') {
         logService.exception('[ApiService] upload', error);
         throw error;
@@ -337,7 +344,7 @@ class ApiService {
       let xhr = new XMLHttpRequest();
 
       // handle cancel
-      onCancel((cb) => {
+      onCancel(cb => {
         xhr.abort();
         cb();
       });
@@ -374,7 +381,7 @@ class ApiService {
       };
 
       xhr.send(formData);
-    }).catch((error) => {
+    }).catch(error => {
       if (error.name !== 'CancelationError') {
         logService.exception('[ApiService] upload', error);
         throw error;

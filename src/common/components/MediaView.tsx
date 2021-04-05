@@ -34,6 +34,8 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import { DATA_SAVER_THUMB_RES } from '../../config/Config';
 import SmartImage from './SmartImage';
 import FastImage from 'react-native-fast-image';
+import DoubleTap from './DoubleTap';
+import NavigationService from '../../navigation/NavigationService';
 
 const imgSize = 75;
 
@@ -49,6 +51,8 @@ type PropsType = {
   width?: number;
   smallEmbed?: boolean;
 };
+
+const DoubleTapTouchable = DoubleTap(TouchableOpacity);
 /**
  * Activity
  */
@@ -125,13 +129,20 @@ export default class MediaView extends Component<PropsType> {
             theme.borderPrimary,
             theme.borderRadius,
           ]}>
-          <SmartImage
-            style={styles.thumbnail}
-            threshold={150}
-            source={source}
-            thumbnail={thumbnail}
-            resizeMode={FastImage.resizeMode.cover}
-          />
+          <DoubleTapTouchable
+            onDoubleTap={this.navToZoomView}
+            onPress={this.onImagePress}
+            onLongPress={this.imageLongPress}
+            activeOpacity={1}
+            testID="Posted Image">
+            <SmartImage
+              style={styles.thumbnail}
+              threshold={150}
+              source={source}
+              thumbnail={thumbnail}
+              resizeMode={FastImage.resizeMode.cover}
+            />
+          </DoubleTapTouchable>
           <TouchableOpacity
             style={[theme.padding2x, theme.flexContainer]}
             onPress={this.openLink}>
@@ -217,6 +228,16 @@ export default class MediaView extends Component<PropsType> {
   };
 
   /**
+   * Navigate to zoom view
+   */
+  navToZoomView(source) {
+    NavigationService.navigate('ViewImage', {
+      entity: this.props.entity,
+      source,
+    });
+  }
+
+  /**
    * Pause video if exist
    */
   pauseVideo() {
@@ -257,7 +278,7 @@ export default class MediaView extends Component<PropsType> {
     this.videoPlayer?.setShowOverlay(showOverlay);
   }
 
-  imageError = (err) => {
+  imageError = err => {
     logService.log('[MediaView] Image error: ' + this.source?.uri, err);
     this.setState({ imageLoadFailed: true });
   };
@@ -286,7 +307,7 @@ export default class MediaView extends Component<PropsType> {
   /**
    * On image load handler
    */
-  onLoadImage = (e) => {
+  onLoadImage = e => {
     if (this.props.autoHeight) {
       this.setState({
         height: e.nativeEvent.height,
@@ -341,7 +362,8 @@ export default class MediaView extends Component<PropsType> {
 
     return (
       <SharedElement id={`${this.props.entity.urn}.image`}>
-        <TouchableOpacity
+        <DoubleTapTouchable
+          onDoubleTap={() => this.navToZoomView(source)}
           onPress={this.onImagePress}
           onLongPress={this.imageLongPress}
           style={[styles.imageContainer, { aspectRatio }]}
@@ -357,7 +379,7 @@ export default class MediaView extends Component<PropsType> {
             onError={this.imageError}
             ignoreDataSaver={this.props.ignoreDataSaver}
           />
-        </TouchableOpacity>
+        </DoubleTapTouchable>
       </SharedElement>
     );
   }

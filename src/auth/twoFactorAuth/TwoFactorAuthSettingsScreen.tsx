@@ -57,7 +57,7 @@ const TwoFactorAuthSettingsScreen = observer(() => {
       <Text style={[styles.description, theme.colorSecondaryText]}>
         {i18n.t('settings.TFAdescription')}
       </Text>
-      {items.map((item) => (
+      {items.map(item => (
         <MenuItem
           item={{
             onPress: () => {

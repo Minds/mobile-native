@@ -31,6 +31,9 @@ import java.lang.reflect.InvocationTargetException;
 import com.minds.mobile.CustomErrorScreen;
 import com.masteratul.exceptionhandler.ReactNativeExceptionHandlerModule;
 
+import com.facebook.react.bridge.JSIModulePackage; // <- add
+import com.swmansion.reanimated.ReanimatedJSIModulePackage; // <- add
+
 public class MainApplication extends Application implements ShareApplication, ReactApplication {
  private final ReactModuleRegistryProvider mModuleRegistryProvider = new ReactModuleRegistryProvider(new BasePackageList().getPackageList(), null);
 
@@ -39,6 +42,11 @@ public class MainApplication extends Application implements ShareApplication, Re
       @Override
       public boolean getUseDeveloperSupport() {
         return BuildConfig.DEBUG;
+      }
+
+      @Override
+      protected JSIModulePackage getJSIModulePackage() {
+        return new ReanimatedJSIModulePackage();
       }
 
       @Override

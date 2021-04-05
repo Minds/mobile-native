@@ -5,6 +5,7 @@ import fakeWireContract from '../../../__mocks__/fake/blockchain/services/WireCo
 import { createStore } from '../../../src/blockchain/v2/walletconnect/WalletConnectContext';
 
 jest.mock('web3');
+jest.mock('../../../src/blockchain/v2/walletconnect/modal/registry');
 
 /**
  * Blockchain token service

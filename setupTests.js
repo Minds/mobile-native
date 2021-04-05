@@ -39,7 +39,7 @@ jest.mock(
   'react-native/Libraries/Components/Touchable/TouchableOpacity.js',
   () => {
     const { View } = require('react-native');
-    const MockTouchable = (props) => {
+    const MockTouchable = props => {
       return <View {...props} />;
     };
 
@@ -53,7 +53,7 @@ jest.mock(
   'react-native/Libraries/Components/Touchable/TouchableHighlight.js',
   () => {
     const { View } = require('react-native');
-    const MockTouchable = (props) => {
+    const MockTouchable = props => {
       return <View {...props} />;
     };
 
@@ -62,3 +62,5 @@ jest.mock(
     return MockTouchable;
   },
 );
+
+global.__reanimatedWorkletInit = jest.fn();

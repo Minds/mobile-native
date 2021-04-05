@@ -83,8 +83,8 @@ export default abstract class ContractServiceAbstract {
     return await new Promise((resolve, reject) => {
       this.web3?.eth
         .sendTransaction(tx)
-        .once('transactionHash', (hash) => resolve({ transactionHash: hash }))
-        .once('error', (e) => reject(e));
+        .once('transactionHash', hash => resolve({ transactionHash: hash }))
+        .once('error', e => reject(e));
       // use deep linking to bring focus to the wallet app
       this.wc.openWalletApp();
     });
@@ -151,8 +151,8 @@ export default abstract class ContractServiceAbstract {
     return await new Promise((resolve, reject) => {
       this.web3?.eth
         .sendTransaction(tx)
-        .once('transactionHash', (hash) => resolve({ transactionHash: hash }))
-        .once('error', (e) => reject(e));
+        .once('transactionHash', hash => resolve({ transactionHash: hash }))
+        .once('error', e => reject(e));
     });
   }
 }

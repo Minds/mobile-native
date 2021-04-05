@@ -58,7 +58,7 @@ class MessengerScreen extends Component {
     }
   }
 
-  searchDebouncer = _.debounce((search) => {
+  searchDebouncer = _.debounce(search => {
     this.props.messengerList.setSearch(search);
   }, 200);
 
@@ -126,7 +126,7 @@ class MessengerScreen extends Component {
         <FlatList
           data={conversations.slice()}
           renderItem={this.renderMessage}
-          keyExtractor={(item) => item.guid}
+          keyExtractor={item => item.guid}
           onRefresh={this.refresh}
           onEndReached={this.loadMore}
           ListFooterComponent={footer}
@@ -158,7 +158,7 @@ class MessengerScreen extends Component {
    * Search change
    * We debounce to prevent a fetch to the server on every key pressed
    */
-  searchChange = (search) => {
+  searchChange = search => {
     this.searchDebouncer(search);
   };
 
@@ -180,7 +180,7 @@ class MessengerScreen extends Component {
    * render row
    * @param {object} row
    */
-  renderMessage = (row) => {
+  renderMessage = row => {
     return (
       <ConversationView
         item={row.item}

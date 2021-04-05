@@ -132,13 +132,13 @@ export default class OffsetListStore {
   }
 
   remove(entity) {
-    const index = this.entities.findIndex((e) => e === entity);
+    const index = this.entities.findIndex(e => e === entity);
     if (index < 0) return;
     this.removeIndex(index);
   }
 
   getIndex(entity) {
-    return this.entities.findIndex((e) => e === entity);
+    return this.entities.findIndex(e => e === entity);
   }
 
   @action

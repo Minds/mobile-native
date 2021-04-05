@@ -152,19 +152,19 @@ export default observer(function ({ navigation }) {
         source={require('../assets/withdrawalbg.jpg')}
         title={i18n.t('earnScreen.title')}>
         <Text style={titleStyle}>{i18n.t('earnScreen.increase')}</Text>
-        {earnItems.map((item) => (
+        {earnItems.map(item => (
           <EarnItem content={item} />
         ))}
         <Text style={[titleStyle, theme.paddingTop2x]}>
           {i18n.t('earnScreen.resources.title')}
         </Text>
-        {resourcesItems.map((item) => (
+        {resourcesItems.map(item => (
           <EarnItem content={item} />
         ))}
         <Text style={[titleStyle, theme.paddingTop2x]}>
           {i18n.t('earnScreen.unlock.title')}
         </Text>
-        {unlockItems.map((item) => (
+        {unlockItems.map(item => (
           <EarnItem content={item} />
         ))}
       </ModalScreen>

@@ -102,7 +102,7 @@ export default class DateRangePicker extends PureComponent {
   /**
    * Fire when to change
    */
-  setTo = (value) => {
+  setTo = value => {
     this.hideTo();
     this.props.onToChange(value);
   };
@@ -110,7 +110,7 @@ export default class DateRangePicker extends PureComponent {
   /**
    * Fire when from change
    */
-  setFrom = (value) => {
+  setFrom = value => {
     this.hideFrom();
     this.props.onFromChange(value);
   };

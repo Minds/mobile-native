@@ -11,7 +11,7 @@ export default class Carousel extends Component {
     offset: 0,
   };
 
-  renderBubbles = (width) => {
+  renderBubbles = width => {
     const {
       children,
       color = '#ffa500',
@@ -45,7 +45,7 @@ export default class Carousel extends Component {
     }
 
     if (this.state.offset % width === 0) {
-      bubbles.map((v) => {
+      bubbles.map(v => {
         v.key == this.state.offset
           ? (bubbles[v.key / width] = <View style={filledBubble} key={v.key} />)
           : null;
@@ -85,7 +85,7 @@ export default class Carousel extends Component {
           horizontal={true}
           pagingEnabled={true}
           showsHorizontalScrollIndicator={showScroll}
-          onScroll={(e) => {
+          onScroll={e => {
             this.setState({ offset: e.nativeEvent.contentOffset.x });
           }}
           style={{ width: width, height: height }}>

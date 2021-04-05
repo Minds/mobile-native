@@ -61,15 +61,12 @@ export type RootStackParamList = {
     onConfirm: (password: string) => void;
     title: string;
   };
+  ViewImage: {};
+  RecoveryCodeUsedScreen: {};
 };
 
 export type AuthStackParamList = {
-  Login: {
-    username?: string;
-    password?: string;
-    tfa?: 'sms' | 'totp';
-    secret?: string;
-  };
+  Login: {};
   Forgot: {
     code?: string;
   };
@@ -217,7 +214,6 @@ export type AppStackParamList = {
   };
   WireFab: {};
   WalletHistory: {};
-  ViewImage: {};
   BlockchainWallet: {};
   Contributions: {};
   Transactions: {};

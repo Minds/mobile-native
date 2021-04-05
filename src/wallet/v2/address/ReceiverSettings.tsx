@@ -40,7 +40,7 @@ const ReceiverSettings = observer(
           {i18n.t('wallet.receiverAddresses').toUpperCase()}
         </Text>
         <View style={innerWrapper}>
-          {receiverSettingsOptions.map((item) => (
+          {receiverSettingsOptions.map(item => (
             <MenuItem item={item} />
           ))}
         </View>

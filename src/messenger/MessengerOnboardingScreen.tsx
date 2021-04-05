@@ -100,7 +100,7 @@ export default class MessengerOnboardingScreen extends Component {
               underlineColorAndroid="transparent"
               placeholder={i18n.t('auth.password')}
               secureTextEntry={true}
-              onChangeText={(password) => {
+              onChangeText={password => {
                 this.setState({ password });
                 this.props.onSetNavNext(this.getNextButton());
               }}
@@ -120,7 +120,7 @@ export default class MessengerOnboardingScreen extends Component {
               underlineColorAndroid="transparent"
               placeholder={i18n.t('auth.confirmpassword')}
               secureTextEntry={true}
-              onChangeText={(password2) => {
+              onChangeText={password2 => {
                 this.setState({ password2 });
                 this.props.onSetNavNext(this.getNextButton());
               }}

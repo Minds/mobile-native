@@ -201,33 +201,24 @@ exports[`renders correctly 1`] = `
             ]
           }
         >
-          <View>
-            <View
-              style={
-                Object {
-                  "flexDirection": "row",
-                  "justifyContent": "space-between",
-                  "width": "100%",
-                }
+          <View
+            style={
+              Object {
+                "paddingBottom": 10,
+                "paddingTop": 5,
               }
-            >
-              <View
-                style={
-                  Object {
-                    "flexDirection": "row",
-                    "justifyContent": "space-between",
-                    "width": "100%",
-                  }
-                }
-              >
+            }
+          >
+            <View>
+              <View>
                 <Text
                   style={
                     Array [
                       Object {
                         "fontFamily": "Roboto",
                         "fontSize": 16,
-                        "fontWeight": "600",
-                        "marginBottom": 5,
+                        "fontWeight": "400",
+                        "marginBottom": 0,
                       },
                       undefined,
                       undefined,

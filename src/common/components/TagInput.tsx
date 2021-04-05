@@ -26,13 +26,13 @@ export default class TagInput extends Component {
     this.props.onChange && this.props.onChange();
   }
 
-  onChangeText = (text) => {
+  onChangeText = text => {
     text = text.replace(/[^\w]/gim, '');
     this.setState({ text, error: '' });
   };
 
-  addTag = (e) => {
-    const inTags = this.props.tags.some((t) => this.state.text === t);
+  addTag = e => {
+    const inTags = this.props.tags.some(t => this.state.text === t);
     if (this.state.text === '') return;
     if (inTags) {
       this.setState({ error: i18nService.t('hashtags.exists') });
@@ -113,7 +113,7 @@ export default class TagInput extends Component {
    * Set input ref
    * @param {TextInputRef} r
    */
-  setInputRef = (r) => (this.inputRef = r);
+  setInputRef = r => (this.inputRef = r);
 }
 
 const styles = StyleSheet.create({

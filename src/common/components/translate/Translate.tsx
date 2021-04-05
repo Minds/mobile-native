@@ -38,7 +38,7 @@ const Translate = observer(
     }, []);
 
     const translate = useCallback(
-      async (language) => {
+      async language => {
         let translatedFrom = null;
         try {
           const translation = await translationService.translate(
@@ -121,8 +121,8 @@ const Translate = observer(
           onItemSelect={languageSelected}
           title={''}
           data={localStore.languages}
-          valueExtractor={(item) => item.name}
-          keyExtractor={(item) => item.language}
+          valueExtractor={item => item.name}
+          keyExtractor={item => item.language}
         />
         {localStore.translating && <CenteredLoading />}
         {localStore.show && !localStore.translating && (

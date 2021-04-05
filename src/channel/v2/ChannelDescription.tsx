@@ -25,7 +25,7 @@ const ChannelDescription = (props: PropsType) => {
   const endColor = backgroundColor + 'FF';
 
   const renderRevealedFooter = useCallback(
-    (handlePress) => {
+    handlePress => {
       return (
         <Text
           style={[theme.fontL, theme.bold, theme.colorLink, theme.marginTop2x]}
@@ -38,7 +38,7 @@ const ChannelDescription = (props: PropsType) => {
   );
 
   const renderTruncatedFooter = useCallback(
-    (handlePress) => {
+    handlePress => {
       return (
         <TouchableOpacity onPress={handlePress} style={styles.touchable}>
           <LinearGradient
@@ -57,7 +57,7 @@ const ChannelDescription = (props: PropsType) => {
       renderTruncatedFooter={renderTruncatedFooter}
       renderRevealedFooter={renderRevealedFooter}>
       <Tags
-        style={[theme.fontL, theme.colorSecondaryText]}
+        style={[theme.fontL, theme.colorSecondaryText]} // M.B. Needed to be able to style parsed tags text again. Not sure whether the android issue is ongoing or not.
         navigation={navigation}>
         {props.channel.briefdescription}
       </Tags>

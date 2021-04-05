@@ -58,7 +58,7 @@ export default observer(function OnboardingScreen() {
 
     // Check for post created locally (the backend check takes too long)
     if (newData.steps && newData.id === 'InitialOnboardingGroup') {
-      const step = newData.steps.find((s) => s.id === 'CreatePostStep');
+      const step = newData.steps.find(s => s.id === 'CreatePostStep');
       if (
         step &&
         !step.is_completed &&
@@ -67,7 +67,7 @@ export default observer(function OnboardingScreen() {
           sessionService.getUser().guid
       ) {
         step.is_completed = true;
-        newData.is_completed = !newData.steps.some((s) => !s.is_completed);
+        newData.is_completed = !newData.steps.some(s => !s.is_completed);
       }
     }
 
@@ -163,7 +163,7 @@ export default observer(function OnboardingScreen() {
   ]).current;
 
   const steps = progressStore.result
-    ? progressStore.result.steps.map((s) =>
+    ? progressStore.result.steps.map(s =>
         stepsMapping[s.id]
           ? {
               title: stepsMapping[s.id].title,
@@ -234,7 +234,7 @@ export default observer(function OnboardingScreen() {
           isVisible={store.showMenu}
           onPressClose={store.hidePicker}
         />
-        {steps.map((item) =>
+        {steps.map(item =>
           item ? (
             <MenuItem
               item={item}

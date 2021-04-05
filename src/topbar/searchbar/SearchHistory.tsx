@@ -36,13 +36,13 @@ const SearchHistory = ({ localStore, renderItem }: PropsType) => {
       </View>
       {localStore.history.length > 0 &&
         localStore.history
-          .filter((item) => typeof item === 'string')
+          .filter(item => typeof item === 'string')
           .map((item, index) => {
             return renderItem(item, index);
           })}
       {localStore.history.length > 0 &&
         localStore.history
-          .filter((item) => typeof item !== 'string')
+          .filter(item => typeof item !== 'string')
           .map((item, index) => {
             return renderItem(item, index);
           })}

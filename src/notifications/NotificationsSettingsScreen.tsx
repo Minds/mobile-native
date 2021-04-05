@@ -54,9 +54,7 @@ export default class NotificationsSettingsScreen extends Component {
               <Text>{notificationText}</Text>
               <Switch
                 value={toggle}
-                onSyncPress={(val) =>
-                  notificationsSettings.saveSetting(key, val)
-                }
+                onSyncPress={val => notificationsSettings.saveSetting(key, val)}
               />
             </View>
           );

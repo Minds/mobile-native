@@ -94,15 +94,15 @@ export const REPORT_ACTIONS = {
  * Get the license text
  */
 const getText = (data, value) => {
-  const lic = data.find((license) => value === license.value);
+  const lic = data.find(license => value === license.value);
   if (!lic) return;
   return lic.text;
 };
 
-export const getLicenseText = (value) => {
+export const getLicenseText = value => {
   return getText(LICENSES, value);
 };
 
-export const getAccessText = (value) => {
+export const getAccessText = value => {
   return getText(ACCESS, value);
 };

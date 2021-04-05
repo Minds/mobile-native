@@ -21,7 +21,7 @@ export class PortraitBarItem {
     this.activities = activities;
   }
   @computed get unseen(): boolean {
-    return this.activities.some((a) => !a.seen);
+    return this.activities.some(a => !a.seen);
   }
 }
 
@@ -47,7 +47,7 @@ function createPortraitStore() {
       }
     },
     sort() {
-      this.items = _.sortBy(this.items, (d) => !d.unseen);
+      this.items = _.sortBy(this.items, d => !d.unseen);
     },
     async load() {
       this.listenSubscriptions();
@@ -80,7 +80,7 @@ function createPortraitStore() {
 
         if (feedStore.entities.length) {
           if (seenList) {
-            feedStore.entities.forEach((entity) => {
+            feedStore.entities.forEach(entity => {
               const seen = _.sortedIndexOf(seenList, entity.urn) !== -1;
 
               if (entity.seen === undefined) {
@@ -97,21 +97,21 @@ function createPortraitStore() {
             _.groupBy(
               user.plus
                 ? feedStore.entities.filter(
-                    (a) =>
+                    a =>
                       a.paywall !== '1' ||
                       (a.wire_threshold &&
                         a.wire_threshold.support_tier &&
                         a.wire_threshold.support_tier?.urn ===
                           'urn:support-tier:730071191229833224/10000000025000000'),
                   )
-                : feedStore.entities.filter((a) => a.paywall !== '1'),
+                : feedStore.entities.filter(a => a.paywall !== '1'),
               'owner_guid',
             ),
-            (activities) =>
+            activities =>
               new PortraitBarItem(activities[0].ownerObj, activities.reverse()),
           );
 
-          this.items = _.sortBy(items, (d) => !d.unseen);
+          this.items = _.sortBy(items, d => !d.unseen);
         }
       } catch (err) {
         logService.exception(err);

@@ -61,15 +61,19 @@ const TierManagementScreen = observer(
             ? ThemedStyles.style.flexContainer
             : null
         }>
-        <Header
-          labelText={i18n.t('monetize.membershipMonetize.label')}
-          onLinkPress={() => navToTierScreen(navigation, false, localStore)}
-        />
+        {localStore.support_tiers.length > 0 && (
+          <Header
+            labelText={i18n.t('monetize.membershipMonetize.label')}
+            onLinkPress={() => navToTierScreen(navigation, false, localStore)}
+          />
+        )}
+
         <TiersList
           tiers={localStore.support_tiers}
           useForSelection={useForSelection}
           tierStore={tierStore}
           navigation={navigation}
+          onLinkPress={() => navToTierScreen(navigation, false, localStore)}
         />
       </ScrollView>
     );

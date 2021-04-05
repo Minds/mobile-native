@@ -57,8 +57,8 @@ const SocialLinks = ({ socialLinks }: PropsType) => {
   }
 
   const parsedSocialLinks = buildFromLegacyChannelProfile(socialLinks)
-    .filter((socialLink) => socialLink.key && socialLink.value)
-    .map((socialLink) => {
+    .filter(socialLink => socialLink.key && socialLink.value)
+    .map(socialLink => {
       socialLink = { ...socialLink }; // Clone
 
       if (!socialLink.value.toLowerCase().startsWith('http')) {
@@ -70,7 +70,7 @@ const SocialLinks = ({ socialLinks }: PropsType) => {
 
   return (
     <View style={theme.rowJustifyStart}>
-      {parsedSocialLinks.map((socialLink) => {
+      {parsedSocialLinks.map(socialLink => {
         const meta = getSocialProfileMeta(socialLink.key);
         return (
           <FaIcon

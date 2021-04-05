@@ -40,7 +40,7 @@ class NotificationsStore {
   /**
    * PollInterval
    */
-  pollInterval: NodeJS.Timeout | null = null;
+  pollInterval: number | null = null;
 
   /**
    * List loading
@@ -86,7 +86,7 @@ class NotificationsStore {
   persist() {
     const data = toJS(this.list.entities);
 
-    data.forEach((n) => delete n._list);
+    data.forEach(n => delete n._list);
 
     storageService.setItem(`notificationsList:${this.filter}`, data);
   }
@@ -187,10 +187,10 @@ class NotificationsStore {
    */
   loadCount() {
     getCount()
-      .then((data) => {
+      .then(data => {
         this.setUnread(data.count);
       })
-      .catch((err) => {
+      .catch(err => {
         logService.exception('[NotificationStore]', err);
       });
   }

@@ -32,7 +32,7 @@ const Input = ({ textToCopy, label, style }: InputProps) => {
       <Text>{label}</Text>
       <View style={[theme.marginTop2x, styles.inputContainer]}>
         <TextInput
-          ref={(ref) => (_textInput.current = ref!)}
+          ref={ref => (_textInput.current = ref!)}
           selectTextOnFocus
           caretHidden
           textContentType={'URL'}

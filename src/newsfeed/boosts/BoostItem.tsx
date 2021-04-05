@@ -15,7 +15,7 @@ export default class BoostItem extends PureComponent {
   /**
    * On layout
    */
-  _onLayout = (event) => {
+  _onLayout = event => {
     if (!this.height) {
       this.height = event.nativeEvent.layout.height;
     }

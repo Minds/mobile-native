@@ -123,7 +123,13 @@ export default class Button extends Component<ButtonPropsType> {
       />
     ) : (
       this.props.text && (
-        <Text style={[fontSize, { color: textColor || mainColor }, textStyle]}>
+        <Text
+          style={[
+            fontSize,
+            { color: textColor || mainColor },
+            textStyle,
+            { fontWeight: '500' },
+          ]}>
           {' '}
           {this.props.text}{' '}
         </Text>

@@ -57,7 +57,7 @@ class SearchBarService {
       typeof item === 'string'
         ? this.searchHistory.indexOf(item)
         : this.searchHistory.findIndex(
-            (value) =>
+            value =>
               !(typeof value === 'string') &&
               value.user.guid === item.user.guid,
           );

@@ -47,8 +47,8 @@ export default class SqliteService {
 
     const torun = count > 0 ? migrations.slice(count) : migrations;
 
-    await this.db.transaction((tx) => {
-      torun.forEach((m) => {
+    await this.db.transaction(tx => {
+      torun.forEach(m => {
         logService.info('sql running migration' + m);
         tx.executeSql(m, []);
       });

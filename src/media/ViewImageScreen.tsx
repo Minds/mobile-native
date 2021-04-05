@@ -1,26 +1,14 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import { View, StyleSheet, Dimensions, Platform } from 'react-native';
-
-import Icon from 'react-native-vector-icons/Ionicons';
-
-// import PhotoView from 'react-native-photo-view';
-
-import { CommonStyle } from '../styles/Common';
-import testID from '../common/helpers/testID';
+import { View, Dimensions } from 'react-native';
 import ImageViewer from '../common/components/ImageViewer';
+import ThemedStyles from '../styles/ThemedStyles';
 
 /**
  * Full screen image viewer
  */
 export default class ViewImageScreen extends Component {
-  static navigationOptions = ({ navigation }) => ({
-    transitionConfig: {
-      isModal: true,
-    },
-  });
-
   constructor(props) {
     super(props);
 
@@ -30,7 +18,7 @@ export default class ViewImageScreen extends Component {
 
     let height = 300;
 
-    if (custom_data && custom_data[0].height && custom_data[0].height != '0') {
+    if (custom_data && custom_data[0].height && custom_data[0].height !== '0') {
       let ratio = custom_data[0].height / custom_data[0].width;
       height = width * ratio;
     }
@@ -45,17 +33,18 @@ export default class ViewImageScreen extends Component {
     return this.props.route.params.source;
   }
 
+  onSwipeDown = () => {
+    this.props.navigation.goBack();
+  };
+
   render() {
     const source = this.getSource();
+    const theme = ThemedStyles.theme;
 
     return (
-      <View
-        style={[
-          CommonStyle.flexContainerCenter,
-          CommonStyle.alignCenter,
-          CommonStyle.backgroundBlack,
-        ]}>
+      <View style={theme.flexContainer}>
         <ImageViewer
+          onSwipeDown={this.onSwipeDown}
           source={source}
           urn={this.props.route.params.entity.urn}
           width={this.state.width}
@@ -66,7 +55,7 @@ export default class ViewImageScreen extends Component {
   }
 }
 
-const sharedElements: SharedElementsComponentConfig = (route) => {
+const sharedElements: SharedElementsComponentConfig = route => {
   const item = route.params.entity;
   return [{ id: `${item.urn}.image` }];
 };

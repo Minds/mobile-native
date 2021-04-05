@@ -30,10 +30,10 @@ describe('Media view component', () => {
     expect(screen).toMatchSnapshot();
   });
 
-  it('should have a TouchableOpacity', async () => {
+  it('should have a DoubleTapCmp', async () => {
     screen.update();
     expect(screen.find('ExplicitImage')).toHaveLength(1);
-    expect(screen.find('TouchableOpacity')).toHaveLength(1);
+    expect(screen.find('DoubleTapCmp')).toHaveLength(1);
   });
 
   it('should show overlay if press', async () => {

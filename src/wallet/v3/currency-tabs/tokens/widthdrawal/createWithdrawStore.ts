@@ -38,7 +38,7 @@ const createWithdrawStore = (p: {
       }
     },
     init() {
-      this.getCanTransfer().then((v) => this.setCanTransfer(v));
+      this.getCanTransfer().then(v => this.setCanTransfer(v));
     },
     setInProgress(value: boolean) {
       this.inProgress = value;

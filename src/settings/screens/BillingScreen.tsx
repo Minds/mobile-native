@@ -8,7 +8,7 @@ import StripeCardSelector from '../../wire/methods/StripeCardSelector';
 import ThemedStyles from '../../styles/ThemedStyles';
 
 export default class BillingScreen extends Component {
-  onSelectCard = (card) => {
+  onSelectCard = card => {
     return;
   };
 

@@ -115,7 +115,7 @@ export const withErrorBoundary = (
   WrappedComponent,
   message = '',
   small = false,
-) => (props) => {
+) => props => {
   if (!message) message = i18n.t('errorDisplaying');
   return (
     <ErrorBoundary message={message} textSmall={small}>

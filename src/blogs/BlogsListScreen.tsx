@@ -50,7 +50,7 @@ export default class BlogsListScreen extends Component {
     this.props.blogs.loadList();
   }
 
-  renderRow = (row) => {
+  renderRow = row => {
     const blog = row.item;
     return (
       <View style={styles.cardContainer}>
@@ -107,7 +107,7 @@ export default class BlogsListScreen extends Component {
   /**
    * On tab change
    */
-  onTabChange = (value) => {
+  onTabChange = value => {
     this.props.blogs.setFilter(value);
     this.props.blogs.reload();
   };
@@ -152,7 +152,7 @@ export default class BlogsListScreen extends Component {
         onEndReached={this.loadMore}
         // onEndReachedThreshold={0.09}
         renderItem={this.renderRow}
-        keyExtractor={(item) => item.guid}
+        keyExtractor={item => item.guid}
         style={styles.list}
         ListHeaderComponent={this.renderToolbar()}
         ListFooterComponent={footer}

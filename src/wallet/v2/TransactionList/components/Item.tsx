@@ -10,6 +10,7 @@ import formatDate from '../../../../common/helpers/date';
 import { AvatarIcon, DeltaIcon } from './Icons';
 import { Avatar } from 'react-native-elements';
 import i18n from '../../../../common/services/i18n.service';
+import capitalize from '../../../../common/helpers/capitalize';
 
 const Item = ({ entity, navigation, currency }: ItemPropsType) => {
   const theme = ThemedStyles.style;
@@ -78,7 +79,9 @@ const getTypeStringAndIcon = (
       avatar = <AvatarIcon name="star-outline" />;
       typeString = (
         <Text style={textColor}>
-          {i18n.t('wallet.transactions.mindsReward')}
+          {entity.reward_type
+            ? `${capitalize(entity.reward_type)} Reward`
+            : i18n.t('wallet.transactions.mindsReward')}
         </Text>
       );
       break;

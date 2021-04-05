@@ -4,6 +4,7 @@ import { createStore } from '../../../src/blockchain/v2/walletconnect/WalletConn
 import fakeTokenContract from '../../../__mocks__/fake/blockchain/services/TokenContract';
 
 jest.mock('web3');
+jest.mock('../../../src/blockchain/v2/walletconnect/modal/registry');
 
 /**
  * Blockchain token service
@@ -26,7 +27,7 @@ describe('blockchain token service', () => {
     blockchainTokenService.getContract.mockResolvedValue(fakeTokenContract);
   });
 
-  it('should return the balance', async (done) => {
+  it('should return the balance', async done => {
     try {
       // contract balance method mock
       const balanceMethod = { call: jest.fn(), encodeABI: jest.fn() };

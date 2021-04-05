@@ -117,7 +117,7 @@ const WalletScreen = observer((props: PropsType) => {
         <TopbarTabbar
           titleStyle={theme.fontXL}
           tabs={tabs}
-          onChange={(currency) => store.setCurrent(currency)}
+          onChange={currency => store.setCurrent(currency)}
           current={store.currency}
           tabStyle={theme.paddingVertical}
         />

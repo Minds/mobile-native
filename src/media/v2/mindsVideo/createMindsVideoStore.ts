@@ -246,7 +246,7 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
 
         this.setSources(
           response.sources.filter(
-            (v) => ['video/mp4', 'video/hls'].indexOf(v.type) > -1,
+            v => ['video/mp4', 'video/hls'].indexOf(v.type) > -1,
           ),
         );
       }

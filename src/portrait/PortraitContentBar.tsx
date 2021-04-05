@@ -43,7 +43,7 @@ export const portraitBarRef = React.createRef<FlatList<PortraitBarItem>>();
 const BarPlaceholder = () => {
   const theme = ThemedStyles.style;
   const color = ThemedStyles.getColor('tertiary_background');
-  const animation = (props) => (
+  const animation = props => (
     <Fade {...props} style={theme.backgroundPrimary} />
   );
   return (

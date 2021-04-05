@@ -23,7 +23,7 @@ import { hashRegex } from '../common/components/Tags';
  * Display an error message to the user.
  * @param {string} message
  */
-const showError = (message) => {
+const showError = message => {
   showMessage({
     position: 'top',
     message: message,
@@ -215,7 +215,7 @@ export default function (props) {
           path: this.mediaToConfirm.uri.replace('file://', ''),
           stickers: ['sticker6', 'sticker9'],
           hiddenControls: ['save', 'share'],
-          onDone: (result) => {
+          onDone: result => {
             Image.getSize(
               this.mediaToConfirm.uri,
               (w, h) => {
@@ -233,7 +233,7 @@ export default function (props) {
                   }
                 });
               },
-              (err) => console.log(err),
+              err => console.log(err),
             );
           },
         });
@@ -250,7 +250,7 @@ export default function (props) {
         this.maxHashtagsError();
         return false;
       }
-      if (this.tags.some((t) => t === tag)) {
+      if (this.tags.some(t => t === tag)) {
         return false;
       }
 
@@ -262,7 +262,7 @@ export default function (props) {
      * @param {string} tag
      */
     removeTag(tag) {
-      const index = this.tags.findIndex((v) => v === tag);
+      const index = this.tags.findIndex(v => v === tag);
       if (index !== -1) {
         this.tags.splice(index, 1);
       }
@@ -270,7 +270,7 @@ export default function (props) {
     parseTags() {
       let result = this.text.match(hashRegex);
       if (result) {
-        result = result.map((v) => v.trim().slice(1));
+        result = result.map(v => v.trim().slice(1));
 
         if (this.tags.length + result.length <= hashtagService.maxHashtags) {
           this.tags.push(...result);

@@ -630,6 +630,9 @@ exports[`Activity screen component renders correctly  1`] = `
             Array [
               undefined,
               undefined,
+              Object {
+                "paddingLeft": 16,
+              },
             ]
           }
         >
@@ -648,17 +651,12 @@ exports[`Activity screen component renders correctly  1`] = `
         </View>
       </View>
     </RCTScrollView>
-    <ViewManagerAdapter_ExpoLinearGradient
-      proxiedProperties={
-        Object {
-          "colors": Array [
-            1712165,
-            4279902245,
-          ],
-          "endPoint": undefined,
-          "locations": undefined,
-          "startPoint": undefined,
-        }
+    <ExpoLinearGradient
+      colors={
+        Array [
+          "#1A202500",
+          "#1A2025FF",
+        ]
       }
       style={
         Object {

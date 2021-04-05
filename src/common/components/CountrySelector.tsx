@@ -19,8 +19,8 @@ const CountrySelector = ({ onlyAllowed, onSelected, selected }: PropsType) => {
   return (
     <InputSelector
       data={filteredCountries}
-      valueExtractor={(item) => item.name}
-      keyExtractor={(item) => item.code}
+      valueExtractor={item => item.name}
+      keyExtractor={item => item.code}
       label={i18n.t('wallet.bank.country')}
       onSelected={onSelected}
       selected={selected}

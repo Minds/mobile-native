@@ -11,10 +11,10 @@ class EntitiesService {
   getEntity(guid) {
     return api
       .get('api/v1/entities/entity/' + guid)
-      .then((data) => {
+      .then(data => {
         return data.entity;
       })
-      .catch((err) => {
+      .catch(err => {
         logService.exception('[EntitiesService]', err);
       });
   }

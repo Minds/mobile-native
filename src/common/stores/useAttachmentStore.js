@@ -90,7 +90,7 @@ export default function () {
         const uploadPromise = attachmentService.attachMedia(
           media,
           extra,
-          (pct) => {
+          pct => {
             store.setProgress(pct);
           },
         );

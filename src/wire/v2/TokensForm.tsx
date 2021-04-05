@@ -42,7 +42,7 @@ const TokensForm = observer(({ store }: propsType) => {
           initialValue={true}
           rightValue={false}
           leftValue={true}
-          onSelectedValueChange={(v) => store.wire.setTokenType(v)}
+          onSelectedValueChange={v => store.wire.setTokenType(v)}
         />
       </LabeledComponent>
 

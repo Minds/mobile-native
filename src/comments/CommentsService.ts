@@ -2,7 +2,7 @@
 import api from './../common/services/api.service';
 import commentStorageService from './CommentStorageService';
 
-const decodeUrn = (urn) => {
+const decodeUrn = urn => {
   let parts = urn.split(':');
 
   const obj = {
