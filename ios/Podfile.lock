@@ -64,7 +64,7 @@ PODS:
   - lottie-ios (3.1.8)
   - lottie-react-native (3.5.0):
     - lottie-ios (~> 3.1.8)
-    - React
+    - React-Core
   - Permission-Camera (2.2.2):
     - RNPermissions
   - Permission-Microphone (2.2.2):
@@ -830,7 +830,7 @@ SPEC CHECKSUMS:
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   libwebp: 946cb3063cea9236285f7e9a8505d806d30e07f3
   lottie-ios: 48fac6be217c76937e36e340e2d09cf7b10b7f5f
-  lottie-react-native: 1fb4ce21d6ad37dab8343eaff8719df76035bd93
+  lottie-react-native: 69740f3742cc82d8211979e2b48681e002c22bff
   Permission-Camera: 5d2aaf95592660b6dcb5e8d1d90ed5d0156cad02
   Permission-Microphone: a0e56790d61392c31627df33328fef079ad46fa8
   Permission-PhotoLibrary: 8227a6ed9f6a971537afe63742d54f5f23a38fe2
@@ -913,6 +913,6 @@ SPEC CHECKSUMS:
   UMTaskManagerInterface: 4c60b43eaf3cb05a164bc9113258a171c18b7bf7
   Yoga: 8c8436d4171c87504c648ae23b1d81242bdf3bbf
 
-PODFILE CHECKSUM: f0e6a63337e8c00c65ae693519d4a27604954738
+PODFILE CHECKSUM: a544c9133d625d44178d86182119b79230a625d5
 
 COCOAPODS: 1.10.1
