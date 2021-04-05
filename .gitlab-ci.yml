@@ -3,6 +3,8 @@ stages:
   - e2e
   - build
   - deploy
+  - release
+  - uploadstore
 
 # Spec test
 test:jest:
@@ -117,6 +119,14 @@ test:jest:
 build:androidproduction:
   image: circleci/android:api-28-node
   stage: build
+  cache:
+    key: '$CI_JOB_NAME-$CI_COMMIT_REF_SLUG'
+    paths:
+      - node_modules/
+      - android/vendor/bundle
+      - .gradle/caches
+      - .gradle/wrapper
+      - .android/build-cache/
   before_script:
     - export ANDROID_SDK_HOME=$CI_PROJECT_DIR
     - export GRADLE_USER_HOME="$CI_PROJECT_DIR/.gradle"
@@ -144,6 +154,14 @@ build:androidproduction:
 build:androidproduction-playstore:
   image: circleci/android:api-28-node
   stage: build
+  cache:
+    key: '$CI_JOB_NAME-$CI_COMMIT_REF_SLUG'
+    paths:
+      - node_modules/
+      - android/vendor/bundle
+      - .gradle/caches
+      - .gradle/wrapper
+      - .android/build-cache/
   before_script:
     - "sed -i 's/^versionCode=/# versionCode=/' android/gradle.properties"
     - "sed -i 's/^## versionCode/versionCode/' android/gradle.properties"
@@ -181,7 +199,7 @@ build:androidproduction-playstore:
 deploy:s3andbrowserstack:oss:
   <<: *deploy_s3andbrowserstack
   variables:
-    APK_FILENAME: "Minds-$CI_COMMIT_REF_SLUG.apk"
+    APK_FILENAME: 'Minds-$CI_COMMIT_REF_SLUG.apk'
   dependencies:
     - build:androidproduction
   only:
@@ -193,7 +211,7 @@ deploy:s3andbrowserstack:oss:
 deploy:s3andbrowserstack:playstore:
   <<: *deploy_s3andbrowserstack
   variables:
-    APK_FILENAME: "Minds-$CI_COMMIT_REF_SLUG-play_store.apk"
+    APK_FILENAME: 'Minds-$CI_COMMIT_REF_SLUG-play_store.apk'
   dependencies:
     - build:androidproduction-playstore
   only:
@@ -201,18 +219,49 @@ deploy:s3andbrowserstack:playstore:
       - /^stable-*/
       - /^test-*/
 
-deploy:google_play:
+# Generate releases.json and upload it
+release:production:
+  image: msantang78/ci-mobile:latest
+  stage: release
+  variables:
+    APK_FILENAME: 'Minds-$CI_COMMIT_REF_SLUG.apk'
+  dependencies:
+    - build:androidproduction
+    - deploy:s3andbrowserstack:oss
+  artifacts:
+    name: 'Release JSON'
+    paths:
+      - releases.json
+      - android/fastlane/metadata/android/en-US/changelogs/default.txt
+    expire_in: 7 days
+    when: on_success
+  when: manual
+  only:
+    refs:
+      - /^stable-*/
+      - /^test-*/ # Delete this
+  before_script:
+    - node -v
+    - yarn install
+  script:
+    - echo "Releasing $APK_FILENAME"
+    - yarn release-json $APK_FILENAME
+    - aws s3 cp releases.json s3://minds-repo/android/releases/releases.json
+
+uploadstore:google_play:
   image: circleci/android:api-28-node
-  stage: deploy
+  stage: uploadstore
   before_script:
     - cd android
     - bundle install --path=vendor/bundle
     - 'echo $ANDROID_PLAYSTORE_JSON | base64 --decode > app/play-store.json'
   script:
     - echo "Upload to the play store Minds-$CI_COMMIT_REF_SLUG-play_store.apk"
-    - bundle exec fastlane supply --apk ../Minds-$CI_COMMIT_REF_SLUG-play_store.apk --track beta
+    - bundle exec fastlane supply --apk ../Minds-$CI_COMMIT_REF_SLUG-play_store.apk
   dependencies:
+    - release:production
     - build:androidproduction-playstore
+  when: manual
   only:
     refs:
       - /^stable-*/
