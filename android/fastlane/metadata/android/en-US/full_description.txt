@@ -1,21 +1,25 @@
-The Crypto Social Network
+Free your mind and get paid for creating content, driving engagement and referring friends. We are a social networking platform to have open conversations and bring people together under the principles of freedom, transparency and privacy. You control your experience.
 
-★ Features. Newsfeed, Wallet, Groups, Blogs, Video, Images, Search, Channels, Videos, Images, Statuses, Rewards, Video Chat
+We make it simple to discover and capture your own original videos, blogs and photos with easy-to-use tools to watch and share your daily thoughts and experiences.
 
-★ Privacy. Chat securely with encrypted messenger. Be anonymous if you wish.
+■ Discover endless videos, photos and blogs from your favorite creators.
 
-★ Contribute. Create popular original content that receives upvotes, comments and reminds. Gain new subscribers, refer contacts, check-in, develop code and more.
+■ Engage with people from all around the world who value free speech and have strong opinions. Help change minds or consider someone else’s point of view.
 
-★ Earn. Each day we measure your contribution relative to the community and reward you with tokens.
+■ Earn money in multiple currencies for creating popular original content and growing your audience. Each day we measure your contribution relative to the community and reward you with tokens using blockchain technology for maximum transparency and control.
 
-★ Get Views. Exchange your tokens for views on your content and increase your chances of earning rewards. No algorithms or surveillance. 100% organic reach. 1 token = 1,000 views.
+■ Chat with your friends and contacts privately with encrypted messenger. Be anonymous if you wish.
 
-★ Sell Digital Services. Share exclusive digital content and other custom rewards to your supporters and earn tokens.  
+■ Sell digital content and premium subscriptions to your fans.
 
-★ Open Source. Minds is free and open source which allows anyone to inspect, modify or share their version of the source code. 
+■ Boost and promote your content for more exposure. Earn or buy tokens for more views on your content. No algorithms or surveillance. One token gets you 1,000 extra views. 100% chronological and organic reach in your newsfeed.
+
+■ Features: Easy mobile video creation, Newsfeed, Wallet (Bitcoin, Ether, Minds Tokens, USD), Video Chat, Groups, Blogs, Video, Photos, Search, Discover, Statuses, Analytics, Juries, Encrypted chat, more...
 
 For support, questions, or more information, please visit:
-https://minds.com/faq 
+https://www.minds.com/help
 
-Source code:
-https://minds.org
+Open source code:
+https://developers.minds.com
+
+Contact us at info@minds.com
