@@ -63,6 +63,24 @@ export default function ReadMore({
   renderRevealedFooter,
 }: PropsType) {
   const [clippedText, setClippedText] = React.useState('');
+  const onTextLayout = React.useCallback(
+    event => {
+      const { lines } = event.nativeEvent;
+
+      if (lines.length <= numberOfLines) {
+        return;
+      }
+
+      let linesText = lines
+        .splice(0, numberOfLines)
+        .map(line => line.text)
+        .join('');
+
+      setClippedText(text.substr(0, linesText.length - 9));
+    },
+    [numberOfLines, text],
+  );
+
   return clippedText ? (
     <MoreLessComponent
       truncatedText={clippedText}
@@ -78,20 +96,7 @@ export default function ReadMore({
         numberOfLines={numberOfLines + additional}
         ellipsizeMode={'tail'}
         style={style}
-        onTextLayout={event => {
-          const { lines } = event.nativeEvent;
-
-          if (lines.length <= numberOfLines) {
-            return;
-          }
-
-          let linesText = lines
-            .splice(0, numberOfLines)
-            .map(line => line.text)
-            .join('');
-
-          setClippedText(text.substr(0, linesText.length - 9));
-        }}>
+        onTextLayout={onTextLayout}>
         <Tags navigation={navigation} style={style} selectable={true}>
           {text}
         </Tags>
