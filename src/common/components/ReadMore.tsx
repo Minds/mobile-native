@@ -81,6 +81,10 @@ export default function ReadMore({
         onTextLayout={event => {
           const { lines } = event.nativeEvent;
 
+          if (lines.length <= numberOfLines) {
+            return;
+          }
+
           let linesText = lines
             .splice(0, numberOfLines)
             .map(line => line.text)
