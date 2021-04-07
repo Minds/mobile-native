@@ -174,6 +174,7 @@ android {
         release {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            proguardFile "${rootProject.projectDir}/../node_modules/detox/android/detox/proguard-rules-app.pro"
             signingConfig signingConfigs.release
         }
     }
@@ -225,6 +226,8 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-core:16.0.7'
     implementation 'com.google.firebase:firebase-messaging:17.3.3' // IMPORTANT: fix the crash when the app receives a push notification
+
+    implementation project(':lottie-react-native')
 
     // I manually linked this package to fix the build errors ignoring the following packages
     // implementation(project(':react-native-jitsi-meet')) {

@@ -1,26 +1,40 @@
 {
   "testRunner": "jest",
   "runnerConfig": "e2e/config.json",
-  "configurations": {
+  "apps": {
     "ios": {
-      "type": "ios.simulator",
+      "type": "ios.app",
       "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/Minds.app",
-      "build": "RN_SRC_EXT=e2e.js xcodebuild -workspace ios/Minds.xcworkspace -scheme Minds -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
-      "device": {
-        "type": "iPhone 11"
-      }
+      "build": "xcodebuild -workspace ios/Minds.xcworkspace -UseNewBuildSystem=NO -scheme Minds -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build EXCLUDED_ARCHS=arm64"
     },
     "android": {
-      "type": "android.emulator",
+      "type": "android.apk",
       "binaryPath": "android/app/build/outputs/apk/debug/app-debug.apk",
+      "build": "cd android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug && cd .."
+    }
+  },
+  "devices": {
+    "simulator": {
+      "type": "ios.simulator",
       "device": {
-        "avdName": "Nexus_6_API_29"
+        "type": "iPhone 12"
+      }
+    },
+    "emulator": {
+      "type": "android.emulator",
+      "device": {
+        "avdName": "Pixel_3a_API_30_x86"
       }
     }
   },
-  "behavior": {
-    "init": {
-      "launchApp": false
+  "configurations": {
+    "ios": {
+      "device": "simulator",
+      "app": "ios"
+    },
+    "android": {
+      "device": "emulator",
+      "app": "android"
     }
   }
 }

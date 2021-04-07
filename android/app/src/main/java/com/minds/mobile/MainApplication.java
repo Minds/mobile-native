@@ -31,6 +31,9 @@ import java.lang.reflect.InvocationTargetException;
 import com.minds.mobile.CustomErrorScreen;
 import com.masteratul.exceptionhandler.ReactNativeExceptionHandlerModule;
 
+import com.airbnb.android.react.lottie.LottiePackage;
+
+
 public class MainApplication extends Application implements ShareApplication, ReactApplication {
  private final ReactModuleRegistryProvider mModuleRegistryProvider = new ReactModuleRegistryProvider(new BasePackageList().getPackageList(), null);
 
@@ -46,6 +49,7 @@ public class MainApplication extends Application implements ShareApplication, Re
         @SuppressWarnings("UnnecessaryLocalVariable")
         List<ReactPackage> packages = new PackageList(this).getPackages();
         packages.add(new RNNotificationsPackage(this.getApplication()));
+        packages.add(new LottiePackage());
 
         // Add unimodules
         List<ReactPackage> unimodules = Arrays.<ReactPackage>asList(
