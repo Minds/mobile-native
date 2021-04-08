@@ -86,7 +86,7 @@ class AuthService {
     } as loginParms;
 
     const data: LoginResponse = await api.post<LoginResponse>(
-      'api/v2/oauth/token',
+      'api/v3/oauth/token',
       params,
       headers,
     );
@@ -103,7 +103,7 @@ class AuthService {
   async logout(): Promise<boolean> {
     this.justRegistered = false;
     try {
-      await api.delete('api/v2/oauth/token');
+      await api.post('api/v3/oauth/revoke');
       session.logout();
 
       // Fixes autosubscribe issue on register
@@ -122,7 +122,7 @@ class AuthService {
   async logoutAll(): Promise<boolean> {
     try {
       await api.delete('api/v1/authenticate/all');
-      await api.delete('api/v2/oauth/token');
+      await api.post('api/v3/oauth/revoke');
       session.logout();
 
       // Fixes autosubscribe issue on register
@@ -150,7 +150,7 @@ class AuthService {
 
     try {
       const data: LoginResponse = await api.post<LoginResponse>(
-        'api/v2/oauth/token',
+        'api/v3/oauth/token',
         params,
       );
 

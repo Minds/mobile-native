@@ -16,7 +16,6 @@ describe('auth service login', () => {
   });
 
   it('login calls oauth2/token api and returns token', async () => {
-
     const response = { access_token: 'a1', refresh_token: 'a2' };
 
     api.post.mockResolvedValue(response);
@@ -30,11 +29,10 @@ describe('auth service login', () => {
     // call api post one time
     expect(api.post.mock.calls.length).toEqual(1);
     // with login url
-    expect(api.post.mock.calls[0][0]).toEqual('api/v2/oauth/token');
+    expect(api.post.mock.calls[0][0]).toEqual('api/v3/oauth/token');
   });
 
   it('login create session on success', async () => {
-
     const response = { access_token: 'a1', refresh_token: 'a2' };
 
     api.post.mockResolvedValue(response);
@@ -52,8 +50,7 @@ describe('auth service login', () => {
   });
 
   it('login returns errors', async () => {
-
-    const response = {status: 'error', error: 'some error'};
+    const response = { status: 'error', error: 'some error' };
 
     api.post.mockRejectedValue(response);
 
@@ -61,7 +58,7 @@ describe('auth service login', () => {
       const promise = authService.login('user', 'pass');
 
       const res = await promise;
-    } catch(err) {
+    } catch (err) {
       // assert on the response
       expect(err).toEqual(response);
     }
@@ -70,12 +67,11 @@ describe('auth service login', () => {
 
 describe('auth service logout', () => {
   beforeEach(() => {
-      api.post.mockClear();
-      session.logout.mockClear();
+    api.post.mockClear();
+    session.logout.mockClear();
   });
 
   it('logout calls api/v1/logout api and returns', async () => {
-
     api.post.mockResolvedValue(true);
 
     const res = await authService.logout();
@@ -87,7 +83,6 @@ describe('auth service logout', () => {
   });
 
   it('logout destroy session on success', async () => {
-
     api.post.mockResolvedValue(true);
 
     const res = await authService.logout();
@@ -99,7 +94,6 @@ describe('auth service logout', () => {
   });
 
   it('should clear cookies on logout', async () => {
-
     api.post.mockResolvedValue(true);
 
     const res = await authService.logout();
@@ -115,14 +109,13 @@ describe('auth service logout', () => {
   });
 
   it('logout returns errors', async () => {
-
-    const response = {status: 'error', error: 'some error'};
+    const response = { status: 'error', error: 'some error' };
 
     api.post.mockRejectedValue(response);
 
     try {
       const res = await authService.logout();
-    } catch(err) {
+    } catch (err) {
       // assert on the response
       expect(err).toEqual(response);
     }
@@ -136,8 +129,7 @@ describe('auth service forgot', () => {
   });
 
   it('forgot calls api/v1/forgotpassword/request and returns', async () => {
-
-    const response = { status: 'success', user: {name: 'someUser'} };
+    const response = { status: 'success', user: { name: 'someUser' } };
 
     api.post.mockResolvedValue(response);
 
@@ -152,17 +144,15 @@ describe('auth service forgot', () => {
   });
 
   it('forgot returns errors', async () => {
-
-    const response = {status: 'error', error: 'some error'};
+    const response = { status: 'error', error: 'some error' };
 
     api.post.mockRejectedValue(response);
 
     try {
       const res = await authService.forgot('user');
-    } catch(err) {
+    } catch (err) {
       // assert on the response
       expect(err).toEqual(response);
     }
   });
 });
-
