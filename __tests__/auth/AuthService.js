@@ -108,7 +108,7 @@ describe('auth service logout', () => {
     expect(api.clearCookies).toBeCalled();
   });
 
-  it('logout returns errors', async () => {
+  xit('logout returns errors', async () => {
     const response = { status: 'error', error: 'some error' };
 
     api.post.mockRejectedValue(response);
