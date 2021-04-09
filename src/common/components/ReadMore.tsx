@@ -1,112 +1,106 @@
-import { useLayout } from '@react-native-community/hooks';
-import React, { useReducer } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { Platform, StyleSheet, Text, TextStyle, View } from 'react-native';
+import Tags from './Tags';
 const VIEW_MORE_HEIGHT = 33;
 
-function reducer(state, action) {
-  switch (action.type) {
-    case 'measured':
-      return {
-        ...state,
-        measured: true,
-        fullHeight: action.fullHeight,
-      };
-    case 'limitedHeight':
-      return {
-        ...state,
-        measured: true,
-        limitedHeight: action.limitedHeight,
-        shouldShowReadMore:
-          state.fullHeight > action.limitedHeight && action.limitedHeight,
-      };
-    case 'showAll':
-      return {
-        ...state,
-        showAllText: true,
-      };
-    case 'showLess':
-      return {
-        ...state,
-        showAllText: false,
-      };
-    default:
-      throw new Error('Wrong action');
-  }
-}
+// we add an extra line for ios, because the onTextLayout event doesn't clip the last line
+const additional = Platform.OS === 'ios' ? 1 : 0;
 
-const initialState = {
-  measured: false,
-  shouldShowReadMore: false,
-  showAllText: false,
-  fullHeight: 0,
-  limitedHeight: 0,
+const MoreLessComponent = ({
+  truncatedText,
+  fullText,
+  style,
+  navigation,
+  renderTruncatedFooter,
+  renderRevealedFooter,
+}) => {
+  const [more, setMore] = React.useState(false);
+  const handlePressReadMore = React.useCallback(() => setMore(true), []);
+  const handlePressReadLess = React.useCallback(() => setMore(false), []);
+  return (
+    <View>
+      <Text>
+        <Tags navigation={navigation} style={style} selectable={true}>
+          {!more ? `${truncatedText}...` : fullText}
+        </Tags>
+      </Text>
+      <View style={styles.readMore}>
+        {!more ? (
+          renderTruncatedFooter ? (
+            renderTruncatedFooter(handlePressReadMore)
+          ) : (
+            <Text style={styles.button} onPress={handlePressReadMore}>
+              Read more
+            </Text>
+          )
+        ) : renderRevealedFooter ? (
+          renderRevealedFooter(handlePressReadLess)
+        ) : (
+          <Text style={styles.button} onPress={handlePressReadLess}>
+            Hide
+          </Text>
+        )}
+      </View>
+    </View>
+  );
 };
 
-export default function ReadMore(props) {
-  const { numberOfLines } = props;
-  const { onLayout, ...layout } = useLayout();
-  const [state, dispatch] = useReducer(reducer, initialState);
+type PropsType = {
+  numberOfLines: number;
+  text: string;
+  style?: TextStyle | Array<TextStyle>;
+  navigation: any;
+  renderTruncatedFooter?: React.ReactNode;
+  renderRevealedFooter?: React.ReactNode;
+};
 
-  if (
-    layout.height &&
-    state.measured &&
-    !state.limitedHeight &&
-    layout.height < state.fullHeight
-  ) {
-    dispatch({ type: 'limitedHeight', limitedHeight: layout.height });
-  }
+export default function ReadMore({
+  numberOfLines,
+  text,
+  style,
+  navigation,
+  renderTruncatedFooter,
+  renderRevealedFooter,
+}: PropsType) {
+  const [clippedText, setClippedText] = React.useState('');
+  const onTextLayout = React.useCallback(
+    event => {
+      const { lines } = event.nativeEvent;
 
-  if (layout.height && !state.measured) {
-    dispatch({ type: 'measured', fullHeight: layout.height });
-  }
+      if (lines.length <= numberOfLines) {
+        return;
+      }
 
-  const handlePressReadMore = () => {
-    dispatch({ type: 'showAll' });
-  };
+      let linesText = lines
+        .splice(0, numberOfLines)
+        .map(line => line.text)
+        .join('');
 
-  const handlePressReadLess = () => {
-    dispatch({ type: 'showLess' });
-  };
+      setClippedText(text.substr(0, linesText.length - 9));
+    },
+    [numberOfLines, text],
+  );
 
-  return (
-    <View
-      style={{
-        height:
-          state.limitedHeight && !state.showAllText
-            ? state.limitedHeight + VIEW_MORE_HEIGHT
-            : state.fullHeight + VIEW_MORE_HEIGHT,
-      }}
-      collapsable={false}>
+  return clippedText ? (
+    <MoreLessComponent
+      truncatedText={clippedText}
+      fullText={text}
+      style={style}
+      navigation={navigation}
+      renderTruncatedFooter={renderTruncatedFooter}
+      renderRevealedFooter={renderRevealedFooter}
+    />
+  ) : (
+    <View>
       <Text
-        numberOfLines={
-          state.measured && !state.showAllText ? numberOfLines : undefined
-        }
-        onLayout={onLayout}>
-        {props.children}
+        numberOfLines={numberOfLines + additional}
+        ellipsizeMode={'tail'}
+        style={style}
+        onTextLayout={onTextLayout}>
+        <Tags navigation={navigation} style={style} selectable={true}>
+          {text}
+        </Tags>
       </Text>
-      {state.shouldShowReadMore && (
-        <View style={styles.readMore}>
-          {state.shouldShowReadMore && !state.showAllText ? (
-            props.renderTruncatedFooter ? (
-              props.renderTruncatedFooter(handlePressReadMore)
-            ) : (
-              <Text style={styles.button} onPress={handlePressReadMore}>
-                Read more
-              </Text>
-            )
-          ) : (
-            state.shouldShowReadMore &&
-            state.showAllText &&
-            (props.renderRevealedFooter ? (
-              props.renderRevealedFooter(handlePressReadLess)
-            ) : (
-              <Text style={styles.button} onPress={handlePressReadLess}>
-                Hide
-              </Text>
-            ))
-          )}
-        </View>
-      )}
     </View>
   );
 }

@@ -1,13 +1,13 @@
 import React, { useCallback } from 'react';
 import { Text, TouchableOpacity, StyleSheet } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
-import ReadMore from 'react-native-read-more-text';
+// import ReadMore from 'react-native-read-more-text';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 
 import i18n from '../../common/services/i18n.service';
-import Tags from '../../common/components/Tags';
 import type UserModel from '../UserModel';
+import ReadMore from '../../common/components/ReadMore';
 
 type PropsType = {
   channel: UserModel;
@@ -54,14 +54,12 @@ const ChannelDescription = (props: PropsType) => {
   return (
     <ReadMore
       numberOfLines={4}
+      text={props.channel.briefdescription}
       renderTruncatedFooter={renderTruncatedFooter}
-      renderRevealedFooter={renderRevealedFooter}>
-      <Tags
-        style={[theme.fontL, theme.colorSecondaryText]} // M.B. Needed to be able to style parsed tags text again. Not sure whether the android issue is ongoing or not.
-        navigation={navigation}>
-        {props.channel.briefdescription}
-      </Tags>
-    </ReadMore>
+      style={[theme.fontL, theme.colorSecondaryText]}
+      navigation={navigation}
+      renderRevealedFooter={renderRevealedFooter}
+    />
   );
 };
 

@@ -12577,10 +12577,6 @@ react-native-ratings@^7.2.0:
     lodash "^4.17.15"
     prop-types "^15.7.2"
 
-react-native-read-more-text@devbelieve365/react-native-read-more-text:
-  version "1.0.0"
-  resolved "https://codeload.github.com/devbelieve365/react-native-read-more-text/tar.gz/7828b78bd632feeb3f5f6bb3fa1b61021ded900f"
-
 react-native-reanimated-hooks@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/react-native-reanimated-hooks/-/react-native-reanimated-hooks-2.0.0.tgz#de4f14734a8fe3a0a0e1e37ca3b2f764c4a53f3e"
