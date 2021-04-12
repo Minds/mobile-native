@@ -49,6 +49,7 @@ export default class UserModel extends BaseModel {
   is_mature?: boolean;
   dob?: string;
   liquidity_spot_opt_out?: boolean;
+  subscriber: boolean = false;
 
   tags: Array<string> = [];
   groupsCount: number = 0;

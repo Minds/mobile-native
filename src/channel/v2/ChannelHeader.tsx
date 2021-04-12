@@ -246,16 +246,29 @@ const ChannelHeader = observer((props: PropsType) => {
           />
         )}
       </View>
-      <Text
+      <View
         style={[
-          styles.username,
-          theme.colorSecondaryText,
+          theme.rowStretch,
+          theme.centered,
           theme.paddingTop,
           theme.paddingBottom3x,
-        ]}
-        numberOfLines={1}>
-        @{channel ? channel.username : props.channelName}
-      </Text>
+        ]}>
+        <Text
+          style={[styles.username, theme.colorSecondaryText]}
+          numberOfLines={1}>
+          @{channel ? channel.username : props.channelName}
+        </Text>
+        {channel!.subscriber === true && (
+          <Text
+            style={[
+              styles.subscriber,
+              theme.colorSecondaryText,
+              theme.mindsSwitchBackgroundSecondary,
+            ]}>
+            {i18n.t('channel.subscriber')}
+          </Text>
+        )}
+      </View>
       {channel && (
         <View style={theme.paddingHorizontal4x}>
           <Text
@@ -348,9 +361,15 @@ const styles = StyleSheet.create({
   },
   username: {
     fontSize: 16,
-    width: '100%',
     textAlign: 'center',
-    marginTop: -2,
+  },
+  subscriber: {
+    fontSize: 14,
+    textAlign: 'center',
+    paddingHorizontal: 5,
+    paddingVertical: 2,
+    borderRadius: 2,
+    marginLeft: 5,
   },
   name: {
     fontSize: 22,
