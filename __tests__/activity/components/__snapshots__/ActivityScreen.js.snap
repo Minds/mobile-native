@@ -987,6 +987,7 @@ exports[`Activity screen component renders correctly  1`] = `
             "pro": false,
             "rewards": false,
             "subscribed": undefined,
+            "subscriber": false,
             "subscribers_count": undefined,
             "subscriptions_count": 0,
             "subtype": false,
