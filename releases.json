@@ -1,6 +1,31 @@
 {
   "versions": [
     {
+      "version": "4.11.0",
+      "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-11-0.apk",
+      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.11.0",
+      "changelog": [
+        "Channel screen styling improvements",
+        "Updated react-native to 0.64",
+        "Bug fixing"
+      ],
+      "unstable": false,
+      "hashes": [
+        {
+          "type": "md5",
+          "value": "3efa64bcbec29196d42fb01c8c1acbf4"
+        },
+        {
+          "type": "sha256",
+          "value": "bab57ae5ae1afe149eda3bfc5b15cb54b24449fdf6a7d9d8705709518957a93c"
+        },
+        {
+          "type": "sha512",
+          "value": "4928f967e9bef4f490a0e8e7715d7940b4475555295d92af4b303c7d153a44e1122b1226fd51d7eaa9ce1c91ac5201b6c877e382631581f3e6d769da9390bc2c"
+        }
+      ]
+    },
+    {
       "version": "4.9.1",
       "href": "https://cdn-assets.minds.com/android/Minds-stable-4-9-1.apk",
       "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.9.1",
