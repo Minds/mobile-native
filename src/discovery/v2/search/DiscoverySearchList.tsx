@@ -49,7 +49,7 @@ export const DiscoverySearchList = observer((props: Props) => {
               row={row}
               navigation={props.navigation}
               onUserTap={(item: UserModel) =>
-                searchBarStore.user.searchBarItemTap(item)
+                searchBarStore.user?.searchBarItemTap(item)
               }
             />
           );
