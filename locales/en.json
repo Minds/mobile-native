@@ -607,8 +607,9 @@
       "smsTitle": "SMS",
       "smsDescription": "Minds will send you an SMS with a two-factor authentication code when prompted"
     },
-    "sessionsOpened": "You currently have {{amount}} opened sessions",
-    "closeSessions": "CLOSE ALL SESSIONS",
+    "sessionsOpened": "Your currently signed into Minds account on the following devices.",
+    "closeSessions": "Close all sessions",
+    "closeSession": "Close session",
     "subscriptionListEmpty": "You don't have any recurring subscription",
     "recurringPaymentsDescription": "Track recurring payments you make to support other channels.",
     "enterDark": "Enter Dark Mode",

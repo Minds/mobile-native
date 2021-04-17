@@ -75,7 +75,8 @@ export default class Button extends Component<ButtonPropsType> {
       active ? 'active' : 'primary_background',
     );
     let mainColor =
-      color || transparent ? '#FFFFFF' : ThemedStyles.getColor('primary_text');
+      color ||
+      (transparent ? '#FFFFFF' : ThemedStyles.getColor('primary_text'));
 
     if (inverted !== undefined) {
       background = mainColor;
@@ -137,6 +138,8 @@ export default class Button extends Component<ButtonPropsType> {
     );
 
     const onButtonPress = loading ? undefined : onPress;
+
+    console.log(onButtonPress);
 
     return (
       <TouchableOpacity
