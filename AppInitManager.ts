@@ -156,9 +156,10 @@ export default class AppInitManager {
       portraitContentService.removeOlderThan(3);
     }, 30000);
 
-    setTimeout(() => {
-      showMessageForPrivateKey();
-    }, 10000);
+    // disable
+    // setTimeout(() => {
+    //   showMessageForPrivateKey();
+    // }, 10000);
 
     if (sessionService.recoveryCodeUsed) {
       sessionService.setRecoveryCodeUsed(false);
