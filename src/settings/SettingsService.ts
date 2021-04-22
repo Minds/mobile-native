@@ -59,7 +59,6 @@ class SettingsService {
    * Delete channel
    */
   async delete(password) {
-    console.log(password);
     try {
       await api.post('api/v2/settings/delete', { password });
       await sessionService.logout();
