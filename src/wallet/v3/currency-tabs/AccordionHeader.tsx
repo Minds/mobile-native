@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ThemedStyles from '../../../styles/ThemedStyles';
 
 type PropsType = {
-  title: string;
+  title: string | React.ReactNode;
   subtitle?: string | React.ReactNode;
   tooltip: any;
   isActive: boolean;
@@ -30,7 +30,10 @@ const AccordionHeader = ({ title, subtitle, tooltip, isActive }: PropsType) => {
         theme.paddingLeft5x,
       ]}>
       <View style={[theme.flexContainer, theme.rowJustifyStart]}>
-        <Text style={[theme.fontLM, theme.fontMedium]}>{title}</Text>
+        {typeof title === 'string' && (
+          <Text style={[theme.fontLM, theme.fontMedium]}>{title}</Text>
+        )}
+        {typeof title !== 'string' && title}
         {tooltip && (
           <View style={styles.tooltipContainer}>
             <Tooltip
@@ -46,7 +49,7 @@ const AccordionHeader = ({ title, subtitle, tooltip, isActive }: PropsType) => {
           </View>
         )}
       </View>
-      <View style={[theme.flexContainer, theme.paddingLeft5x]}>{SubTitle}</View>
+      <View style={theme.paddingRight2x}>{SubTitle}</View>
       <Icon
         name={`chevron-${isActive ? 'up' : 'down'}`}
         size={21}

@@ -54,6 +54,7 @@ export default class UserModel extends BaseModel {
   groupsCount: number = 0;
 
   @observable plus: boolean = false;
+  plus_method: 'usd' | 'tokens' = 'tokens';
 
   @observable disable_autoplay_videos?: boolean;
 
@@ -102,6 +103,7 @@ export default class UserModel extends BaseModel {
   @observable wire_rewards;
 
   @observable pro: boolean = false;
+  pro_method: 'usd' | 'tokens' = 'tokens';
 
   onchain_booster: number = 0;
 
