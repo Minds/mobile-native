@@ -227,6 +227,14 @@ export default class LoginForm extends Component<PropsType, StateType> {
           return;
         }
 
+        if (errJson.message.includes('user could not be found')) {
+          this.setState({
+            msg: i18n.t('auth.loginFail'),
+            inProgress: false,
+          });
+          return;
+        }
+
         this.setState({
           msg: errJson.message || 'Unknown error',
           inProgress: false,

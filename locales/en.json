@@ -91,7 +91,8 @@
     "smsDesc": "Minds just sent a 6-digit authentication code to your phone.",
     "recoveryDesc": "Enter your recovery code in case you lost access to your mobile device.",
     "recoveryFail": "The recovery code you enter doesn't match",
-    "confirmPasswordModal": "Please confirm your account password to continue"
+    "confirmPasswordModal": "Please confirm your account password to continue",
+    "loginFail": "Wrong Username or Password"
   },
   "blockchain": {
     "exportLegacyWallet": "Export legacy wallets",
