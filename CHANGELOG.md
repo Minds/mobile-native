@@ -2,6 +2,12 @@
 
 Minds Mobile
 
+## 4.11.1 - 2021-04-23
+
+### Changed
+
+- Bug fixing
+
 ## 4.11.0 - 2021-03-25
 
 ### Changed
