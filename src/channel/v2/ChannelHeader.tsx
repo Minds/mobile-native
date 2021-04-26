@@ -37,6 +37,7 @@ type PropsType = {
   hideButtons?: boolean;
   hideDescription?: boolean;
   hideTabs?: boolean;
+  hideImages?: boolean;
   channelName?: string;
 };
 
@@ -151,7 +152,7 @@ const ChannelHeader = observer((props: PropsType) => {
 
   return (
     <View style={styles.container}>
-      {props.store && channel && (
+      {props.store && channel && !props.hideImages && (
         <Background
           style={styles.banner}
           source={channel.getBannerSource()}

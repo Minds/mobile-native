@@ -13,10 +13,11 @@ type PropsType = {
   navigation: any;
   store?: ChannelStoreType;
   hideButtons?: boolean;
+  hideInput?: boolean;
 };
 
 const ChannelTopBar = observer(
-  ({ navigation, store, hideButtons }: PropsType) => {
+  ({ navigation, store, hideButtons, hideInput }: PropsType) => {
     const theme = ThemedStyles.style;
 
     const insets = useSafeAreaInsets();
@@ -40,7 +41,7 @@ const ChannelTopBar = observer(
           style={[theme.colorIcon, theme.centered]}
           onPress={navigation.goBack}
         />
-        {store && (
+        {store && !hideInput && (
           <TextInput
             placeholder="Search Channel"
             style={[
