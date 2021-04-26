@@ -40,7 +40,7 @@ class OwnerBlock extends PureComponent<PropsType> {
    */
   _navToChannel = () => {
     // only active if receive the navigation property
-    if (this.props.storeUserTap) {
+    if (this.props.storeUserTap && this.props.searchResultStore.user) {
       this.props.searchResultStore.user.searchBarItemTap(
         this.props.entity.ownerObj,
       );

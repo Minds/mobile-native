@@ -136,7 +136,7 @@ export default class MediaView extends Component<PropsType> {
             activeOpacity={1}
             testID="Posted Image">
             <SmartImage
-              style={styles.thumbnail}
+              style={[styles.thumbnail, theme.backgroundTertiary]}
               threshold={150}
               source={source}
               thumbnail={thumbnail}

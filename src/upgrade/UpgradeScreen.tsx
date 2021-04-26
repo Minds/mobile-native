@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
-import { StyleSheet, View, Text, Platform } from 'react-native';
+import { StyleSheet, View, Platform } from 'react-native';
 import ThemedStyles from '../styles/ThemedStyles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import i18n from '../common/services/i18n.service';
@@ -9,6 +9,7 @@ import CenteredLoading from '../common/components/CenteredLoading';
 
 import { UserError } from '../common/UserError';
 import Button from '../common/components/Button';
+import FitScrollView from '../common/components/FitScrollView';
 import { useStores } from '../common/hooks/use-stores';
 import Header from './Header';
 import createUpgradeStore from './createUpgradeStore';
@@ -19,6 +20,7 @@ import {
   UpgradeScreenRouteProp,
 } from './types';
 import PlanOptions from './PlanOptions';
+import { useDimensions } from '@react-native-community/hooks';
 
 const isIos = Platform.OS === 'ios';
 
@@ -32,6 +34,7 @@ const UpgradeScreen = observer(({ navigation, route }: PropsType) => {
   const wallet = useStores().wallet;
   const theme = ThemedStyles.style;
   const insets = useSafeAreaInsets();
+  const { height } = useDimensions().window;
   const { onComplete, pro } = route.params;
 
   const complete = useCallback(
@@ -88,27 +91,32 @@ const UpgradeScreen = observer(({ navigation, route }: PropsType) => {
     return <CenteredLoading />;
   }
 
-  const cleanTop = { marginTop: insets.top + (isIos ? 60 : 50) };
+  const topMargin = height / 18;
+  const cleanTop = {
+    marginTop: insets.top + (isIos ? topMargin : topMargin + 10),
+  };
 
   return (
     <View style={[cleanTop, styles.container, theme.backgroundSecondary]}>
       <Header pro={pro} />
-      {!isIos && <PaymentMethod store={localStore} />}
-      <PlanOptions store={localStore} pro={pro} />
-      {localStore.method === 'usd' && (
-        <View style={theme.marginTop6x}>
-          <StripeCardSelector onCardSelected={localStore.setCard} />
+      <FitScrollView style={theme.flexContainer}>
+        {!isIos && <PaymentMethod store={localStore} />}
+        <PlanOptions store={localStore} pro={pro} />
+        {localStore.method === 'usd' && (
+          <View style={theme.marginTop6x}>
+            <StripeCardSelector onCardSelected={localStore.setCard} />
+          </View>
+        )}
+        <View style={[theme.padding2x, theme.borderTop, theme.borderPrimary]}>
+          <Button
+            onPress={confirmSend}
+            text={i18n.t(`monetize.${pro ? 'pro' : 'plus'}Join`)}
+            containerStyle={styles.buttonRight}
+            loading={localStore.loading}
+            action
+          />
         </View>
-      )}
-      <View style={[theme.padding2x, theme.borderTop, theme.borderPrimary]}>
-        <Button
-          onPress={confirmSend}
-          text={i18n.t(`monetize.${pro ? 'pro' : 'plus'}Join`)}
-          containerStyle={styles.buttonRight}
-          loading={localStore.loading}
-          action
-        />
-      </View>
+      </FitScrollView>
     </View>
   );
 });

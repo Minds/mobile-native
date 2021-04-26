@@ -63,11 +63,17 @@ class DeeplinksRouter {
    * @param {string} url
    */
   navigate(url) {
-    if (!url) return;
+    if (!url) {
+      return;
+    }
+    if (url.endsWith('/')) {
+      url = url.substr(0, url.length - 1);
+    }
     const route = this._getUrlRoute(url);
+
     if (route && route.screen !== 'Redirect') {
       navigationService.push(route.screen, route.params);
-    } else {
+    } else if (url !== 'https://www.minds.com') {
       Linking.openURL(url.replace('https://www.', 'https://mobile.'));
     }
     return !!route;

@@ -51,7 +51,7 @@ export default observer(function (props) {
           theme.backgroundPrimary,
         ]}>
         <SmartImage
-          style={styles.thumbnail}
+          style={[styles.thumbnail, theme.backgroundTertiary]}
           threshold={150}
           source={source}
           thumbnail={thumbnail}

@@ -23,7 +23,7 @@ export default function (props) {
   );
 
   // solve crash on android due to an invalid url
-  if (Platform.OS === 'android' && props.source?.uri.indexOf('//', 8) !== -1) {
+  if (Platform.OS === 'android' && props.source?.uri?.indexOf('//', 8) !== -1) {
     return null;
   }
 
