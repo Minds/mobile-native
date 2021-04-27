@@ -7,6 +7,8 @@ import FeedsService from '../services/feeds.service';
 import channelService from '../../channel/ChannelService';
 import type ActivityModel from '../../newsfeed/ActivityModel';
 import BaseModel from '../BaseModel';
+import FastImage from 'react-native-fast-image';
+import settingsStore from '../../settings/SettingsStore';
 
 /**
  * Feed store
@@ -117,6 +119,21 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
         entity._list = this;
         this.entities.push(entity);
       });
+
+      if (!settingsStore.dataSaverEnabled) {
+        // Preload images
+        const images = entities
+          .map(e => {
+            const source = e.hasMedia() ? e.getThumbSource('xlarge') : null;
+            if (source) {
+              source.priority = FastImage.priority.low;
+            }
+            return source;
+          })
+          .filter(s => s !== null && s.uri);
+
+        FastImage.preload(images);
+      }
     }
 
     this.loaded = true;

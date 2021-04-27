@@ -82,9 +82,27 @@ const PortraitViewerScreen = observer((props: PropsType) => {
         this.unseenMode = false;
       }
     },
+    preloadImages() {
+      if (!store.items[store.index].imagesPreloaded) {
+        store.items[store.index].preloadImages();
+      }
+      if (store.index > 0) {
+        const item = store.items[store.index - 1];
+        if (!item.imagesPreloaded) {
+          item.preloadImages();
+        }
+      }
+      if (store.index < store.items.length - 1) {
+        const item = store.items[store.index + 1];
+        if (!item.imagesPreloaded) {
+          item.preloadImages();
+        }
+      }
+    },
     prevIndex() {
       if (store.index > 0) {
         store.index = store.index - 1;
+        store.preloadImages();
       }
     },
     nextIndex() {
@@ -95,12 +113,14 @@ const PortraitViewerScreen = observer((props: PropsType) => {
 
         if (nextUnseen !== -1) {
           store.index = store.index + nextUnseen + 1;
+          store.preloadImages();
         } else {
           const prevUnseen = store.items
             .slice(0, store.index)
             .findIndex(user => user.unseen);
           if (prevUnseen !== -1) {
             store.index = prevUnseen;
+            store.preloadImages();
           } else {
             props.navigation.goBack();
           }
@@ -108,6 +128,7 @@ const PortraitViewerScreen = observer((props: PropsType) => {
       } else {
         if (store.index < store.items.length - 1) {
           store.index = store.index + 1;
+          store.preloadImages();
         } else {
           props.navigation.goBack();
         }

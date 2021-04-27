@@ -107,12 +107,7 @@ export default class MediaView extends Component<PropsType> {
     }
 
     if (this.props.entity.perma_url) {
-      source = {
-        uri:
-          this.props.entity.type === 'comment'
-            ? this.props.entity.thumbnail_src
-            : mediaProxyUrl(this.props.entity.thumbnail_src),
-      };
+      source = this.props.entity.getThumbSource('xlarge');
 
       const thumbnail = {
         uri: mediaProxyUrl(

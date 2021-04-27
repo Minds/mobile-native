@@ -230,9 +230,10 @@ export default class UserModel extends BaseModel {
    * Get banner source
    */
   getBannerSource() {
-    if (this.carousels) {
+    if (this.carousels && this.carousels[0]) {
       return {
-        uri: this.carousels[0].src,
+        uri: this.carousels[0].src + this.icontime,
+        headers: api.buildHeaders(),
       };
     }
     return {
