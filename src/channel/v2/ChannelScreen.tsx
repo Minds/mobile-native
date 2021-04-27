@@ -98,6 +98,7 @@ const ChannelScreen = observer((props: PropsType) => {
           navigation={props.navigation}
           store={store}
           hideButtons
+          hideInput
         />
         <ChannelHeader
           store={store}
@@ -106,6 +107,7 @@ const ChannelScreen = observer((props: PropsType) => {
           hideButtons
           hideDescription
           hideTabs
+          hideImages
         />
         <ExplicitOverlay entity={store.channel} />
       </View>
