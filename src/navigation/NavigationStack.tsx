@@ -573,10 +573,12 @@ const AppStack = function () {
       <AppStackNav.Screen
         name="DeleteChannel"
         component={DeleteChannelScreen}
+        options={{ title: i18n.t('settings.deleteChannel') }}
       />
       <AppStackNav.Screen
         name="DeactivateChannel"
         component={DeactivateChannelScreen}
+        options={{ title: i18n.t('settings.disableChannel') }}
       />
       <AppStackNav.Screen
         name="LanguageScreen"
