@@ -1,5 +1,7 @@
 import { Linking } from 'react-native';
+import { showNotification } from '../../AppMessages';
 import apiService from '../common/services/api.service';
+import i18nService from '../common/services/i18n.service';
 import mindsService from '../common/services/minds.service';
 
 const createChatStore = () => ({
@@ -34,6 +36,23 @@ const createChatStore = () => ({
         this.unreadCount = unread;
       }
     } catch (err) {
+    } finally {
+      this.inProgress = false;
+    }
+  },
+  async directMessage(guid: string): Promise<void> {
+    if (this.inProgress) {
+      return;
+    }
+    this.inProgress = true;
+    try {
+      const response: any = await apiService.put(`api/v3/matrix/room/${guid}`);
+      if (!response.room || !response.room.id) {
+        throw new Error('Error: api/v3/matrix/room failed');
+      }
+      Linking.openURL(`${this.chatUrl}/#/room/${response.room.id}`);
+    } catch (err) {
+      showNotification(i18nService.t('messenger.errorDirectMessage'));
     } finally {
       this.inProgress = false;
     }
