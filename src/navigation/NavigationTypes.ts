@@ -89,6 +89,7 @@ export type ActivityFullScreenParamList = {
 
 export type AppStackParamList = {
   ExportLegacyWallet: {};
+  MessengerScreen: {};
   Fab: {
     disableThresholdCheck?: boolean;
     owner: UserModel;

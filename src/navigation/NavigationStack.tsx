@@ -127,6 +127,7 @@ import DisableTFA from '../auth/twoFactorAuth/DisableTFA';
 import SearchScreen from '../topbar/searchbar/SearchScreen';
 import PasswordConfirmScreen from '../auth/PasswordConfirmScreen';
 import RecoveryCodeUsedScreen from '../auth/twoFactorAuth/RecoveryCodeUsedScreen';
+import MessengerScreen from '../messenger/MessengerScreen';
 
 const isIos = Platform.OS === 'ios';
 
@@ -336,6 +337,11 @@ const AppStack = function () {
         name="ExportLegacyWallet"
         component={ExportLegacyWallet}
         options={{ title: 'Export Wallet' }}
+      />
+      <AppStackNav.Screen
+        name="MessengerScreen"
+        component={MessengerScreen}
+        options={{ title: i18n.t('messenger.legacyMessenger') }}
       />
       <AppStackNav.Screen
         name="Capture"

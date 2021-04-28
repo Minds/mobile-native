@@ -12,6 +12,7 @@ import createPortraitStore, {
 } from '../../portrait/createPortraitStore';
 import sessionService from '../services/session.service';
 import logService from '../services/log.service';
+import createChatStore, { ChatStoreType } from '../../chat/createChatStore';
 
 export const storesContext = React.createContext<StoresType | null>(null);
 
@@ -24,6 +25,7 @@ export const StoresProvider = ({ children }) => {
     wallet: useLocalStore(createWalletStore),
     searchBar: useLocalStore(createSearchResultStore),
     portrait: useLocalStore(createPortraitStore),
+    chat: useLocalStore(createChatStore),
   };
 
   React.useEffect(() => {
@@ -46,6 +48,7 @@ export type StoresType = {
   wallet: WalletStoreType;
   searchBar: SearchResultStoreType;
   portrait: PortraitStoreType;
+  chat: ChatStoreType;
 };
 
 /**
