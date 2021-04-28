@@ -8,6 +8,7 @@ const createChatStore = () => ({
   unreadCount: 0,
   chatUrl: '',
   inProgress: false,
+  createInProgress: false,
   polling: 0,
   openChat() {
     if (this.chatUrl) {
@@ -41,10 +42,10 @@ const createChatStore = () => ({
     }
   },
   async directMessage(guid: string): Promise<void> {
-    if (this.inProgress) {
+    if (this.createInProgress) {
       return;
     }
-    this.inProgress = true;
+    this.createInProgress = true;
     try {
       const response: any = await apiService.put(`api/v3/matrix/room/${guid}`);
       if (!response.room || !response.room.id) {
@@ -54,7 +55,7 @@ const createChatStore = () => ({
     } catch (err) {
       showNotification(i18nService.t('messenger.errorDirectMessage'));
     } finally {
-      this.inProgress = false;
+      this.createInProgress = false;
     }
   },
   clear() {
