@@ -22,6 +22,7 @@ import Subscribe from './buttons/Subscribe';
 import Join from './buttons/Join';
 import SmallCircleButton from '../../common/components/SmallCircleButton';
 import { useStores } from '../../common/hooks/use-stores';
+import ChatButton from './ChatButton';
 
 type ButtonsType =
   | 'edit'
@@ -135,9 +136,9 @@ const ChannelButtons = observer(
           // </View>
         )}
         {shouldShow('message') && (
-          <MIcon
-            name="chat-bubble-outline"
+          <ChatButton
             size={SIZE}
+            chat={chat}
             onPress={openMessenger}
             style={props.iconsStyle}
           />
