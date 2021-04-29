@@ -1,8 +1,10 @@
-import { Linking } from 'react-native';
+import { Linking, Platform } from 'react-native';
+import SendIntentAndroid from 'react-native-send-intent';
 import { showNotification } from '../../AppMessages';
 import apiService from '../common/services/api.service';
 import i18nService from '../common/services/i18n.service';
 import mindsService from '../common/services/minds.service';
+import { ANDROID_CHAT_APP } from '../config/Config';
 
 const createChatStore = () => ({
   unreadCount: 0,
@@ -10,7 +12,20 @@ const createChatStore = () => ({
   inProgress: false,
   createInProgress: false,
   polling: 0,
-  openChat() {
+  async openChat() {
+    if (Platform.OS === 'android') {
+      try {
+        const installed = await SendIntentAndroid.isAppInstalled(
+          ANDROID_CHAT_APP,
+        );
+        if (!installed) {
+          Linking.openURL('market://details?id=com.minds.chat');
+          return;
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
     if (this.chatUrl) {
       setTimeout(() => {
         Linking.openURL(this.chatUrl);
