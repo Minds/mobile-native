@@ -69,6 +69,7 @@ const redirectPages = [
   'pro',
   'pay',
   'nodes',
+  'login',
   'boost',
   'rewards',
   'youtube-migration',

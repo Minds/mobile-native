@@ -20,8 +20,6 @@ import gatheringService from '../common/services/gathering.service';
 import { observer } from 'mobx-react';
 import { DiscoveryV2Screen } from '../discovery/v2/DiscoveryV2Screen';
 import ComposeIcon from '../compose/ComposeIcon';
-import MessengerTabIcon from '../messenger/MessengerTabIcon';
-import MessengerScreen from '../messenger/MessengerScreen';
 import Topbar from '../topbar/Topbar';
 import { InternalStack } from '../navigation/NavigationStack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -29,6 +27,8 @@ import TopShadow from '../common/components/TopShadow';
 import { GOOGLE_PLAY_STORE } from '../config/Config';
 import i18n from '../common/services/i18n.service';
 import sessionService from '../common/services/session.service';
+import { useStores } from '../common/hooks/use-stores';
+import ChatTabIcon from '../chat/ChatTabIcon';
 
 const isIOS = Platform.OS === 'ios';
 
@@ -72,6 +72,7 @@ const Discovery = GOOGLE_PLAY_STORE
 const TabBar = ({ state, descriptors, navigation }) => {
   const focusedOptions = descriptors[state.routes[state.index].key].options;
   const insets = useSafeAreaInsets();
+  const { chat } = useStores();
 
   if (focusedOptions.tabBarVisible === false) {
     return null;
@@ -105,6 +106,11 @@ const TabBar = ({ state, descriptors, navigation }) => {
             target: route.key,
             canPreventDefault: true,
           });
+
+          if (route.name === 'Messenger') {
+            chat.openChat();
+            return;
+          }
 
           if (!focused && !event.defaultPrevented) {
             navigation.navigate(route.name);
@@ -164,7 +170,7 @@ const Tabs = observer(function ({ navigation }) {
   const messenger = (
     <Tab.Screen
       name="Messenger"
-      component={MessengerScreen}
+      component={() => null}
       options={{ tabBarTestID: 'Messenger tab button' }}
     />
   );
@@ -210,7 +216,7 @@ const Tabs = observer(function ({ navigation }) {
 
             switch (route.name) {
               case 'Messenger':
-                return <MessengerTabIcon color={color} />;
+                return <ChatTabIcon color={color} />;
               case 'Newsfeed':
                 iconName = 'home';
                 iconsize = 28;

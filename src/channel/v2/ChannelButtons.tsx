@@ -1,11 +1,10 @@
 import React, { PropsWithChildren, useCallback, useRef } from 'react';
-import { View, StyleSheet, Platform } from 'react-native';
+import { View, Platform } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { useNavigation } from '@react-navigation/native';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import { observer } from 'mobx-react';
 import type { NativeStackNavigationProp } from 'react-native-screens/native-stack';
-import sessionService from '../../common/services/session.service';
 import type { AppStackParamList } from '../../navigation/NavigationTypes';
 import {
   FLAG_SUBSCRIBE,
@@ -20,9 +19,10 @@ import { ChannelStoreType } from './createChannelStore';
 import { SupportTiersType } from '../../wire/WireTypes';
 
 import Subscribe from './buttons/Subscribe';
-import Edit from './buttons/Edit';
 import Join from './buttons/Join';
 import SmallCircleButton from '../../common/components/SmallCircleButton';
+import { useStores } from '../../common/hooks/use-stores';
+import ChatButton from './ChatButton';
 
 type ButtonsType =
   | 'edit'
@@ -82,6 +82,7 @@ const ChannelButtons = observer(
     const navigation = useNavigation<
       NativeStackNavigationProp<AppStackParamList>
     >();
+    const { chat } = useStores();
 
     const SIZE = props.iconSize || 18;
 
@@ -91,12 +92,8 @@ const ChannelButtons = observer(
 
     const openMessenger = useCallback(() => {
       if (!props.store.channel) return null;
-      navigation.push('Conversation', {
-        conversation: {
-          guid: props.store.channel.guid + ':' + sessionService.guid,
-        },
-      });
-    }, [navigation, props.store.channel]);
+      chat.directMessage(props.store.channel.guid);
+    }, [chat, props.store.channel]);
 
     const openWire = useCallback(() => {
       navigation.push('WireFab', {
@@ -139,9 +136,9 @@ const ChannelButtons = observer(
           // </View>
         )}
         {shouldShow('message') && (
-          <MIcon
-            name="chat-bubble-outline"
+          <ChatButton
             size={SIZE}
+            chat={chat}
             onPress={openMessenger}
             style={props.iconsStyle}
           />

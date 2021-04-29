@@ -57,6 +57,10 @@ export default function ({ navigation }) {
       title: i18n.t('blockchain.exportLegacyWallet'),
       screen: 'ExportLegacyWallet',
     },
+    {
+      title: i18n.t('messenger.legacyMessenger'),
+      screen: 'MessengerScreen',
+    },
   ];
 
   if (!user.plus) {
