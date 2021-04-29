@@ -1203,6 +1203,7 @@
   "unlockPost": "Unlock Post",
   "setup": "Setup",
   "send": "Send",
+  "sendTo": "Send to",
   "passwordPlaceholder": "password...",
   "passwordConmfirmPlaceholder": "confirm password...",
   "boost": "Boost",

@@ -15,6 +15,8 @@ export const CHAR_LIMIT = 1500;
 
 export const DATA_SAVER_THUMB_RES = 96;
 
+export const ANDROID_CHAT_APP = 'com.minds.chat';
+
 export const MINDS_URI = 'https://www.minds.com/';
 export const MINDS_API_URI = 'https://www.minds.com/';
 
