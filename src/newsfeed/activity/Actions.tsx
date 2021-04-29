@@ -17,6 +17,7 @@ import type ActivityModel from '../ActivityModel';
 import { useNavigation } from '@react-navigation/native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import CommentsEntityOutlet from '../../comments/CommentsEntityOutlet';
+import ShareAction from './actions/ShareAction';
 
 type PropsType = {
   entity: ActivityModel;
@@ -51,6 +52,8 @@ export const Actions = observer((props: PropsType) => {
             }
           />
           <RemindAction entity={entity} />
+
+          <ShareAction entity={entity} />
 
           {!isOwner && hasCrypto && hasWire && (
             <WireAction owner={entity.ownerObj} navigation={navigation} />
