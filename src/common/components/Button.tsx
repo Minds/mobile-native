@@ -139,8 +139,6 @@ export default class Button extends Component<ButtonPropsType> {
 
     const onButtonPress = loading ? undefined : onPress;
 
-    console.log(onButtonPress);
-
     return (
       <TouchableOpacity
         onPress={onButtonPress}
