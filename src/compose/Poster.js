@@ -26,6 +26,7 @@ import MediaPreview from './MediaPreview';
 import discardMessage from './discardMessage';
 import Tags from '../common/components/Tags';
 import KeyboardSpacingView from '../common/components/KeyboardSpacingView';
+import SoftInputMode from 'react-native-set-soft-input-mode';
 
 const { width } = Dimensions.get('window');
 
@@ -79,6 +80,13 @@ export default observer(function (props) {
       localStore.height = e.nativeEvent.contentSize.height * 1.15;
     },
   }));
+
+  React.useEffect(() => {
+    if (Platform.OS === 'android') {
+      SoftInputMode.set(SoftInputMode.ADJUST_RESIZE);
+      return () => SoftInputMode.set(SoftInputMode.ADJUST_PAN);
+    }
+  }, []);
 
   const showEmbed = props.store.embed.hasRichEmbed && props.store.embed.meta;
 
@@ -175,6 +183,7 @@ export default observer(function (props) {
       <PosterOptions ref={optionsRef} store={props.store} />
       {showBottomBar && (
         <KeyboardSpacingView
+          enabled={Platform.OS === 'ios'}
           style={[theme.backgroundPrimary, styles.bottomBarContainer]}>
           <BottomBar
             store={props.store}
