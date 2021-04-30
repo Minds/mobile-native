@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, useCallback, useRef } from 'react';
-import { View, Platform, Linking } from 'react-native';
+import { View, Platform } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { useNavigation } from '@react-navigation/native';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
@@ -23,8 +23,6 @@ import Join from './buttons/Join';
 import SmallCircleButton from '../../common/components/SmallCircleButton';
 import { useStores } from '../../common/hooks/use-stores';
 import ChatButton from './ChatButton';
-import SendIntentAndroid from 'react-native-send-intent';
-import { ANDROID_CHAT_APP } from '../../config/Config';
 
 type ButtonsType =
   | 'edit'
@@ -97,9 +95,8 @@ const ChannelButtons = observer(
 
       if (Platform.OS === 'android') {
         try {
-          SendIntentAndroid.isAppInstalled(ANDROID_CHAT_APP).then(installed => {
+          chat.checkAppInstalled().then(installed => {
             if (!installed) {
-              Linking.openURL('market://details?id=com.minds.chat');
               return;
             }
             if (props.store.channel) {

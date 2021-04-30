@@ -3,6 +3,7 @@ import SendIntentAndroid from 'react-native-send-intent';
 import { showNotification } from '../../AppMessages';
 import apiService from '../common/services/api.service';
 import i18nService from '../common/services/i18n.service';
+import logService from '../common/services/log.service';
 import mindsService from '../common/services/minds.service';
 import { ANDROID_CHAT_APP } from '../config/Config';
 
@@ -12,24 +13,34 @@ const createChatStore = () => ({
   inProgress: false,
   createInProgress: false,
   polling: 0,
+  async checkAppInstalled(openStore = true) {
+    try {
+      const installed = await SendIntentAndroid.isAppInstalled(
+        ANDROID_CHAT_APP,
+      );
+      if (!installed && openStore) {
+        Linking.openURL('market://details?id=com.minds.chat');
+      }
+      return installed;
+    } catch (error) {
+      logService.exception(error);
+      console.log(error);
+      return false;
+    }
+  },
   async openChat() {
     if (Platform.OS === 'android') {
-      try {
-        const installed = await SendIntentAndroid.isAppInstalled(
-          ANDROID_CHAT_APP,
-        );
-        if (!installed) {
-          Linking.openURL('market://details?id=com.minds.chat');
-          return;
-        }
-      } catch (error) {
-        console.log(error);
+      const installed = await this.checkAppInstalled();
+      if (!installed) {
+        return;
       }
     }
     if (this.chatUrl) {
-      setTimeout(() => {
+      if (Platform.OS === 'ios') {
         Linking.openURL(this.chatUrl);
-      }, 100);
+      } else {
+        SendIntentAndroid.openApp(ANDROID_CHAT_APP, {});
+      }
     }
   },
   async init() {
