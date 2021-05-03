@@ -2,7 +2,7 @@ import { CurrencyType } from '../../types/Payment';
 
 export type TokensOptions =
   | 'rewards'
-  | 'overview'
+  | 'balance'
   | 'transactions'
   | 'settings'
   | 'earnings';

@@ -14,6 +14,7 @@ import LiquidityDashboard from './LiquidityDashboard';
 import RewardsDashboard from './RewardsDashboard';
 import SupplyDashboard from './SupplyDashboard';
 import TransactionsDashboard from './TransactionsDashboard';
+import capitalize from '../../../common/helpers/capitalize';
 
 export type DashBoardPropsType = {
   metrics: MetricsSubType;
@@ -39,14 +40,23 @@ const createStore = () => ({
   },
 });
 
-const TokensTab = observer(() => {
+const TokensTab = observer(({ route }: { route: any }) => {
   const theme = ThemedStyles.style;
   const store = useLocalStore(createStore);
   const { wallet } = useStores();
 
   useEffect(() => {
     wallet.loadPrices();
-  });
+    if (
+      route.params &&
+      route.params.subtype &&
+      ['supply', 'transactions', 'liquidity', 'rewards'].includes(
+        route.params.subtype,
+      )
+    ) {
+      store.setOption(capitalize(route.params.subtype) as TokensOptions);
+    }
+  }, [route, store, wallet]);
 
   const { result, error, loading, fetch } = useApiFetch<{
     metrics: Array<TokensMetrics>;
