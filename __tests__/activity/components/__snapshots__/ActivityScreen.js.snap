@@ -1415,6 +1415,7 @@ exports[`Activity screen component renders correctly  1`] = `
             "pro_method": "tokens",
             "rewards": false,
             "subscribed": undefined,
+            "subscriber": false,
             "subscribers_count": undefined,
             "subscriptions_count": 0,
             "subtype": false,
