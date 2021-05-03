@@ -16,7 +16,10 @@ export type DrawerParamList = {
 };
 
 export type InternalStackParamList = {
-  Wallet: {};
+  Wallet: {
+    currency?: string;
+    section?: string;
+  };
   PlusDiscoveryScreen: {};
   BoostConsole: {};
   GroupsList: {};
@@ -203,7 +206,7 @@ export type AppStackParamList = {
   };
   Conversation: {};
   DiscoveryFeed: {};
-  DiscoverySearch: { query: string; plus?: boolean };
+  DiscoverySearch: { query: string; plus?: boolean; q?: string; f?: string };
   Subscribers: {};
   GroupView: {};
   BlogList: {};

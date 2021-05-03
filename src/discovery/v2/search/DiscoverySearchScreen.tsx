@@ -97,8 +97,13 @@ export const DiscoverySearchScreen = observer((props: Props) => {
   });
 
   useEffect(() => {
-    store.setQuery(props.route.params.query, props.route.params.plus);
-  }, [props.route.params.query, props.route.params.plus, store]);
+    const q = decodeURIComponent(props.route.params?.q || '');
+    const query = props.route.params.query || q;
+    if (props.route.params.f) {
+      store.setFilter(props.route.params.f);
+    }
+    store.setQuery(query, props.route.params.plus);
+  }, [store, props.route.params]);
 
   return (
     <View style={theme.flexContainer}>

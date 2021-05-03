@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { observer, useLocalStore } from 'mobx-react';
+import { observer } from 'mobx-react';
 import { View } from 'react-native';
 import TopBarButtonTabBar, {
   ButtonTabType,
@@ -23,6 +23,7 @@ import { useDimensions } from '@react-native-community/hooks';
 import PaidInfo from './PaidInfo';
 import Earnings from '../Earnings';
 import { TokensTabStore } from '../tokens/createTokensTabStore';
+import { UsdTabStore } from './createUsdTabStore';
 
 type PropsType = {
   walletStore: WalletStoreType;
@@ -30,18 +31,8 @@ type PropsType = {
   navigation: WalletScreenNavigationProp;
   route: WalletScreenRouteProp;
   tokensTabStore: TokensTabStore;
+  usdTabStore: UsdTabStore;
 };
-
-const createStore = () => ({
-  option: 'settings' as UsdOptions,
-  showTooltip: false,
-  setOption(option: UsdOptions) {
-    this.option = option;
-  },
-  toggleTooltip() {
-    this.showTooltip = !this.showTooltip;
-  },
-});
 
 /**
  * Usd tab
@@ -53,8 +44,8 @@ const UsdTab = observer(
     route,
     bottomStore,
     tokensTabStore,
+    usdTabStore,
   }: PropsType) => {
-    const store = useLocalStore(createStore);
     const tooltipRef = useRef<any>();
     const screen = useDimensions().screen;
     const theme = ThemedStyles.style;
@@ -66,7 +57,7 @@ const UsdTab = observer(
     ];
 
     let body;
-    switch (store.option) {
+    switch (usdTabStore.option) {
       case 'earnings':
         body = (
           <Earnings
@@ -138,14 +129,14 @@ const UsdTab = observer(
 
         <TopBarButtonTabBar
           tabs={options}
-          current={store.option}
-          onChange={store.setOption}
+          current={usdTabStore.option}
+          onChange={usdTabStore.setOption}
         />
         {body}
       </View>
     );
 
-    if (store.option !== 'transactions') {
+    if (usdTabStore.option !== 'transactions') {
       return <ScrollView>{mainBody}</ScrollView>;
     } else {
       return <View style={theme.flexContainer}>{mainBody}</View>;

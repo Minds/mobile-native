@@ -78,7 +78,7 @@ const redirectPages = [
 ].map(p => [p, 'Redirect']);
 
 /**
- * Deeplink to screen/params maping
+ * Deeplink to screen/params mapping
  */
 export const MINDS_DEEPLINK = [
   ...redirectPages,
@@ -96,7 +96,16 @@ export const MINDS_DEEPLINK = [
   ['blog/view/:guid', 'BlogView'],
   [':user/blog/:slug', 'BlogView'],
   [':username', 'Channel'],
-  ['wallet/tokens/:section', 'Wallet'],
+  ['wallet/:currency/:section', 'Tabs/CaptureTab/Wallet', 'navigate'],
+  [
+    'analytics/dashboard/:type/:subtype',
+    'Tabs/CaptureTab/Analytics',
+    'navigate',
+  ],
+  ['analytics/dashboard/:type', 'Tabs/CaptureTab/Analytics', 'navigate'],
+  ['discovery/search', 'DiscoverySearch'],
+  ['discovery/plus/:tab', 'Tabs/CaptureTab/PlusDiscoveryScreen', 'navigate'], // screen name has slashes to indicate nested screens
+  ['discovery/:tab', 'Discovery', 'navigate'],
 ];
 
 export const DISABLE_PASSWORD_INPUTS = false;

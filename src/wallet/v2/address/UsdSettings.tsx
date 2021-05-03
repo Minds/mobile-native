@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import {
   WalletScreenNavigationProp,
   WalletScreenRouteProp,
-} from '../WalletScreen';
+} from '../../v3/WalletScreen';
 import { View, Text, StyleSheet, Alert } from 'react-native';
 import { WalletStoreType } from '../createWalletStore';
 import ThemedStyles from '../../../styles/ThemedStyles';
