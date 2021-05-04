@@ -339,7 +339,7 @@ const AppStack = function () {
         options={{ title: 'Export Wallet' }}
       />
       <AppStackNav.Screen
-        name="MessengerScreen"
+        name="Messenger"
         component={MessengerScreen}
         options={{ title: i18n.t('messenger.legacyMessenger') }}
       />
