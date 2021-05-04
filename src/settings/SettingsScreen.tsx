@@ -59,7 +59,7 @@ export default function ({ navigation }) {
     },
     {
       title: i18n.t('messenger.legacyMessenger'),
-      screen: 'MessengerScreen',
+      screen: 'Messenger',
     },
   ];
 

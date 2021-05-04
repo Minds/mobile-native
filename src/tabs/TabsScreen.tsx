@@ -36,7 +36,7 @@ export type TabParamList = {
   Newsfeed: {};
   User: {};
   Discovery: {};
-  Messenger: {};
+  MessengerTab: {};
   Notifications: {};
   CaptureTab: {};
 };
@@ -107,7 +107,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
             canPreventDefault: true,
           });
 
-          if (route.name === 'Messenger') {
+          if (route.name === 'MessengerTab') {
             chat.openChat();
             return;
           }
@@ -169,7 +169,7 @@ const Tabs = observer(function ({ navigation }) {
 
   const messenger = (
     <Tab.Screen
-      name="Messenger"
+      name="MessengerTab"
       component={() => null}
       options={{ tabBarTestID: 'Messenger tab button' }}
     />
@@ -215,7 +215,7 @@ const Tabs = observer(function ({ navigation }) {
               iconsize = 28;
 
             switch (route.name) {
-              case 'Messenger':
+              case 'MessengerTab':
                 return <ChatTabIcon color={color} />;
               case 'Newsfeed':
                 iconName = 'home';
