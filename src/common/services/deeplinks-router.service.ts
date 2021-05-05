@@ -116,7 +116,6 @@ class DeeplinksRouter {
     for (var i = 0; i < this.routes.length; i++) {
       const route = this.routes[i];
       const match = route.re.exec(surl);
-      console.log('DOES IT MATCH', surl, route, match);
       if (match) {
         const params = {};
         route.params.forEach((v, i) => (params[v] = match[i + 1]));
