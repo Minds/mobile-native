@@ -2,6 +2,16 @@
 
 Minds Mobile
 
+## 4.12.0 - 2021-05-05
+
+### Changed
+
+- Images pre-load on feeds
+- New chat integration
+- Improved deeplink support
+- New sessions screen
+- Bug fixing
+
 ## 4.11.1 - 2021-04-23
 
 ### Changed
