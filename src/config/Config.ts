@@ -75,13 +75,9 @@ const redirectPages = [
   'youtube-migration',
   'branding',
   'localization',
-].map(p => [p, 'Redirect']);
+].map(p => [p, 'Redirect', undefined, 'i']); //i flag for case insensitive
 
-/**
- * Deeplink to screen/params mapping
- */
-export const MINDS_DEEPLINK = [
-  ...redirectPages,
+const deepLinkPages = [
   ['forgot-password;:username;:code', 'Forgot'],
   ['settings/other/referrals', 'Referrals'],
   ['email-confirmation', 'EmailConfirmation'],
@@ -106,7 +102,12 @@ export const MINDS_DEEPLINK = [
   ['discovery/search', 'DiscoverySearch'],
   ['discovery/plus/:tab', 'Tabs/CaptureTab/PlusDiscoveryScreen', 'navigate'], // screen name has slashes to indicate nested screens
   ['discovery/:tab', 'Discovery', 'navigate'],
-];
+].map(p => [...p, undefined]); //flag undefined for deeplinks
+
+/**
+ * Deeplink to screen/params mapping
+ */
+export const MINDS_DEEPLINK = [...redirectPages, ...deepLinkPages];
 
 export const DISABLE_PASSWORD_INPUTS = false;
 

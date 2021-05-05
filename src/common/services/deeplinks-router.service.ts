@@ -16,7 +16,7 @@ class DeeplinksRouter {
    * Constructor
    */
   constructor() {
-    MINDS_DEEPLINK.forEach(r => this.add(r[0], r[1], r[2]));
+    MINDS_DEEPLINK.forEach(r => this.add(r[0], r[1], r[2], r[3]));
   }
 
   /**
@@ -46,7 +46,7 @@ class DeeplinksRouter {
    * @param {string} url     ex: newsfeed/:guid
    * @param {string} screen  name of the screen
    */
-  add(url, screen, type) {
+  add(url, screen, type, flag) {
     const re = /:(\w+)/gi;
 
     const params = (url.match(re) || []).map(s => s.substr(1));
@@ -55,7 +55,7 @@ class DeeplinksRouter {
       type: type || 'push',
       screen,
       params,
-      re: new RegExp('^' + url.replace(re, '([^/]+?)') + '(/?$|/?\\?)'),
+      re: new RegExp('^' + url.replace(re, '([^/]+?)') + '(/?$|/?\\?)', flag),
     });
   }
 
@@ -116,6 +116,7 @@ class DeeplinksRouter {
     for (var i = 0; i < this.routes.length; i++) {
       const route = this.routes[i];
       const match = route.re.exec(surl);
+      console.log('DOES IT MATCH', surl, route, match);
       if (match) {
         const params = {};
         route.params.forEach((v, i) => (params[v] = match[i + 1]));
