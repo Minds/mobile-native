@@ -46,24 +46,14 @@ const BarPlaceholder = () => {
   const animation = props => (
     <Fade {...props} style={theme.backgroundPrimary} />
   );
+  const style = [theme.margin2x, styles.placeholder];
   return (
     <Placeholder Animation={animation}>
       <View style={theme.rowJustifyStart}>
-        <PlaceholderMedia
-          isRound
-          color={color}
-          style={[theme.margin2x, styles.placeholder]}
-        />
-        <PlaceholderMedia
-          isRound
-          color={color}
-          style={[theme.margin2x, styles.placeholder]}
-        />
-        <PlaceholderMedia
-          isRound
-          color={color}
-          style={[theme.margin2x, styles.placeholder]}
-        />
+        <PlaceholderMedia isRound color={color} style={style} />
+        <PlaceholderMedia isRound color={color} style={style} />
+        <PlaceholderMedia isRound color={color} style={style} />
+        <PlaceholderMedia isRound color={color} style={style} />
       </View>
     </Placeholder>
   );
