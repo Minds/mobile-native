@@ -69,11 +69,13 @@ const CustomBackdrop = observer(
       [style, animatedOpacity],
     );
 
+    const bottomSheet = useBottomSheet();
+
     if (localStore.isOpen === 1) {
       return (
         <Animated.View style={containerStyle} pointerEvents="box-none">
           <TouchableOpacity
-            onPress={useBottomSheet().close}
+            onPress={bottomSheet.close}
             style={[theme.fullHeight, theme.fullWidth]}
           />
         </Animated.View>
