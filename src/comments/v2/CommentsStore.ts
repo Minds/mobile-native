@@ -357,8 +357,9 @@ export default class CommentsStore {
       attachment_guid: <string | undefined>undefined,
     };
 
-    if (this.attachment.guid) {
-      comment.attachment_guid = this.attachment.guid;
+    if (this.attachment.guid || this.edit?.attachment_guid) {
+      comment.attachment_guid =
+        this.attachment.guid || this.edit?.attachment_guid;
     }
 
     if (this.embed.meta) {
@@ -445,7 +446,19 @@ export default class CommentsStore {
 
     try {
       await updateComment(this.edit.guid, comment);
-      this.setCommentDescription(this.edit, this.text);
+      if (
+        comment.attachment_guid &&
+        this.edit.attachment_guid !== comment.attachment_guid
+      ) {
+        const updatedComment: CommentModel = await getComment(
+          this.guid,
+          this.edit._guid,
+          this.getParentPath(),
+        );
+        this.setComment(this.edit, updatedComment);
+      } else {
+        this.setCommentDescription(this.edit, this.text);
+      }
       this.setText('');
       this.edit = undefined;
       this.setShowInput(false);
@@ -467,6 +480,13 @@ export default class CommentsStore {
   @action
   setCommentDescription(comment, description) {
     comment.description = description;
+  }
+
+  @action setComment(comment: CommentModel, updatedComment: CommentModel) {
+    Object.assign(comment, updatedComment);
+    if (updatedComment.attachment_guid) {
+      comment.setHasAttachment(true);
+    }
   }
 
   /**

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { observer } from 'mobx-react';
 import * as entities from 'entities';
 // import ReadMore from 'react-native-read-more-text';
@@ -33,6 +33,15 @@ type PropsType = {
 export default observer(function Comment(props: PropsType) {
   const navigation = useNavigation<any>();
   const theme = ThemedStyles.style;
+
+  useEffect(() => {
+    if (
+      props.comment.attachment_guid ||
+      (props.comment.hasMedia() && !props.comment.hasAttachment)
+    ) {
+      props.comment.setHasAttachment(true);
+    }
+  }, [props.comment]);
 
   const mature = props.comment.mature && !props.comment.mature_visibility;
 
@@ -134,7 +143,7 @@ export default observer(function Comment(props: PropsType) {
                 renderRevealedFooter={renderRevealedFooter}
               />
             )}
-            {props.comment.hasMedia() && (
+            {props.comment.hasAttachment && (
               <View style={theme.paddingTop3x}>
                 <MediaView
                   entity={props.comment}

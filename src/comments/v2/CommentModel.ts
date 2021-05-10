@@ -1,4 +1,4 @@
-import { observable, decorate } from 'mobx';
+import { observable, decorate, action } from 'mobx';
 
 import ActivityModel from '../../newsfeed/ActivityModel';
 
@@ -15,6 +15,13 @@ export default class CommentModel extends ActivityModel {
   _guid: string = '';
   can_reply?: boolean;
   parent_guid_l2?: string;
+
+  @observable hasAttachment = false;
+
+  @action
+  setHasAttachment(hasAttachment: boolean) {
+    this.hasAttachment = hasAttachment;
+  }
 
   /**
    * The parent comment

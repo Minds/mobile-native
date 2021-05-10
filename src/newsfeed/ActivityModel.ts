@@ -79,6 +79,8 @@ export default class ActivityModel extends BaseModel {
   _preview?: boolean;
   attachments?: {
     attachment_guid: string;
+    custom_data: any;
+    custom_type: string;
   };
   type?: string;
   permaweb_id?: string;
