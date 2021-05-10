@@ -163,12 +163,10 @@ export function deleteComment(guid) {
 /**
  * Update a comment
  * @param {string} guid
- * @param {string} description
+ * @param {any} comment
  */
-export function updateComment(guid, description) {
-  return api.post(`api/v1/comments/update/${guid}`, {
-    description: description,
-  });
+export function updateComment(guid, comment) {
+  return api.post(`api/v1/comments/update/${guid}`, comment);
 }
 
 /**

@@ -352,16 +352,8 @@ export default class CommentsStore {
       return;
     }
 
-    if (this.edit) {
-      return this.updateComment();
-    }
-
-    this.saving = true;
-
-    const comment = {
+    const comment: any = {
       comment: this.text.trim(),
-      mature: this.mature,
-      parent_path: this.getParentPath(),
       attachment_guid: <string | undefined>undefined,
     };
 
@@ -372,6 +364,15 @@ export default class CommentsStore {
     if (this.embed.meta) {
       Object.assign(comment, this.embed.meta);
     }
+
+    if (this.edit) {
+      return this.updateComment(comment);
+    }
+
+    comment.mature = this.mature;
+    comment.parent_path = this.getParentPath();
+
+    this.saving = true;
 
     // Add client metada if available
     Object.assign(comment, this.entity.getClientMetadata());
@@ -437,13 +438,13 @@ export default class CommentsStore {
    * @param {string} description
    */
   @action
-  async updateComment() {
+  async updateComment(comment: any) {
     if (!this.edit) return;
 
     this.saving = true;
 
     try {
-      await updateComment(this.edit.guid, this.text);
+      await updateComment(this.edit.guid, comment);
       this.setCommentDescription(this.edit, this.text);
       this.setText('');
       this.edit = undefined;
