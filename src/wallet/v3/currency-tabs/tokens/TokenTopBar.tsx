@@ -55,7 +55,10 @@ const TokenTopBar = ({
           onPress={connectWallet}
           onchainStore={onchainStore}
         />
-        <TokenTabOptions />
+        <TokenTabOptions
+          onchainStore={onchainStore}
+          walletStore={walletStore}
+        />
       </View>
     </View>
   );
