@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
   },
   input: {
     minHeight: 35,
-    flex: 1,
+    flex: 3,
     lineHeight: 22,
   },
   inputContainer: {
