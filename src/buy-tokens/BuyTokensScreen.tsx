@@ -300,7 +300,7 @@ const paymentMethodsList: PaymentOption[] = [
   { type: 'crypto', name: 'Crypto' },
 ];
 
-const buildButtonStyles = (position: number) => {
+const buildButtonStyles = (position: number, _) => {
   switch (position) {
     case 0:
       return [styles.firstOption];
