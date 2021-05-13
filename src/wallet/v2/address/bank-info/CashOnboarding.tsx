@@ -118,7 +118,7 @@ const CashOnboarding = observer(
               selectTextOnFocus={true}
             />
           )}
-          {!localStore.isCountry(['US', 'AU', 'CA', 'IE']) && (
+          {localStore.isCountry(['US', 'AU', 'CA', 'IE', 'IN']) && (
             <SettingInput
               placeholder={friendlyFormKeys.state}
               onChangeText={localStore.setState}
