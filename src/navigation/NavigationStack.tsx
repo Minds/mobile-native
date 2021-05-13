@@ -126,6 +126,8 @@ import VerifyPhoneNumberScreen from '../auth/twoFactorAuth/VerifyPhoneNumberScre
 import DisableTFA from '../auth/twoFactorAuth/DisableTFA';
 import SearchScreen from '../topbar/searchbar/SearchScreen';
 import PasswordConfirmScreen from '../auth/PasswordConfirmScreen';
+import RecoveryCodeUsedScreen from '../auth/twoFactorAuth/RecoveryCodeUsedScreen';
+import MessengerScreen from '../messenger/MessengerScreen';
 
 const isIos = Platform.OS === 'ios';
 
@@ -182,7 +184,7 @@ const FullScreenPostStack = () => (
   </FullScreenPostStackNav.Navigator>
 );
 
-const AccountScreenOptions = (navigation) => [
+const AccountScreenOptions = navigation => [
   {
     title: i18n.t('settings.accountOptions.1'),
     onPress: () => navigation.push('SettingsEmail'),
@@ -219,7 +221,7 @@ const AccountScreenOptions = (navigation) => [
   },
 ];
 
-const SecurityScreenOptions = (navigation) => [
+const SecurityScreenOptions = navigation => [
   {
     title: i18n.t('settings.securityOptions.1'),
     onPress: () => navigation.push('TwoFactorAuthSettingsScreen'),
@@ -232,7 +234,7 @@ const SecurityScreenOptions = (navigation) => [
 
 let BillingScreenOptions;
 if (!isIos) {
-  BillingScreenOptions = (navigation) => [
+  BillingScreenOptions = navigation => [
     {
       title: i18n.t('settings.billingOptions.1'),
       onPress: () => navigation.push('PaymentMethods'),
@@ -243,7 +245,7 @@ if (!isIos) {
     },
   ];
 } else {
-  BillingScreenOptions = (navigation) => [
+  BillingScreenOptions = navigation => [
     {
       title: i18n.t('settings.billingOptions.2'),
       onPress: () => navigation.push('RecurringPayments'),
@@ -335,6 +337,11 @@ const AppStack = function () {
         name="ExportLegacyWallet"
         component={ExportLegacyWallet}
         options={{ title: 'Export Wallet' }}
+      />
+      <AppStackNav.Screen
+        name="Messenger"
+        component={MessengerScreen}
+        options={{ title: i18n.t('messenger.legacyMessenger') }}
       />
       <AppStackNav.Screen
         name="Capture"
@@ -440,15 +447,6 @@ const AppStack = function () {
         name="WireFab"
         component={FabScreenV2}
         options={hideHeader}
-      />
-      <AppStackNav.Screen
-        name="ViewImage"
-        component={ViewImageScreen}
-        options={{
-          headerStyle: {
-            backgroundColor: '#000',
-          },
-        }}
       />
       {/* <AppStackNav.Screen
         name="BlockchainWallet"
@@ -581,10 +579,12 @@ const AppStack = function () {
       <AppStackNav.Screen
         name="DeleteChannel"
         component={DeleteChannelScreen}
+        options={{ title: i18n.t('settings.deleteChannel') }}
       />
       <AppStackNav.Screen
         name="DeactivateChannel"
         component={DeactivateChannelScreen}
+        options={{ title: i18n.t('settings.disableChannel') }}
       />
       <AppStackNav.Screen
         name="LanguageScreen"
@@ -714,6 +714,7 @@ const RootStack = function (props) {
             component={JoinMembershipScreen}
             options={modalOptions}
           />
+          <RootStackNav.Screen name="ViewImage" component={ViewImageScreen} />
           {/* <RootStackNav.Screen
             name="BlockchainWalletModal"
             component={BlockchainWalletModalScreen}
@@ -782,6 +783,11 @@ const RootStack = function (props) {
           <RootStackNav.Screen
             name="PasswordConfirmation"
             component={PasswordConfirmScreen}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen
+            name="RecoveryCodeUsedScreen"
+            component={RecoveryCodeUsedScreen}
             options={modalOptions}
           />
         </Fragment>

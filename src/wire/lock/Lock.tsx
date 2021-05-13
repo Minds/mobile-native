@@ -132,7 +132,7 @@ export default class Lock extends PureComponent<PropsType> {
   unlock = () => {
     this.setState({ unlocking: true });
 
-    this.props.entity.unlock(true).then((result) => {
+    this.props.entity.unlock(true).then(result => {
       this.setState({ unlocking: false });
       if (result) return;
       this.props.navigation.navigate('WireFab', {

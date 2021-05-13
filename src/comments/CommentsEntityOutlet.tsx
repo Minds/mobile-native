@@ -39,7 +39,7 @@ export const CommentsEntityOutlet = observer((props: Props) => {
     );
   };
 
-  const onNewComment = (comment) => {
+  const onNewComment = comment => {
     GoToComments();
   };
 

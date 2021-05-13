@@ -81,7 +81,7 @@ class ThemedStylesStore {
   onThemeChange(fn) {
     return reaction(
       () => [this.theme],
-      async (args) => await fn(...args),
+      async args => await fn(...args),
       {
         fireImmediately: false,
       },

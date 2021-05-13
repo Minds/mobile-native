@@ -45,7 +45,7 @@ const createMembershipMonetizeStore = () => {
       if (wire_threshold && wire_threshold.support_tier) {
         const urn = wire_threshold.support_tier.urn;
         const found = this.supportTiers.find(
-          (support_tier) => support_tier.urn === urn,
+          support_tier => support_tier.urn === urn,
         );
         if (found) {
           this.selectedTier = found;

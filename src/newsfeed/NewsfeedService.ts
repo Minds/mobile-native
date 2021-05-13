@@ -132,10 +132,10 @@ export function toggleMuteNotifications(guid, value) {
   let action = value ? 'mute' : 'unmute';
   return api
     .post('api/v1/entities/notifications/' + guid + '/' + action)
-    .then((data) => {
+    .then(data => {
       return data;
     })
-    .catch((err) => {
+    .catch(err => {
       logService.exception('[NewsfeedService]', err);
       throw 'Oops, an error occurred muting notifications.';
     });
@@ -144,10 +144,10 @@ export function toggleMuteNotifications(guid, value) {
 export function follow(guid) {
   return api
     .put(`api/v2/notifications/follow/${guid}`)
-    .then((data) => {
+    .then(data => {
       return data;
     })
-    .catch((err) => {
+    .catch(err => {
       logService.exception('[NewsfeedService]', err);
       throw 'Ooops';
     });
@@ -156,10 +156,10 @@ export function follow(guid) {
 export function unfollow(guid) {
   return api
     .delete(`api/v2/notifications/follow/${guid}`)
-    .then((data) => {
+    .then(data => {
       return data;
     })
-    .catch((err) => {
+    .catch(err => {
       logService.exception('[NewsfeedService]', err);
       throw 'Oops, an error has occurred whilst unfollowing.';
     });
@@ -178,10 +178,10 @@ export async function isFollowing(guid) {
 export function toggleExplicit(guid, value) {
   return api
     .post('api/v1/entities/explicit/' + guid, { value: value })
-    .then((data) => {
+    .then(data => {
       return { data };
     })
-    .catch((err) => {
+    .catch(err => {
       logService.exception('[NewsfeedService]', err);
       throw 'Oops, an error has occurred toggling explicit content';
     });

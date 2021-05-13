@@ -65,7 +65,7 @@ class Gathering extends React.Component {
   /**
    * On conference terminated
    */
-  onConferenceTerminated = (event) => {
+  onConferenceTerminated = event => {
     gatheringService.stopKeepAlive();
     this.props.navigation.goBack();
   };
@@ -73,7 +73,7 @@ class Gathering extends React.Component {
   /**
    * On conference joined
    */
-  onConferenceJoined = (event) => {
+  onConferenceJoined = event => {
     gatheringService.startKeepAlive();
     if (this.backHandler) {
       this.backHandler.remove();
@@ -92,7 +92,7 @@ class Gathering extends React.Component {
   /**
    * On conference will join
    */
-  onConferenceWillJoin = (event) => {};
+  onConferenceWillJoin = event => {};
 
   /**
    * Render

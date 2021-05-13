@@ -32,7 +32,7 @@ class EntitiesService {
     setInterval(this.garbageCollector, 60000);
 
     // delete the cache when activities are deleted
-    ActivityModel.events.on('deleteEntity', (activity) =>
+    ActivityModel.events.on('deleteEntity', activity =>
       this.deleteFromCache(activity.urn),
     );
   }
@@ -193,13 +193,13 @@ class EntitiesService {
           entity = defaultEntity;
         } else {
           // we fetch from the server
-          await this.fetch([urn], null, asActivities, (e) => (e.urn = urn));
+          await this.fetch([urn], null, asActivities, e => (e.urn = urn));
           entity = this.getFromCache(urn, false);
         }
       }
     }
 
-    if (entity) this.fetch([urn], null, asActivities, (e) => (e.urn = urn)); // Update in the background
+    if (entity) this.fetch([urn], null, asActivities, e => (e.urn = urn)); // Update in the background
 
     return entity;
   }

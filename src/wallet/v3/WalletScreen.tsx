@@ -1,6 +1,10 @@
 import React, { useEffect } from 'react';
 import { Text, View } from 'react-native';
-import { RouteProp, useFocusEffect } from '@react-navigation/native';
+import {
+  RouteProp,
+  useFocusEffect,
+  CompositeNavigationProp,
+} from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { observer, useLocalStore } from 'mobx-react';
@@ -10,7 +14,10 @@ import TokensTab from './currency-tabs/tokens/TokensTab';
 import type { CurrencyType } from '../../types/Payment';
 import type { TabType } from '../../common/components/topbar-tabbar/TopbarTabbar';
 import type { WalletStoreType } from '../v2/createWalletStore';
-import type { AppStackParamList } from '../../navigation/NavigationTypes';
+import type {
+  InternalStackParamList,
+  AppStackParamList,
+} from '../../navigation/NavigationTypes';
 import CenteredLoading from '../../common/components/CenteredLoading';
 import BottomOptionPopup, {
   BottomOptionsStoreType,
@@ -21,11 +28,13 @@ import i18n from '../../common/services/i18n.service';
 import { useStores } from '../../common/hooks/use-stores';
 import { createTokensTabStore } from './currency-tabs/tokens/createTokensTabStore';
 import TokenPrice from './TokenPrice';
+import createUsdTabStore from './currency-tabs/cash/createUsdTabStore';
+import type { UsdOptions, TokensOptions } from '../v2/WalletTypes';
 
-export type WalletScreenRouteProp = RouteProp<AppStackParamList, 'Fab'>;
-export type WalletScreenNavigationProp = StackNavigationProp<
-  AppStackParamList,
-  'Fab'
+export type WalletScreenRouteProp = RouteProp<InternalStackParamList, 'Wallet'>;
+export type WalletScreenNavigationProp = CompositeNavigationProp<
+  StackNavigationProp<InternalStackParamList, 'Wallet'>,
+  StackNavigationProp<AppStackParamList, 'Main'>
 >;
 
 type PropsType = {
@@ -38,11 +47,11 @@ type PropsType = {
  */
 const WalletScreen = observer((props: PropsType) => {
   const theme = ThemedStyles.style;
-
   const store: WalletStoreType = useStores().wallet;
   const bottomStore: BottomOptionsStoreType = useBottomOption();
 
   const tokenTabStore = useLocalStore(createTokensTabStore, store);
+  const usdTabStore = useLocalStore(createUsdTabStore);
 
   const tabs: Array<TabType<CurrencyType>> = [
     {
@@ -57,7 +66,37 @@ const WalletScreen = observer((props: PropsType) => {
 
   useEffect(() => {
     store.loadWallet();
-  }, [store, tokenTabStore]);
+    if (props.route.params && props.route.params.currency) {
+      store.setCurrent(
+        props.route.params.currency === 'cash' ? 'usd' : 'tokens',
+      );
+      if (props.route.params.section) {
+        if (props.route.params.currency === 'cash') {
+          if (
+            ['earnings', 'transactions', 'settings'].includes(
+              props.route.params.section,
+            )
+          ) {
+            usdTabStore.setOption(props.route.params.section as UsdOptions);
+          }
+        } else {
+          if (
+            [
+              'rewards',
+              'balance',
+              'transactions',
+              'settings',
+              'earnings',
+            ].includes(props.route.params.section)
+          ) {
+            tokenTabStore.setOption(
+              props.route.params.section as TokensOptions,
+            );
+          }
+        }
+      }
+    }
+  }, [props.route.params, store, tokenTabStore, usdTabStore]);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -92,6 +131,7 @@ const WalletScreen = observer((props: PropsType) => {
             bottomStore={bottomStore}
             navigation={props.navigation}
             route={props.route}
+            usdTabStore={usdTabStore}
             tokensTabStore={tokenTabStore}
           />
         );
@@ -117,7 +157,7 @@ const WalletScreen = observer((props: PropsType) => {
         <TopbarTabbar
           titleStyle={theme.fontXL}
           tabs={tabs}
-          onChange={(currency) => store.setCurrent(currency)}
+          onChange={currency => store.setCurrent(currency)}
           current={store.currency}
           tabStyle={theme.paddingVertical}
         />

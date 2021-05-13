@@ -64,7 +64,7 @@ const AccordionContent = ({ data, summary }: PropsType) => {
         theme.paddingBottom5x,
         theme.borderPrimary,
       ]}>
-      {data.map((row) => {
+      {data.map(row => {
         return (
           <Container>
             <Row>

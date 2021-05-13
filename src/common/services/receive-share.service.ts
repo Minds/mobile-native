@@ -39,7 +39,7 @@ class ReceiveShareService {
             },
           });
         },
-        (err) => console.log(err),
+        err => console.log(err),
       );
     } else if (item.mimeType.startsWith('video/')) {
       navigationService.navigate('Capture', {

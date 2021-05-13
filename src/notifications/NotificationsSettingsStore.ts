@@ -36,7 +36,7 @@ class NotificationsSettingsStore {
   async load() {
     const settings = await getSettings();
 
-    Object.keys(settings.toggles).forEach((key) => {
+    Object.keys(settings.toggles).forEach(key => {
       const toggle = settings.toggles[key];
       this.setSetting(key, toggle);
     });

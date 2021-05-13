@@ -15,11 +15,11 @@ export default observer(function DataSaverScreen() {
   const theme = ThemedStyles.style;
 
   const setDataSaverMode = useCallback(
-    (val) => settingsStore.setDataSaverMode(val),
+    val => settingsStore.setDataSaverMode(val),
     [],
   );
   const setDataSaverModeDisablesOnWiFi = useCallback(
-    (val) => settingsStore.setDataSaverModeDisablesOnWiFi(val),
+    val => settingsStore.setDataSaverModeDisablesOnWiFi(val),
     [],
   );
 

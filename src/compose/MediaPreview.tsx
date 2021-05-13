@@ -99,7 +99,7 @@ export default observer(function MediaPreview(props: PropsType) {
             containerStyle={previewStyle}
             resizeMode={ResizeMode.CONTAIN}
             autoplay
-            onReadyForDisplay={(e) => {
+            onReadyForDisplay={e => {
               if (
                 e.naturalSize.orientation === 'portrait' &&
                 Platform.OS === 'ios'

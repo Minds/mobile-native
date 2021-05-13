@@ -4,15 +4,12 @@ import React, { Component } from 'react';
 import {
   View,
   ScrollView,
-  TextInput,
   KeyboardAvoidingView,
   Platform,
   Text,
   Alert,
 } from 'react-native';
-import { CommonStyle as CS } from '../../styles/Common';
 import Button from '../../common/components/Button';
-import Colors from '../../styles/Colors';
 import SettingsService from '../SettingsService';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -33,34 +30,41 @@ export default class DeactivateChannelScreen extends Component {
     );
   };
 
+  onConfirmPasswordSuccess = password => {
+    this.props.navigation.goBack();
+    this.onDisable();
+  };
+
+  confirmPassword = () => {
+    this.props.navigation.navigate('PasswordConfirmation', {
+      title: i18n.t('settings.disableChannel'),
+      onConfirm: this.onConfirmPasswordSuccess,
+    });
+  };
+
   /**
    * Render
    */
   render() {
+    const theme = ThemedStyles.style;
     return (
-      <ScrollView style={[CS.flexContainer, CS.padding2x]}>
+      <ScrollView style={[theme.flexContainer, theme.padding2x]}>
         <KeyboardAvoidingView
-          style={[CS.flexContainer]}
-          behavior={Platform.OS == 'ios' ? 'padding' : null}>
-          <Text style={[CS.fontXXL, CS.bold]}>
-            {i18n.t('settings.disableChannel')}
-          </Text>
+          style={[theme.flexContainer]}
+          behavior={Platform.OS === 'ios' ? 'padding' : null}>
           <Text
             style={[
-              CS.fontL,
-              CS.marginTop,
-              CS.marginBottom2x,
-              CS.colorSecondaryText,
+              theme.fontL,
+              theme.marginTop,
+              theme.marginBottom2x,
+              theme.colorSecondaryText,
             ]}>
             {i18n.t('settings.disableDescription')}
           </Text>
-          <View style={CS.marginTop4x}>
+          <View style={theme.marginTop4x}>
             <Button
               text={i18n.t('settings.disableChannelButton')}
-              color={ThemedStyles.getColor('alert')}
-              textColor="white"
-              inverted
-              onPress={this.onDisable}
+              onPress={this.confirmPassword}
             />
           </View>
         </KeyboardAvoidingView>

@@ -13,10 +13,11 @@ type PropsType = {
   navigation: any;
   store?: ChannelStoreType;
   hideButtons?: boolean;
+  hideInput?: boolean;
 };
 
 const ChannelTopBar = observer(
-  ({ navigation, store, hideButtons }: PropsType) => {
+  ({ navigation, store, hideButtons, hideInput }: PropsType) => {
     const theme = ThemedStyles.style;
 
     const insets = useSafeAreaInsets();
@@ -30,17 +31,17 @@ const ChannelTopBar = observer(
           theme.rowJustifyStart,
           theme.alignCenter,
           cleanTop,
-          // theme.paddingTop2x,
+          theme.paddingLeft2x,
           theme.paddingBottom,
           theme.backgroundPrimary,
         ]}>
         <MIcon
-          size={45}
+          size={40}
           name="chevron-left"
           style={[theme.colorIcon, theme.centered]}
           onPress={navigation.goBack}
         />
-        {store && (
+        {store && !hideInput && (
           <TextInput
             placeholder="Search Channel"
             style={[
@@ -50,7 +51,7 @@ const ChannelTopBar = observer(
               theme.paddingLeft3x,
               theme.paddingVertical2x,
             ]}
-            placeholderTextColor={ThemedStyles.getColor('tertiary_text')}
+            placeholderTextColor={ThemedStyles.getColor('secondary_text')}
             value={store.channelSearch}
             onChangeText={store.setChannelSearch}
             returnKeyType={'search'}

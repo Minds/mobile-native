@@ -296,15 +296,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                 >
                   <FastImageView
                     resizeMode="cover"
-                    source={
-                      Object {
-                        "__packager_asset": true,
-                        "height": 1,
-                        "scale": 1,
-                        "uri": "file://assets/full/path/to/directory/name.type",
-                        "width": 1,
-                      }
-                    }
+                    source={null}
                     style={
                       Object {
                         "bottom": 0,
@@ -569,7 +561,9 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "permissions": Object {},
                   "pinned_posts": Array [],
                   "plus": true,
+                  "plus_method": "tokens",
                   "pro": false,
+                  "pro_method": "tokens",
                   "programs": Array [
                     "affiliate",
                   ],
@@ -747,7 +741,9 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "permissions": Object {},
                   "pinned_posts": Array [],
                   "plus": true,
+                  "plus_method": "tokens",
                   "pro": false,
+                  "pro_method": "tokens",
                   "programs": Array [
                     "affiliate",
                   ],
@@ -925,7 +921,9 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "permissions": Object {},
                   "pinned_posts": Array [],
                   "plus": true,
+                  "plus_method": "tokens",
                   "pro": false,
+                  "pro_method": "tokens",
                   "programs": Array [
                     "affiliate",
                   ],
@@ -1105,7 +1103,9 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "permissions": Object {},
                   "pinned_posts": Array [],
                   "plus": true,
+                  "plus_method": "tokens",
                   "pro": false,
+                  "pro_method": "tokens",
                   "programs": Array [
                     "affiliate",
                   ],

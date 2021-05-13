@@ -24,7 +24,7 @@ const PingButton = observer(
     );
     const _onPing = useCallback(
       () =>
-        post().then((data) => {
+        post().then(data => {
           if (data?.done) {
             showNotification(
               i18n.t('referrals.pinged', { username }),

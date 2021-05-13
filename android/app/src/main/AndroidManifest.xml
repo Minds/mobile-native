@@ -69,7 +69,6 @@
 
                 <data
                     android:host="www.minds.com"
-                    android:path="/"
                     android:scheme="https" />
                 <!--
             <data android:pathPattern="/email-confirmation"/>
@@ -77,7 +76,6 @@
             <data android:pathPattern="/groups/profile/..*"/>
             <data android:pathPattern="/wallet/..*"/>
                 -->
-                <data android:pathPattern="/..*" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

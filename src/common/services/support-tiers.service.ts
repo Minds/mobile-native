@@ -23,7 +23,7 @@ class SupportTiersService {
     );
     // only show tiers with tokens on iOS
     if (response.support_tiers && Platform.OS === 'ios') {
-      return response.support_tiers.filter((t) => t.has_tokens);
+      return response.support_tiers.filter(t => t.has_tokens);
     }
     return response.support_tiers;
   }

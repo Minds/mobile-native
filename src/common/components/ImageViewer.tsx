@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Dimensions } from 'react-native';
 import ImageZoom from 'react-native-image-pan-zoom';
-import FastImage from 'react-native-fast-image';
 import { SharedElement } from 'react-navigation-shared-element';
 import SmartImage from './SmartImage';
 
@@ -14,6 +13,9 @@ export default class ImageViewer extends Component {
     return (
       <View style={styles.wrapper}>
         <ImageZoom
+          enableSwipeDown={true}
+          swipeDownThreshold={100}
+          onSwipeDown={this.props.onSwipeDown}
           cropWidth={Dimensions.get('window').width}
           cropHeight={Dimensions.get('window').height}
           imageWidth={this.props.width}

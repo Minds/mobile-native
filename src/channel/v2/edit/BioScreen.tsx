@@ -47,8 +47,10 @@ const BioScreen = observer(({ route, navigation }: PropsType) => {
     await route.params.store.save({
       briefdescription: store.briefDescription,
     });
+
     store.setLoaded(true);
-  }, [store, route]);
+    navigation.goBack();
+  }, [store, route.params.store, navigation]);
 
   useEffect(() => {
     const params = route.params;

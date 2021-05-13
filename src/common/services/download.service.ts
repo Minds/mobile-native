@@ -32,7 +32,7 @@ class DownloadService {
             progressDivider: 1,
           });
 
-          return download.promise.then((result) => {
+          return download.promise.then(result => {
             if (result.statusCode === 200) {
               return CameraRoll.saveToCameraRoll(filePath);
             } else {

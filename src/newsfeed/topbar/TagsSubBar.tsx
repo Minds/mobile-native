@@ -50,7 +50,7 @@ export default class TagsSubBar extends Component<PropsType> {
   /**
    * Toggle tag
    */
-  toogle = async (tag) => {
+  toogle = async tag => {
     try {
       if (tag.selected) {
         await this.props.hashtag.deselect(tag);

@@ -28,7 +28,7 @@ const SearchResultComponent = observer(
             key={user.guid}
             //@ts-ignore
             testID={`suggestedUser${index}`}
-            onUserTap={(item) => {
+            onUserTap={item => {
               localStore.searchBarItemTap(item);
               navigation.goBack();
             }}

@@ -94,7 +94,7 @@ export default class ActivityActionSheet extends Component<
     const reminded =
       entity.remind_users &&
       entity.remind_users.some(
-        (user) => user.guid === sessionService.getUser().guid,
+        user => user.guid === sessionService.getUser().guid,
       );
 
     if (reminded) {
@@ -415,7 +415,7 @@ export default class ActivityActionSheet extends Component<
           testID={this.props.testID}
         />
         <ActionSheet
-          ref={(o) => (this.ActionSheet = o)}
+          ref={o => (this.ActionSheet = o)}
           title={i18n.t('actions')}
           options={this.state.options}
           onPress={this.handleSelection}

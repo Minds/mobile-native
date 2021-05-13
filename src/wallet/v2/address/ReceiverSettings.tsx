@@ -1,5 +1,5 @@
 import React from 'react';
-import { WalletScreenNavigationProp } from '../WalletScreen';
+import { WalletScreenNavigationProp } from '../../v3/WalletScreen';
 import { View, Text, StyleSheet } from 'react-native';
 import { WalletStoreType } from '../createWalletStore';
 import ThemedStyles from '../../../styles/ThemedStyles';
@@ -40,7 +40,7 @@ const ReceiverSettings = observer(
           {i18n.t('wallet.receiverAddresses').toUpperCase()}
         </Text>
         <View style={innerWrapper}>
-          {receiverSettingsOptions.map((item) => (
+          {receiverSettingsOptions.map(item => (
             <MenuItem item={item} />
           ))}
         </View>

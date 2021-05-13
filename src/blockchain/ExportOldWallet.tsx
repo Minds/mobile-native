@@ -44,7 +44,7 @@ export async function getExportableWallets(): Promise<Array<any>> {
         w.hasPrivate = await hasPrivateKeyInStorage(w.address);
       }
     }
-    return wallets.filter((w) => w.hasPrivate && !w.exported);
+    return wallets.filter(w => w.hasPrivate && !w.exported);
   } catch (error) {
     console.log(error);
     throw error;

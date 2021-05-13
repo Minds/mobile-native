@@ -12,7 +12,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import type { BottomOptionsStoreType } from '../../../../common/components/BottomOptionPopup';
 import TransactionsListTokens from '../../../v2/TransactionList/TransactionsListTokens';
 import ReceiverSettings from '../../../v2/address/ReceiverSettings';
-import { WalletScreenNavigationProp } from '../../../v2/WalletScreen';
+import { WalletScreenNavigationProp } from '../../WalletScreen';
 import i18n from '../../../../common/services/i18n.service';
 import TokensRewards from './TokensRewards';
 import TokensEarnings from '../Earnings';
@@ -27,7 +27,7 @@ import { TokensTabStore } from './createTokensTabStore';
 export const options: Array<ButtonTabType<TokensOptions>> = [
   { id: 'rewards', title: 'Rewards' },
   { id: 'earnings', title: 'Earnings' },
-  { id: 'overview', title: 'Balance' },
+  { id: 'balance', title: 'Balance' },
   { id: 'transactions', title: 'Transactions' },
   { id: 'settings', title: 'Settings' },
 ];
@@ -134,7 +134,7 @@ const TokensTab = observer(
           />
         );
         break;
-      case 'overview':
+      case 'balance':
         body = (
           <TokensOverview
             walletStore={walletStore}

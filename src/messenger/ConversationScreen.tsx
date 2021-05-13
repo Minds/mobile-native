@@ -8,10 +8,8 @@ import {
   FlatList,
   StyleSheet,
   TouchableOpacity,
-  KeyboardAvoidingView,
-  Platform,
   Dimensions,
-  SafeAreaView,
+  Platform,
 } from 'react-native';
 
 import { inject, observer } from 'mobx-react';
@@ -32,10 +30,10 @@ import logService from '../common/services/log.service';
 import TextInput from '../common/components/TextInput';
 import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
-import isIphoneX from '../common/helpers/isIphoneX';
 import ActivityIndicator from '../common/components/ActivityIndicator';
+import KeyboardSpacingView from '../common/components/KeyboardSpacingView';
 
-const keyExtractor = (item) => item.rowKey;
+const keyExtractor = item => item.rowKey;
 
 /**
  * Messenger Conversation Screen
@@ -85,7 +83,7 @@ export default class ConversationScreen extends Component {
     if (this.props.messengerList.configured) {
       this.updateTopAvatar(conversation);
       // load conversation
-      this.store.load().then((conv) => {
+      this.store.load().then(conv => {
         // we send the conversation to update the topbar (in case we only receive the guid)
         this.updateTopAvatar(conv);
       });
@@ -170,7 +168,7 @@ export default class ConversationScreen extends Component {
   /**
    * Set list ref
    */
-  setRef = (c) => {
+  setRef = c => {
     this.list = c;
   };
 
@@ -212,55 +210,52 @@ export default class ConversationScreen extends Component {
         this.props.user.me.icontime,
     };
     return (
-      <SafeAreaView style={styles.container}>
-        <KeyboardAvoidingView
-          style={[styles.container, ThemedStyles.style.backgroundSecondary]}
-          behavior={Platform.OS === 'ios' ? 'padding' : null}
-          keyboardVerticalOffset={isIphoneX ? 100 : 64}>
-          <FlatList
-            inverted={true}
-            data={messages}
-            ref={this.setRef}
-            renderItem={this.renderMessage}
-            maxToRenderPerBatch={15}
-            keyExtractor={keyExtractor}
-            style={styles.listView}
-            ListFooterComponent={footer}
-            windowSize={3}
-            onEndReached={this.loadMore}
-            // onEndReachedThreshold={0}
+      <KeyboardSpacingView
+        enabled={Platform.OS === 'ios'}
+        style={[styles.container, ThemedStyles.style.backgroundSecondary]}>
+        <FlatList
+          inverted={true}
+          data={messages}
+          ref={this.setRef}
+          renderItem={this.renderMessage}
+          maxToRenderPerBatch={15}
+          keyExtractor={keyExtractor}
+          style={styles.listView}
+          ListFooterComponent={footer}
+          windowSize={3}
+          onEndReached={this.loadMore}
+          // onEndReachedThreshold={0}
+        />
+        <Text style={styles.characterCounter}>
+          {this.state.text.length} / 180
+        </Text>
+        <View style={styles.messagePoster}>
+          <Image source={avatarImg} style={styles.avatar} />
+          <TextInput
+            style={[styles.input, ThemedStyles.style.colorPrimaryText]}
+            editable={true}
+            underlineColorAndroid="transparent"
+            placeholder={i18n.t('messenger.typeYourMessage')}
+            placeholderTextColor={ThemedStyles.getColor('secondary_text')}
+            onChangeText={this.textChanged}
+            multiline={true}
+            autogrow={true}
+            maxHeight={110}
+            value={this.state.text}
+            testID="ConversationTextInput"
           />
-          <Text style={styles.characterCounter}>
-            {this.state.text.length} / 180
-          </Text>
-          <View style={styles.messagePoster}>
-            <Image source={avatarImg} style={styles.avatar} />
-            <TextInput
-              style={[styles.input, ThemedStyles.style.colorPrimaryText]}
-              editable={true}
-              underlineColorAndroid="transparent"
-              placeholder={i18n.t('messenger.typeYourMessage')}
-              placeholderTextColor={ThemedStyles.getColor('secondary_text')}
-              onChangeText={this.textChanged}
-              multiline={true}
-              autogrow={true}
-              maxHeight={110}
-              value={this.state.text}
-              testID="ConversationTextInput"
+          <TouchableOpacity
+            onPress={this.send}
+            style={styles.sendicon}
+            testID="ConversationSendButton">
+            <Icon
+              name="md-send"
+              size={24}
+              style={ThemedStyles.style.colorIcon}
             />
-            <TouchableOpacity
-              onPress={this.send}
-              style={styles.sendicon}
-              testID="ConversationSendButton">
-              <Icon
-                name="md-send"
-                size={24}
-                style={ThemedStyles.style.colorIcon}
-              />
-            </TouchableOpacity>
-          </View>
-        </KeyboardAvoidingView>
-      </SafeAreaView>
+          </TouchableOpacity>
+        </View>
+      </KeyboardSpacingView>
     );
   }
 
@@ -270,7 +265,7 @@ export default class ConversationScreen extends Component {
    *
    * @param { string } text - the text to be checked
    */
-  textChanged = (text) => {
+  textChanged = text => {
     if (text.length > 180) {
       return;
     }
@@ -325,7 +320,7 @@ export default class ConversationScreen extends Component {
    * render row
    * @param {object} row
    */
-  renderMessage = (row) => {
+  renderMessage = row => {
     return (
       <Message
         message={row.item}

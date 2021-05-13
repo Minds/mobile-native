@@ -79,7 +79,7 @@ if (!__DEV__) {
    * Native Errors
    */
   setNativeExceptionHandler(
-    (exceptionString) => {
+    exceptionString => {
       Sentry.captureException(new Error(exceptionString), {
         logger: 'NativeExceptionHandler',
       });

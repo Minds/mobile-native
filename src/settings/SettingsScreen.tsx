@@ -57,6 +57,10 @@ export default function ({ navigation }) {
       title: i18n.t('blockchain.exportLegacyWallet'),
       screen: 'ExportLegacyWallet',
     },
+    {
+      title: i18n.t('messenger.legacyMessenger'),
+      screen: 'Messenger',
+    },
   ];
 
   if (!user.plus) {
@@ -134,7 +138,7 @@ export default function ({ navigation }) {
         {i18n.t('moreScreen.settings')}
       </Text>
       <View style={[innerWrapper, theme.backgroundPrimary]}>
-        {items.map((item) => (
+        {items.map(item => (
           <MenuItem item={item} />
         ))}
       </View>

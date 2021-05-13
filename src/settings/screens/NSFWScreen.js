@@ -29,7 +29,7 @@ export default function () {
    * Save changes
    */
   const save = useCallback(
-    async (val) => {
+    async val => {
       setLoading(true);
       try {
         await settingsService.submitSettings({ mature: val });

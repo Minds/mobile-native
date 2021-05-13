@@ -31,7 +31,7 @@ const createCashTransactionsStore = ({ wallet, user }: ParamsType) => {
     },
     get list(): Array<SectionListEntities> {
       const list = groupBy(this.entities, 'date');
-      return Object.keys(list).map((v) => ({
+      return Object.keys(list).map(v => ({
         title: v,
         data: list[v],
       }));
@@ -40,7 +40,7 @@ const createCashTransactionsStore = ({ wallet, user }: ParamsType) => {
       this.loading = value;
     },
     setEntities(value: Array<any>) {
-      value.forEach((tx) => {
+      value.forEach(tx => {
         tx.superType = tx.type;
         tx.amount = tx.net / 100;
         const txMoment = moment(tx.timestamp * 1000).local();

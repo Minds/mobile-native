@@ -12,7 +12,7 @@ class SettingsService {
    */
   loadCategories() {
     const rcategories = [];
-    return api.get('api/v1/categories').then((categories) => {
+    return api.get('api/v1/categories').then(categories => {
       for (let id in categories.categories) {
         rcategories.push({
           id: id,
@@ -29,7 +29,7 @@ class SettingsService {
    * Get Settings
    */
   getSettings() {
-    return api.get<any>('api/v1/settings').then((result) => {
+    return api.get<any>('api/v1/settings').then(result => {
       return result;
     });
   }
@@ -38,7 +38,7 @@ class SettingsService {
    * Submit Settings
    */
   submitSettings(params) {
-    return api.post('api/v1/settings', params).then((result) => {
+    return api.post('api/v1/settings', params).then(result => {
       return result;
     });
   }
@@ -59,7 +59,6 @@ class SettingsService {
    * Delete channel
    */
   async delete(password) {
-    console.log(password);
     try {
       await api.post('api/v2/settings/delete', { password });
       await sessionService.logout();

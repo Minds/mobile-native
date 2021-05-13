@@ -67,7 +67,7 @@ export default class BoostsCarousel extends PureComponent {
    */
   _renderItem = ({ item, index }) => {
     //(fix) if loop is active the index is not the real index of boosted
-    const realIndex = this.props.boosts.findIndex((i) => {
+    const realIndex = this.props.boosts.findIndex(i => {
       return i.guid == item.guid;
     });
 
@@ -75,7 +75,7 @@ export default class BoostsCarousel extends PureComponent {
       <BoostItem
         entity={item}
         navigation={this.props.navigation}
-        ref={(ref) => {
+        ref={ref => {
           this.itemsRef[realIndex] = ref;
         }}
       />
@@ -85,7 +85,7 @@ export default class BoostsCarousel extends PureComponent {
   /**
    * On layout
    */
-  _onLayout = (e) => {
+  _onLayout = e => {
     const width = Dimensions.get('window').width;
 
     // fix height of first element
@@ -109,7 +109,7 @@ export default class BoostsCarousel extends PureComponent {
   /**
    * On item snap
    */
-  _onSnapToItem = (index) => {
+  _onSnapToItem = index => {
     const ref = this.itemsRef[index];
 
     const newState = {
@@ -160,7 +160,7 @@ export default class BoostsCarousel extends PureComponent {
 
   onModalHide = () => {};
 
-  onOpenChanged = (value) => {
+  onOpenChanged = value => {
     this.setState({ open: value });
     settingsService
       .settings(
@@ -168,12 +168,12 @@ export default class BoostsCarousel extends PureComponent {
         this.state.open ? 2 : 1,
         this.state.mature ? 1 : 0,
       )
-      .then((result) => {
+      .then(result => {
         this.props.store.loadBoosts(this.state.open ? 2 : 1);
       });
   };
 
-  onExplicitChanged = (value) => {
+  onExplicitChanged = value => {
     this.setState({ mature: value });
     settingsService
       .settings(
@@ -181,12 +181,12 @@ export default class BoostsCarousel extends PureComponent {
         this.state.open ? 2 : 1,
         this.state.mature ? 1 : 0,
       )
-      .then((result) => {
+      .then(result => {
         this.props.store.loadBoosts(this.state.open ? 2 : 1);
       });
   };
 
-  onAutoRotateChanged = (value) => {
+  onAutoRotateChanged = value => {
     this.setState({ autoRotate: value });
   };
 
@@ -200,7 +200,7 @@ export default class BoostsCarousel extends PureComponent {
       return (
         <Carousel
           onLayout={this._onLayout}
-          ref={(c) => {
+          ref={c => {
             this._carousel = c;
           }}
           data={this.props.boosts}

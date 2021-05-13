@@ -65,7 +65,8 @@ const AboutScreen = observer(({ route, navigation }: PropsType) => {
       dob: store.dob,
     });
     store.setLoaded(true);
-  }, [store, route]);
+    navigation.goBack();
+  }, [store, route.params.store, navigation]);
 
   useEffect(() => {
     const params = route.params;
@@ -113,7 +114,7 @@ const AboutScreen = observer(({ route, navigation }: PropsType) => {
             onChangeText={store.setDob}
             value={store.dob}
             testID="dobInput"
-            wrapperBorder={[theme.borderTop, theme.borderBottom]}
+            wrapperBorder={[theme.borderTop]}
             onFocus={() => store.setDob('')}
             inputType="dateInput"
           />
@@ -122,6 +123,7 @@ const AboutScreen = observer(({ route, navigation }: PropsType) => {
           value={store.city}
           onChangeText={store.setCity}
           onEdit={store.setEditingCity}
+          wrapperBorder={[theme.borderBottom]}
         />
       </KeyboardAvoidingView>
     </ScrollView>

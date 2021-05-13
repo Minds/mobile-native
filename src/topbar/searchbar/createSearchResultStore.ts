@@ -5,7 +5,7 @@ import NavigationService from '../../navigation/NavigationService';
 
 const createSearchResultStore = () => {
   const store = {
-    user: {} as UserStore,
+    user: null as UserStore | null,
     search: '',
     loading: false,
     suggested: [] as UserModel[],
@@ -33,7 +33,7 @@ const createSearchResultStore = () => {
     async input(search: string) {
       this.setSearchText(search);
       this.search = search;
-      if (this.shouldShowSuggested) {
+      if (this.shouldShowSuggested && this.user) {
         this.loading = true;
         this.suggested = await this.user.getSuggestedSearch(search);
         this.loading = false;
@@ -41,8 +41,8 @@ const createSearchResultStore = () => {
     },
     searchBarItemTap(item) {
       this.search = '';
-      this.user.toggleSearching();
-      this.user.searchBarItemTap(item);
+      this.user?.toggleSearching();
+      this.user?.searchBarItemTap(item);
     },
     setSearchesAndQueryDiscovery(search: string) {
       this.search = search;

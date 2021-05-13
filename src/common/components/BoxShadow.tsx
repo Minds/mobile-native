@@ -64,7 +64,7 @@ export default class BoxShadow extends Component<PropsType> {
     let rgb = colorRgb(color);
 
     //the same parts for gradients
-    const linear = (key) => {
+    const linear = key => {
       return [
         <Stop
           offset="0"
@@ -80,7 +80,7 @@ export default class BoxShadow extends Component<PropsType> {
         />,
       ];
     };
-    const radial = (key) => {
+    const radial = key => {
       return [
         <Stop
           offset="0"

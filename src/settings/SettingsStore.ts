@@ -59,7 +59,7 @@ export class SettingsStore {
     ]);
 
     // store theme changes
-    ThemedStyles.onThemeChange((value) => {
+    ThemedStyles.onThemeChange(value => {
       this.setTheme(value);
     });
 

@@ -61,13 +61,13 @@ class MessengerListStore {
   newsearch = true;
 
   @computed get unread() {
-    const count = this.conversations.filter((conv) => conv.unread).length;
+    const count = this.conversations.filter(conv => conv.unread).length;
     badge.setUnreadConversations(count);
     return count;
   }
 
   constructor() {
-    session.sessionStorage.getPrivateKey().then((privateKey) => {
+    session.sessionStorage.getPrivateKey().then(privateKey => {
       if (privateKey) {
         this.setPrivateKey(privateKey);
       }
@@ -81,9 +81,9 @@ class MessengerListStore {
   }
 
   @action
-  touchConversation = (guid) => {
+  touchConversation = guid => {
     // search conversation
-    const index = this.conversations.findIndex((conv) => conv.guid === guid);
+    const index = this.conversations.findIndex(conv => conv.guid === guid);
 
     if (index !== -1) {
       const conv = this.conversations[index];
@@ -135,6 +135,7 @@ class MessengerListStore {
         );
       } else {
         if (this.loaded && !this.offset && !reload) {
+          this.setLoading(false);
           return;
         }
         if (reload) this.offset = '';
@@ -172,14 +173,14 @@ class MessengerListStore {
     this.setUnlocking(true);
     return messengerService
       .getCryptoKeys(password)
-      .then((privateKey) => {
+      .then(privateKey => {
         if (privateKey) {
           session.sessionStorage.setPrivateKey(privateKey);
           this.setPrivateKey(privateKey);
         }
         return privateKey;
       })
-      .catch((e) => {
+      .catch(e => {
         Alert.alert(
           i18n.t('sorry'),
           i18n.t('messenger.checkCredentials'),

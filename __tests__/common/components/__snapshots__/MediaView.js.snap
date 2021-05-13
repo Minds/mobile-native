@@ -5,8 +5,9 @@ exports[`Media view component renders correctly 1`] = `
   <SharedElement
     id="undefined.image"
   >
-    <TouchableOpacity
+    <DoubleTapCmp
       activeOpacity={1}
+      onDoubleTap={[Function]}
       onLongPress={[Function]}
       onPress={[Function]}
       style={
@@ -102,7 +103,7 @@ exports[`Media view component renders correctly 1`] = `
           }
         }
       />
-    </TouchableOpacity>
+    </DoubleTapCmp>
   </SharedElement>
 </View>
 `;

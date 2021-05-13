@@ -137,7 +137,7 @@ class StorageService {
    */
   async multiRemove(keys) {
     return await AsyncStorage.multiRemove(
-      keys.map((k) => `${STORAGE_KEY_PREFIX}${k}`),
+      keys.map(k => `${STORAGE_KEY_PREFIX}${k}`),
     );
   }
 
@@ -149,10 +149,10 @@ class StorageService {
    */
   async multiGet(keys) {
     const values = await AsyncStorage.multiGet(
-      keys.map((k) => `${STORAGE_KEY_PREFIX}${k}`),
+      keys.map(k => `${STORAGE_KEY_PREFIX}${k}`),
     );
 
-    return values.map((value) => {
+    return values.map(value => {
       try {
         value[1] = JSON.parse(value[1]);
       } catch (err) {
@@ -173,8 +173,8 @@ class StorageService {
     }
 
     return (await AsyncStorage.getAllKeys())
-      .filter((key) => key.indexOf(`${STORAGE_KEY_PREFIX}${prefix}`) === 0)
-      .map((key) => key.substr(STORAGE_KEY_PREFIX.length));
+      .filter(key => key.indexOf(`${STORAGE_KEY_PREFIX}${prefix}`) === 0)
+      .map(key => key.substr(STORAGE_KEY_PREFIX.length));
   }
 }
 

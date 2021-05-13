@@ -24,7 +24,7 @@ export default class Toolbar extends PureComponent {
   /**
    * change state
    */
-  changeState = (val) => {
+  changeState = val => {
     if (this.state.selected == val) return;
     this.setState({ selected: val });
 
@@ -48,7 +48,7 @@ export default class Toolbar extends PureComponent {
     }
 
     // buttons
-    const buttons = options.map((data) => {
+    const buttons = options.map(data => {
       return (
         <ToolbarItem
           text={data.text}

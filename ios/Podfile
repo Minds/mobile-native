@@ -8,12 +8,12 @@ install! 'cocoapods',
 
 $RNFirebaseAsStaticFramework = true
 
-platform :ios, '10.0'
+platform :ios, '11.0'
 
 target 'Minds' do
   config = use_native_modules!
 
-  use_react_native!(:path => config["reactNativePath"])
+  use_react_native!(:path => config["reactNativePath"], :hermes_enabled => true)
 
   use_unimodules!
 
@@ -50,11 +50,11 @@ target 'Minds' do
       target.build_configurations.each do |config|
         config.build_settings['APPLICATION_EXTENSION_API_ONLY'] = 'NO'
       end
+      if target.name == "React-Core.common-AccessibilityResources"
+        target.remove_from_project
+      end
     end
   end
-
-
-
 end
 
 target 'Minds-tvOS' do
@@ -68,8 +68,15 @@ target 'Minds-tvOS' do
 end
 
 target 'Share' do
-  use_react_native!
+  # use_react_native!
+  config = use_native_modules!
+  use_react_native!(:path => config["reactNativePath"], :hermes_enabled => true)
 
   pod 'RNShareMenu', :path => '../node_modules/react-native-share-menu'
   # Manually link packages here to keep your extension bundle size minimal
+
+  permissions_path = '../node_modules/react-native-permissions/ios'
+  pod 'Permission-Camera', :path => "#{permissions_path}/Camera.podspec"
+  pod 'Permission-Microphone', :path => "#{permissions_path}/Microphone.podspec"
+  pod 'Permission-PhotoLibrary', :path => "#{permissions_path}/PhotoLibrary.podspec"
 end

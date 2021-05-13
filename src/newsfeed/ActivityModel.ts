@@ -1,5 +1,5 @@
 import { runInAction, action, observable, decorate } from 'mobx';
-import FastImage from 'react-native-fast-image';
+import FastImage, { Source } from 'react-native-fast-image';
 import { FlatList, Alert, Platform } from 'react-native';
 
 import BaseModel from '../common/BaseModel';
@@ -23,6 +23,7 @@ import { SupportTiersType } from '../wire/WireTypes';
 import mindsService from '../common/services/minds.service';
 import NavigationService from '../navigation/NavigationService';
 import { showNotification } from '../../AppMessages';
+import mediaProxyUrl from '../common/helpers/media-proxy-url';
 
 type Thumbs = Record<ThumbSize, string> | Record<ThumbSize, string>[];
 
@@ -144,6 +145,9 @@ export default class ActivityModel extends BaseModel {
       case 'batch':
         return true;
     }
+    if (this.perma_url && this.thumbnail_src) {
+      return true;
+    }
     return false;
   }
 
@@ -194,10 +198,20 @@ export default class ActivityModel extends BaseModel {
    * {uri: 'http...'}
    * @param {string} size
    */
-  getThumbSource(size: ThumbSize = 'medium') {
+  getThumbSource(size: ThumbSize = 'medium'): Source {
     // for gif use always the same size to take advantage of the cache (they are not resized)
     if (this.isGif()) {
       size = 'xlarge';
+    }
+
+    if (this.perma_url) {
+      return {
+        uri:
+          this.type === 'comment'
+            ? this.thumbnail_src
+            : mediaProxyUrl(this.thumbnail_src),
+        headers: api.buildHeaders(),
+      };
     }
 
     if (this.thumbnails && this.thumbnails[size]) {
@@ -213,6 +227,7 @@ export default class ActivityModel extends BaseModel {
         headers: api.buildHeaders(),
       };
     }
+
     if (this.custom_type === 'batch') {
       return {
         uri: MINDS_CDN_URI + 'fs/v1/thumbnail/' + this.entity_guid + '/' + size,
@@ -244,8 +259,7 @@ export default class ActivityModel extends BaseModel {
     }
 
     if (this.nsfw !== undefined) {
-      let res = [1, 2, 4].filter((nsfw) => this.nsfw!.indexOf(nsfw) > -1)
-        .length;
+      let res = [1, 2, 4].filter(nsfw => this.nsfw!.indexOf(nsfw) > -1).length;
       if (res) {
         return true;
       }

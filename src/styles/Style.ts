@@ -164,7 +164,7 @@ for (let index = 0; index <= repetitions; index++) {
   dynamicStyles[`borderRadius${post}`] = { borderRadius: index * 2 };
 }
 
-export const buildStyle = (theme) => ({
+export const buildStyle = theme => ({
   ...dynamicStyles,
   // opacity
   opacity100: {

@@ -90,7 +90,7 @@ export default class AppInitManager {
   onLogin = async () => {
     const user = sessionService.getUser();
 
-    Sentry.configureScope((scope) => {
+    Sentry.configureScope(scope => {
       scope.setUser({ id: user.guid });
     });
 
@@ -134,7 +134,10 @@ export default class AppInitManager {
 
       // handle deep link (if the app is opened by one)
       if (this.deepLinkUrl) {
-        deeplinkService.navigate(this.deepLinkUrl);
+        const deeplink = this.deepLinkUrl;
+        setTimeout(() => {
+          deeplinkService.navigate(deeplink);
+        }, 300);
         this.deepLinkUrl = '';
       }
 
@@ -156,9 +159,15 @@ export default class AppInitManager {
       portraitContentService.removeOlderThan(3);
     }, 30000);
 
-    setTimeout(() => {
-      showMessageForPrivateKey();
-    }, 10000);
+    // disable
+    // setTimeout(() => {
+    //   showMessageForPrivateKey();
+    // }, 10000);
+
+    if (sessionService.recoveryCodeUsed) {
+      sessionService.setRecoveryCodeUsed(false);
+      NavigationService.navigate('RecoveryCodeUsedScreen');
+    }
   };
 
   /**

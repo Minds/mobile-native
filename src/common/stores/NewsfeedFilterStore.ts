@@ -111,7 +111,7 @@ export default class NewsfeedFilterStore {
   onFilterChange(fn) {
     return reaction(
       () => [this.filter, this.type, this.period, this.nsfw],
-      (args) => fn(...args),
+      args => fn(...args),
       { fireImmediately: false },
     );
   }
@@ -124,7 +124,7 @@ export default class NewsfeedFilterStore {
   onSearchChange(fn) {
     return reaction(
       () => this.searchtext,
-      (q) => fn(q),
+      q => fn(q),
       { fireImmediately: false },
     );
   }

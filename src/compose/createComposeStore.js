@@ -6,9 +6,7 @@ import RichEmbedStore from '../common/stores/RichEmbedStore';
 import i18n from '../common/services/i18n.service';
 import hashtagService from '../common/services/hashtag.service';
 import api from '../common/services/api.service';
-import remoteAction from '../common/RemoteAction';
 import ActivityModel from '../newsfeed/ActivityModel';
-import { getSingle } from '../newsfeed/NewsfeedService';
 import ThemedStyles from '../styles/ThemedStyles';
 import featuresService from '../common/services/features.service';
 import mindsService from '../common/services/minds.service';
@@ -20,13 +18,12 @@ import logService from '../common/services/log.service';
 import { runInAction } from 'mobx';
 import { Image, Platform } from 'react-native';
 import { hashRegex } from '../common/components/Tags';
-import _ from 'lodash';
 
 /**
  * Display an error message to the user.
  * @param {string} message
  */
-const showError = (message) => {
+const showError = message => {
   showMessage({
     position: 'top',
     message: message,
@@ -45,7 +42,7 @@ const DEFAULT_MONETIZE = {
 /**
  * Composer store
  */
-export default function ({ props, newsfeed }) {
+export default function (props) {
   return {
     portraitMode: false,
     noText: false,
@@ -123,16 +120,8 @@ export default function ({ props, newsfeed }) {
       const { goBack, dispatch } = props.navigation;
       const { params } = props.route;
 
-      if (!isEdit) {
-        newsfeed.prepend(entity);
-      }
-
       if (params && params.parentKey) {
         const routeParams = {
-          prepend:
-            isEdit || (this.isRemind && params.parentKey.includes('GroupView'))
-              ? undefined
-              : entity,
           group: null,
         };
 
@@ -147,6 +136,12 @@ export default function ({ props, newsfeed }) {
       }
       goBack();
       this.clear(false);
+
+      if (!isEdit) {
+        ActivityModel.events.emit('newPost', entity);
+      } else {
+        ActivityModel.events.emit('edited', entity);
+      }
     },
     hydrateFromEntity() {
       this.text = this.entity.message || '';
@@ -220,7 +215,7 @@ export default function ({ props, newsfeed }) {
           path: this.mediaToConfirm.uri.replace('file://', ''),
           stickers: ['sticker6', 'sticker9'],
           hiddenControls: ['save', 'share'],
-          onDone: (result) => {
+          onDone: result => {
             Image.getSize(
               this.mediaToConfirm.uri,
               (w, h) => {
@@ -238,7 +233,7 @@ export default function ({ props, newsfeed }) {
                   }
                 });
               },
-              (err) => console.log(err),
+              err => console.log(err),
             );
           },
         });
@@ -255,7 +250,7 @@ export default function ({ props, newsfeed }) {
         this.maxHashtagsError();
         return false;
       }
-      if (this.tags.some((t) => t === tag)) {
+      if (this.tags.some(t => t === tag)) {
         return false;
       }
 
@@ -267,7 +262,7 @@ export default function ({ props, newsfeed }) {
      * @param {string} tag
      */
     removeTag(tag) {
-      const index = this.tags.findIndex((v) => v === tag);
+      const index = this.tags.findIndex(v => v === tag);
       if (index !== -1) {
         this.tags.splice(index, 1);
       }
@@ -275,7 +270,7 @@ export default function ({ props, newsfeed }) {
     parseTags() {
       let result = this.text.match(hashRegex);
       if (result) {
-        result = result.map((v) => v.trim().slice(1));
+        result = result.map(v => v.trim().slice(1));
 
         if (this.tags.length + result.length <= hashtagService.maxHashtags) {
           this.tags.push(...result);

@@ -148,7 +148,7 @@ class I18nService {
     let translation = i18n.t(scope, opt);
     const keys = Object.keys(values);
     const placeHolders = {};
-    keys.forEach((key) => (placeHolders[key] = `{{${key}}}`));
+    keys.forEach(key => (placeHolders[key] = `{{${key}}}`));
     const splitted: Array<string> = translation.split(/(?:&\{)(.*?)(?:\}&)/gm);
     const result: Array<string | React.ReactNode> = [];
 
@@ -229,7 +229,7 @@ class I18nService {
 
   getCurrentLanguageName() {
     const locale = i18n.currentLocale();
-    const obj = this.getSupportedLocales().find((l) => l.value === locale);
+    const obj = this.getSupportedLocales().find(l => l.value === locale);
     if (obj) {
       return obj.name;
     }

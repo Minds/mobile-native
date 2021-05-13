@@ -122,7 +122,7 @@ export default class GroupHeader extends Component {
     this.props.navigation.navigate('Gathering', { entity: group });
   };
 
-  setMemberSearch = debounce((q) => {
+  setMemberSearch = debounce(q => {
     this.props.store.setMemberSearch(q);
   }, 300);
 
@@ -183,7 +183,7 @@ export default class GroupHeader extends Component {
   /**
    * On tab change
    */
-  onTabChange = (tab) => {
+  onTabChange = tab => {
     const group = this.props.store.group;
 
     switch (tab) {
@@ -217,7 +217,7 @@ export default class GroupHeader extends Component {
     const styles = this.props.styles;
 
     if (topMembers.length) {
-      return topMembers.map((t) => (
+      return topMembers.map(t => (
         <Image
           source={t.getAvatarSource()}
           key={t.guid}
@@ -248,9 +248,9 @@ export default class GroupHeader extends Component {
           style={[stylesheet.icon, ThemedStyles.style.colorPrimaryText]}
         />
         <ActionSheet
-          ref={(o) => (this.ActionSheet = o)}
+          ref={o => (this.ActionSheet = o)}
           options={options}
-          onPress={(i) => {
+          onPress={i => {
             this.handleActionSheetSelection(options[i]);
           }}
           cancelButtonIndex={0}

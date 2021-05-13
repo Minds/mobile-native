@@ -76,7 +76,7 @@ const ChannelBadge = ({
   const sizeIcon = iconSize ?? 16;
   const badgesIcons: Array<JSX.Element> = [];
 
-  badges.forEach((badge) => {
+  badges.forEach(badge => {
     if (badge.shoudlShow(channel, badgesActive)) {
       const badgeColor = {
         color: ThemedStyles.getColor(badge.color),

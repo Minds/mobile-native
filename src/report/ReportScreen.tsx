@@ -89,12 +89,12 @@ export default class ReportScreen extends Component {
     const settings = await mindsService.getSettings();
 
     // reasons in current language with fallback in english translation, in case that both fails the origial label is shown
-    settings.report_reasons.forEach((r) => {
+    settings.report_reasons.forEach(r => {
       r.label = i18n.t(`reports.reasons.${r.value}.label`, {
         defaultValue: r.label,
       });
       if (r.reasons && r.reasons.length) {
-        r.reasons.forEach((r2) => {
+        r.reasons.forEach(r2 => {
           r2.label = i18n.t(
             `reports.reasons.${r.value}.reasons.${r2.value}.label`,
             { defaultValue: r2.label },
@@ -268,7 +268,7 @@ export default class ReportScreen extends Component {
   /**
    * Update not value
    */
-  updateNote = (value) => this.setState({ note: value });
+  updateNote = value => this.setState({ note: value });
 
   /**
    * Render

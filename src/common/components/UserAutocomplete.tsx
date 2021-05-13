@@ -39,7 +39,7 @@ export default class UserAutocomplete extends PureComponent<PropsType> {
   /**
    * Debounced search
    */
-  query = debounce(async (query) => {
+  query = debounce(async query => {
     try {
       const users = await userTypeaheadService.search(query, 6);
       this.setState({ search: false, users });
@@ -131,7 +131,7 @@ export default class UserAutocomplete extends PureComponent<PropsType> {
   /**
    * On full search select
    */
-  searchSelect = (user) => {
+  searchSelect = user => {
     this.close();
     this.selectTag(user);
   };
@@ -172,7 +172,7 @@ export default class UserAutocomplete extends PureComponent<PropsType> {
    * Replace the partial tag with the selected
    * returns the full text
    */
-  selectTag = (user) => {
+  selectTag = user => {
     let endword = [''],
       matchText = this.state.text.substr(0, this.state.selection.end);
 

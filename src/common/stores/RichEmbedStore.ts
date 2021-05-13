@@ -18,14 +18,14 @@ export default class RichEmbedStore {
   @observable metaInProgress = false;
   @observable meta: MetaType = null;
   richEmbedUrl = '';
-  _richEmbedFetchTimer: NodeJS.Timeout | null = null;
+  _richEmbedFetchTimer: number | null = null;
   setRichEmbedPromise: Promise<void> | null = null; // used for testing
 
   /**
    * Richembed check
    */
   @action
-  richEmbedCheck = (text) => {
+  richEmbedCheck = text => {
     const matches = Util.urlReSingle.exec(text);
 
     if (this._richEmbedFetchTimer) {

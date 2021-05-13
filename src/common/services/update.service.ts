@@ -141,7 +141,7 @@ class UpdateService {
     }
 
     if (data.versions && data.versions.find) {
-      const version = data.versions.find((v) => (stable ? !v.unstable : true));
+      const version = data.versions.find(v => (stable ? !v.unstable : true));
       if (version) return version;
     }
 
@@ -168,11 +168,11 @@ class UpdateService {
     const updater = new UpdateAPK.UpdateAPK({
       fileProviderAuthority: 'com.minds.mobile.fileprovider',
 
-      downloadApkProgress: (progress) => {
+      downloadApkProgress: progress => {
         this.setProgress(progress);
       },
 
-      onError: (err) => {
+      onError: err => {
         showNotification(i18n.t('update.failed'), 'danger');
         logService.exception(err);
         navigationService.goBack();

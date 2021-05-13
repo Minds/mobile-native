@@ -16,7 +16,7 @@ class DeeplinksRouter {
    * Constructor
    */
   constructor() {
-    MINDS_DEEPLINK.forEach((r) => this.add(r[0], r[1]));
+    MINDS_DEEPLINK.forEach(r => this.add(r[0], r[1], r[2]));
   }
 
   /**
@@ -46,12 +46,13 @@ class DeeplinksRouter {
    * @param {string} url     ex: newsfeed/:guid
    * @param {string} screen  name of the screen
    */
-  add(url, screen) {
+  add(url, screen, type) {
     const re = /:(\w+)/gi;
 
-    const params = (url.match(re) || []).map((s) => s.substr(1));
+    const params = (url.match(re) || []).map(s => s.substr(1));
 
     this.routes.push({
+      type: type || 'push',
       screen,
       params,
       re: new RegExp('^' + url.replace(re, '([^/]+?)') + '(/?$|/?\\?)'),
@@ -63,14 +64,40 @@ class DeeplinksRouter {
    * @param {string} url
    */
   navigate(url) {
-    if (!url) return;
+    if (!url) {
+      return;
+    }
+    if (url.endsWith('/')) {
+      url = url.substr(0, url.length - 1);
+    }
     const route = this._getUrlRoute(url);
+
     if (route && route.screen !== 'Redirect') {
-      navigationService.push(route.screen, route.params);
-    } else {
+      const screens = route.screen.split('/');
+      if (screens.length === 1) {
+        navigationService[route.type](route.screen, route.params);
+      } else {
+        const screen = screens.shift();
+        const calcParams = this.nestedScreen(screens, route.params);
+        navigationService[route.type](screen, calcParams);
+      }
+    } else if (url !== 'https://www.minds.com') {
       Linking.openURL(url.replace('https://www.', 'https://mobile.'));
     }
     return !!route;
+  }
+
+  nestedScreen(data, params) {
+    const o = {
+      screen: data.shift(),
+    };
+    if (data.length > 0) {
+      o.params = this.nestedScreen(data, params);
+    } else {
+      o.params = params;
+    }
+
+    return o;
   }
 
   cleanUrl(url) {
@@ -94,7 +121,11 @@ class DeeplinksRouter {
         route.params.forEach((v, i) => (params[v] = match[i + 1]));
         const urlParams = this.parseQueryParams(url);
 
-        return { screen: route.screen, params: { ...params, ...urlParams } };
+        return {
+          screen: route.screen,
+          params: { ...params, ...urlParams },
+          type: route.type,
+        };
       }
     }
     return null;

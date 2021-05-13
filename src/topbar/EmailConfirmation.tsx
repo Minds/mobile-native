@@ -1,12 +1,16 @@
 //@ts-nocheck
 import React, { Component } from 'react';
-import { Text, StyleSheet, View, Alert } from 'react-native';
+import { Text, StyleSheet, View, Alert, TouchableOpacity } from 'react-native';
 import i18n from '../common/services/i18n.service';
 import emailConfirmationService from '../common/services/email-confirmation.service';
 import { CommonStyle as CS } from '../styles/Common';
 import { observer, inject } from 'mobx-react';
 import apiService from '../common/services/api.service';
 import UserStore from '../auth/UserStore';
+import withPreventDoubleTap from '../common/components/PreventDoubleTap';
+
+// prevent double tap in touchable
+const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
 
 interface Props {
   user?: UserStore;
@@ -57,9 +61,11 @@ class EmailConfirmation extends Component<Props> {
           <Text style={[CS.fontM, CS.colorWhite]}>
             {i18n.t('emailConfirm.confirm')} {i18n.t('emailConfirm.didntGetit')}
           </Text>
-          <Text style={[CS.bold, CS.colorWhite]} onPress={this.send}>
-            {i18n.t('emailConfirm.sendAgain')}
-          </Text>
+          <TouchableOpacityCustom onPress={this.send}>
+            <Text style={[CS.bold, CS.colorWhite]}>
+              {i18n.t('emailConfirm.sendAgain')}
+            </Text>
+          </TouchableOpacityCustom>
         </View>
         <Text
           style={[styles.modalCloseIcon, CS.colorWhite, CS.bold]}

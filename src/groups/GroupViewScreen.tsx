@@ -34,8 +34,8 @@ import {
 import ThemedStyles from '../styles/ThemedStyles';
 import sessionService from '../common/services/session.service';
 import ExplicitOverlay from '../common/components/explicit/ExplicitOverlay';
-import CommentsStore from '../comments/v2/CommentsStore';
 import CommentBottomSheet from '../comments/v2/CommentBottomSheet';
+import ActivityModel from '../newsfeed/ActivityModel';
 
 /**
  * Groups view screen
@@ -107,25 +107,22 @@ export default class GroupViewScreen extends Component {
     this.props.groupView.loadTopMembers();
   }
 
+  /**
+   * Prepend new posts
+   */
+  prepend = (entity: ActivityModel) => {
+    if (entity.containerObj?.guid === this.props.groupView.group.guid) {
+      this.props.groupView.prepend(entity);
+    }
+  };
+
   componentDidMount() {
     const params = this.props.route.params;
 
     // load data async
     this.initialLoad();
 
-    this.disposeEnter = this.props.navigation.addListener('focus', () => {
-      const params = this.props.route.params;
-
-      if (params && params.prepend) {
-        this.props.groupView.prepend(params.prepend);
-        // we clear the parameter to prevent prepend it again on goBack
-        this.props.navigation.setParams({ prepend: null });
-      }
-    });
-
-    if (params && params.prepend) {
-      this.props.groupView.prepend(params.prepend);
-    }
+    ActivityModel.events.on('newPost', this.prepend);
 
     if (params.tab && this.headerRef) {
       this.headerRef.onTabChange(params.tab);
@@ -143,6 +140,7 @@ export default class GroupViewScreen extends Component {
    * On component will unmount
    */
   componentWillUnmount() {
+    ActivityModel.events.removeListener('newPost', this.prepend);
     this.props.groupView.clear();
     if (this.disposeEnter) {
       this.disposeEnter();
@@ -163,7 +161,7 @@ export default class GroupViewScreen extends Component {
     this.props.groupView.memberRefresh();
   };
 
-  headerRefHandler = (ref) => (this.headerRef = ref);
+  headerRefHandler = ref => (this.headerRef = ref);
 
   getBackIcon() {
     return (
@@ -211,7 +209,7 @@ export default class GroupViewScreen extends Component {
             ListHeaderComponent={header}
             data={group.members.entities.slice()}
             renderItem={this.renderRow}
-            keyExtractor={(item) => item.guid}
+            keyExtractor={item => item.guid}
             onRefresh={this.refresh}
             refreshing={group.members.refreshing}
             onEndReached={this.loadMembers}
@@ -241,7 +239,7 @@ export default class GroupViewScreen extends Component {
   /**
    * Member menu on press
    */
-  memberMenuPress = (member) => {
+  memberMenuPress = member => {
     const group = this.props.groupView.group;
     const memberActions = [i18n.t('cancel')];
     const imOwner = group['is:owner'];
@@ -297,7 +295,7 @@ export default class GroupViewScreen extends Component {
   /**
    * Render user row
    */
-  renderRow = (row) => {
+  renderRow = row => {
     return (
       <GroupUser
         store={this.props.groupView}
@@ -310,7 +308,7 @@ export default class GroupViewScreen extends Component {
     );
   };
 
-  handleSelection = (option) => {
+  handleSelection = option => {
     let selected = this.state.memberActions[option];
 
     switch (selected) {
@@ -371,7 +369,7 @@ export default class GroupViewScreen extends Component {
 
     const memberActionSheet = this.state.memberActions ? (
       <ActionSheet
-        ref={(o) => (this.ActionSheet = o)}
+        ref={o => (this.ActionSheet = o)}
         title={truncate(this.state.member.name, { length: 25, separator: ' ' })}
         options={this.state.memberActions}
         onPress={this.handleSelection}

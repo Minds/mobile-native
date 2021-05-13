@@ -47,7 +47,7 @@ class ReportService {
   }
 
   getReasonString(report) {
-    return REASONS.filter((item) => {
+    return REASONS.filter(item => {
       if (item.hasMore && item.reasons) {
         return (
           item.value === report.reason_code &&
@@ -57,7 +57,7 @@ class ReportService {
       }
       return item.value === report.reason_code;
     })
-      .map((item) => {
+      .map(item => {
         if (item.hasMore && item.reasons) {
           return item.reasons[report.sub_reason_code - 1].label;
         }

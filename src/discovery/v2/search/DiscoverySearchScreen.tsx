@@ -13,25 +13,22 @@ import { RouteProp } from '@react-navigation/native';
 import { AppStackParamList } from '../../../navigation/NavigationTypes';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Icon } from 'react-native-elements';
-import isIphoneX from '../../../common/helpers/isIphoneX';
 import { DiscoverySearchList } from './DiscoverySearchList';
 import { useDiscoveryV2SearchStore } from './DiscoveryV2SearchContext';
 import TopbarTabbar from '../../../common/components/topbar-tabbar/TopbarTabbar';
 import { GOOGLE_PLAY_STORE } from '../../../config/Config';
 import DisabledStoreFeature from '../../../common/components/DisabledStoreFeature';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 interface Props {
   route: RouteProp<AppStackParamList, 'DiscoverySearch'>;
 }
 
-const paddingTop = {
-  paddingTop: isIphoneX ? 50 : 0,
-};
-
 export const DiscoverySearchHeader = observer(() => {
   const theme = ThemedStyles.style;
   const store = useDiscoveryV2SearchStore();
-
+  const insets = useSafeAreaInsets();
+  const paddingTop = { paddingTop: insets.top };
   const navigation = useNavigation<
     StackNavigationProp<AppStackParamList, 'DiscoverySearch'>
   >();
@@ -100,8 +97,13 @@ export const DiscoverySearchScreen = observer((props: Props) => {
   });
 
   useEffect(() => {
-    store.setQuery(props.route.params.query, props.route.params.plus);
-  }, [props.route.params.query, props.route.params.plus, store]);
+    const q = decodeURIComponent(props.route.params?.q || '');
+    const query = props.route.params.query || q;
+    if (props.route.params.f) {
+      store.setFilter(props.route.params.f);
+    }
+    store.setQuery(query, props.route.params.plus);
+  }, [store, props.route.params]);
 
   return (
     <View style={theme.flexContainer}>

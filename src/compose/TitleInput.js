@@ -13,7 +13,7 @@ import { observer } from 'mobx-react';
 export default observer(function (props) {
   const [open, setOpen] = useState(Boolean(props.store.title));
   const onPress = useCallback(() => {
-    setOpen((old) => {
+    setOpen(old => {
       if (old === true) {
         props.store.setTitle('');
       }

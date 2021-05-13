@@ -45,7 +45,7 @@ const PlusDiscoveryScreen = observer(() => {
         </Text>
         <TopbarTabbar
           current={store.activeTabId}
-          onChange={(tabId) => {
+          onChange={tabId => {
             store.setTabId(tabId as TDiscoveryV2Tabs);
           }}
           tabs={[

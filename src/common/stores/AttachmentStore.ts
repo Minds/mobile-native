@@ -77,12 +77,11 @@ export default class AttachmentStore {
       }
 
       // fix camera roll gif issue
-      if (media.type === 'image' && media.fileName) {
-        const extension = media.fileName.split('.').pop();
+      if (media.type === 'image/jpeg' && media.filename) {
+        const extension = media.filename.split('.').pop();
         if (extension && extension.toLowerCase() === 'gif') {
           media.type = 'image/gif';
-          const appleId = media.uri.substring(5, 41);
-          media.uri = `assets-library://asset/asset.GIF?id=${appleId}&ext=GIF`;
+          media.uri = `assets-library://asset/asset.GIF?id=${media.localIdentifier}&ext=GIF`;
         }
       }
     }
@@ -94,13 +93,9 @@ export default class AttachmentStore {
     this.height = media.height;
 
     try {
-      const uploadPromise = attachmentService.attachMedia(
-        media,
-        extra,
-        (pct) => {
-          this.setProgress(pct);
-        },
-      );
+      const uploadPromise = attachmentService.attachMedia(media, extra, pct => {
+        this.setProgress(pct);
+      });
 
       // we need to defer the set because a cenceled promise could set it to false
       setTimeout(() => this.setUploading(true), 0);

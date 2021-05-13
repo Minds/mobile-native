@@ -30,7 +30,7 @@ interface Props {
 /**
  * Key extractor
  */
-const keyExtractor = (item) => String(item.value);
+const keyExtractor = item => String(item.value);
 
 const createStore = () => ({
   other: [] as TDiscoveryTagsTag[],
@@ -42,7 +42,7 @@ const createStore = () => ({
   },
   createTag() {
     const selectedIndex = this.selected.findIndex(
-      (t) => t.value === this.inputValue,
+      t => t.value === this.inputValue,
     );
     if (selectedIndex < 0) {
       this.selected.push({ value: this.inputValue });
@@ -55,32 +55,32 @@ const createStore = () => ({
   },
   selectTag(tag) {
     // Queue for adding
-    const selectedIndex = this.selected.findIndex((t) => t.value === tag.value);
+    const selectedIndex = this.selected.findIndex(t => t.value === tag.value);
     if (selectedIndex < 0) {
       this.selected.push(tag);
     }
 
     // Remove from deselected
     const deselectedIndex = this.deselected.findIndex(
-      (t) => t.value === tag.value,
+      t => t.value === tag.value,
     );
     this.deselected.splice(deselectedIndex, 1);
 
     // Remove from other
-    const otherIndex = this.other.findIndex((t) => t.value === tag.value);
+    const otherIndex = this.other.findIndex(t => t.value === tag.value);
     this.other.splice(otherIndex, 1);
   },
   deselectTag(tag) {
     // Queue for deleting
     const deselectedIndex = this.deselected.findIndex(
-      (t) => t.value === tag.value,
+      t => t.value === tag.value,
     );
     if (deselectedIndex < 0) {
       this.deselected.push(tag);
     }
 
     // Remove from selected
-    const selectedIndex = this.selected.findIndex((t) => t.value === tag.value);
+    const selectedIndex = this.selected.findIndex(t => t.value === tag.value);
     this.selected.splice(selectedIndex, 1);
   },
 });
@@ -103,8 +103,7 @@ export const DiscoveryTagsManager = observer((props: Props) => {
   const ItemPartial = ({ item }) => {
     const tag = item;
 
-    const selected =
-      store.selected.findIndex((t) => t.value === tag.value) > -1;
+    const selected = store.selected.findIndex(t => t.value === tag.value) > -1;
 
     return (
       <MenuItem

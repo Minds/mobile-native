@@ -75,7 +75,7 @@ class MetadataService {
   /**
    * @var {function} entityMapper maps entities properties to metadata
    */
-  entityMapper = (entity) => ({
+  entityMapper = entity => ({
     position: entity._list ? entity._list.getIndex(entity) + 1 : 0,
     medium: entity.boosted ? 'featured-content' : 'feed',
     campaign: entity.boosted_guid ? entity.urn : '',

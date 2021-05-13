@@ -14,7 +14,7 @@ exports[`AnalyticsScreen component should render correctly 1`] = `
     Analytics
   </Text>
   <TopbarTabbar
-    current="tokens"
+    current="token"
     onChange={[Function]}
     tabs={
       Array [
@@ -23,7 +23,7 @@ exports[`AnalyticsScreen component should render correctly 1`] = `
           "title": "Traffic",
         },
         Object {
-          "id": "tokens",
+          "id": "token",
           "title": "Tokens",
         },
         Object {

@@ -97,7 +97,7 @@ export default class Activity extends Component<PropsType> {
 
     if (this.props.entity.__list && !this.props.isReminded) {
       const index = this.props.entity.__list.entities.findIndex(
-        (e) => e === this.props.entity,
+        e => e === this.props.entity,
       );
       navOpts.feed = this.props.entity.__list;
       navOpts.current = index;
@@ -150,7 +150,7 @@ export default class Activity extends Component<PropsType> {
   componentDidMount() {
     this.autoPlayDispose = reaction(
       () => this.props.entity.is_visible,
-      (visible) => {
+      visible => {
         const type = this.props.entity.custom_type || this.props.entity.subtype;
         if (type === 'video') {
           if (visible) {
@@ -268,7 +268,7 @@ export default class Activity extends Component<PropsType> {
               {this.showRemind()}
               {this.props.entity.remind_deleted && <DeletedRemind />}
               <MediaView
-                ref={(o) => {
+                ref={o => {
                   this.mediaView = o;
                 }}
                 entity={entity}
@@ -280,6 +280,7 @@ export default class Activity extends Component<PropsType> {
                 ? message
                 : undefined}
             </View>
+
             <ActivityMetrics entity={this.props.entity} />
             {this.showActions()}
             {this.renderScheduledMessage()}
@@ -323,7 +324,7 @@ export default class Activity extends Component<PropsType> {
   /**
    * Render a banner with a message bellow the activity
    */
-  renderYellowBanner = (message) => {
+  renderYellowBanner = message => {
     return (
       <View style={[styles.yellowBanner, CommonStyle.padding]}>
         <Text style={[styles.yellowBannerText, CommonStyle.paddingLeft]}>
@@ -426,7 +427,7 @@ export default class Activity extends Component<PropsType> {
             theme.borderPrimary,
           ]}>
           <Activity
-            ref={(r) => (this.remind = r)}
+            ref={r => (this.remind = r)}
             hideTabs={true}
             entity={remind_object}
             navigation={this.props.navigation}

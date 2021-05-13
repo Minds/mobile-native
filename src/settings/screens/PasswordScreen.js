@@ -128,7 +128,7 @@ export default observer(function () {
   });
 
   const getInput = useCallback(
-    (props) => {
+    props => {
       const wrapperStyle = [
         theme.paddingLeft3x,
         theme.paddingTop3x,

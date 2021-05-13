@@ -37,12 +37,12 @@ export default class ReportListStore {
   setList(list, replace = false) {
     if (list.appeals) {
       if (replace) {
-        list.appeals.forEach((appeal) => {
+        list.appeals.forEach(appeal => {
           appeal._list = this;
         });
         this.appeals = list.appeals;
       } else {
-        list.appeals.forEach((appeal) => {
+        list.appeals.forEach(appeal => {
           appeal._list = this;
           this.appeals.push(appeal);
         });
@@ -70,13 +70,13 @@ export default class ReportListStore {
   }
 
   remove(appeal) {
-    const index = this.appeals.findIndex((e) => e === appeal);
+    const index = this.appeals.findIndex(e => e === appeal);
     if (index < 0) return;
     this.removeIndex(index);
   }
 
   getIndex(appeal) {
-    return this.appeals.findIndex((e) => e === appeal);
+    return this.appeals.findIndex(e => e === appeal);
   }
 
   @action

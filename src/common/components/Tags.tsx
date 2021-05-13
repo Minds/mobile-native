@@ -98,7 +98,7 @@ export default class Tags extends PureComponent<PropsType> {
   /**
    * full url
    */
-  parseUrl = (str) => {
+  parseUrl = str => {
     const url = /(^|\b)(\b(?:https?|http|ftp):\/\/[-A-Z0-9à-œ+&@#\/%?=~_|!:,.;\(\)]*[-A-Z0-9à-œ+&@#\/%=~_|])/gim;
 
     return this.replaceRegular(str, url, (i, content) => {
@@ -118,7 +118,7 @@ export default class Tags extends PureComponent<PropsType> {
   /**
    * url .com .org .net
    */
-  parseShortUrl = (str) => {
+  parseShortUrl = str => {
     const url = /(^|\b)([-A-Z0-9à-œ+&@#\/%?=~_|!:,.;]+\.(?:com|org|net)\/[-A-Z0-9à-œ+&@#\/%=~_|\(\)]*)/gim;
 
     return this.replaceRegular(str, url, (i, content) => {
@@ -138,7 +138,7 @@ export default class Tags extends PureComponent<PropsType> {
   /**
    * url starting with www
    */
-  parseWwwUrl = (str) => {
+  parseWwwUrl = str => {
     const url = /(^|\b)(www\.[-A-Z0-9à-œ+&@#\/%?=~_|!:,.;]*[-A-Z0-9à-œ+&@#\/%=~_|\(\)]*)/gim;
 
     return this.replaceRegular(str, url, (i, content) => {
@@ -158,7 +158,7 @@ export default class Tags extends PureComponent<PropsType> {
   /**
    * #tags
    */
-  parseHash = (str) => {
+  parseHash = str => {
     return this.replaceRegular(str, hashRegex, (i, content) => {
       return (
         <Text
@@ -176,7 +176,7 @@ export default class Tags extends PureComponent<PropsType> {
   /**
    * @tags
    */
-  parseUser = (str) => {
+  parseUser = str => {
     const hash = /(^|\s|\B)@(\w*[a-zA-Z_]+\w*)/gim;
 
     return this.replaceRegular(str, hash, (i, content) => {
@@ -196,18 +196,18 @@ export default class Tags extends PureComponent<PropsType> {
   /**
    * Navigate to discovery
    */
-  navToDiscovery = (q) => {
+  navToDiscovery = q => {
     this.props.navigation.navigate('DiscoverySearch', { query: q });
   };
 
   /**
    * Navigate to discovery
    */
-  navToChannel = (q) => {
+  navToChannel = q => {
     this.props.navigation.push('Channel', { username: q });
   };
 
-  navToURL = (q) => {
+  navToURL = q => {
     openUrlService.open(q);
   };
 
@@ -218,7 +218,7 @@ export default class Tags extends PureComponent<PropsType> {
    */
   parseArrayOrString(children, fn) {
     if (Array.isArray(children)) {
-      return children.map((child) => {
+      return children.map(child => {
         if (typeof child === 'string') {
           return fn(child);
         } else {
@@ -248,6 +248,6 @@ export default class Tags extends PureComponent<PropsType> {
       result[i] = replace(this.index++, content);
     }
 
-    return result.filter((d) => d != '');
+    return result.filter(d => d != '');
   }
 }

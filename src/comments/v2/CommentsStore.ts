@@ -228,7 +228,7 @@ export default class CommentsStore {
   }
 
   @action
-  replySocket = (guid) => {
+  replySocket = guid => {
     for (let i = 0; i < this.comments.length; i++) {
       if (this.comments[i]._guid == guid) {
         this.comments[i].replies_count++;
@@ -326,9 +326,9 @@ export default class CommentsStore {
       const comments = CommentModel.createMany(response.comments);
 
       if (descending) {
-        comments.reverse().forEach((c) => this.comments.unshift(c));
+        comments.reverse().forEach(c => this.comments.unshift(c));
       } else {
-        comments.forEach((c) => this.comments.push(c));
+        comments.forEach(c => this.comments.push(c));
       }
     }
     this.reversed = response.reversed;
@@ -534,7 +534,7 @@ export default class CommentsStore {
   /**
    * On attached media
    */
-  onAttachedMedia = async (response) => {
+  onAttachedMedia = async response => {
     const attachment = this.attachment;
 
     try {
@@ -548,7 +548,7 @@ export default class CommentsStore {
   /**
    * On media type select
    */
-  selectMediaType = async (i) => {
+  selectMediaType = async i => {
     try {
       let response;
       switch (i) {
@@ -591,7 +591,7 @@ export default class CommentsStore {
    */
   @action
   commentToggleExplicit(guid) {
-    let index = this.comments.findIndex((x) => x.guid == guid);
+    let index = this.comments.findIndex(x => x.guid == guid);
     if (index >= 0) {
       let comment = this.comments[index];
       let value = !comment.mature;
@@ -603,7 +603,7 @@ export default class CommentsStore {
           }),
         )
         .catch(
-          action((err) => {
+          action(err => {
             comment.mature = !value;
             this.comments[index] = comment;
             logService.exception('[CommentsStore] commentToggleExplicit', err);
@@ -618,7 +618,7 @@ export default class CommentsStore {
    */
   @action
   async delete(guid) {
-    let index = this.comments.findIndex((x) => x.guid == guid);
+    let index = this.comments.findIndex(x => x.guid == guid);
     if (index >= 0) {
       await deleteComment(guid);
 

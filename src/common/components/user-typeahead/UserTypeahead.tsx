@@ -107,11 +107,11 @@ export default class UserTypeahead extends PureComponent {
     }
   };
 
-  query = debounce(async (query) => {
+  query = debounce(async query => {
     this._query(query);
   }, 300);
 
-  _query = async (query) => {
+  _query = async query => {
     try {
       this.setState({ query, users: await UserTypeaheadService.search(query) });
     } catch (e) {
@@ -120,7 +120,7 @@ export default class UserTypeahead extends PureComponent {
     }
   };
 
-  onSelect = (item) => {
+  onSelect = item => {
     this.props.onSelect(item);
   };
 
@@ -162,7 +162,7 @@ export default class UserTypeahead extends PureComponent {
           autoCapitalize="none"
           onChangeText={this.setText}
           returnKeyType="search"
-          ref={(textInput) => (this.textInput = textInput)}
+          ref={textInput => (this.textInput = textInput)}
           value={this.state.text}
         />
 
@@ -235,7 +235,7 @@ export default class UserTypeahead extends PureComponent {
     );
   };
 
-  keyExtractor = (item) => item.guid;
+  keyExtractor = item => item.guid;
 
   EmptyPartial = () => {
     return (

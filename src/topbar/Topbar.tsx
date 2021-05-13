@@ -58,7 +58,7 @@ export const Topbar = observer((props: PropsType) => {
   const theme = ThemedStyles.style;
   return (
     <SafeAreaInsetsContext.Consumer>
-      {(insets) => {
+      {insets => {
         const cleanTop = {
           paddingTop: insets && insets.top ? insets.top - 5 : 0,
         };

@@ -20,8 +20,6 @@ import gatheringService from '../common/services/gathering.service';
 import { observer } from 'mobx-react';
 import { DiscoveryV2Screen } from '../discovery/v2/DiscoveryV2Screen';
 import ComposeIcon from '../compose/ComposeIcon';
-import MessengerTabIcon from '../messenger/MessengerTabIcon';
-import MessengerScreen from '../messenger/MessengerScreen';
 import Topbar from '../topbar/Topbar';
 import { InternalStack } from '../navigation/NavigationStack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -29,6 +27,8 @@ import TopShadow from '../common/components/TopShadow';
 import { GOOGLE_PLAY_STORE } from '../config/Config';
 import i18n from '../common/services/i18n.service';
 import sessionService from '../common/services/session.service';
+import { useStores } from '../common/hooks/use-stores';
+import ChatTabIcon from '../chat/ChatTabIcon';
 
 const isIOS = Platform.OS === 'ios';
 
@@ -36,7 +36,7 @@ export type TabParamList = {
   Newsfeed: {};
   User: {};
   Discovery: {};
-  Messenger: {};
+  MessengerTab: {};
   Notifications: {};
   CaptureTab: {};
 };
@@ -72,6 +72,7 @@ const Discovery = GOOGLE_PLAY_STORE
 const TabBar = ({ state, descriptors, navigation }) => {
   const focusedOptions = descriptors[state.routes[state.index].key].options;
   const insets = useSafeAreaInsets();
+  const { chat } = useStores();
 
   if (focusedOptions.tabBarVisible === false) {
     return null;
@@ -105,6 +106,11 @@ const TabBar = ({ state, descriptors, navigation }) => {
             target: route.key,
             canPreventDefault: true,
           });
+
+          if (route.name === 'MessengerTab') {
+            chat.openChat();
+            return;
+          }
 
           if (!focused && !event.defaultPrevented) {
             navigation.navigate(route.name);
@@ -163,8 +169,8 @@ const Tabs = observer(function ({ navigation }) {
 
   const messenger = (
     <Tab.Screen
-      name="Messenger"
-      component={MessengerScreen}
+      name="MessengerTab"
+      component={() => null}
       options={{ tabBarTestID: 'Messenger tab button' }}
     />
   );
@@ -183,7 +189,7 @@ const Tabs = observer(function ({ navigation }) {
       component={() => <View />}
       options={{
         tabBarTestID: 'CaptureTabButton',
-        tabBarButton: (props) => (
+        tabBarButton: props => (
           <TouchableOpacity {...props} onPress={navToChannel} />
         ),
       }}
@@ -199,7 +205,7 @@ const Tabs = observer(function ({ navigation }) {
       <Topbar navigation={navigation} />
       <Tab.Navigator
         initialRouteName="Newsfeed"
-        tabBar={(props) => <TabBar {...props} />}
+        tabBar={props => <TabBar {...props} />}
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused }) => {
             const color = focused
@@ -209,8 +215,8 @@ const Tabs = observer(function ({ navigation }) {
               iconsize = 28;
 
             switch (route.name) {
-              case 'Messenger':
-                return <MessengerTabIcon color={color} />;
+              case 'MessengerTab':
+                return <ChatTabIcon color={color} />;
               case 'Newsfeed':
                 iconName = 'home';
                 iconsize = 28;
@@ -248,7 +254,7 @@ const Tabs = observer(function ({ navigation }) {
           component={InternalStack}
           options={{
             tabBarTestID: 'CaptureTabButton',
-            tabBarButton: (props) => (
+            tabBarButton: props => (
               <TouchableOpacity
                 {...props}
                 onPress={navToCapture}
@@ -276,9 +282,11 @@ const styles = StyleSheet.create({
   tabBar: {
     shadowColor: '#000',
     shadowOffset: { width: 0, height: -1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
-    paddingTop: 10,
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    paddingTop: 20,
+    paddingLeft: 20,
+    paddingRight: 20,
   },
 });
 

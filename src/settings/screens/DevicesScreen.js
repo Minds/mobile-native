@@ -1,81 +1,121 @@
-//@ts-nocheck
-import React, { useCallback, useState, useEffect } from 'react';
-import { View, Text } from 'react-native-animatable';
+import React from 'react';
+import { ScrollView, Text, View } from 'react-native';
+import { observer } from 'mobx-react';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import moment from 'moment-timezone';
+
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
-import Switch from 'react-native-switch-pro';
-import settingsService from '../SettingsService';
 import CenteredLoading from '../../common/components/CenteredLoading';
+import formatDate from '../../common/helpers/date';
 import Button from '../../common/components/Button';
-import authService from '../../auth/AuthService';
-import { Alert } from 'react-native';
+import useApiFetch from '../../common/hooks/useApiFetch';
+import apiService from '../../common/services/api.service';
 
-export default function () {
-  const CS = ThemedStyles.style;
+const options = {
+  retry: 0,
+};
 
-  const [openedSessions, setOpenedSessions] = useState();
-  const [loading, setLoading] = useState(true);
+export default observer(function DeviceScreen() {
+  const theme = ThemedStyles.style;
+  const inset = useSafeAreaInsets();
 
-  /**
-   * Get mature configuration
-   */
-  useEffect(() => {
-    async function getOpenedSessions() {
-      const { channel } = await settingsService.getSettings();
-      setOpenedSessions(channel.open_sessions);
-      setLoading(false);
-    }
-    getOpenedSessions();
-  }, [setOpenedSessions, setLoading]);
-
-  /**
-   * Save changes
-   */
-  const closeSessions = useCallback(async () => {
-    setLoading(true);
-    try {
-      await authService.logoutAll();
-    } catch (err) {
-      console.log('error trying logoutALl');
-    }
-    setLoading(false);
-  }, [setLoading]);
-
-  const component = loading ? (
-    <CenteredLoading />
-  ) : (
-    <View style={[CS.flexContainer, CS.backgroundPrimary, CS.paddingTop4x]}>
-      <View
-        style={[
-          styles.row,
-          CS.backgroundSecondary,
-          CS.paddingVertical3x,
-          CS.paddingHorizontal3x,
-          CS.borderPrimary,
-          CS.borderHair,
-        ]}>
-        <Text
-          style={[styles.text, CS.marginLeft, CS.colorSecondaryText, CS.fontM]}>
-          {i18n.t('settings.sessionsOpened', { amount: openedSessions })}
-        </Text>
-        <Button
-          onPress={closeSessions}
-          text={i18n.t('settings.closeSessions')}
-        />
-      </View>
-    </View>
+  const { result, loading, error, fetch } = useApiFetch(
+    'api/v3/sessions/common-sessions/all',
+    options,
+  );
+  const revokeSession = React.useCallback(
+    session => {
+      apiService
+        .delete(
+          `api/v3/sessions/common-sessions/session?id=${session.id}&platform=${session.platform}`,
+        )
+        .then(() => fetch());
+    },
+    [fetch],
   );
 
-  return component;
-}
+  const padding = {
+    paddingBottom: inset.bottom + 20,
+  };
+
+  return (
+    <ScrollView
+      style={[
+        theme.flexContainer,
+        theme.backgroundPrimary,
+        theme.paddingTop4x,
+        padding,
+      ]}>
+      {error && (
+        <Text style={[theme.fontL, theme.centered, theme.colorSecondaryText]}>
+          {i18n.t('sorry')} {i18n.t('cantLoad')}
+        </Text>
+      )}
+      {loading ? (
+        <CenteredLoading />
+      ) : (
+        <>
+          <Text
+            style={[
+              theme.colorSecondaryText,
+              theme.fontL,
+              theme.paddingHorizontal4x,
+              theme.marginBottom4x,
+            ]}>
+            {i18n.t('settings.sessionsOpened')}
+          </Text>
+          {result?.sessions.map((s, i) => (
+            <View
+              style={[
+                theme.backgroundSecondary,
+                theme.paddingHorizontal4x,
+                theme.paddingVertical2x,
+                theme.borderTop,
+                theme.borderPrimary,
+                i === result.sessions.length - 1 ? theme.borderBottom : null,
+              ]}>
+              <Button
+                onPress={() => revokeSession(s)}
+                text={i18n.t('revoke')}
+                xSmall={true}
+                containerStyle={styles.button}
+                color={ThemedStyles.getColor('alert')}
+                inverted
+              />
+              <Text style={[theme.fontL, theme.fontSemibold, styles.text]}>
+                {s.platform}
+              </Text>
+              <Text style={styles.text}>{s.ip}</Text>
+              <Text style={styles.text}>
+                Last accessed on{' '}
+                <Text style={[theme.fontSemibold, styles.text]}>
+                  {formatDate(
+                    s.last_active,
+                    moment(parseInt(s.last_active, 10) * 1000).isAfter(
+                      moment().subtract(2, 'days'),
+                    )
+                      ? 'friendly'
+                      : 'date',
+                  )}
+                </Text>
+              </Text>
+            </View>
+          ))}
+        </>
+      )}
+    </ScrollView>
+  );
+});
 
 const styles = {
-  row: {
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  button: {
+    position: 'absolute',
+    zIndex: 1000,
+    right: 20,
+    top: 15,
   },
   text: {
-    width: '50%',
+    paddingVertical: 3,
   },
 };

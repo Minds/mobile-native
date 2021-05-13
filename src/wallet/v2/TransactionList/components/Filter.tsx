@@ -20,7 +20,7 @@ type PropsType = {
 
 const Filter = observer((props: PropsType) => {
   const localStore = useLocalStore(
-    (p) => ({
+    p => ({
       showDatePicker: false,
       dateTo: true,
       setDate(value) {
@@ -72,7 +72,7 @@ const Filter = observer((props: PropsType) => {
     });
   }, [props.bottomStore]);
 
-  const getIcon = (transactionType) =>
+  const getIcon = transactionType =>
     props.store.filters.transactionType === transactionType
       ? checkIcon
       : undefined;
@@ -98,7 +98,7 @@ const Filter = observer((props: PropsType) => {
     },
   ];
 
-  const transactionsFilter = props.filters.map((r) => ({
+  const transactionsFilter = props.filters.map(r => ({
     onPress: () => localStore.setType(r[0]),
     title: r[1],
     icon: getIcon(r[0]),
@@ -108,7 +108,7 @@ const Filter = observer((props: PropsType) => {
   return (
     <ScrollView>
       <MenuSubtitle>{i18n.t('wallet.transactions.filterTypes')}</MenuSubtitle>
-      {transactionsFilter.map((v) => (
+      {transactionsFilter.map(v => (
         <MenuItem
           item={v}
           component={Platform.OS === 'android' ? TouchableOpacity : undefined}
@@ -116,7 +116,7 @@ const Filter = observer((props: PropsType) => {
       ))}
 
       <MenuSubtitle>{i18n.t('wallet.transactions.dateRange')}</MenuSubtitle>
-      {datesFilter.map((v) => (
+      {datesFilter.map(v => (
         <MenuItem
           item={v}
           component={Platform.OS === 'android' ? TouchableOpacity : undefined}

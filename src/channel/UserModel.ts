@@ -49,11 +49,13 @@ export default class UserModel extends BaseModel {
   is_mature?: boolean;
   dob?: string;
   liquidity_spot_opt_out?: boolean;
+  subscriber: boolean = false;
 
   tags: Array<string> = [];
   groupsCount: number = 0;
 
   @observable plus: boolean = false;
+  plus_method: 'usd' | 'tokens' = 'tokens';
 
   @observable disable_autoplay_videos?: boolean;
 
@@ -102,6 +104,7 @@ export default class UserModel extends BaseModel {
   @observable wire_rewards;
 
   @observable pro: boolean = false;
+  pro_method: 'usd' | 'tokens' = 'tokens';
 
   onchain_booster: number = 0;
 
@@ -109,7 +112,7 @@ export default class UserModel extends BaseModel {
    * Confirm email
    * @param {Object} params
    */
-  confirmEmail = async (params) => {
+  confirmEmail = async params => {
     // call any api endpoint with the param
     try {
       await apiService.get('api/v2/entities/', { urn: this.urn, ...params });
@@ -228,9 +231,10 @@ export default class UserModel extends BaseModel {
    * Get banner source
    */
   getBannerSource() {
-    if (this.carousels) {
+    if (this.carousels && this.carousels[0]) {
       return {
-        uri: this.carousels[0].src,
+        uri: this.carousels[0].src + this.icontime,
+        headers: api.buildHeaders(),
       };
     }
     return {

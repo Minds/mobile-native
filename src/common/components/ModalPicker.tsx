@@ -59,7 +59,7 @@ export default class ModalPicker extends PureComponent<ModalPickerProps> {
   /**
    * Update state on select
    */
-  select = (value) => {
+  select = value => {
     this.setState({ value });
   };
 

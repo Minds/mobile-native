@@ -35,7 +35,7 @@ export default class AbstractModel {
       return collection;
     }
 
-    arrayData.forEach((data) => {
+    arrayData.forEach(data => {
       const obj: InstanceType<T> = new this() as InstanceType<T>;
       obj.assign(data);
       collection.push(obj);

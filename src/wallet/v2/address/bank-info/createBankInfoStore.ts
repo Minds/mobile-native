@@ -1,4 +1,4 @@
-const createBankInfoStore = (wallet) => ({
+const createBankInfoStore = wallet => ({
   loading: false,
   stripeAgree: false,
   wallet: wallet,
@@ -48,7 +48,7 @@ const createBankInfoStore = (wallet) => ({
   },
   isCountry(countries: Array<string>) {
     return countries.some(
-      (country) => this.wallet.stripeDetails.country === country,
+      country => this.wallet.stripeDetails.country === country,
     );
   },
   setIban(iban: string) {

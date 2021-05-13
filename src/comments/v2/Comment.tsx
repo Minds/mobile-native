@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import * as entities from 'entities';
-import ReadMore from 'react-native-read-more-text';
+// import ReadMore from 'react-native-read-more-text';
 import { LinearGradient } from 'expo-linear-gradient';
 import { View, Text, StyleSheet } from 'react-native';
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
@@ -9,7 +9,6 @@ import { TouchableOpacity } from '@gorhom/bottom-sheet';
 import ReplyAction from '../ReplyAction';
 import CommentHeader from './CommentHeader';
 import type CommentModel from './CommentModel';
-import Tags from '../../common/components/Tags';
 import type CommentsStore from './CommentsStore';
 import CommentBottomMenu from './CommentBottomMenu';
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -19,6 +18,7 @@ import ThumbUpAction from '../../newsfeed/activity/actions/ThumbUpAction';
 import ThumbDownAction from '../../newsfeed/activity/actions/ThumbDownAction';
 import MediaView from '../../common/components/MediaView';
 import { LIGHT_THEME } from '../../styles/Colors';
+import ReadMore from '../../common/components/ReadMore';
 
 type PropsType = {
   comment: CommentModel;
@@ -48,7 +48,7 @@ export default observer(function Comment(props: PropsType) {
   const endColor = backgroundColor + 'FF';
 
   const renderRevealedFooter = React.useCallback(
-    (handlePress) => {
+    handlePress => {
       return (
         <TouchableOpacity onPress={handlePress}>
           <Text
@@ -67,7 +67,7 @@ export default observer(function Comment(props: PropsType) {
   );
 
   const renderTruncatedFooter = React.useCallback(
-    (handlePress) => {
+    handlePress => {
       return (
         <TouchableOpacity onPress={handlePress} style={styles.touchable}>
           <LinearGradient
@@ -128,15 +128,11 @@ export default observer(function Comment(props: PropsType) {
             {!!props.comment.description && (
               <ReadMore
                 numberOfLines={6}
+                navigation={navigation}
+                text={entities.decodeHTML(props.comment.description)}
                 renderTruncatedFooter={renderTruncatedFooter}
-                renderRevealedFooter={renderRevealedFooter}>
-                <Tags
-                  navigation={navigation}
-                  style={theme.fontL}
-                  selectable={true}>
-                  {entities.decodeHTML(props.comment.description)}
-                </Tags>
-              </ReadMore>
+                renderRevealedFooter={renderRevealedFooter}
+              />
             )}
             {props.comment.hasMedia() && (
               <View style={theme.paddingTop3x}>

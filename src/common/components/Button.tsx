@@ -75,7 +75,8 @@ export default class Button extends Component<ButtonPropsType> {
       active ? 'active' : 'primary_background',
     );
     let mainColor =
-      color || transparent ? '#FFFFFF' : ThemedStyles.getColor('primary_text');
+      color ||
+      (transparent ? '#FFFFFF' : ThemedStyles.getColor('primary_text'));
 
     if (inverted !== undefined) {
       background = mainColor;
@@ -123,7 +124,13 @@ export default class Button extends Component<ButtonPropsType> {
       />
     ) : (
       this.props.text && (
-        <Text style={[fontSize, { color: textColor || mainColor }, textStyle]}>
+        <Text
+          style={[
+            fontSize,
+            { color: textColor || mainColor },
+            textStyle,
+            { fontWeight: '500' },
+          ]}>
           {' '}
           {this.props.text}{' '}
         </Text>

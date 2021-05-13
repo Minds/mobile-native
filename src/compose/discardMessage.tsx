@@ -4,7 +4,7 @@ import ThemedStyles from '../styles/ThemedStyles';
 import { View, Text } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-const discardMessage = (confirm) => {
+const discardMessage = confirm => {
   const theme = ThemedStyles.style;
 
   showMessage({

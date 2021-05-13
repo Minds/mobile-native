@@ -39,7 +39,7 @@ export const DiscoverySearchList = observer((props: Props) => {
    * Render activity item
    */
   const ItemPartial = useCallback(
-    (row) => {
+    row => {
       let entity: Element;
 
       switch (row.item.type) {
@@ -49,7 +49,7 @@ export const DiscoverySearchList = observer((props: Props) => {
               row={row}
               navigation={props.navigation}
               onUserTap={(item: UserModel) =>
-                searchBarStore.user.searchBarItemTap(item)
+                searchBarStore.user?.searchBarItemTap(item)
               }
             />
           );

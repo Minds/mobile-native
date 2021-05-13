@@ -1,11 +1,11 @@
 import React from 'react';
-import { View, Text, Linking } from 'react-native';
+import { View, Text } from 'react-native';
 import { observer } from 'mobx-react';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { WalletStoreType } from '../createWalletStore';
 import MenuSubtitle from '../../../common/components/menus/MenuSubtitle';
 import MenuItem from '../../../common/components/menus/MenuItem';
-import { WalletScreenNavigationProp } from '../WalletScreen';
+import { WalletScreenNavigationProp } from '../../v3/WalletScreen';
 import Withdraw from './tokens/Withdraw';
 import { BottomOptionsStoreType } from '../../../common/components/BottomOptionPopup';
 import i18n from '../../../common/services/i18n.service';
