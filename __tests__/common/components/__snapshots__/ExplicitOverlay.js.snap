@@ -5,8 +5,15 @@ exports[`Explicit overlay component renders correctly 1`] = `
   pointerEvents="box-none"
   style={
     Array [
-      undefined,
-      undefined,
+      Object {
+        "alignContent": "center",
+        "alignItems": "center",
+        "alignSelf": "center",
+        "justifyContent": "center",
+      },
+      Object {
+        "backgroundColor": undefined,
+      },
       Object {
         "minHeight": 400,
       },
@@ -19,14 +26,27 @@ exports[`Explicit overlay component renders correctly 1`] = `
     name="lock"
     onPress={[Function]}
     size={55}
+    style={
+      Object {
+        "color": undefined,
+      }
+    }
   />
   <Text
     style={
       Array [
-        undefined,
-        undefined,
-        undefined,
-        undefined,
+        Object {
+          "color": undefined,
+        },
+        Object {
+          "paddingTop": 30,
+        },
+        Object {
+          "fontSize": 22,
+        },
+        Object {
+          "fontWeight": "700",
+        },
       ]
     }
   >
@@ -35,10 +55,18 @@ exports[`Explicit overlay component renders correctly 1`] = `
   <Text
     style={
       Array [
-        undefined,
-        undefined,
-        undefined,
-        undefined,
+        Object {
+          "color": undefined,
+        },
+        Object {
+          "paddingVertical": 10,
+        },
+        Object {
+          "marginBottom": 30,
+        },
+        Object {
+          "fontSize": 18,
+        },
       ]
     }
   />
@@ -46,18 +74,30 @@ exports[`Explicit overlay component renders correctly 1`] = `
     onPress={[Function]}
     style={
       Array [
-        undefined,
-        undefined,
-        undefined,
-        undefined,
+        Object {
+          "borderColor": undefined,
+        },
+        Object {
+          "borderWidth": 0.5,
+        },
+        Object {
+          "backgroundColor": undefined,
+        },
+        Object {
+          "margin": 20,
+        },
       ]
     }
   >
     <Text
       style={
         Array [
-          undefined,
-          undefined,
+          Object {
+            "padding": 10,
+          },
+          Object {
+            "fontSize": 16,
+          },
           undefined,
         ]
       }
@@ -73,8 +113,15 @@ exports[`Explicit overlay component should renders the etag 1`] = `
   pointerEvents="box-none"
   style={
     Array [
-      undefined,
-      undefined,
+      Object {
+        "alignContent": "center",
+        "alignItems": "center",
+        "alignSelf": "center",
+        "justifyContent": "center",
+      },
+      Object {
+        "backgroundColor": undefined,
+      },
       Object {
         "minHeight": 400,
       },
@@ -87,14 +134,27 @@ exports[`Explicit overlay component should renders the etag 1`] = `
     name="lock"
     onPress={[Function]}
     size={55}
+    style={
+      Object {
+        "color": undefined,
+      }
+    }
   />
   <Text
     style={
       Array [
-        undefined,
-        undefined,
-        undefined,
-        undefined,
+        Object {
+          "color": undefined,
+        },
+        Object {
+          "paddingTop": 30,
+        },
+        Object {
+          "fontSize": 22,
+        },
+        Object {
+          "fontWeight": "700",
+        },
       ]
     }
   >
@@ -103,10 +163,18 @@ exports[`Explicit overlay component should renders the etag 1`] = `
   <Text
     style={
       Array [
-        undefined,
-        undefined,
-        undefined,
-        undefined,
+        Object {
+          "color": undefined,
+        },
+        Object {
+          "paddingVertical": 10,
+        },
+        Object {
+          "marginBottom": 30,
+        },
+        Object {
+          "fontSize": 18,
+        },
       ]
     }
   />
@@ -114,18 +182,30 @@ exports[`Explicit overlay component should renders the etag 1`] = `
     onPress={[Function]}
     style={
       Array [
-        undefined,
-        undefined,
-        undefined,
-        undefined,
+        Object {
+          "borderColor": undefined,
+        },
+        Object {
+          "borderWidth": 0.5,
+        },
+        Object {
+          "backgroundColor": undefined,
+        },
+        Object {
+          "margin": 20,
+        },
       ]
     }
   >
     <Text
       style={
         Array [
-          undefined,
-          undefined,
+          Object {
+            "padding": 10,
+          },
+          Object {
+            "fontSize": 16,
+          },
           undefined,
         ]
       }

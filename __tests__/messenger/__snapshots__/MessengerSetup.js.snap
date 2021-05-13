@@ -1,7 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Messenger setup component should render correctly for setup 1`] = `
-<View>
+<View
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
   <View
     style={
       Array [
@@ -83,23 +89,42 @@ exports[`Messenger setup component should render correctly for setup 1`] = `
       </Text>
     </View>
   </View>
-  <View>
+  <View
+    style={
+      Object {
+        "padding": 20,
+      }
+    }
+  >
     <View
       onPress={[Function]}
       style={
         Array [
-          undefined,
-          undefined,
+          Object {
+            "flexDirection": "row",
+            "justifyContent": "center",
+          },
+          Object {
+            "alignContent": "center",
+            "alignItems": "center",
+            "alignSelf": "center",
+            "justifyContent": "center",
+          },
           Object {
             "backgroundColor": "rgba(0,0,0,0.40)",
             "borderColor": "rgba(255,255,255,0.60)",
             "borderRadius": 21,
+            "borderWidth": 1,
             "paddingHorizontal": 23,
             "paddingVertical": 10,
           },
           Array [
-            undefined,
-            undefined,
+            Object {
+              "width": "100%",
+            },
+            Object {
+              "marginTop": 30,
+            },
           ],
         ]
       }
@@ -131,7 +156,13 @@ exports[`Messenger setup component should render correctly for setup 1`] = `
 `;
 
 exports[`Messenger setup component should render correctly for unlock 1`] = `
-<View>
+<View
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
   <View
     style={
       Array [
@@ -214,23 +245,42 @@ exports[`Messenger setup component should render correctly for unlock 1`] = `
       </Text>
     </View>
   </View>
-  <View>
+  <View
+    style={
+      Object {
+        "padding": 20,
+      }
+    }
+  >
     <View
       onPress={[Function]}
       style={
         Array [
-          undefined,
-          undefined,
+          Object {
+            "flexDirection": "row",
+            "justifyContent": "center",
+          },
+          Object {
+            "alignContent": "center",
+            "alignItems": "center",
+            "alignSelf": "center",
+            "justifyContent": "center",
+          },
           Object {
             "backgroundColor": "rgba(0,0,0,0.40)",
             "borderColor": "rgba(255,255,255,0.60)",
             "borderRadius": 21,
+            "borderWidth": 1,
             "paddingHorizontal": 23,
             "paddingVertical": 10,
           },
           Array [
-            undefined,
-            undefined,
+            Object {
+              "width": "100%",
+            },
+            Object {
+              "marginTop": 30,
+            },
           ],
         ]
       }

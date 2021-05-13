@@ -13,9 +13,15 @@ exports[`DiscoveryTagsManager component should render correctly 1`] = `
             selectTextOnFocus={true}
             style={
               Array [
-                undefined,
-                undefined,
-                undefined,
+                Object {
+                  "backgroundColor": undefined,
+                },
+                Object {
+                  "marginRight": 20,
+                },
+                Object {
+                  "paddingLeft": 10,
+                },
               ]
             }
             testID="hashtagInput"

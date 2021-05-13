@@ -84,6 +84,7 @@ export default class BaseModel extends AbstractModel {
     const plainEntity = toJS(this);
 
     // remove references to the list
+    //@ts-ignore
     delete plainEntity.__list;
     delete plainEntity.listRef;
 

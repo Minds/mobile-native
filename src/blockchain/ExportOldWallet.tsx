@@ -69,7 +69,7 @@ export async function showMessageForPrivateKey() {
           {i18n.t('blockchain.exportLegacy1')}
         </Text>
         <Text
-          style={[theme.fontML, theme.marginTop4x, theme.textCenter]}
+          style={[theme.fontLM, theme.marginTop4x, theme.textCenter]}
           onPress={hideMessage}>
           {i18n.t('blockchain.exportLegacy2')}
         </Text>

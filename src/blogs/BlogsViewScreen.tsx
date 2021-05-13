@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 
 import { Icon } from 'react-native-elements';
-import FastImage from 'react-native-fast-image';
+import FastImage, { Source } from 'react-native-fast-image';
 import { ScrollView } from 'react-native-gesture-handler';
 import CommentBottomSheet from '../comments/v2/CommentBottomSheet';
 import CenteredLoading from '../common/components/CenteredLoading';
@@ -187,7 +187,7 @@ export default class BlogsViewScreen extends Component<PropsType> {
     return (
       <View style={[styles.screen, theme.backgroundSecondary]}>
         <SmartImage
-          source={image}
+          source={image as Source}
           resizeMode={FastImage.resizeMode.cover}
           style={styles.image}
         />
@@ -224,7 +224,7 @@ export default class BlogsViewScreen extends Component<PropsType> {
               style={[
                 theme.fontXS,
                 theme.paddingLeft,
-                theme.colorMedium,
+                theme.colorSecondaryText,
                 theme.paddingRight2x,
               ]}>
               {blog.getLicenseText()}
@@ -319,7 +319,7 @@ export default class BlogsViewScreen extends Component<PropsType> {
               style={ComponentsStyle.logo}
               source={require('../assets/logos/logo.png')}
             />
-            <Text style={[theme.fontL, theme.colorDanger]}>
+            <Text style={[theme.fontL, theme.colorAlert]}>
               {i18n.t('blogs.error')}
             </Text>
             <Text style={[theme.fontM]}>{i18n.t('activity.tryAgain')}</Text>

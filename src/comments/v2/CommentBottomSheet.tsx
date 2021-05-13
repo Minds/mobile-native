@@ -142,14 +142,14 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
         }
       }, 500);
     }
-  }, []);
+  }, [props.commentsStore, route.params.open]);
 
   const screenOptions = React.useMemo<StackNavigationOptions>(
     () => ({
       ...TransitionPresets.SlideFromRightIOS,
       headerShown: false,
       safeAreaInsets: { top: 0 },
-      headerBackground: ThemedStyles.style.backgroundSecondary,
+      // headerBackground: ThemedStyles.style.backgroundSecondary,
       cardStyle: ThemedStyles.style.backgroundSecondary,
     }),
     [],

@@ -39,6 +39,15 @@ type PropsType = {
 class NewsfeedScreen extends Component<PropsType> {
   disposeTabPress?: Function;
   portraitBar = React.createRef<any>();
+  emptyProps = {
+    ListEmptyComponent: (
+      <View>
+        <ActivityPlaceHolder />
+        <ActivityPlaceHolder />
+      </View>
+    ),
+  };
+
   /**
    * Nav to activity full screen
    */
@@ -118,16 +127,7 @@ class NewsfeedScreen extends Component<PropsType> {
     );
 
     // Show placeholder before the loading as an empty component.
-    const additionalProps = newsfeed.feedStore.loaded
-      ? {}
-      : {
-          ListEmptyComponent: (
-            <View>
-              <ActivityPlaceHolder />
-              <ActivityPlaceHolder />
-            </View>
-          ),
-        };
+    const additionalProps = newsfeed.feedStore.loaded ? null : this.emptyProps;
 
     return (
       <FeedList
