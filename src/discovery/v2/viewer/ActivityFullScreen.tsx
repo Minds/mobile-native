@@ -10,7 +10,7 @@ import * as entities from 'entities';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
 import MediaView from '../../../common/components/MediaView';
 import OwnerBlock from '../../../newsfeed/activity/OwnerBlock';
-import ThemedStyles from '../../../styles/ThemedStyles';
+import ThemedStyles, { useStyle } from '../../../styles/ThemedStyles';
 import ActivityActionSheet from '../../../newsfeed/activity/ActivityActionSheet';
 import i18n from '../../../common/services/i18n.service';
 
@@ -48,6 +48,44 @@ type PropsType = {
   entity: ActivityModel;
   showCommentsOnFocus?: boolean;
   forceAutoplay?: boolean;
+};
+
+const ActivityOwner = ({
+  entity,
+  navigation,
+  onTranslate,
+}: {
+  entity: ActivityModel;
+  navigation: any;
+  onTranslate: () => void;
+}) => {
+  const insets = useSafeAreaInsets();
+  const { current: cleanTop } = useRef({
+    paddingTop: insets.top - 10 || 2,
+  });
+  const containerStyle = useStyle('backgroundPrimary', styles.header, cleanTop);
+  return (
+    <OwnerBlock
+      entity={entity}
+      navigation={navigation}
+      containerStyle={containerStyle}
+      leftToolbar={
+        <FloatingBackButton
+          onPress={navigation.goBack}
+          style={backButtonStyle}
+        />
+      }
+      rightToolbar={
+        <View style={ThemedStyles.style.rowJustifyCenter}>
+          <ActivityActionSheet
+            entity={entity}
+            navigation={navigation}
+            onTranslate={onTranslate}
+          />
+        </View>
+      }
+    />
+  );
 };
 
 const ActivityFullScreen = observer((props: PropsType) => {
@@ -92,9 +130,6 @@ const ActivityFullScreen = observer((props: PropsType) => {
   const showText = !!entity.text || !!entity.title;
   const { current: cleanBottom } = useRef({
     paddingBottom: insets.bottom - 10,
-  });
-  const { current: cleanTop } = useRef({
-    paddingTop: insets.top - 10 || 2,
   });
 
   const onPressComment = useCallback(() => {
@@ -166,14 +201,15 @@ const ActivityFullScreen = observer((props: PropsType) => {
     : !hasMedia && !hasRemind && entity.text.length < TEXT_MEDIUM_THRESHOLD;
 
   const fontStyle = isMediumText
-    ? [theme.fontXXL, theme.fontMedium]
+    ? mediumFontStyle
     : isShortText
-    ? [theme.fontXXXL, theme.fontMedium]
+    ? shortTextStyle
     : theme.fontLM;
 
   const backgroundColor = ThemedStyles.getColor('secondary_background');
   const startColor = backgroundColor + '00';
   const endColor = backgroundColor + 'FF';
+  const gradientColors = useRef([startColor, endColor]).current;
 
   const showNSFW = entity.shouldBeBlured() && !entity.mature_visibility;
 
@@ -209,29 +245,6 @@ const ActivityFullScreen = observer((props: PropsType) => {
     <LockCmp entity={entity} navigation={navigation} />
   ) : null;
 
-  const ownerBlock = (
-    <OwnerBlock
-      entity={entity}
-      navigation={navigation}
-      containerStyle={[theme.backgroundPrimary, styles.header, cleanTop]}
-      leftToolbar={
-        <FloatingBackButton
-          onPress={navigation.goBack}
-          style={[theme.colorPrimaryText, styles.backButton]}
-        />
-      }
-      rightToolbar={
-        <View style={theme.rowJustifyCenter}>
-          <ActivityActionSheet
-            entity={entity}
-            navigation={navigation}
-            onTranslate={onTranslate}
-          />
-        </View>
-      }
-    />
-  );
-
   const shadowOpt = {
     width: window.width,
     height: 70 + (entity.remind_users ? 42 : 0),
@@ -242,24 +255,42 @@ const ActivityFullScreen = observer((props: PropsType) => {
     y: 0,
   };
 
-  const ownerBlockShadow = Platform.select({
-    ios: ownerBlock,
-    android: <BoxShadow setting={shadowOpt}>{ownerBlock}</BoxShadow>, // Android fallback for shadows
-  });
+  const ownerBlockShadow = React.useMemo(
+    () =>
+      Platform.select({
+        ios: (
+          <ActivityOwner
+            entity={entity}
+            navigation={navigation}
+            onTranslate={onTranslate}
+          />
+        ),
+        android: (
+          <BoxShadow setting={shadowOpt}>
+            <ActivityOwner
+              entity={entity}
+              navigation={navigation}
+              onTranslate={onTranslate}
+            />
+          </BoxShadow>
+        ), // Android fallback for shadows
+      }),
+    [entity, navigation, onTranslate, shadowOpt],
+  );
+
+  const containerStyle = useStyle(window, 'flexContainer', 'backgroundPrimary');
 
   return (
-    <View style={[window, theme.flexContainer, theme.backgroundPrimary]}>
+    <View style={containerStyle}>
       <View style={theme.flexContainer}>
         {ownerBlockShadow}
         <ScrollView
           style={theme.flexContainer}
           onLayout={store.onScrollViewSizeChange}
           onContentSizeChange={store.onContentSizeChange}
-          contentContainerStyle={[
-            store.contentFit ? theme.justifyCenter : null,
-            theme.fullWidth,
-            styles.content,
-          ]}>
+          contentContainerStyle={
+            store.contentFit ? contentFitStyle : contentNotFitStyle
+          }>
           {showNSFW ? (
             <ExplicitOverlay entity={entity} />
           ) : (
@@ -281,7 +312,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
               <TouchableOpacity
                 accessibilityLabel="touchableTextCopy"
                 onLongPress={copyText}
-                style={[theme.paddingHorizontal4x, theme.paddingVertical4x]}>
+                style={textCopyTouchableStyle}>
                 {showText && (
                   <>
                     <ExplicitText
@@ -300,13 +331,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
                 )}
               </TouchableOpacity>
               {hasRemind && (
-                <View
-                  style={[
-                    styles.remind,
-                    theme.margin2x,
-                    theme.borderHair,
-                    theme.borderBackgroundPrimary,
-                  ]}>
+                <View style={remindContainerStyle}>
                   <Activity
                     ref={remindRef}
                     hideTabs={true}
@@ -322,10 +347,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
           <ActivityMetrics entity={props.entity} />
         </ScrollView>
         {!store.contentFit && (
-          <LinearGradient
-            colors={[startColor, endColor]}
-            style={styles.linear}
-          />
+          <LinearGradient colors={gradientColors} style={styles.linear} />
         )}
       </View>
       <View style={cleanBottom}>
@@ -345,6 +367,10 @@ const ActivityFullScreen = observer((props: PropsType) => {
 });
 
 export default ActivityFullScreen;
+
+/**
+ * Styles
+ */
 const styles = StyleSheet.create({
   backButton: {
     position: undefined,
@@ -389,3 +415,30 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
 });
+
+const mediumFontStyle = ThemedStyles.combine('fontXXL', 'fontMedium');
+
+const textCopyTouchableStyle = ThemedStyles.combine(
+  'paddingHorizontal4x',
+  'paddingVertical4x',
+);
+const shortTextStyle = ThemedStyles.combine('fontXXXL', 'fontMedium');
+
+const backButtonStyle = ThemedStyles.combine(
+  'colorPrimaryText',
+  styles.backButton,
+);
+
+const contentFitStyle = ThemedStyles.combine(
+  'justifyCenter',
+  'fullWidth',
+  styles.content,
+);
+const contentNotFitStyle = ThemedStyles.combine('fullWidth', styles.content);
+
+const remindContainerStyle = ThemedStyles.combine(
+  styles.remind,
+  'margin2x',
+  'borderHair',
+  'borderBackgroundPrimary',
+);

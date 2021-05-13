@@ -181,7 +181,7 @@ const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
           valueExtractor={valueExtractor}
           keyExtractor={keyExtractor}>
           {show => (
-            <View style={theme.alignedCenterRow}>
+            <View>
               <TouchableOpacity
                 style={[theme.rowJustifyCenter, theme.alignCenter]}
                 onPress={() => show(timeSpanKey)}>
@@ -207,7 +207,7 @@ const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
               keyExtractor={keyExtractor}
               onItemSelect={_onFilterChange(filter.id)}>
               {show => (
-                <View style={theme.alignedCenterRow}>
+                <View>
                   <TouchableOpacity
                     style={[theme.rowJustifyCenter, theme.alignCenter]}
                     onPress={() => show(_getFilterKey(filter))}>

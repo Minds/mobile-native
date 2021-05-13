@@ -19,7 +19,7 @@ const discardMessage = confirm => {
           Discard this post?
         </Text>
         <Text
-          style={[theme.fontML, theme.marginTop4x, theme.textCenter]}
+          style={[theme.fontLM, theme.marginTop4x, theme.textCenter]}
           onPress={hideMessage}>
           If you discard you’ll lose this post
         </Text>

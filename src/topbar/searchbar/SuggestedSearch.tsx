@@ -12,14 +12,12 @@ type PropsType = {
 };
 
 const SuggestedSearch = observer(({ localStore, renderUser }: PropsType) => {
-  const theme = ThemedStyles.style;
-
   if (localStore.suggested.length === 0) {
     if (localStore.loading) {
       return <CenteredLoading />;
     } else {
       return (
-        <View style={theme.flexContainerStretch}>
+        <View>
           <FindInDiscoveryButton localStore={localStore} />
         </View>
       );

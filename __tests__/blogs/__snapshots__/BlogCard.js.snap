@@ -24,7 +24,9 @@ exports[`blog card component should renders correctly 1`] = `
               "color": undefined,
               "fontSize": 28,
             },
-            undefined,
+            Object {
+              "color": undefined,
+            },
             Object {
               "fontFamily": "Material Icons",
               "fontStyle": "normal",
@@ -169,6 +171,11 @@ exports[`blog card component should renders correctly 1`] = `
   </View>
   <View
     onPress={[Function]}
+    style={
+      Object {
+        "backgroundColor": undefined,
+      }
+    }
   >
     <View
       style={

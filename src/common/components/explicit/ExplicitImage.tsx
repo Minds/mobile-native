@@ -1,20 +1,16 @@
-//@ts-nocheck
 import { observer } from 'mobx-react';
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import type { FastImageProperties, Source } from 'react-native-fast-image';
-import { CommonStyle } from '../../../styles/Common';
+import type { FastImageProps, Source } from 'react-native-fast-image';
+import type ActivityModel from '../../../newsfeed/ActivityModel';
 import ThemedStyles from '../../../styles/ThemedStyles';
-import type BaseModel from '../../BaseModel';
 
 import SmartImage from '../SmartImage';
 
-interface PropsType extends FastImageProperties {
-  onLoadEnd: () => void;
+interface PropsType extends FastImageProps {
   source: Source;
   thumbnail?: Source;
-  onError: (error: any) => void;
-  entity?: BaseModel;
+  entity?: ActivityModel;
   ignoreDataSaver?: boolean;
 }
 
@@ -28,21 +24,13 @@ export default class ExplicitImage extends Component<
   };
 
   render() {
-    const theme = ThemedStyles.style;
     // do not show image if it is mature
     if (
+      this.props.entity &&
       this.props.entity.shouldBeBlured() &&
       !this.props.entity.mature_visibility
     ) {
-      return (
-        <View
-          style={[
-            theme.positionAbsolute,
-            this.props.imageStyle,
-            CommonStyle.blackOverlay,
-          ]}
-        />
-      );
+      return <View style={overlayStyle} />;
     }
 
     if (
@@ -52,16 +40,19 @@ export default class ExplicitImage extends Component<
     ) {
       return <View />;
     }
-
     return (
       <SmartImage
         {...this.props}
         ignoreDataSaver={
           this.props.ignoreDataSaver ||
-          (this.props.entity && this.props.entity.paywall)
+          Boolean(this.props.entity && this.props.entity.paywall)
         }
-        style={[theme.positionAbsolute, this.props.style]}
       />
     );
   }
 }
+
+const overlayStyle = ThemedStyles.combine(
+  'positionAbsolute',
+  'backgroundBlack',
+);

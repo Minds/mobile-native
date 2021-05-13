@@ -19,15 +19,13 @@
 	<key>CFBundleShortVersionString</key>
 	<string>4.13.0</string>
 	<key>CFBundleVersion</key>
-	<string>201907230270</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>HostAppBundleIdentifier</key>
 	<string>com.minds.mobile</string>
 	<key>HostAppURLScheme</key>
 	<string>minds://</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
 		<key>NSExceptionDomains</key>
 		<dict>
 			<key>localhost</key>

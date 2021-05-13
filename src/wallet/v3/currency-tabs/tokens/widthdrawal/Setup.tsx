@@ -39,7 +39,7 @@ const Setup = ({ user, walletStore, navigation }) => {
         <Text
           style={[
             theme.listItemTitle,
-            user.rewards ? theme.strikethrough : '',
+            user.rewards ? theme.strikethrough : null,
           ]}>
           {i18n.t('wallet.phoneVerification')}
         </Text>
@@ -53,7 +53,7 @@ const Setup = ({ user, walletStore, navigation }) => {
     {
       title: (
         <Text
-          style={[theme.listItemTitle, user.plus ? theme.strikethrough : '']}>
+          style={[theme.listItemTitle, user.plus ? theme.strikethrough : null]}>
           {i18n.t('monetize.plusHeader')}
         </Text>
       ),
