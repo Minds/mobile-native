@@ -2,13 +2,7 @@ import React, { Component } from 'react';
 import { reaction } from 'mobx';
 import { observer } from 'mobx-react';
 
-import {
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-  LayoutChangeEvent,
-} from 'react-native';
+import { Text, StyleSheet, View, LayoutChangeEvent } from 'react-native';
 import Clipboard from '@react-native-clipboard/clipboard';
 import * as entities from 'entities';
 
@@ -33,6 +27,7 @@ import sessionService from '../../common/services/session.service';
 import NavigationService from '../../navigation/NavigationService';
 import { showNotification } from '../../../AppMessages';
 import DeletedRemind from './DeletedRemind';
+import { BaseButton } from 'react-native-gesture-handler';
 
 const FONT_THRESHOLD = 300;
 
@@ -246,38 +241,38 @@ export default class Activity extends Component<PropsType> {
         {showNSFW ? (
           <ExplicitOverlay entity={this.props.entity} />
         ) : (
-          <TouchableOpacity
-            delayPressIn={60}
-            activeOpacity={0.8}
-            onPress={this.navToActivity}
-            onLongPress={this.copyText}
-            onLayout={this.onLayout}
-            testID="ActivityView">
-            <View style={styles.bodyContainer}>
-              {lock}
-              {/* Shows ontop only for rich embed or reminds */}
-              {this.props.entity.perma_url || this.props.entity.remind_object
-                ? message
-                : undefined}
-              {this.showRemind()}
-              {this.props.entity.remind_deleted && <DeletedRemind />}
-              <MediaView
-                ref={this.setMediaViewRef}
-                entity={entity}
-                onPress={this.navToActivity}
-                imageStyle={theme.flexContainer}
-                autoHeight={this.props.autoHeight}
-              />
-              {!(this.props.entity.perma_url || this.props.entity.remind_object)
-                ? message
-                : undefined}
-            </View>
+          <View onLayout={this.onLayout}>
+            <BaseButton
+              onPress={this.navToActivity}
+              enabled={!this.props.isReminded}>
+              <View style={styles.bodyContainer}>
+                {lock}
+                {/* Shows ontop only for rich embed or reminds */}
+                {this.props.entity.perma_url || this.props.entity.remind_object
+                  ? message
+                  : undefined}
+                {this.showRemind()}
+                {this.props.entity.remind_deleted && <DeletedRemind />}
+                <MediaView
+                  ref={this.setMediaViewRef}
+                  entity={entity}
+                  onPress={this.navToActivity}
+                  imageStyle={theme.flexContainer}
+                  autoHeight={this.props.autoHeight}
+                />
+                {!(
+                  this.props.entity.perma_url || this.props.entity.remind_object
+                )
+                  ? message
+                  : undefined}
+              </View>
 
-            <ActivityMetrics entity={this.props.entity} />
-            {this.showActions()}
-            {this.renderScheduledMessage()}
-            {this.renderPendingMessage()}
-          </TouchableOpacity>
+              <ActivityMetrics entity={this.props.entity} />
+              {this.showActions()}
+              {this.renderScheduledMessage()}
+              {this.renderPendingMessage()}
+            </BaseButton>
+          </View>
         )}
       </View>
     );

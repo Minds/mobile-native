@@ -2,7 +2,10 @@ import React, { useMemo } from 'react';
 import { View, Text, Image, StyleSheet, Platform } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import {
+  BorderlessButton,
+  TouchableOpacity,
+} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import IconFo from 'react-native-vector-icons/Feather';
 import IconFa from 'react-native-vector-icons/FontAwesome5';
@@ -172,7 +175,7 @@ export default function Drawer(props) {
           {optionsList.map((l, i) =>
             !l ? null : (
               <ListItem
-                Component={TouchableOpacity}
+                Component={BorderlessButton}
                 key={i}
                 title={l.name}
                 titleStyle={menuTitleStyle}

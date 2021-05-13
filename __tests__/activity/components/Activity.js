@@ -64,8 +64,6 @@ describe('Activity component', () => {
     expect(screen.find(Actions)).toHaveLength(1);
     expect(screen.find(OwnerBlock)).toHaveLength(1);
     expect(screen.find(ExplicitText)).toHaveLength(1);
-    // expect(screen.find(ActivityMetrics)).toHaveLength(1);
-    expect(screen.find(TouchableOpacity)).toHaveLength(1);
   });
 
   // it('should navToActivity on press', () => {
