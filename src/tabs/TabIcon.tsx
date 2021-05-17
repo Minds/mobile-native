@@ -1,5 +1,5 @@
 //@ts-nocheck
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
@@ -18,7 +18,7 @@ interface PropsType {
   name: string;
 }
 
-export default class TabIcon extends Component<PropsType> {
+export default class TabIcon extends PureComponent<PropsType> {
   render() {
     const theme = ThemedStyles.style;
     const { name, size, color } = this.props;
@@ -29,7 +29,8 @@ export default class TabIcon extends Component<PropsType> {
         return (
           <EvilIcons
             name={name}
-            style={[color ? { color: color } : theme.colorIcon, styles.icon]}
+            color={color}
+            style={styles.icon}
             size={size ? size : 24}
           />
         );
@@ -37,7 +38,8 @@ export default class TabIcon extends Component<PropsType> {
         return (
           <Entypo
             name={name}
-            style={[color ? { color: color } : theme.colorIcon, styles.icon]}
+            color={color}
+            style={styles.icon}
             size={size ? size : 24}
           />
         );
@@ -46,7 +48,8 @@ export default class TabIcon extends Component<PropsType> {
         icon = (
           <IonIcon
             name={name}
-            style={[color ? { color: color } : theme.colorIcon, styles.icon]}
+            color={color}
+            style={styles.icon}
             size={size ? size : 24}
           />
         );
@@ -55,7 +58,8 @@ export default class TabIcon extends Component<PropsType> {
         icon = (
           <Fontisto
             name={name}
-            style={[color ? { color: color } : theme.colorIcon, styles.icon]}
+            color={color}
+            style={styles.icon}
             size={size ? size : 24}
           />
         );

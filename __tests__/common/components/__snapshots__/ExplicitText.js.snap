@@ -3,19 +3,18 @@
 exports[`Explicit text component renders correctly 1`] = `
 <View
   style={
-    Array [
-      Object {
-        "flex": 1,
-      },
-      null,
-    ]
+    Object {
+      "flex": 1,
+    }
   }
 >
   <Tags
     style={
       Array [
         undefined,
-        undefined,
+        Object {
+          "marginBottom": 5,
+        },
         null,
       ]
     }

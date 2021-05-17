@@ -3,13 +3,12 @@ import { observer, useLocalStore } from 'mobx-react';
 import React, { useEffect } from 'react';
 import {
   Image,
-  ImageURISource,
   Platform,
   StyleSheet,
   TouchableOpacity,
   View,
 } from 'react-native';
-import FastImage, { ResizeMode } from 'react-native-fast-image';
+import FastImage, { ResizeMode, Source } from 'react-native-fast-image';
 import ProgressCircle from 'react-native-progress/CircleSnail';
 import Animated from 'react-native-reanimated';
 import { mix, useTimingTransition } from 'react-native-redash';
@@ -20,12 +19,12 @@ import connectivityService from '../services/connectivity.service';
 import RetryableImage from './RetryableImage';
 
 interface SmartImageProps {
-  thumbnail?: ImageURISource;
+  thumbnail?: Source;
   ignoreDataSaver?: boolean;
   onError?: (e: any) => void;
   size?: number;
   style?: any;
-  source: ImageURISource;
+  source: Source;
   onLoadEnd?: Function;
   resizeMode?: ResizeMode;
   withoutDownloadButton?: boolean;
@@ -58,7 +57,7 @@ export default observer(function (props: SmartImageProps) {
     } catch (e) {
       console.error(e);
     }
-  }, []);
+  }, [store]);
 
   useEffect(
     () =>
@@ -108,7 +107,7 @@ export default observer(function (props: SmartImageProps) {
             key={`thumbnail:${store.retries}`}
             blurRadius={props.thumbBlurRadius || defaultBlur}
             style={props.style}
-            source={props.thumbnail}
+            source={props.thumbnail as any}
           />
         )
       }

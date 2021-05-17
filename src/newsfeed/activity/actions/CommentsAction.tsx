@@ -13,6 +13,7 @@ import type ActivityModel from '../../../newsfeed/ActivityModel';
 import type BlogModel from '../../../blogs/BlogModel';
 import { useRoute } from '@react-navigation/native';
 import { ActivityRouteProp } from '../../ActivityScreen';
+import { actionsContainerStyle } from './styles';
 
 // prevent double tap in touchable
 const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
@@ -63,12 +64,7 @@ const CommentsAction = observer((props: PropsType) => {
 
   return (
     <TouchableOpacityCustom
-      style={[
-        theme.rowJustifyCenter,
-        theme.paddingHorizontal3x,
-        theme.paddingVertical4x,
-        theme.alignCenter,
-      ]}
+      style={actionsContainerStyle}
       onPress={openComments}
       testID={props.testID}>
       <Icon

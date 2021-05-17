@@ -84,7 +84,7 @@ class NotificationsStore {
   };
 
   persist() {
-    const data = toJS(this.list.entities);
+    const data: any = toJS(this.list.entities);
 
     data.forEach(n => delete n._list);
 

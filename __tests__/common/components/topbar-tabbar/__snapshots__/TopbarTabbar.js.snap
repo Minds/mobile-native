@@ -4,10 +4,19 @@ exports[`renders correctly 1`] = `
 <View
   style={
     Array [
-      undefined,
-      undefined,
-      undefined,
-      undefined,
+      Object {
+        "flexDirection": "row",
+        "justifyContent": "flex-start",
+      },
+      Object {
+        "borderBottomWidth": 1,
+      },
+      Object {
+        "borderColor": undefined,
+      },
+      Object {
+        "paddingHorizontal": 10,
+      },
       undefined,
     ]
   }
@@ -17,20 +26,32 @@ exports[`renders correctly 1`] = `
     style={
       Array [
         Array [
-          undefined,
-          undefined,
-          undefined,
+          Object {
+            "paddingVertical": 10,
+          },
+          Object {
+            "marginHorizontal": 10,
+          },
+          Object {
+            "borderBottomWidth": 4,
+          },
         ],
         undefined,
-        undefined,
+        Object {
+          "borderColor": "transparent",
+        },
       ]
     }
   >
     <Text
       style={
         Array [
-          undefined,
-          undefined,
+          Object {
+            "fontSize": 16,
+          },
+          Object {
+            "color": undefined,
+          },
           undefined,
         ]
       }
@@ -40,8 +61,12 @@ exports[`renders correctly 1`] = `
     <Text
       style={
         Array [
-          undefined,
-          undefined,
+          Object {
+            "fontSize": 16,
+          },
+          Object {
+            "color": undefined,
+          },
           Object {
             "paddingVertical": 2,
           },
@@ -57,20 +82,32 @@ exports[`renders correctly 1`] = `
     style={
       Array [
         Array [
-          undefined,
-          undefined,
-          undefined,
+          Object {
+            "paddingVertical": 10,
+          },
+          Object {
+            "marginHorizontal": 10,
+          },
+          Object {
+            "borderBottomWidth": 4,
+          },
         ],
         undefined,
-        undefined,
+        Object {
+          "borderColor": "transparent",
+        },
       ]
     }
   >
     <Text
       style={
         Array [
-          undefined,
-          undefined,
+          Object {
+            "fontSize": 16,
+          },
+          Object {
+            "color": undefined,
+          },
           undefined,
         ]
       }
@@ -80,8 +117,12 @@ exports[`renders correctly 1`] = `
     <Text
       style={
         Array [
-          undefined,
-          undefined,
+          Object {
+            "fontSize": 16,
+          },
+          Object {
+            "color": undefined,
+          },
           Object {
             "paddingVertical": 2,
           },
@@ -97,20 +138,32 @@ exports[`renders correctly 1`] = `
     style={
       Array [
         Array [
-          undefined,
-          undefined,
-          undefined,
+          Object {
+            "paddingVertical": 10,
+          },
+          Object {
+            "marginHorizontal": 10,
+          },
+          Object {
+            "borderBottomWidth": 4,
+          },
         ],
         undefined,
-        undefined,
+        Object {
+          "borderColor": "transparent",
+        },
       ]
     }
   >
     <Text
       style={
         Array [
-          undefined,
-          undefined,
+          Object {
+            "fontSize": 16,
+          },
+          Object {
+            "color": undefined,
+          },
           undefined,
         ]
       }
@@ -120,8 +173,12 @@ exports[`renders correctly 1`] = `
     <Text
       style={
         Array [
-          undefined,
-          undefined,
+          Object {
+            "fontSize": 16,
+          },
+          Object {
+            "color": undefined,
+          },
           Object {
             "paddingVertical": 2,
           },
@@ -137,20 +194,32 @@ exports[`renders correctly 1`] = `
     style={
       Array [
         Array [
-          undefined,
-          undefined,
-          undefined,
+          Object {
+            "paddingVertical": 10,
+          },
+          Object {
+            "marginHorizontal": 10,
+          },
+          Object {
+            "borderBottomWidth": 4,
+          },
         ],
         undefined,
-        undefined,
+        Object {
+          "borderColor": "transparent",
+        },
       ]
     }
   >
     <Text
       style={
         Array [
-          undefined,
-          undefined,
+          Object {
+            "fontSize": 16,
+          },
+          Object {
+            "color": undefined,
+          },
           undefined,
         ]
       }
@@ -160,8 +229,12 @@ exports[`renders correctly 1`] = `
     <Text
       style={
         Array [
-          undefined,
-          undefined,
+          Object {
+            "fontSize": 16,
+          },
+          Object {
+            "color": undefined,
+          },
           Object {
             "paddingVertical": 2,
           },

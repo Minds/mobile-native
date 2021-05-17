@@ -33,6 +33,14 @@ export default class GroupHeader extends Component {
     openingGathering: false,
   };
 
+  constructor(props) {
+    super(props);
+    this.avatarStyle = ThemedStyles.combine(
+      props.styles.avatar,
+      'borderBackgroundPrimary',
+    );
+  }
+
   componentDidMount() {
     const group = this.props.store.group;
     this.props.groupsBar.markAsRead(group, 'activity');
@@ -292,9 +300,9 @@ export default class GroupHeader extends Component {
    * Render Header
    */
   render() {
-    const theme = ThemedStyles.style;
     const group = this.props.store.group;
     const styles = this.props.styles;
+
     const avatar = { uri: this.getAvatar() };
     const iurl = { uri: this.getBannerFromGroup() };
     const actionSheet = group['is:owner'] ? this.getActionSheet() : null;
@@ -320,22 +328,14 @@ export default class GroupHeader extends Component {
               <Icon
                 name="share"
                 size={26}
-                style={[
-                  theme.paddingRight,
-                  theme.marginRight,
-                  theme.colorSecondaryText,
-                ]}
+                style={iconStyle}
                 onPress={this.share}
               />
               {!this.props.store.group.conversationDisabled && (
                 <Icon
                   name="chat-bubble"
                   size={26}
-                  style={[
-                    theme.paddingRight,
-                    theme.marginRight,
-                    theme.colorSecondaryText,
-                  ]}
+                  style={iconStyle}
                   onPress={this.props.onPressComment}
                 />
               )}
@@ -346,10 +346,7 @@ export default class GroupHeader extends Component {
           {actionSheet}
         </View>
         <View style={stylesheet.avatarContainer}>
-          <Image
-            source={avatar}
-            style={[styles.avatar, theme.borderBackgroundPrimary]}
-          />
+          <Image source={avatar} style={this.avatarStyle} />
         </View>
         {this.renderToolbar()}
       </View>
@@ -379,3 +376,9 @@ const stylesheet = StyleSheet.create({
     position: 'absolute',
   },
 });
+
+const iconStyle = ThemedStyles.combine(
+  'paddingRight',
+  'marginRight',
+  'colorSecondaryText',
+);

@@ -61,7 +61,8 @@ export default class Lock extends PureComponent<PropsType> {
               iconStyle={iconStyle}
               color="#4caf50"
             />
-            <Text style={[CommonStyle.fontM, ThemedStyles.style.colorPrimary]}>
+            <Text
+              style={[CommonStyle.fontM, ThemedStyles.style.colorPrimaryText]}>
               {i18n.t('locked')}
             </Text>
           </View>

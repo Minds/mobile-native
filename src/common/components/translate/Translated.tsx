@@ -40,7 +40,7 @@ const Translated = observer(
             theme.paddingLeft2x,
             theme.marginTop2x,
             theme.borderLeft2x,
-            theme.borderGreyed,
+            theme.borderPrimary,
           ]}>
           {data.map(mappingCallback)}
         </View>
@@ -52,7 +52,7 @@ const Translated = observer(
             size={14}
             iconStyle={styles.icon}
           />
-          <Text style={[theme.paddingLeft, theme.colorDarkGreyed]}>
+          <Text style={[theme.paddingLeft, theme.colorSecondaryText]}>
             {i18n.t('translate.from')}{' '}
             <Text style={theme.bold}>{translateStore.translatedFrom}</Text>
           </Text>

@@ -7,10 +7,11 @@ import ThemedStyles from '../styles/ThemedStyles';
 import excerpt from '../common/helpers/excerpt';
 import type { PortraitBarItem } from './createPortraitStore';
 import PressableScale from '../common/components/PressableScale';
+import navigationService from '../navigation/NavigationService';
 
 type PropsType = {
   item: PortraitBarItem;
-  onPress: () => void;
+  index: number;
 };
 
 /**
@@ -18,25 +19,25 @@ type PropsType = {
  * @param props Props
  */
 export default observer(function PortraitContentBarItem(props: PropsType) {
-  const theme = ThemedStyles.style;
+  const onPress = React.useCallback(() => {
+    navigationService.push('ActivityFullScreenNav', {
+      screen: 'PortraitViewerScreen',
+      params: {
+        index: props.index,
+      },
+    });
+  }, [props.index]);
+
   return (
-    <View
-      style={[
-        theme.columnAlignCenter,
-        styles.container,
-        theme.backgroundTransparent,
-        theme.centered,
-      ]}>
-      <PressableScale onPress={props.onPress} activeOpacity={0.5}>
+    <View style={containerStyle}>
+      <PressableScale onPress={onPress} activeOpacity={0.5}>
         <FastImage
           source={props.item.user.getAvatarSource()}
           style={styles.avatar}
         />
         {props.item.unseen ? <View style={styles.unseen} /> : null}
       </PressableScale>
-      <Text style={[theme.fontM, styles.text, theme.colorSecondaryText]}>
-        {excerpt(props.item.user.username, 10)}
-      </Text>
+      <Text style={textStyle}>{excerpt(props.item.user.username, 10)}</Text>
     </View>
   );
 });
@@ -66,3 +67,16 @@ const styles = StyleSheet.create({
     borderRadius: 27.5,
   },
 });
+
+const textStyle = ThemedStyles.combine(
+  'fontM',
+  styles.text,
+  'colorSecondaryText',
+);
+
+const containerStyle = ThemedStyles.combine(
+  'columnAlignCenter',
+  styles.container,
+  'backgroundTransparent',
+  'centered',
+);

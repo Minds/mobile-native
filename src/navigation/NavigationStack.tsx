@@ -9,7 +9,7 @@ import {
   createDrawerNavigator,
   DrawerNavigationOptions,
 } from '@react-navigation/drawer';
-import { Platform, StatusBar, View } from 'react-native';
+import { Dimensions, Platform, StatusBar, View } from 'react-native';
 import {
   createStackNavigator,
   StackNavigationOptions,
@@ -29,16 +29,13 @@ import ConversationScreen from '../messenger/ConversationScreen';
 import GroupsListScreen from '../groups/GroupsListScreen';
 import GroupViewScreen from '../groups/GroupViewScreen';
 import BoostConsoleScreen from '../boost/BoostConsoleScreen';
-import BlogsListScreen from '../blogs/BlogsListScreen';
 import BlogsViewScreen from '../blogs/BlogsViewScreen';
 import FabScreenV2 from '../wire/v2/FabScreen';
 import ViewImageScreen from '../media/ViewImageScreen';
 import ReportScreen from '../report/ReportScreen';
-import NotSupportedScreen from '../static-views/NotSupportedScreen';
 // import OnboardingScreen from '../onboarding/OnboardingScreen';
 import UpdatingScreen from '../update/UpdateScreen';
 import { DiscoverySearchScreen } from '../discovery/v2/search/DiscoverySearchScreen';
-// import Gathering from '../gathering/Gathering';
 import EmailConfirmationScreen from '../onboarding/EmailConfirmationScreen';
 import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
@@ -295,6 +292,12 @@ export const InternalStack = () => {
   );
 };
 
+const gestureHandlerProps = {
+  hitSlop: { left: 0, width: Dimensions.get('window').width },
+  //@ts-ignore
+  waitFor: [portraitBarRef, topBarButtonTabBarRef],
+};
+
 const MainScreen = () => {
   const dimensions = useDimensions().window;
 
@@ -302,11 +305,7 @@ const MainScreen = () => {
   return (
     <DrawerNav.Navigator
       initialRouteName="Tabs"
-      gestureHandlerProps={{
-        hitSlop: { left: 0, width: dimensions.width },
-        //@ts-ignore
-        waitFor: [portraitBarRef, topBarButtonTabBarRef],
-      }}
+      gestureHandlerProps={gestureHandlerProps}
       drawerType="slide"
       drawerContent={Drawer}
       drawerStyle={isLargeScreen ? null : ThemedStyles.style.width90}>
@@ -434,11 +433,6 @@ const AppStack = function () {
         options={hideHeader}
       />
       <AppStackNav.Screen
-        name="BlogList"
-        component={BlogsListScreen}
-        options={{ title: i18n.t('blogs.blogs') }}
-      />
-      <AppStackNav.Screen
         name="BlogView"
         component={BlogsViewScreen}
         options={hideHeader}
@@ -466,7 +460,6 @@ const AppStack = function () {
         component={ReportScreen}
         options={{ title: i18n.t('report') }}
       />
-      <AppStackNav.Screen name="NotSupported" component={NotSupportedScreen} />
       <AppStackNav.Screen
         name="OnboardingScreen"
         component={OnboardingScreen}
@@ -707,7 +700,6 @@ const RootStack = function (props) {
       {props.isLoggedIn ? (
         <Fragment>
           <RootStackNav.Screen name="App" component={AppStack} />
-          {/* <RootStackNav.Screen name="Gathering" component={Gathering} /> */}
           {/* Modal screens here */}
           <RootStackNav.Screen
             name="JoinMembershipScreen"

@@ -13,9 +13,15 @@ exports[`notification component renders correctly for every type 1`] = `
         "paddingRight": 8,
         "paddingTop": 16,
       },
-      undefined,
-      undefined,
-      undefined,
+      Object {
+        "borderBottomWidth": 0.5,
+      },
+      Object {
+        "borderColor": undefined,
+      },
+      Object {
+        "backgroundColor": undefined,
+      },
     ]
   }
 >
@@ -41,8 +47,12 @@ exports[`notification component renders correctly for every type 1`] = `
           "height": 36,
           "width": 36,
         },
-        undefined,
-        undefined,
+        Object {
+          "borderWidth": 0.5,
+        },
+        Object {
+          "borderColor": undefined,
+        },
       ]
     }
   />
@@ -87,7 +97,9 @@ exports[`notification component renders correctly for every type 1`] = `
           Object {
             "fontSize": 11,
           },
-          undefined,
+          Object {
+            "color": undefined,
+          },
         ]
       }
     >
@@ -110,9 +122,15 @@ exports[`notification component renders correctly for every type 2`] = `
         "paddingRight": 8,
         "paddingTop": 16,
       },
-      undefined,
-      undefined,
-      undefined,
+      Object {
+        "borderBottomWidth": 0.5,
+      },
+      Object {
+        "borderColor": undefined,
+      },
+      Object {
+        "backgroundColor": undefined,
+      },
     ]
   }
 >
@@ -138,8 +156,12 @@ exports[`notification component renders correctly for every type 2`] = `
           "height": 36,
           "width": 36,
         },
-        undefined,
-        undefined,
+        Object {
+          "borderWidth": 0.5,
+        },
+        Object {
+          "borderColor": undefined,
+        },
       ]
     }
   />
@@ -184,7 +206,9 @@ exports[`notification component renders correctly for every type 2`] = `
           Object {
             "fontSize": 11,
           },
-          undefined,
+          Object {
+            "color": undefined,
+          },
         ]
       }
     >
@@ -207,9 +231,15 @@ exports[`notification component renders correctly for every type 3`] = `
         "paddingRight": 8,
         "paddingTop": 16,
       },
-      undefined,
-      undefined,
-      undefined,
+      Object {
+        "borderBottomWidth": 0.5,
+      },
+      Object {
+        "borderColor": undefined,
+      },
+      Object {
+        "backgroundColor": undefined,
+      },
     ]
   }
 >
@@ -235,8 +265,12 @@ exports[`notification component renders correctly for every type 3`] = `
           "height": 36,
           "width": 36,
         },
-        undefined,
-        undefined,
+        Object {
+          "borderWidth": 0.5,
+        },
+        Object {
+          "borderColor": undefined,
+        },
       ]
     }
   />
@@ -281,7 +315,9 @@ exports[`notification component renders correctly for every type 3`] = `
           Object {
             "fontSize": 11,
           },
-          undefined,
+          Object {
+            "color": undefined,
+          },
         ]
       }
     >
@@ -304,9 +340,15 @@ exports[`notification component renders correctly for every type 4`] = `
         "paddingRight": 8,
         "paddingTop": 16,
       },
-      undefined,
-      undefined,
-      undefined,
+      Object {
+        "borderBottomWidth": 0.5,
+      },
+      Object {
+        "borderColor": undefined,
+      },
+      Object {
+        "backgroundColor": undefined,
+      },
     ]
   }
 >
@@ -332,8 +374,12 @@ exports[`notification component renders correctly for every type 4`] = `
           "height": 36,
           "width": 36,
         },
-        undefined,
-        undefined,
+        Object {
+          "borderWidth": 0.5,
+        },
+        Object {
+          "borderColor": undefined,
+        },
       ]
     }
   />
@@ -401,7 +447,9 @@ exports[`notification component renders correctly for every type 4`] = `
           Object {
             "fontSize": 11,
           },
-          undefined,
+          Object {
+            "color": undefined,
+          },
         ]
       }
     >
@@ -424,9 +472,15 @@ exports[`notification component renders correctly for every type 5`] = `
         "paddingRight": 8,
         "paddingTop": 16,
       },
-      undefined,
-      undefined,
-      undefined,
+      Object {
+        "borderBottomWidth": 0.5,
+      },
+      Object {
+        "borderColor": undefined,
+      },
+      Object {
+        "backgroundColor": undefined,
+      },
     ]
   }
 >
@@ -452,8 +506,12 @@ exports[`notification component renders correctly for every type 5`] = `
           "height": 36,
           "width": 36,
         },
-        undefined,
-        undefined,
+        Object {
+          "borderWidth": 0.5,
+        },
+        Object {
+          "borderColor": undefined,
+        },
       ]
     }
   />
@@ -526,7 +584,9 @@ exports[`notification component renders correctly for every type 5`] = `
           Object {
             "fontSize": 11,
           },
-          undefined,
+          Object {
+            "color": undefined,
+          },
         ]
       }
     >
@@ -549,9 +609,15 @@ exports[`notification component renders correctly for every type 6`] = `
         "paddingRight": 8,
         "paddingTop": 16,
       },
-      undefined,
-      undefined,
-      undefined,
+      Object {
+        "borderBottomWidth": 0.5,
+      },
+      Object {
+        "borderColor": undefined,
+      },
+      Object {
+        "backgroundColor": undefined,
+      },
     ]
   }
 >
@@ -577,8 +643,12 @@ exports[`notification component renders correctly for every type 6`] = `
           "height": 36,
           "width": 36,
         },
-        undefined,
-        undefined,
+        Object {
+          "borderWidth": 0.5,
+        },
+        Object {
+          "borderColor": undefined,
+        },
       ]
     }
   />
@@ -647,7 +717,9 @@ exports[`notification component renders correctly for every type 6`] = `
           Object {
             "fontSize": 11,
           },
-          undefined,
+          Object {
+            "color": undefined,
+          },
         ]
       }
     >
@@ -670,9 +742,15 @@ exports[`notification component renders correctly for every type 7`] = `
         "paddingRight": 8,
         "paddingTop": 16,
       },
-      undefined,
-      undefined,
-      undefined,
+      Object {
+        "borderBottomWidth": 0.5,
+      },
+      Object {
+        "borderColor": undefined,
+      },
+      Object {
+        "backgroundColor": undefined,
+      },
     ]
   }
 >
@@ -698,8 +776,12 @@ exports[`notification component renders correctly for every type 7`] = `
           "height": 36,
           "width": 36,
         },
-        undefined,
-        undefined,
+        Object {
+          "borderWidth": 0.5,
+        },
+        Object {
+          "borderColor": undefined,
+        },
       ]
     }
   />
@@ -746,7 +828,9 @@ exports[`notification component renders correctly for every type 7`] = `
           Object {
             "fontSize": 11,
           },
-          undefined,
+          Object {
+            "color": undefined,
+          },
         ]
       }
     >
@@ -769,9 +853,15 @@ exports[`notification component renders correctly for every type 8`] = `
         "paddingRight": 8,
         "paddingTop": 16,
       },
-      undefined,
-      undefined,
-      undefined,
+      Object {
+        "borderBottomWidth": 0.5,
+      },
+      Object {
+        "borderColor": undefined,
+      },
+      Object {
+        "backgroundColor": undefined,
+      },
     ]
   }
 >
@@ -797,8 +887,12 @@ exports[`notification component renders correctly for every type 8`] = `
           "height": 36,
           "width": 36,
         },
-        undefined,
-        undefined,
+        Object {
+          "borderWidth": 0.5,
+        },
+        Object {
+          "borderColor": undefined,
+        },
       ]
     }
   />
@@ -832,9 +926,15 @@ exports[`notification component renders correctly for every type 9`] = `
         "paddingRight": 8,
         "paddingTop": 16,
       },
-      undefined,
-      undefined,
-      undefined,
+      Object {
+        "borderBottomWidth": 0.5,
+      },
+      Object {
+        "borderColor": undefined,
+      },
+      Object {
+        "backgroundColor": undefined,
+      },
     ]
   }
 >
@@ -860,8 +960,12 @@ exports[`notification component renders correctly for every type 9`] = `
           "height": 36,
           "width": 36,
         },
-        undefined,
-        undefined,
+        Object {
+          "borderWidth": 0.5,
+        },
+        Object {
+          "borderColor": undefined,
+        },
       ]
     }
   />
@@ -917,7 +1021,9 @@ exports[`notification component renders correctly for every type 9`] = `
           Object {
             "fontSize": 11,
           },
-          undefined,
+          Object {
+            "color": undefined,
+          },
         ]
       }
     >
@@ -940,9 +1046,15 @@ exports[`notification component renders correctly for every type 10`] = `
         "paddingRight": 8,
         "paddingTop": 16,
       },
-      undefined,
-      undefined,
-      undefined,
+      Object {
+        "borderBottomWidth": 0.5,
+      },
+      Object {
+        "borderColor": undefined,
+      },
+      Object {
+        "backgroundColor": undefined,
+      },
     ]
   }
 >
@@ -968,8 +1080,12 @@ exports[`notification component renders correctly for every type 10`] = `
           "height": 36,
           "width": 36,
         },
-        undefined,
-        undefined,
+        Object {
+          "borderWidth": 0.5,
+        },
+        Object {
+          "borderColor": undefined,
+        },
       ]
     }
   />
@@ -1014,7 +1130,9 @@ exports[`notification component renders correctly for every type 10`] = `
           Object {
             "fontSize": 11,
           },
-          undefined,
+          Object {
+            "color": undefined,
+          },
         ]
       }
     >
@@ -1037,9 +1155,15 @@ exports[`notification component renders correctly for every type 11`] = `
         "paddingRight": 8,
         "paddingTop": 16,
       },
-      undefined,
-      undefined,
-      undefined,
+      Object {
+        "borderBottomWidth": 0.5,
+      },
+      Object {
+        "borderColor": undefined,
+      },
+      Object {
+        "backgroundColor": undefined,
+      },
     ]
   }
 >
@@ -1065,8 +1189,12 @@ exports[`notification component renders correctly for every type 11`] = `
           "height": 36,
           "width": 36,
         },
-        undefined,
-        undefined,
+        Object {
+          "borderWidth": 0.5,
+        },
+        Object {
+          "borderColor": undefined,
+        },
       ]
     }
   />
@@ -1110,7 +1238,9 @@ exports[`notification component renders correctly for every type 11`] = `
           Object {
             "fontSize": 11,
           },
-          undefined,
+          Object {
+            "color": undefined,
+          },
         ]
       }
     >
@@ -1133,9 +1263,15 @@ exports[`notification component renders correctly for every type 12`] = `
         "paddingRight": 8,
         "paddingTop": 16,
       },
-      undefined,
-      undefined,
-      undefined,
+      Object {
+        "borderBottomWidth": 0.5,
+      },
+      Object {
+        "borderColor": undefined,
+      },
+      Object {
+        "backgroundColor": undefined,
+      },
     ]
   }
 >
@@ -1161,8 +1297,12 @@ exports[`notification component renders correctly for every type 12`] = `
           "height": 36,
           "width": 36,
         },
-        undefined,
-        undefined,
+        Object {
+          "borderWidth": 0.5,
+        },
+        Object {
+          "borderColor": undefined,
+        },
       ]
     }
   />
@@ -1193,7 +1333,9 @@ exports[`notification component renders correctly for every type 12`] = `
           Object {
             "fontSize": 11,
           },
-          undefined,
+          Object {
+            "color": undefined,
+          },
         ]
       }
     >
@@ -1216,9 +1358,15 @@ exports[`notification component renders correctly for every type 13`] = `
         "paddingRight": 8,
         "paddingTop": 16,
       },
-      undefined,
-      undefined,
-      undefined,
+      Object {
+        "borderBottomWidth": 0.5,
+      },
+      Object {
+        "borderColor": undefined,
+      },
+      Object {
+        "backgroundColor": undefined,
+      },
     ]
   }
 >
@@ -1244,8 +1392,12 @@ exports[`notification component renders correctly for every type 13`] = `
           "height": 36,
           "width": 36,
         },
-        undefined,
-        undefined,
+        Object {
+          "borderWidth": 0.5,
+        },
+        Object {
+          "borderColor": undefined,
+        },
       ]
     }
   />
@@ -1296,7 +1448,9 @@ exports[`notification component renders correctly for every type 13`] = `
           Object {
             "fontSize": 11,
           },
-          undefined,
+          Object {
+            "color": undefined,
+          },
         ]
       }
     >
@@ -1319,9 +1473,15 @@ exports[`notification component renders correctly for every type 14`] = `
         "paddingRight": 8,
         "paddingTop": 16,
       },
-      undefined,
-      undefined,
-      undefined,
+      Object {
+        "borderBottomWidth": 0.5,
+      },
+      Object {
+        "borderColor": undefined,
+      },
+      Object {
+        "backgroundColor": undefined,
+      },
     ]
   }
 >
@@ -1347,8 +1507,12 @@ exports[`notification component renders correctly for every type 14`] = `
           "height": 36,
           "width": 36,
         },
-        undefined,
-        undefined,
+        Object {
+          "borderWidth": 0.5,
+        },
+        Object {
+          "borderColor": undefined,
+        },
       ]
     }
   />
@@ -1389,7 +1553,9 @@ exports[`notification component renders correctly for every type 14`] = `
           Object {
             "fontSize": 11,
           },
-          undefined,
+          Object {
+            "color": undefined,
+          },
         ]
       }
     >
@@ -1412,9 +1578,15 @@ exports[`notification component renders correctly for every type 15`] = `
         "paddingRight": 8,
         "paddingTop": 16,
       },
-      undefined,
-      undefined,
-      undefined,
+      Object {
+        "borderBottomWidth": 0.5,
+      },
+      Object {
+        "borderColor": undefined,
+      },
+      Object {
+        "backgroundColor": undefined,
+      },
     ]
   }
 >
@@ -1440,8 +1612,12 @@ exports[`notification component renders correctly for every type 15`] = `
           "height": 36,
           "width": 36,
         },
-        undefined,
-        undefined,
+        Object {
+          "borderWidth": 0.5,
+        },
+        Object {
+          "borderColor": undefined,
+        },
       ]
     }
   />
@@ -1478,7 +1654,9 @@ exports[`notification component renders correctly for every type 15`] = `
           Object {
             "fontSize": 11,
           },
-          undefined,
+          Object {
+            "color": undefined,
+          },
         ]
       }
     >
@@ -1501,9 +1679,15 @@ exports[`notification component renders correctly for every type 16`] = `
         "paddingRight": 8,
         "paddingTop": 16,
       },
-      undefined,
-      undefined,
-      undefined,
+      Object {
+        "borderBottomWidth": 0.5,
+      },
+      Object {
+        "borderColor": undefined,
+      },
+      Object {
+        "backgroundColor": undefined,
+      },
     ]
   }
 >
@@ -1529,8 +1713,12 @@ exports[`notification component renders correctly for every type 16`] = `
           "height": 36,
           "width": 36,
         },
-        undefined,
-        undefined,
+        Object {
+          "borderWidth": 0.5,
+        },
+        Object {
+          "borderColor": undefined,
+        },
       ]
     }
   />
@@ -1583,7 +1771,9 @@ exports[`notification component renders correctly for every type 16`] = `
           Object {
             "fontSize": 11,
           },
-          undefined,
+          Object {
+            "color": undefined,
+          },
         ]
       }
     >
@@ -1606,9 +1796,15 @@ exports[`notification component renders correctly for every type 17`] = `
         "paddingRight": 8,
         "paddingTop": 16,
       },
-      undefined,
-      undefined,
-      undefined,
+      Object {
+        "borderBottomWidth": 0.5,
+      },
+      Object {
+        "borderColor": undefined,
+      },
+      Object {
+        "backgroundColor": undefined,
+      },
     ]
   }
 >
@@ -1634,8 +1830,12 @@ exports[`notification component renders correctly for every type 17`] = `
           "height": 36,
           "width": 36,
         },
-        undefined,
-        undefined,
+        Object {
+          "borderWidth": 0.5,
+        },
+        Object {
+          "borderColor": undefined,
+        },
       ]
     }
   />
@@ -1666,7 +1866,9 @@ exports[`notification component renders correctly for every type 17`] = `
           Object {
             "fontSize": 11,
           },
-          undefined,
+          Object {
+            "color": undefined,
+          },
         ]
       }
     >
@@ -1689,9 +1891,15 @@ exports[`notification component renders correctly for every type 18`] = `
         "paddingRight": 8,
         "paddingTop": 16,
       },
-      undefined,
-      undefined,
-      undefined,
+      Object {
+        "borderBottomWidth": 0.5,
+      },
+      Object {
+        "borderColor": undefined,
+      },
+      Object {
+        "backgroundColor": undefined,
+      },
     ]
   }
 >
@@ -1717,8 +1925,12 @@ exports[`notification component renders correctly for every type 18`] = `
           "height": 36,
           "width": 36,
         },
-        undefined,
-        undefined,
+        Object {
+          "borderWidth": 0.5,
+        },
+        Object {
+          "borderColor": undefined,
+        },
       ]
     }
   />
@@ -1749,7 +1961,9 @@ exports[`notification component renders correctly for every type 18`] = `
           Object {
             "fontSize": 11,
           },
-          undefined,
+          Object {
+            "color": undefined,
+          },
         ]
       }
     >
@@ -1772,9 +1986,15 @@ exports[`notification component renders correctly for every type 19`] = `
         "paddingRight": 8,
         "paddingTop": 16,
       },
-      undefined,
-      undefined,
-      undefined,
+      Object {
+        "borderBottomWidth": 0.5,
+      },
+      Object {
+        "borderColor": undefined,
+      },
+      Object {
+        "backgroundColor": undefined,
+      },
     ]
   }
 >
@@ -1800,8 +2020,12 @@ exports[`notification component renders correctly for every type 19`] = `
           "height": 36,
           "width": 36,
         },
-        undefined,
-        undefined,
+        Object {
+          "borderWidth": 0.5,
+        },
+        Object {
+          "borderColor": undefined,
+        },
       ]
     }
   />
@@ -1852,7 +2076,9 @@ exports[`notification component renders correctly for every type 19`] = `
           Object {
             "fontSize": 11,
           },
-          undefined,
+          Object {
+            "color": undefined,
+          },
         ]
       }
     >
@@ -1875,9 +2101,15 @@ exports[`notification component renders correctly for every type 20`] = `
         "paddingRight": 8,
         "paddingTop": 16,
       },
-      undefined,
-      undefined,
-      undefined,
+      Object {
+        "borderBottomWidth": 0.5,
+      },
+      Object {
+        "borderColor": undefined,
+      },
+      Object {
+        "backgroundColor": undefined,
+      },
     ]
   }
 >
@@ -1903,8 +2135,12 @@ exports[`notification component renders correctly for every type 20`] = `
           "height": 36,
           "width": 36,
         },
-        undefined,
-        undefined,
+        Object {
+          "borderWidth": 0.5,
+        },
+        Object {
+          "borderColor": undefined,
+        },
       ]
     }
   />
@@ -1945,7 +2181,9 @@ exports[`notification component renders correctly for every type 20`] = `
           Object {
             "fontSize": 11,
           },
-          undefined,
+          Object {
+            "color": undefined,
+          },
         ]
       }
     >
@@ -1968,9 +2206,15 @@ exports[`notification component renders correctly for every type 21`] = `
         "paddingRight": 8,
         "paddingTop": 16,
       },
-      undefined,
-      undefined,
-      undefined,
+      Object {
+        "borderBottomWidth": 0.5,
+      },
+      Object {
+        "borderColor": undefined,
+      },
+      Object {
+        "backgroundColor": undefined,
+      },
     ]
   }
 >
@@ -1996,8 +2240,12 @@ exports[`notification component renders correctly for every type 21`] = `
           "height": 36,
           "width": 36,
         },
-        undefined,
-        undefined,
+        Object {
+          "borderWidth": 0.5,
+        },
+        Object {
+          "borderColor": undefined,
+        },
       ]
     }
   />
@@ -2034,7 +2282,9 @@ exports[`notification component renders correctly for every type 21`] = `
           Object {
             "fontSize": 11,
           },
-          undefined,
+          Object {
+            "color": undefined,
+          },
         ]
       }
     >
@@ -2057,9 +2307,15 @@ exports[`notification component renders correctly for every type 22`] = `
         "paddingRight": 8,
         "paddingTop": 16,
       },
-      undefined,
-      undefined,
-      undefined,
+      Object {
+        "borderBottomWidth": 0.5,
+      },
+      Object {
+        "borderColor": undefined,
+      },
+      Object {
+        "backgroundColor": undefined,
+      },
     ]
   }
 >
@@ -2085,8 +2341,12 @@ exports[`notification component renders correctly for every type 22`] = `
           "height": 36,
           "width": 36,
         },
-        undefined,
-        undefined,
+        Object {
+          "borderWidth": 0.5,
+        },
+        Object {
+          "borderColor": undefined,
+        },
       ]
     }
   />
@@ -2119,7 +2379,9 @@ exports[`notification component renders correctly for every type 22`] = `
           Object {
             "fontSize": 11,
           },
-          undefined,
+          Object {
+            "color": undefined,
+          },
         ]
       }
     >
@@ -2142,9 +2404,15 @@ exports[`notification component renders correctly for every type 23`] = `
         "paddingRight": 8,
         "paddingTop": 16,
       },
-      undefined,
-      undefined,
-      undefined,
+      Object {
+        "borderBottomWidth": 0.5,
+      },
+      Object {
+        "borderColor": undefined,
+      },
+      Object {
+        "backgroundColor": undefined,
+      },
     ]
   }
 >
@@ -2170,8 +2438,12 @@ exports[`notification component renders correctly for every type 23`] = `
           "height": 36,
           "width": 36,
         },
-        undefined,
-        undefined,
+        Object {
+          "borderWidth": 0.5,
+        },
+        Object {
+          "borderColor": undefined,
+        },
       ]
     }
   />
@@ -2202,7 +2474,9 @@ exports[`notification component renders correctly for every type 23`] = `
           Object {
             "fontSize": 11,
           },
-          undefined,
+          Object {
+            "color": undefined,
+          },
         ]
       }
     >
@@ -2225,9 +2499,15 @@ exports[`notification component renders correctly for every type 24`] = `
         "paddingRight": 8,
         "paddingTop": 16,
       },
-      undefined,
-      undefined,
-      undefined,
+      Object {
+        "borderBottomWidth": 0.5,
+      },
+      Object {
+        "borderColor": undefined,
+      },
+      Object {
+        "backgroundColor": undefined,
+      },
     ]
   }
 >
@@ -2253,8 +2533,12 @@ exports[`notification component renders correctly for every type 24`] = `
           "height": 36,
           "width": 36,
         },
-        undefined,
-        undefined,
+        Object {
+          "borderWidth": 0.5,
+        },
+        Object {
+          "borderColor": undefined,
+        },
       ]
     }
   />
@@ -2285,7 +2569,9 @@ exports[`notification component renders correctly for every type 24`] = `
           Object {
             "fontSize": 11,
           },
-          undefined,
+          Object {
+            "color": undefined,
+          },
         ]
       }
     >
@@ -2308,9 +2594,15 @@ exports[`notification component renders correctly for every type 25`] = `
         "paddingRight": 8,
         "paddingTop": 16,
       },
-      undefined,
-      undefined,
-      undefined,
+      Object {
+        "borderBottomWidth": 0.5,
+      },
+      Object {
+        "borderColor": undefined,
+      },
+      Object {
+        "backgroundColor": undefined,
+      },
     ]
   }
 >
@@ -2336,8 +2628,12 @@ exports[`notification component renders correctly for every type 25`] = `
           "height": 36,
           "width": 36,
         },
-        undefined,
-        undefined,
+        Object {
+          "borderWidth": 0.5,
+        },
+        Object {
+          "borderColor": undefined,
+        },
       ]
     }
   />
@@ -2368,7 +2664,9 @@ exports[`notification component renders correctly for every type 25`] = `
           Object {
             "fontSize": 11,
           },
-          undefined,
+          Object {
+            "color": undefined,
+          },
         ]
       }
     >
@@ -2391,9 +2689,15 @@ exports[`notification component renders correctly for every type 26`] = `
         "paddingRight": 8,
         "paddingTop": 16,
       },
-      undefined,
-      undefined,
-      undefined,
+      Object {
+        "borderBottomWidth": 0.5,
+      },
+      Object {
+        "borderColor": undefined,
+      },
+      Object {
+        "backgroundColor": undefined,
+      },
     ]
   }
 >
@@ -2419,8 +2723,12 @@ exports[`notification component renders correctly for every type 26`] = `
           "height": 36,
           "width": 36,
         },
-        undefined,
-        undefined,
+        Object {
+          "borderWidth": 0.5,
+        },
+        Object {
+          "borderColor": undefined,
+        },
       ]
     }
   />
@@ -2462,7 +2770,9 @@ exports[`notification component renders correctly for every type 26`] = `
           Object {
             "fontSize": 11,
           },
-          undefined,
+          Object {
+            "color": undefined,
+          },
         ]
       }
     >
@@ -2485,9 +2795,15 @@ exports[`notification component renders correctly for every type 27`] = `
         "paddingRight": 8,
         "paddingTop": 16,
       },
-      undefined,
-      undefined,
-      undefined,
+      Object {
+        "borderBottomWidth": 0.5,
+      },
+      Object {
+        "borderColor": undefined,
+      },
+      Object {
+        "backgroundColor": undefined,
+      },
     ]
   }
 >
@@ -2513,8 +2829,12 @@ exports[`notification component renders correctly for every type 27`] = `
           "height": 36,
           "width": 36,
         },
-        undefined,
-        undefined,
+        Object {
+          "borderWidth": 0.5,
+        },
+        Object {
+          "borderColor": undefined,
+        },
       ]
     }
   />
@@ -2551,7 +2871,9 @@ exports[`notification component renders correctly for every type 27`] = `
           Object {
             "fontSize": 11,
           },
-          undefined,
+          Object {
+            "color": undefined,
+          },
         ]
       }
     >
@@ -2574,9 +2896,15 @@ exports[`notification component renders correctly for every type 28`] = `
         "paddingRight": 8,
         "paddingTop": 16,
       },
-      undefined,
-      undefined,
-      undefined,
+      Object {
+        "borderBottomWidth": 0.5,
+      },
+      Object {
+        "borderColor": undefined,
+      },
+      Object {
+        "backgroundColor": undefined,
+      },
     ]
   }
 >
@@ -2602,8 +2930,12 @@ exports[`notification component renders correctly for every type 28`] = `
           "height": 36,
           "width": 36,
         },
-        undefined,
-        undefined,
+        Object {
+          "borderWidth": 0.5,
+        },
+        Object {
+          "borderColor": undefined,
+        },
       ]
     }
   />
@@ -2646,7 +2978,9 @@ exports[`notification component renders correctly for every type 28`] = `
           Object {
             "fontSize": 11,
           },
-          undefined,
+          Object {
+            "color": undefined,
+          },
         ]
       }
     >

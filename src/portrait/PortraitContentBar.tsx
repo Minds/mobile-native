@@ -49,24 +49,16 @@ const BarPlaceholder = () => {
   return (
     <Placeholder Animation={animation}>
       <View style={theme.rowJustifyStart}>
-        <PlaceholderMedia
-          isRound
-          color={color}
-          style={[theme.margin2x, styles.placeholder]}
-        />
-        <PlaceholderMedia
-          isRound
-          color={color}
-          style={[theme.margin2x, styles.placeholder]}
-        />
-        <PlaceholderMedia
-          isRound
-          color={color}
-          style={[theme.margin2x, styles.placeholder]}
-        />
+        <PlaceholderMedia isRound color={color} style={styles.placeholder} />
+        <PlaceholderMedia isRound color={color} style={styles.placeholder} />
+        <PlaceholderMedia isRound color={color} style={styles.placeholder} />
       </View>
     </Placeholder>
   );
+};
+
+const renderItem = (row: { item: PortraitBarItem; index: number }) => {
+  return <PortraitContentBarItem item={row.item} index={row.index} />;
 };
 
 /**
@@ -74,9 +66,7 @@ const BarPlaceholder = () => {
  */
 const PortraitContentBar = observer(
   forwardRef((_, ref) => {
-    const theme = ThemedStyles.style;
     const store = useStores().portrait;
-    const navigation = useNavigation<any>();
 
     useEffect(() => {
       store.load();
@@ -95,37 +85,12 @@ const PortraitContentBar = observer(
       return null;
     }, [store]);
 
-    const renderItem = useCallback(
-      (row: { item: PortraitBarItem; index: number }) => (
-        <PortraitContentBarItem
-          item={row.item}
-          onPress={() =>
-            navigation.push('ActivityFullScreenNav', {
-              screen: 'PortraitViewerScreen',
-              params: {
-                index: row.index,
-              },
-            })
-          }
-        />
-      ),
-      [navigation],
-    );
-
     return (
-      <View
-        style={[
-          theme.borderBottom8x,
-          theme.borderBackgroundTertiary,
-          theme.fullWidth,
-        ]}>
+      <View style={containerStyle}>
         <FlatList
           // @ts-ignore
           ref={portraitBarRef}
-          contentContainerStyle={[
-            theme.rowJustifyStart,
-            theme.backgroundPrimary,
-          ]}
+          contentContainerStyle={listContainerStyle}
           style={styles.bar}
           horizontal={true}
           ListHeaderComponent={Header}
@@ -156,7 +121,19 @@ const styles = StyleSheet.create({
     height: 55,
     width: 55,
     borderRadius: 27.5,
+    ...ThemedStyles.style.margin2x,
   },
 });
+
+const listContainerStyle = ThemedStyles.combine(
+  'paddingLeft',
+  'rowJustifyStart',
+  'backgroundPrimary',
+);
+const containerStyle = ThemedStyles.combine(
+  'borderBottom8x',
+  'borderBackgroundTertiary',
+  'fullWidth',
+);
 
 export default PortraitContentBar;
