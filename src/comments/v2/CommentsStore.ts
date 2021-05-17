@@ -375,8 +375,7 @@ export default class CommentsStore {
     };
 
     if (this.attachment.guid || this.edit?.attachment_guid) {
-      comment.attachment_guid =
-        this.attachment.guid || this.edit?.attachment_guid;
+      comment.attachment_guid = this.attachment.guid;
     }
 
     if (this.embed.meta) {
@@ -463,15 +462,13 @@ export default class CommentsStore {
 
     try {
       await updateComment(this.edit.guid, comment);
-      if (
-        comment.attachment_guid &&
-        this.edit.attachment_guid !== comment.attachment_guid
-      ) {
+      if (this.edit.attachment_guid !== comment.attachment_guid) {
         const updatedComment: CommentModel = await getComment(
           this.guid,
           this.edit._guid,
           this.getParentPath(),
         );
+        updatedComment.attachment_guid = comment.attachment_guid;
         this.edit.update(updatedComment);
       } else {
         this.setCommentDescription(this.edit, this.text);
