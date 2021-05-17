@@ -179,7 +179,7 @@ export default class ActivityModel extends BaseModel {
   toPlainObject() {
     const plainEntity = super.toPlainObject();
     if (plainEntity.remind_object && plainEntity.remind_object.__list) {
-      delete plainEntity.remind_object.__list;
+      plainEntity.remind_object.__list = null;
     }
 
     return plainEntity;

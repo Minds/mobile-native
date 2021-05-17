@@ -15,6 +15,12 @@ import createComposeStore from '../../../compose/createComposeStore';
 import { showNotification } from '../../../../AppMessages';
 import { useLegacyStores } from '../../../common/hooks/__mocks__/use-stores';
 import sessionService from '../../../common/services/session.service';
+import {
+  actionsContainerStyle,
+  iconActiveStyle,
+  iconDisabledStyle,
+  iconNormalStyle,
+} from './styles';
 
 // prevent double tap in touchable
 const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
@@ -36,11 +42,11 @@ export default function ({ entity, size = 21 }: PropsTypes) {
       user => user.guid === sessionService.getUser().guid,
     );
 
-  const color = reminded
-    ? theme.colorLink
+  const buttonIconStyle = reminded
+    ? iconActiveStyle
     : entity.can(FLAG_REMIND)
-    ? theme.colorIcon
-    : theme.colorTertiaryText;
+    ? iconNormalStyle
+    : iconDisabledStyle;
 
   const { newsfeed } = useLegacyStores();
 
@@ -103,41 +109,32 @@ export default function ({ entity, size = 21 }: PropsTypes) {
       });
   }, [entity, newsfeed.feedStore]);
 
-  const iconStyle = [theme.colorSecondaryText];
-
-  const menuText = [theme.colorSecondaryText, theme.fontL];
-
   return (
     <Menu
       ref={ref}
       style={theme.backgroundSecondary}
       button={
         <TouchableOpacityCustom
-          style={[
-            ThemedStyles.style.rowJustifyCenter,
-            ThemedStyles.style.paddingHorizontal3x,
-            ThemedStyles.style.paddingVertical4x,
-            ThemedStyles.style.alignCenter,
-          ]}
+          style={actionsContainerStyle}
           onPress={showDropdown}
           testID="Remind activity button">
-          <Icon style={[color, theme.marginRight]} name="repeat" size={size} />
+          <Icon style={buttonIconStyle} name="repeat" size={size} />
           <Counter count={entity.reminds} />
         </TouchableOpacityCustom>
       }>
       {reminded ? (
         <MenuItem onPress={undo} textStyle={menuText}>
-          <Icon style={iconStyle} name="repeat" size={15} />
+          <Icon style={theme.colorSecondaryText} name="repeat" size={15} />
           {'  ' + i18n.t('undoRemind')}
         </MenuItem>
       ) : (
         <>
           <MenuItem onPress={remind} textStyle={menuText}>
-            <Icon style={iconStyle} name="repeat" size={15} />
+            <Icon style={theme.colorSecondaryText} name="repeat" size={15} />
             {'  ' + i18n.t('capture.remind')}
           </MenuItem>
           <MenuItem onPress={quote} textStyle={menuText}>
-            <Icon style={iconStyle} name="edit" size={15} />
+            <Icon style={theme.colorSecondaryText} name="edit" size={15} />
             {'  ' + i18n.t('quote')}
           </MenuItem>
         </>
@@ -145,3 +142,5 @@ export default function ({ entity, size = 21 }: PropsTypes) {
     </Menu>
   );
 }
+
+const menuText = ThemedStyles.combine('colorSecondaryText', 'fontL');

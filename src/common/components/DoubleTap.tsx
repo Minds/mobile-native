@@ -1,5 +1,8 @@
 //@ts-nocheck
 import React from 'react';
+import { TouchableProps } from 'react-native-svg';
+
+type Props = { onDoubleTap: () => void } & TouchableProps;
 
 /**
  * Double Tap HOC
@@ -8,8 +11,8 @@ import React from 'react';
  *
  * @param {Component} WrappedComponent
  */
-const DoubleTap = (Wrapped, delay = 300) => {
-  class DoubleTapCmp extends React.PureComponent {
+const DoubleTap = (Wrapped, delay = 300): any => {
+  class DoubleTapCmp extends React.PureComponent<Props> {
     lastTap = null;
     interval = null;
 

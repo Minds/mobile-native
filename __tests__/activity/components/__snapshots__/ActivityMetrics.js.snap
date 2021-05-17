@@ -4,10 +4,15 @@ exports[`activity metrics component renders correctly 1`] = `
 <View
   style={
     Array [
-      undefined,
-      undefined,
       Object {
-        "paddingLeft": 16,
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+      },
+      Object {
+        "padding": 10,
+      },
+      Object {
+        "paddingLeft": 20,
       },
     ]
   }
@@ -15,9 +20,15 @@ exports[`activity metrics component renders correctly 1`] = `
   <Text
     style={
       Array [
-        undefined,
-        undefined,
-        undefined,
+        Object {
+          "color": undefined,
+        },
+        Object {
+          "fontSize": 14,
+        },
+        Object {
+          "paddingVertical": 5,
+        },
       ]
     }
   >

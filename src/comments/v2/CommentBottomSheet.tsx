@@ -69,11 +69,13 @@ const CustomBackdrop = observer(
       [style, animatedOpacity],
     );
 
+    const bottomSheet = useBottomSheet();
+
     if (localStore.isOpen === 1) {
       return (
         <Animated.View style={containerStyle} pointerEvents="box-none">
           <TouchableOpacity
-            onPress={useBottomSheet().close}
+            onPress={bottomSheet.close}
             style={[theme.fullHeight, theme.fullWidth]}
           />
         </Animated.View>
@@ -140,14 +142,14 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
         }
       }, 500);
     }
-  }, []);
+  }, [props.commentsStore, route.params.open]);
 
   const screenOptions = React.useMemo<StackNavigationOptions>(
     () => ({
       ...TransitionPresets.SlideFromRightIOS,
       headerShown: false,
       safeAreaInsets: { top: 0 },
-      headerBackground: ThemedStyles.style.backgroundSecondary,
+      // headerBackground: ThemedStyles.style.backgroundSecondary,
       cardStyle: ThemedStyles.style.backgroundSecondary,
     }),
     [],

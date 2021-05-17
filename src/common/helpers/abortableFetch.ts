@@ -1,3 +1,4 @@
+//@ts-nocheck
 /**
  * Abortable fetch
  * based on https://github.com/apentle/react-native-cancelable-fetch/blob/master/index.js
@@ -49,7 +50,7 @@ export default function (input, init, tag = undefined) {
       request = new Request(input, init);
     }
 
-    const xhr = new XMLHttpRequest() as XMLHttpRequest & TaggedRequest;
+    const xhr = new XMLHttpRequest() as XMLHttpRequest;
 
     if (init && init.timeout) {
       xhr.timeout = init.timeout;
@@ -66,7 +67,9 @@ export default function (input, init, tag = undefined) {
       }
 
       // Avoid security warnings on getResponseHeader when not allowed by CORS
+      //@ts-ignore
       if (/^X-Request-URL:/m.test(xhr.getAllResponseHeaders())) {
+        //@ts-ignore
         return xhr.getResponseHeader('X-Request-URL');
       }
 
@@ -92,7 +95,7 @@ export default function (input, init, tag = undefined) {
         headers: headers(xhr),
         url: responseURL(),
       };
-
+      //@ts-ignore
       const body = 'response' in xhr ? xhr.response : xhr.responseText;
       remove(xhr);
       resolve(new Response(body, options));

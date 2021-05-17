@@ -53,7 +53,6 @@
       "edit_post": "You are not allowed to edit this post",
       "invite": "You are not allowed to invite",
       "join": "You are not allowed to join",
-      "gathering": "You are not allowed to join to this gathering",
       "message": "You are not allowed to message this user",
       "subscribe": "You are not allowed to subscribe",
       "tag": "You are not allowed to tag this content",
@@ -800,6 +799,7 @@
     "total": "Total",
     "totalPaidout": "Total paid out",
     "alltime": "All-time earnings",
+    "addressCopied": "Address copied to clipboard",
     "withdraw": {
       "errorOnlyOnceDay": "You may only withdraw once a day",
       "errorWithdrawing": "Error withdrawing tokens",
@@ -1341,5 +1341,6 @@
   "mindsPlusFeature": "Minds+ Feature",
   "browserOnly": "Browser Only",
   "clickHere": "click here",
-  "enabled": "Enabled"
+  "enabled": "Enabled",
+  "copyToClipboard": "Copy to Clipboard"
 }

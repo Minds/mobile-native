@@ -1,13 +1,28 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`AnalyticsScreen component should render correctly 1`] = `
-<View>
+<View
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
   <Text
     style={
       Array [
-        undefined,
-        undefined,
-        undefined,
+        Object {
+          "padding": 20,
+        },
+        Object {
+          "fontFamily": "Roboto",
+          "fontSize": 26,
+          "fontWeight": "500",
+          "lineHeight": 44,
+        },
+        Object {
+          "paddingBottom": 10,
+        },
       ]
     }
   >
@@ -41,7 +56,16 @@ exports[`AnalyticsScreen component should render correctly 1`] = `
       ]
     }
   />
-  <View>
+  <View
+    style={
+      Object {
+        "alignContent": "center",
+        "alignItems": "center",
+        "alignSelf": "center",
+        "justifyContent": "center",
+      }
+    }
+  >
     <Memo(wrappedComponent) />
   </View>
 </View>

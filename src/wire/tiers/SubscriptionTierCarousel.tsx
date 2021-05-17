@@ -109,7 +109,7 @@ export default class SubscriptionTierCarousel extends PureComponent<PropsType> {
           CS.borderRadius5x,
           CS.padding2x,
           CS.border,
-          ThemedStyles.style.borderButton,
+          ThemedStyles.style.borderBottom,
         ]}>
         <View style={CS.columnAlignCenter}>
           <Text style={[CS.fontXXL, CS.fontMedium]}>{text}</Text>

@@ -4,11 +4,21 @@ exports[`renders correctly 1`] = `
 <View
   style={
     Array [
-      undefined,
-      undefined,
+      Object {
+        "flexDirection": "row",
+        "justifyContent": "center",
+      },
+      Object {
+        "alignContent": "center",
+        "alignItems": "center",
+        "alignSelf": "center",
+        "justifyContent": "center",
+      },
       Object {
         "backgroundColor": "#242A30",
+        "borderColor": undefined,
         "borderRadius": 21,
+        "borderWidth": 1,
         "paddingHorizontal": 21,
         "paddingVertical": 10,
       },

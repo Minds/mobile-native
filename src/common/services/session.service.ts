@@ -3,7 +3,6 @@ import { observable, action, reaction } from 'mobx';
 
 import sessionStorage from './session.storage.service';
 import AuthService from '../../auth/AuthService';
-import NavigationService from '../../navigation/NavigationService';
 import { getStores } from '../../../AppStores';
 import logService from './log.service';
 import type UserModel from '../../channel/UserModel';
@@ -85,16 +84,16 @@ class SessionService {
         refresh_token_expires * 1000 > Date.now()
       ) {
         logService.info('[SessionService] refreshing token');
-        const token = await AuthService.refreshToken();
-        await this.loadUser(user);
-        return token;
+        const tokens = await AuthService.refreshToken(false);
+
+        this.setRefreshToken(tokens.refresh_token);
+        this.setToken(tokens.access_token);
+
+        this.storeTokens(tokens);
       }
 
       // ensure user loaded before activate the session
       await this.loadUser(user);
-
-      // refresh the token
-      await AuthService.refreshToken();
 
       this.setLoggedIn(true);
 
@@ -202,6 +201,13 @@ class SessionService {
 
     this.setLoggedIn(true);
 
+    this.storeTokens(tokens);
+  }
+
+  /**
+   * save token to storage
+   */
+  storeTokens(tokens) {
     const token_expire = this.getTokenExpiration(tokens.access_token);
     const token_refresh_expire = token_expire + 60 * 60 * 24 * 30;
 
@@ -210,31 +216,6 @@ class SessionService {
       tokens.refresh_token,
       token_refresh_expire,
     );
-  }
-
-  async badAuthorization() {
-    if (this.refreshingTokens || !this.token || !this.refreshToken) return;
-    this.refreshingTokens = true;
-    this.setToken(null);
-    try {
-      await AuthService.refreshToken();
-      this.refreshingTokens = false; // on success
-      return !!this.token;
-      // Same session should not need to refresh anyay
-    } catch {
-      this.promptLogin();
-      setTimeout(() => {
-        this.refreshingTokens = false;
-      }, 1500);
-    }
-  }
-
-  promptLogin() {
-    //this.logout();
-    this.guid = null;
-    this.setToken(null);
-    this.setLoggedIn(false);
-    NavigationService.jumpTo('Auth');
   }
 
   refresh(tokens) {

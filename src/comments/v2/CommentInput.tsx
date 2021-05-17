@@ -176,11 +176,13 @@ const CommentInput = observer(() => {
                 </Text>
               </View>
             ) : (
-              <DotIndicator
-                containerStyle={[theme.alignSelfCenter, theme.justifyEnd]}
-                color={ThemedStyles.getColor('primary_text')}
-                scaleEnabled={true}
-              />
+              <View>
+                <DotIndicator
+                  containerStyle={[theme.alignSelfCenter, theme.justifyEnd]}
+                  color={ThemedStyles.getColor('primary_text')}
+                  scaleEnabled={true}
+                />
+              </View>
             )}
           </View>
         </View>
@@ -219,7 +221,7 @@ const styles = StyleSheet.create({
   },
   input: {
     minHeight: 35,
-    flex: 1,
+    flex: 3,
     lineHeight: 22,
   },
   inputContainer: {

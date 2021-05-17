@@ -5,11 +5,19 @@ exports[`Thumb action component renders correctly 1`] = `
   onPress={[Function]}
   style={
     Array [
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
+      Object {
+        "flexDirection": "row",
+        "justifyContent": "center",
+      },
+      Object {
+        "paddingHorizontal": 15,
+      },
+      Object {
+        "paddingVertical": 20,
+      },
+      Object {
+        "alignItems": "center",
+      },
     ]
   }
   testID="Thumb up activity button"
@@ -20,8 +28,12 @@ exports[`Thumb action component renders correctly 1`] = `
     size={21}
     style={
       Array [
-        undefined,
-        undefined,
+        Object {
+          "color": undefined,
+        },
+        Object {
+          "marginRight": 5,
+        },
       ]
     }
   />

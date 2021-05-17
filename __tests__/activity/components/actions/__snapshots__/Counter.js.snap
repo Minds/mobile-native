@@ -11,14 +11,6 @@ exports[`Owner component renders correctly 1`] = `
 >
   <Text
     size={15}
-    style={
-      Array [
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-      ]
-    }
   >
     100
   </Text>

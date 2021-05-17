@@ -7,7 +7,6 @@ import {
 } from 'react-native-exception-handler';
 
 // import {onError} from 'mobx-react';
-import logService from './src/common/services/log.service';
 import * as Sentry from '@sentry/react-native';
 import shouldReportToSentry from './src/common/helpers/errors';
 
@@ -50,6 +49,7 @@ if (!__DEV__) {
    */
   const jsErrorHandler = (e, isFatal) => {
     if (isFatal) {
+      Sentry.captureException(e);
       if (e) {
         Alert.alert(
           'Unexpected error occurred',

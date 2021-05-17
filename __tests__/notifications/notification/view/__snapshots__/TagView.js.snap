@@ -30,7 +30,9 @@ exports[`renders correctly activity 1`] = `
         Object {
           "fontSize": 11,
         },
-        undefined,
+        Object {
+          "color": undefined,
+        },
       ]
     }
   >
@@ -69,7 +71,9 @@ exports[`renders correctly comment 1`] = `
         Object {
           "fontSize": 11,
         },
-        undefined,
+        Object {
+          "color": undefined,
+        },
       ]
     }
   >

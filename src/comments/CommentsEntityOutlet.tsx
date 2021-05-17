@@ -45,7 +45,7 @@ export const CommentsEntityOutlet = observer((props: Props) => {
 
   return (
     <KeyboardAvoidingView
-      style={[ThemedStyles.style.paddingBottom3x]}
+      style={ThemedStyles.style.paddingBottom3x}
       behavior={Platform.OS == 'ios' ? 'padding' : undefined}>
       <View>
         {count > 0 ? ViewCommentsButton() : undefined}

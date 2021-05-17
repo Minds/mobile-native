@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import ActivityModel from '../../../newsfeed/ActivityModel';
+import { actionsContainerStyle } from './styles';
 
 // prevent double tap in touchable
 const TouchableHighlightCustom = withPreventDoubleTap(TouchableHighlight);
@@ -28,15 +29,10 @@ export default class BoostAction extends PureComponent<PropsType> {
     return (
       <View>
         <TouchableHighlightCustom
-          style={[
-            theme.rowJustifyCenter,
-            theme.paddingHorizontal3x,
-            theme.paddingVertical4x,
-            theme.alignCenter,
-          ]}
+          style={actionsContainerStyle}
           underlayColor="transparent"
           onPress={this.openBoost}>
-          <View style={[theme.rowJustifyStart, theme.centered]}>
+          <View style={iconContainer}>
             <Icon
               name="trending-up"
               style={theme.colorSecondaryText}
@@ -57,3 +53,5 @@ export default class BoostAction extends PureComponent<PropsType> {
     });
   };
 }
+
+const iconContainer = ThemedStyles.combine('rowJustifyStart', 'centered');

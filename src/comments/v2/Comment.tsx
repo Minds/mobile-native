@@ -147,7 +147,7 @@ export default observer(function Comment(props: PropsType) {
               <View style={theme.paddingTop3x}>
                 <MediaView
                   entity={props.comment}
-                  style={theme.borderRadius}
+                  imageStyle={theme.borderRadius}
                   smallEmbed
                   // onPress={this.navToImage}
                 />
@@ -155,7 +155,7 @@ export default observer(function Comment(props: PropsType) {
             )}
             {mature && (
               <View style={theme.marginTop3x}>
-                <Text style={[theme.font, theme.colorTertiaryText]}>
+                <Text style={[theme.fontL, theme.colorTertiaryText]}>
                   {i18n.t('activity.explicitComment')}
                 </Text>
               </View>
@@ -163,13 +163,11 @@ export default observer(function Comment(props: PropsType) {
           </View>
           <View style={styles.actionsContainer}>
             <ThumbUpAction
-              containerStyle={theme.rowJustifyStart}
               entity={props.comment}
               size={16}
               touchableComponent={TouchableOpacity}
             />
             <ThumbDownAction
-              containerStyle={theme.rowJustifyStart}
               entity={props.comment}
               size={16}
               touchableComponent={TouchableOpacity}
@@ -196,7 +194,7 @@ export default observer(function Comment(props: PropsType) {
         // mature
         <View>
           <TouchableOpacity
-            onPress={() => props.comment.toggleMatureVisibility()}
+            onPress={props.comment.toggleMatureVisibility}
             style={[theme.centered, theme.marginTop4x]}>
             <Text style={[theme.bold, theme.fontL, theme.colorSecondaryText]}>
               {i18n.t('activity.explicitComment')}

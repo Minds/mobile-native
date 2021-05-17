@@ -2,108 +2,52 @@
 
 exports[`Media view component renders correctly 1`] = `
 <View>
-  <SharedElement
-    id="undefined.image"
-  >
-    <DoubleTapCmp
-      activeOpacity={1}
-      onDoubleTap={[Function]}
-      onLongPress={[Function]}
-      onPress={[Function]}
-      style={
-        Array [
+  <MediaViewImage
+    entity={
+      Object {
+        "attachment_guid": false,
+        "blurb": false,
+        "containerObj": undefined,
+        "container_guid": "activityguid0",
+        "custom_data": Array [
           Object {
-            "width": "100%",
+            "height": 50,
+            "width": 20,
           },
-          Object {
-            "aspectRatio": 0.4,
-          },
-        ]
+        ],
+        "custom_type": false,
+        "description": "Congratulations! ",
+        "edited": "",
+        "getThumbSource": [MockFunction],
+        "guid": "activityguid0",
+        "hasThumbnails": [MockFunction],
+        "isGif": [MockFunction],
+        "mature": false,
+        "message": "Message",
+        "ownerObj": Object {
+          "guid": "824853017709780997",
+          "subtype": false,
+          "time_created": "1522036284",
+          "type": "user",
+        },
+        "owner_guid": "824853017709780997",
+        "parent_guid": "838106762591510528",
+        "perma_url": false,
+        "rowKey": "something0",
+        "shouldBeBlured": [MockFunction],
+        "subtype": "image",
+        "thumbnail_src": false,
+        "time_created": "1522036284",
+        "title": "TITLE",
+        "type": "activity",
+        "wire_totals": Object {
+          "tokens": 1000000000000000000,
+        },
       }
-      testID="Posted Image"
-    >
-      <ExplicitImage
-        entity={
-          Object {
-            "attachment_guid": false,
-            "blurb": false,
-            "containerObj": undefined,
-            "container_guid": "activityguid0",
-            "custom_data": Array [
-              Object {
-                "height": 50,
-                "width": 20,
-              },
-            ],
-            "custom_type": false,
-            "description": "Congratulations! ",
-            "edited": "",
-            "getThumbSource": [MockFunction] {
-              "calls": Array [
-                Array [
-                  "xlarge",
-                ],
-              ],
-              "results": Array [
-                Object {
-                  "type": "return",
-                  "value": Object {
-                    "uri": "www.something.com",
-                  },
-                },
-              ],
-            },
-            "guid": "activityguid0",
-            "hasThumbnails": [MockFunction],
-            "isGif": [MockFunction] {
-              "calls": Array [
-                Array [],
-              ],
-              "results": Array [
-                Object {
-                  "type": "return",
-                  "value": false,
-                },
-              ],
-            },
-            "mature": false,
-            "message": "Message",
-            "ownerObj": Object {
-              "guid": "824853017709780997",
-              "subtype": false,
-              "time_created": "1522036284",
-              "type": "user",
-            },
-            "owner_guid": "824853017709780997",
-            "parent_guid": "838106762591510528",
-            "perma_url": false,
-            "rowKey": "something0",
-            "shouldBeBlured": [MockFunction],
-            "subtype": "image",
-            "thumbnail_src": false,
-            "time_created": "1522036284",
-            "title": "TITLE",
-            "type": "activity",
-            "wire_totals": Object {
-              "tokens": 1000000000000000000,
-            },
-          }
-        }
-        onError={[Function]}
-        onLoad={[Function]}
-        resizeMode="cover"
-        source={
-          Object {
-            "uri": "www.something.com",
-          }
-        }
-        thumbnail={
-          Object {
-            "uri": "https://cdn.minds.com/api/v3/media/proxy?size=96&src=www.something.com",
-          }
-        }
-      />
-    </DoubleTapCmp>
-  </SharedElement>
+    }
+    onImageDoublePress={[Function]}
+    onImageLongPress={[Function]}
+    onImagePress={[Function]}
+  />
 </View>
 `;

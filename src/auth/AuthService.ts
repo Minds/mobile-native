@@ -14,8 +14,6 @@ interface LoginResponse extends ApiResponse {
   token_type: string;
 }
 
-interface TFAResponse extends ApiResponse {}
-
 export interface RegisterResponse extends ApiResponse {
   guid: string;
   user: UserModel;
@@ -26,11 +24,6 @@ interface ForgotResponse extends ApiResponse {}
 interface ValidateResponse extends ApiResponse {}
 
 interface ResetResponse extends ApiResponse {}
-
-type tfaParams = {
-  token: string;
-  code: string;
-};
 
 type loginParms = {
   username: string;
@@ -138,7 +131,7 @@ class AuthService {
   /**
    * Refresh user token
    */
-  async refreshToken(): Promise<string> {
+  async refreshToken(): Promise<LoginResponse> {
     logService.info('[AuthService] Refreshing token');
 
     const params = {
@@ -153,9 +146,7 @@ class AuthService {
         'api/v3/oauth/token',
         params,
       );
-
-      session.login(data, false);
-      return data.access_token;
+      return data;
     } catch (err) {
       logService.exception('[AuthService] error claiming refresh token', err);
       throw err;
