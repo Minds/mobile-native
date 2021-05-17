@@ -175,11 +175,13 @@ const CommentInput = observer(() => {
                 </Text>
               </View>
             ) : (
-              <DotIndicator
-                containerStyle={[theme.alignSelfCenter, theme.justifyEnd]}
-                color={ThemedStyles.getColor('primary_text')}
-                scaleEnabled={true}
-              />
+              <View>
+                <DotIndicator
+                  containerStyle={[theme.alignSelfCenter, theme.justifyEnd]}
+                  color={ThemedStyles.getColor('primary_text')}
+                  scaleEnabled={true}
+                />
+              </View>
             )}
           </View>
         </View>
