@@ -11,17 +11,11 @@ export default class CommentModel extends ActivityModel {
   child_path?: string;
   replies_count = 0;
   focused?: boolean;
-  attachment_guid?: string;
+  attachment_guid: string = '';
+  custom_type: string = '';
   _guid: string = '';
   can_reply?: boolean;
   parent_guid_l2?: string;
-
-  @observable hasAttachment = false;
-
-  @action
-  setHasAttachment(hasAttachment: boolean) {
-    this.hasAttachment = hasAttachment;
-  }
 
   /**
    * The parent comment
@@ -68,4 +62,5 @@ export default class CommentModel extends ActivityModel {
 decorate(CommentModel, {
   replies_count: observable,
   description: observable,
+  attachment_guid: observable,
 });

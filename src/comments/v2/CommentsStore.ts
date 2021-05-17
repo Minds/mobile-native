@@ -85,8 +85,25 @@ export default class CommentsStore {
       this.text = '';
     }
     this.edit = edit;
-    if (edit) {
+    if (this.edit && edit) {
       this.text = edit.description || '';
+      const source = this.edit.getThumbSource('large');
+      if (
+        this.edit.custom_type === 'batch' ||
+        this.edit.custom_type === 'image'
+      ) {
+        this.attachment.setMedia(
+          'image',
+          this.edit.attachment_guid,
+          source.uri,
+        );
+      } else if (this.edit.custom_type === 'video') {
+        this.attachment.setMedia(
+          'video',
+          this.edit.attachment_guid,
+          source.uri,
+        );
+      }
     }
   }
 
@@ -455,7 +472,7 @@ export default class CommentsStore {
           this.edit._guid,
           this.getParentPath(),
         );
-        this.setComment(this.edit, updatedComment);
+        this.edit.update(updatedComment);
       } else {
         this.setCommentDescription(this.edit, this.text);
       }
@@ -480,13 +497,6 @@ export default class CommentsStore {
   @action
   setCommentDescription(comment, description) {
     comment.description = description;
-  }
-
-  @action setComment(comment: CommentModel, updatedComment: CommentModel) {
-    Object.assign(comment, updatedComment);
-    if (updatedComment.attachment_guid) {
-      comment.setHasAttachment(true);
-    }
   }
 
   /**

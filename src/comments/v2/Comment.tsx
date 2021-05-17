@@ -34,15 +34,6 @@ export default observer(function Comment(props: PropsType) {
   const navigation = useNavigation<any>();
   const theme = ThemedStyles.style;
 
-  useEffect(() => {
-    if (
-      props.comment.attachment_guid ||
-      (props.comment.hasMedia() && !props.comment.hasAttachment)
-    ) {
-      props.comment.setHasAttachment(true);
-    }
-  }, [props.comment]);
-
   const mature = props.comment.mature && !props.comment.mature_visibility;
 
   const canReply =
@@ -143,7 +134,8 @@ export default observer(function Comment(props: PropsType) {
                 renderRevealedFooter={renderRevealedFooter}
               />
             )}
-            {props.comment.hasAttachment && (
+            {(props.comment.hasMedia() ||
+              Boolean(props.comment.attachment_guid)) && (
               <View style={theme.paddingTop3x}>
                 <MediaView
                   entity={props.comment}

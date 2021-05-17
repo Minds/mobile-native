@@ -8,7 +8,6 @@ import logService from '../services/log.service';
 import i18n from '../services/i18n.service';
 import mindsService from '../services/minds.service';
 import { showNotification } from '../../../AppMessages';
-import type CommentModel from '../../comments/v2/CommentModel';
 
 /**
  * Attachment Store
@@ -159,20 +158,11 @@ export default class AttachmentStore {
   /**
    * Delete the uploaded attachment
    */
-  async delete(deleteRemote, edit?: CommentModel) {
-    if (
-      !this.uploading &&
-      ((this.hasAttachment && this.guid) || (edit && edit.attachment_guid))
-    ) {
+  async delete(deleteRemote) {
+    if (!this.uploading && this.hasAttachment && this.guid) {
       try {
-        const guid =
-          this.hasAttachment && this.guid ? this.guid : edit.attachment_guid;
         if (deleteRemote) {
-          attachmentService.deleteMedia(guid);
-        }
-        if (edit && edit.attachment_guid) {
-          edit.attachment_guid = undefined;
-          edit.setHasAttachment(false);
+          attachmentService.deleteMedia(this.guid);
         }
         this.clear();
         return true;
@@ -206,9 +196,10 @@ export default class AttachmentStore {
   }
 
   @action
-  setMedia(type, guid) {
+  setMedia(type, guid, uri = '') {
     this.type = type;
     this.guid = guid;
+    this.uri = uri;
     this.hasAttachment = Boolean(guid);
   }
 

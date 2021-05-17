@@ -87,10 +87,7 @@ const CommentInput = observer(() => {
             activeOpacity={0.5}
             onPress={() => provider.store?.setShowInput(false)}
           />
-          <MediaPreview
-            attachment={provider.store.attachment}
-            edit={provider.store.edit}
-          />
+          <MediaPreview attachment={provider.store.attachment} />
           {provider.store.embed.meta && (
             <MetaPreview
               meta={provider.store.embed.meta}
