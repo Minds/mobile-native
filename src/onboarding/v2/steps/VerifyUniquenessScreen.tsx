@@ -62,6 +62,8 @@ export default observer(function VerifyUniquenessScreen() {
     },*/
   ];
 
+  console.log(otherMapping);
+
   const steps = stepsMapping.map(mappingCallback);
 
   const other = otherMapping.map(mappingCallback);
