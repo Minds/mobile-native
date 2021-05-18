@@ -79,9 +79,10 @@ class SessionService {
       }
 
       if (
-        access_token_expires * 1000 < Date.now() &&
-        refresh_token &&
-        refresh_token_expires * 1000 > Date.now()
+        true // always refresh for now
+        // access_token_expires * 1000 < Date.now() &&
+        // refresh_token &&
+        // refresh_token_expires * 1000 > Date.now()
       ) {
         logService.info('[SessionService] refreshing token');
         const tokens = await AuthService.refreshToken(false);
@@ -207,7 +208,7 @@ class SessionService {
   /**
    * save token to storage
    */
-  storeTokens(tokens) {
+  async storeTokens(tokens) {
     const token_expire = this.getTokenExpiration(tokens.access_token);
     const token_refresh_expire = token_expire + 60 * 60 * 24 * 30;
 
