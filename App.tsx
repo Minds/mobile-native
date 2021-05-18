@@ -60,10 +60,8 @@ if (
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 
-if (Platform.OS === 'android') {
-  require('intl');
-  require('intl/locale-data/jsonp/en');
-}
+require('intl');
+require('intl/locale-data/jsonp/en');
 
 type State = {
   appState: string;
