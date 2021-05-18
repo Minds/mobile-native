@@ -124,7 +124,8 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
         // Preload images
         const images = entities
           .map(e => {
-            const source = e.hasMedia() ? e.getThumbSource('xlarge') : null;
+            const source =
+              e.hasMedia && e.hasMedia() ? e.getThumbSource('xlarge') : null;
             if (source) {
               source.priority = FastImage.priority.low;
             }
