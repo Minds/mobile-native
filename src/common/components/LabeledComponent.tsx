@@ -19,13 +19,12 @@ const LabeledComponent: FunctionComponent<propsType> = ({
   const theme = ThemedStyles.style;
 
   const labelStyles = [theme.colorSecondaryText, styles.label, labelStyle];
-  const valueStyles = [theme.colorPrimaryText, styles.value, valueStyle];
   const wrapperStyles = [styles.wrapper, wrapperStyle];
 
   return (
     <View style={wrapperStyles}>
       <Text style={labelStyles}>{label}</Text>
-      <Text style={valueStyles}>{children}</Text>
+      {children}
     </View>
   );
 };
