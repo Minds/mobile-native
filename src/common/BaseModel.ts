@@ -118,15 +118,13 @@ export default class BaseModel extends AbstractModel {
   update(data) {
     const childs = this.childModels();
 
-    Object.getOwnPropertyNames(this).forEach(key => {
-      if (data[key] !== undefined) {
-        if (childs[key] && this[key] && this[key].update) {
-          // we update the child model
-          this[key].update(data[key]);
-        } else {
-          // we assign the property
-          this[key] = data[key];
-        }
+    Object.getOwnPropertyNames(data).forEach(key => {
+      if (childs[key] && this[key] && this[key].update) {
+        // we update the child model
+        this[key].update(data[key]);
+      } else {
+        // we assign the property
+        this[key] = data[key];
       }
     });
   }

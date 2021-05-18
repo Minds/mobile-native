@@ -19,9 +19,10 @@ import { ImageStyle } from 'react-native-fast-image';
 import MediaViewImage from './media-view/MediaViewImage';
 import openUrlService from '../services/open-url.service';
 import ThemedStyles from '../../styles/ThemedStyles';
+import CommentModel from '../../comments/v2/CommentModel';
 
 type PropsType = {
-  entity: ActivityModel;
+  entity: ActivityModel | CommentModel;
   navigation?: any;
   imageStyle?: StyleProp<ImageStyle>;
   containerStyle?: ViewStyle | Array<ViewStyle>;
@@ -238,6 +239,11 @@ export default class MediaView extends Component<PropsType> {
     // dereference to force re render on change (mobx)
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const paywall = this.props.entity.paywall;
+
+    if (this.props.entity instanceof CommentModel) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const attachment = this.props.entity.attachment_guid;
+    }
 
     if (!media) return null;
 

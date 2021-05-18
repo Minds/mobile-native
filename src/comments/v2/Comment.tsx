@@ -134,7 +134,8 @@ export default observer(function Comment(props: PropsType) {
                 renderRevealedFooter={renderRevealedFooter}
               />
             )}
-            {props.comment.hasMedia() && (
+            {(props.comment.hasMedia() ||
+              Boolean(props.comment.attachment_guid)) && (
               <View style={theme.paddingTop3x}>
                 <MediaView
                   entity={props.comment}

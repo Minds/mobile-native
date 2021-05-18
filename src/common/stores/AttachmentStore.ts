@@ -196,9 +196,10 @@ export default class AttachmentStore {
   }
 
   @action
-  setMedia(type, guid) {
+  setMedia(type, guid, uri = '') {
     this.type = type;
     this.guid = guid;
+    this.uri = uri;
     this.hasAttachment = Boolean(guid);
   }
 

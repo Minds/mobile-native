@@ -161,14 +161,12 @@ const CommentInput = observer(() => {
                       style={theme.colorSecondaryText}
                     />
                   </Touchable>
-                  {!provider.store.edit && (
-                    <CommentInputBottomMenu
-                      store={provider.store}
-                      containerStyle={styles.sendIconCont}
-                      afterSelected={afterSelected}
-                      beforeSelect={beforeSelect}
-                    />
-                  )}
+                  <CommentInputBottomMenu
+                    store={provider.store}
+                    containerStyle={styles.sendIconCont}
+                    afterSelected={afterSelected}
+                    beforeSelect={beforeSelect}
+                  />
                 </View>
                 <Text style={[theme.fontXS, theme.colorSecondaryText]}>
                   {provider.store.text.length} / {CHAR_LIMIT}
