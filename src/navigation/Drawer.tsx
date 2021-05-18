@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { View, Text, Image, StyleSheet, Platform } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -14,6 +14,7 @@ import ThemedStyles from '../styles/ThemedStyles';
 import featuresService from '../common/services/features.service';
 import sessionService from '../common/services/session.service';
 import { GOOGLE_PLAY_STORE } from '../config/Config';
+import FitScrollView from '../common/components/FitScrollView';
 
 const ICON_SIZE = 25;
 
@@ -152,7 +153,7 @@ export default function Drawer(props) {
   const optionsList = getOptionsList(props.navigation);
   return (
     <SafeAreaView style={containerStyle}>
-      <View style={containerStyle}>
+      <FitScrollView style={containerStyle}>
         <View style={styles.headerContainer}>
           <TouchableOpacity onPress={navToChannel}>
             <Image source={avatar} style={styles.wrappedAvatar} />
@@ -185,7 +186,7 @@ export default function Drawer(props) {
             ),
           )}
         </View>
-      </View>
+      </FitScrollView>
     </SafeAreaView>
   );
 }
