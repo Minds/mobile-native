@@ -47,7 +47,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="adjustPan"
-        tools:replace="android:allowBackup">
+        tools:replace="android:allowBackup"
+        android:requestLegacyExternalStorage="true">
         <activity android:name=".CustomErrorScreen"></activity>
         <activity
             android:name=".MainActivity"
