@@ -64,6 +64,7 @@
   },
   "auth": {
     "fieldRequired": "Required",
+    "matchPattern": "Usernames can only have letters, numbers or underscores.",
     "login": "Login",
     "forgot": "Forgot your password?",
     "email": "Email",

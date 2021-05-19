@@ -50,6 +50,8 @@ shadowOptLocal.height = 270;
 
 const validatorText = { color: LIGHT_THEME.primary_text };
 
+const alphanumericPattern = '^[a-zA-Z0-9_]+$';
+
 export default observer(function RegisterScreen(props: PropsType) {
   const captchaRef = useRef<any>(null);
 
@@ -143,6 +145,9 @@ export default observer(function RegisterScreen(props: PropsType) {
     setUsername(value: string) {
       store.showErrors = false;
       store.username = value;
+      if (!store.username.match(alphanumericPattern)) {
+        store.showErrors = true;
+      }
     },
     setEmail(value: string) {
       store.showErrors = false;
@@ -163,6 +168,15 @@ export default observer(function RegisterScreen(props: PropsType) {
         this.showErrors = true;
       }
     },
+    get usernameError() {
+      return !this.showErrors
+        ? undefined
+        : !this.username
+        ? i18n.t('auth.fieldRequired')
+        : !this.username.match(alphanumericPattern)
+        ? i18n.t('auth.matchPattern')
+        : undefined;
+    },
   }));
 
   const theme = ThemedStyles.style;
@@ -177,11 +191,7 @@ export default observer(function RegisterScreen(props: PropsType) {
         onChangeText={store.setUsername}
         value={store.username}
         testID="usernameInput"
-        error={
-          store.showErrors && !store.username
-            ? i18n.t('auth.fieldRequired')
-            : undefined
-        }
+        error={store.usernameError}
         noBottomBorder
         autofocus
       />
