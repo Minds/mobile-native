@@ -10,6 +10,8 @@ export const MINDS_CANARY = false;
 // network timeout time
 export const NETWORK_TIMEOUT = 15000;
 
+export const OAUTH_ENDPOINT = 'api/v3/oauth/token';
+
 // comments char limit
 export const CHAR_LIMIT = 1500;
 

@@ -1,82 +1,59 @@
-import api, { ApiError } from '../../../src/common/services/api.service';
+import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
+import { ApiError, ApiService } from '../../../src/common/services/api.service';
 import session from '../../../src/common/services/session.service';
-import abortableFetch, {
-  abort,
-} from '../../../src/common/helpers/abortableFetch';
+import auth from '../../../src/auth/AuthService';
 import { MINDS_API_URI } from '../../../src/config/Config';
 import { UserError } from '../../../src/common/UserError';
-jest.mock('../../../src/common/services/session.service');
-jest.mock('../../../src/common/helpers/abortableFetch');
+
+jest.mock('../../../src/auth/AuthService');
+
+var mock = new MockAdapter(axios);
+
+const axiosInstance = axios.create();
+// const axiosMock = new MockAdapter(axios);
+
+const api = new ApiService(axiosInstance);
 
 /**
  * POST
  */
 describe('api service POST', () => {
-  beforeEach(() => {
-    abortableFetch.mockClear();
-    session.login.mockClear();
+  afterEach(() => {
+    mock.reset();
   });
 
   it('POST should fetch and return json decoded', async () => {
-    const response = { text: jest.fn(), ok: true };
-    const respBody =
-      '{"access_token": "a1", "user_id": 1000, "status":"success"}';
-    response.text.mockResolvedValue(respBody);
+    const data = { access_token: 'a1', user_id: 1000, status: 'success' };
     const params = { p1: 1, p2: 2 };
+    mock.onAny().reply(200, data);
 
-    abortableFetch.mockResolvedValue(response);
-
-    const res = await api.post('api/path', params);
+    const p = await api.put('api/path', params);
 
     // assert on the response
-    expect(res).toEqual(JSON.parse(respBody));
-    // call fetch post one time
-    expect(abortableFetch.mock.calls.length).toEqual(1);
-    expect(abortableFetch.mock.calls[0][0]).toContain(
-      MINDS_API_URI + 'api/path',
-    );
-    expect(abortableFetch.mock.calls[0][1].method).toEqual('POST');
-    expect(abortableFetch.mock.calls[0][1].body).toEqual(
-      JSON.stringify(params),
-    );
+    expect(p).toEqual(data);
   });
 
-  it('POST should return server error', async () => {
-    const response = {
-      text: jest.fn(),
-      ok: false,
-      body: 'some error',
-      status: 500,
-    };
+  it('POST should return server error with generic message', async () => {
+    mock.onAny().reply(500, 'Some server error');
 
     const params = { p1: 1, p2: 2 };
-
-    abortableFetch.mockResolvedValue(response);
-
     try {
-      const res = await api.post('api/path', params);
+      const p = await api.put('api/path', params);
     } catch (err) {
       // assert on the error
       expect(err).toBeInstanceOf(ApiError);
+      expect(err.message).toEqual('Server error');
     }
   });
 
   it('POST should return json error', async () => {
-    const response = {
-      text: jest.fn(),
-      ok: false,
-      body: 'some error',
-      status: 200,
-    };
-
-    response.text.mockResolvedValue('Invalid JSON');
+    mock.onAny().reply(200, 'Invalid JSON');
 
     const params = { p1: 1, p2: 2 };
 
-    abortableFetch.mockResolvedValue(response);
-
     try {
-      const res = await api.post('api/path', params);
+      const res = await api.put('api/path', params);
     } catch (err) {
       // assert on the error
       expect(err).toBeInstanceOf(ApiError);
@@ -84,18 +61,28 @@ describe('api service POST', () => {
   });
 
   it('POST should return api error', async () => {
-    const response = { text: jest.fn(), ok: true };
-    const respBody = '{"status": "error", "error": "some error" }';
-    response.text.mockResolvedValue(respBody);
+    mock.onAny().reply(200, { status: 'error', message: 'Some Error' });
+
     const params = { p1: 1, p2: 2 };
-
-    abortableFetch.mockResolvedValue(response);
-
     try {
-      const res = await api.post('api/path', params);
+      const p = await api.put('api/path', params);
     } catch (err) {
       // assert on the error
       expect(err).toBeInstanceOf(ApiError);
+      expect(err.message).toEqual('Some Error');
+    }
+  });
+
+  it('POST should return api error even for error status', async () => {
+    mock.onAny().reply(500, { status: 'error', message: 'Some Error' });
+
+    const params = { p1: 1, p2: 2 };
+    try {
+      const p = await api.put('api/path', params);
+    } catch (err) {
+      // assert on the error
+      expect(err).toBeInstanceOf(ApiError);
+      expect(err.message).toEqual('Some Error');
     }
   });
 });
@@ -104,51 +91,37 @@ describe('api service POST', () => {
  * GET
  */
 describe('api service GET', () => {
-  beforeEach(() => {
-    abortableFetch.mockClear();
-    session.login.mockClear();
+  afterEach(() => {
+    mock.reset();
   });
   it('GET should fetch and return json decoded', async () => {
-    const response = { text: jest.fn(), ok: true };
-    const respBody =
-      '{ "access_token": "a1", "user_id": 1000, "status": "success" }';
-    response.text.mockResolvedValue(respBody);
-    const params = { p1: '1', p2: '2' };
+    const data = { access_token: 'a1', user_id: 1000, status: 'success' };
+    const params = { p1: 1, p2: 2 };
+    mock.onAny().reply(200, data);
 
-    abortableFetch.mockResolvedValue(response);
+    const p = await api.get('api/path', params);
 
-    const res = await api.get('api/path', params, null);
     // assert on the response
-    expect(res).toEqual(JSON.parse(respBody));
-    // call fetch get one time
-    expect(abortableFetch.mock.calls.length).toEqual(1);
-    expect(abortableFetch.mock.calls[0][0]).toContain(
-      MINDS_API_URI + 'api/path?p1=1&p2=2',
-    );
+    expect(p).toEqual(data);
   });
 
-  it('GET should return servers error', async () => {
-    const response = { text: jest.fn(), ok: false, body: 'some error' };
+  it('GET should return server error with generic message', async () => {
+    mock.onAny().reply(500, 'Some server error');
 
     const params = { p1: 1, p2: 2 };
-
-    abortableFetch.mockResolvedValue(response);
-
     try {
-      const res = await api.get('api/path', params, null);
+      const p = await api.get('api/path', params);
     } catch (err) {
       // assert on the error
       expect(err).toBeInstanceOf(ApiError);
+      expect(err.message).toEqual('Server error');
     }
   });
 
-  it('GET should return api error', async () => {
-    const response = { text: jest.fn(), ok: true };
-    const respBody = '{ "status": "error", "error": "some error" }';
-    response.text.mockResolvedValue(respBody);
-    const params = { p1: 1, p2: 2 };
+  it('GET should return json error', async () => {
+    mock.onAny().reply(200, 'Invalid JSON');
 
-    abortableFetch.mockResolvedValue(response);
+    const params = { p1: 1, p2: 2 };
 
     try {
       const res = await api.get('api/path', params);
@@ -157,46 +130,70 @@ describe('api service GET', () => {
       expect(err).toBeInstanceOf(ApiError);
     }
   });
+
+  it('GET should return api error', async () => {
+    mock.onAny().reply(200, { status: 'error', message: 'Some Error' });
+
+    const params = { p1: 1, p2: 2 };
+    try {
+      const p = await api.get('api/path', params);
+    } catch (err) {
+      // assert on the error
+      expect(err).toBeInstanceOf(ApiError);
+      expect(err.message).toEqual('Some Error');
+    }
+  });
+
+  it('GET should return api error even for error status', async () => {
+    mock.onAny().reply(500, { status: 'error', message: 'Some Error' });
+
+    const params = { p1: 1, p2: 2 };
+    try {
+      const p = await api.get('api/path', params);
+    } catch (err) {
+      // assert on the error
+      expect(err).toBeInstanceOf(ApiError);
+      expect(err.message).toEqual('Some Error');
+    }
+  });
 });
 
 /**
  * DELETE
  */
 describe('api service DELETE', () => {
-  beforeEach(() => {
-    abortableFetch.mockClear();
-    session.login.mockClear();
+  afterEach(() => {
+    mock.reset();
   });
+
   it('DELETE should fetch and return json decoded', async () => {
-    const response = { text: jest.fn(), ok: true };
-    const respBody =
-      '{ "access_token": "a1", "user_id": 1000, "status": "success" }';
-    response.text.mockResolvedValue(respBody);
-    const params = { p1: '1', p2: '2' };
+    const data = { access_token: 'a1', user_id: 1000, status: 'success' };
+    const params = { p1: 1, p2: 2 };
+    mock.onAny().reply(200, data);
 
-    abortableFetch.mockResolvedValue(response);
-
-    const res = await api.delete('api/path', params);
+    const p = await api.post('api/path', params);
 
     // assert on the response
-    expect(res).toEqual(JSON.parse(respBody));
-    // call fetch delete one time
-    expect(abortableFetch.mock.calls.length).toEqual(1);
-    expect(abortableFetch.mock.calls[0][0]).toContain(
-      MINDS_API_URI + 'api/path',
-    );
-    expect(abortableFetch.mock.calls[0][1].method).toEqual('DELETE');
-    expect(abortableFetch.mock.calls[0][1].body).toEqual(
-      JSON.stringify(params),
-    );
+    expect(p).toEqual(data);
   });
 
-  it('DELETE should return server error', async () => {
-    const response = { text: jest.fn(), ok: false, body: 'some error' };
+  it('DELETE should return server error with generic message', async () => {
+    mock.onAny().reply(500, 'Some server error');
 
     const params = { p1: 1, p2: 2 };
+    try {
+      const p = await api.delete('api/path', params);
+    } catch (err) {
+      // assert on the error
+      expect(err).toBeInstanceOf(ApiError);
+      expect(err.message).toEqual('Server error');
+    }
+  });
 
-    abortableFetch.mockResolvedValue(response);
+  it('DELETE should return json error', async () => {
+    mock.onAny().reply(200, 'Invalid JSON');
+
+    const params = { p1: 1, p2: 2 };
 
     try {
       const res = await api.delete('api/path', params);
@@ -207,18 +204,28 @@ describe('api service DELETE', () => {
   });
 
   it('DELETE should return api error', async () => {
-    const response = { text: jest.fn(), ok: true };
-    const respBody = '{ "status": "error", "error": "some error" }';
-    response.text.mockResolvedValue(respBody);
+    mock.onAny().reply(200, { status: 'error', message: 'Some Error' });
+
     const params = { p1: 1, p2: 2 };
-
-    abortableFetch.mockResolvedValue(response);
-
     try {
-      const res = await api.delete('api/path', params);
+      const p = await api.delete('api/path', params);
     } catch (err) {
       // assert on the error
       expect(err).toBeInstanceOf(ApiError);
+      expect(err.message).toEqual('Some Error');
+    }
+  });
+
+  it('DELETE should return api error even for error status', async () => {
+    mock.onAny().reply(500, { status: 'error', message: 'Some Error' });
+
+    const params = { p1: 1, p2: 2 };
+    try {
+      const p = await api.delete('api/path', params);
+    } catch (err) {
+      // assert on the error
+      expect(err).toBeInstanceOf(ApiError);
+      expect(err.message).toEqual('Some Error');
     }
   });
 });
@@ -227,43 +234,41 @@ describe('api service DELETE', () => {
  * PUT
  */
 describe('api service PUT', () => {
-  beforeEach(() => {
-    abortableFetch.mockClear();
-    session.login.mockClear();
+  afterEach(() => {
+    mock.reset();
   });
+
   it('PUT should fetch and return json decoded', async () => {
-    const response = { text: jest.fn(), ok: true };
-    const respBody =
-      '{ "access_token": "a1", "user_id": 1000, "status": "success" }';
-    response.text.mockResolvedValue(respBody);
-    const params = { p1: '1', p2: '2' };
+    const data = { access_token: 'a1', user_id: 1000, status: 'success' };
+    const params = { p1: 1, p2: 2 };
+    mock.onAny().reply(200, data);
 
-    abortableFetch.mockResolvedValue(response);
-
-    const res = await api.put('api/path', params);
+    const p = await api.put('api/path', params);
 
     // assert on the response
-    expect(res).toEqual(JSON.parse(respBody));
-    // call fetch put one time
-    expect(abortableFetch.mock.calls.length).toEqual(1);
-    expect(abortableFetch.mock.calls[0][0]).toContain(
-      MINDS_API_URI + 'api/path',
-    );
-    expect(abortableFetch.mock.calls[0][1].method).toEqual('PUT');
-    expect(abortableFetch.mock.calls[0][1].body).toEqual(
-      JSON.stringify(params),
-    );
+    expect(p).toEqual(data);
   });
 
-  it('PUT should return server error', async () => {
-    const response = { text: jest.fn(), ok: false, body: 'some error' };
+  it('PUT should return server error with generic message', async () => {
+    mock.onAny().reply(500, 'Some server error');
+
+    const params = { p1: 1, p2: 2 };
+    try {
+      const p = await api.delete('api/path', params);
+    } catch (err) {
+      // assert on the error
+      expect(err).toBeInstanceOf(ApiError);
+      expect(err.message).toEqual('Server error');
+    }
+  });
+
+  it('PUT should return json error', async () => {
+    mock.onAny().reply(200, 'Invalid JSON');
 
     const params = { p1: 1, p2: 2 };
 
-    abortableFetch.mockResolvedValue(response);
-
     try {
-      const res = await api.put('api/path', params);
+      const res = await api.delete('api/path', params);
     } catch (err) {
       // assert on the error
       expect(err).toBeInstanceOf(ApiError);
@@ -271,18 +276,119 @@ describe('api service PUT', () => {
   });
 
   it('PUT should return api error', async () => {
-    const response = { text: jest.fn(), ok: true };
-    const respBody = '{ "status": "error", "error": "some error" }';
-    response.text.mockResolvedValue(respBody);
+    mock.onAny().reply(200, { status: 'error', message: 'Some Error' });
+
     const params = { p1: 1, p2: 2 };
-
-    abortableFetch.mockResolvedValue(response);
-
     try {
-      const res = await api.put('api/path', params);
+      const p = await api.delete('api/path', params);
     } catch (err) {
       // assert on the error
       expect(err).toBeInstanceOf(ApiError);
+      expect(err.message).toEqual('Some Error');
     }
+  });
+
+  it('PUT should return api error even for error status', async () => {
+    mock.onAny().reply(500, { status: 'error', message: 'Some Error' });
+
+    const params = { p1: 1, p2: 2 };
+    try {
+      const p = await api.delete('api/path', params);
+    } catch (err) {
+      // assert on the error
+      expect(err).toBeInstanceOf(ApiError);
+      expect(err.message).toEqual('Some Error');
+    }
+  });
+});
+
+/**
+ * GET
+ */
+describe('api service auth refresh', () => {
+  afterEach(() => {
+    mock.reset();
+    auth.refreshToken.mockClear();
+  });
+  it('auth token should be refreshed only once for simultaneous calls', async () => {
+    const data1 = { user_id: 1, status: 'success' };
+    const data2 = { user_id: 2, status: 'success' };
+    const data3 = { user_id: 3, status: 'success' };
+
+    auth.refreshToken.mockResolvedValue({
+      refresh_token: 'refresh',
+      access_token: 'access',
+    });
+
+    mock
+      .onGet('api/channels/me1')
+      .replyOnce(401)
+      .onGet('api/channels/me2')
+      .replyOnce(401)
+      .onGet('api/channels/me3')
+      .replyOnce(401)
+      .onGet('api/channels/me1')
+      .replyOnce(200, data1)
+      .onGet('api/channels/me2')
+      .replyOnce(200, data2)
+      .onGet('api/channels/me3')
+      .replyOnce(200, data3);
+
+    const p1 = api.get('api/channels/me1');
+    const p2 = api.get('api/channels/me2');
+    const p3 = api.get('api/channels/me3');
+
+    const [r1, r2, r3] = await Promise.all([p1, p2, p3]);
+
+    // assert on the response
+    expect(r1).toEqual(data1);
+    expect(r2).toEqual(data2);
+    expect(r3).toEqual(data3);
+
+    expect(auth.refreshToken).toBeCalledTimes(1);
+  });
+
+  it('simultaneous calls must fail if token refresh fails', async () => {
+    const data1 = { user_id: 1, status: 'success' };
+    const data2 = { user_id: 2, status: 'success' };
+    const data3 = { user_id: 3, status: 'success' };
+    const data4 = { user_id: 4, status: 'success' };
+
+    const error = new Error('Network error');
+    auth.refreshToken.mockRejectedValue(error);
+
+    mock
+      .onGet('api/channels/me1')
+      .replyOnce(401)
+      .onGet('api/channels/me2')
+      .replyOnce(401)
+      .onGet('api/channels/me3')
+      .replyOnce(401)
+      .onGet('api/channels/me4')
+      .replyOnce(401)
+      .onGet('api/channels/me1')
+      .replyOnce(200, data1)
+      .onGet('api/channels/me2')
+      .replyOnce(200, data2)
+      .onGet('api/channels/me3')
+      .replyOnce(200, data3)
+      .onGet('api/channels/me4')
+      .replyOnce(200, data4);
+
+    const p1 = api.get('api/channels/me1');
+    const p2 = api.get('api/channels/me2');
+    const p3 = api.get('api/channels/me3');
+    const p4 = api.get('api/channels/me4');
+
+    const [r1, r2, r3, r4] = await Promise.all(
+      [p1, p2, p3, p4].map(p => p.catch(e => e)),
+    );
+    // assert on the response
+    expect(r1).toBe(error);
+    expect(r2).toBe(error);
+    expect(r3).toBe(error);
+    expect(r4).toBe(error);
+
+    expect(auth.refreshToken).toBeCalledTimes(1);
   });
 });

@@ -102,7 +102,7 @@ export default class AppInitManager {
       boostedContentService.load(),
     ]);
 
-    logService.info('[App] updatting features');
+    logService.info('[App] updating features');
 
     // register device token into backend on login
 

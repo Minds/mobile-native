@@ -24,6 +24,12 @@ class SessionService {
   refreshToken = '';
 
   /**
+   * Tokens TTL
+   */
+  accessTokenExpires = null;
+  refreshTokenExpires = null;
+
+  /**
    * User guid
    */
   guid = null;
@@ -71,6 +77,9 @@ class SessionService {
       const { access_token, access_token_expires } = accessToken;
       const { refresh_token, refresh_token_expires } = refreshToken;
 
+      this.refreshTokenExpires = refresh_token_expires;
+      this.accessTokenExpires = access_token_expires;
+
       this.setRefreshToken(refresh_token);
       this.setToken(access_token);
 
@@ -84,13 +93,7 @@ class SessionService {
         // refresh_token &&
         // refresh_token_expires * 1000 > Date.now()
       ) {
-        logService.info('[SessionService] refreshing token');
-        const tokens = await AuthService.refreshToken(false);
-
-        this.setRefreshToken(tokens.refresh_token);
-        this.setToken(tokens.access_token);
-
-        this.storeTokens(tokens);
+        await this.refreshAuthToken();
       }
 
       // ensure user loaded before activate the session
@@ -105,6 +108,20 @@ class SessionService {
       logService.exception('[SessionService] error getting tokens', e);
       return null;
     }
+  }
+
+  tokenCanRefresh() {
+    return this.refreshToken && this.refreshTokenExpires * 1000 > Date.now();
+  }
+
+  async refreshAuthToken() {
+    logService.info('[SessionService] refreshing token');
+    const tokens = await AuthService.refreshToken(false);
+
+    this.setRefreshToken(tokens.refresh_token);
+    this.setToken(tokens.access_token);
+
+    this.storeTokens(tokens);
   }
 
   async loadUser(user?: UserModel) {

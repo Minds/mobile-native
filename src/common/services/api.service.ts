@@ -1,4 +1,5 @@
 import Cancelable from 'promise-cancelable';
+import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { NativeModules } from 'react-native';
 
 const LOGOUT_EXCEPTIONS = ['password/validate'];
@@ -9,21 +10,21 @@ import {
   MINDS_CANARY,
   MINDS_STAGING,
   NETWORK_TIMEOUT,
+  OAUTH_ENDPOINT,
 } from '../../config/Config';
 
-import abortableFetch, { abort } from '../helpers/abortableFetch';
 import { Version } from '../../config/Version';
 import logService from './log.service';
-
-import * as Sentry from '@sentry/react-native';
 
 import { observable, action } from 'mobx';
 import { UserError } from '../UserError';
 import i18n from './i18n.service';
+import sessionService from './session.service';
 
 export interface ApiResponse {
   status: 'success' | 'error';
   message?: string;
+  errorId?: string;
 }
 
 /**
@@ -53,7 +54,9 @@ const shouldLogout = (url: string) => {
 /**
  * Api service
  */
-class ApiService {
+export class ApiService {
+  refreshPromise: null | Promise<any> = null;
+  axios: AxiosInstance;
   @observable mustVerify = false;
 
   @action
@@ -61,43 +64,69 @@ class ApiService {
     this.mustVerify = value;
   }
 
-  async parseResponse<T extends ApiResponse>(response, url): Promise<T> {
-    // check status
-    if (response.status) {
-      if (response.status === 401) {
-        if (shouldLogout(url)) {
-          session.logout();
-          throw new UserError('Session lost');
+  constructor(axiosInstance = null) {
+    this.axios =
+      axiosInstance ||
+      axios.create({
+        baseURL: MINDS_API_URI,
+      });
+
+    this.axios.interceptors.request.use(config => {
+      config.headers = this.buildHeaders(config.headers);
+      config.timeout = NETWORK_TIMEOUT;
+      return config;
+    });
+
+    this.axios.interceptors.response.use(
+      response => {
+        this.checkResponse(response);
+        return response;
+      },
+      async error => {
+        const { config: originalReq, response } = error;
+
+        if (response) {
+          // refresh token if possible and repeat the call
+          if (
+            response.status === 401 &&
+            !originalReq._isRetry &&
+            originalReq.url !== MINDS_API_URI + OAUTH_ENDPOINT
+          ) {
+            await this.refreshToken();
+            originalReq._isRetry = true;
+            return this.axios(originalReq);
+          }
+
+          // prompt the user if email verification is needed for this endpoint
+          if (isApiForbidden(response) && response.data.must_verify) {
+            this.setMustVerify(true);
+            throw new ApiError(i18n.t('emailConfirm.confirm'));
+          }
+
+          this.checkResponse(response);
         }
-      }
+
+        throw error;
+      },
+    );
+  }
+
+  /**
+   * Refresh token (only one call at the time)
+   */
+  async refreshToken() {
+    if (!this.refreshPromise) {
+      this.refreshPromise = sessionService.refreshAuthToken();
     }
-
-    let data, text, headers;
-
     try {
-      // Convert from JSON
-      headers = response.headers;
-      text = await response.text();
-      data = JSON.parse(text);
-    } catch (err) {
-      if (response.ok && !__DEV__) {
-        if (response.bodyUsed) {
-          Sentry.captureMessage(`Server Error: ${url}\n${text}`);
-        } else {
-          Sentry.captureMessage(
-            `Server Error: ${response.url}, STATUS: ${response.status}\n${text}`,
-          );
-        }
-      } else {
-        console.log('FAILED API CALL:', url, text);
-      }
-      throw new ApiError(i18n.t('errorMessage'));
+      await this.refreshPromise;
+    } finally {
+      this.refreshPromise = null;
     }
+  }
 
-    if (isApiForbidden(response) && data.must_verify) {
-      this.setMustVerify(true);
-      throw new ApiError(i18n.t('emailConfirm.confirm'));
-    }
+  checkResponse<T extends ApiResponse>(response: AxiosResponse<T>): T {
+    const data = response.data;
 
     // Failed on API side
     if (data && data.status && data.status !== 'success') {
@@ -105,8 +134,11 @@ class ApiService {
       const errId = data && data.errorId ? data.errorId : '';
       const apiError = new ApiError(msg);
       apiError.errId = errId;
-      apiError.headers = headers;
+      apiError.headers = response.headers;
       throw apiError;
+    }
+    if (response.status === 500) {
+      throw new ApiError('Server error');
     }
 
     return data;
@@ -164,8 +196,9 @@ class ApiService {
     if (!params) {
       params = {};
     }
-
-    params.cb = Date.now(); //bust the cache every time
+    if (process.env.JEST_WORKER_ID === undefined) {
+      params.cb = Date.now(); //bust the cache every time
+    }
 
     if (MINDS_STAGING) {
       params.staging = '1';
@@ -175,7 +208,7 @@ class ApiService {
     }
 
     const paramsString = this.getParamsString(params);
-    const sep = url.indexOf('?') > -1 ? '&' : '?';
+    const sep = paramsString ? (url.indexOf('?') > -1 ? '&' : '?') : '';
 
     return `${url}${sep}${paramsString}`;
   }
@@ -198,18 +231,10 @@ class ApiService {
     url: string,
     params: object = {},
     tag: any = null,
-    customHeaders: any = {},
   ): Promise<T> {
-    // build headers
-    const headers = this.buildHeaders(customHeaders);
+    const response = await this.axios.get(this.buildUrl(url, params));
 
-    const response = await abortableFetch(
-      MINDS_API_URI + this.buildUrl(url, params),
-      { headers, timeout: NETWORK_TIMEOUT },
-      tag,
-    );
-
-    return await this.parseResponse<T>(response, url);
+    return response.data;
   }
 
   /**
@@ -220,18 +245,13 @@ class ApiService {
   async post<T extends ApiResponse>(
     url: string,
     body: any = {},
-    customHeaders: any = {},
+    headers: any = {},
   ): Promise<T> {
-    const headers = this.buildHeaders(customHeaders);
-
-    let response = await abortableFetch(MINDS_API_URI + this.buildUrl(url), {
-      method: 'POST',
-      body: JSON.stringify(body),
+    const response = await this.axios.post(this.buildUrl(url), body, {
       headers,
-      timeout: NETWORK_TIMEOUT,
     });
 
-    return await this.parseResponse<T>(response, url);
+    return response.data;
   }
 
   /**
@@ -240,38 +260,27 @@ class ApiService {
    * @param {object} body
    */
   async put<T extends ApiResponse>(url: string, body: any = {}): Promise<T> {
-    const headers = this.buildHeaders();
+    const response = await this.axios.put(this.buildUrl(url), body);
 
-    let response = await abortableFetch(MINDS_API_URI + this.buildUrl(url), {
-      method: 'PUT',
-      body: JSON.stringify(body),
-      headers,
-      timeout: NETWORK_TIMEOUT,
-    });
-
-    return await this.parseResponse<T>(response, url);
+    return response.data;
   }
 
   /**
    * Api delete
    * @param {string} url
-   * @param {object} body
+   * @param {object} data
    */
   async delete<T extends ApiResponse>(
     url: string,
-    body: any = {},
-    customHeaders: any = {},
+    data: any = {},
+    headers: any = {},
   ): Promise<T> {
-    const headers = this.buildHeaders(customHeaders);
-
-    let response = await abortableFetch(MINDS_API_URI + this.buildUrl(url), {
-      method: 'DELETE',
-      body: JSON.stringify(body),
+    const response = await this.axios.delete(this.buildUrl(url), {
+      data,
       headers,
-      timeout: NETWORK_TIMEOUT,
     });
 
-    return await this.parseResponse<T>(response, url);
+    return response.data;
   }
 
   /**
