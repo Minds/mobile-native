@@ -34,4 +34,4 @@ export const shadowOpt = {
   y: 0,
 };
 
-export const icon = { top: Platform.OS === 'ios' ? 26 : 28 };
+export const icon = { top: Platform.OS === 'ios' ? 30 : 33 };

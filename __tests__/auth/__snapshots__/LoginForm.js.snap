@@ -278,7 +278,7 @@ exports[`LoginForm component should renders correctly 1`] = `
                 "top": 36,
               },
               Object {
-                "top": 26,
+                "top": 30,
               },
             ],
             Object {
