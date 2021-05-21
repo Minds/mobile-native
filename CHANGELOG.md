@@ -2,6 +2,16 @@
 
 Minds Mobile
 
+## 4.13.0 - 2021-05-21
+
+### Changed
+
+- Performance improvements
+- Media attachment can now be edited on comments
+- Allow exporting legacy wallets more than once
+- Scroll added to the main menu for small screens
+- Bug fixing
+
 ## 4.12.0 - 2021-05-05
 
 ### Changed
