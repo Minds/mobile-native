@@ -53,8 +53,8 @@ const MindsVideo = observer((props: PropsType) => {
 
   const onStoreCreated = props.onStoreCreated;
 
-  // limit the video thumb to a maximum size of 1024
-  const posterSource = useRef(getVideoThumb(props.entity, 1024)).current;
+  const posterSource = useRef(props.entity ? getVideoThumb(props.entity) : null)
+    .current;
   const thumbnailSource = useRef(
     props.entity && dataSaverEnabled
       ? getVideoThumb(props.entity, DATA_SAVER_THUMB_RES)
