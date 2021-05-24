@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 
 import NewsfeedScreen from '../newsfeed/NewsfeedScreen';
-import NotificationsScreen from '../notifications/NotificationsScreen';
+import NotificationsScreen from '../notifications/v3/NotificationsScreen';
 import ThemedStyles, { useStyle } from '../styles/ThemedStyles';
 import TabIcon from './TabIcon';
 import NotificationIcon from '../notifications/NotificationsTabIcon';

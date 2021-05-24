@@ -21,7 +21,7 @@ import ForgotScreen from '../auth/ForgotScreen';
 import ReferralsScreen from '../referral/ReferralsScreen';
 import DataSaverScreen from '../settings/screens/DataSaverScreen';
 import TabsScreen from '../tabs/TabsScreen';
-import NotificationsScreen from '../notifications/NotificationsScreen';
+import NotificationsScreen from '../notifications/v3/NotificationsScreen';
 import ActivityScreen from '../newsfeed/ActivityScreen';
 import ChannelSubscribers from '../channel/subscribers/ChannelSubscribers';
 import RegisterScreen from '../auth/RegisterScreen';

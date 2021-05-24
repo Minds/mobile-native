@@ -425,7 +425,16 @@
     "rewardsStateDecrease": "We miss you! You just dropped down to a {{state}} user.",
     "rewardsStateDecrease1": "Your daily token reward multiplier has been reduced to {{multiplier}}x",
     "rewardsStateDecreaseToday": "It's not too late! You will drop down to a {{state}} user by the end of today and your daily token reward multiplier will reduce to {{multiplier}}x. Get liking and commenting to bring your score back up!",
-    "rewardsSummary": "You earned {{amount}} tokens yesterday."
+    "rewardsSummary": "You earned {{amount}} tokens yesterday.",
+    "verbs": {
+      "vote_up": "voted up",
+      "vote_down": "voted down",
+      "comment": "commented on",
+      "tag": "tagged you in",
+      "remind": "reminded",
+      "quote": "quoted",
+      "subscribe": "subscribed to"
+    }
   },
   "notificationSettings": {
     "enableDisable": "Enable and disable push notifications",

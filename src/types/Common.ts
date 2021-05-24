@@ -72,3 +72,30 @@ export interface SocialProfileMeta {
   customIcon?: boolean;
   domain: string;
 }
+
+export type NotificationType =
+  | 'vote_up'
+  | 'vote_down'
+  | 'comment'
+  | 'tag'
+  | 'remind'
+  | 'quote'
+  | 'subscribe';
+
+export interface Notification {
+  created_timestamp: number;
+  data: any;
+  entity: ActivityModel;
+  entity_urn: string;
+  from: UserModel;
+  from_guid: string;
+  merge_key: string;
+  merged_count: number;
+  merged_from: string[];
+  merged_from_guids: string[];
+  read: boolean;
+  to_guid: string;
+  type: NotificationType;
+  urn: string;
+  uuid: string;
+}

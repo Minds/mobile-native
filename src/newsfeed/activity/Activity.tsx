@@ -47,6 +47,7 @@ type PropsType = {
   onLayout?: Function;
   showCommentsOutlet?: boolean;
   storeUserTap?: boolean;
+  showOnlyContent?: boolean;
 };
 
 /**
@@ -239,10 +240,16 @@ export default class Activity extends Component<PropsType> {
 
     return (
       <View
-        style={this.props.isReminded ? remindedContainerStyle : containerStyle}
+        style={
+          this.props.isReminded
+            ? remindedContainerStyle
+            : this.props.showOnlyContent
+            ? onlyContentContainerStyle
+            : containerStyle
+        }
         onLayout={this.onLayout}>
         <Pinned entity={this.props.entity} />
-        {this.showOwner()}
+        {!this.props.showOnlyContent && this.showOwner()}
         {showNSFW ? (
           <ExplicitOverlay entity={this.props.entity} />
         ) : (
@@ -273,10 +280,12 @@ export default class Activity extends Component<PropsType> {
                 : undefined}
             </View>
 
-            <ActivityMetrics entity={this.props.entity} />
-            {this.showActions()}
-            {this.renderScheduledMessage()}
-            {this.renderPendingMessage()}
+            {!this.props.showOnlyContent && (
+              <ActivityMetrics entity={this.props.entity} />
+            )}
+            {!this.props.showOnlyContent && this.showActions()}
+            {!this.props.showOnlyContent && this.renderScheduledMessage()}
+            {!this.props.showOnlyContent && this.renderPendingMessage()}
           </TouchableOpacity>
         )}
       </View>
@@ -404,6 +413,7 @@ export default class Activity extends Component<PropsType> {
             isReminded={true}
             parentMature={this.props.entity.shouldBeBlured()}
             hydrateOnNav={true}
+            showOnlyContent={this.props.showOnlyContent}
           />
         </View>
       );
@@ -510,6 +520,13 @@ const remindContainerStyle = ThemedStyles.combine(
 const containerStyle = ThemedStyles.combine(
   styles.container,
   'borderBottom8x',
+  'borderBackgroundTertiary',
+  'backgroundPrimary',
+);
+
+const onlyContentContainerStyle = ThemedStyles.combine(
+  styles.container,
+  'borderHair',
   'borderBackgroundTertiary',
   'backgroundPrimary',
 );
