@@ -1,6 +1,5 @@
 //@ts-nocheck
 import api from './../common/services/api.service';
-import { abort } from '../common/helpers/abortableFetch';
 import blockListService from '../common/services/block-list.service';
 import logService from '../common/services/log.service';
 import i18n from '../common/services/i18n.service';

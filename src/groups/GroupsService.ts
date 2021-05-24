@@ -1,10 +1,6 @@
 //@ts-nocheck
-import { InteractionManagerStatic } from 'react-native';
 import api from './../common/services/api.service';
-import { abort } from '../common/helpers/abortableFetch';
 import { getStores } from '../../AppStores';
-import featuresService from '../common/services/features.service';
-import entitiesService from '../common/services/entities.service';
 
 /**
  * Groups Service
