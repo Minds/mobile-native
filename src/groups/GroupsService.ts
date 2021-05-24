@@ -1,10 +1,6 @@
 //@ts-nocheck
-import { InteractionManagerStatic } from 'react-native';
 import api from './../common/services/api.service';
-import { abort } from '../common/helpers/abortableFetch';
 import { getStores } from '../../AppStores';
-import featuresService from '../common/services/features.service';
-import entitiesService from '../common/services/entities.service';
 
 /**
  * Groups Service
@@ -19,9 +15,6 @@ class GroupsService {
         ? 'api/v2/entities/suggested/groups' +
           (getStores().hashtag.all ? '/all' : '')
         : 'api/v1/groups/' + filter;
-
-    // abort previous call
-    abort('groups:list');
 
     const data = await api.get(endpoint, { limit: 12, offset }, 'groups:list');
 
@@ -63,8 +56,6 @@ class GroupsService {
     if (pinned) {
       opts.pinned = pinned;
     }
-
-    abort('groups:feed');
 
     const response = await api.get(endpoint, opts, 'groups:feed');
 

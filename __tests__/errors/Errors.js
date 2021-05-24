@@ -1,7 +1,6 @@
-import {ApiError} from '../../src/common/services/api.service';
+import { ApiError, NetworkError } from '../../src/common/services/api.service';
 import shouldReportToSentry from '../../src/common/helpers/errors';
 import { UserError } from '../../src/common/UserError';
-import { Abort } from '../../src/common/helpers/abortableFetch';
 
 describe('error handling', () => {
   beforeEach(() => {});
@@ -43,12 +42,13 @@ describe('error handling', () => {
   });
 
   it('should not log Network errors', () => {
-    const error = new TypeError('Network request failed');
+    const error = new NetworkError('Network request failed');
     expect(shouldReportToSentry(error)).toBe(false);
   });
 
   it('should not log Abort errors', () => {
-    const error = new Abort('Aborted');
+    const error = new Error('Aborted');
+    error.__CANCEL__ = true;
     expect(shouldReportToSentry(error)).toBe(false);
   });
 

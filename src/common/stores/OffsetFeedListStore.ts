@@ -2,9 +2,9 @@
 import { action } from 'mobx';
 
 import { setViewed } from '../../newsfeed/NewsfeedService';
+import { isNetworkError } from '../services/api.service';
 
 import OffsetListStore from './OffsetListStore';
-import { isNetworkFail } from '../helpers/abortableFetch';
 
 /**
  * Infinite scroll list that inform viewed
@@ -47,7 +47,7 @@ export default class OffsetFeedListStore extends OffsetListStore {
         await setViewed(entity, meta);
       } catch (e) {
         this.viewed.delete(entity.guid);
-        if (!isNetworkFail(e)) {
+        if (!isNetworkError(e)) {
           throw e;
         }
       }
