@@ -20,9 +20,6 @@ class GroupsService {
           (getStores().hashtag.all ? '/all' : '')
         : 'api/v1/groups/' + filter;
 
-    // abort previous call
-    abort('groups:list');
-
     const data = await api.get(endpoint, { limit: 12, offset }, 'groups:list');
 
     let entities = filter === 'suggested' ? data.entities : data.groups;
@@ -63,8 +60,6 @@ class GroupsService {
     if (pinned) {
       opts.pinned = pinned;
     }
-
-    abort('groups:feed');
 
     const response = await api.get(endpoint, opts, 'groups:feed');
 

@@ -7,6 +7,12 @@ import { getStores } from '../../../AppStores';
 import logService from './log.service';
 import type UserModel from '../../channel/UserModel';
 
+export class TokenExpiredError extends Error {}
+
+export const isTokenExpired = error => {
+  return error instanceof TokenExpiredError;
+};
+
 /**
  * Session service
  */
@@ -88,10 +94,9 @@ class SessionService {
       }
 
       if (
-        true // always refresh for now
-        // access_token_expires * 1000 < Date.now() &&
-        // refresh_token &&
-        // refresh_token_expires * 1000 > Date.now()
+        access_token_expires * 1000 < Date.now() &&
+        refresh_token &&
+        refresh_token_expires * 1000 > Date.now()
       ) {
         await this.refreshAuthToken();
       }
@@ -116,12 +121,15 @@ class SessionService {
 
   async refreshAuthToken() {
     logService.info('[SessionService] refreshing token');
-    const tokens = await AuthService.refreshToken(false);
+    if (this.tokenCanRefresh()) {
+      const tokens = await AuthService.refreshToken(false);
+      this.setRefreshToken(tokens.refresh_token);
+      this.setToken(tokens.access_token);
 
-    this.setRefreshToken(tokens.refresh_token);
-    this.setToken(tokens.access_token);
-
-    this.storeTokens(tokens);
+      this.storeTokens(tokens);
+    } else {
+      throw new TokenExpiredError('Session Expired');
+    }
   }
 
   async loadUser(user?: UserModel) {

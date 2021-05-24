@@ -57,7 +57,6 @@ const createCashTransactionsStore = ({ wallet, user }: ParamsType) => {
     },
     async load() {
       this.setLoading(true);
-      // api.abort(this);
       try {
         const result = await api.get<any>(
           'api/v2/payments/stripe/transactions',

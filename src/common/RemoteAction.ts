@@ -1,9 +1,8 @@
 //@ts-nocheck
 import connectivityService from './services/connectivity.service';
-import { isNetworkFail } from './helpers/abortableFetch';
 import i18nService from './services/i18n.service';
 import { Alert } from 'react-native';
-import { isApiError } from './services/api.service';
+import { isApiError, isNetworkError } from './services/api.service';
 import { isUserError } from './UserError';
 
 /**
@@ -25,7 +24,7 @@ async function remoteAction(
   } catch (error) {
     let message;
 
-    if (isNetworkFail(error)) {
+    if (isNetworkError(error)) {
       if (retries > 0) {
         return await remoteAction(action, actionName, --retries);
       }

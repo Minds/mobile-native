@@ -1,16 +1,12 @@
 import { Platform } from 'react-native';
 
 import api from './../common/services/api.service';
-import { abort } from '../common/helpers/abortableFetch';
 import { getStores } from '../../AppStores';
 import logService from '../common/services/log.service';
 import connectivityService from '../common/services/connectivity.service';
 
 export default class NewsfeedService {
   async _getFeed(endpoint, offset, limit) {
-    // abort previous fetchs
-    abort(this);
-
     const data: any = await api.get(endpoint, { offset, limit }, this);
     return {
       entities: data.activity || data.entities,
@@ -56,8 +52,6 @@ export default class NewsfeedService {
    * @param {Number} limit
    */
   async getBoosts(offset, limit = 15, rating = 1) {
-    abort(this);
-
     const data: any = await api.get(
       'api/v1/boost/fetch/newsfeed',
       {

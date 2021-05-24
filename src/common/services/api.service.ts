@@ -1,16 +1,19 @@
 import Cancelable from 'promise-cancelable';
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import axios, { AxiosInstance, AxiosResponse, CancelTokenSource } from 'axios';
 import { NativeModules } from 'react-native';
 
-const LOGOUT_EXCEPTIONS = ['password/validate'];
+// ignore 401 for this URLs
+const EXCEPTIONS_401 = [
+  'api/v2/settings/password/validate',
+  'api/v3/oauth/token',
+];
 
-import session from './session.service';
+import session, { isTokenExpired } from './session.service';
 import {
   MINDS_API_URI,
   MINDS_CANARY,
   MINDS_STAGING,
   NETWORK_TIMEOUT,
-  OAUTH_ENDPOINT,
 } from '../../config/Config';
 
 import { Version } from '../../config/Version';
@@ -19,7 +22,6 @@ import logService from './log.service';
 import { observable, action } from 'mobx';
 import { UserError } from '../UserError';
 import i18n from './i18n.service';
-import sessionService from './session.service';
 
 export interface ApiResponse {
   status: 'success' | 'error';
@@ -39,16 +41,25 @@ export class ApiError extends Error {
   }
 }
 
+export class NetworkError extends Error {}
+
 export const isApiError = function (err) {
   return err instanceof ApiError;
+};
+export const isNetworkError = function (err) {
+  return err instanceof NetworkError;
 };
 
 export const isApiForbidden = function (err) {
   return err.status === 403;
 };
 
-const shouldLogout = (url: string) => {
-  return !LOGOUT_EXCEPTIONS.some(e => url.includes(e));
+export const isAbort = error => {
+  return axios.isCancel(error);
+};
+
+const isNot401Exception = (url: string) => {
+  return !EXCEPTIONS_401.some(e => url.startsWith(e));
 };
 
 /**
@@ -57,6 +68,7 @@ const shouldLogout = (url: string) => {
 export class ApiService {
   refreshPromise: null | Promise<any> = null;
   axios: AxiosInstance;
+  abortTags = new Map<any, CancelTokenSource>();
   @observable mustVerify = false;
 
   @action
@@ -83,18 +95,18 @@ export class ApiService {
         return response;
       },
       async error => {
-        const { config: originalReq, response } = error;
+        const { config: originalReq, response, request } = error;
 
         if (response) {
           // refresh token if possible and repeat the call
           if (
             response.status === 401 &&
             !originalReq._isRetry &&
-            originalReq.url !== MINDS_API_URI + OAUTH_ENDPOINT
+            isNot401Exception(originalReq.url)
           ) {
             await this.refreshToken();
             originalReq._isRetry = true;
-            return this.axios(originalReq);
+            return this.axios.request(originalReq);
           }
 
           // prompt the user if email verification is needed for this endpoint
@@ -104,6 +116,8 @@ export class ApiService {
           }
 
           this.checkResponse(response);
+        } else if (request) {
+          throw new NetworkError(error.message); // server down or there is not connectivity
         }
 
         throw error;
@@ -116,10 +130,20 @@ export class ApiService {
    */
   async refreshToken() {
     if (!this.refreshPromise) {
-      this.refreshPromise = sessionService.refreshAuthToken();
+      this.refreshPromise = session.refreshAuthToken();
     }
     try {
       await this.refreshPromise;
+    } catch (error) {
+      if (
+        (isTokenExpired(error) ||
+          (error.response && error.response.status === 401)) &&
+        session.token
+      ) {
+        session.logout();
+        throw new UserError('Session expired');
+      }
+      throw error;
     } finally {
       this.refreshPromise = null;
     }
@@ -149,7 +173,11 @@ export class ApiService {
    * @param tag
    */
   abort(tag: any) {
-    abort(tag);
+    const source = this.abortTags.get(tag);
+    if (source) {
+      source.cancel();
+      this.abortTags.delete(tag);
+    }
   }
 
   /**
@@ -232,7 +260,19 @@ export class ApiService {
     params: object = {},
     tag: any = null,
   ): Promise<T> {
-    const response = await this.axios.get(this.buildUrl(url, params));
+    let opt;
+    if (tag) {
+      const source = this.abortTags.get(tag);
+      // cancel previous if exists
+      if (source && source.cancel) {
+        source.cancel();
+      }
+      const s = axios.CancelToken.source();
+      opt = { cancelToken: s.token };
+      this.abortTags.set(tag, opt.cancelToken);
+    }
+
+    const response = await this.axios.get(this.buildUrl(url, params), opt);
 
     return response.data;
   }

@@ -5,6 +5,7 @@ import session from '../../../src/common/services/session.service';
 import auth from '../../../src/auth/AuthService';
 import { MINDS_API_URI } from '../../../src/config/Config';
 import { UserError } from '../../../src/common/UserError';
+import sessionService from '../../../src/common/services/session.service';
 
 jest.mock('../../../src/auth/AuthService');
 
@@ -311,6 +312,8 @@ describe('api service auth refresh', () => {
     auth.refreshToken.mockClear();
   });
   it('auth token should be refreshed only once for simultaneous calls', async () => {
+    sessionService.refreshTokenExpires = Date.now() / 1000 + 10000;
+    sessionService.refreshToken = 'refreshtoken';
     const data1 = { user_id: 1, status: 'success' };
     const data2 = { user_id: 2, status: 'success' };
     const data3 = { user_id: 3, status: 'success' };
@@ -348,7 +351,10 @@ describe('api service auth refresh', () => {
     expect(auth.refreshToken).toBeCalledTimes(1);
   });
 
-  it('simultaneous calls must fail if token refresh fails', async () => {
+  it('must fail without logout if token refresh fails by connectivity/server error', async () => {
+    sessionService.refreshTokenExpires = Date.now() / 1000 + 10000;
+    // has session token
+    sessionService.token = 'sometoken';
     const data1 = { user_id: 1, status: 'success' };
     const data2 = { user_id: 2, status: 'success' };
     const data3 = { user_id: 3, status: 'success' };
@@ -384,10 +390,45 @@ describe('api service auth refresh', () => {
       [p1, p2, p3, p4].map(p => p.catch(e => e)),
     );
     // assert on the response
-    expect(r1).toBe(error);
+    expect(r1).toBe(error); //
     expect(r2).toBe(error);
     expect(r3).toBe(error);
     expect(r4).toBe(error);
+
+    expect(auth.refreshToken).toBeCalledTimes(1);
+  });
+
+  it('it should logout if refresh fails with response is 401', async () => {
+    // not expired session token
+    sessionService.refreshTokenExpires = Date.now() / 1000 + 10000;
+    // has session token
+    sessionService.token = 'sometoken';
+
+    const data1 = { user_id: 1, status: 'success' };
+    const data2 = { user_id: 2, status: 'success' };
+
+    const error = { response: { status: 401 } };
+    auth.refreshToken.mockRejectedValue(error);
+
+    mock
+      .onGet('api/channels/me1')
+      .replyOnce(401)
+      .onGet('api/channels/me2')
+      .replyOnce(401)
+      .onGet('api/channels/me1')
+      .replyOnce(200, data1)
+      .onGet('api/channels/me2')
+      .replyOnce(200, data2);
+
+    const p1 = api.get('api/channels/me1');
+    const p2 = api.get('api/channels/me2');
+
+    const [r1, r2] = await Promise.all([p1, p2].map(p => p.catch(e => e)));
+
+    // assert on the response
+    expect(r1).toBeInstanceOf(UserError);
+    expect(r1.message).toEqual('Session expired');
+    expect(r2).toBe(error);
 
     expect(auth.refreshToken).toBeCalledTimes(1);
   });

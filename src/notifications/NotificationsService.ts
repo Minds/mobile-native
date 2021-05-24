@@ -1,5 +1,7 @@
-import api, { ApiResponse } from './../common/services/api.service';
-import { abort, isNetworkFail } from '../common/helpers/abortableFetch';
+import api, {
+  ApiResponse,
+  isNetworkError,
+} from './../common/services/api.service';
 import logService from '../common/services/log.service';
 import { FilterType } from './NotificationsStore';
 
@@ -9,9 +11,6 @@ interface NotificationsServiceResponse extends ApiResponse {
 
 export default class NotificationsService {
   async getFeed(offset: string, filter: FilterType) {
-    // abort previous call
-    abort(this);
-
     try {
       const data = await (<Promise<NotificationsServiceResponse>>(
         api.get(
@@ -29,7 +28,7 @@ export default class NotificationsService {
       if (err.code === 'Abort') {
         return;
       }
-      if (!isNetworkFail(err)) {
+      if (!isNetworkError(err)) {
         logService.exception('[NotificationsService]', err);
       }
       throw err;

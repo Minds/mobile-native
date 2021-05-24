@@ -17,12 +17,12 @@ import { toggleExplicit } from '../../newsfeed/NewsfeedService';
 import RichEmbedStore from '../../common/stores/RichEmbedStore';
 import logService from '../../common/services/log.service';
 import NavigationService from '../../navigation/NavigationService';
-import { isNetworkFail } from '../../common/helpers/abortableFetch';
 import type ActivityModel from '../../newsfeed/ActivityModel';
 import type BlogModel from '../../blogs/BlogModel';
 import type GroupModel from '../../groups/GroupModel';
 import { showNotification } from '../../../AppMessages';
 import i18n from '../../common/services/i18n.service';
+import { isNetworkError } from '../../common/services/api.service';
 
 const COMMENTS_PAGE_SIZE = 6;
 
@@ -196,7 +196,7 @@ export default class CommentsStore {
       } else {
         this.setErrorLoadingNext(true);
       }
-      if (!isNetworkFail(err)) {
+      if (!isNetworkError(err)) {
         logService.exception('[CommentsStore] loadComments', err);
       }
     } finally {
