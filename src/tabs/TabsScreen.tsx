@@ -1,19 +1,10 @@
 import React, { useCallback } from 'react';
-
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import {
-  View,
-  Platform,
-  TouchableOpacity,
-  StyleSheet,
-  Dimensions,
-  PlatformIOSStatic,
-  Text,
-} from 'react-native';
-
+import { View, TouchableOpacity, StyleSheet, Text } from 'react-native';
 import NewsfeedScreen from '../newsfeed/NewsfeedScreen';
 import NotificationsScreen from '../notifications/NotificationsScreen';
-import ThemedStyles, { useStyle } from '../styles/ThemedStyles';
+import ThemedStyles from '../styles/ThemedStyles';
+import { IS_IPAD } from '../styles/Tokens';
 import TabIcon from './TabIcon';
 import NotificationIcon from '../notifications/NotificationsTabIcon';
 import gatheringService from '../common/services/gathering.service';
@@ -22,16 +13,12 @@ import { DiscoveryV2Screen } from '../discovery/v2/DiscoveryV2Screen';
 import ComposeIcon from '../compose/ComposeIcon';
 import Topbar from '../topbar/Topbar';
 import { InternalStack } from '../navigation/NavigationStack';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import TopShadow from '../common/components/TopShadow';
 import { GOOGLE_PLAY_STORE } from '../config/Config';
 import i18n from '../common/services/i18n.service';
 import sessionService from '../common/services/session.service';
-import { useStores } from '../common/hooks/use-stores';
 import ChatTabIcon from '../chat/ChatTabIcon';
 import navigationService from '../navigation/NavigationService';
-
-const isIOS = Platform.OS === 'ios';
+import TabBar from './TabBar';
 
 export type TabParamList = {
   Newsfeed: {};
@@ -41,19 +28,6 @@ export type TabParamList = {
   Notifications: {};
   CaptureTab: {};
 };
-
-const { width } = Dimensions.get('screen');
-
-const shadowOpt = {
-  width,
-  color: '#000000',
-  border: 3.5,
-  opacity: 0.08,
-  x: 0,
-  y: 0,
-};
-
-const isPad = (Platform as PlatformIOSStatic).isPad;
 
 const Tab = createBottomTabNavigator<TabParamList>();
 
@@ -69,81 +43,6 @@ const Discovery = GOOGLE_PLAY_STORE
       );
     }
   : DiscoveryV2Screen;
-
-const TabBar = ({ state, descriptors, navigation }) => {
-  const focusedOptions = descriptors[state.routes[state.index].key].options;
-  const insets = useSafeAreaInsets();
-  const { chat } = useStores();
-
-  const bottomInset = {
-    paddingBottom: insets.bottom
-      ? isPad
-        ? insets.bottom
-        : insets.bottom - 10
-      : 10,
-  };
-
-  const containerStyle = useStyle(
-    'rowJustifySpaceEvenly',
-    'backgroundSecondary',
-    styles.tabBar,
-    bottomInset,
-  );
-
-  if (focusedOptions.tabBarVisible === false) {
-    return null;
-  }
-
-  return (
-    <View style={containerStyle}>
-      {!isIOS && <TopShadow setting={shadowOpt} />}
-      {state.routes.map((route, index) => {
-        const { options } = descriptors[route.key];
-        const focused = state.index === index;
-        const icon = options.tabBarIcon({ focused, route });
-
-        const onPress = () => {
-          const event = navigation.emit({
-            type: 'tabPress',
-            target: route.key,
-            canPreventDefault: true,
-          });
-
-          if (route.name === 'MessengerTab') {
-            chat.openChat();
-            return;
-          }
-
-          if (!focused && !event.defaultPrevented) {
-            navigation.navigate(route.name);
-          }
-        };
-
-        const onLongPress = () => {
-          navigation.emit({
-            type: 'tabLongPress',
-            target: route.key,
-          });
-        };
-
-        const Component = options.tabBarButton || TouchableOpacity;
-
-        return (
-          <Component
-            accessibilityRole="button"
-            accessibilityState={focused ? focusedState : null}
-            accessibilityLabel={options.tabBarAccessibilityLabel}
-            testID={options.tabBarTestID}
-            onPress={onPress}
-            onLongPress={onLongPress}
-            style={styles.buttonContainer}>
-            {icon}
-          </Component>
-        );
-      })}
-    </View>
-  );
-};
 
 /**
  * Main tabs
@@ -229,26 +128,8 @@ const Tabs = observer(function ({ navigation }) {
 
 const styles = StyleSheet.create({
   compose: {
-    width: 48,
-    height: 46,
-  },
-  buttonContainer: {
-    flex: 1,
-    alignContent: 'center',
-    alignItems: 'center',
-    alignSelf: 'center',
-    justifyContent: 'center',
-    height: 35,
-    marginBottom: 3,
-  },
-  tabBar: {
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: -1 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-    paddingTop: 15,
-    paddingLeft: 20,
-    paddingRight: 20,
+    width: 42,
+    height: 40,
   },
 });
 
@@ -258,13 +139,15 @@ const navToChannel = () =>
 const notificationOptions = { tabBarTestID: 'Notifications tab button' };
 const messengerOptions = { tabBarTestID: 'Messenger tab button' };
 const discoveryOptions = { tabBarTestID: 'Discovery tab button' };
-const focusedState = { selected: true };
+
 const tabBar = props => <TabBar {...props} />;
+
 const userOptions = {
   tabBarTestID: 'CaptureTabButton',
   tabBarButton: props => <TouchableOpacity {...props} onPress={navToChannel} />,
 };
 const empty = () => null;
+
 const tabOptions = ({ route }) => ({
   tabBarIcon: ({ focused }) => {
     const color = focused
@@ -294,7 +177,7 @@ const tabOptions = ({ route }) => ({
         return <ComposeIcon style={styles.compose} />;
     }
 
-    if (isPad) {
+    if (IS_IPAD) {
       iconsize = Math.round(iconsize * 1.2);
     }
 

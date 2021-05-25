@@ -21,6 +21,7 @@ interface PropsType {
 export default class TabIcon extends PureComponent<PropsType> {
   render() {
     const theme = ThemedStyles.style;
+
     const { name, size, color } = this.props;
     let icon;
     switch (name) {

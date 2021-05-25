@@ -903,7 +903,7 @@ SPEC CHECKSUMS:
   EXSecureStore: 1b571851e6068b30b8ec097be848a04603c03bae
   EXSQLite: bda6a286dded0637bb312ee781239dcca163ff4b
   FBLazyVector: 7b423f9e248eae65987838148c36eec1dbfe0b53
-  FBReactNativeSpec: 3b6cd8de9fd30a2e0e689694d74526cf1f9f5962
+  FBReactNativeSpec: 90f6605661306118be4970ec0b9aefa9be990d0a
   Flipper: d3da1aa199aad94455ae725e9f3aa43f3ec17021
   Flipper-DoubleConversion: 38631e41ef4f9b12861c67d17cb5518d06badc41
   Flipper-Folly: 755929a4f851b2fb2c347d533a23f191b008554c

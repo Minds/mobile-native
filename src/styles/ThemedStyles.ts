@@ -26,6 +26,7 @@ export class ThemedStylesStore {
 
   navTheme?: object = undefined;
   defaultScreenOptions?: any = undefined;
+  colorTheme?: any = null;
 
   /**
    * Style
@@ -116,7 +117,7 @@ export class ThemedStylesStore {
    * Generates the current theme
    */
   generateStyle() {
-    const theme = this.theme ? DARK_THEME : LIGHT_THEME;
+    this.colorTheme = this.theme ? DARK_THEME : LIGHT_THEME;
 
     const baseTheme = this.theme === 0 ? DefaultTheme : DarkTheme;
 
@@ -126,18 +127,18 @@ export class ThemedStylesStore {
         ...baseTheme.colors,
         background: 'transparent',
         // card: theme.backgroundSecondary, // generates an error on ios
-        text: theme.primary_text,
-        primary: theme.icon,
+        text: this.colorTheme.primary_text,
+        primary: this.colorTheme.icon,
       },
     };
 
     this.defaultScreenOptions = {
       title: '',
       headerStyle: {
-        backgroundColor: theme.primary_background,
+        backgroundColor: this.colorTheme.primary_background,
       },
       contentStyle: {
-        backgroundColor: theme.primary_background,
+        backgroundColor: this.colorTheme.primary_background,
       },
       stackAnimation: Platform.select({
         ios: 'default',
@@ -151,7 +152,7 @@ export class ThemedStylesStore {
       this.defaultScreenOptions.headerTopInsetEnabled = false;
     }
 
-    const newStyle = StyleSheet.create(buildStyle(theme));
+    const newStyle = StyleSheet.create(buildStyle(this.colorTheme));
 
     // we assign to the same object to keep an stable reference to the styles even when the theme change.
     Object.getOwnPropertyNames(this.style).forEach(key => {
