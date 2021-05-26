@@ -92,7 +92,7 @@ const NotificationItem = ({ notification }: PropsType) => {
               </Text>
             )}
             {' ' + i18n.t(`notification.verbs.${notification.type}`)}
-            {' ' + i18n.t(pronoun)}
+            {' ' + pronoun !== '' ? i18n.t(pronoun) : ''}
             <Text style={bodyTextImportantStyle} onPress={router.navToEntity}>
               {' ' + noun}
             </Text>
