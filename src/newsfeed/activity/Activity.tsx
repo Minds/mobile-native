@@ -260,7 +260,12 @@ export default class Activity extends Component<PropsType> {
             onLongPress={this.copyText}
             onLayout={this.onLayout}
             testID="ActivityView">
-            <View style={styles.bodyContainer}>
+            <View
+              style={
+                this.props.showOnlyContent
+                  ? styles.onlyContentbodyContainer
+                  : styles.bodyContainer
+              }>
               {lock}
               {/* Shows ontop only for rich embed or reminds */}
               {this.props.entity.perma_url || this.props.entity.remind_object
@@ -441,6 +446,9 @@ const styles = StyleSheet.create({
   },
   bodyContainer: {
     minHeight: 150,
+    justifyContent: 'center',
+  },
+  onlyContentbodyContainer: {
     justifyContent: 'center',
   },
   messageContainer: {
