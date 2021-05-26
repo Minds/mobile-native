@@ -55,13 +55,15 @@ const NotificationItem = ({ notification }: PropsType) => {
   const hasMerged =
     notification.merged_count === 1 && notification.merged_from[0];
 
+  const navToFromChannel = () => router.navToChannel(fromUser);
+
   return (
     <View style={containerStyle}>
       <View style={styles.innerContainer}>
         <View style={styles.avatarContainer}>
           {
             //@ts-ignore
-            <DebouncedTouchableOpacity onPress={router.navToChannel(fromUser)}>
+            <DebouncedTouchableOpacity onPress={navToFromChannel}>
               <FastImage source={avatarSrc} style={styles.avatar} />
             </DebouncedTouchableOpacity>
           }
@@ -70,9 +72,7 @@ const NotificationItem = ({ notification }: PropsType) => {
         </View>
         <View style={styles.bodyContainer}>
           <Text style={bodyTextStyle}>
-            <Text
-              style={bodyTextImportantStyle}
-              onPress={() => router.navToChannel(fromUser)}>
+            <Text style={bodyTextImportantStyle} onPress={navToFromChannel}>
               {fromUser.name}
             </Text>
             {hasMerged && (
