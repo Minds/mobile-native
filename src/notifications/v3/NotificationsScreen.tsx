@@ -1,29 +1,52 @@
-import React, { useCallback } from 'react';
-import { observer, useLocalStore } from 'mobx-react';
-import { View, Text, FlatList } from 'react-native';
+import React from 'react';
+import { observer } from 'mobx-react';
+import { View, Text, FlatList, ViewToken } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import NotificationsTopBar from './NotificationsTopBar';
 import { useFocusEffect } from '@react-navigation/native';
-import createNotificationsStore from './createNotificationsStore';
 import useApiFetch from '../../common/hooks/useApiFetch';
 import { Notification } from '../../types/Common';
 import i18n from '../../common/services/i18n.service';
 import NotificationItem from './notification/Notification';
+import { useStores } from '../../common/hooks/use-stores';
 
 type PropsType = {};
 
+const viewabilityConfig = {
+  itemVisiblePercentThreshold: 50,
+  minimumViewTime: 300,
+  waitForInteraction: false,
+};
+
+type NotificationList = {
+  status: string;
+  notifications: Notification[];
+  'load-next': string;
+};
+
 const NotificationsScreen = observer(({}: PropsType) => {
   const theme = ThemedStyles.style;
-  const store = useLocalStore(createNotificationsStore);
-
-  const { result, error, loading, fetch, setResult } = useApiFetch<{
-    notifications: Notification[];
-  }>('api/v3/notifications/list', {
+  const { notifications } = useStores();
+  const {
+    result,
+    error,
+    loading,
+    fetch,
+    setResult,
+  } = useApiFetch<NotificationList>('api/v3/notifications/list', {
     params: {
-      filter: store.filter,
+      filter: notifications.filter,
       limit: 15,
-      offset: store.offset,
+      offset: notifications.offset,
     },
+    updateState: (newData: NotificationList, oldData: NotificationList) =>
+      ({
+        ...newData,
+        notifications: [
+          ...(oldData ? oldData.notifications : []),
+          ...newData.notifications,
+        ],
+      } as NotificationList),
     persist: true,
   });
 
@@ -31,29 +54,22 @@ const NotificationsScreen = observer(({}: PropsType) => {
     !loading &&
       result &&
       result['load-next'] &&
-      store.setOffset(result['load-next']);
+      notifications.setOffset(result['load-next']);
   };
 
-  const refresh = () => {
-    store.setOffset('');
+  const refresh = React.useCallback(() => {
+    notifications.setOffset('');
     setResult(null);
     fetch();
-  };
+  }, [fetch, setResult, notifications]);
 
   useFocusEffect(
-    useCallback(() => {
-      if (store.unread > 0) {
-        //store.refresh();
-        store.setUnread(0);
+    React.useCallback(() => {
+      if (notifications.unread > 0 && !loading) {
+        refresh();
       }
-    }, [store]),
+    }, []),
   );
-
-  const renderItem = useCallback((row: any): React.ReactElement => {
-    const notification = row.item;
-
-    return <NotificationItem notification={notification} />;
-  }, []);
 
   if (error && !loading) {
     return (
@@ -73,21 +89,43 @@ const NotificationsScreen = observer(({}: PropsType) => {
 
   const data = result?.notifications || [];
 
+  const onViewableItemsChanged = React.useCallback(
+    (viewableItems: { viewableItems: ViewToken[]; changed: ViewToken[] }) => {
+      viewableItems.viewableItems.forEach((item: { item: Notification }) => {
+        if (!item.item.read) {
+          item.item.read = true;
+          notifications.markAsRead(item.item);
+        }
+      });
+    },
+    [notifications],
+  );
+
   return (
     <View style={theme.flexContainer}>
       <FlatList
         data={data.slice()}
-        ListHeaderComponent={<NotificationsTopBar store={store} />}
+        ListHeaderComponent={
+          <NotificationsTopBar store={notifications} setResult={setResult} />
+        }
         keyExtractor={keyExtractor}
         renderItem={renderItem}
         onEndReached={onFetchMore}
         onRefresh={refresh}
         refreshing={loading}
+        onViewableItemsChanged={onViewableItemsChanged}
+        viewabilityConfig={viewabilityConfig}
       />
     </View>
   );
 });
 
-const keyExtractor = item => item.guid;
+const keyExtractor = (item: Notification, index) => `${item.urn}-${index}`;
+
+const renderItem = (row: any): React.ReactElement => {
+  const notification = row.item;
+
+  return <NotificationItem notification={notification} />;
+};
 
 export default NotificationsScreen;

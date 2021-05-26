@@ -8,6 +8,7 @@ import { NotificationsStore } from './createNotificationsStore';
 
 type PropsType = {
   store: NotificationsStore;
+  setResult: Function;
 };
 
 type NotificationsTabOptions = 'All' | 'Mentions';
@@ -17,11 +18,12 @@ const options: Array<ButtonTabType<NotificationsTabOptions>> = [
   { id: 'Mentions', title: 'Mentions' },
 ];
 
-const NotificationsTopBar = observer(({ store }: PropsType) => {
+const NotificationsTopBar = observer(({ store, setResult }: PropsType) => {
   const localStore = useLocalStore(() => ({
     option: 'All' as NotificationsTabOptions,
     setOption(option: NotificationsTabOptions) {
       this.option = option;
+      setResult(null);
       store.setFilter(option === 'All' ? '' : 'tags');
     },
   }));

@@ -91,7 +91,7 @@ export interface Notification {
   from_guid: string;
   merge_key: string;
   merged_count: number;
-  merged_from: string[];
+  merged_from: UserModel[];
   merged_from_guids: string[];
   read: boolean;
   to_guid: string;

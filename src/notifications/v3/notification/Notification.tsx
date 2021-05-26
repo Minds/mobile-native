@@ -4,7 +4,6 @@ import i18n from '../../../common/services/i18n.service';
 import { Notification } from '../../../types/Common';
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import FastImage from 'react-native-fast-image';
-import { useNavigation } from '@react-navigation/core';
 import UserModel from '../../../channel/UserModel';
 import sessionService from '../../../common/services/session.service';
 import friendlyDateDiff from '../../../common/helpers/friendlyDateDiff';
@@ -16,6 +15,7 @@ import {
 } from './styles';
 import NotificationIcon from './NotificationIcon';
 import ContentPreview from './ContentPreview';
+import useNotificationRouter from './useNotificationRouter';
 
 type PropsType = {
   notification: Notification;
@@ -23,16 +23,9 @@ type PropsType = {
 const DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
 
 const NotificationItem = ({ notification }: PropsType) => {
-  const navigation = useNavigation();
   const fromUser = UserModel.create(notification.from);
   const avatarSrc = fromUser.getAvatarSource();
-
-  const navToChannel = () => {
-    navigation.navigate('Channel', {
-      guid: notification.from_guid,
-      entity: fromUser,
-    });
-  };
+  const router = useNotificationRouter(notification);
 
   const pronoun =
     notification.type === 'quote'
@@ -59,13 +52,16 @@ const NotificationItem = ({ notification }: PropsType) => {
       noun = 'post';
   }
 
+  const hasMerged =
+    notification.merged_count === 1 && notification.merged_from[0];
+
   return (
     <View style={containerStyle}>
       <View style={styles.innerContainer}>
         <View style={styles.avatarContainer}>
           {
             //@ts-ignore
-            <DebouncedTouchableOpacity onPress={navToChannel}>
+            <DebouncedTouchableOpacity onPress={router.navToChannel}>
               <FastImage source={avatarSrc} style={styles.avatar} />
             </DebouncedTouchableOpacity>
           }
@@ -74,22 +70,45 @@ const NotificationItem = ({ notification }: PropsType) => {
         </View>
         <View style={styles.bodyContainer}>
           <Text style={bodyTextStyle}>
-            <Text style={bodyTextImportantStyle} onPress={navToChannel}>
+            <Text
+              style={bodyTextImportantStyle}
+              onPress={() => router.navToChannel(fromUser)}>
               {fromUser.name}
             </Text>
+            {hasMerged && (
+              <Text style={bodyTextStyle}>
+                {' '}
+                and{' '}
+                <Text
+                  style={bodyTextImportantStyle}
+                  onPress={() =>
+                    router.navToChannel(notification.merged_from[0])
+                  }>
+                  {notification.merged_from[0].name}
+                </Text>
+                {notification.merged_count > 1 && (
+                  <Text>and {notification.merged_count} others</Text>
+                )}
+              </Text>
+            )}
             {' ' + i18n.t(`notification.verbs.${notification.type}`)}
             {' ' + i18n.t(pronoun)}
-            <Text style={bodyTextImportantStyle}>{' ' + noun}</Text>
+            <Text style={bodyTextImportantStyle} onPress={router.navToEntity}>
+              {' ' + noun}
+            </Text>
           </Text>
         </View>
         <View style={styles.timeContainer}>
           <Text style={bodyTextStyle}>
             {friendlyDateDiff(notification.created_timestamp * 1000, '', false)}
           </Text>
-          <View style={styles.readIndicator} />
+          {notification.read === false && <View style={styles.readIndicator} />}
         </View>
       </View>
-      <ContentPreview notification={notification} navigation={navigation} />
+      <ContentPreview
+        notification={notification}
+        navigation={router.navigation}
+      />
     </View>
   );
 };

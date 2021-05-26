@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import Activity from '../../../newsfeed/activity/Activity';
 import ActivityModel from '../../../newsfeed/ActivityModel';
 import { Notification } from '../../../types/Common';
-import { spacedCommentPreview, styles } from './styles';
+import { bodyTextStyle, spacedCommentPreview, styles } from './styles';
 
 type PropsType = {
   notification: Notification;
@@ -25,16 +25,12 @@ const ContentPreview = ({ notification, navigation }: PropsType) => {
     <View style={styles.contentPreviewContainer}>
       {hasCommentExcerpt && (
         <Text
-          style={
-            notification.entity ? spacedCommentPreview : styles.commentPreview
-          }>
+          style={notification.entity ? spacedCommentPreview : bodyTextStyle}>
           “{notification.data.comment_excerpt}”
         </Text>
       )}
       {isEntityComment && (
-        <Text style={styles.commentPreview}>
-          “{notification.entity?.description}”
-        </Text>
+        <Text style={bodyTextStyle}>“{notification.entity?.description}”</Text>
       )}
       {isNoCommentEntity && (
         <Activity

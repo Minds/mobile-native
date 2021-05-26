@@ -49,12 +49,7 @@ export const styles = StyleSheet.create({
   },
   contentPreviewContainer: {
     marginTop: 24,
-    paddingLeft: 65,
-  },
-  commentPreview: {
-    fontSize: 19,
-    fontWeight: '500',
-    fontFamily: 'Roboto-Medium',
+    paddingLeft: 0,
   },
 });
 
@@ -77,6 +72,6 @@ export const bodyTextImportantStyle = ThemedStyles.combine(
 );
 
 export const spacedCommentPreview = ThemedStyles.combine(
-  styles.commentPreview,
+  bodyTextStyle,
   'marginBottom4x',
 );
