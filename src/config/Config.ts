@@ -20,7 +20,16 @@ export const ANDROID_CHAT_APP = 'com.minds.chat';
 export const MINDS_URI = 'https://www.minds.com/';
 export const MINDS_API_URI = 'https://www.minds.com/';
 
-export const CONECTIVITY_CHECK_URI = 'https://www.minds.com/';
+// export const MINDS_URI = 'http://192.168.0.19/';
+// export const MINDS_API_URI = 'http://192.168.0.19:8080/';
+
+// export const CONECTIVITY_CHECK_URI = 'http://192.168.0.19/';
+
+// // export const MINDS_URI = 'http://0.0.0.0/';
+// // export const MINDS_API_URI = 'http://0.0.0.0:8080/';
+
+// // export const CONECTIVITY_CHECK_URI = 'http://0.0.0.0/';
+
 export const CONECTIVITY_CHECK_INTERVAL = 10000;
 export const MINDS_GUID = '100000000000000519';
 

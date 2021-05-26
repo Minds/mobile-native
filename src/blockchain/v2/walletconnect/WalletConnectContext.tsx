@@ -117,7 +117,7 @@ export const createStore = (): WCStore => ({
       bridge: 'https://bridge.walletconnect.org',
       clientMeta: MINDS_METADATA,
       qrcode: false,
-      chainId: 1,
+      chainId: 4,
       pollingInterval: DEEPLINK_DELAY_MS,
     });
 
