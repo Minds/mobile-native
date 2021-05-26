@@ -24,6 +24,7 @@ const NotificationsTopBar = observer(({ store, setResult }: PropsType) => {
     setOption(option: NotificationsTabOptions) {
       this.option = option;
       setResult(null);
+      store.setOffset('');
       store.setFilter(option === 'All' ? '' : 'tags');
     },
   }));
