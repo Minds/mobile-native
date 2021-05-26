@@ -53,7 +53,7 @@ const NotificationItem = ({ notification }: PropsType) => {
   }
 
   const hasMerged =
-    notification.merged_count === 1 && notification.merged_from[0];
+    notification.merged_count > 0 && notification.merged_from[0] !== undefined;
 
   const navToFromChannel = () => router.navToChannel(fromUser);
 

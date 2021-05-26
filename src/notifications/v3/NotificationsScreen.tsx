@@ -9,6 +9,7 @@ import { Notification } from '../../types/Common';
 import i18n from '../../common/services/i18n.service';
 import NotificationItem from './notification/Notification';
 import { useStores } from '../../common/hooks/use-stores';
+import ErrorBoundary from '../../common/components/ErrorBoundary';
 
 type PropsType = {};
 
@@ -125,7 +126,13 @@ const keyExtractor = (item: Notification, index) => `${item.urn}-${index}`;
 const renderItem = (row: any): React.ReactElement => {
   const notification = row.item;
 
-  return <NotificationItem notification={notification} />;
+  return (
+    <ErrorBoundary
+      message="Can't show this notification"
+      containerStyle={ThemedStyles.style.borderBottomHair}>
+      <NotificationItem notification={notification} />
+    </ErrorBoundary>
+  );
 };
 
 export default NotificationsScreen;
