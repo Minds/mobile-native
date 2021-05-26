@@ -79,7 +79,6 @@ export default class AppInitManager {
     // clear offline cache
     entitiesStorage.removeAll();
     feedsStorage.removeAll();
-    getStores().notifications.clearLocal();
     getStores().groupsBar.clearLocal();
     translationService.purgeLanguagesCache();
   };

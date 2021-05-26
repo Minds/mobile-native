@@ -1,6 +1,7 @@
 import { useLocalStore } from 'mobx-react';
 import { getStores } from '../../../../AppStores';
 import createChatStore from '../../../chat/createChatStore';
+import createNotificationsStore from '../../../notifications/v3/createNotificationsStore';
 import createPortraitStore from '../../../portrait/createPortraitStore';
 import createSearchResultStore from '../../../topbar/searchbar/createSearchResultStore';
 import createWalletStore from '../../../wallet/v2/createWalletStore';
@@ -17,6 +18,7 @@ export const useStores = (): StoresType => {
     searchBar: useLocalStore(createSearchResultStore),
     portrait: useLocalStore(createPortraitStore),
     chat: useLocalStore(createChatStore),
+    notifications: useLocalStore(createNotificationsStore),
   };
   return stores;
 };
