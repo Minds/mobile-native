@@ -61,7 +61,7 @@ const NotificationItem = ({ notification }: PropsType) => {
         <View style={styles.avatarContainer}>
           {
             //@ts-ignore
-            <DebouncedTouchableOpacity onPress={router.navToChannel}>
+            <DebouncedTouchableOpacity onPress={router.navToChannel(fromUser)}>
               <FastImage source={avatarSrc} style={styles.avatar} />
             </DebouncedTouchableOpacity>
           }
