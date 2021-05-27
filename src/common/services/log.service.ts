@@ -28,8 +28,8 @@ class LogService {
   };
 
   log(...args) {
-    if (!settingsStore.appLog) {
-      return;
+    if (__DEV__) {
+      console.log(...args);
     }
     // deviceLog.log(...args);
   }

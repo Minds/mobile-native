@@ -8,10 +8,10 @@ import session from './../common/services/session.service';
 import crypto from './../common/services/crypto.service';
 import socket from '../common/services/socket.service';
 import badge from '../common/services/badge.service';
-import { abort, isNetworkFail } from '../common/helpers/abortableFetch';
 import i18n from '../common/services/i18n.service';
 import logService from '../common/services/log.service';
 import ConversationModel from './ConversationModel';
+import { isNetworkError } from '../common/services/api.service';
 
 /**
  * Messenger Conversation List Store
@@ -116,9 +116,6 @@ class MessengerListStore {
   async loadList(reload = false) {
     const rows = 24;
 
-    // abort if we have a previous call
-    abort(this);
-
     this.setLoading(true);
     this.setErrorLoading(false);
 
@@ -157,7 +154,7 @@ class MessengerListStore {
 
       this.setErrorLoading(true);
 
-      if (!isNetworkFail(err)) {
+      if (!isNetworkError(err)) {
         logService.exception('[MessengerListStore]', err);
       }
     } finally {

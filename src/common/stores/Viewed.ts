@@ -1,6 +1,6 @@
 //@ts-nocheck
 import { setViewed } from '../../newsfeed/NewsfeedService';
-import { isNetworkFail } from '../helpers/abortableFetch';
+import { isNetworkError } from '../services/api.service';
 
 export default class Viewed {
   /**
@@ -30,7 +30,7 @@ export default class Viewed {
         await setViewed(entity, meta);
       } catch (e) {
         this.viewed.delete(entity.guid);
-        if (!isNetworkFail(e)) {
+        if (!isNetworkError(e)) {
           throw e;
         }
       }

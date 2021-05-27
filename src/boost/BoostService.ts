@@ -1,14 +1,10 @@
 //@ts-nocheck
-import api from './../common/services/api.service';
-import { abort, isNetworkFail } from '../common/helpers/abortableFetch';
+import api, { isNetworkError } from './../common/services/api.service';
 import logService from '../common/services/log.service';
 import i18n from '../common/services/i18n.service';
 
 export default class BoostService {
   async getBoosts(offset, filter, peer_filter) {
-    // abort previous call
-    abort(this);
-
     try {
       const data = await api.get(
         'api/v2/boost/' + filter + '/' + peer_filter,
@@ -24,7 +20,7 @@ export default class BoostService {
         offset: data['load-next'],
       };
     } catch (err) {
-      if (!isNetworkFail(err)) {
+      if (!isNetworkError(err)) {
         logService.exception('[BoostService]', err);
       }
       throw new Error(i18n.t('boosts.errorGet'));
