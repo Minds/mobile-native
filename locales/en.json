@@ -801,7 +801,7 @@
     "alltime": "All-time earnings",
     "addressCopied": "Address copied to clipboard",
     "withdraw": {
-      "errorOnlyOnceDay": "You may only withdraw once a day",
+      "errorOnlyOnceDay": "You can only have one pending withdrawal at a time",
       "errorWithdrawing": "Error withdrawing tokens",
       "amount": "Amount",
       "errorAmountNegative": "Should be a positive number",
@@ -954,7 +954,7 @@
       },
       "completeToTransfer": "Please complete the following before transferring MINDS tokens on-chain.",
       "tokenAmount": "Amount",
-      "transferRequest": "You can request to transfer up to 999 tokens from your rewards to your on-chain wallet below. You may only transfer once per day.",
+      "transferRequest": "You can request to transfer up to 25,000 tokens from your rewards to your on-chain wallet. You can only have one pending withdrawal at a time.",
       "transferNote": "Note: a small amount of ETH will be charged to cover the transaction fee."
     }
   },
