@@ -6,7 +6,7 @@ import { StyleSheet, View, ColorValue } from 'react-native';
 import { observer, inject } from 'mobx-react';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
 import Icon from '~/common/components/icons/Icon';
-import { ICON_SIZE } from '~/styles/Tokens';
+import { ICON_SIZE, SPACING } from '~/styles/Tokens';
 
 import ThemedStyles from '../styles/ThemedStyles';
 
@@ -29,20 +29,20 @@ class NotificationIcon extends Component<PropsType> {
       <View style={styles.container}>
         <Icon name="notifications" size={size} color={color} />
         {this.props.notifications.unread ? (
-          <>
+          <View style={styles.notification}>
             <FAIcon
               name="circle"
-              size={15}
+              size={SPACING.L}
               color={ThemedStyles.getColor('secondary_background')}
               style={styles.unreadBackground}
             />
             <FAIcon
               name="circle"
-              size={10}
+              size={SPACING.L * 0.7}
               color="#E02020"
               style={styles.unread}
             />
-          </>
+          </View>
         ) : null}
       </View>
     );
@@ -61,14 +61,19 @@ const styles = StyleSheet.create({
     zIndex: 9999,
     opacity: 1,
     position: 'absolute',
-    top: 23,
-    left: 16,
+    bottom: 0,
+    left: 0,
   },
   unread: {
     zIndex: 9999,
     opacity: 1,
     position: 'absolute',
-    top: 25.5,
-    left: 18,
+    bottom: Math.round(SPACING.L * 0.15),
+    left: Math.round(SPACING.L * 0.15),
+  },
+  notification: {
+    position: 'absolute',
+    left: '55%',
+    bottom: SPACING.XS,
   },
 });

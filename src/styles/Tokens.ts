@@ -57,4 +57,4 @@ export const SPACING: UISpacing = {
 };
 
 export const ICON_SIZE = SPACING.XXL + SPACING.XS;
-export const BOTTOM_TABS_HEIGHT = SPACING.XXL * 2 + SPACING.XS;
+export const BOTTOM_TABS_HEIGHT = SPACING.XL * 2 + SPACING.XS;

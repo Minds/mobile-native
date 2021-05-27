@@ -19,10 +19,6 @@ const shadowOpt = {
   y: 0,
 };
 
-console.log(THEME);
-
-// docss gitlab developer.minds.com
-
 export default ({ state, descriptors, navigation }) => {
   const focusedOptions = descriptors[state.routes[state.index].key].options;
   const { chat } = useStores();
@@ -87,7 +83,7 @@ export default ({ state, descriptors, navigation }) => {
           testID={options.tabBarTestID}
           onPress={onPress}
           onLongPress={onLongPress}
-          style={styles.buttonContainer}>
+          style={[styles.buttonContainer, _index < 3 && styles.buttonCentered]}>
           {icon}
         </Component>
       );
@@ -98,7 +94,7 @@ export default ({ state, descriptors, navigation }) => {
     <SafeAreaView
       style={[styles.tabBar, { backgroundColor: THEME.secondary_background }]}
       edges={['bottom']}>
-      <View style={[styles.wrapper]}>
+      <View style={styles.wrapper}>
         {!IS_IOS && <TopShadow setting={shadowOpt} />}
         {renderIcons}
       </View>
@@ -107,18 +103,17 @@ export default ({ state, descriptors, navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  buttonCentered: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   buttonContainer: {
     flex: 1,
-    flexDirection: 'column',
-    alignContent: 'center',
-    alignItems: 'center',
-    alignSelf: 'center',
-    justifyContent: 'center',
     height: BOTTOM_TABS_HEIGHT,
   },
   wrapper: {
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
+    alignItems: 'center',
     width: '100%',
     paddingHorizontal: SPACING.S,
   },

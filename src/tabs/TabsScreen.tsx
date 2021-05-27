@@ -129,8 +129,9 @@ const Tabs = observer(function ({ navigation }) {
 
 const styles = StyleSheet.create({
   compose: {
-    width: SPACING.XL * 2 + SPACING.XXS,
-    height: SPACING.XL * 2,
+    width: SPACING.M * 3.5,
+    height: SPACING.M * 3.5,
+    marginTop: SPACING.XXS,
   },
 });
 
@@ -154,8 +155,8 @@ const tabOptions = ({ route }) => ({
     const color = focused
       ? ThemedStyles.getColor('link')
       : ThemedStyles.getColor('secondary_text');
-    let iconName,
-      iconsize = ICON_SIZE;
+    let iconName;
+    let iconsize = ICON_SIZE;
 
     switch (route.name) {
       case 'MessengerTab':
