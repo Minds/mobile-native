@@ -9,7 +9,7 @@ export const IS_IOS = Platform.OS === 'ios';
 export const IS_IPAD = (Platform as PlatformIOSStatic).isPad;
 export const IS_TABLET = isTablet();
 export const COLORS = { ...colors };
-export const THEME = ThemedStyles.colorTheme || {};
+export const THEME = ThemedStyles.getTheme();
 
 let multiplier = 1;
 
@@ -56,4 +56,5 @@ export const SPACING: UISpacing = {
   XXL: 24 * multiplier,
 };
 
+export const ICON_SIZE = SPACING.XXL + SPACING.XS;
 export const BOTTOM_TABS_HEIGHT = SPACING.XXL * 2 + SPACING.XS;

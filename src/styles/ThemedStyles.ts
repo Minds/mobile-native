@@ -26,7 +26,7 @@ export class ThemedStylesStore {
 
   navTheme?: object = undefined;
   defaultScreenOptions?: any = undefined;
-  colorTheme?: any = null;
+  colorTheme?: any = {};
 
   /**
    * Style
@@ -35,6 +35,7 @@ export class ThemedStylesStore {
 
   constructor() {
     this.style = buildStyle(0);
+    this.colorTheme = LIGHT_THEME;
   }
 
   /**
@@ -104,13 +105,17 @@ export class ThemedStylesStore {
     );
   }
 
+  getTheme() {
+    return this.colorTheme || {};
+  }
+
   /**
    * Get color of theme based on property
    * @param {String} prop
    */
   getColor(prop) {
-    const theme = this.theme ? DARK_THEME : LIGHT_THEME;
-    return theme[prop];
+    // const theme = this.theme ? DARK_THEME : LIGHT_THEME;
+    return this.colorTheme[prop];
   }
 
   /**
@@ -118,6 +123,8 @@ export class ThemedStylesStore {
    */
   generateStyle() {
     this.colorTheme = this.theme ? DARK_THEME : LIGHT_THEME;
+
+    console.log(this.colorTheme);
 
     const baseTheme = this.theme === 0 ? DefaultTheme : DarkTheme;
 

@@ -10,13 +10,22 @@ import {
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import IonIcon from 'react-native-vector-icons/Ionicons';
+import EvilIcons from 'react-native-vector-icons/EvilIcons';
+import Fontisto from 'react-native-vector-icons/Fontisto';
+import Entypo from 'react-native-vector-icons/Entypo';
 import ICON_MAP from './map';
-import { SPACING, THEME } from '../../../styles/tokens';
+import { SPACING, THEME } from '~/styles/Tokens';
+import { getMargins } from '~/common/helpers/margins';
 
 const Fonts = {
   MaterialCommunityIcons,
   MaterialIcons,
   FontAwesome,
+  IonIcon,
+  EvilIcons,
+  Fontisto,
+  Entypo,
 };
 
 interface IIcon {
@@ -26,16 +35,18 @@ interface IIcon {
   style?: StyleProp<ViewStyle | FlexStyle | TextStyle>;
 }
 
-export default ({
+export default function Icon({
   color = THEME.primary_text,
   name,
   size = SPACING.L * 2,
   style = {},
-}: IIcon) => {
+  ...extra
+}: IIcon) {
   if (!name || !ICON_MAP[name]) {
     return null;
   }
   const { font: iconFont, name: iconName, ratio } = ICON_MAP[name];
+  const margins = getMargins(extra);
 
   const realSize = size * (ratio || 1);
   const iconStyles = [
@@ -56,6 +67,7 @@ export default ({
           width: size,
         },
         style,
+        margins,
       ]}>
       <Component
         name={iconName}
@@ -65,7 +77,7 @@ export default ({
       />
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {

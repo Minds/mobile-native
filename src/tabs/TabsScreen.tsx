@@ -1,24 +1,25 @@
 import React, { useCallback } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { View, TouchableOpacity, StyleSheet, Text } from 'react-native';
-import NewsfeedScreen from '../newsfeed/NewsfeedScreen';
-import NotificationsScreen from '../notifications/NotificationsScreen';
-import ThemedStyles from '../styles/ThemedStyles';
-import { IS_IPAD } from '../styles/Tokens';
-import TabIcon from './TabIcon';
-import NotificationIcon from '../notifications/NotificationsTabIcon';
-import gatheringService from '../common/services/gathering.service';
+import NewsfeedScreen from '~/newsfeed/NewsfeedScreen';
+import NotificationsScreen from '~/notifications/NotificationsScreen';
+import ThemedStyles from '~/styles/ThemedStyles';
+import { IS_TABLET } from '~/styles/Tokens';
+import NotificationIcon from '~/notifications/NotificationsTabIcon';
+import gatheringService from '~/common/services/gathering.service';
 import { observer } from 'mobx-react';
-import { DiscoveryV2Screen } from '../discovery/v2/DiscoveryV2Screen';
-import ComposeIcon from '../compose/ComposeIcon';
-import Topbar from '../topbar/Topbar';
-import { InternalStack } from '../navigation/NavigationStack';
-import { GOOGLE_PLAY_STORE } from '../config/Config';
-import i18n from '../common/services/i18n.service';
-import sessionService from '../common/services/session.service';
-import ChatTabIcon from '../chat/ChatTabIcon';
-import navigationService from '../navigation/NavigationService';
+import { DiscoveryV2Screen } from '~/discovery/v2/DiscoveryV2Screen';
+import ComposeIcon from '~/compose/ComposeIcon';
+import Topbar from '~/topbar/Topbar';
+import Icon from '~/common/components/icons/Icon';
+import { InternalStack } from '~/navigation/NavigationStack';
+import { GOOGLE_PLAY_STORE } from '~/config/Config';
+import i18n from '~/common/services/i18n.service';
+import sessionService from '~/common/services/session.service';
+import ChatTabIcon from '~/chat/ChatTabIcon';
+import navigationService from '~/navigation/NavigationService';
 import TabBar from './TabBar';
+import { ICON_SIZE, SPACING } from '~/styles/Tokens';
 
 export type TabParamList = {
   Newsfeed: {};
@@ -128,8 +129,8 @@ const Tabs = observer(function ({ navigation }) {
 
 const styles = StyleSheet.create({
   compose: {
-    width: 42,
-    height: 40,
+    width: SPACING.XL * 2 + SPACING.XXS,
+    height: SPACING.XL * 2,
   },
 });
 
@@ -154,22 +155,19 @@ const tabOptions = ({ route }) => ({
       ? ThemedStyles.getColor('link')
       : ThemedStyles.getColor('secondary_text');
     let iconName,
-      iconsize = 28;
+      iconsize = ICON_SIZE;
 
     switch (route.name) {
       case 'MessengerTab':
         return <ChatTabIcon color={color} />;
       case 'Newsfeed':
         iconName = 'home';
-        iconsize = 28;
         break;
       case 'User':
         iconName = 'user';
-        iconsize = 42;
         break;
       case 'Discovery':
         iconName = 'hashtag';
-        iconsize = 24;
         break;
       case 'Notifications':
         return <NotificationIcon color={color} size={iconsize} />;
@@ -177,12 +175,13 @@ const tabOptions = ({ route }) => ({
         return <ComposeIcon style={styles.compose} />;
     }
 
-    if (IS_IPAD) {
+    if (IS_TABLET) {
       iconsize = Math.round(iconsize * 1.2);
     }
 
-    // You can return any component that you like here!
-    return <TabIcon name={iconName} size={iconsize} color={color} />;
+    return (
+      <Icon name={iconName.replace(/md\-/, '')} color={color} size={iconsize} />
+    );
   },
 });
 

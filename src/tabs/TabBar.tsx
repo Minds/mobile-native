@@ -1,9 +1,10 @@
 import React, { useMemo, useCallback } from 'react';
-import { TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import { TouchableOpacity, StyleSheet, Dimensions, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { IS_IOS, BOTTOM_TABS_HEIGHT, THEME } from '../styles/Tokens';
-import TopShadow from '../common/components/TopShadow';
-import { useStores } from '../common/hooks/use-stores';
+import { IS_IOS, BOTTOM_TABS_HEIGHT, COLORS, THEME } from '~/styles/Tokens';
+import TopShadow from '~/common/components/TopShadow';
+import { useStores } from '~/common/hooks/use-stores';
+import { SPACING } from '~/styles/Tokens';
 
 const { width } = Dimensions.get('screen');
 
@@ -18,14 +19,13 @@ const shadowOpt = {
   y: 0,
 };
 
+console.log(THEME);
+
+// docss gitlab developer.minds.com
+
 export default ({ state, descriptors, navigation }) => {
   const focusedOptions = descriptors[state.routes[state.index].key].options;
   const { chat } = useStores();
-  // const containerStyle = useStyle(
-  //   'rowJustifySpaceEvenly',
-  //   'backgroundSecondary',
-  //   styles.tabBar,
-  // );
   const { routes, index } = state;
 
   if (focusedOptions.tabBarVisible === false) {
@@ -47,7 +47,6 @@ export default ({ state, descriptors, navigation }) => {
   );
 
   const renderIcons = useMemo(() => {
-    console.log('re-rendering -- icons');
     return routes?.map((route, _index) => {
       const { options } = descriptors[route.key];
       const focused = index === _index;
@@ -96,9 +95,13 @@ export default ({ state, descriptors, navigation }) => {
   }, [routes, index, chat, descriptors, routeNavigate, routeEmmit]);
 
   return (
-    <SafeAreaView style={styles.tabBar} edges={['bottom']}>
-      {!IS_IOS && <TopShadow setting={shadowOpt} />}
-      {renderIcons}
+    <SafeAreaView
+      style={[styles.tabBar, { backgroundColor: THEME.secondary_background }]}
+      edges={['bottom']}>
+      <View style={[styles.wrapper]}>
+        {!IS_IOS && <TopShadow setting={shadowOpt} />}
+        {renderIcons}
+      </View>
     </SafeAreaView>
   );
 };
@@ -106,19 +109,23 @@ export default ({ state, descriptors, navigation }) => {
 const styles = StyleSheet.create({
   buttonContainer: {
     flex: 1,
+    flexDirection: 'column',
     alignContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
     justifyContent: 'center',
     height: BOTTOM_TABS_HEIGHT,
   },
-  tabBar: {
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: -1 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
+  wrapper: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
-    backgroundColor: THEME.secondary_background,
+    width: '100%',
+    paddingHorizontal: SPACING.S,
+  },
+  tabBar: {
+    shadowColor: COLORS.black,
+    shadowOffset: { width: 0, height: -1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
   },
 });

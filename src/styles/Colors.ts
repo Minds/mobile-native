@@ -15,6 +15,8 @@ const colors = {
   action: 'rgb(96, 125, 139)',
   switchCircle: '#f6f7f5',
   switchBackground: '#3484f5',
+  black: '#000000',
+  white: '#FFFFFF',
 };
 
 export default colors;

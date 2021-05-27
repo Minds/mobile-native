@@ -1,12 +1,11 @@
 import * as React from 'react';
-import { Image, ImageProps } from 'react-native';
-// import FastImage, { FastImageProps } from 'react-native-fast-image';
+import FastImage, { FastImageProps } from 'react-native-fast-image';
 
 const COMPOSE = require('../assets/compose.png');
 
-function ComposerIcon(props: Partial<ImageProps>) {
+function ComposerIcon(props: Partial<FastImageProps>) {
   const { source, ...other } = props;
-  return <Image source={source || COMPOSE} {...other} />;
+  return <FastImage source={source || COMPOSE} {...other} />;
 }
 
 export default ComposerIcon;

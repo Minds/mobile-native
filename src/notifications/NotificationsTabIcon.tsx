@@ -5,7 +5,8 @@ import { StyleSheet, View, ColorValue } from 'react-native';
 
 import { observer, inject } from 'mobx-react';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
-import CIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from '~/common/components/icons/Icon';
+import { ICON_SIZE } from '~/styles/Tokens';
 
 import ThemedStyles from '../styles/ThemedStyles';
 
@@ -22,11 +23,11 @@ class NotificationIcon extends Component<PropsType> {
    */
   render() {
     const color = this.props.color;
-    const size = this.props.size || 24;
+    const size = this.props.size || ICON_SIZE;
 
     return (
       <View style={styles.container}>
-        <CIcon name="bell" size={size} color={color} />
+        <Icon name="notifications" size={size} color={color} />
         {this.props.notifications.unread ? (
           <>
             <FAIcon
