@@ -1507,22 +1507,22 @@
     pouchdb-collections "^1.0.1"
     tiny-queue "^0.2.1"
 
-"@gorhom/bottom-sheet@2.0.5":
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/@gorhom/bottom-sheet/-/bottom-sheet-2.0.5.tgz#aeae862b16492114ff6fcc7cf877331a41ac1bdc"
-  integrity sha512-clF7QX0GWEx0e0ZdTFSoXmreKQMKhkafPn7cud2c0EWKoz61s3MGs0rwJfSHaYoodlKB9mBn6+C5SWx+UW3rUg==
+"@gorhom/bottom-sheet@^3.0.0":
+  version "3.6.5"
+  resolved "https://registry.yarnpkg.com/@gorhom/bottom-sheet/-/bottom-sheet-3.6.5.tgz#e871f14bcd687e584769d0d582d8d6b80ab984c1"
+  integrity sha512-YgpXA5zYkOnTlFpofaaqt5BEeYfm0g1NNivmE63HWU/cn7zY1A1Mmm9G6MgCDlWVjZQgXTo5SdvAbcfUfTN9PA==
   dependencies:
-    "@gorhom/portal" "^0.1.4"
+    "@gorhom/portal" "^1.0.4"
     invariant "^2.2.4"
-    lodash.isequal "^4.5.0"
     nanoid "^3.1.20"
-    react-native-redash "^14.2.4"
+    react-native-redash "^16.0.10"
 
-"@gorhom/portal@^0.1.4":
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/@gorhom/portal/-/portal-0.1.4.tgz#ef9e50d4b6c98ebe606a16d22d6cb58d661421b4"
-  integrity sha512-iU3D0i9NureT5ULTvD8moF2FWyFvVGcr/ahcRMDzBblUO1AwwixZRZ+Lf3d6uk0w4ujOQZ7+Az+uUnI+AsXXBw==
+"@gorhom/portal@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@gorhom/portal/-/portal-1.0.4.tgz#643c7baaffee223819cdd99dad748c3d9dc6bd73"
+  integrity sha512-KalM9E6Op1TCzi00YKhczBz86EV0yYpWuRuTt5J4VS09O2gGbGAEEJwUKb/Rvr3XadtinpLjePj0tZ6lFVPp+g==
   dependencies:
+    immer "^8.0.1"
     lodash.isequal "^4.5.0"
     nanoid "^3.1.20"
 
@@ -8190,6 +8190,11 @@ immediate@~3.0.5:
   resolved "https://registry.yarnpkg.com/immediate/-/immediate-3.0.6.tgz#9db1dbd0faf8de6fbe0f5dd5e56bb606280de69b"
   integrity sha1-nbHb0Pr43m++D13V5Wu2BigN5ps=
 
+immer@^8.0.1:
+  version "8.0.4"
+  resolved "https://registry.yarnpkg.com/immer/-/immer-8.0.4.tgz#3a21605a4e2dded852fb2afd208ad50969737b7a"
+  integrity sha512-jMfL18P+/6P6epANRvRk6q8t+3gGhqsJ9EuJ25AXE+9bNTYtssvzeYbEd0mXRYWCmmXSIbnlpz6vd6iJlmGGGQ==
+
 import-fresh@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/import-fresh/-/import-fresh-2.0.0.tgz#d81355c15612d386c61f9ddd3922d4304822a546"
@@ -12740,10 +12745,19 @@ react-native-reanimated@^2.0.0:
     mockdate "^3.0.2"
     string-hash-64 "^1.0.3"
 
-react-native-redash@^14.2.3, react-native-redash@^14.2.4:
+react-native-redash@^14.2.3:
   version "14.2.4"
   resolved "https://registry.yarnpkg.com/react-native-redash/-/react-native-redash-14.2.4.tgz#5dbb4b2f1a7441bb304fe3494b89e0dc9010c8ef"
   integrity sha512-/1R9UxXv3ffKcrbxolqa2B247Cgd3ikyEm2q1VlBng77Es6PAD4LAOXQ83pBavvwNfOsbhF3ebkbMpJcLaVt3Q==
+  dependencies:
+    abs-svg-path "^0.1.1"
+    normalize-svg-path "^1.0.1"
+    parse-svg-path "^0.1.2"
+
+react-native-redash@^16.0.10:
+  version "16.0.11"
+  resolved "https://registry.yarnpkg.com/react-native-redash/-/react-native-redash-16.0.11.tgz#973c3050a0645e3b9873790a8e68694770a32f27"
+  integrity sha512-9yTpeabkAoWASzmhEkynNh1wDTrLVtbE+x9dOV1DI23vRa7k1HI+Y1jOUNOPyRG2ddgHampNq9iHtsLnkK4mtw==
   dependencies:
     abs-svg-path "^0.1.1"
     normalize-svg-path "^1.0.1"
