@@ -73,7 +73,7 @@ const CustomBackdrop = observer(
       return (
         <Animated.View style={containerStyle} pointerEvents="box-none">
           <TouchableOpacity
-            onPress={bottomSheet.close}
+            onPress={bottomSheet.close as any}
             style={[theme.fullHeight, theme.fullWidth]}
           />
         </Animated.View>
