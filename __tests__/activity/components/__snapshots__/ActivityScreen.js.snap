@@ -299,7 +299,7 @@ exports[`Activity screen component renders correctly  1`] = `
                   style={
                     Object {
                       "alignSelf": "flex-end",
-                      "backgroundColor": "#242A30",
+                      "backgroundColor": "#FFFFFF",
                       "flex": 1,
                       "height": 45.5,
                       "transform": Array [
@@ -321,7 +321,7 @@ exports[`Activity screen component renders correctly  1`] = `
                         },
                         Object {
                           "alignItems": "center",
-                          "backgroundColor": "#242A30",
+                          "backgroundColor": "#FFFFFF",
                           "height": 40,
                           "justifyContent": "center",
                         },
@@ -360,7 +360,7 @@ exports[`Activity screen component renders correctly  1`] = `
                         },
                         Object {
                           "alignItems": "center",
-                          "backgroundColor": "#1A2025",
+                          "backgroundColor": "#F6F7F7",
                           "height": 50,
                           "justifyContent": "center",
                           "marginTop": 6,
@@ -513,7 +513,7 @@ exports[`Activity screen component renders correctly  1`] = `
                 onStartShouldSetResponder={[Function]}
                 style={
                   Object {
-                    "backgroundColor": "#1E242A",
+                    "backgroundColor": "#F8FAFA",
                     "bottom": 0,
                     "height": 1334,
                     "left": 0,
@@ -742,8 +742,8 @@ exports[`Activity screen component renders correctly  1`] = `
     <ExpoLinearGradient
       colors={
         Array [
-          "#1A202500",
-          "#1A2025FF",
+          "#F6F7F700",
+          "#F6F7F7FF",
         ]
       }
       style={

@@ -1,7 +1,7 @@
 import React, { useMemo, useCallback } from 'react';
 import { TouchableOpacity, StyleSheet, Dimensions, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { IS_IOS, BOTTOM_TABS_HEIGHT, COLORS, THEME } from '~/styles/Tokens';
+import { IS_IOS, BOTTOM_TABS_HEIGHT, COLORS } from '~/styles/Tokens';
 import TopShadow from '~/common/components/TopShadow';
 import { useStores } from '~/common/hooks/use-stores';
 import { SPACING } from '~/styles/Tokens';
@@ -92,7 +92,7 @@ export default ({ state, descriptors, navigation }) => {
 
   return (
     <SafeAreaView
-      style={[styles.tabBar, { backgroundColor: THEME.secondary_background }]}
+      style={[styles.tabBar, { backgroundColor: COLORS.secondary_background }]}
       edges={['bottom']}>
       <View style={styles.wrapper}>
         {!IS_IOS && <TopShadow setting={shadowOpt} />}

@@ -19,7 +19,10 @@ import {
 } from 'react-native';
 import { Provider, observer } from 'mobx-react';
 
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import {
+  SafeAreaProvider,
+  initialWindowMetrics,
+} from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import ShareMenu from 'react-native-share-menu';
 import NavigationService, {
@@ -195,7 +198,7 @@ class App extends Component<Props, State> {
       ThemedStyles.theme === 0 ? 'dark-content' : 'light-content';
 
     const app = (
-      <SafeAreaProvider key={'App'}>
+      <SafeAreaProvider key={'App'} initialMetrics={initialWindowMetrics}>
         <ScreenHeightProvider>
           <NavigationContainer
             ref={setTopLevelNavigator}

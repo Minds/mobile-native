@@ -1,5 +1,4 @@
 //@ts-nocheck
-
 const colors = {
   primary: '#4690D6',
   secondary: '#FFDD63',
@@ -15,11 +14,16 @@ const colors = {
   action: 'rgb(96, 125, 139)',
   switchCircle: '#f6f7f5',
   switchBackground: '#3484f5',
-  black: '#000000',
-  white: '#FFFFFF',
 };
 
 export default colors;
+
+// THEME independent colors which could be overwriten by theme colors if needed.
+export const COLORS = {
+  black: '#000000',
+  white: '#FFFFFF',
+  transparent: 'rgba(0,0,0,0)',
+};
 
 export const LIGHT_THEME = {
   name: 'LIGHT',

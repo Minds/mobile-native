@@ -4,7 +4,6 @@ import { View, TouchableOpacity, StyleSheet, Text } from 'react-native';
 import NewsfeedScreen from '~/newsfeed/NewsfeedScreen';
 import NotificationsScreen from '~/notifications/NotificationsScreen';
 import ThemedStyles from '~/styles/ThemedStyles';
-import { IS_TABLET } from '~/styles/Tokens';
 import NotificationIcon from '~/notifications/NotificationsTabIcon';
 import gatheringService from '~/common/services/gathering.service';
 import { observer } from 'mobx-react';
@@ -19,7 +18,7 @@ import sessionService from '~/common/services/session.service';
 import ChatTabIcon from '~/chat/ChatTabIcon';
 import navigationService from '~/navigation/NavigationService';
 import TabBar from './TabBar';
-import { ICON_SIZE, SPACING } from '~/styles/Tokens';
+import { ICON_SIZE, SPACING, IS_TABLET } from '~/styles/Tokens';
 
 export type TabParamList = {
   Newsfeed: {};

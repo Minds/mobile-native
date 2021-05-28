@@ -15,7 +15,7 @@ import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Entypo from 'react-native-vector-icons/Entypo';
 import ICON_MAP from './map';
-import { SPACING, THEME } from '~/styles/Tokens';
+import { SPACING, COLORS } from '~/styles/Tokens';
 import { getMargins } from '~/common/helpers/margins';
 
 const Fonts = {
@@ -36,7 +36,7 @@ interface IIcon {
 }
 
 export default function Icon({
-  color = THEME.primary_text,
+  color = COLORS.primary_text,
   name,
   size = SPACING.L * 2,
   style = {},

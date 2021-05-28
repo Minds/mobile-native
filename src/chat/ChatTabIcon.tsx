@@ -30,7 +30,7 @@ const ChatTabIcon = ({ color }: PropsType) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: SPACING.XS,
+    paddingTop: SPACING.XXS,
     alignItems: 'center',
     justifyContent: 'center',
   },

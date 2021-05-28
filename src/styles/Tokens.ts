@@ -1,15 +1,18 @@
 import { Platform, PlatformIOSStatic, Dimensions } from 'react-native';
-import { isTablet } from 'react-native-device-info';
-import colors from './Colors';
+// import DeviceInfo from 'react-native-device-info';
 import ThemedStyles from './ThemedStyles';
+import { initialWindowMetrics } from 'react-native-safe-area-context';
 
 const { height } = Dimensions.get('window');
 
 export const IS_IOS = Platform.OS === 'ios';
 export const IS_IPAD = (Platform as PlatformIOSStatic).isPad;
-export const IS_TABLET = isTablet();
-export const COLORS = { ...colors };
-export const THEME = ThemedStyles.getTheme();
+
+// current deviceInfo version has an async isTablet function
+// export const IS_TABLET = DeviceInfo.isTablet();
+
+export const COLORS = ThemedStyles.colors;
+export const HAS_BOTTOM_EXTRA_SPACE = !!initialWindowMetrics?.insets.bottom;
 
 let multiplier = 1;
 
@@ -21,7 +24,7 @@ if (height < 600) {
   multiplier = 0.8;
 }
 
-if (IS_TABLET || IS_IPAD) {
+if (IS_IPAD) {
   multiplier = multiplier * 1.4;
 }
 
@@ -57,4 +60,4 @@ export const SPACING: UISpacing = {
 };
 
 export const ICON_SIZE = SPACING.XXL + SPACING.XS;
-export const BOTTOM_TABS_HEIGHT = SPACING.XL * 2 + SPACING.XS;
+export const BOTTOM_TABS_HEIGHT = SPACING.XXL * 2;

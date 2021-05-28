@@ -2,7 +2,7 @@ import { StyleSheet, Platform } from 'react-native';
 import { observable, action, reaction } from 'mobx';
 import React from 'react';
 
-import { DARK_THEME, LIGHT_THEME } from './Colors';
+import { DARK_THEME, LIGHT_THEME, COLORS } from './Colors';
 import { DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { buildStyle } from './Style';
 
@@ -26,7 +26,7 @@ export class ThemedStylesStore {
 
   navTheme?: object = undefined;
   defaultScreenOptions?: any = undefined;
-  colorTheme?: any = {};
+  colors?: any;
 
   /**
    * Style
@@ -35,7 +35,7 @@ export class ThemedStylesStore {
 
   constructor() {
     this.style = buildStyle(0);
-    this.colorTheme = LIGHT_THEME;
+    this.colors = { ...COLORS, ...LIGHT_THEME };
   }
 
   /**
@@ -105,27 +105,19 @@ export class ThemedStylesStore {
     );
   }
 
-  getTheme() {
-    return this.colorTheme || {};
-  }
-
   /**
    * Get color of theme based on property
    * @param {String} prop
    */
   getColor(prop) {
-    // const theme = this.theme ? DARK_THEME : LIGHT_THEME;
-    return this.colorTheme[prop];
+    return this.colors[prop];
   }
 
   /**
    * Generates the current theme
    */
   generateStyle() {
-    this.colorTheme = this.theme ? DARK_THEME : LIGHT_THEME;
-
-    console.log(this.colorTheme);
-
+    Object.assign(this.colors, this.theme ? DARK_THEME : LIGHT_THEME);
     const baseTheme = this.theme === 0 ? DefaultTheme : DarkTheme;
 
     this.navTheme = {
@@ -134,18 +126,18 @@ export class ThemedStylesStore {
         ...baseTheme.colors,
         background: 'transparent',
         // card: theme.backgroundSecondary, // generates an error on ios
-        text: this.colorTheme.primary_text,
-        primary: this.colorTheme.icon,
+        text: this.colors.primary_text,
+        primary: this.colors.icon,
       },
     };
 
     this.defaultScreenOptions = {
       title: '',
       headerStyle: {
-        backgroundColor: this.colorTheme.primary_background,
+        backgroundColor: this.colors.primary_background,
       },
       contentStyle: {
-        backgroundColor: this.colorTheme.primary_background,
+        backgroundColor: this.colors.primary_background,
       },
       stackAnimation: Platform.select({
         ios: 'default',
@@ -159,7 +151,7 @@ export class ThemedStylesStore {
       this.defaultScreenOptions.headerTopInsetEnabled = false;
     }
 
-    const newStyle = StyleSheet.create(buildStyle(this.colorTheme));
+    const newStyle = StyleSheet.create(buildStyle(this.colors));
 
     // we assign to the same object to keep an stable reference to the styles even when the theme change.
     Object.getOwnPropertyNames(this.style).forEach(key => {
