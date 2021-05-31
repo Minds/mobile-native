@@ -13,9 +13,10 @@ import {
   containerStyle,
   styles,
 } from './styles';
-import NotificationIcon from './NotificationIcon';
-import ContentPreview from './ContentPreview';
+import NotificationIcon from './content/NotificationIcon';
+import ContentPreview from './content/ContentPreview';
 import useNotificationRouter from './useNotificationRouter';
+import Merged from './content/Merged';
 
 type PropsType = {
   notification: Notification;
@@ -27,7 +28,11 @@ const NotificationItem = ({ notification }: PropsType) => {
   const avatarSrc = fromUser.getAvatarSource();
   const router = useNotificationRouter(notification);
 
-  const pronoun =
+  const navToFromChannel = () => router.navToChannel(fromUser);
+
+  const verb = ` ${i18n.t(`notification.verbs.${notification.type}`)}`;
+
+  let pronoun =
     notification.type === 'quote'
       ? 'your'
       : notification.type === 'subscribe'
@@ -35,30 +40,26 @@ const NotificationItem = ({ notification }: PropsType) => {
       : notification.entity?.owner_guid === sessionService.getUser().guid
       ? 'your'
       : 'their';
+  pronoun = pronoun !== '' ? ` ${i18n.t(pronoun)}` : '';
 
-  let noun = '';
-
-  switch (notification.entity?.type) {
-    case 'comment':
-      noun = 'comment';
-      break;
-    case 'object':
-      noun = notification.entity?.subtype;
-      break;
-    case 'user':
-      noun = 'you';
-      break;
-    default:
-      noun = 'post';
-  }
-
-  const hasMerged =
-    notification.merged_count > 0 && notification.merged_from[0] !== undefined;
-
-  const navToFromChannel = () => router.navToChannel(fromUser);
+  const nounText = getNoun(
+    notification.entity?.type,
+    notification.entity?.subtype,
+  );
+  const noun = (
+    <Text style={bodyTextImportantStyle} onPress={router.navToEntity}>
+      {' ' + nounText}
+    </Text>
+  );
 
   return (
-    <View style={containerStyle}>
+    <TouchableOpacity
+      style={containerStyle}
+      onPress={
+        notification.type === 'subscribe'
+          ? navToFromChannel
+          : router.navToEntity
+      }>
       <View style={styles.innerContainer}>
         <View style={styles.avatarContainer}>
           {
@@ -75,27 +76,10 @@ const NotificationItem = ({ notification }: PropsType) => {
             <Text style={bodyTextImportantStyle} onPress={navToFromChannel}>
               {fromUser.name}
             </Text>
-            {hasMerged && (
-              <Text style={bodyTextStyle}>
-                {' '}
-                and{' '}
-                <Text
-                  style={bodyTextImportantStyle}
-                  onPress={() =>
-                    router.navToChannel(notification.merged_from[0])
-                  }>
-                  {notification.merged_from[0].name}
-                </Text>
-                {notification.merged_count > 1 && (
-                  <Text>and {notification.merged_count} others</Text>
-                )}
-              </Text>
-            )}
-            {' ' + i18n.t(`notification.verbs.${notification.type}`)}
-            {' ' + pronoun !== '' ? i18n.t(pronoun) : ''}
-            <Text style={bodyTextImportantStyle} onPress={router.navToEntity}>
-              {' ' + noun}
-            </Text>
+            <Merged notification={notification} router={router} />
+            {verb}
+            {pronoun}
+            {noun}
           </Text>
         </View>
         <View style={styles.timeContainer}>
@@ -109,8 +93,27 @@ const NotificationItem = ({ notification }: PropsType) => {
         notification={notification}
         navigation={router.navigation}
       />
-    </View>
+    </TouchableOpacity>
   );
+};
+
+const getNoun = (type: string | undefined, subtype: string | undefined) => {
+  let noun = '';
+
+  switch (type) {
+    case 'comment':
+      noun = 'comment';
+      break;
+    case 'object':
+      noun = subtype || '';
+      break;
+    case 'user':
+      noun = 'you';
+      break;
+    default:
+      noun = 'post';
+  }
+  return noun;
 };
 
 export default NotificationItem;

@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/core';
-import type UserModel from '../../../channel/UserModel';
+import UserModel from '../../../channel/UserModel';
 import { Notification } from '../../../types/Common';
 
 const useNotificationRouter = (notification: Notification) => {
@@ -47,6 +47,12 @@ const useNotificationRouter = (notification: Notification) => {
             guid: notification.entity.guid,
             tab: 'conversation',
           };
+        } else if (notification.entity.type === 'user') {
+          screen = 'Channel';
+          params = {
+            guid: notification.entity.guid,
+            entity: UserModel.checkOrCreate(notification.entity),
+          };
         }
       }
 
@@ -60,5 +66,7 @@ const useNotificationRouter = (notification: Notification) => {
   };
   return router;
 };
+
+export type NotificationRouter = ReturnType<typeof useNotificationRouter>;
 
 export default useNotificationRouter;

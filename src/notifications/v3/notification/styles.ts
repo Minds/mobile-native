@@ -24,6 +24,7 @@ export const styles = StyleSheet.create({
     flex: 2,
     alignSelf: 'center',
     flexDirection: 'row',
+    justifyContent: 'flex-end',
   },
   avatar: {
     height: 37,

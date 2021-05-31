@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import Activity from '../../../newsfeed/activity/Activity';
-import ActivityModel from '../../../newsfeed/ActivityModel';
-import { Notification } from '../../../types/Common';
-import { bodyTextStyle, spacedCommentPreview, styles } from './styles';
+import Activity from '../../../../newsfeed/activity/Activity';
+import ActivityModel from '../../../../newsfeed/ActivityModel';
+import { Notification } from '../../../../types/Common';
+import { bodyTextStyle, spacedCommentPreview, styles } from '../styles';
 
 type PropsType = {
   notification: Notification;

@@ -1,7 +1,7 @@
 import React from 'react';
-import SmallCircleButton from '../../../common/components/SmallCircleButton';
-import { NotificationType } from '../../../types/Common';
-import { styles } from './styles';
+import SmallCircleButton from '../../../../common/components/SmallCircleButton';
+import { NotificationType } from '../../../../types/Common';
+import { styles } from '../styles';
 
 const notificationIconsTypes = {
   vote_up: 'thumb-up',
