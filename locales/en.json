@@ -437,7 +437,7 @@
     }
   },
   "notificationSettings": {
-    "enableDisable": "Enable and disable push notifications",
+    "enableDisable": "Enable Push Notifications",
     "comment": "Comments",
     "like": "Votes",
     "tag": "Tags",
@@ -457,7 +457,15 @@
     "boost_revoked": "Boost Revoked",
     "referral_ping": "Referral Ping",
     "referral_pending": "Referral Pending",
-    "referral_complete": "Referral Complete"
+    "referral_complete": "Referral Complete",
+    "votes": "Votes",
+    "tags": "Tags",
+    "subscriptions": "Subscriptions",
+    "comments": "Comments",
+    "reminds": "Reminds",
+    "boosts": "Boosts",
+    "tokens": "Tokens",
+    "related": "Related to your posts and channel"
   },
   "plus": {
     "freeTrialDesciption": "Start your free trial for 7 days"

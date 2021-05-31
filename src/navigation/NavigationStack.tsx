@@ -78,7 +78,7 @@ import {
 import Drawer from './Drawer';
 import OptionsDrawer from '../common/components/OptionsDrawer';
 import PasswordScreen from '../settings/screens/PasswordScreen';
-import NotificationsSettingsScreen from '../notifications/NotificationsSettingsScreen';
+import NotificationsSettingsScreen from '../notifications/v3/settings/NotificationsSettingsScreen';
 import BlockedChannelsScreen from '../settings/screens/blocked/BlockedChannelsScreen';
 import TierManagementScreen from '../common/components/tier-management/TierManagementScreen';
 import DeleteChannelScreen from '../settings/screens/DeleteChannelScreen';

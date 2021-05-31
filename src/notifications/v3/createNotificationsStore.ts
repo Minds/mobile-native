@@ -1,10 +1,13 @@
-import number from '../../common/helpers/number';
 import apiService from '../../common/services/api.service';
 import badgeService from '../../common/services/badge.service';
 import logService from '../../common/services/log.service';
 import sessionService from '../../common/services/session.service';
 import socketService from '../../common/services/socket.service';
 import { Notification } from '../../types/Common';
+import EmailNotificationsSettingModel, {
+  EmailNotificationsSettingType,
+} from './settings/EmailNotificationsSettingModel';
+import PushNotificationsSettingModel from './settings/PushNotificationsSettingModel';
 
 export type FilterType = '' | 'tags';
 
@@ -13,6 +16,8 @@ const createNotificationsStore = () => ({
   filter: '' as FilterType,
   offset: '',
   pollInterval: null as number | null,
+  pushNotificationsSettings: [] as PushNotificationsSettingModel[],
+  mailsNotificationsSettings: [] as EmailNotificationsSettingModel[],
   init() {
     sessionService.onSession((token: string) => {
       if (token) {
@@ -22,6 +27,9 @@ const createNotificationsStore = () => ({
         this.startPollCount();
 
         this.listen();
+
+        this.loadPushNotificationsSettings();
+        this.loadMailNotificationsSettings();
       } else {
         this.unlisten();
         this.stopPollCount();
@@ -72,9 +80,82 @@ const createNotificationsStore = () => ({
     }
   },
   async markAsRead(notification: Notification): Promise<void> {
-    await apiService.put('api/v3/notifications/read/' + notification.urn);
-    if (this.unread > 0) {
-      this.setUnread(this.unread - 1);
+    try {
+      await apiService.put('api/v3/notifications/read/' + notification.urn);
+      if (this.unread > 0) {
+        this.setUnread(this.unread - 1);
+      }
+    } catch (err) {
+      logService.exception('[NotificationsStore] markAsRead', err);
+    }
+  },
+  async loadMailNotificationsSettings() {
+    try {
+      const response = <any>await apiService.get('api/v2/settings/emails');
+      if (response.notifications) {
+        this.mailsNotificationsSettings = response.notifications.map(
+          (notifications: EmailNotificationsSettingType) =>
+            new EmailNotificationsSettingModel(notifications),
+        );
+      }
+      this.mailsNotificationsSettings[0].toggleValue();
+    } catch (err) {
+      logService.exception(
+        '[NotificationsStore] loadMailNotificationsSettings',
+        err,
+      );
+    }
+  },
+  async loadPushNotificationsSettings() {
+    try {
+      /*console.log('api/v3/notifications/push/settings');
+      const response = <any>(
+        await apiService.get('api/v3/notifications/push/settings')
+      );
+      console.log('loadSettings, ', response);*/
+      const response = {
+        settings: [
+          {
+            notification_group: 'votes',
+            enabled: true,
+          },
+          {
+            notification_group: 'tags',
+            enabled: true,
+          },
+          {
+            notification_group: 'subscriptions',
+            enabled: true,
+          },
+          {
+            notification_group: 'comments',
+            enabled: true,
+          },
+          {
+            notification_group: 'reminds',
+            enabled: true,
+          },
+          {
+            notification_group: 'boosts',
+            enabled: true,
+          },
+          {
+            notification_group: 'tokens',
+            enabled: true,
+          },
+          {
+            notification_group: 'all',
+            enabled: true,
+          },
+        ],
+      };
+      if (response.settings) {
+        this.pushNotificationsSettings = response.settings.map(
+          setting => new PushNotificationsSettingModel(setting),
+        );
+      }
+    } catch (err) {
+      logService.exception('[NotificationsStore] loadSettings', err);
     }
   },
 });
