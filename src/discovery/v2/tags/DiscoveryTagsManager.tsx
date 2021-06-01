@@ -19,6 +19,7 @@ import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import InputContainer from '../../../common/components/InputContainer';
 import i18n from '../../../common/services/i18n.service';
 import { useDimensions } from '@react-native-community/hooks';
+import { withErrorBoundary } from '../../../common/components/ErrorBoundary';
 
 interface Props {
   style?: StyleProp<ViewStyle>;
@@ -90,115 +91,118 @@ type StoreType = ReturnType<typeof createStore>;
 /**
  * Discovery Manage Tags
  */
-export const DiscoveryTagsManager = observer((props: Props) => {
-  const theme = ThemedStyles.style;
-  const discoveryV2 = useDiscoveryV2Store();
-  const store = useLocalStore<StoreType>(createStore);
-  const { height } = useDimensions().window;
+export const DiscoveryTagsManager = withErrorBoundary(
+  observer((props: Props) => {
+    const theme = ThemedStyles.style;
+    const discoveryV2 = useDiscoveryV2Store();
+    const store = useLocalStore<StoreType>(createStore);
+    const { height } = useDimensions().window;
 
-  useEffect(() => {
-    store.setTags(discoveryV2.tags.slice(), discoveryV2.trendingTags.slice());
-  }, [discoveryV2.tags, discoveryV2.trendingTags, props.show, store]);
+    useEffect(() => {
+      store.setTags(discoveryV2.tags.slice(), discoveryV2.trendingTags.slice());
+    }, [discoveryV2.tags, discoveryV2.trendingTags, props.show, store]);
 
-  const ItemPartial = ({ item }) => {
-    const tag = item;
+    const ItemPartial = ({ item }) => {
+      const tag = item;
 
-    const selected = store.selected.findIndex(t => t.value === tag.value) > -1;
+      const selected =
+        store.selected.findIndex(t => t.value === tag.value) > -1;
 
-    return (
-      <MenuItem
-        component={Platform.OS === 'android' ? TouchableOpacity : undefined}
-        item={{
-          title: '#' + tag.value,
-          onPress: () => {
-            if (selected) {
-              store.deselectTag(tag);
-            } else {
-              store.selectTag(tag);
-            }
-          },
-          icon: selected
-            ? {
-                name: 'ios-remove-circle-outline',
-                type: 'ionicon',
+      return (
+        <MenuItem
+          component={Platform.OS === 'android' ? TouchableOpacity : undefined}
+          item={{
+            title: '#' + tag.value,
+            onPress: () => {
+              if (selected) {
+                store.deselectTag(tag);
+              } else {
+                store.selectTag(tag);
               }
-            : { name: 'ios-add-circle-outline', type: 'ionicon' },
-        }}
+            },
+            icon: selected
+              ? {
+                  name: 'ios-remove-circle-outline',
+                  type: 'ionicon',
+                }
+              : { name: 'ios-add-circle-outline', type: 'ionicon' },
+          }}
+        />
+      );
+    };
+
+    const SectionHeaderPatrial = (info: { section: SectionListData<any> }) => {
+      return (
+        <View style={[theme.backgroundSecondary]}>
+          <MenuSubtitle>{info.section.title.toUpperCase()}</MenuSubtitle>
+        </View>
+      );
+    };
+
+    const onCancel = useCallback(() => {
+      props.onCancel();
+    }, [props]);
+
+    const onDone = useCallback(() => {
+      discoveryV2.saveTags(store.selected, store.deselected);
+      props.onDone();
+    }, [discoveryV2, store, props]);
+
+    const onCreate = useCallback(() => {
+      store.createTag();
+      discoveryV2.saveTags(store.selected, store.deselected);
+    }, [store, discoveryV2]);
+
+    /**
+     * Render
+     */
+    return (
+      <BottomOptionPopup
+        noOverlay
+        height={(height - 100) * 0.9}
+        title={i18n.t('discovery.manage')}
+        show={props.show}
+        onCancel={onCancel}
+        onDone={onDone}
+        content={
+          <ScrollView>
+            <SectionList
+              ListHeaderComponent={
+                <InputContainer
+                  placeholder={i18n.t('add')}
+                  onChangeText={store.setValue}
+                  onSubmitEditing={onCreate}
+                  value={store.inputValue}
+                  style={[
+                    theme.backgroundPrimary,
+                    theme.marginRight4x,
+                    theme.paddingLeft2x,
+                  ]}
+                  testID="hashtagInput"
+                  selectTextOnFocus={true}
+                />
+              }
+              renderItem={ItemPartial}
+              renderSectionHeader={SectionHeaderPatrial}
+              sections={[
+                {
+                  title: i18n.t('discovery.yourTags'),
+                  data: store.selected.slice(),
+                },
+                {
+                  title: i18n.t('discovery.otherTags'),
+                  data: store.other.slice(),
+                },
+              ]}
+              keyExtractor={keyExtractor}
+              stickySectionHeadersEnabled={true}
+            />
+          </ScrollView>
+        }
+        doneText={i18n.t('done')}
       />
     );
-  };
-
-  const SectionHeaderPatrial = (info: { section: SectionListData<any> }) => {
-    return (
-      <View style={[theme.backgroundSecondary]}>
-        <MenuSubtitle>{info.section.title.toUpperCase()}</MenuSubtitle>
-      </View>
-    );
-  };
-
-  const onCancel = useCallback(() => {
-    props.onCancel();
-  }, [props]);
-
-  const onDone = useCallback(() => {
-    discoveryV2.saveTags(store.selected, store.deselected);
-    props.onDone();
-  }, [discoveryV2, store, props]);
-
-  const onCreate = useCallback(() => {
-    store.createTag();
-    discoveryV2.saveTags(store.selected, store.deselected);
-  }, [store, discoveryV2]);
-
-  /**
-   * Render
-   */
-  return (
-    <BottomOptionPopup
-      noOverlay
-      height={(height - 100) * 0.9}
-      title={i18n.t('discovery.manage')}
-      show={props.show}
-      onCancel={onCancel}
-      onDone={onDone}
-      content={
-        <ScrollView>
-          <SectionList
-            ListHeaderComponent={
-              <InputContainer
-                placeholder={i18n.t('add')}
-                onChangeText={store.setValue}
-                onSubmitEditing={onCreate}
-                value={store.inputValue}
-                style={[
-                  theme.backgroundPrimary,
-                  theme.marginRight4x,
-                  theme.paddingLeft2x,
-                ]}
-                testID="hashtagInput"
-                selectTextOnFocus={true}
-              />
-            }
-            renderItem={ItemPartial}
-            renderSectionHeader={SectionHeaderPatrial}
-            sections={[
-              {
-                title: i18n.t('discovery.yourTags'),
-                data: store.selected.slice(),
-              },
-              {
-                title: i18n.t('discovery.otherTags'),
-                data: store.other.slice(),
-              },
-            ]}
-            keyExtractor={keyExtractor}
-            stickySectionHeadersEnabled={true}
-          />
-        </ScrollView>
-      }
-      doneText={i18n.t('done')}
-    />
-  );
-});
+  }),
+);
 
 export default DiscoveryTagsManager;

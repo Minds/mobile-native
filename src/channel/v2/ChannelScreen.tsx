@@ -17,6 +17,7 @@ import ChannelTopBar from './ChannelTopBar';
 import UserNotFound from './UserNotFound';
 import ActivityModel from '../../newsfeed/ActivityModel';
 import Button from '../../common/components/Button';
+import { withErrorBoundary } from '../../common/components/ErrorBoundary';
 
 type PropsType = {
   navigation: any;
@@ -179,4 +180,4 @@ const style = StyleSheet.create({
   },
 });
 
-export default ChannelScreen;
+export default withErrorBoundary(ChannelScreen);
