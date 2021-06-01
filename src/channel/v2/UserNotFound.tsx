@@ -3,7 +3,6 @@ import { Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import i18nService from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
-import ChannelHeader from './ChannelHeader';
 import ChannelTopBar from './ChannelTopBar';
 
 const UserNotFound = props => {
@@ -12,19 +11,15 @@ const UserNotFound = props => {
   return (
     <View>
       <ChannelTopBar navigation={props.navigation} />
-      <ChannelHeader
-        navigation={props.navigation}
-        route={props.route}
-        channelName={params.guid || params.username}
-      />
-      <View style={[theme.centered]}>
+      <View style={theme.centered}>
         <Icon
           name="alert-circle-outline"
-          size={28}
+          style={theme.paddingVertical4x}
+          size={35}
           color={ThemedStyles.getColor('primary_text')}
         />
         <Text style={[theme.fontLM, theme.bold]}>
-          {i18nService.t('channel.notExist')}
+          {i18nService.t('channel.notExist')}: @{params.guid || params.username}
         </Text>
       </View>
     </View>
