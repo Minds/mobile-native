@@ -61,7 +61,9 @@ const CustomBackdrop = observer(
     const containerStyle = React.useMemo(
       () => [
         style,
-        ThemedStyles.style.backgroundSecondary,
+        ThemedStyles.theme
+          ? ThemedStyles.style.backgroundSecondary
+          : ThemedStyles.style.backgroundTertiary,
         containerAnimatedStyle,
       ],
       [style, containerAnimatedStyle],
