@@ -561,31 +561,12 @@ exports[`Activity screen component renders correctly  1`] = `
               >
                 <View
                   style={
-                    Array [
-                      Object {
-                        "alignItems": "center",
-                        "backgroundColor": "transparent",
-                        "flex": 1,
-                        "justifyContent": "center",
-                      },
-                    ]
+                    Object {
+                      "flex": 1,
+                      "width": "100%",
+                    }
                   }
                 >
-                  <Text
-                    style={
-                      Object {
-                        "alignContent": "center",
-                        "alignItems": "center",
-                        "alignSelf": "center",
-                        "color": undefined,
-                        "fontSize": 22,
-                        "justifyContent": "center",
-                        "marginBottom": 30,
-                      }
-                    }
-                  >
-                    
-                  </Text>
                   <View
                     style={
                       Array [
@@ -594,12 +575,6 @@ exports[`Activity screen component renders correctly  1`] = `
                         },
                         Object {
                           "marginTop": 15,
-                        },
-                        Object {
-                          "paddingLeft": 10,
-                        },
-                        Object {
-                          "marginBottom": 30,
                         },
                       ]
                     }
@@ -626,6 +601,11 @@ exports[`Activity screen component renders correctly  1`] = `
                       renderItem={[Function]}
                       scrollEventThrottle={50}
                       stickyHeaderIndices={Array []}
+                      style={
+                        Object {
+                          "flex": 1,
+                        }
+                      }
                       updateCellsBatchingPeriod={50}
                       viewabilityConfigCallbackPairs={Array []}
                       windowSize={21}
@@ -636,6 +616,7 @@ exports[`Activity screen component renders correctly  1`] = `
                   <View
                     style={
                       Object {
+                        "alignSelf": "center",
                         "backgroundColor": "transparent",
                         "borderRadius": 28,
                         "height": 55,
