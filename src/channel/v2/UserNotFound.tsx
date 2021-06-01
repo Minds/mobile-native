@@ -15,11 +15,12 @@ const UserNotFound = props => {
         <Icon
           name="alert-circle-outline"
           style={theme.paddingVertical4x}
-          size={35}
+          size={50}
           color={ThemedStyles.getColor('primary_text')}
         />
-        <Text style={[theme.fontLM, theme.bold]}>
-          {i18nService.t('channel.notExist')}: @{params.guid || params.username}
+        <Text style={[theme.fontLM, theme.bold, theme.textCenter]}>
+          {i18nService.t('channel.notExist') + '\n'}@
+          {params.guid || params.username}
         </Text>
       </View>
     </View>
