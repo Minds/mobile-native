@@ -30,7 +30,9 @@ export default observer(function CommentListHeader(props: {
   const titleStyles = [theme.fontMedium, theme.paddingLeft3x];
 
   const closeButton = (
-    <TouchableOpacity style={styles.iconContainer} onPress={bottomSheet.close}>
+    <TouchableOpacity
+      style={styles.iconContainer}
+      onPress={bottomSheet.close as any}>
       <Icon name={'x'} size={24} style={theme.colorSecondaryText} />
     </TouchableOpacity>
   );
