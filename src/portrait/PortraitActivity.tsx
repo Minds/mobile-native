@@ -35,6 +35,7 @@ import CommentBottomSheet from '../comments/v2/CommentBottomSheet';
 import BoxShadow from '../common/components/BoxShadow';
 import formatDate from '../common/helpers/date';
 import i18nService from '../common/services/i18n.service';
+import { withErrorBoundary } from '../common/components/ErrorBoundary';
 
 type ActivityRoute = RouteProp<AppStackParamList, 'Activity'>;
 
@@ -284,7 +285,7 @@ const PortraitActivity = observer((props: PropsType) => {
   );
 });
 
-export default PortraitActivity;
+export default withErrorBoundary(PortraitActivity);
 
 const styles = StyleSheet.create({
   backButton: {
