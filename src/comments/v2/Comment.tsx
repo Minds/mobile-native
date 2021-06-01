@@ -218,6 +218,7 @@ export default observer(function Comment(props: PropsType) {
               store={props.store}
               entity={props.store.entity}
               comment={props.comment}
+              onTranslate={translate}
             />
           </View>
         </View>
