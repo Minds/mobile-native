@@ -52,7 +52,7 @@
     "expo": "^40.0.1",
     "expo-av": "^9.0.0",
     "expo-linear-gradient": "^9.0.0",
-    "i18n-js": "^3.2.2",
+    "i18n-js": "^3.8.0",
     "intl": "^1.2.5",
     "jest-circus": "^26.6.1",
     "lodash": "^4.17.15",

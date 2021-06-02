@@ -10,6 +10,7 @@ import Button from '../common/components/Button';
 import ThemedStyles from '../styles/ThemedStyles';
 import InputContainer from '../common/components/InputContainer';
 import { styles } from './styles';
+import { showNotification } from '../../AppMessages';
 
 type PropsType = {
   onBack: Function;
@@ -19,17 +20,12 @@ type PropsType = {
  * Forgot Password Form
  */
 export default class ForgotPassword extends PureComponent<PropsType> {
-  /**
-   * Component will mount
-   */
-  componentWillMount() {
-    this.setState({
-      username: '',
-      sending: false,
-      sent: false,
-      msg: i18n.t('auth.requestNewPassword'),
-    });
-  }
+  state = {
+    username: '',
+    sending: false,
+    sent: false,
+    msg: i18n.t('auth.requestNewPassword'),
+  };
 
   /**
    * Render
@@ -38,26 +34,11 @@ export default class ForgotPassword extends PureComponent<PropsType> {
     const theme = ThemedStyles.style;
     return (
       <SafeAreaView style={theme.flexContainer}>
-        <Text
-          style={[
-            theme.titleText,
-            theme.colorPrimaryText,
-            theme.marginVertical3x,
-            theme.marginHorizontal3x,
-          ]}>
-          {i18n.t('auth.forgot')}
-        </Text>
-        <Text
-          style={[
-            theme.subTitleText,
-            theme.colorPrimaryText,
-            theme.marginVertical,
-            theme.marginHorizontal3x,
-          ]}>
-          {this.state.msg}
-        </Text>
+        <Text style={titleStyle}>{i18n.t('auth.forgot')}</Text>
+        <Text style={subtitleStyle}>{this.state.msg}</Text>
         {!this.state.sent && (
           <InputContainer
+            autoFocus
             containerStyle={styles.inputBackground}
             style={theme.colorWhite}
             placeholder={i18n.t('auth.username')}
@@ -68,14 +49,9 @@ export default class ForgotPassword extends PureComponent<PropsType> {
             accessibilityLabel="usernameInput"
           />
         )}
-        <View
-          style={[
-            theme.rowJustifyEnd,
-            theme.marginTop4x,
-            theme.paddingRight2x,
-          ]}>
+        <View style={buttonContainerStyle}>
           <Button
-            onPress={() => this.onPressBack()}
+            onPress={this.onPressBack}
             text={i18n.t('goback')}
             containerStyle={theme.marginTop1x}
             accessibilityLabel="backButton"
@@ -84,7 +60,7 @@ export default class ForgotPassword extends PureComponent<PropsType> {
           />
           {!this.state.sent && (
             <Button
-              onPress={() => this.onContinuePress()}
+              onPress={this.onContinuePress}
               text={i18n.t('continue')}
               loading={this.state.sending}
               loadingRight={true}
@@ -103,30 +79,49 @@ export default class ForgotPassword extends PureComponent<PropsType> {
   /**
    * On press back
    */
-  onPressBack() {
+  onPressBack = () => {
     this.props.onBack();
-  }
+  };
 
   /**
    * On continue press
    */
-  async onContinuePress() {
+  onContinuePress = async () => {
     if (!this.state.sent) {
       this.setState({ sending: true });
 
       try {
         const data = await authService.forgot(this.state.username);
-        console.log(data);
         this.setState({
           sent: true,
           msg: i18n.t('auth.requestNewPasswordSuccess'),
         });
       } catch (err) {
-        alert('Oops. Please try again.');
+        showNotification('Oops. Please try again.');
         logService.exception('[ForgotPassword]', err);
       } finally {
         this.setState({ sending: false });
       }
     }
-  }
+  };
 }
+
+const buttonContainerStyle = ThemedStyles.combine(
+  'rowJustifyEnd',
+  'marginTop4x',
+  'paddingRight2x',
+);
+
+const subtitleStyle = ThemedStyles.combine(
+  'subTitleText',
+  'colorWhite',
+  'marginVertical',
+  'marginHorizontal3x',
+);
+const titleStyle = ThemedStyles.combine(
+  'titleText',
+  'colorWhite',
+  'marginTop4x',
+  'marginBottom7x',
+  'marginHorizontal3x',
+);
