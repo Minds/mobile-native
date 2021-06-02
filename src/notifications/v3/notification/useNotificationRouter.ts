@@ -15,7 +15,9 @@ const useNotificationRouter = (notification: NotificationModel) => {
       });
     },
     navToEntity: () => {
-      if (notification.type === 'token_rewards_summary') {
+      if (
+        ['token_rewards_summary', 'wire_received'].includes(notification.type)
+      ) {
         navigator.navTo('Tabs');
       } else {
         switch (notification.entity.type) {
