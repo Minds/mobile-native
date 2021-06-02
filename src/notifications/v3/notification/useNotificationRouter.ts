@@ -4,6 +4,7 @@ import type NotificationModel from './NotificationModel';
 
 const useNotificationRouter = (notification: NotificationModel) => {
   const navigation = useNavigation();
+  navigator.set(navigation, notification);
   const router = {
     navigation: navigation,
     navigate: () => {},
@@ -14,57 +15,71 @@ const useNotificationRouter = (notification: NotificationModel) => {
       });
     },
     navToEntity: () => {
-      // Default case
-      let screen: string = 'Activity';
-      let params: any = {
-        entity: notification.entity,
-        hydrate: true,
-      };
-
-      // Only have focuserUrn if notification type or entity type is comment
-      const focusedUrn =
-        notification.type === 'comment'
-          ? notification.data.comment_urn
-          : notification.entity?.type === 'comment'
-          ? notification.entity.urn
-          : null;
-
-      // if blog, nav to blogView
-      if (
-        notification.entity.type === 'object' &&
-        notification.entity.subtype === 'blog'
-      ) {
-        screen = 'Activity';
-        params = {
-          entity: notification.entity,
-          hydrate: true,
-        };
+      if (notification.type === 'token_rewards_summary') {
+        navigator.navTo('Tabs');
       } else {
-        // if group nav to GroupView
-        if (notification.entity.type === 'group') {
-          screen = 'GroupView';
-          params = {
-            guid: notification.entity.guid,
-            tab: 'conversation',
-          };
-        } else if (notification.entity.type === 'user') {
-          screen = 'Channel';
-          params = {
-            guid: notification.entity.guid,
-            entity: UserModel.checkOrCreate(notification.entity),
-          };
+        switch (notification.entity.type) {
+          case 'group':
+            navigator.navTo('GroupView');
+            break;
+          case 'user':
+            navigator.navTo('Channel');
+            break;
+          default:
+            navigator.navTo('Activity');
         }
       }
-
-      if (focusedUrn) {
-        params.focusedUrn = focusedUrn;
-      }
-
-      // Do the nav
-      navigation.navigate(screen, params);
     },
   };
   return router;
+};
+
+type NavigatorScreensType = 'Activity' | 'Tabs' | 'GroupView' | 'Channel';
+
+const navigator = {
+  navigation: null as any,
+  notification: {} as NotificationModel,
+  set(navigation, notification) {
+    this.navigation = navigation;
+    this.notification = notification;
+  },
+  navTo(screen: NavigatorScreensType) {
+    let params: any = this.getParams(screen);
+    const focusedUrn =
+      this.notification.type === 'comment'
+        ? this.notification.data.comment_urn
+        : this.notification.entity?.type === 'comment'
+        ? this.notification.entity.urn
+        : null;
+    if (focusedUrn) {
+      params.focusedUrn = focusedUrn;
+    }
+    this.navigation.navigate(screen, params);
+  },
+  getParams(screen: NavigatorScreensType) {
+    const params = {
+      Activity: {
+        entity: this.notification.entity,
+        hydrate: true,
+      },
+      Tabs: {
+        screen: 'CaptureTab',
+        params: {
+          screen: 'Wallet',
+          params: { currency: 'tokens', section: 'transactions' },
+        },
+      },
+      GroupView: {
+        guid: this.notification.entity.guid,
+        tab: 'conversation',
+      },
+      Channel: {
+        guid: this.notification.entity.guid,
+        entity: UserModel.checkOrCreate(this.notification.entity),
+      },
+    };
+    return params[screen];
+  },
 };
 
 export type NotificationRouter = ReturnType<typeof useNotificationRouter>;

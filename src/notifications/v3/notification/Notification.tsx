@@ -37,7 +37,7 @@ const NotificationItem = ({ notification }: PropsType) => {
   const Noun =
     notification.Noun !== '' ? (
       <Text style={bodyTextImportantStyle} onPress={router.navToEntity}>
-        {' ' + notification.Noun}
+        {notification.Noun}
       </Text>
     ) : null;
 
@@ -57,8 +57,13 @@ const NotificationItem = ({ notification }: PropsType) => {
               <FastImage source={avatarSrc} style={styles.avatar} />
             </DebouncedTouchableOpacity>
           }
-
-          <NotificationIcon type={notification.type} />
+          {
+            // This view is here to ensure that the wrapped icon that have absolute position
+            // doesn't change move when the notification is longer than expected
+            <View>
+              <NotificationIcon type={notification.type} />
+            </View>
+          }
         </View>
         <View style={styles.bodyContainer}>
           <Text style={bodyTextStyle}>
@@ -68,9 +73,7 @@ const NotificationItem = ({ notification }: PropsType) => {
               </Text>
             )}
             <Merged notification={notification} router={router} />
-            {notification.Verb}
-            {notification.Pronoun}
-            {Noun}
+            {notification.Verb} {notification.Pronoun} {Noun}
           </Text>
         </View>
         <View style={styles.timeContainer}>

@@ -67,10 +67,9 @@ const createStore = ({
     if (this.result) {
       return;
     }
-
     try {
       const data = await storageService.getItem(getCacheKey(url, params));
-      this.result = JSON.parse(data);
+      this.setResult(JSON.parse(data));
     } catch (e) {
       console.error(e);
     }
@@ -144,7 +143,7 @@ export default function useApiFetch<T>(
       store.hydrate(options.params);
     }
     return () => store.clearRetryTimer(true);
-  });
+  }, []);
 
   useEffect(
     () =>

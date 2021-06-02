@@ -76,6 +76,20 @@ const NotificationsScreen = observer(({}: PropsType) => {
     }, []),
   );
 
+  const onViewableItemsChanged = React.useCallback(
+    (viewableItems: { viewableItems: ViewToken[]; changed: ViewToken[] }) => {
+      viewableItems.viewableItems.forEach(
+        (item: { item: NotificationModel }) => {
+          if (!item.item.read) {
+            item.item.read = true;
+            notifications.markAsRead(item.item);
+          }
+        },
+      );
+    },
+    [notifications],
+  );
+
   if (error && !loading) {
     return (
       <Text
@@ -93,18 +107,6 @@ const NotificationsScreen = observer(({}: PropsType) => {
   }
 
   const data = result?.notifications || [];
-
-  const onViewableItemsChanged = React.useCallback(
-    (viewableItems: { viewableItems: ViewToken[]; changed: ViewToken[] }) => {
-      viewableItems.viewableItems.forEach((item: { item: Notification }) => {
-        if (!item.item.read) {
-          item.item.read = true;
-          notifications.markAsRead(item.item);
-        }
-      });
-    },
-    [notifications],
-  );
 
   return (
     <View style={theme.flexContainer}>
@@ -125,7 +127,7 @@ const NotificationsScreen = observer(({}: PropsType) => {
   );
 });
 
-const keyExtractor = (item: Notification, index) => `${item.urn}-${index}`;
+const keyExtractor = (item: NotificationModel, index) => `${item.urn}-${index}`;
 
 const renderItem = (row: any): React.ReactElement => {
   const notification = row.item;
