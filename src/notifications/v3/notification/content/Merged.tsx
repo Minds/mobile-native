@@ -27,7 +27,7 @@ const Merged = ({ notification, router }: PropsType) => {
         {notification.merged_from[0].name}
       </Text>
       {notification.merged_count > 1 && (
-        <Text>and {notification.merged_count} others</Text>
+        <Text> and {notification.merged_count} others </Text>
       )}
     </Text>
   );
