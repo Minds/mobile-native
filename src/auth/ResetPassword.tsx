@@ -1,9 +1,8 @@
 import React from 'react';
 
-import { View, Text, TextInput, KeyboardAvoidingView } from 'react-native';
+import { View, Text, KeyboardAvoidingView } from 'react-native';
 
 import authService from './AuthService';
-import { ComponentsStyle } from '../styles/Components';
 
 import i18n from '../common/services/i18n.service';
 import delay from '../common/helpers/delay';
@@ -13,6 +12,8 @@ import { observer, useLocalStore } from 'mobx-react';
 import { showNotification } from '../../AppMessages';
 import Button from '../common/components/Button';
 import ThemedStyles from '../styles/ThemedStyles';
+import InputContainer from '../common/components/InputContainer';
+import { styles } from './styles';
 
 type PropsType = {
   onBack: () => void;
@@ -30,7 +31,7 @@ const ResetPassword = observer(({ onBack, code, username }: PropsType) => {
     confirmation: '',
     sending: false,
     sent: false,
-    msg: 'Please enter your new password',
+    msg: i18n.t('auth.newPassword'),
     setPassword(password: string) {
       this.password = password;
     },
@@ -43,16 +44,18 @@ const ResetPassword = observer(({ onBack, code, username }: PropsType) => {
     setSent(sent: boolean) {
       this.sent = sent;
     },
-    setMsg(msg: string) {
-      this.msg = msg;
-    },
     async onContinuePress() {
       if (!username || !code) {
-        showNotification(i18n.t('errorMessage'), 'warning');
+        showNotification(i18n.t('errorMessage'), 'warning', 3000, 'top');
         return;
       }
       if (this.confirmation !== this.password) {
-        showNotification(i18n.t('settings.passwordsNotMatch'), 'warning');
+        showNotification(
+          i18n.t('settings.passwordsNotMatch'),
+          'warning',
+          3000,
+          'top',
+        );
         return;
       }
 
@@ -60,20 +63,22 @@ const ResetPassword = observer(({ onBack, code, username }: PropsType) => {
         this.setSending(true);
         try {
           const data = await authService.reset(username, this.password, code);
+          await delay(150);
           // clear the cookies (fix future issues with calls)
           await apiService.clearCookies();
 
           if (data.status === 'success') {
-            await delay(100);
+            this.setSent(true);
+            await delay(300);
             authService.login(username, this.password);
           } else {
             throw data;
           }
         } catch (err) {
           if (err.message) {
-            showNotification(err.message, 'warning');
+            showNotification(err.message, 'warning', 3000, 'top');
           } else {
-            showNotification(i18n.t('errorMessage'), 'warning');
+            showNotification(i18n.t('errorMessage'), 'warning', 3000, 'top');
           }
           logService.exception('[ResetPassword]', err);
         } finally {
@@ -84,51 +89,54 @@ const ResetPassword = observer(({ onBack, code, username }: PropsType) => {
   }));
 
   return (
-    <KeyboardAvoidingView behavior="padding" style={theme.paddingHorizontal3x}>
-      <Text style={[theme.colorWhite, theme.fontM]}>{localStore.msg}</Text>
-      <TextInput
-        style={[
-          ComponentsStyle.loginInput,
-          theme.marginTop2x,
-          theme.marginBottom2x,
-        ]}
+    <KeyboardAvoidingView behavior="padding">
+      <Text style={titleStyle}>{localStore.msg}</Text>
+
+      <InputContainer
+        autoFocus
+        containerStyle={styles.inputBackground}
+        style={theme.colorWhite}
         placeholder={i18n.t('auth.password')}
         returnKeyType={'done'}
-        placeholderTextColor="#444"
-        underlineColorAndroid="transparent"
         onChangeText={localStore.setPassword}
         autoCapitalize={'none'}
         value={localStore.password}
         secureTextEntry={true}
+        noBottomBorder
       />
-      <TextInput
-        style={[
-          ComponentsStyle.loginInput,
-          theme.marginTop2x,
-          theme.marginBottom2x,
-        ]}
+      <InputContainer
+        containerStyle={styles.inputBackground}
+        style={theme.colorWhite}
         placeholder={i18n.t('auth.confirmpassword')}
         returnKeyType={'done'}
-        placeholderTextColor="#444"
-        underlineColorAndroid="transparent"
         onChangeText={localStore.setConfirmation}
         autoCapitalize={'none'}
         value={localStore.confirmation}
         secureTextEntry={true}
       />
       <View style={[theme.rowJustifyEnd, theme.marginTop2x]}>
-        <Button onPress={onBack} text={i18n.t('goback')} />
+        <Button onPress={onBack} text={i18n.t('goback')} large transparent />
         {!localStore.sent && (
           <Button
             onPress={localStore.onContinuePress}
             text={i18n.t('continue')}
             loading={localStore.sending}
             containerStyle={theme.marginLeft4x}
+            large
+            transparent
           />
         )}
       </View>
     </KeyboardAvoidingView>
   );
 });
+
+const titleStyle = ThemedStyles.combine(
+  'fontXXL',
+  'colorWhite',
+  'marginTop4x',
+  'marginBottom8x',
+  'marginHorizontal3x',
+);
 
 export default ResetPassword;

@@ -223,12 +223,15 @@ export default class AppInitManager {
 
         const params = getMaches(this.deepLinkUrl.replace(/%3B/g, ';'), regex);
 
+        RNBootSplash.hide({ duration: 250 });
+
         //sessionService.logout();
         NavigationService.navigate('Forgot', {
           username: params[1],
           code: params[2],
         });
         this.deepLinkUrl = '';
+
         return true;
       }
     } catch (err) {

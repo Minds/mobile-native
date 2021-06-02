@@ -91,7 +91,8 @@
     "recoveryDesc": "Enter your recovery code in case you lost access to your mobile device.",
     "recoveryFail": "The recovery code you enter doesn't match",
     "confirmPasswordModal": "Please confirm your account password to continue",
-    "loginFail": "Wrong Username or Password"
+    "loginFail": "Wrong Username or Password",
+    "newPassword": "Please enter your new password"
   },
   "blockchain": {
     "exportLegacyWallet": "Export legacy wallets",
