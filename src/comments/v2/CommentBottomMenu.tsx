@@ -25,6 +25,7 @@ type PropsType = {
   comment: CommentModel;
   store: CommentsStore;
   entity: ActivityModel | BlogModel | GroupModel;
+  onTranslate: () => void;
 };
 
 const hitSlop = { top: 10, bottom: 10, left: 10, right: 10 };
@@ -36,6 +37,7 @@ export default observer(function CommentBottomMenu({
   comment,
   entity,
   store,
+  onTranslate,
 }: PropsType) {
   const theme = ThemedStyles.style;
 
@@ -52,7 +54,17 @@ export default observer(function CommentBottomMenu({
   const navigation = useNavigation<any>();
 
   const dismissOptions: Array<Array<ItemType>> = React.useMemo(() => {
-    const actions: Array<Array<ItemType>> = [[]];
+    const actions: Array<Array<ItemType>> = [
+      [
+        {
+          title: i18n.t('translate.translate'),
+          onPress: () => {
+            localStore.hide();
+            onTranslate();
+          },
+        },
+      ],
+    ];
 
     const deleteOpt: ItemType = {
       title: i18n.t('delete'),
@@ -160,6 +172,7 @@ export default observer(function CommentBottomMenu({
     entity,
     localStore,
     navigation,
+    onTranslate,
     store,
     theme.colorSecondaryText,
   ]);

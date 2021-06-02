@@ -19,6 +19,7 @@ import ThumbDownAction from '../../newsfeed/activity/actions/ThumbDownAction';
 import MediaView from '../../common/components/MediaView';
 import { LIGHT_THEME } from '../../styles/Colors';
 import ReadMore from '../../common/components/ReadMore';
+import Translate from '../../common/components/translate/Translate';
 
 type PropsType = {
   comment: CommentModel;
@@ -32,6 +33,7 @@ type PropsType = {
  */
 export default observer(function Comment(props: PropsType) {
   const navigation = useNavigation<any>();
+  const translateRef = React.useRef<any>();
   const theme = ThemedStyles.style;
 
   const mature = props.comment.mature && !props.comment.mature_visibility;
@@ -97,6 +99,12 @@ export default observer(function Comment(props: PropsType) {
       theme.marginTop2x,
     ],
   );
+  const translate = React.useCallback(() => {
+    // delayed until the menu is closed
+    setTimeout(() => {
+      translateRef.current?.show();
+    }, 300);
+  }, [translateRef]);
 
   const reply = React.useCallback(() => {
     navigation.push('ReplyComment', {
@@ -126,13 +134,16 @@ export default observer(function Comment(props: PropsType) {
         <>
           <View style={[styles.body, theme.flexContainer]}>
             {!!props.comment.description && (
-              <ReadMore
-                numberOfLines={6}
-                navigation={navigation}
-                text={entities.decodeHTML(props.comment.description)}
-                renderTruncatedFooter={renderTruncatedFooter}
-                renderRevealedFooter={renderRevealedFooter}
-              />
+              <>
+                <ReadMore
+                  numberOfLines={6}
+                  navigation={navigation}
+                  text={entities.decodeHTML(props.comment.description)}
+                  renderTruncatedFooter={renderTruncatedFooter}
+                  renderRevealedFooter={renderRevealedFooter}
+                />
+                <Translate ref={translateRef} entity={props.comment} />
+              </>
             )}
             {(props.comment.hasMedia() ||
               Boolean(props.comment.attachment_guid)) && (
@@ -170,6 +181,7 @@ export default observer(function Comment(props: PropsType) {
               store={props.store}
               entity={props.store.entity}
               comment={props.comment}
+              onTranslate={translate}
             />
           </View>
           {!!props.comment.replies_count && !props.hideReply && (
@@ -206,6 +218,7 @@ export default observer(function Comment(props: PropsType) {
               store={props.store}
               entity={props.store.entity}
               comment={props.comment}
+              onTranslate={translate}
             />
           </View>
         </View>
