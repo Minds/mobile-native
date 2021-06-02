@@ -5,11 +5,11 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import NotificationsTopBar from './NotificationsTopBar';
 import { useFocusEffect } from '@react-navigation/native';
 import useApiFetch from '../../common/hooks/useApiFetch';
-import { Notification } from '../../types/Common';
 import i18n from '../../common/services/i18n.service';
 import NotificationItem from './notification/Notification';
 import { useStores } from '../../common/hooks/use-stores';
 import ErrorBoundary from '../../common/components/ErrorBoundary';
+import NotificationModel from './notification/NotificationModel';
 
 type PropsType = {};
 
@@ -21,7 +21,7 @@ const viewabilityConfig = {
 
 type NotificationList = {
   status: string;
-  notifications: Notification[];
+  notifications: NotificationModel[];
   'load-next': string;
 };
 
@@ -40,14 +40,18 @@ const NotificationsScreen = observer(({}: PropsType) => {
       limit: 15,
       offset: notifications.offset,
     },
-    updateState: (newData: NotificationList, oldData: NotificationList) =>
-      ({
+    updateState: (newData: NotificationList, oldData: NotificationList) => {
+      newData.notifications = NotificationModel.createMany(
+        newData.notifications,
+      );
+      return {
         ...newData,
         notifications: [
           ...(oldData ? oldData.notifications : []),
           ...newData.notifications,
         ],
-      } as NotificationList),
+      } as NotificationList;
+    },
     persist: true,
   });
 

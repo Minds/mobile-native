@@ -1,8 +1,8 @@
 import { useNavigation } from '@react-navigation/core';
 import UserModel from '../../../channel/UserModel';
-import { Notification } from '../../../types/Common';
+import type NotificationModel from './NotificationModel';
 
-const useNotificationRouter = (notification: Notification) => {
+const useNotificationRouter = (notification: NotificationModel) => {
   const navigation = useNavigation();
   const router = {
     navigation: navigation,

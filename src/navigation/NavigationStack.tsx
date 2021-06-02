@@ -78,7 +78,6 @@ import {
 import Drawer from './Drawer';
 import OptionsDrawer from '../common/components/OptionsDrawer';
 import PasswordScreen from '../settings/screens/PasswordScreen';
-import NotificationsSettingsScreen from '../notifications/v3/settings/NotificationsSettingsScreen';
 import BlockedChannelsScreen from '../settings/screens/blocked/BlockedChannelsScreen';
 import TierManagementScreen from '../common/components/tier-management/TierManagementScreen';
 import DeleteChannelScreen from '../settings/screens/DeleteChannelScreen';
@@ -125,6 +124,7 @@ import SearchScreen from '../topbar/searchbar/SearchScreen';
 import PasswordConfirmScreen from '../auth/PasswordConfirmScreen';
 import RecoveryCodeUsedScreen from '../auth/twoFactorAuth/RecoveryCodeUsedScreen';
 import MessengerScreen from '../messenger/MessengerScreen';
+import PushNotificationsSettings from '../notifications/v3/settings/push/PushNotificationsSettings';
 
 const isIos = Platform.OS === 'ios';
 
@@ -215,6 +215,17 @@ const AccountScreenOptions = navigation => [
   {
     title: i18n.t('settings.accountOptions.8'),
     onPress: () => navigation.push('BoostSettingsScreen'),
+  },
+];
+
+const NotificationsScreenOptions = navigation => [
+  {
+    title: i18n.t('settings.notificationsOptions.email'),
+    onPress: () => navigation.push('EmailNotificationsSettings'),
+  },
+  {
+    title: i18n.t('settings.notificationsOptions.push'),
+    onPress: () => navigation.push('PushNotificationsSettings'),
   },
 ];
 
@@ -539,6 +550,14 @@ const AppStack = function () {
         options={{ title: i18n.t('settings.other') }}
       />
       <AppStackNav.Screen
+        name="SettingsNotifications"
+        component={OptionsDrawer}
+        options={{
+          title: i18n.t('settings.accountOptions.4'),
+        }}
+        initialParams={{ options: NotificationsScreenOptions }}
+      />
+      <AppStackNav.Screen
         name="SettingsEmail"
         component={EmailScreen}
         options={{ title: i18n.t('settings.accountOptions.1') }}
@@ -549,8 +568,13 @@ const AppStack = function () {
         options={{ title: i18n.t('settings.accountOptions.3') }}
       />
       <AppStackNav.Screen
-        name="SettingsNotifications"
-        component={NotificationsSettingsScreen}
+        name="PushNotificationsSettings"
+        component={PushNotificationsSettings}
+        options={{ title: i18n.t('settings.pushNotification') }}
+      />
+      <AppStackNav.Screen
+        name="EmailNotificationsSettings"
+        component={PushNotificationsSettings}
         options={{ title: i18n.t('settings.pushNotification') }}
       />
       <AppStackNav.Screen

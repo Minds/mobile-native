@@ -3,11 +3,11 @@ import badgeService from '../../common/services/badge.service';
 import logService from '../../common/services/log.service';
 import sessionService from '../../common/services/session.service';
 import socketService from '../../common/services/socket.service';
-import { Notification } from '../../types/Common';
+import type NotificationModel from './notification/NotificationModel';
 import EmailNotificationsSettingModel, {
   EmailNotificationsSettingType,
-} from './settings/EmailNotificationsSettingModel';
-import PushNotificationsSettingModel from './settings/PushNotificationsSettingModel';
+} from './settings/email/EmailNotificationsSettingModel';
+import PushNotificationsSettingModel from './settings/push/PushNotificationsSettingModel';
 
 export type FilterType = '' | 'tags';
 
@@ -79,7 +79,7 @@ const createNotificationsStore = () => ({
       this.pollInterval = null;
     }
   },
-  async markAsRead(notification: Notification): Promise<void> {
+  async markAsRead(notification: NotificationModel): Promise<void> {
     try {
       await apiService.put('api/v3/notifications/read/' + notification.urn);
       if (this.unread > 0) {
@@ -98,7 +98,6 @@ const createNotificationsStore = () => ({
             new EmailNotificationsSettingModel(notifications),
         );
       }
-      this.mailsNotificationsSettings[0].toggleValue();
     } catch (err) {
       logService.exception(
         '[NotificationsStore] loadMailNotificationsSettings',

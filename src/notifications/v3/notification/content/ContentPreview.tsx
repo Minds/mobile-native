@@ -2,22 +2,26 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import Activity from '../../../../newsfeed/activity/Activity';
 import ActivityModel from '../../../../newsfeed/ActivityModel';
-import { Notification } from '../../../../types/Common';
+import type NotificationModel from '../NotificationModel';
 import { bodyTextStyle, spacedCommentPreview, styles } from '../styles';
 
 type PropsType = {
-  notification: Notification;
+  notification: NotificationModel;
   navigation: any;
 };
 
 const ContentPreview = ({ notification, navigation }: PropsType) => {
+  const entityIsUser = notification.entity?.type === 'user';
   const hasCommentExcerpt =
     notification.type === 'comment' && notification.data.comment_excerpt;
   const isEntityComment = notification.entity?.type === 'comment';
   const isNoCommentEntity =
     notification.entity && notification.entity?.type !== 'comment';
 
-  if (!hasCommentExcerpt && !isEntityComment && !isNoCommentEntity) {
+  if (
+    entityIsUser ||
+    (!hasCommentExcerpt && !isEntityComment && !isNoCommentEntity)
+  ) {
     return null;
   }
 

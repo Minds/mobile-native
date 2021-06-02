@@ -1,7 +1,7 @@
 import { observable, action, computed } from 'mobx';
-import apiService from '../../../common/services/api.service';
-import i18n from '../../../common/services/i18n.service';
-import logService from '../../../common/services/log.service';
+import apiService from '../../../../common/services/api.service';
+import i18n from '../../../../common/services/i18n.service';
+import logService from '../../../../common/services/log.service';
 
 export default class PushNotificationsSettingModel {
   @observable enabled: boolean;

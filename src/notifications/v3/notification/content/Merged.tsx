@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { Notification } from '../../../../types/Common';
+import type NotificationModel from '../NotificationModel';
 import { bodyTextImportantStyle, bodyTextStyle } from '../styles';
 import { NotificationRouter } from '../useNotificationRouter';
 
 type PropsType = {
-  notification: Notification;
+  notification: NotificationModel;
   router: NotificationRouter;
 };
 

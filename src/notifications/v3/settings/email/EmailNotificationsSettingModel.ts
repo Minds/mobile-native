@@ -1,7 +1,7 @@
 import { action, computed, observable } from 'mobx';
-import apiService from '../../../common/services/api.service';
-import i18n from '../../../common/services/i18n.service';
-import logService from '../../../common/services/log.service';
+import apiService from '../../../../common/services/api.service';
+import i18n from '../../../../common/services/i18n.service';
+import logService from '../../../../common/services/log.service';
 
 export type EmailNotificationsSettingType = {
   campaign: 'global' | 'when' | 'with';
@@ -16,14 +16,15 @@ export default class EmailNotificationsSettingModel {
   guid: string;
   _topic: string;
   user_guid: string;
-  @observable value: boolean;
+  @observable value: string;
+  oldValue = '';
 
   constructor(setting: EmailNotificationsSettingType) {
     this.campaign = setting.campaign;
     this.guid = setting.guid;
     this._topic = setting.topic;
     this.user_guid = setting.user_guid;
-    this.value = setting.value === '1';
+    this.value = setting.value;
   }
 
   @computed
@@ -38,8 +39,9 @@ export default class EmailNotificationsSettingModel {
     return translation;
   }
 
-  toggleValue() {
-    this._toggleValue();
+  toggleValue(value: string) {
+    this.oldValue = this.value;
+    this._toggleValue(value);
     this.setValue();
   }
 
@@ -47,18 +49,18 @@ export default class EmailNotificationsSettingModel {
     try {
       const notifications = [];
       notifications[this.campaign] = [];
-      notifications[this.campaign][this.topic] = this.value ? '1' : '';
+      notifications[this.campaign][this.topic] = this.value;
       const response = await apiService.post('api/v2/settings/emails', {
         notifications,
       });
       console.log('setValue', response);
     } catch (err) {
-      this._toggleValue();
+      this._toggleValue(this.oldValue);
       logService.exception('[NotificationsSettingModel] toggleEnabled', err);
     }
   }
 
-  @action _toggleValue() {
-    this.value = !this.value;
+  @action _toggleValue(value: string) {
+    this.value = value;
   }
 }

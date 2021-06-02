@@ -433,7 +433,16 @@
       "tag": "tagged you in",
       "remind": "reminded",
       "quote": "quoted",
-      "subscribe": "subscribed to"
+      "subscribe": "subscribed to",
+      "group_queue_add": "Your post is awaiting approval from the group administrators",
+      "group_queue_approve": "approved",
+      "group_queue_reject": "rejected",
+      "wire_received": "paid",
+      "boost_peer_request": "sent you",
+      "boost_peer_accepted": "accepted",
+      "boost_peer_rejected": "declined",
+      "boost_rejected": "is unable to approve",
+      "token_rewards_summary": "You earned {{amount}} tokens yesterday. Nice job!"
     }
   },
   "notificationSettings": {
@@ -697,6 +706,10 @@
       "c2": "Delete Account",
       "d": "INFO",
       "d1": "App"
+    },
+    "notificationsOptions": {
+      "push": "Push",
+      "email": "Email"
     },
     "autoplay": {
       "description": "Control whether videos in your feed play automatically.",

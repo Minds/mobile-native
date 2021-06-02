@@ -1,10 +1,10 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { Text, Switch, ScrollView } from 'react-native';
-import i18n from '../../../common/services/i18n.service';
-import ThemedStyles from '../../../styles/ThemedStyles';
-import { useStores } from '../../../common/hooks/use-stores';
-import MenuItem from '../../../common/components/menus/MenuItem';
+import i18n from '../../../../common/services/i18n.service';
+import ThemedStyles from '../../../../styles/ThemedStyles';
+import { useStores } from '../../../../common/hooks/use-stores';
+import MenuItem from '../../../../common/components/menus/MenuItem';
 import type PushNotificationsSettingModel from './PushNotificationsSettingModel';
 
 type PropsType = {};

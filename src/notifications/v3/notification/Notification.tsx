@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import i18n from '../../../common/services/i18n.service';
-import { Notification } from '../../../types/Common';
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import FastImage from 'react-native-fast-image';
 import UserModel from '../../../channel/UserModel';
@@ -17,6 +16,7 @@ import NotificationIcon from './content/NotificationIcon';
 import ContentPreview from './content/ContentPreview';
 import useNotificationRouter from './useNotificationRouter';
 import Merged from './content/Merged';
+import type Notification from './NotificationModel';
 
 type PropsType = {
   notification: Notification;
@@ -28,29 +28,18 @@ const NotificationItem = ({ notification }: PropsType) => {
   const avatarSrc = fromUser.getAvatarSource();
   const router = useNotificationRouter(notification);
 
+  if (!notification.isOfNotificationType()) {
+    return null;
+  }
+
   const navToFromChannel = () => router.navToChannel(fromUser);
 
-  const verb = ` ${i18n.t(`notification.verbs.${notification.type}`)}`;
-
-  let pronoun =
-    notification.type === 'quote'
-      ? 'your'
-      : notification.type === 'subscribe'
-      ? ''
-      : notification.entity?.owner_guid === sessionService.getUser().guid
-      ? 'your'
-      : 'their';
-  pronoun = pronoun !== '' ? ` ${i18n.t(pronoun)}` : '';
-
-  const nounText = getNoun(
-    notification.entity?.type,
-    notification.entity?.subtype,
-  );
-  const noun = (
-    <Text style={bodyTextImportantStyle} onPress={router.navToEntity}>
-      {' ' + nounText}
-    </Text>
-  );
+  const Noun =
+    notification.Noun !== '' ? (
+      <Text style={bodyTextImportantStyle} onPress={router.navToEntity}>
+        {' ' + notification.Noun}
+      </Text>
+    ) : null;
 
   return (
     <TouchableOpacity
@@ -73,13 +62,15 @@ const NotificationItem = ({ notification }: PropsType) => {
         </View>
         <View style={styles.bodyContainer}>
           <Text style={bodyTextStyle}>
-            <Text style={bodyTextImportantStyle} onPress={navToFromChannel}>
-              {fromUser.name}
-            </Text>
+            {notification.type !== 'token_rewards_summary' && (
+              <Text style={bodyTextImportantStyle} onPress={navToFromChannel}>
+                {fromUser.name + ' '}
+              </Text>
+            )}
             <Merged notification={notification} router={router} />
-            {verb}
-            {pronoun}
-            {noun}
+            {notification.Verb}
+            {notification.Pronoun}
+            {Noun}
           </Text>
         </View>
         <View style={styles.timeContainer}>
@@ -95,25 +86,6 @@ const NotificationItem = ({ notification }: PropsType) => {
       />
     </TouchableOpacity>
   );
-};
-
-const getNoun = (type: string | undefined, subtype: string | undefined) => {
-  let noun = '';
-
-  switch (type) {
-    case 'comment':
-      noun = 'comment';
-      break;
-    case 'object':
-      noun = subtype || '';
-      break;
-    case 'user':
-      noun = 'you';
-      break;
-    default:
-      noun = 'post';
-  }
-  return noun;
 };
 
 export default NotificationItem;
