@@ -1,10 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import i18n from '../../../common/services/i18n.service';
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import FastImage from 'react-native-fast-image';
-import UserModel from '../../../channel/UserModel';
-import sessionService from '../../../common/services/session.service';
 import friendlyDateDiff from '../../../common/helpers/friendlyDateDiff';
 import {
   bodyTextImportantStyle,
