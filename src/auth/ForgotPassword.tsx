@@ -65,7 +65,7 @@ export default class ForgotPassword extends PureComponent<PropsType> {
               loading={this.state.sending}
               loadingRight={true}
               disable={this.state.sending || this.state.sent}
-              containerStyle={[theme.marginTop1x, theme.marginLeft2x]}
+              containerStyle={continueStyle}
               accessibilityLabel="continueButton"
               large
               transparent
@@ -125,3 +125,7 @@ const titleStyle = ThemedStyles.combine(
   'marginBottom7x',
   'marginHorizontal3x',
 );
+
+const continueStyle = ThemedStyles.combine('marginTop1x', 'marginLeft2x', {
+  width: 138,
+});

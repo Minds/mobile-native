@@ -219,17 +219,10 @@ export default class AppInitManager {
         this.deepLinkUrl &&
         deeplinkService.cleanUrl(this.deepLinkUrl).startsWith('forgot-password')
       ) {
-        const regex = /;username=(.*);code=(.*)/g;
-
-        const params = getMaches(this.deepLinkUrl.replace(/%3B/g, ';'), regex);
-
         RNBootSplash.hide({ duration: 250 });
 
-        //sessionService.logout();
-        NavigationService.navigate('Forgot', {
-          username: params[1],
-          code: params[2],
-        });
+        deeplinkService.navToPasswordReset(this.deepLinkUrl);
+
         this.deepLinkUrl = '';
 
         return true;
