@@ -345,7 +345,7 @@ PODS:
     - React
   - react-native-netinfo (5.9.10):
     - React-Core
-  - react-native-notifications (2.0.6):
+  - react-native-notifications (3.0.0):
     - React
   - react-native-randombytes (3.6.0):
     - React-Core
@@ -939,7 +939,7 @@ SPEC CHECKSUMS:
   react-native-cameraroll: dbda741db5dadcdcf738e55a1fd565c307943bca
   react-native-month-year-picker: 9a59b4b8c4802a23123b0ce4ccadce880ad55f8a
   react-native-netinfo: 30fb89fa913c342be82a887b56e96be6d71201dd
-  react-native-notifications: 163ddedac6fcc8d850ea15b06abdadcacdff00f1
+  react-native-notifications: b67765827723f605d9267922977c8b0ad93e96ee
   react-native-randombytes: b6677f7d495c27e9ee0dbd77ebc97b3c59173729
   react-native-safe-area-context: f0906bf8bc9835ac9a9d3f97e8bde2a997d8da79
   react-native-slider: e99fc201cefe81270fc9d81714a7a0f5e566b168
