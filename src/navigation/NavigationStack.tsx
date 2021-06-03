@@ -125,6 +125,7 @@ import PasswordConfirmScreen from '../auth/PasswordConfirmScreen';
 import RecoveryCodeUsedScreen from '../auth/twoFactorAuth/RecoveryCodeUsedScreen';
 import MessengerScreen from '../messenger/MessengerScreen';
 import PushNotificationsSettings from '../notifications/v3/settings/push/PushNotificationsSettings';
+import SubscribersModal from '../notifications/v3/notification/SubscribersModal';
 
 const isIos = Platform.OS === 'ios';
 
@@ -804,6 +805,11 @@ const RootStack = function (props) {
           <RootStackNav.Screen
             name="RecoveryCodeUsedScreen"
             component={RecoveryCodeUsedScreen}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen
+            name="SubscribersModal"
+            component={SubscribersModal}
             options={modalOptions}
           />
         </Fragment>

@@ -10,10 +10,7 @@ type PropsType = {
 };
 
 const Merged = ({ notification, router }: PropsType) => {
-  const hasMerged =
-    notification.merged_count > 0 && notification.merged_from[0] !== undefined;
-
-  if (!hasMerged) {
+  if (!notification.hasMerged) {
     return null;
   }
 
@@ -24,10 +21,12 @@ const Merged = ({ notification, router }: PropsType) => {
       <Text
         style={bodyTextImportantStyle}
         onPress={() => router.navToChannel(notification.merged_from[0])}>
-        {notification.merged_from[0].name}
+        {notification.merged_from[0].name + ' '}
       </Text>
-      {notification.merged_count > 1 && (
-        <Text> and {notification.merged_count} others </Text>
+      {notification.merged_count > 2 && (
+        <Text onPress={router.navToEntity}>
+          and {notification.merged_count} others{' '}
+        </Text>
       )}
     </Text>
   );

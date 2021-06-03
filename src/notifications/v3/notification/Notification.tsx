@@ -24,9 +24,9 @@ type PropsType = {
 const DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
 
 const NotificationItem = ({ notification }: PropsType) => {
-  const fromUser = UserModel.create(notification.from);
+  const fromUser = notification.from;
   const avatarSrc = fromUser.getAvatarSource();
-  const router = useNotificationRouter(notification);
+  const router = useNotificationRouter(notification, fromUser);
 
   if (!notification.isOfNotificationType()) {
     return null;
@@ -42,13 +42,7 @@ const NotificationItem = ({ notification }: PropsType) => {
     ) : null;
 
   return (
-    <TouchableOpacity
-      style={containerStyle}
-      onPress={
-        notification.type === 'subscribe'
-          ? navToFromChannel
-          : router.navToEntity
-      }>
+    <TouchableOpacity style={containerStyle} onPress={router.navToEntity}>
       <View style={styles.innerContainer}>
         <View style={styles.avatarContainer}>
           {

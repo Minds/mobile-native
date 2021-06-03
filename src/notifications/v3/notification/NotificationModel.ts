@@ -90,6 +90,10 @@ export default class NotificationModel extends AbstractModel {
       amount: this.data?.tokens_formatted,
     });
   }
+
+  get hasMerged() {
+    return this.merged_count > 0 && this.merged_from[0] !== undefined;
+  }
 }
 
 const notificationsType = [

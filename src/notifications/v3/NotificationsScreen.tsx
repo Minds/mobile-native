@@ -10,6 +10,7 @@ import NotificationItem from './notification/Notification';
 import { useStores } from '../../common/hooks/use-stores';
 import ErrorBoundary from '../../common/components/ErrorBoundary';
 import NotificationModel from './notification/NotificationModel';
+import UserModel from '../../channel/UserModel';
 
 type PropsType = {};
 
@@ -25,9 +26,34 @@ type NotificationList = {
   'load-next': string;
 };
 
+const updateState = (newData: NotificationList, oldData: NotificationList) => {
+  newData.notifications = newData.notifications.map(
+    (notification: NotificationModel) => {
+      notification = NotificationModel.checkOrCreate(notification);
+      if (notification.from) {
+        notification.from = UserModel.checkOrCreate(notification.from);
+      }
+      if (notification.merged_from && notification.merged_from.length > 0) {
+        notification.merged_from = UserModel.createMany(
+          notification.merged_from,
+        );
+      }
+      return notification;
+    },
+  );
+  return {
+    ...newData,
+    notifications: [
+      ...(oldData ? oldData.notifications : []),
+      ...newData.notifications,
+    ],
+  } as NotificationList;
+};
+
 const NotificationsScreen = observer(({}: PropsType) => {
   const theme = ThemedStyles.style;
   const { notifications } = useStores();
+
   const {
     result,
     error,
@@ -40,18 +66,7 @@ const NotificationsScreen = observer(({}: PropsType) => {
       limit: 15,
       offset: notifications.offset,
     },
-    updateState: (newData: NotificationList, oldData: NotificationList) => {
-      newData.notifications = NotificationModel.createMany(
-        newData.notifications,
-      );
-      return {
-        ...newData,
-        notifications: [
-          ...(oldData ? oldData.notifications : []),
-          ...newData.notifications,
-        ],
-      } as NotificationList;
-    },
+    updateState,
     persist: true,
   });
 
