@@ -26,7 +26,7 @@ const DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
 const NotificationItem = ({ notification }: PropsType) => {
   const fromUser = notification.from;
   const avatarSrc = fromUser.getAvatarSource();
-  const router = useNotificationRouter(notification, fromUser);
+  const router = useNotificationRouter(notification);
 
   if (!notification.isOfNotificationType()) {
     return null;
