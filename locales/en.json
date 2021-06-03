@@ -92,7 +92,8 @@
     "recoveryFail": "The recovery code you enter doesn't match",
     "confirmPasswordModal": "Please confirm your account password to continue",
     "loginFail": "Wrong Username or Password",
-    "newPassword": "Please enter your new password"
+    "newPassword": "Please enter your new password",
+    "waitLogin": "Logging in with new credentials..."
   },
   "blockchain": {
     "exportLegacyWallet": "Export legacy wallets",

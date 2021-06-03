@@ -2,6 +2,7 @@
 import { MINDS_DEEPLINK } from '../../config/Config';
 import navigationService from '../../navigation/NavigationService';
 import { Linking } from 'react-native';
+import getMatches from '../helpers/getMatches';
 
 /**
  * Deeplinks router
@@ -67,6 +68,10 @@ class DeeplinksRouter {
     if (!url) {
       return;
     }
+    if (this.cleanUrl(url).startsWith('forgot-password')) {
+      this.navToPasswordReset(url);
+      return true;
+    }
     if (url.endsWith('/')) {
       url = url.substr(0, url.length - 1);
     }
@@ -129,6 +134,18 @@ class DeeplinksRouter {
       }
     }
     return null;
+  }
+
+  navToPasswordReset(link) {
+    const regex = /;username=(.*);code=(.*)/g;
+
+    const params = getMatches(link.replace(/%3B/g, ';'), regex);
+
+    //sessionService.logout();
+    navigationService.navigate('Forgot', {
+      username: params[1],
+      code: params[2],
+    });
   }
 }
 

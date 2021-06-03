@@ -14,6 +14,7 @@ import Button from '../common/components/Button';
 import ThemedStyles from '../styles/ThemedStyles';
 import InputContainer from '../common/components/InputContainer';
 import { styles } from './styles';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type PropsType = {
   onBack: () => void;
@@ -63,6 +64,7 @@ const ResetPassword = observer(({ onBack, code, username }: PropsType) => {
         this.setSending(true);
         try {
           const data = await authService.reset(username, this.password, code);
+          showNotification(i18n.t('auth.waitLogin'), 'info', 3000, 'top');
           await delay(150);
           // clear the cookies (fix future issues with calls)
           await apiService.clearCookies();
@@ -89,45 +91,54 @@ const ResetPassword = observer(({ onBack, code, username }: PropsType) => {
   }));
 
   return (
-    <KeyboardAvoidingView behavior="padding">
-      <Text style={titleStyle}>{localStore.msg}</Text>
+    <SafeAreaView>
+      <KeyboardAvoidingView behavior="padding">
+        <Text style={titleStyle}>{localStore.msg}</Text>
 
-      <InputContainer
-        autoFocus
-        containerStyle={styles.inputBackground}
-        style={theme.colorWhite}
-        placeholder={i18n.t('auth.password')}
-        returnKeyType={'done'}
-        onChangeText={localStore.setPassword}
-        autoCapitalize={'none'}
-        value={localStore.password}
-        secureTextEntry={true}
-        noBottomBorder
-      />
-      <InputContainer
-        containerStyle={styles.inputBackground}
-        style={theme.colorWhite}
-        placeholder={i18n.t('auth.confirmpassword')}
-        returnKeyType={'done'}
-        onChangeText={localStore.setConfirmation}
-        autoCapitalize={'none'}
-        value={localStore.confirmation}
-        secureTextEntry={true}
-      />
-      <View style={[theme.rowJustifyEnd, theme.marginTop2x]}>
-        <Button onPress={onBack} text={i18n.t('goback')} large transparent />
-        {!localStore.sent && (
-          <Button
-            onPress={localStore.onContinuePress}
-            text={i18n.t('continue')}
-            loading={localStore.sending}
-            containerStyle={theme.marginLeft4x}
-            large
-            transparent
-          />
-        )}
-      </View>
-    </KeyboardAvoidingView>
+        <InputContainer
+          autoFocus
+          containerStyle={styles.inputBackground}
+          style={theme.colorWhite}
+          placeholder={i18n.t('auth.password')}
+          returnKeyType={'done'}
+          onChangeText={localStore.setPassword}
+          autoCapitalize={'none'}
+          value={localStore.password}
+          secureTextEntry={true}
+          noBottomBorder
+        />
+        <InputContainer
+          containerStyle={styles.inputBackground}
+          style={theme.colorWhite}
+          placeholder={i18n.t('auth.confirmpassword')}
+          returnKeyType={'done'}
+          onChangeText={localStore.setConfirmation}
+          autoCapitalize={'none'}
+          value={localStore.confirmation}
+          secureTextEntry={true}
+        />
+        <View style={[theme.rowJustifyEnd, theme.marginTop2x]}>
+          {!localStore.sent && (
+            <>
+              <Button
+                onPress={onBack}
+                text={i18n.t('goback')}
+                large
+                transparent
+              />
+              <Button
+                onPress={localStore.onContinuePress}
+                text={i18n.t('continue')}
+                loading={localStore.sending}
+                containerStyle={continueStyle}
+                large
+                transparent
+              />
+            </>
+          )}
+        </View>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 });
 
@@ -138,5 +149,9 @@ const titleStyle = ThemedStyles.combine(
   'marginBottom8x',
   'marginHorizontal3x',
 );
+
+const continueStyle = ThemedStyles.combine('marginLeft4x', 'marginRight3x', {
+  width: 138,
+});
 
 export default ResetPassword;

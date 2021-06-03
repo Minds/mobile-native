@@ -118,7 +118,7 @@ export default class Button extends Component<ButtonPropsType> {
     const fontSize = { fontSize: large ? 19 : small ? 16 : xSmall ? 14 : 17 };
     const body = loading ? (
       <DotIndicator
-        containerStyle={[theme.rowJustifyCenter, theme.padding2x]}
+        containerStyle={dotIndicatorStyle}
         color={mainColor}
         scaleEnabled={true}
       />
@@ -152,3 +152,9 @@ export default class Button extends Component<ButtonPropsType> {
     );
   }
 }
+
+const dotIndicatorStyle = ThemedStyles.combine(
+  { width: 50 },
+  'rowJustifyCenter',
+  'padding2x',
+);
