@@ -18,7 +18,7 @@ import sessionService from '~/common/services/session.service';
 import ChatTabIcon from '~/chat/ChatTabIcon';
 import navigationService from '~/navigation/NavigationService';
 import TabBar from './TabBar';
-import { ICON_SIZE, SPACING, IS_TABLET } from '~/styles/Tokens';
+import { ICON_SIZE, SPACING } from '~/styles/Tokens';
 
 export type TabParamList = {
   Newsfeed: {};
@@ -175,9 +175,9 @@ const tabOptions = ({ route }) => ({
         return <ComposeIcon style={styles.compose} />;
     }
 
-    if (IS_TABLET) {
-      iconsize = Math.round(iconsize * 1.2);
-    }
+    // if (IS_TABLET) {
+    //   iconsize = Math.round(iconsize * 1.2);
+    // }
 
     return (
       <Icon name={iconName.replace(/md\-/, '')} color={color} size={iconsize} />
