@@ -65,6 +65,7 @@ export default class ActivityModel extends BaseModel {
   nsfw?: Array<number>;
   flags?: any;
   reminds: number = 0;
+  quotes: number = 0;
   impressions: number = 0;
   perma_url?: string;
   cinemr_guid?: string;

@@ -102,6 +102,7 @@ const createStore = ({
       this.setResult(state);
       this.persist(state);
     } catch (err) {
+      console.log(err);
       if (options?.retry !== undefined && !isAbort(err)) {
         this.setError(err);
         if (options.retry > 0 ? this.retryCount < options?.retry : true) {
@@ -144,7 +145,7 @@ export default function useApiFetch<T>(
       store.hydrate(options.params);
     }
     return () => store.clearRetryTimer(true);
-  });
+  }, [options.params, options.persist, store]);
 
   useEffect(
     () =>

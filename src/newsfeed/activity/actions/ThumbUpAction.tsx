@@ -21,6 +21,7 @@ const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
 type PropsType = {
   entity: ActivityModel;
   size: number;
+  hideCount?: boolean;
   orientation: 'column' | 'row';
   touchableComponent?: React.ComponentClass;
 };
@@ -72,7 +73,7 @@ class ThumbUpAction extends Component<PropsType> {
         onPress={this.toggleThumb}
         testID={`Thumb ${this.direction} activity button`}>
         <Icon style={iconStyle} name={this.iconName} size={this.props.size} />
-        {count ? (
+        {count && !this.props.hideCount ? (
           <Counter
             // size={this.props.size * 0.7}
             count={count}
