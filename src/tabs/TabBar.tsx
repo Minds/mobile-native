@@ -1,10 +1,11 @@
 import React, { useMemo, useCallback } from 'react';
 import { TouchableOpacity, StyleSheet, Dimensions, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { IS_IOS, BOTTOM_TABS_HEIGHT, COLORS } from '~/styles/Tokens';
+import { IS_IOS, BOTTOM_TABS_HEIGHT } from '~/styles/Tokens';
 import TopShadow from '~/common/components/TopShadow';
 import { useStores } from '~/common/hooks/use-stores';
 import { SPACING } from '~/styles/Tokens';
+import ThemedStyles from '~/styles/ThemedStyles';
 
 const { width } = Dimensions.get('screen');
 
@@ -92,7 +93,7 @@ export default ({ state, descriptors, navigation }) => {
 
   return (
     <SafeAreaView
-      style={[styles.tabBar, { backgroundColor: COLORS.secondary_background }]}
+      style={[styles.tabBar, ThemedStyles.style.backgroundSecondary]}
       edges={['bottom']}>
       <View style={styles.wrapper}>
         {!IS_IOS && <TopShadow setting={shadowOpt} />}
@@ -118,7 +119,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: SPACING.S,
   },
   tabBar: {
-    shadowColor: COLORS.black,
+    shadowColor: 'black',
     shadowOffset: { width: 0, height: -1 },
     shadowOpacity: 0.2,
     shadowRadius: 4,

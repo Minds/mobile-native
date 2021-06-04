@@ -15,8 +15,8 @@ import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Entypo from 'react-native-vector-icons/Entypo';
 import ICON_MAP from './map';
-import { SPACING, COLORS } from '~/styles/Tokens';
-import { useStyleFromProps } from '~/styles/ThemedStyles';
+import { SPACING } from '~/styles/Tokens';
+import ThemedStyles, { useStyleFromProps } from '~/styles/ThemedStyles';
 
 const Fonts = {
   MaterialCommunityIcons,
@@ -36,7 +36,7 @@ type IIcon = {
 };
 
 export default function Icon({
-  color = COLORS.primary_text,
+  color = ThemedStyles.getColor('primary_text'),
   name,
   size = SPACING.L * 2,
   style = {},

@@ -11,7 +11,7 @@ export const IS_IPAD = (Platform as PlatformIOSStatic).isPad;
 // current deviceInfo version has an async isTablet function
 // export const IS_TABLET = DeviceInfo.isTablet();
 
-export const COLORS = ThemedStyles.colors;
+// export const COLORS = ThemedStyles.colors;
 export const HAS_BOTTOM_EXTRA_SPACE = !!initialWindowMetrics?.insets.bottom;
 
 let multiplier = 1;
