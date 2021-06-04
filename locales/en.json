@@ -427,6 +427,24 @@
     "rewardsStateDecreaseToday": "It's not too late! You will drop down to a {{state}} user by the end of today and your daily token reward multiplier will reduce to {{multiplier}}x. Get liking and commenting to bring your score back up!",
     "rewardsSummary": "You earned {{amount}} tokens yesterday."
   },
+  "interactions": {
+    "upVotes": {
+      "one": "upvote",
+      "other": "upvotes"
+    },
+    "downVotes": {
+      "one": "downvote",
+      "other": "downvotes"
+    },
+    "reminds": {
+      "one": "remind",
+      "other": "reminds"
+    },
+    "quotes": {
+      "one": "quote",
+      "other": "quotes"
+    }
+  },
   "notificationSettings": {
     "enableDisable": "Enable and disable push notifications",
     "comment": "Comments",
