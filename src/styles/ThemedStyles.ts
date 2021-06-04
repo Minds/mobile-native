@@ -34,15 +34,17 @@ export class ThemedStylesStore {
   style: Styles;
 
   constructor() {
-    this.style = buildStyle(0);
     this.colors = { ...COLORS, ...LIGHT_THEME };
+    this.style = buildStyle(this.colors);
   }
 
   /**
    * Combine styles into an array
    */
   combine(...styles: Array<Style | Object>) {
-    return styles.map(s => (typeof s === 'string' ? this.style[s] : s));
+    return styles
+      .map(s => (typeof s === 'string' ? this.style[s] : s))
+      .filter(s => s !== undefined);
   }
 
   /**
@@ -168,6 +170,21 @@ export default ThemedStyles;
  * Returns an stable reference
  */
 export function useStyle(...styles: Array<Style | Object>) {
+  const ref = React.useRef<any[]>();
+  if (!ref.current) {
+    ref.current = ThemedStyles.combine(...styles);
+  }
+  return ref.current;
+}
+
+/**
+ * Map props to styles
+ */
+export function useStyleFromProps(props: Object) {
+  const styles = Object.keys(props).map(
+    key => key + (typeof props[key] === 'string' ? props[key] : ''),
+  );
+
   const ref = React.useRef<any[]>();
   if (!ref.current) {
     ref.current = ThemedStyles.combine(...styles);

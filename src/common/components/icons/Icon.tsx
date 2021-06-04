@@ -16,7 +16,7 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import Entypo from 'react-native-vector-icons/Entypo';
 import ICON_MAP from './map';
 import { SPACING, COLORS } from '~/styles/Tokens';
-import { getMargins } from '~/common/helpers/margins';
+import { useStyleFromProps } from '~/styles/ThemedStyles';
 
 const Fonts = {
   MaterialCommunityIcons,
@@ -28,12 +28,12 @@ const Fonts = {
   Entypo,
 };
 
-interface IIcon {
+type IIcon = {
   color?: string;
   name?: string;
   size?: number;
   style?: StyleProp<ViewStyle | FlexStyle | TextStyle>;
-}
+};
 
 export default function Icon({
   color = COLORS.primary_text,
@@ -42,12 +42,12 @@ export default function Icon({
   style = {},
   ...extra
 }: IIcon) {
+  const propsStyle = useStyleFromProps(extra);
+
   if (!name || !ICON_MAP[name]) {
     return null;
   }
   const { font: iconFont, name: iconName, ratio } = ICON_MAP[name];
-  const margins = getMargins(extra);
-
   const realSize = size * (ratio || 1);
   const iconStyles = [
     ratio && {
@@ -67,7 +67,7 @@ export default function Icon({
           width: size,
         },
         style,
-        margins,
+        propsStyle,
       ]}>
       <Component
         name={iconName}

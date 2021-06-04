@@ -1,4 +1,6 @@
 import { StyleSheet, Platform } from 'react-native';
+import getMatches from '~/common/helpers/getMatches';
+import { SPACING } from './Tokens';
 
 type DynamicStyles = {
   [key in keyof { 0; 2; 3; 4; 5; 6; 7; 8; 9; 10 } as
@@ -110,7 +112,45 @@ function generateDynamic(): DynamicStyles {
 
 const dynamicStyles = generateDynamic();
 
-export const buildStyle = theme =>
+export const getSpacing = (marginString: string = ''): number => {
+  if (marginString.match(/x/)) {
+    const margin = marginString.split('x');
+    return SPACING[margin[0]] * parseInt(margin[1], 10);
+  }
+  return SPACING[marginString];
+};
+
+const getMargin = name => {
+  const result = getMatches(
+    name,
+    /(margin|padding)?(Top|Bottom|Left|Right|Vertical|Horizontal)(.*)/g,
+  );
+  if (result) {
+    const space = getSpacing(result[3]);
+    return space ? { [result[1] + result[2]]: space } : null;
+  }
+};
+
+/**
+ * Proxy handler in charge of generating dynamic styles
+ */
+const dynamicStyleHandler = {
+  get: function (target, name) {
+    if (name in target) return target[name];
+    if (name.startsWith('margin')) {
+      const m = getMargin(name);
+      if (m) {
+        target[name] = m;
+      }
+    }
+  },
+};
+
+export const buildStyle = theme => {
+  return new Proxy(_buildStyle(theme), dynamicStyleHandler);
+};
+
+const _buildStyle = theme =>
   ({
     ...dynamicStyles,
     // opacity
