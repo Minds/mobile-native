@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -7,8 +7,12 @@ import {
   TextStyle,
   StyleSheet,
   ViewStyle,
+  ScrollView,
+  Dimensions,
 } from 'react-native';
 import ThemedStyles from '../../../styles/ThemedStyles';
+
+const { width } = Dimensions.get('window');
 
 export type TabType<T> = {
   id: T;
@@ -36,9 +40,63 @@ function TopbarTabbar<T>(props: PropsType<T>) {
     theme.marginHorizontal2x,
     theme.borderBottom4x,
   ];
+  const [renderScroll, setRenderScroll] = useState(false);
+
+  const onLayout = e => {
+    if (renderScroll === true) {
+      return;
+    }
+    const edge = e.nativeEvent.layout.width + e.nativeEvent.layout.x;
+    if (edge > width) {
+      setRenderScroll(true);
+    }
+  };
+
+  const renderNav = () => {
+    const items = props.tabs.map((tab, i) => (
+      <TouchableOpacity
+        onLayout={onLayout}
+        onPress={() => props.onChange(tab.id)}
+        key={i}
+        style={[
+          tabStyle,
+          props.tabStyle,
+          tab.id === props.current ? theme.borderTab : theme.borderTransparent,
+        ]}>
+        <Text
+          style={[
+            theme.fontL,
+            tab.id === props.current
+              ? theme.colorPrimaryText
+              : theme.colorSecondaryText,
+            props.titleStyle,
+          ]}>
+          {tab.title}
+        </Text>
+        {!!tab.subtitle && (
+          <Text
+            style={[
+              theme.fontL,
+              theme.colorSecondaryText,
+              styles.subtitle,
+              props.subtitleStyle,
+            ]}>
+            {tab.subtitle}
+          </Text>
+        )}
+      </TouchableOpacity>
+    ));
+
+    if (renderScroll === true) {
+      return <ScrollView horizontal>{items}</ScrollView>;
+    }
+
+    return items;
+  };
 
   return (
     <View
+      onLayout={onLayout}
       style={[
         theme.rowJustifyStart,
         theme.borderBottom,
@@ -46,40 +104,7 @@ function TopbarTabbar<T>(props: PropsType<T>) {
         theme.paddingHorizontal2x,
         props.containerStyle,
       ]}>
-      {props.tabs.map((tab, i) => (
-        <TouchableOpacity
-          onPress={() => props.onChange(tab.id)}
-          key={i}
-          style={[
-            tabStyle,
-            props.tabStyle,
-            tab.id === props.current
-              ? theme.borderTab
-              : theme.borderTransparent,
-          ]}>
-          <Text
-            style={[
-              theme.fontL,
-              tab.id === props.current
-                ? theme.colorPrimaryText
-                : theme.colorSecondaryText,
-              props.titleStyle,
-            ]}>
-            {tab.title}
-          </Text>
-          {!!tab.subtitle && (
-            <Text
-              style={[
-                theme.fontL,
-                theme.colorSecondaryText,
-                styles.subtitle,
-                props.subtitleStyle,
-              ]}>
-              {tab.subtitle}
-            </Text>
-          )}
-        </TouchableOpacity>
-      ))}
+      {renderNav()}
     </View>
   );
 }
