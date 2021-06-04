@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
-import { View, Alert, StyleSheet } from 'react-native';
+import { View, Alert } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { ActionSheetCustom as ActionSheet } from 'react-native-actionsheet';
+import ActionSheet from 'react-native-actionsheet';
 
 import { MINDS_URI } from '../config/Config';
 import shareService from '../share/ShareService';
@@ -123,34 +123,6 @@ export default class BlogActionSheet extends Component<PropsType, StateType> {
   render() {
     const theme = ThemedStyles.style;
 
-    const styles = {
-      body: {
-        flex: 1,
-        alignSelf: 'flex-end',
-        backgroundColor: ThemedStyles.getColor('primary_background'),
-      },
-      titleBox: {
-        height: 40,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: ThemedStyles.getColor('primary_background'),
-      },
-      buttonBox: {
-        height: 50,
-        marginTop: StyleSheet.hairlineWidth,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: ThemedStyles.getColor('secondary_background'),
-      },
-      cancelButtonBox: {
-        height: 50,
-        marginTop: 6,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: ThemedStyles.getColor('secondary_background'),
-      },
-    };
-
     return (
       <View>
         <Icon
@@ -165,7 +137,6 @@ export default class BlogActionSheet extends Component<PropsType, StateType> {
           options={this.state.options}
           onPress={this.handleSelection}
           cancelButtonIndex={0}
-          styles={styles}
         />
       </View>
     );
