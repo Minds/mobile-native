@@ -77,7 +77,7 @@ const navigator = {
         entity: UserModel.checkOrCreate(this.notification.entity),
       },
       SubscribersModal: {
-        subscribers: this.notification.merged_from,
+        subscribers: this.notification.merged_from_guids,
       },
     };
   },

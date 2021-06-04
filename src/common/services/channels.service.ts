@@ -37,6 +37,25 @@ class ChannelsService {
     }
   }
 
+  async getMany(guids: string[]) {
+    const promises: Promise<UserModel | undefined>[] = guids.map(async guid => {
+      try {
+        const urn = `urn:channels:${guid}`;
+        const local = await entitiesStorage.read(urn);
+        if (!local) {
+          return await this.fetch(guid);
+        }
+        const channel = UserModel.create(local);
+        this.fetch(guid, channel); // Update in the background
+        return channel;
+      } catch (err) {
+        console.log(err);
+        return undefined;
+      }
+    });
+    return await Promise.all(promises);
+  }
+
   /**
    * Get channel from entity
    * @param {string} guid

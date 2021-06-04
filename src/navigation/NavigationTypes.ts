@@ -67,7 +67,7 @@ export type RootStackParamList = {
   ViewImage: {};
   RecoveryCodeUsedScreen: {};
   SubscribersModal: {
-    subscribers: UserModel[];
+    subscribers: string[];
   };
 };
 

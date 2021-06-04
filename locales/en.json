@@ -1388,5 +1388,6 @@
   "browserOnly": "Browser Only",
   "clickHere": "click here",
   "enabled": "Enabled",
-  "copyToClipboard": "Copy to Clipboard"
+  "copyToClipboard": "Copy to Clipboard",
+  "emptyList": "Sorry nothing to show here"
 }
