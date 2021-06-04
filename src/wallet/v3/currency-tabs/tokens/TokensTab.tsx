@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { observer } from 'mobx-react';
 import { View } from 'react-native';
 import TopBarButtonTabBar, {
@@ -172,28 +172,37 @@ const TokensTab = observer(
         break;
     }
 
-    const mainBody = (
-      <>
-        <View style={{ ...theme.paddingTop5x }}>
-          <TokenTopBar
-            walletStore={walletStore}
-            connectWallet={mustVerify || connectWallet}
-            onchainStore={onchainStore}
-          />
-          <TopBarButtonTabBar
-            tabs={options}
-            current={store.option}
-            onChange={store.setOption}
-          />
-          {body}
-        </View>
-      </>
+    const mainBody = useMemo(
+      () => (
+        <>
+          <View style={{ ...theme.paddingTop5x }}>
+            <TokenTopBar
+              walletStore={walletStore}
+              connectWallet={mustVerify || connectWallet}
+              onchainStore={onchainStore}
+            />
+            <TopBarButtonTabBar
+              tabs={options}
+              current={store.option}
+              onChange={store.setOption}
+            />
+            {body}
+          </View>
+        </>
+      ),
+      [store.option],
     );
-    if (store.option !== 'transactions') {
-      return <ScrollView>{mainBody}</ScrollView>;
-    } else {
-      return <View style={theme.flexContainer}>{mainBody}</View>;
-    }
+
+    // There isn't a clear reason for adding the fixed view.
+    // If showing the sticky section title's a priority this should be structured differently as it's also not showing the bottom rows.
+
+    return <ScrollView>{mainBody}</ScrollView>;
+
+    // if (store.option !== 'transactions') {
+    //   return <ScrollView>{mainBody}</ScrollView>;
+    // } else {
+    //   return <View style={theme.flexContainer}>{mainBody}</View>;
+    // }
   },
 );
 

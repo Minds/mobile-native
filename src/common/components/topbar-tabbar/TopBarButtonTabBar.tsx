@@ -1,12 +1,5 @@
-import React from 'react';
-import {
-  View,
-  StyleProp,
-  TextStyle,
-  StyleSheet,
-  Insets,
-  Platform,
-} from 'react-native';
+import React, { useEffect } from 'react';
+import { View, StyleProp, TextStyle, StyleSheet, Platform } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import Button from '../Button';
@@ -34,6 +27,10 @@ export const topBarButtonTabBarRef = React.createRef<ScrollView>();
 function TopBarButtonTabBar<T>(props: PropsType<T>) {
   const theme = ThemedStyles.style;
 
+  useEffect(() => {
+    console.log('REDNERRD');
+  }, []);
+
   return (
     <View style={[theme.rowJustifyStart]}>
       <ScrollView
@@ -49,7 +46,7 @@ function TopBarButtonTabBar<T>(props: PropsType<T>) {
           <Button
             borderless
             onPress={() => props.onChange(tab.id)}
-            key={i}
+            key={`${tab}-${i}`}
             text={tab.title}
             containerStyle={[
               styles.buttonContainer,
