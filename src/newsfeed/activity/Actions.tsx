@@ -22,6 +22,7 @@ import ShareAction from './actions/ShareAction';
 type PropsType = {
   entity: ActivityModel;
   showCommentsOutlet?: boolean;
+  hideCount?: boolean;
   onPressComment?: () => void;
 };
 
@@ -40,9 +41,10 @@ export const Actions = observer((props: PropsType) => {
     <View>
       {entity && (
         <View style={containerStyle}>
-          <ThumbUpAction entity={entity} />
-          <ThumbDownAction entity={entity} />
+          <ThumbUpAction entity={entity} hideCount={props.hideCount} />
+          <ThumbDownAction entity={entity} hideCount={props.hideCount} />
           <CommentsAction
+            // hideCount={props.hideCount}
             entity={entity}
             navigation={navigation}
             onPressComment={props.onPressComment}
@@ -50,7 +52,7 @@ export const Actions = observer((props: PropsType) => {
               props.entity.text === 'e2eTest' ? 'ActivityCommentButton' : ''
             }
           />
-          <RemindAction entity={entity} />
+          <RemindAction entity={entity} hideCount={props.hideCount} />
 
           <ShareAction entity={entity} />
 

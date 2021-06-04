@@ -38,6 +38,7 @@ import CommentBottomSheet from '../../../comments/v2/CommentBottomSheet';
 import type BottomSheet from '@gorhom/bottom-sheet';
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
 import Clipboard from '@react-native-clipboard/clipboard';
+import InteractionsBar from '../../../common/components/interactions/InteractionsBar';
 
 type ActivityRoute = RouteProp<AppStackParamList, 'Activity'>;
 
@@ -351,8 +352,10 @@ const ActivityFullScreen = observer((props: PropsType) => {
         )}
       </View>
       <View style={cleanBottom}>
+        <InteractionsBar entity={entity} />
         <Actions
           entity={entity}
+          hideCount
           showCommentsOutlet={false}
           onPressComment={onPressComment}
         />
