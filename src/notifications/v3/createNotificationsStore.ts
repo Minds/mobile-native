@@ -107,47 +107,9 @@ const createNotificationsStore = () => ({
   },
   async loadPushNotificationsSettings() {
     try {
-      /*console.log('api/v3/notifications/push/settings');
       const response = <any>(
         await apiService.get('api/v3/notifications/push/settings')
       );
-      console.log('loadSettings, ', response);*/
-      const response = {
-        settings: [
-          {
-            notification_group: 'votes',
-            enabled: true,
-          },
-          {
-            notification_group: 'tags',
-            enabled: true,
-          },
-          {
-            notification_group: 'subscriptions',
-            enabled: true,
-          },
-          {
-            notification_group: 'comments',
-            enabled: true,
-          },
-          {
-            notification_group: 'reminds',
-            enabled: true,
-          },
-          {
-            notification_group: 'boosts',
-            enabled: true,
-          },
-          {
-            notification_group: 'tokens',
-            enabled: true,
-          },
-          {
-            notification_group: 'all',
-            enabled: true,
-          },
-        ],
-      };
       if (response.settings) {
         this.pushNotificationsSettings = response.settings.map(
           setting => new PushNotificationsSettingModel(setting),

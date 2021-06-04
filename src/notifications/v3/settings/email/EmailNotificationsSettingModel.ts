@@ -47,14 +47,20 @@ export default class EmailNotificationsSettingModel {
 
   async setValue() {
     try {
-      const notifications = [];
-      notifications[this.campaign] = [];
-      notifications[this.campaign][this.topic] = this.value;
+      let notifications = {
+        [this.campaign]: {
+          [this._topic]: this.value,
+        },
+      };
+      console.log('campaign', this.campaign);
+      console.log('topic', this._topic);
+      console.log('notifications', notifications);
       const response = await apiService.post('api/v2/settings/emails', {
         notifications,
       });
       console.log('setValue', response);
     } catch (err) {
+      console.log('err', err);
       this._toggleValue(this.oldValue);
       logService.exception('[NotificationsSettingModel] toggleEnabled', err);
     }

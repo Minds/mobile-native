@@ -126,6 +126,7 @@ import RecoveryCodeUsedScreen from '../auth/twoFactorAuth/RecoveryCodeUsedScreen
 import MessengerScreen from '../messenger/MessengerScreen';
 import PushNotificationsSettings from '../notifications/v3/settings/push/PushNotificationsSettings';
 import SubscribersModal from '../notifications/v3/notification/SubscribersModal';
+import EmailNotificationsSettings from '../notifications/v3/settings/email/EmailNotificationsSettings';
 
 const isIos = Platform.OS === 'ios';
 
@@ -575,7 +576,7 @@ const AppStack = function () {
       />
       <AppStackNav.Screen
         name="EmailNotificationsSettings"
-        component={PushNotificationsSettings}
+        component={EmailNotificationsSettings}
         options={{ title: i18n.t('settings.pushNotification') }}
       />
       <AppStackNav.Screen

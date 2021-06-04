@@ -23,7 +23,7 @@ const Merged = ({ notification, router }: PropsType) => {
         onPress={() => router.navToChannel(notification.merged_from[0])}>
         {notification.merged_from[0].name + ' '}
       </Text>
-      {notification.merged_count > 2 && (
+      {notification.merged_count > 1 && (
         <Text onPress={router.navToEntity}>
           and {notification.merged_count} others{' '}
         </Text>
