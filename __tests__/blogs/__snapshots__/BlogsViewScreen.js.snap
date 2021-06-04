@@ -272,7 +272,6 @@ exports[`blog view screen component should renders correctly 1`] = `
                 Object {
                   "borderColor": undefined,
                 },
-                undefined,
               ]
             }
           >

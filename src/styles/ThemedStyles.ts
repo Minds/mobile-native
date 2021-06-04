@@ -35,7 +35,7 @@ export class ThemedStylesStore {
 
   constructor() {
     this.colors = { ...COLORS, ...LIGHT_THEME };
-    this.style = buildStyle(this.colors);
+    this.style = buildStyle(0);
   }
 
   /**
