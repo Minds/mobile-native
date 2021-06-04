@@ -2412,17 +2412,17 @@
   resolved "https://registry.yarnpkg.com/@metamask/safe-event-emitter/-/safe-event-emitter-2.0.0.tgz#af577b477c683fad17c619a78208cede06f9605c"
   integrity sha512-/kSXhY692qiV1MXu6EeOZvg5nECLclxNXcKCxJ3cXQgYuRymRHpdx/t7JXfsK+JLjwA1e1c1/SBrlQYpusC29Q==
 
-"@motify/components@^0.7.3":
-  version "0.7.3"
-  resolved "https://registry.yarnpkg.com/@motify/components/-/components-0.7.3.tgz#469f7162c49512111d03294935c9028a22c1e68b"
-  integrity sha512-Z6tDuDDjsLgVvswr+kIx+mS1DBO2Kc17ImJjwrjRkXOzcvyyA0CXGYx7AeS8B2H7MsXWRfe5gbjokO0UgPA7EQ==
+"@motify/components@^0.11.0":
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/@motify/components/-/components-0.11.0.tgz#a6aa57ea03419f95d0f10e6ea14ced4d215e1bb0"
+  integrity sha512-xJm4L2AlfCuqLwliB6b0kseV4JzHuHWck237e955JhMU8g2JBKnrHzF9VXMY5xgguMQ2jt3IHSsD2JxBzCjhyA==
   dependencies:
-    "@motify/core" "^0.7.3"
+    "@motify/core" "^0.11.0"
 
-"@motify/core@^0.7.3":
-  version "0.7.3"
-  resolved "https://registry.yarnpkg.com/@motify/core/-/core-0.7.3.tgz#b2a144076dc943017dc5081c95fd5b71e7d661b8"
-  integrity sha512-sO90iA+2yrw+9fVEOBRDgvYpt+dQn54svQ8U0HcQjwc9/ApTFMzIOAgtN0WLK8IB0A7BCLTnRQM+vrVhTIWz4w==
+"@motify/core@^0.11.0":
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/@motify/core/-/core-0.11.0.tgz#017ef217fb4ab04729d6b384e7f6d7f75917481c"
+  integrity sha512-R0MmpLSjwkZqZqk24SiRWuxVcFFUIGVeFrehTe4kotf22Snp4+7SD5kb26jDV0WqD/riTfVHd8o+k+8/uFkGRw==
   dependencies:
     framer-motion "^3.9.1"
 
@@ -10681,13 +10681,13 @@ moo@^0.5.0:
   resolved "https://registry.yarnpkg.com/moo/-/moo-0.5.1.tgz#7aae7f384b9b09f620b6abf6f74ebbcd1b65dbc4"
   integrity sha512-I1mnb5xn4fO80BH9BLcF0yLypy2UKl+Cb01Fu0hJRkJjlCRtxZMWkTdAtDd5ZqCOxtCkhmRwyI57vWT+1iZ67w==
 
-moti@^0.7.3:
-  version "0.7.3"
-  resolved "https://registry.yarnpkg.com/moti/-/moti-0.7.3.tgz#30bd643d0da7cc809091c2268ab8372195d46a6f"
-  integrity sha512-7DDtVnN/imxcQBdUs6TxDU3nPqwcGkgIKMKJYUAvMsr/xYzgkFc049g44wE7aEr9gi+m3eokbv4TkCtvxAd4Lw==
+moti@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/moti/-/moti-0.11.0.tgz#0d0d94ab3d4badb76e1d7df2e54ad3a5b2e0dcd0"
+  integrity sha512-DEqHVHZQVeYwWCWiSEIbsjqK/YL5oM8E0m5kUmbBfVhszpXkYEqguZVlbv9hwCKL4HBQc4vfja+UyA0AcCXV6A==
   dependencies:
-    "@motify/components" "^0.7.3"
-    "@motify/core" "^0.7.3"
+    "@motify/components" "^0.11.0"
+    "@motify/core" "^0.11.0"
 
 mri@^1.1.5:
   version "1.1.6"
