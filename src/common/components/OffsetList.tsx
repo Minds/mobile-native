@@ -22,6 +22,7 @@ type PropsType = {
   fetchEndpoint: string;
   endpointData: string;
   offsetField?: string;
+  map?: (data: any) => any;
   params?: Object;
 };
 
@@ -29,6 +30,8 @@ type FetchResponseType = {
   status: string;
   'load-next': string | number;
 };
+
+const mapping = data => data;
 
 export default observer(function OffsetList<T>(props: PropsType) {
   const theme = ThemedStyles.style;
@@ -43,6 +46,8 @@ export default observer(function OffsetList<T>(props: PropsType) {
 
   type ApiFetchType = FetchResponseType & T;
 
+  const map = props.map || mapping;
+
   const {
     result,
     loading,
@@ -56,14 +61,16 @@ export default observer(function OffsetList<T>(props: PropsType) {
         ...newData,
         [props.endpointData]: [
           ...(oldData ? oldData[props.endpointData] : []),
-          ...(newData && newData[props.endpointData]
-            ? newData[props.endpointData]
-            : []),
+          ...map(
+            newData && newData[props.endpointData]
+              ? newData[props.endpointData]
+              : [],
+          ),
         ],
       } as ApiFetchType),
   });
 
-  console.log(error);
+  console.log(result);
 
   const refresh = React.useCallback(() => {
     setOffset('');
