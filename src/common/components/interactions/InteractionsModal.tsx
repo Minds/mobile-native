@@ -2,22 +2,41 @@ import { observer, useLocalStore } from 'mobx-react';
 import React, { forwardRef } from 'react';
 import { View, Text } from 'react-native';
 import Modal from 'react-native-modal';
-import UserModel from '../../../channel/UserModel';
+
 import DiscoveryUser from '../../../discovery/DiscoveryUserNew';
-import type ActivityModel from '../../../newsfeed/ActivityModel';
+import UserModel from '../../../channel/UserModel';
+import ActivityModel from '../../../newsfeed/ActivityModel';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import capitalize from '../../helpers/capitalize';
 import i18n from '../../services/i18n.service';
 import OffsetList from '../OffsetList';
+import Activity from '../../../newsfeed/activity/Activity';
+import navigationService from '../../../navigation/NavigationService';
 
 type PropsType = {
   entity: ActivityModel;
 };
 
-const renderItem = (row: { item: any; index: number }) => {
-  const r = { item: UserModel.checkOrCreate(row.item.actor), index: row.index };
-  return <DiscoveryUser row={r} />;
+const renderItemUser = (row: { item: any; index: number }) => {
+  return <DiscoveryUser row={row} />;
 };
+
+const renderItemActivity = (row: { item: any; index: number }) => {
+  return (
+    <Activity
+      entity={row.item}
+      hideTabs={true}
+      hideRemind={true}
+      navigation={navigationService}
+    />
+  );
+};
+
+const mapUser = data => data.map(d => UserModel.create(d.actor));
+const mapActivity = data =>
+  data.map(d => {
+    return ActivityModel.create(d);
+  });
 
 type Interactions = 'upVotes' | 'downVotes' | 'reminds' | 'quotes';
 
@@ -39,7 +58,24 @@ export default observer(
         store.interaction = interaction;
       },
       get endpoint() {
-        return `api/v3/votes/list/${entity.guid}`; //TODO: change according interaction
+        return store.interaction === 'upVotes' ||
+          store.interaction === 'downVotes'
+          ? `api/v3/votes/list/${entity.guid}`
+          : 'api/v3/newsfeed';
+      },
+      get opts() {
+        const opts: any = {
+          limit: 24,
+        };
+
+        if (store.interaction === 'reminds') {
+          opts.remind_guid = entity.guid;
+        } else if (store.interaction === 'quotes') {
+          opts.quote_guid = entity.guid;
+        } else {
+          opts.direction = store.interaction === 'upVotes' ? 'up' : 'down';
+        }
+        return opts;
       },
     }));
 
@@ -53,11 +89,10 @@ export default observer(
       },
     }));
 
-    const opts = {
-      limit: 24,
-      direction: store.interaction === 'upVotes' ? 'up' : 'down',
-    };
-    const dataField = 'votes';
+    const isVote =
+      store.interaction === 'upVotes' || store.interaction === 'downVotes';
+
+    const dataField = isVote ? 'votes' : 'entities';
 
     return (
       <Modal
@@ -73,8 +108,9 @@ export default observer(
           <OffsetList
             fetchEndpoint={store.endpoint}
             endpointData={dataField}
-            params={opts}
-            renderItem={renderItem}
+            params={store.opts}
+            map={isVote ? mapUser : mapActivity}
+            renderItem={isVote ? renderItemUser : renderItemActivity}
             offsetField={'next-page'}
           />
         </View>
