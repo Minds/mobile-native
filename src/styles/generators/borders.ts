@@ -9,7 +9,7 @@ function getBorder(name) {
   const result = regex.exec(name);
 
   if (result) {
-    const n = parseInt(result[2], 10);
+    const n = parseInt(result[1], 10);
     if (n === 0 || n > 0) {
       return n * STEP * multiplier;
     }
@@ -21,7 +21,7 @@ export default function borders(name: string) {
   const result = regex.exec(name);
 
   if (result) {
-    const size = getBorder(result[3]);
-    return size ? { [`border${result[2] || ''}Width`]: size } : null;
+    const size = getBorder(result[2]);
+    return size ? { [`border${result[1] || ''}Width`]: size } : null;
   }
 }
