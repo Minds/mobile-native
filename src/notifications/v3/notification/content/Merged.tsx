@@ -16,7 +16,6 @@ const Merged = ({ notification, router }: PropsType) => {
 
   return (
     <Text style={bodyTextStyle}>
-      {' '}
       and{' '}
       <Text
         style={bodyTextImportantStyle}
