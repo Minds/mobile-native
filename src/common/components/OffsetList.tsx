@@ -70,8 +70,6 @@ export default observer(function OffsetList<T>(props: PropsType) {
       } as ApiFetchType),
   });
 
-  console.log(result);
-
   const refresh = React.useCallback(() => {
     setOffset('');
     setResult(null);

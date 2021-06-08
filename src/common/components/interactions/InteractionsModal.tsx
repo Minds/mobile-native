@@ -70,6 +70,7 @@ export default observer(
 
         if (store.interaction === 'reminds') {
           opts.remind_guid = entity.guid;
+          opts.hide_reminds = false;
         } else if (store.interaction === 'quotes') {
           opts.quote_guid = entity.guid;
         } else {
