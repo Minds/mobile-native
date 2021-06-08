@@ -1,5 +1,6 @@
-//@ts-nocheck
-
+/**
+ * Legacy colors
+ */
 const colors = {
   primary: '#4690D6',
   secondary: '#FFDD63',
@@ -19,8 +20,9 @@ const colors = {
 
 export default colors;
 
+export type ColorsType = typeof LIGHT_THEME;
+
 export const LIGHT_THEME = {
-  name: 'LIGHT',
   primary_background: '#FFFFFF',
   primary_background_highlight: '#F8FAFA',
   secondary_background: '#F6F7F7',
@@ -51,8 +53,7 @@ export const LIGHT_THEME = {
   active: '#DADFE5',
 };
 
-export const DARK_THEME = {
-  name: 'DARK',
+export const DARK_THEME: ColorsType = {
   primary_background: '#242A30',
   primary_background_highlight: '#1E242A',
   secondary_background: '#1A2025',

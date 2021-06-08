@@ -1,118 +1,35 @@
 import { StyleSheet, Platform } from 'react-native';
+import sizes from './generators/sizes';
+import borders from './generators/borders';
+import colors from './generators/colors';
+import spacing from './generators/spacing';
+import ThemedStyles from './ThemedStyles';
+import { DynamicStyles } from './types';
 
-type DynamicStyles = {
-  [key in keyof { 0; 2; 3; 4; 5; 6; 7; 8; 9; 10 } as
-    | `border${key}x`
-    | `borderRight${key}x`
-    | `borderTop${key}x`
-    | `borderBottom${key}x`
-    | `borderRadius${key}x`
-    | `borderLeft${key}x`
-    | `paddingVertical${key}x`
-    | `paddingTop${key}x`
-    | `paddingLeft${key}x`
-    | `paddingRight${key}x`
-    | `paddingBottom${key}x`
-    | `paddingHorizontal${key}x`
-    | `padding${key}x`
-    | `marginVertical${key}x`
-    | `marginTop${key}x`
-    | `marginLeft${key}x`
-    | `marginRight${key}x`
-    | `marginBottom${key}x`
-    | `marginHorizontal${key}x`
-    | `margin${key}x`]: any;
-} & {
-  border: any;
-  borderRight: any;
-  borderTop: any;
-  borderBottom: any;
-  borderRadius: any;
-  borderLeft: any;
-  paddingVertical: any;
-  paddingTop: any;
-  paddingLeft: any;
-  paddingRight: any;
-  paddingBottom: any;
-  paddingHorizontal: any;
-  padding: any;
-  marginVertical: any;
-  marginTop: any;
-  marginLeft: any;
-  marginRight: any;
-  marginBottom: any;
-  marginHorizontal: any;
-  margin: any;
-} & {
-    [key in keyof {
-      5;
-      10;
-      15;
-      20;
-      25;
-      30;
-      35;
-      40;
-      45;
-      50;
-      55;
-      65;
-      70;
-      75;
-      80;
-      85;
-      90;
-      95;
-    } as `width${key}` | `height${key}`];
-  };
+const dynamicStyleHandler = {
+  get: function (target, name) {
+    // if already exist we return it
+    if (name in target) return target[name];
 
-const repetitions = 10;
-const step = 5;
+    // generate dynamic style
+    const m =
+      spacing(name) ||
+      colors(name, ThemedStyles) ||
+      borders(name) ||
+      sizes(name);
 
-function generateDynamic(): DynamicStyles {
-  const dynamicStyles = {};
+    if (m) {
+      target[name] = m;
+    }
+    if (target[name]) {
+      return target[name];
+    }
+    throw new Error(`Style not defined: ${name}`);
+  },
+};
 
-  for (let index = 1; index <= 20; index++) {
-    let value = step * index;
-    dynamicStyles[`width${value}`] = { width: `${value}%` };
-    dynamicStyles[`height${value}`] = { height: `${value}%` };
-  }
-
-  for (let index = 0; index <= repetitions; index++) {
-    let value = step * index;
-    const post = index === 1 ? '' : `${index}x`;
-    dynamicStyles[`margin${post}`] = { margin: value };
-    dynamicStyles[`marginVertical${post}`] = { marginVertical: value };
-    dynamicStyles[`marginTop${post}`] = { marginTop: value };
-    dynamicStyles[`marginLeft${post}`] = { marginLeft: value };
-    dynamicStyles[`marginRight${post}`] = { marginRight: value };
-    dynamicStyles[`marginBottom${post}`] = { marginBottom: value };
-    dynamicStyles[`marginHorizontal${post}`] = { marginHorizontal: value };
-
-    dynamicStyles[`padding${post}`] = { padding: value };
-    dynamicStyles[`paddingVertical${post}`] = { paddingVertical: value };
-    dynamicStyles[`paddingTop${post}`] = { paddingTop: value };
-    dynamicStyles[`paddingLeft${post}`] = { paddingLeft: value };
-    dynamicStyles[`paddingRight${post}`] = { paddingRight: value };
-    dynamicStyles[`paddingBottom${post}`] = { paddingBottom: value };
-    dynamicStyles[`paddingHorizontal${post}`] = { paddingHorizontal: value };
-
-    dynamicStyles[`border${post}`] = { borderWidth: index };
-    dynamicStyles[`borderLeft${post}`] = { borderLeftWidth: index };
-    dynamicStyles[`borderRight${post}`] = { borderRightWidth: index };
-    dynamicStyles[`borderTop${post}`] = { borderTopWidth: index };
-    dynamicStyles[`borderBottom${post}`] = { borderBottomWidth: index };
-    dynamicStyles[`borderRadius${post}`] = { borderRadius: index * 2 };
-  }
-
-  return dynamicStyles as DynamicStyles;
-}
-
-const dynamicStyles = generateDynamic();
-
-export const buildStyle = theme =>
+const _buildStyle = theme =>
   ({
-    ...dynamicStyles,
     // opacity
     opacity100: {
       opacity: 1,
@@ -608,4 +525,17 @@ export const buildStyle = theme =>
     },
   } as const);
 
-export type Styles = ReturnType<typeof buildStyle>;
+export type Styles = ReturnType<typeof _buildStyle> & DynamicStyles;
+
+export const buildStyle = (theme): Styles => {
+  return new Proxy(_buildStyle(theme), dynamicStyleHandler);
+};
+
+export const updateTheme = (styles: Styles) => {
+  Object.getOwnPropertyNames(styles).forEach(name => {
+    const style = colors(name, ThemedStyles);
+    if (style) {
+      Object.assign(styles[name], style);
+    }
+  });
+};
