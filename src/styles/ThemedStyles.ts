@@ -2,7 +2,7 @@ import { Platform, ViewStyle, TextStyle, ImageStyle } from 'react-native';
 import { observable, action, reaction } from 'mobx';
 import React from 'react';
 
-import { DARK_THEME, LIGHT_THEME } from './Colors';
+import { ColorsNameType, DARK_THEME, LIGHT_THEME } from './Colors';
 import { DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { buildStyle, updateTheme } from './Style';
 
@@ -112,7 +112,7 @@ export class ThemedStylesStore {
    * Get color of theme based on property
    * @param {String} prop
    */
-  getColor(prop) {
+  getColor(prop: ColorsNameType) {
     const theme = this.theme ? DARK_THEME : LIGHT_THEME;
     return theme[prop];
   }
