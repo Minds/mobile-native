@@ -1,5 +1,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
+import BlogCard from '../../../../blogs/BlogCard';
+import BlogModel from '../../../../blogs/BlogModel';
 import Activity from '../../../../newsfeed/activity/Activity';
 import ActivityModel from '../../../../newsfeed/ActivityModel';
 import type NotificationModel from '../NotificationModel';
@@ -36,17 +38,34 @@ const ContentPreview = ({ notification, navigation }: PropsType) => {
       {isEntityComment && (
         <Text style={bodyTextStyle}>“{notification.entity?.description}”</Text>
       )}
-      {isNoCommentEntity && (
-        <Activity
-          entity={ActivityModel.create(notification.entity)}
-          navigation={navigation}
-          autoHeight={false}
-          showCommentsOutlet={false}
-          showOnlyContent={true}
-        />
-      )}
+      {isNoCommentEntity && renderContent(notification, navigation)}
     </View>
   );
+};
+
+const renderContent = (notification: NotificationModel, navigation: any) => {
+  if (
+    notification.entity.type === 'object' &&
+    notification.entity.subtype === 'blog'
+  ) {
+    return (
+      <BlogCard
+        entity={BlogModel.create(notification.entity)}
+        navigation={navigation}
+        showOnlyContent={true}
+      />
+    );
+  } else {
+    return (
+      <Activity
+        entity={ActivityModel.create(notification.entity)}
+        navigation={navigation}
+        autoHeight={false}
+        showCommentsOutlet={false}
+        showOnlyContent={true}
+      />
+    );
+  }
 };
 
 export default ContentPreview;
