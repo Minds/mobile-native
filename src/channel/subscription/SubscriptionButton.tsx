@@ -9,7 +9,7 @@ import type UserModel from '../UserModel';
 import Button from '../../common/components/Button';
 import i18n from '../../common/services/i18n.service';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { CommonStyle } from '../../styles/Common';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 type PropsType = {
   channel: UserModel;
@@ -65,13 +65,7 @@ class SubscriptionButton extends Component<PropsType> {
         ? i18n.t('channel.requestSubscription')
         : i18n.t('pending');
       if (channel.pending_subscribe) {
-        icon = (
-          <Icon
-            name="ios-close"
-            style={[CommonStyle.colorPrimary, CommonStyle.paddingLeft]}
-            size={23}
-          />
-        );
+        icon = <Icon name="ios-close" style={iconStyle} size={23} />;
       }
     }
 
@@ -82,5 +76,7 @@ class SubscriptionButton extends Component<PropsType> {
     );
   }
 }
+
+const iconStyle = ThemedStyles.combine('paddingLeft', 'colorLink');
 
 export default SubscriptionButton;

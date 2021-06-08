@@ -14,8 +14,6 @@ import { observer, inject } from 'mobx-react';
 import i18n from '../../common/services/i18n.service';
 import DiscoveryUser from '../../discovery/DiscoveryUser';
 import CenteredLoading from '../../common/components/CenteredLoading';
-import { CommonStyle } from '../../styles/Common';
-import colors from '../../styles/Colors';
 import ErrorLoading from '../../common/components/ErrorLoading';
 import ThemedStyles from '../../styles/ThemedStyles';
 
@@ -60,7 +58,7 @@ class ChannelSubscribers extends Component {
    */
   render() {
     let body;
-
+    const theme = ThemedStyles.styles;
     const store = this.props.channelSubscribersStore;
 
     const footerCmp = store.errorLoading ? (
@@ -88,21 +86,16 @@ class ChannelSubscribers extends Component {
     }
 
     return (
-      <View
-        style={[
-          CommonStyle.flexContainer,
-          ThemedStyles.style.backgroundSecondary,
-        ]}>
+      <View style={[theme.flexContainer, theme.backgroundSecondary]}>
         <View style={styles.topbar}>
-          <View
-            style={[CommonStyle.flexContainer, CommonStyle.rowJustifyCenter]}>
+          <View style={[theme.flexContainer, theme.rowJustifyCenter]}>
             <TouchableHighlight
               underlayColor="transparent"
               onPress={() => store.setFilter('subscribers')}
               style={
                 store.filter == 'subscribers'
-                  ? [styles.selectedButton, CommonStyle.flexContainerCenter]
-                  : [styles.buttons, CommonStyle.flexContainerCenter]
+                  ? [styles.selectedButton, theme.flexContainerCenter]
+                  : [styles.buttons, theme.flexContainerCenter]
               }>
               <Text>{i18n.t('subscribers')}</Text>
             </TouchableHighlight>
@@ -110,9 +103,13 @@ class ChannelSubscribers extends Component {
               underlayColor="transparent"
               onPress={() => store.setFilter('subscriptions')}
               style={
-                store.filter == 'subscriptions'
-                  ? [styles.selectedButton, CommonStyle.flexContainerCenter]
-                  : [styles.buttons, CommonStyle.flexContainerCenter]
+                store.filter === 'subscriptions'
+                  ? [
+                      styles.selectedButton,
+                      theme.flexContainerCenter,
+                      theme.colorLink,
+                    ]
+                  : [styles.buttons, theme.flexContainerCenter]
               }>
               <Text>{i18n.t('subscriptions')}</Text>
             </TouchableHighlight>
@@ -169,6 +166,5 @@ const styles = StyleSheet.create({
   selectedButton: {
     alignItems: 'center',
     borderBottomWidth: 3,
-    borderColor: colors.primary,
   },
 });

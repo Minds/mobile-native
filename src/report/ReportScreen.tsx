@@ -17,7 +17,6 @@ import {
 
 import reportService from './ReportService';
 
-import colors from '../styles/Colors';
 import i18n from '../common/services/i18n.service';
 
 import mindsService from '../common/services/minds.service';
@@ -45,7 +44,7 @@ export default class ReportScreen extends Component {
           <Icon
             name="chevron-left"
             size={38}
-            color={colors.primary}
+            style={ThemedStyles.style.colorLink}
             onPress={() => {
               if (this.props.route.params && this.props.route.params.goBack)
                 return this.props.route.params.goBack();
@@ -255,7 +254,9 @@ export default class ReportScreen extends Component {
             <Icon
               name="chevron-right"
               size={36}
-              color={reason.hasMore ? colors.primary : colors.greyed}
+              style={
+                reason.hasMore ? theme.colorLink : theme.colorSecondaryText
+              }
             />
           </View>
         </TouchableOpacity>

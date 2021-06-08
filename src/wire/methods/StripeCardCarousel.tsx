@@ -4,12 +4,12 @@ import { Text, View, StyleSheet, Alert } from 'react-native';
 
 import Carousel from 'react-native-snap-carousel';
 
-import { CommonStyle as CS } from '../../styles/Common';
 import viewportPercentage from '../../common/helpers/viewportPercentage';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import i18n from '../../common/services/i18n.service';
 import type { StripeCard } from '../WireTypes';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 const { value: slideWidth, viewportHeight } = viewportPercentage(50);
 const { value: itemHorizontalMargin } = viewportPercentage(1);
@@ -86,45 +86,55 @@ export default class StripeCardCarousel extends React.PureComponent<PropsType> {
    */
   _renderItem = (row: Row): React.ReactNode => {
     const even = row.index % 2;
+    const theme = ThemedStyles.style;
     return (
       <View
         key={`card${row.item.id}`}
         style={[
           itemHeight,
-          even ? CS.backgroundPrimary : CS.backgroundTertiary,
-          CS.borderRadius4x,
-          CS.padding2x,
-          CS.shadow,
+          even ? theme.backgroundPrimary : theme.backgroundTertiary,
+          theme.borderRadius4x,
+          theme.padding2x,
+          styles.shadow,
         ]}>
         {this.getCardIcon(row.item.card_brand)}
         <Icon
           name="close"
-          style={[CS.positionAbsoluteTopRight, CS.margin, CS.colorWhite]}
+          style={[
+            theme.positionAbsoluteTopRight,
+            theme.margin,
+            theme.colorWhite,
+          ]}
           size={25}
           onPress={(): any => this.delete(row.item)}
         />
         <Text
-          style={[CS.fontM, CS.fontMedium, CS.colorWhite, CS.paddingBottom2x]}>
+          style={[
+            theme.fontM,
+            theme.fontMedium,
+            theme.colorWhite,
+            theme.paddingBottom2x,
+          ]}>
           {row.item.card_country}
         </Text>
         <Text
           style={[
-            CS.fontXL,
-            CS.fontMedium,
-            CS.colorWhite,
-            CS.textCenter,
-            CS.paddingTop3x,
+            theme.fontXL,
+            theme.fontMedium,
+            theme.colorWhite,
+            theme.textCenter,
+            theme.paddingTop3x,
           ]}>
           ********** {row.item.card_last4}
         </Text>
         <Text
           numberOfLines={5}
           style={[
-            CS.fontL,
-            CS.fontHairline,
-            CS.colorWhite,
-            CS.textRight,
-            CS.paddingTop3x,
+            theme.fontL,
+            theme.fontHairline,
+            theme.colorWhite,
+            theme.textRight,
+            theme.paddingTop3x,
           ]}>
           {row.item.card_expires}
         </Text>
@@ -201,5 +211,12 @@ export default class StripeCardCarousel extends React.PureComponent<PropsType> {
 const styles = StyleSheet.create({
   carousle: {
     flexGrow: 0,
+  },
+  shadow: {
+    elevation: 4,
+    shadowOffset: { width: 0, height: 2 },
+    shadowColor: 'black',
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
   },
 });

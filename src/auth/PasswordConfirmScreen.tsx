@@ -17,7 +17,6 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import InputContainer from '../common/components/InputContainer';
 import { icon } from './styles';
-import colors from '../styles/Colors';
 import authService from './AuthService';
 
 type ForgotScreenRouteProp = RouteProp<
@@ -141,9 +140,6 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     color: '#c00',
     textAlign: 'center',
-  },
-  nonEditable: {
-    color: colors.darkGreyed,
   },
   titleText: {
     fontSize: 22,

@@ -1,14 +1,12 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import { View, ScrollView, Text, Alert } from 'react-native';
+import { View, Text, Alert } from 'react-native';
 
 import settingsService from '../SettingsService';
 import i18n from '../../common/services/i18n.service';
 import validator from '../../common/services/validator.service';
 import CenteredLoading from '../../common/components/CenteredLoading';
-import Button from '../../common/components/Button';
-import { CommonStyle } from '../../styles/Common';
 import ModalConfirmPassword from '../../auth/ModalConfirmPassword';
 import { inject } from 'mobx-react';
 import Input from '../../common/components/Input';

@@ -1,16 +1,16 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import { Button, Text, Image, TextInput, StyleSheet, View } from 'react-native';
+import { Text, Image, View } from 'react-native';
 
 import { observer } from 'mobx-react';
 import * as Progress from 'react-native-progress';
 
-import { CommonStyle as CS } from '../styles/Common';
 import updateService from '../common/services/update.service';
 import colors from '../styles/Colors';
 import { ComponentsStyle } from '../styles/Components';
 import i18n from '../common/services/i18n.service';
+import ThemedStyles from '../styles/ThemedStyles';
 
 @observer
 export default class UpdatingScreen extends Component {
@@ -19,12 +19,13 @@ export default class UpdatingScreen extends Component {
   };
 
   render() {
+    const theme = ThemedStyles.style;
     return (
-      <View style={[CS.backgroundWhite, CS.padding, CS.flexContainer]}>
-        <Text style={[CS.fontXXL, CS.textCenter, CS.padding]}>
+      <View style={[theme.backgroundWhite, theme.padding, theme.flexContainer]}>
+        <Text style={[theme.fontXXL, theme.textCenter, theme.padding]}>
           {i18n.t('update.title', { version: updateService.version })}
         </Text>
-        <View style={[CS.centered, CS.flexContainer]}>
+        <View style={[theme.centered, theme.flexContainer]}>
           <View>
             <Image
               resizeMode={'contain'}
@@ -38,11 +39,11 @@ export default class UpdatingScreen extends Component {
             />
             <Text
               style={[
-                CS.fontM,
-                CS.fontMedium,
-                CS.textCenter,
-                CS.colorDark,
-                CS.marginTop,
+                theme.fontM,
+                theme.fontMedium,
+                theme.textCenter,
+                theme.colorDark,
+                theme.marginTop,
               ]}>
               {i18n.t('downloading')} {updateService.progress}%
             </Text>

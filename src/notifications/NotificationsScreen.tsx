@@ -171,7 +171,7 @@ class NotificationsScreen extends Component {
     return (
       <ErrorBoundary
         message="Can't show this notification"
-        containerStyle={ThemedStyles.style.hairLineBottom}>
+        containerStyle={ThemedStyles.style.borderBottomHair}>
         <Notification entity={entity} navigation={this.props.navigation} />
       </ErrorBoundary>
     );

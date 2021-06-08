@@ -15,7 +15,6 @@ import Modal from 'react-native-modal';
 import i18n from '../common/services/i18n.service';
 import authService from '../auth/AuthService';
 import { ComponentsStyle } from '../styles/Components';
-import Colors from '../styles/Colors';
 import ThemedStyles from '../styles/ThemedStyles';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -105,9 +104,6 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     color: '#c00',
     textAlign: 'center',
-  },
-  nonEditable: {
-    color: Colors.darkGreyed,
   },
   textCotainer: {
     flexDirection: 'row',

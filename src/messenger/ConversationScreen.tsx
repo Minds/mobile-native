@@ -22,7 +22,6 @@ import Message from './conversation/Message';
 import MessengerSetup from './MessengerSetup';
 import MessengerInvite from './MessengerInvite';
 
-import { CommonStyle } from '../styles/Common';
 import UserModel from '../channel/UserModel';
 import MessengerConversationStore from './MessengerConversationStore';
 import ErrorLoading from '../common/components/ErrorLoading';
@@ -106,7 +105,10 @@ export default class ConversationScreen extends Component {
         title: participant.name,
         headerRight: () => (
           <TouchableOpacity
-            style={[CommonStyle.rowJustifyEnd, CommonStyle.paddingRight2x]}
+            style={[
+              ThemedStyles.style.rowJustifyEnd,
+              ThemedStyles.style.paddingRight2x,
+            ]}
             onPress={() =>
               this.props.navigation.push('Channel', { guid: participant.guid })
             }>

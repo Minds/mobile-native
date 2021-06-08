@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 import { TouchableHighlight, Text, StyleSheet } from 'react-native';
 import { ComponentsStyle } from '../../styles/Components';
-import { CommonStyle } from '../../styles/Common';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 export default class TransparentButton extends Component {
   onPressAction = () => {
@@ -32,8 +32,7 @@ export default class TransparentButton extends Component {
       submitContent = (
         <Text
           style={[
-            CommonStyle.paddingLeft,
-            CommonStyle.paddingRight,
+            ThemedStyles.style.paddingHorizontal,
             styles.buttonText,
             textStyle,
             { color: color || '#000' },

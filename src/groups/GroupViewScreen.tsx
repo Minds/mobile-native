@@ -19,7 +19,6 @@ import { truncate } from 'lodash';
 
 import * as entities from 'entities';
 import GroupUser from './GroupUser';
-import colors from '../styles/Colors';
 import Tags from '../common/components/Tags';
 import CaptureFab from '../capture/CaptureFab';
 import GroupHeader from './header/GroupHeader';
@@ -169,7 +168,7 @@ export default class GroupViewScreen extends Component {
       <SafeAreaView style={styles.gobackicon}>
         <Icon
           raised
-          color={colors.primary}
+          style={ThemedStyles.style.colorLink}
           size={22}
           name="arrow-back"
           onPress={() => this.props.navigation.goBack()}

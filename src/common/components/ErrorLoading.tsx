@@ -9,7 +9,7 @@ import connectivityService from '../services/connectivity.service';
 
 import Button from './Button';
 import i18n from '../services/i18n.service';
-import { CommonStyle as CS } from '../../styles/Common';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 // types
 type Props = {
@@ -27,22 +27,24 @@ export default class ErrorLoading extends Component<Props> {
    * Render
    */
   render() {
+    const theme = ThemedStyles.style;
     return (
       <View
         style={[
-          CS.padding3x,
-          CS.flexColumnCentered,
-          CS.marginTop2x,
+          theme.padding3x,
+          theme.flexColumnCentered,
+          theme.marginTop2x,
           this.props.inverted
             ? styles.errorLoadingInverted
             : styles.errorLoading,
         ]}>
-        <Text style={[CS.fontM, CS.colorDarkGreyed, CS.marginBottom]}>
-          <Text style={CS.fontSemibold}>{i18n.t('ops')}</Text>{' '}
+        <Text style={[theme.fontM, theme.colorDarkGreyed, theme.marginBottom]}>
+          <Text style={theme.fontSemibold}>{i18n.t('ops')}</Text>{' '}
           {this.props.message}
         </Text>
         {!connectivityService.isConnected && (
-          <Text style={[CS.fontM, CS.colorDarkGreyed, CS.marginBottom]}>
+          <Text
+            style={[theme.fontM, theme.colorDarkGreyed, theme.marginBottom]}>
             {' '}
             {i18n.t('noInternet')}
           </Text>

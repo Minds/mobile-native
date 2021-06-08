@@ -9,8 +9,8 @@ import type SubscriptionRequestStore from './SubscriptionRequestStore';
 import DiscoveryUser from '../../discovery/DiscoveryUser';
 import Button from '../../common/components/Button';
 import i18nService from '../../common/services/i18n.service';
-import { CommonStyle as CS } from '../../styles/Common';
 import { observer } from 'mobx-react';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 type PropsType = {
   row: any;
@@ -49,12 +49,12 @@ class SubscriptionRequest extends DiscoveryUser<PropsType> {
   renderRightButton(): Node {
     if (this.props.row.item.status) {
       return (
-        <View style={[CS.rowJustifyEnd]}>
+        <View style={ThemedStyles.style.rowJustifyEnd}>
           <Text
             style={[
               this.props.row.item.status != 'requestAccepted'
-                ? CS.colorDanger
-                : CS.colorPrimary,
+                ? ThemedStyles.style.colorDanger
+                : ThemedStyles.style.colorPrimary,
             ]}>
             {i18nService.t(`channel.${this.props.row.item.status}`)}
           </Text>
@@ -63,7 +63,7 @@ class SubscriptionRequest extends DiscoveryUser<PropsType> {
     }
 
     return (
-      <View style={[CS.rowJustifyEnd]}>
+      <View style={ThemedStyles.style.rowJustifyEnd}>
         <Button
           text={i18nService.t('accept')}
           onPress={this.onAccept}

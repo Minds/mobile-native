@@ -7,7 +7,6 @@ import { Avatar } from 'react-native-elements';
 
 import FastImage from 'react-native-fast-image';
 import formatDate from '../common/helpers/date';
-import { CommonStyle as CS } from '../styles/Common';
 import { FLAG_VIEW } from '../common/Permissions';
 import Actions from '../newsfeed/activity/Actions';
 import ThemedStyles from '../styles/ThemedStyles';
@@ -56,7 +55,7 @@ export default class BlogCard extends PureComponent<PropsType> {
 
     return (
       <View>
-        <View style={[styles.actionSheet]}>
+        <View style={styles.actionSheet}>
           <BlogActionSheet entity={blog} navigation={this.props.navigation} />
         </View>
         <TouchableOpacity
@@ -67,20 +66,20 @@ export default class BlogCard extends PureComponent<PropsType> {
             style={styles.banner}
             resizeMode={FastImage.resizeMode.cover}
           />
-          <View style={[CS.padding2x]}>
-            <View style={[CS.columnAlignStart, CS.fullWidth]}>
+          <View style={[theme.padding2x]}>
+            <View style={[theme.columnAlignStart, theme.fullWidth]}>
               <Text
-                style={[CS.fontL, CS.fontMedium, CS.flexContainer]}
+                style={[theme.fontL, theme.fontMedium, theme.flexContainer]}
                 numberOfLines={2}
                 ellipsizeMode="tail">
                 {title}
               </Text>
               <View
                 style={[
-                  CS.marginBottom2x,
-                  CS.marginTop2x,
-                  CS.rowJustifyCenter,
-                  CS.alignCenter,
+                  theme.marginBottom2x,
+                  theme.marginTop2x,
+                  theme.rowJustifyCenter,
+                  theme.alignCenter,
                 ]}>
                 {channel && (
                   <Avatar
@@ -91,11 +90,11 @@ export default class BlogCard extends PureComponent<PropsType> {
                   />
                 )}
                 <Text
-                  style={[CS.fontS, CS.paddingLeft, CS.flexContainer]}
+                  style={[theme.fontS, theme.paddingLeft, theme.flexContainer]}
                   numberOfLines={1}>
                   {blog.ownerObj && blog.ownerObj.username.toUpperCase()}
                 </Text>
-                <Text style={[CS.fontXS, CS.paddingLeft]}>
+                <Text style={[theme.fontXS, theme.paddingLeft]}>
                   {formatDate(blog.time_created)}
                 </Text>
               </View>

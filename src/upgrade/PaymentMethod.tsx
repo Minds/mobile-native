@@ -4,7 +4,6 @@ import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
 import Switch from 'react-native-switch-pro';
 import { UpgradeStoreType } from './createUpgradeStore';
-import Colors from '../styles/Colors';
 
 type PropsType = {
   store: UpgradeStoreType;
@@ -25,10 +24,10 @@ const PaymentMethod = ({ store }: PropsType) => {
       <Switch
         value={store.method === 'tokens'}
         onSyncPress={store.setMethod}
-        circleColorActive={Colors.switchCircle}
-        circleColorInactive={Colors.switchCircle}
-        backgroundActive={Colors.switchBackground}
-        backgroundInactive={Colors.switchBackground}
+        circleColorActive={ThemedStyles.getColor('secondary_text')}
+        circleColorInactive={ThemedStyles.getColor('secondary_text')}
+        backgroundActive={ThemedStyles.getColor('tertiary_background')}
+        backgroundInactive={ThemedStyles.getColor('tertiary_background')}
         style={theme.marginHorizontal2x}
       />
       <Text style={switchTextStyle}>tokens</Text>

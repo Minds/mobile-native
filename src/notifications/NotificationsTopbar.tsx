@@ -7,8 +7,6 @@ import { observer, inject } from 'mobx-react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import IonIcon from 'react-native-vector-icons/Ionicons';
-import colors from '../styles/Colors';
-import { CommonStyle } from '../styles/Common';
 import ThemedStyles from '../styles/ThemedStyles';
 
 @inject('notifications')
@@ -30,7 +28,7 @@ export default class NotificacionsTopbar extends Component {
       <View
         style={[
           styles.container,
-          CommonStyle.shadow,
+          styles.shadow,
           ThemedStyles.style.backgroundPrimary,
         ]}>
         <View style={styles.topbar}>
@@ -129,6 +127,13 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
   },
   tabSelected: {
-    borderBottomColor: colors.primary,
+    borderBottomColor: 'blue',
+  },
+  shadow: {
+    elevation: 4,
+    shadowOffset: { width: 0, height: 2 },
+    shadowColor: 'black',
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
   },
 });

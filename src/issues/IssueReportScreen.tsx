@@ -10,11 +10,11 @@ import {
   ScrollView,
 } from 'react-native';
 
-import { CommonStyle as CS } from '../styles/Common';
 import { ComponentsStyle as CmpS } from '../styles/Components';
 import { Version } from '../config/Version';
 import Button from '../common/components/Button';
 import gitlab from '../common/services/gitlab.service';
+import ThemedStyles from '../styles/ThemedStyles';
 
 /**
  * Issue report screen
@@ -106,12 +106,13 @@ export default class IssueReportScreen extends Component {
    * Render
    */
   render() {
+    const theme = ThemedStyles.style;
     return (
       <ScrollView
-        style={[CS.flexContainer, CS.padding2x, CS.backgroundLight]}
+        style={[theme.flexContainer, theme.padding2x, theme.backgroundLight]}
         keyboardShouldPersistTaps="always">
         <View style={{ flexDirection: 'column', alignItems: 'stretch' }}>
-          <Text style={CS.fontThin}>Title</Text>
+          <Text style={theme.fontThin}>Title</Text>
           <TextInput
             style={CmpS.input}
             editable={true}
@@ -120,13 +121,13 @@ export default class IssueReportScreen extends Component {
             onChangeText={v => this.setField('title', v)}
           />
           {this.state.titleRequired && (
-            <Text style={[CS.colorDanger, CS.fontS, CS.fontThin]}>
+            <Text style={[theme.colorDanger, theme.fontS, theme.fontThin]}>
               The title is required
             </Text>
           )}
-          <Text style={[CS.marginTop2x, CS.fontThin]}>Description</Text>
+          <Text style={[theme.marginTop2x, theme.fontThin]}>Description</Text>
           <TextInput
-            style={[CmpS.input, CS.paddingTop2x, { minHeight: 100 }]}
+            style={[CmpS.input, theme.paddingTop2x, { minHeight: 100 }]}
             editable={true}
             underlineColorAndroid="transparent"
             multiline={true}
@@ -135,13 +136,15 @@ export default class IssueReportScreen extends Component {
             onChangeText={v => this.setField('description', v)}
           />
           {this.state.descriptionRequired && (
-            <Text style={[CS.colorDanger, CS.fontS, CS.fontThin]}>
+            <Text style={[theme.colorDanger, theme.fontS, theme.fontThin]}>
               The description is required
             </Text>
           )}
-          <Text style={[CS.marginTop2x, CS.fontThin]}>Steps to reproduce</Text>
+          <Text style={[theme.marginTop2x, theme.fontThin]}>
+            Steps to reproduce
+          </Text>
           <TextInput
-            style={[CmpS.input, CS.paddingTop2x, { minHeight: 100 }]}
+            style={[CmpS.input, theme.paddingTop2x, { minHeight: 100 }]}
             editable={true}
             underlineColorAndroid="transparent"
             multiline={true}
@@ -150,26 +153,28 @@ export default class IssueReportScreen extends Component {
             onChangeText={v => this.setField('steps', v)}
           />
           {this.state.stepsRequired && (
-            <Text style={[CS.colorDanger, CS.fontS, CS.fontThin]}>
+            <Text style={[theme.colorDanger, theme.fontS, theme.fontThin]}>
               The steps are required
             </Text>
           )}
         </View>
-        <View style={CS.paddingTop3x}>
-          <Text style={[CS.fontM, CS.fontHairline]}>{this.getApp()}</Text>
+        <View style={theme.paddingTop3x}>
+          <Text style={[theme.fontM, theme.fontHairline]}>{this.getApp()}</Text>
         </View>
-        <View style={CS.paddingTop1x}>
-          <Text style={[CS.fontM, CS.fontThin]}>{this.getPlatform()}</Text>
+        <View style={theme.paddingTop1x}>
+          <Text style={[theme.fontM, theme.fontThin]}>
+            {this.getPlatform()}
+          </Text>
         </View>
-        <View style={CS.paddingTop3x}>
-          <Text style={[CS.fontM, CS.fontThin]}>
+        <View style={theme.paddingTop3x}>
+          <Text style={[theme.fontM, theme.fontThin]}>
             This bug report is anonymous
           </Text>
         </View>
-        <View style={[CS.paddingTop2x, CS.centered]}>
+        <View style={[theme.paddingTop2x, theme.centered]}>
           <Button
             text="Submit"
-            textStyle={CS.fontXL}
+            textStyle={theme.fontXL}
             onPress={this.onSubmit}
             loading={this.state.sending}
             inverted

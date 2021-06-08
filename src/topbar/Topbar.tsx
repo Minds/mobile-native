@@ -12,16 +12,11 @@ import IconFA from 'react-native-vector-icons/FontAwesome5';
 import { observer } from 'mobx-react';
 import SearchComponent from './searchbar/SearchComponent';
 import ThemedStyles from '../styles/ThemedStyles';
-import {
-  SafeAreaInsetsContext,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
-import BannerInfo from './BannerInfo';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import FastImage from 'react-native-fast-image';
 import { useStores } from '../common/hooks/use-stores';
 import useCurrentUser from '../common/hooks/useCurrentUser';
 import intword from '../common/helpers/intword';
-import colors from '../styles/Colors';
 import featuresService from '../common/services/features.service';
 import EmailConfirmation from './EmailConfirmation';
 
@@ -119,7 +114,6 @@ export const Topbar = observer((props: PropsType) => {
         </View>
       </View>
       {!featuresService.has('onboarding-october-2020') && <EmailConfirmation />}
-      <BannerInfo />
     </View>
   );
 });
@@ -134,7 +128,7 @@ export const styles = StyleSheet.create({
     // paddingBottom: 8,
   },
   menuIconContainer: {
-    backgroundColor: colors.lightGreyed,
+    backgroundColor: '#d8d8d8',
     paddingTop: 1,
     height: 20,
     width: 20,

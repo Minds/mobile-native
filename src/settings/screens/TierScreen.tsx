@@ -9,7 +9,6 @@ import SaveButton from '../../common/components/SaveButton';
 import supportTiersService from '../../common/services/support-tiers.service';
 import Switch from 'react-native-switch-pro';
 import { UserError } from '../../common/UserError';
-import Colors from '../../styles/Colors';
 
 type PropsType = {
   route: any;
@@ -131,10 +130,10 @@ const TierScreen = observer(({ route, navigation }: PropsType) => {
           <Switch
             value={localStore.support_tier.has_usd}
             onSyncPress={localStore.setHasUsd}
-            circleColorActive={Colors.switchCircle}
-            circleColorInactive={Colors.switchCircle}
-            backgroundActive={Colors.switchBackground}
-            backgroundInactive={Colors.switchBackground}
+            circleColorActive={ThemedStyles.getColor('secondary_text')}
+            circleColorInactive={ThemedStyles.getColor('secondary_text')}
+            backgroundActive={ThemedStyles.getColor('tertiary_background')}
+            backgroundInactive={ThemedStyles.getColor('tertiary_background')}
           />
         </View>
       </View>

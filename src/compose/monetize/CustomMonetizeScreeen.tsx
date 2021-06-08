@@ -18,7 +18,6 @@ import Switch from 'react-native-switch-pro';
 import Wrapper from './common/Wrapper';
 import CenteredLoading from '../../common/components/CenteredLoading';
 import { SupportTiersType } from '../../wire/WireTypes';
-import Colors from '../../styles/Colors';
 
 type CustomMonetizeScreenRouteProp = RouteProp<
   AppStackParamList,
@@ -31,6 +30,7 @@ type CustomMonetizeScreenNavigationProp = StackNavigationProp<
 
 type PropsType = {
   route: CustomMonetizeScreenRouteProp;
+  navigation: CustomMonetizeScreenNavigationProp;
 };
 
 const CustomMonetizeScreen = observer((props: PropsType) => {
@@ -168,10 +168,14 @@ const CustomMonetizeScreen = observer((props: PropsType) => {
                 <Switch
                   value={localStore.has_usd}
                   onSyncPress={localStore.setHasUsd}
-                  circleColorActive={Colors.switchCircle}
-                  circleColorInactive={Colors.switchCircle}
-                  backgroundActive={Colors.switchBackground}
-                  backgroundInactive={Colors.switchBackground}
+                  circleColorActive={ThemedStyles.getColor('secondary_text')}
+                  circleColorInactive={ThemedStyles.getColor('secondary_text')}
+                  backgroundActive={ThemedStyles.getColor(
+                    'tertiary_background',
+                  )}
+                  backgroundInactive={ThemedStyles.getColor(
+                    'tertiary_background',
+                  )}
                 />
               </View>
             </View>

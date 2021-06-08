@@ -8,7 +8,6 @@ import UserNamesComponent from '../../../common/components/UserNamesComponent';
 import capitalize from '../../../common/helpers/capitalize';
 import StripeCardSelector from '../../methods/v2/StripeCardSelector';
 import Switch from 'react-native-switch-pro';
-import Colors from '../../../styles/Colors';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../../navigation/NavigationTypes';
@@ -309,10 +308,12 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
               <Switch
                 value={store.payMethod === 'tokens'}
                 onSyncPress={store.setPayMethod}
-                circleColorActive={Colors.switchCircle}
-                circleColorInactive={Colors.switchCircle}
-                backgroundActive={Colors.switchBackground}
-                backgroundInactive={Colors.switchBackground}
+                circleColorActive={ThemedStyles.getColor('secondary_text')}
+                circleColorInactive={ThemedStyles.getColor('secondary_text')}
+                backgroundActive={ThemedStyles.getColor('tertiary_background')}
+                backgroundInactive={ThemedStyles.getColor(
+                  'tertiary_background',
+                )}
                 style={theme.marginHorizontal2x}
               />
               <Text style={switchTextStyle}>{'Tokens'}</Text>

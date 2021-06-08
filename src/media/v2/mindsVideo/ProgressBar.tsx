@@ -2,7 +2,6 @@ import React from 'react';
 import { StyleSheet, Text, View, Platform } from 'react-native';
 import Slider from '@react-native-community/slider';
 import { observer } from 'mobx-react';
-import colors from '../../../styles/Colors';
 import { MindsVideoStoreType } from './createMindsVideoStore';
 import ThemedStyles from '../../../styles/ThemedStyles';
 
@@ -20,8 +19,8 @@ const ProgressBar = observer(({ store }: PropsType) => {
     <View style={styles.container}>
       <Slider
         style={styles.barView}
-        thumbTintColor={colors.primary}
-        minimumTrackTintColor={colors.primary}
+        thumbTintColor={ThemedStyles.getColor('link')}
+        minimumTrackTintColor={ThemedStyles.getColor('link')}
         value={store.currentSeek || store.currentTime}
         maximumValue={store.duration}
         onValueChange={store.changeSeek}

@@ -84,8 +84,8 @@ export default class GroupsBarItem extends Component {
               avatar={this.getAvatar(group)}
               size={60}
               pulseMaxSize={80}
-              borderColor={colors.danger}
-              backgroundColor={colors.danger}
+              borderColor={ThemedStyles.getColor('alert')}
+              backgroundColor={ThemedStyles.getColor('alert')}
               interval={1000}
               onPress={this.askGatheringOrNav}
             />
@@ -118,7 +118,9 @@ export default class GroupsBarItem extends Component {
             source={{ uri: this.getAvatar(group) }}
             style={[styles.avatar]}
           />
-          {group.marker_activity ? <View style={[styles.acitivity]} /> : null}
+          {group.marker_activity ? (
+            <View style={[styles.acitivity, theme.borderPrimary]} />
+          ) : null}
         </TouchableOpacity>
         <Text style={[theme.fontXS, theme.marginTop, theme.fontMedium]}>
           {excerpt(group.name, 11)}
@@ -151,7 +153,6 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
     borderRadius: 34,
     position: 'absolute',
-    borderColor: colors.primary,
   },
   avatar: {
     height: 60,

@@ -1,7 +1,7 @@
 //@ts-nocheck
 import { StyleSheet, Dimensions, Platform } from 'react-native';
 
-import colors, { DARK_THEME, LIGHT_THEME } from './Colors';
+import { LIGHT_THEME } from './Colors';
 
 /**
  * Styles
@@ -124,7 +124,7 @@ export const ComponentsStyle = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     borderRadius: 20,
-    borderColor: colors.primary,
+    borderColor: LIGHT_THEME.link,
   },
   redbutton: {
     margin: 4,
@@ -133,7 +133,7 @@ export const ComponentsStyle = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: 'white',
     borderWidth: 1,
-    borderColor: colors.danger,
+    borderColor: LIGHT_THEME.alert,
   },
 
   button: {
@@ -144,7 +144,7 @@ export const ComponentsStyle = StyleSheet.create({
   },
 
   buttonAction: {
-    borderColor: colors.primary,
+    borderColor: LIGHT_THEME.link,
   },
 
   // background image
@@ -215,7 +215,7 @@ export const ComponentsStyle = StyleSheet.create({
   },
   emptyComponentLink: {
     fontFamily: 'Roboto',
-    color: colors.primary,
+    color: LIGHT_THEME.link,
     marginTop: 16,
   },
 });

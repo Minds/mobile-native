@@ -14,7 +14,6 @@ import { observer } from 'mobx-react';
 
 import { MINDS_CDN_URI } from '../config/Config';
 
-import { CommonStyle } from '../styles/Common';
 import { FLAG_SUBSCRIBE, FLAG_VIEW } from '../common/Permissions';
 import SubscriptionButton from '../channel/subscription/SubscriptionButton';
 import ThemedStyles from '../styles/ThemedStyles';
@@ -107,10 +106,16 @@ class DiscoveryUser<T extends PropsType> extends Component<T, StateType> {
         onPress={this._navToChannel}
         {...otherProps}>
         <Image source={this.state.source} style={styles.avatar} />
-        <View style={[CommonStyle.flexContainerCenter]}>
-          <Text style={[styles.body, CommonStyle.fontXL]}>{row.item.name}</Text>
+        <View style={[ThemedStyles.style.flexContainerCenter]}>
+          <Text style={[styles.body, ThemedStyles.style.fontXL]}>
+            {row.item.name}
+          </Text>
           <Text
-            style={[styles.body, CommonStyle.fontS, CommonStyle.colorMedium]}>
+            style={[
+              styles.body,
+              ThemedStyles.style.fontS,
+              ThemedStyles.style.colorMedium,
+            ]}>
             @{row.item.username}
           </Text>
         </View>
