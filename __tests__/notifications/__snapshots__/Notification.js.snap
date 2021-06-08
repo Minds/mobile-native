@@ -354,7 +354,7 @@ exports[`Notifications component renders correctly 1`] = `
           ]
         }
       >
-        3d 
+        4d 
       </Text>
     </View>
   </View>
