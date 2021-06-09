@@ -114,6 +114,14 @@ const NotificationsScreen = observer(({}: PropsType) => {
     [notifications],
   );
 
+  const ListEmptyComponent = React.useMemo(() => {
+    if (loading) {
+      return null;
+    } else {
+      return Empty;
+    }
+  }, [loading]);
+
   if (error && !loading) {
     return (
       <Text
@@ -144,7 +152,7 @@ const NotificationsScreen = observer(({}: PropsType) => {
         refreshing={loading}
         onViewableItemsChanged={onViewableItemsChanged}
         viewabilityConfig={viewabilityConfig}
-        ListEmptyComponent={Empty}
+        ListEmptyComponent={ListEmptyComponent}
       />
     </View>
   );
