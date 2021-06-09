@@ -31,9 +31,9 @@ const updateState = (newData: NotificationList, oldData: NotificationList) => {
   if (newData && newData.notifications) {
     newData.notifications = newData.notifications.map(
       (notification: NotificationModel) => {
-        notification = NotificationModel.checkOrCreate(notification);
+        notification = NotificationModel.create(notification);
         if (notification.from) {
-          notification.from = UserModel.checkOrCreate(notification.from);
+          notification.from = UserModel.create(notification.from);
         }
         if (notification.merged_from && notification.merged_from.length > 0) {
           notification.merged_from = UserModel.createMany(
