@@ -10,6 +10,8 @@ import UserModel from '../../src/channel/UserModel';
 jest.mock('react-native-system-setting');
 jest.mock('react-native-silent-switch');
 
+jest.mock('../../src/common/services/session.service.ts');
+
 jest.mock(
   '../../src/notifications/v3/notification/useNotificationRouter',
   () => () => ({
