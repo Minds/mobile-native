@@ -43,6 +43,7 @@ type PropsType = {
   isReminded?: boolean;
   autoHeight?: boolean;
   hideTabs?: boolean;
+  hideRemind?: boolean;
   parentMature?: boolean;
   onLayout?: Function;
   showCommentsOutlet?: boolean;
@@ -391,7 +392,7 @@ export default class Activity extends Component<PropsType> {
   showRemind() {
     const remind_object = this.props.entity.remind_object;
 
-    if (remind_object) {
+    if (remind_object && !this.props.hideRemind) {
       if (blockListService.has(remind_object.owner_guid)) {
         return (
           <View style={remindBlockContainerStyle}>

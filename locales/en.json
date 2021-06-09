@@ -91,7 +91,9 @@
     "recoveryDesc": "Enter your recovery code in case you lost access to your mobile device.",
     "recoveryFail": "The recovery code you enter doesn't match",
     "confirmPasswordModal": "Please confirm your account password to continue",
-    "loginFail": "Wrong Username or Password"
+    "loginFail": "Wrong Username or Password",
+    "newPassword": "Please enter your new password",
+    "waitLogin": "Logging in with new credentials..."
   },
   "blockchain": {
     "exportLegacyWallet": "Export legacy wallets",
@@ -443,6 +445,24 @@
       "boost_peer_rejected": "declined",
       "boost_rejected": "is unable to approve",
       "token_rewards_summary": "You earned {{amount}} tokens yesterday. Nice job!"
+    }
+  },
+  "interactions": {
+    "upVotes": {
+      "one": "upvote",
+      "other": "upvotes"
+    },
+    "downVotes": {
+      "one": "downvote",
+      "other": "downvotes"
+    },
+    "reminds": {
+      "one": "remind",
+      "other": "reminds"
+    },
+    "quotes": {
+      "one": "quote",
+      "other": "quotes"
     }
   },
   "notificationSettings": {

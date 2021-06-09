@@ -205,7 +205,8 @@ export default class LoginForm extends Component<PropsType, StateType> {
       .then(() => {
         this.props.onLogin && this.props.onLogin();
       })
-      .catch(errJson => {
+      .catch(err => {
+        const errJson = err.response ? err.response.data : err;
         LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
         if (
           errJson.error === 'invalid_grant' ||

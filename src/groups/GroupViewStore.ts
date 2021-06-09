@@ -60,9 +60,14 @@ class GroupViewStore {
   @observable loading = false;
 
   /**
-   * member search
+   * show search
    */
-  memberSearch = '';
+  @observable showSearch = false;
+
+  /**
+   * search
+   */
+  @observable search = '';
 
   guid = '';
 
@@ -81,6 +86,11 @@ class GroupViewStore {
   @action
   setLoading(value) {
     this.loading = value;
+  }
+
+  @action
+  toggleSearch() {
+    this.showSearch = !this.showSearch;
   }
 
   /**
@@ -104,10 +114,27 @@ class GroupViewStore {
    * Set the member search
    * @param {string} q
    */
-  setMemberSearch(q) {
-    this.memberSearch = q;
-    this.members.clearList();
-    this.loadMembers();
+  @action
+  setSearch(q) {
+    this.search = q;
+    if (this.tab === 'members') {
+      this.members.clearList();
+      this.loadMembers();
+    } else {
+      const params: any = {
+        period: '1y',
+        all: 1,
+        query: this.search,
+        sync: 1,
+      };
+      this.feed
+        .clear()
+        .setParams(params)
+        .fetchRemoteOrLocal()
+        .then(() => {
+          this.setEntitiesContainerObj();
+        });
+    }
   }
 
   @action
@@ -347,6 +374,9 @@ class GroupViewStore {
     this.members = new OffsetListStore('shallow');
     this.group = null;
     this.tab = 'feed';
+    this.topMembers = [];
+    this.search = '';
+    this.showSearch = false;
     this.saving = false;
     this.loading = false;
     this.comments = null;

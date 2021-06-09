@@ -1507,22 +1507,22 @@
     pouchdb-collections "^1.0.1"
     tiny-queue "^0.2.1"
 
-"@gorhom/bottom-sheet@2.0.5":
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/@gorhom/bottom-sheet/-/bottom-sheet-2.0.5.tgz#aeae862b16492114ff6fcc7cf877331a41ac1bdc"
-  integrity sha512-clF7QX0GWEx0e0ZdTFSoXmreKQMKhkafPn7cud2c0EWKoz61s3MGs0rwJfSHaYoodlKB9mBn6+C5SWx+UW3rUg==
+"@gorhom/bottom-sheet@^3.0.0":
+  version "3.6.5"
+  resolved "https://registry.yarnpkg.com/@gorhom/bottom-sheet/-/bottom-sheet-3.6.5.tgz#e871f14bcd687e584769d0d582d8d6b80ab984c1"
+  integrity sha512-YgpXA5zYkOnTlFpofaaqt5BEeYfm0g1NNivmE63HWU/cn7zY1A1Mmm9G6MgCDlWVjZQgXTo5SdvAbcfUfTN9PA==
   dependencies:
-    "@gorhom/portal" "^0.1.4"
+    "@gorhom/portal" "^1.0.4"
     invariant "^2.2.4"
-    lodash.isequal "^4.5.0"
     nanoid "^3.1.20"
-    react-native-redash "^14.2.4"
+    react-native-redash "^16.0.10"
 
-"@gorhom/portal@^0.1.4":
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/@gorhom/portal/-/portal-0.1.4.tgz#ef9e50d4b6c98ebe606a16d22d6cb58d661421b4"
-  integrity sha512-iU3D0i9NureT5ULTvD8moF2FWyFvVGcr/ahcRMDzBblUO1AwwixZRZ+Lf3d6uk0w4ujOQZ7+Az+uUnI+AsXXBw==
+"@gorhom/portal@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@gorhom/portal/-/portal-1.0.4.tgz#643c7baaffee223819cdd99dad748c3d9dc6bd73"
+  integrity sha512-KalM9E6Op1TCzi00YKhczBz86EV0yYpWuRuTt5J4VS09O2gGbGAEEJwUKb/Rvr3XadtinpLjePj0tZ6lFVPp+g==
   dependencies:
+    immer "^8.0.1"
     lodash.isequal "^4.5.0"
     nanoid "^3.1.20"
 
@@ -2412,17 +2412,17 @@
   resolved "https://registry.yarnpkg.com/@metamask/safe-event-emitter/-/safe-event-emitter-2.0.0.tgz#af577b477c683fad17c619a78208cede06f9605c"
   integrity sha512-/kSXhY692qiV1MXu6EeOZvg5nECLclxNXcKCxJ3cXQgYuRymRHpdx/t7JXfsK+JLjwA1e1c1/SBrlQYpusC29Q==
 
-"@motify/components@^0.7.3":
-  version "0.7.3"
-  resolved "https://registry.yarnpkg.com/@motify/components/-/components-0.7.3.tgz#469f7162c49512111d03294935c9028a22c1e68b"
-  integrity sha512-Z6tDuDDjsLgVvswr+kIx+mS1DBO2Kc17ImJjwrjRkXOzcvyyA0CXGYx7AeS8B2H7MsXWRfe5gbjokO0UgPA7EQ==
+"@motify/components@^0.11.0":
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/@motify/components/-/components-0.11.0.tgz#a6aa57ea03419f95d0f10e6ea14ced4d215e1bb0"
+  integrity sha512-xJm4L2AlfCuqLwliB6b0kseV4JzHuHWck237e955JhMU8g2JBKnrHzF9VXMY5xgguMQ2jt3IHSsD2JxBzCjhyA==
   dependencies:
-    "@motify/core" "^0.7.3"
+    "@motify/core" "^0.11.0"
 
-"@motify/core@^0.7.3":
-  version "0.7.3"
-  resolved "https://registry.yarnpkg.com/@motify/core/-/core-0.7.3.tgz#b2a144076dc943017dc5081c95fd5b71e7d661b8"
-  integrity sha512-sO90iA+2yrw+9fVEOBRDgvYpt+dQn54svQ8U0HcQjwc9/ApTFMzIOAgtN0WLK8IB0A7BCLTnRQM+vrVhTIWz4w==
+"@motify/core@^0.11.0":
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/@motify/core/-/core-0.11.0.tgz#017ef217fb4ab04729d6b384e7f6d7f75917481c"
+  integrity sha512-R0MmpLSjwkZqZqk24SiRWuxVcFFUIGVeFrehTe4kotf22Snp4+7SD5kb26jDV0WqD/riTfVHd8o+k+8/uFkGRw==
   dependencies:
     framer-motion "^3.9.1"
 
@@ -8129,7 +8129,7 @@ husky@^5.1.3:
   resolved "https://registry.yarnpkg.com/husky/-/husky-5.2.0.tgz#fc5e1c2300d34855d47de4753607d00943fc0802"
   integrity sha512-AM8T/auHXRBxlrfPVLKP6jt49GCM2Zz47m8G3FOMsLmTv8Dj/fKVWE0Rh2d4Qrvmy131xEsdQnb3OXRib67PGg==
 
-i18n-js@^3.2.2:
+i18n-js@^3.8.0:
   version "3.8.0"
   resolved "https://registry.yarnpkg.com/i18n-js/-/i18n-js-3.8.0.tgz#b8fd6b12e1d88cb71f9806c29bca7c31c012e504"
   integrity sha512-hDsGgPuvw/2P+lXSbOafAwspK8Ste8YrwuuUg17W3wEcO1JkQxBlPgsN1t2+852nTnz4YSYTjZc/1nAA2PC/nw==
@@ -8189,6 +8189,11 @@ immediate@~3.0.5:
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/immediate/-/immediate-3.0.6.tgz#9db1dbd0faf8de6fbe0f5dd5e56bb606280de69b"
   integrity sha1-nbHb0Pr43m++D13V5Wu2BigN5ps=
+
+immer@^8.0.1:
+  version "8.0.4"
+  resolved "https://registry.yarnpkg.com/immer/-/immer-8.0.4.tgz#3a21605a4e2dded852fb2afd208ad50969737b7a"
+  integrity sha512-jMfL18P+/6P6epANRvRk6q8t+3gGhqsJ9EuJ25AXE+9bNTYtssvzeYbEd0mXRYWCmmXSIbnlpz6vd6iJlmGGGQ==
 
 import-fresh@^2.0.0:
   version "2.0.0"
@@ -10676,13 +10681,13 @@ moo@^0.5.0:
   resolved "https://registry.yarnpkg.com/moo/-/moo-0.5.1.tgz#7aae7f384b9b09f620b6abf6f74ebbcd1b65dbc4"
   integrity sha512-I1mnb5xn4fO80BH9BLcF0yLypy2UKl+Cb01Fu0hJRkJjlCRtxZMWkTdAtDd5ZqCOxtCkhmRwyI57vWT+1iZ67w==
 
-moti@^0.7.3:
-  version "0.7.3"
-  resolved "https://registry.yarnpkg.com/moti/-/moti-0.7.3.tgz#30bd643d0da7cc809091c2268ab8372195d46a6f"
-  integrity sha512-7DDtVnN/imxcQBdUs6TxDU3nPqwcGkgIKMKJYUAvMsr/xYzgkFc049g44wE7aEr9gi+m3eokbv4TkCtvxAd4Lw==
+moti@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/moti/-/moti-0.11.0.tgz#0d0d94ab3d4badb76e1d7df2e54ad3a5b2e0dcd0"
+  integrity sha512-DEqHVHZQVeYwWCWiSEIbsjqK/YL5oM8E0m5kUmbBfVhszpXkYEqguZVlbv9hwCKL4HBQc4vfja+UyA0AcCXV6A==
   dependencies:
-    "@motify/components" "^0.7.3"
-    "@motify/core" "^0.7.3"
+    "@motify/components" "^0.11.0"
+    "@motify/core" "^0.11.0"
 
 mri@^1.1.5:
   version "1.1.6"
@@ -12632,10 +12637,10 @@ react-native-modal-datetime-picker@^8.5.1:
   dependencies:
     prop-types "^15.7.2"
 
-react-native-modal@^11.5.6:
-  version "11.7.0"
-  resolved "https://registry.yarnpkg.com/react-native-modal/-/react-native-modal-11.7.0.tgz#6637d757eeac6eda85f7017a9dfdee0c0fe3a34c"
-  integrity sha512-0AeAugUrn12DaJK+k2XGmt8ZIUyWgl1nRdipfwHZDnzFSM8g1oqpf7rHxjOqhimHtmzSj4xJ//ZOn1DWe9aC5Q==
+react-native-modal@^11.10.0:
+  version "11.10.0"
+  resolved "https://registry.yarnpkg.com/react-native-modal/-/react-native-modal-11.10.0.tgz#94a6d3a2428ba5228cfb4dc174cacea79c871591"
+  integrity sha512-syRYDJYSh16bR37R5EKU9T/wC+5bEOfF17IUqf5URdhbEDd+hxyMInC++l45E8oI+MtdOaEp9yAws5xDqk8dnA==
   dependencies:
     prop-types "^15.6.2"
     react-native-animatable "1.3.3"
@@ -12740,10 +12745,19 @@ react-native-reanimated@^2.0.0:
     mockdate "^3.0.2"
     string-hash-64 "^1.0.3"
 
-react-native-redash@^14.2.3, react-native-redash@^14.2.4:
+react-native-redash@^14.2.3:
   version "14.2.4"
   resolved "https://registry.yarnpkg.com/react-native-redash/-/react-native-redash-14.2.4.tgz#5dbb4b2f1a7441bb304fe3494b89e0dc9010c8ef"
   integrity sha512-/1R9UxXv3ffKcrbxolqa2B247Cgd3ikyEm2q1VlBng77Es6PAD4LAOXQ83pBavvwNfOsbhF3ebkbMpJcLaVt3Q==
+  dependencies:
+    abs-svg-path "^0.1.1"
+    normalize-svg-path "^1.0.1"
+    parse-svg-path "^0.1.2"
+
+react-native-redash@^16.0.10:
+  version "16.0.11"
+  resolved "https://registry.yarnpkg.com/react-native-redash/-/react-native-redash-16.0.11.tgz#973c3050a0645e3b9873790a8e68694770a32f27"
+  integrity sha512-9yTpeabkAoWASzmhEkynNh1wDTrLVtbE+x9dOV1DI23vRa7k1HI+Y1jOUNOPyRG2ddgHampNq9iHtsLnkK4mtw==
   dependencies:
     abs-svg-path "^0.1.1"
     normalize-svg-path "^1.0.1"

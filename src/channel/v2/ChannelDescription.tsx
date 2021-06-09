@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import i18n from '../../common/services/i18n.service';
 import type UserModel from '../UserModel';
 import ReadMore from '../../common/components/ReadMore';
+import { withErrorBoundary } from '../../common/components/ErrorBoundary';
 
 type PropsType = {
   channel: UserModel;
@@ -17,7 +18,7 @@ type PropsType = {
  * Channel description with read more and fade
  * @param props
  */
-const ChannelDescription = (props: PropsType) => {
+const ChannelDescription = withErrorBoundary((props: PropsType) => {
   const navigation = useNavigation();
   const theme = ThemedStyles.style;
   const backgroundColor = ThemedStyles.getColor('primary_background');
@@ -61,7 +62,7 @@ const ChannelDescription = (props: PropsType) => {
       renderRevealedFooter={renderRevealedFooter}
     />
   );
-};
+});
 
 export default ChannelDescription;
 

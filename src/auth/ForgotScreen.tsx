@@ -45,7 +45,7 @@ export default class ForgotScreen extends Component<PropsType> {
       <KeyboardAvoidingView
         style={theme.flexContainer}
         behavior={Platform.OS === 'ios' ? 'padding' : null}>
-        <View style={[theme.flexContainer, theme.paddingTop4x]}>
+        <View style={containerStyle}>
           {code && username ? (
             <ResetPassword
               onBack={this.onForgotBack}
@@ -67,3 +67,5 @@ export default class ForgotScreen extends Component<PropsType> {
     this.props.navigation.goBack();
   };
 }
+
+const containerStyle = ThemedStyles.combine('flexContainer', 'paddingTop4x');

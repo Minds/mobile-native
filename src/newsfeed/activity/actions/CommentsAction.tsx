@@ -22,6 +22,7 @@ type PropsType = {
   entity: ActivityModel | BlogModel;
   testID?: string;
   navigation: any;
+  hideCount?: boolean;
   onPressComment?: () => void;
 };
 
@@ -72,7 +73,7 @@ const CommentsAction = observer((props: PropsType) => {
         name={icon}
         size={21}
       />
-      <Counter count={props.entity['comments:count']} />
+      {!props.hideCount && <Counter count={props.entity['comments:count']} />}
     </TouchableOpacityCustom>
   );
 });
