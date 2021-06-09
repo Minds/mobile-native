@@ -17,14 +17,16 @@ const Merged = ({ notification, router }: PropsType) => {
   return (
     <Text style={bodyTextStyle}>
       and{' '}
-      <Text
-        style={bodyTextImportantStyle}
-        onPress={() => router.navToChannel(notification.merged_from[0])}>
-        {notification.merged_from[0].name + ' '}
-      </Text>
+      {notification.merged_count === 1 && (
+        <Text
+          style={bodyTextImportantStyle}
+          onPress={() => router.navToChannel(notification.merged_from[0])}>
+          {notification.merged_from[0].name + ' '}
+        </Text>
+      )}
       {notification.merged_count > 1 && (
         <Text onPress={router.navToEntity}>
-          and {notification.merged_count} others{' '}
+          {notification.merged_count} others{' '}
         </Text>
       )}
     </Text>
