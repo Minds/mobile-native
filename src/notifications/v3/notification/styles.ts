@@ -54,6 +54,11 @@ export const styles = StyleSheet.create({
   },
 });
 
+export const readIndicatorStyle = ThemedStyles.combine(
+  styles.readIndicator,
+  'backgroundLink',
+);
+
 export const containerStyle = ThemedStyles.combine(
   styles.container,
   'borderBottomHair',

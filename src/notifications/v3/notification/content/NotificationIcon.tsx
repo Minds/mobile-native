@@ -1,5 +1,6 @@
 import React from 'react';
 import SmallCircleButton from '../../../../common/components/SmallCircleButton';
+import ThemedStyles from '../../../../styles/ThemedStyles';
 import { NotificationType } from '../NotificationModel';
 import { styles } from '../styles';
 
@@ -29,7 +30,7 @@ const NotificationIcon = ({ type }: { type: NotificationType }) => (
     name={notificationIconsTypes[type].name}
     type={notificationIconsTypes[type].type}
     reverseColor={'#FFFF'}
-    color={'#1B85D6'}
+    color={ThemedStyles.getColor('link')}
     size={10}
     style={styles.notificationIconStyle}
   />

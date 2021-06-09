@@ -18,9 +18,6 @@ const NotificationsTabIcon = observer((props: PropsType) => {
 
   React.useEffect(() => {
     if (!notifications.pollInterval) {
-      console.log(
-        'init notifications store init notifications store init notifications store init notifications store init notifications store init notifications store',
-      );
       notifications.init();
     }
   });

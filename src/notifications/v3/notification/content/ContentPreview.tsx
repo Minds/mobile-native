@@ -1,7 +1,11 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleProp, TextStyle } from 'react-native';
 import BlogCard from '../../../../blogs/BlogCard';
 import BlogModel from '../../../../blogs/BlogModel';
+import ReadMore, {
+  renderRevealedFooter,
+  renderTruncatedFooter,
+} from '../../../../common/components/ReadMore';
 import Activity from '../../../../newsfeed/activity/Activity';
 import ActivityModel from '../../../../newsfeed/ActivityModel';
 import type NotificationModel from '../NotificationModel';
@@ -15,7 +19,7 @@ type PropsType = {
 const ContentPreview = ({ notification, navigation }: PropsType) => {
   const entityIsUser = notification.entity?.type === 'user';
   const hasCommentExcerpt =
-    notification.type === 'comment' && notification.data.comment_excerpt;
+    notification.type === 'comment' && !!notification.data.comment_excerpt;
   const isEntityComment = notification.entity?.type === 'comment';
   const isNoCommentEntity =
     notification.entity && notification.entity?.type !== 'comment';
@@ -29,17 +33,37 @@ const ContentPreview = ({ notification, navigation }: PropsType) => {
 
   return (
     <View style={styles.contentPreviewContainer}>
-      {hasCommentExcerpt && (
-        <Text
-          style={notification.entity ? spacedCommentPreview : bodyTextStyle}>
-          “{notification.data.comment_excerpt}”
-        </Text>
-      )}
-      {isEntityComment && (
-        <Text style={bodyTextStyle}>“{notification.entity?.description}”</Text>
-      )}
+      {hasCommentExcerpt &&
+        renderComment(
+          notification.data.comment_excerpt,
+          notification.entity ? spacedCommentPreview : bodyTextStyle,
+          navigation,
+        )}
+      {isEntityComment &&
+        renderComment(
+          notification.entity?.description!,
+          bodyTextStyle,
+          navigation,
+        )}
       {isNoCommentEntity && renderContent(notification, navigation)}
     </View>
+  );
+};
+
+const renderComment = (
+  text: string,
+  style: TextStyle | TextStyle[],
+  navigation: any,
+) => {
+  return (
+    <ReadMore
+      numberOfLines={6}
+      navigation={navigation}
+      text={`“${text}”`}
+      renderTruncatedFooter={renderTruncatedFooter}
+      renderRevealedFooter={renderRevealedFooter}
+      style={style}
+    />
   );
 };
 

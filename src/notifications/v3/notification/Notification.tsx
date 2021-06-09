@@ -7,6 +7,7 @@ import {
   bodyTextImportantStyle,
   bodyTextStyle,
   containerStyle,
+  readIndicatorStyle,
   styles,
 } from './styles';
 import NotificationIcon from './content/NotificationIcon';
@@ -14,22 +15,31 @@ import ContentPreview from './content/ContentPreview';
 import useNotificationRouter from './useNotificationRouter';
 import Merged from './content/Merged';
 import type Notification from './NotificationModel';
+import InteractionsModal from '../../../common/components/interactions/InteractionsModal';
+import sessionService from '../../../common/services/session.service';
 
 type PropsType = {
   notification: Notification;
 };
 const DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
 
-const NotificationItem = ({ notification }: PropsType) => {
+const NotificationItem = React.memo(({ notification }: PropsType) => {
   const fromUser = notification.from;
-  const avatarSrc = fromUser.getAvatarSource();
-  const router = useNotificationRouter(notification);
+  const avatarSrc = React.useMemo(() => {
+    return fromUser.getAvatarSource();
+  }, [fromUser]);
+  const modalRef = React.useRef<any>(null);
+  const router = useNotificationRouter(notification, modalRef);
+  const user = sessionService.getUser();
+
+  const navToFromChannel = React.useCallback(
+    () => router.navToChannel(fromUser),
+    [fromUser, router],
+  );
 
   if (!notification.isOfNotificationType()) {
     return null;
   }
-
-  const navToFromChannel = () => router.navToChannel(fromUser);
 
   const Noun =
     notification.Noun !== '' ? (
@@ -71,15 +81,18 @@ const NotificationItem = ({ notification }: PropsType) => {
           <Text style={bodyTextStyle}>
             {friendlyDateDiff(notification.created_timestamp * 1000, '', false)}
           </Text>
-          {notification.read === false && <View style={styles.readIndicator} />}
+          {notification.read === false && <View style={readIndicatorStyle} />}
         </View>
       </View>
       <ContentPreview
         notification={notification}
         navigation={router.navigation}
       />
+      {notification.type === 'subscribe' && notification.hasMerged && (
+        <InteractionsModal entity={user} ref={modalRef} />
+      )}
     </TouchableOpacity>
   );
-};
+});
 
 export default NotificationItem;

@@ -96,7 +96,9 @@ const createStore = ({
     this.setError(null);
     try {
       //@ts-ignore
-      const result = await apiService[method](url, data);
+      const result = await (method === 'get'
+        ? apiService.get(url, data, this)
+        : apiService.post(url, data));
       const state = updateStateMethod(result, this.result);
       this.setResult(state);
       this.persist(state);

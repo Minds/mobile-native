@@ -1,8 +1,12 @@
 import { useNavigation } from '@react-navigation/core';
+import React from 'react';
 import UserModel from '../../../channel/UserModel';
 import type NotificationModel from './NotificationModel';
 
-const useNotificationRouter = (notification: NotificationModel) => {
+const useNotificationRouter = (
+  notification: NotificationModel,
+  modalRef: React.MutableRefObject<any>,
+) => {
   const navigation = useNavigation();
   const router = {
     navigation: navigation,
@@ -23,7 +27,7 @@ const useNotificationRouter = (notification: NotificationModel) => {
         if (!notification.hasMerged) {
           router.navToChannel(notification.from);
         } else {
-          navigator.navTo('SubscribersModal');
+          modalRef.current.show('subscribers');
         }
       } else {
         switch (notification.entity.type) {
@@ -42,12 +46,7 @@ const useNotificationRouter = (notification: NotificationModel) => {
   return router;
 };
 
-type NavigatorScreensType =
-  | 'Activity'
-  | 'Tabs'
-  | 'GroupView'
-  | 'Channel'
-  | 'SubscribersModal';
+type NavigatorScreensType = 'Activity' | 'Tabs' | 'GroupView' | 'Channel';
 
 const navigator = {
   navigation: null as any,
@@ -75,9 +74,6 @@ const navigator = {
       Channel: {
         guid: this.notification.entity.guid,
         entity: UserModel.checkOrCreate(this.notification.entity),
-      },
-      SubscribersModal: {
-        subscribers: this.notification.merged_from_guids,
       },
     };
   },

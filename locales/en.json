@@ -463,6 +463,10 @@
     "quotes": {
       "one": "quote",
       "other": "quotes"
+    },
+    "subscribers": {
+      "one": "subscriber",
+      "other": "subscribers"
     }
   },
   "notificationSettings": {
@@ -1409,5 +1413,7 @@
   "clickHere": "click here",
   "enabled": "Enabled",
   "copyToClipboard": "Copy to Clipboard",
-  "emptyList": "Sorry nothing to show here"
+  "emptyList": "Sorry the list is empty",
+  "and": "and",
+  "others": "others"
 }

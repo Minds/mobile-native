@@ -11,6 +11,7 @@ import { useStores } from '../../common/hooks/use-stores';
 import ErrorBoundary from '../../common/components/ErrorBoundary';
 import NotificationModel from './notification/NotificationModel';
 import UserModel from '../../channel/UserModel';
+import EmptyList from '../../common/components/EmptyList';
 
 type PropsType = {};
 
@@ -27,28 +28,32 @@ type NotificationList = {
 };
 
 const updateState = (newData: NotificationList, oldData: NotificationList) => {
-  newData.notifications = newData.notifications.map(
-    (notification: NotificationModel) => {
-      notification = NotificationModel.checkOrCreate(notification);
-      if (notification.from) {
-        notification.from = UserModel.checkOrCreate(notification.from);
-      }
-      if (notification.merged_from && notification.merged_from.length > 0) {
-        notification.merged_from = UserModel.createMany(
-          notification.merged_from,
-        );
-      }
-      return notification;
-    },
-  );
-  return {
-    ...newData,
-    notifications: [
-      ...(oldData ? oldData.notifications : []),
-      ...newData.notifications,
-    ],
-  } as NotificationList;
+  if (newData && newData.notifications) {
+    newData.notifications = newData.notifications.map(
+      (notification: NotificationModel) => {
+        notification = NotificationModel.checkOrCreate(notification);
+        if (notification.from) {
+          notification.from = UserModel.checkOrCreate(notification.from);
+        }
+        if (notification.merged_from && notification.merged_from.length > 0) {
+          notification.merged_from = UserModel.createMany(
+            notification.merged_from,
+          );
+        }
+        return notification;
+      },
+    );
+    return {
+      ...newData,
+      notifications: [
+        ...(oldData ? oldData.notifications : []),
+        ...newData.notifications,
+      ],
+    } as NotificationList;
+  }
 };
+
+const Empty = <EmptyList />;
 
 const NotificationsScreen = observer(({}: PropsType) => {
   const theme = ThemedStyles.style;
@@ -85,10 +90,14 @@ const NotificationsScreen = observer(({}: PropsType) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      if (notifications.unread > 0 && !loading) {
-        refresh();
-      }
-    }, []),
+      notifications.setUnread(0);
+      refresh();
+    }, [notifications, refresh]),
+  );
+
+  const headerComponent = React.useMemo(
+    () => <NotificationsTopBar store={notifications} setResult={setResult} />,
+    [notifications, setResult],
   );
 
   const onViewableItemsChanged = React.useCallback(
@@ -127,9 +136,7 @@ const NotificationsScreen = observer(({}: PropsType) => {
     <View style={theme.flexContainer}>
       <FlatList
         data={data.slice()}
-        ListHeaderComponent={
-          <NotificationsTopBar store={notifications} setResult={setResult} />
-        }
+        ListHeaderComponent={headerComponent}
         keyExtractor={keyExtractor}
         renderItem={renderItem}
         onEndReached={onFetchMore}
@@ -137,6 +144,7 @@ const NotificationsScreen = observer(({}: PropsType) => {
         refreshing={loading}
         onViewableItemsChanged={onViewableItemsChanged}
         viewabilityConfig={viewabilityConfig}
+        ListEmptyComponent={Empty}
       />
     </View>
   );
