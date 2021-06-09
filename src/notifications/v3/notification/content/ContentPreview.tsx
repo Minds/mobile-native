@@ -1,11 +1,8 @@
 import React from 'react';
-import { View, Text, StyleProp, TextStyle } from 'react-native';
+import { View, TextStyle } from 'react-native';
 import BlogCard from '../../../../blogs/BlogCard';
 import BlogModel from '../../../../blogs/BlogModel';
-import ReadMore, {
-  renderRevealedFooter,
-  renderTruncatedFooter,
-} from '../../../../common/components/ReadMore';
+import ReadMore from '../../../../common/components/ReadMore';
 import Activity from '../../../../newsfeed/activity/Activity';
 import ActivityModel from '../../../../newsfeed/ActivityModel';
 import type NotificationModel from '../NotificationModel';
