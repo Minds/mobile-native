@@ -60,8 +60,6 @@ const renderComment = (
       numberOfLines={6}
       navigation={navigation}
       text={`“${text}”`}
-      renderTruncatedFooter={renderTruncatedFooter}
-      renderRevealedFooter={renderRevealedFooter}
       style={style}
     />
   );

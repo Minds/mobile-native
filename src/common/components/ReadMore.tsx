@@ -1,16 +1,6 @@
 import React from 'react';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  TextStyle,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import ThemedStyles from '../../styles/ThemedStyles';
-import i18n from '../services/i18n.service';
+import { Platform, StyleSheet, Text, TextStyle, View } from 'react-native';
 import Tags from './Tags';
-import { LinearGradient } from 'expo-linear-gradient';
 const VIEW_MORE_HEIGHT = 33;
 
 // we add an extra line for ios, because the onTextLayout event doesn't clip the last line
@@ -115,40 +105,6 @@ export default function ReadMore({
   );
 }
 
-const revealedTextStyle = ThemedStyles.combine(
-  'fontL',
-  'bold',
-  'marginTop3x',
-  'textCenter',
-);
-
-const truncatedTextStyle = ThemedStyles.combine(
-  'colorPrimaryText',
-  'fontL',
-  'bold',
-  'textCenter',
-  'marginTop2x',
-);
-
-export const renderRevealedFooter = handlePress => {
-  return (
-    <TouchableOpacity onPress={handlePress}>
-      <Text style={revealedTextStyle}>{i18n.t('showLess')}</Text>
-    </TouchableOpacity>
-  );
-};
-
-export const renderTruncatedFooter = handlePress => {
-  const startColor = (ThemedStyles.theme ? '#242A30' : '#F5F5F5') + '00';
-  const endColor = ThemedStyles.getColor('primary_background') + 'FF';
-  return (
-    <TouchableOpacity onPress={handlePress} style={styles.touchable}>
-      <LinearGradient colors={[startColor, endColor]} style={styles.linear} />
-      <Text style={truncatedTextStyle}>{i18n.t('readMore')}</Text>
-    </TouchableOpacity>
-  );
-};
-
 const styles = StyleSheet.create({
   button: {
     color: '#888',
@@ -156,15 +112,5 @@ const styles = StyleSheet.create({
   },
   readMore: {
     height: VIEW_MORE_HEIGHT,
-  },
-  touchable: {
-    position: 'relative',
-    height: 100,
-    width: '100%',
-    top: -52,
-  },
-  linear: {
-    height: 52,
-    width: '100%',
   },
 });
