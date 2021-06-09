@@ -86,7 +86,8 @@ export default class NotificationModel extends AbstractModel {
   }
 
   get Verb() {
-    return i18n.t(`notification.verbs.${this.type}`, {
+    const type = this.data && this.data.is_reply ? 'reply' : this.type;
+    return i18n.t(`notification.verbs.${type}`, {
       amount: this.data?.tokens_formatted,
     });
   }
