@@ -13,7 +13,6 @@ import type BlogModel from '../../../blogs/BlogModel';
 import i18n from '../../../common/services/i18n.service';
 import createComposeStore from '../../../compose/createComposeStore';
 import { showNotification } from '../../../../AppMessages';
-import { useLegacyStores } from '../../../common/hooks/__mocks__/use-stores';
 import sessionService from '../../../common/services/session.service';
 import {
   actionsContainerStyle,
@@ -21,6 +20,7 @@ import {
   iconDisabledStyle,
   iconNormalStyle,
 } from './styles';
+import { useLegacyStores } from '../../../common/hooks/use-stores';
 
 // prevent double tap in touchable
 const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
