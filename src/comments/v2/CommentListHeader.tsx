@@ -95,6 +95,6 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.06,
     shadowRadius: 4,
-    elevation: 16,
+    elevation: 4,
   },
 });
