@@ -38,6 +38,7 @@ const NotificationsTabIcon = observer((props: PropsType) => {
             size={10}
             color="#E02020"
             style={styles.unread}
+            accessibilityLabel={'redDotIcon'}
           />
         </>
       ) : null}
