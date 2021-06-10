@@ -2,6 +2,12 @@
 
 Minds Mobile
 
+## 4.13.1 - 2021-06-10
+
+### Changed
+
+- Password reset flow fixed
+
 ## 4.13.0 - 2021-05-21
 
 ### Changed
