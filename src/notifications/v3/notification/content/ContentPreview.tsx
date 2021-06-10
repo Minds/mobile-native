@@ -1,11 +1,8 @@
 import React from 'react';
-import { View, Text, StyleProp, TextStyle } from 'react-native';
+import { View, TextStyle } from 'react-native';
 import BlogCard from '../../../../blogs/BlogCard';
 import BlogModel from '../../../../blogs/BlogModel';
-import ReadMore, {
-  renderRevealedFooter,
-  renderTruncatedFooter,
-} from '../../../../common/components/ReadMore';
+import ReadMore from '../../../../common/components/ReadMore';
 import Activity from '../../../../newsfeed/activity/Activity';
 import ActivityModel from '../../../../newsfeed/ActivityModel';
 import type NotificationModel from '../NotificationModel';
@@ -16,7 +13,7 @@ type PropsType = {
   navigation: any;
 };
 
-const ContentPreview = ({ notification, navigation }: PropsType) => {
+const ContentPreview = React.memo(({ notification, navigation }: PropsType) => {
   const entityIsUser = notification.entity?.type === 'user';
   const hasCommentExcerpt =
     notification.type === 'comment' && !!notification.data.comment_excerpt;
@@ -48,7 +45,7 @@ const ContentPreview = ({ notification, navigation }: PropsType) => {
       {isNoCommentEntity && renderContent(notification, navigation)}
     </View>
   );
-};
+});
 
 const renderComment = (
   text: string,

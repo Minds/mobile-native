@@ -1,5 +1,6 @@
 import React from 'react';
 import { Platform, StyleSheet, Text, TextStyle, View } from 'react-native';
+import ThemedStyles from '../../styles/ThemedStyles';
 import Tags from './Tags';
 const VIEW_MORE_HEIGHT = 33;
 
@@ -29,14 +30,14 @@ const MoreLessComponent = ({
           renderTruncatedFooter ? (
             renderTruncatedFooter(handlePressReadMore)
           ) : (
-            <Text style={styles.button} onPress={handlePressReadMore}>
+            <Text style={buttonStyle} onPress={handlePressReadMore}>
               Read more
             </Text>
           )
         ) : renderRevealedFooter ? (
           renderRevealedFooter(handlePressReadLess)
         ) : (
-          <Text style={styles.button} onPress={handlePressReadLess}>
+          <Text style={buttonStyle} onPress={handlePressReadLess}>
             Hide
           </Text>
         )}
@@ -106,11 +107,9 @@ export default function ReadMore({
 }
 
 const styles = StyleSheet.create({
-  button: {
-    color: '#888',
-    marginTop: 5,
-  },
   readMore: {
     height: VIEW_MORE_HEIGHT,
   },
 });
+
+const buttonStyle = ThemedStyles.combine('paddingTop2x', 'colorLink');
