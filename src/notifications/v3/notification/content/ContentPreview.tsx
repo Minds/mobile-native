@@ -13,7 +13,7 @@ type PropsType = {
   navigation: any;
 };
 
-const ContentPreview = ({ notification, navigation }: PropsType) => {
+const ContentPreview = React.memo(({ notification, navigation }: PropsType) => {
   const entityIsUser = notification.entity?.type === 'user';
   const hasCommentExcerpt =
     notification.type === 'comment' && !!notification.data.comment_excerpt;
@@ -45,7 +45,7 @@ const ContentPreview = ({ notification, navigation }: PropsType) => {
       {isNoCommentEntity && renderContent(notification, navigation)}
     </View>
   );
-};
+});
 
 const renderComment = (
   text: string,
