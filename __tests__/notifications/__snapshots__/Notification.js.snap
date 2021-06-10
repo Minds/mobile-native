@@ -354,11 +354,11 @@ exports[`Notifications component renders correctly 1`] = `
           ]
         }
       >
-        5d 
+        6d 
       </Text>
     </View>
   </View>
-  <ContentPreview
+  <Memo()
     notification={
       NotificationModel {
         "created_timestamp": 1622815259,
