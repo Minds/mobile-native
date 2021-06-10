@@ -74,7 +74,8 @@ const NotificationItem = React.memo(({ notification }: PropsType) => {
               </Text>
             )}
             <Merged notification={notification} router={router} />
-            {notification.Verb} {notification.Pronoun} {Noun}
+            {notification.Verb}
+            {notification.Pronoun ? ` ${notification.Pronoun}` : ''} {Noun}
           </Text>
         </View>
         <View style={styles.timeContainer}>

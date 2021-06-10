@@ -325,7 +325,6 @@ exports[`Notifications component renders correctly 1`] = `
         />
         You earned 0.332 tokens yesterday. Nice job!
          
-         
       </Text>
     </View>
     <View
