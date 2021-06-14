@@ -27,6 +27,9 @@ export const LIGHT_THEME = {
   AdminBadge: '#4caf50',
   VerifiedBadge: '#4690df',
   Active: '#DADFE5',
+  White: '#FFFFFF',
+  Black: '#000000',
+  Transparent: 'transparent',
 };
 
 export const DARK_THEME: ColorsType = {
@@ -55,4 +58,7 @@ export const DARK_THEME: ColorsType = {
   AdminBadge: '#5cb860',
   VerifiedBadge: '#4af',
   Active: '#49525B',
+  White: '#FFFFFF',
+  Black: '#000000',
+  Transparent: 'transparent',
 };

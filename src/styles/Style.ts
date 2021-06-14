@@ -21,8 +21,6 @@ const dynamicStyleHandler = {
 
     if (m) {
       target[name] = m;
-    }
-    if (target[name]) {
       return target[name];
     }
     throw new Error(`Style not defined: ${name}`);
@@ -153,29 +151,6 @@ const _buildStyle = (theme: ColorsType) =>
       position: 'absolute',
       bottom: 0,
       right: 0,
-    },
-    colorWhite: {
-      color: '#FFFFFF',
-    },
-    colorBlack: {
-      color: '#000000',
-    },
-    colorTransparent: {
-      color: 'transparent',
-    },
-    // backgrounds
-    bgWhite: {
-      backgroundColor: 'white',
-    },
-    bgBlack: {
-      backgroundColor: 'black',
-    },
-    bgTransparent: {
-      backgroundColor: 'transparent',
-    },
-    // borders
-    borderTransparent: {
-      borderColor: 'transparent',
     },
     // fonts
     fontXS: {

@@ -55,7 +55,7 @@ function TopbarTabbar<T>(props: PropsType<T>) {
             props.tabStyle,
             tab.id === props.current
               ? theme.bcolorTabBorder
-              : theme.borderTransparent,
+              : theme.bcolorTransparent,
           ]}>
           <Text
             style={[

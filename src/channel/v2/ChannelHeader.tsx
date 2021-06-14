@@ -114,7 +114,7 @@ const ChannelHeader = withErrorBoundary(
                       theme.borderBottom,
                       props.store.showScheduled
                         ? theme.bcolorTabBorder
-                        : theme.borderTransparent,
+                        : theme.bcolorTransparent,
                     ]}>
                     <Text
                       style={[theme.fontL, theme.colorSecondaryText]}

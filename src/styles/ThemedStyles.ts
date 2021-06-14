@@ -46,17 +46,6 @@ export class ThemedStylesStore {
   }
 
   /**
-   * Initialize themed styles
-   */
-  async init() {
-    // load stored theme value here
-    if (this.theme !== 0) {
-      this.generateNavStyle();
-      updateTheme(this.style);
-    }
-  }
-
-  /**
    * Set dark theme
    */
   @action
@@ -92,6 +81,9 @@ export class ThemedStylesStore {
   setTheme(value) {
     this.theme = value;
     this.generateNavStyle();
+    if (this.theme !== 0) {
+      updateTheme(this.style);
+    }
   }
 
   /**
@@ -113,7 +105,7 @@ export class ThemedStylesStore {
    * @param {String} prop
    */
   getColor(prop: ColorsNameType) {
-    const theme = this.theme ? DARK_THEME : LIGHT_THEME;
+    const theme = this.theme === 1 ? DARK_THEME : LIGHT_THEME;
     return theme[prop];
   }
 
