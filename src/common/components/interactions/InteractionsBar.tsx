@@ -28,6 +28,16 @@ export default observer(function InteractionsBar({ entity }: PropsType) {
       modalRef.current.show('downVotes');
     }
   }, []);
+  const showReminds = React.useCallback(() => {
+    if (modalRef.current) {
+      modalRef.current.show('reminds');
+    }
+  }, []);
+  const showQuotes = React.useCallback(() => {
+    if (modalRef.current) {
+      modalRef.current.show('quotes');
+    }
+  }, []);
   return (
     <View style={containerStyle}>
       <InteractionsModal entity={entity} ref={modalRef} />
@@ -56,7 +66,7 @@ export default observer(function InteractionsBar({ entity }: PropsType) {
         </PressableScale>
       )}
       {entity.reminds > 0 && (
-        <PressableScale style={buttonStyle}>
+        <PressableScale style={buttonStyle} onPress={showReminds}>
           <Text style={textStyle}>
             <Text style={countStyle}>{abbrev(entity.reminds, 0)}</Text>{' '}
             {i18n.t('interactions.reminds', {
@@ -66,7 +76,7 @@ export default observer(function InteractionsBar({ entity }: PropsType) {
         </PressableScale>
       )}
       {entity.quotes > 0 && (
-        <PressableScale style={buttonStyle}>
+        <PressableScale style={buttonStyle} onPress={showQuotes}>
           <Text style={textStyle}>
             <Text style={countStyle}>{abbrev(entity.quotes, 0)}</Text>{' '}
             {i18n.t('interactions.quotes', {

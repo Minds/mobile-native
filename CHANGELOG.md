@@ -2,6 +2,15 @@
 
 Minds Mobile
 
+## 4.14.0 - 2021-06-11
+
+### Changed
+
+- New notifications
+- Interaction details
+- Translation support added to comments
+- Bug fixing
+
 ## 4.13.0 - 2021-05-21
 
 ### Changed
