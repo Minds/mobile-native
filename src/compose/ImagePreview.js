@@ -43,7 +43,7 @@ export default observer(function (props) {
     <SmartImage
       key={props.image.key || 'imagePreview'}
       source={{ uri: uri + `?${props.image.key}` }} // // we need to change the uri in order to force the reload of the image
-      style={[imageStyle, props.style, ThemedStyles.style.backgroundTertiary]}
+      style={[imageStyle, props.style, ThemedStyles.style.bgTertiaryBackground]}
       resizeMode={FastImage.resizeMode.contain}
     />
   );

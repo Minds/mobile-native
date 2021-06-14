@@ -92,7 +92,7 @@ export default class StripeCardCarousel extends React.PureComponent<PropsType> {
         key={`card${row.item.id}`}
         style={[
           itemHeight,
-          even ? theme.backgroundPrimary : theme.backgroundTertiary,
+          even ? theme.bgPrimaryBackground : theme.bgTertiaryBackground,
           theme.borderRadius4x,
           theme.padding2x,
           styles.shadow,

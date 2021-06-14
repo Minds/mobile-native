@@ -45,7 +45,7 @@ export default observer(function VerifyEmailScreen() {
             theme.paddingVertical3x,
             theme.fullWidth,
             theme.marginTop6x,
-            theme.borderPrimary,
+            theme.bcolorPrimaryBorder,
           ]}
           textStyle={theme.buttonText}
         />

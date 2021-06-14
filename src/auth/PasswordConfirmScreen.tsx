@@ -63,7 +63,7 @@ const PasswordConfirmScreen = observer(({ route, navigation }: PropsType) => {
   const touchStyle = { flex: 3, alignItems: 'flex-end' };
 
   return (
-    <SafeAreaView style={[theme.flexContainer, theme.backgroundPrimary]}>
+    <SafeAreaView style={[theme.flexContainer, theme.bgPrimaryBackground]}>
       <KeyboardAvoidingView
         style={theme.flexContainer}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
@@ -71,7 +71,7 @@ const PasswordConfirmScreen = observer(({ route, navigation }: PropsType) => {
           <Icon
             name="chevron-left"
             size={32}
-            color={ThemedStyles.getColor('secondary_text')}
+            color={ThemedStyles.getColor('SecondaryText')}
             style={iconStyle}
             onPress={navigation.goBack}
           />

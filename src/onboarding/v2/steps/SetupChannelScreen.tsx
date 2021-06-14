@@ -124,9 +124,9 @@ export default observer(function SetupChannelScreen() {
           <View
             style={[
               theme.paddingLeft4x,
-              theme.backgroundSecondary,
+              theme.bgSecondaryBackground,
               theme.borderBottom,
-              theme.borderPrimary,
+              theme.bcolorPrimaryBorder,
             ]}>
             <Text
               style={[
@@ -138,7 +138,7 @@ export default observer(function SetupChannelScreen() {
             </Text>
             <TouchableCustom
               onPress={store.showPicker}
-              style={[styles.avatar, theme.buttonBorder, theme.marginBottom2x]}
+              style={[styles.avatar, theme.marginBottom2x]}
               disabled={channelStore.uploading}
               testID="selectAvatar">
               {hasAvatar && avatar && (
@@ -149,7 +149,7 @@ export default observer(function SetupChannelScreen() {
                 style={[
                   styles.tapOverlayView,
                   styles.avatar,
-                  hasAvatar ? null : theme.backgroundPrimaryText,
+                  hasAvatar ? null : theme.bgPrimaryText,
                 ]}
               />
               <View
@@ -163,7 +163,7 @@ export default observer(function SetupChannelScreen() {
                     name="add"
                     size={32}
                     style={
-                      hasAvatar ? styles.icon : theme.colorBackgroundPrimary
+                      hasAvatar ? styles.icon : theme.colorPrimaryBackground
                     }
                   />
                 )}
@@ -172,7 +172,7 @@ export default observer(function SetupChannelScreen() {
                 <View style={[styles.tapOverlayView]}>
                   <DotIndicator
                     containerStyle={theme.centered}
-                    color={ThemedStyles.getColor('link')}
+                    color={ThemedStyles.getColor('Link')}
                     scaleEnabled={true}
                   />
                 </View>
@@ -190,7 +190,7 @@ export default observer(function SetupChannelScreen() {
                 theme.paddingVertical3x,
                 theme.fullWidth,
                 theme.marginTop,
-                theme.borderPrimary,
+                theme.bcolorPrimaryBorder,
               ]}
               textStyle={theme.buttonText}
             />

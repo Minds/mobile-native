@@ -156,7 +156,7 @@ export default observer(function (props) {
               ref={inputRef}
               scrollEnabled={false}
               placeholder={placeholder}
-              placeholderTextColor={ThemedStyles.getColor('tertiary_text')}
+              placeholderTextColor={ThemedStyles.getColor('TertiaryText')}
               onChangeText={props.store.setText}
               textAlignVertical="top"
               multiline={true}
@@ -184,7 +184,7 @@ export default observer(function (props) {
       {showBottomBar && (
         <KeyboardSpacingView
           enabled={Platform.OS === 'ios'}
-          style={[theme.backgroundPrimary, styles.bottomBarContainer]}>
+          style={[theme.bgPrimaryBackground, styles.bottomBarContainer]}>
           <BottomBar
             store={props.store}
             onOptions={() => {

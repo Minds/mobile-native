@@ -55,7 +55,7 @@ export default class ModalConfirmPassword extends Component<PropsType> {
     return (
       <Modal
         isVisible={this.props.isVisible}
-        backdropColor={ThemedStyles.getColor('primary_background')}
+        backdropColor={ThemedStyles.getColor('PrimaryBackground')}
         backdropOpacity={1}>
         <SafeAreaView style={[CS.flexContainer]}>
           <KeyboardAvoidingView

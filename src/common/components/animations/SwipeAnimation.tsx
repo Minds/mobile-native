@@ -22,7 +22,7 @@ export default function SwipeAnimation(props) {
 
   const containerStyle = {
     opacity,
-    backgroundColor: ThemedStyles.getColor('secondary_background') + '76',
+    backgroundColor: ThemedStyles.getColor('SecondaryBackground') + '76',
   };
 
   if (finished) {
@@ -43,15 +43,15 @@ export default function SwipeAnimation(props) {
         colorFilters={[
           {
             keypath: 'Shape Layer 3',
-            color: ThemedStyles.getColor('primary_text'),
+            color: ThemedStyles.getColor('PrimaryText'),
           },
           {
             keypath: 'Shape Layer 2',
-            color: ThemedStyles.getColor('primary_text'),
+            color: ThemedStyles.getColor('PrimaryText'),
           },
           {
             keypath: 'Shape Layer 1',
-            color: ThemedStyles.getColor('primary_text'),
+            color: ThemedStyles.getColor('PrimaryText'),
           },
         ]}
       />

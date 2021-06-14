@@ -48,7 +48,7 @@ const DisableTFA = observer(({ route }: PropsType) => {
       </Text>
       {store.appAuthEnabled && (
         <InputContainer
-          containerStyle={theme.backgroundPrimaryHighlight}
+          containerStyle={theme.bgPrimaryBackgroundHighlight}
           labelStyle={theme.colorPrimaryText}
           style={theme.colorPrimaryText}
           placeholder={i18n.t('settings.TFAEnterCode')}
@@ -63,8 +63,8 @@ const DisableTFA = observer(({ route }: PropsType) => {
           onPress={onPress}
           style={[
             styles.disableButton,
-            theme.borderPrimary,
-            theme.backgroundPrimaryHighlight,
+            theme.bcolorPrimaryBorder,
+            theme.bgPrimaryBackgroundHighlight,
           ]}>
           <Text style={theme.fontL}>{i18n.t('settings.TFADisableYes')}</Text>
         </TouchableOpacity>

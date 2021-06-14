@@ -106,7 +106,7 @@ const CustomMonetizeScreen = observer((props: PropsType) => {
 
   return (
     <Wrapper store={store} hideDone={!localStore.show} onPressRight={save}>
-      <View style={[theme.flexContainer, theme.backgroundPrimary]}>
+      <View style={[theme.flexContainer, theme.bgPrimaryBackground]}>
         <Text
           style={[
             theme.paddingVertical6x,
@@ -117,7 +117,7 @@ const CustomMonetizeScreen = observer((props: PropsType) => {
           {i18n.t('capture.paywallDescription')}
         </Text>
         <TouchableOpacity
-          style={[styles.optsRow, theme.borderPrimary]}
+          style={[styles.optsRow, theme.bcolorPrimaryBorder]}
           onPress={localStore.showInput}>
           <Text style={[theme.flexContainer, theme.fontL]}>
             {i18n.t('capture.noPaywall')}
@@ -127,7 +127,7 @@ const CustomMonetizeScreen = observer((props: PropsType) => {
           )}
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.optsRow, theme.borderPrimary]}
+          style={[styles.optsRow, theme.bcolorPrimaryBorder]}
           onPress={localStore.showInput}>
           <Text style={[theme.flexContainer, theme.fontL]}>
             {i18n.t('capture.paywall')}
@@ -145,7 +145,7 @@ const CustomMonetizeScreen = observer((props: PropsType) => {
               ref={inputRef}
               style={[
                 theme.colorPrimaryText,
-                theme.borderPrimary,
+                theme.bcolorPrimaryBorder,
                 styles.input,
               ]}
               keyboardType="numeric"
@@ -168,13 +168,11 @@ const CustomMonetizeScreen = observer((props: PropsType) => {
                 <Switch
                   value={localStore.has_usd}
                   onSyncPress={localStore.setHasUsd}
-                  circleColorActive={ThemedStyles.getColor('secondary_text')}
-                  circleColorInactive={ThemedStyles.getColor('secondary_text')}
-                  backgroundActive={ThemedStyles.getColor(
-                    'tertiary_background',
-                  )}
+                  circleColorActive={ThemedStyles.getColor('SecondaryText')}
+                  circleColorInactive={ThemedStyles.getColor('SecondaryText')}
+                  backgroundActive={ThemedStyles.getColor('TertiaryBackground')}
                   backgroundInactive={ThemedStyles.getColor(
-                    'tertiary_background',
+                    'TertiaryBackground',
                   )}
                 />
               </View>

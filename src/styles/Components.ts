@@ -47,14 +47,13 @@ export const ComponentsStyle = StyleSheet.create({
     borderRadius: 4,
   },
   loginInputNew: {
-    color: LIGHT_THEME.primary_text,
+    color: LIGHT_THEME.PrimaryText,
     fontSize: 16,
     padding: 10,
     fontFamily: 'Roboto',
     backgroundColor: 'transparent',
     height: 50,
     borderRadius: 2,
-    borderColor: LIGHT_THEME.button_border,
     borderWidth: 1,
     lineHeight: 21,
   },
@@ -124,7 +123,7 @@ export const ComponentsStyle = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     borderRadius: 20,
-    borderColor: LIGHT_THEME.link,
+    borderColor: LIGHT_THEME.Link,
   },
   redbutton: {
     margin: 4,
@@ -133,7 +132,7 @@ export const ComponentsStyle = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: 'white',
     borderWidth: 1,
-    borderColor: LIGHT_THEME.alert,
+    borderColor: LIGHT_THEME.Alert,
   },
 
   button: {
@@ -144,7 +143,7 @@ export const ComponentsStyle = StyleSheet.create({
   },
 
   buttonAction: {
-    borderColor: LIGHT_THEME.link,
+    borderColor: LIGHT_THEME.Link,
   },
 
   // background image
@@ -215,7 +214,7 @@ export const ComponentsStyle = StyleSheet.create({
   },
   emptyComponentLink: {
     fontFamily: 'Roboto',
-    color: LIGHT_THEME.link,
+    color: LIGHT_THEME.Link,
     marginTop: 16,
   },
 });

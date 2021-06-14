@@ -130,8 +130,8 @@ export class ThemedStylesStore {
       colors: {
         ...baseTheme.colors,
         background: 'transparent',
-        // card: theme.backgroundSecondary, // generates an error on ios
-        text: theme.primary_text,
+        // card: theme.bgSecondaryBackground, // generates an error on ios
+        text: theme.PrimaryText,
         primary: theme.icon,
       },
     };
@@ -139,10 +139,10 @@ export class ThemedStylesStore {
     this.defaultScreenOptions = {
       title: '',
       headerStyle: {
-        backgroundColor: theme.primary_background,
+        backgroundColor: theme.PrimaryBackground,
       },
       contentStyle: {
-        backgroundColor: theme.primary_background,
+        backgroundColor: theme.PrimaryBackground,
       },
       stackAnimation: Platform.select({
         ios: 'default',

@@ -17,17 +17,17 @@ const PaymentMethod = ({ store }: PropsType) => {
       style={[
         theme.rowJustifyStart,
         theme.padding4x,
-        theme.borderPrimary,
+        theme.bcolorPrimaryBorder,
         theme.borderTopHair,
       ]}>
       <Text style={switchTextStyle}>{i18n.t('usd')}</Text>
       <Switch
         value={store.method === 'tokens'}
         onSyncPress={store.setMethod}
-        circleColorActive={ThemedStyles.getColor('secondary_text')}
-        circleColorInactive={ThemedStyles.getColor('secondary_text')}
-        backgroundActive={ThemedStyles.getColor('tertiary_background')}
-        backgroundInactive={ThemedStyles.getColor('tertiary_background')}
+        circleColorActive={ThemedStyles.getColor('SecondaryText')}
+        circleColorInactive={ThemedStyles.getColor('SecondaryText')}
+        backgroundActive={ThemedStyles.getColor('TertiaryBackground')}
+        backgroundInactive={ThemedStyles.getColor('TertiaryBackground')}
         style={theme.marginHorizontal2x}
       />
       <Text style={switchTextStyle}>tokens</Text>

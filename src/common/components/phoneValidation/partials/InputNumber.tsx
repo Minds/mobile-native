@@ -66,7 +66,7 @@ const InputNumber = observer(({ localStore, ...props }: PropsType) => {
     <ListItemButton
       onPress={joinAction}
       disabled={!localStore.canJoin()}
-      style={[theme.borderPrimary, theme.borderHair]}>
+      style={[theme.bcolorPrimaryBorder, theme.borderHair]}>
       {joinButtonContent}
     </ListItemButton>
   );
@@ -77,7 +77,7 @@ const InputNumber = observer(({ localStore, ...props }: PropsType) => {
     style.phoneInput,
     ComponentsStyle.loginInputNew,
     theme.marginRight2x,
-    theme.borderPrimary,
+    theme.bcolorPrimaryBorder,
   ];
 
   return (

@@ -5,6 +5,7 @@ import colors from './generators/colors';
 import spacing from './generators/spacing';
 import ThemedStyles from './ThemedStyles';
 import { DynamicStyles } from './types';
+import type { ColorsType } from './Colors';
 
 const dynamicStyleHandler = {
   get: function (target, name) {
@@ -28,7 +29,7 @@ const dynamicStyleHandler = {
   },
 };
 
-const _buildStyle = theme =>
+const _buildStyle = (theme: ColorsType) =>
   ({
     // opacity
     opacity100: {
@@ -159,67 +160,10 @@ const _buildStyle = theme =>
     colorBlack: {
       color: '#000000',
     },
-    colorGreen: {
-      color: theme.green,
-    },
-    colorPrimaryText: {
-      color: theme.primary_text,
-    },
-    colorSecondaryText: {
-      color: theme.secondary_text,
-    },
-    colorTertiaryText: {
-      color: theme.tertiary_text,
-    },
-    colorLink: {
-      color: theme.link,
-    },
-    colorButton: {
-      color: theme.button_border,
-    },
-    colorDone: {
-      color: theme.done,
-    },
-    colorActionNew: {
-      color: theme.action,
-    },
-    colorIcon: {
-      color: theme.icon,
-    },
-    colorIconActive: {
-      color: theme.icon_active,
-    },
-    colorSeparator: {
-      color: theme.separator,
-    },
-    colorAlert: {
-      color: theme.alert,
-    },
     colorTransparent: {
       color: 'transparent',
     },
     // backgrounds
-    backgroundPrimaryText: {
-      backgroundColor: theme.primary_text,
-    },
-    backgroundSecondaryText: {
-      backgroundColor: theme.secondary_text,
-    },
-    backgroundTertiaryText: {
-      backgroundColor: theme.tertiary_text,
-    },
-    backgroundInfo: {
-      backgroundColor: theme.info_background,
-    },
-    backgroundSuccess: {
-      backgroundColor: theme.success_background,
-    },
-    backgroundDanger: {
-      backgroundColor: theme.danger_background,
-    },
-    backgroundWarning: {
-      backgroundColor: theme.warning_background,
-    },
     backgroundWhite: {
       backgroundColor: 'white',
     },
@@ -229,79 +173,9 @@ const _buildStyle = theme =>
     backgroundTransparent: {
       backgroundColor: 'transparent',
     },
-    backgroundLink: {
-      backgroundColor: theme.link,
-    },
-    backgroundAlert: {
-      backgroundColor: theme.alert,
-    },
-    colorBackgroundPrimary: {
-      color: theme.primary_background,
-    },
-    colorBackgroundSecondary: {
-      color: theme.secondary_background,
-    },
-    colorBackgroundTertiary: {
-      color: theme.tertiary_background,
-    },
-    backgroundPrimary: {
-      backgroundColor: theme.primary_background,
-    },
-    backgroundPrimaryHighlight: {
-      backgroundColor: theme.primary_background_highlight,
-    },
-    backgroundSecondary: {
-      backgroundColor: theme.secondary_background,
-    },
-    backgroundTertiary: {
-      backgroundColor: theme.tertiary_background,
-    },
-    backgroundButtonPrimary: {
-      backgroundColor: theme.primary_button,
-    },
-    backgroundSeparator: {
-      backgroundColor: theme.separator,
-    },
-    backgroundIcon: {
-      backgroundColor: theme.icon,
-    },
-    backgroundIconActive: {
-      backgroundColor: theme.icon_active,
-    },
-    mindsSwitchBackgroundPrimary: {
-      backgroundColor: theme.secondary_background,
-    },
-    mindsSwitchBackgroundSecondary: {
-      backgroundColor: theme.primary_border,
-    },
-
     // borders
     borderTransparent: {
       borderColor: 'transparent',
-    },
-    borderBackgroundPrimary: {
-      borderColor: theme.primary_background,
-    },
-    borderBackgroundSecondary: {
-      borderColor: theme.secondary_background,
-    },
-    borderBackgroundTertiary: {
-      borderColor: theme.tertiary_background,
-    },
-    borderLink: {
-      borderColor: theme.link,
-    },
-    borderPrimary: {
-      borderColor: theme.primary_border,
-    },
-    borderTab: {
-      borderColor: theme.tab_border,
-    },
-    borderIconActive: {
-      borderColor: theme.icon_active,
-    },
-    borderIcon: {
-      borderColor: theme.icon,
     },
     // fonts
     fontXS: {
@@ -387,10 +261,12 @@ const _buildStyle = theme =>
     fontSemibold: {
       fontWeight: '600',
     },
-    strikethrough: {
+    strikeThrough: {
       textDecorationLine: 'line-through',
       textDecorationStyle: 'solid',
     },
+
+    // TODO: remove custom styles from here
     // onboarding
     onboardingTitle: {
       color: '#AEB0B8',
@@ -445,26 +321,26 @@ const _buildStyle = theme =>
 
     // inputs
     input: {
-      color: theme.primary_text,
+      color: theme.PrimaryText,
       fontSize: 16,
       // padding: 10,
       fontFamily: 'Roboto',
       backgroundColor: 'transparent',
       // height: 50,
       borderRadius: 2,
-      borderColor: theme.primary_border,
+      borderColor: theme.PrimaryBorder,
       borderWidth: 1,
       lineHeight: 21,
     },
     link: {
-      color: theme.link,
+      color: theme.Link,
       textDecorationLine: 'underline',
     },
     inputIcon: {
       position: 'absolute',
       right: 8,
       top: Platform.OS === 'ios' ? 36 : 40,
-      color: theme.primary_text,
+      color: theme.PrimaryText,
     },
     transparentButton: {
       borderWidth: 1,
@@ -512,16 +388,6 @@ const _buildStyle = theme =>
     },
     borderBottomHair: {
       borderBottomWidth: StyleSheet.hairlineWidth,
-    },
-    buttonBorder: {
-      borderColor: theme.button_border,
-    },
-
-    // others
-    listItemTitle: {
-      color: theme.primary_text,
-      paddingVertical: 15,
-      fontSize: 17,
     },
   } as const);
 

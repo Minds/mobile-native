@@ -80,7 +80,7 @@ class DiscoveryTile extends Component {
       <View
         style={[
           theme.positionAbsoluteTop,
-          theme.backgroundSeparator,
+          theme.bgSeparator,
           theme.centered,
           styles.boundary,
         ]}>
@@ -92,7 +92,7 @@ class DiscoveryTile extends Component {
       <TouchableOpacity
         onPress={this._onPress}
         style={[this.state.style, styles.tile]}>
-        <View style={[theme.flexContainer, theme.backgroundSeparator]}>
+        <View style={[theme.flexContainer, theme.bgSeparator]}>
           {boundary}
           <ExplicitImage
             source={url}

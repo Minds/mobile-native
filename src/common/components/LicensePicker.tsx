@@ -49,7 +49,7 @@ export default class LicensePicker extends PureComponent {
     const theme = ThemedStyles.styles;
 
     const iconColor =
-      this.props.iconColor || ThemedStyles.getColor('primary_text');
+      this.props.iconColor || ThemedStyles.getColor('PrimaryText');
 
     return (
       <View style={[theme.rowJustifyCenter, theme.alignCenter]}>

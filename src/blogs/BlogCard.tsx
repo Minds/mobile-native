@@ -60,7 +60,7 @@ export default class BlogCard extends PureComponent<PropsType> {
         </View>
         <TouchableOpacity
           onPress={this.navToBlog}
-          style={theme.backgroundSecondary}>
+          style={theme.bgSecondaryBackground}>
           <FastImage
             source={image}
             style={styles.banner}

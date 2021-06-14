@@ -98,7 +98,7 @@ class TagOptinDrawer extends Component<Props> {
         onBackButtonPress={this.dismissModal}
         onBackdropPress={this.dismissModal}
         style={[styles.modal]}>
-        <View style={[styles.modalView, theme.backgroundSecondary]}>
+        <View style={[styles.modalView, theme.bgSecondaryBackground]}>
           <ScrollView style={theme.flexContainer}>
             {this.props.showPreferredToggle ? (
               <View
@@ -107,7 +107,7 @@ class TagOptinDrawer extends Component<Props> {
                   theme.alignCenter,
                   theme.borderBottomHair,
                   theme.paddingBottom2x,
-                  theme.borderPrimarys,
+                  theme.bcolorPrimaryBorders,
                 ]}>
                 <Text>{i18n.t('hashtags.preferred')}</Text>
                 <Switch

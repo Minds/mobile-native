@@ -79,7 +79,7 @@ export default class TosModal extends PureComponent {
             style={[
               theme.fontL,
               theme.textCenter,
-              theme.backgroundPrimary,
+              theme.bgPrimaryBackground,
               theme.padding2x,
               theme.colorWhite,
             ]}>

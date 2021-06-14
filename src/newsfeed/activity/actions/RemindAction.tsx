@@ -113,7 +113,7 @@ export default function ({ entity, size = 21, hideCount }: PropsTypes) {
   return (
     <Menu
       ref={ref}
-      style={theme.backgroundSecondary}
+      style={theme.bgSecondaryBackground}
       button={
         <TouchableOpacityCustom
           style={actionsContainerStyle}

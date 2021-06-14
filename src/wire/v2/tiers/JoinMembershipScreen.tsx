@@ -282,7 +282,7 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
 
   return (
     <View
-      style={[cleanTop, styles.contentContainer, theme.backgroundSecondary]}>
+      style={[cleanTop, styles.contentContainer, theme.bgSecondaryBackground]}>
       {!!store.user && (
         <>
           <HeaderComponent user={store.user} />
@@ -308,12 +308,10 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
               <Switch
                 value={store.payMethod === 'tokens'}
                 onSyncPress={store.setPayMethod}
-                circleColorActive={ThemedStyles.getColor('secondary_text')}
-                circleColorInactive={ThemedStyles.getColor('secondary_text')}
-                backgroundActive={ThemedStyles.getColor('tertiary_background')}
-                backgroundInactive={ThemedStyles.getColor(
-                  'tertiary_background',
-                )}
+                circleColorActive={ThemedStyles.getColor('SecondaryText')}
+                circleColorInactive={ThemedStyles.getColor('SecondaryText')}
+                backgroundActive={ThemedStyles.getColor('TertiaryBackground')}
+                backgroundInactive={ThemedStyles.getColor('TertiaryBackground')}
                 style={theme.marginHorizontal2x}
               />
               <Text style={switchTextStyle}>{'Tokens'}</Text>
@@ -329,7 +327,7 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
                   styles.description,
                   theme.marginTop6x,
                   theme.paddingLeft2x,
-                  theme.borderBackgroundTertiary,
+                  theme.bcolorTertiaryBackground,
                 ]}>
                 <Text style={[theme.fontXL, theme.colorPrimaryText]}>
                   {store.currentTier?.description}
@@ -374,7 +372,7 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
         </ScrollView>
       ) : (
         <DotIndicator
-          color={ThemedStyles.getColor('tertiary_text')}
+          color={ThemedStyles.getColor('TertiaryText')}
           dotSize={10}
         />
       )}

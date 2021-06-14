@@ -67,7 +67,7 @@ export const Topbar = observer((props: PropsType) => {
         style={[
           styles.container,
           theme.borderBottomHair,
-          theme.borderPrimary,
+          theme.bcolorPrimaryBorder,
           cleanTop,
         ]}>
         <View style={styles.topbar}>
@@ -83,7 +83,7 @@ export const Topbar = observer((props: PropsType) => {
                   name="md-menu"
                   style={
                     ThemedStyles.theme
-                      ? theme.colorBackgroundPrimary
+                      ? theme.colorPrimaryBackground
                       : theme.colorSecondaryText
                   }
                   size={14}
@@ -181,5 +181,8 @@ export const styles = StyleSheet.create({
   },
 });
 
-const avatarStyle = ThemedStyles.combine(styles.avatar, 'borderIcon');
-const containerStyle = ThemedStyles.combine('backgroundPrimary', styles.shadow);
+const avatarStyle = ThemedStyles.combine(styles.avatar, 'bcolorIcon');
+const containerStyle = ThemedStyles.combine(
+  'bgPrimaryBackground',
+  styles.shadow,
+);

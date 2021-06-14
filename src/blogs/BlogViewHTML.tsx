@@ -22,8 +22,8 @@ const style = () => `
       /*padding-right: 4px;*/
       font-size: 12px;
       letter-spacing: 0;
-      background-color: ${ThemedStyles.getColor('secondary_background')};
-      color: ${ThemedStyles.getColor('primary_text')};
+      background-color: ${ThemedStyles.getColor('SecondaryBackground')};
+      color: ${ThemedStyles.getColor('PrimaryText')};
       line-height: 20px;
     }
 
@@ -35,7 +35,7 @@ const style = () => `
     br, p, ul, ol {
       font-size: 16px;
       font-family: Roboto, Helvetica, Arial, sans-serif;
-      color: ${ThemedStyles.getColor('secondary_text')};;
+      color: ${ThemedStyles.getColor('SecondaryText')};;
       font-weight: 400;
       line-height: 20px;
       text-rendering: optimizeLegibility;
@@ -52,7 +52,7 @@ const style = () => `
       margin-bottom: 0.58em;
       font-weight: 400;
       font-style: normal;
-      color: ${ThemedStyles.getColor('primary_text')};;
+      color: ${ThemedStyles.getColor('PrimaryText')};;
       margin-top: 20px;
 
 
@@ -68,7 +68,7 @@ const style = () => `
       font-weight: 600;
       font-family: Roboto;
       line-height: 1.1;
-      color: ${ThemedStyles.getColor('primary_text')};;
+      color: ${ThemedStyles.getColor('PrimaryText')};;
       font-size: 24px;
     }
 

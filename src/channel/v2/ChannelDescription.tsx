@@ -21,7 +21,7 @@ type PropsType = {
 const ChannelDescription = withErrorBoundary((props: PropsType) => {
   const navigation = useNavigation();
   const theme = ThemedStyles.style;
-  const backgroundColor = ThemedStyles.getColor('primary_background');
+  const backgroundColor = ThemedStyles.getColor('PrimaryBackground');
   const startColor = (ThemedStyles.theme ? '#242A30' : '#F5F5F5') + '00';
   const endColor = backgroundColor + 'FF';
 

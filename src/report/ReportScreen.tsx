@@ -238,7 +238,7 @@ export default class ReportScreen extends Component {
     const reasonItems = reasons.map((reason, i) => {
       return (
         <TouchableOpacity
-          style={[styles.reasonItem, ThemedStyles.backgroundTertiary]}
+          style={[styles.reasonItem, ThemedStyles.bgTertiaryBackground]}
           key={i}
           onPress={() =>
             this.state.reason
@@ -301,12 +301,12 @@ export default class ReportScreen extends Component {
 
     return (
       <ScrollView
-        style={[theme.flexContainer, ThemedStyles.style.backgroundSecondary]}>
+        style={[theme.flexContainer, ThemedStyles.style.bgSecondaryBackground]}>
         {this.state.reason && (
           <Text
             style={[
               theme.fontM,
-              theme.backgroundPrimary,
+              theme.bgPrimaryBackground,
               theme.colorWhite,
               theme.padding,
             ]}>

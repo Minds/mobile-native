@@ -388,7 +388,7 @@ export default withSafeAreaInsets(
           borderTopRightRadius: 15,
           borderTopLeftRadius: 15,
           alignSelf: 'flex-end',
-          backgroundColor: ThemedStyles.getColor('primary_background'),
+          backgroundColor: ThemedStyles.getColor('PrimaryBackground'),
         },
         titleBox: {
           height: 40,
@@ -396,21 +396,21 @@ export default withSafeAreaInsets(
           borderTopLeftRadius: 15,
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: ThemedStyles.getColor('primary_background'),
+          backgroundColor: ThemedStyles.getColor('PrimaryBackground'),
         },
         buttonBox: {
           height: 50,
           marginTop: StyleSheet.hairlineWidth,
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: ThemedStyles.getColor('secondary_background'),
+          backgroundColor: ThemedStyles.getColor('SecondaryBackground'),
         },
         cancelButtonBox: {
           height: 50,
           marginTop: 6,
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: ThemedStyles.getColor('secondary_background'),
+          backgroundColor: ThemedStyles.getColor('SecondaryBackground'),
         },
       };
 

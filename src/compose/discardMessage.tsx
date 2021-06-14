@@ -29,12 +29,12 @@ const discardMessage = confirm => {
             theme.marginTop6x,
             theme.paddingTop2x,
             theme.borderTopHair,
-            theme.borderPrimary,
+            theme.bcolorPrimaryBorder,
             styles.messageHorizontalLine,
           ]}>
           <View
             style={[
-              theme.borderPrimary,
+              theme.bcolorPrimaryBorder,
               theme.borderRightHair,
               theme.justifyCenter,
               styles.messageVerticalLine,
@@ -63,9 +63,9 @@ const discardMessage = confirm => {
         </View>
       </View>
     ),
-    color: ThemedStyles.getColor('primary_text'),
+    color: ThemedStyles.getColor('PrimaryText'),
     titleStyle: ThemedStyles.style.fontXL,
-    backgroundColor: ThemedStyles.getColor('secondary_background'),
+    backgroundColor: ThemedStyles.getColor('SecondaryBackground'),
     type: 'default',
   });
 };

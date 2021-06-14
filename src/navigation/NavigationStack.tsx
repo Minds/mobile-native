@@ -476,7 +476,7 @@ const AppStack = function () {
         options={{
           title: 'Receiver Address',
           headerStyle: {
-            backgroundColor: ThemedStyles.getColor('primary_background'),
+            backgroundColor: ThemedStyles.getColor('PrimaryBackground'),
           },
           headerHideShadow: true,
         }}
@@ -487,7 +487,7 @@ const AppStack = function () {
         options={{
           title: i18n.t('wallet.bitcoins.update'),
           headerStyle: {
-            backgroundColor: ThemedStyles.getColor('primary_background'),
+            backgroundColor: ThemedStyles.getColor('PrimaryBackground'),
           },
           headerHideShadow: true,
         }}
@@ -498,7 +498,7 @@ const AppStack = function () {
         options={{
           title: i18n.t('wallet.bank.title'),
           headerStyle: {
-            backgroundColor: ThemedStyles.getColor('primary_background'),
+            backgroundColor: ThemedStyles.getColor('PrimaryBackground'),
           },
           headerHideShadow: true,
         }}

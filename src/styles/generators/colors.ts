@@ -19,7 +19,7 @@ export default function colors(name: string, ts: ThemedStylesStore) {
   }
   if (name.startsWith('shadow')) {
     return {
-      borderColor: ts.getColor(name.substr(6) as ColorsNameType),
+      shadowColor: ts.getColor(name.substr(6) as ColorsNameType),
     };
   }
 }

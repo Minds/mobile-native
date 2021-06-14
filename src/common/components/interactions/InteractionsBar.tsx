@@ -92,10 +92,10 @@ export default observer(function InteractionsBar({ entity }: PropsType) {
 const buttonStyle = ThemedStyles.combine('marginLeft2x', 'paddingVertical3x');
 const containerStyle = ThemedStyles.combine(
   'rowJustifyStart',
-  'backgroundPrimary',
+  'bgPrimaryBackground',
   'paddingLeft2x',
   'borderTopHair',
-  'borderPrimary',
+  'bcolorPrimaryBorder',
 );
 const textStyle = ThemedStyles.combine('colorSecondaryText', 'fontM');
 const countStyle = ThemedStyles.combine(

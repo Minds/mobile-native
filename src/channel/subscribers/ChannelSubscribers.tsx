@@ -86,7 +86,7 @@ class ChannelSubscribers extends Component {
     }
 
     return (
-      <View style={[theme.flexContainer, theme.backgroundSecondary]}>
+      <View style={[theme.flexContainer, theme.bgSecondaryBackground]}>
         <View style={styles.topbar}>
           <View style={[theme.flexContainer, theme.rowJustifyCenter]}>
             <TouchableHighlight

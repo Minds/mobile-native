@@ -84,7 +84,7 @@ const SearchResultComponent = observer(
 );
 
 const containerStyle = ThemedStyles.combine(
-  'backgroundPrimary',
+  'bgPrimaryBackground',
   'padding2x',
   'flexContainer',
 );

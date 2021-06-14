@@ -37,8 +37,8 @@ export default observer(function CommentListHeader(props: {
     <View
       style={[
         theme.borderBottomHair,
-        theme.borderPrimary,
-        theme.backgroundPrimary,
+        theme.bcolorPrimaryBorder,
+        theme.bgPrimaryBackground,
         styles.shadow,
       ]}>
       {props.store.parent ? (

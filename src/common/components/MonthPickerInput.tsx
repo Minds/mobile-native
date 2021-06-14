@@ -49,7 +49,7 @@ const MonthPickerInput = observer((props: PropsType) => {
         <Icon
           name="calendar"
           size={21}
-          color={ThemedStyles.getColor('secondary_text')}
+          color={ThemedStyles.getColor('SecondaryText')}
           style={theme.centered}
         />
       </TouchableOpacity>

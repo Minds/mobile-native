@@ -34,7 +34,7 @@ export default function BottomButtonOptions({
       avoidKeyboard={true}
       onBackdropPress={onPressClose}
       isVisible={isVisible}
-      backdropColor={DARK_THEME.secondary_background}
+      backdropColor={DARK_THEME.SecondaryBackground}
       backdropOpacity={0.5}
       useNativeDriver={true}
       style={[theme.fullWidth, theme.margin0x, theme.justifyEnd]}
@@ -50,9 +50,9 @@ export default function BottomButtonOptions({
                 key={i}
                 underlayColor="transparent"
                 containerStyle={[
-                  theme.backgroundPrimary,
+                  theme.bgPrimaryBackground,
                   theme.marginHorizontal3x,
-                  theme.borderPrimary,
+                  theme.bcolorPrimaryBorder,
                   i < plist.length - 1 ? theme.borderBottomHair : null,
                   i === 0 ? styles.borderRadiusTop : null,
                   i === plist.length - 1 ? styles.borderRadiusBottom : null,

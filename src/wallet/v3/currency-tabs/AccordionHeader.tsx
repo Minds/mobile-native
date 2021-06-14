@@ -42,7 +42,7 @@ const AccordionHeader = ({ title, subtitle, tooltip, isActive }: PropsType) => {
               containerStyle={theme.borderRadius}
               width={tooltip.width}
               height={tooltip.height}
-              backgroundColor={ThemedStyles.getColor('link')}
+              backgroundColor={ThemedStyles.getColor('Link')}
               popover={<Text style={theme.colorWhite}>{tooltip.title}</Text>}>
               <Icon name="information-variant" size={15} color="#AEB0B8" />
             </Tooltip>
@@ -53,7 +53,7 @@ const AccordionHeader = ({ title, subtitle, tooltip, isActive }: PropsType) => {
       <Icon
         name={`chevron-${isActive ? 'up' : 'down'}`}
         size={21}
-        color={ThemedStyles.getColor('secondary_text')}
+        color={ThemedStyles.getColor('SecondaryText')}
       />
     </View>
   );

@@ -130,10 +130,10 @@ const TierScreen = observer(({ route, navigation }: PropsType) => {
           <Switch
             value={localStore.support_tier.has_usd}
             onSyncPress={localStore.setHasUsd}
-            circleColorActive={ThemedStyles.getColor('secondary_text')}
-            circleColorInactive={ThemedStyles.getColor('secondary_text')}
-            backgroundActive={ThemedStyles.getColor('tertiary_background')}
-            backgroundInactive={ThemedStyles.getColor('tertiary_background')}
+            circleColorActive={ThemedStyles.getColor('SecondaryText')}
+            circleColorInactive={ThemedStyles.getColor('SecondaryText')}
+            backgroundActive={ThemedStyles.getColor('TertiaryBackground')}
+            backgroundInactive={ThemedStyles.getColor('TertiaryBackground')}
           />
         </View>
       </View>

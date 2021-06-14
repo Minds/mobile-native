@@ -100,7 +100,7 @@ class DiscoveryUser<T extends PropsType> extends Component<T, StateType> {
       <TouchableOpacity
         style={[
           styles.row,
-          ThemedStyles.style.borderPrimary,
+          ThemedStyles.style.bcolorPrimaryBorder,
           ThemedStyles.style.borderBottomHair,
         ]}
         onPress={this._navToChannel}

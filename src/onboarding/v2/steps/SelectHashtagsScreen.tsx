@@ -55,7 +55,7 @@ export default observer(function SelectHashtagsScreen({ navigation, route }) {
     }
   };
 
-  const backgroundColor = ThemedStyles.getColor('primary_background');
+  const backgroundColor = ThemedStyles.getColor('PrimaryBackground');
   const startColor = backgroundColor + '00';
   const endColor = backgroundColor + 'FF';
   const gradient = (
@@ -70,7 +70,7 @@ export default observer(function SelectHashtagsScreen({ navigation, route }) {
         </Text>
         <TagSelect
           tagStyle={styles.hashtag}
-          tagSelectedStyle={theme.borderIconActive}
+          tagSelectedStyle={theme.bcolorIconActive}
           textSelectedStyle={theme.colorPrimaryText}
           textStyle={[theme.colorSecondaryText, theme.fontLM, theme.bold]}
           onTagDeleted={hashtag.deselect}
@@ -87,7 +87,7 @@ export default observer(function SelectHashtagsScreen({ navigation, route }) {
             theme.paddingVertical3x,
             theme.fullWidth,
             theme.marginTop,
-            theme.borderPrimary,
+            theme.bcolorPrimaryBorder,
           ]}
           textStyle={theme.buttonText}
         />

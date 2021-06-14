@@ -60,9 +60,9 @@ export default class GroupsBarItem extends Component {
           </Text>
         </View>
       ),
-      color: ThemedStyles.getColor('primary_text'),
+      color: ThemedStyles.getColor('PrimaryText'),
       titleStyle: ThemedStyles.style.fontXL,
-      backgroundColor: ThemedStyles.getColor('tertiary_background'),
+      backgroundColor: ThemedStyles.getColor('TertiaryBackground'),
       type: 'default',
     });
   };
@@ -84,8 +84,8 @@ export default class GroupsBarItem extends Component {
               avatar={this.getAvatar(group)}
               size={60}
               pulseMaxSize={80}
-              borderColor={ThemedStyles.getColor('alert')}
-              backgroundColor={ThemedStyles.getColor('alert')}
+              borderColor={ThemedStyles.getColor('Alert')}
+              backgroundColor={ThemedStyles.getColor('Alert')}
               interval={1000}
               onPress={this.askGatheringOrNav}
             />
@@ -119,7 +119,7 @@ export default class GroupsBarItem extends Component {
             style={[styles.avatar]}
           />
           {group.marker_activity ? (
-            <View style={[styles.acitivity, theme.borderPrimary]} />
+            <View style={[styles.acitivity, theme.bcolorPrimaryBorder]} />
           ) : null}
         </TouchableOpacity>
         <Text style={[theme.fontXS, theme.marginTop, theme.fontMedium]}>

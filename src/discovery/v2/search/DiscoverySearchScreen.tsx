@@ -38,11 +38,11 @@ export const DiscoverySearchHeader = observer(() => {
   }, [navigation, store]);
 
   return (
-    <View style={[shadow, theme.backgroundPrimary, paddingTop]}>
+    <View style={[shadow, theme.bgPrimaryBackground, paddingTop]}>
       <View style={[theme.rowJustifyStart, theme.alignCenter]}>
         <View style={theme.padding2x}>
           <Icon
-            color={ThemedStyles.getColor('icon')}
+            color={ThemedStyles.getColor('Icon')}
             size={32}
             name="chevron-left"
             type="material-community"
@@ -58,7 +58,7 @@ export const DiscoverySearchHeader = observer(() => {
             containerStyle={[
               theme.marginVertical,
               theme.marginRight4x,
-              theme.backgroundSecondary,
+              theme.bgSecondaryBackground,
               theme.flexContainer,
             ]}
             // iconRight={iconRight}

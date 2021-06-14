@@ -45,14 +45,14 @@ export default function () {
   const component = loading ? (
     <CenteredLoading />
   ) : (
-    <View style={[CS.flexContainer, CS.backgroundPrimary, CS.paddingTop4x]}>
+    <View style={[CS.flexContainer, CS.bgPrimaryBackground, CS.paddingTop4x]}>
       <View
         style={[
           styles.row,
-          CS.backgroundSecondary,
+          CS.bgSecondaryBackground,
           CS.paddingVertical3x,
           CS.paddingHorizontal3x,
-          CS.borderPrimary,
+          CS.bcolorPrimaryBorder,
           CS.borderHairTop,
           CS.borderHairBottom,
         ]}>

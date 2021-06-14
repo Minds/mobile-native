@@ -87,7 +87,7 @@ export default class BoostConsoleScreen extends Component {
         onEndReached={this.loadFeed}
         onEndReachedThreshold={0}
         style={[
-          theme.backgroundPrimary,
+          theme.bgPrimaryBackground,
           theme.flexContainer,
           theme.marginTop3x,
         ]}

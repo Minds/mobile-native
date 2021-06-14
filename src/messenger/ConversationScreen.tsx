@@ -214,7 +214,7 @@ export default class ConversationScreen extends Component {
     return (
       <KeyboardSpacingView
         enabled={Platform.OS === 'ios'}
-        style={[styles.container, ThemedStyles.style.backgroundSecondary]}>
+        style={[styles.container, ThemedStyles.style.bgSecondaryBackground]}>
         <FlatList
           inverted={true}
           data={messages}
@@ -238,7 +238,7 @@ export default class ConversationScreen extends Component {
             editable={true}
             underlineColorAndroid="transparent"
             placeholder={i18n.t('messenger.typeYourMessage')}
-            placeholderTextColor={ThemedStyles.getColor('secondary_text')}
+            placeholderTextColor={ThemedStyles.getColor('SecondaryText')}
             onChangeText={this.textChanged}
             multiline={true}
             autogrow={true}

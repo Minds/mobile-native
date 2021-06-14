@@ -72,15 +72,14 @@ export default class Button extends Component<ButtonPropsType> {
     } = this.props;
 
     let background = ThemedStyles.getColor(
-      active ? 'active' : 'primary_background',
+      active ? 'Active' : 'PrimaryBackground',
     );
     let mainColor =
-      color ||
-      (transparent ? '#FFFFFF' : ThemedStyles.getColor('primary_text'));
+      color || (transparent ? '#FFFFFF' : ThemedStyles.getColor('PrimaryText'));
 
     if (inverted !== undefined) {
       background = mainColor;
-      mainColor = ThemedStyles.getColor('primary_background');
+      mainColor = ThemedStyles.getColor('PrimaryBackground');
     }
 
     const padding = {
@@ -91,7 +90,7 @@ export default class Button extends Component<ButtonPropsType> {
     const border = borderless
       ? {}
       : {
-          ...(action ? theme.borderLink : theme.borderPrimary),
+          ...(action ? theme.bcolorLink : theme.bcolorPrimaryBorder),
           ...theme.border,
         };
 
@@ -99,7 +98,7 @@ export default class Button extends Component<ButtonPropsType> {
       ? {
           backgroundColor: 'rgba(0,0,0,0.40)',
           borderColor: action
-            ? ThemedStyles.getColor('link')
+            ? ThemedStyles.getColor('Link')
             : Platform.select({
                 android: 'rgba(255,255,255,0.40)',
                 ios: 'rgba(255,255,255,0.60)',

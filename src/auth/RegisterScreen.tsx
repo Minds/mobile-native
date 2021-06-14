@@ -48,7 +48,7 @@ type PropsType = {
 const shadowOptLocal = Object.assign({}, shadowOpt);
 shadowOptLocal.height = 270;
 
-const validatorText = { color: LIGHT_THEME.primary_text };
+const validatorText = { color: LIGHT_THEME.PrimaryText };
 
 export default observer(function RegisterScreen(props: PropsType) {
   const captchaRef = useRef<any>(null);
@@ -209,7 +209,7 @@ export default observer(function RegisterScreen(props: PropsType) {
         {!!store.password && store.focused && (
           <Tooltip
             bottom={12}
-            backgroundColor={LIGHT_THEME.primary_background}
+            backgroundColor={LIGHT_THEME.PrimaryBackground}
             containerStyle={theme.paddingLeft2x}>
             <PasswordValidator
               password={store.password}
@@ -290,7 +290,7 @@ export default observer(function RegisterScreen(props: PropsType) {
                     ]}>
                     {i18n.t('auth.accept')}{' '}
                     <Text
-                      style={theme.link}
+                      style={theme.Link}
                       onPress={() =>
                         Linking.openURL('https://www.minds.com/p/terms')
                       }>

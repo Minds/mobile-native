@@ -38,7 +38,7 @@ const FeedFilter = observer((props: PropsType) => {
   return (
     <Menu
       ref={ref}
-      style={[styles.menu, theme.backgroundTertiary]}
+      style={[styles.menu, theme.bgTertiaryBackground]}
       button={
         <TouchableOpacity
           style={[theme.rowJustifyEnd, props.containerStyle]}

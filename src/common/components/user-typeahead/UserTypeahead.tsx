@@ -255,7 +255,7 @@ export default class UserTypeahead extends PureComponent {
     return (
       <Modal
         isVisible={this.props.isModalVisible}
-        backdropColor={ThemedStyles.getColor('primary_background')}
+        backdropColor={ThemedStyles.getColor('PrimaryBackground')}
         backdropOpacity={1}
         onModalShow={this.onModalShow}
         onModalHide={this.onModalHide}>
@@ -266,7 +266,7 @@ export default class UserTypeahead extends PureComponent {
           ListEmptyComponent={this.EmptyPartial}
           renderItem={this.ItemPartial}
           keyExtractor={this.keyExtractor}
-          style={ThemedStyles.style.backgroundPrimary}
+          style={ThemedStyles.style.bgPrimaryBackground}
         />
         {/* TODO: Fix double tapping needed to select an item when a TextInput is active */}
       </Modal>

@@ -40,12 +40,13 @@ const height = 83;
  * Header
  */
 const Header = props => (
-  <View style={[styles.headerContainer, ThemedStyles.style.borderPrimary]}>
+  <View
+    style={[styles.headerContainer, ThemedStyles.style.bcolorPrimaryBorder]}>
     <View
       style={[
         styles.header,
-        ThemedStyles.style.backgroundSecondary,
-        ThemedStyles.style.borderPrimary,
+        ThemedStyles.style.bgSecondaryBackground,
+        ThemedStyles.style.bcolorPrimaryBorder,
       ]}>
       <Text
         style={[
@@ -76,7 +77,7 @@ const Header = props => (
 const Item = props => {
   return (
     <Touchable
-      style={[styles.row, ThemedStyles.style.borderPrimary]}
+      style={[styles.row, ThemedStyles.style.bcolorPrimaryBorder]}
       onPress={props.onPress}
       testID={props.testID}>
       <Text style={[styles.optionTitle, ThemedStyles.style.colorSecondaryText]}>
@@ -194,7 +195,7 @@ export default observer(
     const renderInner = () => (
       <View
         style={[
-          theme.backgroundSecondary,
+          theme.bgSecondaryBackground,
           theme.fullHeight,
           { elevation: 13 },
         ]}>

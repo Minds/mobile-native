@@ -97,7 +97,7 @@ const UpgradeScreen = observer(({ navigation, route }: PropsType) => {
   };
 
   return (
-    <View style={[cleanTop, styles.container, theme.backgroundSecondary]}>
+    <View style={[cleanTop, styles.container, theme.bgSecondaryBackground]}>
       <Header pro={pro} />
       <FitScrollView style={theme.flexContainer}>
         {!isIos && <PaymentMethod store={localStore} />}
@@ -107,7 +107,8 @@ const UpgradeScreen = observer(({ navigation, route }: PropsType) => {
             <StripeCardSelector onCardSelected={localStore.setCard} />
           </View>
         )}
-        <View style={[theme.padding2x, theme.borderTop, theme.borderPrimary]}>
+        <View
+          style={[theme.padding2x, theme.borderTop, theme.bcolorPrimaryBorder]}>
           <Button
             onPress={confirmSend}
             text={i18n.t(`monetize.${pro ? 'pro' : 'plus'}Join`)}

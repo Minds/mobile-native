@@ -42,14 +42,14 @@ const InputSelector = (props: PropsType) => {
   );
 
   return (
-    <View style={[theme.backgroundPrimary, theme.paddingTop4x]}>
+    <View style={[theme.bgPrimaryBackground, theme.paddingTop4x]}>
       <View
         style={[
           theme.rowJustifySpaceBetween,
-          theme.backgroundSecondary,
+          theme.bgSecondaryBackground,
           theme.paddingVertical3x,
           theme.paddingHorizontal3x,
-          theme.borderPrimary,
+          theme.bcolorPrimaryBorder,
           theme.borderHair,
         ]}>
         <Text style={[theme.marginLeft, theme.colorSecondaryText, theme.fontM]}>

@@ -104,5 +104,5 @@ const menuStyle = ThemedStyles.combine(
     width: 180,
   },
   'marginTop4x',
-  'backgroundTertiary',
+  'bgTertiaryBackground',
 );

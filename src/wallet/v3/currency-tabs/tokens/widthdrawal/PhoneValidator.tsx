@@ -41,8 +41,8 @@ const PhoneValidator = observer(({ bottomStore }: PhoneValidatorPropsType) => {
       <Text style={[theme.padding4x, theme.colorSecondaryText]}>{msg}</Text>
       <View
         style={[
-          theme.backgroundPrimary,
-          theme.borderPrimary,
+          theme.bgPrimaryBackground,
+          theme.bcolorPrimaryBorder,
           styles.inputWraper,
         ]}>
         <Text style={[theme.colorSecondaryText]}>{label}</Text>

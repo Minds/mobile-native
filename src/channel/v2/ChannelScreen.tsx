@@ -94,7 +94,7 @@ const ChannelScreen = observer((props: PropsType) => {
     !store.channel.mature_visibility
   ) {
     return (
-      <View style={[theme.backgroundPrimary, theme.flexContainer]}>
+      <View style={[theme.bgPrimaryBackground, theme.flexContainer]}>
         <ChannelTopBar
           navigation={props.navigation}
           store={store}
@@ -151,7 +151,7 @@ const ChannelScreen = observer((props: PropsType) => {
         }
         navigation={props.navigation}
         emptyMessage={emptyMessage}
-        style={[theme.backgroundPrimary, theme.flexContainer]}
+        style={[theme.bgPrimaryBackground, theme.flexContainer]}
         hideItems={store.tab !== 'feed'}
       />
     </>

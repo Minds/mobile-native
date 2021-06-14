@@ -113,7 +113,7 @@ const UsdTab = observer(
             containerStyle={theme.borderRadius}
             width={screen.width - 20}
             height={250}
-            backgroundColor={ThemedStyles.getColor('secondary_background')}
+            backgroundColor={ThemedStyles.getColor('SecondaryBackground')}
             popover={<PaidInfo walletStore={walletStore} />}>
             <PaidButton
               containerStyle={theme.marginRight2x}

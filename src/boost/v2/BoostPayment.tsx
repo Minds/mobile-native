@@ -38,8 +38,8 @@ const BoostPayment = observer(({ localStore }: PropsType) => {
         style={[
           styles.touchable,
           theme.paddingHorizontal4x,
-          theme.backgroundPrimaryHighlight,
-          theme.borderPrimary,
+          theme.bgPrimaryBackgroundHighlight,
+          theme.bcolorPrimaryBorder,
           theme.borderTop,
           theme.borderBottom,
         ]}
@@ -50,7 +50,7 @@ const BoostPayment = observer(({ localStore }: PropsType) => {
         <Icon
           name="menu-down"
           size={24}
-          color={ThemedStyles.getColor('icon')}
+          color={ThemedStyles.getColor('Icon')}
           style={theme.centered}
         />
       </TouchableOpacity>

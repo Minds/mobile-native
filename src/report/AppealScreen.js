@@ -13,7 +13,7 @@ export default function ({ route }) {
   const navigation = useNavigation();
   if (!appeal) {
     return (
-      <View style={[CS.flexContainer, CS.backgroundSecondary, CS.centered]}>
+      <View style={[CS.flexContainer, CS.bgSecondaryBackground, CS.centered]}>
         <Text>{i18n.t('settings.reportedContent.noAppealData')}</Text>
       </View>
     );
@@ -38,13 +38,13 @@ export default function ({ route }) {
   }, [setLoading, navigation]);
 
   return (
-    <View style={[CS.flexContainer, CS.backgroundSecondary]}>
+    <View style={[CS.flexContainer, CS.bgSecondaryBackground]}>
       <View style={styles.posterWrapper}>
         <TextInput
           style={[styles.poster, CS.colorPrimaryText]}
           editable={true}
           placeholder={i18n.t('settings.reportedContent.noteType')}
-          placeholderTextColor={ThemedStyles.getColor('secondary_text')}
+          placeholderTextColor={ThemedStyles.getColor('SecondaryText')}
           underlineColorAndroid="transparent"
           onChangeText={setNote}
           textAlignVertical="top"

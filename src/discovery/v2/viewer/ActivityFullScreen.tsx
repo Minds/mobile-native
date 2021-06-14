@@ -64,7 +64,11 @@ const ActivityOwner = ({
   const { current: cleanTop } = useRef({
     paddingTop: insets.top - 10 || 2,
   });
-  const containerStyle = useStyle('backgroundPrimary', styles.header, cleanTop);
+  const containerStyle = useStyle(
+    'bgPrimaryBackground',
+    styles.header,
+    cleanTop,
+  );
   return (
     <OwnerBlock
       entity={entity}
@@ -207,7 +211,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
     ? shortTextStyle
     : theme.fontLM;
 
-  const backgroundColor = ThemedStyles.getColor('secondary_background');
+  const backgroundColor = ThemedStyles.getColor('SecondaryBackground');
   const startColor = backgroundColor + '00';
   const endColor = backgroundColor + 'FF';
   const gradientColors = useRef([startColor, endColor]).current;
@@ -279,7 +283,11 @@ const ActivityFullScreen = observer((props: PropsType) => {
     [entity, navigation, onTranslate, shadowOpt],
   );
 
-  const containerStyle = useStyle(window, 'flexContainer', 'backgroundPrimary');
+  const containerStyle = useStyle(
+    window,
+    'flexContainer',
+    'bgPrimaryBackground',
+  );
 
   return (
     <View style={containerStyle}>
@@ -443,5 +451,5 @@ const remindContainerStyle = ThemedStyles.combine(
   styles.remind,
   'margin2x',
   'borderHair',
-  'borderBackgroundPrimary',
+  'bcolorPrimaryBackground',
 );

@@ -19,8 +19,8 @@ const ProgressBar = observer(({ store }: PropsType) => {
     <View style={styles.container}>
       <Slider
         style={styles.barView}
-        thumbTintColor={ThemedStyles.getColor('link')}
-        minimumTrackTintColor={ThemedStyles.getColor('link')}
+        thumbTintColor={ThemedStyles.getColor('Link')}
+        minimumTrackTintColor={ThemedStyles.getColor('Link')}
         value={store.currentSeek || store.currentTime}
         maximumValue={store.duration}
         onValueChange={store.changeSeek}

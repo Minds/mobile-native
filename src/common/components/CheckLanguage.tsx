@@ -25,10 +25,10 @@ export default observer(function CheckLanguage() {
       return (
         <View
           style={[
-            theme.backgroundPrimary,
+            theme.bgPrimaryBackground,
             theme.padding2x,
             theme.margin2x,
-            theme.borderPrimary,
+            theme.bcolorPrimaryBorder,
             theme.border,
             theme.borderRadius2x,
           ]}>

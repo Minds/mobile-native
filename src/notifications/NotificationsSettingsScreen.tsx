@@ -34,7 +34,7 @@ export default class NotificationsSettingsScreen extends Component {
 
     return (
       <ScrollView style={styles.container}>
-        <Text style={[styles.title, CS.backgroundTertiary]}>
+        <Text style={[styles.title, CS.bgTertiaryBackground]}>
           {i18n.t('notificationSettings.enableDisable')}
         </Text>
         {Object.keys(settings).map(function (key) {
@@ -49,7 +49,7 @@ export default class NotificationsSettingsScreen extends Component {
           }
           return (
             <View
-              style={[styles.row, CS.borderPrimary, CS.borderBottomHair]}
+              style={[styles.row, CS.bcolorPrimaryBorder, CS.borderBottomHair]}
               key={key}>
               <Text>{notificationText}</Text>
               <Switch

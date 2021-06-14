@@ -17,7 +17,7 @@ export default function BottomBar(props) {
   return (
     <View
       style={[
-        theme.backgroundPrimary,
+        theme.bgPrimaryBackground,
         styles.bottomBar,
         theme.paddingLeft2x,
         theme.padding,

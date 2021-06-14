@@ -177,7 +177,7 @@ export default class BlogsViewScreen extends Component<PropsType> {
     const image = blog.getBannerSource();
 
     return (
-      <View style={[theme.flexContainer, theme.backgroundSecondary]}>
+      <View style={[theme.flexContainer, theme.bgSecondaryBackground]}>
         <SmartImage
           source={image as Source}
           resizeMode={FastImage.resizeMode.cover}
@@ -293,7 +293,7 @@ export default class BlogsViewScreen extends Component<PropsType> {
     }
 
     return (
-      <View style={[theme.flexContainer, theme.backgroundSecondary]}>
+      <View style={[theme.flexContainer, theme.bgSecondaryBackground]}>
         {!this.state.error ? (
           <>
             <ScrollView ref={this.listRef}>{this.getBody()}</ScrollView>

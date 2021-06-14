@@ -202,7 +202,7 @@ export default class MediaView extends Component<PropsType> {
             message: i18n.t('linkCopied'),
             duration: 1300,
             backgroundColor: '#FFDD63DD',
-            color: DARK_THEME.primary_text,
+            color: DARK_THEME.PrimaryText,
             type: 'info',
           });
         }

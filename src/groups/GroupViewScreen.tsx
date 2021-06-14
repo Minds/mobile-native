@@ -212,7 +212,7 @@ export default class GroupViewScreen extends Component {
             onRefresh={this.refresh}
             refreshing={group.members.refreshing}
             onEndReached={this.loadMembers}
-            style={ThemedStyles.style.backgroundPrimary}
+            style={ThemedStyles.style.bgPrimaryBackground}
             // onEndReachedThreshold={0}
             initialNumToRender={12}
             removeClippedSubviews={false}
@@ -223,7 +223,7 @@ export default class GroupViewScreen extends Component {
           .decodeHTML(group.group.briefdescription)
           .trim();
         return (
-          <ScrollView style={ThemedStyles.style.backgroundPrimary}>
+          <ScrollView style={ThemedStyles.style.bgPrimaryBackground}>
             {header}
             <View style={ThemedStyles.style.padding3x}>
               <Tags
@@ -391,7 +391,7 @@ export default class GroupViewScreen extends Component {
       return (
         <View
           style={[
-            theme.backgroundSecondary,
+            theme.bgSecondaryBackground,
             theme.flexContainer,
             theme.justifyCenter,
           ]}>
@@ -402,7 +402,7 @@ export default class GroupViewScreen extends Component {
     }
 
     return (
-      <View style={[theme.flexContainer, theme.backgroundSecondary]}>
+      <View style={[theme.flexContainer, theme.bgSecondaryBackground]}>
         {this.getList()}
         {showPosterFab && (
           <CaptureFab

@@ -105,7 +105,7 @@ export default class SubscriptionTierCarousel extends PureComponent<PropsType> {
         key={`rewards${row.item.amount}`}
         style={[
           theme.rowJustifyCenter,
-          theme.backgroundPrimary,
+          theme.bgPrimaryBackground,
           theme.borderRadius5x,
           theme.padding2x,
           theme.border,

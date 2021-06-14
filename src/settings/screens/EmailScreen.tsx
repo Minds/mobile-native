@@ -118,14 +118,14 @@ class EmailScreen extends Component {
     ) : null;
 
     return (
-      <View style={[CS.flexContainer, CS.paddingTop3x, CS.backgroundPrimary]}>
+      <View style={[CS.flexContainer, CS.paddingTop3x, CS.bgPrimaryBackground]}>
         <View
           style={[
             CS.paddingLeft3x,
             CS.paddingTop3x,
-            CS.backgroundSecondary,
+            CS.bgSecondaryBackground,
             CS.border,
-            CS.borderPrimary,
+            CS.bcolorPrimaryBorder,
           ]}>
           <Input
             style={[CS.border0x, styles.inputHeight]}

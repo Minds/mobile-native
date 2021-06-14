@@ -24,7 +24,7 @@ export default class ToolbarItem extends PureComponent {
     const textStyle = this.getTextStyle();
     const subTextStyle = this.getSubTextStyle();
     const buttonStyle = selected
-      ? [styles.button, { borderBottomColor: ThemedStyles.getColor('link') }]
+      ? [styles.button, { borderBottomColor: ThemedStyles.getColor('Link') }]
       : styles.button;
 
     return (

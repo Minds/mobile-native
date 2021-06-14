@@ -125,8 +125,8 @@ export default class Notification extends Component<PropsType> {
         style={[
           styles.container,
           theme.borderBottomHair,
-          theme.borderPrimary,
-          theme.backgroundPrimary,
+          theme.bcolorPrimaryBorder,
+          theme.bgPrimaryBackground,
         ]}>
         <TouchableWithoutFeedback onPress={this.navToChannel}>
           <Image
@@ -134,7 +134,7 @@ export default class Notification extends Component<PropsType> {
             style={[
               styles.avatar,
               ThemedStyles.style.borderHair,
-              ThemedStyles.style.borderPrimary,
+              ThemedStyles.style.bcolorPrimaryBorder,
             ]}
           />
         </TouchableWithoutFeedback>

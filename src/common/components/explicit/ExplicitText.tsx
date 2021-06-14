@@ -58,7 +58,7 @@ export default class ExplicitText extends Component<PropsType, StateType> {
     super(props);
     Dimensions.addEventListener('change', this.dimensionChange);
 
-    const backgroundColor = ThemedStyles.getColor('primary_background');
+    const backgroundColor = ThemedStyles.getColor('PrimaryBackground');
     const startColor = backgroundColor + '00';
     const endColor = backgroundColor + 'FF';
     this.gradientColors = [startColor, endColor];

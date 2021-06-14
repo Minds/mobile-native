@@ -42,7 +42,7 @@ function TopbarTabbar<T>(props: PropsType<T>) {
       style={[
         theme.rowJustifyStart,
         theme.borderBottom,
-        theme.borderPrimary,
+        theme.bcolorPrimaryBorder,
         theme.paddingHorizontal2x,
         props.containerStyle,
       ]}>
@@ -54,7 +54,7 @@ function TopbarTabbar<T>(props: PropsType<T>) {
             tabStyle,
             props.tabStyle,
             tab.id === props.current
-              ? theme.borderTab
+              ? theme.bcolorTabBorder
               : theme.borderTransparent,
           ]}>
           <Text
