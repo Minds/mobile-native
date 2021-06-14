@@ -1,0 +1,186 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Notifications Screen Component renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <RCTScrollView
+    ListEmptyComponent={null}
+    ListHeaderComponent={
+      <Memo(wrappedComponent)
+        setResult={[Function]}
+        store={
+          Object {
+            "init": [Function],
+            "pollInterval": 1,
+            "setUnread": [Function],
+            "unread": 1,
+          }
+        }
+      />
+    }
+    data={Array []}
+    disableVirtualization={false}
+    getItem={[Function]}
+    getItemCount={[Function]}
+    horizontal={false}
+    initialNumToRender={10}
+    keyExtractor={[Function]}
+    maxToRenderPerBatch={10}
+    onContentSizeChange={[Function]}
+    onEndReached={[Function]}
+    onEndReachedThreshold={2}
+    onLayout={[Function]}
+    onMomentumScrollEnd={[Function]}
+    onRefresh={[Function]}
+    onScroll={[Function]}
+    onScrollBeginDrag={[Function]}
+    onScrollEndDrag={[Function]}
+    onViewableItemsChanged={[Function]}
+    refreshControl={
+      <RefreshControlMock
+        onRefresh={[Function]}
+        refreshing={true}
+      />
+    }
+    refreshing={true}
+    removeClippedSubviews={false}
+    renderItem={[Function]}
+    scrollEventThrottle={50}
+    stickyHeaderIndices={Array []}
+    updateCellsBatchingPeriod={50}
+    viewabilityConfig={
+      Object {
+        "itemVisiblePercentThreshold": 50,
+        "minimumViewTime": 300,
+        "waitForInteraction": false,
+      }
+    }
+    viewabilityConfigCallbackPairs={
+      Array [
+        Object {
+          "onViewableItemsChanged": [Function],
+          "viewabilityConfig": Object {
+            "itemVisiblePercentThreshold": 50,
+            "minimumViewTime": 300,
+            "waitForInteraction": false,
+          },
+        },
+      ]
+    }
+    windowSize={21}
+  >
+    <RCTRefreshControl />
+    <View>
+      <View
+        onLayout={[Function]}
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "flexDirection": "row",
+                "justifyContent": "flex-start",
+              },
+            ]
+          }
+        >
+          <RCTScrollView
+            contentContainerStyle={
+              Array [
+                Object {
+                  "paddingBottom": 10,
+                },
+                Object {
+                  "paddingLeft": 10,
+                },
+                Object {
+                  "flex": 1,
+                  "paddingBottom": 0,
+                  "paddingLeft": 0,
+                },
+              ]
+            }
+            horizontal={true}
+          >
+            <View>
+              <View
+                onPress={[Function]}
+                style={
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                      "flex": 1,
+                      "paddingBottom": 17,
+                      "paddingTop": 14,
+                    },
+                    Object {
+                      "borderBottomColor": "#1B85D6",
+                      "borderBottomWidth": 3,
+                    },
+                  ]
+                }
+              >
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "fontSize": 16,
+                        "fontWeight": "700",
+                      },
+                      Object {
+                        "color": undefined,
+                      },
+                    ]
+                  }
+                >
+                  All
+                </Text>
+              </View>
+              <View
+                onPress={[Function]}
+                style={
+                  Array [
+                    Object {
+                      "borderBottomWidth": 0.5,
+                    },
+                    Object {
+                      "borderColor": undefined,
+                    },
+                    Object {
+                      "alignItems": "center",
+                      "flex": 1,
+                      "paddingBottom": 17,
+                      "paddingTop": 14,
+                    },
+                  ]
+                }
+              >
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "fontSize": 16,
+                        "fontWeight": "700",
+                      },
+                      Object {
+                        "color": undefined,
+                      },
+                    ]
+                  }
+                >
+                  Mentions
+                </Text>
+              </View>
+            </View>
+          </RCTScrollView>
+        </View>
+      </View>
+    </View>
+  </RCTScrollView>
+</View>
+`;
