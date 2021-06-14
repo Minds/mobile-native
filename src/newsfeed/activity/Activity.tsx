@@ -82,7 +82,7 @@ export default class Activity extends Component<PropsType> {
    * Nav to activity full screen
    */
   navToActivity = () => {
-    if (!this.props.navigation) {
+    if (!this.props.navigation || this.props.entity.remind_deleted) {
       return;
     }
     const navOpts = {
@@ -186,6 +186,9 @@ export default class Activity extends Component<PropsType> {
   }
 
   copyText = () => {
+    if (this.props.entity.remind_deleted) {
+      return;
+    }
     const entity = this.props.entity;
     Clipboard.setString(
       entities.decodeHTML(
@@ -281,7 +284,11 @@ export default class Activity extends Component<PropsType> {
                 imageStyle={theme.flexContainer}
                 autoHeight={this.props.autoHeight}
               />
-              {!(this.props.entity.perma_url || this.props.entity.remind_object)
+              {!(
+                this.props.entity.perma_url ||
+                this.props.entity.remind_object ||
+                this.props.entity.remind_deleted
+              )
                 ? message
                 : undefined}
             </View>
