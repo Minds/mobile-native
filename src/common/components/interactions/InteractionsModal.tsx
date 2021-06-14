@@ -12,13 +12,14 @@ import i18n from '../../services/i18n.service';
 import OffsetList from '../OffsetList';
 import Activity from '../../../newsfeed/activity/Activity';
 import navigationService from '../../../navigation/NavigationService';
+import type BaseModel from '../../BaseModel';
 
 type PropsType = {
-  entity: ActivityModel;
+  entity: BaseModel;
 };
 
 const renderItemUser = (row: { item: any; index: number }) => {
-  return <DiscoveryUser row={row} />;
+  return <DiscoveryUser row={row} navigation={navigationService} />;
 };
 
 const renderItemActivity = (row: { item: any; index: number }) => {
@@ -33,12 +34,18 @@ const renderItemActivity = (row: { item: any; index: number }) => {
 };
 
 const mapUser = data => data.map(d => UserModel.create(d.actor));
+const mapSubscriber = data => data.map(d => UserModel.create(d));
 const mapActivity = data =>
   data.map(d => {
     return ActivityModel.create(d);
   });
 
-type Interactions = 'upVotes' | 'downVotes' | 'reminds' | 'quotes';
+type Interactions =
+  | 'upVotes'
+  | 'downVotes'
+  | 'reminds'
+  | 'quotes'
+  | 'subscribers';
 
 /**
  * Interaction modals
@@ -47,7 +54,8 @@ export default observer(
   forwardRef(function InteractionsModal({ entity }: PropsType, ref: any) {
     const store = useLocalStore(() => ({
       visible: false,
-      interaction: 'upVotes',
+      interaction: 'upVotes' as Interactions,
+      offset: '' as any,
       show() {
         store.visible = true;
       },
@@ -61,6 +69,8 @@ export default observer(
         return store.interaction === 'upVotes' ||
           store.interaction === 'downVotes'
           ? `api/v3/votes/list/${entity.guid}`
+          : store.interaction === 'subscribers'
+          ? `api/v3/subscriptions/graph/${entity.guid}/subscribers`
           : 'api/v3/newsfeed';
       },
       get opts() {
@@ -78,6 +88,16 @@ export default observer(
         }
         return opts;
       },
+      get offsetField() {
+        let offsetField = 'next-page';
+        if (store.interaction === 'subscribers') {
+          offsetField = 'from_timestamp';
+        }
+        return offsetField;
+      },
+      setOffset(offset: any) {
+        this.offset = offset;
+      },
     }));
 
     React.useImperativeHandle(ref, () => ({
@@ -92,6 +112,8 @@ export default observer(
 
     const isVote =
       store.interaction === 'upVotes' || store.interaction === 'downVotes';
+
+    const isSubscriber = store.interaction === 'subscribers';
 
     const dataField = isVote ? 'votes' : 'entities';
 
@@ -110,9 +132,11 @@ export default observer(
             fetchEndpoint={store.endpoint}
             endpointData={dataField}
             params={store.opts}
-            map={isVote ? mapUser : mapActivity}
-            renderItem={isVote ? renderItemUser : renderItemActivity}
-            offsetField={'next-page'}
+            map={isVote ? mapUser : isSubscriber ? mapSubscriber : mapActivity}
+            renderItem={
+              isVote || isSubscriber ? renderItemUser : renderItemActivity
+            }
+            offsetField={store.offsetField}
           />
         </View>
       </Modal>

@@ -16,6 +16,7 @@ import BlogActionSheet from './BlogActionSheet';
 type PropsType = {
   entity: BlogModel;
   navigation: any;
+  showOnlyContent?: boolean;
 };
 
 /**
@@ -43,6 +44,33 @@ export default class BlogCard extends PureComponent<PropsType> {
     return title.trim().replace(/\n/gm, ' ');
   }
 
+  renderOnlyContent(image, title) {
+    const theme = ThemedStyles.style;
+    return (
+      <View>
+        <TouchableOpacity
+          onPress={this.navToBlog}
+          style={theme.backgroundSecondary}>
+          <FastImage
+            source={image}
+            style={styles.banner}
+            resizeMode={FastImage.resizeMode.cover}
+          />
+          <View style={[CS.padding2x]}>
+            <View style={[CS.columnAlignStart, CS.fullWidth]}>
+              <Text
+                style={[CS.fontL, CS.fontMedium, CS.flexContainer]}
+                numberOfLines={2}
+                ellipsizeMode="tail">
+                {title}
+              </Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+
   /**
    * Render Card
    */
@@ -52,7 +80,10 @@ export default class BlogCard extends PureComponent<PropsType> {
     const image = blog.getBannerSource();
     const title = this.cleanTitle(blog.title);
     const theme = ThemedStyles.style;
-
+    const showOnlyContent = this.props.showOnlyContent;
+    if (showOnlyContent) {
+      return this.renderOnlyContent(image, title);
+    }
     return (
       <View>
         <View style={styles.actionSheet}>

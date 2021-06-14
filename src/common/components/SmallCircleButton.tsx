@@ -9,7 +9,9 @@ type PropsType = {
   type?: string;
   style?: StyleProp<ViewStyle>;
   size?: number;
-  onPress: (event: GestureResponderEvent) => void;
+  onPress?: (event: GestureResponderEvent) => void;
+  reverseColor?: string;
+  color?: string;
 };
 
 const SmallCircleButton = (props: PropsType) => {
@@ -19,8 +21,8 @@ const SmallCircleButton = (props: PropsType) => {
       reverse
       name={props.name}
       type={props.type || 'material-community'}
-      color={ThemedStyles.getColor('PrimaryBackground')}
-      reverseColor={ThemedStyles.getColor('PrimaryText')}
+      color={props.color || ThemedStyles.getColor('PrimaryBackground')}
+      reverseColor={props.reverseColor || ThemedStyles.getColor('PrimaryText')}
       size={props.size || 16}
       onPress={props.onPress}
       containerStyle={props.style}
