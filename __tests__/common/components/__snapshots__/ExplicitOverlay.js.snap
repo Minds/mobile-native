@@ -12,7 +12,7 @@ exports[`Explicit overlay component renders correctly 1`] = `
         "justifyContent": "center",
       },
       Object {
-        "backgroundColor": undefined,
+        "backgroundColor": "#F6F7F7",
       },
       Object {
         "minHeight": 400,
@@ -28,7 +28,7 @@ exports[`Explicit overlay component renders correctly 1`] = `
     size={55}
     style={
       Object {
-        "color": undefined,
+        "color": "#72727C",
       }
     }
   />
@@ -36,7 +36,7 @@ exports[`Explicit overlay component renders correctly 1`] = `
     style={
       Array [
         Object {
-          "color": undefined,
+          "color": "#43434D",
         },
         Object {
           "paddingTop": 30,
@@ -56,7 +56,7 @@ exports[`Explicit overlay component renders correctly 1`] = `
     style={
       Array [
         Object {
-          "color": undefined,
+          "color": "#9B9B9B",
         },
         Object {
           "paddingVertical": 10,
@@ -75,13 +75,13 @@ exports[`Explicit overlay component renders correctly 1`] = `
     style={
       Array [
         Object {
-          "borderColor": undefined,
+          "borderColor": "#D3DBE3",
         },
         Object {
           "borderWidth": 0.5,
         },
         Object {
-          "backgroundColor": undefined,
+          "backgroundColor": "#FFFFFF",
         },
         Object {
           "margin": 20,
@@ -120,7 +120,7 @@ exports[`Explicit overlay component should renders the etag 1`] = `
         "justifyContent": "center",
       },
       Object {
-        "backgroundColor": undefined,
+        "backgroundColor": "#F6F7F7",
       },
       Object {
         "minHeight": 400,
@@ -136,7 +136,7 @@ exports[`Explicit overlay component should renders the etag 1`] = `
     size={55}
     style={
       Object {
-        "color": undefined,
+        "color": "#72727C",
       }
     }
   />
@@ -144,7 +144,7 @@ exports[`Explicit overlay component should renders the etag 1`] = `
     style={
       Array [
         Object {
-          "color": undefined,
+          "color": "#43434D",
         },
         Object {
           "paddingTop": 30,
@@ -164,7 +164,7 @@ exports[`Explicit overlay component should renders the etag 1`] = `
     style={
       Array [
         Object {
-          "color": undefined,
+          "color": "#9B9B9B",
         },
         Object {
           "paddingVertical": 10,
@@ -183,13 +183,13 @@ exports[`Explicit overlay component should renders the etag 1`] = `
     style={
       Array [
         Object {
-          "borderColor": undefined,
+          "borderColor": "#D3DBE3",
         },
         Object {
           "borderWidth": 0.5,
         },
         Object {
-          "backgroundColor": undefined,
+          "backgroundColor": "#FFFFFF",
         },
         Object {
           "margin": 20,
