@@ -73,8 +73,7 @@ export default class TosModal extends PureComponent {
 
     return (
       <Modal isVisible={this.state.show}>
-        <View
-          style={[theme.backgroundWhite, { height: 400, paddingBottom: 8 }]}>
+        <View style={[theme.bgWhite, { height: 400, paddingBottom: 8 }]}>
           <Text
             style={[
               theme.fontL,

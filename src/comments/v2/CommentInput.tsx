@@ -79,11 +79,7 @@ const CommentInput = observer(() => {
       <View style={[theme.justifyEnd, theme.flexContainer]}>
         <View style={theme.flexContainer}>
           <Touchable
-            style={[
-              theme.flexContainer,
-              theme.backgroundBlack,
-              theme.opacity50,
-            ]}
+            style={[theme.flexContainer, theme.bgBlack, theme.opacity50]}
             activeOpacity={0.5}
             onPress={() => provider.store?.setShowInput(false)}
           />

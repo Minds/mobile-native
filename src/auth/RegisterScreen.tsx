@@ -290,7 +290,7 @@ export default observer(function RegisterScreen(props: PropsType) {
                     ]}>
                     {i18n.t('auth.accept')}{' '}
                     <Text
-                      style={theme.Link}
+                      style={theme.link}
                       onPress={() =>
                         Linking.openURL('https://www.minds.com/p/terms')
                       }>

@@ -1,9 +1,8 @@
-const STEP = 1;
 const multiplier = 1;
 
 function getBorder(name) {
   if (!name) {
-    return STEP * multiplier;
+    return multiplier;
   }
   const regex = /(\d?\d)x/g;
   const result = regex.exec(name);
@@ -11,7 +10,7 @@ function getBorder(name) {
   if (result) {
     const n = parseInt(result[1], 10);
     if (n === 0 || n > 0) {
-      return n * STEP * multiplier;
+      return n * multiplier;
     }
   }
 }
@@ -22,6 +21,8 @@ export default function borders(name: string) {
 
   if (result) {
     const size = getBorder(result[2]);
-    return size ? { [`border${result[1] || ''}Width`]: size } : null;
+    return size !== undefined && size >= 0
+      ? { [`border${result[1] || ''}Width`]: size }
+      : null;
   }
 }

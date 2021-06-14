@@ -129,11 +129,7 @@ class TagOptinDrawer extends Component<Props> {
               </Text>
             ) : null}
             <TagSelect
-              tagStyle={[
-                theme.backgroundWhite,
-                theme.padding1x,
-                theme.flexContainer,
-              ]}
+              tagStyle={[theme.bgWhite, theme.padding1x, theme.flexContainer]}
               textSelectedStyle={[
                 theme.fontSemibold,
                 !this.props.hashtag.all
@@ -141,7 +137,6 @@ class TagOptinDrawer extends Component<Props> {
                   : theme.colorDarkGreyed,
               ]}
               textStyle={[theme.fontL, theme.colorDarkGreyed]}
-              containerStyle={[theme.columnAlignStart]}
               onTagDeleted={this.props.hashtag.deselect}
               onTagAdded={this.props.hashtag.select}
               tags={this.props.hashtag.suggested}

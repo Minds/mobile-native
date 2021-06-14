@@ -76,7 +76,7 @@ export default class GroupsBarItem extends Component {
           style={[
             theme.columnAlignCenter,
             styles.container,
-            theme.backgroundTransparent,
+            theme.bgTransparent,
             theme.centered,
           ]}>
           <View>
@@ -110,7 +110,7 @@ export default class GroupsBarItem extends Component {
         style={[
           theme.columnAlignCenter,
           styles.container,
-          theme.backgroundTransparent,
+          theme.bgTransparent,
           theme.centered,
         ]}>
         <TouchableOpacity onPress={this.navToGroup} activeOpacity={0.5}>

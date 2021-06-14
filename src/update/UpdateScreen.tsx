@@ -21,7 +21,7 @@ export default class UpdatingScreen extends Component {
   render() {
     const theme = ThemedStyles.style;
     return (
-      <View style={[theme.backgroundWhite, theme.padding, theme.flexContainer]}>
+      <View style={[theme.bgWhite, theme.padding, theme.flexContainer]}>
         <Text style={[theme.fontXXL, theme.textCenter, theme.padding]}>
           {i18n.t('update.title', { version: updateService.version })}
         </Text>

@@ -164,13 +164,13 @@ const _buildStyle = (theme: ColorsType) =>
       color: 'transparent',
     },
     // backgrounds
-    backgroundWhite: {
+    bgWhite: {
       backgroundColor: 'white',
     },
-    backgroundBlack: {
+    bgBlack: {
       backgroundColor: 'black',
     },
-    backgroundTransparent: {
+    bgTransparent: {
       backgroundColor: 'transparent',
     },
     // borders

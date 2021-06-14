@@ -261,7 +261,7 @@ export default observer(
         renderHeader={() => (
           <Header onPress={onHeaderPress} opened={localStore.opened} />
         )}
-        style={ThemedStyles.style.backgroundAlert}
+        style={ThemedStyles.style.bgAlert}
         onOpenEnd={onOpenEnd}
         onCloseEnd={onCloseEnd}
       />

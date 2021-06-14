@@ -104,7 +104,7 @@ export default observer(() => {
                 theme.bcolorPrimaryBorder,
                 styles.option,
                 ...buildButtonStyles(index, store.paymentMethod === type),
-                store.paymentMethod === type ? theme.backgroundLink : '',
+                store.paymentMethod === type ? theme.bgLink : '',
               ]}
               onPress={() => store.handleOptionSelection(type)}>
               <Text
@@ -138,7 +138,7 @@ export default observer(() => {
                   {
                     link: (
                       <Text
-                        style={theme.Link}
+                        style={theme.link}
                         onPress={() => {
                           Linking.openURL(
                             'https://cdn-assets.minds.com/front/dist/assets/documents/TermsOfSale-v0.1.pdf',

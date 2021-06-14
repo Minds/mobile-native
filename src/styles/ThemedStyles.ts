@@ -132,7 +132,7 @@ export class ThemedStylesStore {
         background: 'transparent',
         // card: theme.bgSecondaryBackground, // generates an error on ios
         text: theme.PrimaryText,
-        primary: theme.icon,
+        primary: theme.Icon,
       },
     };
 

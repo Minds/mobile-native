@@ -47,7 +47,7 @@ const InputSelector = (props: PropsType) => {
   return (
     <View
       style={[
-        theme.backgroundPrimary,
+        theme.bgPrimaryBackground,
         theme.paddingTop4x,
         props.mainContainerStyle,
       ]}>

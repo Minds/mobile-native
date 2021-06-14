@@ -3,11 +3,12 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { StyleSheet, Text } from 'react-native';
 import type UserModel from '../../channel/UserModel';
+import { ColorsNameType } from '../../styles/Colors';
 
 type badge = {
   badge: string;
   icon: string;
-  color: string;
+  color: ColorsNameType;
   shoudlShow: (channel: UserModel, activeBadges: Array<string>) => boolean;
 };
 
@@ -74,7 +75,7 @@ const ChannelBadge = ({
 }: PropsType) => {
   const badgesActive = activeBadges ?? ['verified', 'admin'];
   const sizeIcon = iconSize ?? 16;
-  const badgesIcons: Array<JSX.Element> = [];
+  const badgesIcons: Array<React.ReactNode> = [];
 
   badges.forEach(badge => {
     if (badge.shoudlShow(channel, badgesActive)) {

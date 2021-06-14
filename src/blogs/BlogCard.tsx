@@ -50,16 +50,16 @@ export default class BlogCard extends PureComponent<PropsType> {
       <View>
         <TouchableOpacity
           onPress={this.navToBlog}
-          style={theme.backgroundSecondary}>
+          style={theme.bgSecondaryBackground}>
           <FastImage
             source={image}
             style={styles.banner}
             resizeMode={FastImage.resizeMode.cover}
           />
-          <View style={[CS.padding2x]}>
-            <View style={[CS.columnAlignStart, CS.fullWidth]}>
+          <View style={theme.padding2x}>
+            <View style={theme.fullWidth}>
               <Text
-                style={[CS.fontL, CS.fontMedium, CS.flexContainer]}
+                style={[theme.fontL, theme.fontMedium, theme.flexContainer]}
                 numberOfLines={2}
                 ellipsizeMode="tail">
                 {title}
@@ -97,8 +97,8 @@ export default class BlogCard extends PureComponent<PropsType> {
             style={styles.banner}
             resizeMode={FastImage.resizeMode.cover}
           />
-          <View style={[theme.padding2x]}>
-            <View style={[theme.columnAlignStart, theme.fullWidth]}>
+          <View style={theme.padding2x}>
+            <View style={theme.fullWidth}>
               <Text
                 style={[theme.fontL, theme.fontMedium, theme.flexContainer]}
                 numberOfLines={2}
