@@ -65,11 +65,11 @@ PODS:
   - lottie-react-native (3.5.0):
     - lottie-ios (~> 3.1.8)
     - React-Core
-  - Permission-Camera (2.2.2):
+  - Permission-Camera (3.0.4):
     - RNPermissions
-  - Permission-Microphone (2.2.2):
+  - Permission-Microphone (3.0.4):
     - RNPermissions
-  - Permission-PhotoLibrary (2.2.2):
+  - Permission-PhotoLibrary (3.0.4):
     - RNPermissions
   - RCT-Folly (2020.01.13.00):
     - boost-for-react-native
@@ -291,8 +291,8 @@ PODS:
     - React-Core
   - react-native-camera/RN (3.43.0):
     - React-Core
-  - react-native-cameraroll (1.4.0):
-    - React
+  - react-native-cameraroll (4.0.4):
+    - React-Core
   - react-native-month-year-picker (1.6.4):
     - React
   - react-native-netinfo (5.9.10):
@@ -412,7 +412,7 @@ PODS:
     - TOCropViewController
   - RNLocalize (1.4.3):
     - React-Core
-  - RNPermissions (2.2.2):
+  - RNPermissions (3.0.4):
     - React-Core
   - RNPhotoEditor (1.0.10):
     - iOSPhotoEditor
@@ -515,9 +515,9 @@ DEPENDENCIES:
   - libevent (~> 2.1.12)
   - lottie-ios (from `../node_modules/lottie-ios`)
   - lottie-react-native (from `../node_modules/lottie-react-native`)
-  - Permission-Camera (from `../node_modules/react-native-permissions/ios/Camera.podspec`)
-  - Permission-Microphone (from `../node_modules/react-native-permissions/ios/Microphone.podspec`)
-  - Permission-PhotoLibrary (from `../node_modules/react-native-permissions/ios/PhotoLibrary.podspec`)
+  - Permission-Camera (from `../node_modules/react-native-permissions/ios/Camera`)
+  - Permission-Microphone (from `../node_modules/react-native-permissions/ios/Microphone`)
+  - Permission-PhotoLibrary (from `../node_modules/react-native-permissions/ios/PhotoLibrary`)
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
   - RCTSilentSwitch (from `../node_modules/react-native-silent-switch`)
@@ -651,11 +651,11 @@ EXTERNAL SOURCES:
   lottie-react-native:
     :path: "../node_modules/lottie-react-native"
   Permission-Camera:
-    :path: "../node_modules/react-native-permissions/ios/Camera.podspec"
+    :path: "../node_modules/react-native-permissions/ios/Camera"
   Permission-Microphone:
-    :path: "../node_modules/react-native-permissions/ios/Microphone.podspec"
+    :path: "../node_modules/react-native-permissions/ios/Microphone"
   Permission-PhotoLibrary:
-    :path: "../node_modules/react-native-permissions/ios/PhotoLibrary.podspec"
+    :path: "../node_modules/react-native-permissions/ios/PhotoLibrary"
   RCT-Folly:
     :podspec: "../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec"
   RCTRequired:
@@ -831,9 +831,9 @@ SPEC CHECKSUMS:
   libwebp: e90b9c01d99205d03b6bb8f2c8c415e5a4ef66f0
   lottie-ios: 48fac6be217c76937e36e340e2d09cf7b10b7f5f
   lottie-react-native: 69740f3742cc82d8211979e2b48681e002c22bff
-  Permission-Camera: 5d2aaf95592660b6dcb5e8d1d90ed5d0156cad02
-  Permission-Microphone: a0e56790d61392c31627df33328fef079ad46fa8
-  Permission-PhotoLibrary: 8227a6ed9f6a971537afe63742d54f5f23a38fe2
+  Permission-Camera: 74dc395c37a06ebe915069c5dca954c7a2a5a2e3
+  Permission-Microphone: 450ff628a7146c415cfb98025e518810d9fa76ad
+  Permission-PhotoLibrary: 440f206f0d36e5951c4c9b28567f60471fdddfb5
   RCT-Folly: 136c01aa731d74f1a38c21402a5ef5fb2e8379a4
   RCTRequired: 6d3e854f0e7260a648badd0d44fc364bc9da9728
   RCTSilentSwitch: bc3867bfe1d9bd19391d15ce0d27f208b6731e52
@@ -848,7 +848,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 80c46bd381fd06e418e0d4f53672dc1d1945c4c3
   React-jsinspector: cc614ec18a9ca96fd275100c16d74d62ee11f0ae
   react-native-camera: f432fcf1b32b528bbf7c3543d3e3b1deb0c5b72a
-  react-native-cameraroll: dbda741db5dadcdcf738e55a1fd565c307943bca
+  react-native-cameraroll: 88f4e62d9ecd0e1f253abe4f685474f2ea14bfa2
   react-native-month-year-picker: 9a59b4b8c4802a23123b0ce4ccadce880ad55f8a
   react-native-netinfo: 30fb89fa913c342be82a887b56e96be6d71201dd
   react-native-notifications: b67765827723f605d9267922977c8b0ad93e96ee
@@ -884,7 +884,7 @@ SPEC CHECKSUMS:
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNImageCropPicker: 08ba3a2e2f4f8833d606f01906c371e382c4dea9
   RNLocalize: 7c7aeda16c01db7a0918981c14875c0a53be9b79
-  RNPermissions: 5df468064df661a4c8c017e2791ce90d7695eea5
+  RNPermissions: c46788f4cd402287425983e04a4c9bb4356036eb
   RNPhotoEditor: 732f185b28e22c7fdfbe65217db6842c644d5aec
   RNReanimated: 6d1ad9cc46e674ef06dd664e28e094d36c6f7f83
   RNScreens: f7ad633b2e0190b77b6a7aab7f914fad6f198d8d
@@ -913,6 +913,6 @@ SPEC CHECKSUMS:
   UMTaskManagerInterface: 4c60b43eaf3cb05a164bc9113258a171c18b7bf7
   Yoga: 575c581c63e0d35c9a83f4b46d01d63abc1100ac
 
-PODFILE CHECKSUM: e687beaeccea1127e57405ec1ad507fa839b591e
+PODFILE CHECKSUM: 69838539fecfdef180bdb0a9e3b1450e64b3a130
 
 COCOAPODS: 1.10.1

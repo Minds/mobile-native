@@ -84,14 +84,6 @@ class PermissionsService {
    * Request media library access (IOS ONLY)
    */
   async mediaLibrary() {
-    console.log(
-      await request(PERMISSIONS.IOS.MEDIA_LIBRARY, {
-        title: 'Minds',
-        message: i18n.t('permissions.mediaLibrary'),
-        buttonPositive: i18n.t('permissions.grant'),
-        buttonNegative: i18n.t('no'),
-      }),
-    );
     return (
       RESULTS.GRANTED ===
       (await request(PERMISSIONS.IOS.MEDIA_LIBRARY, {
