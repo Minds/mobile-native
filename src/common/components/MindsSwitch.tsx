@@ -54,28 +54,24 @@ const MindsSwitch = observer(
         <TouchableOpacity
           style={[
             theme.rowJustifyStart,
-            theme.mindsSwitchBackgroundPrimary,
+            theme.bgSecondaryBackground,
             theme.border,
             theme.borderRadius2x,
-            theme.borderPrimary,
+            theme.bcolorPrimaryBorder,
           ]}
           activeOpacity={0.65}
           onPress={localStore.selectedValueChange}>
           <Text
             style={[
               ...textStyle,
-              localStore.isSelected(leftValue)
-                ? theme.mindsSwitchBackgroundSecondary
-                : null,
+              localStore.isSelected(leftValue) ? theme.bgPrimaryBorder : null,
             ]}>
             {leftText}
           </Text>
           <Text
             style={[
               ...textStyle,
-              localStore.isSelected(rightValue)
-                ? theme.mindsSwitchBackgroundSecondary
-                : null,
+              localStore.isSelected(rightValue) ? theme.bgPrimaryBorder : null,
             ]}>
             {rightText}
           </Text>

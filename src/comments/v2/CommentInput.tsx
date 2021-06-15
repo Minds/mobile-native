@@ -79,11 +79,7 @@ const CommentInput = observer(() => {
       <View style={[theme.justifyEnd, theme.flexContainer]}>
         <View style={theme.flexContainer}>
           <Touchable
-            style={[
-              theme.flexContainer,
-              theme.backgroundBlack,
-              theme.opacity50,
-            ]}
+            style={[theme.flexContainer, theme.bgBlack, theme.opacity50]}
             activeOpacity={0.5}
             onPress={() => provider.store?.setShowInput(false)}
           />
@@ -96,12 +92,12 @@ const CommentInput = observer(() => {
             />
           )}
         </View>
-        <View style={[theme.backgroundPrimary, styles.inputContainer]}>
+        <View style={[theme.bgPrimaryBackground, styles.inputContainer]}>
           {(provider.store.parent || provider.store.edit) && (
             <View
               style={[
                 theme.borderBottomHair,
-                theme.borderPrimary,
+                theme.bcolorPrimaryBorder,
                 theme.paddingBottom2x,
                 theme.paddingHorizontal4x,
                 theme.marginBottom2x,
@@ -128,7 +124,7 @@ const CommentInput = observer(() => {
               multiline={true}
               editable={!provider.store.saving}
               scrollEnabled={true}
-              placeholderTextColor={ThemedStyles.getColor('tertiary_text')}
+              placeholderTextColor={ThemedStyles.getColor('TertiaryText')}
               placeholder={placeHolder}
               underlineColorAndroid="transparent"
               onChangeText={provider.store.setText}
@@ -176,7 +172,7 @@ const CommentInput = observer(() => {
               <View>
                 <DotIndicator
                   containerStyle={[theme.alignSelfCenter, theme.justifyEnd]}
-                  color={ThemedStyles.getColor('primary_text')}
+                  color={ThemedStyles.getColor('PrimaryText')}
                   scaleEnabled={true}
                 />
               </View>

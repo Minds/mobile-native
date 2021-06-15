@@ -5,7 +5,6 @@ import { Text, View, Alert, StyleSheet } from 'react-native';
 import { Icon } from 'react-native-elements';
 import FastImage from 'react-native-fast-image';
 
-import { CommonStyle } from '../../styles/Common';
 import currency from '../../common/helpers/currency';
 import Button from '../../common/components/Button';
 
@@ -36,23 +35,15 @@ export default class Lock extends PureComponent<PropsType> {
    */
   render() {
     const entity = this.props.entity;
+    const theme = ThemedStyles.style;
 
     if (entity.isOwner()) {
       return (
-        <View
-          style={[
-            CommonStyle.padding2x,
-            CommonStyle.rowJustifyCenter,
-            CommonStyle.alignJustifyCenter,
-          ]}>
+        <View style={[theme.padding2x, theme.rowJustifyCenter, theme.centered]}>
           <View style={styles.textContainer}>
-            <Text style={CommonStyle.fontS}>{this.getOwnerIntro()}</Text>
+            <Text style={theme.fontS}>{this.getOwnerIntro()}</Text>
           </View>
-          <View
-            style={[
-              CommonStyle.rowJustifyCenter,
-              CommonStyle.alignJustifyCenter,
-            ]}>
+          <View style={[theme.rowJustifyCenter, theme.centered]}>
             <Icon
               reverse
               name="ios-flash"
@@ -61,8 +52,7 @@ export default class Lock extends PureComponent<PropsType> {
               iconStyle={iconStyle}
               color="#4caf50"
             />
-            <Text
-              style={[CommonStyle.fontM, ThemedStyles.style.colorPrimaryText]}>
+            <Text style={[theme.fontM, ThemedStyles.style.colorPrimaryText]}>
               {i18n.t('locked')}
             </Text>
           </View>
@@ -78,10 +68,10 @@ export default class Lock extends PureComponent<PropsType> {
       <View>
         <View
           style={[
-            CommonStyle.paddingLeft,
-            CommonStyle.paddingRight,
-            CommonStyle.rowJustifyCenter,
-            CommonStyle.alignJustifyCenter,
+            theme.paddingLeft,
+            theme.paddingRight,
+            theme.rowJustifyCenter,
+            theme.centered,
           ]}>
           <View style={styles.textContainer}>
             <Text>{intro}</Text>
@@ -90,33 +80,19 @@ export default class Lock extends PureComponent<PropsType> {
             loading={this.state.unlocking}
             text={i18n.t('unlock').toUpperCase()}
             color="white"
-            containerStyle={CommonStyle.rowJustifyCenter}
+            containerStyle={theme.rowJustifyCenter}
             onPress={this.unlock}>
             <Icon name="ios-flash" type="ionicon" size={22} color="white" />
           </Button>
         </View>
         <FastImage source={imageUri} style={imageStyle} />
-        <View
-          style={[
-            CommonStyle.alignJustifyCenter,
-            CommonStyle.padding2x,
-            styles.mask,
-          ]}>
+        <View style={[theme.centered, theme.padding2x, styles.mask]}>
           <Icon name="ios-flash" type="ionicon" size={55} color="white" />
           <Text
-            style={[
-              CommonStyle.colorWhite,
-              CommonStyle.fontXXXL,
-              CommonStyle.paddingBottom2x,
-            ]}>
+            style={[theme.colorWhite, theme.fontXXXL, theme.paddingBottom2x]}>
             {i18n.t('wire.amountMonth', { amount: this.getFormatedAmount() })}
           </Text>
-          <Text
-            style={[
-              CommonStyle.colorWhite,
-              CommonStyle.fontS,
-              CommonStyle.textCenter,
-            ]}>
+          <Text style={[theme.colorWhite, theme.fontS, theme.textCenter]}>
             {i18n.t('wire.amountMonthDescription', {
               amount: this.getFormatedAmount().toUpperCase(),
               name: entity.ownerObj.name.toUpperCase(),

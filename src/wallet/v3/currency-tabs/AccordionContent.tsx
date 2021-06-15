@@ -59,10 +59,10 @@ const AccordionContent = ({ data, summary }: PropsType) => {
   return (
     <View
       style={[
-        theme.backgroundSecondary,
+        theme.bgSecondaryBackground,
         theme.marginTop,
         theme.paddingBottom5x,
-        theme.borderPrimary,
+        theme.bcolorPrimaryBorder,
       ]}>
       {data.map(row => {
         return (
@@ -77,7 +77,7 @@ const AccordionContent = ({ data, summary }: PropsType) => {
                     containerStyle={theme.borderRadius}
                     width={row.tooltip.width}
                     height={row.tooltip.height}
-                    backgroundColor={ThemedStyles.getColor('link')}
+                    backgroundColor={ThemedStyles.getColor('Link')}
                     popover={
                       <Text style={theme.colorWhite}>{row.tooltip.title}</Text>
                     }>
@@ -103,7 +103,7 @@ const AccordionContent = ({ data, summary }: PropsType) => {
             theme.fontMedium,
             theme.marginLeft5x,
             theme.paddingTop3x,
-            theme.borderPrimary,
+            theme.bcolorPrimaryBorder,
             theme.borderTop,
             theme.marginTop7x,
             theme.width80,

@@ -75,7 +75,7 @@ export default observer(() => {
   return (
     <>
       <ScrollView
-        style={[theme.flexContainer, theme.backgroundPrimary]}
+        style={[theme.flexContainer, theme.bgPrimaryBackground]}
         contentContainerStyle={theme.padding4x}>
         <View style={[theme.alignCenter]}>
           <Text
@@ -96,15 +96,15 @@ export default observer(() => {
             styles.optionsContainer,
             theme.border2x,
             styles.buttonsContainer,
-            theme.borderPrimary,
+            theme.bcolorPrimaryBorder,
           ]}>
           {paymentMethodsList.map(({ type, name }, index) => (
             <Pressable
               style={[
-                theme.borderPrimary,
+                theme.bcolorPrimaryBorder,
                 styles.option,
                 ...buildButtonStyles(index, store.paymentMethod === type),
-                store.paymentMethod === type ? theme.backgroundLink : '',
+                store.paymentMethod === type ? theme.bgLink : '',
               ]}
               onPress={() => store.handleOptionSelection(type)}>
               <Text

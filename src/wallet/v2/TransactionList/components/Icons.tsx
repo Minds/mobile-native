@@ -25,7 +25,7 @@ export const DeltaIcon = ({ delta }: DeltaIconPropsType) => {
 export const AvatarIcon = ({ name }) => (
   <MIcon
     name={name}
-    color={ThemedStyles.getColor('icon')}
+    color={ThemedStyles.getColor('Icon')}
     size={36}
     style={ThemedStyles.style.marginRight3x}
   />

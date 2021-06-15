@@ -54,13 +54,13 @@ const NumberConfirmed = observer(({ localStore, ...props }: PropsType) => {
             style.phoneInput,
             ComponentsStyle.loginInputNew,
             theme.marginRight2x,
-            theme.borderPrimary,
+            theme.bcolorPrimaryBorder,
             theme.colorPrimaryText,
           ]}
           value={localStore.password}
           onChangeText={localStore.setPassword}
           placeholder={i18n.t('passwordPlaceholder')}
-          placeholderTextColor={ThemedStyles.getColor('secondary_text')}
+          placeholderTextColor={ThemedStyles.getColor('SecondaryText')}
         />
         <ListItemButton onPress={remove2FA}>
           <Text style={theme.colorPrimaryText}>

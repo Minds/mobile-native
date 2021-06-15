@@ -10,7 +10,7 @@ interface HandleProps extends BottomSheetHandleProps {
 const Handle: React.FC<HandleProps> = ({ style }) => {
   const theme = ThemedStyles.style;
   // render
-  return <View style={[styles.header, style, theme.backgroundPrimary]} />;
+  return <View style={[styles.header, style, theme.bgPrimaryBackground]} />;
 };
 
 export default Handle;

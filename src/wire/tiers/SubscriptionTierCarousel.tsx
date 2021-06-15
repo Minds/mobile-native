@@ -3,7 +3,6 @@ import { Text, View, StyleSheet } from 'react-native';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 
 import featuresService from '../../common/services/features.service';
-import { CommonStyle as CS } from '../../styles/Common';
 import viewportPercentage from '../../common/helpers/viewportPercentage';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -90,6 +89,7 @@ export default class SubscriptionTierCarousel extends PureComponent<PropsType> {
    * Renders a tier
    */
   _renderItem = row => {
+    const theme = ThemedStyles.style;
     const amount = row.item.amount || this.props.amount;
     const currency = row.item.currency || this.props.currency;
     const recurring = this.props.recurring;
@@ -104,16 +104,16 @@ export default class SubscriptionTierCarousel extends PureComponent<PropsType> {
       <View
         key={`rewards${row.item.amount}`}
         style={[
-          CS.rowJustifyCenter,
-          ThemedStyles.style.backgroundPrimary,
-          CS.borderRadius5x,
-          CS.padding2x,
-          CS.border,
-          ThemedStyles.style.borderBottom,
+          theme.rowJustifyCenter,
+          theme.bgPrimaryBackground,
+          theme.borderRadius5x,
+          theme.padding2x,
+          theme.border,
+          theme.borderBottom,
         ]}>
-        <View style={CS.columnAlignCenter}>
-          <Text style={[CS.fontXXL, CS.fontMedium]}>{text}</Text>
-          <Text numberOfLines={5} style={[CS.fontL, CS.fontMedium]}>
+        <View style={theme.columnAlignCenter}>
+          <Text style={[theme.fontXXL, theme.fontMedium]}>{text}</Text>
+          <Text numberOfLines={5} style={[theme.fontL, theme.fontMedium]}>
             {row.item.description}
           </Text>
         </View>

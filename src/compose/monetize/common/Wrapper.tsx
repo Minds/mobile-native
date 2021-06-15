@@ -30,7 +30,7 @@ const Wrapper = ({
   }, [onPressRight]);
 
   return (
-    <View style={[theme.flexContainer, theme.backgroundPrimary]}>
+    <View style={[theme.flexContainer, theme.bgPrimaryBackground]}>
       <TopBar
         leftText={i18n.t('monetize.title')}
         rightText={rightText}

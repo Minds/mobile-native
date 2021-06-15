@@ -22,14 +22,14 @@ const Payout = ({ minds, mindsPrice, isToday, store }: PropsType) => {
       style={theme.alignSelfCenter}>
       <Icon
         name="refresh"
-        color={ThemedStyles.getColor('secondary_text')}
+        color={ThemedStyles.getColor('SecondaryText')}
         size={20}
       />
     </TouchableOpacity>
   );
 
   const payout = isToday ? (
-    <View style={[styles.container, theme.borderPrimary]}>
+    <View style={[styles.container, theme.bcolorPrimaryBorder]}>
       <View style={styles.innerContainer}>
         <Text style={styles.text}>{i18n.t('wallet.todayEstimate')}</Text>
       </View>
@@ -41,7 +41,7 @@ const Payout = ({ minds, mindsPrice, isToday, store }: PropsType) => {
       {refresh}
     </View>
   ) : (
-    <View style={[styles.container, theme.borderPrimary]}>
+    <View style={[styles.container, theme.bcolorPrimaryBorder]}>
       <Text style={[styles.text, styles.innerContainer]}>
         {i18n.t('wallet.usd.earnings')}
       </Text>

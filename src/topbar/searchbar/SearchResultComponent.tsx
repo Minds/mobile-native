@@ -50,7 +50,7 @@ const SearchResultComponent = observer(
           if (typeof item === 'string') {
             return (
               <MenuItem
-                containerItemStyle={theme.backgroundTransparent}
+                containerItemStyle={theme.bgTransparent}
                 item={{
                   onPress: () => localStore.setSearchesAndQueryDiscovery(item),
                   title: item,
@@ -84,7 +84,7 @@ const SearchResultComponent = observer(
 );
 
 const containerStyle = ThemedStyles.combine(
-  'backgroundPrimary',
+  'bgPrimaryBackground',
   'padding2x',
   'flexContainer',
 );

@@ -85,7 +85,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
 
   const containerStyle = useStyle(
     'rowJustifySpaceEvenly',
-    'backgroundSecondary',
+    'bgSecondaryBackground',
     styles.tabBar,
     bottomInset,
   );
@@ -268,8 +268,8 @@ const empty = () => null;
 const tabOptions = ({ route }) => ({
   tabBarIcon: ({ focused }) => {
     const color = focused
-      ? ThemedStyles.getColor('link')
-      : ThemedStyles.getColor('secondary_text');
+      ? ThemedStyles.getColor('Link')
+      : ThemedStyles.getColor('SecondaryText');
     let iconName,
       iconsize = 28;
 

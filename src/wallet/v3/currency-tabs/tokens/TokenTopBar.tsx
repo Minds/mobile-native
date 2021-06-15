@@ -36,10 +36,10 @@ const TokenTopBar = ({
           containerStyle={theme.borderRadius}
           width={screen.width - 20}
           height={200}
-          backgroundColor={ThemedStyles.getColor('secondary_background')}
+          backgroundColor={ThemedStyles.getColor('SecondaryBackground')}
           popover={<BalanceInfo walletStore={walletStore} />}>
           <TouchableOpacity
-            style={[theme.mindsSwitchBackgroundSecondary, styles.touchable]}
+            style={[theme.bgPrimaryBorder, styles.touchable]}
             onPress={() => tooltipRef.current.toggleTooltip()}>
             <MindsTokens
               mindsPrice={walletStore.prices.minds}

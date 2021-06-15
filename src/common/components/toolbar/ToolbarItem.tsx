@@ -4,10 +4,7 @@ import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import IonIcon from 'react-native-vector-icons/Ionicons';
-
-import colors from '../../../styles/Colors';
 import { Badge } from 'react-native-elements';
-import { CommonStyle } from '../../../styles/Common';
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import ThemedStyles from '../../../styles/ThemedStyles';
 
@@ -27,7 +24,7 @@ export default class ToolbarItem extends PureComponent {
     const textStyle = this.getTextStyle();
     const subTextStyle = this.getSubTextStyle();
     const buttonStyle = selected
-      ? [styles.button, { borderBottomColor: ThemedStyles.getColor('link') }]
+      ? [styles.button, { borderBottomColor: ThemedStyles.getColor('Link') }]
       : styles.button;
 
     return (
@@ -49,7 +46,7 @@ export default class ToolbarItem extends PureComponent {
     return badge && icon ? (
       <Badge
         value={this.props.badge}
-        containerStyle={styles.badgeStyle}
+        containerStyle={badgeStyle}
         wrapperStyle={styles.wrapperStyle}
         textStyle={styles.badgeText}
       />
@@ -77,20 +74,20 @@ export default class ToolbarItem extends PureComponent {
       return selectedTextStyle
         ? [
             styles.buttonSelectedText,
-            CommonStyle.fontS,
+            ThemedStyles.style.fontS,
             ThemedStyles.style.colorIconActive,
             selectedTextStyle,
           ]
         : [
             styles.buttonSelectedText,
-            CommonStyle.fontS,
+            ThemedStyles.style.fontS,
             ThemedStyles.style.colorIconActive,
           ];
     }
 
     return textStyle
-      ? [styles.buttonText, CommonStyle.fontS, textStyle]
-      : [styles.buttonText, CommonStyle.fontS];
+      ? [styles.buttonText, ThemedStyles.style.fontS, textStyle]
+      : [styles.buttonText, ThemedStyles.style.fontS];
   }
 
   /**
@@ -151,10 +148,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 4,
     borderBottomColor: 'transparent',
   },
-  badgeStyle: {
-    backgroundColor: colors.explicit,
-    padding: 3,
-  },
+
   wrapperStyle: {
     position: 'absolute',
     top: -8,
@@ -165,3 +159,10 @@ const styles = StyleSheet.create({
     fontWeight: '400',
   },
 });
+
+const badgeStyle = ThemedStyles.combine(
+  {
+    padding: 3,
+  },
+  'bgAlert',
+);

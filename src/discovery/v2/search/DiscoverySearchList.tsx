@@ -70,7 +70,7 @@ export const DiscoverySearchList = observer((props: Props) => {
 
       return (
         <ErrorBoundary
-          containerStyle={[theme.borderBottomHair, theme.borderPrimary]}
+          containerStyle={[theme.borderBottomHair, theme.bcolorPrimaryBorder]}
           message="Could not load">
           {entity}
         </ErrorBoundary>
@@ -79,7 +79,7 @@ export const DiscoverySearchList = observer((props: Props) => {
     [
       props.navigation,
       theme.borderBottomHair,
-      theme.borderPrimary,
+      theme.bcolorPrimaryBorder,
       searchBarStore,
     ],
   );

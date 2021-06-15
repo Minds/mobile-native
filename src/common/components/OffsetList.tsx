@@ -120,4 +120,4 @@ export default observer(function OffsetList<T>(props: PropsType) {
   );
 });
 
-const listStyle = ThemedStyles.combine('flexContainer', 'backgroundPrimary');
+const listStyle = ThemedStyles.combine('flexContainer', 'bgPrimaryBackground');

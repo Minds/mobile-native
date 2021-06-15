@@ -8,7 +8,7 @@ exports[`blog view screen component should renders correctly 1`] = `
         "flex": 1,
       },
       Object {
-        "backgroundColor": undefined,
+        "backgroundColor": "#F6F7F7",
       },
     ]
   }
@@ -22,7 +22,7 @@ exports[`blog view screen component should renders correctly 1`] = `
               "flex": 1,
             },
             Object {
-              "backgroundColor": undefined,
+              "backgroundColor": "#F6F7F7",
             },
           ]
         }
@@ -91,14 +91,12 @@ exports[`blog view screen component should renders correctly 1`] = `
         </Text>
         <View
           style={
-            Array [
-              Object {
-                "position": "absolute",
-                "right": 10,
-                "top": 10,
-                "zIndex": 1,
-              },
-            ]
+            Object {
+              "position": "absolute",
+              "right": 10,
+              "top": 10,
+              "zIndex": 1,
+            }
           }
         >
           <View>
@@ -112,7 +110,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                     "fontSize": 28,
                   },
                   Object {
-                    "color": undefined,
+                    "color": "#9B9B9B",
                   },
                   Object {
                     "fontFamily": "Material Icons",
@@ -166,7 +164,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                   style={
                     Object {
                       "alignSelf": "flex-end",
-                      "backgroundColor": "#242A30",
+                      "backgroundColor": "#FFFFFF",
                       "flex": 1,
                       "height": 45.5,
                       "transform": Array [
@@ -188,7 +186,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                         },
                         Object {
                           "alignItems": "center",
-                          "backgroundColor": "#242A30",
+                          "backgroundColor": "#FFFFFF",
                           "height": 40,
                           "justifyContent": "center",
                         },
@@ -227,7 +225,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                         },
                         Object {
                           "alignItems": "center",
-                          "backgroundColor": "#1A2025",
+                          "backgroundColor": "#F6F7F7",
                           "height": 50,
                           "justifyContent": "center",
                           "marginTop": 6,
@@ -270,7 +268,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "borderBottomWidth": 0.5,
                 },
                 Object {
-                  "borderColor": undefined,
+                  "borderColor": "#D3DBE3",
                 },
                 undefined,
               ]
@@ -355,7 +353,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                       style={
                         Array [
                           Object {
-                            "color": undefined,
+                            "color": "#43434D",
                           },
                           Object {
                             "fontFamily": "Roboto-Light",
@@ -379,7 +377,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                         style={
                           Array [
                             Object {
-                              "color": undefined,
+                              "color": "#72727C",
                             },
                             Object {
                               "fontFamily": "Roboto-Light",
@@ -408,7 +406,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                           "fontSize": 11,
                         },
                         Object {
-                          "color": undefined,
+                          "color": "#72727C",
                         },
                       ]
                     }
@@ -431,7 +429,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                         "marginLeft": 5,
                       },
                       Object {
-                        "color": undefined,
+                        "color": "#1B85D6",
                       },
                     ],
                     Object {
@@ -459,7 +457,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                         "marginLeft": 5,
                       },
                       Object {
-                        "color": undefined,
+                        "color": "#1B85D6",
                       },
                       null,
                     ],
@@ -1246,7 +1244,13 @@ exports[`blog view screen component should renders correctly 1`] = `
               }
             }
           >
-            <View>
+            <View
+              style={
+                Object {
+                  "color": "#7D7D82",
+                }
+              }
+            >
               <View
                 style={
                   Object {
@@ -1261,7 +1265,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                   style={
                     Array [
                       Object {
-                        "color": "#b0bec5",
+                        "color": "#242424",
                         "fontSize": 18,
                       },
                       Object {
@@ -1292,7 +1296,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "paddingLeft": 5,
                 },
                 Object {
-                  "color": undefined,
+                  "color": "#72727C",
                 },
                 Object {
                   "paddingRight": 10,
@@ -1313,6 +1317,11 @@ exports[`blog view screen component should renders correctly 1`] = `
               activeOpacity={0.3}
               disabled={false}
               onPress={[Function]}
+              style={
+                Object {
+                  "color": "#1B85D6",
+                }
+              }
               underlayColor="transparent"
             >
               <View
@@ -1329,7 +1338,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                   style={
                     Array [
                       Object {
-                        "color": "#4690D6",
+                        "color": "#242424",
                         "fontSize": 20,
                       },
                       Object {
@@ -1383,6 +1392,11 @@ exports[`blog view screen component should renders correctly 1`] = `
               activeOpacity={0.3}
               disabled={false}
               onPress={[Function]}
+              style={
+                Object {
+                  "color": "#1B85D6",
+                }
+              }
               underlayColor="transparent"
             >
               <View
@@ -1402,7 +1416,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                   style={
                     Array [
                       Object {
-                        "color": "#4690D6",
+                        "color": "#242424",
                         "fontSize": 22,
                       },
                       Object {

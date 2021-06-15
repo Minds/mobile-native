@@ -31,7 +31,7 @@ exports[`Thumb action component renders correctly 1`] = `
         style={
           Array [
             Object {
-              "color": undefined,
+              "color": "#7D7D82",
             },
             Object {
               "marginRight": 5,
@@ -47,7 +47,7 @@ exports[`Thumb action component renders correctly 1`] = `
   }
   style={
     Object {
-      "backgroundColor": undefined,
+      "backgroundColor": "#F6F7F7",
     }
   }
 >
@@ -56,7 +56,7 @@ exports[`Thumb action component renders correctly 1`] = `
     textStyle={
       Array [
         Object {
-          "color": undefined,
+          "color": "#72727C",
         },
         Object {
           "fontSize": 16,
@@ -70,7 +70,7 @@ exports[`Thumb action component renders correctly 1`] = `
       size={15}
       style={
         Object {
-          "color": undefined,
+          "color": "#72727C",
         }
       }
     />
@@ -81,7 +81,7 @@ exports[`Thumb action component renders correctly 1`] = `
     textStyle={
       Array [
         Object {
-          "color": undefined,
+          "color": "#72727C",
         },
         Object {
           "fontSize": 16,
@@ -95,7 +95,7 @@ exports[`Thumb action component renders correctly 1`] = `
       size={15}
       style={
         Object {
-          "color": undefined,
+          "color": "#72727C",
         }
       }
     />

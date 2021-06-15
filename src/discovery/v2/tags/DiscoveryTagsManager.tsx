@@ -133,7 +133,7 @@ export const DiscoveryTagsManager = withErrorBoundary(
 
     const SectionHeaderPatrial = (info: { section: SectionListData<any> }) => {
       return (
-        <View style={[theme.backgroundSecondary]}>
+        <View style={[theme.bgSecondaryBackground]}>
           <MenuSubtitle>{info.section.title.toUpperCase()}</MenuSubtitle>
         </View>
       );
@@ -174,7 +174,7 @@ export const DiscoveryTagsManager = withErrorBoundary(
                   onSubmitEditing={onCreate}
                   value={store.inputValue}
                   style={[
-                    theme.backgroundPrimary,
+                    theme.bgPrimaryBackground,
                     theme.marginRight4x,
                     theme.paddingLeft2x,
                   ]}

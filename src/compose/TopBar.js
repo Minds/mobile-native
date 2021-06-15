@@ -31,7 +31,7 @@ export default observer(function (props) {
       {props.store.posting ? (
         <DotIndicator
           containerStyle={[theme.rowJustifyEnd, theme.marginRight4x]}
-          color={ThemedStyles.getColor('secondary_text')}
+          color={ThemedStyles.getColor('SecondaryText')}
           scaleEnabled={true}
         />
       ) : (

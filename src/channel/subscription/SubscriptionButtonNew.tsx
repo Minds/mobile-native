@@ -7,10 +7,9 @@ import { observer } from 'mobx-react';
 import UserModel from '../UserModel';
 
 import i18n from '../../common/services/i18n.service';
-import { CommonStyle as CS } from '../../styles/Common';
-
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import ListItemButton from '../../common/components/ListItemButton';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 type PropsType = {
   channel: UserModel;
@@ -49,8 +48,9 @@ class SubscriptionButtonNew extends Component<PropsType> {
   /**
    * Render
    */
-  render(): Node {
+  render() {
     const { channel } = this.props;
+    const theme = ThemedStyles.style;
 
     let name,
       color = null;
@@ -58,21 +58,21 @@ class SubscriptionButtonNew extends Component<PropsType> {
     if (channel.isOpen()) {
       if (channel.subscribed) {
         name = 'check';
-        color = CS.colorDone;
+        color = theme.colorDone;
       } else {
         name = 'add';
-        color = CS.colorActionNew;
+        color = theme.colorIcon;
       }
     } else {
       if (channel.subscribed) {
         name = 'check';
-        color = CS.colorDone;
+        color = theme.colorDone;
       } else if (channel.pending_subscribe) {
         name = 'close';
-        color = CS.colorActionNew;
+        color = theme.colorIcon;
       } else {
         name = 'add';
-        color = CS.colorActionNew;
+        color = theme.colorIcon;
       }
     }
 

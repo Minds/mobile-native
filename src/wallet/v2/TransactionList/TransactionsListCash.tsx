@@ -65,7 +65,7 @@ const TransactionsListCash = observer(
           !store.refreshing && store.loading ? <CenteredLoading /> : <Empty />
         }
         style={[
-          theme.backgroundPrimary,
+          theme.bgPrimaryBackground,
           theme.paddingLeft4x,
           theme.paddingRight4x,
         ]}

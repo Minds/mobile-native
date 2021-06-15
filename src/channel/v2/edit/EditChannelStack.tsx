@@ -27,7 +27,7 @@ const EditChannelOptions = (navigation, route) => [
 const EditChannelStack = function (AppStackNav: any) {
   const navigatorOptions = {
     headerStyle: {
-      backgroundColor: ThemedStyles.getColor('primary_background'),
+      backgroundColor: ThemedStyles.getColor('PrimaryBackground'),
     },
     headerHideShadow: true,
   };

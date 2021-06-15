@@ -133,7 +133,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                         "fontWeight": "700",
                       },
                       Object {
-                        "color": undefined,
+                        "color": "#43434D",
                       },
                     ]
                   }
@@ -149,7 +149,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                       "borderBottomWidth": 0.5,
                     },
                     Object {
-                      "borderColor": undefined,
+                      "borderColor": "#D3DBE3",
                     },
                     Object {
                       "alignItems": "center",
@@ -168,7 +168,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                         "fontWeight": "700",
                       },
                       Object {
-                        "color": undefined,
+                        "color": "#72727C",
                       },
                     ]
                   }

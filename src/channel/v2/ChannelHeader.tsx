@@ -104,7 +104,7 @@ const ChannelHeader = withErrorBoundary(
               <View
                 style={[
                   styles.bottomBar,
-                  theme.borderPrimary,
+                  theme.bcolorPrimaryBorder,
                   theme.paddingHorizontal4x,
                   theme.rowJustifySpaceBetween,
                 ]}>
@@ -113,8 +113,8 @@ const ChannelHeader = withErrorBoundary(
                     style={[
                       theme.borderBottom,
                       props.store.showScheduled
-                        ? theme.borderTab
-                        : theme.borderTransparent,
+                        ? theme.bcolorTabBorder
+                        : theme.bcolorTransparent,
                     ]}>
                     <Text
                       style={[theme.fontL, theme.colorSecondaryText]}
@@ -162,9 +162,9 @@ const ChannelHeader = withErrorBoundary(
             source={channel.getBannerSource()}
             resizeMode="cover">
             <View
-              style={[styles.avatarContainer, theme.borderBackgroundTertiary]}>
+              style={[styles.avatarContainer, theme.bcolorTertiaryBackground]}>
               <Image
-                style={[styles.avatar, theme.borderPrimary]}
+                style={[styles.avatar, theme.bcolorPrimaryBorder]}
                 source={channel.getAvatarSource()}
                 resizeMode="cover"
               />
@@ -205,8 +205,8 @@ const ChannelHeader = withErrorBoundary(
                     reverse
                     name="file-download"
                     type="material"
-                    color={ThemedStyles.getColor('secondary_background')}
-                    reverseColor={ThemedStyles.getColor('primary_text')}
+                    color={ThemedStyles.getColor('SecondaryBackground')}
+                    reverseColor={ThemedStyles.getColor('PrimaryText')}
                     size={15}
                     onPress={_onBannerDownload}
                   />
@@ -225,9 +225,9 @@ const ChannelHeader = withErrorBoundary(
         {!channel && (
           <View style={[theme.fullWidth, theme.height25]}>
             <View
-              style={[styles.avatarContainer, theme.borderBackgroundTertiary]}>
+              style={[styles.avatarContainer, theme.bcolorTertiaryBackground]}>
               <Image
-                style={[styles.avatar, theme.borderPrimary]}
+                style={[styles.avatar, theme.bcolorPrimaryBorder]}
                 source={require('./../../assets/logos/bulb.png')}
                 resizeMode="cover"
               />
@@ -275,7 +275,7 @@ const ChannelHeader = withErrorBoundary(
               style={[
                 styles.subscriber,
                 theme.colorSecondaryText,
-                theme.mindsSwitchBackgroundSecondary,
+                theme.bgPrimaryBorder,
               ]}>
               {i18n.t('channel.subscriber')}
             </Text>

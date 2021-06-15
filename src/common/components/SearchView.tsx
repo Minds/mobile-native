@@ -60,7 +60,7 @@ export default class SearchView extends PureComponent<Props> {
             onFocus={this.props.onFocus}
             onBlur={this.props.onBlur}
             selectTextOnFocus={true}
-            placeholderTextColor={ThemedStyles.getColor('secondary_text')}
+            placeholderTextColor={ThemedStyles.getColor('SecondaryText')}
             {...attributes}
             underlineColorAndroid={'transparent'}
             style={[styles.input, ThemedStyles.style.colorPrimaryText]}

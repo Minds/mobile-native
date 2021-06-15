@@ -136,7 +136,7 @@ const PortraitActivity = observer((props: PropsType) => {
     <OwnerBlock
       entity={entity}
       navigation={navigation}
-      containerStyle={[theme.backgroundPrimary, styles.header, cleanTop]}
+      containerStyle={[theme.bgPrimaryBackground, styles.header, cleanTop]}
       leftToolbar={
         <FloatingBackButton
           size={35}
@@ -201,7 +201,7 @@ const PortraitActivity = observer((props: PropsType) => {
   );
 
   return (
-    <View style={[window, theme.flexContainer, theme.backgroundSecondary]}>
+    <View style={[window, theme.flexContainer, theme.bgSecondaryBackground]}>
       <View style={theme.flexContainer}>
         {ownerBlockShadow}
         {showNSFW && tappingArea}
@@ -233,7 +233,7 @@ const PortraitActivity = observer((props: PropsType) => {
                     styles.remind,
                     theme.margin2x,
                     theme.borderHair,
-                    theme.borderBackgroundPrimary,
+                    theme.bcolorPrimaryBackground,
                   ]}>
                   <Activity
                     ref={remindRef}

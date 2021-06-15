@@ -2,10 +2,10 @@
 import React, { Component } from 'react';
 
 import { View, Text } from 'react-native';
-import { CommonStyle as CS } from '../styles/Common';
 import CenteredLoading from '../common/components/CenteredLoading';
 import i18n from '../common/services/i18n.service';
 import sessionService from '../common/services/session.service';
+import ThemedStyles from '../styles/ThemedStyles';
 
 /**
  * Email confirmation screen
@@ -54,10 +54,16 @@ export default class EmailConfirmationScreen extends Component {
     if (this.state.error) {
       return (
         <Text
-          style={[CS.fontL, CS.textCenter, CS.colorDarkGreyed]}
+          style={[
+            ThemedStyles.style.fontL,
+            ThemedStyles.style.textCenter,
+            ThemedStyles.style.colorDarkGreyed,
+          ]}
           onPress={this.confirm}>
           {i18n.t('errorMessage') + '\n'}
-          <Text style={[CS.colorPrimary]}>{i18n.t('tryAgain')}</Text>
+          <Text style={[ThemedStyles.style.colorPrimary]}>
+            {i18n.t('tryAgain')}
+          </Text>
         </Text>
       );
     }
@@ -65,10 +71,16 @@ export default class EmailConfirmationScreen extends Component {
     if (this.state.confirmed) {
       return (
         <Text
-          style={[CS.fontXL, CS.textCenter, CS.colorDarkGreyed]}
+          style={[
+            ThemedStyles.style.fontXL,
+            ThemedStyles.style.textCenter,
+            ThemedStyles.style.colorDarkGreyed,
+          ]}
           onPress={() => this.props.navigation.goBack()}>
           {i18n.t('emailConfirm.confirmed') + '\n'}
-          <Text style={[CS.colorPrimary]}>{i18n.t('goback')}</Text>
+          <Text style={[ThemedStyles.style.colorPrimary]}>
+            {i18n.t('goback')}
+          </Text>
         </Text>
       );
     }
@@ -80,7 +92,10 @@ export default class EmailConfirmationScreen extends Component {
    */
   render() {
     return (
-      <View style={[CS.flexContainer, CS.centered]}>{this.renderBody()}</View>
+      <View
+        style={[ThemedStyles.style.flexContainer, ThemedStyles.style.centered]}>
+        {this.renderBody()}
+      </View>
     );
   }
 }

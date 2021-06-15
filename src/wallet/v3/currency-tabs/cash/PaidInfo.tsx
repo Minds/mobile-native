@@ -29,7 +29,7 @@ const PaidInfo = ({ walletStore }: PropsType) => {
         </View>
         <View
           style={[
-            theme.borderPrimary,
+            theme.bcolorPrimaryBorder,
             theme.borderTop,
             theme.marginTop3x,
             ...viewPadding,

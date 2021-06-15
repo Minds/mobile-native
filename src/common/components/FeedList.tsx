@@ -267,6 +267,6 @@ export default class FeedList<T> extends Component<PropsType> {
   };
 }
 
-const style = ThemedStyles.combine('flexContainer', 'backgroundPrimary');
+const style = ThemedStyles.combine('flexContainer', 'bgPrimaryBackground');
 
 const footerStyle = ThemedStyles.combine('centered', 'padding3x');

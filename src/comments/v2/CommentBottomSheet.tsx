@@ -62,8 +62,8 @@ const CustomBackdrop = observer(
       () => [
         style,
         ThemedStyles.theme
-          ? ThemedStyles.style.backgroundSecondary
-          : ThemedStyles.style.backgroundTertiary,
+          ? ThemedStyles.style.bgSecondaryBackground
+          : ThemedStyles.style.bgTertiaryBackground,
         containerAnimatedStyle,
       ],
       [style, containerAnimatedStyle],
@@ -149,8 +149,8 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
       ...TransitionPresets.SlideFromRightIOS,
       headerShown: false,
       safeAreaInsets: { top: 0 },
-      // headerBackground: ThemedStyles.style.backgroundSecondary,
-      cardStyle: ThemedStyles.style.backgroundSecondary,
+      // headerBackground: ThemedStyles.style.bgSecondaryBackground,
+      cardStyle: ThemedStyles.style.bgSecondaryBackground,
     }),
     [],
   );
