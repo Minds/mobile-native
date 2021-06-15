@@ -44,7 +44,7 @@ export default observer(function Comment(props: PropsType) {
     !props.hideReply;
 
   const backgroundColor = ThemedStyles.getColor(
-    props.isHeader ? 'secondary_background' : 'primary_background',
+    props.isHeader ? 'SecondaryBackground' : 'PrimaryBackground',
   );
   const startColor = (ThemedStyles.theme ? '#242A30' : '#F5F5F5') + '00';
   const endColor = backgroundColor + 'FF';
@@ -125,7 +125,7 @@ export default observer(function Comment(props: PropsType) {
     <View
       style={[
         styles.container,
-        theme.borderPrimary,
+        theme.bcolorPrimaryBorder,
         props.comment.focused ? styles.focused : null,
       ]}>
       <CommentHeader entity={props.comment} navigation={navigation} />
@@ -275,7 +275,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   focused: {
-    borderLeftColor: LIGHT_THEME.link,
+    borderLeftColor: LIGHT_THEME.Link,
     borderLeftWidth: 4,
   },
 });

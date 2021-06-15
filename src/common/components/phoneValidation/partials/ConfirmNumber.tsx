@@ -46,7 +46,7 @@ const ConfirmNumber = observer(({ localStore, ...props }: PropsType) => {
     style.phoneInput,
     ComponentsStyle.loginInputNew,
     theme.marginRight2x,
-    theme.borderPrimary,
+    theme.bcolorPrimaryBorder,
   ];
 
   return (
@@ -60,7 +60,7 @@ const ConfirmNumber = observer(({ localStore, ...props }: PropsType) => {
           placeholder={
             !props.bottomStore ? i18n.t('onboarding.confirmationCode') : ''
           }
-          placeholderTextColor={ThemedStyles.getColor('secondary_text')}
+          placeholderTextColor={ThemedStyles.getColor('SecondaryText')}
           keyboardType="numeric"
         />
         {joinActionButton}

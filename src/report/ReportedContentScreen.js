@@ -107,13 +107,13 @@ class ReportedContentScreen extends Component {
     const selectedButton = {
       alignItems: 'center',
       borderBottomWidth: 3,
-      ...CS.borderPrimary,
+      ...CS.bcolorPrimaryBorder,
     };
 
     const headerStyle = [CS.colorSecondaryText, CS.fontM, CS.textCenter];
 
     return (
-      <View style={[CS.flexContainer, CS.backgroundSecondary]}>
+      <View style={[CS.flexContainer, CS.bgSecondaryBackground]}>
         <View style={styles.topbar}>
           <View style={[CS.flexContainer, CS.rowJustifyCenter]}>
             <TouchableHighlight

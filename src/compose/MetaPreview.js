@@ -38,7 +38,7 @@ export default observer(function (props) {
       {!props.isEdit && (
         <TouchableOpacity
           onPress={props.onRemove}
-          style={[styles.removeRichEmbed, theme.backgroundSecondary]}>
+          style={[styles.removeRichEmbed, theme.bgSecondaryBackground]}>
           <IonIcon name="ios-close" size={22} style={theme.colorPrimaryText} />
         </TouchableOpacity>
       )}
@@ -46,12 +46,12 @@ export default observer(function (props) {
         style={[
           styles.row,
           theme.borderHair,
-          theme.borderPrimary,
+          theme.bcolorPrimaryBorder,
           theme.borderRadius2x,
-          theme.backgroundPrimary,
+          theme.bgPrimaryBackground,
         ]}>
         <SmartImage
-          style={[styles.thumbnail, theme.backgroundTertiary]}
+          style={[styles.thumbnail, theme.bgTertiaryBackground]}
           threshold={150}
           source={source}
           thumbnail={thumbnail}

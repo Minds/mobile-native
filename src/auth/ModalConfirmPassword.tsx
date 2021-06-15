@@ -15,7 +15,6 @@ import Modal from 'react-native-modal';
 import i18n from '../common/services/i18n.service';
 import authService from '../auth/AuthService';
 import { ComponentsStyle } from '../styles/Components';
-import Colors from '../styles/Colors';
 import ThemedStyles from '../styles/ThemedStyles';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -56,7 +55,7 @@ export default class ModalConfirmPassword extends Component<PropsType> {
     return (
       <Modal
         isVisible={this.props.isVisible}
-        backdropColor={ThemedStyles.getColor('primary_background')}
+        backdropColor={ThemedStyles.getColor('PrimaryBackground')}
         backdropOpacity={1}>
         <SafeAreaView style={[CS.flexContainer]}>
           <KeyboardAvoidingView
@@ -105,9 +104,6 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     color: '#c00',
     textAlign: 'center',
-  },
-  nonEditable: {
-    color: Colors.darkGreyed,
   },
   textCotainer: {
     flexDirection: 'row',

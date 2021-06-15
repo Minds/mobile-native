@@ -41,7 +41,7 @@ const Input = ({ textToCopy, label, style }: InputProps) => {
           autoCorrect={false}
           style={[
             theme.input,
-            theme.backgroundSecondary,
+            theme.bgSecondaryBackground,
             theme.padding2x,
             theme.fontM,
             styles.input,
@@ -51,7 +51,7 @@ const Input = ({ textToCopy, label, style }: InputProps) => {
         <Text
           style={[
             theme.colorLink,
-            theme.backgroundSecondary,
+            theme.bgSecondaryBackground,
             theme.paddingHorizontal4x,
             styles.copyText,
           ]}>

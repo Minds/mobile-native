@@ -19,9 +19,9 @@ const SettingInput = ({ onError, ref, ...props }: PropsType) => {
   const wrapperStyle = [
     theme.paddingLeft3x,
     theme.paddingTop3x,
-    theme.backgroundSecondary,
+    theme.bgSecondaryBackground,
     props.wrapperBorder,
-    theme.borderPrimary,
+    theme.bcolorPrimaryBorder,
   ];
 
   const labelStyle = [theme.colorSecondaryText, theme.fontL];

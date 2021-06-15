@@ -6,7 +6,6 @@ import feedsStorage from './sql/feeds.storage';
 import { showMessage } from 'react-native-flash-message';
 import i18n from './i18n.service';
 import connectivityService from './connectivity.service';
-import Colors from '../../styles/Colors';
 import boostedContentService from './boosted-content.service';
 import BaseModel from '../BaseModel';
 import { Platform } from 'react-native';
@@ -411,7 +410,7 @@ export default class FeedsService {
         description: i18n.t('showingStored'),
         duration: 1300,
         backgroundColor: '#FFDD63DD',
-        color: Colors.dark,
+        color: '#222222',
         type: 'info',
       });
     }

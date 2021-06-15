@@ -114,10 +114,8 @@ class App extends Component<Props, State> {
     if (!RefreshControl.defaultProps) {
       RefreshControl.defaultProps = {};
     }
-    RefreshControl.defaultProps.tintColor = ThemedStyles.getColor(
-      'icon_active',
-    );
-    RefreshControl.defaultProps.colors = [ThemedStyles.getColor('icon_active')];
+    RefreshControl.defaultProps.tintColor = ThemedStyles.getColor('IconActive');
+    RefreshControl.defaultProps.colors = [ThemedStyles.getColor('IconActive')];
   }
 
   /**
@@ -209,7 +207,7 @@ class App extends Component<Props, State> {
                   <StatusBar
                     barStyle={statusBarStyle}
                     backgroundColor={ThemedStyles.getColor(
-                      'secondary_background',
+                      'SecondaryBackground',
                     )}
                   />
                   <WCContextProvider>

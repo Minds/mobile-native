@@ -21,7 +21,6 @@ import UserTypeaheadService from './UserTypeaheadService';
 
 import debounce from '../../helpers/debounce';
 import channelAvatarUrl from '../../helpers/channel-avatar-url';
-import colors from '../../../styles/Colors';
 import abbrev from '../../helpers/abbrev';
 import logService from '../../services/log.service';
 import i18nService from '../../services/i18n.service';
@@ -79,7 +78,7 @@ export default class UserTypeahead extends PureComponent {
       flexDirection: 'row',
       alignItems: 'center',
       borderBottomWidth: 1,
-      borderBottomColor: colors.greyed,
+      borderBottomColor: '#222222', // TODO: this is a legacy component, replace this
     },
     headerIcon: {
       marginRight: 10,
@@ -149,7 +148,7 @@ export default class UserTypeahead extends PureComponent {
         <Icon
           name="md-search"
           size={24}
-          color={colors.greyed}
+          color={'#222222'} // TODO: this is a legacy component, replace this
           style={this.styles.headerIcon}
         />
 
@@ -170,7 +169,7 @@ export default class UserTypeahead extends PureComponent {
           <Icon
             name="md-close"
             size={32}
-            color={colors.greyed}
+            color={'#222222'} // TODO: this is a legacy component, replace this
             style={this.styles.headerIcon}
           />
         </Touchable>
@@ -256,7 +255,7 @@ export default class UserTypeahead extends PureComponent {
     return (
       <Modal
         isVisible={this.props.isModalVisible}
-        backdropColor={ThemedStyles.getColor('primary_background')}
+        backdropColor={ThemedStyles.getColor('PrimaryBackground')}
         backdropOpacity={1}
         onModalShow={this.onModalShow}
         onModalHide={this.onModalHide}>
@@ -267,7 +266,7 @@ export default class UserTypeahead extends PureComponent {
           ListEmptyComponent={this.EmptyPartial}
           renderItem={this.ItemPartial}
           keyExtractor={this.keyExtractor}
-          style={ThemedStyles.style.backgroundPrimary}
+          style={ThemedStyles.style.bgPrimaryBackground}
         />
         {/* TODO: Fix double tapping needed to select an item when a TextInput is active */}
       </Modal>

@@ -28,7 +28,7 @@ const SearchScreen = observer(() => {
     <KeyboardSpacingView
       style={[
         StyleSheet.absoluteFill,
-        theme.backgroundPrimary,
+        theme.bgPrimaryBackground,
         paddingTop,
         paddingBottom,
       ]}>
@@ -51,7 +51,7 @@ const SearchScreen = observer(() => {
           <TextInput
             ref={inputRef}
             placeholder={i18n.t('discovery.search')}
-            placeholderTextColor={ThemedStyles.getColor('secondary_text')}
+            placeholderTextColor={ThemedStyles.getColor('SecondaryText')}
             onChangeText={localStore.input}
             value={localStore.searchText}
             testID="searchInput"
@@ -74,7 +74,7 @@ const SearchScreen = observer(() => {
       </View>
       {GOOGLE_PLAY_STORE ? (
         <DisabledStoreFeature
-          style={[styles.height, theme.backgroundPrimary]}
+          style={[styles.height, theme.bgPrimaryBackground]}
         />
       ) : (
         <SearchResultComponent

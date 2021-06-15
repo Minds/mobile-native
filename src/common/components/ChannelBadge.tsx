@@ -3,11 +3,12 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { StyleSheet, Text } from 'react-native';
 import type UserModel from '../../channel/UserModel';
+import { ColorsNameType } from '../../styles/Colors';
 
 type badge = {
   badge: string;
   icon: string;
-  color: string;
+  color: ColorsNameType;
   shoudlShow: (channel: UserModel, activeBadges: Array<string>) => boolean;
 };
 
@@ -15,7 +16,7 @@ const badges: Array<badge> = [
   {
     badge: 'Verified',
     icon: 'verified-user',
-    color: 'verifiedBadge',
+    color: 'VerifiedBadge',
     shoudlShow: (channel: UserModel, activeBadges: Array<string>) =>
       activeBadges.includes('verified') &&
       channel.verified &&
@@ -24,35 +25,35 @@ const badges: Array<badge> = [
   {
     badge: 'Plus',
     icon: 'add_circle_outline',
-    color: 'icon_active',
+    color: 'IconActive',
     shoudlShow: (channel: UserModel, activeBadges: Array<string>) =>
       activeBadges.includes('plus') && channel.plus && !channel.pro,
   },
   {
     badge: 'Pro',
     icon: 'business-center',
-    color: 'icon_active',
+    color: 'IconActive',
     shoudlShow: (channel: UserModel, activeBadges: Array<string>) =>
       activeBadges.includes('plus') && channel.pro,
   },
   {
     badge: 'Admin',
     icon: 'verified-user',
-    color: 'adminBadge',
+    color: 'AdminBadge',
     shoudlShow: (channel: UserModel, activeBadges: Array<string>) =>
       activeBadges.includes('admin') && channel.is_admin,
   },
   {
     badge: 'Founder',
     icon: 'flight-takeoff',
-    color: 'icon_active',
+    color: 'IconActive',
     shoudlShow: (channel: UserModel, activeBadges: Array<string>) =>
       activeBadges.includes('founder') && channel.founder,
   },
   {
     badge: 'Boosted OnChain in the last 7 days',
-    icon: 'link',
-    color: 'icon_active',
+    icon: 'Link',
+    color: 'IconActive',
     shoudlShow: (channel: UserModel, activeBadges: Array<string>) =>
       activeBadges.includes('onchain_booster') &&
       channel.onchain_booster * 1000 > Date.now(),
@@ -74,7 +75,7 @@ const ChannelBadge = ({
 }: PropsType) => {
   const badgesActive = activeBadges ?? ['verified', 'admin'];
   const sizeIcon = iconSize ?? 16;
-  const badgesIcons: Array<JSX.Element> = [];
+  const badgesIcons: Array<React.ReactNode> = [];
 
   badges.forEach(badge => {
     if (badge.shoudlShow(channel, badgesActive)) {

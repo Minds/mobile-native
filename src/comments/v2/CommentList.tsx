@@ -49,7 +49,7 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
     theme.rowJustifyStart,
     theme.borderTopHair,
     theme.borderBottomHair,
-    theme.borderPrimary,
+    theme.bcolorPrimaryBorder,
     theme.paddingTop2x,
     theme.paddingBottom2x,
     theme.alignCenter,
@@ -113,8 +113,8 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
           <View
             style={[
               styles.headerCommentContainer,
-              theme.borderPrimary,
-              theme.backgroundSecondary,
+              theme.bcolorPrimaryBorder,
+              theme.bgSecondaryBackground,
             ]}>
             <Comment
               comment={props.store.parent}
@@ -140,8 +140,8 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
   }, [
     placeHolder,
     props.store,
-    theme.backgroundSecondary,
-    theme.borderPrimary,
+    theme.bgSecondaryBackground,
+    theme.bcolorPrimaryBorder,
     theme.colorSecondaryText,
     theme.fontL,
     touchableStyles,
@@ -153,12 +153,12 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
   }, [props.store]);
 
   return (
-    <View style={[theme.flexContainer, theme.backgroundPrimary]}>
+    <View style={[theme.flexContainer, theme.bgPrimaryBackground]}>
       <CommentListHeader store={props.store} />
       {GOOGLE_PLAY_STORE ? (
         <DisabledStoreFeature
           style={[
-            theme.backgroundPrimary,
+            theme.bgPrimaryBackground,
             theme.flexContainer,
             theme.padding4x,
           ]}
@@ -172,9 +172,9 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
           ListFooterComponent={Footer}
           keyExtractor={keyExtractor}
           renderItem={renderItem}
-          style={[theme.flexContainer, theme.backgroundPrimary]}
+          style={[theme.flexContainer, theme.bgPrimaryBackground]}
           contentContainerStyle={[
-            theme.backgroundPrimary,
+            theme.bgPrimaryBackground,
             theme.paddingBottom3x,
           ]}
         />

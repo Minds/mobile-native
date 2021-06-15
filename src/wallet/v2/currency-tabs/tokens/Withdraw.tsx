@@ -51,7 +51,7 @@ const Withdraw = observer((props: PropsType) => {
           <View
             style={[
               theme.borderBottom,
-              theme.borderPrimary,
+              theme.bcolorPrimaryBorder,
               theme.rowJustifySpaceBetween,
               theme.paddingHorizontal4x,
               theme.paddingVertical2x,

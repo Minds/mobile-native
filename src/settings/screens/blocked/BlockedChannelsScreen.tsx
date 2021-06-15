@@ -35,7 +35,7 @@ const BlockedChannelsScreen = observer(props => {
             <Text>{i18n.t('settings.noBlockedChannels')}</Text>
           </View>
         }
-        style={[theme.backgroundPrimary, theme.flexContainer]}
+        style={[theme.bgPrimaryBackground, theme.flexContainer]}
         onRefresh={onRefresh}
       />
     </View>

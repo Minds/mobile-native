@@ -96,4 +96,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const containerStyle = ThemedStyles.combine(styles.container, 'borderPrimary');
+const containerStyle = ThemedStyles.combine(
+  styles.container,
+  'bcolorPrimaryBorder',
+);

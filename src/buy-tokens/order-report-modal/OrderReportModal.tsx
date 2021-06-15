@@ -30,7 +30,11 @@ export default function ({ report, ...modalProps }: Props) {
   return (
     <CloseableModal {...modalProps}>
       <View
-        style={[theme.flexContainer, theme.padding8x, theme.backgroundPrimary]}>
+        style={[
+          theme.flexContainer,
+          theme.padding8x,
+          theme.bgPrimaryBackground,
+        ]}>
         <Text style={[theme.marginBottom5x, theme.fontXL]}>
           {i18n.t('orderReport.thanksMessage', {
             tokenAmount: String(tokenAmount).slice(0, 6),
@@ -45,7 +49,7 @@ export default function ({ report, ...modalProps }: Props) {
             theme.rowJustifySpaceBetween,
             theme.marginBottom5x,
             theme.borderTopHair,
-            theme.borderBackgroundTertiary,
+            theme.bcolorTertiaryBackground,
             theme.paddingTop5x,
             styles.wrap,
           ]}>

@@ -26,7 +26,7 @@ export default observer(function TokenPrice() {
   return (
     <Pressable
       style={[
-        theme.borderPrimary,
+        theme.bcolorPrimaryBorder,
         theme.border,
         theme.alignCenter,
         theme.borderRadius10x,

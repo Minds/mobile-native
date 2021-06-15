@@ -22,7 +22,6 @@ import Message from './conversation/Message';
 import MessengerSetup from './MessengerSetup';
 import MessengerInvite from './MessengerInvite';
 
-import { CommonStyle } from '../styles/Common';
 import UserModel from '../channel/UserModel';
 import MessengerConversationStore from './MessengerConversationStore';
 import ErrorLoading from '../common/components/ErrorLoading';
@@ -106,7 +105,10 @@ export default class ConversationScreen extends Component {
         title: participant.name,
         headerRight: () => (
           <TouchableOpacity
-            style={[CommonStyle.rowJustifyEnd, CommonStyle.paddingRight2x]}
+            style={[
+              ThemedStyles.style.rowJustifyEnd,
+              ThemedStyles.style.paddingRight2x,
+            ]}
             onPress={() =>
               this.props.navigation.push('Channel', { guid: participant.guid })
             }>
@@ -212,7 +214,7 @@ export default class ConversationScreen extends Component {
     return (
       <KeyboardSpacingView
         enabled={Platform.OS === 'ios'}
-        style={[styles.container, ThemedStyles.style.backgroundSecondary]}>
+        style={[styles.container, ThemedStyles.style.bgSecondaryBackground]}>
         <FlatList
           inverted={true}
           data={messages}
@@ -236,7 +238,7 @@ export default class ConversationScreen extends Component {
             editable={true}
             underlineColorAndroid="transparent"
             placeholder={i18n.t('messenger.typeYourMessage')}
-            placeholderTextColor={ThemedStyles.getColor('secondary_text')}
+            placeholderTextColor={ThemedStyles.getColor('SecondaryText')}
             onChangeText={this.textChanged}
             multiline={true}
             autogrow={true}

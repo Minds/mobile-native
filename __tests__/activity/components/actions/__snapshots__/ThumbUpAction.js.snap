@@ -29,7 +29,7 @@ exports[`Thumb action component renders correctly 1`] = `
     style={
       Array [
         Object {
-          "color": undefined,
+          "color": "#7D7D82",
         },
         Object {
           "marginRight": 5,

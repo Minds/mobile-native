@@ -150,7 +150,7 @@ const PortraitViewerScreen = observer((props: PropsType) => {
     width,
     backgroundColor: ThemedStyles.theme
       ? 'black'
-      : ThemedStyles.getColor('tertiary_background'),
+      : ThemedStyles.getColor('TertiaryBackground'),
     alignSelf: 'center',
   };
 

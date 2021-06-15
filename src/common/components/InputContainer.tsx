@@ -17,10 +17,10 @@ const InputContainer = (props: PropsType) => {
       style={[
         theme.paddingLeft4x,
         styles.container,
-        theme.backgroundSecondary,
+        theme.bgSecondaryBackground,
         theme.borderTop,
         noBottomBorder ? null : theme.borderBottom,
-        theme.borderPrimary,
+        theme.bcolorPrimaryBorder,
         props.containerStyle,
       ]}>
       <Input

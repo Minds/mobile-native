@@ -46,10 +46,10 @@ export default function () {
 
   const rowStyle = [
     styles.row,
-    theme.backgroundSecondary,
+    theme.bgSecondaryBackground,
     theme.paddingVertical3x,
     theme.paddingHorizontal3x,
-    theme.borderPrimary,
+    theme.bcolorPrimaryBorder,
     theme.borderBottom,
     theme.borderTop,
   ];
@@ -62,7 +62,7 @@ export default function () {
     <View
       style={[
         theme.flexContainer,
-        theme.backgroundPrimary,
+        theme.bgPrimaryBackground,
         theme.paddingTop4x,
       ]}>
       <View style={rowStyle}>
@@ -74,7 +74,7 @@ export default function () {
         <Icon
           name="chevron-right"
           size={24}
-          color={ThemedStyles.getColor('secondary_text')}
+          color={ThemedStyles.getColor('SecondaryText')}
         />
       </TouchableOpacity>
     </View>

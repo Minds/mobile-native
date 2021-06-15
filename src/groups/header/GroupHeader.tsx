@@ -45,11 +45,11 @@ export default class GroupHeader extends Component<PropsTypes> {
     super(props);
     this.avatarStyle = ThemedStyles.combine(
       props.styles.avatar,
-      'borderBackgroundPrimary',
+      'bcolorPrimaryBackground',
     );
     this.userAvatarStyle = ThemedStyles.combine(
       props.styles.userAvatar,
-      'borderBackgroundPrimary',
+      'bcolorPrimaryBackground',
     );
   }
 
@@ -180,7 +180,7 @@ export default class GroupHeader extends Component<PropsTypes> {
           options={typeOptions}
           initial={this.props.store.tab}
           onChange={this.onTabChange}
-          containerStyle={ThemedStyles.style.borderPrimary}
+          containerStyle={ThemedStyles.style.bcolorPrimaryBorder}
         />
         <AnimatedSearch store={this.props.store} />
       </View>

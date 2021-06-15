@@ -21,7 +21,7 @@ exports[`activity metrics component renders correctly 1`] = `
     style={
       Array [
         Object {
-          "color": undefined,
+          "color": "#72727C",
         },
         Object {
           "fontSize": 14,

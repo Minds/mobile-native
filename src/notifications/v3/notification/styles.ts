@@ -56,13 +56,13 @@ export const styles = StyleSheet.create({
 
 export const readIndicatorStyle = ThemedStyles.combine(
   styles.readIndicator,
-  'backgroundLink',
+  'bgLink',
 );
 
 export const containerStyle = ThemedStyles.combine(
   styles.container,
   'borderBottomHair',
-  'borderPrimary',
+  'bcolorPrimaryBorder',
 );
 
 export const bodyTextStyle = ThemedStyles.combine(
@@ -78,6 +78,8 @@ export const bodyTextImportantStyle = ThemedStyles.combine(
 );
 
 export const spacedCommentPreview = ThemedStyles.combine(
-  bodyTextStyle,
+  styles.bodyText,
+  'fontNormal',
+  'colorSecondaryText',
   'marginBottom4x',
 );

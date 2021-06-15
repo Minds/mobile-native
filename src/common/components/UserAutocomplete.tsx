@@ -100,7 +100,7 @@ export default class UserAutocomplete extends PureComponent<PropsType> {
     const users = this.state.users
       ? this.state.users.map((user, i) => {
           return (
-            <View style={[style.tags, theme.backgroundTertiary]} key={i}>
+            <View style={[style.tags, theme.bgTertiaryBackground]} key={i}>
               <Text onPress={() => this.selectTag(user)}>@{user.username}</Text>
             </View>
           );
@@ -213,7 +213,7 @@ export default class UserAutocomplete extends PureComponent<PropsType> {
 
     return (
       <KeyboardAccessory
-        backgroundColor={ThemedStyles.getColor('primary_background')}
+        backgroundColor={ThemedStyles.getColor('PrimaryBackground')}
         show={this.state.tag}
         noFloat={this.props.noFloat}>
         <UserTypeahead

@@ -9,7 +9,6 @@ import ThemedStyles from '../../../../styles/ThemedStyles';
 import withPreventDoubleTap from '../../../../common/components/PreventDoubleTap';
 import ProgressBar from '../ProgressBar';
 import { styles, iconSize, iconResSize, playSize } from './styles';
-import Colors from '../../../../styles/Colors';
 // workaround to fix tooltips on android
 import Tooltip from 'rne-modal-tooltip';
 
@@ -28,6 +27,7 @@ const DebouncedTouchableWithoutFeedback = withPreventDoubleTap(
 );
 
 const hitSlop = { top: 20, bottom: 20, right: 20, left: 20 };
+const controlColor = '#F7F7F7';
 
 const SourceSelector = ({ localStore }: SourceSelectorPropsType) => {
   const theme = ThemedStyles.style;
@@ -88,7 +88,7 @@ const Controls = observer(({ localStore, entity, hideOverlay }: PropsType) => {
                 style={[styles.videoIcon, styles.textShadow]}
                 name={localStore.paused ? 'play' : 'pause'}
                 size={playSize - 25}
-                color={Colors.light}
+                color={controlColor}
               />
             </View>
           </View>
@@ -118,7 +118,7 @@ const Controls = observer(({ localStore, entity, hideOverlay }: PropsType) => {
                 onPress={localStore.toggleFullScreen}
                 name="ios-expand"
                 size={iconSize}
-                color={Colors.light}
+                color={controlColor}
                 style={theme.paddingHorizontal}
               />
               {progressBar}
@@ -133,7 +133,7 @@ const Controls = observer(({ localStore, entity, hideOverlay }: PropsType) => {
                         : 'ios-volume-high'
                     }
                     size={iconSize}
-                    color={Colors.light}
+                    color={controlColor}
                   />
                 </DebouncedTouchableWithoutFeedback>
               </View>
@@ -155,7 +155,7 @@ const Controls = observer(({ localStore, entity, hideOverlay }: PropsType) => {
         onPress={localStore.toggleVolume}
         name={localStore.volume === 0 ? 'ios-volume-mute' : 'ios-volume-high'}
         size={iconSize}
-        color={Colors.light}
+        color={controlColor}
       />
     </View>
   ) : null;

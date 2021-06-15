@@ -73,7 +73,7 @@ const shortTextStyle = ThemedStyles.combine(
 const textStyle = ThemedStyles.combine(styles.message, 'fontL');
 
 const remindBlockContainerStyle = ThemedStyles.combine(
-  'backgroundTertiary',
+  'bgTertiaryBackground',
   'margin2x',
   'borderRadius2x',
   'padding2x',
@@ -83,25 +83,25 @@ const remindContainerStyle = ThemedStyles.combine(
   styles.remind,
   'margin2x',
   'borderHair',
-  'borderPrimary',
+  'bcolorPrimaryBorder',
 );
 
 const containerStyle = ThemedStyles.combine(
   styles.container,
   'borderBottom8x',
-  'borderBackgroundTertiary',
-  'backgroundPrimary',
+  'bcolorTertiaryBackground',
+  'bgPrimaryBackground',
 );
 
 const onlyContentContainerStyle = ThemedStyles.combine(
   styles.container,
   'borderHair',
-  'borderBackgroundTertiary',
-  'backgroundPrimary',
+  'bcolorTertiaryBackground',
+  'bgPrimaryBackground',
 );
 const remindedContainerStyle = ThemedStyles.combine(
   styles.container,
-  'backgroundPrimary',
+  'bgPrimaryBackground',
 );
 
 export {
