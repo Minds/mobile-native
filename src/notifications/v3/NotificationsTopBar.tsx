@@ -5,8 +5,6 @@ import TopBarButtonTabBar, {
 } from '../../common/components/topbar-tabbar/TopBarButtonTabBar';
 import { StyleSheet } from 'react-native';
 import { NotificationsStore } from './createNotificationsStore';
-import ThemedStyles from '../../styles/ThemedStyles';
-import { Icon } from 'react-native-elements';
 
 type PropsType = {
   store: NotificationsStore;
@@ -56,6 +54,7 @@ const styles = StyleSheet.create({
   scrollViewContainerStyle: {
     flex: 1,
     paddingBottom: 0,
+    paddingTop: 5,
     paddingLeft: 0,
   },
 });

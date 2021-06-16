@@ -111,6 +111,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   "flex": 1,
                   "paddingBottom": 0,
                   "paddingLeft": 0,
+                  "paddingTop": 5,
                 },
               ]
             }
