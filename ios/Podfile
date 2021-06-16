@@ -23,9 +23,9 @@ target 'Minds' do
   # pod 'RNShareMenu', :path => '../node_modules/react-native-share-menu'
 
   permissions_path = '../node_modules/react-native-permissions/ios'
-  pod 'Permission-Camera', :path => "#{permissions_path}/Camera.podspec"
-  pod 'Permission-Microphone', :path => "#{permissions_path}/Microphone.podspec"
-  pod 'Permission-PhotoLibrary', :path => "#{permissions_path}/PhotoLibrary.podspec"
+  pod 'Permission-Camera', :path => "#{permissions_path}/Camera"
+  pod 'Permission-Microphone', :path => "#{permissions_path}/Microphone"
+  pod 'Permission-PhotoLibrary', :path => "#{permissions_path}/PhotoLibrary"
 
   # pod 'RNSentry', :path => '../node_modules/@sentry/react-native'
 
@@ -77,7 +77,7 @@ target 'Share' do
   # Manually link packages here to keep your extension bundle size minimal
 
   permissions_path = '../node_modules/react-native-permissions/ios'
-  pod 'Permission-Camera', :path => "#{permissions_path}/Camera.podspec"
-  pod 'Permission-Microphone', :path => "#{permissions_path}/Microphone.podspec"
-  pod 'Permission-PhotoLibrary', :path => "#{permissions_path}/PhotoLibrary.podspec"
+  pod 'Permission-Camera', :path => "#{permissions_path}/Camera"
+  pod 'Permission-Microphone', :path => "#{permissions_path}/Microphone"
+  pod 'Permission-PhotoLibrary', :path => "#{permissions_path}/PhotoLibrary"
 end
