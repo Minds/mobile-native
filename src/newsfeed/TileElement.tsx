@@ -66,7 +66,10 @@ export default class TileElement extends PureComponent<
   constructor(props) {
     super(props);
     const source = this.props.entity.getThumbSource();
-    source.uri = mediaProxyUrl(source.uri, 512);
+    const type = this.props.entity.custom_type || this.props.entity.subtype;
+    if (type === 'video') {
+      source.uri = mediaProxyUrl(source.uri, 300);
+    }
     this.state = {
       source,
       ready: false,

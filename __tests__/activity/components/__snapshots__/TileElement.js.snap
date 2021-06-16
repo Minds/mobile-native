@@ -28,7 +28,7 @@ exports[`Owner component renders correctly 1`] = `
       onLoadEnd={[Function]}
       source={
         Object {
-          "uri": "https://cdn.minds.com/api/v3/media/proxy?size=512&src=https%3A%2F%2Fwww.minds.com%2Fimage",
+          "uri": "https://www.minds.com/image",
         }
       }
       style={
