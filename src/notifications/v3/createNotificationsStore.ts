@@ -4,12 +4,13 @@ import logService from '../../common/services/log.service';
 import sessionService from '../../common/services/session.service';
 import socketService from '../../common/services/socket.service';
 import type NotificationModel from './notification/NotificationModel';
+import { NotificationsTabOptions } from './NotificationsTopBar';
 import EmailNotificationsSettingModel, {
   EmailNotificationsSettingType,
 } from './settings/email/EmailNotificationsSettingModel';
 import PushNotificationsSettingModel from './settings/push/PushNotificationsSettingModel';
 
-export type FilterType = '' | 'tags';
+export type FilterType = '' | NotificationsTabOptions;
 
 const createNotificationsStore = () => ({
   unread: 0,

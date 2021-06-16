@@ -4,19 +4,20 @@ import {
   StyleProp,
   TextStyle,
   StyleSheet,
-  Insets,
   Platform,
   TouchableOpacity,
   Text,
   ViewStyle,
 } from 'react-native';
+import { Icon } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import Button from '../Button';
 
 export type ButtonTabType<T> = {
   id: T;
-  title: string;
+  title?: string;
+  icon?: { name: string; type: string };
 };
 
 type PropsType<T> = {
@@ -78,19 +79,49 @@ function TopBarButtonTabBar<T>(props: PropsType<T>) {
                   ? touchableContainerSelected
                   : touchableContainer
               }>
-              <Text
-                style={
-                  tab.id === props.current
-                    ? touchableTextStyleSelected
-                    : touchableTextStyle
-                }>
-                {tab.title}
-              </Text>
+              {!!tab.title && (
+                <TabTitle
+                  isCurrent={tab.id === props.current}
+                  title={tab.title}
+                />
+              )}
+              {!!tab.icon && (
+                <TabIcon
+                  name={tab.icon.name}
+                  type={tab.icon.type}
+                  isCurrent={tab.id === props.current}
+                />
+              )}
             </TouchableOpacity>
           ),
         )}
       </ScrollView>
     </View>
+  );
+}
+
+const TabIcon = ({ name, type, isCurrent }) => (
+  <Icon
+    name={name}
+    color={ThemedStyles.getColor(isCurrent ? 'primary_text' : 'icon')}
+    size={21}
+    type={type}
+  />
+);
+
+type TabTiltePropsType = {
+  isCurrent: boolean;
+  title: string;
+};
+function TabTitle({ isCurrent, title }: TabTiltePropsType) {
+  if (!title) {
+    return null;
+  }
+
+  return (
+    <Text style={isCurrent ? touchableTextStyleSelected : touchableTextStyle}>
+      {title}
+    </Text>
   );
 }
 

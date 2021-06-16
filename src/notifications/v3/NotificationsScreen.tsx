@@ -12,6 +12,7 @@ import ErrorBoundary from '../../common/components/ErrorBoundary';
 import NotificationModel from './notification/NotificationModel';
 import UserModel from '../../channel/UserModel';
 import EmptyList from '../../common/components/EmptyList';
+import NotificationPlaceHolder from './notification/NotificationPlaceHolder';
 
 type PropsType = {};
 
@@ -116,7 +117,16 @@ const NotificationsScreen = observer(({}: PropsType) => {
 
   const ListEmptyComponent = React.useMemo(() => {
     if (loading) {
-      return null;
+      return (
+        <View>
+          <NotificationPlaceHolder />
+          <NotificationPlaceHolder />
+          <NotificationPlaceHolder />
+          <NotificationPlaceHolder />
+          <NotificationPlaceHolder />
+          <NotificationPlaceHolder />
+        </View>
+      );
     } else {
       return Empty;
     }
