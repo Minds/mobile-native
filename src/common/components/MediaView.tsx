@@ -20,6 +20,7 @@ import MediaViewImage from './media-view/MediaViewImage';
 import openUrlService from '../services/open-url.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import CommentModel from '../../comments/v2/CommentModel';
+import { showNotification } from '../../../AppMessages';
 
 type PropsType = {
   entity: ActivityModel | CommentModel;
@@ -133,9 +134,9 @@ export default class MediaView extends Component<PropsType> {
   runDownload = async source => {
     try {
       await download.downloadToGallery(source.uri, this.props.entity);
-      Alert.alert(i18n.t('success'), i18n.t('imageAdded'));
+      showNotification(i18n.t('imageAdded'), 'info', 3000, 'top');
     } catch (e) {
-      Alert.alert(i18n.t('errorDownloading'));
+      showNotification(i18n.t('errorDownloading'), 'danger', 3000, 'top');
       logService.exception('[MediaView] runDownload', e);
     }
   };
