@@ -4,19 +4,40 @@ exports[`Owner component renders correctly 1`] = `
 <TouchableOpacity
   onPress={[Function]}
   style={
-    Object {
-      "height": 30,
-      "width": 30,
-    }
-  }
->
-  <FastImage
-    style={
+    Array [
       Object {
         "height": 30,
         "width": 30,
+      },
+      Object {
+        "backgroundColor": undefined,
+      },
+      Object {
+        "borderWidth": 0.5,
+      },
+      Object {
+        "borderColor": undefined,
+      },
+    ]
+  }
+>
+  <Container
+    ready={false}
+  >
+    <Memo(wrappedComponent)
+      onLoadEnd={[Function]}
+      source={
+        Object {
+          "uri": "https://www.minds.com/image",
+        }
       }
-    }
-  />
+      style={
+        Object {
+          "height": 30,
+          "width": 30,
+        }
+      }
+    />
+  </Container>
 </TouchableOpacity>
 `;

@@ -49,7 +49,7 @@ export default function MediaViewImage({
         : ({
             ...source,
             uri: mediaProxyUrl(
-              entity.getThumbSource('medium'), // convert from medium size to save some backend resources
+              entity.getThumbSource('medium').uri, // convert from medium size to save some backend resources
               DATA_SAVER_THUMB_RES,
             ),
           } as Source),
