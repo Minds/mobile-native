@@ -80,9 +80,9 @@ export default class TileElement extends PureComponent<
         width: this.props.size,
         height: this.props.size,
       },
-      'backgroundSecondary',
+      'bgSecondaryBackground',
       'borderHair',
-      'borderPrimary',
+      'bcolorPrimaryBorder',
     );
   }
 
