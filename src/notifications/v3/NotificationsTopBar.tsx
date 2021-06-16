@@ -5,27 +5,39 @@ import TopBarButtonTabBar, {
 } from '../../common/components/topbar-tabbar/TopBarButtonTabBar';
 import { StyleSheet } from 'react-native';
 import { NotificationsStore } from './createNotificationsStore';
+import ThemedStyles from '../../styles/ThemedStyles';
+import { Icon } from 'react-native-elements';
 
 type PropsType = {
   store: NotificationsStore;
   setResult: Function;
 };
 
-type NotificationsTabOptions = 'All' | 'Mentions';
+export type NotificationsTabOptions =
+  | 'all'
+  | 'tags'
+  | 'comments'
+  | 'subscriptions'
+  | 'votes'
+  | 'reminds';
 
 const options: Array<ButtonTabType<NotificationsTabOptions>> = [
-  { id: 'All', title: 'All' },
-  { id: 'Mentions', title: 'Mentions' },
+  { id: 'all', icon: { name: 'list', type: 'material' } },
+  { id: 'tags', icon: { name: 'local-offer', type: 'material' } },
+  { id: 'comments', icon: { name: 'chat-bubble', type: 'material' } },
+  { id: 'subscriptions', icon: { name: 'people', type: 'material' } },
+  { id: 'votes', icon: { name: 'thumb-up', type: 'material' } },
+  { id: 'reminds', icon: { name: 'repeat', type: 'material' } },
 ];
 
 const NotificationsTopBar = observer(({ store, setResult }: PropsType) => {
   const localStore = useLocalStore(() => ({
-    option: 'All' as NotificationsTabOptions,
+    option: 'all' as NotificationsTabOptions,
     setOption(option: NotificationsTabOptions) {
       this.option = option;
       setResult(null);
       store.setOffset('');
-      store.setFilter(option === 'All' ? '' : 'tags');
+      store.setFilter(option === 'all' ? '' : option);
     },
   }));
 
