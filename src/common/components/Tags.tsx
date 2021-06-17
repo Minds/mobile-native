@@ -21,6 +21,17 @@ export const hashRegex = new RegExp(
   'gim',
 );
 
+export const cashRegex = new RegExp(
+  [
+    '([^&]|\\b|^)', // Start of string, and word bounday. Not if preceeded by & symbol
+    '\\$', //
+    '([',
+    'A-Za-z',
+    ']+)',
+  ].join(''),
+  'gim', // Global, Case insensitive, Multiline
+);
+
 type PropsType = {
   color?: string;
   selectable?: boolean;
@@ -74,6 +85,7 @@ export default class Tags extends PureComponent<PropsType> {
     rtn = this.parseArrayOrString(rtn, this.parseShortUrl);
     rtn = this.parseArrayOrString(rtn, this.parseWwwUrl);
     rtn = this.parseArrayOrString(rtn, this.parseHash);
+    rtn = this.parseArrayOrString(rtn, this.parseCash);
     rtn = this.parseArrayOrString(rtn, this.parseUser);
 
     if (Array.isArray(rtn)) {
@@ -156,6 +168,21 @@ export default class Tags extends PureComponent<PropsType> {
             this.navToDiscovery(`#${content}`);
           }}>
           #{content}
+        </Text>
+      );
+    });
+  };
+
+  parseCash = str => {
+    return this.replaceRegular(str, cashRegex, (i, content) => {
+      return (
+        <Text
+          key={i}
+          style={[this.props.style, this.styles]}
+          onPress={() => {
+            this.navToDiscovery(`\$${content}`);
+          }}>
+          ${content}
         </Text>
       );
     });

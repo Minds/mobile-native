@@ -66,8 +66,8 @@ const createTokensTransactionsStore = ({ wallet, user }: ParamsType) => {
 
             if (i !== 0) {
               runningTotal -= previousTxAmount;
-              previousTxAmount = isWithdrawal ? 0 : entity.amount;
             }
+            previousTxAmount = isWithdrawal ? 0 : entity.amount;
             entity.runningTotal = this.formatAmount(runningTotal);
           }
 

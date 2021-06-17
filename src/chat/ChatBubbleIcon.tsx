@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     zIndex: 9999,
     opacity: 1,
     position: 'absolute',
-    bottom: 25,
+    bottom: 20,
     left: 18,
     backgroundColor: '#e03c20',
     borderRadius: 10,

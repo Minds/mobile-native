@@ -56,14 +56,14 @@ const styles = StyleSheet.create({
     zIndex: 9999,
     opacity: 1,
     position: 'absolute',
-    top: 23,
+    top: 1,
     left: 16,
   },
   unread: {
     zIndex: 9999,
     opacity: 1,
     position: 'absolute',
-    top: 25.5,
+    top: 3.5,
     left: 18,
   },
 });
