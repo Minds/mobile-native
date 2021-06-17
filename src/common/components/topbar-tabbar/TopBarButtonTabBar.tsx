@@ -101,7 +101,7 @@ function TopBarButtonTabBar<T>(props: PropsType<T>) {
 const TabIcon = ({ name, type, isCurrent }) => (
   <Icon
     name={name}
-    color={ThemedStyles.getColor(isCurrent ? 'primary_text' : 'icon')}
+    color={ThemedStyles.getColor(isCurrent ? 'PrimaryText' : 'Icon')}
     size={21}
     type={type}
   />
