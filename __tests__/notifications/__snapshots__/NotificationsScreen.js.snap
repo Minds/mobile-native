@@ -157,7 +157,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                         style={
                           Array [
                             Object {
-                              "color": "#242424",
+                              "color": "#43434D",
                               "fontSize": 21,
                             },
                             Object {
@@ -220,7 +220,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                         style={
                           Array [
                             Object {
-                              "color": "#242424",
+                              "color": "#7D7D82",
                               "fontSize": 21,
                             },
                             Object {
@@ -283,7 +283,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                         style={
                           Array [
                             Object {
-                              "color": "#242424",
+                              "color": "#7D7D82",
                               "fontSize": 21,
                             },
                             Object {
@@ -346,7 +346,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                         style={
                           Array [
                             Object {
-                              "color": "#242424",
+                              "color": "#7D7D82",
                               "fontSize": 21,
                             },
                             Object {
@@ -409,7 +409,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                         style={
                           Array [
                             Object {
-                              "color": "#242424",
+                              "color": "#7D7D82",
                               "fontSize": 21,
                             },
                             Object {
@@ -472,7 +472,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                         style={
                           Array [
                             Object {
-                              "color": "#242424",
+                              "color": "#7D7D82",
                               "fontSize": 21,
                             },
                             Object {
