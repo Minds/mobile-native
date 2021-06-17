@@ -46,7 +46,7 @@ type PropsType = {
 };
 
 const shadowOptLocal = Object.assign({}, shadowOpt);
-shadowOptLocal.height = 270;
+shadowOptLocal.height = 300;
 
 const validatorText = { color: LIGHT_THEME.primary_text };
 
@@ -272,7 +272,7 @@ export default observer(function RegisterScreen(props: PropsType) {
                 onPress={props.navigation.goBack}
               />
             </View>
-            <View style={theme.marginBottom6x}>{inputsWithShadow}</View>
+            {inputsWithShadow}
             <View style={[theme.paddingHorizontal4x, theme.paddingVertical2x]}>
               <CheckBox
                 containerStyle={[
