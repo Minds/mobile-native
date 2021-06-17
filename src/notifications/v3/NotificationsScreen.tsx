@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import { View, Text, FlatList, ViewToken } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import NotificationsTopBar from './NotificationsTopBar';
-import { useFocusEffect } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import useApiFetch from '../../common/hooks/useApiFetch';
 import i18n from '../../common/services/i18n.service';
 import NotificationItem from './notification/Notification';
@@ -14,7 +14,9 @@ import UserModel from '../../channel/UserModel';
 import EmptyList from '../../common/components/EmptyList';
 import NotificationPlaceHolder from './notification/NotificationPlaceHolder';
 
-type PropsType = {};
+type PropsType = {
+  navigation?: any;
+};
 
 const viewabilityConfig = {
   itemVisiblePercentThreshold: 50,
@@ -56,10 +58,14 @@ const updateState = (newData: NotificationList, oldData: NotificationList) => {
 
 const Empty = <EmptyList />;
 
-const NotificationsScreen = observer(({}: PropsType) => {
+const NotificationsScreen = observer(({ navigation }: PropsType) => {
   const theme = ThemedStyles.style;
   const { notifications } = useStores();
-
+  const params = {
+    filter: notifications.filter,
+    limit: 15,
+    offset: notifications.offset,
+  };
   const {
     result,
     error,
@@ -67,11 +73,7 @@ const NotificationsScreen = observer(({}: PropsType) => {
     fetch,
     setResult,
   } = useApiFetch<NotificationList>('api/v3/notifications/list', {
-    params: {
-      filter: notifications.filter,
-      limit: 15,
-      offset: notifications.offset,
-    },
+    params,
     updateState,
     persist: true,
   });
@@ -86,15 +88,25 @@ const NotificationsScreen = observer(({}: PropsType) => {
   const refresh = React.useCallback(() => {
     notifications.setOffset('');
     setResult(null);
-    fetch();
-  }, [fetch, setResult, notifications]);
+    fetch(params);
+  }, [notifications, setResult, fetch, params]);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      notifications.setUnread(0);
-      refresh();
-    }, [notifications, refresh]),
-  );
+  const onFocus = React.useCallback(() => {
+    notifications.setUnread(0);
+    refresh();
+  }, [notifications, refresh]);
+
+  //useFocusEffect(onFocus);
+
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener(
+      //@ts-ignore
+      'tabPress',
+      onFocus,
+    );
+
+    return unsubscribe;
+  }, [navigation, onFocus]);
 
   const headerComponent = React.useMemo(
     () => <NotificationsTopBar store={notifications} setResult={setResult} />,
