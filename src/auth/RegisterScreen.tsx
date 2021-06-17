@@ -272,7 +272,7 @@ export default observer(function RegisterScreen(props: PropsType) {
                 onPress={props.navigation.goBack}
               />
             </View>
-            {inputsWithShadow}
+            <View style={theme.marginBottom6x}>{inputsWithShadow}</View>
             <View style={[theme.paddingHorizontal4x, theme.paddingVertical2x]}>
               <CheckBox
                 containerStyle={[
