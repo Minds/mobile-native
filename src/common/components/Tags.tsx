@@ -178,7 +178,7 @@ export default class Tags extends PureComponent<PropsType> {
       return (
         <Text
           key={i}
-          style={[this.props.style, this.styles]}
+          style={[this.props.style, ThemedStyles.style.colorLink]}
           onPress={() => {
             this.navToDiscovery(`\$${content}`);
           }}>
