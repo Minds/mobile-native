@@ -7,7 +7,6 @@ import {
   Alert,
   Button,
   Text,
-  TextInput,
   StyleSheet,
   ScrollView,
   View,
@@ -22,6 +21,7 @@ import i18n from '../common/services/i18n.service';
 import mindsService from '../common/services/minds.service';
 import CenteredLoading from '../common/components/CenteredLoading';
 import ThemedStyles from '../styles/ThemedStyles';
+import TextInput from '../common/components/TextInput';
 
 export default class ReportScreen extends Component {
   state = {

@@ -170,6 +170,7 @@ exports[`ForgotScreen component should renders correctly 1`] = `
                 "borderColor": "rgba(255,255,255,0.30)",
               }
             }
+            keyboardAppearance="dark"
             labelStyle={
               Array [
                 Object {

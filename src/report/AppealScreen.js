@@ -1,11 +1,13 @@
 //@ts-nocheck
 import React, { useCallback, useState } from 'react';
+import { Text, Alert, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
 import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
-import { Text, Alert } from 'react-native';
 import Button from '../common/components/Button';
 import reportService from './ReportService';
-import { useNavigation } from '@react-navigation/native';
+import TextInput from '../common/components/TextInput';
 
 export default function ({ route }) {
   const CS = ThemedStyles.style;

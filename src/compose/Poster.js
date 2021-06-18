@@ -1,7 +1,6 @@
 import React, { useCallback, useRef, useEffect } from 'react';
 import {
   StyleSheet,
-  TextInput,
   View,
   Dimensions,
   Keyboard,
@@ -27,6 +26,7 @@ import discardMessage from './discardMessage';
 import Tags from '../common/components/Tags';
 import KeyboardSpacingView from '../common/components/KeyboardSpacingView';
 import SoftInputMode from 'react-native-set-soft-input-mode';
+import TextInput from '../common/components/TextInput';
 
 const { width } = Dimensions.get('window');
 

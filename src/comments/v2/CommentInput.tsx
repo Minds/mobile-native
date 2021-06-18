@@ -2,12 +2,12 @@ import React from 'react';
 import {
   View,
   StyleSheet,
-  TextInput,
   Dimensions,
   TouchableOpacity,
   Text,
   Platform,
 } from 'react-native';
+import type { TextInput as TextInputType } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import SoftInputMode from 'react-native-set-soft-input-mode';
 
@@ -24,6 +24,7 @@ import CommentInputBottomMenu from './CommentInputBottomMenu';
 import preventDoubleTap from '../../common/components/PreventDoubleTap';
 import { DotIndicator } from 'react-native-reanimated-indicators';
 import { CHAR_LIMIT } from '../../config/Config';
+import TextInput from '../../common/components/TextInput';
 
 const { height } = Dimensions.get('window');
 
@@ -43,7 +44,7 @@ export const CommentInputContext = React.createContext(storeProvider);
  */
 const CommentInput = observer(() => {
   const theme = ThemedStyles.style;
-  const ref = React.useRef<TextInput>(null);
+  const ref = React.useRef<TextInputType>(null);
   const provider = React.useContext(CommentInputContext);
 
   React.useEffect(() => {
