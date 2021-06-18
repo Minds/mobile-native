@@ -899,7 +899,7 @@ exports[`Activity screen component renders correctly  1`] = `
               style={
                 Array [
                   Object {
-                    "color": undefined,
+                    "color": "#72727C",
                   },
                   Object {
                     "textAlign": "center",
@@ -918,7 +918,7 @@ exports[`Activity screen component renders correctly  1`] = `
               <Text
                 style={
                   Object {
-                    "color": undefined,
+                    "color": "#1B85D6",
                   }
                 }
               >

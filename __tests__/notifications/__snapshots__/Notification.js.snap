@@ -93,7 +93,7 @@ exports[`Notifications component renders correctly 1`] = `
         <Merged
           notification={
             NotificationModel {
-              "created_timestamp": 1622815259,
+              "created_timestamp": 1624028020.7,
               "data": Object {
                 "tokens_formatted": "0.332",
                 "usd_formatted": "0.36",
@@ -353,14 +353,14 @@ exports[`Notifications component renders correctly 1`] = `
           ]
         }
       >
-        1w 
+        53m 
       </Text>
     </View>
   </View>
   <Memo()
     notification={
       NotificationModel {
-        "created_timestamp": 1622815259,
+        "created_timestamp": 1624028020.7,
         "data": Object {
           "tokens_formatted": "0.332",
           "usd_formatted": "0.36",
