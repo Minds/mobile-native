@@ -65,17 +65,18 @@ class DeeplinksRouter {
    * @param {string} url
    */
   navigate(url) {
-    if (!url) {
+    const cleanURL = this.cleanUrl(url);
+    if (!url || !cleanURL) {
       return;
     }
-    if (this.cleanUrl(url).startsWith('forgot-password')) {
+    if (cleanURL.startsWith('forgot-password')) {
       this.navToPasswordReset(url);
       return true;
     }
     if (url.endsWith('/')) {
       url = url.substr(0, url.length - 1);
     }
-    const route = this._getUrlRoute(url);
+    const route = this._getUrlRoute(url, cleanURL);
 
     if (route && route.screen !== 'Redirect') {
       const screens = route.screen.split('/');
@@ -112,15 +113,12 @@ class DeeplinksRouter {
   }
 
   /**
-   * get url for given route
-   * @param {string} url
+   * Get url for given route
    */
-  _getUrlRoute(url) {
-    const surl = this.cleanUrl(url);
-
+  _getUrlRoute(url, cleanURL) {
     for (var i = 0; i < this.routes.length; i++) {
       const route = this.routes[i];
-      const match = route.re.exec(surl);
+      const match = route.re.exec(cleanURL);
       if (match) {
         const params = {};
         route.params.forEach((v, i) => (params[v] = match[i + 1]));
