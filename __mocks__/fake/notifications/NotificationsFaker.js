@@ -195,7 +195,7 @@ function load() {
         yt_channels: [],
       },
       read: true,
-      created_timestamp: Date.now() / 1000 - 3200,
+      created_timestamp: 1622815259,
       type: 'token_rewards_summary',
       data: {
         tokens_formatted: '0.332',
