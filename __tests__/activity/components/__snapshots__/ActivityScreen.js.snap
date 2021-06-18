@@ -889,6 +889,37 @@ exports[`Activity screen component renders correctly  1`] = `
             >
               Upvotes
             </Text>
+            <Text
+              onPress={[Function]}
+              style={
+                Array [
+                  Object {
+                    "color": undefined,
+                  },
+                  Object {
+                    "textAlign": "center",
+                  },
+                  Object {
+                    "fontSize": 16,
+                  },
+                  Object {
+                    "marginVertical": 20,
+                  },
+                ]
+              }
+            >
+              Error
+
+              <Text
+                style={
+                  Object {
+                    "color": undefined,
+                  }
+                }
+              >
+                Try again
+              </Text>
+            </Text>
           </View>
         </View>
       </Modal>
