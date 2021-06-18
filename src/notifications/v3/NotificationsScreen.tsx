@@ -3,7 +3,6 @@ import { observer } from 'mobx-react';
 import { View, Text, FlatList, ViewToken } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import NotificationsTopBar from './NotificationsTopBar';
-import { useNavigation } from '@react-navigation/native';
 import useApiFetch from '../../common/hooks/useApiFetch';
 import i18n from '../../common/services/i18n.service';
 import NotificationItem from './notification/Notification';
@@ -75,7 +74,6 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
   } = useApiFetch<NotificationList>('api/v3/notifications/list', {
     params,
     updateState,
-    persist: true,
   });
 
   const onFetchMore = () => {
@@ -128,6 +126,17 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
   );
 
   const ListEmptyComponent = React.useMemo(() => {
+    if (error && !loading) {
+      return (
+        <Text style={errorStyle} onPress={() => fetch()}>
+          {i18n.t('cantReachServer') + '\n'}
+          <Text style={[theme.colorLink, theme.marginTop2x]}>
+            {i18n.t('tryAgain')}
+          </Text>
+        </Text>
+      );
+    }
+
     if (loading) {
       return (
         <View>
@@ -142,23 +151,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
     } else {
       return Empty;
     }
-  }, [loading]);
-
-  if (error && !loading) {
-    return (
-      <Text
-        style={[
-          theme.colorSecondaryText,
-          theme.textCenter,
-          theme.fontL,
-          theme.marginVertical4x,
-        ]}
-        onPress={() => fetch()}>
-        {i18n.t('error') + '\n'}
-        <Text style={theme.colorLink}>{i18n.t('tryAgain')}</Text>
-      </Text>
-    );
-  }
+  }, [error, loading, fetch]);
 
   const data = result?.notifications || [];
 
@@ -195,3 +188,10 @@ const renderItem = (row: any): React.ReactElement => {
 };
 
 export default NotificationsScreen;
+
+const errorStyle = ThemedStyles.combine(
+  'colorSecondaryText',
+  'textCenter',
+  'fontXL',
+  'marginVertical4x',
+);

@@ -213,7 +213,7 @@ export default class Input extends Component<PropsType> {
     return (
       <View style={styles.container}>
         <View>
-          <View>
+          <View style={theme.rowStretch}>
             <Text
               style={[
                 styles.label,

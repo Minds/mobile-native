@@ -46,7 +46,7 @@ type PropsType = {
 };
 
 const shadowOptLocal = Object.assign({}, shadowOpt);
-shadowOptLocal.height = 270;
+shadowOptLocal.height = 300;
 
 const validatorText = { color: LIGHT_THEME.PrimaryText };
 
