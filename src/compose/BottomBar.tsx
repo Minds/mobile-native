@@ -38,14 +38,16 @@ export default function BottomBar(props) {
           onPress={() => props.store.setModePhoto(false)}
         />
       )}
-      <IconM
-        name="attach-money"
-        size={27}
-        style={iconStyle}
-        onPress={() =>
-          navigation.navigate('MonetizeSelector', { store: props.store })
-        }
-      />
+      {!props.store.isGroup() && (
+        <IconM
+          name="attach-money"
+          size={27}
+          style={iconStyle}
+          onPress={() =>
+            navigation.navigate('MonetizeSelector', { store: props.store })
+          }
+        />
+      )}
       <FIcon
         name="hash"
         size={27}
