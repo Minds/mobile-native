@@ -4,7 +4,6 @@ import {
   Text,
   StyleSheet,
   ScrollView,
-  TextInput,
   TouchableOpacity,
 } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
@@ -17,6 +16,7 @@ import NavigationService from '../navigation/NavigationService';
 import hashtagService from '../common/services/hashtag.service';
 import HistoryStore from '../common/stores/HistoryStore';
 import sessionService from '../common/services/session.service';
+import TextInput from '../common/components/TextInput';
 
 /**
  * Tag row
@@ -50,7 +50,7 @@ const TagRow = props => {
 export default observer(function (props) {
   const theme = ThemedStyles.style;
   const store = props.route.params.store;
-  const inputRef = useRef();
+  const inputRef = useRef(null);
 
   const localStore = useLocalStore(
     ({ postStore }) => ({

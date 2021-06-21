@@ -1,11 +1,6 @@
 import React, { useCallback, useRef, useEffect } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  TextInput,
-} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import type { TextInput as TextInputType } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import i18n from '../../common/services/i18n.service';
@@ -18,6 +13,7 @@ import Switch from 'react-native-switch-pro';
 import Wrapper from './common/Wrapper';
 import CenteredLoading from '../../common/components/CenteredLoading';
 import { SupportTiersType } from '../../wire/WireTypes';
+import TextInput from '../../common/components/TextInput';
 
 type CustomMonetizeScreenRouteProp = RouteProp<
   AppStackParamList,
@@ -66,7 +62,7 @@ const CustomMonetizeScreen = observer((props: PropsType) => {
     },
   }));
 
-  const inputRef = useRef<TextInput>(null);
+  const inputRef = useRef<TextInputType>(null);
 
   const save = useCallback(async () => {
     try {

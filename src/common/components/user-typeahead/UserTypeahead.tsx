@@ -1,14 +1,7 @@
 //@ts-nocheck
 import React, { PureComponent } from 'react';
 
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  FlatList,
-  Image,
-} from 'react-native';
+import { StyleSheet, Text, View, FlatList, Image } from 'react-native';
 
 import Modal from 'react-native-modal';
 
@@ -25,6 +18,7 @@ import abbrev from '../../helpers/abbrev';
 import logService from '../../services/log.service';
 import i18nService from '../../services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
+import TextInput from '../TextInput';
 
 export default class UserTypeahead extends PureComponent {
   textInput = void 0;

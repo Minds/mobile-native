@@ -1,7 +1,7 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import { View, Text, TextInput, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
 import { inject, observer } from 'mobx-react';
 
@@ -14,6 +14,7 @@ import stylesheet from '../onboarding/stylesheet';
 import i18n from '../common/services/i18n.service';
 import ActivityIndicator from '../common/components/ActivityIndicator';
 import ThemedStyles from '../styles/ThemedStyles';
+import TextInput from '../common/components/TextInput';
 
 @inject('messengerList')
 @observer

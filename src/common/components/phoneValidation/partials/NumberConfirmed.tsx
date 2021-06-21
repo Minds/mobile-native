@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Text, TextInput, View } from 'react-native';
+import { Text, View } from 'react-native';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 import i18n from '../../../services/i18n.service';
 import { PhoneValidationPropsType } from '../PhoneValidationComponent';
@@ -10,6 +10,7 @@ import { observer } from 'mobx-react';
 import twoFactorAuthenticationService from '../../../services/two-factor-authentication.service';
 import { UserError } from '../../../UserError';
 import { PhoneValidationStoreType } from '../createLocalStore';
+import TextInput from '../../TextInput';
 
 type PropsType = {
   localStore: PhoneValidationStoreType;
