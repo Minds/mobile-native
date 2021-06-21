@@ -156,7 +156,14 @@ exports[`LoginScreen component should renders correctly 1`] = `
                 }
               >
                 <View>
-                  <View>
+                  <View
+                    style={
+                      Object {
+                        "alignItems": "stretch",
+                        "flexDirection": "row",
+                      }
+                    }
+                  >
                     <Text
                       style={
                         Array [
@@ -275,7 +282,14 @@ exports[`LoginScreen component should renders correctly 1`] = `
                   }
                 >
                   <View>
-                    <View>
+                    <View
+                      style={
+                        Object {
+                          "alignItems": "stretch",
+                          "flexDirection": "row",
+                        }
+                      }
+                    >
                       <Text
                         style={
                           Array [

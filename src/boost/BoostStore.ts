@@ -2,12 +2,11 @@
 import { observable, action } from 'mobx';
 
 import OffsetListStore from '../common/stores/OffsetListStore';
-import { revokeBoost, rejectBoost, acceptBoost } from './BoostService';
 
 import BoostModel from './BoostModel';
 import BoostService from './BoostService';
 import logService from '../common/services/log.service';
-import { isNetworkFail } from '../common/helpers/abortableFetch';
+import { isNetworkError } from '../common/services/api.service';
 
 /**
  * Boosts Store
@@ -61,7 +60,7 @@ class BoostStore {
     } catch (err) {
       // ignore aborts
       if (err.code === 'Abort') return;
-      if (!isNetworkFail(err)) {
+      if (!isNetworkError(err)) {
         logService.exception('[BoostStore]', err);
       }
     } finally {

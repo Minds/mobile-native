@@ -138,6 +138,8 @@ export type AppStackParamList = {
   BoostSettingsScreen: {};
   SettingsPassword: {};
   SettingsNotifications: {};
+  PushNotificationsSettings: {};
+  EmailNotificationsSettings: {};
   DataSaverScreen: {};
   BlockedChannels: {};
   TierManagementScreen: {};

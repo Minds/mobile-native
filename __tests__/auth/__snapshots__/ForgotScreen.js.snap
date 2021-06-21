@@ -44,10 +44,13 @@ exports[`ForgotScreen component should renders correctly 1`] = `
               "lineHeight": 44,
             },
             Object {
-              "color": undefined,
+              "color": "#FFFFFF",
             },
             Object {
-              "marginVertical": 15,
+              "marginTop": 20,
+            },
+            Object {
+              "marginBottom": 35,
             },
             Object {
               "marginHorizontal": 15,
@@ -67,7 +70,7 @@ exports[`ForgotScreen component should renders correctly 1`] = `
               "lineHeight": 23,
             },
             Object {
-              "color": undefined,
+              "color": "#FFFFFF",
             },
             Object {
               "marginVertical": 5,
@@ -117,7 +120,14 @@ exports[`ForgotScreen component should renders correctly 1`] = `
           }
         >
           <View>
-            <View>
+            <View
+              style={
+                Object {
+                  "alignItems": "stretch",
+                  "flexDirection": "row",
+                }
+              }
+            >
               <Text
                 style={
                   Array [
@@ -153,6 +163,7 @@ exports[`ForgotScreen component should renders correctly 1`] = `
             accessibilityLabel="usernameInput"
             allowFontScaling={true}
             autoCapitalize="none"
+            autoFocus={true}
             containerStyle={
               Object {
                 "backgroundColor": "rgba(0,0,0,0.25)",
@@ -308,6 +319,9 @@ exports[`ForgotScreen component should renders correctly 1`] = `
                 undefined,
                 Object {
                   "marginLeft": 10,
+                },
+                Object {
+                  "width": 138,
                 },
               ],
             ]

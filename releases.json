@@ -1,6 +1,33 @@
 {
   "versions": [
     {
+      "version": "4.13.0",
+      "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-13-0.apk",
+      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.13.0",
+      "changelog": [
+        "Performance improvements",
+        "Media attachment can now be edited on comments",
+        "Allow exporting legacy wallets more than once",
+        "Scroll added to the main menu for small screens",
+        "Bug fixing"
+      ],
+      "unstable": false,
+      "hashes": [
+        {
+          "type": "md5",
+          "value": "a2e4530a1d71f29eb66c7e37b1074dd7"
+        },
+        {
+          "type": "sha256",
+          "value": "02db2c461bc45f8724a4e94ce63b5d4aa77866b0425ecc3946803035cb2434de"
+        },
+        {
+          "type": "sha512",
+          "value": "e0d5236c5e566c4cb7b843ef90724e1d3d3052399103dffbc79343e9300d47a717a7ef8d733197048269050931f040811f267ffacce54583f4b0d6a28bd5a24c"
+        }
+      ]
+    },
+    {
       "version": "4.11.1",
       "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-11-1.apk",
       "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.11.1",

@@ -13,7 +13,6 @@ import type BlogModel from '../../../blogs/BlogModel';
 import i18n from '../../../common/services/i18n.service';
 import createComposeStore from '../../../compose/createComposeStore';
 import { showNotification } from '../../../../AppMessages';
-import { useLegacyStores } from '../../../common/hooks/__mocks__/use-stores';
 import sessionService from '../../../common/services/session.service';
 import {
   actionsContainerStyle,
@@ -21,6 +20,7 @@ import {
   iconDisabledStyle,
   iconNormalStyle,
 } from './styles';
+import { useLegacyStores } from '../../../common/hooks/use-stores';
 
 // prevent double tap in touchable
 const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
@@ -28,13 +28,14 @@ const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
 type PropsTypes = {
   entity: ActivityModel | BlogModel;
   size?: number;
+  hideCount?: boolean;
   vertical?: boolean;
 };
 
 /**
  * Remind Action Component
  */
-export default function ({ entity, size = 21 }: PropsTypes) {
+export default function ({ entity, size = 21, hideCount }: PropsTypes) {
   const theme = ThemedStyles.style;
   const reminded =
     entity.remind_users &&
@@ -119,7 +120,7 @@ export default function ({ entity, size = 21 }: PropsTypes) {
           onPress={showDropdown}
           testID="Remind activity button">
           <Icon style={buttonIconStyle} name="repeat" size={size} />
-          <Counter count={entity.reminds} />
+          {!hideCount && <Counter count={entity.reminds} />}
         </TouchableOpacityCustom>
       }>
       {reminded ? (

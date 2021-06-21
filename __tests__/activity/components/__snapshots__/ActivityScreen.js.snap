@@ -486,6 +486,7 @@ exports[`Activity screen component renders correctly  1`] = `
               onModalWillHide={[Function]}
               onModalWillShow={[Function]}
               onRequestClose={[Function]}
+              panResponderThreshold={4}
               scrollHorizontal={false}
               scrollOffset={0}
               scrollOffsetMax={0}
@@ -534,6 +535,7 @@ exports[`Activity screen component renders correctly  1`] = `
                 onModalHide={[Function]}
                 onModalWillHide={[Function]}
                 onModalWillShow={[Function]}
+                panResponderThreshold={4}
                 pointerEvents="box-none"
                 scrollHorizontal={false}
                 scrollOffset={0}
@@ -561,31 +563,12 @@ exports[`Activity screen component renders correctly  1`] = `
               >
                 <View
                   style={
-                    Array [
-                      Object {
-                        "alignItems": "center",
-                        "backgroundColor": "transparent",
-                        "flex": 1,
-                        "justifyContent": "center",
-                      },
-                    ]
+                    Object {
+                      "flex": 1,
+                      "width": "100%",
+                    }
                   }
                 >
-                  <Text
-                    style={
-                      Object {
-                        "alignContent": "center",
-                        "alignItems": "center",
-                        "alignSelf": "center",
-                        "color": undefined,
-                        "fontSize": 22,
-                        "justifyContent": "center",
-                        "marginBottom": 30,
-                      }
-                    }
-                  >
-                    
-                  </Text>
                   <View
                     style={
                       Array [
@@ -594,12 +577,6 @@ exports[`Activity screen component renders correctly  1`] = `
                         },
                         Object {
                           "marginTop": 15,
-                        },
-                        Object {
-                          "paddingLeft": 10,
-                        },
-                        Object {
-                          "marginBottom": 30,
                         },
                       ]
                     }
@@ -626,6 +603,11 @@ exports[`Activity screen component renders correctly  1`] = `
                       renderItem={[Function]}
                       scrollEventThrottle={50}
                       stickyHeaderIndices={Array []}
+                      style={
+                        Object {
+                          "flex": 1,
+                        }
+                      }
                       updateCellsBatchingPeriod={50}
                       viewabilityConfigCallbackPairs={Array []}
                       windowSize={21}
@@ -636,6 +618,7 @@ exports[`Activity screen component renders correctly  1`] = `
                   <View
                     style={
                       Object {
+                        "alignSelf": "center",
                         "backgroundColor": "transparent",
                         "borderRadius": 28,
                         "height": 55,
@@ -763,6 +746,184 @@ exports[`Activity screen component renders correctly  1`] = `
       }
     }
   >
+    <View
+      style={
+        Array [
+          Object {
+            "flexDirection": "row",
+            "justifyContent": "flex-start",
+          },
+          Object {
+            "backgroundColor": undefined,
+          },
+          Object {
+            "paddingLeft": 10,
+          },
+          Object {
+            "borderTopWidth": 0.5,
+          },
+          Object {
+            "borderColor": undefined,
+          },
+        ]
+      }
+    >
+      <Modal
+        animationType="none"
+        deviceHeight={null}
+        deviceWidth={null}
+        hardwareAccelerated={false}
+        hideModalContentWhileAnimating={false}
+        onBackdropPress={[Function]}
+        onModalHide={[Function]}
+        onModalWillHide={[Function]}
+        onModalWillShow={[Function]}
+        onRequestClose={[Function]}
+        panResponderThreshold={4}
+        scrollHorizontal={false}
+        scrollOffset={0}
+        scrollOffsetMax={0}
+        scrollTo={null}
+        supportedOrientations={
+          Array [
+            "portrait",
+            "landscape",
+          ]
+        }
+        swipeThreshold={100}
+        transparent={true}
+        visible={false}
+      >
+        <View
+          accessible={true}
+          focusable={true}
+          forwardedRef={[Function]}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "backgroundColor": "black",
+              "bottom": 0,
+              "height": 1334,
+              "left": 0,
+              "opacity": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "width": 750,
+            }
+          }
+        />
+        <View
+          deviceHeight={null}
+          deviceWidth={null}
+          forwardedRef={[Function]}
+          hideModalContentWhileAnimating={false}
+          onBackdropPress={[Function]}
+          onModalHide={[Function]}
+          onModalWillHide={[Function]}
+          onModalWillShow={[Function]}
+          panResponderThreshold={4}
+          pointerEvents="box-none"
+          scrollHorizontal={false}
+          scrollOffset={0}
+          scrollOffsetMax={0}
+          scrollTo={null}
+          style={
+            Object {
+              "flex": 1,
+              "justifyContent": "center",
+              "margin": 37.5,
+              "transform": Array [
+                Object {
+                  "translateY": 0,
+                },
+              ],
+            }
+          }
+          supportedOrientations={
+            Array [
+              "portrait",
+              "landscape",
+            ]
+          }
+          swipeThreshold={100}
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "height": "75%",
+                },
+                Object {
+                  "backgroundColor": undefined,
+                },
+                Object {
+                  "padding": 15,
+                },
+                Object {
+                  "borderRadius": 10,
+                },
+              ]
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "fontSize": 22,
+                  },
+                  Object {
+                    "marginLeft": 10,
+                  },
+                  Object {
+                    "marginBottom": 5,
+                  },
+                ]
+              }
+            >
+              Upvotes
+            </Text>
+            <Text
+              onPress={[Function]}
+              style={
+                Array [
+                  Object {
+                    "color": undefined,
+                  },
+                  Object {
+                    "textAlign": "center",
+                  },
+                  Object {
+                    "fontSize": 16,
+                  },
+                  Object {
+                    "marginVertical": 20,
+                  },
+                ]
+              }
+            >
+              Error
+
+              <Text
+                style={
+                  Object {
+                    "color": undefined,
+                  }
+                }
+              >
+                Try again
+              </Text>
+            </Text>
+          </View>
+        </View>
+      </Modal>
+    </View>
     <View>
       <View
         style={
@@ -979,10 +1140,6 @@ exports[`Activity screen component renders correctly  1`] = `
                   ]
                 }
               />
-              <Counter
-                count={0}
-                size={15}
-              />
             </preventDoubleTap(TouchableOpacity)>
           }
           style={
@@ -1119,6 +1276,7 @@ exports[`Activity screen component renders correctly  1`] = `
             onModalWillHide={[Function]}
             onModalWillShow={[Function]}
             onRequestClose={[Function]}
+            panResponderThreshold={4}
             scrollHorizontal={false}
             scrollOffset={0}
             scrollOffsetMax={0}
@@ -1206,6 +1364,7 @@ exports[`Activity screen component renders correctly  1`] = `
                 onModalHide={[Function]}
                 onModalWillHide={[Function]}
                 onModalWillShow={[Function]}
+                panResponderThreshold={4}
                 pointerEvents="box-none"
                 scrollHorizontal={false}
                 scrollOffset={0}
@@ -1625,6 +1784,7 @@ exports[`Activity screen component renders correctly  1`] = `
           "perma_url": false,
           "permissions": Object {},
           "pinned": false,
+          "quotes": 0,
           "reminds": 0,
           "rowKey": "something0",
           "shouldBeBlured": [MockFunction] {

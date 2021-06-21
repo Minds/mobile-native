@@ -90,6 +90,7 @@ exports[`Activity component renders correctly 1`] = `
         "perma_url": false,
         "permissions": Object {},
         "pinned": false,
+        "quotes": 0,
         "reminds": 0,
         "rowKey": "something0",
         "shouldBeBlured": [MockFunction] {
@@ -190,6 +191,7 @@ exports[`Activity component renders correctly 1`] = `
         "perma_url": false,
         "permissions": Object {},
         "pinned": false,
+        "quotes": 0,
         "reminds": 0,
         "rowKey": "something0",
         "shouldBeBlured": [MockFunction] {
@@ -296,6 +298,7 @@ exports[`Activity component renders correctly 1`] = `
             "perma_url": false,
             "permissions": Object {},
             "pinned": false,
+            "quotes": 0,
             "reminds": 0,
             "rowKey": "something0",
             "shouldBeBlured": [MockFunction] {
@@ -422,6 +425,7 @@ exports[`Activity component renders correctly 1`] = `
             "perma_url": false,
             "permissions": Object {},
             "pinned": false,
+            "quotes": 0,
             "reminds": 0,
             "rowKey": "something0",
             "shouldBeBlured": [MockFunction] {
@@ -536,6 +540,7 @@ exports[`Activity component renders correctly 1`] = `
               "perma_url": false,
               "permissions": Object {},
               "pinned": false,
+              "quotes": 0,
               "reminds": 0,
               "rowKey": "something0",
               "shouldBeBlured": [MockFunction] {
@@ -661,6 +666,7 @@ exports[`Activity component renders correctly 1`] = `
               "perma_url": false,
               "permissions": Object {},
               "pinned": false,
+              "quotes": 0,
               "reminds": 0,
               "rowKey": "something0",
               "shouldBeBlured": [MockFunction] {
@@ -770,6 +776,7 @@ exports[`Activity component renders correctly 1`] = `
           "perma_url": false,
           "permissions": Object {},
           "pinned": false,
+          "quotes": 0,
           "reminds": 0,
           "rowKey": "something0",
           "shouldBeBlured": [MockFunction] {
@@ -870,6 +877,7 @@ exports[`Activity component renders correctly 1`] = `
           "perma_url": false,
           "permissions": Object {},
           "pinned": false,
+          "quotes": 0,
           "reminds": 0,
           "rowKey": "something0",
           "shouldBeBlured": [MockFunction] {

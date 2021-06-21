@@ -10,6 +10,8 @@ import { FLAG_VIEW } from '../common/Permissions';
 import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
 import CenteredLoading from '../common/components/CenteredLoading';
 import type BlogModel from '../blogs/BlogModel';
+import { showNotification } from '../../AppMessages';
+import i18n from '../common/services/i18n.service';
 
 export type ActivityRouteProp = RouteProp<AppStackParamList, 'Activity'>;
 type ActivityNavigationProp = StackNavigationProp<
@@ -55,6 +57,15 @@ const ActivityScreen = observer((props: PropsType) => {
         } else {
           const urn = 'urn:activity:' + params.guid;
           await store.entityStore.loadEntity(urn, undefined, false);
+
+          if (!store.entityStore.entity) {
+            showNotification(
+              i18n.t('settings.reportedContent.postNotFound'),
+              'info',
+              3000,
+              'top',
+            );
+          }
 
           if (
             !store.entityStore.entity ||

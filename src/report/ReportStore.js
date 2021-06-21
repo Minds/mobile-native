@@ -4,7 +4,7 @@ import { observable, action } from 'mobx';
 import ReportListStore from './ReportListStore';
 import reportService from './ReportService';
 import logService from '../common/services/log.service';
-import { isNetworkFail } from '../common/helpers/abortableFetch';
+import { isNetworkError } from '../common/services/api.service';
 
 export default class ReportStore {
   @observable filter = 'review';
@@ -31,7 +31,7 @@ export default class ReportStore {
 
       return response;
     } catch (err) {
-      if (!isNetworkFail(err)) {
+      if (!isNetworkError(err)) {
         logService.exception('[ReportStore] loadList', err);
       }
       this.list.setErrorLoading(true);

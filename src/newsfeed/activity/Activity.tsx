@@ -43,10 +43,12 @@ type PropsType = {
   isReminded?: boolean;
   autoHeight?: boolean;
   hideTabs?: boolean;
+  hideRemind?: boolean;
   parentMature?: boolean;
   onLayout?: Function;
   showCommentsOutlet?: boolean;
   storeUserTap?: boolean;
+  showOnlyContent?: boolean;
 };
 
 /**
@@ -239,10 +241,16 @@ export default class Activity extends Component<PropsType> {
 
     return (
       <View
-        style={this.props.isReminded ? remindedContainerStyle : containerStyle}
+        style={
+          this.props.isReminded
+            ? remindedContainerStyle
+            : this.props.showOnlyContent
+            ? onlyContentContainerStyle
+            : containerStyle
+        }
         onLayout={this.onLayout}>
         <Pinned entity={this.props.entity} />
-        {this.showOwner()}
+        {!this.props.showOnlyContent && this.showOwner()}
         {showNSFW ? (
           <ExplicitOverlay entity={this.props.entity} />
         ) : (
@@ -253,7 +261,12 @@ export default class Activity extends Component<PropsType> {
             onLongPress={this.copyText}
             onLayout={this.onLayout}
             testID="ActivityView">
-            <View style={styles.bodyContainer}>
+            <View
+              style={
+                this.props.showOnlyContent
+                  ? styles.onlyContentbodyContainer
+                  : styles.bodyContainer
+              }>
               {lock}
               {/* Shows ontop only for rich embed or reminds */}
               {this.props.entity.perma_url || this.props.entity.remind_object
@@ -273,10 +286,12 @@ export default class Activity extends Component<PropsType> {
                 : undefined}
             </View>
 
-            <ActivityMetrics entity={this.props.entity} />
-            {this.showActions()}
-            {this.renderScheduledMessage()}
-            {this.renderPendingMessage()}
+            {!this.props.showOnlyContent && (
+              <ActivityMetrics entity={this.props.entity} />
+            )}
+            {!this.props.showOnlyContent && this.showActions()}
+            {!this.props.showOnlyContent && this.renderScheduledMessage()}
+            {!this.props.showOnlyContent && this.renderPendingMessage()}
           </TouchableOpacity>
         )}
       </View>
@@ -377,7 +392,7 @@ export default class Activity extends Component<PropsType> {
   showRemind() {
     const remind_object = this.props.entity.remind_object;
 
-    if (remind_object) {
+    if (remind_object && !this.props.hideRemind) {
       if (blockListService.has(remind_object.owner_guid)) {
         return (
           <View style={remindBlockContainerStyle}>
@@ -404,6 +419,7 @@ export default class Activity extends Component<PropsType> {
             isReminded={true}
             parentMature={this.props.entity.shouldBeBlured()}
             hydrateOnNav={true}
+            showOnlyContent={this.props.showOnlyContent}
           />
         </View>
       );
@@ -431,6 +447,9 @@ const styles = StyleSheet.create({
   },
   bodyContainer: {
     minHeight: 150,
+    justifyContent: 'center',
+  },
+  onlyContentbodyContainer: {
     justifyContent: 'center',
   },
   messageContainer: {
@@ -510,6 +529,13 @@ const remindContainerStyle = ThemedStyles.combine(
 const containerStyle = ThemedStyles.combine(
   styles.container,
   'borderBottom8x',
+  'borderBackgroundTertiary',
+  'backgroundPrimary',
+);
+
+const onlyContentContainerStyle = ThemedStyles.combine(
+  styles.container,
+  'borderHair',
   'borderBackgroundTertiary',
   'backgroundPrimary',
 );

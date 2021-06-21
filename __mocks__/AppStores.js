@@ -1,4 +1,4 @@
 export default {
   __esModule: true,
-  getStores; jest.fn(),
+  getStores: jest.fn(),
 };

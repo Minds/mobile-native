@@ -12,6 +12,7 @@ import abbrev from '../../../common/helpers/abbrev';
 import SocialLinks from '../../../common/components/SocialLinks';
 import Tags from '../../../common/components/Tags';
 import { useIsFocused } from '@react-navigation/core';
+import { withErrorBoundary } from '../../../common/components/ErrorBoundary';
 
 type PropsType = {
   store: ChannelStoreType;
@@ -132,4 +133,4 @@ const AboutTab = observer(({ store, navigation }: PropsType) => {
   );
 });
 
-export default AboutTab;
+export default withErrorBoundary(AboutTab);

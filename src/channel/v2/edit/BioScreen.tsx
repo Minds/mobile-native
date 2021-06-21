@@ -12,6 +12,7 @@ import {
   BioScreenRouteProp,
   BioScreenNavigationProp,
 } from '../../../navigation/NavigationTypes';
+import { withErrorBoundary } from '../../../common/components/ErrorBoundary';
 
 type PropsType = {
   route: BioScreenRouteProp;
@@ -92,4 +93,4 @@ const BioScreen = observer(({ route, navigation }: PropsType) => {
   );
 });
 
-export default BioScreen;
+export default withErrorBoundary(BioScreen);
