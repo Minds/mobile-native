@@ -87,7 +87,7 @@ export class SettingsStore {
     getStores().hashtag.setAll(!this.useHashtags);
 
     // theme
-    ThemedStyles.setTheme(data[5][1] || 0);
+    ThemedStyles.setTheme(data[5][1] || 1);
 
     return this;
   }

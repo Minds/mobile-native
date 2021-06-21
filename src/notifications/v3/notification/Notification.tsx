@@ -52,9 +52,12 @@ const NotificationItem = React.memo(({ notification }: PropsType) => {
     <TouchableOpacity style={containerStyle} onPress={router.navToEntity}>
       <View style={styles.innerContainer}>
         <View style={styles.avatarContainer}>
-          <DebouncedTouchableOpacity onPress={navToFromChannel}>
-            <FastImage source={avatarSrc} style={styles.avatar} />
-          </DebouncedTouchableOpacity>
+          {
+            //@ts-ignore
+            <DebouncedTouchableOpacity onPress={navToFromChannel}>
+              <FastImage source={avatarSrc} style={styles.avatar} />
+            </DebouncedTouchableOpacity>
+          }
           {
             // This view is here to ensure that the wrapped icon that have absolute position
             // doesn't change move when the notification is longer than expected

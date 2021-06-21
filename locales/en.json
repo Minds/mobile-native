@@ -93,7 +93,10 @@
     "confirmPasswordModal": "Please confirm your account password to continue",
     "loginFail": "Wrong Username or Password",
     "newPassword": "Please enter your new password",
-    "waitLogin": "Logging in with new credentials..."
+    "waitLogin": "Logging in with new credentials...",
+    "resetPassword": "Reset Password",
+    "createNewPassword": "Create a new password",
+    "inputUser": "Enter your channel name below to start the password recovery process."
   },
   "blockchain": {
     "exportLegacyWallet": "Export legacy wallets",
