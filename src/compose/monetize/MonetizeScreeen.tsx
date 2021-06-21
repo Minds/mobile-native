@@ -67,6 +67,8 @@ const MonetizeScreen = observer(({ route }: PropsType) => {
     store.wire_threshold && store.wire_threshold.support_tier,
   );
 
+  const showPlusMembership = !store.isGroup();
+
   const checkIcon = (
     <MIcon name="check" size={24} style={theme.colorSecondaryText} />
   );
@@ -94,15 +96,17 @@ const MonetizeScreen = observer(({ route }: PropsType) => {
       />
       <View style={theme.marginTop4x}>
         <MenuSubtitle>{i18n.t('monetize.options')}</MenuSubtitle>
-        <MenuItem
-          item={{
-            onPress: useNavCallback('PlusMonetize', store),
-            title: i18n.t('monetize.plus'),
-            icon: <IconItem isActive={isPlusSelected} />,
-          }}
-          containerItemStyle={theme.backgroundPrimary}
-          testID="monetizePlus"
-        />
+        {showPlusMembership && (
+          <MenuItem
+            item={{
+              onPress: useNavCallback('PlusMonetize', store),
+              title: i18n.t('monetize.plus'),
+              icon: <IconItem isActive={isPlusSelected} />,
+            }}
+            containerItemStyle={theme.backgroundPrimary}
+            testID="monetizePlus"
+          />
+        )}
         <MenuItem
           item={{
             onPress: () =>
