@@ -1,23 +1,28 @@
 {
   "versions": [
     {
-      "version": "4.13.1",
-      "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-13-1.apk",
-      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.13.1",
-      "changelog": ["Password reset flow fixed"],
+      "version": "4.14.0",
+      "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-14-0.apk",
+      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.14.0",
+      "changelog": [
+        "New notifications",
+        "Interaction details",
+        "Translation support added to comments",
+        "Bug fixing"
+      ],
       "unstable": false,
       "hashes": [
         {
           "type": "md5",
-          "value": "2188d42fa1796d30d10ee478fce22b98"
+          "value": "5c5890d618ff759e09d11e29770acf63"
         },
         {
           "type": "sha256",
-          "value": "704f821a197aa62e23151f90161bfa988360070e1001d48bc2858836f82a02f9"
+          "value": "e110bcece4dd068ee2db7bb8198ac5043736a5646ca86bd451dc5bb6ff187ba7"
         },
         {
           "type": "sha512",
-          "value": "7586983ece8016451cd244421cef5d2e312dea34759616c4fa5c560709a1c010d66275606e36e28928171e29a371d6490f110b57f46d3f3c2d34ab51a1996bce"
+          "value": "60ea30d61b7ec1a4250b942b26d5b42e7e5d9729d84c7db70d845b93422b6eb51806c30058bbce4ec22b1677fcd6b2e9166e119ae55f311e77ff4bb1e82b6025"
         }
       ]
     },
