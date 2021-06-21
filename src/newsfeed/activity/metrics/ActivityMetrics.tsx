@@ -51,13 +51,8 @@ export default class ActivityMetrics extends Component<PropsType> {
     );
 
     return (
-      <View
-        style={[
-          theme.rowJustifySpaceBetween,
-          theme.padding2x,
-          { paddingLeft: 16 },
-        ]}>
-        <Text style={[theme.colorSecondaryText, theme.fontM, theme.padding]}>
+      <View style={containerStyle}>
+        <Text style={textStyle}>
           {entity.impressions > 0
             ? abbrev(entity.impressions, 1) +
               ` ${i18n.t('views').toLowerCase()} · `
@@ -66,7 +61,7 @@ export default class ActivityMetrics extends Component<PropsType> {
         </Text>
 
         {this.props.entity.boosted ? (
-          <View style={[theme.rowJustifyStart, theme.centered]}>
+          <View style={boostedContainerStyle}>
             <Icon
               type="ionicon"
               name="md-trending-up"
@@ -75,7 +70,7 @@ export default class ActivityMetrics extends Component<PropsType> {
               color={ThemedStyles.getColor('link')}
             />
 
-            <Text style={[theme.marginRight2x, theme.colorLink, theme.fontS]}>
+            <Text style={boostedTextStyle}>
               {i18nService.t('boosted').toUpperCase()}
             </Text>
           </View>
@@ -85,3 +80,26 @@ export default class ActivityMetrics extends Component<PropsType> {
     );
   }
 }
+
+const containerStyle = ThemedStyles.combine(
+  'rowJustifySpaceBetween',
+  'padding2x',
+  'paddingLeft4x',
+);
+
+const textStyle = ThemedStyles.combine(
+  'colorSecondaryText',
+  'fontM',
+  'paddingVertical',
+);
+
+const boostedTextStyle = ThemedStyles.combine(
+  'marginRight2x',
+  'colorLink',
+  'fontS',
+);
+
+const boostedContainerStyle = ThemedStyles.combine(
+  'rowJustifyStart',
+  'centered',
+);

@@ -52,7 +52,7 @@ export default class ActivityActionSheet extends Component<
     super(props);
     const theme = ThemedStyles.style;
     this.deleteOption = (
-      <Text testID="deleteOption" style={[theme.colorDanger, theme.fontXL]}>
+      <Text testID="deleteOption" style={[theme.colorAlert, theme.fontXL]}>
         {i18n.t('delete')}
       </Text>
     );
@@ -61,7 +61,7 @@ export default class ActivityActionSheet extends Component<
   /**
    * Show menu
    */
-  async showActionSheet() {
+  showActionSheet = async () => {
     if (this.props.entity['is:following'] === undefined) {
       this.props.entity['is:following'] = await isFollowing(
         this.props.entity.guid,
@@ -71,7 +71,7 @@ export default class ActivityActionSheet extends Component<
     this.setState({ options: this.getOptions() }, () => {
       this.ActionSheet.show();
     });
-  }
+  };
 
   /**
    * Handle selection by index
@@ -406,16 +406,16 @@ export default class ActivityActionSheet extends Component<
     };
 
     return (
-      <View>
+      <View style={theme.paddingLeft2x}>
         <Icon
           name="more-vert"
-          onPress={() => this.showActionSheet()}
+          onPress={this.showActionSheet}
           size={28}
           style={theme.colorTertiaryText}
           testID={this.props.testID}
         />
         <ActionSheet
-          ref={o => (this.ActionSheet = o)}
+          ref={this.setRef}
           title={i18n.t('actions')}
           options={this.state.options}
           onPress={this.handleSelection}
@@ -425,4 +425,6 @@ export default class ActivityActionSheet extends Component<
       </View>
     );
   }
+
+  setRef = o => (this.ActionSheet = o);
 }

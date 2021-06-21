@@ -7,10 +7,19 @@ exports[`Thumb action component renders correctly 1`] = `
       onPress={[Function]}
       style={
         Array [
-          undefined,
-          undefined,
-          undefined,
-          undefined,
+          Object {
+            "flexDirection": "row",
+            "justifyContent": "center",
+          },
+          Object {
+            "paddingHorizontal": 15,
+          },
+          Object {
+            "paddingVertical": 20,
+          },
+          Object {
+            "alignItems": "center",
+          },
         ]
       }
       testID="Remind activity button"
@@ -21,8 +30,12 @@ exports[`Thumb action component renders correctly 1`] = `
         size={21}
         style={
           Array [
-            undefined,
-            undefined,
+            Object {
+              "color": undefined,
+            },
+            Object {
+              "marginRight": 5,
+            },
           ]
         }
       />
@@ -32,13 +45,22 @@ exports[`Thumb action component renders correctly 1`] = `
       />
     </preventDoubleTap(TouchableOpacity)>
   }
+  style={
+    Object {
+      "backgroundColor": undefined,
+    }
+  }
 >
   <MenuItem
     onPress={[Function]}
     textStyle={
       Array [
-        undefined,
-        undefined,
+        Object {
+          "color": undefined,
+        },
+        Object {
+          "fontSize": 16,
+        },
       ]
     }
   >
@@ -47,9 +69,9 @@ exports[`Thumb action component renders correctly 1`] = `
       name="repeat"
       size={15}
       style={
-        Array [
-          undefined,
-        ]
+        Object {
+          "color": undefined,
+        }
       }
     />
       Remind
@@ -58,8 +80,12 @@ exports[`Thumb action component renders correctly 1`] = `
     onPress={[Function]}
     textStyle={
       Array [
-        undefined,
-        undefined,
+        Object {
+          "color": undefined,
+        },
+        Object {
+          "fontSize": 16,
+        },
       ]
     }
   >
@@ -68,9 +94,9 @@ exports[`Thumb action component renders correctly 1`] = `
       name="edit"
       size={15}
       style={
-        Array [
-          undefined,
-        ]
+        Object {
+          "color": undefined,
+        }
       }
     />
       Quote

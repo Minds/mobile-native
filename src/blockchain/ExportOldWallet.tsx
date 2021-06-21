@@ -35,7 +35,9 @@ export async function fetchPrivateKeyFromStorage(address, secret) {
 /**
  * Returns the wallets with private key stored
  */
-export async function getExportableWallets(): Promise<Array<any>> {
+export async function getExportableWallets(
+  showExported = false,
+): Promise<Array<any>> {
   try {
     const wallets = await fetchListFromStorage();
     for (let index = 0; index < wallets.length; index++) {
@@ -44,7 +46,9 @@ export async function getExportableWallets(): Promise<Array<any>> {
         w.hasPrivate = await hasPrivateKeyInStorage(w.address);
       }
     }
-    return wallets.filter(w => w.hasPrivate && !w.exported);
+    return wallets.filter(
+      showExported ? w => w.hasPrivate : w => w.hasPrivate && !w.exported,
+    );
   } catch (error) {
     console.log(error);
     throw error;
@@ -69,7 +73,7 @@ export async function showMessageForPrivateKey() {
           {i18n.t('blockchain.exportLegacy1')}
         </Text>
         <Text
-          style={[theme.fontML, theme.marginTop4x, theme.textCenter]}
+          style={[theme.fontLM, theme.marginTop4x, theme.textCenter]}
           onPress={hideMessage}>
           {i18n.t('blockchain.exportLegacy2')}
         </Text>

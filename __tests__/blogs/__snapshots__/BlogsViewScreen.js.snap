@@ -4,8 +4,12 @@ exports[`blog view screen component should renders correctly 1`] = `
 <View
   style={
     Array [
-      undefined,
-      undefined,
+      Object {
+        "flex": 1,
+      },
+      Object {
+        "backgroundColor": undefined,
+      },
     ]
   }
 >
@@ -17,7 +21,9 @@ exports[`blog view screen component should renders correctly 1`] = `
             Object {
               "flex": 1,
             },
-            undefined,
+            Object {
+              "backgroundColor": undefined,
+            },
           ]
         }
       >
@@ -105,7 +111,9 @@ exports[`blog view screen component should renders correctly 1`] = `
                     "color": undefined,
                     "fontSize": 28,
                   },
-                  undefined,
+                  Object {
+                    "color": undefined,
+                  },
                   Object {
                     "fontFamily": "Material Icons",
                     "fontStyle": "normal",
@@ -261,7 +269,9 @@ exports[`blog view screen component should renders correctly 1`] = `
                 Object {
                   "borderBottomWidth": 0.5,
                 },
-                undefined,
+                Object {
+                  "borderColor": undefined,
+                },
                 undefined,
               ]
             }
@@ -326,26 +336,40 @@ exports[`blog view screen component should renders correctly 1`] = `
                   }
                 >
                   <View
-                    onPress={[Function]}
+                    pointerEvents="box-none"
                     style={
                       Array [
-                        undefined,
-                        undefined,
+                        Object {
+                          "flexDirection": "row",
+                          "justifyContent": "flex-start",
+                        },
+                        Object {
+                          "alignItems": "center",
+                        },
                       ]
                     }
                   >
                     <Text
                       numberOfLines={1}
+                      onPress={[Function]}
                       style={
                         Array [
                           Object {
-                            "color": "#444",
-                            "fontFamily": "Roboto",
-                            "fontSize": 17,
-                            "fontWeight": "bold",
+                            "color": undefined,
                           },
-                          undefined,
-                          undefined,
+                          Object {
+                            "fontFamily": "Roboto-Light",
+                            "fontWeight": "300",
+                          },
+                          Object {
+                            "fontWeight": "700",
+                          },
+                          Object {
+                            "fontSize": 17,
+                          },
+                          Object {
+                            "flex": 1,
+                          },
                         ]
                       }
                     >
@@ -355,13 +379,18 @@ exports[`blog view screen component should renders correctly 1`] = `
                         style={
                           Array [
                             Object {
-                              "color": "#444",
-                              "fontFamily": "Roboto",
-                              "fontSize": 17,
-                              "fontWeight": "bold",
+                              "color": undefined,
                             },
-                            undefined,
-                            undefined,
+                            Object {
+                              "fontFamily": "Roboto-Light",
+                              "fontWeight": "300",
+                            },
+                            Object {
+                              "fontWeight": "700",
+                            },
+                            Object {
+                              "fontSize": 17,
+                            },
                           ]
                         }
                       >
@@ -378,7 +407,9 @@ exports[`blog view screen component should renders correctly 1`] = `
                           "color": "#888",
                           "fontSize": 11,
                         },
-                        undefined,
+                        Object {
+                          "color": undefined,
+                        },
                       ]
                     }
                   >
@@ -394,10 +425,15 @@ exports[`blog view screen component should renders correctly 1`] = `
                       "color": undefined,
                       "fontSize": 20,
                     },
-                    Object {
-                      "alignSelf": "center",
-                      "marginLeft": 5,
-                    },
+                    Array [
+                      Object {
+                        "alignSelf": "center",
+                        "marginLeft": 5,
+                      },
+                      Object {
+                        "color": undefined,
+                      },
+                    ],
                     Object {
                       "fontFamily": "Material Icons",
                       "fontStyle": "normal",
@@ -422,7 +458,9 @@ exports[`blog view screen component should renders correctly 1`] = `
                         "alignSelf": "center",
                         "marginLeft": 5,
                       },
-                      undefined,
+                      Object {
+                        "color": undefined,
+                      },
                       null,
                     ],
                     Object {
@@ -442,8 +480,13 @@ exports[`blog view screen component should renders correctly 1`] = `
         <View
           style={
             Array [
-              undefined,
-              undefined,
+              Object {
+                "paddingHorizontal": 10,
+              },
+              Object {
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+              },
             ]
           }
         >
@@ -1238,10 +1281,18 @@ exports[`blog view screen component should renders correctly 1`] = `
           <Text
             style={
               Array [
-                undefined,
-                undefined,
-                undefined,
-                undefined,
+                Object {
+                  "fontSize": 10,
+                },
+                Object {
+                  "paddingLeft": 5,
+                },
+                Object {
+                  "color": undefined,
+                },
+                Object {
+                  "paddingRight": 10,
+                },
               ]
             }
           >

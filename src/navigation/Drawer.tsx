@@ -9,30 +9,22 @@ import IconFa from 'react-native-vector-icons/FontAwesome5';
 import IconMC from 'react-native-vector-icons/MaterialCommunityIcons';
 import { ListItem } from 'react-native-elements';
 
-import testID from '../common/helpers/testID';
 import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
 import featuresService from '../common/services/features.service';
 import sessionService from '../common/services/session.service';
 import { GOOGLE_PLAY_STORE } from '../config/Config';
+import FitScrollView from '../common/components/FitScrollView';
 
 const ICON_SIZE = 25;
 
 const getOptionsList = navigation => {
-  const theme = ThemedStyles.style;
-
   const hasRewards = sessionService.getUser().rewards;
 
   let list = [
     {
       name: i18n.t('newsfeed.title'),
-      icon: (
-        <Icon
-          name="home"
-          size={ICON_SIZE - 4}
-          style={[theme.colorIcon, styles.icon]}
-        />
-      ),
+      icon: <Icon name="home" size={ICON_SIZE - 4} style={iconStyle} />,
       onPress: () => {
         navigation.navigate('Newsfeed');
       },
@@ -40,13 +32,7 @@ const getOptionsList = navigation => {
     !GOOGLE_PLAY_STORE
       ? {
           name: i18n.t('discovery.title'),
-          icon: (
-            <IconFo
-              name="hash"
-              size={ICON_SIZE - 4}
-              style={[theme.colorIcon, styles.icon]}
-            />
-          ),
+          icon: <IconFo name="hash" size={ICON_SIZE - 4} style={iconStyle} />,
           onPress: () => {
             navigation.navigate('Discovery');
           },
@@ -56,11 +42,7 @@ const getOptionsList = navigation => {
       ? {
           name: i18n.t('wire.lock.plus'),
           icon: (
-            <Icon
-              name="add-to-queue"
-              size={ICON_SIZE - 4}
-              style={[theme.colorIcon, styles.icon]}
-            />
+            <Icon name="add-to-queue" size={ICON_SIZE - 4} style={iconStyle} />
           ),
           onPress: () => {
             navigation.navigate('Tabs', {
@@ -73,13 +55,7 @@ const getOptionsList = navigation => {
     featuresService.has('crypto')
       ? {
           name: i18n.t('moreScreen.wallet'),
-          icon: (
-            <IconMC
-              name="bank"
-              size={ICON_SIZE}
-              style={[theme.colorIcon, styles.icon]}
-            />
-          ),
+          icon: <IconMC name="bank" size={ICON_SIZE} style={iconStyle} />,
           onPress: () => {
             navigation.navigate('Tabs', {
               screen: 'CaptureTab',
@@ -90,26 +66,14 @@ const getOptionsList = navigation => {
       : null,
     {
       name: i18n.t('earnScreen.title'),
-      icon: (
-        <Icon
-          name="attach-money"
-          size={ICON_SIZE}
-          style={[theme.colorIcon, styles.icon]}
-        />
-      ),
+      icon: <Icon name="attach-money" size={ICON_SIZE} style={iconStyle} />,
       onPress: () => {
         navigation.navigate('EarnModal');
       },
     },
     {
       name: 'Buy Tokens',
-      icon: (
-        <IconFa
-          name="coins"
-          size={ICON_SIZE}
-          style={[theme.colorIcon, styles.icon]}
-        />
-      ),
+      icon: <IconFa name="coins" size={ICON_SIZE} style={iconStyle} />,
       onPress: () => {
         const navToBuyTokens = () => {
           navigation.navigate('Tabs', {
@@ -131,13 +95,7 @@ const getOptionsList = navigation => {
     ...list,
     {
       name: 'Analytics',
-      icon: (
-        <Icon
-          name="analytics"
-          size={ICON_SIZE}
-          style={[theme.colorIcon, styles.icon]}
-        />
-      ),
+      icon: <Icon name="analytics" size={ICON_SIZE} style={iconStyle} />,
 
       onPress: () => {
         navigation.navigate('Tabs', {
@@ -152,7 +110,7 @@ const getOptionsList = navigation => {
         <IconMC
           name="account-multiple"
           size={ICON_SIZE - 4}
-          style={[theme.colorIcon, styles.icon]}
+          style={iconStyle}
         />
       ),
       onPress: () => {
@@ -164,13 +122,7 @@ const getOptionsList = navigation => {
     },
     {
       name: i18n.t('moreScreen.settings'),
-      icon: (
-        <Icon
-          name="settings"
-          size={ICON_SIZE}
-          style={[theme.colorIcon, styles.icon]}
-        />
-      ),
+      icon: <Icon name="settings" size={ICON_SIZE} style={iconStyle} />,
       onPress: () => {
         navigation.navigate('Tabs', {
           screen: 'CaptureTab',
@@ -195,50 +147,46 @@ export default function Drawer(props) {
     props.navigation.push('Channel', { entity: channel });
   };
 
-  const theme = ThemedStyles.style;
   const avatar =
     channel && channel.getAvatarSource ? channel.getAvatarSource('medium') : {};
 
+  const optionsList = getOptionsList(props.navigation);
   return (
-    <SafeAreaView style={[theme.flexContainer, theme.backgroundPrimary]}>
-      <View style={[theme.flexContainer, theme.backgroundPrimary]}>
+    <SafeAreaView style={containerStyle}>
+      <FitScrollView style={containerStyle}>
         <View style={styles.headerContainer}>
           <TouchableOpacity onPress={navToChannel}>
             <Image source={avatar} style={styles.wrappedAvatar} />
           </TouchableOpacity>
-          <View style={[theme.flexColumn, theme.marginLeft2x]}>
-            <Text
-              style={[styles.titleText, theme.colorPrimaryText]}
-              onPress={navToChannel}>
+          <View style={titleContainerStyle}>
+            <Text style={titleStyle} onPress={navToChannel}>
               {channel.name || `@${channel.username}`}
             </Text>
             {channel.name && (
-              <Text
-                onPress={navToChannel}
-                style={[styles.subTitleText, theme.colorSecondaryText]}>
+              <Text onPress={navToChannel} style={subtitleStyle}>
                 @{channel.username}
               </Text>
             )}
           </View>
         </View>
         <View style={styles.body}>
-          {getOptionsList(props.navigation).map((l, i) =>
+          {optionsList.map((l, i) =>
             !l ? null : (
               <ListItem
                 Component={TouchableOpacity}
                 key={i}
                 title={l.name}
-                titleStyle={[styles.menuText, theme.colorPrimaryText]}
+                titleStyle={menuTitleStyle}
                 containerStyle={styles.listItem}
                 pad={5}
                 leftIcon={l.icon}
                 onPress={l.onPress}
-                {...testID(l.name)}
+                // testID={l.name}
               />
             ),
           )}
         </View>
-      </View>
+      </FitScrollView>
     </SafeAreaView>
   );
 }
@@ -292,3 +240,18 @@ const styles = StyleSheet.create({
     paddingBottom: Platform.select({ ios: 30, android: 25 }),
   },
 });
+const menuTitleStyle = ThemedStyles.combine(
+  styles.menuText,
+  'colorPrimaryText',
+);
+const containerStyle = ThemedStyles.combine(
+  'flexContainer',
+  'backgroundPrimary',
+);
+const subtitleStyle = ThemedStyles.combine(
+  styles.subTitleText,
+  'colorSecondaryText',
+);
+const titleContainerStyle = ThemedStyles.combine('flexColumn', 'marginLeft2x');
+const titleStyle = ThemedStyles.combine(styles.titleText, 'colorPrimaryText');
+const iconStyle = ThemedStyles.combine('colorIcon', styles.icon);

@@ -70,9 +70,15 @@ exports[`renders correctly 1`] = `
             "justifyContent": "center",
           },
           Array [
-            undefined,
-            undefined,
-            undefined,
+            Object {
+              "width": "100%",
+            },
+            Object {
+              "margin": 0,
+            },
+            Object {
+              "justifyContent": "flex-end",
+            },
           ],
           Object {
             "margin": 0,
@@ -101,13 +107,14 @@ exports[`renders correctly 1`] = `
       style={
         Object {
           "flex": 1,
-          "justifyContent": "center",
-          "margin": 37.5,
+          "justifyContent": "flex-end",
+          "margin": 0,
           "transform": Array [
             Object {
               "translateY": 0,
             },
           ],
+          "width": "100%",
         }
       }
       supportedOrientations={
@@ -138,8 +145,13 @@ exports[`renders correctly 1`] = `
         <View
           style={
             Array [
-              undefined,
-              undefined,
+              Object {
+                "paddingHorizontal": 20,
+              },
+              Object {
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+              },
             ]
           }
         >
@@ -147,10 +159,18 @@ exports[`renders correctly 1`] = `
             onPress={[Function]}
             style={
               Array [
-                undefined,
-                undefined,
-                undefined,
-                undefined,
+                Object {
+                  "fontSize": 18,
+                },
+                Object {
+                  "color": "#FFFFFF",
+                },
+                Object {
+                  "paddingVertical": 20,
+                },
+                Object {
+                  "textAlign": "center",
+                },
               ]
             }
           >
@@ -159,11 +179,21 @@ exports[`renders correctly 1`] = `
           <Text
             style={
               Array [
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
+                Object {
+                  "fontSize": 18,
+                },
+                Object {
+                  "color": "#FFFFFF",
+                },
+                Object {
+                  "paddingVertical": 20,
+                },
+                Object {
+                  "textAlign": "center",
+                },
+                Object {
+                  "fontWeight": "700",
+                },
               ]
             }
           >
@@ -173,10 +203,18 @@ exports[`renders correctly 1`] = `
             onPress={[Function]}
             style={
               Array [
-                undefined,
-                undefined,
-                undefined,
-                undefined,
+                Object {
+                  "fontSize": 18,
+                },
+                Object {
+                  "paddingVertical": 20,
+                },
+                Object {
+                  "textAlign": "center",
+                },
+                Object {
+                  "color": undefined,
+                },
               ]
             }
           >
@@ -186,14 +224,24 @@ exports[`renders correctly 1`] = `
         <View
           style={
             Array [
-              undefined,
+              Object {
+                "paddingLeft": 20,
+              },
               Object {
                 "paddingTop": 10,
               },
-              undefined,
-              undefined,
-              undefined,
-              undefined,
+              Object {
+                "backgroundColor": undefined,
+              },
+              Object {
+                "borderTopWidth": 1,
+              },
+              Object {
+                "borderBottomWidth": 1,
+              },
+              Object {
+                "borderColor": undefined,
+              },
               Object {
                 "backgroundColor": "#1A2025",
                 "borderColor": "#404a4e",
@@ -220,8 +268,12 @@ exports[`renders correctly 1`] = `
                         "fontWeight": "400",
                         "marginBottom": 0,
                       },
-                      undefined,
-                      undefined,
+                      Object {
+                        "color": undefined,
+                      },
+                      Object {
+                        "color": "#FFFFFF",
+                      },
                     ]
                   }
                 >
@@ -239,6 +291,11 @@ exports[`renders correctly 1`] = `
                   "borderColor": "#404a4e",
                 }
               }
+              labelStyle={
+                Object {
+                  "color": "#FFFFFF",
+                }
+              }
               onChangeText={[Function]}
               onEndEditing={[Function]}
               placeholder=""
@@ -247,7 +304,16 @@ exports[`renders correctly 1`] = `
               returnKeyType="done"
               style={
                 Array [
-                  undefined,
+                  Object {
+                    "backgroundColor": "transparent",
+                    "borderColor": undefined,
+                    "borderRadius": 2,
+                    "borderWidth": 1,
+                    "color": undefined,
+                    "fontFamily": "Roboto",
+                    "fontSize": 16,
+                    "lineHeight": 21,
+                  },
                   Array [
                     Object {
                       "borderWidth": 0,
@@ -255,9 +321,15 @@ exports[`renders correctly 1`] = `
                       "paddingHorizontal": 0,
                       "paddingVertical": 8,
                     },
-                    undefined,
-                    undefined,
-                    undefined,
+                    Object {
+                      "paddingLeft": 0,
+                    },
+                    Object {
+                      "fontSize": 18,
+                    },
+                    Object {
+                      "color": "#FFFFFF",
+                    },
                   ],
                 ]
               }

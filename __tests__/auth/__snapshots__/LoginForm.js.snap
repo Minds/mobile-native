@@ -1,7 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`LoginForm component should renders correctly 1`] = `
-<View>
+<View
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
   <View
     style={
       Object {
@@ -22,14 +28,22 @@ exports[`LoginForm component should renders correctly 1`] = `
     <View
       style={
         Array [
-          undefined,
+          Object {
+            "paddingLeft": 20,
+          },
           Object {
             "paddingTop": 10,
           },
-          undefined,
-          undefined,
+          Object {
+            "backgroundColor": undefined,
+          },
+          Object {
+            "borderTopWidth": 1,
+          },
           null,
-          undefined,
+          Object {
+            "borderColor": undefined,
+          },
           Object {
             "backgroundColor": "rgba(0,0,0,0.25)",
             "borderColor": "rgba(255,255,255,0.30)",
@@ -56,8 +70,12 @@ exports[`LoginForm component should renders correctly 1`] = `
                     "fontWeight": "400",
                     "marginBottom": 0,
                   },
-                  undefined,
-                  undefined,
+                  Object {
+                    "color": undefined,
+                  },
+                  Object {
+                    "color": "#FFFFFF",
+                  },
                 ]
               }
             >
@@ -75,6 +93,11 @@ exports[`LoginForm component should renders correctly 1`] = `
               "borderColor": "rgba(255,255,255,0.30)",
             }
           }
+          labelStyle={
+            Object {
+              "color": "#FFFFFF",
+            }
+          }
           onChangeText={[Function]}
           placeholder=""
           placeholderTextColor="#444"
@@ -82,7 +105,16 @@ exports[`LoginForm component should renders correctly 1`] = `
           returnKeyType="done"
           style={
             Array [
-              undefined,
+              Object {
+                "backgroundColor": "transparent",
+                "borderColor": undefined,
+                "borderRadius": 2,
+                "borderWidth": 1,
+                "color": undefined,
+                "fontFamily": "Roboto",
+                "fontSize": 16,
+                "lineHeight": 21,
+              },
               Array [
                 Object {
                   "borderWidth": 0,
@@ -90,9 +122,15 @@ exports[`LoginForm component should renders correctly 1`] = `
                   "paddingHorizontal": 0,
                   "paddingVertical": 8,
                 },
-                undefined,
-                undefined,
-                undefined,
+                Object {
+                  "paddingLeft": 0,
+                },
+                Object {
+                  "fontSize": 18,
+                },
+                Object {
+                  "color": "#FFFFFF",
+                },
               ],
             ]
           }
@@ -107,14 +145,24 @@ exports[`LoginForm component should renders correctly 1`] = `
       <View
         style={
           Array [
-            undefined,
+            Object {
+              "paddingLeft": 20,
+            },
             Object {
               "paddingTop": 10,
             },
-            undefined,
-            undefined,
-            undefined,
-            undefined,
+            Object {
+              "backgroundColor": undefined,
+            },
+            Object {
+              "borderTopWidth": 1,
+            },
+            Object {
+              "borderBottomWidth": 1,
+            },
+            Object {
+              "borderColor": undefined,
+            },
             Object {
               "backgroundColor": "rgba(0,0,0,0.25)",
               "borderColor": "rgba(255,255,255,0.30)",
@@ -141,8 +189,12 @@ exports[`LoginForm component should renders correctly 1`] = `
                       "fontWeight": "400",
                       "marginBottom": 0,
                     },
-                    undefined,
-                    undefined,
+                    Object {
+                      "color": undefined,
+                    },
+                    Object {
+                      "color": "#FFFFFF",
+                    },
                   ]
                 }
               >
@@ -160,6 +212,11 @@ exports[`LoginForm component should renders correctly 1`] = `
                 "borderColor": "rgba(255,255,255,0.30)",
               }
             }
+            labelStyle={
+              Object {
+                "color": "#FFFFFF",
+              }
+            }
             onChangeText={[Function]}
             placeholder=""
             placeholderTextColor="#444"
@@ -168,7 +225,16 @@ exports[`LoginForm component should renders correctly 1`] = `
             secureTextEntry={true}
             style={
               Array [
-                undefined,
+                Object {
+                  "backgroundColor": "transparent",
+                  "borderColor": undefined,
+                  "borderRadius": 2,
+                  "borderWidth": 1,
+                  "color": undefined,
+                  "fontFamily": "Roboto",
+                  "fontSize": 16,
+                  "lineHeight": 21,
+                },
                 Array [
                   Object {
                     "borderWidth": 0,
@@ -176,9 +242,15 @@ exports[`LoginForm component should renders correctly 1`] = `
                     "paddingHorizontal": 0,
                     "paddingVertical": 8,
                   },
-                  undefined,
-                  undefined,
-                  undefined,
+                  Object {
+                    "paddingLeft": 0,
+                  },
+                  Object {
+                    "fontSize": 18,
+                  },
+                  Object {
+                    "color": "#FFFFFF",
+                  },
                 ],
               ]
             }
@@ -199,9 +271,14 @@ exports[`LoginForm component should renders correctly 1`] = `
               "fontSize": 25,
             },
             Array [
-              undefined,
               Object {
-                "top": 26,
+                "color": undefined,
+                "position": "absolute",
+                "right": 8,
+                "top": 36,
+              },
+              Object {
+                "top": 30,
               },
             ],
             Object {
@@ -220,8 +297,12 @@ exports[`LoginForm component should renders correctly 1`] = `
   <View
     style={
       Array [
-        undefined,
-        undefined,
+        Object {
+          "margin": 30,
+        },
+        Object {
+          "flex": 1,
+        },
       ]
     }
   >
@@ -231,12 +312,21 @@ exports[`LoginForm component should renders correctly 1`] = `
       onPress={[Function]}
       style={
         Array [
-          undefined,
-          undefined,
+          Object {
+            "flexDirection": "row",
+            "justifyContent": "center",
+          },
+          Object {
+            "alignContent": "center",
+            "alignItems": "center",
+            "alignSelf": "center",
+            "justifyContent": "center",
+          },
           Object {
             "backgroundColor": "rgba(0,0,0,0.40)",
             "borderColor": "rgba(255,255,255,0.60)",
             "borderRadius": 21,
+            "borderWidth": 1,
             "paddingHorizontal": 23,
             "paddingVertical": 10,
           },
@@ -244,7 +334,9 @@ exports[`LoginForm component should renders correctly 1`] = `
             Object {
               "marginTop": 24.254545454545454,
             },
-            undefined,
+            Object {
+              "width": "100%",
+            },
           ],
         ]
       }
@@ -271,37 +363,68 @@ exports[`LoginForm component should renders correctly 1`] = `
          
       </Text>
     </View>
-    <View>
+    <View
+      style={
+        Object {
+          "marginTop": 20,
+        }
+      }
+    >
       <Text
         onPress={[Function]}
         style={
           Array [
-            undefined,
-            undefined,
-            undefined,
+            Object {
+              "color": "#FFFFFF",
+            },
+            Object {
+              "fontSize": 16,
+            },
+            Object {
+              "textAlign": "center",
+            },
           ]
         }
       >
         Forgot your password?
       </Text>
     </View>
-    <View />
+    <View
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    />
     <View
       disabled={false}
       style={
         Array [
-          undefined,
-          undefined,
+          Object {
+            "flexDirection": "row",
+            "justifyContent": "center",
+          },
+          Object {
+            "alignContent": "center",
+            "alignItems": "center",
+            "alignSelf": "center",
+            "justifyContent": "center",
+          },
           Object {
             "backgroundColor": "rgba(0,0,0,0.40)",
             "borderColor": "rgba(255,255,255,0.60)",
             "borderRadius": 21,
+            "borderWidth": 1,
             "paddingHorizontal": 23,
             "paddingVertical": 10,
           },
           Array [
-            undefined,
-            undefined,
+            Object {
+              "width": "100%",
+            },
+            Object {
+              "marginTop": 30,
+            },
           ],
         ]
       }

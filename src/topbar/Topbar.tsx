@@ -12,7 +12,10 @@ import IconFA from 'react-native-vector-icons/FontAwesome5';
 import { observer } from 'mobx-react';
 import SearchComponent from './searchbar/SearchComponent';
 import ThemedStyles from '../styles/ThemedStyles';
-import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
+import {
+  SafeAreaInsetsContext,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context';
 import BannerInfo from './BannerInfo';
 import FastImage from 'react-native-fast-image';
 import { useStores } from '../common/hooks/use-stores';
@@ -29,7 +32,7 @@ type PropsType = {
 export const Topbar = observer((props: PropsType) => {
   const { wallet } = useStores();
   const user = useCurrentUser();
-
+  const insets = useSafeAreaInsets();
   // dereference to react to observable changes
   const balance = wallet.balance;
   const prices = wallet.prices;
@@ -42,87 +45,82 @@ export const Topbar = observer((props: PropsType) => {
     }
   });
 
-  const avatar = user ? user.getAvatarSource('medium') : { uri: '' };
+  const avatar = React.useMemo(
+    () => (user ? user.getAvatarSource('medium') : { uri: '' }),
+    [user],
+  );
 
-  const openMenu = () => {
+  const cleanTop = React.useRef({
+    paddingTop: insets && insets.top ? insets.top - 5 : 0,
+  }).current;
+
+  const openMenu = React.useCallback(() => {
     props.navigation.openDrawer();
-  };
+  }, [props.navigation]);
 
-  const openWallet = () => {
+  const openWallet = React.useCallback(() => {
     props.navigation.navigate('Tabs', {
       screen: 'CaptureTab',
       params: { screen: 'Wallet' },
     });
-  };
+  }, [props.navigation]);
 
   const theme = ThemedStyles.style;
   return (
-    <SafeAreaInsetsContext.Consumer>
-      {insets => {
-        const cleanTop = {
-          paddingTop: insets && insets.top ? insets.top - 5 : 0,
-        };
-
-        return (
-          <View style={[theme.backgroundPrimary, styles.shadow]}>
-            <View
-              style={[
-                styles.container,
-                theme.borderBottomHair,
-                theme.borderPrimary,
-                cleanTop,
-              ]}>
-              <View style={styles.topbar}>
-                <View style={styles.topbarLeft}>
-                  <TouchableOpacity onPress={openMenu}>
-                    <FastImage
-                      source={avatar}
-                      style={[styles.avatar, theme.borderIcon]}
-                      resizeMode="contain"
-                    />
-                    <View style={styles.menuIconContainer}>
-                      <Icon
-                        name="md-menu"
-                        style={
-                          ThemedStyles.theme
-                            ? theme.colorBackgroundPrimary
-                            : theme.colorSecondaryText
-                        }
-                        size={14}
-                      />
-                    </View>
-                  </TouchableOpacity>
-                  <SearchComponent navigation={props.navigation} />
-                </View>
-                <View style={styles.topbarRight}>
-                  <Text
-                    onPress={openWallet}
-                    style={[
-                      theme.fontL,
-                      theme.colorSecondaryText,
-                      theme.paddingRight2x,
-                      theme.paddingVertical2x,
-                    ]}>
-                    {usdBalance > 0 && '$' + intword(usdBalance)}
-                  </Text>
-
-                  <IconFA
-                    name="coins"
-                    size={20}
-                    style={theme.colorIcon}
-                    onPress={openWallet}
-                  />
-                </View>
+    <View style={containerStyle}>
+      <View
+        style={[
+          styles.container,
+          theme.borderBottomHair,
+          theme.borderPrimary,
+          cleanTop,
+        ]}>
+        <View style={styles.topbar}>
+          <View style={styles.topbarLeft}>
+            <TouchableOpacity onPress={openMenu}>
+              <FastImage
+                source={avatar}
+                style={avatarStyle}
+                resizeMode="contain"
+              />
+              <View style={styles.menuIconContainer}>
+                <Icon
+                  name="md-menu"
+                  style={
+                    ThemedStyles.theme
+                      ? theme.colorBackgroundPrimary
+                      : theme.colorSecondaryText
+                  }
+                  size={14}
+                />
               </View>
-            </View>
-            {!featuresService.has('onboarding-october-2020') && (
-              <EmailConfirmation />
-            )}
-            <BannerInfo />
+            </TouchableOpacity>
+            <SearchComponent navigation={props.navigation} />
           </View>
-        );
-      }}
-    </SafeAreaInsetsContext.Consumer>
+          <View style={styles.topbarRight}>
+            <Text
+              onPress={openWallet}
+              style={[
+                theme.fontL,
+                theme.colorSecondaryText,
+                theme.paddingRight2x,
+                theme.paddingVertical2x,
+              ]}>
+              {usdBalance > 0 && '$' + intword(usdBalance)}
+            </Text>
+
+            <IconFA
+              name="coins"
+              size={20}
+              style={theme.colorIcon}
+              onPress={openWallet}
+            />
+          </View>
+        </View>
+      </View>
+      {!featuresService.has('onboarding-october-2020') && <EmailConfirmation />}
+      <BannerInfo />
+    </View>
   );
 });
 
@@ -188,3 +186,6 @@ export const styles = StyleSheet.create({
     transform: [{ scale: 0 }],
   },
 });
+
+const avatarStyle = ThemedStyles.combine(styles.avatar, 'borderIcon');
+const containerStyle = ThemedStyles.combine('backgroundPrimary', styles.shadow);

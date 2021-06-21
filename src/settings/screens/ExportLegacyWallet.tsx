@@ -31,7 +31,7 @@ export default observer(function ExportLegacyWallet() {
     wallets: [] as Array<any>,
     password: '',
     async load() {
-      store.wallets = await getExportableWallets();
+      store.wallets = await getExportableWallets(true);
     },
     setPassword(v) {
       store.password = v;

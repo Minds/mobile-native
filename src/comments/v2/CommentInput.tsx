@@ -161,25 +161,25 @@ const CommentInput = observer(() => {
                       style={theme.colorSecondaryText}
                     />
                   </Touchable>
-                  {!provider.store.edit && (
-                    <CommentInputBottomMenu
-                      store={provider.store}
-                      containerStyle={styles.sendIconCont}
-                      afterSelected={afterSelected}
-                      beforeSelect={beforeSelect}
-                    />
-                  )}
+                  <CommentInputBottomMenu
+                    store={provider.store}
+                    containerStyle={styles.sendIconCont}
+                    afterSelected={afterSelected}
+                    beforeSelect={beforeSelect}
+                  />
                 </View>
                 <Text style={[theme.fontXS, theme.colorSecondaryText]}>
                   {provider.store.text.length} / {CHAR_LIMIT}
                 </Text>
               </View>
             ) : (
-              <DotIndicator
-                containerStyle={[theme.alignSelfCenter, theme.justifyEnd]}
-                color={ThemedStyles.getColor('primary_text')}
-                scaleEnabled={true}
-              />
+              <View>
+                <DotIndicator
+                  containerStyle={[theme.alignSelfCenter, theme.justifyEnd]}
+                  color={ThemedStyles.getColor('primary_text')}
+                  scaleEnabled={true}
+                />
+              </View>
             )}
           </View>
         </View>
@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
   },
   input: {
     minHeight: 35,
-    flex: 1,
+    flex: 3,
     lineHeight: 22,
   },
   inputContainer: {

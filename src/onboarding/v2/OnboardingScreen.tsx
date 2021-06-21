@@ -3,7 +3,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { observer, useLocalStore } from 'mobx-react';
 import moment from 'moment-timezone';
 import React, { useRef } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TextStyle } from 'react-native';
 import * as Progress from 'react-native-progress';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { showNotification } from '../../../AppMessages';
@@ -238,12 +238,14 @@ export default observer(function OnboardingScreen() {
           item ? (
             <MenuItem
               item={item}
-              titleStyle={[
-                item.is_completed
-                  ? theme.colorSecondaryText
-                  : theme.colorPrimaryText,
-                item.is_completed ? theme.strikethrough : null,
-              ]}
+              titleStyle={
+                [
+                  item.is_completed
+                    ? theme.colorSecondaryText
+                    : theme.colorPrimaryText,
+                  item.is_completed ? theme.strikethrough : null,
+                ] as TextStyle
+              }
             />
           ) : null,
         )}

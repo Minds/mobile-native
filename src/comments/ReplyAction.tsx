@@ -38,21 +38,12 @@ export default class ReplyAction extends Component<{
    * Render
    */
   render() {
-    const theme = ThemedStyles.style;
-
     return (
       <TouchableOpacityCustom
-        style={[
-          theme.paddingRight2x,
-          theme.rowJustifyStart,
-          theme.marginLeft3x,
-        ]}
+        style={containerStyle}
         onPress={this.toggleExpand}
         testID="ReplyCommentButton">
-        <Text
-          style={[theme.colorPrimaryText, theme.marginRight, theme.fontMedium]}>
-          {i18n.t('reply')}
-        </Text>
+        <Text style={fontStyle}>{i18n.t('reply')}</Text>
       </TouchableOpacityCustom>
     );
   }
@@ -64,3 +55,15 @@ export default class ReplyAction extends Component<{
     this.props.onPressReply();
   };
 }
+
+const containerStyle = ThemedStyles.combine(
+  'paddingRight2x',
+  'rowJustifyStart',
+  'marginLeft3x',
+);
+
+const fontStyle = ThemedStyles.combine(
+  'colorPrimaryText',
+  'marginRight',
+  'fontMedium',
+);

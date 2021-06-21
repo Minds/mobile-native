@@ -79,6 +79,8 @@ export default class ActivityModel extends BaseModel {
   _preview?: boolean;
   attachments?: {
     attachment_guid: string;
+    custom_data: any;
+    custom_type: string;
   };
   type?: string;
   permaweb_id?: string;
@@ -177,7 +179,7 @@ export default class ActivityModel extends BaseModel {
   toPlainObject() {
     const plainEntity = super.toPlainObject();
     if (plainEntity.remind_object && plainEntity.remind_object.__list) {
-      delete plainEntity.remind_object.__list;
+      plainEntity.remind_object.__list = null;
     }
 
     return plainEntity;

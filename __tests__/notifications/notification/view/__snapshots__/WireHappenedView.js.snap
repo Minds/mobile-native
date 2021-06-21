@@ -40,7 +40,9 @@ exports[`renders correctly for not owner and not subscribed 1`] = `
         Object {
           "fontSize": 11,
         },
-        undefined,
+        Object {
+          "color": undefined,
+        },
       ]
     }
   >
@@ -89,7 +91,9 @@ exports[`renders correctly for owner and not subscribed 1`] = `
         Object {
           "fontSize": 11,
         },
-        undefined,
+        Object {
+          "color": undefined,
+        },
       ]
     }
   >
@@ -138,7 +142,9 @@ exports[`renders correctly for owner and subscribed 1`] = `
         Object {
           "fontSize": 11,
         },
-        undefined,
+        Object {
+          "color": undefined,
+        },
       ]
     }
   >
@@ -187,7 +193,9 @@ exports[`renders correctly for owner and subscribed 2`] = `
         Object {
           "fontSize": 11,
         },
-        undefined,
+        Object {
+          "color": undefined,
+        },
       ]
     }
   >

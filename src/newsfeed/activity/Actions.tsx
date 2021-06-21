@@ -26,7 +26,6 @@ type PropsType = {
 };
 
 export const Actions = observer((props: PropsType) => {
-  const theme = ThemedStyles.style;
   const navigation = useNavigation();
 
   const entity = props.entity;
@@ -40,7 +39,7 @@ export const Actions = observer((props: PropsType) => {
   return (
     <View>
       {entity && (
-        <View style={[styles.container, theme.borderPrimary]}>
+        <View style={containerStyle}>
           <ThumbUpAction entity={entity} />
           <ThumbDownAction entity={entity} />
           <CommentsAction
@@ -77,10 +76,8 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     flexDirection: 'row',
-    // alignItems: 'center',
     justifyContent: 'space-evenly',
     paddingHorizontal: 10,
-    // backgroundColor: 'blue',
     borderTopWidth: StyleSheet.hairlineWidth,
   },
   avatar: {
@@ -91,3 +88,5 @@ const styles = StyleSheet.create({
     borderColor: '#EEE',
   },
 });
+
+const containerStyle = ThemedStyles.combine(styles.container, 'borderPrimary');
