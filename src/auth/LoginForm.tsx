@@ -219,9 +219,9 @@ export default class LoginForm extends Component<PropsType, StateType> {
           return;
         }
 
-        if (errJson.errId && errJson.errId === TWO_FACTOR_ERROR) {
+        if (err.errId && err.errId === TWO_FACTOR_ERROR) {
           this.props.store.showTwoFactorForm(
-            errJson.headers.map['x-minds-sms-2fa-key'],
+            err.headers['x-minds-sms-2fa-key'],
             this.state.username,
             this.state.password,
           );
