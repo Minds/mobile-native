@@ -110,24 +110,29 @@ const Error = observer(({ store }: { store: BottomModalStore }) => {
 
 const styles = {
   view: ThemedStyles.combine('justifyEnd', 'margin0x'),
-  container: ThemedStyles.combine('bgPrimaryBackground', 'paddingBottom2x', {
-    borderTopLeftRadius: 15,
-    borderTopRightRadius: 15,
-    overflow: 'hidden',
-  }),
+  container: ThemedStyles.combine(
+    'bgPrimaryBackground_Dark',
+    'paddingBottom2x',
+    {
+      borderTopLeftRadius: 15,
+      borderTopRightRadius: 15,
+      overflow: 'hidden',
+    },
+  ),
   title: ThemedStyles.combine(
+    'colorPrimaryText_Dark',
     'marginTop5x',
     'marginBottom4x',
     'bold',
     'fontXXL',
     'textCenter',
   ),
-  closeIcon: ThemedStyles.combine('colorPrimaryText', {
+  closeIcon: ThemedStyles.combine('colorPrimaryText_Dark', {
     position: 'absolute',
     top: 24,
     right: 10,
   }),
-  backIcon: ThemedStyles.combine('colorPrimaryText', {
+  backIcon: ThemedStyles.combine('colorPrimaryText_Dark', {
     position: 'absolute',
     top: 24,
     left: 10,

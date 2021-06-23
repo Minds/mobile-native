@@ -20,7 +20,7 @@ import ThemedStyles from '../styles/ThemedStyles';
 import BoxShadow from '../common/components/BoxShadow';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Button from '../common/components/Button';
-import { LIGHT_THEME } from '../styles/Colors';
+import { DARK_THEME } from '../styles/Colors';
 import DismissKeyboard from '../common/components/DismissKeyboard';
 import validatePassword from '../common/helpers/validatePassword';
 import { showNotification } from '../../AppMessages';
@@ -205,7 +205,7 @@ export default observer(function RegisterScreen(props: PropsType) {
       <View>
         <PasswordInput
           store={store}
-          tooltipBackground={LIGHT_THEME.PrimaryBackground}
+          tooltipBackground={DARK_THEME.TertiaryBackground}
           inputContainerStyle={styles.inputBackground}
           inputStyle={theme.colorWhite}
           inputLabelStyle={theme.colorWhite}

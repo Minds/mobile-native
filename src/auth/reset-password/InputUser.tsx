@@ -6,6 +6,7 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
 import InputContainer from '../../common/components/InputContainer';
 import Button from '../../common/components/Button';
+import { DARK_THEME } from '../../styles/Colors';
 
 type PropsType = {
   store: ResetPasswordStore;
@@ -32,6 +33,7 @@ const InputUser = observer(({ store }: PropsType) => {
         centered={false}
         containerStyle={styles.button}
         loading={store.sending}
+        textColor={DARK_THEME.PrimaryText}
         action
       />
     </View>
@@ -48,11 +50,14 @@ export const styles = {
     'textCenter',
     'paddingVertical6x',
     'paddingHorizontal4x',
-    'bcolorPrimaryBorder',
-    'colorSecondaryText',
+    'bcolorPrimaryBorder_Dark',
+    'colorSecondaryText_Dark',
   ),
-  inputContainer: ThemedStyles.combine('bgPrimaryBackgroundHighlight'),
-  label: ThemedStyles.combine('colorSecondaryText'),
-  inputText: ThemedStyles.combine('colorPrimaryText'),
-  button: ThemedStyles.combine('margin6x'),
+  inputContainer: ThemedStyles.combine(
+    'bgPrimaryBackgroundHighlight_Dark',
+    'bcolorPrimaryBorder_Dark',
+  ),
+  label: ThemedStyles.combine('colorSecondaryText_Dark'),
+  inputText: ThemedStyles.combine('colorPrimaryText_Dark'),
+  button: ThemedStyles.combine('margin6x', 'bgPrimaryBackground_Dark'),
 };

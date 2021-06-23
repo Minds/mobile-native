@@ -66,4 +66,4 @@ const PasswordInput = observer(({ store, ...props }: PropsType) => {
 
 export default PasswordInput;
 
-const validatorText = ThemedStyles.combine('colorPrimaryText');
+const validatorText = ThemedStyles.combine('colorPrimaryText_Dark');

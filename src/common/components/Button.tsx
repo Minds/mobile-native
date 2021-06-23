@@ -120,7 +120,7 @@ export default class Button extends Component<ButtonPropsType> {
     const body = loading ? (
       <DotIndicator
         containerStyle={dotIndicatorStyle}
-        color={mainColor}
+        color={textColor || mainColor}
         scaleEnabled={true}
       />
     ) : (

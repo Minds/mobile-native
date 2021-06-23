@@ -9,6 +9,7 @@ import { styles } from './InputUser';
 import { icon } from '../styles';
 import Button from '../../common/components/Button';
 import PasswordInput from '../../common/components/password-input/PasswordInput';
+import { DARK_THEME } from '../../styles/Colors';
 
 type PropsType = {
   store: ResetPasswordStore;
@@ -31,7 +32,7 @@ const InputPassword = observer(({ store, onFinish }: PropsType) => {
       <View style={wrapperStyle}>
         <PasswordInput
           store={store}
-          tooltipBackground={ThemedStyles.getColor('TertiaryBackground')}
+          tooltipBackground={DARK_THEME.TertiaryBackground}
           inputContainerStyle={styles.inputContainer}
           inputStyle={styles.inputText}
           inputLabelStyle={styles.label}
@@ -44,6 +45,7 @@ const InputPassword = observer(({ store, onFinish }: PropsType) => {
         centered={false}
         containerStyle={styles.button}
         loading={store.sending}
+        textColor={DARK_THEME.PrimaryText}
         action
       />
     </View>
@@ -51,6 +53,10 @@ const InputPassword = observer(({ store, onFinish }: PropsType) => {
 });
 
 const wrapperStyle = ThemedStyles.combine('marginVertical6x');
-const iconStyle = ThemedStyles.combine('inputIcon', 'colorPrimaryText', icon);
+const iconStyle = ThemedStyles.combine(
+  'inputIcon',
+  'colorPrimaryText_Dark',
+  icon,
+);
 
 export default InputPassword;
