@@ -38,7 +38,8 @@ const BottomModal: React.ForwardRefRenderFunction<
   }));
   return (
     <Modal
-      swipeDirection={['up', 'down']}
+      swipeDirection={'down'}
+      onSwipeComplete={store.hide}
       isVisible={store.visible}
       onBackdropPress={store.hide}
       style={styles.view}>
