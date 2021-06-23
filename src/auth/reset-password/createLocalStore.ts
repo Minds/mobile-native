@@ -29,7 +29,6 @@ const createLocalStore = ({ ref }: { ref: RefObject<BottomModalHandles> }) => ({
     this.hidePassword = !this.hidePassword;
   },
   navToInputUser() {
-    console.log('nav');
     this.currentStep = 'inputUser';
   },
   navToEmailSended() {
@@ -57,7 +56,6 @@ const createLocalStore = ({ ref }: { ref: RefObject<BottomModalHandles> }) => ({
   },
   get canSendAgain() {
     const now = Date.now();
-    console.log('canSendAgain', now - this.sent > 10000);
     return now - this.sent > 10000;
   },
   focus() {

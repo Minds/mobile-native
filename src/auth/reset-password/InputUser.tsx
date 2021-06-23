@@ -25,7 +25,6 @@ const InputUser = observer(({ store }: PropsType) => {
         autoCompleteType="username"
         textContentType="username"
         value={store.username}
-        testID="usernameInput"
       />
       <Button
         text={i18n.t('continue')}
