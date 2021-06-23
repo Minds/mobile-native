@@ -28,11 +28,11 @@ const InputUser = observer(({ store }: PropsType) => {
       />
       <Button
         text={i18n.t('continue')}
-        onPress={store.navToEmailSended}
-        borderless
-        active
+        onPress={store.sendEmail}
         centered={false}
         containerStyle={styles.button}
+        loading={store.sending}
+        action
       />
     </View>
   );
@@ -40,7 +40,7 @@ const InputUser = observer(({ store }: PropsType) => {
 
 export default InputUser;
 
-const styles = {
+export const styles = {
   text: ThemedStyles.combine(
     'fontMedium',
     'fontL',

@@ -28,6 +28,7 @@ const titleMargin = { paddingVertical: height / 18 };
 
 type PropsType = {
   navigation: any;
+  route: LoginScreenRouteProp;
 };
 
 export type LoginScreenRouteProp = RouteProp<AuthStackParamList, 'Login'>;
@@ -68,7 +69,11 @@ export default function LoginScreen(props: PropsType) {
               testID="loginscreentext">
               {i18n.t('auth.login')}
             </Text>
-            <Form navigation={props.navigation} store={twoFactorStore} />
+            <Form
+              navigation={props.navigation}
+              store={twoFactorStore}
+              route={props.route}
+            />
           </View>
         </FitScrollView>
       </DismissKeyboard>
@@ -78,13 +83,21 @@ export default function LoginScreen(props: PropsType) {
 
 // separate component so we only reload this part between auth steps
 const Form = observer(
-  ({ store, navigation }: { store: TwoFactorStore; navigation: any }) => {
+  ({
+    store,
+    navigation,
+    route,
+  }: {
+    store: TwoFactorStore;
+    navigation: any;
+    route: LoginScreenRouteProp;
+  }) => {
     const form =
       store.twoFactorAuthStep === 'login' ? (
         <LoginForm
-          onForgot={() => navigation.push('Forgot')}
           onRegisterPress={() => navigation.push('Register')}
           store={store}
+          route={route}
         />
       ) : (
         <TwoFactorTotpForm store={store} />

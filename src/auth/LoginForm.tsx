@@ -25,12 +25,13 @@ import { observer, useLocalStore } from 'mobx-react';
 import ResetPasswordModal, {
   ResetPasswordModalHandles,
 } from './reset-password/ResetPasswordModal';
+import { LoginScreenRouteProp } from './LoginScreen';
 
 type PropsType = {
   onLogin?: Function;
   onRegisterPress?: () => void;
-  onForgot: Function;
   store: TwoFactorStore;
+  route: LoginScreenRouteProp;
 };
 
 const { height } = Dimensions.get('window');
@@ -110,6 +111,15 @@ export default observer(function LoginForm(props: PropsType) {
       resetRef.current?.show();
     },
   }));
+
+  const username = props.route?.params?.username;
+  const code = props.route?.params?.code;
+  React.useEffect(() => {
+    const navToInputPassword = username && code && !!resetRef.current;
+    if (navToInputPassword) {
+      resetRef.current!.show(navToInputPassword, username, code);
+    }
+  }, [code, username]);
 
   const theme = ThemedStyles.style;
 

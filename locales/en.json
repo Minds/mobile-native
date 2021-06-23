@@ -92,11 +92,15 @@
     "recoveryFail": "The recovery code you enter doesn't match",
     "confirmPasswordModal": "Please confirm your account password to continue",
     "loginFail": "Wrong Username or Password",
-    "newPassword": "Please enter your new password",
     "waitLogin": "Logging in with new credentials...",
     "resetPassword": "Reset Password",
     "createNewPassword": "Create a new password",
-    "inputUser": "Enter your channel name below to start the password recovery process."
+    "inputUser": "Enter your channel name below to start the password recovery process.",
+    "emailSent": "An email with reset instructions has been sent to your inbox.",
+    "followInstuctions": "Follow the intructions contained within to continue the reset process.",
+    "sendAgain": "Send email again",
+    "waitMoment": "You have to wait 10 seconds after last time you've requested the email",
+    "newPassword": "Create a new password. You’ll use this to access your account."
   },
   "blockchain": {
     "exportLegacyWallet": "Export legacy wallets",

@@ -1,10 +1,15 @@
 import React from 'react';
-import { Text, View, ViewStyle } from 'react-native';
+import { Text, View, ViewStyle, TouchableOpacity } from 'react-native';
 import Modal from 'react-native-modal';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import Button from '../Button';
 import i18n from '../../services/i18n.service';
+import createBottomModalStore, {
+  BottomModalStore,
+} from './createBottomModalStore';
+import { observer, useLocalStore } from 'mobx-react';
 
 type PropsType = {
   children: React.ReactNode;
@@ -20,33 +25,22 @@ type PropsType = {
 };
 
 export interface BottomModalHandles {
-  show(): void;
-  hide(): void;
+  store: BottomModalStore;
 }
 
 const BottomModal: React.ForwardRefRenderFunction<
   BottomModalHandles,
   PropsType
 > = ({ children, ...props }, ref) => {
-  const [visible, setVisible] = React.useState(false);
-  const show = () => setVisible(true),
-    hide = () => {
-      !!props.onPressClose && props.onPressClose();
-      setVisible(false);
-    };
+  const store = useLocalStore(createBottomModalStore);
   React.useImperativeHandle(ref, () => ({
-    show: () => {
-      show();
-    },
-    hide: () => {
-      hide();
-    },
+    store,
   }));
   return (
     <Modal
-      isVisible={visible}
-      useNativeDriver={true}
-      onBackdropPress={hide}
+      swipeDirection={['up', 'down']}
+      isVisible={store.visible}
+      onBackdropPress={store.hide}
       style={styles.view}>
       <View style={[styles.container, props.containerStyle]}>
         {props.barTop && <View style={styles.bar} />}
@@ -64,7 +58,7 @@ const BottomModal: React.ForwardRefRenderFunction<
             size={34}
             name="close"
             style={styles.closeIcon}
-            onPress={hide}
+            onPress={store.hide}
           />
         )}
         {children}
@@ -72,7 +66,7 @@ const BottomModal: React.ForwardRefRenderFunction<
           <View style={styles.cancelButton}>
             <Button
               text={props.cancelText || i18n.t('cancel')}
-              onPress={hide}
+              onPress={store.hide}
               borderless
               active
               centered={false}
@@ -81,9 +75,38 @@ const BottomModal: React.ForwardRefRenderFunction<
         )}
         {props.barBottom && <View style={styles.bar} />}
       </View>
+      <Error store={store} />
     </Modal>
   );
 };
+
+const Error = observer(({ store }: { store: BottomModalStore }) => {
+  React.useEffect(() => {
+    const cleanup = setTimeout(() => {
+      if (store.error !== '') {
+        store.setError('');
+      }
+    }, 3000);
+    return () => {
+      cleanup;
+    };
+  }, [store, store.error]);
+  if (store.error === '') {
+    return null;
+  }
+  return (
+    <TouchableOpacity
+      style={styles.errorView}
+      onPress={() => store.setError('')}>
+      <View style={styles.errorIconView}>
+        <Icon name="error" size={32} color="white" />
+      </View>
+      <View style={styles.errorTextView}>
+        <Text style={styles.errorText}>{store.error}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+});
 
 const styles = {
   view: ThemedStyles.combine('justifyEnd', 'margin0x'),
@@ -115,6 +138,18 @@ const styles = {
     borderWidth: 3,
     borderRadius: 15,
   }),
+  errorView: ThemedStyles.combine('bgWhite', 'rowJustifyStart', 'width90', {
+    position: 'absolute',
+    bottom: 20,
+    left: 20,
+  }),
+  errorIconView: { backgroundColor: '#ca4a34', padding: 16 },
+  errorText: ThemedStyles.combine('fontL', { color: '#7d7d82' }),
+  errorTextView: ThemedStyles.combine(
+    'flexContainer',
+    'justifyCenter',
+    'paddingLeft4x',
+  ),
 };
 
-export default React.forwardRef(BottomModal);
+export default observer(React.forwardRef(BottomModal));

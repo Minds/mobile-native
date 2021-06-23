@@ -48,7 +48,7 @@ type PropsType = {
 const shadowOptLocal = Object.assign({}, shadowOpt);
 shadowOptLocal.height = 300;
 
-const validatorText = { color: LIGHT_THEME.PrimaryText };
+export const validatorText = { color: ThemedStyles.getColor('PrimaryText') };
 
 export default observer(function RegisterScreen(props: PropsType) {
   const captchaRef = useRef<any>(null);
