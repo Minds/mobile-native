@@ -1507,7 +1507,7 @@
     pouchdb-collections "^1.0.1"
     tiny-queue "^0.2.1"
 
-"@gorhom/bottom-sheet@^3.6.5":
+"@gorhom/bottom-sheet@^3.0.0":
   version "3.6.5"
   resolved "https://registry.yarnpkg.com/@gorhom/bottom-sheet/-/bottom-sheet-3.6.5.tgz#e871f14bcd687e584769d0d582d8d6b80ab984c1"
   integrity sha512-YgpXA5zYkOnTlFpofaaqt5BEeYfm0g1NNivmE63HWU/cn7zY1A1Mmm9G6MgCDlWVjZQgXTo5SdvAbcfUfTN9PA==
