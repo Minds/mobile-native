@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 
 import {
-  TextInput,
   StyleSheet,
   Platform,
   TouchableOpacity,
@@ -12,13 +11,14 @@ import {
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import ThemedStyles from '../../styles/ThemedStyles';
+import TextInput from './TextInput';
 
 interface Props {
   placeholder: string;
   value: string;
-  onFocus?: Function;
-  onBlur?: Function;
-  onChangeText?: Function;
+  onFocus?: () => void;
+  onBlur?: () => void;
+  onChangeText?: (text) => void;
   containerStyle: StyleProp<ViewStyle>;
   iconRight: string | null;
   iconRightOnPress: Function;
@@ -55,12 +55,11 @@ export default class SearchView extends PureComponent<Props> {
       <View style={this.containerStyle}>
         <Icon size={22} style={iconStyle} name={'md-search'} />
         {
-          //@ts-ignore
           <TextInput
             onFocus={this.props.onFocus}
             onBlur={this.props.onBlur}
             selectTextOnFocus={true}
-            placeholderTextColor={ThemedStyles.getColor('secondary_text')}
+            placeholderTextColor={ThemedStyles.getColor('SecondaryText')}
             {...attributes}
             underlineColorAndroid={'transparent'}
             style={[styles.input, ThemedStyles.style.colorPrimaryText]}

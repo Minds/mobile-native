@@ -35,14 +35,14 @@ exports[`LoginForm component should renders correctly 1`] = `
             "paddingTop": 10,
           },
           Object {
-            "backgroundColor": undefined,
+            "backgroundColor": "#F6F7F7",
           },
           Object {
             "borderTopWidth": 1,
           },
           null,
           Object {
-            "borderColor": undefined,
+            "borderColor": "#D3DBE3",
           },
           Object {
             "backgroundColor": "rgba(0,0,0,0.25)",
@@ -78,7 +78,7 @@ exports[`LoginForm component should renders correctly 1`] = `
                     "marginBottom": 0,
                   },
                   Object {
-                    "color": undefined,
+                    "color": "#72727C",
                   },
                   Object {
                     "color": "#FFFFFF",
@@ -100,6 +100,7 @@ exports[`LoginForm component should renders correctly 1`] = `
               "borderColor": "rgba(255,255,255,0.30)",
             }
           }
+          keyboardAppearance="dark"
           labelStyle={
             Object {
               "color": "#FFFFFF",
@@ -114,10 +115,10 @@ exports[`LoginForm component should renders correctly 1`] = `
             Array [
               Object {
                 "backgroundColor": "transparent",
-                "borderColor": undefined,
+                "borderColor": "#D3DBE3",
                 "borderRadius": 2,
                 "borderWidth": 1,
-                "color": undefined,
+                "color": "#43434D",
                 "fontFamily": "Roboto",
                 "fontSize": 16,
                 "lineHeight": 21,
@@ -159,7 +160,7 @@ exports[`LoginForm component should renders correctly 1`] = `
               "paddingTop": 10,
             },
             Object {
-              "backgroundColor": undefined,
+              "backgroundColor": "#F6F7F7",
             },
             Object {
               "borderTopWidth": 1,
@@ -168,7 +169,7 @@ exports[`LoginForm component should renders correctly 1`] = `
               "borderBottomWidth": 1,
             },
             Object {
-              "borderColor": undefined,
+              "borderColor": "#D3DBE3",
             },
             Object {
               "backgroundColor": "rgba(0,0,0,0.25)",
@@ -204,7 +205,7 @@ exports[`LoginForm component should renders correctly 1`] = `
                       "marginBottom": 0,
                     },
                     Object {
-                      "color": undefined,
+                      "color": "#72727C",
                     },
                     Object {
                       "color": "#FFFFFF",
@@ -226,6 +227,7 @@ exports[`LoginForm component should renders correctly 1`] = `
                 "borderColor": "rgba(255,255,255,0.30)",
               }
             }
+            keyboardAppearance="dark"
             labelStyle={
               Object {
                 "color": "#FFFFFF",
@@ -241,10 +243,10 @@ exports[`LoginForm component should renders correctly 1`] = `
               Array [
                 Object {
                   "backgroundColor": "transparent",
-                  "borderColor": undefined,
+                  "borderColor": "#D3DBE3",
                   "borderRadius": 2,
                   "borderWidth": 1,
-                  "color": undefined,
+                  "color": "#43434D",
                   "fontFamily": "Roboto",
                   "fontSize": 16,
                   "lineHeight": 21,
@@ -286,7 +288,7 @@ exports[`LoginForm component should renders correctly 1`] = `
             },
             Array [
               Object {
-                "color": undefined,
+                "color": "#43434D",
                 "position": "absolute",
                 "right": 8,
                 "top": 36,

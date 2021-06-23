@@ -89,7 +89,7 @@ const TiersList = observer(
                 ? checkIcon
                 : transparentCheckIcon,
             }}
-            containerItemStyle={theme.backgroundPrimary}
+            containerItemStyle={theme.bgPrimaryBackground}
           />
         ))}
       </>

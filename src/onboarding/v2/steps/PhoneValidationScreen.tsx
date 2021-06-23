@@ -90,8 +90,8 @@ export default observer(function PhoneValidationScreen() {
               theme.padding4x,
               theme.borderTopHair,
               theme.borderBottomHair,
-              theme.borderIcon,
-              theme.backgroundSecondary,
+              theme.bcolorIcon,
+              theme.bgSecondaryBackground,
             ]}>
             <PhoneValidationComponent
               textStyle={theme.colorPrimaryText}
@@ -124,7 +124,7 @@ export default observer(function PhoneValidationScreen() {
                 theme.paddingVertical3x,
                 theme.fullWidth,
                 theme.marginTop,
-                theme.borderPrimary,
+                theme.bcolorPrimaryBorder,
               ]}
               textStyle={theme.buttonText}
             />

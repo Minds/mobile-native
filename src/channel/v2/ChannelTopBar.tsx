@@ -33,7 +33,7 @@ const ChannelTopBar = observer(
           cleanTop,
           theme.paddingLeft2x,
           theme.paddingBottom,
-          theme.backgroundPrimary,
+          theme.bgPrimaryBackground,
         ]}>
         <MIcon
           size={40}
@@ -51,7 +51,7 @@ const ChannelTopBar = observer(
               theme.paddingLeft3x,
               theme.paddingVertical2x,
             ]}
-            placeholderTextColor={ThemedStyles.getColor('secondary_text')}
+            placeholderTextColor={ThemedStyles.getColor('SecondaryText')}
             value={store.channelSearch}
             onChangeText={store.setChannelSearch}
             returnKeyType={'search'}

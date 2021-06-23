@@ -17,7 +17,7 @@ const UserNotFound = props => {
           name="alert-circle-outline"
           style={theme.paddingVertical4x}
           size={50}
-          color={ThemedStyles.getColor('primary_text')}
+          color={ThemedStyles.getColor('PrimaryText')}
         />
         <Text style={[theme.fontLM, theme.bold, theme.textCenter]}>
           {i18nService.t('channel.notExist') + '\n'}@

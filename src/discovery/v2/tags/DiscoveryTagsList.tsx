@@ -88,7 +88,7 @@ export const DiscoveryTagsList = withErrorBoundary(
               </>
             ),
           }}
-          containerItemStyle={theme.backgroundPrimary}
+          containerItemStyle={theme.bgPrimaryBackground}
         />
       );
     };
@@ -104,7 +104,7 @@ export const DiscoveryTagsList = withErrorBoundary(
         <View
           style={[
             ThemedStyles.style.rowJustifyStart,
-            ThemedStyles.style.backgroundPrimary,
+            ThemedStyles.style.bgPrimaryBackground,
             ThemedStyles.style.padding4x,
           ]}>
           <View style={ThemedStyles.style.flexContainer} />

@@ -4,7 +4,6 @@ import {
   Text,
   StyleSheet,
   ScrollView,
-  TextInput,
   TouchableOpacity,
 } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
@@ -17,6 +16,7 @@ import NavigationService from '../navigation/NavigationService';
 import hashtagService from '../common/services/hashtag.service';
 import HistoryStore from '../common/stores/HistoryStore';
 import sessionService from '../common/services/session.service';
+import TextInput from '../common/components/TextInput';
 
 /**
  * Tag row
@@ -28,7 +28,7 @@ const TagRow = props => {
   }, [props.store, props.tag]);
 
   return (
-    <View style={[styles.tagRow, ThemedStyles.style.borderPrimary]}>
+    <View style={[styles.tagRow, ThemedStyles.style.bcolorPrimaryBorder]}>
       <Text
         style={[ThemedStyles.style.flexContainer, ThemedStyles.style.fontXL]}>
         #{props.tag}
@@ -50,7 +50,7 @@ const TagRow = props => {
 export default observer(function (props) {
   const theme = ThemedStyles.style;
   const store = props.route.params.store;
-  const inputRef = useRef();
+  const inputRef = useRef(null);
 
   const localStore = useLocalStore(
     ({ postStore }) => ({
@@ -102,7 +102,7 @@ export default observer(function (props) {
   }, [localStore]);
 
   return (
-    <View style={[theme.flexContainer, theme.backgroundPrimary]}>
+    <View style={[theme.flexContainer, theme.bgPrimaryBackground]}>
       <TopBar
         leftText="Tags"
         rightText={i18n.t('done')}
@@ -146,12 +146,12 @@ export default observer(function (props) {
         ref={inputRef}
         style={[
           theme.colorPrimaryText,
-          theme.borderPrimary,
+          theme.bcolorPrimaryBorder,
           styles.input,
-          localStore.focused ? theme.backgroundSecondary : null,
+          localStore.focused ? theme.bgSecondaryBackground : null,
         ]}
         placeholder="Enter tag"
-        placeholderTextColor={ThemedStyles.getColor('tertiary_text')}
+        placeholderTextColor={ThemedStyles.getColor('TertiaryText')}
         onSubmitEditing={localStore.add}
         onChangeText={localStore.setText}
         textAlignVertical="top"
@@ -166,7 +166,7 @@ export default observer(function (props) {
         testID="PostInput"
       />
       {showHistory && (
-        <View style={[styles.tagHistory, theme.backgroundSecondary]}>
+        <View style={[styles.tagHistory, theme.bgSecondaryBackground]}>
           <View style={styles.tagHistoryOpt}>
             <Text style={theme.colorSecondaryText}>Recent tags</Text>
             <Text

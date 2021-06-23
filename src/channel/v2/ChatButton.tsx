@@ -24,7 +24,7 @@ export default observer(function ChatButton({
     <View>
       <DotIndicator
         dotSize={5}
-        color={ThemedStyles.getColor('primary_text')}
+        color={ThemedStyles.getColor('PrimaryText')}
         scaleEnabled={true}
       />
     </View>

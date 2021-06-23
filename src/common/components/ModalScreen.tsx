@@ -22,7 +22,7 @@ const ModalScreen = ({ children, ...props }: PropsType) => {
     ? { marginTop: insets.top + 50 }
     : { marginTop: 50 };
   return (
-    <View style={[styles.container, theme.backgroundPrimary, cleanTop]}>
+    <View style={[styles.container, theme.bgPrimaryBackground, cleanTop]}>
       <ModalHeader {...props} />
       <ScrollView contentContainerStyle={theme.paddingBottom3x}>
         {children}

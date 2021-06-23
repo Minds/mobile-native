@@ -3,11 +3,12 @@ import React, { Component } from 'react';
 
 import { observer } from 'mobx-react';
 
-import { TextInput, View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 
 import { Icon } from 'react-native-elements';
 import i18nService from '../services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
+import TextInput from './TextInput';
 
 /**
  * Tag Input Component
@@ -69,7 +70,7 @@ export default class TagInput extends Component {
       tags = (
         <View style={styles.tagContainer}>
           {this.props.tags.map((t, i) => (
-            <View style={[styles.tag, theme.backgroundPrimary]} key={i}>
+            <View style={[styles.tag, theme.bgPrimaryBackground]} key={i}>
               <Text style={styles.tagText}>#{t}</Text>
               <Icon
                 name="ios-close"
@@ -93,7 +94,7 @@ export default class TagInput extends Component {
           autoCapitalize="none"
           autoFocus={autoFocus}
           style={[styles.input, theme.colorPrimaryText]}
-          placeholderTextColor={ThemedStyles.getColor('secondary_text')}
+          placeholderTextColor={ThemedStyles.getColor('SecondaryText')}
           ref={this.setInputRef}
           value={this.state.text}
           blurOnSubmit={false}

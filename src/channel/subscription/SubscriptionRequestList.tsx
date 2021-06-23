@@ -9,9 +9,9 @@ import { inject, observer } from 'mobx-react';
 
 import SubscriptionRequest from './SubscriptionRequest';
 import i18n from '../../common/services/i18n.service';
-import { CommonStyle as CS } from '../../styles/Common';
 import ErrorLoading from '../../common/components/ErrorLoading';
 import ActivityIndicator from '../../common/components/ActivityIndicator';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 type PropsType = {
   subscriptionRequest: SubscriptionRequestStore;
@@ -50,6 +50,7 @@ class SubscriptionRequestList extends Component<PropsType> {
    */
   render(): Node {
     const { subscriptionRequest, ...otherProps } = this.props;
+    const theme = ThemedStyles.style;
 
     let footerCmp = null,
       emptyCmp = null;
@@ -62,13 +63,18 @@ class SubscriptionRequestList extends Component<PropsType> {
       const message = subscriptionRequest.loading ? (
         <ActivityIndicator size="large" />
       ) : (
-        <Text style={[CS.fontM, CS.fontHairline]}>
+        <Text style={[theme.fontM, theme.fontHairline]}>
           {i18n.t('discovery.nothingToShow')}
         </Text>
       );
 
       emptyCmp = (
-        <View style={[CS.flexColumnCentered, CS.marginTop4x, CS.paddingTop2x]}>
+        <View
+          style={[
+            theme.flexColumnCentered,
+            theme.marginTop4x,
+            theme.paddingTop2x,
+          ]}>
           {message}
         </View>
       );

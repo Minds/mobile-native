@@ -46,7 +46,7 @@ export default observer(function (props: PropsType) {
             style={[
               theme.rowJustifyCenter,
               styles.textContainer,
-              theme.backgroundLink,
+              theme.bgLink,
             ]}>
             <Text
               selectable={true}
@@ -95,7 +95,7 @@ export default observer(function (props: PropsType) {
           style={[
             theme.rowJustifyCenter,
             styles.textContainer,
-            theme.backgroundTertiary,
+            theme.bgTertiaryBackground,
           ]}>
           <Text
             selectable={true}

@@ -61,7 +61,7 @@ const EmailNotificationsSettings = ({}: PropsType) => {
                             title: setting.topic,
                             icon: <SettingToggle setting={setting} />,
                           }}
-                          containerItemStyle={theme.backgroundPrimary}
+                          containerItemStyle={theme.bgPrimaryBackground}
                           titleStyle={itemTextStyleMedium}
                         />
                       )}
@@ -141,7 +141,7 @@ const NotificationSelector = observer(
 );
 
 const selectorContainer = ThemedStyles.combine(
-  'backgroundPrimary',
+  'bgPrimaryBackground',
   'borderLeft0x',
   'borderRight0x',
 );
@@ -160,12 +160,13 @@ export const itemTextStyle = ThemedStyles.combine('fontL', 'colorPrimaryText');
 
 export const itemTextStyleMedium = ThemedStyles.combine(
   'fontMedium',
-  itemTextStyle,
+  'fontL',
+  'colorPrimaryText',
 );
 
 export const containerStyle = ThemedStyles.combine(
   'flexContainer',
-  'backgroundSecondary',
+  'bgSecondaryBackground',
   'paddingVertical2x',
 );
 

@@ -25,7 +25,7 @@ const Header = ({ showFilter }: PropsType) => {
           <TouchableOpacity onPress={showFilter}>
             <MIcon
               name={'filter-variant'}
-              color={ThemedStyles.getColor('icon')}
+              color={ThemedStyles.getColor('Icon')}
               size={28}
             />
             <Text style={theme.colorSecondaryText}>

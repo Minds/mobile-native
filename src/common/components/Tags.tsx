@@ -4,8 +4,8 @@ import _ from 'lodash';
 import React, { PureComponent } from 'react';
 
 import { Text, TextStyle } from 'react-native';
+import ThemedStyles from '../../styles/ThemedStyles';
 
-import colors from '../../styles/Colors';
 import openUrlService from '../services/open-url.service';
 
 export const hashRegex = new RegExp(
@@ -46,18 +46,6 @@ type PropsType = {
  */
 export default class Tags extends PureComponent<PropsType> {
   index: number = 0;
-  styles = {
-    color: colors.primary,
-  };
-
-  /**
-   * On component will mount
-   */
-  componentWillMount() {
-    if (this.props.color) {
-      this.styles.color = this.props.color;
-    }
-  }
 
   /**
    * Render
@@ -117,7 +105,7 @@ export default class Tags extends PureComponent<PropsType> {
       return (
         <Text
           key={i}
-          style={[this.props.style, this.styles]}
+          style={[this.props.style, ThemedStyles.style.colorLink]}
           onPress={() => {
             this.navToURL(content);
           }}>
@@ -137,7 +125,7 @@ export default class Tags extends PureComponent<PropsType> {
       return (
         <Text
           key={i}
-          style={[this.props.style, this.styles]}
+          style={[this.props.style, ThemedStyles.style.colorLink]}
           onPress={() => {
             this.navToURL(content);
           }}>
@@ -157,7 +145,7 @@ export default class Tags extends PureComponent<PropsType> {
       return (
         <Text
           key={i}
-          style={[this.props.style, this.styles]}
+          style={[this.props.style, ThemedStyles.style.colorLink]}
           onPress={() => {
             this.navToURL('http://' + content);
           }}>
@@ -175,7 +163,7 @@ export default class Tags extends PureComponent<PropsType> {
       return (
         <Text
           key={i}
-          style={[this.props.style, this.styles]}
+          style={[this.props.style, ThemedStyles.style.colorLink]}
           onPress={() => {
             this.navToDiscovery(`#${content}`);
           }}>
@@ -190,7 +178,7 @@ export default class Tags extends PureComponent<PropsType> {
       return (
         <Text
           key={i}
-          style={[this.props.style, this.styles]}
+          style={[this.props.style, ThemedStyles.style.colorLink]}
           onPress={() => {
             this.navToDiscovery(`\$${content}`);
           }}>
@@ -210,7 +198,7 @@ export default class Tags extends PureComponent<PropsType> {
       return (
         <Text
           key={i}
-          style={[this.props.style, this.styles]}
+          style={[this.props.style, ThemedStyles.style.colorLink]}
           onPress={() => {
             this.navToChannel(content);
           }}>

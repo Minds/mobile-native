@@ -1,7 +1,6 @@
 import React, { useCallback, useRef, useEffect } from 'react';
 import {
   StyleSheet,
-  TextInput,
   View,
   Dimensions,
   Keyboard,
@@ -27,6 +26,7 @@ import discardMessage from './discardMessage';
 import Tags from '../common/components/Tags';
 import KeyboardSpacingView from '../common/components/KeyboardSpacingView';
 import SoftInputMode from 'react-native-set-soft-input-mode';
+import TextInput from '../common/components/TextInput';
 
 const { width } = Dimensions.get('window');
 
@@ -156,7 +156,7 @@ export default observer(function (props) {
               ref={inputRef}
               scrollEnabled={false}
               placeholder={placeholder}
-              placeholderTextColor={ThemedStyles.getColor('tertiary_text')}
+              placeholderTextColor={ThemedStyles.getColor('TertiaryText')}
               onChangeText={props.store.setText}
               textAlignVertical="top"
               multiline={true}
@@ -184,7 +184,7 @@ export default observer(function (props) {
       {showBottomBar && (
         <KeyboardSpacingView
           enabled={Platform.OS === 'ios'}
-          style={[theme.backgroundPrimary, styles.bottomBarContainer]}>
+          style={[theme.bgPrimaryBackground, styles.bottomBarContainer]}>
           <BottomBar
             store={props.store}
             onOptions={() => {

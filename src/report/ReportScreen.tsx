@@ -7,7 +7,6 @@ import {
   Alert,
   Button,
   Text,
-  TextInput,
   StyleSheet,
   ScrollView,
   View,
@@ -17,12 +16,12 @@ import {
 
 import reportService from './ReportService';
 
-import colors from '../styles/Colors';
 import i18n from '../common/services/i18n.service';
 
 import mindsService from '../common/services/minds.service';
 import CenteredLoading from '../common/components/CenteredLoading';
 import ThemedStyles from '../styles/ThemedStyles';
+import TextInput from '../common/components/TextInput';
 
 export default class ReportScreen extends Component {
   state = {
@@ -45,7 +44,7 @@ export default class ReportScreen extends Component {
           <Icon
             name="chevron-left"
             size={38}
-            color={colors.primary}
+            style={ThemedStyles.style.colorLink}
             onPress={() => {
               if (this.props.route.params && this.props.route.params.goBack)
                 return this.props.route.params.goBack();
@@ -239,7 +238,7 @@ export default class ReportScreen extends Component {
     const reasonItems = reasons.map((reason, i) => {
       return (
         <TouchableOpacity
-          style={[styles.reasonItem, ThemedStyles.backgroundTertiary]}
+          style={[styles.reasonItem, ThemedStyles.bgTertiaryBackground]}
           key={i}
           onPress={() =>
             this.state.reason
@@ -255,7 +254,9 @@ export default class ReportScreen extends Component {
             <Icon
               name="chevron-right"
               size={36}
-              color={reason.hasMore ? colors.primary : colors.greyed}
+              style={
+                reason.hasMore ? theme.colorLink : theme.colorSecondaryText
+              }
             />
           </View>
         </TouchableOpacity>
@@ -300,12 +301,12 @@ export default class ReportScreen extends Component {
 
     return (
       <ScrollView
-        style={[theme.flexContainer, ThemedStyles.style.backgroundSecondary]}>
+        style={[theme.flexContainer, ThemedStyles.style.bgSecondaryBackground]}>
         {this.state.reason && (
           <Text
             style={[
               theme.fontM,
-              theme.backgroundPrimary,
+              theme.bgPrimaryBackground,
               theme.colorWhite,
               theme.padding,
             ]}>

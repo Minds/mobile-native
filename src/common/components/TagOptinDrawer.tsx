@@ -3,13 +3,11 @@ import React, { Component } from 'react';
 import { Text, View, StyleSheet, ScrollView } from 'react-native';
 import { inject, observer } from 'mobx-react';
 import Switch from 'react-native-switch-pro';
-import IonIcon from 'react-native-vector-icons/Ionicons';
 import Modal from 'react-native-modal';
 import { debounce } from 'lodash';
 
 import TagSelect from './TagSelect';
 import TagInput from './TagInput';
-import { CommonStyle as CS } from '../../styles/Common';
 import i18n from '../services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 
@@ -100,16 +98,16 @@ class TagOptinDrawer extends Component<Props> {
         onBackButtonPress={this.dismissModal}
         onBackdropPress={this.dismissModal}
         style={[styles.modal]}>
-        <View style={[styles.modalView, theme.backgroundSecondary]}>
-          <ScrollView style={CS.flexContainer}>
+        <View style={[styles.modalView, theme.bgSecondaryBackground]}>
+          <ScrollView style={theme.flexContainer}>
             {this.props.showPreferredToggle ? (
               <View
                 style={[
-                  CS.rowJustifySpaceEvenly,
-                  CS.alignCenter,
-                  CS.borderBottomHair,
-                  CS.paddingBottom2x,
-                  theme.borderPrimarys,
+                  theme.rowJustifySpaceEvenly,
+                  theme.alignCenter,
+                  theme.borderBottomHair,
+                  theme.paddingBottom2x,
+                  theme.bcolorPrimaryBorders,
                 ]}>
                 <Text>{i18n.t('hashtags.preferred')}</Text>
                 <Switch
@@ -121,23 +119,24 @@ class TagOptinDrawer extends Component<Props> {
             {this.props.onSelectOne ? (
               <Text
                 style={[
-                  CS.fontS,
+                  theme.fontS,
                   theme.colorTextSeconday,
-                  CS.fontLight,
-                  CS.textCenter,
-                  CS.marginTop,
+                  theme.fontLight,
+                  theme.textCenter,
+                  theme.marginTop,
                 ]}>
                 {i18n.t('hashtags.hold')}
               </Text>
             ) : null}
             <TagSelect
-              tagStyle={[CS.backgroundWhite, CS.padding1x, CS.flexContainer]}
+              tagStyle={[theme.bgWhite, theme.padding1x, theme.flexContainer]}
               textSelectedStyle={[
-                CS.fontSemibold,
-                !this.props.hashtag.all ? CS.colorPrimary : CS.colorDarkGreyed,
+                theme.fontSemibold,
+                !this.props.hashtag.all
+                  ? theme.colorPrimary
+                  : theme.colorDarkGreyed,
               ]}
-              textStyle={[CS.fontL, CS.colorDarkGreyed]}
-              containerStyle={[CS.columnAlignStart]}
+              textStyle={[theme.fontL, theme.colorDarkGreyed]}
               onTagDeleted={this.props.hashtag.deselect}
               onTagAdded={this.props.hashtag.select}
               tags={this.props.hashtag.suggested}

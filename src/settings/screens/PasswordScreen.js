@@ -132,9 +132,9 @@ export default observer(function () {
       const wrapperStyle = [
         theme.paddingLeft3x,
         theme.paddingTop3x,
-        theme.backgroundSecondary,
+        theme.bgSecondaryBackground,
         props.wrapperBorder,
-        theme.borderPrimary,
+        theme.bcolorPrimaryBorder,
       ];
 
       const labelStyle = [
@@ -168,7 +168,7 @@ export default observer(function () {
   const subContainer = !store.passwordFocused ? [theme.paddingTop7x] : [];
 
   return (
-    <ScrollView style={[theme.flexContainer, theme.backgroundPrimary]}>
+    <ScrollView style={[theme.flexContainer, theme.bgPrimaryBackground]}>
       <KeyboardAvoidingView
         style={[theme.flexContainer, theme.paddingTop3x]}
         behavior="position"

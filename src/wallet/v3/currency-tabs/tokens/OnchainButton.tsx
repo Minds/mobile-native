@@ -53,12 +53,7 @@ const OnchainButton = observer((props: PropsType) => {
 
   return props.onchainStore.loading ? (
     <View>
-      <Text
-        style={[
-          props.style,
-          theme.mindsSwitchBackgroundSecondary,
-          theme.marginLeft2x,
-        ]}>
+      <Text style={[props.style, theme.bgPrimaryBorder, theme.marginLeft2x]}>
         ...
       </Text>
     </View>

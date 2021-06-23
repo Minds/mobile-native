@@ -22,7 +22,7 @@ const RecoveryCodeUsedScreen = () => {
   const mailToMinds = () => Linking.openURL('mailto:support@example.com');
 
   return (
-    <View style={[styles.mainContainer, theme.backgroundPrimary]}>
+    <View style={[styles.mainContainer, theme.bgPrimaryBackground]}>
       <View style={theme.rowJustifyStart}>
         <Text style={styles.header}>{i18n.t('settings.TFADisabled')}</Text>
         <TouchableOpacity

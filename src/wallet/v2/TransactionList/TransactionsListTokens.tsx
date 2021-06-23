@@ -71,7 +71,7 @@ const TransactionsListTokens = observer(
           )
         }
         style={[
-          theme.backgroundPrimary,
+          theme.bgPrimaryBackground,
           theme.paddingLeft4x,
           theme.paddingRight4x,
         ]}

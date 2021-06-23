@@ -24,8 +24,8 @@ const LineChart = ({ data, width, style }: LineChartProps) => {
       yAxisInterval={data.labels.length % 20 ? 5 : 1}
       chartConfig={{
         decimalPlaces: 2,
-        color: () => ThemedStyles.getColor('link'),
-        labelColor: () => ThemedStyles.getColor('secondary_text'),
+        color: () => ThemedStyles.getColor('Link'),
+        labelColor: () => ThemedStyles.getColor('SecondaryText'),
         style: {
           borderRadius: 16,
         },
@@ -37,21 +37,21 @@ const LineChart = ({ data, width, style }: LineChartProps) => {
           r: '3',
         },
         propsForBackgroundLines: {
-          stroke: ThemedStyles.getColor('secondary_text'),
+          stroke: ThemedStyles.getColor('SecondaryText'),
           strokeDasharray: undefined,
           strokeWidth: StyleSheet.hairlineWidth,
         },
-        scrollableDotFill: ThemedStyles.getColor('primary_text'),
+        scrollableDotFill: ThemedStyles.getColor('PrimaryText'),
         scrollableDotRadius: 4,
         scrollableInfoViewStyle: {
           justifyContent: 'center',
           height: 80,
           padding: 0,
-          backgroundColor: ThemedStyles.getColor('tertiary_background'),
+          backgroundColor: ThemedStyles.getColor('TertiaryBackground'),
           borderRadius: 2,
         },
         scrollableInfoTextStyle: {
-          color: ThemedStyles.getColor('primary_text'),
+          color: ThemedStyles.getColor('PrimaryText'),
           padding: 0,
           fontSize: 14,
           textAlign: 'center',

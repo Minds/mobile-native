@@ -19,7 +19,6 @@ import { truncate } from 'lodash';
 
 import * as entities from 'entities';
 import GroupUser from './GroupUser';
-import colors from '../styles/Colors';
 import Tags from '../common/components/Tags';
 import CaptureFab from '../capture/CaptureFab';
 import GroupHeader from './header/GroupHeader';
@@ -169,7 +168,7 @@ export default class GroupViewScreen extends Component {
       <SafeAreaView style={styles.gobackicon}>
         <Icon
           raised
-          color={colors.primary}
+          style={ThemedStyles.style.colorLink}
           size={22}
           name="arrow-back"
           onPress={() => this.props.navigation.goBack()}
@@ -213,7 +212,7 @@ export default class GroupViewScreen extends Component {
             onRefresh={this.refresh}
             refreshing={group.members.refreshing}
             onEndReached={this.loadMembers}
-            style={ThemedStyles.style.backgroundPrimary}
+            style={ThemedStyles.style.bgPrimaryBackground}
             // onEndReachedThreshold={0}
             initialNumToRender={12}
             removeClippedSubviews={false}
@@ -224,7 +223,7 @@ export default class GroupViewScreen extends Component {
           .decodeHTML(group.group.briefdescription)
           .trim();
         return (
-          <ScrollView style={ThemedStyles.style.backgroundPrimary}>
+          <ScrollView style={ThemedStyles.style.bgPrimaryBackground}>
             {header}
             <View style={ThemedStyles.style.padding3x}>
               <Tags
@@ -392,7 +391,7 @@ export default class GroupViewScreen extends Component {
       return (
         <View
           style={[
-            theme.backgroundSecondary,
+            theme.bgSecondaryBackground,
             theme.flexContainer,
             theme.justifyCenter,
           ]}>
@@ -403,7 +402,7 @@ export default class GroupViewScreen extends Component {
     }
 
     return (
-      <View style={[theme.flexContainer, theme.backgroundSecondary]}>
+      <View style={[theme.flexContainer, theme.bgSecondaryBackground]}>
         {this.getList()}
         {showPosterFab && (
           <CaptureFab

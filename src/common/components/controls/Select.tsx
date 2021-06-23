@@ -26,7 +26,7 @@ const Select = ({ label, onPress }: SelectProps) => {
         style={[
           theme.rowJustifySpaceBetween,
           theme.padding2x,
-          theme.borderPrimary,
+          theme.bcolorPrimaryBorder,
           styles.container,
         ]}>
         <Text style={styles.label}>{label}</Text>

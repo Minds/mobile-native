@@ -43,13 +43,13 @@ const TimeMultiplier = ({ multiplier }: PropsType) => {
     <TouchableOpacity
       style={styles.mainContainer}
       onPress={() => tooltipRef.current.toggleTooltip()}>
-      <View style={[styles.multiplierContainer, theme.backgroundPrimary]}>
+      <View style={[styles.multiplierContainer, theme.bgPrimaryBackground]}>
         <View style={[styles.multiplierRow]}>
           <Text style={theme.fontS}>{format(multiplier)}</Text>
           <View
             style={[
               theme.flexContainer,
-              theme.backgroundSecondary,
+              theme.bgSecondaryBackground,
               theme.marginHorizontal,
             ]}>
             <View style={progressBar} />
@@ -64,11 +64,11 @@ const TimeMultiplier = ({ multiplier }: PropsType) => {
         containerStyle={theme.borderRadius}
         width={225}
         height={100}
-        backgroundColor={ThemedStyles.getColor('link')}
+        backgroundColor={ThemedStyles.getColor('Link')}
         popover={<ToolTipText />}>
         <View />
       </Tooltip>
-      <View style={[styles.infoContainer, theme.backgroundTertiary]}>
+      <View style={[styles.infoContainer, theme.bgTertiaryBackground]}>
         <Text style={styles.infoText}>
           {format(calculateDaysFromMultiplier(multiplier))} / 365 days
         </Text>

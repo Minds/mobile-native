@@ -22,7 +22,7 @@ export default function ListItemButton(
       borderRadius={2}
       style={[
         styles.container,
-        theme.borderPrimary,
+        theme.bcolorPrimaryBorder,
         theme.centered,
         props.style,
       ]}>

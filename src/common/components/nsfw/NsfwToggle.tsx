@@ -1,13 +1,11 @@
 //@ts-nocheck
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { Text } from 'react-native';
 import Menu, { MenuItem } from 'react-native-material-menu';
 import MdIcon from 'react-native-vector-icons/MaterialIcons';
 
 import Touchable from '../Touchable';
-import Colors from '../../../styles/Colors';
 import autobind from '../../helpers/autobind';
-import testID from '../../helpers/testID';
 import i18n from '../../services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
 
@@ -84,10 +82,7 @@ export default class NsfwToggle extends Component {
 
     return (
       <React.Fragment>
-        <Menu
-          ref={this.menuRef}
-          style={[styles.menu, themed.backgroundTertiary]}
-          button={button}>
+        <Menu ref={this.menuRef} style={menuStyle} button={button}>
           {this.reasons.map((reason, i) => (
             <MenuItem
               key={i}
@@ -104,21 +99,10 @@ export default class NsfwToggle extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  menu: {
+const menuStyle = ThemedStyles.combine(
+  {
     width: 180,
-    marginTop: 20,
   },
-  menuItemText: {
-    color: Colors.darkGreyed,
-  },
-  menuItemIcon: {
-    color: 'transparent',
-  },
-  menuItemTextActive: {
-    color: Colors.primary,
-  },
-  menuItemIconActive: {
-    color: Colors.primary,
-  },
-});
+  'marginTop4x',
+  'bgTertiaryBackground',
+);

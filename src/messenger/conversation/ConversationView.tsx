@@ -74,7 +74,7 @@ export default class ConversationView extends Component {
       <TouchableOpacity
         style={[
           styles.row,
-          { borderColor: ThemedStyles.getColor('primary_border') },
+          { borderColor: ThemedStyles.getColor('PrimaryBorder') },
         ]}
         onPress={this._navToConversation}
         testID={this.props.testID}>

@@ -18,10 +18,10 @@ export default class BillingScreen extends Component {
       <View
         style={[
           theme.columnAlignCenter,
-          theme.backgroundSecondary,
+          theme.bgSecondaryBackground,
           theme.borderTop,
           theme.borderBottom,
-          theme.borderPrimary,
+          theme.bcolorPrimaryBorder,
           theme.paddingBottom3x,
         ]}>
         <Text

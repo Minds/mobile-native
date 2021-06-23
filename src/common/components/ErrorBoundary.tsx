@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
 import { Text, View, ViewStyle } from 'react-native';
-import { CommonStyle as CS } from '../../styles/Common';
 import logService from '../services/log.service';
 import i18n from '../services/i18n.service';
 import { showNotification } from '../../../AppMessages';
 import Clipboard from '@react-native-clipboard/clipboard';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 type PropsType = {
   message: string;
@@ -63,27 +63,27 @@ export default class ErrorBoundary extends Component<PropsType, StateType> {
 
   getErrorMessage() {
     const { containerStyle, textSmall } = this.props;
-
+    const theme = ThemedStyles.style;
     return (
-      <View style={[CS.columnAlignCenter, containerStyle]}>
+      <View style={[theme.columnAlignCenter, containerStyle]}>
         <Text
           style={[
-            textSmall ? CS.fontS : CS.fontM,
-            CS.textCenter,
-            CS.marginTop2x,
-            CS.fontHairline,
-            CS.colorDanger,
+            textSmall ? theme.fontS : theme.fontM,
+            theme.textCenter,
+            theme.marginTop2x,
+            theme.fontHairline,
+            theme.colorAlert,
           ]}
           onPress={this.copy}>
           {this.props.message || i18n.t('errorDisplaying')}
         </Text>
         <Text
           style={[
-            textSmall ? CS.fontXS : CS.fontS,
-            CS.textCenter,
-            CS.marginTop2x,
-            CS.marginBottom2x,
-            CS.fontHairline,
+            textSmall ? theme.fontXS : theme.fontS,
+            theme.textCenter,
+            theme.marginTop2x,
+            theme.marginBottom2x,
+            theme.fontHairline,
           ]}
           onPress={this.copy}>
           {i18n.t('tapCopyError')}

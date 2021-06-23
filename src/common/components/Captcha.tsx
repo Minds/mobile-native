@@ -13,10 +13,10 @@ import { DARK_THEME } from '../../styles/Colors';
 import i18nService from '../services/i18n.service';
 import InputContainer from './InputContainer';
 
-const backgroundPrimary = { backgroundColor: DARK_THEME.primary_background };
+const backgroundPrimary = { backgroundColor: DARK_THEME.PrimaryBackground };
 const backgroundSecondary = {
-  backgroundColor: DARK_THEME.secondary_background,
-  borderColor: DARK_THEME.borderColorPrimary,
+  backgroundColor: DARK_THEME.SecondaryBackground,
+  borderColor: DARK_THEME.PrimaryBorder,
 };
 
 interface CaptchaResponse extends ApiResponse {
@@ -90,7 +90,7 @@ const Captcha = observer(
         avoidKeyboard={true}
         onBackdropPress={store.hideModal}
         isVisible={store.show}
-        backdropColor={DARK_THEME.secondary_background}
+        backdropColor={DARK_THEME.SecondaryBackground}
         backdropOpacity={0.9}
         useNativeDriver={true}
         style={[theme.fullWidth, theme.margin0x, theme.justifyEnd]}
@@ -144,7 +144,7 @@ const Captcha = observer(
               <Icon
                 name="reload"
                 type="material-community"
-                underlayColor={ThemedStyles.getColor('primary_background')}
+                underlayColor={ThemedStyles.getColor('PrimaryBackground')}
                 size={45}
                 iconStyle={theme.colorIcon}
                 onPress={store.load}

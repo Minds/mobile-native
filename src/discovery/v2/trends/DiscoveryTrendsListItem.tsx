@@ -65,7 +65,7 @@ export const DiscoveryTrendsListItem = withErrorBoundary(
             style={[
               styles.container,
               ThemedStyles.style.padding4x,
-              ThemedStyles.style.borderPrimary,
+              ThemedStyles.style.bcolorPrimaryBorder,
             ]}>
             <View style={[styles.body]}>
               <Text style={styles.title}>
@@ -92,7 +92,7 @@ export const DiscoveryTrendsListItem = withErrorBoundary(
           style={[
             styles.container,
             ThemedStyles.style.padding4x,
-            ThemedStyles.style.borderPrimary,
+            ThemedStyles.style.bcolorPrimaryBorder,
           ]}>
           <View style={[styles.body]}>
             <Text style={styles.title}>
@@ -134,7 +134,7 @@ export const DiscoveryTrendsListItem = withErrorBoundary(
           style={[
             styles.container,
             ThemedStyles.style.padding4x,
-            ThemedStyles.style.borderPrimary,
+            ThemedStyles.style.bcolorPrimaryBorder,
           ]}>
           <View style={[styles.body]}>
             <Text
@@ -148,7 +148,7 @@ export const DiscoveryTrendsListItem = withErrorBoundary(
           </View>
           <Icon
             type="material-community"
-            color={ThemedStyles.getColor('tertiary_text')}
+            color={ThemedStyles.getColor('TertiaryText')}
             name="chevron-right"
             size={32}
             style={styles.centered}

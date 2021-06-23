@@ -94,7 +94,7 @@ const VerifyAuthAppScreen = observer(({ route }: PropsType) => {
           onPress={store.copySecret}>
           <Icon
             name="content-copy"
-            color={ThemedStyles.getColor('primary_text')}
+            color={ThemedStyles.getColor('PrimaryText')}
             size={14}
           />
           <Text style={[styles.smallTitle, theme.marginLeft]}>
@@ -103,7 +103,7 @@ const VerifyAuthAppScreen = observer(({ route }: PropsType) => {
         </TouchableOpacity>
       </View>
       <InputContainer
-        containerStyle={theme.backgroundPrimaryHighlight}
+        containerStyle={theme.bgPrimaryBackgroundHighlight}
         labelStyle={theme.colorPrimaryText}
         style={theme.colorPrimaryText}
         placeholder={i18n.t('settings.TFAEnterCode')}

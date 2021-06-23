@@ -30,7 +30,7 @@ const NotificationsTabIcon = observer((props: PropsType) => {
           <FAIcon
             name="circle"
             size={15}
-            color={ThemedStyles.getColor('secondary_background')}
+            color={ThemedStyles.getColor('SecondaryBackground')}
             style={styles.unreadBackground}
           />
           <FAIcon
