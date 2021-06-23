@@ -16,13 +16,17 @@ function getBorder(name) {
 }
 
 export default function borders(name: string) {
-  const regex = /^border(Top|Bottom|Left|Right|Vertical|Horizontal|Radius)?(.*)/g;
+  const regex = /^border(Top|Bottom|Left|Right|Radius)?(.*)/g;
   const result = regex.exec(name);
 
   if (result) {
     const size = getBorder(result[2]);
     return size !== undefined && size >= 0
-      ? { [`border${result[1] || ''}Width`]: size }
+      ? {
+          [`border${result[1] || ''}${
+            result[1] !== 'Radius' ? 'Width' : ''
+          }`]: size,
+        }
       : null;
   }
 }
