@@ -872,7 +872,7 @@ exports[`Activity screen component renders correctly  1`] = `
                   "padding": 15,
                 },
                 Object {
-                  "borderRadiusWidth": 5,
+                  "borderRadius": 5,
                 },
               ]
             }
@@ -1281,6 +1281,7 @@ exports[`Activity screen component renders correctly  1`] = `
             onModalWillHide={[Function]}
             onModalWillShow={[Function]}
             onRequestClose={[Function]}
+            onSwipeComplete={[Function]}
             panResponderThreshold={4}
             scrollHorizontal={false}
             scrollOffset={0}
@@ -1292,6 +1293,7 @@ exports[`Activity screen component renders correctly  1`] = `
                 "landscape",
               ]
             }
+            swipeDirection="down"
             swipeThreshold={100}
             transparent={true}
             visible={false}
@@ -1369,6 +1371,19 @@ exports[`Activity screen component renders correctly  1`] = `
                 onModalHide={[Function]}
                 onModalWillHide={[Function]}
                 onModalWillShow={[Function]}
+                onMoveShouldSetResponder={[Function]}
+                onMoveShouldSetResponderCapture={[Function]}
+                onResponderEnd={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderReject={[Function]}
+                onResponderRelease={[Function]}
+                onResponderStart={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                onStartShouldSetResponderCapture={[Function]}
+                onSwipeComplete={[Function]}
                 panResponderThreshold={4}
                 pointerEvents="box-none"
                 scrollHorizontal={false}
@@ -1394,6 +1409,7 @@ exports[`Activity screen component renders correctly  1`] = `
                     "landscape",
                   ]
                 }
+                swipeDirection="down"
                 swipeThreshold={100}
               >
                 <View
