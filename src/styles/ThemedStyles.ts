@@ -45,6 +45,12 @@ export class ThemedStylesStore {
     return styles.map(s => (typeof s === 'string' ? this.style[s] : s));
   }
 
+  create(styles: { [key: string]: Array<Style | CustomStyle> }) {
+    const s: any = {};
+    Object.keys(styles).forEach(key => (s[key] = this.combine(...styles[key])));
+    return s;
+  }
+
   /**
    * Set dark theme
    */
