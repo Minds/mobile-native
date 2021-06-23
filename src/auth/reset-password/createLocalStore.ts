@@ -2,6 +2,7 @@ import { RefObject } from 'react';
 import { showNotification } from '../../../AppMessages';
 import { BottomModalHandles } from '../../common/components/bottom-modal/BottomModal';
 import delay from '../../common/helpers/delay';
+import validatePassword from '../../common/helpers/validatePassword';
 import apiService from '../../common/services/api.service';
 import i18n from '../../common/services/i18n.service';
 import logService from '../../common/services/log.service';
@@ -87,7 +88,12 @@ const createLocalStore = ({ ref }: { ref: RefObject<BottomModalHandles> }) => ({
   async resetPassword() {
     if (!this.username || !this.code) {
       ref.current?.store.setError(i18n.t('errorMessage'));
-      return;
+      return false;
+    }
+
+    if (!validatePassword(this.password).all) {
+      ref.current?.store.setError(i18n.t('auth.invalidPassword'));
+      return false;
     }
 
     if (this.canSendAgain) {

@@ -4,15 +4,11 @@ import { View, Text } from 'react-native';
 import i18n from '../../common/services/i18n.service';
 import { ResetPasswordStore } from './createLocalStore';
 import { containerStyle, textStyle } from './EmailSended';
-import Tooltip from '../../common/components/Tooltip';
-import PasswordValidator from '../../common/components/PasswordValidator';
-import InputContainer from '../../common/components/InputContainer';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { validatorText } from '../RegisterScreen';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { styles } from './InputUser';
 import { icon } from '../styles';
 import Button from '../../common/components/Button';
+import PasswordInput from '../../common/components/password-input/PasswordInput';
 
 type PropsType = {
   store: ResetPasswordStore;
@@ -33,34 +29,13 @@ const InputPassword = observer(({ store, onFinish }: PropsType) => {
         <Text style={textStyle}>{i18n.t('auth.newPassword')}</Text>
       </View>
       <View style={wrapperStyle}>
-        {!!store.password && store.focused && (
-          <Tooltip
-            bottom={12}
-            backgroundColor={ThemedStyles.getColor('TertiaryBackground')}
-            containerStyle={ThemedStyles.style.paddingLeft2x}>
-            <PasswordValidator
-              password={store.password}
-              textStyle={validatorText}
-            />
-          </Tooltip>
-        )}
-        <InputContainer
-          containerStyle={styles.inputContainer}
-          style={styles.inputText}
-          labelStyle={styles.label}
-          placeholder={i18n.t('auth.password')}
-          secureTextEntry={store.hidePassword}
-          onChangeText={store.setPassword}
-          value={store.password}
-          testID="passwordInput"
-          onFocus={store.focus}
-          onBlur={store.blur}
-        />
-        <Icon
-          name={store.hidePassword ? 'md-eye' : 'md-eye-off'}
-          size={25}
-          onPress={store.toggleHidePassword}
-          style={iconStyle}
+        <PasswordInput
+          store={store}
+          tooltipBackground={ThemedStyles.getColor('TertiaryBackground')}
+          inputContainerStyle={styles.inputContainer}
+          inputStyle={styles.inputText}
+          inputLabelStyle={styles.label}
+          iconStyle={iconStyle}
         />
       </View>
       <Button
