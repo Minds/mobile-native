@@ -577,6 +577,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
             onModalWillHide={[Function]}
             onModalWillShow={[Function]}
             onRequestClose={[Function]}
+            onSwipeComplete={[Function]}
             panResponderThreshold={4}
             scrollHorizontal={false}
             scrollOffset={0}
@@ -588,12 +589,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                 "landscape",
               ]
             }
-            swipeDirection={
-              Array [
-                "up",
-                "down",
-              ]
-            }
+            swipeDirection="down"
             swipeThreshold={100}
             transparent={true}
             visible={false}
@@ -644,6 +640,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
               onStartShouldSetResponderCapture={[Function]}
+              onSwipeComplete={[Function]}
               panResponderThreshold={4}
               pointerEvents="box-none"
               scrollHorizontal={false}
@@ -670,12 +667,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                   "landscape",
                 ]
               }
-              swipeDirection={
-                Array [
-                  "up",
-                  "down",
-                ]
-              }
+              swipeDirection="down"
               swipeThreshold={100}
             >
               <View
@@ -875,6 +867,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                             },
                           ]
                         }
+                        keyboardAppearance="dark"
                         labelStyle={
                           Array [
                             Object {
