@@ -29,8 +29,4 @@ describe('Thumb action component', () => {
   it('renders correctly', async () => {
     expect(screen).toMatchSnapshot();
   });
-
-  it('should have a remind button', async () => {
-    expect(screen.find('Menu')).toHaveLength(1);
-  });
 });

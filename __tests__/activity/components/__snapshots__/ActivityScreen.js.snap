@@ -1107,127 +1107,55 @@ exports[`Activity screen component renders correctly  1`] = `
             </Text>
           </View>
         </View>
-        <Menu
-          button={
-            <preventDoubleTap(TouchableOpacity)
-              onPress={[Function]}
-              style={
-                Array [
-                  Object {
-                    "flexDirection": "row",
-                    "justifyContent": "center",
-                  },
-                  Object {
-                    "paddingHorizontal": 15,
-                  },
-                  Object {
-                    "paddingVertical": 20,
-                  },
-                  Object {
-                    "alignItems": "center",
-                  },
-                ]
-              }
-              testID="Remind activity button"
-            >
-              <Icon
-                allowFontScaling={false}
-                name="repeat"
-                size={21}
-                style={
-                  Array [
-                    Object {
-                      "color": "#7D7D82",
-                    },
-                    Object {
-                      "marginRight": 5,
-                    },
-                  ]
-                }
-              />
-            </preventDoubleTap(TouchableOpacity)>
-          }
+        <View
+          onPress={[Function]}
           style={
-            Object {
-              "backgroundColor": "#F6F7F7",
-            }
+            Array [
+              Object {
+                "flexDirection": "row",
+                "justifyContent": "center",
+              },
+              Object {
+                "paddingHorizontal": 15,
+              },
+              Object {
+                "paddingVertical": 20,
+              },
+              Object {
+                "alignItems": "center",
+              },
+            ]
           }
+          testID="Remind activity button"
         >
-          <MenuItem
-            onPress={[Function]}
-            textStyle={
+          <Text
+            allowFontScaling={false}
+            style={
               Array [
                 Object {
-                  "color": "#72727C",
+                  "color": undefined,
+                  "fontSize": 21,
                 },
+                Array [
+                  Object {
+                    "color": "#7D7D82",
+                  },
+                  Object {
+                    "marginRight": 5,
+                  },
+                ],
                 Object {
-                  "fontSize": 16,
+                  "fontFamily": "Material Icons",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
                 },
+                Object {},
               ]
             }
           >
-            <Text
-              allowFontScaling={false}
-              style={
-                Array [
-                  Object {
-                    "color": undefined,
-                    "fontSize": 15,
-                  },
-                  Object {
-                    "color": "#72727C",
-                  },
-                  Object {
-                    "fontFamily": "Material Icons",
-                    "fontStyle": "normal",
-                    "fontWeight": "normal",
-                  },
-                  Object {},
-                ]
-              }
-            >
-              
-            </Text>
-              Remind
-          </MenuItem>
-          <MenuItem
-            onPress={[Function]}
-            textStyle={
-              Array [
-                Object {
-                  "color": "#72727C",
-                },
-                Object {
-                  "fontSize": 16,
-                },
-              ]
-            }
-          >
-            <Text
-              allowFontScaling={false}
-              style={
-                Array [
-                  Object {
-                    "color": undefined,
-                    "fontSize": 15,
-                  },
-                  Object {
-                    "color": "#72727C",
-                  },
-                  Object {
-                    "fontFamily": "Material Icons",
-                    "fontStyle": "normal",
-                    "fontWeight": "normal",
-                  },
-                  Object {},
-                ]
-              }
-            >
-              
-            </Text>
-              Quote
-          </MenuItem>
-        </Menu>
+            
+          </Text>
+        </View>
         <View
           onPress={[Function]}
           style={
