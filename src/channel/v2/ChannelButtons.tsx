@@ -172,7 +172,9 @@ const ChannelButtons = withErrorBoundary(
           <MIcon
             name="more-horiz"
             size={22}
-            onPress={() => menuRef.current?.show()}
+            onPress={() => {
+              menuRef.current?.present();
+            }}
             style={[theme.paddingRight, props.iconsStyle]}
           />
         )}
@@ -184,11 +186,13 @@ const ChannelButtons = withErrorBoundary(
           />
         )}
         {showSubscribe && <Subscribe {...props} />}
-        <ChannelMoreMenu
-          channel={props.store.channel}
-          ref={menuRef}
-          isSubscribedToTier={isSubscribedToTier(props.store.tiers)}
-        />
+        {shouldShow('more') && (
+          <ChannelMoreMenu
+            channel={props.store.channel}
+            ref={menuRef}
+            isSubscribedToTier={isSubscribedToTier(props.store.tiers)}
+          />
+        )}
       </View>
     );
   }),
