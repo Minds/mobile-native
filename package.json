@@ -22,8 +22,8 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@crowdlinker/react-native-pager": "^0.2.3",
     "@gorhom/bottom-sheet": "^3.0.0",
+    "@msantang78/react-native-pager": "^0.2.4",
     "@react-native-clipboard/clipboard": "^1.7.0",
     "@react-native-community/art": "^1.1.2",
     "@react-native-community/async-storage": "^1.8.0",
@@ -106,7 +106,7 @@
     "react-native-progress": "^4.0.3",
     "react-native-qrcode-svg": "^5.2.0",
     "react-native-randombytes": "^3.5.3",
-    "react-native-reanimated": "^2.0.0",
+    "react-native-reanimated": "^2.2.0",
     "react-native-reanimated-indicators": "^2.0.0",
     "react-native-redash": "^14.2.3",
     "react-native-safe-area-context": "^3.1.4",

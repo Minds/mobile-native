@@ -11,7 +11,7 @@ import {
   PagerProvider,
   iPageInterpolation,
   Extrapolate,
-} from '@crowdlinker/react-native-pager';
+} from '@msantang78/react-native-pager';
 
 import ThemedStyles from '../styles/ThemedStyles';
 import MetadataService from '../common/services/metadata.service';
