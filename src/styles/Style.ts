@@ -119,6 +119,9 @@ const _buildStyle = (theme: ColorsType) =>
     alignSelfCenter: {
       alignSelf: 'center',
     },
+    alignSelfStretch: {
+      alignSelf: 'stretch',
+    },
     centered: {
       alignContent: 'center',
       alignItems: 'center',

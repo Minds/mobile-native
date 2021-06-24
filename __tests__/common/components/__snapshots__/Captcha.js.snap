@@ -300,6 +300,7 @@ exports[`renders correctly 1`] = `
                   "borderColor": "#414C57",
                 }
               }
+              keyboardAppearance="dark"
               labelStyle={
                 Object {
                   "color": "#FFFFFF",

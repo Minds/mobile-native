@@ -1,5 +1,4 @@
-import React, { useCallback, forwardRef } from 'react';
-import ActionSheet from 'react-native-actionsheet';
+import React, { forwardRef } from 'react';
 import type { NativeStackNavigationProp } from 'react-native-screens/native-stack';
 import { useNavigation } from '@react-navigation/native';
 
@@ -8,27 +7,116 @@ import i18n from '../../common/services/i18n.service';
 import type { AppStackParamList } from '../../navigation/NavigationTypes';
 import shareService from '../../share/ShareService';
 import { MINDS_URI } from '../../config/Config';
+import BottomSheet from '../../common/components/bottom-sheet/BottomSheet';
+import MenuItem from '../../common/components/bottom-sheet/MenuItem';
+import { observer } from 'mobx-react';
+import BottomSheetButton from '../../common/components/bottom-sheet/BottomSheetButton';
+
+function dismiss(ref) {
+  setTimeout(() => {
+    ref.current?.dismiss();
+  }, 0);
+}
 
 /**
  * Get menu options
  * @param channel
  */
-const getOptions = (channel: UserModel, isSubscribedToTier: boolean) => {
-  let options = [i18n.t('cancel')];
-  options.push(i18n.t('channel.share'));
+const getOptions = (
+  channel: UserModel,
+  isSubscribedToTier: boolean,
+  navigation,
+  ref: any,
+) => {
+  let options: Array<{
+    iconName: string;
+    iconType: string;
+    title: string;
+    onPress: () => void;
+  }> = [];
+  options.push({
+    iconName: 'share-social',
+    iconType: 'ionicon',
+    title: i18n.t('channel.share'),
+    onPress: () => {
+      shareService.share(i18n.t('channel.share'), MINDS_URI + channel.username);
+      ref.current.dismiss();
+    },
+  });
   if (channel.isOwner()) {
-    options.push(i18n.t('boosts.boostChannel'));
+    options.push({
+      iconName: 'trending-up',
+      iconType: 'material-community',
+      title: i18n.t('boosts.boostChannel'),
+      onPress: () => {
+        navigation.navigate('BoostChannelScreen', {});
+        ref.current.dismiss();
+      },
+    });
   }
   if (channel.isSubscribed()) {
-    options.push(i18n.t('channel.unsubscribe'));
+    options.push({
+      iconName: 'person-remove-outline',
+      iconType: 'ionicon',
+      title: i18n.t('channel.unsubscribe'),
+      onPress: () => {
+        channel.toggleSubscription();
+        dismiss(ref);
+      },
+    });
+  } else {
+    options.push({
+      iconName: 'person-add-outline',
+      iconType: 'ionicon',
+      title: i18n.t('channel.subscribe'),
+      onPress: () => {
+        channel.toggleSubscription();
+        dismiss(ref);
+      },
+    });
   }
   if (!channel.blocked) {
-    options.push(i18n.t('channel.block'));
+    options.push({
+      iconName: 'remove-circle-outline',
+      iconType: 'ionicon',
+      title: i18n.t('channel.block'),
+      onPress: () => {
+        channel.toggleBlock();
+        ref.current.dismiss();
+      },
+    });
   } else {
-    options.push(i18n.t('channel.unblock'));
+    options.push({
+      iconName: 'person-add-outline',
+      iconType: 'ionicon',
+      title: i18n.t('channel.unblock'),
+      onPress: () => {
+        channel.toggleBlock();
+        ref.current.dismiss();
+      },
+    });
   }
-  options.push(i18n.t('channel.report'));
-  isSubscribedToTier && options.push(i18n.t('settings.billingOptions.2'));
+  options.push({
+    title: i18n.t('channel.report'),
+    iconName: 'ios-flag-outline',
+    iconType: 'ionicon',
+    onPress: () => {
+      navigation.push('Report', {
+        entity: channel,
+      });
+      ref.current.dismiss();
+    },
+  });
+  isSubscribedToTier &&
+    options.push({
+      iconName: 'attach-money',
+      iconType: 'material',
+      title: i18n.t('settings.billingOptions.2'),
+      onPress: () => {
+        navigation.navigate('RecurringPayments', {});
+        ref.current.dismiss();
+      },
+    });
   return options;
 };
 
@@ -41,56 +129,30 @@ type PropsType = {
  * Channel More Menu (action sheet)
  * @param props
  */
-const ChannelMoreMenu = (props: PropsType, ref: any) => {
+const ChannelMoreMenu = forwardRef((props: PropsType, ref: any) => {
   const navigation = useNavigation<
     NativeStackNavigationProp<AppStackParamList, 'Channel'>
   >();
 
-  const handleSelection = useCallback(
-    option => {
-      let options = getOptions(props.channel, props.isSubscribedToTier);
-      let selected = options[option];
-      switch (selected) {
-        case i18n.t('channel.unsubscribe'):
-          props.channel.toggleSubscription();
-          break;
-        case i18n.t('channel.block'):
-          props.channel.toggleBlock();
-          break;
-        case i18n.t('channel.unblock'):
-          props.channel.toggleBlock();
-          break;
-        case i18n.t('channel.report'):
-          navigation.push('Report', {
-            entity: props.channel,
-          });
-          break;
-        case i18n.t('settings.billingOptions.2'):
-          navigation.navigate('RecurringPayments', {});
-          break;
-        case i18n.t('channel.share'):
-          shareService.share(
-            i18n.t('channel.share'),
-            MINDS_URI + props.channel.username,
-          );
-          break;
-        case i18n.t('boosts.boostChannel'):
-          navigation.navigate('BoostChannelScreen', {});
-          break;
-      }
-    },
-    [props, navigation],
+  const options = getOptions(
+    props.channel,
+    props.isSubscribedToTier,
+    navigation,
+    ref,
   );
+
+  const close = React.useCallback(() => {
+    ref.current?.dismiss();
+  }, [ref]);
 
   return (
-    <ActionSheet
-      ref={ref}
-      title={i18n.t('actions')}
-      options={getOptions(props.channel, props.isSubscribedToTier)}
-      onPress={handleSelection}
-      cancelButtonIndex={0}
-    />
+    <BottomSheet ref={ref}>
+      {options.map((b, i) => (
+        <MenuItem {...b} key={i} />
+      ))}
+      <BottomSheetButton text={i18n.t('cancel')} onPress={close} />
+    </BottomSheet>
   );
-};
+});
 
-export default forwardRef(ChannelMoreMenu);
+export default observer(ChannelMoreMenu);

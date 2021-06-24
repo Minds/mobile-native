@@ -1,7 +1,6 @@
 import { observer, useLocalStore } from 'mobx-react';
 import React from 'react';
 import { View, Text } from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
 import { showNotification } from '../../../AppMessages';
 import {
   getExportableWallets,
@@ -11,6 +10,7 @@ import {
 } from '../../blockchain/ExportOldWallet';
 import Button from '../../common/components/Button';
 import Selector from '../../common/components/Selector';
+import TextInput from '../../common/components/TextInput';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 

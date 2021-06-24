@@ -7,7 +7,7 @@ import ThemedStyles from '../styles/ThemedStyles';
 import TopBar from './TopBar';
 import i18n from '../common/services/i18n.service';
 import NavigationService from '../navigation/NavigationService';
-import { TextInput } from 'react-native-gesture-handler';
+import TextInput from '../common/components/TextInput';
 
 /**
  * NSFW selector

@@ -53,7 +53,7 @@ export const DiscoverySearchHeader = observer(() => {
           //@ts-ignore
           <SearchView
             placeholder={i18n.t('discovery.search')}
-            onChangeText={store.setQuery}
+            onChangeText={store.setQuery as any}
             value={store.query}
             containerStyle={[
               theme.marginVertical,

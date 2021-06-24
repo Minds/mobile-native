@@ -1,7 +1,7 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import { Text, View, TextInput, Alert, StyleSheet } from 'react-native';
+import { Text, View, Alert, StyleSheet } from 'react-native';
 
 import { inject, observer, Observer } from 'mobx-react';
 
@@ -13,6 +13,7 @@ import i18n from '../common/services/i18n.service';
 import ActivityIndicator from '../common/components/ActivityIndicator';
 import ThemedStyles from '../styles/ThemedStyles';
 import { showNotification } from '../../AppMessages';
+import TextInput from '../common/components/TextInput';
 
 type PropsType = {
   rekey?: boolean;

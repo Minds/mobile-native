@@ -196,6 +196,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                       "borderColor": "rgba(255,255,255,0.30)",
                     }
                   }
+                  keyboardAppearance="dark"
                   labelStyle={
                     Object {
                       "color": "#FFFFFF",
@@ -322,6 +323,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                         "borderColor": "rgba(255,255,255,0.30)",
                       }
                     }
+                    keyboardAppearance="dark"
                     labelStyle={
                       Object {
                         "color": "#FFFFFF",

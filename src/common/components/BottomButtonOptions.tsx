@@ -33,15 +33,17 @@ export default function BottomButtonOptions({
     <Modal
       avoidKeyboard={true}
       onBackdropPress={onPressClose}
+      onSwipeComplete={onPressClose}
       isVisible={isVisible}
+      swipeDirection="down"
       backdropColor={DARK_THEME.SecondaryBackground}
-      backdropOpacity={0.5}
+      backdropOpacity={0.7}
       useNativeDriver={true}
-      style={[theme.fullWidth, theme.margin0x, theme.justifyEnd]}
+      style={modalStyle}
       animationInTiming={100}
       animationOutTiming={100}
-      animationOut="fadeOut"
-      animationIn="fadeIn">
+      animationOut="bounceOutDown"
+      animationIn="bounceInUp">
       <View style={theme.paddingBottom}>
         {list.map((plist, indx) => (
           <View style={theme.paddingBottom2x} key={`${indx}c`}>
@@ -90,3 +92,5 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 10,
   },
 });
+
+const modalStyle = ThemedStyles.combine('fullWidth', 'margin0x', 'justifyEnd');

@@ -195,7 +195,7 @@ export default class BoostActionBar extends Component {
             underlayColor="transparent"
             style={ComponentsStyle.bluebutton}>
             <Text
-              style={ThemedStyles.styles.colorLink}
+              style={ThemedStyles.style.colorLink}
               adjustsFontSizeToFit
               numberOfLines={1}>
               {' '}
