@@ -596,6 +596,9 @@ export default function (props) {
     togglePostToPermaweb() {
       this.postToPermaweb = !this.postToPermaweb;
     },
+    isGroup() {
+      return !!props.route?.params?.group;
+    },
     maxHashtagsError() {
       showError(
         i18n.t('capture.maxHashtags', {
