@@ -2,7 +2,7 @@ import React, { useRef, useCallback, useEffect } from 'react';
 import { View, StyleSheet, Platform } from 'react-native';
 import { useDimensions } from '@react-native-community/hooks';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
-import { useFocus } from '@crowdlinker/react-native-pager';
+import { useFocus } from '@msantang78/react-native-pager';
 import { LinearGradient } from 'expo-linear-gradient';
 import { observer, useLocalStore } from 'mobx-react';
 import * as entities from 'entities';
