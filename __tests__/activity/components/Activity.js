@@ -9,7 +9,7 @@ import { activitiesServiceFaker } from '../../../__mocks__/fake/ActivitiesFaker'
 
 import ExplicitText from '../../../src/common/components/explicit/ExplicitText';
 import OwnerBlock from '../../../src/newsfeed/activity/OwnerBlock';
-import Actions from '../../../src/newsfeed/activity/Actions';
+import BottomContent from '../../../src/newsfeed/activity/BottomContent';
 import ActivityMetrics from '../../../src/newsfeed/activity/metrics/ActivityMetrics';
 
 import MediaView from '../../../src/common/components/MediaView';
@@ -61,10 +61,9 @@ describe('Activity component', () => {
     screen.update();
 
     expect(screen.find(MediaView)).toHaveLength(1);
-    expect(screen.find(Actions)).toHaveLength(1);
+    expect(screen.find(BottomContent)).toHaveLength(1);
     expect(screen.find(OwnerBlock)).toHaveLength(1);
     expect(screen.find(ExplicitText)).toHaveLength(1);
-    // expect(screen.find(ActivityMetrics)).toHaveLength(1);
     expect(screen.find(TouchableOpacity)).toHaveLength(1);
   });
 
