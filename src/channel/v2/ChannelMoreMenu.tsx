@@ -87,7 +87,7 @@ const getOptions = (
     });
   } else {
     options.push({
-      iconName: 'person-add-outline',
+      iconName: 'remove-circle-outline',
       iconType: 'ionicon',
       title: i18n.t('channel.unblock'),
       onPress: () => {
