@@ -33,7 +33,7 @@ export default class PushNotificationsSettingModel {
     try {
       await apiService.post(
         `api/v3/notifications/push/settings/${this.notification_group}`,
-        {},
+        { enabled: this.enabled },
       );
     } catch (err) {
       this._toggleEnabled();
