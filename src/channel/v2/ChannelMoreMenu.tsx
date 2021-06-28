@@ -7,10 +7,12 @@ import i18n from '../../common/services/i18n.service';
 import type { AppStackParamList } from '../../navigation/NavigationTypes';
 import shareService from '../../share/ShareService';
 import { MINDS_URI } from '../../config/Config';
-import BottomSheet from '../../common/components/bottom-sheet/BottomSheet';
-import MenuItem from '../../common/components/bottom-sheet/MenuItem';
 import { observer } from 'mobx-react';
-import BottomSheetButton from '../../common/components/bottom-sheet/BottomSheetButton';
+import {
+  BottomSheet,
+  BottomSheetButton,
+  MenuItem,
+} from '../../common/components/bottom-sheet';
 
 function dismiss(ref) {
   setTimeout(() => {
@@ -130,9 +132,8 @@ type PropsType = {
  * @param props
  */
 const ChannelMoreMenu = forwardRef((props: PropsType, ref: any) => {
-  const navigation = useNavigation<
-    NativeStackNavigationProp<AppStackParamList, 'Channel'>
-  >();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<AppStackParamList, 'Channel'>>();
 
   const options = getOptions(
     props.channel,

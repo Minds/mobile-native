@@ -16,11 +16,12 @@ import type GroupModel from '../../groups/GroupModel';
 import type ActivityModel from '../../newsfeed/ActivityModel';
 import sessionService from '../../common/services/session.service';
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
-import BottomSheet from '../../common/components/bottom-sheet/BottomSheet';
-import BottomSheetButton from '../../common/components/bottom-sheet/BottomSheetButton';
-import MenuItem, {
-  MenuItemProps,
-} from '../../common/components/bottom-sheet/MenuItem';
+import { MenuItemProps } from '../../common/components/bottom-sheet/MenuItem';
+import {
+  BottomSheet,
+  BottomSheetButton,
+  MenuItem,
+} from '../../common/components/bottom-sheet';
 
 type PropsType = {
   comment: CommentModel;

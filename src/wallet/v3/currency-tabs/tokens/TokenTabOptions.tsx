@@ -5,13 +5,13 @@ import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { IconType } from 'react-native-elements';
 import { showNotification } from '../../../../../AppMessages';
-import BottomSheet from '../../../../common/components/bottom-sheet/BottomSheet';
 import i18n from '../../../../common/services/i18n.service';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 import { WalletStoreType } from '../../../v2/createWalletStore';
 import { isConnected as isWalletConnected } from '../../useUniqueOnchain';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {
+  BottomSheet,
   BottomSheetButton,
   MenuItem,
 } from '../../../../common/components/bottom-sheet';

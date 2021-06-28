@@ -19,9 +19,11 @@ import {
   iconNormalStyle,
 } from './styles';
 import { useLegacyStores } from '../../../common/hooks/use-stores';
-import BottomSheet from '../../../common/components/bottom-sheet/BottomSheet';
-import MenuItem from '../../../common/components/bottom-sheet/MenuItem';
-import BottomSheetButton from '../../../common/components/bottom-sheet/BottomSheetButton';
+import {
+  BottomSheet,
+  BottomSheetButton,
+  MenuItem,
+} from '../../../common/components/bottom-sheet';
 
 // prevent double tap in touchable
 const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
