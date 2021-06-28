@@ -127,13 +127,14 @@ type PropsType = {
   isSubscribedToTier: boolean;
 };
 
+type NavigationType = NativeStackNavigationProp<AppStackParamList, 'Channel'>;
+
 /**
  * Channel More Menu (action sheet)
  * @param props
  */
 const ChannelMoreMenu = forwardRef((props: PropsType, ref: any) => {
-  const navigation =
-    useNavigation<NativeStackNavigationProp<AppStackParamList, 'Channel'>>();
+  const navigation = useNavigation<NavigationType>();
 
   const options = getOptions(
     props.channel,
