@@ -7,7 +7,6 @@ import { observer, inject } from 'mobx-react';
 
 import FastImage from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import ActionSheet from 'react-native-actionsheet';
 import SmartImage from '../../common/components/SmartImage';
 
 import { MINDS_CDN_URI, MINDS_LINK_URI } from '../../config/Config';
@@ -23,6 +22,9 @@ import type GroupsBarStore from '../GroupsBarStore';
 import GroupViewStore from '../GroupViewStore';
 import DismissKeyboard from '../../common/components/DismissKeyboard';
 import AnimatedSearch from './AnimatedSearch';
+import BottomSheet from '../../common/components/bottom-sheet/BottomSheet';
+import MenuItem from '../../common/components/bottom-sheet/MenuItem';
+import BottomSheetButton from '../../common/components/bottom-sheet/BottomSheetButton';
 
 type PropsTypes = {
   groupsBar: GroupsBarStore;
@@ -40,6 +42,7 @@ export default class GroupHeader extends Component<PropsTypes> {
   };
   avatarStyle: any;
   userAvatarStyle: any;
+  refActionSheet = React.createRef();
 
   constructor(props) {
     super(props);
@@ -239,13 +242,17 @@ export default class GroupHeader extends Component<PropsTypes> {
     }
   };
 
+  toggleConversation = async () => {
+    this.refActionSheet.current?.dismiss();
+    try {
+      await this.props.store.group.toggleConversationDisabled();
+    } catch (err) {
+      console.error(err);
+      this.showError();
+    }
+  };
+
   getActionSheet() {
-    let options = [i18n.t('cancel')];
-    options.push(
-      this.props.store.group.conversationDisabled
-        ? i18n.t('groups.enableConversations')
-        : i18n.t('groups.disableConversations'),
-    );
     return (
       <View style={stylesheet.rightToolbar}>
         <Icon
@@ -254,38 +261,42 @@ export default class GroupHeader extends Component<PropsTypes> {
           size={26}
           style={ThemedStyles.style.colorPrimaryText}
         />
-        <ActionSheet
-          ref={o => (this.ActionSheet = o)}
-          options={options}
-          onPress={i => {
-            this.handleActionSheetSelection(options[i]);
-          }}
-          cancelButtonIndex={0}
-        />
+        <BottomSheet ref={this.refActionSheet} title={i18n.t('actions')}>
+          {this.props.store.group.conversationDisabled ? (
+            <MenuItem
+              title={i18n.t('groups.enableConversations')}
+              iconName="message-outline"
+              iconType="material-community"
+              onPress={this.toggleConversation}
+            />
+          ) : (
+            <MenuItem
+              title={i18n.t('groups.disableConversations')}
+              iconName="message-lock-outline"
+              iconType="material-community"
+              onPress={this.toggleConversation}
+            />
+          )}
+
+          <BottomSheetButton
+            text={i18n.t('cancel')}
+            onPress={this.hideActionSheet}
+          />
+        </BottomSheet>
       </View>
     );
   }
 
   showActionSheet = async () => {
-    this.ActionSheet.show();
+    this.refActionSheet.current?.present();
+  };
+  hideActionSheet = async () => {
+    this.refActionSheet.current?.dismiss();
   };
 
   toggleSearch = () => {
     this.props.store.toggleSearch();
   };
-
-  async handleActionSheetSelection(option) {
-    switch (option) {
-      case i18n.t('groups.disableConversations'):
-      case i18n.t('groups.enableConversations'):
-        try {
-          await this.props.store.group.toggleConversationDisabled();
-        } catch (err) {
-          console.error(err);
-          this.showError();
-        }
-    }
-  }
 
   /**
    * Show an error message
