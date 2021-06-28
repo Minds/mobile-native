@@ -184,11 +184,18 @@ export default class BlogsViewScreen extends Component<PropsType> {
           style={styles.image}
         />
         <Text style={styles.title}>{blog.title}</Text>
-        <View style={styles.actionSheet}>
-          <BlogActionSheet entity={blog} navigation={this.props.navigation} />
-        </View>
         <View style={styles.ownerBlockContainer}>
-          <OwnerBlock entity={blog} navigation={this.props.navigation}>
+          <OwnerBlock
+            entity={blog}
+            navigation={this.props.navigation}
+            rightToolbar={
+              <View style={styles.actionSheet}>
+                <BlogActionSheet
+                  entity={blog}
+                  navigation={this.props.navigation}
+                />
+              </View>
+            }>
             <Text style={[styles.timestamp, theme.colorSecondaryText]}>
               {formatDate(blog.time_created)}
             </Text>
@@ -328,32 +335,30 @@ export default class BlogsViewScreen extends Component<PropsType> {
  */
 const styles = StyleSheet.create({
   actionSheet: {
-    position: 'absolute',
-    top: 10,
-    right: 10,
-    zIndex: 1,
+    paddingLeft: 5,
   },
   header: {
     position: 'absolute',
     left: 0,
     top: 0,
+    width: '100%',
   },
   title: {
     paddingTop: 12,
     paddingBottom: 8,
-    paddingLeft: 12,
-    paddingRight: 12,
+    paddingLeft: 15,
+    paddingRight: 15,
     fontSize: 22,
     // fontWeight: '800',
     fontFamily: 'Roboto-Black', // workaround android ignoring >= 800
   },
   ownerBlockContainer: {
-    margin: 8,
+    marginVertical: 8,
   },
   description: {
-    paddingLeft: 12,
-    paddingRight: 12,
-    paddingBottom: 12,
+    paddingLeft: 15,
+    paddingRight: 15,
+    paddingBottom: 15,
   },
   image: {
     height: 200,
