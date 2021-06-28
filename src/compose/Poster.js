@@ -22,11 +22,12 @@ import TopBar from './TopBar';
 import { ScrollView } from 'react-native-gesture-handler';
 import BottomBar from './BottomBar';
 import MediaPreview from './MediaPreview';
-import discardMessage from './discardMessage';
 import Tags from '../common/components/Tags';
 import KeyboardSpacingView from '../common/components/KeyboardSpacingView';
 import SoftInputMode from 'react-native-set-soft-input-mode';
 import TextInput from '../common/components/TextInput';
+import BottomSheet from '../common/components/bottom-sheet/BottomSheet';
+import BottomSheetButton from '../common/components/bottom-sheet/BottomSheetButton';
 
 const { width } = Dimensions.get('window');
 
@@ -38,6 +39,7 @@ export default observer(function (props) {
   const theme = ThemedStyles.style;
   const inputRef = useRef(null);
   const optionsRef = useRef(null);
+  const confirmRef = useRef(null);
 
   // On post press
   const onPost = useCallback(async () => {
@@ -52,27 +54,28 @@ export default observer(function (props) {
     }
   }, [props.store]);
 
+  const discard = useCallback(() => {
+    if (props.store.isRemind || props.store.isEdit) {
+      props.store.clear();
+      NavigationService.goBack();
+    } else {
+      props.store.setModePhoto();
+    }
+  }, [props.store]);
+
   // On press back
   const onPressBack = useCallback(() => {
-    const discard = () => {
-      if (props.store.isRemind || props.store.isEdit) {
-        props.store.clear();
-        NavigationService.goBack();
-      } else {
-        props.store.setModePhoto();
-      }
-    };
     if (
       props.store.text ||
       props.store.attachment.hasAttachment ||
       props.store.embed.hasRichEmbed
     ) {
       Keyboard.dismiss();
-      discardMessage(discard);
+      showConfirm();
     } else {
       discard();
     }
-  }, [props.store]);
+  }, [discard, props.store, showConfirm]);
 
   const localStore = useLocalStore(() => ({
     height: 42, // input height
@@ -119,6 +122,13 @@ export default observer(function (props) {
       }
     });
   }, [inputRef]);
+
+  const closeConfirm = React.useCallback(() => {
+    confirmRef.current?.dismiss();
+  }, []);
+  const showConfirm = React.useCallback(() => {
+    confirmRef.current?.present();
+  }, []);
 
   const showBottomBar = !optionsRef.current || !optionsRef.current.opened;
 
@@ -194,6 +204,20 @@ export default observer(function (props) {
           />
         </KeyboardSpacingView>
       )}
+      <BottomSheet
+        ref={confirmRef}
+        title={i18n.t('capture.discardPost')}
+        detail={i18n.t('capture.discardPostDescription')}>
+        <BottomSheetButton
+          text={i18n.t('capture.yesDiscard')}
+          onPress={discard}
+          action
+        />
+        <BottomSheetButton
+          text={i18n.t('capture.keepEditing')}
+          onPress={closeConfirm}
+        />
+      </BottomSheet>
     </View>
   );
 });
