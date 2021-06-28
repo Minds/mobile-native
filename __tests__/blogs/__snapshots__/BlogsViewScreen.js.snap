@@ -81,8 +81,8 @@ exports[`blog view screen component should renders correctly 1`] = `
               "fontFamily": "Roboto-Black",
               "fontSize": 22,
               "paddingBottom": 8,
-              "paddingLeft": 12,
-              "paddingRight": 12,
+              "paddingLeft": 15,
+              "paddingRight": 15,
               "paddingTop": 12,
             }
           }
@@ -92,172 +92,7 @@ exports[`blog view screen component should renders correctly 1`] = `
         <View
           style={
             Object {
-              "position": "absolute",
-              "right": 10,
-              "top": 10,
-              "zIndex": 1,
-            }
-          }
-        >
-          <View>
-            <Text
-              allowFontScaling={false}
-              onPress={[Function]}
-              style={
-                Array [
-                  Object {
-                    "color": undefined,
-                    "fontSize": 28,
-                  },
-                  Object {
-                    "color": "#9B9B9B",
-                  },
-                  Object {
-                    "fontFamily": "Material Icons",
-                    "fontStyle": "normal",
-                    "fontWeight": "normal",
-                  },
-                  Object {},
-                ]
-              }
-            >
-              
-            </Text>
-            <Modal
-              animationType="none"
-              hardwareAccelerated={false}
-              onRequestClose={[Function]}
-              transparent={true}
-              visible={false}
-            >
-              <View
-                style={
-                  Array [
-                    Array [
-                      Object {
-                        "flex": 1,
-                        "flexDirection": "row",
-                      },
-                    ],
-                  ]
-                }
-              >
-                <Text
-                  onPress={[Function]}
-                  style={
-                    Array [
-                      Array [
-                        Object {
-                          "backgroundColor": "#000",
-                          "bottom": 0,
-                          "left": 0,
-                          "opacity": 0.4,
-                          "position": "absolute",
-                          "right": 0,
-                          "top": 0,
-                        },
-                      ],
-                    ]
-                  }
-                />
-                <View
-                  style={
-                    Object {
-                      "alignSelf": "flex-end",
-                      "backgroundColor": "#FFFFFF",
-                      "flex": 1,
-                      "height": 45.5,
-                      "transform": Array [
-                        Object {
-                          "translateY": 45.5,
-                        },
-                      ],
-                    }
-                  }
-                >
-                  <View
-                    style={
-                      Array [
-                        Object {
-                          "alignItems": "center",
-                          "backgroundColor": "#fff",
-                          "height": 40,
-                          "justifyContent": "center",
-                        },
-                        Object {
-                          "alignItems": "center",
-                          "backgroundColor": "#FFFFFF",
-                          "height": 40,
-                          "justifyContent": "center",
-                        },
-                      ]
-                    }
-                  >
-                    <Text
-                      style={
-                        Array [
-                          Object {
-                            "color": "#757575",
-                            "fontSize": 14,
-                          },
-                        ]
-                      }
-                    >
-                      Actions
-                    </Text>
-                  </View>
-                  <RCTScrollView
-                    scrollEnabled={false}
-                  >
-                    <View />
-                  </RCTScrollView>
-                  <View
-                    activeOpacity={1}
-                    onPress={[Function]}
-                    style={
-                      Array [
-                        Object {
-                          "alignItems": "center",
-                          "backgroundColor": "#fff",
-                          "height": 50,
-                          "justifyContent": "center",
-                          "marginTop": 6,
-                        },
-                        Object {
-                          "alignItems": "center",
-                          "backgroundColor": "#F6F7F7",
-                          "height": 50,
-                          "justifyContent": "center",
-                          "marginTop": 6,
-                        },
-                      ]
-                    }
-                    underlayColor="#F4F4F4"
-                  >
-                    <Text
-                      style={
-                        Array [
-                          Array [
-                            Object {
-                              "fontSize": 18,
-                            },
-                          ],
-                          Object {
-                            "color": "#007AFF",
-                          },
-                        ]
-                      }
-                    />
-                  </View>
-                </View>
-              </View>
-            </Modal>
-          </View>
-        </View>
-        <View
-          style={
-            Object {
-              "margin": 8,
+              "marginVertical": 8,
             }
           }
         >
@@ -472,6 +307,39 @@ exports[`blog view screen component should renders correctly 1`] = `
               >
                 
               </Text>
+              <View
+                style={
+                  Object {
+                    "paddingLeft": 5,
+                  }
+                }
+              >
+                <View>
+                  <Text
+                    allowFontScaling={false}
+                    onPress={[Function]}
+                    style={
+                      Array [
+                        Object {
+                          "color": undefined,
+                          "fontSize": 28,
+                        },
+                        Object {
+                          "color": "#9B9B9B",
+                        },
+                        Object {
+                          "fontFamily": "Material Icons",
+                          "fontStyle": "normal",
+                          "fontWeight": "normal",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    
+                  </Text>
+                </View>
+              </View>
             </View>
           </View>
         </View>
@@ -1218,9 +1086,9 @@ exports[`blog view screen component should renders correctly 1`] = `
         <View
           style={
             Object {
-              "paddingBottom": 12,
-              "paddingLeft": 12,
-              "paddingRight": 12,
+              "paddingBottom": 15,
+              "paddingLeft": 15,
+              "paddingRight": 15,
             }
           }
         >
@@ -1367,6 +1235,7 @@ exports[`blog view screen component should renders correctly 1`] = `
               "left": 0,
               "position": "absolute",
               "top": 0,
+              "width": "100%",
             }
           }
         >
