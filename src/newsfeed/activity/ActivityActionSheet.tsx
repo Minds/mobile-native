@@ -196,7 +196,7 @@ export default withSafeAreaInsets(
         // Translate
         options.push({
           title: i18n.t('translate.translate'),
-          iconName: 'edit',
+          iconName: 'translate',
           iconType: 'material',
           onPress: () => {
             if (this.props.onTranslate) this.props.onTranslate();
