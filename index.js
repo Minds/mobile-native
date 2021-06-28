@@ -12,8 +12,12 @@ import React from 'react';
 //   });
 // }
 import { AppRegistry } from 'react-native';
+import reanimated from 'react-native-reanimated';
 import App from './App';
 import { enableScreens } from 'react-native-screens';
+
+// polyfill to avoid react-native-reanimated-indicators error with new reanimated
+reanimated.interpolate = reanimated.interpolateNode;
 
 enableScreens();
 
