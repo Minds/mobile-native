@@ -1,16 +1,12 @@
 import React from 'react';
 import * as entities from 'entities';
 import { Alert } from 'react-native';
-import { observer, useLocalStore } from 'mobx-react';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Clipboard from '@react-native-clipboard/clipboard';
 
 import { showNotification } from '../../../AppMessages';
 
-import BottomButtonOptions, {
-  ItemType,
-} from '../../common/components/BottomButtonOptions';
 import type CommentModel from './CommentModel';
 import type CommentsStore from './CommentsStore';
 import type BlogModel from '../../blogs/BlogModel';
@@ -20,6 +16,11 @@ import type GroupModel from '../../groups/GroupModel';
 import type ActivityModel from '../../newsfeed/ActivityModel';
 import sessionService from '../../common/services/session.service';
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
+import BottomSheet from '../../common/components/bottom-sheet/BottomSheet';
+import BottomSheetButton from '../../common/components/bottom-sheet/BottomSheetButton';
+import MenuItem, {
+  MenuItemProps,
+} from '../../common/components/bottom-sheet/MenuItem';
 
 type PropsType = {
   comment: CommentModel;
@@ -33,7 +34,7 @@ const hitSlop = { top: 10, bottom: 10, left: 10, right: 10 };
 /**
  * Comments options menu
  */
-export default observer(function CommentBottomMenu({
+export default function CommentBottomMenu({
   comment,
   entity,
   store,
@@ -41,43 +42,49 @@ export default observer(function CommentBottomMenu({
 }: PropsType) {
   const theme = ThemedStyles.style;
 
-  const localStore = useLocalStore(() => ({
-    showMenu: false,
-    show() {
-      localStore.showMenu = true;
-    },
-    hide() {
-      localStore.showMenu = false;
-    },
-  }));
-
   const navigation = useNavigation<any>();
+  // Do not render BottomSheet unless it is necessary
+  const [shown, setShown] = React.useState(false);
 
-  const dismissOptions: Array<Array<ItemType>> = React.useMemo(() => {
-    const actions: Array<Array<ItemType>> = [
-      [
-        {
-          title: i18n.t('translate.translate'),
-          onPress: () => {
-            localStore.hide();
-            onTranslate();
-          },
+  const ref = React.useRef<any>();
+  const close = React.useCallback(() => {
+    ref.current?.dismiss();
+  }, []);
+  const show = React.useCallback(() => {
+    if (shown) {
+      ref.current?.present();
+    } else {
+      setShown(true);
+    }
+  }, [shown]);
+
+  const dismissOptions: Array<MenuItemProps> = React.useMemo(() => {
+    const actions: Array<MenuItemProps> = [
+      {
+        title: i18n.t('translate.translate'),
+        iconName: 'translate',
+        iconType: 'material',
+        onPress: () => {
+          close();
+          onTranslate();
         },
-      ],
+      },
     ];
 
-    const deleteOpt: ItemType = {
+    const deleteOpt: MenuItemProps = {
       title: i18n.t('delete'),
+      iconName: 'delete',
+      iconType: 'material-community',
       onPress: () => {
         Alert.alert(
           i18n.t('confirm'),
           i18n.t('confirmNoUndo'),
           [
-            { text: i18n.t('no'), style: 'cancel', onPress: localStore.hide },
+            { text: i18n.t('no'), style: 'cancel', onPress: close },
             {
               text: i18n.t('yesImSure'),
               onPress: () => {
-                localStore.hide();
+                close();
                 store
                   .delete(comment.guid)
                   .then(() => {
@@ -97,94 +104,91 @@ export default observer(function CommentBottomMenu({
       },
     };
 
-    const setExplicit: ItemType = {
+    const setExplicit: MenuItemProps = {
       title: i18n.t('setExplicit'),
+      iconName: 'explicit',
+      iconType: 'material',
       onPress: () => {
         store.commentToggleExplicit(comment.guid);
-        localStore.hide();
+        close();
       },
     };
-    const removeExplicit: ItemType = {
+    const removeExplicit: MenuItemProps = {
       title: i18n.t('removeExplicit'),
+      iconName: 'explicit',
+      iconType: 'material',
       onPress: () => {
         store.commentToggleExplicit(comment.guid);
-        localStore.hide();
+        close();
       },
     };
 
     if (comment.isOwner()) {
-      actions[0].push({
+      actions.push({
         title: i18n.t('edit'),
+        iconName: 'edit',
+        iconType: 'material',
         onPress: () => {
-          localStore.hide();
+          close();
           // we delay showing the input to prevent the keyboard to be hidden
           setTimeout(() => store.setShowInput(true, comment), 300);
         },
       });
 
-      actions[0].push(deleteOpt);
+      actions.push(deleteOpt);
 
       if (!comment.mature) {
-        actions[0].push(setExplicit);
+        actions.push(setExplicit);
       } else {
-        actions[0].push(removeExplicit);
+        actions.push(removeExplicit);
       }
     } else {
       if (sessionService.getUser().isAdmin()) {
-        actions[0].push(deleteOpt);
+        actions.push(deleteOpt);
 
         if (!comment.mature) {
-          actions[0].push(setExplicit);
+          actions.push(setExplicit);
         } else {
-          actions[0].push(removeExplicit);
+          actions.push(removeExplicit);
         }
       } else if (entity.isOwner()) {
-        actions[0].push(deleteOpt);
+        actions.push(deleteOpt);
       }
 
-      actions[0].push({
+      actions.push({
         title: i18n.t('report'),
+        iconName: 'ios-flag-outline',
+        iconType: 'ionicon',
         onPress: () => {
           navigation.push('Report', { entity: comment });
-          localStore.hide();
+          close();
         },
       });
-      actions[0].push({
+      actions.push({
         title: i18n.t('copy'),
+        iconName: 'content-copy',
+        iconType: 'material',
         onPress: () => {
           Clipboard.setString(entities.decodeHTML(comment.description || ''));
           showNotification(i18n.t('copied'), 'info');
-          localStore.hide();
+          close();
         },
       });
     }
-
-    actions.push([
-      {
-        title: i18n.t('cancel'),
-        titleStyle: theme.colorSecondaryText,
-        onPress: localStore.hide,
-      },
-    ]);
     return actions;
-  }, [
-    comment,
-    entity,
-    localStore,
-    navigation,
-    onTranslate,
-    store,
-    theme.colorSecondaryText,
-  ]);
+  }, [close, comment, entity, navigation, onTranslate, store]);
 
   return (
-    <TouchableOpacity onPress={localStore.show} hitSlop={hitSlop}>
+    <TouchableOpacity onPress={show} hitSlop={hitSlop}>
       <Icon name="more-vert" size={18} style={theme.colorTertiaryText} />
-      <BottomButtonOptions
-        list={dismissOptions}
-        isVisible={localStore.showMenu}
-        onPressClose={localStore.hide}
-      />
+      {shown && (
+        <BottomSheet ref={ref} autoShow>
+          {dismissOptions.map((a, i) => (
+            <MenuItem {...a} key={i} />
+          ))}
+          <BottomSheetButton text={i18n.t('cancel')} onPress={close} />
+        </BottomSheet>
+      )}
     </TouchableOpacity>
   );
-});
+}
