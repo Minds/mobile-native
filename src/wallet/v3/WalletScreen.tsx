@@ -128,7 +128,6 @@ const WalletScreen = observer((props: PropsType) => {
         body = (
           <UsdTab
             walletStore={store}
-            bottomStore={bottomStore}
             navigation={props.navigation}
             route={props.route}
             usdTabStore={usdTabStore}

@@ -17,9 +17,11 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import type ActivityModel from '../ActivityModel';
 import { showNotification } from '../../../AppMessages';
 import { withSafeAreaInsets } from 'react-native-safe-area-context';
-import MenuItem from '../../common/components/bottom-sheet/MenuItem';
-import BottomSheetButton from '../../common/components/bottom-sheet/BottomSheetButton';
-import BottomSheet from '../../common/components/bottom-sheet/BottomSheet';
+import {
+  BottomSheet,
+  BottomSheetButton,
+  MenuItem,
+} from '../../common/components/bottom-sheet';
 
 type PropsType = {
   entity: ActivityModel;

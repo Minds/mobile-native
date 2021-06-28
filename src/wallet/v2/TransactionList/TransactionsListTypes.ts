@@ -1,7 +1,6 @@
 import type OffsetListStore from '../../../common/stores/OffsetListStore';
 import type UserModel from '../../../channel/UserModel';
 import { WalletStoreType } from '../createWalletStore';
-import { BottomOptionsStoreType } from '../../../common/components/BottomOptionPopup';
 
 export type FilterStore = {
   filters: ListFiltersType;
@@ -65,11 +64,9 @@ export type DeltaIconPropsType = {
 };
 
 export type PropsType = {
-  filters: Array<[string, string]>;
   currency: currencyType;
   navigation: any;
   wallet: WalletStoreType;
-  bottomStore: BottomOptionsStoreType;
 };
 
 export type transactionTypes =

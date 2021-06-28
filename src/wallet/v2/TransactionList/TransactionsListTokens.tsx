@@ -3,18 +3,15 @@ import { observer, useLocalStore } from 'mobx-react';
 import { SectionList, Text } from 'react-native';
 import CenteredLoading from '../../../common/components/CenteredLoading';
 import { useLegacyStores } from '../../../common/hooks/use-stores';
-import i18n from '../../../common/services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { PropsType } from './TransactionsListTypes';
 import Item from './components/Item';
-
-import Filter from './components/Filter';
-import Header from './components/Header';
 import createTokensTransactionsStore from './createTokensTransactionsStore';
 import Empty from './components/Empty';
+import Header from '../../v3/transaction-list/components/Header';
 
 const TransactionsListTokens = observer(
-  ({ navigation, currency, wallet, bottomStore, filters }: PropsType) => {
+  ({ navigation, currency, wallet }: PropsType) => {
     const { user } = useLegacyStores();
     const store = useLocalStore(createTokensTransactionsStore, {
       wallet,
@@ -29,17 +26,7 @@ const TransactionsListTokens = observer(
       [navigation, currency],
     );
 
-    const showFilter = useCallback(() => {
-      bottomStore.show(
-        i18n.t('wallet.transactions.filterTransactions'),
-        i18n.t('done'),
-        <Filter store={store} filters={filters} bottomStore={bottomStore} />,
-      );
-    }, [store, bottomStore, filters]);
-
-    const renderHeader = useCallback(() => <Header showFilter={showFilter} />, [
-      showFilter,
-    ]);
+    const renderHeader = useCallback(() => <Header store={store} />, [store]);
 
     const renderSectionHeader = useCallback(
       ({ section: { title } }) => (

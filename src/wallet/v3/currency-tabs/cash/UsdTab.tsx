@@ -8,7 +8,6 @@ import { UsdOptions } from '../../../v2/WalletTypes';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 import type { WalletStoreType } from '../../../v2/createWalletStore';
 import { ScrollView } from 'react-native-gesture-handler';
-import type { BottomOptionsStoreType } from '../../../../common/components/BottomOptionPopup';
 import {
   WalletScreenRouteProp,
   WalletScreenNavigationProp,
@@ -27,7 +26,6 @@ import { UsdTabStore } from './createUsdTabStore';
 
 type PropsType = {
   walletStore: WalletStoreType;
-  bottomStore: BottomOptionsStoreType;
   navigation: WalletScreenNavigationProp;
   route: WalletScreenRouteProp;
   tokensTabStore: TokensTabStore;
@@ -42,7 +40,6 @@ const UsdTab = observer(
     walletStore,
     navigation,
     route,
-    bottomStore,
     tokensTabStore,
     usdTabStore,
   }: PropsType) => {
@@ -68,20 +65,11 @@ const UsdTab = observer(
         );
         break;
       case 'transactions':
-        //TODO: filter are not implemented in the backend change the first string to the corresponding values after
-        const filters: Array<[string, string]> = [
-          ['all', i18n.t('wallet.transactions.allFilter')],
-          ['wire', i18n.t('wallet.transactions.wiresFilter')],
-          ['pro', i18n.t('wallet.transactions.proEarningsFilter')],
-          ['payout', i18n.t('wallet.transactions.payoutsFilter')],
-        ];
         body = (
           <TransactionsListCash
-            filters={filters}
             navigation={navigation}
             currency="usd"
             wallet={walletStore}
-            bottomStore={bottomStore}
           />
         );
         break;
