@@ -149,7 +149,6 @@ const TokensTab = observer(
             navigation={navigation}
             currency="tokens"
             wallet={walletStore}
-            bottomStore={bottomStore}
           />
         );
         break;

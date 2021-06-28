@@ -5,17 +5,14 @@ import ThemedStyles from '../../../../styles/ThemedStyles';
 import i18n from '../../../../common/services/i18n.service';
 import { TokensTransactionsListStoreType } from '../../../v2/TransactionList/createTokensTransactionsStore';
 import { AvatarIcon } from '../../../v2/TransactionList/components/Icons';
-import { CashTransactionsListStoreType } from '../../../v2/TransactionList/createCashTransactionsStore';
 
 type PropsType = {
-  store: TokensTransactionsListStoreType | CashTransactionsListStoreType;
+  store?: TokensTransactionsListStoreType;
 };
 
 const Header = ({ store }: PropsType) => {
   const theme = ThemedStyles.style;
   const alignedCenterRow = [theme.rowJustifyStart, theme.alignCenter];
-
-  const renderFilter = store.setTransactionType !== undefined;
 
   return (
     <View style={theme.marginBottom3x}>
@@ -23,7 +20,7 @@ const Header = ({ store }: PropsType) => {
         <Text style={theme.colorSecondaryText}>
           {i18n.t('wallet.transactions.pending')}
         </Text>
-        {renderFilter && (
+        {!!store && (
           <View style={alignedCenterRow}>
             <Filter store={store} />
           </View>

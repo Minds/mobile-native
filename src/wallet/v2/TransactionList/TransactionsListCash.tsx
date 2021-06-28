@@ -26,7 +26,7 @@ const TransactionsListCash = observer(
       [navigation, currency],
     );
 
-    const renderHeader = useCallback(() => <Header store={store} />, [store]);
+    const renderHeader = useCallback(() => <Header />, []);
 
     const renderSectionHeader = useCallback(
       ({ section: { title } }) => (
