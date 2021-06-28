@@ -114,7 +114,7 @@ class DiscoveryUser<T extends PropsType> extends Component<T, StateType> {
             style={[
               styles.body,
               ThemedStyles.style.fontS,
-              ThemedStyles.style.colorMedium,
+              ThemedStyles.style.colorSecondaryText,
             ]}>
             @{row.item.username}
           </Text>
