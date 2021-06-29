@@ -46,6 +46,7 @@ export default class TokensStore {
       });
   }
 
+  @action
   async loadTransactionsListAsync(
     filters: ListFiltersType,
     callback?: Function,
@@ -71,11 +72,10 @@ export default class TokensStore {
   }
 
   @action
-  refreshTransactionsList(filters: ListFiltersType, callback?: Function) {
+  async refreshTransactionsList(filters: ListFiltersType, callback?: Function) {
     this.list.refresh();
-    this.loadTransactionsListAsync(filters, callback).finally(() => {
-      this.list.refreshDone();
-    });
+    await this.loadTransactionsListAsync(filters, callback);
+    this.list.refreshDone();
   }
 
   @action

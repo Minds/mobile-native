@@ -258,140 +258,6 @@ exports[`Activity screen component renders correctly  1`] = `
             >
               
             </Text>
-            <Modal
-              animationType="none"
-              hardwareAccelerated={false}
-              onRequestClose={[Function]}
-              transparent={true}
-              visible={false}
-            >
-              <View
-                style={
-                  Array [
-                    Array [
-                      Object {
-                        "flex": 1,
-                        "flexDirection": "row",
-                      },
-                    ],
-                  ]
-                }
-              >
-                <Text
-                  onPress={[Function]}
-                  style={
-                    Array [
-                      Array [
-                        Object {
-                          "backgroundColor": "#000",
-                          "bottom": 0,
-                          "left": 0,
-                          "opacity": 0.4,
-                          "position": "absolute",
-                          "right": 0,
-                          "top": 0,
-                        },
-                      ],
-                    ]
-                  }
-                />
-                <View
-                  style={
-                    Object {
-                      "alignSelf": "flex-end",
-                      "backgroundColor": "#FFFFFF",
-                      "borderTopLeftRadius": 15,
-                      "borderTopRightRadius": 15,
-                      "flex": 1,
-                      "height": 45.5,
-                      "paddingBottom": undefined,
-                      "transform": Array [
-                        Object {
-                          "translateY": 45.5,
-                        },
-                      ],
-                    }
-                  }
-                >
-                  <View
-                    style={
-                      Array [
-                        Object {
-                          "alignItems": "center",
-                          "backgroundColor": "#fff",
-                          "height": 40,
-                          "justifyContent": "center",
-                        },
-                        Object {
-                          "alignItems": "center",
-                          "backgroundColor": "#FFFFFF",
-                          "borderTopLeftRadius": 15,
-                          "borderTopRightRadius": 15,
-                          "height": 40,
-                          "justifyContent": "center",
-                        },
-                      ]
-                    }
-                  >
-                    <Text
-                      style={
-                        Array [
-                          Object {
-                            "color": "#757575",
-                            "fontSize": 14,
-                          },
-                        ]
-                      }
-                    >
-                      Actions
-                    </Text>
-                  </View>
-                  <RCTScrollView
-                    scrollEnabled={false}
-                  >
-                    <View />
-                  </RCTScrollView>
-                  <View
-                    activeOpacity={1}
-                    onPress={[Function]}
-                    style={
-                      Array [
-                        Object {
-                          "alignItems": "center",
-                          "backgroundColor": "#fff",
-                          "height": 50,
-                          "justifyContent": "center",
-                          "marginTop": 6,
-                        },
-                        Object {
-                          "alignItems": "center",
-                          "backgroundColor": "#F6F7F7",
-                          "height": 50,
-                          "justifyContent": "center",
-                          "marginTop": 6,
-                        },
-                      ]
-                    }
-                    underlayColor="#F4F4F4"
-                  >
-                    <Text
-                      style={
-                        Array [
-                          Array [
-                            Object {
-                              "fontSize": 18,
-                            },
-                          ],
-                          Object {
-                            "color": "#007AFF",
-                          },
-                        ]
-                      }
-                    />
-                  </View>
-                </View>
-              </View>
-            </Modal>
           </View>
         </View>
       </View>
@@ -1107,127 +973,55 @@ exports[`Activity screen component renders correctly  1`] = `
             </Text>
           </View>
         </View>
-        <Menu
-          button={
-            <preventDoubleTap(TouchableOpacity)
-              onPress={[Function]}
-              style={
-                Array [
-                  Object {
-                    "flexDirection": "row",
-                    "justifyContent": "center",
-                  },
-                  Object {
-                    "paddingHorizontal": 15,
-                  },
-                  Object {
-                    "paddingVertical": 20,
-                  },
-                  Object {
-                    "alignItems": "center",
-                  },
-                ]
-              }
-              testID="Remind activity button"
-            >
-              <Icon
-                allowFontScaling={false}
-                name="repeat"
-                size={21}
-                style={
-                  Array [
-                    Object {
-                      "color": "#7D7D82",
-                    },
-                    Object {
-                      "marginRight": 5,
-                    },
-                  ]
-                }
-              />
-            </preventDoubleTap(TouchableOpacity)>
-          }
+        <View
+          onPress={[Function]}
           style={
-            Object {
-              "backgroundColor": "#F6F7F7",
-            }
+            Array [
+              Object {
+                "flexDirection": "row",
+                "justifyContent": "center",
+              },
+              Object {
+                "paddingHorizontal": 15,
+              },
+              Object {
+                "paddingVertical": 20,
+              },
+              Object {
+                "alignItems": "center",
+              },
+            ]
           }
+          testID="Remind activity button"
         >
-          <MenuItem
-            onPress={[Function]}
-            textStyle={
+          <Text
+            allowFontScaling={false}
+            style={
               Array [
                 Object {
-                  "color": "#72727C",
+                  "color": undefined,
+                  "fontSize": 21,
                 },
+                Array [
+                  Object {
+                    "color": "#7D7D82",
+                  },
+                  Object {
+                    "marginRight": 5,
+                  },
+                ],
                 Object {
-                  "fontSize": 16,
+                  "fontFamily": "Material Icons",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
                 },
+                Object {},
               ]
             }
           >
-            <Text
-              allowFontScaling={false}
-              style={
-                Array [
-                  Object {
-                    "color": undefined,
-                    "fontSize": 15,
-                  },
-                  Object {
-                    "color": "#72727C",
-                  },
-                  Object {
-                    "fontFamily": "Material Icons",
-                    "fontStyle": "normal",
-                    "fontWeight": "normal",
-                  },
-                  Object {},
-                ]
-              }
-            >
-              
-            </Text>
-              Remind
-          </MenuItem>
-          <MenuItem
-            onPress={[Function]}
-            textStyle={
-              Array [
-                Object {
-                  "color": "#72727C",
-                },
-                Object {
-                  "fontSize": 16,
-                },
-              ]
-            }
-          >
-            <Text
-              allowFontScaling={false}
-              style={
-                Array [
-                  Object {
-                    "color": undefined,
-                    "fontSize": 15,
-                  },
-                  Object {
-                    "color": "#72727C",
-                  },
-                  Object {
-                    "fontFamily": "Material Icons",
-                    "fontStyle": "normal",
-                    "fontWeight": "normal",
-                  },
-                  Object {},
-                ]
-              }
-            >
-              
-            </Text>
-              Quote
-          </MenuItem>
-        </Menu>
+            
+          </Text>
+        </View>
         <View
           onPress={[Function]}
           style={

@@ -7,10 +7,12 @@ import i18n from '../../common/services/i18n.service';
 import type { AppStackParamList } from '../../navigation/NavigationTypes';
 import shareService from '../../share/ShareService';
 import { MINDS_URI } from '../../config/Config';
-import BottomSheet from '../../common/components/bottom-sheet/BottomSheet';
-import MenuItem from '../../common/components/bottom-sheet/MenuItem';
 import { observer } from 'mobx-react';
-import BottomSheetButton from '../../common/components/bottom-sheet/BottomSheetButton';
+import {
+  BottomSheet,
+  BottomSheetButton,
+  MenuItem,
+} from '../../common/components/bottom-sheet';
 
 function dismiss(ref) {
   setTimeout(() => {
@@ -87,7 +89,7 @@ const getOptions = (
     });
   } else {
     options.push({
-      iconName: 'person-add-outline',
+      iconName: 'remove-circle-outline',
       iconType: 'ionicon',
       title: i18n.t('channel.unblock'),
       onPress: () => {
@@ -125,14 +127,14 @@ type PropsType = {
   isSubscribedToTier: boolean;
 };
 
+type NavigationType = NativeStackNavigationProp<AppStackParamList, 'Channel'>;
+
 /**
  * Channel More Menu (action sheet)
  * @param props
  */
 const ChannelMoreMenu = forwardRef((props: PropsType, ref: any) => {
-  const navigation = useNavigation<
-    NativeStackNavigationProp<AppStackParamList, 'Channel'>
-  >();
+  const navigation = useNavigation<NavigationType>();
 
   const options = getOptions(
     props.channel,

@@ -5,7 +5,7 @@ import { Icon, IconType } from 'react-native-elements';
 
 import ThemedStyles from '../../../styles/ThemedStyles';
 
-type PropsType = {
+export type MenuItemProps = {
   title: string;
   iconName: string;
   iconType: IconType;
@@ -19,7 +19,7 @@ const MenuItem = ({
   title,
   onPress,
   iconSize,
-}: PropsType) => {
+}: MenuItemProps) => {
   iconSize = iconSize || 25;
   return (
     <TouchableOpacity style={styles.menuContainer} onPress={onPress}>

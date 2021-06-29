@@ -1,13 +1,11 @@
 import React, { forwardRef } from 'react';
-import {
-  BottomSheetModal,
-  BottomSheetModalProps,
-  BottomSheetBackdrop,
-} from '@gorhom/bottom-sheet';
+import { BottomSheetModal, BottomSheetModalProps } from '@gorhom/bottom-sheet';
 import { StatusBar, Text, View } from 'react-native';
 import ThemedStyles, { useStyle } from '../../../styles/ThemedStyles';
 import Handle from './Handle';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+import Backdrop from './Backdrop';
 
 interface PropsType extends Omit<BottomSheetModalProps, 'snapPoints'> {
   title?: string;
@@ -54,7 +52,7 @@ export default forwardRef<BottomSheetModal, PropsType>((props, ref) => {
 
   // renders
   const renderBackdrop = React.useCallback(
-    props => <BottomSheetBackdrop {...props} pressBehavior="close" />,
+    props => <Backdrop {...props} pressBehavior="close" />,
     [],
   );
 

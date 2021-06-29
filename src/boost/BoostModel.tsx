@@ -6,11 +6,6 @@ import UserModel from '../channel/UserModel';
  */
 export default class BoostModel extends BaseModel {
   /**
-   * @var boolean
-   */
-  @observable state;
-
-  /**
    * Child models
    */
   childModels() {

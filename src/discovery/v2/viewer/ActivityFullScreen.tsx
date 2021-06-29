@@ -2,7 +2,7 @@ import React, { useRef, useCallback, useEffect } from 'react';
 import { View, StyleSheet, Platform } from 'react-native';
 import { useDimensions } from '@react-native-community/hooks';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
-import { useFocus } from '@crowdlinker/react-native-pager';
+import { useFocus } from '@msantang78/react-native-pager';
 import { LinearGradient } from 'expo-linear-gradient';
 import { observer, useLocalStore } from 'mobx-react';
 import * as entities from 'entities';
@@ -69,6 +69,19 @@ const ActivityOwner = ({
     styles.header,
     cleanTop,
   );
+  const right = React.useMemo(
+    () => (
+      <View style={ThemedStyles.style.rowJustifyCenter}>
+        <ActivityActionSheet
+          entity={entity}
+          navigation={navigation}
+          onTranslate={onTranslate}
+        />
+      </View>
+    ),
+    [entity, navigation, onTranslate],
+  );
+
   return (
     <OwnerBlock
       entity={entity}
@@ -80,15 +93,7 @@ const ActivityOwner = ({
           style={backButtonStyle}
         />
       }
-      rightToolbar={
-        <View style={ThemedStyles.style.rowJustifyCenter}>
-          <ActivityActionSheet
-            entity={entity}
-            navigation={navigation}
-            onTranslate={onTranslate}
-          />
-        </View>
-      }
+      rightToolbar={right}
     />
   );
 };
@@ -189,7 +194,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
           focusedUrn: undefined,
           scrollToBottom: undefined,
         });
-      }, 100);
+      }, 600);
     }
     return () => {
       if (openCommentsTimeOut) {

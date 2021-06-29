@@ -144,19 +144,11 @@ const TokensTab = observer(
         );
         break;
       case 'transactions':
-        const filters: Array<[string, string]> = [
-          ['all', i18n.t('wallet.transactions.allFilter')],
-          ['offchain:reward', i18n.t('wallet.transactions.rewardsFilter')],
-          ['offchain:boost', i18n.t('wallet.transactions.boostsFilter')],
-          ['offchain:wire', i18n.t('wallet.transactions.transferFilter')],
-        ];
         body = (
           <TransactionsListTokens
-            filters={filters}
             navigation={navigation}
             currency="tokens"
             wallet={walletStore}
-            bottomStore={bottomStore}
           />
         );
         break;

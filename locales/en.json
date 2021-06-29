@@ -231,6 +231,10 @@
     "hold": "Hold to select only one"
   },
   "capture": {
+    "discardPost": "Discard this post?",
+    "discardPostDescription": "If you discard you’ll lose this post",
+    "keepEditing": "Keep Editing",
+    "yesDiscard": "Yes, Discard",
     "licenseDescription": "Select your desired license type. This can be changed at any time after posting.",
     "pupularLicenses": "Popular licenses",
     "mediaPortraitError": "Selected media is not portrait",
@@ -920,7 +924,7 @@
       "filter": "Filter",
       "reward": "Today’s daily reward",
       "filterTransactions": "Filter Transactions",
-      "filterTypes": "TRANSACTION TYPES",
+      "filterTypes": "Transaction types",
       "allFilter": "All",
       "mindsReward": "Minds Reward",
       "rewardsFilter": "Minds Rewards",

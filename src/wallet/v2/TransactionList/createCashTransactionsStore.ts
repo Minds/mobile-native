@@ -29,6 +29,7 @@ const createCashTransactionsStore = ({ wallet, user }: ParamsType) => {
         to: moment().endOf('day').toDate(),
       },
     },
+    setTransactionType: undefined,
     get list(): Array<SectionListEntities> {
       const list = groupBy(this.entities, 'date');
       return Object.keys(list).map(v => ({

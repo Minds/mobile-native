@@ -6,7 +6,7 @@ import {
   Pager,
   PagerProvider,
   iPageInterpolation,
-} from '@crowdlinker/react-native-pager';
+} from '@msantang78/react-native-pager';
 
 import ActivityFullScreen from './ActivityFullScreen';
 import type FeedStore from '../../../common/stores/FeedStore';

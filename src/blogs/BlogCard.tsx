@@ -86,9 +86,6 @@ export default class BlogCard extends PureComponent<PropsType> {
     }
     return (
       <View>
-        <View style={styles.actionSheet}>
-          <BlogActionSheet entity={blog} navigation={this.props.navigation} />
-        </View>
         <TouchableOpacity
           onPress={this.navToBlog}
           style={theme.bgSecondaryBackground}>
@@ -100,7 +97,7 @@ export default class BlogCard extends PureComponent<PropsType> {
           <View style={theme.padding2x}>
             <View style={theme.fullWidth}>
               <Text
-                style={[theme.fontL, theme.fontMedium, theme.flexContainer]}
+                style={[theme.fontXL, theme.fontMedium, theme.flexContainer]}
                 numberOfLines={2}
                 ellipsizeMode="tail">
                 {title}
@@ -108,26 +105,36 @@ export default class BlogCard extends PureComponent<PropsType> {
               <View
                 style={[
                   theme.marginBottom2x,
-                  theme.marginTop2x,
+                  theme.marginTop3x,
                   theme.rowJustifyCenter,
                   theme.alignCenter,
                 ]}>
                 {channel && (
                   <Avatar
-                    width={24}
-                    height={24}
+                    width={26}
+                    height={26}
                     rounded
                     source={channel.getAvatarSource()}
                   />
                 )}
                 <Text
-                  style={[theme.fontS, theme.paddingLeft, theme.flexContainer]}
+                  style={[
+                    theme.fontL,
+                    theme.paddingLeft2x,
+                    theme.flexContainer,
+                  ]}
                   numberOfLines={1}>
-                  {blog.ownerObj && blog.ownerObj.username.toUpperCase()}
+                  {blog.ownerObj && blog.ownerObj.username}
                 </Text>
                 <Text style={[theme.fontXS, theme.paddingLeft]}>
                   {formatDate(blog.time_created)}
                 </Text>
+                <View style={theme.paddingLeft}>
+                  <BlogActionSheet
+                    entity={blog}
+                    navigation={this.props.navigation}
+                  />
+                </View>
               </View>
             </View>
           </View>
@@ -146,11 +153,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: 150,
     width: '100%',
-  },
-  actionSheet: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    zIndex: 1,
   },
 });
