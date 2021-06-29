@@ -125,8 +125,7 @@ export default observer(function Comment(props: PropsType) {
     <View
       style={[
         styles.container,
-        theme.bcolorPrimaryBorder,
-        props.comment.focused ? styles.focused : null,
+        props.comment.focused ? styles.focused : theme.bcolorPrimaryBorder,
       ]}>
       <CommentHeader entity={props.comment} navigation={navigation} />
 
