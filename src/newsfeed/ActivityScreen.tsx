@@ -31,6 +31,9 @@ const ActivityScreen = observer((props: PropsType) => {
   const store = useLocalStore(
     (p: PropsType) => ({
       loading: false,
+      setLoading(value: boolean) {
+        store.loading = value;
+      },
       entityStore: new SingleEntityStore<ActivityModel>(),
       async loadEntity() {
         const params = p.route.params;
@@ -56,7 +59,9 @@ const ActivityScreen = observer((props: PropsType) => {
           }
         } else {
           const urn = 'urn:activity:' + params.guid;
+          this.setLoading(true);
           await store.entityStore.loadEntity(urn, undefined, false);
+          this.setLoading(false);
 
           if (!store.entityStore.entity) {
             showNotification(
@@ -104,7 +109,7 @@ const ActivityScreen = observer((props: PropsType) => {
   }, [store]);
 
   if (!store.entityStore.entity) {
-    return <CenteredLoading />;
+    return store.loading ? <CenteredLoading /> : null;
   }
 
   return <ActivityFullScreen entity={store.entityStore.entity} />;

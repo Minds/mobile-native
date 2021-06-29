@@ -69,6 +69,19 @@ const ActivityOwner = ({
     styles.header,
     cleanTop,
   );
+  const right = React.useMemo(
+    () => (
+      <View style={ThemedStyles.style.rowJustifyCenter}>
+        <ActivityActionSheet
+          entity={entity}
+          navigation={navigation}
+          onTranslate={onTranslate}
+        />
+      </View>
+    ),
+    [entity, navigation, onTranslate],
+  );
+
   return (
     <OwnerBlock
       entity={entity}
@@ -80,15 +93,7 @@ const ActivityOwner = ({
           style={backButtonStyle}
         />
       }
-      rightToolbar={
-        <View style={ThemedStyles.style.rowJustifyCenter}>
-          <ActivityActionSheet
-            entity={entity}
-            navigation={navigation}
-            onTranslate={onTranslate}
-          />
-        </View>
-      }
+      rightToolbar={right}
     />
   );
 };
@@ -189,7 +194,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
           focusedUrn: undefined,
           scrollToBottom: undefined,
         });
-      }, 100);
+      }, 600);
     }
     return () => {
       if (openCommentsTimeOut) {
