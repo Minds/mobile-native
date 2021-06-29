@@ -31,6 +31,7 @@ export interface ButtonPropsType extends TouchableOpacityProps {
   action?: boolean;
   active?: boolean;
   borderless?: boolean;
+  centered?: boolean;
 }
 
 /**
@@ -68,6 +69,7 @@ export default class Button extends Component<ButtonPropsType> {
       action,
       active,
       borderless,
+      centered = true,
       ...extraProps
     } = this.props;
 
@@ -118,7 +120,7 @@ export default class Button extends Component<ButtonPropsType> {
     const body = loading ? (
       <DotIndicator
         containerStyle={dotIndicatorStyle}
-        color={mainColor}
+        color={textColor || mainColor}
         scaleEnabled={true}
       />
     ) : (
@@ -143,7 +145,12 @@ export default class Button extends Component<ButtonPropsType> {
         onPress={onButtonPress}
         disabled={disabled}
         accessibilityLabel={accessibilityLabel}
-        style={[theme.rowJustifyCenter, theme.centered, style, containerStyle]}
+        style={[
+          theme.rowJustifyCenter,
+          centered ? theme.centered : {},
+          style,
+          containerStyle,
+        ]}
         {...extraProps}>
         {children}
         {body}

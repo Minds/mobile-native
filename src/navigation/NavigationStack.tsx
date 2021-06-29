@@ -17,7 +17,6 @@ import {
 import AnalyticsScreen from '../analytics/AnalyticsScreen';
 
 import LoginScreen from '../auth/LoginScreen';
-import ForgotScreen from '../auth/ForgotScreen';
 import ReferralsScreen from '../referral/ReferralsScreen';
 import DataSaverScreen from '../settings/screens/DataSaverScreen';
 import TabsScreen from '../tabs/TabsScreen';
@@ -699,7 +698,6 @@ const AuthStack = function () {
         // @ts-ignore
         screenOptions={AuthTransition}>
         <AuthStackNav.Screen name="Login" component={LoginScreen} />
-        <AuthStackNav.Screen name="Forgot" component={ForgotScreen} />
         <AuthStackNav.Screen name="Register" component={RegisterScreen} />
       </AuthStackNav.Navigator>
     </View>

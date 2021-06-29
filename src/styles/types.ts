@@ -36,6 +36,8 @@ type RemoveTrailingZero<T extends string> = T extends `${infer Fst}${infer Snd}`
 
 type Numbers_99 = RemoveTrailingZero<Values<NestedValues<NumberHelper>>>;
 
+type ThemeSuffix = '_Light' | '_Dark';
+
 export type DynamicStyles = {
   [key in Enumerate<30> as
     | `border${key}x`
@@ -85,7 +87,11 @@ export type DynamicStyles = {
   {
     [key in keyof ColorsType as
       | `bg${key}`
+      | `bg${key}${ThemeSuffix}`
       | `color${key}`
+      | `color${key}${ThemeSuffix}`
       | `bcolor${key}`
-      | `shadow${key}`];
+      | `bcolor${key}${ThemeSuffix}`
+      | `shadow${key}`
+      | `shadow${key}${ThemeSuffix}`];
   };
