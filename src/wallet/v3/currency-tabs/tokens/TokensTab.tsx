@@ -23,12 +23,14 @@ import sessionService from '../../../../common/services/session.service';
 import apiService from '../../../../common/services/api.service';
 import { showNotification } from '../../../../../AppMessages';
 import { TokensTabStore } from './createTokensTabStore';
+import TransactionsListWithdrawals from './widthdrawal/TransactionsListWithdrawals';
 
 export const options: Array<ButtonTabType<TokensOptions>> = [
   { id: 'rewards', title: 'Rewards' },
   { id: 'earnings', title: 'Earnings' },
   { id: 'balance', title: 'Balance' },
   { id: 'transactions', title: 'Transactions' },
+  { id: 'onchain_transfers', title: 'Onchain Transfers' },
   { id: 'settings', title: 'Settings' },
 ];
 
@@ -152,6 +154,9 @@ const TokensTab = observer(
           />
         );
         break;
+      case 'onchain_transfers':
+        body = <TransactionsListWithdrawals />;
+        break;
       case 'settings':
         body = (
           <ReceiverSettings
@@ -181,7 +186,10 @@ const TokensTab = observer(
         </View>
       </>
     );
-    if (store.option !== 'transactions') {
+    if (
+      store.option !== 'transactions' &&
+      store.option !== 'onchain_transfers'
+    ) {
       return <ScrollView>{mainBody}</ScrollView>;
     } else {
       return <View style={theme.flexContainer}>{mainBody}</View>;
