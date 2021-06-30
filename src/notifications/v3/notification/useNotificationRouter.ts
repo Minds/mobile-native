@@ -55,11 +55,20 @@ const navigator = {
   set(navigation, notification) {
     this.navigation = navigation;
     this.notification = notification;
+
+    const activityParams =
+      this.notification.entity?.type === 'comment'
+        ? {
+            guid: this.notification.entity.entity_guid,
+            hydrate: true,
+          }
+        : {
+            entity: this.notification.entity,
+            hydrate: true,
+          };
+
     this.params = {
-      Activity: {
-        entity: this.notification.entity,
-        hydrate: true,
-      },
+      Activity: activityParams,
       Tabs: {
         screen: 'CaptureTab',
         params: {
@@ -88,6 +97,7 @@ const navigator = {
     if (focusedUrn) {
       params.focusedUrn = focusedUrn;
     }
+
     this.navigation.navigate(screen, params);
   },
 };

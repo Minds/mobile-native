@@ -2,9 +2,9 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { View, Text } from 'react-native';
-import ThemedStyle from '../../styles/ThemedStyles';
-import validatePassword from '../helpers/validatePassword';
-import i18n from '../services/i18n.service';
+import ThemedStyle from '../../../styles/ThemedStyles';
+import validatePassword from '../../helpers/validatePassword';
+import i18n from '../../services/i18n.service';
 
 const checked = value => {
   return (

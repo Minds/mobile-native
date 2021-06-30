@@ -13,7 +13,7 @@ import settingsService from '../SettingsService';
 import { KeyboardAvoidingView, Alert } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import isIphoneX from '../../common/helpers/isIphoneX';
-import PasswordValidator from '../../common/components/PasswordValidator';
+import PasswordValidator from '../../common/components/password-input/PasswordValidator';
 
 export default observer(function () {
   const theme = ThemedStyles.style;

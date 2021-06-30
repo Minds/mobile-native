@@ -1,15 +1,17 @@
 import React from 'react';
-import { observer, useLocalStore } from 'mobx-react';
+import { observer } from 'mobx-react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
-
-import BottomButtonOptions, {
-  ItemType,
-} from '../../common/components/BottomButtonOptions';
 import type CommentsStore from './CommentsStore';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
 import { StyleProp, ViewStyle } from 'react-native';
+import {
+  BottomSheet,
+  BottomSheetButton,
+  MenuItem,
+} from '../../common/components/bottom-sheet';
+import { MenuItemProps } from '../../common/components/bottom-sheet/MenuItem';
 
 type PropsType = {
   store: CommentsStore;
@@ -30,82 +32,83 @@ export default observer(function CommentInputBottomMenu({
 }: PropsType) {
   const theme = ThemedStyles.style;
 
-  const localStore = useLocalStore(() => ({
-    showMenu: false,
-    show() {
-      beforeSelect();
-      localStore.showMenu = true;
-    },
-    hide() {
-      localStore.showMenu = false;
-    },
-  }));
+  const ref = React.useRef<any>();
+  const close = React.useCallback(() => {
+    ref.current?.dismiss();
+  }, []);
+  const show = React.useCallback(() => {
+    beforeSelect();
+    ref.current?.present();
+  }, [beforeSelect]);
 
-  const dismissOptions: Array<Array<ItemType>> = React.useMemo(() => {
-    const actions: Array<Array<ItemType>> = [[]];
+  const dismissOptions: Array<MenuItemProps> = React.useMemo(() => {
+    const actions: Array<MenuItemProps> = [];
 
-    const setExplicit: ItemType = {
+    const setExplicit: MenuItemProps = {
       title: i18n.t('setExplicit'),
       onPress: () => {
         store.toggleMature();
-        localStore.hide();
+        close();
       },
+      iconName: 'explicit',
+      iconType: 'material',
     };
-    const removeExplicit: ItemType = {
+
+    const removeExplicit: MenuItemProps = {
       title: i18n.t('removeExplicit'),
       onPress: () => {
         store.toggleMature();
-        localStore.hide();
+        close();
       },
+      iconName: 'explicit',
+      iconType: 'material',
     };
 
-    const openGallery: ItemType = {
+    const openGallery: MenuItemProps = {
       title: i18n.t('capture.attach'),
       onPress: () => {
         const fn = () => {
-          localStore.hide();
+          close();
           afterSelected();
         };
         store.gallery(fn);
       },
+      iconName: 'photo-library',
+      iconType: 'material',
     };
 
-    const openPhoto: ItemType = {
+    const openPhoto: MenuItemProps = {
       title: i18n.t('capture.takePhoto'),
       onPress: () => {
-        localStore.hide();
+        close();
         store.photo(afterSelected);
       },
+      iconName: 'photo-camera',
+      iconType: 'material',
     };
 
-    actions[0].push(openGallery);
-    actions[0].push(openPhoto);
+    actions.push(openGallery);
+    actions.push(openPhoto);
 
     if (!store.mature) {
-      actions[0].push(setExplicit);
+      actions.push(setExplicit);
     } else {
-      actions[0].push(removeExplicit);
+      actions.push(removeExplicit);
     }
 
-    actions.push([
-      {
-        title: i18n.t('cancel'),
-        titleStyle: theme.colorSecondaryText,
-        onPress: localStore.hide,
-      },
-    ]);
     return actions;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [afterSelected, localStore, store.mature, theme.colorSecondaryText]);
+  }, [afterSelected, store.mature, theme.colorSecondaryText]);
 
   return (
-    <TouchableOpacity onPress={localStore.show} hitSlop={slop}>
+    <TouchableOpacity onPress={show} hitSlop={slop}>
       <Icon name="more-vert" size={18} style={theme.colorTertiaryText} />
-      <BottomButtonOptions
-        list={dismissOptions}
-        isVisible={localStore.showMenu}
-        onPressClose={localStore.hide}
-      />
+      <BottomSheet ref={ref}>
+        {dismissOptions.map((a, i) => (
+          <MenuItem {...a} key={i} />
+        ))}
+        <BottomSheetButton text={i18n.t('cancel')} onPress={close} />
+      </BottomSheet>
     </TouchableOpacity>
   );
 });
