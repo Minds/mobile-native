@@ -38,6 +38,7 @@ const BottomModal: React.ForwardRefRenderFunction<
   }));
   return (
     <Modal
+      avoidKeyboard
       swipeDirection={'down'}
       onSwipeComplete={store.hide}
       isVisible={store.visible}
