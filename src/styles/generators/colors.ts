@@ -13,7 +13,7 @@ const getDarkThemeColor = (prop: ColorsNameType) => {
 };
 
 export default function colors(name: string, ts: ThemedStylesStore) {
-  let fn = ts.getColor,
+  let fn = ts.getColor.bind(ts),
     tName = name;
 
   if (tName.endsWith(LIGHT_SUFFIX)) {
