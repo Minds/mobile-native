@@ -156,7 +156,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
           if (store) {
             store.showComments();
           }
-        }, 500);
+        }, 300);
       }
       const user = sessionService.getUser();
 
@@ -194,7 +194,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
           focusedUrn: undefined,
           scrollToBottom: undefined,
         });
-      }, 600);
+      }, 400);
     }
     return () => {
       if (openCommentsTimeOut) {
