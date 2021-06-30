@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, Text } from 'react-native';
+import { TouchableOpacity, Text, ViewStyle } from 'react-native';
 import i18n from '../services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import MdIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -14,6 +14,7 @@ type PropsType = {
     filter: string;
     setFilter: Function;
   };
+  containerStyles?: ViewStyle | ViewStyle[];
 };
 
 /**
@@ -48,7 +49,7 @@ const FeedFilter = (props: PropsType) => {
   return (
     <>
       <TouchableOpacity
-        style={ThemedStyles.style.rowJustifyEnd}
+        style={[ThemedStyles.style.rowJustifyEnd, props.containerStyles]}
         onPress={show}
         testID="FilterToggle">
         <MdIcon name="filter" size={18} style={ThemedStyles.style.colorIcon} />
