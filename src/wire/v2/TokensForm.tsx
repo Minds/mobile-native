@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { observer } from 'mobx-react';
-import { View, StyleSheet, Text } from 'react-native';
-import Input from '../../common/components/Input';
+import { View, Text } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import type { FabScreenStore } from './FabScreen';
 import LabeledComponent from '../../common/components/LabeledComponent';
 import { CheckBox } from 'react-native-elements';
 import MindsSwitch from '../../common/components/MindsSwitch';
 import i18nService from '../../common/services/i18n.service';
+import InputContainer from '../../common/components/InputContainer';
 
 type propsType = {
   store: FabScreenStore;
@@ -26,76 +26,78 @@ const TokensForm = observer(({ store }: propsType) => {
 
   return (
     <View>
-      <Input
+      <InputContainer
+        containerStyle={styles.inputContainer}
         labelStyle={styles.label}
-        style={[theme.marginBottom2x, styles.input]}
+        style={styles.inputText}
         placeholder={'Tokens'}
         onChangeText={store.setAmount}
         value={store.amount.toString()}
-        testID="fabTokensInput"
         keyboardType="decimal-pad"
+        testID="fabTokensInput"
       />
-      <LabeledComponent label="Wallet Type" wrapperStyle={theme.marginBottom4x}>
-        <MindsSwitch
-          leftText={i18nService.t('blockchain.offchain')}
-          rightText={i18nService.t('blockchain.onchain')}
-          initialValue={true}
-          rightValue={false}
-          leftValue={true}
-          onSelectedValueChange={v => store.wire.setTokenType(v)}
-        />
-      </LabeledComponent>
-
-      <LabeledComponent
-        label="Wallet Balance"
-        wrapperStyle={theme.marginBottom4x}>
-        <Text style={[theme.colorPrimaryText, theme.fontMedium, theme.fontL]}>
-          {store.walletBalance}
-        </Text>
-      </LabeledComponent>
-
-      {store.wire.offchain && (
-        <LabeledComponent label="Repeat Payment Monthly">
-          <CheckBox
-            containerStyle={[theme.checkbox, styles.checkbox]}
-            title={
-              <Text
-                style={[
-                  theme.colorPrimaryText,
-                  theme.fontMedium,
-                  theme.paddingLeft,
-                  theme.fontL,
-                ]}>
-                Repeat ?
-              </Text>
-            }
-            checked={store.wire.recurring}
-            onPress={store.setRepeat}
+      <View style={theme.paddingHorizontal4x}>
+        <LabeledComponent
+          label="Wallet Type"
+          wrapperStyle={theme.marginBottom4x}>
+          <MindsSwitch
+            leftText={i18nService.t('blockchain.offchain')}
+            rightText={i18nService.t('blockchain.onchain')}
+            initialValue={true}
+            rightValue={false}
+            leftValue={true}
+            onSelectedValueChange={v => store.wire.setTokenType(v)}
           />
         </LabeledComponent>
-      )}
+
+        <LabeledComponent
+          label="Wallet Balance"
+          wrapperStyle={theme.marginBottom4x}>
+          <Text style={[theme.colorPrimaryText, theme.fontMedium, theme.fontL]}>
+            {store.walletBalance}
+          </Text>
+        </LabeledComponent>
+
+        {store.wire.offchain && (
+          <LabeledComponent label="Repeat Payment Monthly">
+            <CheckBox
+              containerStyle={[theme.checkbox, styles.checkbox]}
+              title={
+                <Text
+                  style={[
+                    theme.colorPrimaryText,
+                    theme.fontMedium,
+                    theme.paddingLeft,
+                    theme.fontL,
+                  ]}>
+                  Repeat ?
+                </Text>
+              }
+              checked={store.wire.recurring}
+              onPress={store.setRepeat}
+            />
+          </LabeledComponent>
+        )}
+      </View>
     </View>
   );
 });
 
-const styles = StyleSheet.create({
-  label: {
-    fontSize: 16,
-    marginBottom: 10,
-  },
-  input: {
-    height: 37,
-    padding: 0,
-    fontSize: 18,
-    fontWeight: '400',
-    fontFamily: 'Roboto-Medium',
-    paddingLeft: 10,
-  },
-  checkbox: {
-    marginRight: 0,
-    marginTop: 0,
-    paddingTop: 0,
-  },
+export const styles = ThemedStyles.create({
+  inputContainer: [
+    'bgPrimaryBackgroundHighlight_Dark',
+    'bcolorPrimaryBorder_Dark',
+    'marginBottom4x',
+  ],
+  label: ['colorSecondaryText_Dark'],
+  inputText: ['colorPrimaryText_Dark', 'marginBottom0x'],
+  checkbox: [
+    {
+      marginRight: 0,
+      marginTop: 0,
+      paddingTop: 0,
+    },
+  ],
 });
 
 export default TokensForm;
