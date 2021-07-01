@@ -1,5 +1,8 @@
 import React, { forwardRef } from 'react';
-import BottomSheet, { BottomSheetBackgroundProps } from '@gorhom/bottom-sheet';
+import BottomSheet, {
+  BottomSheetBackdrop,
+  BottomSheetBackgroundProps,
+} from '@gorhom/bottom-sheet';
 import { Dimensions, View } from 'react-native';
 
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -15,8 +18,6 @@ import { useRoute } from '@react-navigation/native';
 import CommentInput from './CommentInput';
 import { useLocalStore } from 'mobx-react';
 import { GOOGLE_PLAY_STORE } from '../../config/Config';
-
-import Backdrop from '../../common/components/bottom-sheet/Backdrop';
 
 const BottomSheetLocalStore = ({ onChange }) => ({
   isOpen: 0,
@@ -108,11 +109,8 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
 
   // renders
   const renderBackdrop = React.useCallback(
-    props =>
-      localStore.isOpen ? (
-        <Backdrop {...props} pressBehavior="collapse" />
-      ) : null,
-    [localStore],
+    props => <BottomSheetBackdrop {...props} pressBehavior="collapse" />,
+    [],
   );
 
   return [
