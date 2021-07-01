@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     left: 10,
-    width: '90%',
+    width: '80%',
     zIndex: 1999,
   },
   bubble: {

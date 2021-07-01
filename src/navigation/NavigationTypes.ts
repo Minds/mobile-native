@@ -69,7 +69,10 @@ export type RootStackParamList = {
 };
 
 export type AuthStackParamList = {
-  Login: {};
+  Login: {
+    username?: string;
+    code?: string;
+  };
   Forgot: {
     code?: string;
   };
@@ -138,6 +141,8 @@ export type AppStackParamList = {
   BoostSettingsScreen: {};
   SettingsPassword: {};
   SettingsNotifications: {};
+  PushNotificationsSettings: {};
+  EmailNotificationsSettings: {};
   DataSaverScreen: {};
   BlockedChannels: {};
   TierManagementScreen: {};

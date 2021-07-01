@@ -12,6 +12,7 @@ import {
   BioScreenRouteProp,
   BioScreenNavigationProp,
 } from '../../../navigation/NavigationTypes';
+import { withErrorBoundary } from '../../../common/components/ErrorBoundary';
 
 type PropsType = {
   route: BioScreenRouteProp;
@@ -72,7 +73,7 @@ const BioScreen = observer(({ route, navigation }: PropsType) => {
 
   return (
     <ScrollView
-      style={[theme.flexContainer, theme.backgroundPrimary]}
+      style={[theme.flexContainer, theme.bgPrimaryBackground]}
       keyboardShouldPersistTaps={true}>
       <KeyboardAvoidingView
         style={[theme.flexContainer, theme.paddingTop3x]}
@@ -92,4 +93,4 @@ const BioScreen = observer(({ route, navigation }: PropsType) => {
   );
 });
 
-export default BioScreen;
+export default withErrorBoundary(BioScreen);

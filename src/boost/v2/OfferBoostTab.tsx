@@ -44,7 +44,7 @@ const OfferBoostTab = observer(({ localStore }: PropsType) => {
     keyboardType: 'decimal-pad',
     selectTextOnFocus: true,
     style: vPadding,
-    containerStyle: theme.backgroundPrimaryHighlight,
+    containerStyle: theme.bgPrimaryBackgroundHighlight,
     labelStyle: [marginB, theme.fontM],
   };
   return (
@@ -70,8 +70,8 @@ const OfferBoostTab = observer(({ localStore }: PropsType) => {
             theme.marginVertical5x,
             theme.paddingVertical2x,
             theme.paddingHorizontal4x,
-            theme.backgroundPrimaryHighlight,
-            theme.borderPrimary,
+            theme.bgPrimaryBackgroundHighlight,
+            theme.bcolorPrimaryBorder,
             theme.borderTop,
             theme.borderBottom,
           ]}

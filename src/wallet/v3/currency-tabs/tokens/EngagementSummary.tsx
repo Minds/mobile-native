@@ -7,6 +7,7 @@ import { Container, Info, Row, Title } from '../AccordionContent';
 import ActivityMultiplier from './multipliers/ActivityMultiplier';
 import { SummaryLabel } from './LiquiditySummary';
 import { Reward } from './createTokensTabStore';
+import capitalize from '../../../../common/helpers/capitalize';
 
 type PropsType = {
   contributionScores: ContributionMetric[];
@@ -18,7 +19,7 @@ const ContributionScores = ({ metric }: { metric: ContributionMetric }) => {
   return (
     <Container>
       <Row>
-        <Title>{metric.label}</Title>
+        <Title>{capitalize(metric.label)}</Title>
       </Row>
       <Row>
         <Title style={theme.width25}>{format(metric.amount, false)}</Title>

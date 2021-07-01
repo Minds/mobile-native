@@ -10,7 +10,7 @@ interface HandleProps extends BottomSheetHandleProps {
 const Handle: React.FC<HandleProps> = ({ style }) => {
   const theme = ThemedStyles.style;
   // render
-  return <View style={[styles.header, style, theme.backgroundPrimary]} />;
+  return <View style={[styles.header, style, theme.bgPrimaryBackground]} />;
 };
 
 export default Handle;
@@ -20,14 +20,6 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     justifyContent: 'center',
     height: 17,
-    shadowColor: 'black',
-    shadowOffset: {
-      width: 0,
-      height: -6,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
-    elevation: 16,
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
   },

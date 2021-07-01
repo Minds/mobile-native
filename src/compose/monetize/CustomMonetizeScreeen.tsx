@@ -1,11 +1,6 @@
 import React, { useCallback, useRef, useEffect } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  TextInput,
-} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import type { TextInput as TextInputType } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import i18n from '../../common/services/i18n.service';
@@ -18,7 +13,7 @@ import Switch from 'react-native-switch-pro';
 import Wrapper from './common/Wrapper';
 import CenteredLoading from '../../common/components/CenteredLoading';
 import { SupportTiersType } from '../../wire/WireTypes';
-import Colors from '../../styles/Colors';
+import TextInput from '../../common/components/TextInput';
 
 type CustomMonetizeScreenRouteProp = RouteProp<
   AppStackParamList,
@@ -31,6 +26,7 @@ type CustomMonetizeScreenNavigationProp = StackNavigationProp<
 
 type PropsType = {
   route: CustomMonetizeScreenRouteProp;
+  navigation: CustomMonetizeScreenNavigationProp;
 };
 
 const CustomMonetizeScreen = observer((props: PropsType) => {
@@ -66,7 +62,7 @@ const CustomMonetizeScreen = observer((props: PropsType) => {
     },
   }));
 
-  const inputRef = useRef<TextInput>(null);
+  const inputRef = useRef<TextInputType>(null);
 
   const save = useCallback(async () => {
     try {
@@ -106,7 +102,7 @@ const CustomMonetizeScreen = observer((props: PropsType) => {
 
   return (
     <Wrapper store={store} hideDone={!localStore.show} onPressRight={save}>
-      <View style={[theme.flexContainer, theme.backgroundPrimary]}>
+      <View style={[theme.flexContainer, theme.bgPrimaryBackground]}>
         <Text
           style={[
             theme.paddingVertical6x,
@@ -117,7 +113,7 @@ const CustomMonetizeScreen = observer((props: PropsType) => {
           {i18n.t('capture.paywallDescription')}
         </Text>
         <TouchableOpacity
-          style={[styles.optsRow, theme.borderPrimary]}
+          style={[styles.optsRow, theme.bcolorPrimaryBorder]}
           onPress={localStore.showInput}>
           <Text style={[theme.flexContainer, theme.fontL]}>
             {i18n.t('capture.noPaywall')}
@@ -127,7 +123,7 @@ const CustomMonetizeScreen = observer((props: PropsType) => {
           )}
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.optsRow, theme.borderPrimary]}
+          style={[styles.optsRow, theme.bcolorPrimaryBorder]}
           onPress={localStore.showInput}>
           <Text style={[theme.flexContainer, theme.fontL]}>
             {i18n.t('capture.paywall')}
@@ -145,7 +141,7 @@ const CustomMonetizeScreen = observer((props: PropsType) => {
               ref={inputRef}
               style={[
                 theme.colorPrimaryText,
-                theme.borderPrimary,
+                theme.bcolorPrimaryBorder,
                 styles.input,
               ]}
               keyboardType="numeric"
@@ -168,10 +164,12 @@ const CustomMonetizeScreen = observer((props: PropsType) => {
                 <Switch
                   value={localStore.has_usd}
                   onSyncPress={localStore.setHasUsd}
-                  circleColorActive={Colors.switchCircle}
-                  circleColorInactive={Colors.switchCircle}
-                  backgroundActive={Colors.switchBackground}
-                  backgroundInactive={Colors.switchBackground}
+                  circleColorActive={ThemedStyles.getColor('SecondaryText')}
+                  circleColorInactive={ThemedStyles.getColor('SecondaryText')}
+                  backgroundActive={ThemedStyles.getColor('TertiaryBackground')}
+                  backgroundInactive={ThemedStyles.getColor(
+                    'TertiaryBackground',
+                  )}
                 />
               </View>
             </View>

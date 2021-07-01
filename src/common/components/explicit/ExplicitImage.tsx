@@ -52,7 +52,4 @@ export default class ExplicitImage extends Component<
   }
 }
 
-const overlayStyle = ThemedStyles.combine(
-  'positionAbsolute',
-  'backgroundBlack',
-);
+const overlayStyle = ThemedStyles.combine('positionAbsolute', 'bgBlack');

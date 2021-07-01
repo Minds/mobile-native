@@ -48,7 +48,7 @@ export default class BlockedChannel extends Component<PropsType> {
           theme.flexContainer,
           theme.centered,
           theme.padding2x,
-          theme.backgroundTertiary,
+          theme.bgTertiaryBackground,
           theme.fullWidth,
         ]}>
         <Text

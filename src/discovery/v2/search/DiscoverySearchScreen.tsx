@@ -1,9 +1,8 @@
 import React, { useEffect, useCallback } from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import { observer } from 'mobx-react';
 
 import SearchView from '../../../common/components/SearchView';
-import { CommonStyle as CS } from '../../../styles/Common';
 
 import testID from '../../../common/helpers/testID';
 import i18n from '../../../common/services/i18n.service';
@@ -39,11 +38,11 @@ export const DiscoverySearchHeader = observer(() => {
   }, [navigation, store]);
 
   return (
-    <View style={[CS.shadow, theme.backgroundPrimary, paddingTop]}>
+    <View style={[shadow, theme.bgPrimaryBackground, paddingTop]}>
       <View style={[theme.rowJustifyStart, theme.alignCenter]}>
         <View style={theme.padding2x}>
           <Icon
-            color={ThemedStyles.getColor('icon')}
+            color={ThemedStyles.getColor('Icon')}
             size={32}
             name="chevron-left"
             type="material-community"
@@ -54,12 +53,12 @@ export const DiscoverySearchHeader = observer(() => {
           //@ts-ignore
           <SearchView
             placeholder={i18n.t('discovery.search')}
-            onChangeText={store.setQuery}
+            onChangeText={store.setQuery as any}
             value={store.query}
             containerStyle={[
               theme.marginVertical,
               theme.marginRight4x,
-              theme.backgroundSecondary,
+              theme.bgSecondaryBackground,
               theme.flexContainer,
             ]}
             // iconRight={iconRight}
@@ -119,3 +118,11 @@ export const DiscoverySearchScreen = observer((props: Props) => {
     </View>
   );
 });
+
+const shadow = {
+  elevation: 4,
+  shadowOffset: { width: 0, height: 2 },
+  shadowColor: 'black',
+  shadowOpacity: 0.1,
+  shadowRadius: 2,
+};

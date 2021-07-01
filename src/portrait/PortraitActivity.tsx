@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { useDimensions } from '@react-native-community/hooks';
 import { RouteProp, useNavigation } from '@react-navigation/native';
-import { useFocus } from '@crowdlinker/react-native-pager';
+import { useFocus } from '@msantang78/react-native-pager';
 import { observer, useLocalStore } from 'mobx-react';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -35,6 +35,7 @@ import CommentBottomSheet from '../comments/v2/CommentBottomSheet';
 import BoxShadow from '../common/components/BoxShadow';
 import formatDate from '../common/helpers/date';
 import i18nService from '../common/services/i18n.service';
+import { withErrorBoundary } from '../common/components/ErrorBoundary';
 
 type ActivityRoute = RouteProp<AppStackParamList, 'Activity'>;
 
@@ -135,7 +136,7 @@ const PortraitActivity = observer((props: PropsType) => {
     <OwnerBlock
       entity={entity}
       navigation={navigation}
-      containerStyle={[theme.backgroundPrimary, styles.header, cleanTop]}
+      containerStyle={[theme.bgPrimaryBackground, styles.header, cleanTop]}
       leftToolbar={
         <FloatingBackButton
           size={35}
@@ -200,7 +201,7 @@ const PortraitActivity = observer((props: PropsType) => {
   );
 
   return (
-    <View style={[window, theme.flexContainer, theme.backgroundSecondary]}>
+    <View style={[window, theme.flexContainer, theme.bgSecondaryBackground]}>
       <View style={theme.flexContainer}>
         {ownerBlockShadow}
         {showNSFW && tappingArea}
@@ -232,7 +233,7 @@ const PortraitActivity = observer((props: PropsType) => {
                     styles.remind,
                     theme.margin2x,
                     theme.borderHair,
-                    theme.borderBackgroundPrimary,
+                    theme.bcolorPrimaryBackground,
                   ]}>
                   <Activity
                     ref={remindRef}
@@ -284,7 +285,7 @@ const PortraitActivity = observer((props: PropsType) => {
   );
 });
 
-export default PortraitActivity;
+export default withErrorBoundary(PortraitActivity);
 
 const styles = StyleSheet.create({
   backButton: {

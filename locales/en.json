@@ -91,7 +91,16 @@
     "recoveryDesc": "Enter your recovery code in case you lost access to your mobile device.",
     "recoveryFail": "The recovery code you enter doesn't match",
     "confirmPasswordModal": "Please confirm your account password to continue",
-    "loginFail": "Wrong Username or Password"
+    "loginFail": "Wrong Username or Password",
+    "waitLogin": "Logging in with new credentials...",
+    "resetPassword": "Reset Password",
+    "createNewPassword": "Create a new password",
+    "inputUser": "Enter your channel name below to start the password recovery process.",
+    "emailSent": "An email with reset instructions has been sent to your inbox.",
+    "followInstuctions": "Follow the intructions contained within to continue the reset process.",
+    "sendAgain": "Send email again",
+    "waitMoment": "You have to wait 10 seconds after last time you've requested the email",
+    "newPassword": "Create a new password. You’ll use this to access your account."
   },
   "blockchain": {
     "exportLegacyWallet": "Export legacy wallets",
@@ -222,6 +231,10 @@
     "hold": "Hold to select only one"
   },
   "capture": {
+    "discardPost": "Discard this post?",
+    "discardPostDescription": "If you discard you’ll lose this post",
+    "keepEditing": "Keep Editing",
+    "yesDiscard": "Yes, Discard",
     "licenseDescription": "Select your desired license type. This can be changed at any time after posting.",
     "pupularLicenses": "Popular licenses",
     "mediaPortraitError": "Selected media is not portrait",
@@ -425,10 +438,51 @@
     "rewardsStateDecrease": "We miss you! You just dropped down to a {{state}} user.",
     "rewardsStateDecrease1": "Your daily token reward multiplier has been reduced to {{multiplier}}x",
     "rewardsStateDecreaseToday": "It's not too late! You will drop down to a {{state}} user by the end of today and your daily token reward multiplier will reduce to {{multiplier}}x. Get liking and commenting to bring your score back up!",
-    "rewardsSummary": "You earned {{amount}} tokens yesterday."
+    "rewardsSummary": "You earned {{amount}} tokens yesterday.",
+    "verbs": {
+      "vote_up": "voted up",
+      "vote_down": "voted down",
+      "comment": "commented on",
+      "reply": "replied to",
+      "tag": "tagged you in",
+      "remind": "reminded",
+      "quote": "quoted",
+      "subscribe": "subscribed to",
+      "group_queue_add": "Your post is awaiting approval from the group administrators",
+      "group_queue_approve": "approved",
+      "group_queue_reject": "rejected",
+      "wire_received": "paid",
+      "boost_peer_request": "sent you",
+      "boost_peer_accepted": "accepted",
+      "boost_peer_rejected": "declined",
+      "boost_rejected": "is unable to approve",
+      "token_rewards_summary": "You earned {{amount}} tokens yesterday. Nice job!"
+    }
+  },
+  "interactions": {
+    "upVotes": {
+      "one": "upvote",
+      "other": "upvotes"
+    },
+    "downVotes": {
+      "one": "downvote",
+      "other": "downvotes"
+    },
+    "reminds": {
+      "one": "remind",
+      "other": "reminds"
+    },
+    "quotes": {
+      "one": "quote",
+      "other": "quotes"
+    },
+    "subscribers": {
+      "one": "subscriber",
+      "other": "subscribers"
+    }
   },
   "notificationSettings": {
-    "enableDisable": "Enable and disable push notifications",
+    "enableDisable": "Enable Push Notifications",
     "comment": "Comments",
     "like": "Votes",
     "tag": "Tags",
@@ -436,19 +490,43 @@
     "remind": "Reminds",
     "boost_request": "Boosts Offers",
     "boost_rejected": "Boost Rejected",
-    "boost_completed": "Fulfilled Boosts",
     "rewards_reminder": "Rewards Reminder",
     "rewards_summary": "Rewards Daily Summary",
     "message": "Messenger",
     "messenger_invite": "Messenger Invites",
-    "daily": "Daily",
     "group_invite": "Group Invites",
     "boost_gift": "Boost Gift",
     "boost_accepted": "Boost Accepted",
     "boost_revoked": "Boost Revoked",
     "referral_ping": "Referral Ping",
     "referral_pending": "Referral Pending",
-    "referral_complete": "Referral Complete"
+    "referral_complete": "Referral Complete",
+    "votes": "Votes",
+    "tags": "Tags",
+    "subscriptions": "Subscriptions",
+    "comments": "Comments",
+    "reminds": "Reminds",
+    "boosts": "Boosts",
+    "tokens": "Tokens",
+    "related": "Related to your posts and channel",
+    "emailWhen": "Email me when",
+    "emailWith": "Email me with",
+    "emailUpdated": "Keep me updated with",
+    "exclusive_promotions": "Exclusive Promotions",
+    "minds_news": "News about new Minds products and features",
+    "minds_tips": "Tips on how to use Minds",
+    "boost_completed": "My boost has been completed",
+    "unread_notifications": "I have unread notifications",
+    "wire_received": "I receive a wire",
+    "channel_improvement_tips": "Tips on how to improve my channel",
+    "new_channels": "New things to subscribe to",
+    "posts_missed_since_login": "Things I’ve missed since my last login",
+    "top_posts": "Top posts from my network",
+    "frecuency": "Notification Frequency",
+    "periodically": "Periodically",
+    "daily": "Daily",
+    "weekly": "Weekly",
+    "never": "Never"
   },
   "plus": {
     "freeTrialDesciption": "Start your free trial for 7 days"
@@ -681,6 +759,10 @@
       "d": "INFO",
       "d1": "App"
     },
+    "notificationsOptions": {
+      "push": "Push",
+      "email": "Email"
+    },
     "autoplay": {
       "description": "Control whether videos in your feed play automatically.",
       "enable": "Enable video autoplay",
@@ -842,7 +924,7 @@
       "filter": "Filter",
       "reward": "Today’s daily reward",
       "filterTransactions": "Filter Transactions",
-      "filterTypes": "TRANSACTION TYPES",
+      "filterTypes": "Transaction types",
       "allFilter": "All",
       "mindsReward": "Minds Reward",
       "rewardsFilter": "Minds Rewards",
@@ -1342,5 +1424,8 @@
   "browserOnly": "Browser Only",
   "clickHere": "click here",
   "enabled": "Enabled",
-  "copyToClipboard": "Copy to Clipboard"
+  "copyToClipboard": "Copy to Clipboard",
+  "emptyList": "Sorry the list is empty",
+  "and": "and",
+  "others": "others"
 }

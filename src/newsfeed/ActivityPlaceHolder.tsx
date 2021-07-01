@@ -12,18 +12,18 @@ import { useDimensions } from '@react-native-community/hooks';
 
 export default function ActivityPlaceHolder() {
   const theme = ThemedStyles.style;
-  const color = ThemedStyles.getColor('tertiary_background');
+  const color = ThemedStyles.getColor('TertiaryBackground');
   const { width } = useDimensions().screen;
 
   const animation = props => (
-    <Fade {...props} style={theme.backgroundPrimary} />
+    <Fade {...props} style={theme.bgPrimaryBackground} />
   );
 
   return (
     <View
       style={[
         theme.borderBottom8x,
-        theme.borderBackgroundPrimary,
+        theme.bcolorPrimaryBackground,
         theme.paddingBottom4x,
         theme.paddingTop2x,
       ]}>

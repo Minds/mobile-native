@@ -1,14 +1,5 @@
 import React, { forwardRef } from 'react';
-import BottomSheet, {
-  BottomSheetBackdropProps,
-  BottomSheetBackgroundProps,
-  TouchableOpacity,
-  useBottomSheet,
-} from '@gorhom/bottom-sheet';
-import Animated, {
-  Extrapolate,
-  interpolateNode,
-} from 'react-native-reanimated';
+import BottomSheet, { BottomSheetBackgroundProps } from '@gorhom/bottom-sheet';
 import { Dimensions, View } from 'react-native';
 
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -22,8 +13,10 @@ import {
 } from '@react-navigation/stack';
 import { useRoute } from '@react-navigation/native';
 import CommentInput from './CommentInput';
-import { observer, useLocalStore } from 'mobx-react';
+import { useLocalStore } from 'mobx-react';
 import { GOOGLE_PLAY_STORE } from '../../config/Config';
+
+import Backdrop from '../../common/components/bottom-sheet/Backdrop';
 
 const BottomSheetLocalStore = ({ onChange }) => ({
   isOpen: 0,
@@ -35,56 +28,9 @@ const BottomSheetLocalStore = ({ onChange }) => ({
   },
 });
 
-type BackdropProps = {
-  localStore: ReturnType<typeof BottomSheetLocalStore>;
-} & BottomSheetBackdropProps;
-
 const { height: windowHeight } = Dimensions.get('window');
 
 const snapPoints = [-150, windowHeight * 0.85];
-
-const CustomBackdrop = observer(
-  ({ animatedIndex, style, localStore }: BackdropProps) => {
-    const theme = ThemedStyles.style;
-    // animated variables
-    const animatedOpacity = React.useMemo(
-      () =>
-        interpolateNode(animatedIndex, {
-          inputRange: [0, 1],
-          outputRange: [0, 0.8],
-          extrapolate: Extrapolate.CLAMP,
-        }),
-      [animatedIndex],
-    );
-
-    // styles
-    const containerStyle = React.useMemo(
-      () => [
-        style,
-        ThemedStyles.style.backgroundSecondary,
-        {
-          opacity: animatedOpacity,
-        },
-      ],
-      [style, animatedOpacity],
-    );
-
-    const bottomSheet = useBottomSheet();
-
-    if (localStore.isOpen === 1) {
-      return (
-        <Animated.View style={containerStyle} pointerEvents="box-none">
-          <TouchableOpacity
-            onPress={bottomSheet.close}
-            style={[theme.fullHeight, theme.fullWidth]}
-          />
-        </Animated.View>
-      );
-    }
-
-    return <Animated.View style={containerStyle} pointerEvents="box-none" />;
-  },
-);
 
 /**
  * Custom background
@@ -149,8 +95,8 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
       ...TransitionPresets.SlideFromRightIOS,
       headerShown: false,
       safeAreaInsets: { top: 0 },
-      // headerBackground: ThemedStyles.style.backgroundSecondary,
-      cardStyle: ThemedStyles.style.backgroundSecondary,
+      // headerBackground: ThemedStyles.style.bgSecondaryBackground,
+      cardStyle: ThemedStyles.style.bgSecondaryBackground,
     }),
     [],
   );
@@ -160,8 +106,13 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
     [props.commentsStore],
   );
 
-  const Backdrop = (bottomSheetBackdropProps: BottomSheetBackdropProps) => (
-    <CustomBackdrop {...bottomSheetBackdropProps} localStore={localStore} />
+  // renders
+  const renderBackdrop = React.useCallback(
+    props =>
+      localStore.isOpen ? (
+        <Backdrop {...props} pressBehavior="collapse" />
+      ) : null,
+    [localStore],
   );
 
   return [
@@ -173,7 +124,7 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
       snapPoints={snapPoints}
       handleComponent={Handle}
       backgroundComponent={CustomBackground}
-      backdropComponent={Backdrop}>
+      backdropComponent={renderBackdrop}>
       {!props.hideContent && ( // we disable the navigator until the screen is focused (for the post swiper)
         <Stack.Navigator screenOptions={screenOptions} headerMode="none">
           <Stack.Screen

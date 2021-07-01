@@ -187,7 +187,7 @@ const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
                 onPress={() => show(timeSpanKey)}>
                 <MIcon
                   name={'date-range'}
-                  color={ThemedStyles.getColor('icon')}
+                  color={ThemedStyles.getColor('Icon')}
                   size={18}
                 />
                 <Text style={[theme.colorSecondaryText, theme.marginLeft]}>
@@ -216,7 +216,7 @@ const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
                     </Text>
                     <MIcon
                       name={'filter-alt'}
-                      color={ThemedStyles.getColor('icon')}
+                      color={ThemedStyles.getColor('Icon')}
                       size={18}
                     />
                   </TouchableOpacity>

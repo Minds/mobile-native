@@ -12,7 +12,6 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import type FeedStore from '../stores/FeedStore';
 import type ActivityModel from '../../newsfeed/ActivityModel';
 import ActivityIndicator from './ActivityIndicator';
-import { styles } from '../../media/v2/mindsVideo/overlays/styles';
 
 type PropsType = {
   feedStore: FeedStore;
@@ -267,6 +266,6 @@ export default class FeedList<T> extends Component<PropsType> {
   };
 }
 
-const style = ThemedStyles.combine('flexContainer', 'backgroundPrimary');
+const style = ThemedStyles.combine('flexContainer', 'bgPrimaryBackground');
 
 const footerStyle = ThemedStyles.combine('centered', 'padding3x');

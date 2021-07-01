@@ -12,10 +12,10 @@ import {
 } from 'react-native';
 
 import NewsfeedScreen from '../newsfeed/NewsfeedScreen';
-import NotificationsScreen from '../notifications/NotificationsScreen';
+import NotificationsScreen from '../notifications/v3/NotificationsScreen';
 import ThemedStyles, { useStyle } from '../styles/ThemedStyles';
 import TabIcon from './TabIcon';
-import NotificationIcon from '../notifications/NotificationsTabIcon';
+import NotificationIcon from '../notifications/v3/notifications-tab-icon/NotificationsTabIcon';
 import gatheringService from '../common/services/gathering.service';
 import { observer } from 'mobx-react';
 import { DiscoveryV2Screen } from '../discovery/v2/DiscoveryV2Screen';
@@ -85,7 +85,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
 
   const containerStyle = useStyle(
     'rowJustifySpaceEvenly',
-    'backgroundSecondary',
+    'bgSecondaryBackground',
     styles.tabBar,
     bottomInset,
   );
@@ -268,8 +268,8 @@ const empty = () => null;
 const tabOptions = ({ route }) => ({
   tabBarIcon: ({ focused }) => {
     const color = focused
-      ? ThemedStyles.getColor('link')
-      : ThemedStyles.getColor('secondary_text');
+      ? ThemedStyles.getColor('Link')
+      : ThemedStyles.getColor('SecondaryText');
     let iconName,
       iconsize = 28;
 

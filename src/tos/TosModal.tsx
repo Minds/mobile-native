@@ -4,13 +4,13 @@ import { View, Text, Linking } from 'react-native';
 
 import Modal from 'react-native-modal';
 
-import { CommonStyle as CS } from '../styles/Common';
 import Button from '../common/components/Button';
 import i18nService from '../common/services/i18n.service';
 import { observer } from 'mobx-react';
 import mindsService from '../common/services/minds.service';
 import logService from '../common/services/log.service';
 import apiService from '../common/services/api.service';
+import ThemedStyles from '../styles/ThemedStyles';
 
 /**
  * Tos Modal
@@ -64,6 +64,7 @@ export default class TosModal extends PureComponent {
    * Render
    */
   render() {
+    const theme = ThemedStyles.style;
     if (!this.props.user.me.last_accepted_tos || !this.state.last_accepted_tos)
       return null;
 
@@ -72,21 +73,21 @@ export default class TosModal extends PureComponent {
 
     return (
       <Modal isVisible={this.state.show}>
-        <View style={[CS.backgroundWhite, { height: 400, paddingBottom: 8 }]}>
+        <View style={[theme.bgWhite, { height: 400, paddingBottom: 8 }]}>
           <Text
             style={[
-              CS.fontL,
-              CS.textCenter,
-              CS.backgroundPrimary,
-              CS.padding2x,
-              CS.colorWhite,
+              theme.fontL,
+              theme.textCenter,
+              theme.bgPrimaryBackground,
+              theme.padding2x,
+              theme.colorWhite,
             ]}>
             UPDATE
           </Text>
-          <View style={[CS.flexContainer, CS.padding]}>
-            <Text style={[CS.fontS, CS.textJustify]}>
+          <View style={[theme.flexContainer, theme.padding]}>
+            <Text style={[theme.fontS, theme.textJustify]}>
               We've recently updated our{' '}
-              <Text onPress={this.openTerms} style={CS.colorPrimary}>
+              <Text onPress={this.openTerms} style={theme.colorPrimary}>
                 Terms of Service
               </Text>{' '}
               to reflect the changes to our network with the launch of the Jury
@@ -94,36 +95,36 @@ export default class TosModal extends PureComponent {
               power between Minds, Inc. and the community. The following is a
               brief summary of what has changed:{' '}
             </Text>
-            <Text style={[CS.fontS, CS.paddingLeft, CS.paddingTop2x]}>
+            <Text style={[theme.fontS, theme.paddingLeft, theme.paddingTop2x]}>
               · Creation of a separate{' '}
-              <Text onPress={this.openContent} style={CS.colorPrimary}>
+              <Text onPress={this.openContent} style={theme.colorPrimary}>
                 Content Policy
               </Text>{' '}
               document for more clarity
             </Text>
-            <Text style={[CS.fontS, CS.paddingLeft]}>
+            <Text style={[theme.fontS, theme.paddingLeft]}>
               · Clarification of licensing specifications and restrictions
             </Text>
-            <Text style={[CS.fontS, CS.paddingLeft]}>
+            <Text style={[theme.fontS, theme.paddingLeft]}>
               · Clarification of terminology and overall grammatical
               improvements
             </Text>
-            <Text style={[CS.fontS, CS.paddingTop2x, CS.textJustify]}>
+            <Text style={[theme.fontS, theme.paddingTop2x, theme.textJustify]}>
               Please also note that your continued use of Minds serves as
               acceptance of these new terms and policies. Thank you.
             </Text>
             {this.state.error && (
               <Text
                 style={[
-                  CS.fontS,
-                  CS.paddingTop2x,
-                  CS.textCenter,
-                  CS.colorDanger,
+                  theme.fontS,
+                  theme.paddingTop2x,
+                  theme.textCenter,
+                  theme.colorDanger,
                 ]}>
                 There was an error please try again.
               </Text>
             )}
-            <View style={[CS.rowJustifyCenter, CS.paddingTop2x]}>
+            <View style={[theme.rowJustifyCenter, theme.paddingTop2x]}>
               <Button text={i18nService.t('ok')} onPress={this.ok} />
             </View>
           </View>

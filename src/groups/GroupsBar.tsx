@@ -97,7 +97,7 @@ export default class GroupsBar extends Component {
             style={[
               theme.fontS,
               theme.colorLink,
-              theme.borderPrimary,
+              theme.bcolorPrimaryBorder,
               theme.border,
               theme.borderRadius7x,
               theme.padding,
@@ -128,7 +128,7 @@ export default class GroupsBar extends Component {
         }
         contentContainerStyle={[
           theme.rowJustifyStart,
-          theme.backgroundSecondary,
+          theme.bgSecondaryBackground,
         ]}
         style={[styles.bar]}
         horizontal={true}

@@ -19,6 +19,7 @@ import ThumbDownAction from '../../newsfeed/activity/actions/ThumbDownAction';
 import MediaView from '../../common/components/MediaView';
 import { LIGHT_THEME } from '../../styles/Colors';
 import ReadMore from '../../common/components/ReadMore';
+import Translate from '../../common/components/translate/Translate';
 
 type PropsType = {
   comment: CommentModel;
@@ -32,6 +33,7 @@ type PropsType = {
  */
 export default observer(function Comment(props: PropsType) {
   const navigation = useNavigation<any>();
+  const translateRef = React.useRef<any>();
   const theme = ThemedStyles.style;
 
   const mature = props.comment.mature && !props.comment.mature_visibility;
@@ -42,7 +44,7 @@ export default observer(function Comment(props: PropsType) {
     !props.hideReply;
 
   const backgroundColor = ThemedStyles.getColor(
-    props.isHeader ? 'secondary_background' : 'primary_background',
+    props.isHeader ? 'SecondaryBackground' : 'PrimaryBackground',
   );
   const startColor = (ThemedStyles.theme ? '#242A30' : '#F5F5F5') + '00';
   const endColor = backgroundColor + 'FF';
@@ -97,6 +99,12 @@ export default observer(function Comment(props: PropsType) {
       theme.marginTop2x,
     ],
   );
+  const translate = React.useCallback(() => {
+    // delayed until the menu is closed
+    setTimeout(() => {
+      translateRef.current?.show();
+    }, 300);
+  }, [translateRef]);
 
   const reply = React.useCallback(() => {
     navigation.push('ReplyComment', {
@@ -117,8 +125,7 @@ export default observer(function Comment(props: PropsType) {
     <View
       style={[
         styles.container,
-        theme.borderPrimary,
-        props.comment.focused ? styles.focused : null,
+        props.comment.focused ? styles.focused : theme.bcolorPrimaryBorder,
       ]}>
       <CommentHeader entity={props.comment} navigation={navigation} />
 
@@ -126,13 +133,16 @@ export default observer(function Comment(props: PropsType) {
         <>
           <View style={[styles.body, theme.flexContainer]}>
             {!!props.comment.description && (
-              <ReadMore
-                numberOfLines={6}
-                navigation={navigation}
-                text={entities.decodeHTML(props.comment.description)}
-                renderTruncatedFooter={renderTruncatedFooter}
-                renderRevealedFooter={renderRevealedFooter}
-              />
+              <>
+                <ReadMore
+                  numberOfLines={6}
+                  navigation={navigation}
+                  text={entities.decodeHTML(props.comment.description)}
+                  renderTruncatedFooter={renderTruncatedFooter}
+                  renderRevealedFooter={renderRevealedFooter}
+                />
+                <Translate ref={translateRef} entity={props.comment} />
+              </>
             )}
             {(props.comment.hasMedia() ||
               Boolean(props.comment.attachment_guid)) && (
@@ -170,6 +180,7 @@ export default observer(function Comment(props: PropsType) {
               store={props.store}
               entity={props.store.entity}
               comment={props.comment}
+              onTranslate={translate}
             />
           </View>
           {!!props.comment.replies_count && !props.hideReply && (
@@ -206,6 +217,7 @@ export default observer(function Comment(props: PropsType) {
               store={props.store}
               entity={props.store.entity}
               comment={props.comment}
+              onTranslate={translate}
             />
           </View>
         </View>
@@ -262,7 +274,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   focused: {
-    borderLeftColor: LIGHT_THEME.link,
+    borderLeftColor: LIGHT_THEME.Link,
     borderLeftWidth: 4,
   },
 });

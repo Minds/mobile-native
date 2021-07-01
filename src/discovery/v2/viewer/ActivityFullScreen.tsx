@@ -2,7 +2,7 @@ import React, { useRef, useCallback, useEffect } from 'react';
 import { View, StyleSheet, Platform } from 'react-native';
 import { useDimensions } from '@react-native-community/hooks';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
-import { useFocus } from '@crowdlinker/react-native-pager';
+import { useFocus } from '@msantang78/react-native-pager';
 import { LinearGradient } from 'expo-linear-gradient';
 import { observer, useLocalStore } from 'mobx-react';
 import * as entities from 'entities';
@@ -38,6 +38,7 @@ import CommentBottomSheet from '../../../comments/v2/CommentBottomSheet';
 import type BottomSheet from '@gorhom/bottom-sheet';
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
 import Clipboard from '@react-native-clipboard/clipboard';
+import InteractionsBar from '../../../common/components/interactions/InteractionsBar';
 
 type ActivityRoute = RouteProp<AppStackParamList, 'Activity'>;
 
@@ -63,7 +64,24 @@ const ActivityOwner = ({
   const { current: cleanTop } = useRef({
     paddingTop: insets.top - 10 || 2,
   });
-  const containerStyle = useStyle('backgroundPrimary', styles.header, cleanTop);
+  const containerStyle = useStyle(
+    'bgPrimaryBackground',
+    styles.header,
+    cleanTop,
+  );
+  const right = React.useMemo(
+    () => (
+      <View style={ThemedStyles.style.rowJustifyCenter}>
+        <ActivityActionSheet
+          entity={entity}
+          navigation={navigation}
+          onTranslate={onTranslate}
+        />
+      </View>
+    ),
+    [entity, navigation, onTranslate],
+  );
+
   return (
     <OwnerBlock
       entity={entity}
@@ -75,15 +93,7 @@ const ActivityOwner = ({
           style={backButtonStyle}
         />
       }
-      rightToolbar={
-        <View style={ThemedStyles.style.rowJustifyCenter}>
-          <ActivityActionSheet
-            entity={entity}
-            navigation={navigation}
-            onTranslate={onTranslate}
-          />
-        </View>
-      }
+      rightToolbar={right}
     />
   );
 };
@@ -146,7 +156,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
           if (store) {
             store.showComments();
           }
-        }, 500);
+        }, 300);
       }
       const user = sessionService.getUser();
 
@@ -184,7 +194,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
           focusedUrn: undefined,
           scrollToBottom: undefined,
         });
-      }, 100);
+      }, 400);
     }
     return () => {
       if (openCommentsTimeOut) {
@@ -206,7 +216,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
     ? shortTextStyle
     : theme.fontLM;
 
-  const backgroundColor = ThemedStyles.getColor('secondary_background');
+  const backgroundColor = ThemedStyles.getColor('SecondaryBackground');
   const startColor = backgroundColor + '00';
   const endColor = backgroundColor + 'FF';
   const gradientColors = useRef([startColor, endColor]).current;
@@ -278,7 +288,11 @@ const ActivityFullScreen = observer((props: PropsType) => {
     [entity, navigation, onTranslate, shadowOpt],
   );
 
-  const containerStyle = useStyle(window, 'flexContainer', 'backgroundPrimary');
+  const containerStyle = useStyle(
+    window,
+    'flexContainer',
+    'bgPrimaryBackground',
+  );
 
   return (
     <View style={containerStyle}>
@@ -351,8 +365,10 @@ const ActivityFullScreen = observer((props: PropsType) => {
         )}
       </View>
       <View style={cleanBottom}>
+        <InteractionsBar entity={entity} />
         <Actions
           entity={entity}
+          hideCount
           showCommentsOutlet={false}
           onPressComment={onPressComment}
         />
@@ -440,5 +456,5 @@ const remindContainerStyle = ThemedStyles.combine(
   styles.remind,
   'margin2x',
   'borderHair',
-  'borderBackgroundPrimary',
+  'bcolorPrimaryBackground',
 );

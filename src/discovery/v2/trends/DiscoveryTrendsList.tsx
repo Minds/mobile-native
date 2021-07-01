@@ -70,7 +70,11 @@ export const DiscoveryTrendsList = observer(({ plus, store }: PropsType) => {
 
   const header = (
     <View
-      style={[theme.borderBottom8x, theme.borderPrimary, theme.marginBottom2x]}>
+      style={[
+        theme.borderBottom8x,
+        theme.bcolorPrimaryBorder,
+        theme.marginBottom2x,
+      ]}>
       {store.trends.map(ItemPartial)}
     </View>
   );

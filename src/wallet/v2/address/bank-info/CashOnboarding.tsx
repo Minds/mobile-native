@@ -64,7 +64,7 @@ const CashOnboarding = observer(
                 inputType={'dateInput'}
               />
             </View>
-            <View style={[theme.backgroundSecondary, styles.phoneContainer]}>
+            <View style={[theme.bgSecondaryBackground, styles.phoneContainer]}>
               <Text
                 style={[
                   theme.colorSecondaryText,

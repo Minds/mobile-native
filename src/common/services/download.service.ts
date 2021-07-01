@@ -6,7 +6,7 @@ import RNFS from 'react-native-fs';
 import i18nService from './i18n.service';
 import { showNotification } from '../../../AppMessages';
 import type ActivityModel from '../../newsfeed/ActivityModel';
-import imagePickerService from './image-picker.service';
+import permissionsService from './permissions.service';
 
 /**
  * Download Service
@@ -19,27 +19,34 @@ class DownloadService {
    */
   async downloadToGallery(url: string, entity: ActivityModel) {
     try {
-      const hasPermission = await imagePickerService.checkGalleryPermissions();
-      if (hasPermission) {
-        if (Platform.OS === 'ios') {
-          return CameraRoll.saveToCameraRoll(url);
-        } else {
-          const type = this.isGif(entity) ? 'gif' : 'jpg';
-          const filePath = `${RNFS.CachesDirectoryPath}/${entity.guid}.${type}`;
-          const download = RNFS.downloadFile({
-            fromUrl: url,
-            toFile: filePath,
-            progressDivider: 1,
-          });
+      if (Platform.OS === 'ios') {
+        return CameraRoll.save(url, { type: 'photo' });
+      } else {
+        let allowed = await permissionsService.checkWriteExternalStorage(true);
 
-          return download.promise.then(result => {
-            if (result.statusCode === 200) {
-              return CameraRoll.saveToCameraRoll(filePath);
-            } else {
-              showNotification(i18nService.t('errorDownloading'), 'danger');
-            }
-          });
+        if (!allowed) {
+          allowed = await permissionsService.writeExternalStorage();
         }
+
+        if (!allowed) {
+          return;
+        }
+
+        const type = this.isGif(entity) ? 'gif' : 'jpg';
+        const filePath = `${RNFS.CachesDirectoryPath}/${entity.guid}.${type}`;
+        const download = RNFS.downloadFile({
+          fromUrl: url,
+          toFile: filePath,
+          progressDivider: 1,
+        });
+
+        return download.promise.then(result => {
+          if (result.statusCode === 200) {
+            return CameraRoll.save(filePath, { type: 'photo' });
+          } else {
+            showNotification(i18nService.t('errorDownloading'), 'danger');
+          }
+        });
       }
     } catch (e) {
       showNotification(i18nService.t('errorDownloading'), 'danger');

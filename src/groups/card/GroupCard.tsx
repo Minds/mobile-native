@@ -7,8 +7,8 @@ import SmartImage from '../../common/components/SmartImage';
 import { MINDS_CDN_URI } from '../../config/Config';
 import abbrev from '../../common/helpers/abbrev';
 import FastImage from 'react-native-fast-image';
-import { CommonStyle } from '../../styles/Common';
 import i18n from '../../common/services/i18n.service';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 /**
  * Group Card
@@ -44,6 +44,7 @@ export default class GroupCard extends Component {
     const group = this.props.entity;
     const avatar = this.getAvatar();
     const iurl = this.getBannerFromGroup();
+    const theme = ThemedStyles.style;
 
     return (
       <View>
@@ -54,11 +55,7 @@ export default class GroupCard extends Component {
         />
         <View style={styles.headertextcontainer}>
           <View style={styles.countercontainer}>
-            <View
-              style={[
-                CommonStyle.columnAlignCenter,
-                CommonStyle.flexContainer,
-              ]}>
+            <View style={[theme.columnAlignCenter, theme.flexContainer]}>
               <Text style={styles.countertitle}>
                 {i18n.t('members').toUpperCase()}
               </Text>
@@ -66,11 +63,7 @@ export default class GroupCard extends Component {
                 {abbrev(group['members:count'], 0)}
               </Text>
             </View>
-            <View
-              style={[
-                CommonStyle.columnAlignCenter,
-                CommonStyle.flexContainer,
-              ]}>
+            <View style={[theme.columnAlignCenter, theme.flexContainer]}>
               <Text style={styles.countertitle}>
                 {i18n.t('feed').toUpperCase()}
               </Text>
@@ -78,11 +71,7 @@ export default class GroupCard extends Component {
                 {abbrev(group['activity:count'], 0)}
               </Text>
             </View>
-            <View
-              style={[
-                CommonStyle.columnAlignCenter,
-                CommonStyle.flexContainer,
-              ]}>
+            <View style={[theme.columnAlignCenter, theme.flexContainer]}>
               <Text style={styles.countertitle}>
                 {i18n.t('comments.comments').toUpperCase()}
               </Text>
@@ -91,7 +80,7 @@ export default class GroupCard extends Component {
               </Text>
             </View>
           </View>
-          <View style={[CommonStyle.rowJustifyCenter]}>
+          <View style={[theme.rowJustifyCenter]}>
             <View style={styles.namecol}>
               <Text style={styles.name}>{group.name.toUpperCase()}</Text>
             </View>

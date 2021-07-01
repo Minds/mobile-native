@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import * as Animatable from 'react-native-animatable';
 
 import {
@@ -21,226 +21,194 @@ import InputContainer from '../common/components/InputContainer';
 import BoxShadow from '../common/components/BoxShadow';
 import { styles, shadowOpt, icon } from './styles';
 import { TwoFactorStore } from './twoFactorAuth/createTwoFactorStore';
+import { observer, useLocalStore } from 'mobx-react';
+import ResetPasswordModal, {
+  ResetPasswordModalHandles,
+} from './reset-password/ResetPasswordModal';
+import { LoginScreenRouteProp } from './LoginScreen';
 
 type PropsType = {
   onLogin?: Function;
   onRegisterPress?: () => void;
-  onForgot: Function;
   store: TwoFactorStore;
-};
-
-type StateType = {
-  username: string;
-  password: string;
-  msg: string;
-  hidePassword: boolean;
-  inProgress: boolean;
+  route: LoginScreenRouteProp;
 };
 
 const { height } = Dimensions.get('window');
 
 const loginMargin = { marginTop: height / 55 };
 
-/**
- * Login Form
- */
-export default class LoginForm extends Component<PropsType, StateType> {
-  /**
-   * State
-   */
-  state = {
+export default observer(function LoginForm(props: PropsType) {
+  const resetRef = React.useRef<ResetPasswordModalHandles>(null);
+  const localStore = useLocalStore(() => ({
     username: '',
     password: '',
     msg: '',
-    language: '',
+    language: i18n.getCurrentLocale(),
     hidePassword: true,
     inProgress: false,
-  };
+    setUsername(value) {
+      const username = String(value).trim();
+      this.username = username;
+    },
+    setPassword(value) {
+      const password = String(value).trim();
+      this.password = password;
+    },
+    toggleHidePassword() {
+      this.hidePassword = !this.hidePassword;
+    },
+    setInProgress(value: boolean) {
+      this.inProgress = value;
+    },
+    initLogin() {
+      this.msg = '';
+      this.inProgress = true;
+    },
+    setError(msg: string) {
+      this.msg = msg;
+      this.inProgress = false;
+    },
+    onLoginPress() {
+      this.initLogin();
+      // is two factor auth
+      authService
+        .login(this.username, this.password)
+        .then(() => {
+          props.onLogin && props.onLogin();
+        })
+        .catch(err => {
+          const errJson = err.response ? err.response.data : err;
+          LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+          if (
+            errJson.error === 'invalid_grant' ||
+            errJson.error === 'invalid_client'
+          ) {
+            this.setError(i18n.t('auth.invalidGrant'));
+            return;
+          }
 
-  /**
-   * Constructor
-   */
-  constructor(props: PropsType) {
-    super(props);
-    this.state.language = i18n.getCurrentLocale();
-  }
+          if (err.errId && err.errId === TWO_FACTOR_ERROR) {
+            props.store.showTwoFactorForm(
+              err.headers['x-minds-sms-2fa-key'],
+              this.username,
+              this.password,
+            );
+            return;
+          }
 
-  /**
-   * Render
-   */
-  render() {
-    const theme = ThemedStyles.style;
+          if (errJson.message.includes('user could not be found')) {
+            this.setError(i18n.t('auth.loginFail'));
+            return;
+          }
 
-    const msg = this.state.msg ? (
-      <Animatable.Text
-        animation="bounceInLeft"
-        useNativeDriver
-        style={[theme.subTitleText, theme.colorSecondaryText, theme.textCenter]}
-        testID="loginMsg">
-        {this.state.msg}
-      </Animatable.Text>
-    ) : null;
+          this.setError(errJson.message || 'Unknown error');
 
-    const inputs = (
-      <View style={styles.shadow}>
+          logService.exception('[LoginForm]', errJson);
+        });
+    },
+    onForgotPress() {
+      resetRef.current?.show();
+    },
+  }));
+
+  const username = props.route?.params?.username;
+  const code = props.route?.params?.code;
+  React.useEffect(() => {
+    const navToInputPassword = username && code && !!resetRef.current;
+    if (navToInputPassword) {
+      resetRef.current!.show(navToInputPassword, username, code);
+    }
+  }, [code, username]);
+
+  const theme = ThemedStyles.style;
+
+  const msg = localStore.msg ? (
+    <Animatable.Text
+      animation="bounceInLeft"
+      useNativeDriver
+      style={[theme.subTitleText, theme.colorSecondaryText, theme.textCenter]}
+      testID="loginMsg">
+      {localStore.msg}
+    </Animatable.Text>
+  ) : null;
+
+  const inputs = (
+    <View style={styles.shadow}>
+      <InputContainer
+        containerStyle={styles.inputBackground}
+        labelStyle={theme.colorWhite}
+        style={theme.colorWhite}
+        placeholder={i18n.t('auth.username')}
+        onChangeText={localStore.setUsername}
+        autoCompleteType="username"
+        textContentType="username"
+        value={localStore.username}
+        testID="usernameInput"
+        noBottomBorder
+      />
+      <View>
         <InputContainer
           containerStyle={styles.inputBackground}
           labelStyle={theme.colorWhite}
           style={theme.colorWhite}
-          placeholder={i18n.t('auth.username')}
-          onChangeText={this.setUsername}
-          autoCompleteType="username"
-          textContentType="username"
-          value={this.state.username}
-          testID="usernameInput"
-          noBottomBorder
+          placeholder={i18n.t('auth.password')}
+          secureTextEntry={localStore.hidePassword}
+          autoCompleteType="password"
+          textContentType="password"
+          onChangeText={localStore.setPassword}
+          value={localStore.password}
+          testID="userPasswordInput"
         />
-        <View>
-          <InputContainer
-            containerStyle={styles.inputBackground}
-            labelStyle={theme.colorWhite}
-            style={theme.colorWhite}
-            placeholder={i18n.t('auth.password')}
-            secureTextEntry={this.state.hidePassword}
-            autoCompleteType="password"
-            textContentType="password"
-            onChangeText={this.setPassword}
-            value={this.state.password}
-            testID="userPasswordInput"
-          />
-          <Icon
-            name={this.state.hidePassword ? 'md-eye' : 'md-eye-off'}
-            size={25}
-            onPress={this.toggleHidePassword}
-            style={[theme.inputIcon, icon]}
-          />
-        </View>
+        <Icon
+          name={localStore.hidePassword ? 'md-eye' : 'md-eye-off'}
+          size={25}
+          onPress={localStore.toggleHidePassword}
+          style={[theme.inputIcon, icon]}
+        />
       </View>
-    );
+    </View>
+  );
 
-    const inputsWithShadow = Platform.select({
-      ios: inputs,
-      android: <BoxShadow setting={shadowOpt}>{inputs}</BoxShadow>, // Android fallback for shadows
-    });
+  const inputsWithShadow = Platform.select({
+    ios: inputs,
+    android: <BoxShadow setting={shadowOpt}>{inputs}</BoxShadow>, // Android fallback for shadows
+  });
 
-    return (
-      <View style={theme.flexContainer}>
-        {msg}
-        {inputsWithShadow}
-        <View style={[theme.margin6x, theme.flexContainer]}>
-          <Button
-            onPress={() => this.onLoginPress()}
-            text={i18n.t('auth.login')}
-            containerStyle={[loginMargin, theme.fullWidth]}
-            loading={this.state.inProgress}
-            disabled={this.state.inProgress}
-            accessibilityLabel="loginButton"
-            transparent
-            large
-          />
-          <View style={theme.marginTop4x}>
-            <Text
-              style={[theme.colorWhite, theme.fontL, theme.textCenter]}
-              onPress={this.onForgotPress}>
-              {i18n.t('auth.forgot')}
-            </Text>
-          </View>
-          <View style={theme.flexContainer} />
-          <Button
-            onPress={this.props.onRegisterPress}
-            text={i18n.t('auth.createChannel')}
-            containerStyle={[theme.fullWidth, theme.marginTop6x]}
-            disabled={this.state.inProgress}
-            testID="registerButton"
-            transparent
-            large
-          />
+  return (
+    <View style={theme.flexContainer}>
+      {msg}
+      {inputsWithShadow}
+      <View style={[theme.margin6x, theme.flexContainer]}>
+        <Button
+          onPress={localStore.onLoginPress}
+          text={i18n.t('auth.login')}
+          containerStyle={[loginMargin, theme.fullWidth]}
+          loading={localStore.inProgress}
+          disabled={localStore.inProgress}
+          accessibilityLabel="loginButton"
+          transparent
+          large
+        />
+        <View style={theme.marginTop4x}>
+          <Text
+            style={[theme.colorWhite, theme.fontL, theme.textCenter]}
+            onPress={localStore.onForgotPress}>
+            {i18n.t('auth.forgot')}
+          </Text>
         </View>
+        <View style={theme.flexContainer} />
+        <Button
+          onPress={props.onRegisterPress}
+          text={i18n.t('auth.createChannel')}
+          containerStyle={[theme.fullWidth, theme.marginTop6x]}
+          disabled={localStore.inProgress}
+          testID="registerButton"
+          transparent
+          large
+        />
       </View>
-    );
-  }
-
-  /**
-   * Set two factor
-   * Set username
-   * @param {string} value
-   */
-  setUsername = value => {
-    const username = String(value).trim();
-    this.setState({ username });
-  };
-
-  /**
-   * Set pasword
-   * @param {string} value
-   */
-  setPassword = value => {
-    const password = String(value).trim();
-    this.setState({ password });
-  };
-
-  /**
-   * toggle
-   * @param {string} value
-   */
-  toggleHidePassword = () => {
-    this.setState({ hidePassword: !this.state.hidePassword });
-  };
-
-  /**
-   * Handle forgot password
-   */
-  onForgotPress = () => {
-    this.props.onForgot();
-  };
-
-  /**
-   * On login press
-   */
-  onLoginPress() {
-    this.setState({ msg: '', inProgress: true });
-    // is two factor auth
-    authService
-      .login(this.state.username, this.state.password)
-      .then(() => {
-        this.props.onLogin && this.props.onLogin();
-      })
-      .catch(errJson => {
-        LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
-        if (
-          errJson.error === 'invalid_grant' ||
-          errJson.error === 'invalid_client'
-        ) {
-          this.setState({
-            msg: i18n.t('auth.invalidGrant'),
-            inProgress: false,
-          });
-          return;
-        }
-
-        if (errJson.errId && errJson.errId === TWO_FACTOR_ERROR) {
-          this.props.store.showTwoFactorForm(
-            errJson.headers.map['x-minds-sms-2fa-key'],
-            this.state.username,
-            this.state.password,
-          );
-          return;
-        }
-
-        if (errJson.message.includes('user could not be found')) {
-          this.setState({
-            msg: i18n.t('auth.loginFail'),
-            inProgress: false,
-          });
-          return;
-        }
-
-        this.setState({
-          msg: errJson.message || 'Unknown error',
-          inProgress: false,
-        });
-
-        logService.exception('[LoginForm]', errJson);
-      });
-  }
-}
+      <ResetPasswordModal ref={resetRef} />
+    </View>
+  );
+});

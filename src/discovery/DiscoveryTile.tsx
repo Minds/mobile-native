@@ -9,7 +9,6 @@ import { observer } from 'mobx-react';
 import ExplicitImage from '../common/components/explicit/ExplicitImage';
 
 import ExplicitOverlay from '../common/components/explicit/ExplicitOverlay';
-import { CommonStyle as CS } from '../styles/Common';
 import ThemedStyles from '../styles/ThemedStyles';
 
 @observer
@@ -57,6 +56,7 @@ class DiscoveryTile extends Component {
    */
   render() {
     const entity = this.props.entity;
+    const theme = ThemedStyles.style;
 
     // this optimization have some issues with the changes of the video auto-pause
     // if (!entity.is_visible) {
@@ -79,9 +79,9 @@ class DiscoveryTile extends Component {
     const boundary = this.props.boundaryText ? (
       <View
         style={[
-          CS.positionAbsoluteTop,
-          ThemedStyles.style.backgroundSeparator,
-          CS.centered,
+          theme.positionAbsoluteTop,
+          theme.bgSeparator,
+          theme.centered,
           styles.boundary,
         ]}>
         <Text>{this.props.boundaryText}</Text>
@@ -92,8 +92,7 @@ class DiscoveryTile extends Component {
       <TouchableOpacity
         onPress={this._onPress}
         style={[this.state.style, styles.tile]}>
-        <View
-          style={[CS.flexContainer, ThemedStyles.style.backgroundSeparator]}>
+        <View style={[theme.flexContainer, theme.bgSeparator]}>
           {boundary}
           <ExplicitImage
             source={url}

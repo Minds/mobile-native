@@ -6,7 +6,7 @@ import React, {
   useRef,
 } from 'react';
 
-import { View, TextStyle, Alert } from 'react-native';
+import { View, TextStyle } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import createTranslateStore from './createTranslateStore';
 import Translated from './Translated';
@@ -15,6 +15,7 @@ import i18n from '../../services/i18n.service';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
 import Selector from '../Selector';
 import CenteredLoading from '../CenteredLoading';
+import { showNotification } from '../../../../AppMessages';
 
 export interface TranslatePropsType {
   entity: ActivityModel;
@@ -31,8 +32,7 @@ const Translate = observer(
     const localStore = useLocalStore(createTranslateStore, { selectorRef });
 
     const showError = useCallback(() => {
-      Alert.alert(
-        i18n.t('ops'),
+      showNotification(
         i18n.t('translate.error') + '\n' + i18n.t('pleaseTryAgain'),
       );
     }, []);
@@ -119,6 +119,7 @@ const Translate = observer(
         <Selector
           ref={selectorRef}
           onItemSelect={languageSelected}
+          backdropOpacity={0.9}
           title={''}
           data={localStore.languages}
           valueExtractor={item => item.name}

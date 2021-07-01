@@ -87,7 +87,7 @@ export const MINDS_DEEPLINK = [
   ['email-confirmation', 'EmailConfirmation'],
   ['groups/profile/:guid/feed', 'GroupView'],
   ['groups/profile/:guid', 'GroupView'],
-  ['notifications', 'Notifications'],
+  ['notifications', 'Notifications', 'navigate'],
   ['groups/:filter', 'GroupsList'],
   ['newsfeed/:guid', 'Activity'],
   ['media/:guid', 'Activity'],

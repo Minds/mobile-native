@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Text, TextInput, View } from 'react-native';
+import { Text, View } from 'react-native';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 import i18n from '../../../services/i18n.service';
 import { PhoneValidationPropsType } from '../PhoneValidationComponent';
@@ -10,6 +10,7 @@ import { observer } from 'mobx-react';
 import twoFactorAuthenticationService from '../../../services/two-factor-authentication.service';
 import { UserError } from '../../../UserError';
 import { PhoneValidationStoreType } from '../createLocalStore';
+import TextInput from '../../TextInput';
 
 type PropsType = {
   localStore: PhoneValidationStoreType;
@@ -54,13 +55,13 @@ const NumberConfirmed = observer(({ localStore, ...props }: PropsType) => {
             style.phoneInput,
             ComponentsStyle.loginInputNew,
             theme.marginRight2x,
-            theme.borderPrimary,
+            theme.bcolorPrimaryBorder,
             theme.colorPrimaryText,
           ]}
           value={localStore.password}
           onChangeText={localStore.setPassword}
           placeholder={i18n.t('passwordPlaceholder')}
-          placeholderTextColor={ThemedStyles.getColor('secondary_text')}
+          placeholderTextColor={ThemedStyles.getColor('SecondaryText')}
         />
         <ListItemButton onPress={remove2FA}>
           <Text style={theme.colorPrimaryText}>

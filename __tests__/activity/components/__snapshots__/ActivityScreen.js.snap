@@ -14,7 +14,7 @@ exports[`Activity screen component renders correctly  1`] = `
         "flex": 1,
       },
       Object {
-        "backgroundColor": undefined,
+        "backgroundColor": "#FFFFFF",
       },
     ]
   }
@@ -33,11 +33,11 @@ exports[`Activity screen component renders correctly  1`] = `
             "borderBottomWidth": 0.5,
           },
           Object {
-            "borderColor": undefined,
+            "borderColor": "#D3DBE3",
           },
           Array [
             Object {
-              "backgroundColor": undefined,
+              "backgroundColor": "#FFFFFF",
             },
             Object {
               "borderBottomWidth": 0,
@@ -89,14 +89,14 @@ exports[`Activity screen component renders correctly  1`] = `
                   "shadowRadius": 3,
                 },
                 Object {
-                  "color": undefined,
+                  "color": "#43434D",
                 },
                 Object {
                   "top": 5,
                 },
                 Array [
                   Object {
-                    "color": undefined,
+                    "color": "#43434D",
                   },
                   Object {
                     "marginLeft": -17,
@@ -197,7 +197,7 @@ exports[`Activity screen component renders correctly  1`] = `
                 style={
                   Array [
                     Object {
-                      "color": undefined,
+                      "color": "#43434D",
                     },
                     Object {
                       "fontFamily": "Roboto-Light",
@@ -245,7 +245,7 @@ exports[`Activity screen component renders correctly  1`] = `
                     "fontSize": 28,
                   },
                   Object {
-                    "color": undefined,
+                    "color": "#9B9B9B",
                   },
                   Object {
                     "fontFamily": "Material Icons",
@@ -258,135 +258,6 @@ exports[`Activity screen component renders correctly  1`] = `
             >
               
             </Text>
-            <Modal
-              animationType="none"
-              hardwareAccelerated={false}
-              onRequestClose={[Function]}
-              transparent={true}
-              visible={false}
-            >
-              <View
-                style={
-                  Array [
-                    Array [
-                      Object {
-                        "flex": 1,
-                        "flexDirection": "row",
-                      },
-                    ],
-                  ]
-                }
-              >
-                <Text
-                  onPress={[Function]}
-                  style={
-                    Array [
-                      Array [
-                        Object {
-                          "backgroundColor": "#000",
-                          "bottom": 0,
-                          "left": 0,
-                          "opacity": 0.4,
-                          "position": "absolute",
-                          "right": 0,
-                          "top": 0,
-                        },
-                      ],
-                    ]
-                  }
-                />
-                <View
-                  style={
-                    Object {
-                      "alignSelf": "flex-end",
-                      "backgroundColor": "#242A30",
-                      "flex": 1,
-                      "height": 45.5,
-                      "transform": Array [
-                        Object {
-                          "translateY": 45.5,
-                        },
-                      ],
-                    }
-                  }
-                >
-                  <View
-                    style={
-                      Array [
-                        Object {
-                          "alignItems": "center",
-                          "backgroundColor": "#fff",
-                          "height": 40,
-                          "justifyContent": "center",
-                        },
-                        Object {
-                          "alignItems": "center",
-                          "backgroundColor": "#242A30",
-                          "height": 40,
-                          "justifyContent": "center",
-                        },
-                      ]
-                    }
-                  >
-                    <Text
-                      style={
-                        Array [
-                          Object {
-                            "color": "#757575",
-                            "fontSize": 14,
-                          },
-                        ]
-                      }
-                    >
-                      Actions
-                    </Text>
-                  </View>
-                  <RCTScrollView
-                    scrollEnabled={false}
-                  >
-                    <View />
-                  </RCTScrollView>
-                  <View
-                    activeOpacity={1}
-                    onPress={[Function]}
-                    style={
-                      Array [
-                        Object {
-                          "alignItems": "center",
-                          "backgroundColor": "#fff",
-                          "height": 50,
-                          "justifyContent": "center",
-                          "marginTop": 6,
-                        },
-                        Object {
-                          "alignItems": "center",
-                          "backgroundColor": "#1A2025",
-                          "height": 50,
-                          "justifyContent": "center",
-                          "marginTop": 6,
-                        },
-                      ]
-                    }
-                    underlayColor="#F4F4F4"
-                  >
-                    <Text
-                      style={
-                        Array [
-                          Array [
-                            Object {
-                              "fontSize": 18,
-                            },
-                          ],
-                          Object {
-                            "color": "#007AFF",
-                          },
-                        ]
-                      }
-                    />
-                  </View>
-                </View>
-              </View>
-            </Modal>
           </View>
         </View>
       </View>
@@ -486,6 +357,7 @@ exports[`Activity screen component renders correctly  1`] = `
               onModalWillHide={[Function]}
               onModalWillShow={[Function]}
               onRequestClose={[Function]}
+              panResponderThreshold={4}
               scrollHorizontal={false}
               scrollOffset={0}
               scrollOffsetMax={0}
@@ -513,7 +385,7 @@ exports[`Activity screen component renders correctly  1`] = `
                 onStartShouldSetResponder={[Function]}
                 style={
                   Object {
-                    "backgroundColor": "#1E242A",
+                    "backgroundColor": "#F8FAFA",
                     "bottom": 0,
                     "height": 1334,
                     "left": 0,
@@ -534,6 +406,7 @@ exports[`Activity screen component renders correctly  1`] = `
                 onModalHide={[Function]}
                 onModalWillHide={[Function]}
                 onModalWillShow={[Function]}
+                panResponderThreshold={4}
                 pointerEvents="box-none"
                 scrollHorizontal={false}
                 scrollOffset={0}
@@ -561,31 +434,12 @@ exports[`Activity screen component renders correctly  1`] = `
               >
                 <View
                   style={
-                    Array [
-                      Object {
-                        "alignItems": "center",
-                        "backgroundColor": "transparent",
-                        "flex": 1,
-                        "justifyContent": "center",
-                      },
-                    ]
+                    Object {
+                      "flex": 1,
+                      "width": "100%",
+                    }
                   }
                 >
-                  <Text
-                    style={
-                      Object {
-                        "alignContent": "center",
-                        "alignItems": "center",
-                        "alignSelf": "center",
-                        "color": undefined,
-                        "fontSize": 22,
-                        "justifyContent": "center",
-                        "marginBottom": 30,
-                      }
-                    }
-                  >
-                    
-                  </Text>
                   <View
                     style={
                       Array [
@@ -594,12 +448,6 @@ exports[`Activity screen component renders correctly  1`] = `
                         },
                         Object {
                           "marginTop": 15,
-                        },
-                        Object {
-                          "paddingLeft": 10,
-                        },
-                        Object {
-                          "marginBottom": 30,
                         },
                       ]
                     }
@@ -626,6 +474,11 @@ exports[`Activity screen component renders correctly  1`] = `
                       renderItem={[Function]}
                       scrollEventThrottle={50}
                       stickyHeaderIndices={Array []}
+                      style={
+                        Object {
+                          "flex": 1,
+                        }
+                      }
                       updateCellsBatchingPeriod={50}
                       viewabilityConfigCallbackPairs={Array []}
                       windowSize={21}
@@ -636,6 +489,7 @@ exports[`Activity screen component renders correctly  1`] = `
                   <View
                     style={
                       Object {
+                        "alignSelf": "center",
                         "backgroundColor": "transparent",
                         "borderRadius": 28,
                         "height": 55,
@@ -722,7 +576,7 @@ exports[`Activity screen component renders correctly  1`] = `
             style={
               Array [
                 Object {
-                  "color": undefined,
+                  "color": "#72727C",
                 },
                 Object {
                   "fontSize": 14,
@@ -742,8 +596,8 @@ exports[`Activity screen component renders correctly  1`] = `
     <ExpoLinearGradient
       colors={
         Array [
-          "#1A202500",
-          "#1A2025FF",
+          "#F6F7F700",
+          "#F6F7F7FF",
         ]
       }
       style={
@@ -763,6 +617,184 @@ exports[`Activity screen component renders correctly  1`] = `
       }
     }
   >
+    <View
+      style={
+        Array [
+          Object {
+            "flexDirection": "row",
+            "justifyContent": "flex-start",
+          },
+          Object {
+            "backgroundColor": "#FFFFFF",
+          },
+          Object {
+            "paddingLeft": 10,
+          },
+          Object {
+            "borderTopWidth": 0.5,
+          },
+          Object {
+            "borderColor": "#D3DBE3",
+          },
+        ]
+      }
+    >
+      <Modal
+        animationType="none"
+        deviceHeight={null}
+        deviceWidth={null}
+        hardwareAccelerated={false}
+        hideModalContentWhileAnimating={false}
+        onBackdropPress={[Function]}
+        onModalHide={[Function]}
+        onModalWillHide={[Function]}
+        onModalWillShow={[Function]}
+        onRequestClose={[Function]}
+        panResponderThreshold={4}
+        scrollHorizontal={false}
+        scrollOffset={0}
+        scrollOffsetMax={0}
+        scrollTo={null}
+        supportedOrientations={
+          Array [
+            "portrait",
+            "landscape",
+          ]
+        }
+        swipeThreshold={100}
+        transparent={true}
+        visible={false}
+      >
+        <View
+          accessible={true}
+          focusable={true}
+          forwardedRef={[Function]}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "backgroundColor": "black",
+              "bottom": 0,
+              "height": 1334,
+              "left": 0,
+              "opacity": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "width": 750,
+            }
+          }
+        />
+        <View
+          deviceHeight={null}
+          deviceWidth={null}
+          forwardedRef={[Function]}
+          hideModalContentWhileAnimating={false}
+          onBackdropPress={[Function]}
+          onModalHide={[Function]}
+          onModalWillHide={[Function]}
+          onModalWillShow={[Function]}
+          panResponderThreshold={4}
+          pointerEvents="box-none"
+          scrollHorizontal={false}
+          scrollOffset={0}
+          scrollOffsetMax={0}
+          scrollTo={null}
+          style={
+            Object {
+              "flex": 1,
+              "justifyContent": "center",
+              "margin": 37.5,
+              "transform": Array [
+                Object {
+                  "translateY": 0,
+                },
+              ],
+            }
+          }
+          supportedOrientations={
+            Array [
+              "portrait",
+              "landscape",
+            ]
+          }
+          swipeThreshold={100}
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "height": "75%",
+                },
+                Object {
+                  "backgroundColor": "#FFFFFF",
+                },
+                Object {
+                  "padding": 15,
+                },
+                Object {
+                  "borderRadius": 5,
+                },
+              ]
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "fontSize": 22,
+                  },
+                  Object {
+                    "marginLeft": 10,
+                  },
+                  Object {
+                    "marginBottom": 5,
+                  },
+                ]
+              }
+            >
+              Upvotes
+            </Text>
+            <Text
+              onPress={[Function]}
+              style={
+                Array [
+                  Object {
+                    "color": "#72727C",
+                  },
+                  Object {
+                    "textAlign": "center",
+                  },
+                  Object {
+                    "fontSize": 16,
+                  },
+                  Object {
+                    "marginVertical": 20,
+                  },
+                ]
+              }
+            >
+              Error
+
+              <Text
+                style={
+                  Object {
+                    "color": "#1B85D6",
+                  }
+                }
+              >
+                Try again
+              </Text>
+            </Text>
+          </View>
+        </View>
+      </Modal>
+    </View>
     <View>
       <View
         style={
@@ -775,7 +807,7 @@ exports[`Activity screen component renders correctly  1`] = `
               "paddingHorizontal": 10,
             },
             Object {
-              "borderColor": undefined,
+              "borderColor": "#D3DBE3",
             },
           ]
         }
@@ -811,7 +843,7 @@ exports[`Activity screen component renders correctly  1`] = `
                 },
                 Array [
                   Object {
-                    "color": undefined,
+                    "color": "#7D7D82",
                   },
                   Object {
                     "marginRight": 5,
@@ -860,7 +892,7 @@ exports[`Activity screen component renders correctly  1`] = `
                 },
                 Array [
                   Object {
-                    "color": undefined,
+                    "color": "#7D7D82",
                   },
                   Object {
                     "marginRight": 5,
@@ -909,7 +941,7 @@ exports[`Activity screen component renders correctly  1`] = `
                 },
                 Array [
                   Object {
-                    "color": undefined,
+                    "color": "#7D7D82",
                   },
                   Object {
                     "marginRight": 5,
@@ -941,131 +973,55 @@ exports[`Activity screen component renders correctly  1`] = `
             </Text>
           </View>
         </View>
-        <Menu
-          button={
-            <preventDoubleTap(TouchableOpacity)
-              onPress={[Function]}
-              style={
-                Array [
-                  Object {
-                    "flexDirection": "row",
-                    "justifyContent": "center",
-                  },
-                  Object {
-                    "paddingHorizontal": 15,
-                  },
-                  Object {
-                    "paddingVertical": 20,
-                  },
-                  Object {
-                    "alignItems": "center",
-                  },
-                ]
-              }
-              testID="Remind activity button"
-            >
-              <Icon
-                allowFontScaling={false}
-                name="repeat"
-                size={21}
-                style={
-                  Array [
-                    Object {
-                      "color": undefined,
-                    },
-                    Object {
-                      "marginRight": 5,
-                    },
-                  ]
-                }
-              />
-              <Counter
-                count={0}
-                size={15}
-              />
-            </preventDoubleTap(TouchableOpacity)>
-          }
+        <View
+          onPress={[Function]}
           style={
-            Object {
-              "backgroundColor": undefined,
-            }
+            Array [
+              Object {
+                "flexDirection": "row",
+                "justifyContent": "center",
+              },
+              Object {
+                "paddingHorizontal": 15,
+              },
+              Object {
+                "paddingVertical": 20,
+              },
+              Object {
+                "alignItems": "center",
+              },
+            ]
           }
+          testID="Remind activity button"
         >
-          <MenuItem
-            onPress={[Function]}
-            textStyle={
+          <Text
+            allowFontScaling={false}
+            style={
               Array [
                 Object {
                   "color": undefined,
+                  "fontSize": 21,
                 },
+                Array [
+                  Object {
+                    "color": "#7D7D82",
+                  },
+                  Object {
+                    "marginRight": 5,
+                  },
+                ],
                 Object {
-                  "fontSize": 16,
+                  "fontFamily": "Material Icons",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
                 },
+                Object {},
               ]
             }
           >
-            <Text
-              allowFontScaling={false}
-              style={
-                Array [
-                  Object {
-                    "color": undefined,
-                    "fontSize": 15,
-                  },
-                  Object {
-                    "color": undefined,
-                  },
-                  Object {
-                    "fontFamily": "Material Icons",
-                    "fontStyle": "normal",
-                    "fontWeight": "normal",
-                  },
-                  Object {},
-                ]
-              }
-            >
-              
-            </Text>
-              Remind
-          </MenuItem>
-          <MenuItem
-            onPress={[Function]}
-            textStyle={
-              Array [
-                Object {
-                  "color": undefined,
-                },
-                Object {
-                  "fontSize": 16,
-                },
-              ]
-            }
-          >
-            <Text
-              allowFontScaling={false}
-              style={
-                Array [
-                  Object {
-                    "color": undefined,
-                    "fontSize": 15,
-                  },
-                  Object {
-                    "color": undefined,
-                  },
-                  Object {
-                    "fontFamily": "Material Icons",
-                    "fontStyle": "normal",
-                    "fontWeight": "normal",
-                  },
-                  Object {},
-                ]
-              }
-            >
-              
-            </Text>
-              Quote
-          </MenuItem>
-        </Menu>
+            
+          </Text>
+        </View>
         <View
           onPress={[Function]}
           style={
@@ -1095,7 +1051,7 @@ exports[`Activity screen component renders correctly  1`] = `
                   "fontSize": 20,
                 },
                 Object {
-                  "color": undefined,
+                  "color": "#7D7D82",
                 },
                 Object {
                   "fontFamily": "Ionicons",
@@ -1119,6 +1075,8 @@ exports[`Activity screen component renders correctly  1`] = `
             onModalWillHide={[Function]}
             onModalWillShow={[Function]}
             onRequestClose={[Function]}
+            onSwipeComplete={[Function]}
+            panResponderThreshold={4}
             scrollHorizontal={false}
             scrollOffset={0}
             scrollOffsetMax={0}
@@ -1129,6 +1087,7 @@ exports[`Activity screen component renders correctly  1`] = `
                 "landscape",
               ]
             }
+            swipeDirection="down"
             swipeThreshold={100}
             transparent={true}
             visible={false}
@@ -1206,6 +1165,20 @@ exports[`Activity screen component renders correctly  1`] = `
                 onModalHide={[Function]}
                 onModalWillHide={[Function]}
                 onModalWillShow={[Function]}
+                onMoveShouldSetResponder={[Function]}
+                onMoveShouldSetResponderCapture={[Function]}
+                onResponderEnd={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderReject={[Function]}
+                onResponderRelease={[Function]}
+                onResponderStart={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                onStartShouldSetResponderCapture={[Function]}
+                onSwipeComplete={[Function]}
+                panResponderThreshold={4}
                 pointerEvents="box-none"
                 scrollHorizontal={false}
                 scrollOffset={0}
@@ -1230,6 +1203,7 @@ exports[`Activity screen component renders correctly  1`] = `
                     "landscape",
                   ]
                 }
+                swipeDirection="down"
                 swipeThreshold={100}
               >
                 <View
@@ -1256,9 +1230,9 @@ exports[`Activity screen component renders correctly  1`] = `
                         style={
                           Object {
                             "alignItems": "center",
-                            "backgroundColor": undefined,
+                            "backgroundColor": "#FFFFFF",
                             "borderBottomWidth": 0.5,
-                            "borderColor": undefined,
+                            "borderColor": "#D3DBE3",
                             "borderTopLeftRadius": 10,
                             "borderTopRightRadius": 10,
                             "flexDirection": "row",
@@ -1326,7 +1300,7 @@ exports[`Activity screen component renders correctly  1`] = `
                                 "alignItems": "center",
                                 "alignSelf": "center",
                                 "backgroundColor": "transparent",
-                                "color": undefined,
+                                "color": "#43434D",
                                 "fontSize": 18,
                                 "justifyContent": "center",
                                 "paddingVertical": 5,
@@ -1347,10 +1321,10 @@ exports[`Activity screen component renders correctly  1`] = `
                         style={
                           Object {
                             "alignItems": "center",
-                            "backgroundColor": undefined,
+                            "backgroundColor": "#FFFFFF",
                             "borderBottomLeftRadius": 10,
                             "borderBottomRightRadius": 10,
-                            "borderColor": undefined,
+                            "borderColor": "#D3DBE3",
                             "flexDirection": "row",
                             "marginBottom": 10,
                             "marginHorizontal": 15,
@@ -1417,7 +1391,7 @@ exports[`Activity screen component renders correctly  1`] = `
                                 "alignItems": "center",
                                 "alignSelf": "center",
                                 "backgroundColor": "transparent",
-                                "color": undefined,
+                                "color": "#43434D",
                                 "fontSize": 18,
                                 "justifyContent": "center",
                                 "paddingVertical": 5,
@@ -1447,10 +1421,10 @@ exports[`Activity screen component renders correctly  1`] = `
                         style={
                           Object {
                             "alignItems": "center",
-                            "backgroundColor": undefined,
+                            "backgroundColor": "#FFFFFF",
                             "borderBottomLeftRadius": 10,
                             "borderBottomRightRadius": 10,
-                            "borderColor": undefined,
+                            "borderColor": "#D3DBE3",
                             "borderTopLeftRadius": 10,
                             "borderTopRightRadius": 10,
                             "flexDirection": "row",
@@ -1519,7 +1493,7 @@ exports[`Activity screen component renders correctly  1`] = `
                                 "alignItems": "center",
                                 "alignSelf": "center",
                                 "backgroundColor": "transparent",
-                                "color": undefined,
+                                "color": "#72727C",
                                 "fontSize": 18,
                                 "justifyContent": "center",
                                 "paddingVertical": 5,
@@ -1625,6 +1599,7 @@ exports[`Activity screen component renders correctly  1`] = `
           "perma_url": false,
           "permissions": Object {},
           "pinned": false,
+          "quotes": 0,
           "reminds": 0,
           "rowKey": "something0",
           "shouldBeBlured": [MockFunction] {

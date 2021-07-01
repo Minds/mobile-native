@@ -10,7 +10,9 @@ type PropsType = {
 
 const FindInDiscoveryButton = ({ showBorder, localStore }: PropsType) => {
   const theme = ThemedStyles.style;
-  const borders = showBorder ? [theme.borderTopHair, theme.borderPrimary] : [];
+  const borders = showBorder
+    ? [theme.borderTopHair, theme.bcolorPrimaryBorder]
+    : [];
   return (
     <TouchableOpacity
       onPress={() => localStore.searchDiscovery()}

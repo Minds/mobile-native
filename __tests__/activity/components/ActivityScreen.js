@@ -13,15 +13,19 @@ import {
 } from '../../../__mocks__/@react-navigation/native';
 import { getStores } from '../../../AppStores';
 
+jest.mock('react-native-reanimated', () =>
+  require('react-native-reanimated/mock'),
+);
+
 getStores.mockReturnValue({
   newsfeed: {},
 });
 
 jest.mock('react-native-system-setting', () => {
   return {
-    getVolume: jest.fn(() => Promise.resolve())
-  }
-})
+    getVolume: jest.fn(() => Promise.resolve()),
+  };
+});
 
 jest.mock('react-native-safe-area-context');
 jest.mock('react-native-material-menu');
@@ -61,7 +65,7 @@ jest.mock(
 jest.useRealTimers();
 
 describe('Activity screen component', () => {
-  it('renders correctly ', async (done) => {
+  it('renders correctly ', async done => {
     try {
       const navigation = {
         push: jest.fn(),

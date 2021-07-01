@@ -1,10 +1,11 @@
 import React, { useState, useCallback } from 'react';
-import { View, Text, TextInput, StyleSheet } from 'react-native';
+import { View, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 
 import ThemedStyles from '../styles/ThemedStyles';
 import i18nService from '../common/services/i18n.service';
 import { observer } from 'mobx-react';
+import TextInput from '../common/components/TextInput';
 
 /**
  * Title input
@@ -52,7 +53,7 @@ export default observer(function (props) {
             theme.paddingHorizontal4x,
           ]}
           placeholder={i18nService.t('title')}
-          placeholderTextColor={ThemedStyles.getColor('tertiary_text')}
+          placeholderTextColor={ThemedStyles.getColor('TertiaryText')}
           onChangeText={props.store.setTitle}
           textAlignVertical="top"
           value={props.store.title}

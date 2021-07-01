@@ -26,7 +26,7 @@ const ConnectBankButton = ({ walletStore, navigation }: PropsType) => {
       <Icon
         name="plus-circle"
         size={16}
-        color={ThemedStyles.getColor('primary_text')}
+        color={ThemedStyles.getColor('PrimaryText')}
         style={theme.marginLeft2x}
       />
     </>

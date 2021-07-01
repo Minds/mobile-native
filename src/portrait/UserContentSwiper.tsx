@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { ActivityFullScreenParamList } from '../navigation/NavigationTypes';
 import { RouteProp } from '@react-navigation/native';
 import { useLocalStore, observer } from 'mobx-react';
-import { useOnFocus } from '@crowdlinker/react-native-pager';
+import { useOnFocus } from '@msantang78/react-native-pager';
 import ThemedStyles from '../styles/ThemedStyles';
 import portraitContentService from './PortraitContentService';
 import Viewed from '../common/stores/Viewed';

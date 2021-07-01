@@ -169,7 +169,7 @@ export default observer(function OnboardingScreen() {
               title: stepsMapping[s.id].title,
               is_completed: s.is_completed,
               icon: s.is_completed
-                ? { name: 'checkmark', color: ThemedStyles.getColor('link') }
+                ? { name: 'checkmark', color: ThemedStyles.getColor('Link') }
                 : undefined,
               onPress:
                 stepsMapping[s.id].onPress ||
@@ -221,8 +221,8 @@ export default observer(function OnboardingScreen() {
             />
           </View>
           <Progress.Bar
-            color={ThemedStyles.getColor('link')}
-            unfilledColor={ThemedStyles.getColor('secondary_text')}
+            color={ThemedStyles.getColor('Link')}
+            unfilledColor={ThemedStyles.getColor('SecondaryText')}
             progress={progressStore.result?.completed_pct}
             width={width - 40}
             borderWidth={0}
@@ -243,7 +243,7 @@ export default observer(function OnboardingScreen() {
                   item.is_completed
                     ? theme.colorSecondaryText
                     : theme.colorPrimaryText,
-                  item.is_completed ? theme.strikethrough : null,
+                  item.is_completed ? theme.strikeThrough : null,
                 ] as TextStyle
               }
             />
@@ -253,6 +253,8 @@ export default observer(function OnboardingScreen() {
     );
 
   return (
-    <View style={[theme.backgroundSecondary, theme.flexContainer]}>{body}</View>
+    <View style={[theme.bgSecondaryBackground, theme.flexContainer]}>
+      {body}
+    </View>
   );
 });

@@ -40,13 +40,13 @@ const ActivityMultiplier = ({ multiplier }: PropsType) => {
         return backgroundLevels[`level${activityLevel}`];
       case 2:
         if (activityLevel === 1) {
-          return theme.backgroundSecondary;
+          return theme.bgSecondaryBackground;
         } else {
           return backgroundLevels[`level${activityLevel}`];
         }
       case 3:
         if (activityLevel !== 3) {
-          return theme.backgroundSecondary;
+          return theme.bgSecondaryBackground;
         } else {
           return backgroundLevels[`level${activityLevel}`];
         }
@@ -69,7 +69,7 @@ const ActivityMultiplier = ({ multiplier }: PropsType) => {
     <TouchableOpacity
       style={styles.mainContainer}
       onPress={() => tooltipRef.current.toggleTooltip()}>
-      <View style={[styles.multiplierContainer, theme.backgroundPrimary]}>
+      <View style={[styles.multiplierContainer, theme.bgPrimaryBackground]}>
         <Text style={theme.fontS}>{activityLevel}.0</Text>
         <View style={[styles.multiplierRow]}>
           <View style={[styles.multiplierLevel, getLevelStyle(1)]} />
@@ -78,7 +78,7 @@ const ActivityMultiplier = ({ multiplier }: PropsType) => {
               styles.multiplierLevel,
               theme.borderLeftHair,
               theme.borderRightHair,
-              theme.borderPrimary,
+              theme.bcolorPrimaryBorder,
               getLevelStyle(2),
             ]}
           />
@@ -93,11 +93,11 @@ const ActivityMultiplier = ({ multiplier }: PropsType) => {
         containerStyle={theme.borderRadius}
         width={250}
         height={200}
-        backgroundColor={ThemedStyles.getColor('link')}
+        backgroundColor={ThemedStyles.getColor('Link')}
         popover={<ToolTipText />}>
         <View />
       </Tooltip>
-      <View style={[styles.infoContainer, theme.backgroundTertiary]}>
+      <View style={[styles.infoContainer, theme.bgTertiaryBackground]}>
         <Text style={styles.infoText}>{activityLevelText}</Text>
       </View>
     </TouchableOpacity>

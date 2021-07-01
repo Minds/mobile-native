@@ -246,7 +246,7 @@ const menuTitleStyle = ThemedStyles.combine(
 );
 const containerStyle = ThemedStyles.combine(
   'flexContainer',
-  'backgroundPrimary',
+  'bgPrimaryBackground',
 );
 const subtitleStyle = ThemedStyles.combine(
   styles.subTitleText,

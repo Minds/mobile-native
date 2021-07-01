@@ -10,6 +10,7 @@ import SuggestedSearch from './SuggestedSearch';
 import SearchHistory from './SearchHistory';
 import MenuItem from '../../common/components/menus/MenuItem';
 import { SearchResultStoreType } from './createSearchResultStore';
+import { withErrorBoundary } from '../../common/components/ErrorBoundary';
 
 type PropsType = {
   navigation: any;
@@ -49,7 +50,7 @@ const SearchResultComponent = observer(
           if (typeof item === 'string') {
             return (
               <MenuItem
-                containerItemStyle={theme.backgroundTransparent}
+                containerItemStyle={theme.bgTransparent}
                 item={{
                   onPress: () => localStore.setSearchesAndQueryDiscovery(item),
                   title: item,
@@ -70,8 +71,7 @@ const SearchResultComponent = observer(
 
     // If have something to search, render suggested, else, search history
     return (
-      <View
-        style={[theme.backgroundPrimary, theme.padding2x, theme.flexContainer]}>
+      <View style={containerStyle}>
         {localStore.shouldShowSuggested && (
           <SuggestedSearch localStore={localStore} renderUser={renderUser} />
         )}
@@ -83,4 +83,13 @@ const SearchResultComponent = observer(
   },
 );
 
-export default SearchResultComponent;
+const containerStyle = ThemedStyles.combine(
+  'bgPrimaryBackground',
+  'padding2x',
+  'flexContainer',
+);
+
+export default withErrorBoundary(
+  SearchResultComponent,
+  'Error displaying results',
+);

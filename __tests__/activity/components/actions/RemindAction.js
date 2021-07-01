@@ -5,8 +5,10 @@ import { shallow } from 'enzyme';
 import { activitiesServiceFaker } from '../../../../__mocks__/fake/ActivitiesFaker';
 import RemindAction from '../../../../src/newsfeed/activity/actions/RemindAction';
 import ActivityModel from '../../../../src/newsfeed/ActivityModel';
-import { useRoute, useNavigation } from '@react-navigation/native';
 import { getStores } from '../../../../AppStores';
+
+jest.mock('../../../../AppStores');
+jest.mock('../../../../src/common/hooks/use-stores.tsx');
 
 getStores.mockReturnValue({
   newsfeed: {},
@@ -26,9 +28,5 @@ describe('Thumb action component', () => {
 
   it('renders correctly', async () => {
     expect(screen).toMatchSnapshot();
-  });
-
-  it('should have a remind button', async () => {
-    expect(screen.find('Menu')).toHaveLength(1);
   });
 });

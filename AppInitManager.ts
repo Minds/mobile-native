@@ -79,7 +79,6 @@ export default class AppInitManager {
     // clear offline cache
     entitiesStorage.removeAll();
     feedsStorage.removeAll();
-    getStores().notifications.clearLocal();
     getStores().groupsBar.clearLocal();
     translationService.purgeLanguagesCache();
   };
@@ -219,16 +218,12 @@ export default class AppInitManager {
         this.deepLinkUrl &&
         deeplinkService.cleanUrl(this.deepLinkUrl).startsWith('forgot-password')
       ) {
-        const regex = /;username=(.*);code=(.*)/g;
+        RNBootSplash.hide({ duration: 250 });
 
-        const params = getMaches(this.deepLinkUrl.replace(/%3B/g, ';'), regex);
+        deeplinkService.navToPasswordReset(this.deepLinkUrl);
 
-        //sessionService.logout();
-        NavigationService.navigate('Forgot', {
-          username: params[1],
-          code: params[2],
-        });
         this.deepLinkUrl = '';
+
         return true;
       }
     } catch (err) {

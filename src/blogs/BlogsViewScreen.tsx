@@ -1,14 +1,7 @@
 import { inject, observer } from 'mobx-react';
 import React, { Component } from 'react';
 
-import {
-  Alert,
-  Dimensions,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { Alert, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 
 import { Icon } from 'react-native-elements';
 import FastImage, { Source } from 'react-native-fast-image';
@@ -26,7 +19,6 @@ import ThumbUpAction from '../newsfeed/activity/actions/ThumbUpAction';
 import CommentsAction from '../newsfeed/activity/actions/CommentsAction';
 import OwnerBlock from '../newsfeed/activity/OwnerBlock';
 import shareService from '../share/ShareService';
-import colors from '../styles/Colors';
 import ThemedStyles from '../styles/ThemedStyles';
 import Lock from '../wire/v2/lock/Lock';
 import BlogActionSheet from './BlogActionSheet';
@@ -185,18 +177,25 @@ export default class BlogsViewScreen extends Component<PropsType> {
     const image = blog.getBannerSource();
 
     return (
-      <View style={[styles.screen, theme.backgroundSecondary]}>
+      <View style={[theme.flexContainer, theme.bgSecondaryBackground]}>
         <SmartImage
           source={image as Source}
           resizeMode={FastImage.resizeMode.cover}
           style={styles.image}
         />
         <Text style={styles.title}>{blog.title}</Text>
-        <View style={[styles.actionSheet]}>
-          <BlogActionSheet entity={blog} navigation={this.props.navigation} />
-        </View>
         <View style={styles.ownerBlockContainer}>
-          <OwnerBlock entity={blog} navigation={this.props.navigation}>
+          <OwnerBlock
+            entity={blog}
+            navigation={this.props.navigation}
+            rightToolbar={
+              <View style={styles.actionSheet}>
+                <BlogActionSheet
+                  entity={blog}
+                  navigation={this.props.navigation}
+                />
+              </View>
+            }>
             <Text style={[styles.timestamp, theme.colorSecondaryText]}>
               {formatDate(blog.time_created)}
             </Text>
@@ -218,7 +217,7 @@ export default class BlogsViewScreen extends Component<PropsType> {
         {!blog.paywall && (
           <View style={styles.moreInformation}>
             {Boolean(blog.getLicenseText()) && (
-              <Icon color={colors.medium} size={18} name="public" />
+              <Icon style={theme.colorIcon} size={18} name="public" />
             )}
             <Text
               style={[
@@ -230,7 +229,7 @@ export default class BlogsViewScreen extends Component<PropsType> {
               {blog.getLicenseText()}
             </Text>
             <Icon
-              color={colors.primary}
+              style={theme.colorLink}
               size={20}
               name="share"
               onPress={this.share}
@@ -240,7 +239,7 @@ export default class BlogsViewScreen extends Component<PropsType> {
         <SafeAreaView style={styles.header}>
           <Icon
             raised
-            color={colors.primary}
+            style={theme.colorLink}
             size={22}
             name="arrow-back"
             onPress={() => this.props.navigation.goBack()}
@@ -290,6 +289,7 @@ export default class BlogsViewScreen extends Component<PropsType> {
       return <CenteredLoading />;
     } else {
       // force observe on description
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const desc = this.props.blogsView.blog.description;
     }
 
@@ -300,7 +300,7 @@ export default class BlogsViewScreen extends Component<PropsType> {
     }
 
     return (
-      <View style={[theme.flexContainer, theme.backgroundSecondary]}>
+      <View style={[theme.flexContainer, theme.bgSecondaryBackground]}>
         {!this.state.error ? (
           <>
             <ScrollView ref={this.listRef}>{this.getBody()}</ScrollView>
@@ -330,57 +330,35 @@ export default class BlogsViewScreen extends Component<PropsType> {
   }
 }
 
-let paddingBottom = 0;
-
-const d = Dimensions.get('window');
-if (d.height == 812 || d.width == 812) {
-  paddingBottom = 16;
-}
-
 /**
  * Styles
  */
 const styles = StyleSheet.create({
-  containerContainer: {
-    flex: 1,
-    paddingBottom: paddingBottom,
-  },
   actionSheet: {
-    position: 'absolute',
-    top: 10,
-    right: 10,
-    zIndex: 1,
+    paddingLeft: 5,
   },
   header: {
     position: 'absolute',
     left: 0,
     top: 0,
-  },
-  actionsContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 4,
+    width: '100%',
   },
   title: {
     paddingTop: 12,
     paddingBottom: 8,
-    paddingLeft: 12,
-    paddingRight: 12,
+    paddingLeft: 15,
+    paddingRight: 15,
     fontSize: 22,
     // fontWeight: '800',
     fontFamily: 'Roboto-Black', // workaround android ignoring >= 800
   },
   ownerBlockContainer: {
-    margin: 8,
+    marginVertical: 8,
   },
   description: {
-    paddingLeft: 12,
-    paddingRight: 12,
-    paddingBottom: 12,
-  },
-  screen: {
-    flex: 1,
+    paddingLeft: 15,
+    paddingRight: 15,
+    paddingBottom: 15,
   },
   image: {
     height: 200,
@@ -392,59 +370,5 @@ const styles = StyleSheet.create({
   moreInformation: {
     padding: 12,
     flexDirection: 'row',
-  },
-  messagePoster: {
-    flexDirection: 'row',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    alignSelf: 'baseline',
-    backgroundColor: '#FFF',
-    padding: 5,
-  },
-  posterAvatar: {
-    height: 36,
-    width: 36,
-    borderRadius: 18,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#EEE',
-  },
-  input: {
-    marginLeft: 8,
-  },
-  preview: {
-    height: 200,
-    flexDirection: 'row',
-    alignItems: 'stretch',
-    position: 'relative',
-  },
-  deleteAttachment: {
-    position: 'absolute',
-    right: 8,
-    top: 0,
-    color: '#FFF',
-  },
-  sendicon: {
-    paddingRight: 8,
-  },
-  loadCommentsContainer: {
-    backgroundColor: '#EEE',
-    borderRadius: 3,
-    justifyContent: 'center',
-    flexDirection: 'row',
-    padding: 8,
-    margin: 8,
-  },
-  loadCommentsText: {
-    color: '#888',
-    fontSize: 10,
-  },
-  rightToolbar: {
-    alignSelf: 'flex-end',
-    bottom: 35,
-    right: 10,
-  },
-  icon: {
-    color: '#888',
   },
 });

@@ -20,7 +20,7 @@ const BoostInput = observer(({ localStore }: PropsType) => {
     keyboardType: 'decimal-pad',
     selectTextOnFocus: true,
     style: vPadding,
-    containerStyle: theme.backgroundPrimaryHighlight,
+    containerStyle: theme.bgPrimaryBackgroundHighlight,
     labelStyle: [marginB, theme.fontM],
   };
   return (

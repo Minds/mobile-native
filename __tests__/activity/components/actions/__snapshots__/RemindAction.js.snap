@@ -1,105 +1,47 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Thumb action component renders correctly 1`] = `
-<Menu
-  button={
-    <preventDoubleTap(TouchableOpacity)
-      onPress={[Function]}
-      style={
-        Array [
-          Object {
-            "flexDirection": "row",
-            "justifyContent": "center",
-          },
-          Object {
-            "paddingHorizontal": 15,
-          },
-          Object {
-            "paddingVertical": 20,
-          },
-          Object {
-            "alignItems": "center",
-          },
-        ]
-      }
-      testID="Remind activity button"
-    >
-      <Icon
-        allowFontScaling={false}
-        name="repeat"
-        size={21}
-        style={
-          Array [
-            Object {
-              "color": undefined,
-            },
-            Object {
-              "marginRight": 5,
-            },
-          ]
-        }
-      />
-      <Counter
-        count={0}
-        size={15}
-      />
-    </preventDoubleTap(TouchableOpacity)>
-  }
-  style={
-    Object {
-      "backgroundColor": undefined,
-    }
-  }
->
-  <MenuItem
+<Fragment>
+  <preventDoubleTap(TouchableOpacity)
     onPress={[Function]}
-    textStyle={
+    style={
       Array [
         Object {
-          "color": undefined,
+          "flexDirection": "row",
+          "justifyContent": "center",
         },
         Object {
-          "fontSize": 16,
+          "paddingHorizontal": 15,
+        },
+        Object {
+          "paddingVertical": 20,
+        },
+        Object {
+          "alignItems": "center",
         },
       ]
     }
+    testID="Remind activity button"
   >
     <Icon
       allowFontScaling={false}
       name="repeat"
-      size={15}
+      size={21}
       style={
-        Object {
-          "color": undefined,
-        }
+        Array [
+          Object {
+            "color": "#7D7D82",
+          },
+          Object {
+            "marginRight": 5,
+          },
+        ]
       }
     />
-      Remind
-  </MenuItem>
-  <MenuItem
-    onPress={[Function]}
-    textStyle={
-      Array [
-        Object {
-          "color": undefined,
-        },
-        Object {
-          "fontSize": 16,
-        },
-      ]
-    }
-  >
-    <Icon
-      allowFontScaling={false}
-      name="edit"
+    <Counter
+      count={0}
       size={15}
-      style={
-        Object {
-          "color": undefined,
-        }
-      }
     />
-      Quote
-  </MenuItem>
-</Menu>
+  </preventDoubleTap(TouchableOpacity)>
+</Fragment>
 `;

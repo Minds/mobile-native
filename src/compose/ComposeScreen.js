@@ -53,7 +53,7 @@ export default observer(function (props) {
               styles.tabContainer,
               theme.paddingVertical6x,
               tabStyle,
-              theme.backgroundSecondary,
+              theme.bgSecondaryBackground,
             ]}>
             <View style={styles.tabs}>
               <Text
