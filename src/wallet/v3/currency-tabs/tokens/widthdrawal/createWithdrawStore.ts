@@ -28,7 +28,7 @@ const createWithdrawStore = (p: {
       this.accept = !this.accept;
     },
     async onPressTransfer() {
-      if (this.error || !this.canTransfer || this.inProgress) {
+      if (this.hasError() || !this.canTransfer || this.inProgress) {
         return;
       }
       try {
@@ -44,7 +44,7 @@ const createWithdrawStore = (p: {
     setInProgress(value: boolean) {
       this.inProgress = value;
     },
-    get error(): boolean {
+    hasError(): boolean {
       const v = parseFloat(this.amount);
       if (v <= 0) {
         showNotification(
