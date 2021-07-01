@@ -49,6 +49,9 @@ const _buildStyle = (theme: ColorsType) =>
     flexContainer: {
       flex: 1,
     },
+    flexWrap: {
+      flexWrap: 'wrap',
+    },
     flexContainerCenter: {
       flex: 1,
       justifyContent: 'center',

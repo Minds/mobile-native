@@ -3,7 +3,7 @@ import React, { FunctionComponent } from 'react';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { ChannelStoreType } from '../../channel/v2/createChannelStore';
 import { observer } from 'mobx-react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text } from 'react-native';
 import ChannelBadges from '../../channel/badges/ChannelBadges';
 import UserStore from '../../auth/UserStore';
 import type UserModel from '../../channel/UserModel';
@@ -28,14 +28,9 @@ const UserNamesComponent: FunctionComponent<propsType> = observer(
 
     return (
       <View>
-        <View
-          style={[
-            theme.rowJustifyCenter,
-            theme.alignCenter,
-            theme.paddingTop8x,
-          ]}>
+        <View style={styles.container}>
           {pay && (
-            <View style={[theme.rowStretch, theme.centered]}>
+            <View style={styles.payContainer}>
               <Text style={[theme.bold, theme.fontXL]}>Tip</Text>
               <MIcon size={30} name="menu-right" color="#95C064" />
             </View>
@@ -49,14 +44,7 @@ const UserNamesComponent: FunctionComponent<propsType> = observer(
             iconStyle={theme.colorLink}
           />
         </View>
-        <Text
-          style={[
-            styles.username,
-            theme.colorSecondaryText,
-            theme.paddingTop2x,
-            theme.paddingBottom3x,
-          ]}
-          numberOfLines={1}>
+        <Text style={styles.username} numberOfLines={1}>
           @{channel.username}
         </Text>
       </View>
@@ -64,17 +52,24 @@ const UserNamesComponent: FunctionComponent<propsType> = observer(
   },
 );
 
-const styles = StyleSheet.create({
-  username: {
-    fontSize: 16,
-    width: '100%',
-    textAlign: 'center',
-  },
-  name: {
-    fontSize: 22,
-    fontWeight: '600',
-    textAlign: 'center',
-  },
+const styles = ThemedStyles.create({
+  container: ['rowJustifyCenter', 'alignCenter', 'paddingTop8x', 'flexWrap'],
+  payContainer: ['rowStretch', 'centered'],
+  username: [
+    'colorSecondaryText',
+    'paddingTop2x',
+    'paddingBottom3x',
+    'fontL',
+    'fullWidth',
+    'textCenter',
+  ],
+  name: [
+    {
+      fontSize: 22,
+      fontWeight: '600',
+      textAlign: 'center',
+    },
+  ],
 });
 
 export default UserNamesComponent;

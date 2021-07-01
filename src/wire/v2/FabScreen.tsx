@@ -209,7 +209,7 @@ const FabScreen = observer(({ route, navigation }) => {
           <HeaderComponent user={owner} />
           <UserNamesComponent user={owner} pay={true} />
           <HeaderTabsComponent tabList={tabList} store={store} />
-          <View style={theme.padding4x}>
+          <View style={theme.paddingVertical4x}>
             {store.tab === 'tokens' && <TokensForm store={store} />}
             {store.tab === 'usd' && <UsdForm store={store} />}
           </View>
