@@ -353,7 +353,7 @@ exports[`Notifications component renders correctly 1`] = `
           ]
         }
       >
-        3w 
+        4w 
       </Text>
     </View>
   </View>
