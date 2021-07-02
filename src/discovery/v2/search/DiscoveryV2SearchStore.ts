@@ -8,15 +8,17 @@ import FeedStore from '../../../common/stores/FeedStore';
 export default class DiscoveryV2SearchStore {
   listStore = new FeedStore(true);
 
-  @observable filter: string = 'top';
+  @observable algorithm: string = 'top';
   @observable query: string = '';
   @observable refreshing: boolean = false;
+  @observable filter: string = 'all';
 
   params = {
     period: 'relevant',
-    algorithm: this.filter,
+    algorithm: this.algorithm,
     q: this.query,
     plus: false,
+    type: this.filter,
   };
 
   constructor() {
@@ -43,7 +45,7 @@ export default class DiscoveryV2SearchStore {
     this.listStore
       .setParams({
         period: 'relevant',
-        algorithm: this.filter,
+        algorithm: this.algorithm,
         q: this.query,
         // nsfw: this.filters.nsfw.concat([]),
       })
@@ -51,9 +53,17 @@ export default class DiscoveryV2SearchStore {
   };
 
   @action
+  setAlgorithm = (algorithm: string) => {
+    this.algorithm = algorithm;
+    this.params.algorithm = algorithm;
+    this.listStore.clear();
+    this.refresh();
+  };
+
+  @action
   setFilter = (filter: string) => {
     this.filter = filter;
-    this.params.algorithm = filter;
+    this.params.type = filter;
     this.listStore.clear();
     this.refresh();
   };
