@@ -195,7 +195,7 @@ export default class FeedList<T> extends Component<PropsType> {
     changed: any[];
   }) => {
     change.viewableItems.forEach((item: { item: any }) => {
-      this.props.feedStore.addViewed(item.item);
+      item.item.sendViewed();
     });
     change.changed.forEach(
       (c: { item: { setVisible: (arg0: any) => void }; isViewable: any }) => {

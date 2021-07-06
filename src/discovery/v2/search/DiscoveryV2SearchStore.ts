@@ -22,6 +22,7 @@ export default class DiscoveryV2SearchStore {
   };
 
   constructor() {
+    this.listStore.getMetadataService()?.setSource(`search/${this.algorithm}`);
     this.listStore
       .setEndpoint('api/v3/discovery/search')
       .setLimit(12)
@@ -54,6 +55,7 @@ export default class DiscoveryV2SearchStore {
 
   @action
   setAlgorithm = (algorithm: string) => {
+    this.listStore.getMetadataService()?.setSource(`search/${algorithm}`);
     this.algorithm = algorithm;
     this.params.algorithm = algorithm;
     this.listStore.clear();

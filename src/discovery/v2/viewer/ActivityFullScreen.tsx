@@ -5,7 +5,11 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { useFocus } from '@msantang78/react-native-pager';
 import { LinearGradient } from 'expo-linear-gradient';
 import { observer, useLocalStore } from 'mobx-react';
+import { ScrollView } from 'react-native-gesture-handler';
 import * as entities from 'entities';
+import type BottomSheet from '@gorhom/bottom-sheet';
+import { TouchableOpacity } from '@gorhom/bottom-sheet';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 import type ActivityModel from '../../../newsfeed/ActivityModel';
 import MediaView from '../../../common/components/MediaView';
@@ -20,14 +24,11 @@ import Translate from '../../../common/components/translate/Translate';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Actions from '../../../newsfeed/activity/Actions';
 import Activity from '../../../newsfeed/activity/Activity';
-
 import CommentsStore from '../../../comments/v2/CommentsStore';
-import { ScrollView } from 'react-native-gesture-handler';
 import sessionService from '../../../common/services/session.service';
 import videoPlayerService from '../../../common/services/video-player.service';
 import ExplicitOverlay from '../../../common/components/explicit/ExplicitOverlay';
 import featuresService from '../../../common/services/features.service';
-
 import LockV2 from '../../../wire/v2/lock/Lock';
 import Lock from '../../../wire/lock/Lock';
 import { showNotification } from '../../../../AppMessages';
@@ -35,9 +36,6 @@ import { AppStackParamList } from '../../../navigation/NavigationTypes';
 import BoxShadow from '../../../common/components/BoxShadow';
 import ActivityMetrics from '../../../newsfeed/activity/metrics/ActivityMetrics';
 import CommentBottomSheet from '../../../comments/v2/CommentBottomSheet';
-import type BottomSheet from '@gorhom/bottom-sheet';
-import { TouchableOpacity } from '@gorhom/bottom-sheet';
-import Clipboard from '@react-native-clipboard/clipboard';
 import InteractionsBar from '../../../common/components/interactions/InteractionsBar';
 
 type ActivityRoute = RouteProp<AppStackParamList, 'Activity'>;

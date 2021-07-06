@@ -97,13 +97,15 @@ export default class OffsetListStore {
   setList(list, replace = false, callback = undefined) {
     if (list.entities) {
       if (replace) {
-        list.entities.forEach((entity: EntityType) => {
+        list.entities.forEach((entity: EntityType, index: number) => {
           entity._list = this;
+          entity.position = index + 1;
         });
         this.entities = list.entities;
       } else {
         list.entities.forEach((entity: EntityType) => {
           entity._list = this;
+          entity.position = this.entities.length + 2;
           this.entities.push(entity);
         });
       }
