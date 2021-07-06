@@ -43,7 +43,8 @@ const FeedFilter = (props: PropsType) => {
         },
         selected: props.store.filter === f,
       })),
-    [close, props.store],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [close, props.store, props.store.filter],
   );
 
   const containerStyle = useStyle(
