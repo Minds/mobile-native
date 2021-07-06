@@ -43,18 +43,16 @@ const ViewerScreen = observer((props: PropsType) => {
       store.index = v;
 
       // report viewed with metadata
-      feedStore.addViewed(feedStore.entities[store.index]);
+      feedStore.entities[store.index].sendViewed('single');
     },
   }));
 
   useEffect(() => {
     feedStore.viewed.clearViewed();
-    feedStore.metadataService?.pushSource('single');
     // report initial as viewed with metadata
-    feedStore.addViewed(feedStore.entities[store.index]);
+    feedStore.entities[store.index].sendViewed('single');
     return () => {
       feedStore.viewed.clearViewed();
-      feedStore.metadataService?.popSource();
       if (!SettingsStore.swipeAnimShown) {
         SettingsStore.setSwipeAnimShown(true);
       }

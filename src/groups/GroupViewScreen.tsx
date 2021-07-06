@@ -109,6 +109,8 @@ export default class GroupViewScreen extends Component {
       return;
     }
 
+    this.props.groupView.group.sendViewed('single');
+
     this.props.groupView.loadTopMembers();
   }
 

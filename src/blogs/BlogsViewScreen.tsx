@@ -87,9 +87,6 @@ export default class BlogsViewScreen extends Component<PropsType> {
     const params = this.props.route.params;
     try {
       if (params.blog) {
-        if (params.blog._list && params.blog._list.metadataService) {
-          params.blog._list.metadataService.pushSource('single');
-        }
         await this.props.blogsView.setBlog(params.blog);
 
         if (!params.blog.description) {
@@ -113,11 +110,8 @@ export default class BlogsViewScreen extends Component<PropsType> {
         return;
       }
 
-      if (this.props.blogsView.blog && this.props.blogsView.blog._list) {
-        this.props.blogsView.blog._list.viewed.addViewed(
-          this.props.blogsView.blog,
-          this.props.blogsView.blog._list.metadataService,
-        );
+      if (this.props.blogsView.blog) {
+        this.props.blogsView.blog.sendViewed('single');
       }
     } catch (error) {
       logService.exception(error);
@@ -134,10 +128,6 @@ export default class BlogsViewScreen extends Component<PropsType> {
    * On component will unmount
    */
   componentWillUnmount() {
-    const blog = this.props.blogsView.blog;
-    if (blog && blog._list && blog._list.metadataService) {
-      blog._list.metadataService.popSource();
-    }
     this.props.blogsView.reset();
   }
 

@@ -96,13 +96,14 @@ const createChannelStore = () => {
           NavigationService.goBack();
           showNotification(i18n.t('nsfw.notSafeChannel'));
         }
-        this.loadFromEntity(params.entity);
+        await this.loadFromEntity(params.entity);
         this.tiers =
           (await supportTiersService.getAllFromGuid(params.entity.guid)) || [];
       } else if (params.guid || params.username) {
         //@ts-ignore
-        this.loadFromGuidOrUsername(params.guid || params.username);
+        await this.loadFromGuidOrUsername(params.guid || params.username);
       }
+      this.channel?.sendViewed('single');
     },
     /**
      * Load selected feed
@@ -376,6 +377,8 @@ const createChannelStore = () => {
       );
     },
   };
+
+  store.feedStore.getMetadataService()?.setSource('feed/channel');
   return store;
 };
 

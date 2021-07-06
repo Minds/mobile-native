@@ -1,4 +1,3 @@
-//@ts-nocheck
 import moment from 'moment';
 import sessionService from './session.service';
 import hashCode from '../helpers/hash-code';
@@ -9,62 +8,32 @@ import NavigationService from '../../navigation/NavigationService';
  */
 class MetadataService {
   /**
-   * @var {String} source
+   * @var source
    */
-  _source = ['feed/subscribed'];
+  source = 'feed/subscribed';
 
   /**
-   * @var {String} medium
+   * @var medium
    */
   medium = 'feed';
 
   /**
-   * @var {String} campaign
+   * @var campaign
    */
   campaign = '';
 
   /**
    * @var {moment} deltaBegin
    */
-  deltaBegin = null;
+  deltaBegin = moment();
 
   /**
-   * @var {String} salt
+   * @var salt
    */
-  salt = null;
+  salt = '';
 
   /**
-   * Source getter
-   */
-  get source() {
-    return this._source[this._source.length - 1];
-  }
-
-  /**
-   * Source setter
-   */
-  set source(value) {
-    this._source[this._source.length - 1] = value;
-  }
-
-  /**
-   * Push source
-   * @param {String} value
-   */
-  pushSource(value) {
-    this._source.push(value);
-  }
-
-  /**
-   * Pop source
-   * @returns {String}
-   */
-  popSource() {
-    return this._source.pop();
-  }
-
-  /**
-   * Cosntructor
+   * Constructor
    */
   constructor() {
     sessionService.onLogin(() => {
@@ -75,9 +44,9 @@ class MetadataService {
   /**
    * @var {function} entityMapper maps entities properties to metadata
    */
-  entityMapper = entity => ({
+  entityMapper = (entity, medium) => ({
     position: entity._list ? entity._list.getIndex(entity) + 1 : 0,
-    medium: entity.boosted ? 'featured-content' : 'feed',
+    medium: medium ? medium : entity.boosted ? 'featured-content' : 'feed',
     campaign: entity.boosted_guid ? entity.urn : '',
   });
 
@@ -89,19 +58,13 @@ class MetadataService {
   }
 
   /**
-   * Set the entities mapper function
-   * @param {Function} fn
-   */
-  setEntityMapper(fn) {
-    this.entityMapper = fn;
-    return this;
-  }
-
-  /**
    * Get delta in seconds
    * @returns {integer} seconds
    */
-  getDelta() {
+  getDelta(medium) {
+    if (this.medium || medium === 'single') {
+      return 0;
+    }
     const deltaEnd = moment();
     const delta = moment.duration(deltaEnd.diff(this.deltaBegin));
     return delta.seconds();
@@ -137,11 +100,6 @@ class MetadataService {
     return this;
   }
 
-  setPosition(position) {
-    this.position = position;
-    return this;
-  }
-
   /**
    * Build the page token
    */
@@ -174,14 +132,9 @@ class MetadataService {
    * returns the client metadata
    * @param {Object|undefined} overrides
    */
-  dto(overrides) {
-    if (!this.deltaBegin) {
-      // There's no client meta in this component branch.
-      return {};
-    }
-
+  dto(overrides, medium?: string) {
     return {
-      client_meta: this.build(overrides),
+      client_meta: this.build(overrides, medium),
     };
   }
 
@@ -189,24 +142,23 @@ class MetadataService {
    * Get the metadata for the entity
    * @param {BaseModel} entity
    */
-  getEntityMeta(entity) {
-    const overrides = this.entityMapper(entity);
-    return this.dto(overrides);
+  getEntityMeta(entity, medium?: string) {
+    const overrides = this.entityMapper(entity, medium);
+    return this.dto(overrides, medium);
   }
 
   /**
    * Build metadata
    * @param {Object} overrides
    */
-  build(overrides = {}) {
+  private build(overrides = {}, medium?: string) {
     return {
       platform: 'mobile',
       page_token: this.buildPageToken(),
-      delta: this.getDelta(),
+      delta: this.getDelta(medium),
       source: this.source,
       medium: this.medium,
       campaign: this.campaign,
-      position: this.position,
       ...overrides,
     };
   }

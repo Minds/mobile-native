@@ -51,12 +51,7 @@ const ActivityScreen = observer((props: PropsType) => {
             return;
           }
 
-          store.entityStore.loadEntity(urn, entity, true);
-
-          // change metadata source
-          if (params.entity._list && params.entity._list.metadataService) {
-            params.entity._list.metadataService.pushSource('single');
-          }
+          await store.entityStore.loadEntity(urn, entity, true);
         } else {
           const urn = 'urn:activity:' + params.guid;
           this.setLoading(true);
@@ -87,18 +82,7 @@ const ActivityScreen = observer((props: PropsType) => {
             });
           }
         }
-
-        if (params.entity && params.entity._list) {
-          // this second condition it's for legacy boost feed
-          if (params.entity._list instanceof OffsetFeedListStore) {
-            params.entity._list.addViewed(params.entity);
-          } else {
-            params.entity._list.viewed.addViewed(
-              params.entity,
-              params.entity._list.metadataService,
-            );
-          }
-        }
+        store.entityStore.entity?.sendViewed('single');
       },
     }),
     props,

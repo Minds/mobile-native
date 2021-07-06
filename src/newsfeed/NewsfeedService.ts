@@ -4,6 +4,11 @@ import api from './../common/services/api.service';
 import { getStores } from '../../AppStores';
 import logService from '../common/services/log.service';
 import connectivityService from '../common/services/connectivity.service';
+import analyticsService from '../common/services/analytics.service';
+import type ActivityModel from './ActivityModel';
+import type BlogModel from '../blogs/BlogModel';
+import UserModel from '../channel/UserModel';
+import GroupModel from '../groups/GroupModel';
 
 export default class NewsfeedService {
   async _getFeed(endpoint, offset, limit) {
@@ -96,13 +101,25 @@ export function toggleComments(guid, value) {
  * @param {Object} entity
  * @param {Object} data
  */
-export async function setViewed(entity, extra = {}) {
+export async function setViewed(
+  entity: ActivityModel | BlogModel | GroupModel | UserModel,
+  extra: any = {},
+) {
   let data;
 
   // ignore if there is no internet
-  if (!connectivityService.isConnected) return;
+  if (!connectivityService.isConnected) {
+    return;
+  }
 
-  if (entity.boosted_guid) {
+  if (extra.client_meta) {
+    analyticsService.trackViewedContent(entity, extra.client_meta);
+  }
+
+  if (
+    !(entity instanceof GroupModel || entity instanceof UserModel) &&
+    entity.boosted_guid
+  ) {
     data = await api.post(
       'api/v2/analytics/views/boost/' + entity.boosted_guid,
       extra,

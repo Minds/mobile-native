@@ -1,7 +1,9 @@
-//@ts-nocheck
 import { setViewed } from '../../newsfeed/NewsfeedService';
 import { isNetworkError } from '../services/api.service';
 
+/**
+ * Feed list viewed logic
+ */
 export default class Viewed {
   /**
    * @var {Map} viewed viewed entities list
@@ -17,19 +19,17 @@ export default class Viewed {
 
   /**
    * Add an entity to the viewed list and inform to the backend
-   * @param {BaseModel} entity
-   * @param {MetadataService|undefined} metadataService
    */
-  async addViewed(entity, metadataService) {
-    if (!this.viewed.get(entity.guid)) {
-      this.viewed.set(entity.guid, true);
+  async addViewed(entity, metadataService, medium?: string) {
+    if (medium || !this.viewed.get(entity.guid)) {
+      !medium && this.viewed.set(entity.guid, true);
       try {
         const meta = metadataService
-          ? metadataService.getEntityMeta(entity)
+          ? metadataService.getEntityMeta(entity, medium)
           : {};
         await setViewed(entity, meta);
       } catch (e) {
-        this.viewed.delete(entity.guid);
+        !medium && this.viewed.delete(entity.guid);
         if (!isNetworkError(e)) {
           throw e;
         }

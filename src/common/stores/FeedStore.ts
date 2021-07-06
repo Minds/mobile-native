@@ -89,9 +89,10 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   /**
    * Add an entity to the viewed list and inform to the backend
    * @param {BaseModel} entity
+   * @param {string} medium
    */
-  async addViewed(entity) {
-    return await this.viewed.addViewed(entity, this.metadataService);
+  async addViewed(entity, medium?: string) {
+    return await this.viewed.addViewed(entity, this.metadataService, medium);
   }
 
   /**
@@ -499,6 +500,7 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
     this.loading = false;
     this.entities = [];
     this.feedsService.setOffset(0);
+    this.viewed.clearViewed();
     return this;
   }
 

@@ -47,6 +47,7 @@ import receiveShareService from './src/common/services/receive-share.service';
 import AppInitManager from './AppInitManager';
 import { ScreenHeightProvider } from './src/common/components/KeyboardSpacingView';
 import { WCContextProvider } from './src/blockchain/v2/walletconnect/WalletConnectContext';
+import analyticsService from './src/common/services/analytics.service';
 
 YellowBox.ignoreWarnings(['']);
 
@@ -200,7 +201,8 @@ class App extends Component<Props, State> {
           <NavigationContainer
             ref={setTopLevelNavigator}
             theme={ThemedStyles.navTheme}
-            onReady={appInitManager.onNavigatorReady}>
+            onReady={appInitManager.onNavigatorReady}
+            onStateChange={analyticsService.onNavigatorStateChange}>
             <StoresProvider>
               <Provider key="app" {...stores}>
                 <BottomSheetModalProvider>
