@@ -44,8 +44,14 @@ class MetadataService {
   /**
    * @var {function} entityMapper maps entities properties to metadata
    */
-  entityMapper = (entity, medium) => ({
-    position: entity._list ? entity._list.getIndex(entity) + 1 : 0,
+  entityMapper = (entity, medium, position) => ({
+    position: position
+      ? position
+      : entity.position !== undefined
+      ? entity.position
+      : entity._list
+      ? entity._list.getIndex(entity) + 1
+      : 0,
     medium: medium ? medium : entity.boosted ? 'featured-content' : 'feed',
     campaign: entity.boosted_guid ? entity.urn : '',
   });
@@ -142,8 +148,8 @@ class MetadataService {
    * Get the metadata for the entity
    * @param {BaseModel} entity
    */
-  getEntityMeta(entity, medium?: string) {
-    const overrides = this.entityMapper(entity, medium);
+  getEntityMeta(entity, medium?: string, position?: number) {
+    const overrides = this.entityMapper(entity, medium, position);
     return this.dto(overrides, medium);
   }
 

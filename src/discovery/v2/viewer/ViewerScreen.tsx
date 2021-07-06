@@ -43,14 +43,16 @@ const ViewerScreen = observer((props: PropsType) => {
       store.index = v;
 
       // report viewed with metadata
-      feedStore.entities[store.index].sendViewed('single');
+      const position = Math.abs(store.index - props.route.params.current);
+      feedStore.entities[store.index].sendViewed('single', position);
     },
   }));
 
   useEffect(() => {
     feedStore.viewed.clearViewed();
     // report initial as viewed with metadata
-    feedStore.entities[store.index].sendViewed('single');
+    const position = Math.abs(store.index - props.route.params.current) + 1;
+    feedStore.entities[store.index].sendViewed('single', position);
     return () => {
       feedStore.viewed.clearViewed();
       if (!SettingsStore.swipeAnimShown) {

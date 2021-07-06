@@ -1,5 +1,6 @@
 import { setViewed } from '../../newsfeed/NewsfeedService';
 import { isNetworkError } from '../services/api.service';
+import type MetadataService from '../services/metadata.service';
 
 /**
  * Feed list viewed logic
@@ -20,12 +21,17 @@ export default class Viewed {
   /**
    * Add an entity to the viewed list and inform to the backend
    */
-  async addViewed(entity, metadataService, medium?: string) {
+  async addViewed(
+    entity,
+    metadataService: MetadataService,
+    medium?: string,
+    position?: number,
+  ) {
     if (medium || !this.viewed.get(entity.guid)) {
       !medium && this.viewed.set(entity.guid, true);
       try {
         const meta = metadataService
-          ? metadataService.getEntityMeta(entity, medium)
+          ? metadataService.getEntityMeta(entity, medium, position)
           : {};
         await setViewed(entity, meta);
       } catch (e) {

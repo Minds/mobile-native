@@ -91,8 +91,15 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
    * @param {BaseModel} entity
    * @param {string} medium
    */
-  async addViewed(entity, medium?: string) {
-    return await this.viewed.addViewed(entity, this.metadataService, medium);
+  addViewed(entity, medium?: string, position?: number) {
+    return this.metadataService
+      ? this.viewed.addViewed(
+          entity,
+          this.metadataService as MetadataService,
+          medium,
+          position,
+        )
+      : Promise.resolve();
   }
 
   /**
@@ -111,13 +118,15 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   @action
   addEntities(entities, replace = false) {
     if (replace) {
-      entities.forEach(entity => {
+      entities.forEach((entity, index) => {
         entity._list = this;
+        entity.position = index + 1;
       });
       this.entities = entities;
     } else {
       entities.forEach(entity => {
         entity._list = this;
+        entity.position = this.entities.length + 1;
         this.entities.push(entity);
       });
 

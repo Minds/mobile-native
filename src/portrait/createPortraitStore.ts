@@ -129,6 +129,15 @@ function createPortraitStore() {
           );
 
           this.items = _.sortBy(items, d => !d.unseen);
+
+          // set positions used for analytics metadata
+          let i = 1;
+          this.items.forEach(barItem => {
+            barItem.activities.forEach(a => {
+              a.position = i;
+              i++;
+            });
+          });
         }
       } catch (err) {
         logService.exception(err);

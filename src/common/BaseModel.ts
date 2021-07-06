@@ -20,6 +20,7 @@ import MetadataService from './services/metadata.service';
  * Base model
  */
 export default class BaseModel extends AbstractModel {
+  position?: number;
   username: string = '';
   guid: string = '';
   owner_guid?: string;
@@ -345,15 +346,15 @@ export default class BaseModel extends AbstractModel {
   /**
    * Report viewed content
    */
-  sendViewed(medium?: string) {
+  sendViewed(medium?: string, position?: number) {
     if (this._list) {
-      this._list.addViewed(this, medium);
+      this._list.addViewed(this, medium, position);
     } else {
       const metadata = new MetadataService();
       metadata.setMedium('single').setSource('single');
       //@ts-ignore
       setViewed(this, {
-        client_meta: metadata.getEntityMeta(this, medium),
+        client_meta: metadata.getEntityMeta(this, medium, position),
       });
     }
   }
