@@ -3,7 +3,6 @@ import { observer } from 'mobx-react';
 import { View, Text, FlatList, ViewToken } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import NotificationsTopBar from './NotificationsTopBar';
-import { useFocusEffect } from '@react-navigation/native';
 import useApiFetch from '../../common/hooks/useApiFetch';
 import i18n from '../../common/services/i18n.service';
 import NotificationItem from './notification/Notification';
@@ -14,7 +13,9 @@ import UserModel from '../../channel/UserModel';
 import EmptyList from '../../common/components/EmptyList';
 import NotificationPlaceHolder from './notification/NotificationPlaceHolder';
 
-type PropsType = {};
+type PropsType = {
+  navigation?: any;
+};
 
 const viewabilityConfig = {
   itemVisiblePercentThreshold: 50,
@@ -56,10 +57,14 @@ const updateState = (newData: NotificationList, oldData: NotificationList) => {
 
 const Empty = <EmptyList />;
 
-const NotificationsScreen = observer(({}: PropsType) => {
+const NotificationsScreen = observer(({ navigation }: PropsType) => {
   const theme = ThemedStyles.style;
   const { notifications } = useStores();
-
+  const params = {
+    filter: notifications.filter,
+    limit: 15,
+    offset: notifications.offset,
+  };
   const {
     result,
     error,
@@ -67,13 +72,8 @@ const NotificationsScreen = observer(({}: PropsType) => {
     fetch,
     setResult,
   } = useApiFetch<NotificationList>('api/v3/notifications/list', {
-    params: {
-      filter: notifications.filter,
-      limit: 15,
-      offset: notifications.offset,
-    },
+    params,
     updateState,
-    persist: true,
   });
 
   const onFetchMore = () => {
@@ -86,15 +86,25 @@ const NotificationsScreen = observer(({}: PropsType) => {
   const refresh = React.useCallback(() => {
     notifications.setOffset('');
     setResult(null);
-    fetch();
-  }, [fetch, setResult, notifications]);
+    fetch(params);
+  }, [notifications, setResult, fetch, params]);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      notifications.setUnread(0);
-      refresh();
-    }, [notifications, refresh]),
-  );
+  const onFocus = React.useCallback(() => {
+    notifications.setUnread(0);
+    refresh();
+  }, [notifications, refresh]);
+
+  //useFocusEffect(onFocus);
+
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener(
+      //@ts-ignore
+      'tabPress',
+      onFocus,
+    );
+
+    return unsubscribe;
+  }, [navigation, onFocus]);
 
   const headerComponent = React.useMemo(
     () => <NotificationsTopBar store={notifications} setResult={setResult} />,
@@ -116,6 +126,17 @@ const NotificationsScreen = observer(({}: PropsType) => {
   );
 
   const ListEmptyComponent = React.useMemo(() => {
+    if (error && !loading) {
+      return (
+        <Text style={errorStyle} onPress={() => fetch()}>
+          {i18n.t('cantReachServer') + '\n'}
+          <Text style={[theme.colorLink, theme.marginTop2x]}>
+            {i18n.t('tryAgain')}
+          </Text>
+        </Text>
+      );
+    }
+
     if (loading) {
       return (
         <View>
@@ -130,23 +151,7 @@ const NotificationsScreen = observer(({}: PropsType) => {
     } else {
       return Empty;
     }
-  }, [loading]);
-
-  if (error && !loading) {
-    return (
-      <Text
-        style={[
-          theme.colorSecondaryText,
-          theme.textCenter,
-          theme.fontL,
-          theme.marginVertical4x,
-        ]}
-        onPress={() => fetch()}>
-        {i18n.t('error') + '\n'}
-        <Text style={theme.colorLink}>{i18n.t('tryAgain')}</Text>
-      </Text>
-    );
-  }
+  }, [error, loading, fetch]);
 
   const data = result?.notifications || [];
 
@@ -183,3 +188,10 @@ const renderItem = (row: any): React.ReactElement => {
 };
 
 export default NotificationsScreen;
+
+const errorStyle = ThemedStyles.combine(
+  'colorSecondaryText',
+  'textCenter',
+  'fontXL',
+  'marginVertical4x',
+);

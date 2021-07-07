@@ -12,14 +12,12 @@ import {
 
 import { observer, inject } from 'mobx-react';
 
-import ActionSheet from 'react-native-actionsheet';
 import { Icon } from 'react-native-elements';
 
 import { truncate } from 'lodash';
 
 import * as entities from 'entities';
 import GroupUser from './GroupUser';
-import colors from '../styles/Colors';
 import Tags from '../common/components/Tags';
 import CaptureFab from '../capture/CaptureFab';
 import GroupHeader from './header/GroupHeader';
@@ -36,6 +34,10 @@ import sessionService from '../common/services/session.service';
 import ExplicitOverlay from '../common/components/explicit/ExplicitOverlay';
 import CommentBottomSheet from '../comments/v2/CommentBottomSheet';
 import ActivityModel from '../newsfeed/ActivityModel';
+import BottomSheet from '../common/components/bottom-sheet/BottomSheet';
+import MenuItem, {
+  MenuItemProps,
+} from '../common/components/bottom-sheet/MenuItem';
 
 /**
  * Groups view screen
@@ -63,6 +65,8 @@ export default class GroupViewScreen extends Component {
   };
 
   commentsRef;
+
+  actionSheetRef = React.createRef();
 
   /**
    * Disable navigation bar
@@ -104,6 +108,8 @@ export default class GroupViewScreen extends Component {
       this.props.navigation.goBack();
       return;
     }
+
+    this.props.groupView.group.sendViewed('single');
 
     this.props.groupView.loadTopMembers();
   }
@@ -169,7 +175,7 @@ export default class GroupViewScreen extends Component {
       <SafeAreaView style={styles.gobackicon}>
         <Icon
           raised
-          color={colors.primary}
+          style={ThemedStyles.style.colorLink}
           size={22}
           name="arrow-back"
           onPress={() => this.props.navigation.goBack()}
@@ -213,7 +219,7 @@ export default class GroupViewScreen extends Component {
             onRefresh={this.refresh}
             refreshing={group.members.refreshing}
             onEndReached={this.loadMembers}
-            style={ThemedStyles.style.backgroundPrimary}
+            style={ThemedStyles.style.bgPrimaryBackground}
             // onEndReachedThreshold={0}
             initialNumToRender={12}
             removeClippedSubviews={false}
@@ -224,7 +230,7 @@ export default class GroupViewScreen extends Component {
           .decodeHTML(group.group.briefdescription)
           .trim();
         return (
-          <ScrollView style={ThemedStyles.style.backgroundPrimary}>
+          <ScrollView style={ThemedStyles.style.bgPrimaryBackground}>
             {header}
             <View style={ThemedStyles.style.padding3x}>
               <Tags
@@ -238,26 +244,60 @@ export default class GroupViewScreen extends Component {
     }
   }
 
+  closeMemberMenu = () => this.actionSheetRef.current?.dismiss();
+
   /**
    * Member menu on press
    */
   memberMenuPress = member => {
     const group = this.props.groupView.group;
-    const memberActions = [i18n.t('cancel')];
+    const memberActions: Array<MenuItemProps> = [];
     const imOwner = group['is:owner'];
     const imModerator = group['is:moderator'];
 
     if (imOwner) {
       if (member['is:owner']) {
-        memberActions.push(i18n.t('groups.removeOwner'));
+        memberActions.push({
+          title: i18n.t('groups.removeOwner'),
+          iconName: 'delete',
+          iconType: 'material-community',
+          onPress: () => {
+            this.closeMemberMenu();
+            this.props.groupView.revokeOwner(this.state.member);
+          },
+        });
       } else if (!member['is:moderator']) {
-        memberActions.push(i18n.t('groups.makeOwner'));
+        memberActions.push({
+          title: i18n.t('groups.makeOwner'),
+          iconName: 'person-circle-outline',
+          iconType: 'ionicon',
+          onPress: () => {
+            this.closeMemberMenu();
+            this.props.groupView.makeOwner(this.state.member);
+          },
+        });
         if (group.can(FLAG_APPOINT_MODERATOR)) {
-          memberActions.push(i18n.t('groups.makeModerator'));
+          memberActions.push({
+            title: i18n.t('groups.makeModerator'),
+            iconName: 'add-moderator',
+            iconType: 'material',
+            onPress: () => {
+              this.closeMemberMenu();
+              this.props.groupView.makeModerator(this.state.member);
+            },
+          });
         }
       } else {
         if (group.can(FLAG_APPOINT_MODERATOR)) {
-          memberActions.push(i18n.t('groups.removeModerator'));
+          memberActions.push({
+            title: i18n.t('groups.removeModerator'),
+            iconName: 'remove-moderator',
+            iconType: 'material',
+            onPress: () => {
+              this.closeMemberMenu();
+              this.props.groupView.removeModerator(this.state.member);
+            },
+          });
         }
       }
     }
@@ -267,8 +307,36 @@ export default class GroupViewScreen extends Component {
       !member['is:owner'] &&
       !member['is:moderator']
     ) {
-      memberActions.push(i18n.t('groups.kick'));
-      memberActions.push(i18n.t('groups.ban'));
+      memberActions.push({
+        title: i18n.t('groups.kick'),
+        iconName: 'exit-outline',
+        iconType: 'ionicon',
+        onPress: () => {
+          this.closeMemberMenu();
+          Alert.alert(i18n.t('confirm'), i18n.t('groups.confirmKick'), [
+            { text: i18n.t('no'), style: 'cancel' },
+            {
+              text: i18n.t('yes'),
+              onPress: () => this.props.groupView.kick(this.state.member),
+            },
+          ]);
+        },
+      });
+      memberActions.push({
+        title: i18n.t('groups.ban'),
+        iconName: 'prohibited',
+        iconType: 'foundation',
+        onPress: () => {
+          this.closeMemberMenu();
+          Alert.alert(i18n.t('confirm'), i18n.t('groups.banConfirm'), [
+            { text: i18n.t('no'), style: 'cancel' },
+            {
+              text: i18n.t('yes'),
+              onPress: () => this.props.groupView.ban(this.state.member),
+            },
+          ]);
+        },
+      });
     }
 
     this.setState(
@@ -277,7 +345,7 @@ export default class GroupViewScreen extends Component {
         member,
       },
       () => {
-        this.ActionSheet.show();
+        this.actionSheetRef.current?.present();
       },
     );
   };
@@ -310,44 +378,6 @@ export default class GroupViewScreen extends Component {
     );
   };
 
-  handleSelection = option => {
-    let selected = this.state.memberActions[option];
-
-    switch (selected) {
-      case i18n.t('groups.ban'):
-        Alert.alert(i18n.t('confirm'), i18n.t('groups.banConfirm'), [
-          { text: i18n.t('no'), style: 'cancel' },
-          {
-            text: i18n.t('yes'),
-            onPress: () => this.props.groupView.ban(this.state.member),
-          },
-        ]);
-        break;
-      case i18n.t('groups.kick'):
-        Alert.alert(i18n.t('confirm'), i18n.t('groups.confirmKick'), [
-          { text: i18n.t('no'), style: 'cancel' },
-          {
-            text: i18n.t('yes'),
-            onPress: () => this.props.groupView.kick(this.state.member),
-          },
-        ]);
-
-        break;
-      case i18n.t('groups.makeOwner'):
-        this.props.groupView.makeOwner(this.state.member);
-        break;
-      case i18n.t('groups.removeOwner'):
-        this.props.groupView.revokeOwner(this.state.member);
-        break;
-      case i18n.t('groups.makeModerator'):
-        this.props.groupView.makeModerator(this.state.member);
-        break;
-      case i18n.t('groups.removeModerator'):
-        this.props.groupView.revokeModerator(this.state.member);
-        break;
-    }
-  };
-
   /**
    * Render
    */
@@ -370,13 +400,17 @@ export default class GroupViewScreen extends Component {
       !this.state.conversationIsOpen;
 
     const memberActionSheet = this.state.memberActions ? (
-      <ActionSheet
-        ref={o => (this.ActionSheet = o)}
-        title={truncate(this.state.member.name, { length: 25, separator: ' ' })}
-        options={this.state.memberActions}
-        onPress={this.handleSelection}
-        cancelButtonIndex={0}
-      />
+      <BottomSheet
+        key={`sheet${this.state.memberActions.length}`}
+        ref={this.actionSheetRef}
+        title={truncate(this.state.member.name, {
+          length: 25,
+          separator: ' ',
+        })}>
+        {this.state.memberActions.map((o, i) => (
+          <MenuItem {...o} key={i} />
+        ))}
+      </BottomSheet>
     ) : null;
 
     const theme = ThemedStyles.style;
@@ -392,7 +426,7 @@ export default class GroupViewScreen extends Component {
       return (
         <View
           style={[
-            theme.backgroundSecondary,
+            theme.bgSecondaryBackground,
             theme.flexContainer,
             theme.justifyCenter,
           ]}>
@@ -403,7 +437,7 @@ export default class GroupViewScreen extends Component {
     }
 
     return (
-      <View style={[theme.flexContainer, theme.backgroundSecondary]}>
+      <View style={[theme.flexContainer, theme.bgSecondaryBackground]}>
         {this.getList()}
         {showPosterFab && (
           <CaptureFab

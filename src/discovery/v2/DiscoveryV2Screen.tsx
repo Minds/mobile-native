@@ -82,7 +82,7 @@ export const DiscoveryV2Screen = withErrorBoundary(
 
     return (
       <View style={theme.flexContainer}>
-        <View style={[theme.backgroundPrimary, theme.paddingTop]}>
+        <View style={[theme.bgPrimaryBackground, theme.paddingTop]}>
           <InitialOnboardingButton />
           <TopbarTabbar
             current={store.activeTabId}

@@ -20,9 +20,7 @@ import ThemedStyles from '../styles/ThemedStyles';
 import BoxShadow from '../common/components/BoxShadow';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Button from '../common/components/Button';
-import PasswordValidator from '../common/components/PasswordValidator';
-import { LIGHT_THEME } from '../styles/Colors';
-import Tooltip from '../common/components/Tooltip';
+import { DARK_THEME } from '../styles/Colors';
 import DismissKeyboard from '../common/components/DismissKeyboard';
 import validatePassword from '../common/helpers/validatePassword';
 import { showNotification } from '../../AppMessages';
@@ -35,6 +33,7 @@ import logService from '../common/services/log.service';
 import FitScrollView from '../common/components/FitScrollView';
 import sessionService from '../common/services/session.service';
 import featuresService from '../common/services/features.service';
+import PasswordInput from '../common/components/password-input/PasswordInput';
 
 export type WalletScreenNavigationProp = StackNavigationProp<
   AuthStackParamList,
@@ -46,9 +45,7 @@ type PropsType = {
 };
 
 const shadowOptLocal = Object.assign({}, shadowOpt);
-shadowOptLocal.height = 270;
-
-const validatorText = { color: LIGHT_THEME.primary_text };
+shadowOptLocal.height = 300;
 
 export default observer(function RegisterScreen(props: PropsType) {
   const captchaRef = useRef<any>(null);
@@ -206,34 +203,13 @@ export default observer(function RegisterScreen(props: PropsType) {
         onBlur={store.emailInputBlur}
       />
       <View>
-        {!!store.password && store.focused && (
-          <Tooltip
-            bottom={12}
-            backgroundColor={LIGHT_THEME.primary_background}
-            containerStyle={theme.paddingLeft2x}>
-            <PasswordValidator
-              password={store.password}
-              textStyle={validatorText}
-            />
-          </Tooltip>
-        )}
-        <InputContainer
-          containerStyle={styles.inputBackground}
-          style={theme.colorWhite}
-          labelStyle={theme.colorWhite}
-          placeholder={i18n.t('auth.password')}
-          secureTextEntry={store.hidePassword}
-          onChangeText={store.setPassword}
-          value={store.password}
-          testID="passwordInput"
-          onFocus={store.focus}
-          onBlur={store.blur}
-        />
-        <Icon
-          name={store.hidePassword ? 'md-eye' : 'md-eye-off'}
-          size={25}
-          onPress={store.toggleHidePassword}
-          style={[theme.inputIcon, icon, theme.colorWhite]}
+        <PasswordInput
+          store={store}
+          tooltipBackground={DARK_THEME.TertiaryBackground}
+          inputContainerStyle={styles.inputBackground}
+          inputStyle={theme.colorWhite}
+          inputLabelStyle={theme.colorWhite}
+          iconStyle={[theme.inputIcon, icon, theme.colorWhite]}
         />
       </View>
     </View>

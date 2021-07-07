@@ -89,7 +89,10 @@ const createStore = ({
   setError(e) {
     this.error = e;
   },
-  async fetch(data: object = {}, retry = false) {
+  async fetch(data?: object, retry = false) {
+    if (!data) {
+      data = options?.params || {};
+    }
     this.clearRetryTimer(!retry);
     const updateStateMethod = options?.updateState || updateState;
     this.setLoading(true);
@@ -99,13 +102,13 @@ const createStore = ({
       const result = await (method === 'get'
         ? apiService.get(url, data, this)
         : apiService.post(url, data));
+
       const state = updateStateMethod(result, this.result);
       this.setResult(state);
-      this.persist(state);
+      this.persist(data);
     } catch (err) {
-      console.log(err);
+      this.setError(err);
       if (options?.retry !== undefined && !isAbort(err)) {
-        this.setError(err);
         if (options.retry > 0 ? this.retryCount < options?.retry : true) {
           this.retryCount++;
           this.retryTimer = setTimeout(() => {
@@ -142,11 +145,8 @@ export default function useApiFetch<T>(
 
   // if persist was true, hydrate on the first render
   useEffect(() => {
-    if (options.persist) {
-      store.hydrate(options.params);
-    }
     return () => store.clearRetryTimer(true);
-  }, [options.params, options.persist, store]);
+  }, [store]);
 
   useEffect(
     () =>

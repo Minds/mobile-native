@@ -102,7 +102,7 @@ class OwnerBlock extends PureComponent<PropsType> {
 
     this.containerStyle = ThemedStyles.combine(
       'borderBottomHair',
-      'borderPrimary',
+      'bcolorPrimaryBorder',
       props.containerStyle,
     );
   }
@@ -237,7 +237,7 @@ const remindContainer = ThemedStyles.combine(
   'paddingVertical2x',
   'paddingHorizontal4x',
   'borderBottomHair',
-  'borderPrimary',
+  'bcolorPrimaryBorder',
   'rowJustifyStart',
 );
 

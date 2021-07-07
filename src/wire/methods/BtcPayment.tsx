@@ -2,10 +2,10 @@ import * as React from 'react';
 import { View, Text, Linking } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 
-import { CommonStyle as CS } from '../../styles/Common';
 import viewportPercentage from '../../common/helpers/viewportPercentage';
 import Button from '../../common/components/Button';
 import i18nService from '../../common/services/i18n.service';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 type PropsType = {
   address: string;
@@ -37,36 +37,36 @@ export default class BtcPayment extends React.PureComponent<PropsType> {
    */
   render(): React.ReactNode {
     this.url = `bitcoin:${this.props.address}?amount=${this.props.amount}`;
-
+    const theme = ThemedStyles.style;
     return (
-      <View style={[CS.flexContainer, CS.marginTop3x]}>
-        <Text style={[CS.fontXL, CS.textCenter]}>
+      <View style={[theme.flexContainer, theme.marginTop3x]}>
+        <Text style={[theme.fontXL, theme.textCenter]}>
           Tap to send{' '}
-          <Text style={CS.colorPrimary}>{this.props.amount} BTC</Text> to
+          <Text style={theme.colorLink}>{this.props.amount} BTC</Text> to
         </Text>
-        <Text style={[CS.colorPrimary, CS.fontL]} numberOfLines={1}>
+        <Text style={[theme.colorLink, theme.fontL]} numberOfLines={1}>
           {this.props.address}
         </Text>
-        <View style={CS.rowJustifyCenter}>
+        <View style={theme.rowJustifyCenter}>
           <Button
             text={i18nService.t('goback')}
             onPress={this.cancel}
-            containerStyle={CS.padding}
-            textStyle={CS.fontL}
+            containerStyle={theme.padding}
+            textStyle={theme.fontL}
           />
           <Button
             inverted
             text={i18nService.t('send').toUpperCase()}
             onPress={this.openLink}
-            containerStyle={CS.padding}
-            textStyle={CS.fontL}
+            containerStyle={theme.padding}
+            textStyle={theme.fontL}
           />
         </View>
 
-        <Text style={[CS.fontXL, CS.textCenter, CS.marginTop4x]}>
+        <Text style={[theme.fontXL, theme.textCenter, theme.marginTop4x]}>
           Or scan the following QR code
         </Text>
-        <View style={[CS.centered, CS.marginTop3x]}>
+        <View style={[theme.centered, theme.marginTop3x]}>
           <QRCode value={this.url} size={viewportPercentage(70).value} />
         </View>
       </View>

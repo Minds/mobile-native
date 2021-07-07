@@ -33,7 +33,7 @@ const PushNotificationsSettings = ({}: PropsType) => {
               />
             ),
           }}
-          containerItemStyle={theme.backgroundPrimary}
+          containerItemStyle={theme.bgPrimaryBackground}
           titleStyle={itemTextStyle}
         />
         <Text style={titleStyle}>
@@ -49,7 +49,7 @@ const PushNotificationsSettings = ({}: PropsType) => {
                 title: setting.notificationGroup,
                 icon: <SettingToggle setting={setting} />,
               }}
-              containerItemStyle={theme.backgroundPrimary}
+              containerItemStyle={theme.bgPrimaryBackground}
               titleStyle={itemTextStyleMedium}
             />
           );

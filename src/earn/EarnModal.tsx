@@ -31,7 +31,7 @@ const EarnItem = ({ content }: EarnItemPropsType) => {
     <View style={[theme.rowJustifyStart, theme.alignCenter]}>
       <Icon
         name={content.icon}
-        color={ThemedStyles.getColor('primary_text')}
+        color={ThemedStyles.getColor('PrimaryText')}
         size={20}
         style={[theme.centered, theme.marginRight3x]}
       />
@@ -57,7 +57,7 @@ const EarnItem = ({ content }: EarnItemPropsType) => {
       {body}
       <Icon
         name={'chevron-right'}
-        color={ThemedStyles.getColor('secondary_text')}
+        color={ThemedStyles.getColor('SecondaryText')}
         size={24}
       />
     </TouchableOpacity>

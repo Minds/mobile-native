@@ -10,7 +10,7 @@ import download from '../services/download.service';
 import logService from '../services/log.service';
 import i18n from '../services/i18n.service';
 import { showMessage } from 'react-native-flash-message';
-import Colors from '../../styles/Colors';
+import { DARK_THEME } from '../../styles/Colors';
 import type ActivityModel from '../../newsfeed/ActivityModel';
 import { MindsVideoStoreType } from '../../media/v2/mindsVideo/createMindsVideoStore';
 import NavigationService from '../../navigation/NavigationService';
@@ -203,7 +203,7 @@ export default class MediaView extends Component<PropsType> {
             message: i18n.t('linkCopied'),
             duration: 1300,
             backgroundColor: '#FFDD63DD',
-            color: Colors.dark,
+            color: DARK_THEME.PrimaryText,
             type: 'info',
           });
         }

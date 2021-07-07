@@ -7,7 +7,7 @@ import ThemedStyles from '../styles/ThemedStyles';
 import TopBar from './TopBar';
 import i18n from '../common/services/i18n.service';
 import NavigationService from '../navigation/NavigationService';
-import { TextInput } from 'react-native-gesture-handler';
+import TextInput from '../common/components/TextInput';
 
 /**
  * NSFW selector
@@ -37,7 +37,7 @@ export default observer(function (props) {
   );
 
   return (
-    <View style={[theme.flexContainer, theme.backgroundPrimary]}>
+    <View style={[theme.flexContainer, theme.bgPrimaryBackground]}>
       <TopBar
         leftText={i18n.t('monetize.title')}
         rightText={i18n.t('done')}
@@ -55,7 +55,7 @@ export default observer(function (props) {
         {i18n.t('capture.paywallDescription')}
       </Text>
       <TouchableOpacity
-        style={[styles.optsRow, theme.borderPrimary]}
+        style={[styles.optsRow, theme.bcolorPrimaryBorder]}
         onPress={onNopaywall}>
         <Text style={[theme.flexContainer, theme.fontL]}>
           {i18n.t('capture.noPaywall')}
@@ -65,7 +65,7 @@ export default observer(function (props) {
         )}
       </TouchableOpacity>
       <TouchableOpacity
-        style={[styles.optsRow, theme.borderPrimary]}
+        style={[styles.optsRow, theme.bcolorPrimaryBorder]}
         onPress={localStore.showInput}>
         <Text style={[theme.flexContainer, theme.fontL]}>
           {i18n.t('capture.paywall')}
@@ -88,7 +88,11 @@ export default observer(function (props) {
           </Text>
           <TextInput
             ref={inputRef}
-            style={[theme.colorPrimaryText, theme.borderPrimary, styles.input]}
+            style={[
+              theme.colorPrimaryText,
+              theme.bcolorPrimaryBorder,
+              styles.input,
+            ]}
             keyboardType="numeric"
             onChangeText={store.setTokenThreshold}
             textAlignVertical="top"
@@ -111,7 +115,7 @@ export default observer(function (props) {
             {i18n.t('capture.paywallLabel', { currency: 'USD' })}
           </Text>
           <TextInput
-            style={[theme.colorPrimaryText, theme.borderPrimary, styles.input]}
+            style={[theme.colorPrimaryText, theme.bcolorPrimaryBorder, styles.input]}
             keyboardType="numeric"
             onChangeText={localStore.setText}
             textAlignVertical="top"

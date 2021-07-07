@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react';
 
 import { Text, View } from 'react-native';
 
-import { CommonStyle as CS } from '../../../styles/Common';
 import abbrev from '../../../common/helpers/abbrev';
 import ThemedStyles from '../../../styles/ThemedStyles';
 
@@ -31,7 +30,7 @@ export default class Counter extends PureComponent<PropsType> {
     const { count, ...otherProps } = this.props;
 
     return (
-      <View style={CS.columnAlignCenter}>
+      <View style={ThemedStyles.style.columnAlignCenter}>
         <Text style={textStyle} {...otherProps}>
           {count > 0 ? abbrev(count, 0) : ''}
         </Text>

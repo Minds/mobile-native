@@ -215,7 +215,7 @@ exports[`renders correctly 1`] = `
                   "textAlign": "center",
                 },
                 Object {
-                  "color": undefined,
+                  "color": "#1B85D6",
                 },
               ]
             }
@@ -233,7 +233,7 @@ exports[`renders correctly 1`] = `
                 "paddingTop": 10,
               },
               Object {
-                "backgroundColor": undefined,
+                "backgroundColor": "#F6F7F7",
               },
               Object {
                 "borderTopWidth": 1,
@@ -242,11 +242,11 @@ exports[`renders correctly 1`] = `
                 "borderBottomWidth": 1,
               },
               Object {
-                "borderColor": undefined,
+                "borderColor": "#D3DBE3",
               },
               Object {
                 "backgroundColor": "#1A2025",
-                "borderColor": "#404a4e",
+                "borderColor": "#414C57",
               },
             ]
           }
@@ -260,7 +260,14 @@ exports[`renders correctly 1`] = `
             }
           >
             <View>
-              <View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "stretch",
+                    "flexDirection": "row",
+                  }
+                }
+              >
                 <Text
                   style={
                     Array [
@@ -271,7 +278,7 @@ exports[`renders correctly 1`] = `
                         "marginBottom": 0,
                       },
                       Object {
-                        "color": undefined,
+                        "color": "#72727C",
                       },
                       Object {
                         "color": "#FFFFFF",
@@ -290,9 +297,10 @@ exports[`renders correctly 1`] = `
               containerStyle={
                 Object {
                   "backgroundColor": "#1A2025",
-                  "borderColor": "#404a4e",
+                  "borderColor": "#414C57",
                 }
               }
+              keyboardAppearance="dark"
               labelStyle={
                 Object {
                   "color": "#FFFFFF",
@@ -308,10 +316,10 @@ exports[`renders correctly 1`] = `
                 Array [
                   Object {
                     "backgroundColor": "transparent",
-                    "borderColor": undefined,
+                    "borderColor": "#D3DBE3",
                     "borderRadius": 2,
                     "borderWidth": 1,
-                    "color": undefined,
+                    "color": "#43434D",
                     "fontFamily": "Roboto",
                     "fontSize": 16,
                     "lineHeight": 21,

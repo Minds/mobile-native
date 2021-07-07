@@ -7,7 +7,6 @@ import { style } from './styles';
 import { ComponentsStyle } from '../../../../styles/Components';
 import ListItemButton from '../../ListItemButton';
 import { observer } from 'mobx-react';
-import Colors from '../../../../styles/Colors';
 import ActivityIndicator from '../../ActivityIndicator';
 import PhoneInput from 'react-native-phone-input';
 import { PhoneValidationStoreType } from '../createLocalStore';
@@ -59,7 +58,7 @@ const InputNumber = observer(({ localStore, ...props }: PropsType) => {
 
   if (localStore.inProgress) {
     joinButtonContent = (
-      <ActivityIndicator size="small" color={Colors.primary} />
+      <ActivityIndicator size="small" color={theme.colorLink} />
     );
   }
 
@@ -67,7 +66,7 @@ const InputNumber = observer(({ localStore, ...props }: PropsType) => {
     <ListItemButton
       onPress={joinAction}
       disabled={!localStore.canJoin()}
-      style={[theme.borderPrimary, theme.borderHair]}>
+      style={[theme.bcolorPrimaryBorder, theme.borderHair]}>
       {joinButtonContent}
     </ListItemButton>
   );
@@ -78,7 +77,7 @@ const InputNumber = observer(({ localStore, ...props }: PropsType) => {
     style.phoneInput,
     ComponentsStyle.loginInputNew,
     theme.marginRight2x,
-    theme.borderPrimary,
+    theme.bcolorPrimaryBorder,
   ];
 
   return (

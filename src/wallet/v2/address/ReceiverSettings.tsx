@@ -18,7 +18,7 @@ type PropsType = {
 const ReceiverSettings = observer(
   ({ navigation, onchainStore, connectWallet, walletStore }: PropsType) => {
     const theme = ThemedStyles.style;
-    const innerWrapper = [theme.borderBottomHair, theme.borderPrimary];
+    const innerWrapper = [theme.borderBottomHair, theme.bcolorPrimaryBorder];
     const btcAddress = walletStore.wallet.btc.address;
     const receiverSettingsOptions = [
       {

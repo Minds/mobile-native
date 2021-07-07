@@ -15,7 +15,7 @@ exports[`Notifications component renders correctly 1`] = `
         "borderBottomWidth": 0.5,
       },
       Object {
-        "borderColor": undefined,
+        "borderColor": "#D3DBE3",
       },
     ]
   }
@@ -85,7 +85,7 @@ exports[`Notifications component renders correctly 1`] = `
               "fontWeight": "400",
             },
             Object {
-              "color": undefined,
+              "color": "#72727C",
             },
           ]
         }
@@ -348,12 +348,12 @@ exports[`Notifications component renders correctly 1`] = `
               "fontWeight": "400",
             },
             Object {
-              "color": undefined,
+              "color": "#72727C",
             },
           ]
         }
       >
-        1w 
+        1w
       </Text>
     </View>
   </View>

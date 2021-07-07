@@ -41,7 +41,7 @@ export default observer(function (props) {
   const current = moment(store.time_created);
 
   return (
-    <View style={[theme.flexContainer, theme.backgroundPrimary]}>
+    <View style={[theme.flexContainer, theme.bgPrimaryBackground]}>
       <TopBar
         leftText="Schedule"
         rightText={i18n.t('done')}
@@ -59,7 +59,7 @@ export default observer(function (props) {
         {i18n.t('activity.scheduled')}
       </Text>
       <TouchableOpacity
-        style={[styles.optsRow, theme.borderPrimary]}
+        style={[styles.optsRow, theme.bcolorPrimaryBorder]}
         onPress={onNow}>
         <Text style={[theme.flexContainer, theme.fontL]}>{i18n.t('now')}</Text>
         {!store.time_created && (
@@ -67,7 +67,7 @@ export default observer(function (props) {
         )}
       </TouchableOpacity>
       <TouchableOpacity
-        style={[styles.optsRow, theme.borderPrimary]}
+        style={[styles.optsRow, theme.bcolorPrimaryBorder]}
         onPress={localStore.showPicker}>
         <Text style={[theme.flexContainer, theme.fontL]}>
           {i18n.t('capture.customTime')}

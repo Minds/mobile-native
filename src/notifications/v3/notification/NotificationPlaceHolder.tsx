@@ -11,17 +11,17 @@ import ThemedStyles from '../../../styles/ThemedStyles';
 
 export default function NotificationPlaceHolder() {
   const theme = ThemedStyles.style;
-  const color = ThemedStyles.getColor('tertiary_background');
+  const color = ThemedStyles.getColor('TertiaryBackground');
 
   const animation = props => (
-    <Fade {...props} style={theme.backgroundPrimary} />
+    <Fade {...props} style={theme.bgPrimaryBackground} />
   );
 
   return (
     <View
       style={[
         theme.borderBottom8x,
-        theme.borderBackgroundPrimary,
+        theme.bcolorPrimaryBackground,
         theme.paddingBottom4x,
         theme.paddingTop2x,
       ]}>

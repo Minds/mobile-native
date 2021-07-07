@@ -1,15 +1,17 @@
-import { StyleSheet, Platform } from 'react-native';
+import { Platform, ViewStyle, TextStyle, ImageStyle } from 'react-native';
 import { observable, action, reaction } from 'mobx';
 import React from 'react';
 
-import { DARK_THEME, LIGHT_THEME } from './Colors';
+import { ColorsNameType, DARK_THEME, LIGHT_THEME } from './Colors';
 import { DefaultTheme, DarkTheme } from '@react-navigation/native';
-import { buildStyle } from './Style';
+import { buildStyle, updateTheme } from './Style';
 
 import type { Styles } from './Style';
 import RNBootSplash from 'react-native-bootsplash';
 
 type Style = keyof Styles;
+
+type CustomStyle = ViewStyle | TextStyle | ImageStyle;
 
 /**
  * ThemedStylesStore
@@ -33,24 +35,20 @@ export class ThemedStylesStore {
   style: Styles;
 
   constructor() {
-    this.style = buildStyle(0);
+    this.style = buildStyle(LIGHT_THEME);
   }
 
   /**
    * Combine styles into an array
    */
-  combine(...styles: Array<Style | Object>) {
+  combine(...styles: Array<Style | CustomStyle>) {
     return styles.map(s => (typeof s === 'string' ? this.style[s] : s));
   }
 
-  /**
-   * Initialice themed styles
-   */
-  async init() {
-    // load stored theme value here
-    if (this.theme !== 0) {
-      this.generateStyle();
-    }
+  create(styles: { [key: string]: Array<Style | CustomStyle> }) {
+    const s: any = {};
+    Object.keys(styles).forEach(key => (s[key] = this.combine(...styles[key])));
+    return s;
   }
 
   /**
@@ -60,7 +58,8 @@ export class ThemedStylesStore {
   setDark() {
     RNBootSplash.show({ duration: 150 });
     this.theme = 1;
-    this.generateStyle();
+    this.generateNavStyle();
+    updateTheme(this.style);
     setTimeout(() => {
       RNBootSplash.hide({ duration: 150 });
     }, 1000);
@@ -73,7 +72,8 @@ export class ThemedStylesStore {
   setLight() {
     RNBootSplash.show({ duration: 150 });
     this.theme = 0;
-    this.generateStyle();
+    this.generateNavStyle();
+    updateTheme(this.style);
     setTimeout(() => {
       RNBootSplash.hide({ duration: 150 });
     }, 2000);
@@ -86,7 +86,10 @@ export class ThemedStylesStore {
   @action
   setTheme(value) {
     this.theme = value;
-    this.generateStyle();
+    this.generateNavStyle();
+    if (this.theme !== 0) {
+      updateTheme(this.style);
+    }
   }
 
   /**
@@ -107,15 +110,15 @@ export class ThemedStylesStore {
    * Get color of theme based on property
    * @param {String} prop
    */
-  getColor(prop) {
-    const theme = this.theme ? DARK_THEME : LIGHT_THEME;
+  getColor(prop: ColorsNameType) {
+    const theme = this.theme === 1 ? DARK_THEME : LIGHT_THEME;
     return theme[prop];
   }
 
   /**
    * Generates the current theme
    */
-  generateStyle() {
+  generateNavStyle() {
     const theme = this.theme ? DARK_THEME : LIGHT_THEME;
 
     const baseTheme = this.theme === 0 ? DefaultTheme : DarkTheme;
@@ -125,19 +128,19 @@ export class ThemedStylesStore {
       colors: {
         ...baseTheme.colors,
         background: 'transparent',
-        // card: theme.backgroundSecondary, // generates an error on ios
-        text: theme.primary_text,
-        primary: theme.icon,
+        // card: theme.bgSecondaryBackground, // generates an error on ios
+        text: theme.PrimaryText,
+        primary: theme.Icon,
       },
     };
 
     this.defaultScreenOptions = {
       title: '',
       headerStyle: {
-        backgroundColor: theme.primary_background,
+        backgroundColor: theme.PrimaryBackground,
       },
       contentStyle: {
-        backgroundColor: theme.primary_background,
+        backgroundColor: theme.PrimaryBackground,
       },
       stackAnimation: Platform.select({
         ios: 'default',
@@ -150,13 +153,6 @@ export class ThemedStylesStore {
     if (Platform.OS === 'android') {
       this.defaultScreenOptions.headerTopInsetEnabled = false;
     }
-
-    const newStyle = StyleSheet.create(buildStyle(theme));
-
-    // we assign to the same object to keep an stable reference to the styles even when the theme change.
-    Object.getOwnPropertyNames(this.style).forEach(key => {
-      Object.assign(this.style[key], newStyle[key]);
-    });
   }
 }
 
@@ -167,7 +163,22 @@ export default ThemedStyles;
 /**
  * Returns an stable reference
  */
-export function useStyle(...styles: Array<Style | Object>) {
+export function useStyle(...styles: Array<Style | CustomStyle>) {
+  const ref = React.useRef<any[]>();
+  if (!ref.current) {
+    ref.current = ThemedStyles.combine(...styles);
+  }
+  return ref.current;
+}
+
+/**
+ * Map props to styles
+ */
+export function useStyleFromProps(props: Object) {
+  const styles: any = Object.keys(props).map(
+    key => key + (typeof props[key] === 'string' ? props[key] : ''),
+  );
+
   const ref = React.useRef<any[]>();
   if (!ref.current) {
     ref.current = ThemedStyles.combine(...styles);

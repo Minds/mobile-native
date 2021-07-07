@@ -17,7 +17,6 @@ import {
 import AnalyticsScreen from '../analytics/AnalyticsScreen';
 
 import LoginScreen from '../auth/LoginScreen';
-import ForgotScreen from '../auth/ForgotScreen';
 import ReferralsScreen from '../referral/ReferralsScreen';
 import DataSaverScreen from '../settings/screens/DataSaverScreen';
 import TabsScreen from '../tabs/TabsScreen';
@@ -488,7 +487,7 @@ const AppStack = function () {
         options={{
           title: 'Receiver Address',
           headerStyle: {
-            backgroundColor: ThemedStyles.getColor('primary_background'),
+            backgroundColor: ThemedStyles.getColor('PrimaryBackground'),
           },
           headerHideShadow: true,
         }}
@@ -499,7 +498,7 @@ const AppStack = function () {
         options={{
           title: i18n.t('wallet.bitcoins.update'),
           headerStyle: {
-            backgroundColor: ThemedStyles.getColor('primary_background'),
+            backgroundColor: ThemedStyles.getColor('PrimaryBackground'),
           },
           headerHideShadow: true,
         }}
@@ -510,7 +509,7 @@ const AppStack = function () {
         options={{
           title: i18n.t('wallet.bank.title'),
           headerStyle: {
-            backgroundColor: ThemedStyles.getColor('primary_background'),
+            backgroundColor: ThemedStyles.getColor('PrimaryBackground'),
           },
           headerHideShadow: true,
         }}
@@ -699,7 +698,6 @@ const AuthStack = function () {
         // @ts-ignore
         screenOptions={AuthTransition}>
         <AuthStackNav.Screen name="Login" component={LoginScreen} />
-        <AuthStackNav.Screen name="Forgot" component={ForgotScreen} />
         <AuthStackNav.Screen name="Register" component={RegisterScreen} />
       </AuthStackNav.Navigator>
     </View>

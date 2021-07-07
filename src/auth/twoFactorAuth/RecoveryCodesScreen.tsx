@@ -51,8 +51,8 @@ const RecoveryCodesScreen = observer(({ route }: PropsType) => {
           theme.padding4x,
           theme.borderTop,
           theme.borderBottom,
-          theme.borderPrimary,
-          theme.backgroundPrimaryHighlight,
+          theme.bcolorPrimaryBorder,
+          theme.bgPrimaryBackgroundHighlight,
           theme.marginTop5x,
         ]}>
         <View style={theme.rowJustifySpaceBetween}>
@@ -64,7 +64,7 @@ const RecoveryCodesScreen = observer(({ route }: PropsType) => {
             onPress={store.copyRecoveryCode}>
             <Icon
               name="content-copy"
-              color={ThemedStyles.getColor('primary_text')}
+              color={ThemedStyles.getColor('PrimaryText')}
               size={14}
             />
             <Text style={[styles.smallTitle, theme.marginLeft]}>

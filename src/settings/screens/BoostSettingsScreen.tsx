@@ -162,7 +162,7 @@ const BoostSettingsScreen = observer(() => {
     <Icon
       name="check"
       size={16}
-      color={ThemedStyles.getColor('secondary_text')}
+      color={ThemedStyles.getColor('SecondaryText')}
     />
   );
 
@@ -170,9 +170,9 @@ const BoostSettingsScreen = observer(() => {
     theme.rowJustifySpaceBetween,
     theme.paddingVertical3x,
     theme.borderBottom,
-    theme.borderPrimary,
+    theme.bcolorPrimaryBorder,
     theme.paddingHorizontal4x,
-    theme.backgroundPrimary,
+    theme.bgPrimaryBackground,
   ];
 
   const browserOnly = (
@@ -188,7 +188,11 @@ const BoostSettingsScreen = observer(() => {
 
   return (
     <ScrollView
-      style={[theme.backgroundSecondary, theme.fullHeight, theme.paddingTop4x]}>
+      style={[
+        theme.bgSecondaryBackground,
+        theme.fullHeight,
+        theme.paddingTop4x,
+      ]}>
       <Text
         style={[
           theme.colorSecondaryText,
@@ -223,7 +227,7 @@ const BoostSettingsScreen = observer(() => {
                 containerStyle={theme.borderRadius}
                 width={item.tooltip.width}
                 height={item.tooltip.height}
-                backgroundColor={ThemedStyles.getColor('link')}
+                backgroundColor={ThemedStyles.getColor('Link')}
                 popover={
                   <Text style={theme.colorWhite}>
                     {i18n.t(`settings.boost.${item.id}Tooltip`)}
@@ -232,7 +236,7 @@ const BoostSettingsScreen = observer(() => {
                 <Icon
                   name="information-variant"
                   size={15}
-                  color={ThemedStyles.getColor('tertiary_text')}
+                  color={ThemedStyles.getColor('TertiaryText')}
                 />
               </Tooltip>
               {item.browserOnly && browserOnly}
@@ -242,7 +246,7 @@ const BoostSettingsScreen = observer(() => {
               style={[
                 buttonStyles,
                 theme.borderTop,
-                item.disabled ? theme.backgroundSecondary : {},
+                item.disabled ? theme.bgSecondaryBackground : {},
               ]}
               onPress={item.disabled ? () => false : () => item.onPress(true)}>
               <Text
@@ -259,7 +263,7 @@ const BoostSettingsScreen = observer(() => {
             <TouchableOpacity
               style={[
                 buttonStyles,
-                item.disabled ? theme.backgroundSecondary : {},
+                item.disabled ? theme.bgSecondaryBackground : {},
               ]}
               onPress={item.disabled ? () => false : () => item.onPress(false)}>
               <Text

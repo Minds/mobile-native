@@ -133,7 +133,7 @@ const LocationAutoSuggest = observer((props: propsType) => {
     }
   }, [store, props]);
 
-  const listStyle = [theme.backgroundTertiary, theme.flexContainer];
+  const listStyle = [theme.bgTertiaryBackground, theme.flexContainer];
 
   const TextInput = props?.inputStyle === 'inputAlone' ? Input : SettingInput;
 

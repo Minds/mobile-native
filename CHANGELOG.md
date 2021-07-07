@@ -2,7 +2,25 @@
 
 Minds Mobile
 
-## 4.14.0 - 2021-06-11
+## 4.14.3 - 2021-07-01
+
+### Changed
+
+- Fix notifications navigation
+
+## 4.14.2 - 2021-06-25
+
+### Changed
+
+- Fix push notification settings
+
+## 4.14.1 - 2021-06-22
+
+### Changed
+
+- Fix 2FA
+
+## 4.14.0 - 2021-06-21
 
 ### Changed
 

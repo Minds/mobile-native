@@ -1,5 +1,4 @@
 import { Platform, StyleSheet } from 'react-native';
-import Colors from '../../../../styles/Colors';
 
 export const iconSize = Platform.select({ ios: 30, android: 26 });
 export const iconResSize = Platform.select({ ios: 28, android: 24 });
@@ -21,9 +20,6 @@ export const styles = StyleSheet.create({
   },
   overlayContainerTransparent: {
     backgroundColor: 'transparent',
-  },
-  errorText: {
-    color: Colors.darkGreyed,
   },
   videoIcon: {
     paddingLeft: 3,

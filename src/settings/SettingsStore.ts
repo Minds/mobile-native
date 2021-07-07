@@ -65,7 +65,6 @@ export class SettingsStore {
 
     if (!data) {
       ThemedStyles.theme = 0;
-      ThemedStyles.init();
       return this;
     }
 

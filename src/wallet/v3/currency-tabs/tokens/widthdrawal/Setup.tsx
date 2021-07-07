@@ -36,11 +36,7 @@ const Setup = ({ user, walletStore, navigation }) => {
   walletSetup = [
     {
       title: (
-        <Text
-          style={[
-            theme.listItemTitle,
-            user.rewards ? theme.strikethrough : null,
-          ]}>
+        <Text style={[titleStyle, user.rewards ? theme.strikeThrough : null]}>
           {i18n.t('wallet.phoneVerification')}
         </Text>
       ),
@@ -52,8 +48,7 @@ const Setup = ({ user, walletStore, navigation }) => {
     },
     {
       title: (
-        <Text
-          style={[theme.listItemTitle, user.plus ? theme.strikethrough : null]}>
+        <Text style={[titleStyle, user.plus ? theme.strikeThrough : null]}>
           {i18n.t('monetize.plusHeader')}
         </Text>
       ),
@@ -77,7 +72,7 @@ const Setup = ({ user, walletStore, navigation }) => {
         <MenuItem
           item={item}
           key={i}
-          containerItemStyle={theme.backgroundPrimary}
+          containerItemStyle={theme.bgPrimaryBackground}
         />
       ))}
     </View>
@@ -92,5 +87,13 @@ const styles = StyleSheet.create({
     marginRight: 25,
   },
 });
+
+const titleStyle = ThemedStyles.combine(
+  {
+    paddingVertical: 15,
+    fontSize: 17,
+  },
+  'colorPrimaryText',
+);
 
 export default Setup;

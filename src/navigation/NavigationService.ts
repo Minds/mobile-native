@@ -7,6 +7,10 @@ import {
 
 let _navigator = null;
 
+export function getTopLevelNavigator() {
+  return _navigator;
+}
+
 function getStateFrom(nav) {
   if (nav.routes && nav.routes[nav.index].state) {
     return getStateFrom(nav.routes[nav.index].state);

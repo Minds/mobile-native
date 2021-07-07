@@ -82,11 +82,11 @@ export default class TagSelect extends Component<PropsType> {
             <TouchableOpacity
               style={[
                 styles.tag,
-                theme.backgroundPrimary,
+                theme.bgPrimaryBackground,
                 tagStyle,
                 tag.selected ? tagSelectedStyle : null,
                 tag.value === this.props.hashtag.hashtag
-                  ? [theme.borderPrimary, theme.border]
+                  ? [theme.bcolorPrimaryBorder, theme.border]
                   : null,
               ]}
               key={i}

@@ -77,6 +77,6 @@ const textStyle = ThemedStyles.combine(
 const containerStyle = ThemedStyles.combine(
   'columnAlignCenter',
   styles.container,
-  'backgroundTransparent',
+  'bgTransparent',
   'centered',
 );

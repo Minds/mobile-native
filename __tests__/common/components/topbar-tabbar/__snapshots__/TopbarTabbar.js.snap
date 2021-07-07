@@ -12,7 +12,7 @@ exports[`renders correctly 1`] = `
         "borderBottomWidth": 1,
       },
       Object {
-        "borderColor": undefined,
+        "borderColor": "#D3DBE3",
       },
       Object {
         "paddingHorizontal": 10,
@@ -50,7 +50,7 @@ exports[`renders correctly 1`] = `
             "fontSize": 16,
           },
           Object {
-            "color": undefined,
+            "color": "#72727C",
           },
           undefined,
         ]
@@ -65,7 +65,7 @@ exports[`renders correctly 1`] = `
             "fontSize": 16,
           },
           Object {
-            "color": undefined,
+            "color": "#72727C",
           },
           Object {
             "paddingVertical": 2,
@@ -106,7 +106,7 @@ exports[`renders correctly 1`] = `
             "fontSize": 16,
           },
           Object {
-            "color": undefined,
+            "color": "#72727C",
           },
           undefined,
         ]
@@ -121,7 +121,7 @@ exports[`renders correctly 1`] = `
             "fontSize": 16,
           },
           Object {
-            "color": undefined,
+            "color": "#72727C",
           },
           Object {
             "paddingVertical": 2,
@@ -162,7 +162,7 @@ exports[`renders correctly 1`] = `
             "fontSize": 16,
           },
           Object {
-            "color": undefined,
+            "color": "#72727C",
           },
           undefined,
         ]
@@ -177,7 +177,7 @@ exports[`renders correctly 1`] = `
             "fontSize": 16,
           },
           Object {
-            "color": undefined,
+            "color": "#72727C",
           },
           Object {
             "paddingVertical": 2,
@@ -218,7 +218,7 @@ exports[`renders correctly 1`] = `
             "fontSize": 16,
           },
           Object {
-            "color": undefined,
+            "color": "#72727C",
           },
           undefined,
         ]
@@ -233,7 +233,7 @@ exports[`renders correctly 1`] = `
             "fontSize": 16,
           },
           Object {
-            "color": undefined,
+            "color": "#72727C",
           },
           Object {
             "paddingVertical": 2,

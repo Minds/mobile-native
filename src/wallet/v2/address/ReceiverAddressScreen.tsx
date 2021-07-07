@@ -45,7 +45,7 @@ const ReceiverAddressScreen = ({ route }: PropsType) => {
 
   const qrWrapper = [
     theme.padding4x,
-    theme.backgroundSecondary,
+    theme.bgSecondaryBackground,
     theme.centered,
     theme.marginTop6x,
     theme.marginBottom3x,

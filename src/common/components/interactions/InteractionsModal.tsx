@@ -152,7 +152,7 @@ const titleStyle = ThemedStyles.combine(
 
 const containerStyle = ThemedStyles.combine(
   'height75',
-  'backgroundPrimary',
+  'bgPrimaryBackground',
   'padding3x',
   'borderRadius5x',
 );

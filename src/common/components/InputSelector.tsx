@@ -47,17 +47,17 @@ const InputSelector = (props: PropsType) => {
   return (
     <View
       style={[
-        theme.backgroundPrimary,
+        theme.bgPrimaryBackground,
         theme.paddingTop4x,
         props.mainContainerStyle,
       ]}>
       <View
         style={[
           theme.rowJustifySpaceBetween,
-          theme.backgroundSecondary,
+          theme.bgSecondaryBackground,
           theme.paddingVertical3x,
           theme.paddingHorizontal3x,
-          theme.borderPrimary,
+          theme.bcolorPrimaryBorder,
           theme.borderHair,
           props.containerStyle,
         ]}>

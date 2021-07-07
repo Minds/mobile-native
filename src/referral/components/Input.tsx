@@ -2,7 +2,7 @@ import React, { useCallback, useRef } from 'react';
 import {
   StyleSheet,
   Text,
-  TextInput,
+  TextInput as TextInputType,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -10,6 +10,7 @@ import { showNotification } from '../../../AppMessages';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import Clipboard from '@react-native-clipboard/clipboard';
+import TextInput from '../../common/components/TextInput';
 
 interface InputProps {
   textToCopy: string;
@@ -19,7 +20,7 @@ interface InputProps {
 
 const Input = ({ textToCopy, label, style }: InputProps) => {
   const theme = ThemedStyles.style;
-  const _textInput = useRef<TextInput>();
+  const _textInput = useRef<TextInputType>();
 
   const _onFocus = useCallback(() => {
     _textInput.current!.focus();
@@ -41,7 +42,7 @@ const Input = ({ textToCopy, label, style }: InputProps) => {
           autoCorrect={false}
           style={[
             theme.input,
-            theme.backgroundSecondary,
+            theme.bgSecondaryBackground,
             theme.padding2x,
             theme.fontM,
             styles.input,
@@ -51,7 +52,7 @@ const Input = ({ textToCopy, label, style }: InputProps) => {
         <Text
           style={[
             theme.colorLink,
-            theme.backgroundSecondary,
+            theme.bgSecondaryBackground,
             theme.paddingHorizontal4x,
             styles.copyText,
           ]}>

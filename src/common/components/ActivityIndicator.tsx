@@ -5,7 +5,7 @@ import ThemedStyles from '../../styles/ThemedStyles';
 
 const ActivityIndicator = props => (
   <RNActivityIndicator
-    color={ThemedStyles.getColor('secondary_text')}
+    color={ThemedStyles.getColor('SecondaryText')}
     {...props}
   />
 );

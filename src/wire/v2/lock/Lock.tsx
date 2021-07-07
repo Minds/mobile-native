@@ -100,7 +100,7 @@ const Lock = observer(({ entity }: PropsType) => {
       <View
         style={[
           styles.mask,
-          theme.backgroundSeparator,
+          theme.bgSeparator,
           theme.centered,
           theme.padding2x,
         ]}>

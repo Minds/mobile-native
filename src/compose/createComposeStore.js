@@ -29,7 +29,7 @@ const showError = message => {
     message: message,
     titleStyle: ThemedStyles.style.fontXL,
     duration: 2000,
-    backgroundColor: ThemedStyles.getColor('tertiary_background'),
+    backgroundColor: ThemedStyles.getColor('TertiaryBackground'),
     type: 'danger',
   });
 };
@@ -595,6 +595,9 @@ export default function (props) {
     },
     togglePostToPermaweb() {
       this.postToPermaweb = !this.postToPermaweb;
+    },
+    isGroup() {
+      return !!props.route?.params?.group;
     },
     maxHashtagsError() {
       showError(

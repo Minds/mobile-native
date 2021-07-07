@@ -6,7 +6,7 @@ import {
   Pager,
   PagerProvider,
   iPageInterpolation,
-} from '@crowdlinker/react-native-pager';
+} from '@msantang78/react-native-pager';
 
 import ActivityFullScreen from './ActivityFullScreen';
 import type FeedStore from '../../../common/stores/FeedStore';
@@ -43,18 +43,18 @@ const ViewerScreen = observer((props: PropsType) => {
       store.index = v;
 
       // report viewed with metadata
-      feedStore.addViewed(feedStore.entities[store.index]);
+      const position = Math.abs(store.index - props.route.params.current);
+      feedStore.entities[store.index].sendViewed('single', position);
     },
   }));
 
   useEffect(() => {
     feedStore.viewed.clearViewed();
-    feedStore.metadataService?.pushSource('single');
     // report initial as viewed with metadata
-    feedStore.addViewed(feedStore.entities[store.index]);
+    const position = Math.abs(store.index - props.route.params.current) + 1;
+    feedStore.entities[store.index].sendViewed('single', position);
     return () => {
       feedStore.viewed.clearViewed();
-      feedStore.metadataService?.popSource();
       if (!SettingsStore.swipeAnimShown) {
         SettingsStore.setSwipeAnimShown(true);
       }
@@ -68,7 +68,7 @@ const ViewerScreen = observer((props: PropsType) => {
     width,
     backgroundColor: ThemedStyles.theme
       ? 'black'
-      : ThemedStyles.getColor('tertiary_background'),
+      : ThemedStyles.getColor('TertiaryBackground'),
     alignSelf: 'center',
   };
 

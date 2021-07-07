@@ -44,14 +44,12 @@ const Withdraw = observer((props: PropsType) => {
             onChangeText={store.setAmount}
             value={store.amount}
             testID="amountInput"
-            style={store.error ? theme.colorAlert : null}
-            error={store.error}
             selectTextOnFocus={true}
           />
           <View
             style={[
               theme.borderBottom,
-              theme.borderPrimary,
+              theme.bcolorPrimaryBorder,
               theme.rowJustifySpaceBetween,
               theme.paddingHorizontal4x,
               theme.paddingVertical2x,

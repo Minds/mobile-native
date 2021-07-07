@@ -3,177 +3,10 @@
 exports[`blog card component should renders correctly 1`] = `
 <View>
   <View
-    style={
-      Array [
-        Object {
-          "position": "absolute",
-          "right": 0,
-          "top": 0,
-          "zIndex": 1,
-        },
-      ]
-    }
-  >
-    <View>
-      <Text
-        allowFontScaling={false}
-        onPress={[Function]}
-        style={
-          Array [
-            Object {
-              "color": undefined,
-              "fontSize": 28,
-            },
-            Object {
-              "color": undefined,
-            },
-            Object {
-              "fontFamily": "Material Icons",
-              "fontStyle": "normal",
-              "fontWeight": "normal",
-            },
-            Object {},
-          ]
-        }
-      >
-        
-      </Text>
-      <Modal
-        animationType="none"
-        hardwareAccelerated={false}
-        onRequestClose={[Function]}
-        transparent={true}
-        visible={false}
-      >
-        <View
-          style={
-            Array [
-              Array [
-                Object {
-                  "flex": 1,
-                  "flexDirection": "row",
-                },
-              ],
-            ]
-          }
-        >
-          <Text
-            onPress={[Function]}
-            style={
-              Array [
-                Array [
-                  Object {
-                    "backgroundColor": "#000",
-                    "bottom": 0,
-                    "left": 0,
-                    "opacity": 0.4,
-                    "position": "absolute",
-                    "right": 0,
-                    "top": 0,
-                  },
-                ],
-              ]
-            }
-          />
-          <View
-            style={
-              Object {
-                "alignSelf": "flex-end",
-                "backgroundColor": "#242A30",
-                "flex": 1,
-                "height": 45.5,
-                "transform": Array [
-                  Object {
-                    "translateY": 45.5,
-                  },
-                ],
-              }
-            }
-          >
-            <View
-              style={
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "backgroundColor": "#fff",
-                    "height": 40,
-                    "justifyContent": "center",
-                  },
-                  Object {
-                    "alignItems": "center",
-                    "backgroundColor": "#242A30",
-                    "height": 40,
-                    "justifyContent": "center",
-                  },
-                ]
-              }
-            >
-              <Text
-                style={
-                  Array [
-                    Object {
-                      "color": "#757575",
-                      "fontSize": 14,
-                    },
-                  ]
-                }
-              >
-                Actions
-              </Text>
-            </View>
-            <RCTScrollView
-              scrollEnabled={false}
-            >
-              <View />
-            </RCTScrollView>
-            <View
-              activeOpacity={1}
-              onPress={[Function]}
-              style={
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "backgroundColor": "#fff",
-                    "height": 50,
-                    "justifyContent": "center",
-                    "marginTop": 6,
-                  },
-                  Object {
-                    "alignItems": "center",
-                    "backgroundColor": "#1A2025",
-                    "height": 50,
-                    "justifyContent": "center",
-                    "marginTop": 6,
-                  },
-                ]
-              }
-              underlayColor="#F4F4F4"
-            >
-              <Text
-                style={
-                  Array [
-                    Array [
-                      Object {
-                        "fontSize": 18,
-                      },
-                    ],
-                    Object {
-                      "color": "#007AFF",
-                    },
-                  ]
-                }
-              />
-            </View>
-          </View>
-        </View>
-      </Modal>
-    </View>
-  </View>
-  <View
     onPress={[Function]}
     style={
       Object {
-        "backgroundColor": undefined,
+        "backgroundColor": "#F6F7F7",
       }
     }
   >
@@ -218,24 +51,16 @@ exports[`blog card component should renders correctly 1`] = `
     </View>
     <View
       style={
-        Array [
-          Object {
-            "padding": 10,
-          },
-        ]
+        Object {
+          "padding": 10,
+        }
       }
     >
       <View
         style={
-          Array [
-            Object {
-              "alignItems": "flex-start",
-              "flexDirection": "column",
-            },
-            Object {
-              "width": "100%",
-            },
-          ]
+          Object {
+            "width": "100%",
+          }
         }
       >
         <Text
@@ -244,9 +69,10 @@ exports[`blog card component should renders correctly 1`] = `
           style={
             Array [
               Object {
-                "fontSize": 16,
+                "fontSize": 18,
               },
               Object {
+                "fontFamily": "Roboto-Medium",
                 "fontWeight": "500",
               },
               Object {
@@ -264,7 +90,7 @@ exports[`blog card component should renders correctly 1`] = `
                 "marginBottom": 10,
               },
               Object {
-                "marginTop": 10,
+                "marginTop": 15,
               },
               Object {
                 "flexDirection": "row",
@@ -277,7 +103,7 @@ exports[`blog card component should renders correctly 1`] = `
           }
         >
           <View
-            height={24}
+            height={26}
             style={
               Object {
                 "backgroundColor": "transparent",
@@ -328,7 +154,7 @@ exports[`blog card component should renders correctly 1`] = `
                 },
               }
             }
-            width={24}
+            width={26}
           >
             <View
               accessibilityIgnoresInvertColors={true}
@@ -447,10 +273,10 @@ exports[`blog card component should renders correctly 1`] = `
             style={
               Array [
                 Object {
-                  "fontSize": 12,
+                  "fontSize": 16,
                 },
                 Object {
-                  "paddingLeft": 5,
+                  "paddingLeft": 10,
                 },
                 Object {
                   "flex": 1,
@@ -458,7 +284,7 @@ exports[`blog card component should renders correctly 1`] = `
               ]
             }
           >
-            SOMEUSERMANE
+            someusermane
           </Text>
           <Text
             style={
@@ -474,6 +300,39 @@ exports[`blog card component should renders correctly 1`] = `
           >
             Apr 27, 2018, 07:17
           </Text>
+          <View
+            style={
+              Object {
+                "paddingLeft": 5,
+              }
+            }
+          >
+            <View>
+              <Text
+                allowFontScaling={false}
+                onPress={[Function]}
+                style={
+                  Array [
+                    Object {
+                      "color": undefined,
+                      "fontSize": 28,
+                    },
+                    Object {
+                      "color": "#9B9B9B",
+                    },
+                    Object {
+                      "fontFamily": "Material Icons",
+                      "fontStyle": "normal",
+                      "fontWeight": "normal",
+                    },
+                    Object {},
+                  ]
+                }
+              >
+                
+              </Text>
+            </View>
+          </View>
         </View>
       </View>
     </View>
