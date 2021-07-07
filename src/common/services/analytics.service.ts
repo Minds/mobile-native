@@ -67,9 +67,10 @@ export class AnalyticsService {
     if (!nav) {
       return;
     }
-    const currentRouteName = nav.getCurrentRoute().name;
+    const currentRouteName = nav.getCurrentRoute()?.name;
 
     if (
+      currentRouteName &&
       this.previousRouteName !== currentRouteName &&
       !IGNORE_SCREENS.includes(currentRouteName)
     ) {
