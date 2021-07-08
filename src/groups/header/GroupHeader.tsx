@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 import { Text, Image, View, StyleSheet, Alert } from 'react-native';
 
 import { observer, inject } from 'mobx-react';
-import { debounce } from 'lodash';
 
 import FastImage from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -14,24 +13,45 @@ import SmartImage from '../../common/components/SmartImage';
 import { MINDS_CDN_URI, MINDS_LINK_URI } from '../../config/Config';
 import abbrev from '../../common/helpers/abbrev';
 import Toolbar from '../../common/components/toolbar/Toolbar';
-import { CommonStyle } from '../../styles/Common';
-import SearchView from '../../common/components/SearchView';
 import i18n from '../../common/services/i18n.service';
 import { FLAG_JOIN } from '../../common/Permissions';
 import Button from '../../common/components/Button';
 import ThemedStyles from '../../styles/ThemedStyles';
 import ShareService from '../../share/ShareService';
 import ActivityIndicator from '../../common/components/ActivityIndicator';
+import type GroupsBarStore from '../GroupsBarStore';
+import GroupViewStore from '../GroupViewStore';
+import DismissKeyboard from '../../common/components/DismissKeyboard';
+import AnimatedSearch from './AnimatedSearch';
+
+type PropsTypes = {
+  groupsBar: GroupsBarStore;
+  store: GroupViewStore;
+};
 
 /**
  * Group Header
  */
 @inject('groupsBar')
 @observer
-export default class GroupHeader extends Component {
+export default class GroupHeader extends Component<PropsTypes> {
   state = {
     openingGathering: false,
   };
+  avatarStyle: any;
+  userAvatarStyle: any;
+
+  constructor(props) {
+    super(props);
+    this.avatarStyle = ThemedStyles.combine(
+      props.styles.avatar,
+      'borderBackgroundPrimary',
+    );
+    this.userAvatarStyle = ThemedStyles.combine(
+      props.styles.userAvatar,
+      'borderBackgroundPrimary',
+    );
+  }
 
   componentDidMount() {
     const group = this.props.store.group;
@@ -43,6 +63,9 @@ export default class GroupHeader extends Component {
    */
   getBannerFromGroup() {
     const group = this.props.store.group;
+    if (!group) {
+      return null;
+    }
     return (
       MINDS_CDN_URI + 'fs/v1/banners/' + group.guid + '/fat/' + group.icontime
     );
@@ -52,10 +75,12 @@ export default class GroupHeader extends Component {
    * Share group
    */
   share = () => {
-    ShareService.share(
-      this.props.store.group.name,
-      MINDS_LINK_URI + `groups/profile/${this.props.store.group.guid}/feed`,
-    );
+    if (this.props.store.group !== null) {
+      ShareService.share(
+        this.props.store.group.name,
+        MINDS_LINK_URI + `groups/profile/${this.props.store.group.guid}/feed`,
+      );
+    }
   };
 
   /**
@@ -82,8 +107,8 @@ export default class GroupHeader extends Component {
       <Button
         {...buttonProps}
         accessibilityLabel={i18n.t('groups.subscribeMessage')}
-        containerStyle={CommonStyle.marginLeft}
-        textStyle={[CommonStyle.marginLeft, CommonStyle.marginRight]}
+        containerStyle={ThemedStyles.style.marginLeft}
+        textStyle={actionButtonStyle}
         loading={store.saving}
         disabled={store.saving}
         xSmall
@@ -97,9 +122,7 @@ export default class GroupHeader extends Component {
   getGatheringButton() {
     const theme = ThemedStyles.style;
     if (this.state.openingGathering) {
-      return (
-        <ActivityIndicator style={CommonStyle.paddingRight} size="large" />
-      );
+      return <ActivityIndicator style={theme.paddingRight} size="large" />;
     }
 
     if (this.props.store.group['videoChatDisabled'] === 0) {
@@ -121,10 +144,6 @@ export default class GroupHeader extends Component {
     setTimeout(() => this.setState({ openingGathering: false }), 1500);
     this.props.navigation.navigate('Gathering', { entity: group });
   };
-
-  setMemberSearch = debounce(q => {
-    this.props.store.setMemberSearch(q);
-  }, 300);
 
   /**
    * Render Tabs
@@ -155,18 +174,6 @@ export default class GroupHeader extends Component {
     //   typeOptions.push(conversation);
     // }
 
-    const searchBar =
-      this.props.store.tab === 'members' ? (
-        <SearchView
-          containerStyle={[
-            CommonStyle.flexContainer,
-            CommonStyle.hairLineBottom,
-          ]}
-          placeholder={i18n.t('discovery.search')}
-          onChangeText={this.setMemberSearch}
-        />
-      ) : null;
-
     return (
       <View>
         <Toolbar
@@ -175,10 +182,14 @@ export default class GroupHeader extends Component {
           onChange={this.onTabChange}
           containerStyle={ThemedStyles.style.borderPrimary}
         />
-        {searchBar}
+        <AnimatedSearch store={this.props.store} />
       </View>
     );
   }
+
+  clearSearch = () => {
+    this.props.store.setSearch('');
+  };
 
   /**
    * On tab change
@@ -214,17 +225,13 @@ export default class GroupHeader extends Component {
 
   renderAvatars = () => {
     const topMembers = this.props.store.topMembers;
-    const styles = this.props.styles;
 
     if (topMembers.length) {
       return topMembers.map(t => (
         <Image
           source={t.getAvatarSource()}
           key={t.guid}
-          style={[
-            styles.userAvatar,
-            ThemedStyles.style.borderBackgroundPrimary,
-          ]}
+          style={this.userAvatarStyle}
         />
       ));
     } else {
@@ -243,9 +250,9 @@ export default class GroupHeader extends Component {
       <View style={stylesheet.rightToolbar}>
         <Icon
           name="more-vert"
-          onPress={() => this.showActionSheet()}
+          onPress={this.showActionSheet}
           size={26}
-          style={[stylesheet.icon, ThemedStyles.style.colorPrimaryText]}
+          style={ThemedStyles.style.colorPrimaryText}
         />
         <ActionSheet
           ref={o => (this.ActionSheet = o)}
@@ -259,9 +266,13 @@ export default class GroupHeader extends Component {
     );
   }
 
-  async showActionSheet() {
+  showActionSheet = async () => {
     this.ActionSheet.show();
-  }
+  };
+
+  toggleSearch = () => {
+    this.props.store.toggleSearch();
+  };
 
   async handleActionSheetSelection(option) {
     switch (option) {
@@ -295,64 +306,61 @@ export default class GroupHeader extends Component {
     const theme = ThemedStyles.style;
     const group = this.props.store.group;
     const styles = this.props.styles;
+
     const avatar = { uri: this.getAvatar() };
     const iurl = { uri: this.getBannerFromGroup() };
     const actionSheet = group['is:owner'] ? this.getActionSheet() : null;
     return (
-      <View>
-        <SmartImage
-          source={iurl}
-          style={styles.banner}
-          resizeMode={FastImage.resizeMode.cover}
-        />
-        <View style={styles.headertextcontainer}>
-          <View style={styles.avatarContainer}>
-            <View
-              style={[CommonStyle.rowJustifyStart, CommonStyle.flexContainer]}>
-              {this.renderAvatars()}
+      <DismissKeyboard>
+        <View>
+          {Boolean(iurl.uri) && (
+            <SmartImage
+              source={iurl}
+              style={styles.banner}
+              resizeMode={FastImage.resizeMode.cover}
+            />
+          )}
+          <View style={styles.headertextcontainer}>
+            <View style={styles.avatarContainer}>
+              <View style={avatarContainersStyle}>{this.renderAvatars()}</View>
             </View>
-          </View>
-          <View style={CommonStyle.rowJustifyCenter}>
-            <View style={styles.namecol}>
-              <Text style={styles.name}>{group.name.toUpperCase()}</Text>
-            </View>
-            <View style={styles.buttonscol}>
-              <Icon
-                name="share"
-                size={26}
-                style={[
-                  theme.paddingRight,
-                  theme.marginRight,
-                  theme.colorSecondaryText,
-                ]}
-                onPress={this.share}
-              />
-              {!this.props.store.group.conversationDisabled && (
+            <View style={theme.rowJustifyCenter}>
+              <View style={styles.namecol}>
+                <Text style={styles.name}>{group.name}</Text>
+              </View>
+              <View style={styles.buttonscol}>
                 <Icon
-                  name="chat-bubble"
-                  size={26}
-                  style={[
-                    theme.paddingRight,
-                    theme.marginRight,
-                    theme.colorSecondaryText,
-                  ]}
-                  onPress={this.props.onPressComment}
+                  name="search"
+                  size={25}
+                  onPress={this.toggleSearch}
+                  style={iconStyle}
                 />
-              )}
-              {/* {group.can(FLAG_JOIN_GATHERING) && this.getGatheringButton()} */}
-              {group.can(FLAG_JOIN) && this.getActionButton()}
+                <Icon
+                  name="share"
+                  size={25}
+                  style={iconStyle}
+                  onPress={this.share}
+                />
+                {!this.props.store.group?.conversationDisabled && (
+                  <Icon
+                    name="chat-bubble-outline"
+                    size={25}
+                    style={iconStyle}
+                    onPress={this.props.onPressComment}
+                  />
+                )}
+                {/* {group.can(FLAG_JOIN_GATHERING) && this.getGatheringButton()} */}
+                {group.can(FLAG_JOIN) && this.getActionButton()}
+              </View>
             </View>
+            {actionSheet}
           </View>
-          {actionSheet}
+          <View style={stylesheet.avatarContainer}>
+            <Image source={avatar} style={this.avatarStyle} />
+          </View>
+          {this.renderToolbar()}
         </View>
-        <View style={stylesheet.avatarContainer}>
-          <Image
-            source={avatar}
-            style={[styles.avatar, theme.borderBackgroundPrimary]}
-          />
-        </View>
-        {this.renderToolbar()}
-      </View>
+      </DismissKeyboard>
     );
   }
 }
@@ -379,3 +387,15 @@ const stylesheet = StyleSheet.create({
     position: 'absolute',
   },
 });
+
+const iconStyle = ThemedStyles.combine(
+  'paddingRight',
+  'marginRight',
+  'colorSecondaryText',
+);
+
+const avatarContainersStyle = ThemedStyles.combine(
+  'rowJustifyStart',
+  'flexContainer',
+);
+const actionButtonStyle = ThemedStyles.combine('marginLeft', 'marginRight');

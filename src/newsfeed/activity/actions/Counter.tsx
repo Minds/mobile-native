@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 
-import { Text, View, TextStyle } from 'react-native';
+import { Text, View } from 'react-native';
 
 import { CommonStyle as CS } from '../../../styles/Common';
 import abbrev from '../../../common/helpers/abbrev';
@@ -10,7 +10,6 @@ type PropsType = {
   size: number;
   count: number;
   testID?: string;
-  style: TextStyle;
 };
 
 /**
@@ -29,17 +28,16 @@ export default class Counter extends PureComponent<PropsType> {
    * Render
    */
   render(): React.ReactNode {
-    const theme = ThemedStyles.style;
-    const { count, style, ...otherProps } = this.props;
+    const { count, ...otherProps } = this.props;
 
     return (
       <View style={CS.columnAlignCenter}>
-        <Text
-          style={[theme.colorIcon, theme.fontL, theme.fontMedium, style]}
-          {...otherProps}>
+        <Text style={textStyle} {...otherProps}>
           {count > 0 ? abbrev(count, 0) : ''}
         </Text>
       </View>
     );
   }
 }
+
+const textStyle = ThemedStyles.combine('colorIcon', 'fontL', 'fontMedium');

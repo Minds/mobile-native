@@ -17,17 +17,15 @@
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
-	<string>4.12.0</string>
+	<string>4.14.3</string>
 	<key>CFBundleVersion</key>
-	<string>201907230270</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>HostAppBundleIdentifier</key>
 	<string>com.minds.mobile</string>
 	<key>HostAppURLScheme</key>
 	<string>minds://</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
 		<key>NSExceptionDomains</key>
 		<dict>
 			<key>localhost</key>

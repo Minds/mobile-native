@@ -40,7 +40,6 @@ const Input = ({ textToCopy, label, style }: InputProps) => {
           collapsable
           autoCorrect={false}
           style={[
-            theme.fieldTextInput,
             theme.input,
             theme.backgroundSecondary,
             theme.padding2x,

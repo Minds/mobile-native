@@ -119,7 +119,7 @@ const BoostSettingsScreen = observer(() => {
         height: 75,
         width: 200,
       },
-      disabled: !user.pro,
+      disabled: !user.plus,
     },
     {
       id: 'boostAutoRotation',

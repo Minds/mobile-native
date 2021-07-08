@@ -7,7 +7,8 @@ import BottomSheet, {
 } from '@gorhom/bottom-sheet';
 import Animated, {
   Extrapolate,
-  interpolateNode,
+  interpolate,
+  useAnimatedStyle,
 } from 'react-native-reanimated';
 import { Dimensions, View } from 'react-native';
 
@@ -47,33 +48,34 @@ const CustomBackdrop = observer(
   ({ animatedIndex, style, localStore }: BackdropProps) => {
     const theme = ThemedStyles.style;
     // animated variables
-    const animatedOpacity = React.useMemo(
-      () =>
-        interpolateNode(animatedIndex, {
-          inputRange: [0, 1],
-          outputRange: [0, 0.8],
-          extrapolate: Extrapolate.CLAMP,
-        }),
-      [animatedIndex],
-    );
+    const containerAnimatedStyle = useAnimatedStyle(() => ({
+      opacity: interpolate(
+        animatedIndex.value,
+        [0, 1],
+        [0, 0.8],
+        Extrapolate.CLAMP,
+      ),
+    }));
 
     // styles
     const containerStyle = React.useMemo(
       () => [
         style,
-        ThemedStyles.style.backgroundSecondary,
-        {
-          opacity: animatedOpacity,
-        },
+        ThemedStyles.theme
+          ? ThemedStyles.style.backgroundSecondary
+          : ThemedStyles.style.backgroundTertiary,
+        containerAnimatedStyle,
       ],
-      [style, animatedOpacity],
+      [style, containerAnimatedStyle],
     );
+
+    const bottomSheet = useBottomSheet();
 
     if (localStore.isOpen === 1) {
       return (
         <Animated.View style={containerStyle} pointerEvents="box-none">
           <TouchableOpacity
-            onPress={useBottomSheet().close}
+            onPress={() => bottomSheet.collapse()}
             style={[theme.fullHeight, theme.fullWidth]}
           />
         </Animated.View>
@@ -140,14 +142,14 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
         }
       }, 500);
     }
-  }, []);
+  }, [props.commentsStore, route.params.open]);
 
   const screenOptions = React.useMemo<StackNavigationOptions>(
     () => ({
       ...TransitionPresets.SlideFromRightIOS,
       headerShown: false,
       safeAreaInsets: { top: 0 },
-      headerBackground: ThemedStyles.style.backgroundSecondary,
+      // headerBackground: ThemedStyles.style.backgroundSecondary,
       cardStyle: ThemedStyles.style.backgroundSecondary,
     }),
     [],

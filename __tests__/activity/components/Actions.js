@@ -1,23 +1,11 @@
 import 'react-native';
 import React from 'react';
-import { Text, TouchableOpacity } from 'react-native';
 import { shallow, mount } from 'enzyme';
-
-import ActionSheet from 'react-native-actionsheet';
-import * as Progress from 'react-native-progress';
-
 import Actions from '../../../src/newsfeed/activity/Actions';
 
-import { commentsServiceFaker } from '../../../__mocks__/fake/CommentsFaker';
 import { activitiesServiceFaker } from '../../../__mocks__/fake/ActivitiesFaker';
 
-import renderer from 'react-test-renderer';
-
-import formatDate from '../../../src/common/helpers/date';
-import domain from '../../../src/common/helpers/domain';
-import MediaView from '../../../src/common/components/MediaView';
 import UserStore from '../../../src/auth/UserStore';
-import MindsVideoV2 from '../../../src/media/v2/mindsVideo/MindsVideo';
 
 import featuresService from '../../../src/common/services/features.service';
 import { Provider } from 'mobx-react';

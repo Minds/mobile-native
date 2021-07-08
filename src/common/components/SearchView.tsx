@@ -2,12 +2,12 @@ import React, { PureComponent } from 'react';
 
 import {
   TextInput,
-  View,
   StyleSheet,
   Platform,
   TouchableOpacity,
   StyleProp,
   ViewStyle,
+  View,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -35,26 +35,25 @@ export default class SearchView extends PureComponent<Props> {
     containerStyle: null,
   };
 
+  containerStyle: any;
+
+  constructor(props: Props) {
+    super(props);
+
+    this.containerStyle = [styles.container, props.containerStyle];
+  }
+
   /**
    * Render
    */
   render() {
-    const {
-      iconRight,
-      iconRightOnPress,
-      containerStyle,
-      ...attributes
-    } = this.props;
+    const { iconRight, iconRightOnPress, ...attributes } = this.props;
 
     let rIcon = this.getRightIcon(iconRight, iconRightOnPress);
 
     return (
-      <View style={[styles.container, containerStyle]}>
-        <Icon
-          size={22}
-          style={[styles.icon, ThemedStyles.style.colorIcon]}
-          name={'md-search'}
-        />
+      <View style={this.containerStyle}>
+        <Icon size={22} style={iconStyle} name={'md-search'} />
         {
           //@ts-ignore
           <TextInput
@@ -84,7 +83,7 @@ export default class SearchView extends PureComponent<Props> {
         if (iconRightOnPress) {
           return (
             <TouchableOpacity
-              style={[styles.icon, styles.iconRight]}
+              style={styles.iconRight}
               onPress={iconRightOnPress}>
               <Icon size={18} name={iconRight} color={'#444'} />
             </TouchableOpacity>
@@ -93,7 +92,7 @@ export default class SearchView extends PureComponent<Props> {
           return (
             <Icon
               size={18}
-              style={[styles.icon, styles.iconRight]}
+              style={styles.iconRight}
               name={iconRight}
               color={'#444'}
             />
@@ -110,7 +109,8 @@ const styles = StyleSheet.create({
   container: {
     borderBottomColor: '#000',
     borderTopColor: '#000',
-    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
     backgroundColor: '#f2f2f2',
     borderRadius: 50,
     height: 45,
@@ -120,17 +120,16 @@ const styles = StyleSheet.create({
   iconRight: {
     right: 0,
     paddingRight: 12,
+    marginLeft: 10,
   },
   icon: {
-    backgroundColor: 'transparent',
-    position: 'absolute',
-    paddingLeft: 10,
-    top: 12,
+    marginLeft: 10,
   },
   input: {
-    paddingLeft: 30,
+    paddingLeft: 5,
     paddingRight: 19,
     marginLeft: 8,
+    flex: 1,
     overflow: 'hidden',
     backgroundColor: 'transparent',
     fontSize: 14,
@@ -145,3 +144,5 @@ const styles = StyleSheet.create({
     }),
   },
 });
+
+const iconStyle = ThemedStyles.combine(styles.icon, 'colorIcon');

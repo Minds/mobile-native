@@ -1,6 +1,5 @@
 //@ts-nocheck
-import { isApiError } from '../services/api.service';
-import { isAbort, isNetworkFail } from './abortableFetch';
+import { isAbort, isApiError, isNetworkError } from '../services/api.service';
 import { isUserError } from '../UserError';
 
 const isUnexpected = error => {
@@ -9,7 +8,7 @@ const isUnexpected = error => {
 
 export default function shouldReportToSentry(error) {
   const isError = error instanceof Error,
-    isNotNetworkFail = !isNetworkFail(error),
+    isNotNetworkFail = !isNetworkError(error),
     isNotUserError = !isUserError(error),
     isNotAbort = !isAbort(error),
     isNotApiError = !isApiError(error),

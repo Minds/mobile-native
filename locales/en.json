@@ -53,7 +53,6 @@
       "edit_post": "You are not allowed to edit this post",
       "invite": "You are not allowed to invite",
       "join": "You are not allowed to join",
-      "gathering": "You are not allowed to join to this gathering",
       "message": "You are not allowed to message this user",
       "subscribe": "You are not allowed to subscribe",
       "tag": "You are not allowed to tag this content",
@@ -92,7 +91,9 @@
     "recoveryDesc": "Enter your recovery code in case you lost access to your mobile device.",
     "recoveryFail": "The recovery code you enter doesn't match",
     "confirmPasswordModal": "Please confirm your account password to continue",
-    "loginFail": "Wrong Username or Password"
+    "loginFail": "Wrong Username or Password",
+    "newPassword": "Please enter your new password",
+    "waitLogin": "Logging in with new credentials..."
   },
   "blockchain": {
     "exportLegacyWallet": "Export legacy wallets",
@@ -426,10 +427,51 @@
     "rewardsStateDecrease": "We miss you! You just dropped down to a {{state}} user.",
     "rewardsStateDecrease1": "Your daily token reward multiplier has been reduced to {{multiplier}}x",
     "rewardsStateDecreaseToday": "It's not too late! You will drop down to a {{state}} user by the end of today and your daily token reward multiplier will reduce to {{multiplier}}x. Get liking and commenting to bring your score back up!",
-    "rewardsSummary": "You earned {{amount}} tokens yesterday."
+    "rewardsSummary": "You earned {{amount}} tokens yesterday.",
+    "verbs": {
+      "vote_up": "voted up",
+      "vote_down": "voted down",
+      "comment": "commented on",
+      "reply": "replied to",
+      "tag": "tagged you in",
+      "remind": "reminded",
+      "quote": "quoted",
+      "subscribe": "subscribed to",
+      "group_queue_add": "Your post is awaiting approval from the group administrators",
+      "group_queue_approve": "approved",
+      "group_queue_reject": "rejected",
+      "wire_received": "paid",
+      "boost_peer_request": "sent you",
+      "boost_peer_accepted": "accepted",
+      "boost_peer_rejected": "declined",
+      "boost_rejected": "is unable to approve",
+      "token_rewards_summary": "You earned {{amount}} tokens yesterday. Nice job!"
+    }
+  },
+  "interactions": {
+    "upVotes": {
+      "one": "upvote",
+      "other": "upvotes"
+    },
+    "downVotes": {
+      "one": "downvote",
+      "other": "downvotes"
+    },
+    "reminds": {
+      "one": "remind",
+      "other": "reminds"
+    },
+    "quotes": {
+      "one": "quote",
+      "other": "quotes"
+    },
+    "subscribers": {
+      "one": "subscriber",
+      "other": "subscribers"
+    }
   },
   "notificationSettings": {
-    "enableDisable": "Enable and disable push notifications",
+    "enableDisable": "Enable Push Notifications",
     "comment": "Comments",
     "like": "Votes",
     "tag": "Tags",
@@ -437,19 +479,43 @@
     "remind": "Reminds",
     "boost_request": "Boosts Offers",
     "boost_rejected": "Boost Rejected",
-    "boost_completed": "Fulfilled Boosts",
     "rewards_reminder": "Rewards Reminder",
     "rewards_summary": "Rewards Daily Summary",
     "message": "Messenger",
     "messenger_invite": "Messenger Invites",
-    "daily": "Daily",
     "group_invite": "Group Invites",
     "boost_gift": "Boost Gift",
     "boost_accepted": "Boost Accepted",
     "boost_revoked": "Boost Revoked",
     "referral_ping": "Referral Ping",
     "referral_pending": "Referral Pending",
-    "referral_complete": "Referral Complete"
+    "referral_complete": "Referral Complete",
+    "votes": "Votes",
+    "tags": "Tags",
+    "subscriptions": "Subscriptions",
+    "comments": "Comments",
+    "reminds": "Reminds",
+    "boosts": "Boosts",
+    "tokens": "Tokens",
+    "related": "Related to your posts and channel",
+    "emailWhen": "Email me when",
+    "emailWith": "Email me with",
+    "emailUpdated": "Keep me updated with",
+    "exclusive_promotions": "Exclusive Promotions",
+    "minds_news": "News about new Minds products and features",
+    "minds_tips": "Tips on how to use Minds",
+    "boost_completed": "My boost has been completed",
+    "unread_notifications": "I have unread notifications",
+    "wire_received": "I receive a wire",
+    "channel_improvement_tips": "Tips on how to improve my channel",
+    "new_channels": "New things to subscribe to",
+    "posts_missed_since_login": "Things I’ve missed since my last login",
+    "top_posts": "Top posts from my network",
+    "frecuency": "Notification Frequency",
+    "periodically": "Periodically",
+    "daily": "Daily",
+    "weekly": "Weekly",
+    "never": "Never"
   },
   "plus": {
     "freeTrialDesciption": "Start your free trial for 7 days"
@@ -682,6 +748,10 @@
       "d": "INFO",
       "d1": "App"
     },
+    "notificationsOptions": {
+      "push": "Push",
+      "email": "Email"
+    },
     "autoplay": {
       "description": "Control whether videos in your feed play automatically.",
       "enable": "Enable video autoplay",
@@ -800,6 +870,7 @@
     "total": "Total",
     "totalPaidout": "Total paid out",
     "alltime": "All-time earnings",
+    "addressCopied": "Address copied to clipboard",
     "withdraw": {
       "errorOnlyOnceDay": "You may only withdraw once a day",
       "errorWithdrawing": "Error withdrawing tokens",
@@ -1341,5 +1412,9 @@
   "mindsPlusFeature": "Minds+ Feature",
   "browserOnly": "Browser Only",
   "clickHere": "click here",
-  "enabled": "Enabled"
+  "enabled": "Enabled",
+  "copyToClipboard": "Copy to Clipboard",
+  "emptyList": "Sorry the list is empty",
+  "and": "and",
+  "others": "others"
 }

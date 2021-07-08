@@ -35,6 +35,7 @@ type StateType = {
 @observer
 export default class ExplicitText extends Component<PropsType, StateType> {
   needTruncate = false;
+  gradientColors: any;
 
   state = {
     more: false,
@@ -57,6 +58,11 @@ export default class ExplicitText extends Component<PropsType, StateType> {
   constructor(props) {
     super(props);
     Dimensions.addEventListener('change', this.dimensionChange);
+
+    const backgroundColor = ThemedStyles.getColor('primary_background');
+    const startColor = backgroundColor + '00';
+    const endColor = backgroundColor + 'FF';
+    this.gradientColors = [startColor, endColor];
   }
 
   /**
@@ -94,8 +100,8 @@ export default class ExplicitText extends Component<PropsType, StateType> {
       }
     }
 
-    let body: Element | null = null;
-    let moreLess: JSX.Element | null = null;
+    let body: React.ReactNode | null = null;
+    let moreLess: React.ReactNode | null = null;
     let explicitToggle = null;
 
     if (message !== '') {
@@ -127,7 +133,7 @@ export default class ExplicitText extends Component<PropsType, StateType> {
         style={[
           this.props.style,
           theme.marginBottom,
-          message ? styles.titleHasMessage : null,
+          message ? theme.bold : null,
         ]}>
         {title}
       </Tags>
@@ -136,7 +142,7 @@ export default class ExplicitText extends Component<PropsType, StateType> {
     const paywalled = !!entity.paywall && !entity.isOwner();
 
     return (
-      <View style={[styles.container, paywalled ? styles.paywalled : null]}>
+      <View style={paywalled ? styles.paywalled : theme.flexContainer}>
         {titleCmp}
         {body}
         {moreLess}
@@ -147,11 +153,8 @@ export default class ExplicitText extends Component<PropsType, StateType> {
   }
 
   renderGradient() {
-    const backgroundColor = ThemedStyles.getColor('primary_background');
-    const startColor = backgroundColor + '00';
-    const endColor = backgroundColor + 'FF';
     return (
-      <LinearGradient colors={[startColor, endColor]} style={styles.linear} />
+      <LinearGradient colors={this.gradientColors} style={styles.linear} />
     );
   }
 
@@ -203,12 +206,10 @@ export default class ExplicitText extends Component<PropsType, StateType> {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   paywalled: {
     maxHeight: 70,
     overflow: 'hidden',
+    flex: 1,
   },
   linear: {
     position: 'absolute',
@@ -240,8 +241,5 @@ const styles = StyleSheet.create({
         textShadowRadius: 20,
       },
     }),
-  },
-  titleHasMessage: {
-    fontWeight: 'bold',
   },
 });

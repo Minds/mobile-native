@@ -65,6 +65,7 @@ export default class ActivityModel extends BaseModel {
   nsfw?: Array<number>;
   flags?: any;
   reminds: number = 0;
+  quotes: number = 0;
   impressions: number = 0;
   perma_url?: string;
   cinemr_guid?: string;
@@ -79,6 +80,8 @@ export default class ActivityModel extends BaseModel {
   _preview?: boolean;
   attachments?: {
     attachment_guid: string;
+    custom_data: any;
+    custom_type: string;
   };
   type?: string;
   permaweb_id?: string;
@@ -177,7 +180,7 @@ export default class ActivityModel extends BaseModel {
   toPlainObject() {
     const plainEntity = super.toPlainObject();
     if (plainEntity.remind_object && plainEntity.remind_object.__list) {
-      delete plainEntity.remind_object.__list;
+      plainEntity.remind_object.__list = null;
     }
 
     return plainEntity;

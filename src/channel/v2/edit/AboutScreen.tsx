@@ -12,6 +12,7 @@ import type {
   AboutScreenRouteProp,
   AboutScreenNavigationProp,
 } from '../../../navigation/NavigationTypes';
+import { withErrorBoundary } from '../../../common/components/ErrorBoundary';
 
 type PropsType = {
   route: AboutScreenRouteProp;
@@ -130,4 +131,4 @@ const AboutScreen = observer(({ route, navigation }: PropsType) => {
   );
 });
 
-export default AboutScreen;
+export default withErrorBoundary(AboutScreen);

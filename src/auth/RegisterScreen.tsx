@@ -46,7 +46,7 @@ type PropsType = {
 };
 
 const shadowOptLocal = Object.assign({}, shadowOpt);
-shadowOptLocal.height = 270;
+shadowOptLocal.height = 300;
 
 const validatorText = { color: LIGHT_THEME.primary_text };
 
@@ -324,7 +324,7 @@ export default observer(function RegisterScreen(props: PropsType) {
               <Button
                 onPress={store.onRegisterPress}
                 text={i18n.t('auth.createChannel')}
-                containerStyle={[theme.fullWidth, theme.marginTop1x]}
+                containerStyle={[theme.fullWidth, theme.marginTop]}
                 loading={store.inProgress}
                 disabled={store.inProgress}
                 testID="registerButton"

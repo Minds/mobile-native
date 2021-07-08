@@ -1,13 +1,11 @@
 import React, { PureComponent } from 'react';
-
 import { TouchableOpacity } from 'react-native';
-
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import { CommonStyle } from '../../../styles/Common';
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import type UserModel from '../../../channel/UserModel';
+import { actionsContainerStyle } from './styles';
 
 // prevent double tap in touchable
 const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
@@ -27,7 +25,7 @@ export default class WireAction extends PureComponent<PropsType> {
   render() {
     return (
       <TouchableOpacityCustom
-        style={[CommonStyle.centered, ThemedStyles.style.paddingHorizontal4x]}
+        style={actionsContainerStyle}
         onPress={this.openWire}>
         <Icon
           style={ThemedStyles.style.colorIconActive}

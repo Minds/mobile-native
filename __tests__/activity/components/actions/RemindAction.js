@@ -5,8 +5,10 @@ import { shallow } from 'enzyme';
 import { activitiesServiceFaker } from '../../../../__mocks__/fake/ActivitiesFaker';
 import RemindAction from '../../../../src/newsfeed/activity/actions/RemindAction';
 import ActivityModel from '../../../../src/newsfeed/ActivityModel';
-import { useRoute, useNavigation } from '@react-navigation/native';
 import { getStores } from '../../../../AppStores';
+
+jest.mock('../../../../AppStores');
+jest.mock('../../../../src/common/hooks/use-stores.tsx');
 
 getStores.mockReturnValue({
   newsfeed: {},

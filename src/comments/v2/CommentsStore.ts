@@ -17,12 +17,12 @@ import { toggleExplicit } from '../../newsfeed/NewsfeedService';
 import RichEmbedStore from '../../common/stores/RichEmbedStore';
 import logService from '../../common/services/log.service';
 import NavigationService from '../../navigation/NavigationService';
-import { isNetworkFail } from '../../common/helpers/abortableFetch';
 import type ActivityModel from '../../newsfeed/ActivityModel';
 import type BlogModel from '../../blogs/BlogModel';
 import type GroupModel from '../../groups/GroupModel';
 import { showNotification } from '../../../AppMessages';
 import i18n from '../../common/services/i18n.service';
+import { isNetworkError } from '../../common/services/api.service';
 
 const COMMENTS_PAGE_SIZE = 6;
 
@@ -85,8 +85,25 @@ export default class CommentsStore {
       this.text = '';
     }
     this.edit = edit;
-    if (edit) {
+    if (this.edit && edit) {
       this.text = edit.description || '';
+      const source = this.edit.getThumbSource('large');
+      if (
+        this.edit.custom_type === 'batch' ||
+        this.edit.custom_type === 'image'
+      ) {
+        this.attachment.setMedia(
+          'image',
+          this.edit.attachment_guid,
+          source.uri,
+        );
+      } else if (this.edit.custom_type === 'video') {
+        this.attachment.setMedia(
+          'video',
+          this.edit.attachment_guid,
+          source.uri,
+        );
+      }
     }
   }
 
@@ -179,7 +196,7 @@ export default class CommentsStore {
       } else {
         this.setErrorLoadingNext(true);
       }
-      if (!isNetworkFail(err)) {
+      if (!isNetworkError(err)) {
         logService.exception('[CommentsStore] loadComments', err);
       }
     } finally {
@@ -352,26 +369,27 @@ export default class CommentsStore {
       return;
     }
 
-    if (this.edit) {
-      return this.updateComment();
-    }
-
-    this.saving = true;
-
-    const comment = {
+    const comment: any = {
       comment: this.text.trim(),
-      mature: this.mature,
-      parent_path: this.getParentPath(),
       attachment_guid: <string | undefined>undefined,
     };
 
-    if (this.attachment.guid) {
+    if (this.attachment.guid || this.edit?.attachment_guid) {
       comment.attachment_guid = this.attachment.guid;
     }
 
     if (this.embed.meta) {
       Object.assign(comment, this.embed.meta);
     }
+
+    if (this.edit) {
+      return this.updateComment(comment);
+    }
+
+    comment.mature = this.mature;
+    comment.parent_path = this.getParentPath();
+
+    this.saving = true;
 
     // Add client metada if available
     Object.assign(comment, this.entity.getClientMetadata());
@@ -437,14 +455,24 @@ export default class CommentsStore {
    * @param {string} description
    */
   @action
-  async updateComment() {
+  async updateComment(comment: any) {
     if (!this.edit) return;
 
     this.saving = true;
 
     try {
-      await updateComment(this.edit.guid, this.text);
-      this.setCommentDescription(this.edit, this.text);
+      await updateComment(this.edit.guid, comment);
+      if (this.edit.attachment_guid !== comment.attachment_guid) {
+        const updatedComment: CommentModel = await getComment(
+          this.guid,
+          this.edit._guid,
+          this.getParentPath(),
+        );
+        updatedComment.attachment_guid = comment.attachment_guid;
+        this.edit.update(updatedComment);
+      } else {
+        this.setCommentDescription(this.edit, this.text);
+      }
       this.setText('');
       this.edit = undefined;
       this.setShowInput(false);

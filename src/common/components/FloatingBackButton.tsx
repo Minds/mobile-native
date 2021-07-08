@@ -1,12 +1,12 @@
 import React from 'react';
-import { StyleSheet, StyleProp, ViewStyle } from 'react-native';
+import { StyleSheet, StyleProp, TextStyle, ViewStyle } from 'react-native';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ThemedStyles from '../../styles/ThemedStyles';
 
 type PropsType = {
   onPress: () => void;
-  style?: StyleProp<ViewStyle>;
+  style?: any;
   size?: number;
 };
 

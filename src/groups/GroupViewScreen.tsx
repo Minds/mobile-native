@@ -74,6 +74,7 @@ export default class GroupViewScreen extends Component {
   constructor(props) {
     super(props);
     this.commentsRef = React.createRef();
+    this.props.groupView.reset();
   }
 
   /**
@@ -202,7 +203,6 @@ export default class GroupViewScreen extends Component {
             navigation={this.props.navigation}
           />
         );
-        break;
       case 'members':
         return (
           <FlatList
@@ -213,26 +213,28 @@ export default class GroupViewScreen extends Component {
             onRefresh={this.refresh}
             refreshing={group.members.refreshing}
             onEndReached={this.loadMembers}
+            style={ThemedStyles.style.backgroundPrimary}
             // onEndReachedThreshold={0}
             initialNumToRender={12}
-            style={styles.listView}
             removeClippedSubviews={false}
           />
         );
-        break;
       case 'desc':
         const description = entities
           .decodeHTML(group.group.briefdescription)
           .trim();
         return (
-          <ScrollView>
+          <ScrollView style={ThemedStyles.style.backgroundPrimary}>
             {header}
-            <View style={ThemedStyles.style.padding2x}>
-              <Tags navigation={this.props.navigation}>{description}</Tags>
+            <View style={ThemedStyles.style.padding3x}>
+              <Tags
+                navigation={this.props.navigation}
+                style={ThemedStyles.style.fontL}>
+                {description}
+              </Tags>
             </View>
           </ScrollView>
         );
-        break;
     }
   }
 

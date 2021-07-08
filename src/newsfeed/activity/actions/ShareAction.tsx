@@ -4,7 +4,6 @@ import { Linking, Platform, TouchableOpacity } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import { CommonStyle } from '../../../styles/Common';
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import type ActivityModel from '../../ActivityModel';
@@ -17,6 +16,7 @@ import SendIntentAndroid from 'react-native-send-intent';
 import { ANDROID_CHAT_APP, MINDS_URI } from '../../../config/Config';
 import logService from '../../../common/services/log.service';
 import ShareService from '../../../share/ShareService';
+import { actionsContainerStyle } from './styles';
 
 // prevent double tap in touchable
 const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
@@ -26,7 +26,6 @@ type PropsType = {
 };
 
 export default observer(function ShareAction({ entity }: PropsType) {
-  const theme = ThemedStyles.style;
   // store
   const localStore = useLocalStore(() => ({
     showMenu: false,
@@ -68,7 +67,7 @@ export default observer(function ShareAction({ entity }: PropsType) {
     },
   }));
 
-  const options: Array<Array<ItemType>> = [
+  const options: Array<Array<ItemType>> = React.useRef([
     [
       {
         title: i18n.t('sendTo'),
@@ -85,15 +84,15 @@ export default observer(function ShareAction({ entity }: PropsType) {
     [
       {
         title: i18n.t('cancel'),
-        titleStyle: theme.colorSecondaryText,
+        titleStyle: ThemedStyles.style.colorSecondaryText,
         onPress: localStore.hide,
       },
     ],
-  ];
+  ]).current;
 
   return (
     <TouchableOpacityCustom
-      style={[CommonStyle.centered, ThemedStyles.style.paddingHorizontal4x]}
+      style={actionsContainerStyle}
       onPress={localStore.onPress}>
       <Icon
         style={ThemedStyles.style.colorIcon}

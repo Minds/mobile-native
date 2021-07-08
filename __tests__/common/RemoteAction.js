@@ -1,12 +1,11 @@
-import {Alert} from 'react-native';
+import { Alert } from 'react-native';
 import remoteAction from '../../src/common/RemoteAction';
 import connectivityService from '../../src/common/services/connectivity.service';
-import { ApiError } from '../../src/common/services/api.service';
+import { ApiError, NetworkError } from '../../src/common/services/api.service';
 
 jest.mock('../../src/common/services/connectivity.service');
 
 describe('remote action', () => {
-
   Alert.alert = jest.fn();
 
   beforeEach(() => {
@@ -29,7 +28,7 @@ describe('remote action', () => {
   it('should auto retry on net error', async () => {
     const action = jest.fn();
     action.mockImplementation(async () => {
-      throw new TypeError('Network request failed');
+      throw new NetworkError('Network request failed');
     });
 
     await remoteAction(action);
@@ -42,7 +41,7 @@ describe('remote action', () => {
     const action = jest.fn();
 
     action.mockImplementation(async () => {
-      throw new TypeError('Network request failed');
+      throw new NetworkError('Network request failed');
     });
 
     await remoteAction(action, '', 2);
@@ -61,7 +60,7 @@ describe('remote action', () => {
       if (tries > 1) {
         return;
       }
-      throw new TypeError('Network request failed');
+      throw new NetworkError('Network request failed');
     });
 
     await remoteAction(action, '', 2);
@@ -74,7 +73,7 @@ describe('remote action', () => {
     const action = jest.fn();
 
     action.mockImplementation(async () => {
-      throw new TypeError('Network request failed');
+      throw new NetworkError('Network request failed');
     });
 
     connectivityService.isConnected = false;
@@ -114,7 +113,7 @@ describe('remote action', () => {
     const action = jest.fn();
 
     action.mockImplementation(async () => {
-      throw new TypeError('Network request failed');
+      throw new NetworkError('Network request failed');
     });
 
     await remoteAction(action, '', 0);
@@ -124,7 +123,7 @@ describe('remote action', () => {
 
     // should call alert with the correct messages
     expect(Alert.alert.mock.calls[0][0]).toBe('Sorry!');
-    expect(Alert.alert.mock.calls[0][1]).toBe('Can\'t reach the server');
+    expect(Alert.alert.mock.calls[0][1]).toBe("Can't reach the server");
     expect(Alert.alert.mock.calls[0][2][0].text).toBe('Ok');
     expect(Alert.alert.mock.calls[0][2][1].text).toBe('Try again');
   });
@@ -133,7 +132,7 @@ describe('remote action', () => {
     const action = jest.fn();
 
     action.mockImplementation(async () => {
-      throw new TypeError('Network request failed');
+      throw new NetworkError('Network request failed');
     });
 
     await remoteAction(action, '', 0);

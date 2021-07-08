@@ -35,6 +35,9 @@ type PropsType = {
  * Owner Block Component
  */
 class OwnerBlock extends PureComponent<PropsType> {
+  avatarSrc: any;
+  containerStyle: any;
+
   /**
    * Navigate To channel
    */
@@ -86,13 +89,21 @@ class OwnerBlock extends PureComponent<PropsType> {
       <DebouncedTouchableOpacity
         onPress={this._navToGroup}
         style={styles.groupContainer}>
-        <Text
-          style={[styles.groupName, ThemedStyles.style.colorSecondaryText]}
-          lineBreakMode="tail"
-          numberOfLines={1}>
+        <Text style={groupNameStyle} lineBreakMode="tail" numberOfLines={1}>
           {this.props.entity.containerObj.name}
         </Text>
       </DebouncedTouchableOpacity>
+    );
+  }
+
+  constructor(props) {
+    super(props);
+    this.avatarSrc = this.props.entity.ownerObj.getAvatarSource();
+
+    this.containerStyle = ThemedStyles.combine(
+      'borderBottomHair',
+      'borderPrimary',
+      props.containerStyle,
     );
   }
 
@@ -104,23 +115,10 @@ class OwnerBlock extends PureComponent<PropsType> {
     const channel = this.props.entity.ownerObj;
     const rightToolbar = this.props.rightToolbar || null;
 
-    const avatarSrc = channel.getAvatarSource();
-
     // Remind header
     const remind = this.props.entity.remind_users ? (
-      <View
-        style={[
-          theme.paddingVertical2x,
-          theme.paddingHorizontal4x,
-          theme.borderBottomHair,
-          theme.borderPrimary,
-          theme.rowJustifyStart,
-        ]}>
-        <IconMa
-          name="repeat"
-          size={15}
-          style={[theme.colorIconActive, styles.remindIcon]}
-        />
+      <View style={remindContainer}>
+        <IconMa name="repeat" size={15} style={remindIconStyle} />
         <Text>
           <Text style={theme.colorSecondaryText}>
             {i18nService.t('remindedBy')}{' '}
@@ -145,45 +143,29 @@ class OwnerBlock extends PureComponent<PropsType> {
       channel.name && channel.name !== channel.username ? channel.name : '';
 
     return (
-      <View
-        style={[
-          styles.mainContainer,
-          theme.borderPrimary,
-          this.props.containerStyle,
-        ]}>
+      <View style={this.containerStyle}>
         {remind}
         <View style={styles.container}>
           {this.props.leftToolbar}
           <DebouncedTouchableOpacity onPress={this._navToChannel}>
-            <FastImage source={avatarSrc} style={styles.avatar} />
+            <FastImage source={this.avatarSrc} style={styles.avatar} />
           </DebouncedTouchableOpacity>
           <View style={styles.body}>
             <View style={styles.nameContainer}>
-              <DebouncedTouchableOpacity
-                onPress={this._navToChannel}
-                style={[theme.rowJustifyStart, theme.alignCenter]}>
+              <View pointerEvents="box-none" style={nameTouchableStyle}>
                 <Text
                   numberOfLines={1}
-                  style={[
-                    styles.username,
-                    theme.colorPrimaryText,
-                    theme.flexContainer,
-                  ]}>
+                  style={nameStyle}
+                  onPress={this._navToChannel}>
                   {name || channel.username}
                   {Boolean(name) && (
-                    <Text
-                      numberOfLines={1}
-                      style={[
-                        styles.username,
-                        theme.colorSecondaryText,
-                        theme.fontLight,
-                      ]}>
+                    <Text numberOfLines={1} style={usernameStyle}>
                       {' '}
                       @{channel.username}
                     </Text>
                   )}
                 </Text>
-              </DebouncedTouchableOpacity>
+              </View>
               {this.group}
               {this.props.children}
             </View>
@@ -207,9 +189,6 @@ const styles = StyleSheet.create({
     paddingTop: Platform.select({ android: 3, ios: 1 }),
     paddingRight: 5,
   },
-  mainContainer: {
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
   container: {
     display: 'flex',
     paddingHorizontal: 20,
@@ -230,17 +209,39 @@ const styles = StyleSheet.create({
   nameContainer: {
     flexDirection: 'column',
   },
-  username: {
-    fontWeight: 'bold',
-    fontFamily: 'Roboto',
-    color: '#444',
-    fontSize: 17,
-  },
   groupContainer: {
     paddingTop: 3,
   },
-  groupName: {
-    fontFamily: 'Roboto',
-    fontSize: 15,
-  },
 });
+
+const remindIconStyle = ThemedStyles.combine(
+  'colorIconActive',
+  styles.remindIcon,
+);
+
+const groupNameStyle = ThemedStyles.combine('fontM', 'colorSecondaryText');
+const usernameStyle = ThemedStyles.combine(
+  'colorSecondaryText',
+  'fontLight',
+  'bold',
+  'fontLM',
+);
+const nameStyle = ThemedStyles.combine(
+  'colorPrimaryText',
+  'fontLight',
+  'bold',
+  'fontLM',
+  'flexContainer',
+);
+const remindContainer = ThemedStyles.combine(
+  'paddingVertical2x',
+  'paddingHorizontal4x',
+  'borderBottomHair',
+  'borderPrimary',
+  'rowJustifyStart',
+);
+
+const nameTouchableStyle = ThemedStyles.combine(
+  'rowJustifyStart',
+  'alignCenter',
+);

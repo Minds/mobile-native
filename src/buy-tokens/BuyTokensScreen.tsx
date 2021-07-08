@@ -5,7 +5,6 @@ import { observer, useLocalStore } from 'mobx-react';
 import ThemedStyles from '../styles/ThemedStyles';
 import Button from '../common/components/Button';
 import { Text, CheckBox } from 'react-native-elements';
-import { ThemedStyle } from '../styles/Style';
 import UniswapWidget from '../common/components/uniswap-widget/UniswapWidget';
 import TransakWidget, {
   TransakOrderProcessed,
@@ -104,11 +103,7 @@ export default observer(() => {
               style={[
                 theme.borderPrimary,
                 styles.option,
-                ...buildButtonStyles(
-                  theme,
-                  index,
-                  store.paymentMethod === type,
-                ),
+                ...buildButtonStyles(index, store.paymentMethod === type),
                 store.paymentMethod === type ? theme.backgroundLink : '',
               ]}
               onPress={() => store.handleOptionSelection(type)}>
@@ -166,10 +161,12 @@ export default observer(() => {
           </Text>
           <Button
             text={i18n.t('buyTokensScreen.buy')}
-            containerStyle={[
-              theme.alignCenter,
-              !canBuyTokens ? styles.disabledButton : '',
-            ]}
+            containerStyle={
+              [
+                theme.alignCenter,
+                !canBuyTokens ? styles.disabledButton : null,
+              ] as any
+            }
             onPress={() => {
               if (store.paymentMethod === 'crypto') {
                 store.setShowUniswapWidget(!store.showUniswapWidget);
@@ -303,11 +300,7 @@ const paymentMethodsList: PaymentOption[] = [
   { type: 'crypto', name: 'Crypto' },
 ];
 
-const buildButtonStyles = (
-  theme: ThemedStyle,
-  position: number,
-  isSelected: boolean,
-) => {
+const buildButtonStyles = (position: number, _) => {
   switch (position) {
     case 0:
       return [styles.firstOption];

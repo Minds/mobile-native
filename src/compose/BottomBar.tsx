@@ -22,18 +22,22 @@ export default function BottomBar(props) {
         theme.paddingLeft2x,
         theme.padding,
       ]}>
-      <FIcon
-        size={27}
-        name="image"
-        style={iconStyle}
-        onPress={() => props.store.selectFromGallery(props.store.mode)}
-      />
-      <Icon
-        name="ios-camera-sharp"
-        size={27}
-        style={iconStyle}
-        onPress={() => props.store.setModePhoto(false)}
-      />
+      {!props.store.isEdit && (
+        <FIcon
+          size={27}
+          name="image"
+          style={iconStyle}
+          onPress={() => props.store.selectFromGallery(props.store.mode)}
+        />
+      )}
+      {!props.store.isEdit && (
+        <Icon
+          name="ios-camera-sharp"
+          size={27}
+          style={iconStyle}
+          onPress={() => props.store.setModePhoto(false)}
+        />
+      )}
       <IconM
         name="attach-money"
         size={27}

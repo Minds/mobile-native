@@ -36,7 +36,7 @@ export default class AndroidPlatfom extends AbstractPlatform {
   }
 
   registerToken() {
-    super.registerToken('google');
+    super.registerToken('fcm');
   }
 
   /**

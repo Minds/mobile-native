@@ -95,7 +95,7 @@ export default class IosPlatfom extends AbstractPlatform {
 
   // register token into backend
   registerToken() {
-    super.registerToken('apple');
+    super.registerToken('apns');
   }
 
   _onPushRegistrationFailed(error) {

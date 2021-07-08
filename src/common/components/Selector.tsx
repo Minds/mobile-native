@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { FlatList, StyleSheet, TextStyle, View } from 'react-native';
 import Modal from 'react-native-modal';
 import { Icon, Text } from 'react-native-elements';
-import { CommonStyle } from '../../styles/Common';
 import ThemedStyles from '../../styles/ThemedStyles';
 import Touchable from './Touchable';
 
@@ -54,7 +53,7 @@ export default class Selector extends Component<PropsType> {
     return (
       <Touchable
         onPress={() => this.itemSelect(item)}
-        style={CommonStyle.margin2x}>
+        style={[theme.margin, theme.padding]}>
         <Text
           style={[
             fontColor,
@@ -96,28 +95,21 @@ export default class Selector extends Component<PropsType> {
       <Modal
         backdropColor={ThemedStyles.getColor('primary_background_highlight')}
         isVisible={this.state.show}
+        style={theme.flexContainer}
         backdropOpacity={this.props.backdropOpacity}>
-        <View style={[styles.container]}>
-          <Text
-            style={[
-              theme.colorPrimaryText,
-              theme.fontXXL,
-              styles.marginBottom,
-              theme.centered,
-            ]}>
-            {this.props.title}
-          </Text>
-          <View
-            style={[
-              theme.flexContainer,
-              theme.marginTop3x,
-              theme.paddingLeft2x,
-              styles.marginBottom,
-            ]}>
+        <View style={styles.container}>
+          {Boolean(this.props.title) && (
+            <Text
+              style={[theme.colorPrimaryText, theme.fontXXL, theme.centered]}>
+              {this.props.title}
+            </Text>
+          )}
+          <View style={[theme.flexContainer, theme.marginTop3x]}>
             <FlatList
               data={this.props.data}
               renderItem={this.renderItem}
               extraData={this.state.selected}
+              style={theme.flexContainer}
               ref={this.flatListRef}
               onScrollToIndexFailed={() =>
                 this.flatListRef.current?.scrollToEnd()
@@ -147,18 +139,14 @@ export default class Selector extends Component<PropsType> {
 
 const styles = StyleSheet.create({
   container: {
+    width: '100%',
     flex: 1,
-    backgroundColor: 'transparent',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   iconContainer: {
+    alignSelf: 'center',
     backgroundColor: 'transparent',
     width: 55,
     height: 55,
     zIndex: 1000,
-  },
-  marginBottom: {
-    marginBottom: 30,
   },
 });

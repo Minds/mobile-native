@@ -3,7 +3,7 @@ import service from '../../../src/common/services/download.service';
 import CameraRoll from '@react-native-community/cameraroll';
 import permissions from '../../../src/common/services/permissions.service';
 
-CameraRoll.saveToCameraRoll = jest.fn();
+CameraRoll.save = jest.fn();
 
 jest.mock('../../../src/common/services/permissions.service');
 jest.mock('../../../src/common/services/session.service');
@@ -16,7 +16,7 @@ describe('Download service', () => {
     permissions.writeExternalStorage.mockReturnValue(false);
     Platform.OS = 'notios';
     await service.downloadToGallery('url');
-    expect(CameraRoll.saveToCameraRoll).not.toHaveBeenCalled();
+    expect(CameraRoll.save).not.toHaveBeenCalled();
   });
 
   it('should call camera roll', async () => {
@@ -24,6 +24,6 @@ describe('Download service', () => {
     Platform.OS = 'ios';
     permissions.checkMediaLibrary.mockReturnValue(true);
     await service.downloadToGallery('url');
-    expect(CameraRoll.saveToCameraRoll).toHaveBeenCalled();
+    expect(CameraRoll.save).toHaveBeenCalled();
   });
 });

@@ -10,11 +10,11 @@ import type { AppStackParamList } from '../navigation/NavigationTypes';
 import type MessengerListStore from '../messenger/MessengerListStore';
 import type UserStore from '../auth/UserStore';
 import type NewsfeedStore from './NewsfeedStore';
-import type NotificationsStore from '../notifications/NotificationsStore';
 import CheckLanguage from '../common/components/CheckLanguage';
 import ActivityPlaceHolder from './ActivityPlaceHolder';
 import PortraitContentBar from '../portrait/PortraitContentBar';
 import InitialOnboardingButton from '../onboarding/v2/InitialOnboardingButton';
+import { withErrorBoundary } from '../common/components/ErrorBoundary';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
@@ -26,7 +26,6 @@ type PropsType = {
   navigation: NewsfeedScreenNavigationProp;
   user: UserStore;
   messengerList: MessengerListStore;
-  notifications: NotificationsStore;
   newsfeed: NewsfeedStore<any>;
   route: NewsfeedScreenRouteProp;
 };
@@ -34,11 +33,20 @@ type PropsType = {
 /**
  * News Feed Screen
  */
-@inject('newsfeed', 'user', 'messengerList', 'notifications')
+@inject('newsfeed', 'user', 'messengerList')
 @observer
 class NewsfeedScreen extends Component<PropsType> {
   disposeTabPress?: Function;
   portraitBar = React.createRef<any>();
+  emptyProps = {
+    ListEmptyComponent: (
+      <View>
+        <ActivityPlaceHolder />
+        <ActivityPlaceHolder />
+      </View>
+    ),
+  };
+
   /**
    * Nav to activity full screen
    */
@@ -78,13 +86,6 @@ class NewsfeedScreen extends Component<PropsType> {
 
     // listen socket on app start
     this.props.messengerList.listen();
-
-    // load notifications
-    try {
-      await this.props.notifications.readLocal();
-    } finally {
-      this.props.notifications.loadList(true);
-    }
   }
 
   /**
@@ -118,16 +119,7 @@ class NewsfeedScreen extends Component<PropsType> {
     );
 
     // Show placeholder before the loading as an empty component.
-    const additionalProps = newsfeed.feedStore.loaded
-      ? {}
-      : {
-          ListEmptyComponent: (
-            <View>
-              <ActivityPlaceHolder />
-              <ActivityPlaceHolder />
-            </View>
-          ),
-        };
+    const additionalProps = newsfeed.feedStore.loaded ? null : this.emptyProps;
 
     return (
       <FeedList
@@ -142,4 +134,4 @@ class NewsfeedScreen extends Component<PropsType> {
   }
 }
 
-export default NewsfeedScreen;
+export default withErrorBoundary(NewsfeedScreen);

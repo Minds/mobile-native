@@ -1,6 +1,5 @@
 //@ts-nocheck
 import api from './../common/services/api.service';
-import { abort } from '../common/helpers/abortableFetch';
 import blockListService from '../common/services/block-list.service';
 import logService from '../common/services/log.service';
 import i18n from '../common/services/i18n.service';
@@ -59,8 +58,6 @@ class ChannelService {
 
   async getFeed(guid, opts = { limit: 12 }) {
     const tag = `channel:feed:${guid}`;
-    // abort previous call
-    abort(tag);
 
     const data = await api.get(`api/v1/newsfeed/personal/${guid}`, opts, tag);
 
@@ -82,8 +79,6 @@ class ChannelService {
 
   async getImageFeed(guid, offset) {
     const tag = `channel:images:${guid}`;
-    // abort previous call
-    abort(tag);
 
     return api
       .get(
@@ -105,8 +100,6 @@ class ChannelService {
 
   async getVideoFeed(guid, offset) {
     const tag = `channel:images:${guid}`;
-    // abort previous call
-    abort(tag);
 
     return api
       .get(
@@ -128,8 +121,6 @@ class ChannelService {
 
   async getBlogFeed(guid, offset) {
     const tag = `channel:blog:${guid}`;
-    // abort previous call
-    abort(tag);
 
     return api
       .get('api/v1/blog/owner/' + guid, { offset: offset, limit: 12 }, tag)

@@ -19,6 +19,7 @@ import ThumbDownAction from '../../newsfeed/activity/actions/ThumbDownAction';
 import MediaView from '../../common/components/MediaView';
 import { LIGHT_THEME } from '../../styles/Colors';
 import ReadMore from '../../common/components/ReadMore';
+import Translate from '../../common/components/translate/Translate';
 
 type PropsType = {
   comment: CommentModel;
@@ -32,6 +33,7 @@ type PropsType = {
  */
 export default observer(function Comment(props: PropsType) {
   const navigation = useNavigation<any>();
+  const translateRef = React.useRef<any>();
   const theme = ThemedStyles.style;
 
   const mature = props.comment.mature && !props.comment.mature_visibility;
@@ -97,6 +99,12 @@ export default observer(function Comment(props: PropsType) {
       theme.marginTop2x,
     ],
   );
+  const translate = React.useCallback(() => {
+    // delayed until the menu is closed
+    setTimeout(() => {
+      translateRef.current?.show();
+    }, 300);
+  }, [translateRef]);
 
   const reply = React.useCallback(() => {
     navigation.push('ReplyComment', {
@@ -126,19 +134,23 @@ export default observer(function Comment(props: PropsType) {
         <>
           <View style={[styles.body, theme.flexContainer]}>
             {!!props.comment.description && (
-              <ReadMore
-                numberOfLines={6}
-                navigation={navigation}
-                text={entities.decodeHTML(props.comment.description)}
-                renderTruncatedFooter={renderTruncatedFooter}
-                renderRevealedFooter={renderRevealedFooter}
-              />
+              <>
+                <ReadMore
+                  numberOfLines={6}
+                  navigation={navigation}
+                  text={entities.decodeHTML(props.comment.description)}
+                  renderTruncatedFooter={renderTruncatedFooter}
+                  renderRevealedFooter={renderRevealedFooter}
+                />
+                <Translate ref={translateRef} entity={props.comment} />
+              </>
             )}
-            {props.comment.hasMedia() && (
+            {(props.comment.hasMedia() ||
+              Boolean(props.comment.attachment_guid)) && (
               <View style={theme.paddingTop3x}>
                 <MediaView
                   entity={props.comment}
-                  style={theme.borderRadius}
+                  imageStyle={theme.borderRadius}
                   smallEmbed
                   // onPress={this.navToImage}
                 />
@@ -146,7 +158,7 @@ export default observer(function Comment(props: PropsType) {
             )}
             {mature && (
               <View style={theme.marginTop3x}>
-                <Text style={[theme.font, theme.colorTertiaryText]}>
+                <Text style={[theme.fontL, theme.colorTertiaryText]}>
                   {i18n.t('activity.explicitComment')}
                 </Text>
               </View>
@@ -154,13 +166,11 @@ export default observer(function Comment(props: PropsType) {
           </View>
           <View style={styles.actionsContainer}>
             <ThumbUpAction
-              containerStyle={theme.rowJustifyStart}
               entity={props.comment}
               size={16}
               touchableComponent={TouchableOpacity}
             />
             <ThumbDownAction
-              containerStyle={theme.rowJustifyStart}
               entity={props.comment}
               size={16}
               touchableComponent={TouchableOpacity}
@@ -171,6 +181,7 @@ export default observer(function Comment(props: PropsType) {
               store={props.store}
               entity={props.store.entity}
               comment={props.comment}
+              onTranslate={translate}
             />
           </View>
           {!!props.comment.replies_count && !props.hideReply && (
@@ -187,7 +198,7 @@ export default observer(function Comment(props: PropsType) {
         // mature
         <View>
           <TouchableOpacity
-            onPress={() => props.comment.toggleMatureVisibility()}
+            onPress={props.comment.toggleMatureVisibility}
             style={[theme.centered, theme.marginTop4x]}>
             <Text style={[theme.bold, theme.fontL, theme.colorSecondaryText]}>
               {i18n.t('activity.explicitComment')}
@@ -207,6 +218,7 @@ export default observer(function Comment(props: PropsType) {
               store={props.store}
               entity={props.store.entity}
               comment={props.comment}
+              onTranslate={translate}
             />
           </View>
         </View>

@@ -1,12 +1,13 @@
 import 'react-native';
 import React from 'react';
-import { Text, Dimensions, TouchableOpacity } from 'react-native';
+import { Text, Dimensions } from 'react-native';
 import { shallow } from 'enzyme';
 import MindsVideoV2 from '../../../src/media/v2/mindsVideo/MindsVideo';
 import MediaView from '../../../src/common/components/MediaView';
 
 import { activitiesServiceFaker } from '../../../__mocks__/fake/ActivitiesFaker';
 
+jest.mock('@gorhom/bottom-sheet');
 jest.mock('../../../src/media/v2/mindsVideo/MindsVideo', () => 'MindsVideoV2');
 
 describe('Media view component', () => {
@@ -30,10 +31,9 @@ describe('Media view component', () => {
     expect(screen).toMatchSnapshot();
   });
 
-  it('should have a DoubleTapCmp', async () => {
+  it('should have a MediaViewImage', async () => {
     screen.update();
-    expect(screen.find('ExplicitImage')).toHaveLength(1);
-    expect(screen.find('DoubleTapCmp')).toHaveLength(1);
+    expect(screen.find('MediaViewImage')).toHaveLength(1);
   });
 
   it('should show overlay if press', async () => {

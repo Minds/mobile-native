@@ -19,7 +19,7 @@ const BoostButton = observer(({ localStore }: PropsType) => {
         theme.backgroundPrimary,
         theme.paddingVertical2x,
         theme.paddingHorizontal4x,
-        theme.marginTop1x,
+        theme.marginTop,
         theme.marginBottom7x,
         theme.marginRight5x,
         theme.borderLink,

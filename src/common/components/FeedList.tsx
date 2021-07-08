@@ -4,7 +4,6 @@ import { observer } from 'mobx-react';
 
 import Activity from '../../newsfeed/activity/Activity';
 import TileElement from '../../newsfeed/TileElement';
-import { CommonStyle as CS } from '../../styles/Common';
 import { ComponentsStyle } from '../../styles/Components';
 import ErrorLoading from './ErrorLoading';
 import ErrorBoundary from './ErrorBoundary';
@@ -42,7 +41,6 @@ export default class FeedList<T> extends Component<PropsType> {
   };
   state = {
     itemHeight: 0,
-    viewed: [],
   };
 
   /**
@@ -123,16 +121,15 @@ export default class FeedList<T> extends Component<PropsType> {
       }
     }
 
-    const footer = this.getFooter();
-
     return (
       <ListComponent
+        containerStyle={ThemedStyles.style.paddingBottom10x}
         ref={this.setListRef}
         key={feedStore.isTiled ? 't' : 'f'}
         onLayout={this.onLayout}
         ListHeaderComponent={header}
-        ListFooterComponent={footer}
-        data={!this.props.hideItems ? feedStore.entities.slice() : []}
+        ListFooterComponent={this.getFooter}
+        data={!this.props.hideItems ? feedStore.entities : []}
         renderItem={renderRow}
         keyExtractor={this.keyExtractor}
         onRefresh={this.refresh}
@@ -140,13 +137,10 @@ export default class FeedList<T> extends Component<PropsType> {
         onEndReached={this.loadMore}
         // onEndReachedThreshold={0}
         numColumns={feedStore.isTiled ? 3 : 1}
-        style={[
-          ThemedStyles.style.flexContainer,
-          ThemedStyles.style.backgroundPrimary,
-        ]}
+        style={style}
         initialNumToRender={3}
-        maxToRenderPerBatch={5}
-        windowSize={7}
+        maxToRenderPerBatch={4}
+        windowSize={9}
         // removeClippedSubviews={true}
         ListEmptyComponent={!this.props.hideItems ? empty : null}
         viewabilityConfig={this.viewOpts}
@@ -168,12 +162,10 @@ export default class FeedList<T> extends Component<PropsType> {
   /**
    * Get footer
    */
-  getFooter() {
+  getFooter = () => {
     if (this.props.feedStore.loading && !this.props.feedStore.refreshing) {
       return (
-        <View
-          style={[CS.centered, CS.padding3x]}
-          testID="ActivityIndicatorView">
+        <View style={footerStyle} testID="ActivityIndicatorView">
           <ActivityIndicator size={'large'} />
         </View>
       );
@@ -182,7 +174,7 @@ export default class FeedList<T> extends Component<PropsType> {
       return this.getErrorLoading();
     }
     return null;
-  }
+  };
 
   /**
    * Get error loading component
@@ -243,18 +235,16 @@ export default class FeedList<T> extends Component<PropsType> {
    * Render activity
    */
   renderActivity = (row: { index: number; item: ActivityModel }) => {
-    let isLast = this.props.feedStore.entities.length === row.index + 1;
     const entity = row.item;
 
     return (
       <ErrorBoundary
         message={this.cantShowActivity}
-        containerStyle={CS.hairLineBottom}>
+        containerStyle={ThemedStyles.style.borderBottomHair}>
         <Activity
           entity={entity}
           navigation={this.props.navigation}
           autoHeight={false}
-          isLast={isLast}
           showCommentsOutlet={false}
         />
       </ErrorBoundary>
@@ -275,3 +265,7 @@ export default class FeedList<T> extends Component<PropsType> {
     );
   };
 }
+
+const style = ThemedStyles.combine('flexContainer', 'backgroundPrimary');
+
+const footerStyle = ThemedStyles.combine('centered', 'padding3x');

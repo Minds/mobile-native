@@ -23,11 +23,12 @@ export default class AbstractPlatform {
   registerToken(service) {
     if (this.token) {
       api
-        .post('api/v1/notifications', {
+        .post('api/v3/notifications/push/token', {
           service: service,
           token: this.token,
         })
-        .catch(err => logService.exception('[PushService]', err));
+        .catch(err => logService.exception('[PushService]', err))
+        .then(() => logService.log('[PushService]: Registered'));
     } else {
       this.shouldRegister = true;
     }
