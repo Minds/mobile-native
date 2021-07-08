@@ -44,7 +44,7 @@ platform :ios do
     match(
       api_key: api_key,
       type: "appstore",
-      app_identifier:["com.minds.mobile","com.minds.mobile.Share"]
+      app_identifier:["com.minds.mobile","com.minds.mobile.Share","com.minds.mobile.ImageNotification"]
     )
     increment_build_number(xcodeproj: "Minds.xcodeproj", build_number: latest_testflight_build_number(api_key: api_key) + 1)
     build_app(scheme: "Minds")
