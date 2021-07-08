@@ -63,7 +63,7 @@ export default class CommentsStore {
   parent: CommentModel | null = null;
 
   constructor(entity) {
-    this.focusedUrn = this.getFocuedUrn();
+    this.focusedUrn = this.getFocusedUrn();
     this.entity = entity;
   }
 
@@ -139,7 +139,7 @@ export default class CommentsStore {
   /**
    * Get focused urn
    */
-  getFocuedUrn() {
+  getFocusedUrn() {
     const params = NavigationService.getCurrentState().params;
 
     let value = null;

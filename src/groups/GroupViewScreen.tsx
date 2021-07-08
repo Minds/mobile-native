@@ -112,6 +112,12 @@ export default class GroupViewScreen extends Component {
     this.props.groupView.group.sendViewed('single');
 
     this.props.groupView.loadTopMembers();
+
+    if (this.props.route.params && this.props.route.params.focusedUrn) {
+      setTimeout(() => {
+        this.openComments();
+      }, 300);
+    }
   }
 
   /**
@@ -451,7 +457,7 @@ export default class GroupViewScreen extends Component {
           <CommentBottomSheet
             title={i18n.t('conversation')}
             ref={this.commentsRef}
-            hideContent={false}
+            hideContent={!this.state.conversationIsOpen}
             commentsStore={this.props.groupView.comments}
             onChange={this.onChange}
           />

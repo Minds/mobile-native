@@ -80,6 +80,13 @@ const ActivityScreen = observer((props: PropsType) => {
               blog: store.entityStore.entity as BlogModel,
             });
           }
+          // workaround for tagged in group conversation notification
+          if (store.entityStore.entity.type === 'group') {
+            props.navigation.replace('GroupView', {
+              group: store.entityStore.entity,
+              ...params,
+            });
+          }
         }
         store.entityStore.entity?.sendViewed('single');
       },
@@ -91,7 +98,7 @@ const ActivityScreen = observer((props: PropsType) => {
     store.loadEntity();
   }, [store]);
 
-  if (!store.entityStore.entity) {
+  if (!store.entityStore.entity || store.entityStore.entity.type === 'group') {
     return store.loading ? <CenteredLoading /> : null;
   }
 

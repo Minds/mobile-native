@@ -71,7 +71,7 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
     onChange: props.onChange,
   });
   const { current: focusedUrn } = React.useRef(
-    props.commentsStore.getFocuedUrn(),
+    props.commentsStore.getFocusedUrn(),
   );
   const route = useRoute<any>();
 
