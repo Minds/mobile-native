@@ -6,10 +6,7 @@ jobs:
           at: .
       - rn/yarn_install
       - run:
-          command: yarn eslint
-          name: Run ESLint
-      - run:
-          command: yarn test
+          command: yarn run test --maxWorkers=2
           name: Jest
   checkout_code:
     executor: rn/linux_js
@@ -49,8 +46,8 @@ workflows:
             - checkout_code
       # - rn/ios_build_and_test:
       #     build_configuration: Release
-      #     detox_configuration: ios.sim.release
-      #     device: iPhone X
+      #     detox_configuration: ios.release
+      #     device: iPhone 12
       #     project_path: ios/Minds.xcodeproj
       #     requires:
       #       - analyse_js
