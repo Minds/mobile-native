@@ -16,13 +16,23 @@ jobs:
           paths: .
           root: .
   fastlane_release:
-    executor: rn/linux_js
+    executor: rn/macos
     steps:
       - attach_workspace:
           at: .
       - rn/yarn_install
       - run:
-          command: bundle exec fastlane ios buildrelease
+          working_directory: ios
+          command: pod install
+      - run:
+          command: gem install bundler
+          name: Install bundler
+      - run:
+          command: gem install fastlane
+          name: Install Fastlane
+      - run:
+          working_directory: ios
+          command: fastlane buildrelease
           name: Run Fastlane
   ios-testflight:
     executor: rn/linux_js
@@ -31,7 +41,7 @@ jobs:
           at: .
       - rn/yarn_install
       - run:
-          command: bundle exec testflight
+          command: fastlane testflight
           name: Run Fastlane
 
 orbs:
