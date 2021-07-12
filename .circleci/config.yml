@@ -1,3 +1,20 @@
+commands:
+  install_fastlane:
+    description: 'Install fastlane'
+    steps:
+      - restore_cache:
+          key: bundle-v1-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
+      - run:
+          command: gem install bundler
+          name: Install bundler
+      - run:
+          command: gem install fastlane
+          name: Install Fastlane
+      - save_cache:
+          key: bundle-v1-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
+          paths:
+            - vendor/bundle
+
 jobs:
   analyse_js:
     executor: rn/linux_js
@@ -26,16 +43,19 @@ jobs:
       - run:
           working_directory: ios
           command: pod install
-      - run:
-          command: gem install bundler
-          name: Install bundler
-      - run:
-          command: gem install fastlane
-          name: Install Fastlane
+      - install_fastlane
       - run:
           working_directory: ios
           command: fastlane buildrelease
           name: Run build
+  fastlane_testflight:
+    executor: rn/macos
+    steps:
+      - attach_workspace:
+          at: .
+      - rn/yarn_install:
+          cache: false
+      - install_fastlane
       - run:
           command: fastlane testflight
           name: Upload testflight
@@ -62,5 +82,8 @@ workflows:
           requires:
             - analyse_js
             - ios-testflight-approval
+      - fastlane_testflight:
+          requires:
+            - fastlane_release
       - ios-testflight-approval:
           type: approval
