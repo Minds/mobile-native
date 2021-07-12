@@ -28,7 +28,7 @@ describe('LoginForm component', () => {
 
     const user = getByTestId('usernameInput');
     const pass = getByTestId('userPasswordInput');
-    const button = getByA11yLabel('loginButton');
+    const button = getByTestId('loginButton');
 
     await fireEvent.changeText(user, 'myuser');
     await fireEvent.changeText(pass, 'mypass');
