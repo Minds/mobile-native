@@ -111,7 +111,7 @@ class NewsfeedScreen extends Component<PropsType> {
     const newsfeed = this.props.newsfeed;
 
     const header = (
-      <View>
+      <View testID="NewsfeedScreen">
         <CheckLanguage />
         <InitialOnboardingButton />
         <PortraitContentBar ref={this.portraitBar} />

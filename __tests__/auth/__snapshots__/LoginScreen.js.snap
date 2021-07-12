@@ -419,7 +419,6 @@ exports[`LoginScreen component should renders correctly 1`] = `
             }
           >
             <View
-              accessibilityLabel="loginButton"
               disabled={false}
               onPress={[Function]}
               style={
@@ -452,6 +451,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                   ],
                 ]
               }
+              testID="loginButton"
               text="Login"
             >
               <Text
