@@ -51,30 +51,30 @@ platform :ios do
   end
 
   desc "Push a new beta build to TestFlight"
-  lane :testflight do
+  lane :upload_testflight do
     upload_to_testflight(skip_waiting_for_build_processing: true, api_key: auth)
   end
 
-  desc "Prepare sentry release"
-  lane :preparesentry do
-    version = get_version_number(
-      xcodeproj: "Minds.xcodeproj",
-      target: "Minds"
-    )
-    sh("echo " + version + " > ../version")
+  # desc "Prepare sentry release"
+  # lane :preparesentry do
+  #   version = get_version_number(
+  #     xcodeproj: "Minds.xcodeproj",
+  #     target: "Minds"
+  #   )
+  #   sh("echo " + version + " > ../version")
 
-    sentry_upload_dsym(
-      org_slug: 'minds-inc',
-      project_slug: 'mobile',
-      dsym_path: 'Minds.app.dSYM.zip'
-    )
+  #   sentry_upload_dsym(
+  #     org_slug: 'minds-inc',
+  #     project_slug: 'mobile',
+  #     dsym_path: 'Minds.app.dSYM.zip'
+  #   )
 
-    sentry_create_release(
-      org_slug: 'minds-inc',
-      project_slug: 'mobile',
-      version: version ,
-      finalize: false
-    )
-  end
+  #   sentry_create_release(
+  #     org_slug: 'minds-inc',
+  #     project_slug: 'mobile',
+  #     version: version ,
+  #     finalize: false
+  #   )
+  # end
 
 end

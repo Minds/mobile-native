@@ -14,7 +14,7 @@ Install _fastlane_ using
 [sudo] gem install fastlane -NV
 ```
 
-or alternatively using `brew cask install fastlane`
+or alternatively using `brew install fastlane`
 
 # Available Actions
 
@@ -44,24 +44,16 @@ fastlane ios buildrelease
 
 Build release
 
-### ios testflight
+### ios upload_testflight
 
 ```
-fastlane ios testflight
+fastlane ios upload_testflight
 ```
 
 Push a new beta build to TestFlight
 
-### ios preparesentry
-
-```
-fastlane ios preparesentry
-```
-
-Prepare sentry release
-
 ---
 
-This README.md is auto-generated and will be re-generated every time [fastlane](https://fastlane.tools) is run.
+This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.
 More information about fastlane can be found on [fastlane.tools](https://fastlane.tools).
 The documentation of fastlane can be found on [docs.fastlane.tools](https://docs.fastlane.tools).

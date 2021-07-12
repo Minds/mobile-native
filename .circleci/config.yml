@@ -57,7 +57,8 @@ jobs:
           cache: false
       - install_fastlane
       - run:
-          command: fastlane testflight
+          working_directory: ios
+          command: fastlane upload_testflight
           name: Upload testflight
 
 orbs:
