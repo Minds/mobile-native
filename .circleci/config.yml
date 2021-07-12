@@ -4,7 +4,8 @@ jobs:
     steps:
       - attach_workspace:
           at: .
-      - rn/yarn_install
+      - rn/yarn_install:
+          cache: false
       - run:
           command: yarn run test --maxWorkers=2
           name: Jest
@@ -20,7 +21,8 @@ jobs:
     steps:
       - attach_workspace:
           at: .
-      - rn/yarn_install
+      - rn/yarn_install:
+          cache: false
       - run:
           working_directory: ios
           command: pod install
