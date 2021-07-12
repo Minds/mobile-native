@@ -186,7 +186,7 @@ export default observer(function LoginForm(props: PropsType) {
           containerStyle={[loginMargin, theme.fullWidth]}
           loading={localStore.inProgress}
           disabled={localStore.inProgress}
-          accessibilityLabel="loginButton"
+          testID="loginButton"
           transparent
           large
         />
