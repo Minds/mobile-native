@@ -2,6 +2,17 @@
 
 Minds Mobile
 
+## 4.15.0 - 2021-07-01
+
+### Changed
+
+- New bottom sheets
+- New password reset screens
+- Keyboard dark theme support on iOS
+- Snowplow analytics
+- Search filter added to discovery
+- Bug fixing
+
 ## 4.14.3 - 2021-07-01
 
 ### Changed
