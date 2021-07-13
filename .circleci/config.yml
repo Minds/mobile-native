@@ -48,14 +48,6 @@ jobs:
           working_directory: ios
           command: fastlane buildrelease
           name: Run build
-  fastlane_testflight:
-    executor: rn/macos
-    steps:
-      - attach_workspace:
-          at: .
-      - rn/yarn_install:
-          cache: false
-      - install_fastlane
       - run:
           working_directory: ios
           command: fastlane upload_testflight
@@ -83,8 +75,5 @@ workflows:
           requires:
             - analyse_js
             - ios-testflight-approval
-      - fastlane_testflight:
-          requires:
-            - fastlane_release
       - ios-testflight-approval:
           type: approval
