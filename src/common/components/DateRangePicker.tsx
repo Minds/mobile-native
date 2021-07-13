@@ -1,13 +1,10 @@
 //@ts-nocheck
 import React, { PureComponent } from 'react';
-
 import { Text, View, TouchableOpacity } from 'react-native';
-
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
-import { CommonStyle } from '../../styles/Common';
-
 import i18n from '../../common/services/i18n.service';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 /**
  * Date range picker
@@ -35,22 +32,21 @@ export default class DateRangePicker extends PureComponent {
    * Render
    */
   render() {
+    const theme = ThemedStyles.style;
     return (
-      <View style={[CommonStyle.padding, CommonStyle.rowJustifyCenter]}>
+      <View style={[theme.padding, theme.rowJustifyCenter]}>
         <TouchableOpacity onPress={this.showFrom}>
-          <Text style={CommonStyle.fontS}>
+          <Text style={theme.fontS}>
             FROM:{' '}
-            <Text style={[CommonStyle.colorPrimary, CommonStyle.fontL]}>
+            <Text style={[theme.colorPrimary, theme.fontL]}>
               {i18n.l('date.formats.small', this.props.from)}
             </Text>
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={this.showTo}
-          style={CommonStyle.paddingLeft2x}>
-          <Text style={CommonStyle.fontS}>
+        <TouchableOpacity onPress={this.showTo} style={theme.paddingLeft2x}>
+          <Text style={theme.fontS}>
             TO:{' '}
-            <Text style={[CommonStyle.colorPrimary, CommonStyle.fontL]}>
+            <Text style={[theme.colorPrimary, theme.fontL]}>
               {i18n.l('date.formats.small', this.props.to)}
             </Text>
           </Text>

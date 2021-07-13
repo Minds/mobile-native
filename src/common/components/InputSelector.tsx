@@ -3,7 +3,7 @@ import React, { useCallback, useState, useRef } from 'react';
 import { View, Text } from 'react-native-animatable';
 import ThemedStyles from '../../styles/ThemedStyles';
 import Selector from '../../common/components/Selector';
-import { TextStyle } from 'react-native';
+import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 
 type PropsType = {
   data: Array<any>;
@@ -13,8 +13,11 @@ type PropsType = {
   selectTitle?: string;
   label: string;
   selected: any;
-  textStyle?: TextStyle;
+  textStyle?: StyleProp<TextStyle>;
   backdropOpacity?: number;
+  containerStyle?: StyleProp<ViewStyle>;
+  labelStyle?: StyleProp<TextStyle>;
+  mainContainerStyle?: StyleProp<ViewStyle>;
 };
 
 const InputSelector = (props: PropsType) => {
@@ -42,17 +45,29 @@ const InputSelector = (props: PropsType) => {
   );
 
   return (
-    <View style={[theme.backgroundPrimary, theme.paddingTop4x]}>
+    <View
+      style={[
+        theme.bgPrimaryBackground,
+        theme.paddingTop4x,
+        props.mainContainerStyle,
+      ]}>
       <View
         style={[
           theme.rowJustifySpaceBetween,
-          theme.backgroundSecondary,
+          theme.bgSecondaryBackground,
           theme.paddingVertical3x,
           theme.paddingHorizontal3x,
-          theme.borderPrimary,
+          theme.bcolorPrimaryBorder,
           theme.borderHair,
+          props.containerStyle,
         ]}>
-        <Text style={[theme.marginLeft, theme.colorSecondaryText, theme.fontM]}>
+        <Text
+          style={[
+            theme.marginLeft,
+            theme.colorSecondaryText,
+            theme.fontM,
+            props.labelStyle,
+          ]}>
           {props.label}
         </Text>
         <Text

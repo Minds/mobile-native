@@ -16,13 +16,13 @@ const BoostButton = observer(({ localStore }: PropsType) => {
       onPress={localStore.boost}
       text={localStore.buttonText}
       containerStyle={[
-        theme.backgroundPrimary,
+        theme.bgPrimaryBackground,
         theme.paddingVertical2x,
         theme.paddingHorizontal4x,
         theme.marginTop,
         theme.marginBottom7x,
         theme.marginRight5x,
-        theme.borderLink,
+        theme.bcolorLink,
         theme.border,
         theme.alignSelfEnd,
       ]}

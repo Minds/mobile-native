@@ -22,11 +22,12 @@ export default function ModalContainer(props: PropsType) {
     paddingBottom: insets.bottom,
   });
   return (
-    <View style={[cleanTop, styles.contentContainer, theme.backgroundPrimary]}>
+    <View
+      style={[cleanTop, styles.contentContainer, theme.bgPrimaryBackground]}>
       <Text style={styles.title}>{props.title}</Text>
       <MIcon
         size={45}
-        name="chevron-left"
+        name="left-chevron"
         style={[styles.backIcon, ThemedStyles.style.colorPrimaryText]}
         onPress={props.onPressBack}
       />

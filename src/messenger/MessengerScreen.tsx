@@ -111,14 +111,14 @@ class MessengerScreen extends Component {
     const footer = this.getFooter();
 
     return (
-      <View style={[styles.container, theme.backgroundPrimary]}>
+      <View style={[styles.container, theme.bgPrimaryBackground]}>
         <View
           style={[theme.rowJustifyStart, theme.alignCenter, theme.marginTop2x]}>
           <SearchView
             placeholder={i18n.t('discovery.search')}
             onChangeText={this.searchChange}
             iconRight={iconRight}
-            containerStyle={[theme.backgroundSecondary, theme.flexContainer]}
+            containerStyle={[theme.bgSecondaryBackground, theme.flexContainer]}
             iconRightOnPress={this.onLogoutPress}
           />
         </View>

@@ -91,7 +91,7 @@ export default class ExplicitOverlay extends PureComponent<PropsType> {
         pointerEvents="box-none"
         style={[
           theme.centered,
-          theme.backgroundSecondary,
+          theme.bgSecondaryBackground,
           styles.onTop,
           containerStyle,
         ]}>
@@ -135,9 +135,9 @@ export default class ExplicitOverlay extends PureComponent<PropsType> {
             </Text>
             <TouchableOpacity
               style={[
-                theme.borderPrimary,
+                theme.bcolorPrimaryBorder,
                 theme.borderHair,
-                theme.backgroundPrimary,
+                theme.bgPrimaryBackground,
                 theme.margin4x,
               ]}
               onPress={this.toggle}>

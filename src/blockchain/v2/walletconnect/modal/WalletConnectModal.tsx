@@ -41,7 +41,7 @@ export default observer(function () {
         <View
           style={[
             theme.flexContainer,
-            theme.backgroundPrimary,
+            theme.bgPrimaryBackground,
             styles.modalBody,
             theme.padding4x,
           ]}>

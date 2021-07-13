@@ -17,31 +17,37 @@ export default function BottomBar(props) {
   return (
     <View
       style={[
-        theme.backgroundPrimary,
+        theme.bgPrimaryBackground,
         styles.bottomBar,
         theme.paddingLeft2x,
         theme.padding,
       ]}>
-      <FIcon
-        size={27}
-        name="image"
-        style={iconStyle}
-        onPress={() => props.store.selectFromGallery(props.store.mode)}
-      />
-      <Icon
-        name="ios-camera-sharp"
-        size={27}
-        style={iconStyle}
-        onPress={() => props.store.setModePhoto(false)}
-      />
-      <IconM
-        name="attach-money"
-        size={27}
-        style={iconStyle}
-        onPress={() =>
-          navigation.navigate('MonetizeSelector', { store: props.store })
-        }
-      />
+      {!props.store.isEdit && (
+        <FIcon
+          size={27}
+          name="image"
+          style={iconStyle}
+          onPress={() => props.store.selectFromGallery(props.store.mode)}
+        />
+      )}
+      {!props.store.isEdit && (
+        <Icon
+          name="ios-camera-sharp"
+          size={27}
+          style={iconStyle}
+          onPress={() => props.store.setModePhoto(false)}
+        />
+      )}
+      {!props.store.isGroup() && (
+        <IconM
+          name="attach-money"
+          size={27}
+          style={iconStyle}
+          onPress={() =>
+            navigation.navigate('MonetizeSelector', { store: props.store })
+          }
+        />
+      )}
       <FIcon
         name="hash"
         size={27}

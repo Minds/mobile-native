@@ -16,12 +16,15 @@ import {
   StatusBar,
   UIManager,
   RefreshControl,
+  YellowBox,
 } from 'react-native';
 import { Provider, observer } from 'mobx-react';
 
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import ShareMenu from 'react-native-share-menu';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+
 import NavigationService, {
   setTopLevelNavigator,
 } from './src/navigation/NavigationService';
@@ -40,12 +43,12 @@ import { StoresProvider } from './src/common/hooks/use-stores';
 import AppMessages from './AppMessages';
 import i18n from './src/common/services/i18n.service';
 
-// disable warnings
-import { YellowBox } from 'react-native';
 import receiveShareService from './src/common/services/receive-share.service';
 import AppInitManager from './AppInitManager';
 import { ScreenHeightProvider } from './src/common/components/KeyboardSpacingView';
 import { WCContextProvider } from './src/blockchain/v2/walletconnect/WalletConnectContext';
+import analyticsService from './src/common/services/analytics.service';
+
 YellowBox.ignoreWarnings(['']);
 
 const stores = getStores();
@@ -60,10 +63,8 @@ if (
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 
-if (Platform.OS === 'android') {
-  require('intl');
-  require('intl/locale-data/jsonp/en');
-}
+require('intl');
+require('intl/locale-data/jsonp/en');
 
 type State = {
   appState: string;
@@ -116,10 +117,8 @@ class App extends Component<Props, State> {
     if (!RefreshControl.defaultProps) {
       RefreshControl.defaultProps = {};
     }
-    RefreshControl.defaultProps.tintColor = ThemedStyles.getColor(
-      'icon_active',
-    );
-    RefreshControl.defaultProps.colors = [ThemedStyles.getColor('icon_active')];
+    RefreshControl.defaultProps.tintColor = ThemedStyles.getColor('IconActive');
+    RefreshControl.defaultProps.colors = [ThemedStyles.getColor('IconActive')];
   }
 
   /**
@@ -202,26 +201,29 @@ class App extends Component<Props, State> {
           <NavigationContainer
             ref={setTopLevelNavigator}
             theme={ThemedStyles.navTheme}
-            onReady={appInitManager.onNavigatorReady}>
+            onReady={appInitManager.onNavigatorReady}
+            onStateChange={analyticsService.onNavigatorStateChange}>
             <StoresProvider>
               <Provider key="app" {...stores}>
-                <ErrorBoundary
-                  message="An error occurred"
-                  containerStyle={ThemedStyles.style.centered}>
-                  <StatusBar
-                    barStyle={statusBarStyle}
-                    backgroundColor={ThemedStyles.getColor(
-                      'secondary_background',
-                    )}
-                  />
-                  <WCContextProvider>
-                    <NavigationStack
-                      key={ThemedStyles.theme + i18n.locale}
-                      isLoggedIn={isLoggedIn}
+                <BottomSheetModalProvider>
+                  <ErrorBoundary
+                    message="An error occurred"
+                    containerStyle={ThemedStyles.style.centered}>
+                    <StatusBar
+                      barStyle={statusBarStyle}
+                      backgroundColor={ThemedStyles.getColor(
+                        'SecondaryBackground',
+                      )}
                     />
-                  </WCContextProvider>
-                  <AppMessages />
-                </ErrorBoundary>
+                    <WCContextProvider>
+                      <NavigationStack
+                        key={ThemedStyles.theme + i18n.locale}
+                        isLoggedIn={isLoggedIn}
+                      />
+                    </WCContextProvider>
+                    <AppMessages />
+                  </ErrorBoundary>
+                </BottomSheetModalProvider>
               </Provider>
             </StoresProvider>
           </NavigationContainer>

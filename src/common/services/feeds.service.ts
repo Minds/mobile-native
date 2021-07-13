@@ -1,13 +1,11 @@
 //@ts-nocheck
 import logService from './log.service';
-import apiService from './api.service';
-import { abort, isNetworkFail } from '../helpers/abortableFetch';
+import apiService, { isNetworkError } from './api.service';
 import entitiesService from './entities.service';
 import feedsStorage from './sql/feeds.storage';
 import { showMessage } from 'react-native-flash-message';
 import i18n from './i18n.service';
 import connectivityService from './connectivity.service';
-import Colors from '../../styles/Colors';
 import boostedContentService from './boosted-content.service';
 import BaseModel from '../BaseModel';
 import { Platform } from 'react-native';
@@ -95,7 +93,7 @@ export default class FeedsService {
       try {
         await this.fetch(true);
       } catch (err) {
-        if (!isNetworkFail(err)) {
+        if (!isNetworkError(err)) {
           logService.exception('[FeedService] getEntities', err);
         }
       }
@@ -250,7 +248,7 @@ export default class FeedsService {
    * Abort pending fetch
    */
   abort() {
-    abort(this);
+    apiService.abort(this);
   }
 
   /**
@@ -280,8 +278,6 @@ export default class FeedsService {
    * @param {boolean} more
    */
   async fetch(more: boolean = false): Promise<void> {
-    abort(this);
-
     const params = {
       ...this.params,
       ...{
@@ -377,7 +373,7 @@ export default class FeedsService {
         return;
       }
 
-      if (!isNetworkFail(err)) {
+      if (!isNetworkError(err)) {
         logService.exception('[FeedService]', err);
       }
 
@@ -396,7 +392,7 @@ export default class FeedsService {
         return;
       }
 
-      if (!isNetworkFail(err)) {
+      if (!isNetworkError(err)) {
         logService.exception('[FeedService]', err);
       }
 
@@ -414,7 +410,7 @@ export default class FeedsService {
         description: i18n.t('showingStored'),
         duration: 1300,
         backgroundColor: '#FFDD63DD',
-        color: Colors.dark,
+        color: '#222222',
         type: 'info',
       });
     }

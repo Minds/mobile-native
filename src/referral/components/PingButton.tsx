@@ -46,7 +46,7 @@ const PingButton = observer(
             ? null
             : [
                 theme.borderHair,
-                theme.borderLink,
+                theme.bcolorLink,
                 styles.iconContainer,
                 theme.padding,
               ]
@@ -54,7 +54,7 @@ const PingButton = observer(
         {loading ? (
           <ActivityIndicator
             size={'small'}
-            color={ThemedStyles.getColor('link')}
+            color={ThemedStyles.getColor('Link')}
           />
         ) : (
           <MIcon
@@ -62,7 +62,7 @@ const PingButton = observer(
             size={25}
             style={
               result || !pingable
-                ? theme.colorBackgroundTertiary
+                ? theme.colorTertiaryBackground
                 : theme.colorLink
             }
           />

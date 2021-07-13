@@ -12,6 +12,7 @@ import type {
   AboutScreenRouteProp,
   AboutScreenNavigationProp,
 } from '../../../navigation/NavigationTypes';
+import { withErrorBoundary } from '../../../common/components/ErrorBoundary';
 
 type PropsType = {
   route: AboutScreenRouteProp;
@@ -92,7 +93,7 @@ const AboutScreen = observer(({ route, navigation }: PropsType) => {
 
   return (
     <ScrollView
-      style={[theme.flexContainer, theme.backgroundPrimary]}
+      style={[theme.flexContainer, theme.bgPrimaryBackground]}
       keyboardShouldPersistTaps={true}>
       <KeyboardAvoidingView
         style={[theme.flexContainer, theme.paddingTop3x]}
@@ -130,4 +131,4 @@ const AboutScreen = observer(({ route, navigation }: PropsType) => {
   );
 });
 
-export default AboutScreen;
+export default withErrorBoundary(AboutScreen);

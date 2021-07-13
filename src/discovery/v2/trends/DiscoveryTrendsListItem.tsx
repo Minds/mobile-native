@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import FastImage from 'react-native-fast-image';
+import { withErrorBoundary } from '../../../common/components/ErrorBoundary';
 import SmartImage from '../../../common/components/SmartImage';
 import formatDate from '../../../common/helpers/date';
 import excerpt from '../../../common/helpers/excerpt';
@@ -26,44 +27,72 @@ interface Props {
 /**
  * Discovery List Item
  */
-export const DiscoveryTrendsListItem = observer((props: Props) => {
-  const { data, isHero } = props;
-  const navigation = useNavigation<StackNavigationProp<any>>();
+export const DiscoveryTrendsListItem = withErrorBoundary(
+  observer((props: Props) => {
+    const { data, isHero } = props;
+    const navigation = useNavigation<StackNavigationProp<any>>();
 
-  let partial: JSX.Element;
+    let partial: React.ReactNode;
 
-  const onPress = (): void => {
-    if (data.entity) {
-      if (data.entity.subtype === 'blog') {
-        navigation.push('BlogView', {
-          blog: data.entity,
-        });
+    const onPress = (): void => {
+      if (data.entity) {
+        if (data.entity.subtype === 'blog') {
+          navigation.push('BlogView', {
+            blog: data.entity,
+          });
+        } else {
+          navigation.push('Activity', {
+            entity: data.entity,
+          });
+        }
       } else {
-        navigation.push('Activity', {
-          entity: data.entity,
-        });
+        return goToSearch();
       }
-    } else {
-      return goToSearch();
-    }
-  };
+    };
 
-  const goToSearch = (): void => {
-    navigation.push('DiscoverySearch', {
-      query: data.title || '#' + data.hashtag,
-    });
-  };
+    const goToSearch = (): void => {
+      navigation.push('DiscoverySearch', {
+        query: data.title || '#' + data.hashtag,
+      });
+    };
 
-  const HeroPartial = (): JSX.Element => {
-    const entity = data.entity;
-    return (
-      <View style={[styles.heroContainer]}>
-        {RichPartialThumbnail()}
+    const HeroPartial = (): React.ReactNode => {
+      const entity = data.entity;
+      return (
+        <View style={[styles.heroContainer]}>
+          {RichPartialThumbnail()}
+          <View
+            style={[
+              styles.container,
+              ThemedStyles.style.padding4x,
+              ThemedStyles.style.bcolorPrimaryBorder,
+            ]}>
+            <View style={[styles.body]}>
+              <Text style={styles.title}>
+                {excerpt(data.title, DISCOVERY_TRENDING_MAX_LENGTH)}
+              </Text>
+              <Text
+                style={[
+                  ThemedStyles.style.colorSecondaryText,
+                  styles.secondaryInformationBottom,
+                ]}>
+                {data.volume} channels discussing -{' '}
+                {formatDate(entity.time_created, 'friendly')}
+              </Text>
+            </View>
+          </View>
+        </View>
+      );
+    };
+
+    const RichPartial = () => {
+      const entity = data.entity;
+      return (
         <View
           style={[
             styles.container,
             ThemedStyles.style.padding4x,
-            ThemedStyles.style.borderPrimary,
+            ThemedStyles.style.bcolorPrimaryBorder,
           ]}>
           <View style={[styles.body]}>
             <Text style={styles.title}>
@@ -78,95 +107,69 @@ export const DiscoveryTrendsListItem = observer((props: Props) => {
               {formatDate(entity.time_created, 'friendly')}
             </Text>
           </View>
+          {RichPartialThumbnail()}
         </View>
-      </View>
-    );
-  };
+      );
+    };
 
-  const RichPartial = () => {
-    const entity = data.entity;
-    return (
-      <View
-        style={[
-          styles.container,
-          ThemedStyles.style.padding4x,
-          ThemedStyles.style.borderPrimary,
-        ]}>
-        <View style={[styles.body]}>
-          <Text style={styles.title}>
-            {excerpt(data.title, DISCOVERY_TRENDING_MAX_LENGTH)}
-          </Text>
-          <Text
-            style={[
-              ThemedStyles.style.colorSecondaryText,
-              styles.secondaryInformationBottom,
-            ]}>
-            {data.volume} channels discussing -{' '}
-            {formatDate(entity.time_created, 'friendly')}
-          </Text>
-        </View>
-        {RichPartialThumbnail()}
-      </View>
-    );
-  };
+    const RichPartialThumbnail = () => {
+      const entity = data.entity;
+      const uri = entity.thumbnail_src.startsWith('//')
+        ? `https:${entity.thumbnail_src}`
+        : entity.thumbnail_src;
+      const image = { uri };
 
-  const RichPartialThumbnail = () => {
-    const entity = data.entity;
-    const uri = entity.thumbnail_src.startsWith('//')
-      ? `https:${entity.thumbnail_src}`
-      : entity.thumbnail_src;
-    const image = { uri };
-
-    return (
-      <SmartImage
-        source={image}
-        style={[styles.thumbnail, isHero ? styles.heroThumbnail : null]}
-        resizeMode={FastImage.resizeMode.cover}
-      />
-    );
-  };
-
-  const TrendingHashtagPartial = () => {
-    return (
-      <View
-        style={[
-          styles.container,
-          ThemedStyles.style.padding4x,
-          ThemedStyles.style.borderPrimary,
-        ]}>
-        <View style={[styles.body]}>
-          <Text
-            style={[
-              ThemedStyles.style.colorSecondaryText,
-              styles.secondaryInformationTop,
-            ]}>
-            Trending {data.period}h - {data.volume} posts
-          </Text>
-          <Text style={styles.title}>#{data.hashtag}</Text>
-        </View>
-        <Icon
-          type="material-community"
-          color={ThemedStyles.getColor('tertiary_text')}
-          name="chevron-right"
-          size={32}
-          style={styles.centered}
+      return (
+        <SmartImage
+          source={image}
+          style={[styles.thumbnail, isHero ? styles.heroThumbnail : null]}
+          resizeMode={FastImage.resizeMode.cover}
         />
-      </View>
+      );
+    };
+
+    const TrendingHashtagPartial = () => {
+      return (
+        <View
+          style={[
+            styles.container,
+            ThemedStyles.style.padding4x,
+            ThemedStyles.style.bcolorPrimaryBorder,
+          ]}>
+          <View style={[styles.body]}>
+            <Text
+              style={[
+                ThemedStyles.style.colorSecondaryText,
+                styles.secondaryInformationTop,
+              ]}>
+              Trending {data.period}h - {data.volume} posts
+            </Text>
+            <Text style={styles.title}>#{data.hashtag}</Text>
+          </View>
+          <Icon
+            type="material-community"
+            color={ThemedStyles.getColor('TertiaryText')}
+            name="chevron-right"
+            size={32}
+            style={styles.centered}
+          />
+        </View>
+      );
+    };
+
+    if (isHero && data.entity) {
+      partial = HeroPartial();
+    } else {
+      partial = data.title ? RichPartial() : TrendingHashtagPartial();
+    }
+
+    return (
+      <TouchableHighlight underlayColor="transparent" onPress={() => onPress()}>
+        {partial}
+      </TouchableHighlight>
     );
-  };
-
-  if (isHero && data.entity) {
-    partial = HeroPartial();
-  } else {
-    partial = data.title ? RichPartial() : TrendingHashtagPartial();
-  }
-
-  return (
-    <TouchableHighlight underlayColor="transparent" onPress={() => onPress()}>
-      {partial}
-    </TouchableHighlight>
-  );
-});
+  }),
+);
 
 const styles = StyleSheet.create({
   container: {

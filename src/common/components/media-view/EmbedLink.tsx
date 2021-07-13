@@ -85,7 +85,7 @@ export default function EmbedLink({
 const containerStyle = ThemedStyles.combine(
   'rowJustifyStart',
   'borderHair',
-  'borderPrimary',
+  'bcolorPrimaryBorder',
   'borderRadius',
 );
 
@@ -101,4 +101,7 @@ const styles = StyleSheet.create({
 const titleStyle = ThemedStyles.combine('fontL', 'bold');
 const titleContainerStyle = ThemedStyles.combine('padding2x', 'flexContainer');
 const domainStyle = ThemedStyles.combine('fontM', 'colorSecondaryText');
-const imageStyle = ThemedStyles.combine(styles.thumbnail, 'backgroundTertiary');
+const imageStyle = ThemedStyles.combine(
+  styles.thumbnail,
+  'bgTertiaryBackground',
+);

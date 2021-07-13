@@ -101,7 +101,7 @@ export default function ({ navigation }) {
   const innerWrapper = [
     theme.borderTopHair,
     theme.borderBottomHair,
-    theme.borderPrimary,
+    theme.bcolorPrimaryBorder,
   ];
 
   const logOut = {
@@ -131,13 +131,13 @@ export default function ({ navigation }) {
 
   return (
     <ScrollView
-      style={[theme.flexContainer, theme.backgroundPrimary]}
+      style={[theme.flexContainer, theme.bgPrimaryBackground]}
       contentContainerStyle={theme.paddingBottom4x}>
       <Text
         style={[theme.titleText, theme.paddingLeft4x, theme.paddingVertical2x]}>
         {i18n.t('moreScreen.settings')}
       </Text>
-      <View style={[innerWrapper, theme.backgroundPrimary]}>
+      <View style={[innerWrapper, theme.bgPrimaryBackground]}>
         {items.map(item => (
           <MenuItem item={item} />
         ))}

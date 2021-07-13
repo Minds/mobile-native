@@ -29,7 +29,7 @@ const Option = props => {
 
   return (
     <TouchableOpacity
-      style={[styles.optsRow, ThemedStyles.style.borderPrimary]}
+      style={[styles.optsRow, ThemedStyles.style.bcolorPrimaryBorder]}
       onPress={onSelect}>
       <Text
         style={[ThemedStyles.style.flexContainer, ThemedStyles.style.fontL]}>
@@ -54,7 +54,7 @@ export default observer(function (props) {
   const store = props.route.params.store;
 
   return (
-    <View style={[theme.flexContainer, theme.backgroundPrimary]}>
+    <View style={[theme.flexContainer, theme.bgPrimaryBackground]}>
       <TopBar
         leftText="License"
         rightText={i18n.t('done')}

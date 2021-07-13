@@ -3,16 +3,12 @@ import Icon from 'react-native-vector-icons/Feather';
 import { observer } from 'mobx-react';
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import FastImage from 'react-native-fast-image';
-import sessionService from '../../common/services/session.service';
 import NavigationService from '../../navigation/NavigationService';
 import ThemedStyles from '../../styles/ThemedStyles';
 import type CommentsStore from './CommentsStore';
 import i18n from '../../common/services/i18n.service';
 import { useRoute } from '@react-navigation/native';
-import GroupModel from '../../groups/GroupModel';
 import { useBottomSheet } from '@gorhom/bottom-sheet';
-import { GOOGLE_PLAY_STORE } from '../../config/Config';
 
 export default observer(function CommentListHeader(props: {
   store: CommentsStore;
@@ -30,7 +26,9 @@ export default observer(function CommentListHeader(props: {
   const titleStyles = [theme.fontMedium, theme.paddingLeft3x];
 
   const closeButton = (
-    <TouchableOpacity style={styles.iconContainer} onPress={bottomSheet.close}>
+    <TouchableOpacity
+      style={styles.iconContainer}
+      onPress={() => bottomSheet.collapse()}>
       <Icon name={'x'} size={24} style={theme.colorSecondaryText} />
     </TouchableOpacity>
   );
@@ -39,8 +37,9 @@ export default observer(function CommentListHeader(props: {
     <View
       style={[
         theme.borderBottomHair,
-        theme.borderPrimary,
-        theme.backgroundPrimary,
+        theme.bcolorPrimaryBorder,
+        theme.bgPrimaryBackground,
+        styles.shadow,
       ]}>
       {props.store.parent ? (
         <View>
@@ -86,5 +85,16 @@ export default observer(function CommentListHeader(props: {
 const styles = StyleSheet.create({
   iconContainer: {
     paddingRight: 30,
+  },
+  shadow: {
+    shadowColor: 'black',
+    zIndex: 50,
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.06,
+    shadowRadius: 4,
+    elevation: 4,
   },
 });

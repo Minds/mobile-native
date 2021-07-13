@@ -15,7 +15,7 @@ export default function AppInfoScreen() {
     theme.rowJustifySpaceBetween,
     theme.padding4x,
     theme.borderBottomHair,
-    theme.borderPrimary,
+    theme.bcolorPrimaryBorder,
   ];
 
   const valueStyle = [theme.colorSecondaryText, theme.fontL, theme.fontThin];
@@ -28,7 +28,7 @@ export default function AppInfoScreen() {
         styles.logoBackground,
         theme.flexContainer,
         theme.centered,
-        theme.backgroundPrimary,
+        theme.bgPrimaryBackground,
       ]}>
       <FastImage
         resizeMode={FastImage.resizeMode.cover}

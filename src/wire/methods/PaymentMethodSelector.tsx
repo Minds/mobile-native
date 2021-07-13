@@ -5,7 +5,6 @@ import { Text, View, TouchableOpacity } from 'react-native';
 import featuresService from '../../common/services/features.service';
 import testID from '../../common/helpers/testID';
 import PaymentMethodIcon from './PaymentMethodIcon';
-import { CommonStyle as CS } from '../../styles/Common';
 import ThemedStyles from '../../styles/ThemedStyles';
 
 type PropsType = {
@@ -55,11 +54,11 @@ export default class PaymentMethodSelector extends React.PureComponent<PropsType
   render(): React.ReactNode {
     const theme = ThemedStyles.style;
     return (
-      <View style={[CS.rowJustifySpaceEvenly, CS.fullWidth]}>
+      <View style={[theme.rowJustifySpaceEvenly, theme.fullWidth]}>
         {this.methods.map(
           (method: any, i: number): React.ReactNode => (
             <TouchableOpacity
-              style={[CS.alignCenter, CS.padding]}
+              style={[theme.alignCenter, theme.padding]}
               {...testID(`PAYMENT METHOD ${method.label}`)}
               key={i}
               onPress={method.handle}>
@@ -74,7 +73,7 @@ export default class PaymentMethodSelector extends React.PureComponent<PropsType
               />
               <Text
                 style={[
-                  CS.fontL,
+                  theme.fontL,
                   method.label.toLowerCase() === this.props.value
                     ? theme.colorIconActive
                     : theme.colorIcon,

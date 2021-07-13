@@ -30,7 +30,7 @@ const WithdrawalInput = observer((props: TypeProps) => {
     keyboardType: 'decimal-pad',
     selectTextOnFocus: true,
     style: vPadding,
-    containerStyle: [theme.backgroundPrimaryHighlight, theme.borderBottom],
+    containerStyle: [theme.bgPrimaryBackgroundHighlight, theme.borderBottom],
     labelStyle: [marginB, theme.fontM],
   };
   return (

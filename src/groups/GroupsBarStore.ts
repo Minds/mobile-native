@@ -5,7 +5,7 @@ import socketService from '../common/services/socket.service';
 import logService from '../common/services/log.service';
 import GroupModel from './GroupModel';
 import storageService from '../common/services/storage.service';
-import { isNetworkFail } from '../common/helpers/abortableFetch';
+import { isNetworkError } from '../common/services/api.service';
 
 /**
  * Groups bar store
@@ -187,7 +187,7 @@ class GroupsBarStore {
       this.offset = groups.offset;
       return groups;
     } catch (err) {
-      if (!isNetworkFail(err)) {
+      if (!isNetworkError(err)) {
         logService.exception('[GroupsBarStore]', err);
       }
       throw err; //continue error flow

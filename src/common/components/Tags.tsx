@@ -4,8 +4,8 @@ import _ from 'lodash';
 import React, { PureComponent } from 'react';
 
 import { Text, TextStyle } from 'react-native';
+import ThemedStyles from '../../styles/ThemedStyles';
 
-import colors from '../../styles/Colors';
 import openUrlService from '../services/open-url.service';
 
 export const hashRegex = new RegExp(
@@ -19,6 +19,17 @@ export const hashRegex = new RegExp(
     ']+)',
   ].join(''),
   'gim',
+);
+
+export const cashRegex = new RegExp(
+  [
+    '([^&]|\\b|^)', // Start of string, and word bounday. Not if preceeded by & symbol
+    '\\$', //
+    '([',
+    'A-Za-z',
+    ']+)',
+  ].join(''),
+  'gim', // Global, Case insensitive, Multiline
 );
 
 type PropsType = {
@@ -35,18 +46,6 @@ type PropsType = {
  */
 export default class Tags extends PureComponent<PropsType> {
   index: number = 0;
-  styles = {
-    color: colors.primary,
-  };
-
-  /**
-   * On component will mount
-   */
-  componentWillMount() {
-    if (this.props.color) {
-      this.styles.color = this.props.color;
-    }
-  }
 
   /**
    * Render
@@ -86,6 +85,7 @@ export default class Tags extends PureComponent<PropsType> {
     rtn = this.parseArrayOrString(rtn, this.parseShortUrl);
     rtn = this.parseArrayOrString(rtn, this.parseWwwUrl);
     rtn = this.parseArrayOrString(rtn, this.parseHash);
+    rtn = this.parseArrayOrString(rtn, this.parseCash);
     rtn = this.parseArrayOrString(rtn, this.parseUser);
 
     if (Array.isArray(rtn)) {
@@ -105,7 +105,7 @@ export default class Tags extends PureComponent<PropsType> {
       return (
         <Text
           key={i}
-          style={[this.props.style, this.styles]}
+          style={[this.props.style, ThemedStyles.style.colorLink]}
           onPress={() => {
             this.navToURL(content);
           }}>
@@ -125,7 +125,7 @@ export default class Tags extends PureComponent<PropsType> {
       return (
         <Text
           key={i}
-          style={[this.props.style, this.styles]}
+          style={[this.props.style, ThemedStyles.style.colorLink]}
           onPress={() => {
             this.navToURL(content);
           }}>
@@ -145,7 +145,7 @@ export default class Tags extends PureComponent<PropsType> {
       return (
         <Text
           key={i}
-          style={[this.props.style, this.styles]}
+          style={[this.props.style, ThemedStyles.style.colorLink]}
           onPress={() => {
             this.navToURL('http://' + content);
           }}>
@@ -163,11 +163,26 @@ export default class Tags extends PureComponent<PropsType> {
       return (
         <Text
           key={i}
-          style={[this.props.style, this.styles]}
+          style={[this.props.style, ThemedStyles.style.colorLink]}
           onPress={() => {
             this.navToDiscovery(`#${content}`);
           }}>
           #{content}
+        </Text>
+      );
+    });
+  };
+
+  parseCash = str => {
+    return this.replaceRegular(str, cashRegex, (i, content) => {
+      return (
+        <Text
+          key={i}
+          style={[this.props.style, ThemedStyles.style.colorLink]}
+          onPress={() => {
+            this.navToDiscovery(`\$${content}`);
+          }}>
+          ${content}
         </Text>
       );
     });
@@ -183,7 +198,7 @@ export default class Tags extends PureComponent<PropsType> {
       return (
         <Text
           key={i}
-          style={[this.props.style, this.styles]}
+          style={[this.props.style, ThemedStyles.style.colorLink]}
           onPress={() => {
             this.navToChannel(content);
           }}>

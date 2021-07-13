@@ -44,7 +44,11 @@ const DatePicker = observer((props: PropsType) => {
 
   return (
     <TouchableOpacity
-      style={[styles.container, theme.borderPrimary, props.containerStyle]}
+      style={[
+        styles.container,
+        theme.bcolorPrimaryBorder,
+        props.containerStyle,
+      ]}
       onPress={localStore.openPicker}>
       <View>
         <Text style={[theme.fontL, theme.colorSecondaryText]}>
@@ -55,7 +59,7 @@ const DatePicker = observer((props: PropsType) => {
       <Icon
         name="calendar"
         size={21}
-        color={ThemedStyles.getColor('secondary_text')}
+        color={ThemedStyles.getColor('SecondaryText')}
         style={theme.centered}
       />
       <DateTimePicker

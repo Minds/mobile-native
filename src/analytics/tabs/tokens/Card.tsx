@@ -18,7 +18,7 @@ type PropsType = {
 const Card = ({ metrics, type }: PropsType) => {
   const theme = ThemedStyles.style;
   return (
-    <View style={[styles.container, theme.borderPrimary]}>
+    <View style={[styles.container, theme.bcolorPrimaryBorder]}>
       <View style={theme.rowJustifySpaceBetween}>
         <Title type={type} />
         <Comparative comparative={metrics.comparative} total={metrics.total} />
@@ -55,7 +55,7 @@ const Title = ({ type }) => {
         containerStyle={theme.borderRadius}
         width={200}
         height={100}
-        backgroundColor={ThemedStyles.getColor('link')}
+        backgroundColor={ThemedStyles.getColor('Link')}
         popover={
           <Text style={theme.colorWhite}>
             {i18n.t(`analytics.tokens.tooltips.${type}`)}

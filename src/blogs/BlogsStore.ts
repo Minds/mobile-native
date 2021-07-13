@@ -5,7 +5,7 @@ import blogService from './BlogsService';
 import BlogModel from './BlogModel';
 import OffsetListStore from '../common/stores/OffsetListStore';
 import logService from '../common/services/log.service';
-import { isNetworkFail } from '../common/helpers/abortableFetch';
+import { isNetworkError } from '../common/services/api.service';
 
 /**
  * Blogs store
@@ -38,7 +38,7 @@ class BlogsStore {
 
       return response;
     } catch (err) {
-      if (!isNetworkFail(err)) {
+      if (!isNetworkError(err)) {
         logService.exception('[BlogStore] loadList', err);
       }
       this.list.setErrorLoading(true);

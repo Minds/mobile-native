@@ -2,23 +2,14 @@ import React, { Component } from 'react';
 import { reaction } from 'mobx';
 import { observer } from 'mobx-react';
 
-import {
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-  LayoutChangeEvent,
-} from 'react-native';
+import { Text, TouchableOpacity, View, LayoutChangeEvent } from 'react-native';
 import Clipboard from '@react-native-clipboard/clipboard';
 import * as entities from 'entities';
 
 import ExplicitText from '../../common/components/explicit/ExplicitText';
 import settingsStore from '../../settings/SettingsStore';
 import OwnerBlock from './OwnerBlock';
-import Actions from './Actions';
-import formatDate from '../../common/helpers/date';
 import ActivityActionSheet from './ActivityActionSheet';
-import ActivityMetrics from './metrics/ActivityMetrics';
 import MediaView from '../../common/components/MediaView';
 import Translate from '../../common/components/translate/Translate';
 import ExplicitOverlay from '../../common/components/explicit/ExplicitOverlay';
@@ -33,6 +24,17 @@ import sessionService from '../../common/services/session.service';
 import NavigationService from '../../navigation/NavigationService';
 import { showNotification } from '../../../AppMessages';
 import DeletedRemind from './DeletedRemind';
+import BottomContent from './BottomContent';
+import {
+  containerStyle,
+  onlyContentContainerStyle,
+  remindBlockContainerStyle,
+  remindContainerStyle,
+  remindedContainerStyle,
+  shortTextStyle,
+  styles,
+  textStyle,
+} from './styles';
 
 const FONT_THRESHOLD = 300;
 
@@ -43,10 +45,12 @@ type PropsType = {
   isReminded?: boolean;
   autoHeight?: boolean;
   hideTabs?: boolean;
+  hideRemind?: boolean;
   parentMature?: boolean;
   onLayout?: Function;
   showCommentsOutlet?: boolean;
   storeUserTap?: boolean;
+  showOnlyContent?: boolean;
 };
 
 /**
@@ -80,7 +84,7 @@ export default class Activity extends Component<PropsType> {
    * Nav to activity full screen
    */
   navToActivity = () => {
-    if (!this.props.navigation) {
+    if (!this.props.navigation || this.props.entity.remind_deleted) {
       return;
     }
     const navOpts = {
@@ -184,6 +188,9 @@ export default class Activity extends Component<PropsType> {
   }
 
   copyText = () => {
+    if (this.props.entity.remind_deleted) {
+      return;
+    }
     const entity = this.props.entity;
     Clipboard.setString(
       entities.decodeHTML(
@@ -239,10 +246,16 @@ export default class Activity extends Component<PropsType> {
 
     return (
       <View
-        style={this.props.isReminded ? remindedContainerStyle : containerStyle}
+        style={
+          this.props.isReminded
+            ? remindedContainerStyle
+            : this.props.showOnlyContent
+            ? onlyContentContainerStyle
+            : containerStyle
+        }
         onLayout={this.onLayout}>
         <Pinned entity={this.props.entity} />
-        {this.showOwner()}
+        {!this.props.showOnlyContent && this.showOwner()}
         {showNSFW ? (
           <ExplicitOverlay entity={this.props.entity} />
         ) : (
@@ -253,7 +266,12 @@ export default class Activity extends Component<PropsType> {
             onLongPress={this.copyText}
             onLayout={this.onLayout}
             testID="ActivityView">
-            <View style={styles.bodyContainer}>
+            <View
+              style={
+                this.props.showOnlyContent
+                  ? styles.onlyContentbodyContainer
+                  : styles.bodyContainer
+              }>
               {lock}
               {/* Shows ontop only for rich embed or reminds */}
               {this.props.entity.perma_url || this.props.entity.remind_object
@@ -268,15 +286,20 @@ export default class Activity extends Component<PropsType> {
                 imageStyle={theme.flexContainer}
                 autoHeight={this.props.autoHeight}
               />
-              {!(this.props.entity.perma_url || this.props.entity.remind_object)
+              {!(
+                this.props.entity.perma_url ||
+                this.props.entity.remind_object ||
+                this.props.entity.remind_deleted
+              )
                 ? message
                 : undefined}
             </View>
-
-            <ActivityMetrics entity={this.props.entity} />
-            {this.showActions()}
-            {this.renderScheduledMessage()}
-            {this.renderPendingMessage()}
+            <BottomContent
+              entity={entity}
+              showOnlyContent={this.props.showOnlyContent}
+              showCommentsOutlet={this.props.showCommentsOutlet}
+              hideTabs={this.props.hideTabs}
+            />
           </TouchableOpacity>
         )}
       </View>
@@ -285,39 +308,6 @@ export default class Activity extends Component<PropsType> {
 
   setMediaViewRef = o => {
     this.mediaView = o;
-  };
-
-  /**
-   * Show message if entity is scheduled
-   */
-  renderScheduledMessage = () => {
-    return this.props.entity.isScheduled()
-      ? this.renderYellowBanner(
-          `${i18n.t('activity.scheduled')} ${formatDate(
-            this.props.entity.time_created,
-          )}.`,
-        )
-      : null;
-  };
-
-  /**
-   * Show message if entity is awaiting moderation
-   */
-  renderPendingMessage = () => {
-    return this.props.entity.isPending()
-      ? this.renderYellowBanner(i18n.t('activity.pendingModeration'))
-      : null;
-  };
-
-  /**
-   * Render a banner with a message bellow the activity
-   */
-  renderYellowBanner = message => {
-    return (
-      <View style={styles.yellowBanner}>
-        <Text style={styles.yellowBannerText}>{message}</Text>
-      </View>
-    );
   };
 
   /**
@@ -377,7 +367,7 @@ export default class Activity extends Component<PropsType> {
   showRemind() {
     const remind_object = this.props.entity.remind_object;
 
-    if (remind_object) {
+    if (remind_object && !this.props.hideRemind) {
       if (blockListService.has(remind_object.owner_guid)) {
         return (
           <View style={remindBlockContainerStyle}>
@@ -404,116 +394,10 @@ export default class Activity extends Component<PropsType> {
             isReminded={true}
             parentMature={this.props.entity.shouldBeBlured()}
             hydrateOnNav={true}
+            showOnlyContent={this.props.showOnlyContent}
           />
         </View>
       );
     }
   }
-
-  /**
-   * Show actions
-   */
-  showActions() {
-    if (!this.props.hideTabs) {
-      return (
-        <Actions
-          entity={this.props.entity}
-          showCommentsOutlet={this.props.showCommentsOutlet}
-        />
-      );
-    }
-  }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    overflow: 'visible',
-  },
-  bodyContainer: {
-    minHeight: 150,
-    justifyContent: 'center',
-  },
-  messageContainer: {
-    paddingHorizontal: 20,
-    paddingVertical: 15,
-  },
-  message: {
-    fontFamily: 'Roboto',
-    fontSize: 16,
-    lineHeight: 24,
-  },
-  emptyMessage: {
-    padding: 0,
-  },
-  timestamp: {
-    fontSize: 14,
-    color: '#888',
-  },
-  remind: {
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 1,
-      height: 1,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-    elevation: 5,
-  },
-  boostTagContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  boostTagLabel: {
-    fontWeight: '400',
-    marginLeft: 2,
-    fontSize: 14,
-    letterSpacing: 0.75,
-  },
-  blockedNoticeDesc: {
-    opacity: 0.7,
-    textAlign: 'center',
-  },
-  yellowBannerText: {
-    fontSize: 11,
-    color: '#000',
-    ...ThemedStyles.style.paddingLeft,
-  },
-  yellowBanner: {
-    backgroundColor: '#ffecb3',
-    ...ThemedStyles.style.padding,
-  },
-});
-
-const shortTextStyle = ThemedStyles.combine(
-  styles.message,
-  'fontXL',
-  'colorPrimaryText',
-  'fontMedium',
-);
-
-const textStyle = ThemedStyles.combine(styles.message, 'fontL');
-
-const remindBlockContainerStyle = ThemedStyles.combine(
-  'backgroundTertiary',
-  'margin2x',
-  'borderRadius2x',
-  'padding2x',
-);
-
-const remindContainerStyle = ThemedStyles.combine(
-  styles.remind,
-  'margin2x',
-  'borderHair',
-  'borderPrimary',
-);
-
-const containerStyle = ThemedStyles.combine(
-  styles.container,
-  'borderBottom8x',
-  'borderBackgroundTertiary',
-  'backgroundPrimary',
-);
-const remindedContainerStyle = ThemedStyles.combine(
-  styles.container,
-  'backgroundPrimary',
-);

@@ -1,0 +1,589 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Notifications component renders correctly 1`] = `
+<TouchableOpacity
+  onPress={[Function]}
+  style={
+    Array [
+      Object {
+        "flex": 1,
+        "flexDirection": "column",
+        "paddingHorizontal": 20,
+        "paddingVertical": 16,
+      },
+      Object {
+        "borderBottomWidth": 0.5,
+      },
+      Object {
+        "borderColor": "#D3DBE3",
+      },
+    ]
+  }
+>
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "column",
+          "marginRight": 28,
+        }
+      }
+    >
+      <preventDoubleTap(TouchableOpacity)
+        onPress={[Function]}
+      >
+        <FastImage
+          source={
+            Object {
+              "headers": Object {
+                "App-Version": "3.8.0",
+                "Cache-Control": "no-cache, no-store, must-revalidate",
+                "Content-Type": "application/json",
+                "Pragma": "no-cache",
+              },
+              "uri": "https://cdn.minds.com/icon/100000000000000519/medium/1623077876",
+            }
+          }
+          style={
+            Object {
+              "borderRadius": 18.5,
+              "height": 37,
+              "width": 37,
+            }
+          }
+        />
+      </preventDoubleTap(TouchableOpacity)>
+      <View>
+        <NotificationIcon
+          type="token_rewards_summary"
+        />
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "alignSelf": "center",
+          "flex": 9,
+        }
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "fontSize": 15,
+              "lineHeight": 18,
+            },
+            Object {
+              "fontWeight": "400",
+            },
+            Object {
+              "color": "#72727C",
+            },
+          ]
+        }
+      >
+        <Merged
+          notification={
+            NotificationModel {
+              "created_timestamp": 1622815259,
+              "data": Object {
+                "tokens_formatted": "0.332",
+                "usd_formatted": "0.36",
+              },
+              "entity": Object {
+                "access_id": "2",
+                "allow_comments": false,
+                "allow_unsubscribed_contact": false,
+                "ban_reason": false,
+                "banned": "no",
+                "boostProPlus": false,
+                "boost_autorotate": true,
+                "boost_rating": 1,
+                "briefdescription": "Full Stack Developer at @minds",
+                "btc_address": "1M27rFgyxqGdbmyjABu7J3pqa2YPhFs4mp",
+                "canary": true,
+                "categories": Array [],
+                "chat": true,
+                "city": "Colonia Avellaneda",
+                "container_guid": "0",
+                "disable_autoplay_videos": true,
+                "disabled_boost": false,
+                "dismissed_widgets": Array [
+                  "language-sidebar-2020",
+                  "discovery-disclaimer-2020",
+                ],
+                "email_confirmed": true,
+                "eth_wallet": "0xd3004e3cbA40079c31F80F0C465aacc34588bd79",
+                "fb": false,
+                "feature_flags": false,
+                "featured_id": false,
+                "founder": false,
+                "gender": "",
+                "guid": "968187695744425997",
+                "hashtags": false,
+                "hide_share_buttons": true,
+                "icontime": "1613843786",
+                "is_admin": false,
+                "is_mature": false,
+                "language": "en",
+                "last_accepted_tos": 1558597098,
+                "last_avatar_upload": "1565703100",
+                "legacy_guid": false,
+                "liquidity_spot_opt_out": 0,
+                "mature": 1,
+                "mature_lock": false,
+                "merchant": Object {
+                  "id": "acct_1Gj1tZDf4yhop99j",
+                  "service": "stripe",
+                },
+                "mode": 0,
+                "monetized": "",
+                "name": "Juan",
+                "nsfw": Array [],
+                "nsfw_lock": Array [],
+                "onchain_booster": 0,
+                "opted_in_hashtags": 5,
+                "owner_guid": "0",
+                "p2p_media_enabled": false,
+                "pinned_posts": Array [
+                  "1234531362564866048",
+                ],
+                "plus": false,
+                "pro": false,
+                "pro_published": false,
+                "programs": Array [],
+                "rating": 1,
+                "rewards": true,
+                "signup_method": false,
+                "site_guid": false,
+                "social_profiles": Array [
+                  Object {
+                    "key": "linkedin",
+                    "value": "linkedin.com/in/juan-manuel-solaro-730a48184",
+                  },
+                ],
+                "subscribed": false,
+                "subscriber": false,
+                "subtype": false,
+                "surge_token": "eyJzZXJ2aWNlIjoiZ29vZ2xlIiwidG9rZW4iOiJkbzZ2LWhfWGhxMDpBUEE5MWJGQ3N0T3c4QzdPR3M0ZjZDZ3VzWWhma0JScGstMF9rN0xValQyUmJhRGtmTmJpZXlSSG1oRmRJeTlRRTlEY0tsV0ZPZFNxR3hfNU9YQnI3VXFUV3paMDFNZ1ZSYm9fVXM3WjZrQVpiX2ZtdDU2akh2LVdUNXk3RzM4ZlBIQ1QwSDZEdXU5RyJ9",
+                "tags": Array [
+                  "technology",
+                  "crypto",
+                  "blockchain",
+                  "music",
+                  "art",
+                ],
+                "theme": "dark",
+                "time_created": "1556209934",
+                "time_updated": false,
+                "toaster_notifications": true,
+                "type": "user",
+                "urn": "urn:user:968187695744425997",
+                "username": "juanmsolaro",
+                "verified": true,
+                "website": "",
+                "wire_rewards": Object {
+                  "description": "",
+                  "rewards": Object {
+                    "money": Array [
+                      Object {
+                        "amount": "1",
+                        "description": "VIP",
+                      },
+                    ],
+                    "points": Array [],
+                    "tokens": Array [
+                      Object {
+                        "amount": "1",
+                        "description": "Common Citizen",
+                      },
+                      Object {
+                        "amount": "2",
+                        "description": "Adventurer",
+                      },
+                      Object {
+                        "amount": "3",
+                        "description": "Hero",
+                      },
+                    ],
+                  },
+                },
+                "yt_channels": Array [],
+              },
+              "entity_urn": "urn:user:968187695744425997",
+              "from": Object {
+                "access_id": false,
+                "allow_comments": false,
+                "allow_unsubscribed_contact": false,
+                "ban_reason": false,
+                "banned": "no",
+                "blocked": undefined,
+                "boostProPlus": false,
+                "boost_autorotate": true,
+                "boost_rating": 1,
+                "briefdescription": "",
+                "btc_address": "",
+                "canary": false,
+                "categories": Array [],
+                "city": false,
+                "confirmEmail": [Function],
+                "container_guid": false,
+                "disable_autoplay_videos": false,
+                "disabled_boost": false,
+                "dismissed_widgets": Array [],
+                "email_confirmed": true,
+                "eth_wallet": "",
+                "fb": false,
+                "feature_flags": false,
+                "featured_id": false,
+                "founder": false,
+                "gender": false,
+                "groupsCount": 0,
+                "guid": "100000000000000519",
+                "hashtags": false,
+                "hide_share_buttons": false,
+                "icontime": "1623077876",
+                "impressions": undefined,
+                "isOwner": [Function],
+                "is_admin": false,
+                "is_mature": false,
+                "last_accepted_tos": 1558597098,
+                "last_avatar_upload": "0",
+                "legacy_guid": false,
+                "liquidity_spot_opt_out": 0,
+                "mature": 0,
+                "mature_lock": false,
+                "mature_visibility": false,
+                "merchant": false,
+                "mode": 0,
+                "monetized": false,
+                "name": "Minds",
+                "nsfw": Array [],
+                "nsfw_lock": Array [],
+                "onchain_booster": 0,
+                "opted_in_hashtags": 0,
+                "owner_guid": false,
+                "p2p_media_enabled": false,
+                "pending_subscribe": false,
+                "permissions": Object {},
+                "pinned_posts": Array [],
+                "plus": false,
+                "plus_method": "tokens",
+                "pro": false,
+                "pro_method": "tokens",
+                "pro_published": false,
+                "programs": Array [],
+                "rating": 1,
+                "rewards": false,
+                "signup_method": false,
+                "site_guid": false,
+                "social_profiles": Array [],
+                "subscribed": true,
+                "subscriber": false,
+                "subscribers_count": undefined,
+                "subscriptions_count": 0,
+                "subtype": false,
+                "surge_token": "",
+                "tags": Array [],
+                "theme": false,
+                "time_created": "1623077876",
+                "time_updated": false,
+                "toaster_notifications": true,
+                "type": "user",
+                "urn": "urn:user:100000000000000519",
+                "username": "minds",
+                "verified": false,
+                "website": false,
+                "wire_rewards": null,
+                "yt_channels": Array [],
+              },
+              "from_guid": "100000000000000519",
+              "merge_key": "52161ea64224a6ac08d653f9dd40b6e568d55362945138174507bf566e9e5e63",
+              "merged_count": 0,
+              "merged_from": Array [],
+              "merged_from_guids": Array [],
+              "read": true,
+              "to_guid": "968187695744425997",
+              "type": "token_rewards_summary",
+              "urn": "urn:notification:968187695744425997-4a427b80-c53d-11eb-a497-93e2755f275f",
+              "uuid": "4a427b80-c53d-11eb-a497-93e2755f275f",
+            }
+          }
+          router={
+            Object {
+              "navToEntity": [Function],
+            }
+          }
+        />
+        You earned 0.332 tokens yesterday. Nice job!
+         
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignSelf": "center",
+          "flex": 2,
+          "flexDirection": "row",
+          "justifyContent": "flex-end",
+        }
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "fontSize": 15,
+              "lineHeight": 18,
+            },
+            Object {
+              "fontWeight": "400",
+            },
+            Object {
+              "color": "#72727C",
+            },
+          ]
+        }
+      >
+        1w
+      </Text>
+    </View>
+  </View>
+  <Memo()
+    notification={
+      NotificationModel {
+        "created_timestamp": 1622815259,
+        "data": Object {
+          "tokens_formatted": "0.332",
+          "usd_formatted": "0.36",
+        },
+        "entity": Object {
+          "access_id": "2",
+          "allow_comments": false,
+          "allow_unsubscribed_contact": false,
+          "ban_reason": false,
+          "banned": "no",
+          "boostProPlus": false,
+          "boost_autorotate": true,
+          "boost_rating": 1,
+          "briefdescription": "Full Stack Developer at @minds",
+          "btc_address": "1M27rFgyxqGdbmyjABu7J3pqa2YPhFs4mp",
+          "canary": true,
+          "categories": Array [],
+          "chat": true,
+          "city": "Colonia Avellaneda",
+          "container_guid": "0",
+          "disable_autoplay_videos": true,
+          "disabled_boost": false,
+          "dismissed_widgets": Array [
+            "language-sidebar-2020",
+            "discovery-disclaimer-2020",
+          ],
+          "email_confirmed": true,
+          "eth_wallet": "0xd3004e3cbA40079c31F80F0C465aacc34588bd79",
+          "fb": false,
+          "feature_flags": false,
+          "featured_id": false,
+          "founder": false,
+          "gender": "",
+          "guid": "968187695744425997",
+          "hashtags": false,
+          "hide_share_buttons": true,
+          "icontime": "1613843786",
+          "is_admin": false,
+          "is_mature": false,
+          "language": "en",
+          "last_accepted_tos": 1558597098,
+          "last_avatar_upload": "1565703100",
+          "legacy_guid": false,
+          "liquidity_spot_opt_out": 0,
+          "mature": 1,
+          "mature_lock": false,
+          "merchant": Object {
+            "id": "acct_1Gj1tZDf4yhop99j",
+            "service": "stripe",
+          },
+          "mode": 0,
+          "monetized": "",
+          "name": "Juan",
+          "nsfw": Array [],
+          "nsfw_lock": Array [],
+          "onchain_booster": 0,
+          "opted_in_hashtags": 5,
+          "owner_guid": "0",
+          "p2p_media_enabled": false,
+          "pinned_posts": Array [
+            "1234531362564866048",
+          ],
+          "plus": false,
+          "pro": false,
+          "pro_published": false,
+          "programs": Array [],
+          "rating": 1,
+          "rewards": true,
+          "signup_method": false,
+          "site_guid": false,
+          "social_profiles": Array [
+            Object {
+              "key": "linkedin",
+              "value": "linkedin.com/in/juan-manuel-solaro-730a48184",
+            },
+          ],
+          "subscribed": false,
+          "subscriber": false,
+          "subtype": false,
+          "surge_token": "eyJzZXJ2aWNlIjoiZ29vZ2xlIiwidG9rZW4iOiJkbzZ2LWhfWGhxMDpBUEE5MWJGQ3N0T3c4QzdPR3M0ZjZDZ3VzWWhma0JScGstMF9rN0xValQyUmJhRGtmTmJpZXlSSG1oRmRJeTlRRTlEY0tsV0ZPZFNxR3hfNU9YQnI3VXFUV3paMDFNZ1ZSYm9fVXM3WjZrQVpiX2ZtdDU2akh2LVdUNXk3RzM4ZlBIQ1QwSDZEdXU5RyJ9",
+          "tags": Array [
+            "technology",
+            "crypto",
+            "blockchain",
+            "music",
+            "art",
+          ],
+          "theme": "dark",
+          "time_created": "1556209934",
+          "time_updated": false,
+          "toaster_notifications": true,
+          "type": "user",
+          "urn": "urn:user:968187695744425997",
+          "username": "juanmsolaro",
+          "verified": true,
+          "website": "",
+          "wire_rewards": Object {
+            "description": "",
+            "rewards": Object {
+              "money": Array [
+                Object {
+                  "amount": "1",
+                  "description": "VIP",
+                },
+              ],
+              "points": Array [],
+              "tokens": Array [
+                Object {
+                  "amount": "1",
+                  "description": "Common Citizen",
+                },
+                Object {
+                  "amount": "2",
+                  "description": "Adventurer",
+                },
+                Object {
+                  "amount": "3",
+                  "description": "Hero",
+                },
+              ],
+            },
+          },
+          "yt_channels": Array [],
+        },
+        "entity_urn": "urn:user:968187695744425997",
+        "from": Object {
+          "access_id": false,
+          "allow_comments": false,
+          "allow_unsubscribed_contact": false,
+          "ban_reason": false,
+          "banned": "no",
+          "blocked": undefined,
+          "boostProPlus": false,
+          "boost_autorotate": true,
+          "boost_rating": 1,
+          "briefdescription": "",
+          "btc_address": "",
+          "canary": false,
+          "categories": Array [],
+          "city": false,
+          "confirmEmail": [Function],
+          "container_guid": false,
+          "disable_autoplay_videos": false,
+          "disabled_boost": false,
+          "dismissed_widgets": Array [],
+          "email_confirmed": true,
+          "eth_wallet": "",
+          "fb": false,
+          "feature_flags": false,
+          "featured_id": false,
+          "founder": false,
+          "gender": false,
+          "groupsCount": 0,
+          "guid": "100000000000000519",
+          "hashtags": false,
+          "hide_share_buttons": false,
+          "icontime": "1623077876",
+          "impressions": undefined,
+          "isOwner": [Function],
+          "is_admin": false,
+          "is_mature": false,
+          "last_accepted_tos": 1558597098,
+          "last_avatar_upload": "0",
+          "legacy_guid": false,
+          "liquidity_spot_opt_out": 0,
+          "mature": 0,
+          "mature_lock": false,
+          "mature_visibility": false,
+          "merchant": false,
+          "mode": 0,
+          "monetized": false,
+          "name": "Minds",
+          "nsfw": Array [],
+          "nsfw_lock": Array [],
+          "onchain_booster": 0,
+          "opted_in_hashtags": 0,
+          "owner_guid": false,
+          "p2p_media_enabled": false,
+          "pending_subscribe": false,
+          "permissions": Object {},
+          "pinned_posts": Array [],
+          "plus": false,
+          "plus_method": "tokens",
+          "pro": false,
+          "pro_method": "tokens",
+          "pro_published": false,
+          "programs": Array [],
+          "rating": 1,
+          "rewards": false,
+          "signup_method": false,
+          "site_guid": false,
+          "social_profiles": Array [],
+          "subscribed": true,
+          "subscriber": false,
+          "subscribers_count": undefined,
+          "subscriptions_count": 0,
+          "subtype": false,
+          "surge_token": "",
+          "tags": Array [],
+          "theme": false,
+          "time_created": "1623077876",
+          "time_updated": false,
+          "toaster_notifications": true,
+          "type": "user",
+          "urn": "urn:user:100000000000000519",
+          "username": "minds",
+          "verified": false,
+          "website": false,
+          "wire_rewards": null,
+          "yt_channels": Array [],
+        },
+        "from_guid": "100000000000000519",
+        "merge_key": "52161ea64224a6ac08d653f9dd40b6e568d55362945138174507bf566e9e5e63",
+        "merged_count": 0,
+        "merged_from": Array [],
+        "merged_from_guids": Array [],
+        "read": true,
+        "to_guid": "968187695744425997",
+        "type": "token_rewards_summary",
+        "urn": "urn:notification:968187695744425997-4a427b80-c53d-11eb-a497-93e2755f275f",
+        "uuid": "4a427b80-c53d-11eb-a497-93e2755f275f",
+      }
+    }
+  />
+</TouchableOpacity>
+`;

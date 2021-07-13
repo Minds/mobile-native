@@ -17,3 +17,7 @@ export const useSafeAreaInsets = function () {
     bottom: 0,
   };
 };
+
+export const withSafeAreaInsets = function (Wrapped) {
+  return Wrapped;
+};

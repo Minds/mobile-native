@@ -2,11 +2,10 @@
 import { observable, action } from 'mobx';
 
 import groupsService from './GroupsService';
-import { MINDS_FEATURES } from '../config/Config';
 import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
 import GroupModel from './GroupModel';
 import logService from '../common/services/log.service';
-import { isNetworkFail } from '../common/helpers/abortableFetch';
+import { isNetworkError } from '../common/services/api.service';
 
 /**
  * Groups store
@@ -46,7 +45,7 @@ class GroupsStore {
       // ignore aborts
       if (err.code === 'Abort') return;
       this.list.setErrorLoading(true);
-      if (!isNetworkFail(err)) {
+      if (!isNetworkError(err)) {
         logService.exception('[GroupsStore]', err);
       }
     } finally {

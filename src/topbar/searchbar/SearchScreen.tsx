@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
-import { Platform, StyleSheet, TextInput, View } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
+import type { TextInput as TextInputType } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import i18n from '../../common/services/i18n.service';
@@ -11,12 +12,13 @@ import { GOOGLE_PLAY_STORE } from '../../config/Config';
 import { observer } from 'mobx-react';
 import KeyboardSpacingView from '../../common/components/KeyboardSpacingView';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import TextInput from '../../common/components/TextInput';
 
 const SearchScreen = observer(() => {
   const theme = ThemedStyles.style;
   const { user } = useLegacyStores();
   const localStore = useStores().searchBar;
-  const inputRef = useRef<TextInput>(null);
+  const inputRef = useRef<TextInputType>(null);
   const navigation = useNavigation();
   const insets = useSafeAreaInsets();
   const paddingTop = { paddingTop: insets.top };
@@ -28,7 +30,7 @@ const SearchScreen = observer(() => {
     <KeyboardSpacingView
       style={[
         StyleSheet.absoluteFill,
-        theme.backgroundPrimary,
+        theme.bgPrimaryBackground,
         paddingTop,
         paddingBottom,
       ]}>
@@ -51,7 +53,7 @@ const SearchScreen = observer(() => {
           <TextInput
             ref={inputRef}
             placeholder={i18n.t('discovery.search')}
-            placeholderTextColor={ThemedStyles.getColor('secondary_text')}
+            placeholderTextColor={ThemedStyles.getColor('SecondaryText')}
             onChangeText={localStore.input}
             value={localStore.searchText}
             testID="searchInput"
@@ -74,7 +76,7 @@ const SearchScreen = observer(() => {
       </View>
       {GOOGLE_PLAY_STORE ? (
         <DisabledStoreFeature
-          style={[styles.height, theme.backgroundPrimary]}
+          style={[styles.height, theme.bgPrimaryBackground]}
         />
       ) : (
         <SearchResultComponent

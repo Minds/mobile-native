@@ -60,9 +60,9 @@ export default class GroupsBarItem extends Component {
           </Text>
         </View>
       ),
-      color: ThemedStyles.getColor('primary_text'),
+      color: ThemedStyles.getColor('PrimaryText'),
       titleStyle: ThemedStyles.style.fontXL,
-      backgroundColor: ThemedStyles.getColor('tertiary_background'),
+      backgroundColor: ThemedStyles.getColor('TertiaryBackground'),
       type: 'default',
     });
   };
@@ -76,7 +76,7 @@ export default class GroupsBarItem extends Component {
           style={[
             theme.columnAlignCenter,
             styles.container,
-            theme.backgroundTransparent,
+            theme.bgTransparent,
             theme.centered,
           ]}>
           <View>
@@ -84,8 +84,8 @@ export default class GroupsBarItem extends Component {
               avatar={this.getAvatar(group)}
               size={60}
               pulseMaxSize={80}
-              borderColor={colors.danger}
-              backgroundColor={colors.danger}
+              borderColor={ThemedStyles.getColor('Alert')}
+              backgroundColor={ThemedStyles.getColor('Alert')}
               interval={1000}
               onPress={this.askGatheringOrNav}
             />
@@ -110,7 +110,7 @@ export default class GroupsBarItem extends Component {
         style={[
           theme.columnAlignCenter,
           styles.container,
-          theme.backgroundTransparent,
+          theme.bgTransparent,
           theme.centered,
         ]}>
         <TouchableOpacity onPress={this.navToGroup} activeOpacity={0.5}>
@@ -118,7 +118,9 @@ export default class GroupsBarItem extends Component {
             source={{ uri: this.getAvatar(group) }}
             style={[styles.avatar]}
           />
-          {group.marker_activity ? <View style={[styles.acitivity]} /> : null}
+          {group.marker_activity ? (
+            <View style={[styles.acitivity, theme.bcolorPrimaryBorder]} />
+          ) : null}
         </TouchableOpacity>
         <Text style={[theme.fontXS, theme.marginTop, theme.fontMedium]}>
           {excerpt(group.name, 11)}
@@ -151,7 +153,6 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
     borderRadius: 34,
     position: 'absolute',
-    borderColor: colors.primary,
   },
   avatar: {
     height: 60,

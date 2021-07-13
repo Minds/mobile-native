@@ -21,6 +21,9 @@ type PropsType = {
   renderItem: ListRenderItem<any>;
   fetchEndpoint: string;
   endpointData: string;
+  offsetField?: string;
+  map?: (data: any) => any;
+  params?: Object;
 };
 
 type FetchResponseType = {
@@ -28,15 +31,22 @@ type FetchResponseType = {
   'load-next': string | number;
 };
 
+const mapping = data => data;
+
 export default observer(function OffsetList<T>(props: PropsType) {
   const theme = ThemedStyles.style;
   const [offset, setOffset] = useState<string | number>('');
   const opts = {
     limit: 12,
-    offset,
+    [props.offsetField || 'offset']: offset,
   };
+  if (props.params) {
+    Object.assign(opts, props.params);
+  }
 
   type ApiFetchType = FetchResponseType & T;
+
+  const map = props.map || mapping;
 
   const {
     result,
@@ -51,9 +61,11 @@ export default observer(function OffsetList<T>(props: PropsType) {
         ...newData,
         [props.endpointData]: [
           ...(oldData ? oldData[props.endpointData] : []),
-          ...(newData && newData[props.endpointData]
-            ? newData[props.endpointData]
-            : []),
+          ...map(
+            newData && newData[props.endpointData]
+              ? newData[props.endpointData]
+              : [],
+          ),
         ],
       } as ApiFetchType),
   });
@@ -66,7 +78,7 @@ export default observer(function OffsetList<T>(props: PropsType) {
 
   const onFetchMore = useCallback(() => {
     !loading && result && result['load-next'] && setOffset(result['load-next']);
-  }, [result]);
+  }, [loading, result]);
 
   const keyExtractor = (item, index: any) => `${item.urn}${index}`;
 
@@ -86,7 +98,7 @@ export default observer(function OffsetList<T>(props: PropsType) {
     );
   }
 
-  if (loading) {
+  if (loading && !result) {
     return <CenteredLoading />;
   }
 
@@ -103,10 +115,9 @@ export default observer(function OffsetList<T>(props: PropsType) {
       onEndReached={onFetchMore}
       onRefresh={refresh}
       refreshing={false}
-      style={[
-        ThemedStyles.style.flexContainer,
-        ThemedStyles.style.backgroundPrimary,
-      ]}
+      style={props.style || listStyle}
     />
   );
 });
+
+const listStyle = ThemedStyles.combine('flexContainer', 'bgPrimaryBackground');

@@ -86,8 +86,8 @@ const VerifyPhoneNumberScreen = observer(({ route }: PropsType) => {
           theme.padding4x,
           theme.borderTopHair,
           theme.borderBottomHair,
-          theme.borderIcon,
-          theme.backgroundSecondary,
+          theme.bcolorIcon,
+          theme.bgSecondaryBackground,
         ]}>
         <PhoneValidationComponent
           textStyle={theme.colorPrimaryText}

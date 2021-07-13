@@ -35,6 +35,7 @@ export default class UserModel extends BaseModel {
   username!: string;
   briefdescription!: string;
   city!: string;
+  type!: string;
   name!: string;
   is_admin = false;
   canary = false;

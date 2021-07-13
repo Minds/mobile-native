@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
-import { View, Alert, Text, StyleSheet, Linking } from 'react-native';
+import { View, Alert, Linking } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { ActionSheetCustom as ActionSheet } from 'react-native-actionsheet';
 
 import { MINDS_URI } from '../../config/Config';
 import { isFollowing } from '../NewsfeedService';
@@ -11,121 +10,184 @@ import shareService from '../../share/ShareService';
 import i18n from '../../common/services/i18n.service';
 import featuresService from '../../common/services/features.service';
 import translationService from '../../common/services/translation.service';
-import { FLAG_EDIT_POST, FLAG_DELETE_POST } from '../../common/Permissions';
+import { FLAG_EDIT_POST } from '../../common/Permissions';
 import sessionService from '../../common/services/session.service';
 import NavigationService from '../../navigation/NavigationService';
 import ThemedStyles from '../../styles/ThemedStyles';
 import type ActivityModel from '../ActivityModel';
 import { showNotification } from '../../../AppMessages';
+import { withSafeAreaInsets } from 'react-native-safe-area-context';
+import {
+  BottomSheet,
+  BottomSheetButton,
+  MenuItem,
+} from '../../common/components/bottom-sheet';
 
 type PropsType = {
   entity: ActivityModel;
   onTranslate?: Function;
   testID?: string;
   navigation: any;
+  insets?: {
+    bottom: number;
+  };
 };
 
 type StateType = {
   options: Array<any>;
   userBlocked: boolean;
+  shown: boolean;
 };
 
 /**
  * Activity Actions Component
  */
-export default class ActivityActionSheet extends Component<
-  PropsType,
-  StateType
-> {
-  ActionSheet: ActionSheet | null;
-  deleteOption: React.ReactNode;
-  state: StateType = {
-    options: [],
-    userBlocked: false,
-  };
+export default withSafeAreaInsets(
+  class ActivityActionSheet extends PureComponent<PropsType, StateType> {
+    ref = React.createRef<any>();
+    deleteOption: React.ReactNode;
+    state: StateType = {
+      options: [],
+      userBlocked: false,
+      shown: false,
+    };
 
-  /**
-   * Constructor
-   * @param {Object} props
-   */
-  constructor(props) {
-    super(props);
-    const theme = ThemedStyles.style;
-    this.deleteOption = (
-      <Text testID="deleteOption" style={[theme.colorAlert, theme.fontXL]}>
-        {i18n.t('delete')}
-      </Text>
-    );
-  }
-
-  /**
-   * Show menu
-   */
-  showActionSheet = async () => {
-    if (this.props.entity['is:following'] === undefined) {
-      this.props.entity['is:following'] = await isFollowing(
-        this.props.entity.guid,
-      );
+    /**
+     * Constructor
+     * @param {Object} props
+     */
+    constructor(props) {
+      super(props);
     }
 
-    this.setState({ options: this.getOptions() }, () => {
-      this.ActionSheet.show();
-    });
-  };
+    /**
+     * Show menu
+     */
+    showActionSheet = async () => {
+      if (this.props.entity['is:following'] === undefined) {
+        this.props.entity['is:following'] = await isFollowing(
+          this.props.entity.guid,
+        );
+      }
 
-  /**
-   * Handle selection by index
-   * @param {number} index
-   */
-  handleSelection = (index: number) => {
-    if (!this.state.options[index]) {
-      return;
-    }
-    this.executeAction(this.state.options[index]);
-  };
-
-  /**
-   * Get the options array based on the permissions
-   */
-  getOptions() {
-    let options = [i18n.t('cancel')];
-    const entity = this.props.entity;
-
-    const reminded =
-      entity.remind_users &&
-      entity.remind_users.some(
-        user => user.guid === sessionService.getUser().guid,
-      );
-
-    if (reminded) {
-      options.push(i18n.t('undoRemind'));
-    }
-
-    // TODO: remove feature flag
-    if (featuresService.has('permissions')) {
-      // if can edit
-      if (entity.can(FLAG_EDIT_POST)) {
-        options.push(i18n.t('edit'));
-
-        if (!entity.mature) {
-          options.push(i18n.t('setExplicit'));
+      this.setState({ options: this.getOptions() }, () => {
+        if (!this.state.shown) {
+          this.setState({ shown: true });
         } else {
-          options.push(i18n.t('removeExplicit'));
+          this.ref.current?.present();
         }
+      });
+    };
+
+    /**
+     * Hide menu
+     */
+    hideActionSheet = () => {
+      this.ref.current?.dismiss();
+    };
+
+    /**
+     * Get the options array based on the permissions
+     */
+    getOptions() {
+      const options: Array<{
+        iconName: string;
+        iconType: string;
+        title: string;
+        onPress: () => void;
+      }> = [];
+
+      const entity = this.props.entity;
+
+      const reminded =
+        entity.remind_users &&
+        entity.remind_users.some(
+          user => user.guid === sessionService.getUser().guid,
+        );
+
+      if (reminded) {
+        options.push({
+          title: i18n.t('undoRemind'),
+          iconName: 'undo',
+          iconType: 'material',
+          onPress: async () => {
+            try {
+              await this.props.entity.deleteRemind();
+              showNotification(i18n.t('remindRemoved'), 'success');
+            } catch (error) {
+              showNotification(i18n.t('errorMessage'), 'warning');
+            }
+            this.hideActionSheet();
+          },
+        });
+      }
+
+      // if can edit
+      if (
+        entity.isOwner() ||
+        (featuresService.has('permissions') && entity.can(FLAG_EDIT_POST))
+      ) {
+        // Edit
+        options.push({
+          title: i18n.t('edit'),
+          iconName: 'edit',
+          iconType: 'material',
+          onPress: async () => {
+            this.props.navigation.navigate('Capture', {
+              isEdit: true,
+              entity: this.props.entity,
+            });
+            this.hideActionSheet();
+          },
+        });
+
+        // Set / Remove explicit
+        options.push({
+          title: !entity.mature
+            ? i18n.t('setExplicit')
+            : i18n.t('removeExplicit'),
+          iconName: 'explicit',
+          iconType: 'material',
+          onPress: async () => {
+            this.hideActionSheet();
+            try {
+              await this.props.entity.toggleExplicit();
+            } catch (err) {
+              this.showError();
+            }
+          },
+        });
 
         if (!entity.dontPin) {
-          if (!entity.pinned) {
-            options.push(i18n.t('pin'));
-          } else {
-            options.push(i18n.t('unpin'));
-          }
+          // Pin / Unpin
+          options.push({
+            title: !entity.pinned ? i18n.t('pin') : i18n.t('unpin'),
+            iconName: 'pin-outline',
+            iconType: 'material-community',
+            onPress: async () => {
+              this.props.entity.togglePin();
+              this.hideActionSheet();
+            },
+          });
         }
+
         if (featuresService.has('allow-comments-toggle')) {
-          options.push(
-            entity.allow_comments
+          // Toggle comments
+          options.push({
+            title: entity.allow_comments
               ? i18n.t('disableComments')
               : i18n.t('enableComments'),
-          );
+            iconName: 'pin-outline',
+            iconType: 'material-community',
+            onPress: async () => {
+              try {
+                this.hideActionSheet();
+                await this.props.entity.toggleAllowComments();
+              } catch (err) {
+                this.showError();
+              }
+            },
+          });
         }
       }
 
@@ -133,298 +195,212 @@ export default class ActivityActionSheet extends Component<
         !!this.props.onTranslate &&
         translationService.isTranslatable(entity)
       ) {
-        options.push(i18n.t('translate.translate'));
+        // Translate
+        options.push({
+          title: i18n.t('translate.translate'),
+          iconName: 'translate',
+          iconType: 'material',
+          onPress: () => {
+            if (this.props.onTranslate) this.props.onTranslate();
+            this.hideActionSheet();
+          },
+        });
       }
 
-      // if is not the owner
-      if (!entity.isOwner()) {
-        options.push(i18n.t('report'));
-
-        if (this.state && this.state.userBlocked) {
-          options.push(i18n.t('channel.unblock'));
-        } else {
-          options.push(i18n.t('channel.block'));
-        }
-      }
-
-      options.push(i18n.t('share'));
-
-      if (!entity['is:following']) {
-        options.push(i18n.t('follow'));
-      } else {
-        options.push(i18n.t('unfollow'));
-      }
-
-      // if can delete
-      if (entity.can(FLAG_DELETE_POST)) {
-        options.push(this.deleteOption);
-      }
-    } else {
-      // if can edit
-      if (entity.isOwner()) {
-        options.push(i18n.t('edit'));
-
-        if (!entity.mature) {
-          options.push(i18n.t('setExplicit'));
-        } else {
-          options.push(i18n.t('removeExplicit'));
-        }
-
-        if (!entity.dontPin) {
-          if (!entity.pinned) {
-            options.push(i18n.t('pin'));
-          } else {
-            options.push(i18n.t('unpin'));
-          }
-        }
-        if (featuresService.has('allow-comments-toggle')) {
-          options.push(
-            entity.allow_comments
-              ? i18n.t('disableComments')
-              : i18n.t('enableComments'),
-          );
-        }
-      }
-
-      if (translationService.isTranslatable(entity)) {
-        options.push(i18n.t('translate.translate'));
-      }
-
+      // Permaweb
       if (featuresService.has('permaweb') && entity.permaweb_id) {
-        options.push(i18n.t('permaweb.viewOnPermaweb'));
+        options.push({
+          title: i18n.t('permaweb.viewOnPermaweb'),
+          iconName: 'format-paragraph',
+          iconType: 'material-community',
+          onPress: () => {
+            this.hideActionSheet();
+            Linking.openURL(
+              'https://viewblock.io/arweave/tx/' +
+                this.props.entity.permaweb_id,
+            );
+          },
+        });
       }
 
-      // if is not the owner
       if (!entity.isOwner()) {
-        options.push(i18n.t('report'));
+        // Report
+        options.push({
+          title: i18n.t('report'),
+          iconName: 'ios-flag-outline',
+          iconType: 'ionicon',
+          onPress: () => {
+            this.hideActionSheet();
+            this.props.navigation.navigate('Report', {
+              entity: this.props.entity,
+            });
+          },
+        });
 
-        if (this.state && this.state.userBlocked) {
-          options.push(i18n.t('channel.unblock'));
-        } else {
-          options.push(i18n.t('channel.block'));
-        }
+        // Block / Unblock
+        options.push({
+          title: this.state.userBlocked
+            ? i18n.t('channel.unblock')
+            : i18n.t('channel.block'),
+          iconName: 'remove-circle-outline',
+          iconType: 'ionicon',
+          onPress: async () => {
+            this.hideActionSheet();
+            if (!this.state.userBlocked) {
+              try {
+                await this.props.entity.blockOwner();
+                this.setState({
+                  userBlocked: true,
+                });
+              } catch (err) {
+                this.showError();
+              }
+            } else {
+              try {
+                await this.props.entity.unblockOwner();
+                this.setState({
+                  userBlocked: false,
+                });
+              } catch (err) {
+                this.showError();
+              }
+            }
+          },
+        });
       }
+      // Share
+      options.push({
+        iconName: 'share-social',
+        iconType: 'ionicon',
+        title: i18n.t('share'),
+        onPress: () => {
+          this.hideActionSheet();
+          shareService.share(
+            this.props.entity.text,
+            MINDS_URI + 'newsfeed/' + this.props.entity.guid,
+          );
+        },
+      });
 
-      options.push(i18n.t('share'));
+      options.push({
+        iconName: entity['is:following'] ? 'bell-cancel' : 'bell',
+        iconType: 'material-community',
+        title: !entity['is:following'] ? i18n.t('follow') : i18n.t('unfollow'),
+        onPress: async () => {
+          this.hideActionSheet();
 
-      if (!entity['is:following']) {
-        options.push(i18n.t('follow'));
-      } else {
-        options.push(i18n.t('unfollow'));
-      }
+          try {
+            await this.props.entity.toggleFollow();
+          } catch (err) {
+            this.showError();
+          }
+        },
+      });
 
       // if can delete
-      const containerObj = entity.containerObj;
       if (
         entity.isOwner() ||
         sessionService.getUser().isAdmin() ||
-        (containerObj && containerObj['is:owner'])
+        (entity.containerObj && entity.containerObj['is:owner'])
       ) {
-        options.push(this.deleteOption);
+        options.push({
+          iconName: 'delete',
+          iconType: 'material-community',
+          title: i18n.t('delete'),
+          onPress: () => {
+            this.hideActionSheet();
+            setTimeout(() => {
+              Alert.alert(
+                i18n.t('delete'),
+                i18n.t('confirmNoUndo'),
+                [
+                  { text: i18n.t('cancel'), style: 'cancel' },
+                  { text: i18n.t('ok'), onPress: () => this.deleteEntity() },
+                ],
+                { cancelable: false },
+              );
+              return;
+            }, 300);
+          },
+        });
+      }
+
+      if (entity.hasImage()) {
+        options.push({
+          iconName: 'fullscreen',
+          iconType: 'material-community',
+          title: i18n.t('imageViewer'),
+          onPress: () => {
+            this.hideActionSheet();
+            const source = this.props.entity.getThumbSource('xlarge');
+            this.props.navigation.navigate('ViewImage', {
+              entity: this.props.entity,
+              source,
+            });
+          },
+        });
+      }
+
+      return options;
+    }
+
+    /**
+     * Delete an entity
+     */
+    async deleteEntity() {
+      try {
+        await this.props.entity.deleteEntity();
+
+        const state = NavigationService.getCurrentState();
+
+        if (state && state.name === 'Activity') {
+          this.props.navigation.goBack();
+        }
+      } catch (err) {
+        this.showError();
       }
     }
 
-    if (entity.hasImage()) {
-      options.push(i18n.t('imageViewer'));
+    /**
+     * Show an error message
+     */
+    showError() {
+      showNotification(
+        i18n.t('errorMessage') + '\n' + i18n.t('activity.tryAgain'),
+        'warning',
+        2000,
+        'top',
+      );
     }
 
-    return options;
-  }
+    /**
+     * Render Header
+     */
+    render() {
+      const theme = ThemedStyles.style;
 
-  /**
-   * Delete an entity
-   */
-  async deleteEntity() {
-    try {
-      await this.props.entity.deleteEntity();
-
-      const state = NavigationService.getCurrentState();
-
-      if (state && state.name === 'Activity') {
-        this.props.navigation.goBack();
-      }
-    } catch (err) {
-      this.showError();
+      return (
+        <View style={theme.paddingLeft2x}>
+          <Icon
+            name="more-vert"
+            onPress={this.showActionSheet}
+            size={28}
+            style={theme.colorTertiaryText}
+            testID={this.props.testID}
+          />
+          {this.state.shown && (
+            <BottomSheet ref={this.ref} autoShow>
+              {this.state.options.map((a, i) => (
+                <MenuItem {...a} key={i} />
+              ))}
+              <BottomSheetButton
+                text={i18n.t('cancel')}
+                onPress={this.hideActionSheet}
+              />
+            </BottomSheet>
+          )}
+        </View>
+      );
     }
-  }
-
-  /**
-   * Show an error message
-   */
-  showError() {
-    Alert.alert(
-      i18n.t('sorry'),
-      i18n.t('errorMessage') + '\n' + i18n.t('activity.tryAgain'),
-      [{ text: i18n.t('ok'), onPress: () => {} }],
-      { cancelable: false },
-    );
-  }
-
-  /**
-   * Execute an action
-   * @param {string} option
-   */
-  async executeAction(option) {
-    switch (option) {
-      case i18n.t('undoRemind'):
-        try {
-          await this.props.entity.deleteRemind();
-          showNotification(i18n.t('remindRemoved'), 'success');
-        } catch (error) {
-          showNotification(i18n.t('errorMessage'), 'warning');
-        }
-        break;
-      case this.deleteOption:
-        setTimeout(() => {
-          Alert.alert(
-            i18n.t('delete'),
-            i18n.t('confirmNoUndo'),
-            [
-              { text: i18n.t('cancel'), style: 'cancel' },
-              { text: i18n.t('ok'), onPress: () => this.deleteEntity() },
-            ],
-            { cancelable: false },
-          );
-          return;
-        }, 300);
-        break;
-      case i18n.t('translate.translate'):
-        if (this.props.onTranslate) this.props.onTranslate();
-        break;
-      case i18n.t('edit'):
-        this.props.navigation.navigate('Capture', {
-          isEdit: true,
-          entity: this.props.entity,
-        });
-        break;
-      case i18n.t('setExplicit'):
-      case i18n.t('removeExplicit'):
-        try {
-          await this.props.entity.toggleExplicit();
-          // this.reloadOptions();
-        } catch (err) {
-          this.showError();
-        }
-        break;
-      case i18n.t('channel.block'):
-        try {
-          await this.props.entity.blockOwner();
-          this.setState({
-            userBlocked: true,
-          });
-        } catch (err) {
-          this.showError();
-        }
-        break;
-      case i18n.t('channel.unblock'):
-        try {
-          await this.props.entity.unblockOwner();
-          this.setState({
-            userBlocked: false,
-          });
-        } catch (err) {
-          this.showError();
-        }
-        break;
-      case i18n.t('follow'):
-      case i18n.t('unfollow'):
-        try {
-          await this.props.entity.toggleFollow();
-          // this.reloadOptions();
-        } catch (err) {
-          this.showError();
-        }
-        break;
-      case i18n.t('share'):
-        shareService.share(
-          this.props.entity.text,
-          MINDS_URI + 'newsfeed/' + this.props.entity.guid,
-        );
-        break;
-      case i18n.t('pin'):
-      case i18n.t('unpin'):
-        this.props.entity.togglePin();
-        break;
-      case i18n.t('report'):
-        this.props.navigation.navigate('Report', { entity: this.props.entity });
-        break;
-      case i18n.t('enableComments'):
-      case i18n.t('disableComments'):
-        try {
-          await this.props.entity.toggleAllowComments();
-        } catch (err) {
-          this.showError();
-        }
-        break;
-      case i18n.t('permaweb.viewOnPermaweb'):
-        Linking.openURL(
-          'https://viewblock.io/arweave/tx/' + this.props.entity.permaweb_id,
-        );
-        break;
-      case i18n.t('imageViewer'):
-        const source = this.props.entity.getThumbSource('xlarge');
-        this.props.navigation.navigate('ViewImage', {
-          entity: this.props.entity,
-          source,
-        });
-        break;
-    }
-  }
-
-  /**
-   * Render Header
-   */
-  render() {
-    const theme = ThemedStyles.style;
-
-    const styles = {
-      body: {
-        flex: 1,
-        alignSelf: 'flex-end',
-        backgroundColor: ThemedStyles.getColor('primary_background'),
-      },
-      titleBox: {
-        height: 40,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: ThemedStyles.getColor('primary_background'),
-      },
-      buttonBox: {
-        height: 50,
-        marginTop: StyleSheet.hairlineWidth,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: ThemedStyles.getColor('secondary_background'),
-      },
-      cancelButtonBox: {
-        height: 50,
-        marginTop: 6,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: ThemedStyles.getColor('secondary_background'),
-      },
-    };
-
-    return (
-      <View style={theme.paddingLeft2x}>
-        <Icon
-          name="more-vert"
-          onPress={this.showActionSheet}
-          size={28}
-          style={theme.colorTertiaryText}
-          testID={this.props.testID}
-        />
-        <ActionSheet
-          ref={this.setRef}
-          title={i18n.t('actions')}
-          options={this.state.options}
-          onPress={this.handleSelection}
-          cancelButtonIndex={0}
-          styles={styles}
-        />
-      </View>
-    );
-  }
-
-  setRef = o => (this.ActionSheet = o);
-}
+  },
+);

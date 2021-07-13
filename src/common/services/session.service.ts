@@ -7,6 +7,12 @@ import { getStores } from '../../../AppStores';
 import logService from './log.service';
 import type UserModel from '../../channel/UserModel';
 
+export class TokenExpiredError extends Error {}
+
+export const isTokenExpired = error => {
+  return error instanceof TokenExpiredError;
+};
+
 /**
  * Session service
  */
@@ -22,6 +28,12 @@ class SessionService {
    * Refresh token
    */
   refreshToken = '';
+
+  /**
+   * Tokens TTL
+   */
+  accessTokenExpires = null;
+  refreshTokenExpires = null;
 
   /**
    * User guid
@@ -71,6 +83,9 @@ class SessionService {
       const { access_token, access_token_expires } = accessToken;
       const { refresh_token, refresh_token_expires } = refreshToken;
 
+      this.refreshTokenExpires = refresh_token_expires;
+      this.accessTokenExpires = access_token_expires;
+
       this.setRefreshToken(refresh_token);
       this.setToken(access_token);
 
@@ -83,13 +98,7 @@ class SessionService {
         refresh_token &&
         refresh_token_expires * 1000 > Date.now()
       ) {
-        logService.info('[SessionService] refreshing token');
-        const tokens = await AuthService.refreshToken(false);
-
-        this.setRefreshToken(tokens.refresh_token);
-        this.setToken(tokens.access_token);
-
-        this.storeTokens(tokens);
+        await this.refreshAuthToken();
       }
 
       // ensure user loaded before activate the session
@@ -103,6 +112,23 @@ class SessionService {
       this.setRefreshToken(null);
       logService.exception('[SessionService] error getting tokens', e);
       return null;
+    }
+  }
+
+  tokenCanRefresh() {
+    return this.refreshToken && this.refreshTokenExpires * 1000 > Date.now();
+  }
+
+  async refreshAuthToken() {
+    logService.info('[SessionService] refreshing token');
+    if (this.tokenCanRefresh()) {
+      const tokens = await AuthService.refreshToken(false);
+      this.setRefreshToken(tokens.refresh_token);
+      this.setToken(tokens.access_token);
+
+      this.storeTokens(tokens);
+    } else {
+      throw new TokenExpiredError('Session Expired');
     }
   }
 
@@ -207,7 +233,7 @@ class SessionService {
   /**
    * save token to storage
    */
-  storeTokens(tokens) {
+  async storeTokens(tokens) {
     const token_expire = this.getTokenExpiration(tokens.access_token);
     const token_refresh_expire = token_expire + 60 * 60 * 24 * 30;
 

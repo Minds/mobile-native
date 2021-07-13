@@ -2,12 +2,12 @@ import React from 'react';
 import {
   View,
   StyleSheet,
-  TextInput,
   Dimensions,
   TouchableOpacity,
   Text,
   Platform,
 } from 'react-native';
+import type { TextInput as TextInputType } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import SoftInputMode from 'react-native-set-soft-input-mode';
 
@@ -24,6 +24,7 @@ import CommentInputBottomMenu from './CommentInputBottomMenu';
 import preventDoubleTap from '../../common/components/PreventDoubleTap';
 import { DotIndicator } from 'react-native-reanimated-indicators';
 import { CHAR_LIMIT } from '../../config/Config';
+import TextInput from '../../common/components/TextInput';
 
 const { height } = Dimensions.get('window');
 
@@ -43,7 +44,7 @@ export const CommentInputContext = React.createContext(storeProvider);
  */
 const CommentInput = observer(() => {
   const theme = ThemedStyles.style;
-  const ref = React.useRef<TextInput>(null);
+  const ref = React.useRef<TextInputType>(null);
   const provider = React.useContext(CommentInputContext);
 
   React.useEffect(() => {
@@ -79,11 +80,7 @@ const CommentInput = observer(() => {
       <View style={[theme.justifyEnd, theme.flexContainer]}>
         <View style={theme.flexContainer}>
           <Touchable
-            style={[
-              theme.flexContainer,
-              theme.backgroundBlack,
-              theme.opacity50,
-            ]}
+            style={[theme.flexContainer, theme.bgBlack, theme.opacity50]}
             activeOpacity={0.5}
             onPress={() => provider.store?.setShowInput(false)}
           />
@@ -96,12 +93,12 @@ const CommentInput = observer(() => {
             />
           )}
         </View>
-        <View style={[theme.backgroundPrimary, styles.inputContainer]}>
+        <View style={[theme.bgPrimaryBackground, styles.inputContainer]}>
           {(provider.store.parent || provider.store.edit) && (
             <View
               style={[
                 theme.borderBottomHair,
-                theme.borderPrimary,
+                theme.bcolorPrimaryBorder,
                 theme.paddingBottom2x,
                 theme.paddingHorizontal4x,
                 theme.marginBottom2x,
@@ -128,7 +125,7 @@ const CommentInput = observer(() => {
               multiline={true}
               editable={!provider.store.saving}
               scrollEnabled={true}
-              placeholderTextColor={ThemedStyles.getColor('tertiary_text')}
+              placeholderTextColor={ThemedStyles.getColor('TertiaryText')}
               placeholder={placeHolder}
               underlineColorAndroid="transparent"
               onChangeText={provider.store.setText}
@@ -176,7 +173,7 @@ const CommentInput = observer(() => {
               <View>
                 <DotIndicator
                   containerStyle={[theme.alignSelfCenter, theme.justifyEnd]}
-                  color={ThemedStyles.getColor('primary_text')}
+                  color={ThemedStyles.getColor('PrimaryText')}
                   scaleEnabled={true}
                 />
               </View>

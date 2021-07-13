@@ -40,7 +40,7 @@ const Translated = observer(
             theme.paddingLeft2x,
             theme.marginTop2x,
             theme.borderLeft2x,
-            theme.borderPrimary,
+            theme.bcolorPrimaryBorder,
           ]}>
           {data.map(mappingCallback)}
         </View>

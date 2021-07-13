@@ -26,7 +26,7 @@ const NsfwOption = props => {
 
   return (
     <TouchableOpacity
-      style={[styles.optsRow, ThemedStyles.style.borderPrimary]}
+      style={[styles.optsRow, ThemedStyles.style.bcolorPrimaryBorder]}
       onPress={onSelect}>
       <Text
         style={[ThemedStyles.style.flexContainer, ThemedStyles.style.fontL]}>
@@ -57,7 +57,7 @@ export default observer(function (props) {
   }));
 
   return (
-    <View style={[theme.flexContainer, theme.backgroundPrimary]}>
+    <View style={[theme.flexContainer, theme.bgPrimaryBackground]}>
       <TopBar
         leftText="NSFW"
         rightText={i18n.t('done')}

@@ -4,7 +4,7 @@ import EventEmitter from 'eventemitter3';
 
 import sessionService from './services/session.service';
 import { vote } from './services/votes.service';
-import { toggleExplicit } from '../newsfeed/NewsfeedService';
+import { setViewed, toggleExplicit } from '../newsfeed/NewsfeedService';
 import logService from './services/log.service';
 import { revokeBoost, acceptBoost, rejectBoost } from '../boost/BoostService';
 import { toggleAllowComments as toggleAllow } from '../comments/CommentsService';
@@ -14,11 +14,13 @@ import type UserModel from '../channel/UserModel';
 import type FeedStore from './stores/FeedStore';
 import { showNotification } from '../../AppMessages';
 import AbstractModel from './AbstractModel';
+import MetadataService from './services/metadata.service';
 
 /**
  * Base model
  */
 export default class BaseModel extends AbstractModel {
+  position?: number;
   username: string = '';
   guid: string = '';
   owner_guid?: string;
@@ -327,7 +329,10 @@ export default class BaseModel extends AbstractModel {
     return allowed;
   }
 
-  isScheduled() {
+  /**
+   * Is scheduled?
+   */
+  isScheduled(): boolean {
     return parseInt(this.time_created, 10) * 1000 > Date.now() + 15000;
   }
 
@@ -338,7 +343,26 @@ export default class BaseModel extends AbstractModel {
     return this.pending && this.pending !== '0'; // asking like this because front does the same
   }
 
-  static isScheduled(timeCreatedValue) {
+  /**
+   * Report viewed content
+   */
+  sendViewed(medium?: string, position?: number) {
+    if (this._list) {
+      this._list.addViewed(this, medium, position);
+    } else {
+      const metadata = new MetadataService();
+      metadata.setMedium('single').setSource('single');
+      //@ts-ignore
+      setViewed(this, {
+        client_meta: metadata.getEntityMeta(this, medium, position),
+      });
+    }
+  }
+
+  /**
+   * Static isScheduled
+   */
+  static isScheduled(timeCreatedValue: string | Date | number) {
     let response = false;
 
     if (timeCreatedValue) {

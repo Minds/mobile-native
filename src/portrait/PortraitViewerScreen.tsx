@@ -11,7 +11,7 @@ import {
   PagerProvider,
   iPageInterpolation,
   Extrapolate,
-} from '@crowdlinker/react-native-pager';
+} from '@msantang78/react-native-pager';
 
 import ThemedStyles from '../styles/ThemedStyles';
 import MetadataService from '../common/services/metadata.service';
@@ -150,7 +150,7 @@ const PortraitViewerScreen = observer((props: PropsType) => {
     width,
     backgroundColor: ThemedStyles.theme
       ? 'black'
-      : ThemedStyles.getColor('tertiary_background'),
+      : ThemedStyles.getColor('TertiaryBackground'),
     alignSelf: 'center',
   };
 

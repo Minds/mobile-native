@@ -89,9 +89,17 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   /**
    * Add an entity to the viewed list and inform to the backend
    * @param {BaseModel} entity
+   * @param {string} medium
    */
-  async addViewed(entity) {
-    return await this.viewed.addViewed(entity, this.metadataService);
+  addViewed(entity, medium?: string, position?: number) {
+    return this.metadataService
+      ? this.viewed.addViewed(
+          entity,
+          this.metadataService as MetadataService,
+          medium,
+          position,
+        )
+      : Promise.resolve();
   }
 
   /**
@@ -110,13 +118,15 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   @action
   addEntities(entities, replace = false) {
     if (replace) {
-      entities.forEach(entity => {
+      entities.forEach((entity, index) => {
         entity._list = this;
+        entity.position = index + 1;
       });
       this.entities = entities;
     } else {
       entities.forEach(entity => {
         entity._list = this;
+        entity.position = this.entities.length + 1;
         this.entities.push(entity);
       });
 
@@ -124,7 +134,8 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
         // Preload images
         const images = entities
           .map(e => {
-            const source = e.hasMedia() ? e.getThumbSource('xlarge') : null;
+            const source =
+              e.hasMedia && e.hasMedia() ? e.getThumbSource('xlarge') : null;
             if (source) {
               source.priority = FastImage.priority.low;
             }
@@ -498,6 +509,7 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
     this.loading = false;
     this.entities = [];
     this.feedsService.setOffset(0);
+    this.viewed.clearViewed();
     return this;
   }
 

@@ -23,6 +23,7 @@ import Join from './buttons/Join';
 import SmallCircleButton from '../../common/components/SmallCircleButton';
 import { useStores } from '../../common/hooks/use-stores';
 import ChatButton from './ChatButton';
+import { withErrorBoundary } from '../../common/components/ErrorBoundary';
 
 type ButtonsType =
   | 'edit'
@@ -75,8 +76,8 @@ const check = {
 /**
  * Channel buttons
  */
-const ChannelButtons = observer(
-  (props: PropsWithChildren<ChannelButtonsPropsType>) => {
+const ChannelButtons = withErrorBoundary(
+  observer((props: PropsWithChildren<ChannelButtonsPropsType>) => {
     const menuRef = useRef<any>();
     const theme = ThemedStyles.style;
     const navigation = useNavigation<
@@ -171,7 +172,9 @@ const ChannelButtons = observer(
           <MIcon
             name="more-horiz"
             size={22}
-            onPress={() => menuRef.current?.show()}
+            onPress={() => {
+              menuRef.current?.present();
+            }}
             style={[theme.paddingRight, props.iconsStyle]}
           />
         )}
@@ -183,14 +186,16 @@ const ChannelButtons = observer(
           />
         )}
         {showSubscribe && <Subscribe {...props} />}
-        <ChannelMoreMenu
-          channel={props.store.channel}
-          ref={menuRef}
-          isSubscribedToTier={isSubscribedToTier(props.store.tiers)}
-        />
+        {shouldShow('more') && (
+          <ChannelMoreMenu
+            channel={props.store.channel}
+            ref={menuRef}
+            isSubscribedToTier={isSubscribedToTier(props.store.tiers)}
+          />
+        )}
       </View>
     );
-  },
+  }),
 );
 
 export default ChannelButtons;

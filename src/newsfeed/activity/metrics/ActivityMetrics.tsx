@@ -67,7 +67,7 @@ export default class ActivityMetrics extends Component<PropsType> {
               name="md-trending-up"
               size={18}
               style={theme.marginRight}
-              color={ThemedStyles.getColor('link')}
+              color={ThemedStyles.getColor('Link')}
             />
 
             <Text style={boostedTextStyle}>

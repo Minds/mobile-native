@@ -5,7 +5,6 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
-  TextInput,
   TextStyle,
   TextInputProps,
 } from 'react-native';
@@ -14,6 +13,7 @@ import InfoPopup from './InfoPopup';
 
 import ThemedStyles from '../../styles/ThemedStyles';
 import PhoneValidationComponent from './phoneValidation/PhoneValidationComponent';
+import TextInput from './TextInput';
 
 export interface PropsType extends TextInputProps {
   TFA?: any;
@@ -213,7 +213,7 @@ export default class Input extends Component<PropsType> {
     return (
       <View style={styles.container}>
         <View>
-          <View>
+          <View style={theme.rowStretch}>
             <Text
               style={[
                 styles.label,

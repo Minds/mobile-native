@@ -36,10 +36,10 @@ export default function ({
 
   // ListItem Container Style
   const containerStyle = [
-    theme.backgroundSecondary,
+    theme.bgSecondaryBackground,
     theme.borderTopHair,
     theme.borderBottomHair,
-    theme.borderPrimary,
+    theme.bcolorPrimaryBorder,
     theme.padding0x,
     theme.paddingHorizontal4x,
     containerItemStyle,
@@ -71,7 +71,7 @@ export default function ({
       underlayColor="transparent"
       testID={testID}>
       <ListItem.Content>
-        <ListItem.Title style={[theme.listItemTitle, titleStyle]}>
+        <ListItem.Title style={[baseTitleStyle, titleStyle]}>
           {item.title}
         </ListItem.Title>
       </ListItem.Content>
@@ -80,3 +80,11 @@ export default function ({
     </ListItem>
   );
 }
+
+const baseTitleStyle = ThemedStyles.combine(
+  {
+    paddingVertical: 15,
+    fontSize: 17,
+  },
+  'colorPrimaryText',
+);

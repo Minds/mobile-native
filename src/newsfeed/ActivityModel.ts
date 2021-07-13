@@ -49,6 +49,7 @@ export default class ActivityModel extends BaseModel {
   'thumbs:up:user_guids': Array<number>;
   seen?: boolean;
   rowKey?: string;
+  boosted_guid?: string;
   description?: string; // on image objects in some cases the message is on description field
   containerObj?: GroupModel;
   remind_object?: ActivityModel;
@@ -65,6 +66,7 @@ export default class ActivityModel extends BaseModel {
   nsfw?: Array<number>;
   flags?: any;
   reminds: number = 0;
+  quotes: number = 0;
   impressions: number = 0;
   perma_url?: string;
   cinemr_guid?: string;

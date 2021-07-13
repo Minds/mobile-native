@@ -4,40 +4,55 @@ import React, { Component } from 'react';
 import { Text, Image, View, StyleSheet, Alert } from 'react-native';
 
 import { observer, inject } from 'mobx-react';
-import { debounce } from 'lodash';
 
 import FastImage from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import ActionSheet from 'react-native-actionsheet';
 import SmartImage from '../../common/components/SmartImage';
 
 import { MINDS_CDN_URI, MINDS_LINK_URI } from '../../config/Config';
 import abbrev from '../../common/helpers/abbrev';
 import Toolbar from '../../common/components/toolbar/Toolbar';
-import { CommonStyle } from '../../styles/Common';
-import SearchView from '../../common/components/SearchView';
 import i18n from '../../common/services/i18n.service';
 import { FLAG_JOIN } from '../../common/Permissions';
 import Button from '../../common/components/Button';
 import ThemedStyles from '../../styles/ThemedStyles';
 import ShareService from '../../share/ShareService';
 import ActivityIndicator from '../../common/components/ActivityIndicator';
+import type GroupsBarStore from '../GroupsBarStore';
+import GroupViewStore from '../GroupViewStore';
+import DismissKeyboard from '../../common/components/DismissKeyboard';
+import AnimatedSearch from './AnimatedSearch';
+import BottomSheet from '../../common/components/bottom-sheet/BottomSheet';
+import MenuItem from '../../common/components/bottom-sheet/MenuItem';
+import BottomSheetButton from '../../common/components/bottom-sheet/BottomSheetButton';
+
+type PropsTypes = {
+  groupsBar: GroupsBarStore;
+  store: GroupViewStore;
+};
 
 /**
  * Group Header
  */
 @inject('groupsBar')
 @observer
-export default class GroupHeader extends Component {
+export default class GroupHeader extends Component<PropsTypes> {
   state = {
     openingGathering: false,
   };
+  avatarStyle: any;
+  userAvatarStyle: any;
+  refActionSheet = React.createRef();
 
   constructor(props) {
     super(props);
     this.avatarStyle = ThemedStyles.combine(
       props.styles.avatar,
-      'borderBackgroundPrimary',
+      'bcolorPrimaryBackground',
+    );
+    this.userAvatarStyle = ThemedStyles.combine(
+      props.styles.userAvatar,
+      'bcolorPrimaryBackground',
     );
   }
 
@@ -51,6 +66,9 @@ export default class GroupHeader extends Component {
    */
   getBannerFromGroup() {
     const group = this.props.store.group;
+    if (!group) {
+      return null;
+    }
     return (
       MINDS_CDN_URI + 'fs/v1/banners/' + group.guid + '/fat/' + group.icontime
     );
@@ -60,10 +78,12 @@ export default class GroupHeader extends Component {
    * Share group
    */
   share = () => {
-    ShareService.share(
-      this.props.store.group.name,
-      MINDS_LINK_URI + `groups/profile/${this.props.store.group.guid}/feed`,
-    );
+    if (this.props.store.group !== null) {
+      ShareService.share(
+        this.props.store.group.name,
+        MINDS_LINK_URI + `groups/profile/${this.props.store.group.guid}/feed`,
+      );
+    }
   };
 
   /**
@@ -90,8 +110,8 @@ export default class GroupHeader extends Component {
       <Button
         {...buttonProps}
         accessibilityLabel={i18n.t('groups.subscribeMessage')}
-        containerStyle={CommonStyle.marginLeft}
-        textStyle={[CommonStyle.marginLeft, CommonStyle.marginRight]}
+        containerStyle={ThemedStyles.style.marginLeft}
+        textStyle={actionButtonStyle}
         loading={store.saving}
         disabled={store.saving}
         xSmall
@@ -105,9 +125,7 @@ export default class GroupHeader extends Component {
   getGatheringButton() {
     const theme = ThemedStyles.style;
     if (this.state.openingGathering) {
-      return (
-        <ActivityIndicator style={CommonStyle.paddingRight} size="large" />
-      );
+      return <ActivityIndicator style={theme.paddingRight} size="large" />;
     }
 
     if (this.props.store.group['videoChatDisabled'] === 0) {
@@ -129,10 +147,6 @@ export default class GroupHeader extends Component {
     setTimeout(() => this.setState({ openingGathering: false }), 1500);
     this.props.navigation.navigate('Gathering', { entity: group });
   };
-
-  setMemberSearch = debounce(q => {
-    this.props.store.setMemberSearch(q);
-  }, 300);
 
   /**
    * Render Tabs
@@ -163,30 +177,22 @@ export default class GroupHeader extends Component {
     //   typeOptions.push(conversation);
     // }
 
-    const searchBar =
-      this.props.store.tab === 'members' ? (
-        <SearchView
-          containerStyle={[
-            CommonStyle.flexContainer,
-            CommonStyle.hairLineBottom,
-          ]}
-          placeholder={i18n.t('discovery.search')}
-          onChangeText={this.setMemberSearch}
-        />
-      ) : null;
-
     return (
       <View>
         <Toolbar
           options={typeOptions}
           initial={this.props.store.tab}
           onChange={this.onTabChange}
-          containerStyle={ThemedStyles.style.borderPrimary}
+          containerStyle={ThemedStyles.style.bcolorPrimaryBorder}
         />
-        {searchBar}
+        <AnimatedSearch store={this.props.store} />
       </View>
     );
   }
+
+  clearSearch = () => {
+    this.props.store.setSearch('');
+  };
 
   /**
    * On tab change
@@ -222,17 +228,13 @@ export default class GroupHeader extends Component {
 
   renderAvatars = () => {
     const topMembers = this.props.store.topMembers;
-    const styles = this.props.styles;
 
     if (topMembers.length) {
       return topMembers.map(t => (
         <Image
           source={t.getAvatarSource()}
           key={t.guid}
-          style={[
-            styles.userAvatar,
-            ThemedStyles.style.borderBackgroundPrimary,
-          ]}
+          style={this.userAvatarStyle}
         />
       ));
     } else {
@@ -240,49 +242,61 @@ export default class GroupHeader extends Component {
     }
   };
 
+  toggleConversation = async () => {
+    this.refActionSheet.current?.dismiss();
+    try {
+      await this.props.store.group.toggleConversationDisabled();
+    } catch (err) {
+      console.error(err);
+      this.showError();
+    }
+  };
+
   getActionSheet() {
-    let options = [i18n.t('cancel')];
-    options.push(
-      this.props.store.group.conversationDisabled
-        ? i18n.t('groups.enableConversations')
-        : i18n.t('groups.disableConversations'),
-    );
     return (
       <View style={stylesheet.rightToolbar}>
         <Icon
           name="more-vert"
-          onPress={() => this.showActionSheet()}
+          onPress={this.showActionSheet}
           size={26}
-          style={[stylesheet.icon, ThemedStyles.style.colorPrimaryText]}
+          style={ThemedStyles.style.colorPrimaryText}
         />
-        <ActionSheet
-          ref={o => (this.ActionSheet = o)}
-          options={options}
-          onPress={i => {
-            this.handleActionSheetSelection(options[i]);
-          }}
-          cancelButtonIndex={0}
-        />
+        <BottomSheet ref={this.refActionSheet} title={i18n.t('actions')}>
+          {this.props.store.group.conversationDisabled ? (
+            <MenuItem
+              title={i18n.t('groups.enableConversations')}
+              iconName="message-outline"
+              iconType="material-community"
+              onPress={this.toggleConversation}
+            />
+          ) : (
+            <MenuItem
+              title={i18n.t('groups.disableConversations')}
+              iconName="message-lock-outline"
+              iconType="material-community"
+              onPress={this.toggleConversation}
+            />
+          )}
+
+          <BottomSheetButton
+            text={i18n.t('cancel')}
+            onPress={this.hideActionSheet}
+          />
+        </BottomSheet>
       </View>
     );
   }
 
-  async showActionSheet() {
-    this.ActionSheet.show();
-  }
+  showActionSheet = async () => {
+    this.refActionSheet.current?.present();
+  };
+  hideActionSheet = async () => {
+    this.refActionSheet.current?.dismiss();
+  };
 
-  async handleActionSheetSelection(option) {
-    switch (option) {
-      case i18n.t('groups.disableConversations'):
-      case i18n.t('groups.enableConversations'):
-        try {
-          await this.props.store.group.toggleConversationDisabled();
-        } catch (err) {
-          console.error(err);
-          this.showError();
-        }
-    }
-  }
+  toggleSearch = () => {
+    this.props.store.toggleSearch();
+  };
 
   /**
    * Show an error message
@@ -300,6 +314,7 @@ export default class GroupHeader extends Component {
    * Render Header
    */
   render() {
+    const theme = ThemedStyles.style;
     const group = this.props.store.group;
     const styles = this.props.styles;
 
@@ -307,49 +322,56 @@ export default class GroupHeader extends Component {
     const iurl = { uri: this.getBannerFromGroup() };
     const actionSheet = group['is:owner'] ? this.getActionSheet() : null;
     return (
-      <View>
-        <SmartImage
-          source={iurl}
-          style={styles.banner}
-          resizeMode={FastImage.resizeMode.cover}
-        />
-        <View style={styles.headertextcontainer}>
-          <View style={styles.avatarContainer}>
-            <View
-              style={[CommonStyle.rowJustifyStart, CommonStyle.flexContainer]}>
-              {this.renderAvatars()}
+      <DismissKeyboard>
+        <View>
+          {Boolean(iurl.uri) && (
+            <SmartImage
+              source={iurl}
+              style={styles.banner}
+              resizeMode={FastImage.resizeMode.cover}
+            />
+          )}
+          <View style={styles.headertextcontainer}>
+            <View style={styles.avatarContainer}>
+              <View style={avatarContainersStyle}>{this.renderAvatars()}</View>
             </View>
-          </View>
-          <View style={CommonStyle.rowJustifyCenter}>
-            <View style={styles.namecol}>
-              <Text style={styles.name}>{group.name.toUpperCase()}</Text>
-            </View>
-            <View style={styles.buttonscol}>
-              <Icon
-                name="share"
-                size={26}
-                style={iconStyle}
-                onPress={this.share}
-              />
-              {!this.props.store.group.conversationDisabled && (
+            <View style={theme.rowJustifyCenter}>
+              <View style={styles.namecol}>
+                <Text style={styles.name}>{group.name}</Text>
+              </View>
+              <View style={styles.buttonscol}>
                 <Icon
-                  name="chat-bubble"
-                  size={26}
+                  name="search"
+                  size={25}
+                  onPress={this.toggleSearch}
                   style={iconStyle}
-                  onPress={this.props.onPressComment}
                 />
-              )}
-              {/* {group.can(FLAG_JOIN_GATHERING) && this.getGatheringButton()} */}
-              {group.can(FLAG_JOIN) && this.getActionButton()}
+                <Icon
+                  name="share"
+                  size={25}
+                  style={iconStyle}
+                  onPress={this.share}
+                />
+                {!this.props.store.group?.conversationDisabled && (
+                  <Icon
+                    name="chat-bubble-outline"
+                    size={25}
+                    style={iconStyle}
+                    onPress={this.props.onPressComment}
+                  />
+                )}
+                {/* {group.can(FLAG_JOIN_GATHERING) && this.getGatheringButton()} */}
+                {group.can(FLAG_JOIN) && this.getActionButton()}
+              </View>
             </View>
+            {actionSheet}
           </View>
-          {actionSheet}
+          <View style={stylesheet.avatarContainer}>
+            <Image source={avatar} style={this.avatarStyle} />
+          </View>
+          {this.renderToolbar()}
         </View>
-        <View style={stylesheet.avatarContainer}>
-          <Image source={avatar} style={this.avatarStyle} />
-        </View>
-        {this.renderToolbar()}
-      </View>
+      </DismissKeyboard>
     );
   }
 }
@@ -382,3 +404,9 @@ const iconStyle = ThemedStyles.combine(
   'marginRight',
   'colorSecondaryText',
 );
+
+const avatarContainersStyle = ThemedStyles.combine(
+  'rowJustifyStart',
+  'flexContainer',
+);
+const actionButtonStyle = ThemedStyles.combine('marginLeft', 'marginRight');

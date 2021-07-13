@@ -8,7 +8,7 @@ export default class CenteredLoading extends Component {
     return (
       <View style={styles.activitycontainer} onLayout={this.props.onLayout}>
         <ActivityIndicator
-          color={ThemedStyles.getColor('link')}
+          color={ThemedStyles.getColor('Link')}
           size={'large'}
         />
       </View>

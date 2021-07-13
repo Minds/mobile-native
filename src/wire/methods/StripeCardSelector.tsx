@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { View, Alert } from 'react-native';
 
-import { CommonStyle as CS } from '../../styles/Common';
 import api, { ApiResponse } from '../../common/services/api.service';
 import stripe, { initStripe } from '../../common/services/stripe.service';
 import Button from '../../common/components/Button';
@@ -9,6 +8,7 @@ import i18nService from '../../common/services/i18n.service';
 import StripeCardCarousel from './StripeCardCarousel';
 import type { StripeCard } from '../WireTypes';
 import ActivityIndicator from '../../common/components/ActivityIndicator';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 type PropsType = {
   onCardSelected: Function;
@@ -67,6 +67,7 @@ export default class StripeCardSelector extends React.PureComponent<
    * Render
    */
   render(): React.ReactNode {
+    const theme = ThemedStyles.style;
     return (
       <View>
         {!this.state.loaded && <ActivityIndicator />}
@@ -77,11 +78,11 @@ export default class StripeCardSelector extends React.PureComponent<
             onCardDeleted={this.onCardDeleted}
           />
         )}
-        <View style={[CS.rowJustifyCenter, CS.marginTop2x]}>
+        <View style={[theme.rowJustifyCenter, theme.marginTop2x]}>
           <Button
             text="Add Card"
             onPress={this.addNewCard}
-            textStyle={[CS.padding]}
+            textStyle={[theme.padding]}
           />
         </View>
       </View>

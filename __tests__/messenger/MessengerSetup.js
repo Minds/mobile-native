@@ -1,12 +1,13 @@
 import 'react-native';
 import React from 'react';
-import { Alert, TextInput } from 'react-native';
+import { Alert } from 'react-native';
 import { shallow } from 'enzyme';
 import MessengerSetup from '../../src/messenger/MessengerSetup';
 import MessengerListStore from '../../src/messenger/MessengerListStore';
 import UserStore from '../../src/auth/UserStore';
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
+import TextInput from '../../src/common/components/TextInput';
 
 jest.mock('../../src/messenger/MessengerListStore');
 jest.mock('../../src/auth/UserStore');
