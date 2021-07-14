@@ -62,8 +62,16 @@ jobs:
       - rn/yarn_install:
           cache: false
       - rn/pod_install
+      - restore_cache:
+          name: Restoring iOS Build caches
+          keys:
+            - ios-build-cache-{{ arch }}-{{ checksum "~/.tmp/checksumfiles/package.json" }}-{{ .Environment.CACHE_VERSION }}
       - rn/detox_build:
           configuration: ios.release
+      - save_cache:
+          name: Saving iOS Build Cache
+          paths: ios/build
+          key: ios-build-cache-{{ arch }}-{{ checksum "~/.tmp/checksumfiles/package.json" }}-{{ .Environment.CACHE_VERSION }}
       - rn/detox_test:
           configuration: ios.release
 
