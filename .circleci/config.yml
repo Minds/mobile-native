@@ -39,7 +39,7 @@ jobs:
       - attach_workspace:
           at: .
       - rn/yarn_install:
-          cache_folder: ~/.cache/yarn
+          cache_folder: /Users/distiller/Library/Caches/Yarn
       - run:
           working_directory: ios
           command: pod install
@@ -60,18 +60,18 @@ jobs:
       - rn/setup_macos_executor
       - rn/ios_simulator_start
       - rn/yarn_install:
-          cache_folder: ~/.cache/yarn
+          cache_folder: /Users/distiller/Library/Caches/Yarn
       - rn/pod_install
       - restore_cache:
           name: Restoring iOS Build caches
           keys:
-            - ios-build-cache-{{ arch }}-{{ checksum "~/.tmp/checksumfiles/package.json" }}-{{ .Environment.CACHE_VERSION }}
+            - ios-build-cache-{{ arch }}-{{ checksum "package.json" }}-{{ .Environment.CACHE_VERSION }}
       - rn/detox_build:
           configuration: ios.release
       - save_cache:
           name: Saving iOS Build Cache
           paths: ios/build
-          key: ios-build-cache-{{ arch }}-{{ checksum "~/.tmp/checksumfiles/package.json" }}-{{ .Environment.CACHE_VERSION }}
+          key: ios-build-cache-{{ arch }}-{{ checksum "package.json" }}-{{ .Environment.CACHE_VERSION }}
       - rn/detox_test:
           configuration: ios.release
 
