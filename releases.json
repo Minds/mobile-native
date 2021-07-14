@@ -1,6 +1,34 @@
 {
   "versions": [
     {
+      "version": "4.15.0",
+      "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-15-0.apk",
+      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.15.0",
+      "changelog": [
+        "New bottom sheets",
+        "New password reset screens",
+        "Keyboard dark theme support on iOS",
+        "Snowplow analytics",
+        "Search filter added to discovery",
+        "Bug fixing"
+      ],
+      "unstable": false,
+      "hashes": [
+        {
+          "type": "md5",
+          "value": "8060063057cf6d5131449c0b8415d882"
+        },
+        {
+          "type": "sha256",
+          "value": "b1b9738c9d179f5e7c15ee6f5fd764cfff33d7e3fc9aca19a24f8b6661d40b82"
+        },
+        {
+          "type": "sha512",
+          "value": "b2125b21ea404e404ae792814615de5740b5dffb461bce90addd6260198f135cc8f5cdc594871ade1d71de4ba5a8a63d5da4b0bd31da9e706c7e0475e4233e2b"
+        }
+      ]
+    },
+    {
       "version": "4.14.2",
       "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-14-2.apk",
       "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.14.2",
