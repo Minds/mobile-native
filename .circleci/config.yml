@@ -67,11 +67,25 @@ jobs:
           keys:
             - ios-build-cache-{{ arch }}-{{ checksum "package.json" }}-{{ .Environment.CACHE_VERSION }}
       - rn/detox_build:
-          configuration: ios.release
+          configuration: ios
       - save_cache:
           name: Saving iOS Build Cache
           paths: ios/build
           key: ios-build-cache-{{ arch }}-{{ checksum "package.json" }}-{{ .Environment.CACHE_VERSION }}
+      - rn/detox_test:
+          configuration: ios
+  e2e_prod:
+    executor: rn/macos
+    steps:
+      - attach_workspace:
+          at: .
+      - rn/setup_macos_executor
+      - rn/ios_simulator_start
+      - rn/yarn_install:
+          cache_folder: /Users/distiller/Library/Caches/Yarn
+      - rn/pod_install
+      - rn/detox_build:
+          configuration: ios.release
       - rn/detox_test:
           configuration: ios.release
 
@@ -88,6 +102,15 @@ workflows:
       - e2e:
           requires:
             - checkout_code
+          filters:
+            branches:
+              ignore: /^stable.*/
+      - e2e_prod:
+          requires:
+            - checkout_code
+          filters:
+            branches:
+              only: /^stable.*/
       - fastlane_release:
           requires:
             - analyse_js
