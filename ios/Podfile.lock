@@ -452,9 +452,9 @@ PODS:
     - Yoga
   - RNScreens (2.18.1):
     - React-Core
-  - RNSentry (1.9.0):
+  - RNSentry (2.6.0):
     - React-Core
-    - Sentry (~> 5.2.0)
+    - Sentry (= 7.0.0)
   - RNShare (6.0.1):
     - React-Core
   - RNSharedElement (0.7.0):
@@ -474,9 +474,9 @@ PODS:
   - SDWebImageWebPCoder (0.6.1):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.7)
-  - Sentry (5.2.2):
-    - Sentry/Core (= 5.2.2)
-  - Sentry/Core (5.2.2)
+  - Sentry (7.0.0):
+    - Sentry/Core (= 7.0.0)
+  - Sentry/Core (7.0.0)
   - SnowplowTracker (1.7.1):
     - FMDB (~> 2.6)
   - TOCropViewController (2.6.0)
@@ -902,7 +902,7 @@ SPEC CHECKSUMS:
   RNPhotoEditor: 732f185b28e22c7fdfbe65217db6842c644d5aec
   RNReanimated: 654354ac62644c9b7256b6a37ca657f6fa754ffb
   RNScreens: f7ad633b2e0190b77b6a7aab7f914fad6f198d8d
-  RNSentry: 1adaa43b01c6a3ab5091d4d1add66b7c58558898
+  RNSentry: a2b02b326ae4fce91ce7c57d3f7dcf8df4f72269
   RNShare: 755de6bac084428f8fd8fb54c376f126f40e560c
   RNSharedElement: 00b1a1420d213a34459bb9a5aacabb38107d7948
   RNShareMenu: 555df30344da0d60947ccc781b0447ee9e5cd48f
@@ -911,7 +911,7 @@ SPEC CHECKSUMS:
   RNVectorIcons: bc69e6a278b14842063605de32bec61f0b251a59
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: d0dac55073088d24b2ac1b191a71a8f8d0adac21
-  Sentry: 8fa58a051237554f22507fb483b9a1de0171a2dc
+  Sentry: 89d26e036063b9cb9caa59b6951dd2f8277aa13b
   SnowplowTracker: c393b26c456142ad5a78f4e4d771c71cb194f06c
   TOCropViewController: 3105367e808b7d3d886a74ff59bf4804e7d3ab38
   UMAppLoader: 92d044af52626af3d81a69796ad666fc7a9a7d78
