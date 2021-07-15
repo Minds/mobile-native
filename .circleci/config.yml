@@ -72,8 +72,10 @@ jobs:
           name: Saving iOS Build Cache
           paths: ios/build
           key: ios-build-cache-{{ arch }}-{{ checksum "package.json" }}-{{ .Environment.CACHE_VERSION }}
-      - rn/detox_test:
-          configuration: ios
+      - run:
+          command: detox test -c ios -l warn --headless --debug-synchronization 2000
+          name: Run Detox
+
   e2e_prod:
     executor: rn/macos
     steps:
