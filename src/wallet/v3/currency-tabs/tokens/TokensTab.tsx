@@ -13,7 +13,6 @@ import type { BottomOptionsStoreType } from '../../../../common/components/Botto
 import TransactionsListTokens from '../../../v2/TransactionList/TransactionsListTokens';
 import ReceiverSettings from '../../../v2/address/ReceiverSettings';
 import { WalletScreenNavigationProp } from '../../WalletScreen';
-import i18n from '../../../../common/services/i18n.service';
 import TokensRewards from './TokensRewards';
 import TokensEarnings from '../Earnings';
 import TokenTopBar from './TokenTopBar';
@@ -71,13 +70,10 @@ const TokensTab = observer(
         );
         wc.openWalletApp();
 
-        console.log('[TokensTab.connectWallet]: requesting signature');
-
         const signature = await wc.provider.connector.signPersonalMessage([
           msg,
           wc.address,
         ]);
-        console.log('[TokensTab.connectWallet]: signature ' + signature);
 
         onchainStore.setLoading(true);
 
@@ -164,9 +160,9 @@ const TokensTab = observer(
         break;
     }
 
-    const mainBody = (
-      <>
-        <View style={{ ...theme.paddingTop5x }}>
+    return (
+      <ScrollView>
+        <View style={theme.paddingTop5x}>
           <TokenTopBar
             walletStore={walletStore}
             connectWallet={mustVerify || connectWallet}
@@ -176,16 +172,12 @@ const TokensTab = observer(
             tabs={options}
             current={store.option}
             onChange={store.setOption}
+            scrollViewContainerStyle={theme.paddingRight2x}
           />
           {body}
         </View>
-      </>
+      </ScrollView>
     );
-    if (store.option !== 'transactions') {
-      return <ScrollView>{mainBody}</ScrollView>;
-    } else {
-      return <View style={theme.flexContainer}>{mainBody}</View>;
-    }
   },
 );
 
