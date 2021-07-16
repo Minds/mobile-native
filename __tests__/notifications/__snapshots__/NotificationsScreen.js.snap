@@ -90,12 +90,10 @@ exports[`Notifications Screen Component renders correctly 1`] = `
       >
         <View
           style={
-            Array [
-              Object {
-                "flexDirection": "row",
-                "justifyContent": "flex-start",
-              },
-            ]
+            Object {
+              "flexDirection": "row",
+              "justifyContent": "flex-start",
+            }
           }
         >
           <RCTScrollView
