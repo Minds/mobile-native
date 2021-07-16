@@ -374,6 +374,16 @@ export default class CommentsStore {
       attachment_guid: <string | undefined>undefined,
     };
 
+    if (comment.comment === '') {
+      showNotification(
+        i18n.t('messenger.typeYourMessage'),
+        'info',
+        3000,
+        'top',
+      );
+      return;
+    }
+
     if (this.attachment.guid || this.edit?.attachment_guid) {
       comment.attachment_guid = this.attachment.guid;
     }
