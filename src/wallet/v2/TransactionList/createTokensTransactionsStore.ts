@@ -8,6 +8,7 @@ import {
   ExtendedEntity,
   deltaType,
   ListFiltersType,
+  transactionTypes,
 } from './TransactionsListTypes';
 import type { WalletStoreType } from '../createWalletStore';
 import toFriendlyCrypto from '../../../common/helpers/toFriendlyCrypto';
@@ -34,6 +35,10 @@ const createTokensTransactionsStore = ({ wallet, user }: ParamsType) => {
         from: moment().subtract(1, 'month').toDate(),
         to: moment().endOf('day').toDate(),
       },
+    },
+    setTransactionType(transactionType: transactionTypes) {
+      this.filters.transactionType = transactionType;
+      this.refresh();
     },
     get list(): Array<SectionListEntities> {
       // set runningTotal same value as balance

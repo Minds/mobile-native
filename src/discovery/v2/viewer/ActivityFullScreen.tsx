@@ -2,10 +2,14 @@ import React, { useRef, useCallback, useEffect } from 'react';
 import { View, StyleSheet, Platform } from 'react-native';
 import { useDimensions } from '@react-native-community/hooks';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
-import { useFocus } from '@crowdlinker/react-native-pager';
+import { useFocus } from '@msantang78/react-native-pager';
 import { LinearGradient } from 'expo-linear-gradient';
 import { observer, useLocalStore } from 'mobx-react';
+import { ScrollView } from 'react-native-gesture-handler';
 import * as entities from 'entities';
+import type BottomSheet from '@gorhom/bottom-sheet';
+import { TouchableOpacity } from '@gorhom/bottom-sheet';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 import type ActivityModel from '../../../newsfeed/ActivityModel';
 import MediaView from '../../../common/components/MediaView';
@@ -20,14 +24,11 @@ import Translate from '../../../common/components/translate/Translate';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Actions from '../../../newsfeed/activity/Actions';
 import Activity from '../../../newsfeed/activity/Activity';
-
 import CommentsStore from '../../../comments/v2/CommentsStore';
-import { ScrollView } from 'react-native-gesture-handler';
 import sessionService from '../../../common/services/session.service';
 import videoPlayerService from '../../../common/services/video-player.service';
 import ExplicitOverlay from '../../../common/components/explicit/ExplicitOverlay';
 import featuresService from '../../../common/services/features.service';
-
 import LockV2 from '../../../wire/v2/lock/Lock';
 import Lock from '../../../wire/lock/Lock';
 import { showNotification } from '../../../../AppMessages';
@@ -35,9 +36,6 @@ import { AppStackParamList } from '../../../navigation/NavigationTypes';
 import BoxShadow from '../../../common/components/BoxShadow';
 import ActivityMetrics from '../../../newsfeed/activity/metrics/ActivityMetrics';
 import CommentBottomSheet from '../../../comments/v2/CommentBottomSheet';
-import type BottomSheet from '@gorhom/bottom-sheet';
-import { TouchableOpacity } from '@gorhom/bottom-sheet';
-import Clipboard from '@react-native-clipboard/clipboard';
 import InteractionsBar from '../../../common/components/interactions/InteractionsBar';
 
 type ActivityRoute = RouteProp<AppStackParamList, 'Activity'>;
@@ -64,7 +62,24 @@ const ActivityOwner = ({
   const { current: cleanTop } = useRef({
     paddingTop: insets.top - 10 || 2,
   });
-  const containerStyle = useStyle('backgroundPrimary', styles.header, cleanTop);
+  const containerStyle = useStyle(
+    'bgPrimaryBackground',
+    styles.header,
+    cleanTop,
+  );
+  const right = React.useMemo(
+    () => (
+      <View style={ThemedStyles.style.rowJustifyCenter}>
+        <ActivityActionSheet
+          entity={entity}
+          navigation={navigation}
+          onTranslate={onTranslate}
+        />
+      </View>
+    ),
+    [entity, navigation, onTranslate],
+  );
+
   return (
     <OwnerBlock
       entity={entity}
@@ -76,15 +91,7 @@ const ActivityOwner = ({
           style={backButtonStyle}
         />
       }
-      rightToolbar={
-        <View style={ThemedStyles.style.rowJustifyCenter}>
-          <ActivityActionSheet
-            entity={entity}
-            navigation={navigation}
-            onTranslate={onTranslate}
-          />
-        </View>
-      }
+      rightToolbar={right}
     />
   );
 };
@@ -147,7 +154,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
           if (store) {
             store.showComments();
           }
-        }, 500);
+        }, 300);
       }
       const user = sessionService.getUser();
 
@@ -185,7 +192,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
           focusedUrn: undefined,
           scrollToBottom: undefined,
         });
-      }, 100);
+      }, 400);
     }
     return () => {
       if (openCommentsTimeOut) {
@@ -207,7 +214,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
     ? shortTextStyle
     : theme.fontLM;
 
-  const backgroundColor = ThemedStyles.getColor('secondary_background');
+  const backgroundColor = ThemedStyles.getColor('SecondaryBackground');
   const startColor = backgroundColor + '00';
   const endColor = backgroundColor + 'FF';
   const gradientColors = useRef([startColor, endColor]).current;
@@ -279,7 +286,11 @@ const ActivityFullScreen = observer((props: PropsType) => {
     [entity, navigation, onTranslate, shadowOpt],
   );
 
-  const containerStyle = useStyle(window, 'flexContainer', 'backgroundPrimary');
+  const containerStyle = useStyle(
+    window,
+    'flexContainer',
+    'bgPrimaryBackground',
+  );
 
   return (
     <View style={containerStyle}>
@@ -443,5 +454,5 @@ const remindContainerStyle = ThemedStyles.combine(
   styles.remind,
   'margin2x',
   'borderHair',
-  'borderBackgroundPrimary',
+  'bcolorPrimaryBackground',
 );

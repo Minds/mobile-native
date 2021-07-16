@@ -15,11 +15,11 @@ const SegmentedButton = (props: PropsType) => {
   const theme = ThemedStyles.style;
   const buttonStyle = {
     borderColor: ThemedStyles.theme
-      ? ThemedStyles.getColor('primary_border')
+      ? ThemedStyles.getColor('PrimaryBorder')
       : '#FFFFFF',
     backgroundColor: ThemedStyles.theme
-      ? ThemedStyles.getColor('primary_background')
-      : ThemedStyles.getColor('primary_border'),
+      ? ThemedStyles.getColor('PrimaryBackground')
+      : ThemedStyles.getColor('PrimaryBorder'),
   };
   return (
     <TouchableOpacity

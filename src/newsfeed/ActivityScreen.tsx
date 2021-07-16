@@ -7,7 +7,6 @@ import ActivityFullScreen from '../discovery/v2/viewer/ActivityFullScreen';
 import SingleEntityStore from '../common/stores/SingleEntityStore';
 import ActivityModel from './ActivityModel';
 import { FLAG_VIEW } from '../common/Permissions';
-import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
 import CenteredLoading from '../common/components/CenteredLoading';
 import type BlogModel from '../blogs/BlogModel';
 import { showNotification } from '../../AppMessages';
@@ -31,6 +30,9 @@ const ActivityScreen = observer((props: PropsType) => {
   const store = useLocalStore(
     (p: PropsType) => ({
       loading: false,
+      setLoading(value: boolean) {
+        store.loading = value;
+      },
       entityStore: new SingleEntityStore<ActivityModel>(),
       async loadEntity() {
         const params = p.route.params;
@@ -48,15 +50,12 @@ const ActivityScreen = observer((props: PropsType) => {
             return;
           }
 
-          store.entityStore.loadEntity(urn, entity, true);
-
-          // change metadata source
-          if (params.entity._list && params.entity._list.metadataService) {
-            params.entity._list.metadataService.pushSource('single');
-          }
+          await store.entityStore.loadEntity(urn, entity, true);
         } else {
           const urn = 'urn:activity:' + params.guid;
+          this.setLoading(true);
           await store.entityStore.loadEntity(urn, undefined, false);
+          this.setLoading(false);
 
           if (!store.entityStore.entity) {
             showNotification(
@@ -81,19 +80,15 @@ const ActivityScreen = observer((props: PropsType) => {
               blog: store.entityStore.entity as BlogModel,
             });
           }
-        }
-
-        if (params.entity && params.entity._list) {
-          // this second condition it's for legacy boost feed
-          if (params.entity._list instanceof OffsetFeedListStore) {
-            params.entity._list.addViewed(params.entity);
-          } else {
-            params.entity._list.viewed.addViewed(
-              params.entity,
-              params.entity._list.metadataService,
-            );
+          // workaround for tagged in group conversation notification
+          if (store.entityStore.entity.type === 'group') {
+            props.navigation.replace('GroupView', {
+              group: store.entityStore.entity,
+              ...params,
+            });
           }
         }
+        store.entityStore.entity?.sendViewed('single');
       },
     }),
     props,
@@ -103,8 +98,8 @@ const ActivityScreen = observer((props: PropsType) => {
     store.loadEntity();
   }, [store]);
 
-  if (!store.entityStore.entity) {
-    return <CenteredLoading />;
+  if (!store.entityStore.entity || store.entityStore.entity.type === 'group') {
+    return store.loading ? <CenteredLoading /> : null;
   }
 
   return <ActivityFullScreen entity={store.entityStore.entity} />;

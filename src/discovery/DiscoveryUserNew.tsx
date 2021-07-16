@@ -7,7 +7,6 @@ import { observer } from 'mobx-react';
 
 import { MINDS_CDN_URI } from '../config/Config';
 
-// import { CommonStyle as CS } from '../styles/Common';
 import { FLAG_SUBSCRIBE, FLAG_VIEW } from '../common/Permissions';
 import SubscriptionButtonNew from '../channel/subscription/SubscriptionButtonNew';
 import ThemedStyles from '../styles/ThemedStyles';

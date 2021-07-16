@@ -1,7 +1,7 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import { View, Text, TextInput, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
 import { inject, observer } from 'mobx-react';
 
@@ -9,12 +9,12 @@ import api from './../common/services/api.service';
 
 import NavNextButton from '../common/components/NavNextButton';
 
-import Colors from '../styles/Colors';
-import { CommonStyle } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
 import stylesheet from '../onboarding/stylesheet';
 import i18n from '../common/services/i18n.service';
 import ActivityIndicator from '../common/components/ActivityIndicator';
+import ThemedStyles from '../styles/ThemedStyles';
+import TextInput from '../common/components/TextInput';
 
 @inject('messengerList')
 @observer
@@ -34,7 +34,7 @@ export default class MessengerOnboardingScreen extends Component {
       <NavNextButton
         onPress={this.props.onNext}
         title={i18n.t('done').toUpperCase()}
-        color={Colors.darkGreyed}
+        color={ThemedStyles.style.colorPrimaryText}
       />
     );
 
@@ -43,7 +43,7 @@ export default class MessengerOnboardingScreen extends Component {
         <NavNextButton
           onPress={this.setup.bind(this)}
           title={i18n.t('done')}
-          color={Colors.primary}
+          color={ThemedStyles.style.colorLink}
         />
       );
     }
@@ -85,13 +85,14 @@ export default class MessengerOnboardingScreen extends Component {
   }
 
   render() {
+    const theme = ThemedStyles.style;
     return (
       <View>
         <Text style={style.h1}>{i18n.t('messenger.messenger')}</Text>
 
         <Text style={style.p}>{i18n.t('messenger.onboardingText')}</Text>
 
-        <View style={[CommonStyle.flexContainer, CommonStyle.padding2x]}>
+        <View style={[theme.flexContainer, theme.padding2x]}>
           <View style={{ flexDirection: 'row', alignItems: 'stretch' }}>
             <TextInput
               ref="password"

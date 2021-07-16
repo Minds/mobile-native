@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react';
 import { View } from 'react-native';
 import { ActivityFullScreenParamList } from '../navigation/NavigationTypes';
-import { RouteProp } from '@react-navigation/native';
+import { RouteProp, useFocusEffect } from '@react-navigation/native';
 import { useLocalStore, observer } from 'mobx-react';
-import { useOnFocus } from '@crowdlinker/react-native-pager';
+import { useOnFocus } from '@msantang78/react-native-pager';
 import ThemedStyles from '../styles/ThemedStyles';
 import portraitContentService from './PortraitContentService';
 import Viewed from '../common/stores/Viewed';
@@ -33,6 +33,7 @@ metadataService.setSource('portrait').setMedium('feed');
 const UserContentSwiper = observer((props: PropsType) => {
   const activities = props.item.activities;
   const firstUnseen = activities.findIndex(a => !a.seen);
+  const deltaPosition = React.useRef(0);
 
   const store = useLocalStore(() => ({
     index: firstUnseen !== -1 ? firstUnseen : 0,
@@ -44,12 +45,32 @@ const UserContentSwiper = observer((props: PropsType) => {
       store.index = v;
       portraitContentService.seen(activities[store.index].urn);
       activities[store.index].seen = true;
-      store.viewed.addViewed(activities[store.index], metadataService);
+      store.viewed.addViewed(
+        activities[store.index],
+        metadataService,
+        'portrait',
+        Math.abs(
+          deltaPosition.current - (activities[store.index].position || 0),
+        ) + 1,
+      );
     },
   }));
 
+  useFocusEffect(
+    useCallback(() => {
+      deltaPosition.current = activities[store.index].position || 0;
+    }, [activities, store]),
+  );
+
   useOnFocus(() => {
-    store.viewed.addViewed(activities[store.index], metadataService);
+    store.viewed.addViewed(
+      activities[store.index],
+      metadataService,
+      'portrait',
+      Math.abs(
+        deltaPosition.current - (activities[store.index].position || 0),
+      ) + 1,
+    );
     portraitContentService.seen(activities[store.index].urn);
     activities[store.index].seen = true;
   });

@@ -102,14 +102,14 @@ export default class ModalPicker extends PureComponent<ModalPickerProps> {
 
     return (
       <Modal isVisible={this.props.show}>
-        <View style={[CS.backgroundTertiary, { height, paddingBottom: 8 }]}>
+        <View style={[CS.bgTertiaryBackground, { height, paddingBottom: 8 }]}>
           <Text
             style={[
               CS.fontL,
               CS.textCenter,
               CS.padding2x,
               CS.colorPrimaryText,
-              CS.backgroundTertiary,
+              CS.bgTertiaryBackground,
             ]}>
             {title}
           </Text>
@@ -122,7 +122,7 @@ export default class ModalPicker extends PureComponent<ModalPickerProps> {
               itemStyle={[
                 CS.fontM,
                 CS.colorPrimaryText,
-                CS.backgroundTertiary,
+                CS.bgTertiaryBackground,
               ]}>
               {items.map((item, i) => (
                 <Picker.Item
@@ -131,7 +131,11 @@ export default class ModalPicker extends PureComponent<ModalPickerProps> {
                     valueExtractor ? valueExtractor(item) : item[labelField]
                   }
                   value={keyExtractor ? keyExtractor(item) : item[valueField]}
-                  style={[CS.fontM, CS.colorPrimaryText, CS.backgroundTertiary]}
+                  style={[
+                    CS.fontM,
+                    CS.colorPrimaryText,
+                    CS.bgTertiaryBackground,
+                  ]}
                 />
               ))}
             </Picker>

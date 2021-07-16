@@ -1,14 +1,12 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import { View, ScrollView, Text, Alert } from 'react-native';
+import { View, Text, Alert } from 'react-native';
 
 import settingsService from '../SettingsService';
 import i18n from '../../common/services/i18n.service';
 import validator from '../../common/services/validator.service';
 import CenteredLoading from '../../common/components/CenteredLoading';
-import Button from '../../common/components/Button';
-import { CommonStyle } from '../../styles/Common';
 import ModalConfirmPassword from '../../auth/ModalConfirmPassword';
 import { inject } from 'mobx-react';
 import Input from '../../common/components/Input';
@@ -120,14 +118,14 @@ class EmailScreen extends Component {
     ) : null;
 
     return (
-      <View style={[CS.flexContainer, CS.paddingTop3x, CS.backgroundPrimary]}>
+      <View style={[CS.flexContainer, CS.paddingTop3x, CS.bgPrimaryBackground]}>
         <View
           style={[
             CS.paddingLeft3x,
             CS.paddingTop3x,
-            CS.backgroundSecondary,
+            CS.bgSecondaryBackground,
             CS.border,
-            CS.borderPrimary,
+            CS.bcolorPrimaryBorder,
           ]}>
           <Input
             style={[CS.border0x, styles.inputHeight]}

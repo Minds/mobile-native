@@ -48,6 +48,9 @@ PODS:
     - React-Core (= 0.64.2)
     - React-jsi (= 0.64.2)
     - ReactCommon/turbomodule/core (= 0.64.2)
+  - FMDB (2.7.5):
+    - FMDB/standard (= 2.7.5)
+  - FMDB/standard (2.7.5)
   - glog (0.3.5)
   - hermes-engine (0.7.2)
   - iOSPhotoEditor (0.5)
@@ -417,7 +420,7 @@ PODS:
   - RNPhotoEditor (1.0.10):
     - iOSPhotoEditor
     - React
-  - RNReanimated (2.0.0):
+  - RNReanimated (2.2.0):
     - DoubleConversion
     - FBLazyVector
     - FBReactNativeSpec
@@ -458,6 +461,9 @@ PODS:
     - React
   - RNShareMenu (5.0.3):
     - React
+  - RNSnowplowTracker (1.0.0):
+    - React-Core
+    - SnowplowTracker (~> 1.7.0)
   - RNSVG (12.1.0):
     - React
   - RNVectorIcons (7.1.0):
@@ -471,6 +477,8 @@ PODS:
   - Sentry (5.2.2):
     - Sentry/Core (= 5.2.2)
   - Sentry/Core (5.2.2)
+  - SnowplowTracker (1.7.1):
+    - FMDB (~> 2.6)
   - TOCropViewController (2.6.0)
   - UMAppLoader (1.4.0)
   - UMBarCodeScannerInterface (5.4.0)
@@ -579,6 +587,7 @@ DEPENDENCIES:
   - RNShare (from `../node_modules/react-native-share`)
   - RNSharedElement (from `../node_modules/react-native-shared-element`)
   - RNShareMenu (from `../node_modules/react-native-share-menu`)
+  - "RNSnowplowTracker (from `../node_modules/@snowplow/react-native-tracker/ios`)"
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - UMAppLoader (from `../node_modules/unimodules-app-loader/ios`)
@@ -599,12 +608,14 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - boost-for-react-native
+    - FMDB
     - hermes-engine
     - libevent
     - libwebp
     - SDWebImage
     - SDWebImageWebPCoder
     - Sentry
+    - SnowplowTracker
     - TOCropViewController
 
 EXTERNAL SOURCES:
@@ -772,6 +783,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-shared-element"
   RNShareMenu:
     :path: "../node_modules/react-native-share-menu"
+  RNSnowplowTracker:
+    :path: "../node_modules/@snowplow/react-native-tracker/ios"
   RNSVG:
     :path: "../node_modules/react-native-svg"
   RNVectorIcons:
@@ -824,6 +837,7 @@ SPEC CHECKSUMS:
   EXSQLite: bda6a286dded0637bb312ee781239dcca163ff4b
   FBLazyVector: e686045572151edef46010a6f819ade377dfeb4b
   FBReactNativeSpec: aed77751d06df1313df482694720f097cc2b7a79
+  FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
   hermes-engine: 7d97ba46a1e29bacf3e3c61ecb2804a5ddd02d4f
   iOSPhotoEditor: 0f36d2c064d2999b7f4cd20c9db679581d24f7bf
@@ -886,17 +900,19 @@ SPEC CHECKSUMS:
   RNLocalize: 7c7aeda16c01db7a0918981c14875c0a53be9b79
   RNPermissions: c46788f4cd402287425983e04a4c9bb4356036eb
   RNPhotoEditor: 732f185b28e22c7fdfbe65217db6842c644d5aec
-  RNReanimated: 6d1ad9cc46e674ef06dd664e28e094d36c6f7f83
+  RNReanimated: 654354ac62644c9b7256b6a37ca657f6fa754ffb
   RNScreens: f7ad633b2e0190b77b6a7aab7f914fad6f198d8d
   RNSentry: 1adaa43b01c6a3ab5091d4d1add66b7c58558898
   RNShare: 755de6bac084428f8fd8fb54c376f126f40e560c
   RNSharedElement: 00b1a1420d213a34459bb9a5aacabb38107d7948
   RNShareMenu: 555df30344da0d60947ccc781b0447ee9e5cd48f
+  RNSnowplowTracker: ca97090a5d73271ff946426848da26fea447c400
   RNSVG: ce9d996113475209013317e48b05c21ee988d42e
   RNVectorIcons: bc69e6a278b14842063605de32bec61f0b251a59
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: d0dac55073088d24b2ac1b191a71a8f8d0adac21
   Sentry: 8fa58a051237554f22507fb483b9a1de0171a2dc
+  SnowplowTracker: c393b26c456142ad5a78f4e4d771c71cb194f06c
   TOCropViewController: 3105367e808b7d3d886a74ff59bf4804e7d3ab38
   UMAppLoader: 92d044af52626af3d81a69796ad666fc7a9a7d78
   UMBarCodeScannerInterface: 3f6c1b09ef4b867ce752b8c0b3893bcf9cd85f32

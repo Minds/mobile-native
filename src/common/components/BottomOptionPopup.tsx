@@ -77,13 +77,13 @@ const BottomOptionPopup = observer((props: PropsType) => {
     }
   }, [store, props.show]);
 
-  const backgroundColor = props.backgroundColor || theme.backgroundSecondary;
+  const backgroundColor = props.backgroundColor || theme.bgSecondaryBackground;
 
   return (
     <>
       {store.showing && !props.noOverlay && (
         <TouchableHighlight
-          style={[styles.overlay, theme.backgroundSecondary]}
+          style={[styles.overlay, theme.bgSecondaryBackground]}
           onPress={store.close}>
           <View />
         </TouchableHighlight>

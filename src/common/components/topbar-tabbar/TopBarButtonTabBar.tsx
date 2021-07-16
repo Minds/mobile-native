@@ -61,9 +61,7 @@ function TopBarButtonTabBar<T>(props: PropsType<T>) {
               text={tab.title}
               containerStyle={[
                 styles.buttonContainer,
-                tab.id === props.current
-                  ? theme.backgroundLink
-                  : theme.backgroundTransparent,
+                tab.id === props.current ? theme.bgLink : theme.bgTransparent,
               ]}
               textStyle={[
                 styles.text,
@@ -103,7 +101,7 @@ function TopBarButtonTabBar<T>(props: PropsType<T>) {
 const TabIcon = ({ name, type, isCurrent }) => (
   <Icon
     name={name}
-    color={ThemedStyles.getColor(isCurrent ? 'primary_text' : 'icon')}
+    color={ThemedStyles.getColor(isCurrent ? 'PrimaryText' : 'Icon')}
     size={21}
     type={type}
   />
@@ -165,7 +163,7 @@ const touchableTextStyle = ThemedStyles.combine(
 
 const touchableContainer = ThemedStyles.combine(
   'borderBottomHair',
-  'borderPrimary',
+  'bcolorPrimaryBorder',
   styles.touchableContainer,
 );
 

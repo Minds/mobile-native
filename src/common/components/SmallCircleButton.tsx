@@ -21,8 +21,8 @@ const SmallCircleButton = (props: PropsType) => {
       reverse
       name={props.name}
       type={props.type || 'material-community'}
-      color={props.color || ThemedStyles.getColor('primary_background')}
-      reverseColor={props.reverseColor || ThemedStyles.getColor('primary_text')}
+      color={props.color || ThemedStyles.getColor('PrimaryBackground')}
+      reverseColor={props.reverseColor || ThemedStyles.getColor('PrimaryText')}
       size={props.size || 16}
       onPress={props.onPress}
       containerStyle={props.style}

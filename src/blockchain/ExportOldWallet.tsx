@@ -83,12 +83,12 @@ export async function showMessageForPrivateKey() {
             theme.marginTop6x,
             theme.paddingTop2x,
             theme.borderTopHair,
-            theme.borderPrimary,
+            theme.bcolorPrimaryBorder,
             styles.messageHorizontalLine,
           ]}>
           <View
             style={[
-              theme.borderPrimary,
+              theme.bcolorPrimaryBorder,
               theme.borderRightHair,
               theme.justifyCenter,
               styles.messageVerticalLine,
@@ -117,9 +117,9 @@ export async function showMessageForPrivateKey() {
         </View>
       </View>
     ),
-    color: ThemedStyles.getColor('primary_text'),
+    color: ThemedStyles.getColor('PrimaryText'),
     titleStyle: ThemedStyles.style.fontXL,
-    backgroundColor: ThemedStyles.getColor('tertiary_background'),
+    backgroundColor: ThemedStyles.getColor('TertiaryBackground'),
     type: 'default',
   });
 }

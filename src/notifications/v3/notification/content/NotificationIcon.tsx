@@ -30,7 +30,7 @@ const NotificationIcon = ({ type }: { type: NotificationType }) => (
     name={notificationIconsTypes[type].name}
     type={notificationIconsTypes[type].type}
     reverseColor={'#FFFF'}
-    color={ThemedStyles.getColor('link')}
+    color={ThemedStyles.getColor('Link')}
     size={10}
     style={styles.notificationIconStyle}
   />

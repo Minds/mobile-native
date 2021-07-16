@@ -44,7 +44,7 @@ export default observer(function (props) {
         style={[
           styles.bottomBar,
           cleanBottom,
-          theme.backgroundSecondary,
+          theme.bgSecondaryBackground,
           isImage ? styles.floating : null,
         ]}>
         {isImage ? (

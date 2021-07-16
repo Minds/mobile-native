@@ -1,76 +1,76 @@
-import React, { useRef, useCallback } from 'react';
-import {
-  TouchableOpacity,
-  Text,
-  StyleSheet,
-  StyleProp,
-  TextStyle,
-  ViewStyle,
-} from 'react-native';
-import Menu, { MenuItem } from 'react-native-material-menu';
+import React from 'react';
+import { TouchableOpacity, Text, ViewStyle } from 'react-native';
 import i18n from '../services/i18n.service';
-import ThemedStyles from '../../styles/ThemedStyles';
+import ThemedStyles, { useStyle } from '../../styles/ThemedStyles';
 import MdIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { observer } from 'mobx-react';
+import BottomSheet from './bottom-sheet/BottomSheet';
+import BottomSheetButton from './bottom-sheet/BottomSheetButton';
+import RadioButton from './bottom-sheet/RadioButton';
 
 type PropsType = {
   hideLabel?: boolean;
-  labelStyle?: StyleProp<TextStyle>;
-  containerStyle?: StyleProp<ViewStyle>;
   store: {
     filter: string;
     setFilter: Function;
   };
+  containerStyles?: ViewStyle | ViewStyle[];
 };
 
 /**
  * Feed Filter selector
  */
-const FeedFilter = observer((props: PropsType) => {
-  const theme = ThemedStyles.style;
-  const ref = useRef<any>();
-  const showDropdown = useCallback(() => {
-    if (ref.current) {
-      ref.current.show();
-    }
+const FeedFilter = (props: PropsType) => {
+  const ref = React.useRef<any>();
+  const close = React.useCallback(() => {
+    ref.current?.dismiss();
+  }, [ref]);
+  const show = React.useCallback(() => {
+    ref.current?.present();
   }, [ref]);
 
-  return (
-    <Menu
-      ref={ref}
-      style={[styles.menu, theme.backgroundTertiary]}
-      button={
-        <TouchableOpacity
-          style={[theme.rowJustifyEnd, props.containerStyle]}
-          onPress={showDropdown}
-          testID="FilterToggle">
-          <MdIcon name="filter" size={18} style={theme.colorIcon} />
-
-          {!props.hideLabel && (
-            <Text style={[theme.fontL, theme.paddingLeft]}>
-              {i18n.t('filter')}
-            </Text>
-          )}
-        </TouchableOpacity>
-      }>
-      {['all', 'images', 'videos', 'blogs'].map(f => (
-        <MenuItem
-          onPress={() => props.store.setFilter(f)}
-          textStyle={theme.fontL}
-          testID={`Filter${f}`}>
-          {props.store.filter === f && <MdIcon name="check" />}
-          {' ' + i18n.t(`discovery.${f}`)}
-        </MenuItem>
-      ))}
-    </Menu>
+  const options = React.useMemo(
+    () =>
+      ['all', 'images', 'videos', 'blogs'].map(f => ({
+        title: i18n.t(`discovery.${f}`),
+        onPress: () => {
+          close();
+          setTimeout(() => {
+            if (props.store && props.store.setFilter) {
+              props.store.setFilter(f);
+            }
+          }, 200);
+        },
+        selected: props.store.filter === f,
+      })),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [close, props.store, props.store.filter],
   );
-});
 
-export default FeedFilter;
+  const containerStyle = useStyle(
+    'rowJustifyEnd',
+    props.containerStyles as ViewStyle,
+  );
 
-const styles = StyleSheet.create({
-  menu: {
-    width: 180,
-    marginTop: 20,
-  },
-});
+  return (
+    <>
+      <TouchableOpacity
+        style={containerStyle}
+        onPress={show}
+        testID="FilterToggle">
+        <MdIcon name="filter" size={18} style={ThemedStyles.style.colorIcon} />
+        {!props.hideLabel && <Text style={itemStyle}>{i18n.t('filter')}</Text>}
+      </TouchableOpacity>
+      <BottomSheet ref={ref} title={i18n.t('filter') + ' ' + i18n.t('feed')}>
+        {options.map((b, i) => (
+          <RadioButton {...b} key={i} />
+        ))}
+        <BottomSheetButton text={i18n.t('close')} onPress={close} />
+      </BottomSheet>
+    </>
+  );
+};
+
+const itemStyle = ThemedStyles.combine('fontL', 'paddingLeft');
+
+export default observer(FeedFilter);

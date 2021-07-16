@@ -234,6 +234,7 @@ class GroupViewStore {
       this.group.guid,
       user.guid,
     );
+    console.log(result);
     if (!!result.done) {
       user['is:moderator'] = true;
     }
@@ -339,11 +340,11 @@ class GroupViewStore {
    */
   @action
   setGroup(group) {
-    this.group = GroupModel.checkOrCreate(group);
-    this.setGuid(group.guid);
     if (!this.comments) {
       this.comments = new CommentsStore(group);
     }
+    this.group = GroupModel.checkOrCreate(group);
+    this.setGuid(group.guid);
   }
 
   /**

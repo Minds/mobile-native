@@ -10,6 +10,7 @@ import ActivityModel from '../newsfeed/ActivityModel';
  */
 export default class BlogModel extends ActivityModel {
   license: string = '';
+  slug: string = '';
 
   /**
    * Get banner source

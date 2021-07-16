@@ -1,14 +1,11 @@
 //@ts-nocheck
 import React, { Component } from 'react';
-
-import { Text, View, TextInput, StyleSheet } from 'react-native';
-
+import { Text, View } from 'react-native';
 import { observer } from 'mobx-react';
 
-import { CommonStyle } from '../styles/Common';
-import { ComponentsStyle } from '../styles/Components';
 import Button from '../common/components/Button';
 import i18n from '../common/services/i18n.service';
+import ThemedStyles from '../styles/ThemedStyles';
 
 /**
  * Messenger Invite
@@ -30,8 +27,9 @@ export default class MessengerInvite extends Component {
   render() {
     const invitable = this.props.messengerConversation.invitable;
     const invited = this.props.messengerConversation.invited;
+    const theme = ThemedStyles.style;
 
-    btnText = invited
+    const btnText = invited
       ? i18n.t('messenger.invited')
       : i18n.t('messenger.invite');
 
@@ -39,21 +37,17 @@ export default class MessengerInvite extends Component {
 
     return (
       <View
-        style={[
-          CommonStyle.flexContainer,
-          CommonStyle.padding2x,
-          CommonStyle.backgroundLight,
-        ]}>
-        <View style={[CommonStyle.paddingBottom3x, CommonStyle.padding3x]}>
-          <Text style={[CommonStyle.fontXL, CommonStyle.textCenter]}>
+        style={[theme.flexContainer, theme.padding2x, theme.backgroundLight]}>
+        <View style={[theme.paddingBottom3x, theme.padding3x]}>
+          <Text style={[theme.fontXL, theme.textCenter]}>
             {i18n.t('messenger.looksLike')}{' '}
-            <Text style={CommonStyle.flexContainerCenter}>
+            <Text style={theme.flexContainerCenter}>
               @{invitable[0].username}
             </Text>{' '}
             {i18n.t('messenger.isntUsingMessenger')}.
           </Text>
         </View>
-        <View style={[CommonStyle.centered]}>{button}</View>
+        <View style={[theme.centered]}>{button}</View>
       </View>
     );
   }

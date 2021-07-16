@@ -1,13 +1,11 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import { Text, View, TextInput, Alert, StyleSheet } from 'react-native';
+import { Text, View, Alert, StyleSheet } from 'react-native';
 
 import { inject, observer, Observer } from 'mobx-react';
 
-import { CommonStyle } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
-import Colors from '../styles/Colors';
 import NavNextButton from '../common/components/NavNextButton';
 import Button from '../common/components/Button';
 import logService from '../common/services/log.service';
@@ -15,6 +13,7 @@ import i18n from '../common/services/i18n.service';
 import ActivityIndicator from '../common/components/ActivityIndicator';
 import ThemedStyles from '../styles/ThemedStyles';
 import { showNotification } from '../../AppMessages';
+import TextInput from '../common/components/TextInput';
 
 type PropsType = {
   rekey?: boolean;
@@ -44,7 +43,7 @@ export default class MessengerSetup extends Component<PropsType> {
         <NavNextButton
           onPress={this.unlock}
           title={i18n.t('unlock').toUpperCase()}
-          color={Colors.primary}
+          color={ThemedStyles.style.colorLink}
         />
       );
     } else {
@@ -52,7 +51,7 @@ export default class MessengerSetup extends Component<PropsType> {
         <NavNextButton
           onPress={this.setup}
           title={i18n.t('setup').toUpperCase()}
-          color={Colors.primary}
+          color={ThemedStyles.style.colorLink}
         />
       );
     }
@@ -61,7 +60,7 @@ export default class MessengerSetup extends Component<PropsType> {
       <Observer>
         {() =>
           this.props.messengerList.unlocking ? (
-            <ActivityIndicator style={CommonStyle.marginRight2x} />
+            <ActivityIndicator style={ThemedStyles.style.marginRight2x} />
           ) : (
             button
           )
@@ -105,7 +104,11 @@ export default class MessengerSetup extends Component<PropsType> {
 
   renderUnlock() {
     return (
-      <View style={[CommonStyle.flexContainer, CommonStyle.padding2x]}>
+      <View
+        style={[
+          ThemedStyles.style.flexContainer,
+          ThemedStyles.style.padding2x,
+        ]}>
         <View style={{ flexDirection: 'column', alignItems: 'stretch' }}>
           <TextInput
             style={ComponentsStyle.passwordinput}
@@ -141,7 +144,11 @@ export default class MessengerSetup extends Component<PropsType> {
         });
 
     return (
-      <View style={[CommonStyle.flexContainer, CommonStyle.padding2x]}>
+      <View
+        style={[
+          ThemedStyles.style.flexContainer,
+          ThemedStyles.style.padding2x,
+        ]}>
         <View style={{ flexDirection: 'column', alignItems: 'stretch' }}>
           <TextInput
             style={ComponentsStyle.passwordinput}
@@ -152,7 +159,10 @@ export default class MessengerSetup extends Component<PropsType> {
             onChangeText={password => (this.password = password)}
           />
           <TextInput
-            style={[ComponentsStyle.passwordinput, CommonStyle.marginTop2x]}
+            style={[
+              ComponentsStyle.passwordinput,
+              ThemedStyles.style.marginTop2x,
+            ]}
             editable={true}
             underlineColorAndroid="transparent"
             placeholder={i18n.t('passwordConmfirmPlaceholder')}

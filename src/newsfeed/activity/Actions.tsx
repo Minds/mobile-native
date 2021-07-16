@@ -24,10 +24,15 @@ type PropsType = {
   showCommentsOutlet?: boolean;
   hideCount?: boolean;
   onPressComment?: () => void;
+  hideTabs?: boolean;
 };
 
 export const Actions = observer((props: PropsType) => {
   const navigation = useNavigation();
+
+  if (props.hideTabs) {
+    return null;
+  }
 
   const entity = props.entity;
   const isOwner = entity.isOwner();
@@ -91,4 +96,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const containerStyle = ThemedStyles.combine(styles.container, 'borderPrimary');
+const containerStyle = ThemedStyles.combine(
+  styles.container,
+  'bcolorPrimaryBorder',
+);

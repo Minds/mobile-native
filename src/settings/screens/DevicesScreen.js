@@ -43,7 +43,7 @@ export default observer(function DeviceScreen() {
     <ScrollView
       style={[
         theme.flexContainer,
-        theme.backgroundPrimary,
+        theme.bgPrimaryBackground,
         theme.paddingTop4x,
         padding,
       ]}>
@@ -68,11 +68,11 @@ export default observer(function DeviceScreen() {
           {result?.sessions.map((s, i) => (
             <View
               style={[
-                theme.backgroundSecondary,
+                theme.bgSecondaryBackground,
                 theme.paddingHorizontal4x,
                 theme.paddingVertical2x,
                 theme.borderTop,
-                theme.borderPrimary,
+                theme.bcolorPrimaryBorder,
                 i === result.sessions.length - 1 ? theme.borderBottom : null,
               ]}>
               <Button
@@ -80,7 +80,7 @@ export default observer(function DeviceScreen() {
                 text={i18n.t('revoke')}
                 xSmall={true}
                 containerStyle={styles.button}
-                color={ThemedStyles.getColor('alert')}
+                color={ThemedStyles.getColor('Alert')}
                 inverted
               />
               <Text style={[theme.fontL, theme.fontSemibold, styles.text]}>

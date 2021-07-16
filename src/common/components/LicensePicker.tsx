@@ -1,11 +1,10 @@
 //@ts-nocheck
 import React, { PureComponent } from 'react';
-import { Picker, View, Text, Platform } from 'react-native';
+import { View, Text } from 'react-native';
 import { Icon } from 'react-native-elements';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 import { LICENSES, getLicenseText } from '../services/list-options.service';
-import { CommonStyle } from '../../styles/Common';
-import colors from '../../styles/Colors';
 import ModalPicker from './ModalPicker';
 
 /**
@@ -47,17 +46,14 @@ export default class LicensePicker extends PureComponent {
    */
   render() {
     const text = getLicenseText(this.state.current);
+    const theme = ThemedStyles.styles;
 
-    const iconColor = this.props.iconColor || colors.darkGreyed;
+    const iconColor =
+      this.props.iconColor || ThemedStyles.getColor('PrimaryText');
 
     return (
-      <View style={[CommonStyle.rowJustifyCenter, CommonStyle.alignCenter]}>
-        <Text
-          style={[
-            CommonStyle.fontXS,
-            CommonStyle.colorMedium,
-            CommonStyle.paddingRight,
-          ]}>
+      <View style={[theme.rowJustifyCenter, theme.alignCenter]}>
+        <Text style={[theme.fontXS, theme.colorMedium, theme.paddingRight]}>
           {text}
         </Text>
         <Icon name="copyright" color={iconColor} onPress={this.toggle} />

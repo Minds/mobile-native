@@ -12,7 +12,6 @@ import {
 } from 'react-native';
 
 import Tags from '../../../common/components/Tags';
-import colors from '../../../styles/Colors';
 import i18n from '../../services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
@@ -59,7 +58,7 @@ export default class ExplicitText extends Component<PropsType, StateType> {
     super(props);
     Dimensions.addEventListener('change', this.dimensionChange);
 
-    const backgroundColor = ThemedStyles.getColor('primary_background');
+    const backgroundColor = ThemedStyles.getColor('PrimaryBackground');
     const startColor = backgroundColor + '00';
     const endColor = backgroundColor + 'FF';
     this.gradientColors = [startColor, endColor];
@@ -191,7 +190,7 @@ export default class ExplicitText extends Component<PropsType, StateType> {
   getMoreLess() {
     const msg = this.state.more ? i18n.t('showLess') : i18n.t('readMore');
     return (
-      <Text style={styles.readmore} onPress={this.toggleReadMore}>
+      <Text style={readmoreStyle} onPress={this.toggleReadMore}>
         {msg}
       </Text>
     );
@@ -219,10 +218,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     zIndex: 9999,
   },
-  readmore: {
-    color: colors.primary,
-    marginTop: 5,
-  },
   mature: {
     ...Platform.select({
       ios: {
@@ -243,3 +238,5 @@ const styles = StyleSheet.create({
     }),
   },
 });
+
+const readmoreStyle = ThemedStyles.combine('colorLink', 'paddingTop');

@@ -15,7 +15,7 @@ type PropsTypes = {
 const searchContainerStyle = ThemedStyles.combine(
   'marginTop2x',
   'flexContainer',
-  'hairLineBottom',
+  'borderBottomHair',
 );
 
 export default observer(function AnimatedSearch(props: PropsTypes) {

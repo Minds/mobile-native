@@ -44,25 +44,25 @@ const renderNotificationIcon = (icon: Icon = 'success') => {
   switch (icon) {
     case 'success':
       return (
-        <View style={[styles.success, theme.backgroundSuccess]}>
+        <View style={[styles.success, theme.bgSuccessBackground]}>
           <IconIon name="md-checkmark" color="white" size={25} />
         </View>
       );
     case 'info':
       return (
-        <View style={[styles.info, theme.backgroundInfo]}>
+        <View style={[styles.info, theme.bgInfoBackground]}>
           <IconAnt name="exclamationcircleo" color="white" size={25} />
         </View>
       );
     case 'warning':
       return (
-        <View style={[styles.warning, theme.backgroundWarning]}>
+        <View style={[styles.warning, theme.bgWarningBackground]}>
           <IconIon name="ios-warning" color="white" size={25} />
         </View>
       );
     case 'danger':
       return (
-        <View style={[styles.danger, theme.backgroundDanger]}>
+        <View style={[styles.danger, theme.bgDangerBackground]}>
           <IconMC name="alert-octagon" color="white" size={25} />
         </View>
       );

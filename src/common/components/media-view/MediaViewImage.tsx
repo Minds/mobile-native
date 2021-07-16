@@ -140,7 +140,7 @@ export default function MediaViewImage({
 const errorTextStyle = ThemedStyles.combine('fontS', 'colorTertiaryText');
 const errorContainerStyle = ThemedStyles.combine(
   'padding4x',
-  'backgroundSecondary',
+  'bgSecondaryBackground',
   'centered',
   { height: 200 },
 );

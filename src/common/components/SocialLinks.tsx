@@ -9,7 +9,7 @@ const getSocialProfileMeta = (key: string): SocialProfileMeta => {
     key: '',
     label: '',
     link: '#',
-    icon: 'link',
+    icon: 'Link',
     domain: '',
   };
 
@@ -77,7 +77,7 @@ const SocialLinks = ({ socialLinks }: PropsType) => {
             name={meta.icon}
             size={16}
             onPress={() => Linking.openURL(socialLink.value)}
-            color={ThemedStyles.getColor('icon')}
+            color={ThemedStyles.getColor('Icon')}
             style={theme.marginHorizontal}
           />
         );
@@ -275,7 +275,7 @@ export const socialProfileMeta: SocialProfileMeta[] = [
     key: 'other',
     label: 'Other',
     link: '',
-    icon: 'link',
+    icon: 'Link',
     domain: '',
   },
 ];

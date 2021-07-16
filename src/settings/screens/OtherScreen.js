@@ -58,7 +58,7 @@ export default function ({ navigation }) {
   ];
 
   return (
-    <ScrollView style={[theme.flexContainer, theme.backgroundPrimary]}>
+    <ScrollView style={[theme.flexContainer, theme.bgPrimaryBackground]}>
       <MenuSubtitle>{i18n.t('settings.otherOptions.a')}</MenuSubtitle>
       {contentAdmin.map((item, i) => (
         <MenuItem item={item} i={i} />

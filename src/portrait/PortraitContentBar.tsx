@@ -29,7 +29,7 @@ const Header = () => {
   return (
     <TouchableOpacity
       onPress={nav}
-      style={[styles.add, theme.backgroundTertiary, theme.centered]}>
+      style={[styles.add, theme.bgTertiaryBackground, theme.centered]}>
       <Text style={[theme.fontXXL, theme.colorSecondaryText]}>+</Text>
     </TouchableOpacity>
   );
@@ -42,9 +42,9 @@ export const portraitBarRef = React.createRef<FlatList<PortraitBarItem>>();
 
 const BarPlaceholder = () => {
   const theme = ThemedStyles.style;
-  const color = ThemedStyles.getColor('tertiary_background');
+  const color = ThemedStyles.getColor('TertiaryBackground');
   const animation = props => (
-    <Fade {...props} style={theme.backgroundPrimary} />
+    <Fade {...props} style={theme.bgPrimaryBackground} />
   );
   return (
     <Placeholder Animation={animation}>
@@ -128,11 +128,11 @@ const styles = StyleSheet.create({
 const listContainerStyle = ThemedStyles.combine(
   'paddingLeft',
   'rowJustifyStart',
-  'backgroundPrimary',
+  'bgPrimaryBackground',
 );
 const containerStyle = ThemedStyles.combine(
   'borderBottom8x',
-  'borderBackgroundTertiary',
+  'bcolorTertiaryBackground',
   'fullWidth',
 );
 

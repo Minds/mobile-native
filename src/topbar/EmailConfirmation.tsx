@@ -3,11 +3,11 @@ import React, { Component } from 'react';
 import { Text, StyleSheet, View, Alert, TouchableOpacity } from 'react-native';
 import i18n from '../common/services/i18n.service';
 import emailConfirmationService from '../common/services/email-confirmation.service';
-import { CommonStyle as CS } from '../styles/Common';
 import { observer, inject } from 'mobx-react';
 import apiService from '../common/services/api.service';
 import UserStore from '../auth/UserStore';
 import withPreventDoubleTap from '../common/components/PreventDoubleTap';
+import ThemedStyles from '../styles/ThemedStyles';
 
 // prevent double tap in touchable
 const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
@@ -46,6 +46,7 @@ class EmailConfirmation extends Component<Props> {
    * Render
    */
   render() {
+    const theme = ThemedStyles.style;
     const show =
       apiService.mustVerify ||
       (!this.props.user.emailConfirmMessageDismiss &&
@@ -58,17 +59,17 @@ class EmailConfirmation extends Component<Props> {
     return (
       <View style={styles.container}>
         <View style={styles.body}>
-          <Text style={[CS.fontM, CS.colorWhite]}>
+          <Text style={[theme.fontM, theme.colorWhite]}>
             {i18n.t('emailConfirm.confirm')} {i18n.t('emailConfirm.didntGetit')}
           </Text>
           <TouchableOpacityCustom onPress={this.send}>
-            <Text style={[CS.bold, CS.colorWhite]}>
+            <Text style={[theme.bold, theme.colorWhite]}>
               {i18n.t('emailConfirm.sendAgain')}
             </Text>
           </TouchableOpacityCustom>
         </View>
         <Text
-          style={[styles.modalCloseIcon, CS.colorWhite, CS.bold]}
+          style={[styles.modalCloseIcon, theme.colorWhite, theme.bold]}
           onPress={this.dismiss}>
           [Close]
         </Text>
