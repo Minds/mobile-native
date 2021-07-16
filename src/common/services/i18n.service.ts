@@ -14,54 +14,67 @@ const translationGetters = {
   },
   es: () => {
     require('moment/locale/es');
+    moment.locale('es');
     return require('../../../locales/es.json');
   },
   ar: () => {
     require('moment/locale/ar');
+    moment.locale('ar');
     return require('../../../locales/ar.json');
   },
   de: () => {
     require('moment/locale/de');
+    moment.locale('de');
     return require('../../../locales/de.json');
   },
   fr: () => {
     require('moment/locale/fr');
+    moment.locale('fr');
     return require('../../../locales/fr.json');
   },
   hi: () => {
     require('moment/locale/hi');
+    moment.locale('hi');
     return require('../../../locales/hi.json');
   },
   it: () => {
     require('moment/locale/it');
+    moment.locale('it');
     return require('../../../locales/it.json');
   },
   ja: () => {
     require('moment/locale/ja');
+    moment.locale('ja');
     return require('../../../locales/ja.json');
   },
   pt: () => {
     require('moment/locale/pt');
+    moment.locale('pt');
     return require('../../../locales/pt.json');
   },
   ru: () => {
     require('moment/locale/ru');
+    moment.locale('ru');
     return require('../../../locales/ru.json');
   },
   th: () => {
     require('moment/locale/th');
+    moment.locale('th');
     return require('../../../locales/th.json');
   },
   vi: () => {
     require('moment/locale/vi');
+    moment.locale('vi');
     return require('../../../locales/vi.json');
   },
   zh: () => {
     require('moment/locale/zh-cn');
+    moment.locale('zh-cn');
     return require('../../../locales/zh.json');
   },
   sk: () => {
     require('moment/locale/sk');
+    moment.locale('sk');
     return require('../../../locales/sk.json');
   },
 };
@@ -193,7 +206,6 @@ class I18nService {
       };
     }
     i18n.locale = locale;
-    moment.locale(locale);
 
     if (locale === 'en') {
       moment.updateLocale('en', {
