@@ -63,13 +63,11 @@ const styles = ThemedStyles.create({
     'fullWidth',
     'textCenter',
   ],
-  name: [
-    {
-      fontSize: 22,
-      fontWeight: '600',
-      textAlign: 'center',
-    },
-  ],
+  name: {
+    fontSize: 22,
+    fontWeight: '600',
+    textAlign: 'center',
+  },
 });
 
 export default UserNamesComponent;

@@ -45,9 +45,15 @@ export class ThemedStylesStore {
     return styles.map(s => (typeof s === 'string' ? this.style[s] : s));
   }
 
-  create(styles: { [key: string]: Array<Style | CustomStyle> }) {
+  create(styles: { [key: string]: Array<Style | CustomStyle> | CustomStyle }) {
     const s: any = {};
-    Object.keys(styles).forEach(key => (s[key] = this.combine(...styles[key])));
+    Object.keys(styles).forEach(key => {
+      if (Array.isArray(styles[key])) {
+        s[key] = this.combine(...(styles[key] as Array<Style | CustomStyle>));
+      } else {
+        s[key] = styles[key];
+      }
+    });
     return s;
   }
 
