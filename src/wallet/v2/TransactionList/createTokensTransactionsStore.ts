@@ -1,5 +1,4 @@
 import moment from 'moment-timezone';
-import formatDate from '../../../common/helpers/date';
 import groupBy from '../../../common/helpers/groupBy';
 import type UserStore from '../../../auth/UserStore';
 import UserModel from '../../../channel/UserModel';
@@ -13,6 +12,7 @@ import {
 import type { WalletStoreType } from '../createWalletStore';
 import toFriendlyCrypto from '../../../common/helpers/toFriendlyCrypto';
 import TokensStore from '../../tokens/TokensStore';
+import i18n from '../../../common/services/i18n.service';
 
 type ParamsType = {
   wallet: WalletStoreType;
@@ -49,7 +49,7 @@ const createTokensTransactionsStore = ({ wallet, user }: ParamsType) => {
             return false;
           }
           if (!entity.formatted) {
-            entity.date = formatDate(entity.timestamp, 'nameDay');
+            entity.date = i18n.date(entity.timestamp, 'nameDay');
             entity.otherUser = entity.contract.includes('wire')
               ? this.getUser(entity)
               : null;

@@ -33,8 +33,7 @@ import LockV2 from '../wire/v2/lock/Lock';
 import { AppStackParamList } from '../navigation/NavigationTypes';
 import CommentBottomSheet from '../comments/v2/CommentBottomSheet';
 import BoxShadow from '../common/components/BoxShadow';
-import formatDate from '../common/helpers/date';
-import i18nService from '../common/services/i18n.service';
+import i18n from '../common/services/i18n.service';
 import { withErrorBoundary } from '../common/components/ErrorBoundary';
 
 type ActivityRoute = RouteProp<AppStackParamList, 'Activity'>;
@@ -153,11 +152,11 @@ const PortraitActivity = observer((props: PropsType) => {
         <Text
           numberOfLines={1}
           style={[theme.fontM, theme.colorSecondaryText, theme.paddingRight]}>
-          {formatDate(entity.time_created, 'friendly')}
+          {i18n.date(entity.time_created, 'friendly')}
           {!!entity.edited && (
             <Text style={[theme.fontS, theme.colorSecondaryText]}>
               {' '}
-              · {i18nService.t('edited').toUpperCase()}
+              · {i18n.t('edited').toUpperCase()}
             </Text>
           )}
         </Text>

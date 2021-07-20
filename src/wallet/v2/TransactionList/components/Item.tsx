@@ -6,7 +6,6 @@ import {
 } from '../TransactionsListTypes';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 import { View, Text } from 'react-native';
-import formatDate from '../../../../common/helpers/date';
 import { AvatarIcon, DeltaIcon } from './Icons';
 import { Avatar } from 'react-native-elements';
 import i18n from '../../../../common/services/i18n.service';
@@ -28,7 +27,7 @@ const Item = ({ entity, navigation, currency }: ItemPropsType) => {
       <View style={theme.flexColumn}>
         {typeString}
         <Text style={[...secondaryText, theme.marginTop]}>
-          {formatDate(entity.timestamp, 'time')}
+          {i18n.date(entity.timestamp, 'time')}
         </Text>
       </View>
       <View style={theme.flexColumn}>

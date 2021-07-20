@@ -1,14 +1,9 @@
 {
-  "date": {
-    "formats": {
-      "small": "%b %-d, %Y",
-      "medium": "%a, %b %-d, %Y"
-    }
-  },
-  "datetime": {
-    "formats": {
-      "small": "%b %-d, %Y %-I:%M%p"
-    }
+  "dateformats": {
+    "date": "MMM DD, YYYY",
+    "short": "MMM DD",
+    "nameDay": "ddd MMM Do",
+    "datetime": "MMM DD YYYY · HH:mm"
   },
   "activity": {
     "loadEarlier": "LOAD EARLIER",

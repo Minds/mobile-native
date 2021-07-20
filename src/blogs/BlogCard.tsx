@@ -6,12 +6,12 @@ import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 import { Avatar } from 'react-native-elements';
 
 import FastImage from 'react-native-fast-image';
-import formatDate from '../common/helpers/date';
 import { FLAG_VIEW } from '../common/Permissions';
 import Actions from '../newsfeed/activity/Actions';
 import ThemedStyles from '../styles/ThemedStyles';
 import type BlogModel from './BlogModel';
 import BlogActionSheet from './BlogActionSheet';
+import i18n from '../common/services/i18n.service';
 
 type PropsType = {
   entity: BlogModel;
@@ -127,7 +127,7 @@ export default class BlogCard extends PureComponent<PropsType> {
                   {blog.ownerObj && blog.ownerObj.username}
                 </Text>
                 <Text style={[theme.fontXS, theme.paddingLeft]}>
-                  {formatDate(blog.time_created)}
+                  {i18n.date(blog.time_created * 1000)}
                 </Text>
                 <View style={theme.paddingLeft}>
                   <BlogActionSheet
