@@ -7,7 +7,6 @@ import moment from 'moment-timezone';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
 import CenteredLoading from '../../common/components/CenteredLoading';
-import formatDate from '../../common/helpers/date';
 import Button from '../../common/components/Button';
 import useApiFetch from '../../common/hooks/useApiFetch';
 import apiService from '../../common/services/api.service';
@@ -90,14 +89,7 @@ export default observer(function DeviceScreen() {
               <Text style={styles.text}>
                 Last accessed on{' '}
                 <Text style={[theme.fontSemibold, styles.text]}>
-                  {formatDate(
-                    s.last_active,
-                    moment(parseInt(s.last_active, 10) * 1000).isAfter(
-                      moment().subtract(2, 'days'),
-                    )
-                      ? 'friendly'
-                      : 'date',
-                  )}
+                  {i18n.date('friendly')}
                 </Text>
               </Text>
             </View>

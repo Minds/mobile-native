@@ -1,15 +1,13 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import { Text, Image, View, Button, StyleSheet } from 'react-native';
+import { Text, Image, View, StyleSheet } from 'react-native';
 
-import { observer, inject } from 'mobx-react';
-
-import Icon from 'react-native-vector-icons/Ionicons';
+import { observer } from 'mobx-react';
 import SmartImage from '../common/components/SmartImage';
 import { MINDS_CDN_URI } from '../config/Config';
 import FastImage from 'react-native-fast-image';
-import formatDate from '../common/helpers/date';
+import i18n from '../common/services/i18n.service';
 /**
  * Channel Card
  */
@@ -51,7 +49,7 @@ export default class ImageCard extends Component {
                   {entity.ownerObj.username.toUpperCase()}
                 </Text>
                 <Text style={styles.createdDate}>
-                  {formatDate(entity.time_created)}
+                  {i18n.date(entity.time_created * 1000)}
                 </Text>
               </View>
             </View>

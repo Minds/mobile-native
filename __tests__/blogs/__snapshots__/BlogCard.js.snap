@@ -298,7 +298,7 @@ exports[`blog card component should renders correctly 1`] = `
               ]
             }
           >
-            Apr 27, 2018, 07:17
+            Apr 27 2018 · 07:17
           </Text>
           <View
             style={
