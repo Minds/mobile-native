@@ -22,7 +22,7 @@ jobs:
       - attach_workspace:
           at: .
       - rn/yarn_install:
-          cache: false
+          cache_folder: ~/.cache/yarn
       - run:
           command: yarn run test --maxWorkers=2
           name: Jest
@@ -39,7 +39,7 @@ jobs:
       - attach_workspace:
           at: .
       - rn/yarn_install:
-          cache: false
+          cache_folder: /Users/distiller/Library/Caches/Yarn
       - run:
           working_directory: ios
           command: pod install
@@ -60,7 +60,31 @@ jobs:
       - rn/setup_macos_executor
       - rn/ios_simulator_start
       - rn/yarn_install:
-          cache: false
+          cache_folder: /Users/distiller/Library/Caches/Yarn
+      - rn/pod_install
+      - restore_cache:
+          name: Restoring iOS Build caches
+          keys:
+            - ios-build-cache-{{ arch }}-{{ checksum "package.json" }}-{{ .Environment.CACHE_VERSION }}
+      - rn/detox_build:
+          configuration: ios
+      - save_cache:
+          name: Saving iOS Build Cache
+          paths: ios/build
+          key: ios-build-cache-{{ arch }}-{{ checksum "package.json" }}-{{ .Environment.CACHE_VERSION }}
+      - run:
+          command: detox test -c ios -l warn --headless --debug-synchronization 2000
+          name: Run Detox
+
+  e2e_prod:
+    executor: rn/macos
+    steps:
+      - attach_workspace:
+          at: .
+      - rn/setup_macos_executor
+      - rn/ios_simulator_start
+      - rn/yarn_install:
+          cache_folder: /Users/distiller/Library/Caches/Yarn
       - rn/pod_install
       - rn/detox_build:
           configuration: ios.release
@@ -68,7 +92,7 @@ jobs:
           configuration: ios.release
 
 orbs:
-  rn: react-native-community/react-native@5.3.0
+  rn: react-native-community/react-native@5.4.0
 version: 2.1
 workflows:
   test:
@@ -80,6 +104,15 @@ workflows:
       - e2e:
           requires:
             - checkout_code
+          filters:
+            branches:
+              ignore: /^stable.*/
+      - e2e_prod:
+          requires:
+            - checkout_code
+          filters:
+            branches:
+              only: /^stable.*/
       - fastlane_release:
           requires:
             - analyse_js
