@@ -91,13 +91,11 @@ export const styles = ThemedStyles.create({
   ],
   label: ['colorSecondaryText_Dark'],
   inputText: ['colorPrimaryText_Dark', 'marginBottom0x'],
-  checkbox: [
-    {
-      marginRight: 0,
-      marginTop: 0,
-      paddingTop: 0,
-    },
-  ],
+  checkbox: {
+    marginRight: 0,
+    marginTop: 0,
+    paddingTop: 0,
+  },
 });
 
 export default TokensForm;

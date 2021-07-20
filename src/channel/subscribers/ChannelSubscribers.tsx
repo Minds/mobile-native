@@ -1,13 +1,6 @@
-//@ts-nocheck
 import React, { Component } from 'react';
 
-import {
-  StyleSheet,
-  Text,
-  FlatList,
-  View,
-  TouchableHighlight,
-} from 'react-native';
+import { Text, FlatList, View, TouchableHighlight } from 'react-native';
 
 import { observer, inject } from 'mobx-react';
 
@@ -16,13 +9,20 @@ import DiscoveryUser from '../../discovery/DiscoveryUser';
 import CenteredLoading from '../../common/components/CenteredLoading';
 import ErrorLoading from '../../common/components/ErrorLoading';
 import ThemedStyles from '../../styles/ThemedStyles';
+import type ChannelSubscribersStore from './ChannelSubscribersStore';
+
+type PropsType = {
+  channelSubscribersStore: ChannelSubscribersStore;
+  route: any;
+  navigation: any;
+};
 
 /**
  * Discovery screen
  */
 @inject('channelSubscribersStore')
 @observer
-class ChannelSubscribers extends Component {
+class ChannelSubscribers extends Component<PropsType> {
   /**
    * On component will mount
    */
@@ -58,7 +58,7 @@ class ChannelSubscribers extends Component {
    */
   render() {
     let body;
-    const theme = ThemedStyles.styles;
+    const theme = ThemedStyles.style;
     const store = this.props.channelSubscribersStore;
 
     const footerCmp = store.errorLoading ? (
@@ -78,7 +78,7 @@ class ChannelSubscribers extends Component {
           onEndReached={this.loadFeed}
           // onEndReachedThreshold={0}
           initialNumToRender={12}
-          style={styles.listView}
+          style={theme.flexContainer}
           removeClippedSubviews={false}
           ListFooterComponent={footerCmp}
         />
@@ -86,32 +86,28 @@ class ChannelSubscribers extends Component {
     }
 
     return (
-      <View style={[theme.flexContainer, theme.bgSecondaryBackground]}>
+      <View style={styles.container}>
         <View style={styles.topbar}>
-          <View style={[theme.flexContainer, theme.rowJustifyCenter]}>
+          <View style={styles.row}>
             <TouchableHighlight
               underlayColor="transparent"
               onPress={() => store.setFilter('subscribers')}
               style={
-                store.filter == 'subscribers'
-                  ? [styles.selectedButton, theme.flexContainerCenter]
-                  : [styles.buttons, theme.flexContainerCenter]
+                store.filter === 'subscribers'
+                  ? styles.selectedButton
+                  : styles.buttons
               }>
-              <Text>{i18n.t('subscribers')}</Text>
+              <Text style={theme.fontL}>{i18n.t('subscribers')}</Text>
             </TouchableHighlight>
             <TouchableHighlight
               underlayColor="transparent"
               onPress={() => store.setFilter('subscriptions')}
               style={
                 store.filter === 'subscriptions'
-                  ? [
-                      styles.selectedButton,
-                      theme.flexContainerCenter,
-                      theme.colorLink,
-                    ]
-                  : [styles.buttons, theme.flexContainerCenter]
+                  ? styles.selectedButton
+                  : styles.buttons
               }>
-              <Text>{i18n.t('subscriptions')}</Text>
+              <Text style={theme.fontL}>{i18n.t('subscriptions')}</Text>
             </TouchableHighlight>
           </View>
         </View>
@@ -124,14 +120,14 @@ class ChannelSubscribers extends Component {
    * Load subs data
    */
   loadFeed = () => {
-    this.props.channelSubscribersStore.loadList(this.props.guid);
+    this.props.channelSubscribersStore.loadList();
   };
 
   /**
    * Refresh subs data
    */
   refresh = () => {
-    this.props.channelSubscribersStore.refresh(this.props.guid);
+    this.props.channelSubscribersStore.refresh();
   };
 
   /**
@@ -150,21 +146,23 @@ class ChannelSubscribers extends Component {
 
 export default ChannelSubscribers;
 
-const styles = StyleSheet.create({
-  listView: {
-    flex: 1,
-  },
+const styles = ThemedStyles.create({
   topbar: {
     height: 35,
     justifyContent: 'center',
     flexDirection: 'row',
   },
+  row: ['flexContainer', 'rowJustifyCenter'],
+  container: ['flexContainer', 'bgPrimaryBackground'],
+  buttons: ['flexContainerCenter', 'alignCenter'],
 
-  buttons: {
-    alignItems: 'center',
-  },
-  selectedButton: {
-    alignItems: 'center',
-    borderBottomWidth: 3,
-  },
+  selectedButton: [
+    'flexContainerCenter',
+    'bcolorLink',
+    'colorLink',
+    {
+      alignItems: 'center',
+      borderBottomWidth: 3,
+    },
+  ],
 });
