@@ -1190,15 +1190,15 @@
       "always": "Always"
     },
     "membershipMonetize": {
-      "description": "Make this post available exclusivley to one of your membership tiers.",
+      "description": "Make this post available exclusively to one of your membership tiers.",
       "noTiers": "You don’t have any Membership Tiers",
       "tiersDescription": "Setting up your tiers is quick and easy. Start earning extra revenue for your content today.",
-      "setup": "Setup membersip tiers",
+      "setup": "Setup membership tiers",
       "label": "MEMBERSHIP TIERS",
       "manage": "Manage"
     },
     "customMonetize": {
-      "usd": "Contributiuon in USD (will be converted to tokens if necesary)",
+      "usd": "Contribution in USD (will be converted to tokens if necessary)",
       "hasUsd": "Accept USD",
       "hasTokens": "Accept Tokens"
     }
