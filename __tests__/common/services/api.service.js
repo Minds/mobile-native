@@ -44,7 +44,7 @@ describe('api service POST', () => {
     } catch (err) {
       // assert on the error
       expect(err).toBeInstanceOf(ApiError);
-      expect(err.message).toEqual('Server error');
+      expect(err.message).toEqual('Server error 500');
     }
   });
 
@@ -115,7 +115,7 @@ describe('api service GET', () => {
     } catch (err) {
       // assert on the error
       expect(err).toBeInstanceOf(ApiError);
-      expect(err.message).toEqual('Server error');
+      expect(err.message).toEqual('Server error 500');
     }
   });
 
@@ -187,7 +187,7 @@ describe('api service DELETE', () => {
     } catch (err) {
       // assert on the error
       expect(err).toBeInstanceOf(ApiError);
-      expect(err.message).toEqual('Server error');
+      expect(err.message).toEqual('Server error 500');
     }
   });
 
@@ -259,7 +259,7 @@ describe('api service PUT', () => {
     } catch (err) {
       // assert on the error
       expect(err).toBeInstanceOf(ApiError);
-      expect(err.message).toEqual('Server error');
+      expect(err.message).toEqual('Server error 500');
     }
   });
 

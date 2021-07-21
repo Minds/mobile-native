@@ -161,8 +161,8 @@ export class ApiService {
       apiError.headers = response.headers;
       throw apiError;
     }
-    if (response.status === 500) {
-      throw new ApiError('Server error');
+    if (response.status >= 500) {
+      throw new ApiError('Server error ' + response.status);
     }
 
     return data;
@@ -426,7 +426,7 @@ export class ApiService {
         }
       };
       xhr.onerror = function () {
-        reject(new TypeError('Network request failed'));
+        reject(new NetworkError('Network request failed'));
       };
 
       xhr.send(formData);

@@ -5,7 +5,7 @@ import AttachmentStore from '../common/stores/AttachmentStore';
 import RichEmbedStore from '../common/stores/RichEmbedStore';
 import i18n from '../common/services/i18n.service';
 import hashtagService from '../common/services/hashtag.service';
-import api from '../common/services/api.service';
+import api, { ApiError } from '../common/services/api.service';
 import ActivityModel from '../newsfeed/ActivityModel';
 import ThemedStyles from '../styles/ThemedStyles';
 import featuresService from '../common/services/features.service';
@@ -480,9 +480,7 @@ export default function (props) {
         let newPost = {
           message: this.text,
           accessId: this.accessId,
-          time_created:
-            Math.floor(this.time_created / 1000) ||
-            Math.floor(Date.now() / 1000),
+          time_created: Math.floor(this.time_created / 1000) || null,
         };
 
         if (this.paywalled) {
@@ -550,7 +548,11 @@ export default function (props) {
           return ActivityModel.create(response.activity);
         }
       } catch (e) {
-        showError(i18n.t('errorMessage') + '\n' + i18n.t('pleaseTryAgain'));
+        if (e instanceof ApiError) {
+          showError(e.message);
+        } else {
+          showError(i18n.t('errorMessage') + '\n' + i18n.t('pleaseTryAgain'));
+        }
         logService.exception(e);
       } finally {
         this.setPosting(false);
