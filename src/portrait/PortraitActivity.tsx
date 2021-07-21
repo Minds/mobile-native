@@ -152,7 +152,7 @@ const PortraitActivity = observer((props: PropsType) => {
         <Text
           numberOfLines={1}
           style={[theme.fontM, theme.colorSecondaryText, theme.paddingRight]}>
-          {i18n.date(entity.time_created, 'friendly')}
+          {i18n.date(parseInt(entity.time_created, 10) * 1000, 'friendly')}
           {!!entity.edited && (
             <Text style={[theme.fontS, theme.colorSecondaryText]}>
               {' '}

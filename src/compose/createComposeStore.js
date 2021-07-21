@@ -279,7 +279,6 @@ export default function (props) {
 
         if (all.length <= hashtagService.maxHashtags) {
           this.tags = all;
-          console.log(all);
           return true;
         } else {
           this.maxHashtagsError();
