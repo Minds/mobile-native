@@ -218,6 +218,17 @@ export default class ActivityModel extends BaseModel {
       };
     }
 
+    if (
+      this.type === 'object' &&
+      this.subtype === 'image' &&
+      this.thumbnail_src
+    ) {
+      return {
+        uri: this.thumbnail_src,
+        headers: api.buildHeaders(),
+      };
+    }
+
     if (this.thumbnails && this.thumbnails[size]) {
       return { uri: this.thumbnails[size], headers: api.buildHeaders() };
     }
