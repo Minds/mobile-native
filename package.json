@@ -22,7 +22,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@gorhom/bottom-sheet": "^3.0.0",
+    "@gorhom/bottom-sheet": "^3.6.6",
     "@msantang78/react-native-pager": "^0.2.4",
     "@react-native-clipboard/clipboard": "^1.7.0",
     "@react-native-community/art": "^1.1.2",
