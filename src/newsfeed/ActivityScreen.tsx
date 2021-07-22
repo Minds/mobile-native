@@ -37,11 +37,13 @@ const ActivityScreen = observer((props: PropsType) => {
       async loadEntity() {
         const params = p.route.params;
         if (
-          params.entity &&
-          (params.entity.guid || params.entity.entity_guid)
+          (params.entity && params.entity.urn) ||
+          (params.entity && (params.entity.guid || params.entity.entity_guid))
         ) {
-          const urn =
-            'urn:activity:' + (params.entity.guid || params.entity.entity_guid);
+          const urn = params.entity.urn
+            ? params.entity.urn
+            : 'urn:activity:' +
+              (params.entity.guid || params.entity.entity_guid);
 
           const entity = ActivityModel.checkOrCreate(params.entity);
 
@@ -49,8 +51,7 @@ const ActivityScreen = observer((props: PropsType) => {
             props.navigation.goBack();
             return;
           }
-
-          await store.entityStore.loadEntity(urn, entity, true);
+          await store.entityStore.loadEntity(urn, entity, false);
         } else {
           const urn = 'urn:activity:' + params.guid;
           this.setLoading(true);
