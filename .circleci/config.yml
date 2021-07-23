@@ -44,6 +44,7 @@ jobs:
           working_directory: ios
           command: pod install
       - install_fastlane
+      - run: yarn update-settings
       - run:
           working_directory: ios
           command: fastlane buildrelease
