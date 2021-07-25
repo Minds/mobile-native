@@ -1,4 +1,5 @@
-import { waitForAndType, waitForAndTap, waitForElement } from '../helpers/waitFor';
+/* eslint-env detox/detox, jest */
+import { waitForAndType, waitForAndTap } from '../helpers/waitFor';
 
 /**
  * Login action

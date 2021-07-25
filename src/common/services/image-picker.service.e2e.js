@@ -1,5 +1,5 @@
-//@ts-nocheck
 import CameraRoll from '@react-native-community/cameraroll';
+import RNFS from 'react-native-fs';
 
 /**
  * Image picker service e2e mock
@@ -14,7 +14,8 @@ class ImagePickerService {
    * @param {string} title
    * @param {string} type   photo or video
    */
-  async show(title, type = 'photo') {
+  async launchImageLibrary(title, type = 'photo') {
+    console.log('this launch image library mocked service');
     const params = {
       first: 30,
       assetType: 'All',
@@ -22,13 +23,23 @@ class ImagePickerService {
 
     const result = await CameraRoll.getPhotos(params);
 
+    const origUri = result.edges[0].node.image.uri;
+
+    const uri = await RNFS.copyAssetsFileIOS(
+      origUri,
+      RNFS.TemporaryDirectoryPath + 'test.jpg',
+      512,
+      512,
+    );
+
     return {
-      uri: result.edges[0].node.image.uri,
+      uri: uri,
+      path: uri,
       type: result.edges[0].node.type,
-      fileName: result.edges[0].node.image.filename,
-      duration: result.edges[0].node.image.playableDuration,
-      width: result.edges[0].node.image.width,
-      height: result.edges[0].node.image.height,
+      fileName: 'test.jpg',
+      duration: null,
+      width: 1024,
+      height: 1024,
     };
   }
 }

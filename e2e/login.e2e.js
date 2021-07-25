@@ -1,3 +1,4 @@
+/* eslint-env detox/detox, jest */
 import { expect } from 'detox';
 import login from './actions/login';
 

@@ -67,6 +67,7 @@ export default observer(function MediaPreview(props: PropsType) {
         <View>
           {!props.store.isEdit && !props.store.portraitMode && (
             <TouchableOpacity
+              testID="AttachmentDeleteButton"
               onPress={() =>
                 props.store.attachment.cancelOrDelete(!props.store.isEdit)
               }

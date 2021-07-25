@@ -202,10 +202,10 @@ export class ApiService {
     };
 
     if (MINDS_STAGING) {
-      headers.Cookie = 'staging=1';
+      headers.Cookie = `${headers.Cookie};staging=1`;
     }
     if (MINDS_CANARY) {
-      headers.Cookie = 'canary=1';
+      headers.Cookie = `${headers.Cookie};canary=1`;
     }
 
     if (session.token) {
