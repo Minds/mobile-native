@@ -793,6 +793,7 @@
   "onboarding": {
     "startEarning": "Start earning tokens",
     "improveExperience": "Improve your experience",
+    "hidePanel": "Hide this panel",
     "joinGroup": "Join a group",
     "subscribeToChannel": "Subscribe to a channel",
     "completeToEarn": "Complete to earn tokens",
