@@ -338,6 +338,9 @@ exports[`renders correctly 1`] = `
                       "fontSize": 18,
                     },
                     Object {
+                      "color": "#43434D",
+                    },
+                    Object {
                       "color": "#FFFFFF",
                     },
                   ],

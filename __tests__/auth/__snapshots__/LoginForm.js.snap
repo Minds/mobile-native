@@ -137,6 +137,9 @@ exports[`LoginForm component should renders correctly 1`] = `
                   "fontSize": 18,
                 },
                 Object {
+                  "color": "#43434D",
+                },
+                Object {
                   "color": "#FFFFFF",
                 },
               ],
@@ -263,6 +266,9 @@ exports[`LoginForm component should renders correctly 1`] = `
                   },
                   Object {
                     "fontSize": 18,
+                  },
+                  Object {
+                    "color": "#43434D",
                   },
                   Object {
                     "color": "#FFFFFF",
@@ -843,6 +849,9 @@ exports[`LoginForm component should renders correctly 1`] = `
                         },
                         Object {
                           "fontSize": 18,
+                        },
+                        Object {
+                          "color": "#43434D",
                         },
                         Array [
                           Object {
