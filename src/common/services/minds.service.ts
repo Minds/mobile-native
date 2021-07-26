@@ -49,7 +49,7 @@ class MindsService {
         }
       } catch {
         settings = this.loadDefault();
-        await AsyncStorage.setItem('@MindsSettings', JSON.stringify(settings));
+        AsyncStorage.setItem('@MindsSettings', JSON.stringify(settings));
       }
       this.settings = settings;
       // update the features based on the settings
