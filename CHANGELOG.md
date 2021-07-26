@@ -2,7 +2,17 @@
 
 Minds Mobile
 
-## 4.15.0 - 2021-07-01
+## 4.16.0 - 2021-07-26
+
+### Changed
+
+- Fix comments scroll problems
+- Date format
+- Detect chat app installed on iOS
+- Improves UX on comments
+- Bug fixing
+
+## 4.15.0 - 2021-07-10
 
 ### Changed
 
