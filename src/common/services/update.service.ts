@@ -166,7 +166,7 @@ class UpdateService {
     this.setDownloading(true);
 
     const updater = new UpdateAPK.UpdateAPK({
-      fileProviderAuthority: 'com.minds.mobile.fileprovider',
+      fileProviderAuthority: 'com.minds.mobile.provider',
 
       downloadApkProgress: progress => {
         this.setProgress(progress);

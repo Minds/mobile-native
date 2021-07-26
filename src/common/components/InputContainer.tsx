@@ -28,6 +28,7 @@ const InputContainer = (props: PropsType) => {
           styles.input,
           theme.paddingLeft0x,
           theme.fontXL,
+          theme.colorPrimaryText,
           style,
           // heightStyle,
         ]}
