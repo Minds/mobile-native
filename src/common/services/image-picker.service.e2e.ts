@@ -21,6 +21,7 @@ class ImagePickerService {
       assetType: 'All',
     };
 
+    //@ts-ignore
     const result = await CameraRoll.getPhotos(params);
 
     const origUri = result.edges[0].node.image.uri;
