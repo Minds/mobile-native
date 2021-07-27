@@ -1,9 +1,5 @@
 /* eslint-env detox/detox, jest */
-import {
-  waitForAndType,
-  waitForElement,
-  waitForAndTap,
-} from './helpers/waitFor';
+import { waitForElement } from './helpers/waitFor';
 
 import login from './actions/login';
 
@@ -35,7 +31,6 @@ describe('Onboarding Flow', () => {
   });
 
   it('should set up channel', async () => {
-    // login should be visible
     await waitForElement(by.id('startOnboarding'));
   });
 });
