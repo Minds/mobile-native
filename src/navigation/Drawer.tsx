@@ -174,15 +174,17 @@ export default function Drawer(props) {
             !l ? null : (
               <ListItem
                 Component={TouchableOpacity}
-                key={i}
-                title={l.name}
-                titleStyle={menuTitleStyle}
-                containerStyle={styles.listItem}
                 pad={5}
-                leftIcon={l.icon}
+                key={i}
                 onPress={l.onPress}
-                // testID={l.name}
-              />
+                containerStyle={styles.listItem}>
+                {l.icon}
+                <ListItem.Content>
+                  <ListItem.Title style={menuTitleStyle}>
+                    {l.name}
+                  </ListItem.Title>
+                </ListItem.Content>
+              </ListItem>
             ),
           )}
         </View>
