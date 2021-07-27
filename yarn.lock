@@ -15259,10 +15259,10 @@ tinycolor2@^1.4.1:
   resolved "https://registry.yarnpkg.com/tinycolor2/-/tinycolor2-1.4.2.tgz#3f6a4d1071ad07676d7fa472e1fac40a719d8803"
   integrity sha512-vJhccZPs965sV/L2sU4oRQVAos0pQXwsvTLkWYdqJ+a8Q5kPFzJTuOFwy7UniPli44NKQGAglksjvOcpo95aZA==
 
-tipsi-stripe@8.0.0-beta.10:
-  version "8.0.0-beta.10"
-  resolved "https://registry.yarnpkg.com/tipsi-stripe/-/tipsi-stripe-8.0.0-beta.10.tgz#d9a1fdffa0d3171554bd85ff1147866a1fb93136"
-  integrity sha512-CVCVgu/p1rrgtVLZTA4gKv8gb+1ig0kWvowL+XzS/h4QouCYg3LPc3prr+op5HQJ5O+P9f6isQy2kUdEcarFEQ==
+tipsi-stripe@9.1.4:
+  version "9.1.4"
+  resolved "https://registry.yarnpkg.com/tipsi-stripe/-/tipsi-stripe-9.1.4.tgz#ca889a3b4b5ef2b7a3ed609715f5ef5c7ec67385"
+  integrity sha512-TYzV7dfpxMnd8AQny2NilALWeNyZ+52rpscVPp6mX0kI5rmOpJafu5cDblkQKhdlnrQgIPfNOGjWntyHyuuh6Q==
 
 tmp@^0.0.33:
   version "0.0.33"

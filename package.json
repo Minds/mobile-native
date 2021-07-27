@@ -133,7 +133,7 @@
     "rne-modal-tooltip": "gist:b28c003d87c619674def0878473338a0",
     "rxjs": "^6.5.5",
     "socket.io-client": "^2.3.0",
-    "tipsi-stripe": "8.0.0-beta.10",
+    "tipsi-stripe": "9.1.4",
     "vm-browserify": "^1.1.2",
     "web3": "^1.3.3",
     "yarn": "^1.22.4"
