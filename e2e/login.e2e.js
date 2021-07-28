@@ -42,6 +42,6 @@ describe('Login Flow', () => {
     await login(process.env.loginUser, process.env.loginPass);
 
     // it should show the newsfeed screen
-    await expect(element(by.id('NewsfeedScreen'))).toBeVisible();
+    await expect(element(by.id('feedlistCMP'))).toBeVisible();
   });
 });
