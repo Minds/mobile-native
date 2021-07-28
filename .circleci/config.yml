@@ -106,13 +106,13 @@ workflows:
             - checkout_code
           filters:
             branches:
-              ignore: /^stable.*/
+              only: /^stable.*/
       - e2e_prod:
           requires:
             - checkout_code
           filters:
             branches:
-              only: /^stable.*/
+              ignore: /^stable.*/
       - fastlane_release:
           requires:
             - analyse_js
