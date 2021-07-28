@@ -109,6 +109,7 @@ import BoostChannelScreen from '../boost/v2/BoostChannelScreen';
 import BoostPostScreen from '../boost/v2/BoostPostScreen';
 import BuyTokensScreen from '../buy-tokens/BuyTokensScreen';
 import { topBarButtonTabBarRef } from '../common/components/topbar-tabbar/TopBarButtonTabBar';
+import { topbarTabbarRef } from '../common/components/topbar-tabbar/TopbarTabbar';
 import ExportLegacyWallet from '../settings/screens/ExportLegacyWallet';
 import Withdrawal from '../wallet/v3/currency-tabs/tokens/widthdrawal/Withdrawal';
 import EarnModal from '../earn/EarnModal';
@@ -306,7 +307,7 @@ export const InternalStack = () => {
 const gestureHandlerProps = {
   hitSlop: { left: 0, width: Dimensions.get('window').width },
   //@ts-ignore
-  waitFor: [portraitBarRef, topBarButtonTabBarRef],
+  waitFor: [portraitBarRef, topBarButtonTabBarRef, topbarTabbarRef],
 };
 
 const MainScreen = () => {

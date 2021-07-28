@@ -7,6 +7,7 @@ import {
   TextStyle,
   StyleSheet,
   ViewStyle,
+  ScrollView,
 } from 'react-native';
 import ThemedStyles from '../../../styles/ThemedStyles';
 
@@ -25,6 +26,11 @@ type PropsType<T> = {
   tabStyle?: StyleProp<ViewStyle>;
   containerStyle?: StyleProp<ViewStyle>;
 };
+
+/**
+ * topbarTabbarRef Ref
+ */
+export const topbarTabbarRef = React.createRef<ScrollView>();
 
 /**
  * Tab bar
@@ -46,40 +52,42 @@ function TopbarTabbar<T>(props: PropsType<T>) {
         theme.paddingHorizontal2x,
         props.containerStyle,
       ]}>
-      {props.tabs.map((tab, i) => (
-        <TouchableOpacity
-          onPress={() => props.onChange(tab.id)}
-          key={i}
-          style={[
-            tabStyle,
-            props.tabStyle,
-            tab.id === props.current
-              ? theme.bcolorTabBorder
-              : theme.bcolorTransparent,
-          ]}>
-          <Text
+      <ScrollView horizontal ref={topbarTabbarRef}>
+        {props.tabs.map((tab, i) => (
+          <TouchableOpacity
+            onPress={() => props.onChange(tab.id)}
+            key={i}
             style={[
-              theme.fontL,
+              tabStyle,
+              props.tabStyle,
               tab.id === props.current
-                ? theme.colorPrimaryText
-                : theme.colorSecondaryText,
-              props.titleStyle,
+                ? theme.bcolorTabBorder
+                : theme.bcolorTransparent,
             ]}>
-            {tab.title}
-          </Text>
-          {!!tab.subtitle && (
             <Text
               style={[
                 theme.fontL,
-                theme.colorSecondaryText,
-                styles.subtitle,
-                props.subtitleStyle,
+                tab.id === props.current
+                  ? theme.colorPrimaryText
+                  : theme.colorSecondaryText,
+                props.titleStyle,
               ]}>
-              {tab.subtitle}
+              {tab.title}
             </Text>
-          )}
-        </TouchableOpacity>
-      ))}
+            {!!tab.subtitle && (
+              <Text
+                style={[
+                  theme.fontL,
+                  theme.colorSecondaryText,
+                  styles.subtitle,
+                  props.subtitleStyle,
+                ]}>
+                {tab.subtitle}
+              </Text>
+            )}
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
     </View>
   );
 }
