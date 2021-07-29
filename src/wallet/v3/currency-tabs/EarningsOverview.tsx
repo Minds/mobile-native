@@ -20,6 +20,7 @@ import toFriendlyCrypto from '../../../common/helpers/toFriendlyCrypto';
 import { TokensTabStore } from './tokens/createTokensTabStore';
 import sessionService from '../../../common/services/session.service';
 import AccordionHeaderTitle from './AccordionHeaderTitle';
+import i18n from '../../../common/services/i18n.service';
 
 type PropsType = {
   localStore: TokensTabStore;
@@ -30,15 +31,15 @@ type PropsType = {
 export const getFriendlyLabel = (id: string): string => {
   switch (id) {
     case 'wire':
-      return 'Minds Pay';
+      return i18n.t('wallet.wire');
     case 'wire-all':
-      return 'Memberships & Tips';
+      return i18n.t('wallet.wireAll');
     case 'partner':
-      return 'Revenue Share';
+      return i18n.t('wallet.partner');
     case 'plus':
-      return 'Minds+ Content';
+      return i18n.t('wallet.plus');
     case 'wire_referral':
-      return 'Minds Pay Commissions';
+      return i18n.t('wallet.wireReferral');
   }
 
   return capitalize(id);
