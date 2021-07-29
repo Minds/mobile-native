@@ -38,10 +38,6 @@ describe('Post Flow', () => {
     await waitForAndTap(by.id('CaptureTextButton'));
     await waitForAndType(by.id('PostInput'), text);
     await tapElement(by.id('topBarDone'));
-
-    await scrollToPost();
-
-    await deletePost();
   });
 
   it('should be able to set nsfw to a post', async () => {
@@ -64,8 +60,6 @@ describe('Post Flow', () => {
       .toBeVisible()
       .withTimeout(120000);
     await tapElement(by.id('topBarDone'));
-    await scrollToPost();
-    await deletePost();
   });
 
   it('should be able to cancel image upload and then post', async () => {
@@ -73,11 +67,3 @@ describe('Post Flow', () => {
     await waitForAndTap(by.id('AttachmentDeleteButton'));
   });
 });
-
-async function scrollToPost() {
-  // scroll up so we have visibility of the created post
-  await waitFor(element(by.id('ActivityMoreButton')))
-    .toBeVisible()
-    .whileElement(by.id('feedlistCMP'))
-    .scroll(100, 'up');
-}
