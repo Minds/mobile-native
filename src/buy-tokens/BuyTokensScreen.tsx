@@ -14,7 +14,7 @@ import OrderReportModal, {
 } from './order-report-modal/OrderReportModal';
 import { startCase as _startCase } from 'lodash';
 import i18n from '../common/services/i18n.service';
-import mindsService from '../common/services/minds.service';
+import mindsConfigService from '../common/services/minds-config.service';
 
 type PaymentMethod = 'card' | 'bank' | 'crypto';
 type PaymentOption = { type: PaymentMethod; name: string };
@@ -52,15 +52,11 @@ export default observer(() => {
   const canBuyTokens = !!store.paymentMethod && store.aggressTerms;
 
   useEffect(() => {
-    const getSettings = async () => {
-      const settings = await mindsService.getSettings();
-      store.setKeys(
-        settings.blockchain.transak.api_key,
-        settings.blockchain.token.address,
-      );
-    };
-
-    getSettings();
+    const settings = mindsConfigService.getSettings();
+    store.setKeys(
+      settings.blockchain.transak.api_key,
+      settings.blockchain.token.address,
+    );
   }, [store]);
 
   useEffect(() => {
@@ -77,7 +73,7 @@ export default observer(() => {
       <ScrollView
         style={[theme.flexContainer, theme.bgPrimaryBackground]}
         contentContainerStyle={theme.padding4x}>
-        <View style={[theme.alignCenter]}>
+        <View style={theme.alignCenter}>
           <Text
             style={[
               theme.colorPrimaryText,

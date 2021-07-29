@@ -3,7 +3,7 @@
 import { Alert } from 'react-native';
 
 import { MINDS_FEATURES } from '../../config/Config';
-import mindsService from './minds.service';
+import mindsConfigService from './minds-config.service';
 import { observable, action } from 'mobx';
 import sessionService from './session.service';
 import i18n from './i18n.service';
@@ -25,7 +25,7 @@ class FeaturesService {
   async updateFeatures() {
     let settings;
 
-    settings = await mindsService.getSettings();
+    settings = mindsConfigService.getSettings();
 
     const features = settings.features;
 

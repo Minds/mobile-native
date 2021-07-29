@@ -6,7 +6,7 @@ import RNConvertPhAsset from 'react-native-convert-ph-asset';
 import attachmentService from '../services/attachment.service';
 import logService from '../services/log.service';
 import i18n from '../services/i18n.service';
-import mindsService from '../services/minds.service';
+import mindsConfigService from '../services/minds-config.service';
 import { showNotification } from '../../../AppMessages';
 
 /**
@@ -119,7 +119,7 @@ export default class AttachmentStore {
   }
 
   async validate(media) {
-    const settings = await mindsService.getSettings();
+    const settings = mindsConfigService.getSettings();
     if (media.duration && media.duration > settings.max_video_length * 1000) {
       Alert.alert(
         i18n.t('sorry'),

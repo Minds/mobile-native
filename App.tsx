@@ -188,6 +188,7 @@ class App extends Component<Props, State> {
     }
 
     const isLoggedIn = sessionService.userLoggedIn;
+    const isReady = sessionService.isReady;
 
     const statusBarStyle =
       ThemedStyles.theme === 0 ? 'dark-content' : 'light-content';
@@ -216,6 +217,7 @@ class App extends Component<Props, State> {
                       <NavigationStack
                         key={ThemedStyles.theme + i18n.locale}
                         isLoggedIn={isLoggedIn}
+                        isReady={isReady}
                       />
                     </WCContextProvider>
                     <AppMessages />

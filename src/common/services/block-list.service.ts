@@ -1,8 +1,10 @@
 import apiService from './api.service';
 import sessionService from './session.service';
-import storageService from './storage.service';
 import logService from './log.service';
 import { observable, action } from 'mobx';
+import { storages } from './storage/storages.service';
+
+const key = 'blockedChannels';
 
 /**
  * Block list service
@@ -25,8 +27,8 @@ export class BlockListService {
     return this.blocked.has(guid);
   }
 
-  async loadFromStorage() {
-    const guids = await storageService.getItem('@minds:blocked');
+  loadFromStorage() {
+    const guids = storages.user?.getArray(key);
     if (guids) {
       guids.forEach(g => this.blocked.set(g, undefined));
     }
@@ -44,15 +46,15 @@ export class BlockListService {
         response.guids.forEach(g => this.blocked.set(g, undefined));
       }
 
-      storageService.setItem('@minds:blocked', response.guids); // save to storage
+      storages.user?.setArray(key, response.guids); // save to storage
     } catch (err) {
       logService.exception('[BlockListService]', err);
     }
   }
 
-  async prune() {
+  prune() {
     this.blocked.clear();
-    await storageService.setItem('@minds:blocked', []);
+    storages.user?.setArray(key, []);
   }
 
   getList() {
@@ -60,15 +62,15 @@ export class BlockListService {
   }
 
   @action
-  async add(guid: string) {
+  add(guid: string) {
     this.blocked.set(guid, undefined);
-    storageService.setItem('@minds:blocked', this.blocked.keys());
+    storages.user?.setArray(key, Array.from(this.blocked.keys()));
   }
 
   @action
-  async remove(guid: string) {
+  remove(guid: string) {
     this.blocked.delete(guid);
-    storageService.setItem('@minds:blocked', this.blocked.keys());
+    storages.user?.setArray(key, Array.from(this.blocked.keys()));
   }
 }
 

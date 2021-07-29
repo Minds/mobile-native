@@ -3,13 +3,12 @@ import { Linking, Alert, Clipboard, Platform } from 'react-native';
 import * as Sentry from '@sentry/react-native';
 import ShareMenu from 'react-native-share-menu';
 
-import settingsStore, { SettingsStore } from './src/settings/SettingsStore';
+import { SettingsStore } from './src/settings/SettingsStore';
 import apiService from './src/common/services/api.service';
 import pushService from './src/common/services/push.service';
-import mindsService from './src/common/services/minds.service';
 import receiveShare from './src/common/services/receive-share.service';
 import sqliteStorageProviderService from './src/common/services/sqlite-storage-provider.service';
-import getMaches from './src/common/helpers/getMatches';
+
 import { GOOGLE_PLAY_STORE } from './src/config/Config';
 import updateService from './src/common/services/update.service';
 import logService from './src/common/services/log.service';
@@ -25,7 +24,6 @@ import feedsStorage from './src/common/services/sql/feeds.storage';
 import translationService from './src/common/services/translation.service';
 import badgeService from './src/common/services/badge.service';
 import { getStores } from './AppStores';
-import { showMessageForPrivateKey } from './src/blockchain/ExportOldWallet';
 
 /**
  * App initialization manager
@@ -33,7 +31,6 @@ import { showMessageForPrivateKey } from './src/blockchain/ExportOldWallet';
 export default class AppInitManager {
   initialized = false;
 
-  mindsSettingsPromise?: Promise<any>;
   settingsStorePromise?: Promise<SettingsStore>;
   deeplinkPromise?: Promise<string | null>;
   deepLinkUrl = '';
@@ -58,8 +55,6 @@ export default class AppInitManager {
     apiService.clearCookies();
 
     // init settings loading
-    this.mindsSettingsPromise = mindsService.getSettings();
-    this.settingsStorePromise = settingsStore.init();
     this.deeplinkPromise = Linking.getInitialURL();
 
     // On app login (runs if the user login or if it is already logged in)
@@ -96,12 +91,7 @@ export default class AppInitManager {
     logService.info('[App] Getting minds settings and onboarding progress');
 
     // load minds settings and boosted content
-    await Promise.all([
-      this.mindsSettingsPromise,
-      boostedContentService.load(),
-    ]);
-
-    logService.info('[App] updating features');
+    await boostedContentService.load();
 
     // register device token into backend on login
 
@@ -175,12 +165,7 @@ export default class AppInitManager {
   onNavigatorReady = async () => {
     try {
       // load app setting before start
-      const results = await Promise.all([
-        this.settingsStorePromise,
-        this.deeplinkPromise,
-      ]);
-
-      this.deepLinkUrl = results[1] || '';
+      this.deepLinkUrl = (await this.deeplinkPromise) || '';
 
       if (!this.handlePasswordResetDeepLink()) {
         logService.info('[App] initializing session');

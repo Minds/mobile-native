@@ -1,6 +1,6 @@
 import type UserModel from '../channel/UserModel';
 import entitiesService from '../common/services/entities.service';
-import mindsService from '../common/services/minds.service';
+import mindsConfigService from '../common/services/minds-config.service';
 import WireStore from '../wire/WireStore';
 import { PaymentPlan, payMethod, UpgradePlans } from './types';
 
@@ -86,16 +86,13 @@ const createUpgradeStore = () => {
     },
     async getSettings(pro: boolean) {
       // update the settings
-      await mindsService.update();
+      await mindsConfigService.update();
+      const settings = mindsConfigService.getSettings();
       // used to get costs for plus
-      this.settings = pro
-        ? (await mindsService.getSettings()).upgrades.pro
-        : (await mindsService.getSettings()).upgrades.plus;
+      this.settings = pro ? settings.upgrades.pro : settings.upgrades.plus;
 
       // used to pay plus by wire
-      const handler = pro
-        ? mindsService.settings.handlers.pro
-        : mindsService.settings.handlers.plus;
+      const handler = pro ? settings.handlers.pro : settings.handlers.plus;
 
       this.owner = (await entitiesService.single(
         `urn:user:${handler}`,

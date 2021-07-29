@@ -1,11 +1,11 @@
-//@ts-nocheck
 import { observable, action, reaction } from 'mobx';
-
-import sessionStorage from './session.storage.service';
+import { SessionStorageService } from './storage/session.storage.service';
 import AuthService from '../../auth/AuthService';
 import { getStores } from '../../../AppStores';
 import logService from './log.service';
 import type UserModel from '../../channel/UserModel';
+import { createUserStore } from './storage/storages.service';
+import SettingsStore from '../../settings/SettingsStore';
 
 export class TokenExpiredError extends Error {}
 
@@ -18,6 +18,7 @@ export const isTokenExpired = error => {
  */
 class SessionService {
   @observable userLoggedIn = false;
+  @observable ready = false;
 
   /**
    * Session token
@@ -38,12 +39,12 @@ class SessionService {
   /**
    * User guid
    */
-  guid = null;
+  guid: string | null = null;
 
   /**
    * Session storage service
    */
-  sessionStorage = null;
+  sessionStorage;
 
   /**
    * Initial screen
@@ -58,7 +59,7 @@ class SessionService {
    * Constructor
    * @param {object} sessionStorage
    */
-  constructor(sessionStorage) {
+  constructor(sessionStorage: SessionStorageService) {
     this.sessionStorage = sessionStorage;
   }
 
@@ -67,18 +68,17 @@ class SessionService {
    */
   async init() {
     try {
-      const [
-        accessToken,
-        refreshToken,
-        user,
-      ] = await this.sessionStorage.getAll();
+      const sessionData = this.sessionStorage.getAll();
 
       // if there is no session active we clean up and return;
-      if (!accessToken) {
+      if (sessionData === null) {
         this.setToken(null);
         this.setRefreshToken(null);
+        this.setReady();
         return null;
       }
+
+      const [accessToken, refreshToken, user] = sessionData;
 
       const { access_token, access_token_expires } = accessToken;
       const { refresh_token, refresh_token_expires } = refreshToken;
@@ -89,21 +89,14 @@ class SessionService {
       this.setRefreshToken(refresh_token);
       this.setToken(access_token);
 
-      if (!access_token) {
-        return null;
-      }
-
-      if (
-        access_token_expires * 1000 < Date.now() &&
-        refresh_token &&
-        refresh_token_expires * 1000 > Date.now()
-      ) {
-        await this.refreshAuthToken();
-      }
-
       // ensure user loaded before activate the session
       await this.loadUser(user);
 
+      if (this.guid) {
+        createUserStore(this.guid);
+        SettingsStore.loadUserSettings();
+      }
+      this.setReady();
       this.setLoggedIn(true);
 
       return access_token;
@@ -116,7 +109,11 @@ class SessionService {
   }
 
   tokenCanRefresh() {
-    return this.refreshToken && this.refreshTokenExpires * 1000 > Date.now();
+    return (
+      this.refreshToken &&
+      this.refreshTokenExpires &&
+      this.refreshTokenExpires * 1000 > Date.now()
+    );
   }
 
   async refreshAuthToken() {
@@ -139,11 +136,11 @@ class SessionService {
       getStores()
         .user.load(true)
         .then(user => {
-          if (user) sessionStorage.setUser(user);
+          if (user) this.sessionStorage.setUser(user);
         });
     } else {
       user = await getStores().user.load();
-      sessionStorage.setUser(user);
+      this.sessionStorage.setUser(user);
     }
 
     this.guid = user.guid;
@@ -191,6 +188,11 @@ class SessionService {
     this.userLoggedIn = value;
   }
 
+  @action
+  setReady() {
+    this.ready = true;
+  }
+
   /**
    * Set token
    */
@@ -223,6 +225,12 @@ class SessionService {
     // ensure user loaded before activate the session
     if (loadUser) {
       await this.loadUser();
+    }
+
+    // create user data storage
+    if (this.guid) {
+      createUserStore(this.guid);
+      SettingsStore.loadUserSettings();
     }
 
     this.setLoggedIn(true);
@@ -333,7 +341,7 @@ class SessionService {
    * Clear messenger keys
    */
   clearMessengerKeys() {
-    return sessionStorage.clearPrivateKey();
+    return this.sessionStorage.clearPrivateKey();
   }
 
   setRecoveryCodeUsed(used: boolean) {
@@ -341,4 +349,4 @@ class SessionService {
   }
 }
 
-export default new SessionService(sessionStorage);
+export default new SessionService(new SessionStorageService());

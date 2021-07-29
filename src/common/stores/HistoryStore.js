@@ -1,5 +1,5 @@
 import { observable, action } from 'mobx';
-import storageService from '../services/storage.service';
+import { storages } from '../services/storage/storages.service';
 
 /**
  * History store with persistence
@@ -25,7 +25,7 @@ export default class HistoryStore {
    * Load data
    */
   async load() {
-    const data = await storageService.getItem(this.key);
+    const data = storages.user?.getArray(this.key);
     if (data) {
       this.setHistory(data);
     }
@@ -37,7 +37,7 @@ export default class HistoryStore {
   @action
   clear = () => {
     this.history = [];
-    storageService.setItem(this.key, this.history);
+    storages.user?.setArray(this.key, this.history);
   };
 
   /**
@@ -63,6 +63,6 @@ export default class HistoryStore {
     if (this.history.unshift(item) > this.max) {
       this.history.pop();
     }
-    storageService.setItem(this.key, this.history);
+    storages.user?.setArray(this.key, this.history);
   }
 }
