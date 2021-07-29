@@ -18,15 +18,10 @@ export default class DateRangePicker extends PureComponent {
     from: new Date(),
   };
 
-  /**
-   * On component will mount
-   */
-  componentWillMount() {
-    this.setState({
-      fromVisible: false,
-      toVisible: false,
-    });
-  }
+  state = {
+    fromVisible: false,
+    toVisible: false,
+  };
 
   /**
    * Render

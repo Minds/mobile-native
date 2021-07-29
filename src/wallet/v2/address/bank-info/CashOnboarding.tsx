@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { ScrollView, StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import CountrySelector from '../../../../common/components/CountrySelector';
 import MenuItem from '../../../../common/components/menus/MenuItem';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -28,7 +28,7 @@ const CashOnboarding = observer(
 
     return (
       <DismissKeyboard>
-        <KeyboardAwareScrollView keyboardShouldPersistTaps={true}>
+        <KeyboardAwareScrollView keyboardShouldPersistTaps="always">
           <KeyboardSpacingView>
             <CountrySelector
               onlyAllowed="allowedCountriesBankAccount"

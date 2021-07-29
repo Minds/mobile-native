@@ -44,9 +44,10 @@ export default class FeedList<T> extends Component<PropsType> {
   };
 
   /**
-   * On list mount
+   * Constructor
    */
-  componentWillMount() {
+  constructor(props) {
+    super(props);
     this.cantShowActivity = i18n.t('errorShowActivity');
   }
 

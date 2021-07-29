@@ -34,7 +34,8 @@ export default class MessengerSetup extends Component<PropsType> {
   password = '';
   confirm = '';
 
-  componentWillMount() {
+  constructor(props) {
+    super(props);
     const { setOptions } = this.props.navigation;
     let button;
 

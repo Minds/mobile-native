@@ -1,14 +1,7 @@
 //@ts-nocheck
-//@ts-nocheck
 import React, { Component } from 'react';
 
-import {
-  View,
-  Image,
-  Text,
-  StyleSheet,
-  TouchableHighlight,
-} from 'react-native';
+import { View, Image, Text, StyleSheet } from 'react-native';
 
 import { observer, inject } from 'mobx-react';
 import token from '../../common/helpers/token';
@@ -21,9 +14,6 @@ import colors from '../../styles/Colors';
 export default class WalletBalanceTokens extends Component {
   componentDidMount() {
     this.props.wallet.refresh();
-  }
-
-  componentWillMount() {
     this.disposeEnter = this.props.navigation.addListener('focus', () => {
       this.triggerRender(this.props.wallet);
     });
