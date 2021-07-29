@@ -130,6 +130,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
 
         return (
           <Component
+            key={`tab${index}`}
             accessibilityRole="button"
             accessibilityState={focused ? focusedState : null}
             accessibilityLabel={options.tabBarAccessibilityLabel}

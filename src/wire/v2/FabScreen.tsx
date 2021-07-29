@@ -185,7 +185,7 @@ const FabScreen = observer(({ route, navigation }) => {
   return (
     <Fragment>
       <ScrollView
-        keyboardShouldPersistTaps={true}
+        keyboardShouldPersistTaps="always"
         contentContainerStyle={cleanTop}>
         <View style={theme.rowJustifySpaceBetween}>
           <View style={theme.rowJustifyStart}>

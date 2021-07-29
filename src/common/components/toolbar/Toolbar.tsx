@@ -12,10 +12,8 @@ export default class Toolbar extends PureComponent {
     selected: null,
   };
 
-  /**
-   * Component will mount
-   */
-  componentWillMount() {
+  constructor(props) {
+    super(props);
     const initial = this.props.initial;
 
     if (initial) this.state.selected = initial;

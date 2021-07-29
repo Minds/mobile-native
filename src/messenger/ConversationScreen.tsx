@@ -61,7 +61,8 @@ export default class ConversationScreen extends Component {
     };
   };
 
-  componentWillMount() {
+  constructor(props) {
+    super(props);
     this.store = new MessengerConversationStore();
     const params = this.props.route.params;
     let conversation;

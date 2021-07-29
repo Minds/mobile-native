@@ -5,7 +5,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
   <RCTScrollView
     accessible={true}
     focusable={true}
-    keyboardShouldPersistTaps={true}
+    keyboardShouldPersistTaps="always"
     onClick={[Function]}
     onContentSizeChange={[Function]}
     onLayout={[Function]}

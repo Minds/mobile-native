@@ -125,6 +125,7 @@ class OwnerBlock extends PureComponent<PropsType> {
           </Text>
           {this.props.entity.remind_users.map(u => (
             <Text
+              key={u.guid}
               onPress={() => {
                 if (!this.props.navigation) return;
                 this.props.navigation.push('Channel', {

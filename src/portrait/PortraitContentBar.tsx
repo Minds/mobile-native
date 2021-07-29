@@ -97,11 +97,14 @@ const PortraitContentBar = observer(
           ListEmptyComponent={Empty}
           renderItem={renderItem}
           data={store.items.slice()}
+          keyExtractor={keyExtractor}
         />
       </View>
     );
   }),
 );
+
+const keyExtractor = (item, _) => item.user.guid;
 
 const styles = StyleSheet.create({
   bar: {

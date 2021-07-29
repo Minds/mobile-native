@@ -290,7 +290,7 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
         </>
       )}
       {!store.loadingData ? (
-        <ScrollView keyboardShouldPersistTaps={true}>
+        <ScrollView keyboardShouldPersistTaps="always">
           {!isIos && (
             <View
               style={[

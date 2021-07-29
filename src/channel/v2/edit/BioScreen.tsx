@@ -74,7 +74,7 @@ const BioScreen = observer(({ route, navigation }: PropsType) => {
   return (
     <ScrollView
       style={[theme.flexContainer, theme.bgPrimaryBackground]}
-      keyboardShouldPersistTaps={true}>
+      keyboardShouldPersistTaps="always">
       <KeyboardAvoidingView
         style={[theme.flexContainer, theme.paddingTop3x]}
         behavior="position"

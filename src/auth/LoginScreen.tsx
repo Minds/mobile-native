@@ -50,7 +50,7 @@ export default function LoginScreen(props: PropsType) {
       <DismissKeyboard>
         <FitScrollView
           style={theme.flexContainer}
-          keyboardShouldPersistTaps={true}>
+          keyboardShouldPersistTaps="always">
           <View style={theme.flexColumnStretch}>
             <Animated.View style={[styles.bulb, { height: containerHeight }]}>
               <Animated.Image
