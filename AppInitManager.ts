@@ -101,9 +101,6 @@ export default class AppInitManager {
     // clear app badge
     badgeService.setUnreadConversations(0);
     badgeService.setUnreadNotifications(0);
-    // clear offline cache
-    entitiesStorage.removeAll();
-    feedsStorage.removeAll();
     getStores().groupsBar.clearLocal();
     translationService.purgeLanguagesCache();
   };
@@ -135,14 +132,13 @@ export default class AppInitManager {
     // fire offline cache garbage collector 30 seconds after start
     setTimeout(() => {
       if (!connectivityService.isConnected) return;
-      entitiesStorage.removeOlderThan(30);
-      feedsStorage.removeOlderThan(30);
-      commentStorageService.removeOlderThan(30);
       portraitContentService.removeOlderThan(3);
     }, 30000);
   };
 
   async initialNavigationHandling() {
+    // hide splash
+    RNBootSplash.hide({ duration: 250 });
     // load minds settings and boosted content
     await boostedContentService.load();
     try {
@@ -156,9 +152,6 @@ export default class AppInitManager {
         });
         sessionService.setInitialScreen('');
       }
-
-      // hide splash
-      RNBootSplash.hide({ duration: 450 });
 
       // handle deep link (if the app is opened by one)
       if (this.deepLinkUrl) {

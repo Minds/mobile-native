@@ -11,6 +11,7 @@ export type TFA = 'sms' | 'totp';
 
 interface LoginResponse extends ApiResponse {
   access_token: string;
+  refresh_token: string;
   token_type: string;
 }
 

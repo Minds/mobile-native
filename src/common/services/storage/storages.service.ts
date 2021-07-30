@@ -5,12 +5,14 @@ type Storages = {
   session: MMKVStorage.API;
   app: MMKVStorage.API;
   user: MMKVStorage.API | null;
+  userCache: MMKVStorage.API | null;
 };
 
 export const storages: Storages = {
   session: createStorage('session'),
   app: createStorage('app'),
   user: null,
+  userCache: null,
 };
 
 /**
@@ -39,4 +41,5 @@ export function createStorage(
  */
 export function createUserStore(guid: string) {
   storages.user = createStorage(`user_${guid}`);
+  storages.userCache = createStorage(`user_cache_${guid}`);
 }
