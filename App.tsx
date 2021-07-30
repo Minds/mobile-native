@@ -188,51 +188,50 @@ class App extends Component<Props, State> {
     }
 
     const isLoggedIn = sessionService.userLoggedIn;
-    const isReady = sessionService.isReady;
 
     const statusBarStyle =
       ThemedStyles.theme === 0 ? 'dark-content' : 'light-content';
 
-    const app = (
-      <SafeAreaProvider key={'App'}>
-        <ScreenHeightProvider>
-          <NavigationContainer
-            ref={setTopLevelNavigator}
-            theme={ThemedStyles.navTheme}
-            onReady={appInitManager.onNavigatorReady}
-            onStateChange={analyticsService.onNavigatorStateChange}>
-            <StoresProvider>
-              <Provider key="app" {...stores}>
-                <BottomSheetModalProvider>
-                  <ErrorBoundary
-                    message="An error occurred"
-                    containerStyle={ThemedStyles.style.centered}>
-                    <StatusBar
-                      barStyle={statusBarStyle}
-                      backgroundColor={ThemedStyles.getColor(
-                        'SecondaryBackground',
-                      )}
-                    />
-                    <WCContextProvider>
-                      <NavigationStack
-                        key={ThemedStyles.theme + i18n.locale}
-                        isLoggedIn={isLoggedIn}
-                        isReady={isReady}
-                      />
-                    </WCContextProvider>
-                    <AppMessages />
-                  </ErrorBoundary>
-                </BottomSheetModalProvider>
-              </Provider>
-            </StoresProvider>
-          </NavigationContainer>
-        </ScreenHeightProvider>
-      </SafeAreaProvider>
+    return (
+      <>
+        <SafeAreaProvider key={'App'}>
+          <ScreenHeightProvider>
+            {sessionService.ready && (
+              <NavigationContainer
+                ref={setTopLevelNavigator}
+                theme={ThemedStyles.navTheme}
+                onReady={appInitManager.onNavigatorReady}
+                onStateChange={analyticsService.onNavigatorStateChange}>
+                <StoresProvider>
+                  <Provider key="app" {...stores}>
+                    <BottomSheetModalProvider>
+                      <ErrorBoundary
+                        message="An error occurred"
+                        containerStyle={ThemedStyles.style.centered}>
+                        <StatusBar
+                          barStyle={statusBarStyle}
+                          backgroundColor={ThemedStyles.getColor(
+                            'SecondaryBackground',
+                          )}
+                        />
+                        <WCContextProvider>
+                          <NavigationStack
+                            key={ThemedStyles.theme + i18n.locale}
+                            isLoggedIn={isLoggedIn}
+                          />
+                        </WCContextProvider>
+                        <AppMessages />
+                      </ErrorBoundary>
+                    </BottomSheetModalProvider>
+                  </Provider>
+                </StoresProvider>
+              </NavigationContainer>
+            )}
+          </ScreenHeightProvider>
+        </SafeAreaProvider>
+        <TosModal user={stores.user} key="tosModal" />
+      </>
     );
-
-    const tosModal = <TosModal user={stores.user} key="tosModal" />;
-
-    return [app, tosModal];
   }
 }
 

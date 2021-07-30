@@ -1,5 +1,5 @@
 import RNBootSplash from 'react-native-bootsplash';
-import { Linking, Alert, Clipboard, Platform } from 'react-native';
+import { Linking, Alert, Platform } from 'react-native';
 import * as Sentry from '@sentry/react-native';
 import ShareMenu from 'react-native-share-menu';
 
@@ -30,7 +30,7 @@ import { getStores } from './AppStores';
  */
 export default class AppInitManager {
   initialized = false;
-
+  shouldHandlePasswordReset = false;
   settingsStorePromise?: Promise<SettingsStore>;
   deeplinkPromise?: Promise<string | null>;
   deepLinkUrl = '';
@@ -62,6 +62,36 @@ export default class AppInitManager {
 
     //on app logout
     sessionService.onLogout(this.onLogout);
+
+    this.checkDeepLink().then(async shouldHandlePasswordReset => {
+      if (shouldHandlePasswordReset) {
+        sessionService.setReady();
+        this.shouldHandlePasswordReset = true;
+      } else {
+        try {
+          logService.info('[App] init session');
+          const token = await sessionService.init();
+
+          if (!token) {
+            logService.info('[App] there is no active session');
+            RNBootSplash.hide({ duration: 250 });
+          } else {
+            logService.info('[App] session initialized');
+          }
+        } catch (err) {
+          logService.exception('[App] Error initializing the app', err);
+          Alert.alert(
+            'Error',
+            'There was an error initializing the app.\n Do you want to copy the stack trace.',
+            [
+              { text: 'Yes', onPress: () => Clipboard.setString(err.stack) },
+              { text: 'No' },
+            ],
+            { cancelable: false },
+          );
+        }
+      }
+    });
   }
 
   /**
@@ -90,20 +120,9 @@ export default class AppInitManager {
 
     logService.info('[App] Getting minds settings and onboarding progress');
 
-    // load minds settings and boosted content
-    await boostedContentService.load();
-
     // register device token into backend on login
 
     pushService.registerToken();
-
-    logService.info(
-      '[App] navigating to initial screen',
-      sessionService.initialScreen,
-    );
-
-    // hide splash
-    RNBootSplash.hide({ duration: 450 });
 
     // check update
     if (Platform.OS !== 'ios' && !GOOGLE_PLAY_STORE) {
@@ -113,13 +132,33 @@ export default class AppInitManager {
       }, 5000);
     }
 
-    try {
-      NavigationService.navigate(sessionService.initialScreen, {
-        initial: true,
-      });
+    // fire offline cache garbage collector 30 seconds after start
+    setTimeout(() => {
+      if (!connectivityService.isConnected) return;
+      entitiesStorage.removeOlderThan(30);
+      feedsStorage.removeOlderThan(30);
+      commentStorageService.removeOlderThan(30);
+      portraitContentService.removeOlderThan(3);
+    }, 30000);
+  };
 
-      // return to default init screen
-      sessionService.setInitialScreen('Tabs');
+  async initialNavigationHandling() {
+    // load minds settings and boosted content
+    await boostedContentService.load();
+    try {
+      logService.info(
+        '[App] navigating to initial screen',
+        sessionService.initialScreen,
+      );
+      if (sessionService.initialScreen) {
+        NavigationService.navigate(sessionService.initialScreen, {
+          initial: true,
+        });
+        sessionService.setInitialScreen('');
+      }
+
+      // hide splash
+      RNBootSplash.hide({ duration: 450 });
 
       // handle deep link (if the app is opened by one)
       if (this.deepLinkUrl) {
@@ -135,82 +174,35 @@ export default class AppInitManager {
 
       // handle initial shared content`
       ShareMenu.getInitialShare(receiveShare.handle);
+
+      if (sessionService.recoveryCodeUsed) {
+        sessionService.setRecoveryCodeUsed(false);
+        NavigationService.navigate('RecoveryCodeUsedScreen');
+      }
     } catch (err) {
       logService.exception(err);
     }
-
-    // fire offline cache garbage collector 30 seconds after start
-    setTimeout(() => {
-      if (!connectivityService.isConnected) return;
-      entitiesStorage.removeOlderThan(30);
-      feedsStorage.removeOlderThan(30);
-      commentStorageService.removeOlderThan(30);
-      portraitContentService.removeOlderThan(3);
-    }, 30000);
-
-    // disable
-    // setTimeout(() => {
-    //   showMessageForPrivateKey();
-    // }, 10000);
-
-    if (sessionService.recoveryCodeUsed) {
-      sessionService.setRecoveryCodeUsed(false);
-      NavigationService.navigate('RecoveryCodeUsedScreen');
-    }
-  };
+  }
 
   /**
    * Run the session logic when the navigator is ready
    */
   onNavigatorReady = async () => {
-    try {
-      // load app setting before start
-      this.deepLinkUrl = (await this.deeplinkPromise) || '';
-
-      if (!this.handlePasswordResetDeepLink()) {
-        logService.info('[App] initializing session');
-
-        const token = await sessionService.init();
-
-        if (!token) {
-          logService.info('[App] there is no active session');
-          RNBootSplash.hide({ duration: 250 });
-          // NavigationService.navigate('Auth', { screen: 'Login'});
-        } else {
-          logService.info('[App] session initialized');
-        }
-      }
-    } catch (err) {
-      logService.exception('[App] Error initializing the app', err);
-      Alert.alert(
-        'Error',
-        'There was an error initializing the app.\n Do you want to copy the stack trace.',
-        [
-          { text: 'Yes', onPress: () => Clipboard.setString(err.stack) },
-          { text: 'No' },
-        ],
-        { cancelable: false },
-      );
+    if (this.shouldHandlePasswordReset) {
+      logService.info('[App] initializing session');
+      this.handlePasswordResetDeepLink();
+    } else {
+      this.initialNavigationHandling();
     }
   };
 
-  /**
-   * Handle pre login deep links
-   */
-  handlePasswordResetDeepLink() {
+  async checkDeepLink(): Promise<boolean> {
+    this.deepLinkUrl = (await this.deeplinkPromise) || '';
     try {
-      if (
+      return (
         this.deepLinkUrl &&
         deeplinkService.cleanUrl(this.deepLinkUrl).startsWith('forgot-password')
-      ) {
-        RNBootSplash.hide({ duration: 250 });
-
-        deeplinkService.navToPasswordReset(this.deepLinkUrl);
-
-        this.deepLinkUrl = '';
-
-        return true;
-      }
+      );
     } catch (err) {
       logService.exception(
         '[App] Error checking for password reset deep link',
@@ -218,5 +210,16 @@ export default class AppInitManager {
       );
     }
     return false;
+  }
+
+  /**
+   * Handle pre login deep links
+   */
+  handlePasswordResetDeepLink() {
+    RNBootSplash.hide({ duration: 250 });
+
+    deeplinkService.navToPasswordReset(this.deepLinkUrl);
+
+    this.deepLinkUrl = '';
   }
 }

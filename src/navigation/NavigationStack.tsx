@@ -708,8 +708,8 @@ const defaultScreenOptions = {
   headerShown: false,
   cardStyle: { backgroundColor: 'transparent' },
   gestureEnabled: false,
-  cardOverlayEnabled: true,
   ...ModalTransition,
+  cardOverlayEnabled: true,
 };
 
 const RootStack = function (props) {
@@ -722,9 +722,7 @@ const RootStack = function (props) {
       keyboardHandlingEnabled={false}
       // @ts-ignore
       screenOptions={defaultScreenOptions}>
-      {props.isReady ? (
-        <RootStackNav.Screen name="Splash" component={View} />
-      ) : props.isLoggedIn ? (
+      {props.isLoggedIn ? (
         <>
           <RootStackNav.Screen
             name="App"

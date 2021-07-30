@@ -44,12 +44,12 @@ class SessionService {
   /**
    * Session storage service
    */
-  sessionStorage;
+  sessionStorage: SessionStorageService;
 
   /**
    * Initial screen
    */
-  initialScreen = 'Tabs';
+  initialScreen = '';
 
   @observable refreshingTokens = false;
 
@@ -250,12 +250,6 @@ class SessionService {
       tokens.refresh_token,
       token_refresh_expire,
     );
-  }
-
-  refresh(tokens) {
-    this.setToken(tokens.access_token);
-    this.sessionStorage.setAccessToken(tokens.access_token);
-    this.sessionStorage.setRefreshToken(tokens.refresh_token);
   }
 
   /**

@@ -19,6 +19,10 @@ export class SessionStorageService {
         refreshToken = data[1][1],
         user = data[2][1];
 
+      if (!accessToken || !refreshToken || !user) {
+        return null;
+      }
+
       return [accessToken, refreshToken, user];
     } catch (err) {
       return null;
