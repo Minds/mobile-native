@@ -416,7 +416,11 @@ const AppStack = function () {
         name="EmailConfirmation"
         component={EmailConfirmationScreen}
       />
-      <AppStackNav.Screen name="Update" component={UpdatingScreen} />
+      <AppStackNav.Screen
+        name="Update"
+        component={UpdatingScreen}
+        options={hideHeader}
+      />
       <AppStackNav.Screen
         name="Notifications"
         component={NotificationsScreen}
