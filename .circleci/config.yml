@@ -54,6 +54,7 @@ jobs:
           name: Upload testflight
   e2e:
     executor: rn/macos
+    resource_class: xlarge
     steps:
       - attach_workspace:
           at: .
