@@ -7,7 +7,6 @@ import { SettingsStore } from './src/settings/SettingsStore';
 import apiService from './src/common/services/api.service';
 import pushService from './src/common/services/push.service';
 import receiveShare from './src/common/services/receive-share.service';
-import sqliteStorageProviderService from './src/common/services/sqlite-storage-provider.service';
 
 import { GOOGLE_PLAY_STORE } from './src/config/Config';
 import updateService from './src/common/services/update.service';
@@ -15,12 +14,9 @@ import logService from './src/common/services/log.service';
 import connectivityService from './src/common/services/connectivity.service';
 import portraitContentService from './src/portrait/PortraitContentService';
 import sessionService from './src/common/services/session.service';
-import commentStorageService from './src/comments/CommentStorageService';
 import deeplinkService from './src/common/services/deeplinks-router.service';
 import boostedContentService from './src/common/services/boosted-content.service';
 import NavigationService from './src/navigation/NavigationService';
-import entitiesStorage from './src/common/services/sql/entities.storage';
-import feedsStorage from './src/common/services/sql/feeds.storage';
 import translationService from './src/common/services/translation.service';
 import badgeService from './src/common/services/badge.service';
 import { getStores } from './AppStores';
@@ -47,9 +43,6 @@ export default class AppInitManager {
 
     // init push service
     pushService.init();
-
-    // fire sqlite init
-    sqliteStorageProviderService.get();
 
     // clear old cookies
     apiService.clearCookies();
