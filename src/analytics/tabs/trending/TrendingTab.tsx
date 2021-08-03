@@ -2,6 +2,7 @@ import { useDimensions } from '@react-native-community/hooks';
 import { observer } from 'mobx-react';
 import React, { useCallback, useMemo } from 'react';
 import {
+  Dimensions,
   ScrollView,
   StyleSheet,
   Text,
@@ -13,6 +14,7 @@ import useApiFetch from '../../../common/hooks/useApiFetch';
 import i18n from '../../../common/services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { Dashboard, Entity } from '../../AnalyticsTypes';
+import { activityIndicatorStyle, errorStyle } from '../dashboard/DashboardTab';
 
 interface TrendingTabProps {
   navigation: any;
@@ -20,8 +22,6 @@ interface TrendingTabProps {
 
 const TrendingTab = observer(({ navigation }: TrendingTabProps) => {
   const theme = ThemedStyles.style;
-  const { width } = useDimensions().window;
-  const widthStyle = useMemo(() => ({ width }), [width]);
 
   const getEntityRoute = useCallback(
     (type, entity) => {
@@ -85,12 +85,7 @@ const TrendingTab = observer(({ navigation }: TrendingTabProps) => {
   });
 
   if (!result && loading) {
-    return (
-      <ActivityIndicator
-        style={[theme.positionAbsolute, { top: 200 }]}
-        size={'large'}
-      />
-    );
+    return <ActivityIndicator style={activityIndicatorStyle} size={'large'} />;
   }
 
   if (!result) {
@@ -118,14 +113,7 @@ const TrendingTab = observer(({ navigation }: TrendingTabProps) => {
 
   if (error || dataError) {
     return (
-      <Text
-        style={[
-          theme.colorSecondaryText,
-          theme.textCenter,
-          theme.fontL,
-          theme.marginVertical4x,
-        ]}
-        onPress={fetch}>
+      <Text style={errorStyle} onPress={fetch}>
         {i18n.t('error') + '\n'}
         <Text style={theme.colorLink}>{i18n.t('tryAgain')}</Text>
       </Text>
@@ -134,24 +122,24 @@ const TrendingTab = observer(({ navigation }: TrendingTabProps) => {
 
   return (
     <ScrollView
-      style={[theme.flexContainer, widthStyle]}
+      style={styles.scrollView}
       contentContainerStyle={theme.padding4x}>
-      <View style={[theme.rowJustifySpaceBetween]}>
-        <View style={[styles.firstColumn, theme.paddingVertical4x]}>
+      <View style={theme.rowJustifySpaceBetween}>
+        <View style={styles.firstColumn}>
           <Text style={theme.bold}>{i18n.t('analytics.trending.content')}</Text>
         </View>
-        <View style={[theme.flexColumnCentered, theme.paddingRight]}>
-          <Text style={[theme.bold, theme.textCenter]}>
+        <View style={styles.columnView}>
+          <Text style={styles.text}>
             {i18n.t('analytics.trending.totalViews')}
           </Text>
         </View>
-        <View style={[theme.flexColumnCentered, theme.paddingRight]}>
-          <Text style={[theme.bold, theme.textCenter]}>
+        <View style={styles.columnView}>
+          <Text style={styles.text}>
             {i18n.t('analytics.trending.organic')}
           </Text>
         </View>
-        <View style={[theme.flexColumnCentered, theme.paddingRight]}>
-          <Text style={[theme.bold, theme.textCenter]}>
+        <View style={styles.columnView}>
+          <Text style={styles.text}>
             {i18n.t('analytics.trending.pageViews')}
           </Text>
         </View>
@@ -163,19 +151,19 @@ const TrendingTab = observer(({ navigation }: TrendingTabProps) => {
           activeOpacity={0.7}
           onPress={row.values.entity.onPress}
           style={theme.rowJustifySpaceBetween}>
-          <View style={[styles.firstColumn, theme.paddingVertical4x]}>
+          <View style={styles.firstColumn}>
             <Text>{row.values.entity.title}</Text>
-            <Text style={[theme.colorTertiaryText, theme.marginTop]}>
+            <Text style={styles.tertiaryText}>
               {`@${row.values.entity.username}`}
             </Text>
           </View>
-          <View style={[theme.flexColumnCentered, theme.padding]}>
+          <View style={styles.columnViewP}>
             <Text>{row.values['views::total']}</Text>
           </View>
-          <View style={[theme.flexColumnCentered, theme.padding]}>
+          <View style={styles.columnViewP}>
             <Text>{row.values['views::organic']}</Text>
           </View>
-          <View style={[theme.flexColumnCentered, theme.padding]}>
+          <View style={styles.columnViewP}>
             <Text>{row.values['views::single']}</Text>
           </View>
         </TouchableOpacity>
@@ -186,8 +174,17 @@ const TrendingTab = observer(({ navigation }: TrendingTabProps) => {
 
 export default TrendingTab;
 
-const styles = StyleSheet.create({
-  firstColumn: {
-    flex: 3,
-  },
+const { width } = Dimensions.get('window');
+const styles = ThemedStyles.create({
+  scrollView: ['flexContainer', { width }],
+  columnView: ['flexColumnCentered', 'paddingRight'],
+  columnViewP: ['flexColumnCentered', 'padding'],
+  text: ['bold', 'textCenter'],
+  tertiaryText: ['colorTertiaryText', 'marginTop'],
+  firstColumn: [
+    'paddingVertical4x',
+    {
+      flex: 3,
+    },
+  ],
 });

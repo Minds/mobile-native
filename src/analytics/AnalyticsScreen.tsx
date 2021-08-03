@@ -71,9 +71,7 @@ const AnalyticsScreen = observer(
 
     return (
       <View style={theme.flexContainer}>
-        <Text style={[theme.padding4x, theme.titleText, theme.paddingBottom2x]}>
-          {i18n.t('analytics.title')}
-        </Text>
+        <Text style={title}>{i18n.t('analytics.title')}</Text>
         <TopbarTabbar
           current={activeTabId}
           onChange={_onTabBarChange}
@@ -90,5 +88,7 @@ const AnalyticsScreen = observer(
     );
   },
 );
+
+const title = ThemedStyles.combine('padding4x', 'titleText', 'paddingBottom2x');
 
 export default AnalyticsScreen;
