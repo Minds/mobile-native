@@ -51,7 +51,7 @@ export class CommentStorageService {
     data: { comments: Array<any>; status?: string },
   ) {
     try {
-      const key = `comments:${entityGuid}:${parentPath}:${offset}:${
+      const key = `comm:${entityGuid}:${parentPath}:${offset}:${
         focusedUrn || ''
       }:${descending ? '0' : '1'}`;
       return storages.userCache?.setMap(key, this.clean(data));

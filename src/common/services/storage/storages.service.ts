@@ -26,7 +26,7 @@ export function createStorage(
 ): MMKVStorage.API {
   const loader = new MMKVStorage.Loader().withInstanceID(storageId);
 
-  // Multiprocess crash on iOS
+  // Multi-process crash on iOS
   if (Platform.OS !== 'ios') {
     loader.setProcessingMode(MMKVStorage.MODES.MULTI_PROCESS);
   }

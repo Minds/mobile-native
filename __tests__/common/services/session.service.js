@@ -1,21 +1,24 @@
-import service from '../../../src/common/services/session.service';
+import { SessionService } from '../../../src/common/services/session.service';
+import { SessionStorageService } from '../../../src/common/services/storage/session.storage.service';
 import { getStores } from '../../../AppStores';
-import sessionStorage from '../../../src/common/services/session.storage.service';
-jest.mock('../../../src/common/services/session.storage.service');
+
+jest.mock('../../../src/common/services/storage/session.storage.service');
 jest.mock('../../../AppStores');
 
 /**
  * Tests
  */
-describe.skip('Session service', () => {
+describe('Session service', () => {
   it('should have initial values', async () => {
+    const sessionStorage = new SessionStorageService();
+    const service = new SessionService(sessionStorage);
     const appStores = { user: { load: jest.fn(), setUser: jest.fn() } };
     getStores.mockReturnValue(appStores);
 
     const now = Date.now() + 3600;
-    expect(service.initialScreen).toEqual('Tabs');
+    expect(service.initialScreen).toEqual('');
     expect(service.token).toEqual('');
-    sessionStorage.getAll.mockResolvedValue([
+    sessionStorage.getAll.mockReturnValue([
       { access_token: '1111', access_token_expires: now },
       { refresh_token: '2222', refresh_token_expires: now },
       { guid: 'guid1' },

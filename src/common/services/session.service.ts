@@ -16,7 +16,7 @@ export const isTokenExpired = error => {
 /**
  * Session service
  */
-class SessionService {
+export class SessionService {
   @observable userLoggedIn = false;
   @observable ready = false;
 

@@ -48,8 +48,6 @@ import { ScreenHeightProvider } from './src/common/components/KeyboardSpacingVie
 import { WCContextProvider } from './src/blockchain/v2/walletconnect/WalletConnectContext';
 import analyticsService from './src/common/services/analytics.service';
 
-const stores = getStores();
-
 const appInitManager = new AppInitManager();
 appInitManager.initializeServices();
 
@@ -187,6 +185,8 @@ class App extends Component<Props, State> {
       return null;
     }
 
+    const stores = getStores();
+
     const isLoggedIn = sessionService.userLoggedIn;
 
     const statusBarStyle =
@@ -194,7 +194,7 @@ class App extends Component<Props, State> {
 
     return (
       <>
-        <SafeAreaProvider key={'App'}>
+        <SafeAreaProvider>
           <ScreenHeightProvider>
             {sessionService.ready && (
               <NavigationContainer
@@ -229,7 +229,7 @@ class App extends Component<Props, State> {
             )}
           </ScreenHeightProvider>
         </SafeAreaProvider>
-        <TosModal user={stores.user} key="tosModal" />
+        <TosModal user={stores.user} />
       </>
     );
   }
