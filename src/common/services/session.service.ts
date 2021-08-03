@@ -325,13 +325,6 @@ class SessionService {
   }
 
   /**
-   * There is a user logged in?
-   */
-  isLoggedIn() {
-    return this.token !== null;
-  }
-
-  /**
    * Clear messenger keys
    */
   clearMessengerKeys() {

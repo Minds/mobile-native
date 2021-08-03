@@ -35,6 +35,9 @@ class BoostedContentService {
    */
   load = async (): Promise<any> => {
     this.init();
+    if (!sessionService.userLoggedIn) {
+      return;
+    }
     try {
       const done = await this.feedsService!.setLimit(24)
         .setOffset(0)
@@ -60,7 +63,7 @@ class BoostedContentService {
     if (!this.feedsService) {
       this.feedsService = new FeedsService();
       setInterval(() => {
-        if (sessionService.isLoggedIn()) {
+        if (sessionService.userLoggedIn) {
           this.update();
         }
       }, 60000);

@@ -38,7 +38,7 @@ describe.skip('Session service', () => {
 
     service.onLogin(() => {});
     expect(sessionStorage.setAccessToken).toHaveBeenCalled();
-    expect(service.isLoggedIn()).toBe(true);
+    expect(service.userLoggedIn).toBe(true);
     service.logout();
 
     service.onLogout(() => {});
