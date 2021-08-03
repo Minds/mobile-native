@@ -11,8 +11,6 @@ import receiveShare from './src/common/services/receive-share.service';
 import { GOOGLE_PLAY_STORE } from './src/config/Config';
 import updateService from './src/common/services/update.service';
 import logService from './src/common/services/log.service';
-import connectivityService from './src/common/services/connectivity.service';
-import portraitContentService from './src/portrait/PortraitContentService';
 import sessionService from './src/common/services/session.service';
 import deeplinkService from './src/common/services/deeplinks-router.service';
 import boostedContentService from './src/common/services/boosted-content.service';
@@ -20,6 +18,7 @@ import NavigationService from './src/navigation/NavigationService';
 import translationService from './src/common/services/translation.service';
 import badgeService from './src/common/services/badge.service';
 import { getStores } from './AppStores';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 /**
  * App initialization manager
@@ -121,12 +120,6 @@ export default class AppInitManager {
         updateService.checkUpdate(!user.canary);
       }, 5000);
     }
-
-    // fire offline cache garbage collector 30 seconds after start
-    setTimeout(() => {
-      if (!connectivityService.isConnected) return;
-      portraitContentService.removeOlderThan(3);
-    }, 30000);
   };
 
   async initialNavigationHandling() {

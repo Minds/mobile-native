@@ -33,8 +33,8 @@ class SessionService {
   /**
    * Tokens TTL
    */
-  accessTokenExpires = null;
-  refreshTokenExpires = null;
+  accessTokenExpires: number | null = null;
+  refreshTokenExpires: number | null = null;
 
   /**
    * User guid
@@ -119,7 +119,7 @@ class SessionService {
   async refreshAuthToken() {
     logService.info('[SessionService] refreshing token');
     if (this.tokenCanRefresh()) {
-      const tokens = await AuthService.refreshToken(false);
+      const tokens = await AuthService.refreshToken();
       this.setRefreshToken(tokens.refresh_token);
       this.setToken(tokens.access_token);
 
@@ -167,6 +167,7 @@ class SessionService {
    */
   parseJwt(token) {
     try {
+      //@ts-ignore
       return JSON.parse(atob(token.split('.')[1]));
     } catch (e) {
       return null;

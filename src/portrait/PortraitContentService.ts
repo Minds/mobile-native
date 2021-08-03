@@ -22,7 +22,7 @@ export class PortraitContentService {
    */
   async getSeen(): Promise<Map<string, number> | null> {
     try {
-      const urns: Array<[string, number]> =
+      const urns: any =
         (await storages.userPortrait?.indexer.numbers.getAll()) || [];
 
       if (

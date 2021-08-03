@@ -48,7 +48,7 @@ export class CommentStorageService {
     descending: boolean,
     offset: string,
     focusedUrn: string,
-    data: Object,
+    data: { comments: Array<any>; status?: string },
   ) {
     try {
       const key = `comments:${entityGuid}:${parentPath}:${offset}:${

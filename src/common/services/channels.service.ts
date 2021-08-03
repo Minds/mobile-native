@@ -27,7 +27,7 @@ class ChannelsService {
         return await this.fetch(guidOrUsername);
       }
 
-      const channel = UserModel.create(local || defaultChannel);
+      const channel = UserModel.create((local || defaultChannel) as object);
 
       this.fetch(guidOrUsername, channel); // Update in the background
 

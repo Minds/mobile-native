@@ -28,7 +28,7 @@ export class BlockListService {
   }
 
   loadFromStorage() {
-    const guids = storages.user?.getArray(key);
+    const guids = storages.user?.getArray<string>(key);
     if (guids) {
       guids.forEach(g => this.blocked.set(g, undefined));
     }

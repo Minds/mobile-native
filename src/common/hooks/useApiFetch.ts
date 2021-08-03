@@ -25,7 +25,7 @@ export interface FetchStore<T> {
   setLoading: (v: boolean) => void;
   setError: (v: any) => void;
   fetch: (object?) => Promise<any>;
-  hydrate: (params: any) => Promise<any>;
+  hydrate: (params: any) => any;
 }
 
 export interface PostStore<T> extends FetchStore<T> {
@@ -48,7 +48,7 @@ const createStore = ({
   retryTimer: <any>null,
   retryCount: 0,
   loading: false,
-  result: null,
+  result: <any>null,
   error: null,
   clearRetryTimer(clearCount: boolean) {
     if (this.retryTimer !== undefined) {
