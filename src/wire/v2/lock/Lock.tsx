@@ -78,7 +78,7 @@ const Lock = observer(({ entity }: PropsType) => {
       entity.ownerObj.username,
     );
   } else {
-    if (wire_threshold && 'min' in wire_threshold) {
+    if (wire_threshold && wire_threshold.min) {
       message = `This post can only be seen by supporters who send over ${currency(
         wire_threshold.min,
         wire_threshold.type === 'money' ? 'money' : 'token',
