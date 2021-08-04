@@ -23,7 +23,7 @@ type PropsType = {
 
 const getProcessedData = (data: Reward): AccordionContentData[] => [
   {
-    title: 'Your Score',
+    title: i18n.t('wallet.yourScore'),
     info: `${format(data.score, false)} points`,
     tooltip: {
       title: i18n.t(`wallet.tokens.tooltips.${data.reward_type}Score`),
@@ -32,7 +32,7 @@ const getProcessedData = (data: Reward): AccordionContentData[] => [
     },
   },
   {
-    title: 'Network Score',
+    title: i18n.t('wallet.networkScore'),
     info: `${format(data.global_summary.score, false)} points`,
     tooltip: {
       title: i18n.t(`wallet.tokens.tooltips.${data.reward_type}Total`),
@@ -41,7 +41,7 @@ const getProcessedData = (data: Reward): AccordionContentData[] => [
     },
   },
   {
-    title: 'Your Share',
+    title: i18n.t('wallet.yourShare'),
     info: `${format(data.share_pct * 100)}%`,
     tooltip: {
       title: i18n.t(`wallet.tokens.tooltips.${data.reward_type}Percentage`),
@@ -50,7 +50,7 @@ const getProcessedData = (data: Reward): AccordionContentData[] => [
     },
   },
   {
-    title: 'Reward',
+    title: i18n.t('wallet.rewards', { count: 1 }),
     info: `${format(parseFloat(data.token_amount))} (${format(
       data.share_pct * 100,
     )}% of ${format(parseFloat(data.global_summary.token_amount))})`,
