@@ -10,7 +10,7 @@ type Storages = {
 };
 
 export const storages: Storages = {
-  session: createStorage('session'),
+  session: createStorage('session', true),
   app: createStorage('app'),
   user: null,
   userPortrait: null,
