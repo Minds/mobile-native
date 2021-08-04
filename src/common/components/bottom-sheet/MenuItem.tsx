@@ -10,6 +10,7 @@ export type MenuItemProps = {
   iconName: string;
   iconType: IconType;
   iconSize?: number;
+  testID?: string;
   onPress: () => void;
 };
 
@@ -19,10 +20,14 @@ const MenuItem = ({
   title,
   onPress,
   iconSize,
+  testID = '',
 }: MenuItemProps) => {
   iconSize = iconSize || 25;
   return (
-    <TouchableOpacity style={styles.menuContainer} onPress={onPress}>
+    <TouchableOpacity
+      style={styles.menuContainer}
+      onPress={onPress}
+      testID={testID}>
       {Boolean(iconName) && (
         <View style={styles.iconContainer}>
           <Icon

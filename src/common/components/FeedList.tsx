@@ -148,6 +148,7 @@ export default class FeedList<T> extends Component<PropsType> {
         onViewableItemsChanged={this.onViewableItemsChanged}
         onScroll={this.onScroll}
         keyboardShouldPersistTaps="always"
+        testID="feedlistCMP"
         {...passThroughProps}
       />
     );

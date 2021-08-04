@@ -213,6 +213,7 @@ const Tabs = observer(function ({ navigation }) {
                 {...props}
                 onPress={navToCapture}
                 onLongPress={navToVideoCapture}
+                testID="CaptureTouchableButton"
               />
             ),
           }}

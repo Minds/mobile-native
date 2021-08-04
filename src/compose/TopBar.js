@@ -25,6 +25,7 @@ export default observer(function (props) {
         name={backIconName}
         style={theme.colorPrimaryText}
         onPress={props.onPressBack}
+        testID="topbarBack"
       />
       {props.leftText && <Text style={styles.leftText}>{props.leftText}</Text>}
       <View style={theme.flexContainer} />

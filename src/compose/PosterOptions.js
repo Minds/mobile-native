@@ -210,6 +210,7 @@ export default observer(
             nsfw.length !== 0 ? i18n.t('nsfw.notSafe') : i18n.t('nsfw.safe')
           }
           onPress={onNsfwPress}
+          testID="nsfwButton"
         />
         {showSchedule && (
           <Item

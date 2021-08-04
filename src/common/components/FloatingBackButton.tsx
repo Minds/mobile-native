@@ -24,6 +24,7 @@ const FloatingBackButton = (props: PropsType) => {
         props.style,
       ]}
       onPress={props.onPress}
+      testID="floatingBackButton"
     />
   );
 };
