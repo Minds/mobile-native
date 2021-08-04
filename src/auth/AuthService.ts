@@ -97,7 +97,7 @@ class AuthService {
   async logout(): Promise<boolean> {
     this.justRegistered = false;
     try {
-      await api.post('api/v3/oauth/revoke');
+      api.post('api/v3/oauth/revoke');
       session.logout();
 
       // Fixes autosubscribe issue on register
