@@ -130,7 +130,7 @@ export default class FeedList<T> extends Component<PropsType> {
         onLayout={this.onLayout}
         ListHeaderComponent={header}
         ListFooterComponent={this.getFooter}
-        data={!this.props.hideItems ? feedStore.entities : []}
+        data={!this.props.hideItems ? feedStore.entities.slice() : []}
         renderItem={renderRow}
         keyExtractor={this.keyExtractor}
         onRefresh={this.refresh}

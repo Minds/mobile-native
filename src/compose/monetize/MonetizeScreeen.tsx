@@ -13,7 +13,7 @@ import Wrapper from './common/Wrapper';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '../../navigation/NavigationTypes';
-import mindsService from '../../common/services/minds.service';
+import mindsService from '../../common/services/minds-config.service';
 
 type MonetizeScreenRouteProp = RouteProp<AppStackParamList, 'MonetizeSelector'>;
 type MonetizeScreenNavigationProp = StackNavigationProp<

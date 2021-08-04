@@ -11,6 +11,7 @@ export type TFA = 'sms' | 'totp';
 
 interface LoginResponse extends ApiResponse {
   access_token: string;
+  refresh_token: string;
   token_type: string;
 }
 
@@ -96,7 +97,7 @@ class AuthService {
   async logout(): Promise<boolean> {
     this.justRegistered = false;
     try {
-      await api.post('api/v3/oauth/revoke');
+      api.post('api/v3/oauth/revoke');
       session.logout();
 
       // Fixes autosubscribe issue on register

@@ -2,9 +2,9 @@ import 'react-native';
 import React from 'react';
 import App from '../App';
 import { BackHandler } from 'react-native';
-
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
+import { getStores } from '../AppStores';
 jest.mock('react-native-reanimated', () =>
   require('react-native-reanimated/mock'),
 );
@@ -17,7 +17,6 @@ jest.mock(
 
 // mock backhandler
 BackHandler.addEventListener = jest.fn();
-jest.mock('../src/common/services/sqlite-storage-provider.service');
 jest.mock('../src/common/services/log.service', () => {});
 jest.mock('../src/common/services/push.service');
 
@@ -56,6 +55,14 @@ jest.mock('react-native-safe-area-context');
 
 jest.mock('../src/common/services/translation.service');
 jest.mock('../src/tos/TosModal', () => 'TosModal');
+
+getStores.mockReturnValue({
+  user: {
+    me: {},
+    load: jest.fn(),
+    setUser: jest.fn(),
+  },
+});
 
 it('renders correctly', () => {
   const tree = renderer.create(<App />);

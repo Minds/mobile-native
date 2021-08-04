@@ -7,7 +7,7 @@ import Modal from 'react-native-modal';
 import Button from '../common/components/Button';
 import i18nService from '../common/services/i18n.service';
 import { observer } from 'mobx-react';
-import mindsService from '../common/services/minds.service';
+import mindsConfigService from '../common/services/minds-config.service';
 import logService from '../common/services/log.service';
 import apiService from '../common/services/api.service';
 import ThemedStyles from '../styles/ThemedStyles';
@@ -26,9 +26,9 @@ export default class TosModal extends PureComponent {
   /**
    * Component did mount
    */
-  async componentDidMount() {
+  componentDidMount() {
     try {
-      const settings = await mindsService.getSettings();
+      const settings = mindsConfigService.getSettings();
       if (settings.last_accepted_tos) {
         this.setState({ last_accepted_tos: settings.last_accepted_tos });
       }

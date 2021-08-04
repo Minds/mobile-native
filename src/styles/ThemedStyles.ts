@@ -8,6 +8,7 @@ import { buildStyle, updateTheme } from './Style';
 
 import type { Styles } from './Style';
 import RNBootSplash from 'react-native-bootsplash';
+import { storages } from '../common/services/storage/storages.service';
 
 type Style = keyof Styles;
 
@@ -35,7 +36,9 @@ export class ThemedStylesStore {
   style: Styles;
 
   constructor() {
-    this.style = buildStyle(LIGHT_THEME);
+    this.theme = storages.app.getInt('theme') || 0;
+    this.style = buildStyle(this.theme === 0 ? LIGHT_THEME : DARK_THEME);
+    this.generateNavStyle();
   }
 
   /**
@@ -64,6 +67,7 @@ export class ThemedStylesStore {
   setDark() {
     RNBootSplash.show({ duration: 150 });
     this.theme = 1;
+    storages.app.setInt('theme', this.theme);
     this.generateNavStyle();
     updateTheme(this.style);
     setTimeout(() => {
@@ -78,24 +82,12 @@ export class ThemedStylesStore {
   setLight() {
     RNBootSplash.show({ duration: 150 });
     this.theme = 0;
+    storages.app.setInt('theme', this.theme);
     this.generateNavStyle();
     updateTheme(this.style);
     setTimeout(() => {
       RNBootSplash.hide({ duration: 150 });
     }, 2000);
-  }
-
-  /**
-   * Set theme
-   * @param {number} value
-   */
-  @action
-  setTheme(value) {
-    this.theme = value;
-    this.generateNavStyle();
-    if (this.theme !== 0) {
-      updateTheme(this.style);
-    }
   }
 
   /**

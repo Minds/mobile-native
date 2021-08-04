@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import {
   createNativeStackNavigator,
   NativeStackNavigationOptions,
@@ -704,6 +704,14 @@ const AuthStack = function () {
   );
 };
 
+const defaultScreenOptions = {
+  headerShown: false,
+  cardStyle: { backgroundColor: 'transparent' },
+  gestureEnabled: false,
+  ...ModalTransition,
+  cardOverlayEnabled: true,
+};
+
 const RootStack = function (props) {
   const initial = props.isLoggedIn ? 'App' : 'Auth';
 
@@ -713,16 +721,14 @@ const RootStack = function (props) {
       mode="modal"
       keyboardHandlingEnabled={false}
       // @ts-ignore
-      screenOptions={{
-        headerShown: false,
-        cardStyle: { backgroundColor: 'transparent' },
-        gestureEnabled: false,
-        ...ModalTransition,
-        cardOverlayEnabled: true,
-      }}>
+      screenOptions={defaultScreenOptions}>
       {props.isLoggedIn ? (
-        <Fragment>
-          <RootStackNav.Screen name="App" component={AppStack} />
+        <>
+          <RootStackNav.Screen
+            name="App"
+            component={AppStack}
+            options={{ animationEnabled: false }}
+          />
           {/* Modal screens here */}
           <RootStackNav.Screen
             name="JoinMembershipScreen"
@@ -731,9 +737,9 @@ const RootStack = function (props) {
           />
           <RootStackNav.Screen name="ViewImage" component={ViewImageScreen} />
           {/* <RootStackNav.Screen
-            name="BlockchainWalletModal"
-            component={BlockchainWalletModalScreen}
-          /> */}
+              name="BlockchainWalletModal"
+              component={BlockchainWalletModalScreen}
+            /> */}
           <RootStackNav.Screen
             name="UpgradeScreen"
             component={UpgradeScreen}
@@ -805,7 +811,7 @@ const RootStack = function (props) {
             component={RecoveryCodeUsedScreen}
             options={modalOptions}
           />
-        </Fragment>
+        </>
       ) : (
         <>
           <RootStackNav.Screen name="Auth" component={AuthStack} />

@@ -115,6 +115,7 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
 
   return [
     <BottomSheet
+      key="commentSheet"
       ref={ref}
       index={0}
       onChange={localStore.setOpen}
@@ -140,7 +141,7 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
         </Stack.Navigator>
       )}
     </BottomSheet>,
-    <CommentInput />,
+    <CommentInput key="commentInput" />,
   ];
 };
 

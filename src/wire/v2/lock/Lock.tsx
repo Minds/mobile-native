@@ -5,7 +5,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import LockTag from './LockTag';
 import { SupportTiersType } from '../../WireTypes';
-import mindsService from '../../../common/services/minds.service';
+import mindsService from '../../../common/services/minds-config.service';
 import Button from '../../../common/components/Button';
 import i18n from '../../../common/services/i18n.service';
 import type { LockType } from '../../../types/Common';

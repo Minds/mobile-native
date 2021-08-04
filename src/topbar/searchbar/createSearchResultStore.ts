@@ -25,7 +25,7 @@ const createSearchResultStore = () => {
     },
     async init(user: UserStore) {
       this.user = user;
-      this.history = await user.getSearchHistory();
+      this.history = user.getSearchHistory();
     },
     get shouldShowSuggested() {
       return this.search.length > 0;

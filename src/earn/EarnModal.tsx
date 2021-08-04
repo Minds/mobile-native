@@ -9,7 +9,7 @@ import {
 import UniswapWidget from '../common/components/uniswap-widget/UniswapWidget';
 import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
-import mindsService from '../common/services/minds.service';
+import mindsConfigService from '../common/services/minds-config.service';
 import { observer, useLocalStore } from 'mobx-react';
 import createLocalStore from './createLocalStore';
 import ModalScreen from '../common/components/ModalScreen';
@@ -69,11 +69,8 @@ export default observer(function ({ navigation }) {
   const localStore = useLocalStore(createLocalStore);
 
   useEffect(() => {
-    const getSettings = async () => {
-      const settings = await mindsService.getSettings();
-      localStore.setTokenAddress(settings.blockchain.token.address);
-    };
-    getSettings();
+    const settings = mindsConfigService.getSettings();
+    localStore.setTokenAddress(settings.blockchain.token.address);
   }, [localStore]);
 
   const navTo = (screen: string, options = {}) =>

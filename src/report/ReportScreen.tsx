@@ -18,7 +18,7 @@ import reportService from './ReportService';
 
 import i18n from '../common/services/i18n.service';
 
-import mindsService from '../common/services/minds.service';
+import mindsService from '../common/services/minds-config.service';
 import CenteredLoading from '../common/components/CenteredLoading';
 import ThemedStyles from '../styles/ThemedStyles';
 import TextInput from '../common/components/TextInput';
@@ -84,8 +84,8 @@ export default class ReportScreen extends Component {
   /**
    * Load reasons from minds settings
    */
-  async loadReasons() {
-    const settings = await mindsService.getSettings();
+  loadReasons() {
+    const settings = mindsService.getSettings();
 
     // reasons in current language with fallback in english translation, in case that both fails the origial label is shown
     settings.report_reasons.forEach(r => {

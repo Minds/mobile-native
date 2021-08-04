@@ -4,7 +4,7 @@ import { showNotification } from '../../AppMessages';
 import apiService from '../common/services/api.service';
 import i18nService from '../common/services/i18n.service';
 import logService from '../common/services/log.service';
-import mindsService from '../common/services/minds.service';
+import mindsService from '../common/services/minds-config.service';
 import { ANDROID_CHAT_APP } from '../config/Config';
 
 const createChatStore = () => ({
@@ -53,7 +53,7 @@ const createChatStore = () => ({
   },
   async init() {
     this.loadCount();
-    const chatUrl = (await mindsService.getSettings()).matrix?.chat_url;
+    const chatUrl = mindsService.getSettings().matrix?.chat_url;
     if (chatUrl) {
       this.chatUrl = chatUrl;
     }
