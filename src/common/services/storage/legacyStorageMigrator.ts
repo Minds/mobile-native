@@ -26,12 +26,13 @@ export async function migrateLegacyStorage() {
       session.setMap('refresh_token', refreshToken);
       session.setMap('user', user);
     }
+
     if (privateKey) {
       session.setString('private_key', privateKey);
     }
 
     // Migrate settings
-    const settings = storageService.multiGet([
+    const settings = await storageService.multiGet([
       'LeftHanded',
       'CreatorNsfw',
       'ConsumerNsfw',
@@ -46,34 +47,36 @@ export async function migrateLegacyStorage() {
       '@Minds:Locale',
     ]);
 
-    const leftHanded = settings[0][1];
-    const creatorNsfw = settings[1][1] || [];
-    const consumerNsfw = settings[2][1] || [];
-    const theme = data[4][1] ? parseInt(data[4][1], 10) : 0;
-    const ignoreBestLanguage = settings[5][1] || '';
-    const composerMode = settings[6][1] || 'photo';
-    const ignoreOnboarding = settings[7][1];
+    if (settings) {
+      const leftHanded = settings[0][1];
+      const creatorNsfw = settings[1][1] || ([] as any);
+      const consumerNsfw = settings[2][1] || ([] as any);
+      const theme = settings[4][1] ? parseInt(settings[4][1], 10) : 0;
+      const ignoreBestLanguage = Boolean(settings[5][1]);
+      const composerMode = settings[6][1] || 'photo';
+      const ignoreOnboarding = settings[7][1] || '';
 
-    const settingsSaverMode = settings[8][1] || false;
-    const settingsSaverModeDisablesOnWiFi = settings[9][1] || false;
+      const settingsSaverMode = Boolean(settings[8][1]);
+      const settingsSaverModeDisablesOnWiFi = Boolean(settings[9][1]);
 
-    const swipeAnimShown = settings[10][1];
-    const locale = settings[10][1];
+      const locale = settings[11][1] || 'en';
 
-    app.setBool('leftHanded', !!leftHanded);
-    app.setInt('theme', theme);
-    app.setBool('dataSaverMode', settingsSaverMode);
-    app.setBool('dataSaverModeDisablesOnWiFi', settingsSaverModeDisablesOnWiFi);
-    app.setBool('swipeAnimShown', swipeAnimShown);
-    app.setBool('ignoreBestLanguage', ignoreBestLanguage);
-    app.setString('locale', locale);
-    app.setString('composerMode', composerMode);
-
-    if (user && user.guid) {
-      const userStorage = createStorage(`user_${user.guid}`);
-      userStorage.setArray('creatorNSFW', creatorNsfw);
-      userStorage.setArray('consumerNSFW', consumerNsfw);
-      userStorage.setString('ignoreOnboarding', ignoreOnboarding || '');
+      app.setBool('leftHanded', !!leftHanded);
+      app.setInt('theme', theme);
+      app.setBool('dataSaverMode', settingsSaverMode);
+      app.setBool(
+        'dataSaverModeDisablesOnWiFi',
+        settingsSaverModeDisablesOnWiFi,
+      );
+      app.setBool('ignoreBestLanguage', ignoreBestLanguage);
+      app.setString('locale', locale);
+      app.setString('composerMode', composerMode);
+      if (user && user.guid) {
+        const userStorage = createStorage(`user_${user.guid}`);
+        userStorage.setArray('creatorNSFW', creatorNsfw);
+        userStorage.setArray('consumerNSFW', consumerNsfw);
+        userStorage.setString('ignoreOnboarding', ignoreOnboarding);
+      }
     }
 
     app.setBool('isMigrated', true);

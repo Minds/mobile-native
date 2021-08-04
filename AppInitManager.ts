@@ -19,6 +19,7 @@ import translationService from './src/common/services/translation.service';
 import badgeService from './src/common/services/badge.service';
 import { getStores } from './AppStores';
 import Clipboard from '@react-native-clipboard/clipboard';
+import { migrateLegacyStorage } from './src/common/services/storage/legacyStorageMigrator';
 
 /**
  * App initialization manager
@@ -84,6 +85,8 @@ export default class AppInitManager {
         }
       }
     });
+
+    migrateLegacyStorage();
   }
 
   /**
