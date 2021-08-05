@@ -7,8 +7,8 @@ import {
   TextStyle,
   StyleSheet,
   ViewStyle,
-  ScrollView,
 } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import ThemedStyles from '../../../styles/ThemedStyles';
 
 export type TabType<T> = {
