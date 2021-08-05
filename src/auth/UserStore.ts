@@ -122,8 +122,8 @@ class UserStore {
   /**
    * Get user search history
    */
-  async getSearchHistory() {
-    return await searchBarService.getSearchHistory();
+  getSearchHistory() {
+    return searchBarService.getSearchHistory();
   }
 
   /**

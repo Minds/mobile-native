@@ -3,9 +3,9 @@ import * as RNLocalize from 'react-native-localize';
 import i18n from 'i18n-js';
 import { memoize } from 'lodash';
 import { I18nManager } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
 import moment from 'moment-timezone';
 import { observable, action } from 'mobx';
+import { storages } from './storage/storages.service';
 
 const translationGetters = {
   // lazy requires (metro bundler does not support symlinks)
@@ -84,8 +84,6 @@ const translate = memoize(
   (key, config) => (config ? key + JSON.stringify(config) : key),
 );
 
-const namespace = '@Minds:Locale';
-
 type DateFormat = {
   date: string;
   short: string;
@@ -109,9 +107,9 @@ class I18nService {
   /**
    * Initialize service
    */
-  async init() {
+  init() {
     // read locale from storage
-    let language = await AsyncStorage.getItem(namespace);
+    let language = storages.app.getString('locale');
     // get best available language when app start
     this.bestLocale = this.getBestLanguage();
 
@@ -243,7 +241,7 @@ class I18nService {
   @action
   setLocale(locale: string, store = true) {
     if (store) {
-      AsyncStorage.setItem(namespace, locale);
+      storages.app.setString('locale', locale);
     }
     // clear translation cache
     translate.cache.clear();

@@ -13,7 +13,7 @@ import { observer, useLocalStore } from 'mobx-react';
 import ThemedStyles from '../styles/ThemedStyles';
 import RecordButton from './RecordButton';
 import { useSafeArea } from 'react-native-safe-area-context';
-import mindsService from '../common/services/minds.service';
+import mindsConfigService from '../common/services/minds-config.service';
 import VideoClock from './VideoClock';
 
 /**
@@ -68,7 +68,7 @@ export default observer(function (props) {
           store.setRecording(false);
           return ref.current.stopRecording();
         }
-        const settings = await mindsService.getSettings();
+        const settings = mindsConfigService.getSettings();
 
         store.setRecording(true, pulse);
 

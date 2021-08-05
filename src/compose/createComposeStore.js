@@ -9,7 +9,7 @@ import api, { ApiError } from '../common/services/api.service';
 import ActivityModel from '../newsfeed/ActivityModel';
 import ThemedStyles from '../styles/ThemedStyles';
 import featuresService from '../common/services/features.service';
-import mindsService from '../common/services/minds.service';
+import mindsConfigService from '../common/services/minds-config.service';
 import supportTiersService from '../common/services/support-tiers.service';
 import settingsStore from '../settings/SettingsStore';
 import attachmentService from '../common/services/attachment.service';
@@ -441,7 +441,7 @@ export default function (props) {
           this.wire_threshold &&
           'support_tier' in this.wire_threshold &&
           this.wire_threshold.support_tier.urn ===
-            mindsService.settings.plus.support_tier_urn
+            mindsConfigService.settings.plus.support_tier_urn
         ) {
           // Must have tags
           if (this.tags.length === 0) {
@@ -575,7 +575,7 @@ export default function (props) {
     async savePlusMonetize(expires) {
       this.wire_threshold = {
         support_tier: {
-          urn: (await mindsService.getSettings()).plus.support_tier_urn,
+          urn: mindsConfigService.getSettings().plus.support_tier_urn,
           expires,
         },
       };

@@ -879,6 +879,21 @@
     "totalPaidout": "Total paid out",
     "alltime": "All-time earnings",
     "addressCopied": "Address copied to clipboard",
+    "wire": "Minds Pay",
+    "wireAll": "Memberships & Tips",
+    "partner": "Revenue Share",
+    "plus": "Minds+ Content",
+    "wireReferral": "Minds Pay Commissions",
+    "yourScore": "Your Score",
+    "networkScore": "Network Score",
+    "yourShare": "Your Share",
+    "rewards": {
+      "one": "Reward",
+      "other": "Rewards"
+    },
+    "completeStep": "Please complete the step in your wallet app",
+    "connectFirst": "Connect the wallet first",
+    "verified": "Your On-chain address is now setup and verified",
     "withdraw": {
       "errorOnlyOnceDay": "You can only have one pending withdrawal at a time",
       "errorWithdrawing": "Error withdrawing tokens",

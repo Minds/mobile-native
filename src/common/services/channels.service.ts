@@ -1,7 +1,7 @@
 import apiService, { isApiForbidden } from './api.service';
 
 import UserModel from '../../channel/UserModel';
-import entitiesStorage from './sql/entities.storage';
+import entitiesStorage from './storage/entities.storage';
 
 /**
  * Channels services
@@ -19,7 +19,7 @@ class ChannelsService {
     try {
       const urn = `urn:channels:${guidOrUsername}`;
 
-      const local = await entitiesStorage.read(urn);
+      const local = entitiesStorage.read(urn);
 
       if ((!local && !defaultChannel) || forceUpdate) {
         // we fetch from the server
@@ -27,7 +27,7 @@ class ChannelsService {
         return await this.fetch(guidOrUsername);
       }
 
-      const channel = UserModel.create(local || defaultChannel);
+      const channel = UserModel.create((local || defaultChannel) as object);
 
       this.fetch(guidOrUsername, channel); // Update in the background
 
@@ -41,7 +41,7 @@ class ChannelsService {
     const promises: Promise<UserModel | undefined>[] = guids.map(async guid => {
       try {
         const urn = `urn:channels:${guid}`;
-        const local = await entitiesStorage.read(urn);
+        const local = entitiesStorage.read(urn);
         if (!local) {
           return await this.fetch(guid);
         }

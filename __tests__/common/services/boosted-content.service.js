@@ -1,7 +1,7 @@
-import boostedContentService from "../../../src/common/services/boosted-content.service";
-import FeedsService from "../../../src/common/services/feeds.service";
-import blockListService from "../../../src/common/services/block-list.service";
-
+import boostedContentService from '../../../src/common/services/boosted-content.service';
+import FeedsService from '../../../src/common/services/feeds.service';
+import blockListService from '../../../src/common/services/block-list.service';
+import sessionService from '../../../src/common/services/session.service';
 
 jest.mock('../../../src/common/services/feeds.service');
 jest.mock('../../../src/common/services/session.service');
@@ -11,33 +11,36 @@ jest.mock('../../../src/common/services/block-list.service');
  * Tests
  */
 describe('Boosted content service', () => {
-
   beforeEach(() => {
     blockListService.has.mockClear();
+    sessionService.userLoggedIn = true;
     boostedContentService.init();
   });
 
   it('should fetch the boosts from the server', async () => {
-
     blockListService.has.mockReturnValue(false);
     const fakeBoosts = [
-      {guid: 1, ownerObj: {guid: 1}},
-      {guid: 2, ownerObj: {guid: 2}},
-      {guid: 3, ownerObj: {guid: 3}},
+      { guid: 1, ownerObj: { guid: 1 } },
+      { guid: 2, ownerObj: { guid: 2 } },
+      { guid: 3, ownerObj: { guid: 3 } },
     ];
     const result = fakeBoosts.map(e => {
       e.boosted = true;
       return e;
     });
 
-    boostedContentService.feedsService.getEntities.mockResolvedValue(fakeBoosts);
+    boostedContentService.feedsService.getEntities.mockResolvedValue(
+      fakeBoosts,
+    );
     boostedContentService.feedsService.fetchLocal.mockResolvedValue(true);
 
     // load the boosts
     await boostedContentService.load();
 
     // should fetch the feed
-    expect(boostedContentService.feedsService.setEndpoint).toBeCalledWith('api/v2/boost/feed');
+    expect(boostedContentService.feedsService.setEndpoint).toBeCalledWith(
+      'api/v2/boost/feed',
+    );
     expect(boostedContentService.feedsService.setOffset).toBeCalledWith(0);
     expect(boostedContentService.feedsService.setLimit).toBeCalledWith(24);
     expect(boostedContentService.feedsService.fetchLocal).toBeCalled();
@@ -50,7 +53,6 @@ describe('Boosted content service', () => {
   });
 
   it('should fetch the boosts and filter blocked', async () => {
-
     blockListService.has
       .mockReturnValueOnce(false)
       .mockReturnValueOnce(true)
@@ -60,9 +62,9 @@ describe('Boosted content service', () => {
       .mockReturnValueOnce(false);
 
     const fakeBoosts = [
-      {guid: 1, ownerObj: {guid: 1}},
-      {guid: 2, ownerObj: {guid: 2}},
-      {guid: 3, ownerObj: {guid: 3}},
+      { guid: 1, ownerObj: { guid: 1 } },
+      { guid: 2, ownerObj: { guid: 2 } },
+      { guid: 3, ownerObj: { guid: 3 } },
     ];
 
     const result = fakeBoosts
@@ -72,20 +74,24 @@ describe('Boosted content service', () => {
       })
       .filter(e => e.guid !== 2);
 
-    boostedContentService.feedsService.getEntities.mockResolvedValue(fakeBoosts);
+    boostedContentService.feedsService.getEntities.mockResolvedValue(
+      fakeBoosts,
+    );
     boostedContentService.feedsService.fetchLocal.mockResolvedValue(true);
 
     // load the boosts
     await boostedContentService.load();
 
     // should fetch the feed
-    expect(boostedContentService.feedsService.setEndpoint).toBeCalledWith('api/v2/boost/feed');
+    expect(boostedContentService.feedsService.setEndpoint).toBeCalledWith(
+      'api/v2/boost/feed',
+    );
     expect(boostedContentService.feedsService.setOffset).toBeCalledWith(0);
     expect(boostedContentService.feedsService.setLimit).toBeCalledWith(24);
     expect(boostedContentService.feedsService.fetchLocal).toBeCalled();
 
     // blocked should be called
-    expect( blockListService.has).toBeCalled();
+    expect(blockListService.has).toBeCalled();
 
     // should fetch the boosts entities
     expect(boostedContentService.feedsService.getEntities).toBeCalled();
@@ -95,8 +101,7 @@ describe('Boosted content service', () => {
   });
 
   it('should return next boost and start again when the end is reached', () => {
-
-    const fakeBoosts = [{guid: 1}, {guid: 2}, {guid: 3}];
+    const fakeBoosts = [{ guid: 1 }, { guid: 2 }, { guid: 3 }];
 
     blockListService.has.mockReturnValue(false);
 
@@ -111,5 +116,4 @@ describe('Boosted content service', () => {
     // start again
     expect(boostedContentService.fetch()).toBe(fakeBoosts[0]);
   });
-
 });

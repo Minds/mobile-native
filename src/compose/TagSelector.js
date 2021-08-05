@@ -15,7 +15,6 @@ import i18n from '../common/services/i18n.service';
 import NavigationService from '../navigation/NavigationService';
 import hashtagService from '../common/services/hashtag.service';
 import HistoryStore from '../common/stores/HistoryStore';
-import sessionService from '../common/services/session.service';
 import TextInput from '../common/components/TextInput';
 
 /**
@@ -54,7 +53,7 @@ export default observer(function (props) {
 
   const localStore = useLocalStore(
     ({ postStore }) => ({
-      history: new HistoryStore(`${sessionService.guid}-tags-history`, 12),
+      history: new HistoryStore(`tags-history`, 12),
       text: '',
       suggested: [],
       focused: false,

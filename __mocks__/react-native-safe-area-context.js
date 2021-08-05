@@ -21,3 +21,7 @@ export const useSafeAreaInsets = function () {
 export const withSafeAreaInsets = function (Wrapped) {
   return Wrapped;
 };
+
+export const SafeAreaProvider = function (props) {
+  return <View>{props.children}</View>;
+};

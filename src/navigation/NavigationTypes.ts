@@ -32,6 +32,7 @@ export type InternalStackParamList = {
 };
 
 export type RootStackParamList = {
+  Splash: {};
   App: {};
   Auth: {};
   Gathering: {};

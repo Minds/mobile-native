@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import {
   createNativeStackNavigator,
   NativeStackNavigationOptions,
@@ -109,6 +109,7 @@ import BoostChannelScreen from '../boost/v2/BoostChannelScreen';
 import BoostPostScreen from '../boost/v2/BoostPostScreen';
 import BuyTokensScreen from '../buy-tokens/BuyTokensScreen';
 import { topBarButtonTabBarRef } from '../common/components/topbar-tabbar/TopBarButtonTabBar';
+import { topbarTabbarRef } from '../common/components/topbar-tabbar/TopbarTabbar';
 import ExportLegacyWallet from '../settings/screens/ExportLegacyWallet';
 import Withdrawal from '../wallet/v3/currency-tabs/tokens/widthdrawal/Withdrawal';
 import EarnModal from '../earn/EarnModal';
@@ -306,7 +307,7 @@ export const InternalStack = () => {
 const gestureHandlerProps = {
   hitSlop: { left: 0, width: Dimensions.get('window').width },
   //@ts-ignore
-  waitFor: [portraitBarRef, topBarButtonTabBarRef],
+  waitFor: [portraitBarRef, topBarButtonTabBarRef, topbarTabbarRef],
 };
 
 const MainScreen = () => {
@@ -416,7 +417,11 @@ const AppStack = function () {
         name="EmailConfirmation"
         component={EmailConfirmationScreen}
       />
-      <AppStackNav.Screen name="Update" component={UpdatingScreen} />
+      <AppStackNav.Screen
+        name="Update"
+        component={UpdatingScreen}
+        options={hideHeader}
+      />
       <AppStackNav.Screen
         name="Notifications"
         component={NotificationsScreen}
@@ -704,6 +709,14 @@ const AuthStack = function () {
   );
 };
 
+const defaultScreenOptions = {
+  headerShown: false,
+  cardStyle: { backgroundColor: 'transparent' },
+  gestureEnabled: false,
+  ...ModalTransition,
+  cardOverlayEnabled: true,
+};
+
 const RootStack = function (props) {
   const initial = props.isLoggedIn ? 'App' : 'Auth';
 
@@ -713,16 +726,14 @@ const RootStack = function (props) {
       mode="modal"
       keyboardHandlingEnabled={false}
       // @ts-ignore
-      screenOptions={{
-        headerShown: false,
-        cardStyle: { backgroundColor: 'transparent' },
-        gestureEnabled: false,
-        ...ModalTransition,
-        cardOverlayEnabled: true,
-      }}>
+      screenOptions={defaultScreenOptions}>
       {props.isLoggedIn ? (
-        <Fragment>
-          <RootStackNav.Screen name="App" component={AppStack} />
+        <>
+          <RootStackNav.Screen
+            name="App"
+            component={AppStack}
+            options={{ animationEnabled: false }}
+          />
           {/* Modal screens here */}
           <RootStackNav.Screen
             name="JoinMembershipScreen"
@@ -731,9 +742,9 @@ const RootStack = function (props) {
           />
           <RootStackNav.Screen name="ViewImage" component={ViewImageScreen} />
           {/* <RootStackNav.Screen
-            name="BlockchainWalletModal"
-            component={BlockchainWalletModalScreen}
-          /> */}
+              name="BlockchainWalletModal"
+              component={BlockchainWalletModalScreen}
+            /> */}
           <RootStackNav.Screen
             name="UpgradeScreen"
             component={UpgradeScreen}
@@ -805,7 +816,7 @@ const RootStack = function (props) {
             component={RecoveryCodeUsedScreen}
             options={modalOptions}
           />
-        </Fragment>
+        </>
       ) : (
         <>
           <RootStackNav.Screen name="Auth" component={AuthStack} />

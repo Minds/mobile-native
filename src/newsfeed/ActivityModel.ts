@@ -20,7 +20,7 @@ import logService from '../common/services/log.service';
 import type { ThumbSize, LockType } from '../types/Common';
 import type GroupModel from '../groups/GroupModel';
 import { SupportTiersType } from '../wire/WireTypes';
-import mindsService from '../common/services/minds.service';
+import mindsService from '../common/services/minds-config.service';
 import NavigationService from '../navigation/NavigationService';
 import { showNotification } from '../../AppMessages';
 import mediaProxyUrl from '../common/helpers/media-proxy-url';

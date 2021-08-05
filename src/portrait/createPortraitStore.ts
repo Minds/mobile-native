@@ -98,7 +98,7 @@ function createPortraitStore() {
         if (feedStore.entities.length) {
           if (seenList) {
             feedStore.entities.forEach(entity => {
-              const seen = _.sortedIndexOf(seenList, entity.urn) !== -1;
+              const seen = seenList.has(entity.urn);
 
               if (entity.seen === undefined) {
                 extendObservable(entity, { seen });

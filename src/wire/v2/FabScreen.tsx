@@ -21,9 +21,9 @@ import i18n from '../../common/services/i18n.service';
 import logService from '../../common/services/log.service';
 import api from '../../common/services/api.service';
 import toFriendlyCrypto from '../../common/helpers/toFriendlyCrypto';
-import storageService from '../../common/services/storage.service';
 import useWalletConnect from '../../blockchain/v2/walletconnect/useWalletConnect';
 import { WCStore } from '../../blockchain/v2/walletconnect/WalletConnectContext';
+import { storages } from '../../common/services/storage/storages.service';
 
 const isIos = Platform.OS === 'ios';
 
@@ -51,13 +51,13 @@ const createFabScreenStore = ({ wc }: { wc: WCStore }) => {
       this.goBack = goBack;
       this.loaded = true;
     },
-    async getLastAmount() {
-      const lastAmount = await storageService.getItem(lastAmountStorageKey);
-      this.amount = parseFloat(lastAmount) || 0;
+    getLastAmount() {
+      const lastAmount = storages.user?.getString(lastAmountStorageKey);
+      this.amount = lastAmount ? parseFloat(lastAmount) : 0;
       this.wire.setAmount(this.amount);
     },
     async setLastAmount(amount: string) {
-      await storageService.setItem(lastAmountStorageKey, amount);
+      storages.user?.setString(lastAmountStorageKey, amount);
     },
     setCard(card: any) {
       this.card = card;

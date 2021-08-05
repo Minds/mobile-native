@@ -1,6 +1,6 @@
-import storageService from '../../common/services/storage.service';
 import apiService from '../../common/services/api.service';
 import UserModel from '../../channel/UserModel';
+import { storages } from '../../common/services/storage/storages.service';
 
 export type userItem = { user: UserModel };
 
@@ -20,8 +20,8 @@ class SearchBarService {
     this.storageKey = `${guid}:searchHistory`;
   }
 
-  async getSearchHistoryFromStorage() {
-    const searchHistory = await storageService.getItem(this.storageKey);
+  getSearchHistoryFromStorage() {
+    const searchHistory = storages.user?.getArray(this.storageKey);
     if (searchHistory && Array.isArray(searchHistory)) {
       this.searchHistory = searchHistory;
     }
@@ -42,8 +42,8 @@ class SearchBarService {
   /**
    * Retrieve search history
    */
-  async getSearchHistory() {
-    await this.getSearchHistoryFromStorage();
+  getSearchHistory() {
+    this.getSearchHistoryFromStorage();
     return this.searchHistory;
   }
 
@@ -71,12 +71,12 @@ class SearchBarService {
       this.searchHistory.pop();
     }
 
-    await storageService.setItem(this.storageKey, this.searchHistory);
+    storages.user?.setArray(this.storageKey, this.searchHistory);
   }
 
   async clearSearchHistory() {
     this.searchHistory = [];
-    await storageService.setItem(this.storageKey, this.searchHistory);
+    storages.user?.setArray(this.storageKey, this.searchHistory);
   }
 }
 

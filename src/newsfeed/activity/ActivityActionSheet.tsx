@@ -94,6 +94,7 @@ export default withSafeAreaInsets(
         iconName: string;
         iconType: string;
         title: string;
+        testID?: string;
         onPress: () => void;
       }> = [];
 
@@ -307,6 +308,7 @@ export default withSafeAreaInsets(
           iconName: 'delete',
           iconType: 'material-community',
           title: i18n.t('delete'),
+          testID: 'deleteOption',
           onPress: () => {
             this.hideActionSheet();
             setTimeout(() => {

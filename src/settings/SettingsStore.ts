@@ -2,16 +2,12 @@
 import { observable, action, computed } from 'mobx';
 import connectivityService from '../common/services/connectivity.service';
 import moment, { Moment } from 'moment-timezone';
-
-import storageService from '../common/services/storage.service';
-import { getStores } from '../../AppStores';
-import ThemedStyles from '../styles/ThemedStyles';
+import { storages } from '../common/services/storage/storages.service';
 
 /**
  * Store for the values held in Settings.
  */
 export class SettingsStore {
-  @observable appLog = true;
   @observable leftHanded = null;
   @observable ignoreBestLanguage = '';
   @observable ignoreOnboarding: Moment | false = false;
@@ -37,59 +33,27 @@ export class SettingsStore {
     return dataSaverEnabled;
   }
 
+  constructor() {
+    this.leftHanded = storages.app.getBool('leftHanded') || false;
+    this.composerMode = storages.app.getString('composerMode') || 'photo';
+    this.dataSaverMode = storages.app.getBool('dataSaverMode') || false;
+    this.dataSaverModeDisablesOnWiFi =
+      storages.app.getBool('dataSaverModeDisablesOnWiFi') || false;
+    this.swipeAnimShown = storages.app.getBool('leftHanded') || false;
+    this.ignoreBestLanguage =
+      storages.app.getArray('ignoreBestLanguage') || false;
+  }
+
   /**
-   * Initializes local variables with their correct values as stored locally.
-   * Await to guarantee completion & ensure that this is called prior to using the Store.
+   * Load user related settings
    */
-  @action.bound
-  async init() {
-    const data = await storageService.multiGet([
-      'LeftHanded',
-      'AppLog',
-      'CreatorNsfw',
-      'ConsumerNsfw',
-      'UseHashtags',
-      'Theme',
-      'IgnoreBestLanguage',
-      'ComposerMode',
-      'IgnoreOnboarding',
-      'DataSaverMode',
-      'DataSaverModeDisablesOnWiFi',
-      'SwipeAnimShown',
-    ]);
-
-    // store theme changes
-    ThemedStyles.onThemeChange(value => {
-      this.setTheme(value);
-    });
-
-    if (!data) {
-      ThemedStyles.theme = 0;
-      return this;
-    }
-
-    this.leftHanded = data[0][1];
-    this.appLog = data[1][1];
-    this.creatorNsfw = data[2][1] || [];
-    this.consumerNsfw = data[3][1] || [];
-    this.useHashtags = data[4][1] === null ? true : data[4][1];
-    this.ignoreBestLanguage = data[6][1] || '';
-    this.composerMode = data[7][1] || 'photo';
-    this.ignoreOnboarding = data[8][1]
-      ? moment(parseInt(data[8][1], 10))
+  loadUserSettings() {
+    this.creatorNsfw = storages.user?.getArray('creatorNSFW') || [];
+    this.consumerNsfw = storages.user?.getArray('consumerNSFW') || [];
+    const ignoreOnboardingDate = storages.user?.getString('ignoreOnboarding');
+    this.ignoreOnboarding = ignoreOnboardingDate
+      ? moment(parseInt(ignoreOnboardingDate, 10))
       : false;
-    this.dataSaverMode = data[9][1] || false;
-    this.dataSaverModeDisablesOnWiFi = data[10][1] || false;
-
-    this.swipeAnimShown = data[10][1];
-
-    // set the initial value for hashtag
-    getStores().hashtag.setAll(!this.useHashtags);
-
-    // theme
-    ThemedStyles.setTheme(data[5][1] || 0);
-
-    return this;
   }
 
   /**
@@ -99,96 +63,78 @@ export class SettingsStore {
   @action
   setIgnoreBestLanguage(value: string) {
     this.ignoreBestLanguage = value;
-    storageService.setItem('IgnoreBestLanguage', value);
+    storages.app.setBool('ignoreBestLanguage', value);
   }
 
-  /**
-   * Set the theme in the stored values
-   * @param {numeric} value
-   */
-  setTheme(value) {
-    storageService.setItem('Theme', value);
-  }
   /**
    * Set composer mode
    * @param {string} value
    */
   setComposerMode(value: string) {
-    storageService.setItem('ComposerMode', value);
     this.composerMode = value;
+    storages.app.setString('composerMode', value);
   }
 
   /**
    * Sets in local store and changes this class variable
    */
   @action
-  setAppLog(value) {
-    storageService.setItem('AppLog', value);
-    this.appLog = value;
-  }
-
-  /**
-   * Sets in local store and changes this class variable
-   */
-  @action
-  setLeftHanded(value) {
-    storageService.setItem('LeftHanded', value);
+  setLeftHanded(value: boolean) {
+    storages.app.setBool('leftHanded', value);
     this.leftHanded = value;
   }
+
   /**
    * Set swipe animation shown
-   * @param value
    */
   setSwipeAnimShown(value: boolean) {
-    storageService.setItem('SwipeAnimShown', value);
+    storages.app.setBool('swipeAnimShown', value);
     this.swipeAnimShown = value;
   }
 
-  setCreatorNsfw(value) {
-    storageService.setItem('CreatorNsfw', value);
+  /**
+   * Set creator NSFW array
+   */
+  setCreatorNsfw(value: Array) {
+    storages.user?.setArray('creatorNSFW', value);
     this.creatorNsfw = value;
   }
 
+  /**
+   * Set consumer NSFW array
+   */
   setConsumerNsfw(value) {
-    storageService.setItem('ConsumerNsfw', value);
+    storages.user?.setArray('consumerNSFW', value);
     this.consumerNsfw = value;
   }
 
-  setUseHashtags(value) {
-    storageService.setItem('UseHashtags', value);
-    this.useHashtags = value;
-  }
-
   /**
-   *
-   * @param value moment | false
+   * Set ignore onboarding date
    */
   @action
   setIgnoreOnboarding(value: Moment | false) {
-    storageService.setItem(
-      'IgnoreOnboarding',
-      value ? value.format('x') : false,
+    storages.user?.setString(
+      'ignoreOnboarding',
+      value ? value.format('x') : '',
     );
     this.ignoreOnboarding = value;
   }
 
   /**
    * Set data saver mode
-   * @param {boolean} value
    */
   @action
   setDataSaverMode(value: boolean) {
-    storageService.setItem('DataSaverMode', value);
+    storages.app.setItem('dataSaverMode', value);
     this.dataSaverMode = value;
   }
 
   /**
    * Set data saver mode on a Wi-Fi connection
-   * @param {boolean} value
    */
   @action
   setDataSaverModeDisablesOnWiFi(value: boolean) {
-    storageService.setItem('DataSaverModeDisablesOnWiFi', value);
+    storages.app.setItem('dataSaverModeDisablesOnWiFi', value);
     this.dataSaverModeDisablesOnWiFi = value;
   }
 }

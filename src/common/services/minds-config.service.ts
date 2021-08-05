@@ -1,14 +1,12 @@
-//@ts-nocheck
 import api from './api.service';
-import AsyncStorage from '@react-native-community/async-storage';
 import featuresService from './features.service';
+import { storages } from './storage/storages.service';
 
 /**
  * Minds Service
  */
-class MindsService {
-  settings;
-  promise;
+class MindsConfigService {
+  settings: any;
 
   /**
    * Lazy load default settings
@@ -20,7 +18,7 @@ class MindsService {
    */
   async update() {
     const settings = await api.get('api/v1/minds/config');
-    await AsyncStorage.setItem('@MindsSettings', JSON.stringify(settings));
+    storages.app.setMap('mindsSettings', settings);
     this.settings = settings;
     // update the features based on the settings
     featuresService.updateFeatures();
@@ -30,26 +28,11 @@ class MindsService {
    * Get settings
    */
   getSettings() {
-    if (!this.promise || this.settings) {
-      this.promise = this._getSettings();
-    }
-    return this.promise;
-  }
-
-  /**
-   * Get settings
-   */
-  async _getSettings() {
     let settings;
     if (!this.settings) {
-      try {
-        settings = JSON.parse(await AsyncStorage.getItem('@MindsSettings'));
-        if (!settings) {
-          throw Error('No settings stored');
-        }
-      } catch {
+      settings = storages.app.getMap('mindsSettings');
+      if (!settings) {
         settings = this.loadDefault();
-        await AsyncStorage.setItem('@MindsSettings', JSON.stringify(settings));
       }
       this.settings = settings;
       // update the features based on the settings
@@ -65,8 +48,8 @@ class MindsService {
    */
   clear() {
     this.settings = undefined;
-    AsyncStorage.removeItem('@MindsSettings');
+    storages.app.removeItem('mindsSettings');
   }
 }
 
-export default new MindsService();
+export default new MindsConfigService();
