@@ -160,7 +160,15 @@ export default class Activity extends Component<PropsType> {
             const user = sessionService.getUser();
             if (
               !user.disable_autoplay_videos &&
-              !settingsStore.dataSaverEnabled
+              !settingsStore.dataSaverEnabled &&
+              !(
+                // do not autoplay minds+ videos for non plus users
+                (
+                  !user.plus &&
+                  this.props.entity.getLockType &&
+                  this.props.entity.getLockType() === 'plus'
+                )
+              )
             ) {
               const state = NavigationService.getCurrentState();
 
