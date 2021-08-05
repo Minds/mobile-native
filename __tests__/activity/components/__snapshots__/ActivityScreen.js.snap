@@ -843,12 +843,15 @@ exports[`Activity screen component renders correctly  1`] = `
                   "fontSize": 21,
                 },
                 Array [
-                  Object {
-                    "color": "#7D7D82",
-                  },
-                  Object {
-                    "marginRight": 5,
-                  },
+                  Array [
+                    Object {
+                      "color": "#7D7D82",
+                    },
+                    Object {
+                      "marginRight": 5,
+                    },
+                  ],
+                  [Function],
                 ],
                 Object {
                   "fontFamily": "Material Icons",
@@ -892,12 +895,15 @@ exports[`Activity screen component renders correctly  1`] = `
                   "fontSize": 21,
                 },
                 Array [
-                  Object {
-                    "color": "#7D7D82",
-                  },
-                  Object {
-                    "marginRight": 5,
-                  },
+                  Array [
+                    Object {
+                      "color": "#7D7D82",
+                    },
+                    Object {
+                      "marginRight": 5,
+                    },
+                  ],
+                  [Function],
                 ],
                 Object {
                   "fontFamily": "Material Icons",
