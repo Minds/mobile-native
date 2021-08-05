@@ -474,8 +474,6 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
       if (refresh) this.clear();
       this.addEntities(localEntities);
 
-      console.log('LOCAL LOADED', this.feedsService.params);
-
       await this.feedsService.fetch();
       const remoteEntities = await this.feedsService.getEntities();
 
@@ -486,7 +484,6 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
         return;
       this.clear();
       this.addEntities(remoteEntities);
-      console.log('Remote LOADED', this.feedsService.params);
     } catch (err) {
       // ignore aborts
       if (err.code === 'Abort') return;
