@@ -36,6 +36,7 @@ const getOptionsList = navigation => {
           onPress: () => {
             navigation.navigate('Discovery');
           },
+          testID: 'discovery',
         }
       : null,
     featuresService.has('plus-2020') && !GOOGLE_PLAY_STORE
@@ -62,6 +63,7 @@ const getOptionsList = navigation => {
               params: { screen: 'Wallet' },
             });
           },
+          testID: 'wallet',
         }
       : null,
     {
@@ -174,6 +176,7 @@ export default function Drawer(props) {
             !l ? null : (
               <ListItem
                 Component={TouchableOpacity}
+                testID={l.testID}
                 pad={5}
                 key={i}
                 onPress={l.onPress}

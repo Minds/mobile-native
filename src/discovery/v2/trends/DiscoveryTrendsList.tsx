@@ -10,6 +10,7 @@ import FeedList from '../../../common/components/FeedList';
 import { useNavigation } from '@react-navigation/native';
 import type DiscoveryV2Store from '../DiscoveryV2Store';
 import CenteredLoading from '../../../common/components/CenteredLoading';
+import Customize from '../../customize/Customize';
 
 type PropsType = {
   plus?: boolean;
@@ -75,6 +76,7 @@ export const DiscoveryTrendsList = observer(({ plus, store }: PropsType) => {
         theme.bcolorPrimaryBorder,
         theme.marginBottom2x,
       ]}>
+      <Customize />
       {store.trends.map(ItemPartial)}
     </View>
   );

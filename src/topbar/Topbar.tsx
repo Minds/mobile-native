@@ -77,6 +77,7 @@ export const Topbar = observer((props: PropsType) => {
                 source={avatar}
                 style={avatarStyle}
                 resizeMode="contain"
+                testID="userAvatar"
               />
               <View style={styles.menuIconContainer}>
                 <Icon
