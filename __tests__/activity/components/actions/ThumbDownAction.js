@@ -34,9 +34,9 @@ describe('Thumb action component', () => {
     expect(screen).toMatchSnapshot();
   });
 
-  it('should have A boost button', async () => {
+  it('should have an icon button', async () => {
     screen.update();
-    expect(screen.find('Icon')).toHaveLength(1);
+    expect(screen.find('AnimatedThumb')).toHaveLength(1);
   });
 
   it('should navigate a thumb on press ', () => {

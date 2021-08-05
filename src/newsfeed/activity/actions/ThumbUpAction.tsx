@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { observer } from 'mobx-react';
+import { motify, useAnimationState } from 'moti';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Counter from './Counter';
@@ -24,6 +25,83 @@ type PropsType = {
   hideCount?: boolean;
   orientation: 'column' | 'row';
   touchableComponent?: React.ComponentClass;
+};
+
+const AnimatedIcon = motify(Icon)();
+
+const AnimatedThumb = ({
+  voted,
+  size,
+  canVote,
+  down,
+  name,
+}: {
+  voted: boolean;
+  size: number;
+  canVote: boolean;
+  down: boolean;
+  name: string;
+}) => {
+  const initialRender = React.useRef(true);
+  const animation = useAnimationState({
+    from: {
+      scale: 1,
+      translateY: 0,
+      rotate: '0deg',
+    },
+    up: {
+      scale: [
+        { value: 1, type: 'timing', duration: 150 },
+        { value: 1.3, type: 'timing', duration: 150 },
+        { value: 1, type: 'spring', delay: 80 },
+      ],
+      rotate: [
+        { value: '0deg', type: 'timing', duration: 120 },
+        { value: '-20deg', type: 'timing', duration: 160 },
+        { value: '0deg', type: 'spring', delay: 150 },
+      ],
+      translateY: [
+        { value: 0, type: 'timing', duration: 150 },
+        { value: down ? 10 : -10, type: 'timing', duration: 150 },
+        { value: 0, type: 'spring', delay: 150 },
+      ],
+    },
+    down: {
+      scale: [
+        { value: 1, type: 'timing', duration: 150 },
+        { value: 1.2, type: 'timing', duration: 150 },
+        { value: 1, type: 'spring', delay: 150 },
+      ],
+      translateX: [
+        { value: -5, type: 'timing', duration: 80 },
+        { value: 5, type: 'timing', duration: 80 },
+        { value: -5, type: 'timing', duration: 80 },
+        { value: 0, type: 'timing', duration: 80 },
+      ],
+    },
+  });
+
+  React.useEffect(() => {
+    if (initialRender.current) {
+      initialRender.current = false;
+      return;
+    }
+    if (voted) {
+      animation.transitionTo('up');
+    } else {
+      animation.transitionTo('down');
+    }
+  }, [voted]);
+
+  const iconStyle = canVote
+    ? voted
+      ? iconActiveStyle
+      : iconNormalStyle
+    : iconDisabledStyle;
+
+  return (
+    <AnimatedIcon style={iconStyle} name={name} size={size} state={animation} />
+  );
 };
 
 /**
@@ -59,12 +137,6 @@ class ThumbUpAction extends Component<PropsType> {
 
     const canVote = entity.can(FLAG_VOTE);
 
-    const iconStyle = canVote
-      ? this.voted
-        ? iconActiveStyle
-        : iconNormalStyle
-      : iconDisabledStyle;
-
     const Touchable = this.props.touchableComponent || TouchableOpacityCustom;
 
     return (
@@ -72,7 +144,13 @@ class ThumbUpAction extends Component<PropsType> {
         style={actionsContainerStyle}
         onPress={this.toggleThumb}
         testID={`Thumb ${this.direction} activity button`}>
-        <Icon style={iconStyle} name={this.iconName} size={this.props.size} />
+        <AnimatedThumb
+          canVote={canVote}
+          voted={this.voted}
+          size={this.props.size}
+          name={this.iconName}
+          down={this.direction !== 'up'}
+        />
         {count && !this.props.hideCount ? (
           <Counter
             // size={this.props.size * 0.7}
