@@ -450,6 +450,55 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   }
 
   /**
+   * Fetch from remote endpoint or from the local storage if it fails
+   * @param {boolean} refresh
+   */
+  async fetchLocalThenRemote(refresh = false) {
+    this.setLoading(true).setErrorLoading(false);
+
+    const endpoint = this.feedsService.endpoint;
+    const params = this.feedsService.params;
+
+    try {
+      await this.feedsService.fetchLocal();
+      if (refresh) this.setOffset(0);
+      const localEntities = await this.feedsService.getEntities();
+
+      // if the endpoint or the params are changed we ignore the result
+      if (
+        endpoint !== this.feedsService.endpoint ||
+        params !== this.feedsService.params
+      )
+        return;
+
+      if (refresh) this.clear();
+      this.addEntities(localEntities);
+
+      console.log('LOCAL LOADED', this.feedsService.params);
+
+      await this.feedsService.fetch();
+      const remoteEntities = await this.feedsService.getEntities();
+
+      if (
+        endpoint !== this.feedsService.endpoint ||
+        params !== this.feedsService.params
+      )
+        return;
+      this.clear();
+      this.addEntities(remoteEntities);
+      console.log('Remote LOADED', this.feedsService.params);
+    } catch (err) {
+      // ignore aborts
+      if (err.code === 'Abort') return;
+      console.log(err);
+      logService.exception('[FeedStore]', err);
+      this.setErrorLoading(true);
+    } finally {
+      this.setLoading(false);
+    }
+  }
+
+  /**
    * Load next page
    */
   loadMore = async () => {
