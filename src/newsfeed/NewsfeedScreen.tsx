@@ -79,7 +79,7 @@ class NewsfeedScreen extends Component<PropsType> {
   async loadFeed() {
     // this.props.discovery.init();
 
-    await this.props.newsfeed.feedStore.fetchRemoteOrLocal();
+    await this.props.newsfeed.feedStore.fetchLocalThenRemote();
 
     // load messenger
     this.props.messengerList.loadList();

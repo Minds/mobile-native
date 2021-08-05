@@ -72,7 +72,12 @@ function createPortraitStore() {
       try {
         feedStore.setParams({
           portrait: true,
-          to_timestamp: moment().subtract(2, 'days').unix(),
+          to_timestamp: moment()
+            .subtract(2, 'days')
+            .hour(0)
+            .minutes(0)
+            .seconds(0)
+            .unix(),
         });
 
         this.loading = true;
