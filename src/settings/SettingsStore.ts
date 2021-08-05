@@ -41,7 +41,7 @@ export class SettingsStore {
       storages.app.getBool('dataSaverModeDisablesOnWiFi') || false;
     this.swipeAnimShown = storages.app.getBool('leftHanded') || false;
     this.ignoreBestLanguage =
-      storages.app.getArray('ignoreBestLanguage') || false;
+      storages.app.getString('ignoreBestLanguage') || '';
   }
 
   /**
@@ -63,7 +63,7 @@ export class SettingsStore {
   @action
   setIgnoreBestLanguage(value: string) {
     this.ignoreBestLanguage = value;
-    storages.app.setBool('ignoreBestLanguage', value);
+    storages.app.setString('ignoreBestLanguage', value);
   }
 
   /**

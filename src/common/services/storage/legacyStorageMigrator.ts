@@ -52,7 +52,7 @@ export async function migrateLegacyStorage() {
       const creatorNsfw = settings[1][1] || ([] as any);
       const consumerNsfw = settings[2][1] || ([] as any);
       const theme = settings[4][1] ? parseInt(settings[4][1], 10) : 0;
-      const ignoreBestLanguage = Boolean(settings[5][1]);
+      const ignoreBestLanguage = settings[5][1] || '';
       const composerMode = settings[6][1] || 'photo';
       const ignoreOnboarding = settings[7][1] || '';
 
@@ -68,7 +68,7 @@ export async function migrateLegacyStorage() {
         'dataSaverModeDisablesOnWiFi',
         settingsSaverModeDisablesOnWiFi,
       );
-      app.setBool('ignoreBestLanguage', ignoreBestLanguage);
+      app.setString('ignoreBestLanguage', ignoreBestLanguage);
       app.setString('locale', locale);
       app.setString('composerMode', composerMode);
       if (user && user.guid) {
