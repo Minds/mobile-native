@@ -18,7 +18,7 @@ import supportTiersService from '../../../common/services/support-tiers.service'
 import type { SupportTiersType } from '../../../wire/WireTypes';
 import UserModel from '../../../channel/UserModel';
 import { DotIndicator } from 'react-native-reanimated-indicators';
-import Selector from '../../../common/components/Selector';
+import Selector from '../../../common/components/SelectorV2';
 import MenuItem, {
   MenuItemItem,
 } from '../../../common/components/menus/MenuItem';

@@ -4,7 +4,7 @@ import { View, Text } from 'react-native-animatable';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
 import ModalPicker from '../../common/components/ModalPicker';
-import Selector from '../../common/components/Selector';
+import Selector from '../../common/components/SelectorV2';
 
 export default function () {
   const CS = ThemedStyles.style;

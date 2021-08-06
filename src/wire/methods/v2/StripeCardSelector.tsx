@@ -3,7 +3,7 @@ import * as React from 'react';
 import type { StripeCard } from '../../WireTypes';
 import MenuItem from '../../../common/components/menus/MenuItem';
 import ThemedStyles from '../../../styles/ThemedStyles';
-import Selector from '../../../common/components/Selector';
+import Selector from '../../../common/components/SelectorV2';
 import stripe, { initStripe } from '../../../common/services/stripe.service';
 import api, { ApiResponse } from '../../../common/services/api.service';
 import i18n from '../../../common/services/i18n.service';

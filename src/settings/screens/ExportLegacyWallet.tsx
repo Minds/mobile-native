@@ -9,7 +9,7 @@ import {
   setWallets,
 } from '../../blockchain/ExportOldWallet';
 import Button from '../../common/components/Button';
-import Selector from '../../common/components/Selector';
+import Selector from '../../common/components/SelectorV2';
 import TextInput from '../../common/components/TextInput';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
