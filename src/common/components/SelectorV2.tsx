@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { FlatList, Text, TextStyle } from 'react-native';
+import { Text, TextStyle } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { BottomSheetButton, BottomSheet, MenuItem } from './bottom-sheet';
 import i18n from '../../common/services/i18n.service';
+import { FlatList } from 'react-native-gesture-handler';
 
 type PropsType = {
   data: Array<Object>;
@@ -21,7 +22,7 @@ export default class Selector extends Component<PropsType> {
     selected: '',
   };
 
-  flatListRef = React.createRef<FlatList<any>>();
+  flatListRef = React.createRef<any>();
   bottomSheetRef = React.createRef<any>();
 
   show = (item?) => {
@@ -54,6 +55,7 @@ export default class Selector extends Component<PropsType> {
 
     return (
       <MenuItem
+        key={this.keyExtractor(item)}
         onPress={() => this.itemSelect(item)}
         textStyle={{ color: fontColor.color }}
         title={this.valueExtractor(item)}
@@ -105,6 +107,7 @@ export default class Selector extends Component<PropsType> {
           extraData={this.state.selected}
           style={styles.flatList}
           ref={this.flatListRef}
+          keyExtractor={this.keyExtractor}
           onScrollToIndexFailed={() => this.flatListRef.current?.scrollToEnd()}
         />
         <BottomSheetButton text={i18n.t('cancel')} onPress={this.close} />
