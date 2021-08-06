@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Platform, Pressable } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 
@@ -9,23 +9,29 @@ import ThemedStyles from '../../styles/ThemedStyles';
 const MPressable = ({ ...props }) => {
   const [pressed, setPressed] = useState(false);
 
-  const platformSpecificProps = Platform.select({
-    android: {
-      android_ripple: { color: ThemedStyles.getColor('TertiaryBackground') },
-    },
-    default: {
-      onPressIn: () => setPressed(true),
-      onPressOut: () => setPressed(false),
-      style: [
-        {
-          backgroundColor: pressed
-            ? ThemedStyles.getColor('TertiaryBackground')
-            : undefined,
+  const platformSpecificProps = useMemo(
+    () =>
+      Platform.select({
+        android: {
+          android_ripple: {
+            color: ThemedStyles.getColor('TertiaryBackground'),
+          },
         },
-        props.style,
-      ],
-    },
-  });
+        default: {
+          onPressIn: () => setPressed(true),
+          onPressOut: () => setPressed(false),
+          style: [
+            {
+              backgroundColor: pressed
+                ? ThemedStyles.getColor('TertiaryBackground')
+                : undefined,
+            },
+            props.style,
+          ],
+        },
+      }),
+    [pressed],
+  );
 
   return <Pressable {...props} {...platformSpecificProps} />;
 };
