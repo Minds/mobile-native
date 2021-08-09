@@ -23,7 +23,10 @@ const dynamicStyleHandler = {
       target[name] = m;
       return target[name];
     }
-    throw new Error(`Style not defined: ${name}`);
+    if (__DEV__) {
+      throw new Error(`Style not defined: ${name}`);
+    }
+    return null;
   },
 };
 
