@@ -1,4 +1,5 @@
 import React from 'react';
+import { get } from 'lodash';
 import * as RNLocalize from 'react-native-localize';
 import i18n from 'i18n-js';
 import { memoize } from 'lodash';
@@ -273,10 +274,18 @@ class I18nService {
     }
 
     this.dateFormat = {
-      date: i18n.lookup('dateformats.date'),
-      nameDay: i18n.lookup('dateformats.nameDay'),
-      datetime: i18n.lookup('dateformats.datetime'),
-      short: i18n.lookup('dateformats.short'),
+      date:
+        get(i18n.translations[locale], 'dateformats.date') ||
+        get(i18n.translations.en, 'dateformats.date'),
+      nameDay:
+        get(i18n.translations[locale], 'dateformats.nameDay') ||
+        get(i18n.translations.en, 'dateformats.nameDay'),
+      datetime:
+        get(i18n.translations[locale], 'dateformats.datetime') ||
+        get(i18n.translations.en, 'dateformats.datetime'),
+      short:
+        get(i18n.translations[locale], 'dateformats.short') ||
+        get(i18n.translations.en, 'dateformats.short'),
     };
 
     // update observable to fire app reload
