@@ -12,7 +12,7 @@ export class SessionStorageService {
       const data = storages.session.getMultipleItems([
         'access_token',
         'refresh_token',
-        'logged_in_user',
+        'user',
       ]);
 
       const accessToken = data[0][1],
@@ -45,7 +45,7 @@ export class SessionStorageService {
    * @param {object} user
    */
   setUser(user) {
-    storages.session.setMap('logged_in_user', user);
+    storages.session.setMap('user', user);
   }
 
   /**
