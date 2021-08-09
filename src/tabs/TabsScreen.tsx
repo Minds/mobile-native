@@ -13,7 +13,7 @@ import {
 
 import NewsfeedScreen from '../newsfeed/NewsfeedScreen';
 import NotificationsScreen from '../notifications/v3/NotificationsScreen';
-import ThemedStyles, { useStyle } from '../styles/ThemedStyles';
+import ThemedStyles, { useMemoStyle } from '../styles/ThemedStyles';
 import TabIcon from './TabIcon';
 import NotificationIcon from '../notifications/v3/notifications-tab-icon/NotificationsTabIcon';
 import gatheringService from '../common/services/gathering.service';
@@ -83,11 +83,14 @@ const TabBar = ({ state, descriptors, navigation }) => {
       : 10,
   };
 
-  const containerStyle = useStyle(
-    'rowJustifySpaceEvenly',
-    'bgSecondaryBackground',
-    styles.tabBar,
-    bottomInset,
+  const containerStyle = useMemoStyle(
+    [
+      'rowJustifySpaceEvenly',
+      'bgSecondaryBackground',
+      styles.tabBar,
+      bottomInset,
+    ],
+    [insets.bottom],
   );
 
   if (focusedOptions.tabBarVisible === false) {

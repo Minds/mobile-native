@@ -169,6 +169,13 @@ export function useStyle(...styles: Array<Style | CustomStyle>) {
   return ref.current;
 }
 
+export function useMemoStyle(
+  styles: Array<Style | CustomStyle>,
+  dependencies: React.DependencyList | undefined,
+) {
+  return React.useMemo(() => ThemedStyles.combine(...styles), dependencies);
+}
+
 /**
  * Map props to styles
  */
