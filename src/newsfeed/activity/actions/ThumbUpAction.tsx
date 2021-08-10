@@ -51,32 +51,31 @@ const AnimatedThumb = ({
     },
     up: {
       scale: [
-        { value: 1, type: 'timing', duration: 150 },
-        { value: 1.3, type: 'timing', duration: 150 },
+        { value: 1, type: 'timing', duration: 120 },
+        { value: 1.08, type: 'timing', duration: 150 },
         { value: 1, type: 'spring', delay: 80 },
       ],
       rotate: [
         { value: '0deg', type: 'timing', duration: 120 },
-        { value: '-20deg', type: 'timing', duration: 160 },
+        { value: '-12deg', type: 'timing', duration: 160 },
         { value: '0deg', type: 'spring', delay: 150 },
       ],
       translateY: [
         { value: 0, type: 'timing', duration: 150 },
-        { value: down ? 10 : -10, type: 'timing', duration: 150 },
+        { value: down ? 6 : -6, type: 'timing', duration: 150 },
         { value: 0, type: 'spring', delay: 150 },
       ],
     },
     down: {
       scale: [
-        { value: 1, type: 'timing', duration: 150 },
-        { value: 1.2, type: 'timing', duration: 150 },
-        { value: 1, type: 'spring', delay: 150 },
+        { value: 0.9, type: 'timing', duration: 80 },
+        { value: 1, type: 'spring', delay: 80 },
       ],
       translateX: [
-        { value: -5, type: 'timing', duration: 80 },
-        { value: 5, type: 'timing', duration: 80 },
-        { value: -5, type: 'timing', duration: 80 },
-        { value: 0, type: 'timing', duration: 80 },
+        { value: -2, type: 'timing', duration: 100 },
+        { value: 3, type: 'timing', duration: 100 },
+        { value: -2, type: 'timing', duration: 100 },
+        { value: 0, type: 'timing', duration: 100 },
       ],
     },
   });
