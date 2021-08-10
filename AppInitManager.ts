@@ -56,37 +56,38 @@ export default class AppInitManager {
     //on app logout
     sessionService.onLogout(this.onLogout);
 
-    this.checkDeepLink().then(async shouldHandlePasswordReset => {
-      if (shouldHandlePasswordReset) {
-        sessionService.setReady();
-        this.shouldHandlePasswordReset = true;
-      } else {
-        try {
-          logService.info('[App] init session');
-          const token = await sessionService.init();
+    //TODO: remove store migrator
+    migrateLegacyStorage().then(() => {
+      this.checkDeepLink().then(async shouldHandlePasswordReset => {
+        if (shouldHandlePasswordReset) {
+          sessionService.setReady();
+          this.shouldHandlePasswordReset = true;
+        } else {
+          try {
+            logService.info('[App] init session');
+            const token = await sessionService.init();
 
-          if (!token) {
-            logService.info('[App] there is no active session');
-            RNBootSplash.hide({ duration: 250 });
-          } else {
-            logService.info('[App] session initialized');
+            if (!token) {
+              logService.info('[App] there is no active session');
+              RNBootSplash.hide({ duration: 250 });
+            } else {
+              logService.info('[App] session initialized');
+            }
+          } catch (err) {
+            logService.exception('[App] Error initializing the app', err);
+            Alert.alert(
+              'Error',
+              'There was an error initializing the app.\n Do you want to copy the stack trace.',
+              [
+                { text: 'Yes', onPress: () => Clipboard.setString(err.stack) },
+                { text: 'No' },
+              ],
+              { cancelable: false },
+            );
           }
-        } catch (err) {
-          logService.exception('[App] Error initializing the app', err);
-          Alert.alert(
-            'Error',
-            'There was an error initializing the app.\n Do you want to copy the stack trace.',
-            [
-              { text: 'Yes', onPress: () => Clipboard.setString(err.stack) },
-              { text: 'No' },
-            ],
-            { cancelable: false },
-          );
         }
-      }
+      });
     });
-
-    migrateLegacyStorage();
   }
 
   /**
