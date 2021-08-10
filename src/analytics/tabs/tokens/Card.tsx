@@ -18,7 +18,7 @@ type PropsType = {
 const Card = ({ metrics, type }: PropsType) => {
   const theme = ThemedStyles.style;
   return (
-    <View style={[styles.container, theme.bcolorPrimaryBorder]}>
+    <View style={styles.container}>
       <View style={theme.rowJustifySpaceBetween}>
         <Title type={type} />
         <Comparative comparative={metrics.comparative} total={metrics.total} />
@@ -39,14 +39,8 @@ const Card = ({ metrics, type }: PropsType) => {
 const Title = ({ type }) => {
   const theme = ThemedStyles.style;
   return (
-    <View style={[theme.rowJustifyStart]}>
-      <Text
-        style={[
-          theme.fontLM,
-          theme.colorSecondaryText,
-          theme.bold,
-          theme.marginRight,
-        ]}>
+    <View style={theme.rowJustifyStart}>
+      <Text style={styles.title}>
         {i18n.t(`analytics.tokens.labels.${type}`)}
       </Text>
       <Tooltip
@@ -96,7 +90,7 @@ const Comparative = ({
       />
       <Text style={styles.comparativeText}>
         {format(comparative.total_diff)}{' '}
-        <Text style={[styles.comparativeText, theme.colorSecondaryText]}>
+        <Text style={styles.comparativeText}>
           ({Math.round((prcnt + Number.EPSILON) * 100) / 100}%)
         </Text>
       </Text>
@@ -128,44 +122,46 @@ const AmountInfo = ({ metrics }: { metrics: TokensMetrics }) => {
         <Text style={styles.amountText}>
           {format(metrics.total)}
           {metrics.format === 'points' && (
-            <Text
-              style={[theme.colorSecondaryText, styles.amountTextSecondary]}>
-              {' '}
-              {i18n.t('points')}
-            </Text>
+            <Text style={styles.amountTextSecondary}> {i18n.t('points')}</Text>
           )}
         </Text>
       );
       break;
   }
 
-  return (
-    <View
-      style={[theme.rowJustifyStart, theme.marginTop2x, theme.marginBottom3x]}>
-      {body}
-    </View>
-  );
+  return <View style={styles.bodyContainer}>{body}</View>;
 };
 
-const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderTopWidth: StyleSheet.hairlineWidth,
-  },
-  comparativeText: {
-    fontSize: 16,
-    fontWeight: '500',
-    fontFamily: 'Roboto-Medium',
-  },
+const styles = ThemedStyles.create({
+  bodyContainer: ['rowJustifyStart', 'marginTop2x', 'marginBottom3x'],
+  container: [
+    'bcolorPrimaryBorder',
+    {
+      padding: 20,
+      borderBottomWidth: StyleSheet.hairlineWidth,
+      borderTopWidth: StyleSheet.hairlineWidth,
+    },
+  ],
+  title: ['fontLM', 'colorSecondaryText', 'bold', 'marginRight'],
+  comparativeText: [
+    'colorSecondaryText',
+    {
+      fontSize: 16,
+      fontWeight: '500',
+      fontFamily: 'Roboto-Medium',
+    },
+  ],
   amountText: {
     fontWeight: '700',
     fontSize: 26,
   },
-  amountTextSecondary: {
-    fontWeight: '700',
-    fontSize: 20,
-  },
+  amountTextSecondary: [
+    'colorSecondaryText',
+    {
+      fontWeight: '700',
+      fontSize: 20,
+    },
+  ],
 });
 
 export default Card;
