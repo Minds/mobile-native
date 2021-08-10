@@ -404,7 +404,7 @@ PODS:
     - React-Core
     - SDWebImage (~> 5.8)
     - SDWebImageWebPCoder (~> 0.6.1)
-  - RNFS (2.16.6):
+  - RNFS (2.18.0):
     - React
   - RNGestureHandler (1.10.3):
     - React-Core
@@ -454,8 +454,9 @@ PODS:
     - React-RCTVibration
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNScreens (2.18.1):
+  - RNScreens (3.5.0):
     - React-Core
+    - React-RCTImage
   - RNSentry (2.6.0):
     - React-Core
     - Sentry (= 7.0.0)
@@ -463,7 +464,7 @@ PODS:
     - React-Core
   - RNSharedElement (0.7.0):
     - React
-  - RNShareMenu (5.0.3):
+  - RNShareMenu (5.0.4):
     - React
   - RNSnowplowTracker (1.0.0):
     - React-Core
@@ -902,18 +903,18 @@ SPEC CHECKSUMS:
   RNDateTimePicker: 968ccf716b3b6aee07849641966005924de5c0f9
   RNDeviceInfo: 6ecb1d1c87d20e4c62354be0348de23362824dcd
   RNFastImage: 811ade1ec186fa437ff92bd189dd6721c0ed11d9
-  RNFS: 2bd9eb49dc82fa9676382f0585b992c424cd59df
+  RNFS: 3ab21fa6c56d65566d1fb26c2228e2b6132e5e32
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNImageCropPicker: 08ba3a2e2f4f8833d606f01906c371e382c4dea9
   RNLocalize: 7c7aeda16c01db7a0918981c14875c0a53be9b79
   RNPermissions: c46788f4cd402287425983e04a4c9bb4356036eb
   RNPhotoEditor: 732f185b28e22c7fdfbe65217db6842c644d5aec
   RNReanimated: 654354ac62644c9b7256b6a37ca657f6fa754ffb
-  RNScreens: f7ad633b2e0190b77b6a7aab7f914fad6f198d8d
+  RNScreens: 01ab149b5dd5c27f5ff26741b1d2bdf2cee1af35
   RNSentry: a2b02b326ae4fce91ce7c57d3f7dcf8df4f72269
   RNShare: 755de6bac084428f8fd8fb54c376f126f40e560c
   RNSharedElement: 00b1a1420d213a34459bb9a5aacabb38107d7948
-  RNShareMenu: 555df30344da0d60947ccc781b0447ee9e5cd48f
+  RNShareMenu: 6a821c28a1e03a9fdcad7b1919ca401641db6d43
   RNSnowplowTracker: ca97090a5d73271ff946426848da26fea447c400
   RNSVG: ce9d996113475209013317e48b05c21ee988d42e
   RNVectorIcons: bc69e6a278b14842063605de32bec61f0b251a59
