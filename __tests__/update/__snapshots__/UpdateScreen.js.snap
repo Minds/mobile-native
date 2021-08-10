@@ -1,0 +1,145 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Update Screen Component renders correctly 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "backgroundColor": "#FFFFFF",
+      },
+      Object {
+        "padding": 5,
+      },
+      Object {
+        "flex": 1,
+      },
+    ]
+  }
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "fontSize": 22,
+        },
+        Object {
+          "textAlign": "center",
+        },
+        Object {
+          "padding": 5,
+        },
+      ]
+    }
+  >
+    Update to v
+  </Text>
+  <View
+    style={
+      Array [
+        Object {
+          "alignContent": "center",
+          "alignItems": "center",
+          "alignSelf": "center",
+          "justifyContent": "center",
+        },
+        Object {
+          "flex": 1,
+        },
+      ]
+    }
+  >
+    <View>
+      <Image
+        resizeMode="contain"
+        source={
+          Object {
+            "testUri": "../../../src/assets/logos/logo.png",
+          }
+        }
+        style={
+          Object {
+            "alignSelf": "center",
+            "height": 84,
+            "marginBottom": 30,
+            "width": 200,
+          }
+        }
+      />
+      <View
+        animated={true}
+        animationConfig={
+          Object {
+            "bounciness": 0,
+          }
+        }
+        animationType="spring"
+        indeterminate={false}
+        indeterminateAnimationDuration={1000}
+        onLayout={[Function]}
+        progress={0}
+        style={
+          Array [
+            Object {
+              "backgroundColor": undefined,
+              "borderColor": "#1B85D6",
+              "borderRadius": 4,
+              "borderWidth": 1,
+              "overflow": "hidden",
+              "width": null,
+            },
+            undefined,
+          ]
+        }
+        useNativeDriver={false}
+      >
+        <View
+          style={
+            Object {
+              "backgroundColor": "#1B85D6",
+              "height": 6,
+              "transform": Array [
+                Object {
+                  "translateX": 0,
+                },
+                Object {
+                  "translateX": 1,
+                },
+                Object {
+                  "scaleX": 0.0001,
+                },
+              ],
+            }
+          }
+        />
+      </View>
+      <Text
+        style={
+          Array [
+            Object {
+              "fontSize": 14,
+            },
+            Object {
+              "fontFamily": "Roboto-Medium",
+              "fontWeight": "500",
+            },
+            Object {
+              "textAlign": "center",
+            },
+            Object {
+              "color": "#43434D",
+            },
+            Object {
+              "marginTop": 5,
+            },
+          ]
+        }
+      >
+        Downloading
+         
+        0
+        %
+      </Text>
+    </View>
+  </View>
+</View>
+`;
