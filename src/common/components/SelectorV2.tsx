@@ -1,14 +1,21 @@
-import React, { Component } from 'react';
+import React, {
+  forwardRef,
+  ForwardRefRenderFunction,
+  useCallback,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react';
 import { Text, TextStyle } from 'react-native';
-import ThemedStyles from '../../styles/ThemedStyles';
-import { BottomSheetButton, BottomSheet, MenuItem } from './bottom-sheet';
-import i18n from '../../common/services/i18n.service';
 import { FlatList } from 'react-native-gesture-handler';
+import ThemedStyles from '../../styles/ThemedStyles';
+import { BottomSheet, BottomSheetButton, MenuItem } from './bottom-sheet';
+import i18n from '../../common/services/i18n.service';
 
 type PropsType = {
   data: Array<Object>;
-  valueExtractor: Function;
-  keyExtractor: Function;
+  valueExtractor: (item: any) => string;
+  keyExtractor: (item: any) => string;
   title?: string;
   onItemSelect: Function;
   textStyle?: TextStyle | TextStyle[];
@@ -16,113 +23,157 @@ type PropsType = {
   children?: (onItemSelect: any) => any;
 };
 
-export default class Selector extends Component<PropsType> {
-  state = {
-    show: false,
-    selected: '',
-  };
+/**
+ * Selector with BottomSheet
+ *
+ * It is used as such:
+ * ```
+ *  <Selector ...props>
+ *    {show => (
+ *      <Button onPress={show} />
+ *    )}
+ *  </Selector>
+ * ```
+ *
+ * Or alternatively without children
+ * ```
+ *  <Selector ref={selectorRef} />
+ *
+ *  selectorRef.current.show()
+ * ```
+ **/
+const SelectorV2: ForwardRefRenderFunction<any, PropsType> = (
+  { title, data, keyExtractor, valueExtractor, onItemSelect, children },
+  ref,
+) => {
+  // =====================| STATES |==========================>
+  /**
+   * Is the bottomSheet visible?
+   **/
+  const [shown, setShown] = useState(false);
+  /**
+   * Shows the currently selected item
+   **/
+  const [selected, setSelected] = useState('');
 
-  flatListRef = React.createRef<any>();
-  bottomSheetRef = React.createRef<any>();
+  // =====================| VARIABLES |==========================>
+  const theme = ThemedStyles.style;
 
-  show = (item?) => {
-    this.setState({ show: true, selected: item });
+  // =====================| REFS |==========================>
+  const bottomSheetRef = useRef<any>();
+  const flatListRef = useRef<any>();
 
-    // SCROLL TO INDEX IF SELECTED
-    setTimeout(() => {
-      if (this.state.selected) {
-        const itemToScrollTo = this.props.data.find(
-          item => this.props.keyExtractor(item) === this.state.selected,
-        );
-        this.flatListRef.current?.scrollToIndex({
-          animated: true,
-          index: this.props.data.indexOf(itemToScrollTo || 0),
-        });
-      }
-    }, 500);
-  };
+  // =====================| FUNCTIONS |==========================>
+  /**
+   * Shows or hides the BottomSheet while optionally receiving a an item
+   * if an item was given, it makes that item selected
+   * it also scrolls to the selected item
+   **/
+  const show = useCallback(
+    (item?) => {
+      setShown(true);
+      setSelected(item);
 
-  close = () => {
-    this.setState({ show: false });
-  };
+      // SCROLL TO INDEX IF SELECTED
+      setTimeout(() => {
+        if (selected) {
+          const itemToScrollTo = data.find(
+            item => keyExtractor(item) === selected,
+          );
+          flatListRef.current?.scrollToIndex({
+            animated: true,
+            index: data.indexOf(itemToScrollTo || 0),
+          });
+        }
+      }, 500);
+    },
+    [selected, keyExtractor, selected, flatListRef, data],
+  );
 
-  renderItem = ({ item }) => {
-    const theme = ThemedStyles.style;
+  /**
+   * Closes the BottomSheet
+   **/
+  const close = useCallback(() => setShown(false), []);
 
-    const fontColor = this.isSelected(item)
-      ? theme.colorLink
-      : theme.colorPrimaryText;
+  /**
+   * Renders the FlatList item
+   **/
+  const renderItem = useCallback(
+    ({ item }) => {
+      const isSelected = item => selected === keyExtractor(item);
 
-    return (
-      <MenuItem
-        key={this.keyExtractor(item)}
-        onPress={() => this.itemSelect(item)}
-        textStyle={{ color: fontColor.color }}
-        title={this.valueExtractor(item)}
-        style={styles.menuItem}
-      />
-    );
-  };
+      const onMenuItemPress = () => {
+        onItemSelect(item);
+        close();
+      };
 
-  itemSelect = item => {
-    this.props.onItemSelect(item);
-    this.close();
-  };
+      const textStyle = isSelected(item)
+        ? { color: theme.colorLink }
+        : { color: theme.colorPrimaryText };
 
-  isSelected = item => {
-    return this.state.selected === this.keyExtractor(item);
-  };
-
-  setSelected = item => {
-    this.setState({ selected: this.keyExtractor(item) });
-  };
-
-  valueExtractor = item => {
-    return this.props.valueExtractor(item);
-  };
-
-  keyExtractor = item => {
-    return this.props.keyExtractor(item);
-  };
-
-  render() {
-    const theme = ThemedStyles.style;
-
-    const modal = this.state.show && (
-      <BottomSheet ref={this.bottomSheetRef} autoShow onDismiss={this.close}>
-        {Boolean(this.props.title) && (
-          <Text
-            style={[
-              theme.colorPrimaryText,
-              theme.fontXXL,
-              theme.centered,
-              theme.marginLeft5x,
-            ]}>
-            {this.props.title}
-          </Text>
-        )}
-        <FlatList
-          data={this.props.data}
-          renderItem={this.renderItem}
-          extraData={this.state.selected}
-          style={styles.flatList}
-          ref={this.flatListRef}
-          keyExtractor={this.keyExtractor}
-          onScrollToIndexFailed={() => this.flatListRef.current?.scrollToEnd()}
+      return (
+        <MenuItem
+          key={keyExtractor(item)}
+          onPress={onMenuItemPress}
+          textStyle={textStyle}
+          title={valueExtractor(item)}
+          style={styles.menuItem}
         />
-        <BottomSheetButton text={i18n.t('cancel')} onPress={this.close} />
-      </BottomSheet>
+      );
+    },
+    [selected, onItemSelect],
+  );
+
+  /**
+   * This function is called when the scroll to index fails
+   **/
+  const onScrollToIndexFailed = useCallback(
+    () => flatListRef.current?.scrollToEnd(),
+    [flatListRef],
+  );
+
+  /**
+   * Imperative handles to call show and close functions
+   * from outside
+   **/
+  useImperativeHandle(ref, () => ({
+    show,
+    close,
+  }));
+
+  // =====================| RENDER |==========================>
+  const modal = shown ? (
+    <BottomSheet ref={bottomSheetRef} autoShow onDismiss={close}>
+      {Boolean(title) && <Text style={styles.title}>{title}</Text>}
+      <FlatList
+        data={data}
+        renderItem={renderItem}
+        extraData={selected}
+        style={styles.flatList}
+        ref={flatListRef}
+        keyExtractor={keyExtractor}
+        onScrollToIndexFailed={onScrollToIndexFailed}
+      />
+      <BottomSheetButton text={i18n.t('cancel')} onPress={close} />
+    </BottomSheet>
+  ) : null;
+
+  if (children) {
+    return (
+      <>
+        {children(show)}
+        {modal}
+      </>
     );
-
-    if (this.props.children) {
-      return [this.props.children(this.show), modal];
-    }
-
-    return modal;
   }
-}
+
+  return modal;
+};
+
+export default forwardRef(SelectorV2);
 
 const styles = ThemedStyles.create({
   menuItem: ['paddingHorizontal5x', 'rowJustifyCenter'],
   flatList: { maxHeight: 300, overflow: 'scroll' },
+  title: ['colorPrimaryText', 'fontXXL', 'centered', 'marginLeft5x'],
 });
