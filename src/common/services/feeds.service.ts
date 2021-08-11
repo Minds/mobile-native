@@ -137,7 +137,7 @@ export default class FeedsService {
 
     const plainEntity = entity.toPlainObject();
 
-    entitiesService.addEntity(plainEntity, true);
+    entitiesService.save(plainEntity);
     // save without wait
     feedsStorage.save(this);
   }
