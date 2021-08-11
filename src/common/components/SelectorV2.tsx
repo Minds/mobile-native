@@ -1,16 +1,44 @@
 import React, {
+  FC,
   forwardRef,
   ForwardRefRenderFunction,
   useCallback,
   useImperativeHandle,
+  useMemo,
   useRef,
   useState,
 } from 'react';
-import { Text, TextStyle } from 'react-native';
+import { Text, TextStyle, View, ViewProps } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { BottomSheet, BottomSheetButton, MenuItem } from './bottom-sheet';
 import i18n from '../../common/services/i18n.service';
+import { LinearGradient } from 'expo-linear-gradient';
+
+/**
+ * a View that has two linear gradients on top and bottom
+ **/
+const GradientView: FC<ViewProps> = ({ children, ...props }) => {
+  const backgroundColor = ThemedStyles.getColor('PrimaryBackgroundHighlight');
+  const endColor = (ThemedStyles.theme ? '#242A30' : '#F5F5F5') + '00';
+  const startColor = backgroundColor + 'FF';
+
+  return (
+    <View {...props}>
+      {children}
+      <LinearGradient
+        colors={[startColor, endColor]}
+        style={topGradientStyle}
+        pointerEvents="none"
+      />
+      <LinearGradient
+        colors={[endColor, startColor]}
+        style={bottomGradientStyle}
+        pointerEvents="none"
+      />
+    </View>
+  );
+};
 
 type PropsType = {
   data: Array<Object>;
@@ -58,6 +86,20 @@ const SelectorV2: ForwardRefRenderFunction<any, PropsType> = (
 
   // =====================| VARIABLES |==========================>
   const theme = ThemedStyles.style;
+  /**
+   * only show the gradient view if we had more than 5 items. this may be
+   * a naive logic
+   **/
+  const showGradientView = data.length > 5;
+  /**
+   * we want to handle top and bottom paddings, and a correct
+   * scrollToIndex behavior. we do this to hit two birds with
+   * one stone
+   **/
+  const listData = useMemo(
+    () => (showGradientView ? ['', ...data, ''] : data),
+    [data],
+  );
 
   // =====================| REFS |==========================>
   const bottomSheetRef = useRef<any>();
@@ -76,10 +118,8 @@ const SelectorV2: ForwardRefRenderFunction<any, PropsType> = (
 
       // SCROLL TO INDEX IF SELECTED
       setTimeout(() => {
-        if (selected) {
-          const itemToScrollTo = data.find(
-            item => keyExtractor(item) === selected,
-          );
+        if (item) {
+          const itemToScrollTo = data.find(i => keyExtractor(i) === item);
           flatListRef.current?.scrollToIndex({
             animated: true,
             index: data.indexOf(itemToScrollTo || 0),
@@ -87,7 +127,7 @@ const SelectorV2: ForwardRefRenderFunction<any, PropsType> = (
         }
       }, 500);
     },
-    [selected, keyExtractor, selected, flatListRef, data],
+    [selected, flatListRef, data],
   );
 
   /**
@@ -99,7 +139,11 @@ const SelectorV2: ForwardRefRenderFunction<any, PropsType> = (
    * Renders the FlatList item
    **/
   const renderItem = useCallback(
-    ({ item }) => {
+    ({ item, index }) => {
+      if (item === '') {
+        return <View style={{ height: gradientHeight }} key={index} />;
+      }
+
       const isSelected = item => selected === keyExtractor(item);
 
       const onMenuItemPress = () => {
@@ -108,8 +152,8 @@ const SelectorV2: ForwardRefRenderFunction<any, PropsType> = (
       };
 
       const textStyle = isSelected(item)
-        ? { color: theme.colorLink }
-        : { color: theme.colorPrimaryText };
+        ? theme.colorLink
+        : theme.colorPrimaryText;
 
       return (
         <MenuItem
@@ -142,18 +186,22 @@ const SelectorV2: ForwardRefRenderFunction<any, PropsType> = (
   }));
 
   // =====================| RENDER |==========================>
+  const flatList = (
+    <FlatList
+      data={listData}
+      renderItem={renderItem}
+      extraData={selected}
+      style={styles.flatList}
+      ref={flatListRef}
+      keyExtractor={keyExtractor}
+      onScrollToIndexFailed={onScrollToIndexFailed}
+    />
+  );
+
   const modal = shown ? (
     <BottomSheet ref={bottomSheetRef} autoShow onDismiss={close}>
       {Boolean(title) && <Text style={styles.title}>{title}</Text>}
-      <FlatList
-        data={data}
-        renderItem={renderItem}
-        extraData={selected}
-        style={styles.flatList}
-        ref={flatListRef}
-        keyExtractor={keyExtractor}
-        onScrollToIndexFailed={onScrollToIndexFailed}
-      />
+      {showGradientView ? <GradientView>{flatList}</GradientView> : flatList}
       <BottomSheetButton text={i18n.t('cancel')} onPress={close} />
     </BottomSheet>
   ) : null;
@@ -172,8 +220,35 @@ const SelectorV2: ForwardRefRenderFunction<any, PropsType> = (
 
 export default forwardRef(SelectorV2);
 
+const gradientHeight = 100;
+
 const styles = ThemedStyles.create({
   menuItem: ['paddingHorizontal5x', 'rowJustifyCenter'],
   flatList: { maxHeight: 300, overflow: 'scroll' },
   title: ['colorPrimaryText', 'fontXXL', 'centered', 'marginLeft5x'],
+  linear: {
+    height: gradientHeight,
+    width: '100%',
+  },
+  topGradient: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+  },
+  bottomGradient: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+  },
 });
+
+const topGradientStyle = ThemedStyles.combine(
+  styles.linear,
+  styles.topGradient,
+);
+const bottomGradientStyle = ThemedStyles.combine(
+  styles.linear,
+  styles.bottomGradient,
+);
