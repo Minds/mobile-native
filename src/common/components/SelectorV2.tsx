@@ -42,7 +42,7 @@ const GradientView: FC<ViewProps> = ({ children, ...props }) => {
 
 type PropsType = {
   data: Array<Object>;
-  valueExtractor: (item: any) => string;
+  valueExtractor: (item: any) => JSX.Element | string;
   keyExtractor: (item: any) => string;
   title?: string;
   onItemSelect: Function;

@@ -5,7 +5,7 @@ import ThemedStyles, { useStyle } from '../../../styles/ThemedStyles';
 import MPressable from '../MPressable';
 
 export type MenuItemProps = {
-  title: string;
+  title: string | JSX.Element;
   iconName?: string;
   iconType?: IconType;
   iconSize?: number;

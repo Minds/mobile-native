@@ -117,7 +117,7 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
    * show input if tokens is selected payment
    */
   const store = useLocalStore(createJoinMembershipStore, { tiers });
-  const selectorRef = useRef<Selector>(null);
+  const selectorRef = useRef<any>(null);
 
   const { onComplete } = route.params;
 

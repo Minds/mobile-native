@@ -26,7 +26,7 @@ const keyExtractor = (wallet: any) => wallet.address;
 
 export default observer(function ExportLegacyWallet() {
   const theme = ThemedStyles.style;
-  const selectorRef = React.useRef<Selector>(null);
+  const selectorRef = React.useRef<any>(null);
   const store = useLocalStore(() => ({
     wallets: [] as Array<any>,
     password: '',

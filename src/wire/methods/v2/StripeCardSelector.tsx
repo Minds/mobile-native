@@ -57,7 +57,7 @@ export default class StripeCardSelector extends React.PureComponent<
     inProgress: false,
   } as StateType;
 
-  selectorRef = React.createRef<Selector>();
+  selectorRef = React.createRef<any>();
 
   /**
    * Component did mount

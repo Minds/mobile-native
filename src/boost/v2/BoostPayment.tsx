@@ -15,7 +15,7 @@ type PropsType = {
 
 const BoostPayment = observer(({ localStore }: PropsType) => {
   const theme = ThemedStyles.style;
-  const selectorRef = useRef<Selector>(null);
+  const selectorRef = useRef<any>(null);
 
   const getMethodLabel = (method: WalletCurrency) => (
     <Text style={[theme.fontL, theme.centered]}>
