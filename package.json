@@ -22,7 +22,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@gorhom/bottom-sheet": "^3.0.0",
+    "@gorhom/bottom-sheet": "^3.6.6",
     "@msantang78/react-native-pager": "^0.2.4",
     "@react-native-clipboard/clipboard": "^1.7.0",
     "@react-native-community/art": "^1.1.2",
@@ -37,7 +37,7 @@
     "@react-navigation/drawer": "^5.11.4",
     "@react-navigation/native": "^5.8.10",
     "@react-navigation/stack": "^5.12.8",
-    "@sentry/react-native": "^1.6.3",
+    "@sentry/react-native": "^2.6.0",
     "@snowplow/react-native-tracker": "^0.2.0",
     "@types/react-native-vector-icons": "^6.4.5",
     "@walletconnect/registry-server": "WalletConnect/walletconnect-registry",
@@ -62,8 +62,8 @@
     "mobx": "^5.15.4",
     "mobx-react": "^6.2.2",
     "mobx-utils": "^5.5.7",
-    "moment": "^2.24.0",
-    "moment-timezone": "^0.5.27",
+    "moment": "^2.29.1",
+    "moment-timezone": "^0.5.33",
     "moti": "^0.11.0",
     "node-libs-react-native": "^1.2.1",
     "observable-hooks": "^3.1.2",

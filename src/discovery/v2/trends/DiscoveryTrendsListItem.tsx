@@ -13,8 +13,8 @@ import { Icon } from 'react-native-elements';
 import FastImage from 'react-native-fast-image';
 import { withErrorBoundary } from '../../../common/components/ErrorBoundary';
 import SmartImage from '../../../common/components/SmartImage';
-import formatDate from '../../../common/helpers/date';
 import excerpt from '../../../common/helpers/excerpt';
+import i18n from '../../../common/services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
 
 const DISCOVERY_TRENDING_MAX_LENGTH = 140;
@@ -77,7 +77,10 @@ export const DiscoveryTrendsListItem = withErrorBoundary(
                   styles.secondaryInformationBottom,
                 ]}>
                 {data.volume} channels discussing -{' '}
-                {formatDate(entity.time_created, 'friendly')}
+                {i18n.date(
+                  parseInt(entity.time_created, 10) * 1000,
+                  'friendly',
+                )}
               </Text>
             </View>
           </View>
@@ -104,7 +107,7 @@ export const DiscoveryTrendsListItem = withErrorBoundary(
                 styles.secondaryInformationBottom,
               ]}>
               {data.volume} channels discussing -{' '}
-              {formatDate(entity.time_created, 'friendly')}
+              {i18n.date(entity.time_created, 'friendly')}
             </Text>
           </View>
           {RichPartialThumbnail()}

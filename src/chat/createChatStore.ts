@@ -15,11 +15,21 @@ const createChatStore = () => ({
   polling: 0,
   async checkAppInstalled(openStore = true) {
     try {
-      const installed = await SendIntentAndroid.isAppInstalled(
-        ANDROID_CHAT_APP,
-      );
-      if (!installed && openStore) {
-        Linking.openURL('market://details?id=com.minds.chat');
+      let installed = false;
+      if (Platform.OS === 'android') {
+        installed = await SendIntentAndroid.isAppInstalled(ANDROID_CHAT_APP);
+        if (!installed && openStore) {
+          Linking.openURL('market://details?id=com.minds.chat');
+        }
+      } else {
+        try {
+          installed = await Linking.canOpenURL('mindschat:mindschat');
+        } catch (error) {}
+        if (!installed && openStore) {
+          Linking.openURL(
+            'https://itunes.apple.com/us/app/keynote/id1562887434?mt=8',
+          );
+        }
       }
       return installed;
     } catch (error) {
@@ -29,11 +39,9 @@ const createChatStore = () => ({
     }
   },
   async openChat() {
-    if (Platform.OS === 'android') {
-      const installed = await this.checkAppInstalled();
-      if (!installed) {
-        return;
-      }
+    const installed = await this.checkAppInstalled();
+    if (!installed) {
+      return;
     }
     if (this.chatUrl) {
       if (Platform.OS === 'ios') {

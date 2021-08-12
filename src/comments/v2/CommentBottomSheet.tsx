@@ -31,7 +31,7 @@ const BottomSheetLocalStore = ({ onChange }) => ({
 
 const { height: windowHeight } = Dimensions.get('window');
 
-const snapPoints = [-150, windowHeight * 0.85];
+const snapPoints = [-150, Math.floor(windowHeight * 0.85)];
 
 /**
  * Custom background
@@ -118,7 +118,7 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
       ref={ref}
       index={0}
       onChange={localStore.setOpen}
-      containerHeight={windowHeight + 10}
+      containerHeight={windowHeight}
       snapPoints={snapPoints}
       handleComponent={Handle}
       backgroundComponent={CustomBackground}

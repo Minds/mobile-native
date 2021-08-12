@@ -7,7 +7,7 @@ import { observer } from 'mobx-react';
 
 import { MINDS_CDN_URI } from '../config/Config';
 import MindsVideo from './v2/mindsVideo/MindsVideo';
-import formatDate from '../common/helpers/date';
+import i18n from '../common/services/i18n.service';
 
 /**
  * Video Card
@@ -47,7 +47,7 @@ export default class VideoCard extends Component {
                   {entity.ownerObj.username.toUpperCase()}
                 </Text>
                 <Text style={styles.createdDate}>
-                  {formatDate(entity.time_created)}
+                  {i18n.date(entity.time_created * 1000)}
                 </Text>
               </View>
             </View>

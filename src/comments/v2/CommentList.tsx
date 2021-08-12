@@ -45,16 +45,6 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
       ? 'messenger.typeYourMessage'
       : 'activity.typeComment';
 
-  const touchableStyles = [
-    theme.rowJustifyStart,
-    theme.borderTopHair,
-    theme.borderBottomHair,
-    theme.bcolorPrimaryBorder,
-    theme.paddingTop2x,
-    theme.paddingBottom2x,
-    theme.alignCenter,
-  ];
-
   useFocusEffect(
     React.useCallback(() => {
       provider.setStore(props.store);
@@ -66,9 +56,7 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
     const focusedUrn = props.store?.focusedUrn;
 
     props.store.loadComments(true).then(() => {
-      if (!focusedUrn) {
-        setTimeout(() => ref.current?.scrollToEnd(), 600);
-      } else {
+      if (focusedUrn) {
         // open focused if necessary
         const focused = props.store.comments.find(c => c.expanded);
         if (focused) {
@@ -110,12 +98,7 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
     return (
       <>
         {props.store.parent && (
-          <View
-            style={[
-              styles.headerCommentContainer,
-              theme.bcolorPrimaryBorder,
-              theme.bgSecondaryBackground,
-            ]}>
+          <View style={styles.headerCommentContainer}>
             <Comment
               comment={props.store.parent}
               store={props.store}
@@ -127,33 +110,27 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
         {!GOOGLE_PLAY_STORE && (
           <TouchableOpacity
             onPress={() => props.store.setShowInput(true)}
-            style={touchableStyles}>
+            style={styles.touchableStyles}>
             <FastImage source={user.getAvatarSource()} style={styles.avatar} />
-            <Text style={[theme.fontL, theme.colorSecondaryText]}>
+            <Text style={styles.reply}>
               {i18n.t(props.store.parent ? 'activity.typeReply' : placeHolder)}
             </Text>
           </TouchableOpacity>
         )}
-        <LoadMore store={props.store} />
+        <LoadMore store={props.store} next={true} />
       </>
     );
-  }, [
-    placeHolder,
-    props.store,
-    theme.bgSecondaryBackground,
-    theme.bcolorPrimaryBorder,
-    theme.colorSecondaryText,
-    theme.fontL,
-    touchableStyles,
-    user,
-  ]);
+  }, [placeHolder, props.store, user]);
 
   const Footer = React.useCallback(() => {
-    return <LoadMore store={props.store} next={true} />;
+    return <LoadMore store={props.store} />;
+  }, [props.store]);
+  const loadMore = React.useCallback(() => {
+    return props.store.loadComments();
   }, [props.store]);
 
   return (
-    <View style={[theme.flexContainer, theme.bgPrimaryBackground]}>
+    <View style={styles.container}>
       <CommentListHeader store={props.store} />
       {GOOGLE_PLAY_STORE ? (
         <DisabledStoreFeature
@@ -171,32 +148,49 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
           ListHeaderComponent={Header}
           ListFooterComponent={Footer}
           keyExtractor={keyExtractor}
+          onEndReached={loadMore}
           renderItem={renderItem}
-          style={[theme.flexContainer, theme.bgPrimaryBackground]}
-          contentContainerStyle={[
-            theme.bgPrimaryBackground,
-            theme.paddingBottom3x,
-          ]}
+          style={styles.list}
+          contentContainerStyle={styles.listContainer}
         />
       )}
     </View>
   );
 };
 
-const keyExtractor = item => item.guid;
-
-const styles = StyleSheet.create({
-  headerCommentContainer: {
-    borderTopWidth: StyleSheet.hairlineWidth,
-    overflow: 'scroll',
-  },
-  avatar: {
-    height: 37,
-    width: 37,
-    borderRadius: 18.5,
-    marginRight: 15,
-    marginLeft: 15,
-  },
+const styles = ThemedStyles.create({
+  list: ['flexContainer', 'bgPrimaryBackground'],
+  listContainer: ['bgPrimaryBackground', 'paddingBottom3x'],
+  container: ['flexContainer', 'bgPrimaryBackground'],
+  touchableStyles: [
+    'rowJustifyStart',
+    'borderTopHair',
+    'borderBottomHair',
+    'bcolorPrimaryBorder',
+    'paddingTop2x',
+    'paddingBottom2x',
+    'alignCenter',
+  ],
+  replay: ['fontL', 'colorSecondaryText'],
+  headerCommentContainer: [
+    'bcolorPrimaryBorder',
+    'bgSecondaryBackground',
+    {
+      borderTopWidth: StyleSheet.hairlineWidth,
+      overflow: 'scroll',
+    },
+  ],
+  avatar: [
+    {
+      height: 37,
+      width: 37,
+      borderRadius: 18.5,
+      marginRight: 15,
+      marginLeft: 15,
+    },
+  ],
 });
+
+const keyExtractor = item => item.guid;
 
 export default observer(CommentList);

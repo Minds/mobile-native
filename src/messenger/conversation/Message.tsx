@@ -4,10 +4,10 @@ import { observer } from 'mobx-react';
 
 import { Text, View, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
-import formatDate from '../../common/helpers/date';
 import Tags from '../../common/components/Tags';
 import ThemedStyles from '../../styles/ThemedStyles';
 import type MessageModel from './MessageModel';
+import i18n from '../../common/services/i18n.service';
 
 type PropsType = {
   message: MessageModel;
@@ -71,7 +71,9 @@ export default observer(function (props: PropsType) {
           <Text
             selectable={true}
             style={[styles.messagedate, styles.rightText]}>
-            {formatDate(props.message.time_created)}
+            {props.message.time_created
+              ? i18n.date(props.message.time_created * 1000)
+              : ''}
           </Text>
         ) : null}
       </View>
@@ -109,7 +111,7 @@ export default observer(function (props: PropsType) {
       </View>
       {props.message.showDate ? (
         <Text selectable={true} style={styles.messagedate}>
-          {formatDate(props.message.time_created)}
+          {i18n.date(props.message.time_created)}
         </Text>
       ) : null}
     </View>

@@ -1,14 +1,13 @@
 import React, { PureComponent } from 'react';
 import { Text, StyleSheet, View, Platform } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import moment from 'moment-timezone';
 
 import withPreventDoubleTap from '../../common/components/PreventDoubleTap';
 import ThemedStyles from '../../styles/ThemedStyles';
 import type CommentModel from './CommentModel';
 import ChannelBadges from '../../channel/badges/ChannelBadges';
-import formatDate from '../../common/helpers/date';
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
+import i18n from '../../common/services/i18n.service';
 const DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
 
 type PropsType = {
@@ -49,14 +48,9 @@ class CommentHeader extends PureComponent<PropsType> {
     const name =
       channel.name && channel.name !== channel.username ? channel.name : '';
 
-    const date = formatDate(
-      this.props.entity.time_created,
-
-      moment(parseInt(this.props.entity.time_created, 10) * 1000).isAfter(
-        moment().subtract(2, 'days'),
-      )
-        ? 'friendly'
-        : 'date',
+    const date = i18n.date(
+      parseInt(this.props.entity.time_created, 10) * 1000,
+      'friendly',
     );
 
     return (

@@ -356,7 +356,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
               )}
             </>
           )}
-          <ActivityMetrics entity={props.entity} />
+          <ActivityMetrics entity={props.entity} fullDate />
         </ScrollView>
         {!store.contentFit && (
           <LinearGradient colors={gradientColors} style={styles.linear} />

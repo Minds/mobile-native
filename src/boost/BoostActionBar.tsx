@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 import { Icon } from 'react-native-elements';
 
 import { Text, StyleSheet, TouchableHighlight, View } from 'react-native';
-import formatDate from '../common/helpers/date';
 
 import { observer, inject } from 'mobx-react';
 
@@ -125,7 +124,7 @@ export default class BoostActionBar extends Component {
           style={styles.icon}
         />
         <Text style={styles.value}>
-          {formatDate(this.props.entity.scheduledTs)}
+          {i18n.date(this.props.entity.scheduledTs * 1000)}
         </Text>
       </View>
     ) : (
@@ -138,7 +137,7 @@ export default class BoostActionBar extends Component {
           style={styles.icon}
         />
         <Text style={styles.value}>
-          {formatDate(this.props.entity.time_created, 'd-m-Y')}
+          {i18n.date(this.props.entity.time_created * 1000, 'datetime')}
         </Text>
       </View>
     );

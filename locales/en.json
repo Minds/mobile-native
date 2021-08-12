@@ -1,14 +1,9 @@
 {
-  "date": {
-    "formats": {
-      "small": "%b %-d, %Y",
-      "medium": "%a, %b %-d, %Y"
-    }
-  },
-  "datetime": {
-    "formats": {
-      "small": "%b %-d, %Y %-I:%M%p"
-    }
+  "dateformats": {
+    "date": "MMM DD, YYYY",
+    "short": "MMM DD",
+    "nameDay": "ddd MMM Do",
+    "datetime": "MMM DD YYYY · HH:mm"
   },
   "activity": {
     "loadEarlier": "LOAD EARLIER",
@@ -64,6 +59,7 @@
   },
   "auth": {
     "fieldRequired": "Required",
+    "matchPattern": "Usernames can only have letters, numbers or underscores.",
     "login": "Login",
     "forgot": "Forgot your password?",
     "email": "Email",
@@ -797,6 +793,7 @@
   "onboarding": {
     "startEarning": "Start earning tokens",
     "improveExperience": "Improve your experience",
+    "hidePanel": "Hide this panel",
     "joinGroup": "Join a group",
     "subscribeToChannel": "Subscribe to a channel",
     "completeToEarn": "Complete to earn tokens",
@@ -1194,15 +1191,15 @@
       "always": "Always"
     },
     "membershipMonetize": {
-      "description": "Make this post available exclusivley to one of your membership tiers.",
+      "description": "Make this post available exclusively to one of your membership tiers.",
       "noTiers": "You don’t have any Membership Tiers",
       "tiersDescription": "Setting up your tiers is quick and easy. Start earning extra revenue for your content today.",
-      "setup": "Setup membersip tiers",
+      "setup": "Setup membership tiers",
       "label": "MEMBERSHIP TIERS",
       "manage": "Manage"
     },
     "customMonetize": {
-      "usd": "Contributiuon in USD (will be converted to tokens if necesary)",
+      "usd": "Contribution in USD (will be converted to tokens if necessary)",
       "hasUsd": "Accept USD",
       "hasTokens": "Accept Tokens"
     }

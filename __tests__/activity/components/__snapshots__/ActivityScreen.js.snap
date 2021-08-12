@@ -588,7 +588,7 @@ exports[`Activity screen component renders correctly  1`] = `
             }
           >
             
-            Mar 25th, 2018
+            Mar 25 2018 · 20:51
           </Text>
         </View>
       </View>
@@ -1636,7 +1636,6 @@ exports[`Activity screen component renders correctly  1`] = `
         "errorLoadingNext": false,
         "errorLoadingPrevious": false,
         "focusedUrn": null,
-        "guid": "",
         "level": 0,
         "loadNext": "",
         "loadPrevious": "",

@@ -2,7 +2,6 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import FastImage from 'react-native-fast-image';
-import friendlyDateDiff from '../../../common/helpers/friendlyDateDiff';
 import {
   bodyTextImportantStyle,
   bodyTextStyle,
@@ -17,6 +16,7 @@ import Merged from './content/Merged';
 import type Notification from './NotificationModel';
 import InteractionsModal from '../../../common/components/interactions/InteractionsModal';
 import sessionService from '../../../common/services/session.service';
+import i18n from '../../../common/services/i18n.service';
 
 type PropsType = {
   notification: Notification;
@@ -80,7 +80,7 @@ const NotificationItem = React.memo(({ notification }: PropsType) => {
         </View>
         <View style={styles.timeContainer}>
           <Text style={bodyTextStyle}>
-            {friendlyDateDiff(notification.created_timestamp * 1000, '', false)}
+            {i18n.date(notification.created_timestamp * 1000, 'friendly')}
           </Text>
           {notification.read === false && <View style={readIndicatorStyle} />}
         </View>

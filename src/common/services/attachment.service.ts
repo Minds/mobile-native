@@ -4,10 +4,9 @@ import imagePicker from './image-picker.service';
 import Cancelable from 'promise-cancelable';
 import logService from './log.service';
 import { showNotification } from '../../../AppMessages';
-import { Platform } from 'react-native';
 
 /**
- * Attacment service
+ * Attachment service
  */
 class AttachmentService {
   /**

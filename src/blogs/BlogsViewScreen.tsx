@@ -9,7 +9,6 @@ import { ScrollView } from 'react-native-gesture-handler';
 import CommentBottomSheet from '../comments/v2/CommentBottomSheet';
 import CenteredLoading from '../common/components/CenteredLoading';
 import SmartImage from '../common/components/SmartImage';
-import formatDate from '../common/helpers/date';
 import { FLAG_VIEW } from '../common/Permissions';
 import i18n from '../common/services/i18n.service';
 import logService from '../common/services/log.service';
@@ -187,7 +186,7 @@ export default class BlogsViewScreen extends Component<PropsType> {
               </View>
             }>
             <Text style={[styles.timestamp, theme.colorSecondaryText]}>
-              {formatDate(blog.time_created)}
+              {i18n.date(parseInt(blog.time_created, 10) * 1000)}
             </Text>
           </OwnerBlock>
         </View>

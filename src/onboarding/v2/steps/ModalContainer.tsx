@@ -27,7 +27,7 @@ export default function ModalContainer(props: PropsType) {
       <Text style={styles.title}>{props.title}</Text>
       <MIcon
         size={45}
-        name="left-chevron"
+        name="chevron-left"
         style={[styles.backIcon, ThemedStyles.style.colorPrimaryText]}
         onPress={props.onPressBack}
       />
