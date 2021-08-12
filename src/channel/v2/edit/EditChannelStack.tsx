@@ -4,8 +4,18 @@ import ThemedStyles from '../../../styles/ThemedStyles';
 import OptionsDrawer from '../../../common/components/OptionsDrawer';
 import AboutScreen from './AboutScreen';
 import BioScreen from './BioScreen';
+import BannerScreen from './BannerScreen';
+import AvatarScreen from './AvatarScreen';
 
 const EditChannelOptions = (navigation, route) => [
+  {
+    title: 'Banner',
+    onPress: () => navigation.push('Banner', { store: route.params.store }),
+  },
+  {
+    title: 'Avatar',
+    onPress: () => navigation.push('Avatar', { store: route.params.store }),
+  },
   {
     title: i18n.t('channel.edit.bio'),
     onPress: () => navigation.push('Bio', { store: route.params.store }),
@@ -51,6 +61,18 @@ const EditChannelStack = function (AppStackNav: any) {
       name="About"
       component={AboutScreen}
       options={{ title: i18n.t('channel.edit.about'), ...navigatorOptions }}
+    />,
+    <AppStackNav.Screen
+      key="banner"
+      name="Banner"
+      component={BannerScreen}
+      options={{ title: 'Banner', ...navigatorOptions }}
+    />,
+    <AppStackNav.Screen
+      key="avatar"
+      name="Avatar"
+      component={AvatarScreen}
+      options={{ title: 'Avatar', ...navigatorOptions }}
     />,
   ];
 };
