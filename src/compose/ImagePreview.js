@@ -13,7 +13,6 @@ const { width } = Dimensions.get('window');
  * @param {Object} props
  */
 export default observer(function (props) {
-  console.log(props.image);
   // calculate the aspect ratio
   let aspectRatio = Platform.select({
     ios: props.image.width / props.image.height,

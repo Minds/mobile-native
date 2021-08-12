@@ -3,7 +3,7 @@ import { View, StyleSheet, Text } from 'react-native';
 import { observer } from 'mobx-react';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import ThemedStyles from '../styles/ThemedStyles';
+import ThemedStyles, { useMemoStyle } from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
 import ImagePreview from './ImagePreview';
 import { useSafeArea } from 'react-native-safe-area-context';
@@ -41,60 +41,64 @@ export default observer(function (props) {
     />
   );
 
+  const bottomBarStyle = useMemoStyle(
+    [
+      styles.bottomBar,
+      cleanBottom,
+      theme.bgSecondaryBackground,
+      isImage ? styles.floating : null,
+    ],
+    [cleanBottom, isImage],
+  );
+
+  const backStyle = useMemoStyle(
+    [styles.backIcon, theme.colorWhite, cleanTop],
+    [cleanTop],
+  );
+
   return (
     <View style={theme.flexContainer}>
-      <View style={[theme.flexContainer, theme.justifyCenter]}>
-        {previewComponent}
-      </View>
-      <View
-        style={[
-          styles.bottomBar,
-          cleanBottom,
-          theme.bgSecondaryBackground,
-          isImage ? styles.floating : null,
-        ]}>
+      <View style={styles.mediaContainer}>{previewComponent}</View>
+      <View style={bottomBarStyle}>
         {isImage ? (
-          <Text
-            onPress={props.store.editImage}
-            style={[
-              theme.fontXL,
-              theme.colorSecondaryText,
-              theme.fontSemibold,
-              theme.marginLeft3x,
-              styles.text,
-            ]}>
+          <Text onPress={props.store.editImage} style={styles.leftText}>
             {i18n.t('edit')}
           </Text>
         ) : (
           <View />
         )}
-        <Text
-          onPress={props.store.acceptMedia}
-          style={[
-            theme.fontXL,
-            theme.colorSecondaryText,
-            theme.bold,
-            theme.marginRight3x,
-            styles.text,
-          ]}>
+        <Text onPress={props.store.acceptMedia} style={styles.rightText}>
           {i18n.t('confirm')}
         </Text>
       </View>
       <MIcon
         size={45}
         name="chevron-left"
-        style={[styles.backIcon, theme.colorWhite, cleanTop]}
+        style={backStyle}
         onPress={props.store.rejectImage}
       />
     </View>
   );
 });
 
-const styles = StyleSheet.create({
-  text: {
-    paddingRight: 10,
-    textAlignVertical: 'center',
-  },
+const styles = ThemedStyles.create({
+  mediaContainer: ['flexContainer', 'justifyCenter'],
+  leftText: [
+    'fontXL',
+    'colorSecondaryText',
+    'fontSemibold',
+    'marginLeft3x',
+    'paddingRight2x',
+    { textAlignVertical: 'center' },
+  ],
+  rightText: [
+    'fontXL',
+    'colorSecondaryText',
+    'bold',
+    'marginRight3x',
+    'paddingRight2x',
+    { textAlignVertical: 'center' },
+  ],
   floating: {
     position: 'absolute',
     bottom: 0,
