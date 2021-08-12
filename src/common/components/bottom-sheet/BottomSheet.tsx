@@ -23,7 +23,7 @@ export default forwardRef<BottomSheetModal, PropsType>((props, ref) => {
   const insets = useSafeAreaInsets();
 
   const contStyle = useStyle(styles.contentContainer, {
-    paddingBottom: insets.bottom || 10,
+    paddingBottom: insets.bottom || 24,
   });
 
   React.useEffect(() => {
@@ -75,7 +75,7 @@ export default forwardRef<BottomSheetModal, PropsType>((props, ref) => {
 });
 
 const styles = ThemedStyles.create({
-  contentContainer: ['bgPrimaryBackgroundHighlight', 'paddingHorizontal5x'],
+  contentContainer: ['bgPrimaryBackgroundHighlight'],
   title: ['fontXXL', 'bold', 'textCenter', 'marginVertical3x'],
   detail: [
     'fontL',
