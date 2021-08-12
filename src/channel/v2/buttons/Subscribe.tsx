@@ -12,6 +12,7 @@ const Subscribe = (props: ChannelButtonsPropsType) => {
     padding: 8,
     paddingHorizontal: 10,
     backgroundColor: ThemedStyles.getColor('Link'),
+    borderRadius: 100,
   });
 
   return (
