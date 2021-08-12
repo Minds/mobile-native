@@ -19,7 +19,8 @@ target 'Minds' do
 
   # use_frameworks! :linkage => :static
 
-  pod 'iOSPhotoEditor', :path => '../node_modules/photo-editor'
+  pod 'RNPhotoEditor', :path => '../node_modules/react-native-photo-editor/ios'
+  pod 'iOSPhotoEditor', :git => 'https://github.com/prscX/photo-editor', :branch => 'master'
   # pod 'RNShareMenu', :path => '../node_modules/react-native-share-menu'
 
   permissions_path = '../node_modules/react-native-permissions/ios'
