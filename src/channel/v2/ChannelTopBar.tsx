@@ -217,7 +217,7 @@ const ChannelTopBar = observer(
           onPress={navigation.goBack}
           color={
             withBg
-              ? tinycolor(backgroundColor).setAlpha(0.5).toRgbString()
+              ? tinycolor(backgroundColor).setAlpha(0.15).toRgbString()
               : undefined
           }
           reverseColor={withBg ? textColor : undefined}
@@ -233,7 +233,7 @@ const ChannelTopBar = observer(
             raisedIcons={!withBg}
             iconColor={
               withBg
-                ? tinycolor(backgroundColor).setAlpha(0.5).toRgbString()
+                ? tinycolor(backgroundColor).setAlpha(0.15).toRgbString()
                 : undefined
             }
             iconReverseColor={withBg ? textColor : undefined}
