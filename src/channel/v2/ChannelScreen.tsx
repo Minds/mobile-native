@@ -102,6 +102,7 @@ const ChannelScreen = observer((props: PropsType) => {
   );
   const bannerUri = store.channel?.getBannerSource().uri;
   const { chat } = useStores();
+  const feedListRef = useRef<FeedList<any>>();
   /**
    * scroll offset
    **/
@@ -310,6 +311,14 @@ const ChannelScreen = observer((props: PropsType) => {
     }
   }, [bannerUri]);
 
+  /**
+   * Scroll to top when topbar is pressed
+   **/
+  const onTopBarPress = useCallback(
+    () => feedListRef.current?.scrollToTop(),
+    [],
+  );
+
   // =====================| RENDERS |=====================>
   const renderBlog = useCallback(
     (row: { item: BlogModel }) => {
@@ -450,6 +459,7 @@ const ChannelScreen = observer((props: PropsType) => {
           textColor={textColor}
           navigation={props.navigation}
           store={store}
+          onPress={onTopBarPress}
         />
       </Animated.View>
 

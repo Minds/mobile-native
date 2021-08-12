@@ -5,6 +5,7 @@ import {
   SafeAreaView,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import ThemedStyles, {
@@ -46,6 +47,10 @@ type PropsType = {
    * the color of the readable material on the topbar
    **/
   textColor?: string;
+  /**
+   * onPress of the topbar
+   **/
+  onPress?: () => void;
 };
 
 /**
@@ -60,6 +65,7 @@ const ChannelTopBar = observer(
     backgroundColor,
     textColor,
     withBg,
+    onPress,
   }: PropsType) => {
     // =====================| STATES & VARIABLES |=====================>
     const theme = ThemedStyles.style;
@@ -187,11 +193,14 @@ const ChannelTopBar = observer(
     );
 
     return (
-      <View style={containerStyle}>
+      <TouchableOpacity
+        activeOpacity={1}
+        onPress={onPress}
+        style={containerStyle}>
         <Animated.View style={topBarInnerWrapperStyle}>
           {BLURRED_BANNER_BACKGROUND && (
             <Image
-              blurRadius={100}
+              blurRadius={90}
               style={theme.positionAbsolute}
               source={store?.channel?.getBannerSource()!}
               resizeMode="cover"
@@ -248,7 +257,7 @@ const ChannelTopBar = observer(
             {searchInput}
           </Animated.View>
         )}
-      </View>
+      </TouchableOpacity>
     );
   },
 );
