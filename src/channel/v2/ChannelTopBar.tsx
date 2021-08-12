@@ -251,7 +251,7 @@ const ChannelTopBar = observer(
         {store && !hideInput && (
           <Animated.View
             style={[
-              { position: 'absolute', left: 65, right: 65 },
+              { position: 'absolute', left: 65, right: 65, elevation: 5 },
               searchInputAnimatedStyle,
             ]}>
             {searchInput}
