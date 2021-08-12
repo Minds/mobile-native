@@ -220,7 +220,6 @@ dependencies {
 
     addUnimodulesDependencies()
 
-    implementation project(':tipsi-stripe')
     implementation project(':reactnativenotifications')
 
 
