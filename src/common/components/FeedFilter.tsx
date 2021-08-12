@@ -7,6 +7,7 @@ import { observer } from 'mobx-react';
 import BottomSheet from './bottom-sheet/BottomSheet';
 import BottomSheetButton from './bottom-sheet/BottomSheetButton';
 import RadioButton from './bottom-sheet/RadioButton';
+import MPressable from './MPressable';
 
 type PropsType = {
   hideLabel?: boolean;
@@ -54,13 +55,21 @@ const FeedFilter = (props: PropsType) => {
 
   return (
     <>
-      <TouchableOpacity
+      <MPressable style={containerStyle} onPress={show} testID="FilterToggle">
+        <MdIcon
+          name="filter-variant"
+          size={18}
+          style={[ThemedStyles.style.colorIcon, { top: -1 }]}
+        />
+        {!props.hideLabel && <Text style={itemStyle}>{i18n.t('filter')}</Text>}
+      </MPressable>
+      {/*<TouchableOpacity
         style={containerStyle}
         onPress={show}
         testID="FilterToggle">
         <MdIcon name="filter" size={18} style={ThemedStyles.style.colorIcon} />
         {!props.hideLabel && <Text style={itemStyle}>{i18n.t('filter')}</Text>}
-      </TouchableOpacity>
+      </TouchableOpacity>*/}
       <BottomSheet ref={ref} title={i18n.t('filter') + ' ' + i18n.t('feed')}>
         {options.map((b, i) => (
           <RadioButton {...b} key={i} />
@@ -71,6 +80,6 @@ const FeedFilter = (props: PropsType) => {
   );
 };
 
-const itemStyle = ThemedStyles.combine('fontL', 'paddingLeft');
+const itemStyle = ThemedStyles.combine('fontM', 'paddingLeft');
 
 export default observer(FeedFilter);

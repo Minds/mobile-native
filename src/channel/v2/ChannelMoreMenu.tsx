@@ -29,6 +29,7 @@ const getOptions = (
   channel: UserModel,
   isSubscribedToTier: boolean,
   onSearchChannelPressed: () => void,
+  onEditPress: () => void,
   navigation,
   ref: any,
 ) => {
@@ -38,6 +39,53 @@ const getOptions = (
     title: string;
     onPress: () => void;
   }> = [];
+
+  if (channel.isOwner()) {
+    options.push({
+      iconName: 'edit',
+      iconType: 'material',
+      title: i18n.t('channel.editChannel'),
+      onPress: () => {
+        onEditPress();
+        dismiss(ref);
+      },
+    });
+  } else {
+    if (channel.isSubscribed()) {
+      options.push({
+        iconName: 'person-remove-outline',
+        iconType: 'ionicon',
+        title: i18n.t('channel.unsubscribe'),
+        onPress: () => {
+          channel.toggleSubscription();
+          dismiss(ref);
+        },
+      });
+    } else {
+      options.push({
+        iconName: 'person-add-outline',
+        iconType: 'ionicon',
+        title: i18n.t('channel.subscribe'),
+        onPress: () => {
+          channel.toggleSubscription();
+          dismiss(ref);
+        },
+      });
+    }
+  }
+
+  if (channel.isOwner()) {
+    options.push({
+      iconName: 'trending-up',
+      iconType: 'material-community',
+      title: i18n.t('boosts.boostChannel'),
+      onPress: () => {
+        navigation.navigate('BoostChannelScreen', {});
+        ref.current.dismiss();
+      },
+    });
+  }
+
   options.push({
     iconName: 'share-social',
     iconType: 'ionicon',
@@ -53,43 +101,11 @@ const getOptions = (
     iconType: 'ionicon',
     title: 'Search Channel',
     onPress: () => {
-      onSearchChannelPressed()
+      onSearchChannelPressed();
       ref.current.dismiss();
     },
   });
 
-  if (channel.isOwner()) {
-    options.push({
-      iconName: 'trending-up',
-      iconType: 'material-community',
-      title: i18n.t('boosts.boostChannel'),
-      onPress: () => {
-        navigation.navigate('BoostChannelScreen', {});
-        ref.current.dismiss();
-      },
-    });
-  }
-  if (channel.isSubscribed()) {
-    options.push({
-      iconName: 'person-remove-outline',
-      iconType: 'ionicon',
-      title: i18n.t('channel.unsubscribe'),
-      onPress: () => {
-        channel.toggleSubscription();
-        dismiss(ref);
-      },
-    });
-  } else {
-    options.push({
-      iconName: 'person-add-outline',
-      iconType: 'ionicon',
-      title: i18n.t('channel.subscribe'),
-      onPress: () => {
-        channel.toggleSubscription();
-        dismiss(ref);
-      },
-    });
-  }
   if (!channel.blocked) {
     options.push({
       iconName: 'remove-circle-outline',
@@ -140,6 +156,7 @@ type PropsType = {
   channel: UserModel;
   isSubscribedToTier: boolean;
   onSearchChannelPressed: () => void;
+  onEditPress: () => void;
 };
 
 type NavigationType = NativeStackNavigationProp<AppStackParamList, 'Channel'>;
@@ -155,6 +172,7 @@ const ChannelMoreMenu = forwardRef((props: PropsType, ref: any) => {
     props.channel,
     props.isSubscribedToTier,
     props.onSearchChannelPressed,
+    props.onEditPress,
     navigation,
     ref,
   );

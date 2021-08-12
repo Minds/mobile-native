@@ -12,12 +12,13 @@ type PropsType = {
   onPress?: (event: GestureResponderEvent) => void;
   reverseColor?: string;
   color?: string;
+  raised?: boolean;
 };
 
-const SmallCircleButton = (props: PropsType) => {
+const SmallCircleButton = ({ raised = true, ...props }: PropsType) => {
   return (
     <Icon
-      raised
+      raised={raised}
       reverse
       name={props.name}
       type={props.type || 'material-community'}

@@ -44,6 +44,7 @@ export type ChannelButtonsPropsType = {
   iconSize?: number;
   iconColor?: string;
   iconReverseColor?: string;
+  raisedIcons?: boolean;
 };
 
 const isIos = Platform.OS === 'ios';
@@ -96,6 +97,13 @@ const ChannelButtons = withErrorBoundary(
       });
     }, [navigation, props.store.channel]);
 
+    /**
+     * called when edit button is pressed
+     **/
+    const onEditPress = useCallback(
+      () => navigation.push('EditChannelScreen', { store: props.store }),
+      [],
+    );
     if (!props.store.channel) return null;
 
     const shouldShow = (button: ButtonsType) =>
@@ -115,6 +123,7 @@ const ChannelButtons = withErrorBoundary(
 
         {shouldShow('boost') && (
           <SmallCircleButton
+            raised={props.raisedIcons}
             name="trending-up"
             type="material"
             onPress={boostChannel}
@@ -122,17 +131,9 @@ const ChannelButtons = withErrorBoundary(
             reverseColor={props.iconReverseColor}
           />
         )}
-        {shouldShow('edit') && (
-          <SmallCircleButton
-            name="edit"
-            type="material"
-            onPress={props.onEditPress}
-            color={props.iconColor}
-            reverseColor={props.iconReverseColor}
-          />
-        )}
         {shouldShow('wire') && (
           <SmallCircleButton
+            raised={props.raisedIcons}
             name="attach-money"
             type="material"
             onPress={openWire}
@@ -142,6 +143,7 @@ const ChannelButtons = withErrorBoundary(
         )}
         {shouldShow('more') && (
           <SmallCircleButton
+            raised={props.raisedIcons}
             name="more-horiz"
             type="material"
             onPress={() => {
@@ -151,18 +153,12 @@ const ChannelButtons = withErrorBoundary(
             reverseColor={props.iconReverseColor}
           />
         )}
-        {shouldShow('join') && (
-          <Join
-            showSubscribe={showSubscribe}
-            navigation={navigation}
-            {...props}
-          />
-        )}
         {showSubscribe && <Subscribe {...props} />}
         {shouldShow('more') && (
           <ChannelMoreMenu
             channel={props.store.channel}
             ref={menuRef}
+            onEditPress={onEditPress}
             onSearchChannelPressed={props.onSearchChannelPressed}
             isSubscribedToTier={isSubscribedToTier(props.store.tiers)}
           />

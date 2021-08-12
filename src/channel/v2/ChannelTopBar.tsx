@@ -144,14 +144,6 @@ const ChannelTopBar = observer(
     }, []);
 
     /**
-     * called when edit button is pressed
-     **/
-    const onEditPress = useCallback(
-      () => navigation.push('EditChannelScreen', { store: store }),
-      [],
-    );
-
-    /**
      * called when search channel option from
      * more menu is pressed
      **/
@@ -220,6 +212,7 @@ const ChannelTopBar = observer(
         </Animated.View>
         <SmallCircleButton
           name="chevron-left"
+          raised={!withBg}
           style={theme.colorIcon}
           onPress={navigation.goBack}
           color={
@@ -233,11 +226,11 @@ const ChannelTopBar = observer(
           <ChannelButtons
             iconSize={25}
             store={store}
-            onEditPress={onEditPress}
             onSearchChannelPressed={onSearchChannelPressed}
             notShow={hiddenChannelButtons}
             containerStyle={theme.centered}
             iconsStyle={styles.channelButtonsIconsStyle}
+            raisedIcons={!withBg}
             iconColor={
               withBg
                 ? tinycolor(backgroundColor).setAlpha(0.5).toRgbString()

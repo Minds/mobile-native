@@ -3,7 +3,8 @@ import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
 import IconM from 'react-native-vector-icons/MaterialIcons';
 import { observer } from 'mobx-react';
 import type { ChannelStoreType, ChannelTabType } from './createChannelStore';
-import ThemedStyles from '../../styles/ThemedStyles';
+import { Image } from 'react-native-animatable';
+import ThemedStyles, { useStyle } from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
 import abbrev from '../../common/helpers/abbrev';
 import ChannelDescription from './ChannelDescription';
@@ -45,6 +46,13 @@ const avatarSize = Math.min(170, Math.round(0.6 * bannerHeight));
 const ChannelHeader = withErrorBoundary(
   observer((props: PropsType) => {
     const theme = ThemedStyles.style;
+    const feedFilterStyles = useStyle(
+      'paddingVertical3x',
+      'paddingRight3x',
+      'paddingLeft2x',
+      'borderRadius4x',
+      'bgPrimaryBackground',
+    );
     if (props.store && !props.store.channel) {
       return null;
     }
@@ -320,6 +328,7 @@ const ChannelHeader = withErrorBoundary(
                   tabs={tabs}
                   onChange={props.store.setTab}
                   current={props.store.tab}
+                  containerStyle={{ borderBottomWidth: 0 }}
                 />
                 {props.store?.tab === 'feed' && (
                   <FadeView
@@ -330,9 +339,12 @@ const ChannelHeader = withErrorBoundary(
                       position: 'absolute',
                       right: 0,
                       paddingLeft: FADE_LENGTH / 1.5,
-                      bottom: 0,
+                      bottom: 1,
                     }}>
-                    <FeedFilter store={props.store} />
+                    <FeedFilter
+                      store={props.store}
+                      containerStyles={feedFilterStyles}
+                    />
                   </FadeView>
                 )}
               </View>

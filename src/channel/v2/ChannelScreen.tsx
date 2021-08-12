@@ -429,6 +429,7 @@ const ChannelScreen = observer((props: PropsType) => {
         feedStore={store.feedStore}
         renderActivity={renderActivity}
         onScroll={onScroll}
+        refreshControlTintColor={textColor}
         header={
           <ChannelHeader
             store={store}

@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { FlatList, View, Text, StyleProp, ViewStyle } from 'react-native';
+import {
+  FlatList,
+  View,
+  Text,
+  StyleProp,
+  ViewStyle,
+  RefreshControl,
+} from 'react-native';
 import { observer } from 'mobx-react';
 
 import Activity from '../../newsfeed/activity/Activity';
@@ -27,6 +34,7 @@ type PropsType = {
   onRefresh?: () => void;
   afterRefresh?: () => void;
   onScroll?: (e: any) => void;
+  refreshControlTintColor?: string;
 };
 
 /**
@@ -158,6 +166,15 @@ export default class FeedList<T> extends Component<PropsType> {
         onRefresh={this.refresh}
         refreshing={feedStore.refreshing}
         onEndReached={this.loadMore}
+        refreshControl={
+          Boolean(this.props.refreshControlTintColor) && (
+            <RefreshControl
+              tintColor={this.props.refreshControlTintColor}
+              refreshing={feedStore.refreshing}
+              onRefresh={this.refresh}
+            />
+          )
+        }
         // onEndReachedThreshold={0}
         numColumns={feedStore.isTiled ? 3 : 1}
         style={style}
