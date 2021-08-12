@@ -57,7 +57,7 @@ const ChannelDescription = withErrorBoundary((props: PropsType) => {
       numberOfLines={4}
       text={props.channel.briefdescription}
       renderTruncatedFooter={renderTruncatedFooter}
-      style={[theme.fontL, theme.colorSecondaryText]}
+      style={[theme.fontM, theme.colorSecondaryText]}
       navigation={navigation}
       renderRevealedFooter={renderRevealedFooter}
     />
