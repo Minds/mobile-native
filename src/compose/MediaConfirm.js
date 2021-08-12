@@ -20,7 +20,11 @@ export default observer(function (props) {
   const insets = useSafeArea();
   const cleanTop = useRef({ paddingTop: insets.top || 0 }).current;
   const cleanBottom = useRef({ height: insets.bottom + 50 }).current;
-  const videoStyle = useRef({ marginBottom: insets.bottom, flex: 1 }).current;
+  const videoStyle = useRef({
+    marginBottom: insets.bottom,
+    flex: 1,
+    width: '100%',
+  }).current;
   const video = useRef({ uri: props.store.mediaToConfirm.uri }).current;
 
   const isImage = props.store.mediaToConfirm.type.startsWith('image');
@@ -39,7 +43,9 @@ export default observer(function (props) {
 
   return (
     <View style={theme.flexContainer}>
-      {previewComponent}
+      <View style={[theme.flexContainer, theme.justifyCenter]}>
+        {previewComponent}
+      </View>
       <View
         style={[
           styles.bottomBar,
