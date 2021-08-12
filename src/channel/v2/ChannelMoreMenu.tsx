@@ -28,6 +28,7 @@ function dismiss(ref) {
 const getOptions = (
   channel: UserModel,
   isSubscribedToTier: boolean,
+  onSearchChannelPressed: () => void,
   navigation,
   ref: any,
 ) => {
@@ -46,6 +47,17 @@ const getOptions = (
       ref.current.dismiss();
     },
   });
+
+  options.push({
+    iconName: 'search-outline',
+    iconType: 'ionicon',
+    title: 'Search Channel',
+    onPress: () => {
+      onSearchChannelPressed()
+      ref.current.dismiss();
+    },
+  });
+
   if (channel.isOwner()) {
     options.push({
       iconName: 'trending-up',
@@ -127,6 +139,7 @@ const getOptions = (
 type PropsType = {
   channel: UserModel;
   isSubscribedToTier: boolean;
+  onSearchChannelPressed: () => void;
 };
 
 type NavigationType = NativeStackNavigationProp<AppStackParamList, 'Channel'>;
@@ -141,6 +154,7 @@ const ChannelMoreMenu = forwardRef((props: PropsType, ref: any) => {
   const options = getOptions(
     props.channel,
     props.isSubscribedToTier,
+    props.onSearchChannelPressed,
     navigation,
     ref,
   );

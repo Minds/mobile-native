@@ -37,10 +37,13 @@ type ButtonsType =
 export type ChannelButtonsPropsType = {
   store: ChannelStoreType;
   onEditPress: (ev: GestureResponderEvent) => void;
+  onSearchChannelPressed: () => void;
   notShow?: Array<ButtonsType>;
   containerStyle?: any;
   iconsStyle?: any;
   iconSize?: number;
+  iconColor?: string;
+  iconReverseColor?: string;
 };
 
 const isIos = Platform.OS === 'ios';
@@ -83,35 +86,10 @@ const ChannelButtons = withErrorBoundary(
     const navigation = useNavigation<
       NativeStackNavigationProp<AppStackParamList>
     >();
-    const { chat } = useStores();
-
-    const SIZE = props.iconSize || 18;
 
     const boostChannel = useCallback(() => {
       navigation.navigate('BoostChannelScreen', {});
     }, [navigation]);
-
-    const openMessenger = useCallback(() => {
-      if (!props.store.channel) return null;
-
-      if (Platform.OS === 'android') {
-        try {
-          chat.checkAppInstalled().then(installed => {
-            if (!installed) {
-              return;
-            }
-            if (props.store.channel) {
-              chat.directMessage(props.store.channel.guid);
-            }
-          });
-        } catch (error) {
-          console.log(error);
-        }
-      } else {
-        chat.directMessage(props.store.channel.guid);
-      }
-    }, [chat, props.store.channel]);
-
     const openWire = useCallback(() => {
       navigation.push('WireFab', {
         owner: props.store.channel,
@@ -140,6 +118,8 @@ const ChannelButtons = withErrorBoundary(
             name="trending-up"
             type="material"
             onPress={boostChannel}
+            color={props.iconColor}
+            reverseColor={props.iconReverseColor}
           />
         )}
         {shouldShow('edit') && (
@@ -147,35 +127,28 @@ const ChannelButtons = withErrorBoundary(
             name="edit"
             type="material"
             onPress={props.onEditPress}
-          />
-          // <View style={theme.paddingTop2x}>
-          //   <Edit {...props} />
-          // </View>
-        )}
-        {shouldShow('message') && (
-          <ChatButton
-            size={SIZE}
-            chat={chat}
-            onPress={openMessenger}
-            style={props.iconsStyle}
+            color={props.iconColor}
+            reverseColor={props.iconReverseColor}
           />
         )}
         {shouldShow('wire') && (
-          <MIcon
+          <SmallCircleButton
             name="attach-money"
-            size={SIZE}
+            type="material"
             onPress={openWire}
-            style={props.iconsStyle}
+            color={props.iconColor}
+            reverseColor={props.iconReverseColor}
           />
         )}
         {shouldShow('more') && (
-          <MIcon
+          <SmallCircleButton
             name="more-horiz"
-            size={22}
+            type="material"
             onPress={() => {
               menuRef.current?.present();
             }}
-            style={[theme.paddingRight, props.iconsStyle]}
+            color={props.iconColor}
+            reverseColor={props.iconReverseColor}
           />
         )}
         {shouldShow('join') && (
@@ -190,6 +163,7 @@ const ChannelButtons = withErrorBoundary(
           <ChannelMoreMenu
             channel={props.store.channel}
             ref={menuRef}
+            onSearchChannelPressed={props.onSearchChannelPressed}
             isSubscribedToTier={isSubscribedToTier(props.store.tiers)}
           />
         )}
