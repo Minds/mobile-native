@@ -26,6 +26,7 @@ type PropsType = {
   ListEmptyComponent?: React.ReactNode;
   onRefresh?: () => void;
   afterRefresh?: () => void;
+  onScroll?: (e: any) => void;
 };
 
 /**
@@ -97,6 +98,8 @@ export default class FeedList<T> extends Component<PropsType> {
 
   onScroll = (e: { nativeEvent: { contentOffset: { y: number } } }) => {
     this.props.feedStore.scrollOffset = e.nativeEvent.contentOffset.y;
+
+    this.props.onScroll?.(e);
   };
 
   /**

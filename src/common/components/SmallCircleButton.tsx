@@ -23,9 +23,10 @@ const SmallCircleButton = (props: PropsType) => {
       type={props.type || 'material-community'}
       color={props.color || ThemedStyles.getColor('PrimaryBackground')}
       reverseColor={props.reverseColor || ThemedStyles.getColor('PrimaryText')}
-      size={props.size || 16}
+      size={props.size || 18}
       onPress={props.onPress}
       containerStyle={props.style}
+      iconStyle={{ fontSize: 25 }}
     />
   );
 };
