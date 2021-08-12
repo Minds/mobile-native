@@ -20,11 +20,8 @@ type PropsType = {
  */
 export default observer(function PortraitContentBarItem(props: PropsType) {
   const onPress = React.useCallback(() => {
-    navigationService.push('ActivityFullScreenNav', {
-      screen: 'PortraitViewerScreen',
-      params: {
-        index: props.index,
-      },
+    navigationService.push('PortraitViewerScreen', {
+      index: props.index,
     });
   }, [props.index]);
 

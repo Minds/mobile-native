@@ -55,7 +55,7 @@ import EditChannelStack from '../channel/v2/edit/EditChannelStack';
 import ReceiverAddressScreen from '../wallet/v2/address/ReceiverAddressScreen';
 import BtcReceiverAddressScreen from '../wallet/v2/address/BtcAddressScreen';
 import BankInfoScreen from '../wallet/v2/address/BankInfoScreen';
-import ViewerScreen from '../discovery/v2/viewer/ViewerScreen';
+// import ViewerScreen from '../discovery/v2/viewer/ViewerScreen';
 import PlusMonetizeScreen from '../compose/monetize/PlusMonetizeScreeen';
 import MembershipMonetizeScreeen from '../compose/monetize/MembershipMonetizeScreeen';
 import CustomMonetizeScreen from '../compose/monetize/CustomMonetizeScreeen';
@@ -70,7 +70,6 @@ import {
   AuthStackParamList,
   AppStackParamList,
   DrawerParamList,
-  ActivityFullScreenParamList,
   InternalStackParamList,
 } from './NavigationTypes';
 
@@ -142,45 +141,6 @@ const RootStackNav = createStackNavigator<RootStackParamList>();
 const InternalStackNav = createNativeStackNavigator<InternalStackParamList>();
 // const MainSwiper = createMaterialTopTabNavigator<MainSwiperParamList>();
 const DrawerNav = createDrawerNavigator<DrawerParamList>();
-
-const FullScreenPostStackNav = createSharedElementStackNavigator<ActivityFullScreenParamList>();
-
-const FullScreenPostStack = () => (
-  <FullScreenPostStackNav.Navigator>
-    <FullScreenPostStackNav.Screen
-      name="ActivityFullScreen"
-      component={ViewerScreen}
-      options={
-        {
-          stackAnimation: 'none',
-          ...hideHeader,
-          title: '',
-        } as StackNavigationOptions
-      }
-    />
-    <FullScreenPostStackNav.Screen
-      name="PortraitViewerScreen"
-      component={PortraitViewerScreen}
-      options={
-        {
-          stackAnimation: 'none',
-          ...hideHeader,
-          title: '',
-        } as StackNavigationOptions
-      }
-    />
-    <FullScreenPostStackNav.Screen
-      name="ViewImage"
-      component={ViewImageScreen}
-      options={({ route }: { route: any }) => ({
-        title: route.params.entity.ownerObj.name,
-        headerStyle: {
-          backgroundColor: '#000',
-        },
-      })}
-    />
-  </FullScreenPostStackNav.Navigator>
-);
 
 const AccountScreenOptions = navigation => [
   {
@@ -340,9 +300,12 @@ const AppStack = function () {
         options={hideHeader}
       />
       <AppStackNav.Screen
-        name="ActivityFullScreenNav"
-        component={FullScreenPostStack}
-        options={{ stackAnimation: 'none', ...hideHeader }}
+        name="PortraitViewerScreen"
+        component={PortraitViewerScreen}
+        options={{
+          stackAnimation: 'fade_from_bottom',
+          ...hideHeader,
+        }}
       />
       <AppStackNav.Screen
         name="ExportLegacyWallet"

@@ -80,21 +80,11 @@ export type AuthStackParamList = {
   Register: {};
 };
 
-export type ActivityFullScreenParamList = {
+export type AppStackParamList = {
   PortraitViewerScreen: {
     items: Array<PortraitBarItem>;
     index: number;
   };
-  ActivityFullScreen: {
-    feed: FeedStore;
-    current: number;
-  };
-  ViewImage: {
-    entity: ActivityModel;
-  };
-};
-
-export type AppStackParamList = {
   ExportLegacyWallet: {};
   Messenger: {};
   Fab: {
