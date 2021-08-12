@@ -3,7 +3,7 @@ import { TouchableOpacity } from 'react-native';
 import { observer } from 'mobx-react';
 import { motify, useAnimationState } from 'moti';
 
-import Icon from 'react-native-vector-icons/AntDesign';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import Counter from './Counter';
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import { FLAG_VOTE } from '../../../common/Permissions';
@@ -57,7 +57,7 @@ const AnimatedThumb = ({
       ],
       rotate: [
         { value: '0deg', type: 'timing', duration: 120 },
-        { value: down ? '12deg' : '-12deg', type: 'timing', duration: 160 },
+        { value: '-12deg', type: 'timing', duration: 160 },
         { value: '0deg', type: 'spring', delay: 150 },
       ],
       translateY: [
@@ -112,7 +112,7 @@ class ThumbUpAction extends Component<PropsType> {
    * Default Props
    */
   static defaultProps = {
-    size: 19,
+    size: 21,
     orientation: 'row',
   };
 
@@ -124,10 +124,7 @@ class ThumbUpAction extends Component<PropsType> {
   /**
    * Action Icon
    */
-  filledIcon: string = 'like1';
-  outlineIcon: string = 'like2';
-
-  reversed = true;
+  iconName: string = 'thumb-up';
 
   /**
    * Render
@@ -150,7 +147,7 @@ class ThumbUpAction extends Component<PropsType> {
           canVote={canVote}
           voted={this.voted}
           size={this.props.size}
-          name={this.voted ? this.filledIcon : this.outlineIcon}
+          name={this.iconName}
           down={this.direction !== 'up'}
         />
         {count && !this.props.hideCount ? (
