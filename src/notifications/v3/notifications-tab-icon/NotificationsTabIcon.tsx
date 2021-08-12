@@ -22,26 +22,33 @@ const NotificationsTabIcon = observer((props: PropsType) => {
     }
   });
 
+  const showIndicator = notifications.unread > 0;
+
+  const Indicator = React.useMemo(
+    () => (
+      <>
+        <FAIcon
+          name="circle"
+          size={15}
+          color={ThemedStyles.getColor('SecondaryBackground')}
+          style={styles.unreadBackground}
+        />
+        <FAIcon
+          name="circle"
+          size={10}
+          color="#E02020"
+          style={styles.unread}
+          accessibilityLabel={'redDotIcon'}
+        />
+      </>
+    ),
+    [],
+  );
+
   return (
     <View style={styles.container}>
       <CIcon name="bell" size={size} color={color} />
-      {notifications.unread ? (
-        <>
-          <FAIcon
-            name="circle"
-            size={15}
-            color={ThemedStyles.getColor('SecondaryBackground')}
-            style={styles.unreadBackground}
-          />
-          <FAIcon
-            name="circle"
-            size={10}
-            color="#E02020"
-            style={styles.unread}
-            accessibilityLabel={'redDotIcon'}
-          />
-        </>
-      ) : null}
+      {showIndicator && Indicator}
     </View>
   );
 });

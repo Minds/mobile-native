@@ -8,22 +8,13 @@ import { useNavigation } from '../../__mocks__/@react-navigation/native';
 
 jest.mock('react-native-system-setting');
 jest.mock('react-native-silent-switch');
+jest.mock('react-native-notifications');
 
 jest.mock('react-native-system-setting', () => {
   return {
     getVolume: jest.fn(() => Promise.resolve()),
   };
 });
-
-jest.mock(
-  '../../src/notifications/v3/createNotificationsStore.ts',
-  () => () => ({
-    init: jest.fn(),
-    unread: 1,
-    setUnread: jest.fn,
-    pollInterval: 1,
-  }),
-);
 
 describe('Notifications Screen Component', () => {
   let navigation;
@@ -41,15 +32,5 @@ describe('Notifications Screen Component', () => {
       </StoresProvider>,
     );
     expect(toJSON()).toMatchSnapshot();
-  });
-
-  it('renders red dot correctly', () => {
-    const { getByA11yLabel } = render(
-      <StoresProvider>
-        <NotificationsTabIcon color={'red'} />
-      </StoresProvider>,
-    );
-
-    expect(getByA11yLabel('redDotIcon')).toBeDefined();
   });
 });
