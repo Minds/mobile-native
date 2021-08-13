@@ -107,7 +107,7 @@ export const DiscoveryTrendsListItem = withErrorBoundary(
                 styles.secondaryInformationBottom,
               ]}>
               {data.volume} channels discussing -{' '}
-              {i18n.date(entity.time_created, 'friendly')}
+              {i18n.date(parseInt(entity.time_created, 10) * 1000, 'friendly')}
             </Text>
           </View>
           {RichPartialThumbnail()}
