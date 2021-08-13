@@ -290,7 +290,7 @@ const tabOptions = ({ route }) => ({
         iconsize = 42;
         break;
       case 'Discovery':
-        iconName = 'hashtag';
+        iconName = 'search';
         iconsize = 24;
         break;
       case 'Notifications':

@@ -3,7 +3,6 @@ import React, { PureComponent } from 'react';
 
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
-import Fontisto from 'react-native-vector-icons/Fontisto';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { ColorValue, StyleSheet } from 'react-native';
 import ThemedStyles from '../styles/ThemedStyles';
@@ -54,9 +53,9 @@ export default class TabIcon extends PureComponent<PropsType> {
           />
         );
         break;
-      case 'hashtag':
+      case 'search':
         icon = (
-          <Fontisto
+          <IonIcon
             name={name}
             color={color}
             style={styles.icon}
