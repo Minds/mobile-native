@@ -4,16 +4,12 @@ import {
   NativeStackNavigationOptions,
 } from 'react-native-screens/native-stack';
 import { useDimensions } from '@react-native-community/hooks';
-import { createSharedElementStackNavigator } from 'react-navigation-shared-element';
 import {
   createDrawerNavigator,
   DrawerNavigationOptions,
 } from '@react-navigation/drawer';
 import { Dimensions, Platform, StatusBar, View } from 'react-native';
-import {
-  createStackNavigator,
-  StackNavigationOptions,
-} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import AnalyticsScreen from '../analytics/AnalyticsScreen';
 
 import LoginScreen from '../auth/LoginScreen';
@@ -133,6 +129,8 @@ const captureOptions = {
   title: '',
   stackAnimation: 'fade',
   headerShown: false,
+  statusBarTranslucent: true,
+  statusBarColor: 'transparent',
 } as NativeStackNavigationOptions;
 
 const AppStackNav = createNativeStackNavigator<AppStackParamList>();
@@ -695,7 +693,10 @@ const RootStack = function (props) {
           <RootStackNav.Screen
             name="App"
             component={AppStack}
-            options={{ animationEnabled: false }}
+            options={{
+              animationEnabled: false,
+              cardStyle: ThemedStyles.style.bgPrimaryBackground, // avoid dark fade in android transition
+            }}
           />
           {/* Modal screens here */}
           <RootStackNav.Screen
