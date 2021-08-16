@@ -229,6 +229,7 @@ const ChannelTopBar = observer(
               ? tinycolor(backgroundColor).setAlpha(0.15).toRgbString()
               : undefined
           }
+          iconStyle={styles.iconStyle}
           reverseColor={withBg ? textColor : undefined}
         />
         {store && !hideButtons && (
@@ -292,4 +293,5 @@ const styles = ThemedStyles.create({
     Platform.OS === 'android' ? { top: -4.5 } : {},
   ],
   channelButtonsIconsStyle: ['paddingLeft4x', 'colorSecondaryText'],
+  iconStyle: { fontSize: 25 },
 });

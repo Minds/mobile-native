@@ -13,6 +13,7 @@ type PropsType = {
   reverseColor?: string;
   color?: string;
   raised?: boolean;
+  iconStyle?: any;
 };
 
 const SmallCircleButton = ({ raised = true, ...props }: PropsType) => {
@@ -27,7 +28,7 @@ const SmallCircleButton = ({ raised = true, ...props }: PropsType) => {
       size={props.size || 18}
       onPress={props.onPress}
       containerStyle={props.style}
-      iconStyle={{ fontSize: 25 }}
+      iconStyle={props.iconStyle}
     />
   );
 };

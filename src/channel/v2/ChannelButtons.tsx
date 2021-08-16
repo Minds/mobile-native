@@ -111,7 +111,6 @@ const ChannelButtons = withErrorBoundary(
       (!props.notShow.includes(button) && check[button](props.store));
 
     const showSubscribe = shouldShow('subscribe');
-
     return (
       <View
         style={[
@@ -129,6 +128,7 @@ const ChannelButtons = withErrorBoundary(
             onPress={boostChannel}
             color={props.iconColor}
             reverseColor={props.iconReverseColor}
+            iconStyle={iconStyle}
           />
         )}
         {shouldShow('wire') && (
@@ -139,6 +139,7 @@ const ChannelButtons = withErrorBoundary(
             onPress={openWire}
             color={props.iconColor}
             reverseColor={props.iconReverseColor}
+            iconStyle={iconStyle}
           />
         )}
         {shouldShow('more') && (
@@ -151,6 +152,7 @@ const ChannelButtons = withErrorBoundary(
             }}
             color={props.iconColor}
             reverseColor={props.iconReverseColor}
+            iconStyle={iconStyle}
           />
         )}
         {showSubscribe && <Subscribe {...props} />}
@@ -167,5 +169,7 @@ const ChannelButtons = withErrorBoundary(
     );
   }),
 );
+
+const iconStyle = { fontSize: 25 };
 
 export default ChannelButtons;
