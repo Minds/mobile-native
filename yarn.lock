@@ -1276,6 +1276,13 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
+"@babel/runtime@^7.2.0":
+  version "7.15.3"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.15.3.tgz#2e1c2880ca118e5b2f9988322bd8a7656a32502b"
+  integrity sha512-OvwMLqNXkCXSz1kSm58sEsNuhqOx/fKpnUnKnFB5v8uDda5bLNEHNgKPvhDN6IU0LDcnHQ90LlJ0Q6jnyBSIBA==
+  dependencies:
+    regenerator-runtime "^0.13.4"
+
 "@babel/template@^7.0.0", "@babel/template@^7.12.13", "@babel/template@^7.3.3", "@babel/template@^7.4.0", "@babel/template@^7.8.6":
   version "7.12.13"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.12.13.tgz#530265be8a2589dbb37523844c5bcb55947fb327"
@@ -11983,9 +11990,13 @@ phin@^2.9.1:
   resolved "https://registry.yarnpkg.com/phin/-/phin-2.9.3.tgz#f9b6ac10a035636fb65dfc576aaaa17b8743125c"
   integrity sha512-CzFr90qM24ju5f88quFC/6qohjC144rehe5n6DH900lgXmUe86+xCKc10ev56gRKC4/BkHUoG4uSiQgBiIXwDA==
 
-"photo-editor@https://github.com/prscX/photo-editor":
-  version "0.0.0"
-  resolved "https://github.com/prscX/photo-editor#4924e9ec984d25d03644e58aa148282642171de9"
+photo-editor@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/photo-editor/-/photo-editor-0.2.0.tgz#b85b492709ee64b7b3df5fdc8e36db37519efaf4"
+  integrity sha512-NJBsCMvijN+g6fgxEZ+aPk02gF/jK/qtGffU6tDsyRKmyXTMagxkLtwc2pzVlwEJXJH+KotxOJCzTf6XTNdENg==
+  dependencies:
+    "@babel/runtime" "^7.2.0"
+    fbemitter "^2.1.1"
 
 picomatch@^2.0.4, picomatch@^2.0.5, picomatch@^2.2.1:
   version "2.2.2"
@@ -12829,10 +12840,10 @@ react-native-phone-input@thegamenicorus/react-native-phone-input#6ab1a91a09ddd42
     lodash "^4.17.4"
     prop-types "^15.5.10"
 
-react-native-photo-editor@^1.0.7:
-  version "1.0.10"
-  resolved "https://registry.yarnpkg.com/react-native-photo-editor/-/react-native-photo-editor-1.0.10.tgz#de47c6f8da524d2251a552afad3f52582f050845"
-  integrity sha512-WqASsY2FrateKGEgglVvPYiRlmuX0F8vg7D8MRSqvv3hpetq+SQEbidWtxG+xZPEM5oIa2/w3tqMROX8+4Ubsg==
+react-native-photo-editor@^1.0.12:
+  version "1.0.12"
+  resolved "https://registry.yarnpkg.com/react-native-photo-editor/-/react-native-photo-editor-1.0.12.tgz#bd2dff20e8f35445e875a05dd88b40d024e6365f"
+  integrity sha512-HDBCPluN2qqNm/RLUq7H+N5FNcgA+BLqELYs5lofUhKk3rfP/lP/iR3Jz3Oo8rXomEu7R6Dp3YKJ8+EukcN9XQ==
 
 react-native-progress@^4.0.3:
   version "4.1.2"
