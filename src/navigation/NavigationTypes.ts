@@ -49,7 +49,9 @@ export type RootStackParamList = {
     onComplete: Function;
     pro?: boolean;
   };
-  VerifyEmail: {};
+  VerifyEmail: {
+    __e_cnf_token: string;
+  };
   SelectHashtags: {};
   SetupChannel: {};
   VerifyUniqueness: {};

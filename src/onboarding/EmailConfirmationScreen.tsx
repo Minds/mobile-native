@@ -36,11 +36,17 @@ export default class EmailConfirmationScreen extends Component {
   confirm = async () => {
     this.setState({ error: false });
 
+    console.log('confirming');
+
     const result = await sessionService
       .getUser()
       .confirmEmail(this.props.route.params);
 
+    console.log('confirmEmail called', result);
+
     if (!result) {
+      console.log('confirm !result');
+
       this.setState({ error: true });
     } else {
       this.setState({ confirmed: true });
@@ -69,18 +75,13 @@ export default class EmailConfirmationScreen extends Component {
     }
 
     if (this.state.confirmed) {
+      console.log('email confirmed');
       return (
         <Text
-          style={[
-            ThemedStyles.style.fontXL,
-            ThemedStyles.style.textCenter,
-            ThemedStyles.style.colorDarkGreyed,
-          ]}
+          style={[ThemedStyles.style.fontXL, ThemedStyles.style.textCenter]}
           onPress={() => this.props.navigation.goBack()}>
           {i18n.t('emailConfirm.confirmed') + '\n'}
-          <Text style={[ThemedStyles.style.colorPrimary]}>
-            {i18n.t('goback')}
-          </Text>
+          <Text>{i18n.t('goback')}</Text>
         </Text>
       );
     }

@@ -96,7 +96,7 @@ import TransparentLayer from '../common/components/TransparentLayer';
 import PortraitViewerScreen from '../portrait/PortraitViewerScreen';
 import { portraitBarRef } from '../portrait/PortraitContentBar';
 import OnboardingScreen from '../onboarding/v2/OnboardingScreen';
-import VerifyEmailScreen from '../onboarding/v2/steps/VerifyEmailScreen';
+import VerifyEmailScreen from '../onboarding/v2/steps/email/VerifyEmailScreen';
 import SelectHashtagsScreen from '../onboarding/v2/steps/SelectHashtagsScreen';
 import SetupChannelScreen from '../onboarding/v2/steps/SetupChannelScreen';
 import VerifyUniquenessScreen from '../onboarding/v2/steps/VerifyUniquenessScreen';
