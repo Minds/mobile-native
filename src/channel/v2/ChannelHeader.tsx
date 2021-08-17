@@ -3,7 +3,7 @@ import {
   View,
   Text,
   StyleSheet,
-  ImageBackground,
+  Image,
   Dimensions,
   ScrollView,
 } from 'react-native';
@@ -13,7 +13,6 @@ import McIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { observer } from 'mobx-react';
 import settingsStore from '../../settings/SettingsStore';
 import type { ChannelStoreType, ChannelTabType } from './createChannelStore';
-import { Image } from 'react-native-animatable';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
 import abbrev from '../../common/helpers/abbrev';
@@ -30,6 +29,7 @@ import TopbarTabbar, {
 import AboutTab from './tabs/AboutTab';
 import TierManagementScreen from '../../common/components/tier-management/TierManagementScreen';
 import { withErrorBoundary } from '../../common/components/ErrorBoundary';
+import RetryableImage from '../../common/components/RetryableImage';
 
 type PropsType = {
   store?: ChannelStoreType;
@@ -152,18 +152,20 @@ const ChannelHeader = withErrorBoundary(
       }
     };
 
-    const Background: any = showBanner ? ImageBackground : View;
-
     return (
       <View style={styles.container}>
         {props.store && channel && !props.hideImages && (
-          <Background
-            style={styles.banner}
-            source={channel.getBannerSource()}
-            resizeMode="cover">
+          <View style={styles.banner}>
+            {showBanner && (
+              <RetryableImage
+                style={theme.positionAbsolute}
+                source={channel.getBannerSource()}
+                resizeMode="cover"
+              />
+            )}
             <View
               style={[styles.avatarContainer, theme.bcolorTertiaryBackground]}>
-              <Image
+              <RetryableImage
                 style={[styles.avatar, theme.bcolorPrimaryBorder]}
                 source={channel.getAvatarSource()}
                 resizeMode="cover"
@@ -220,7 +222,7 @@ const ChannelHeader = withErrorBoundary(
                 <Progress.Pie progress={props.store.bannerProgress} size={36} />
               </View>
             ) : null}
-          </Background>
+          </View>
         )}
         {!channel && (
           <View style={[theme.fullWidth, theme.height25]}>
