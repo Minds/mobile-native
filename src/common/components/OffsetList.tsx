@@ -16,7 +16,9 @@ type PropsType = {
   header?: React.ComponentType<any> | React.ReactElement;
   emptyMessage?: React.ReactNode;
   style?: StyleProp<ViewStyle>;
+  contentContainerStyle?: StyleProp<ViewStyle>;
   ListEmptyComponent?: React.ReactNode;
+  ListComponent?: any;
   onRefresh?: () => void;
   renderItem: ListRenderItem<any>;
   fetchEndpoint: string;
@@ -106,8 +108,10 @@ export default observer(function OffsetList<T>(props: PropsType) {
     return null;
   }
 
+  const List = props.ListComponent || FlatList;
+
   return (
-    <FlatList
+    <List
       ListHeaderComponent={props.header}
       data={result[props.endpointData].slice()}
       renderItem={props.renderItem}
@@ -115,6 +119,7 @@ export default observer(function OffsetList<T>(props: PropsType) {
       onEndReached={onFetchMore}
       onRefresh={refresh}
       refreshing={false}
+      contentContainerStyle={props.contentContainerStyle}
       style={props.style || listStyle}
     />
   );
