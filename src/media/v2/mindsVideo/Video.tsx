@@ -28,6 +28,15 @@ const ExpoVideo = observer(
       }
     }, [localStore]);
 
+    const readyForDisplay = React.useCallback(
+      (event: VideoReadyForDisplayEvent) => {
+        onReadyForDisplay && onReadyForDisplay(event);
+
+        localStore.setShowThumbnail(false);
+      },
+      [localStore, onReadyForDisplay],
+    );
+
     return (
       <Video
         onPlaybackStatusUpdate={localStore.updatePlaybackCallback}
@@ -42,7 +51,7 @@ const ExpoVideo = observer(
         style={theme.flexContainer}
         ref={playbackObject}
         volume={1}
-        onReadyForDisplay={onReadyForDisplay}
+        onReadyForDisplay={readyForDisplay}
       />
     );
   },
