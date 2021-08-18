@@ -1168,7 +1168,7 @@
     "button": "NSFW"
   },
   "update": {
-    "title": "Update to v{{version}}",
+    "title": "Updating to v{{version}}",
     "failed": "Error updating the App"
   },
   "searchBar": {
