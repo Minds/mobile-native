@@ -32,6 +32,11 @@ const NotificationItem = React.memo(({ notification }: PropsType) => {
   const router = useNotificationRouter(notification, modalRef);
   const user = sessionService.getUser();
 
+  const navToChannel = React.useCallback(() => router.navToChannel(user), [
+    user,
+    router,
+  ]);
+
   const navToFromChannel = React.useCallback(
     () => router.navToChannel(fromUser),
     [fromUser, router],
@@ -43,7 +48,7 @@ const NotificationItem = React.memo(({ notification }: PropsType) => {
 
   const Noun =
     notification.Noun !== '' ? (
-      <Text style={bodyTextImportantStyle} onPress={router.navToEntity}>
+      <Text style={bodyTextImportantStyle} onPress={navToChannel}>
         {notification.Noun}
       </Text>
     ) : null;
