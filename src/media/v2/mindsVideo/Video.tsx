@@ -6,6 +6,7 @@ import type CommentModel from '../../../comments/v2/CommentModel';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { MindsVideoStoreType } from './createMindsVideoStore';
+import { useKeepAwake } from 'expo-keep-awake';
 
 type PropsType = {
   entity?: ActivityModel | CommentModel;
@@ -19,6 +20,11 @@ const ExpoVideo = observer(
   ({ localStore, repeat = true, resizeMode, onReadyForDisplay }: PropsType) => {
     const theme = ThemedStyles.style;
     const playbackObject = useRef<Video>(null);
+
+    /**
+     * As long as this component is rendered, do not sleep
+     **/
+    useKeepAwake();
 
     const source = localStore.video.uri ? toJS(localStore.video) : undefined;
 

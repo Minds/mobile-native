@@ -51,6 +51,7 @@
     "entities": "^2.0.0",
     "expo": "^40.0.1",
     "expo-av": "^9.0.0",
+    "expo-keep-awake": "~8.4.0",
     "expo-linear-gradient": "^9.0.0",
     "i18n-js": "^3.8.0",
     "intl": "^1.2.5",

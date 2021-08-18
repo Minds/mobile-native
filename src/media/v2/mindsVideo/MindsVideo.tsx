@@ -9,6 +9,7 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
+import { useKeepAwake } from 'expo-keep-awake';
 import type CommentModel from '../../../comments/v2/CommentModel';
 import SmartImage from '../../../common/components/SmartImage';
 import getVideoThumb from '../../../common/helpers/get-video-thumbnail';
@@ -66,6 +67,11 @@ const MindsVideo = observer((props: PropsType) => {
   if (!isFocused && !localStore.paused) {
     localStore.pause();
   }
+
+  /**
+   * As long as this component is rendered, do not sleep
+   **/
+  useKeepAwake();
 
   useEffect(() => {
     onStoreCreated && onStoreCreated(localStore);
