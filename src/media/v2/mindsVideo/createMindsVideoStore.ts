@@ -257,7 +257,6 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
       }
 
       this.setShowOverlay(false);
-      this.setShowThumbnail(false);
 
       if (Array.isArray(this.sources)) {
         this.video = {
