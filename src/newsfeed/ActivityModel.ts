@@ -40,13 +40,14 @@ export default class ActivityModel extends BaseModel {
   @observable edited: '0' | '1' = '0';
   @observable paywall: true | '1' | '' = '';
 
+  time_updated: string = '';
   // decorated observables
   'is:following': boolean;
   'thumbs:down:count': number;
   'thumbs:up:count': number;
   'comments:count': number;
-  'thumbs:down:user_guids': Array<number>;
-  'thumbs:up:user_guids': Array<number>;
+  'thumbs:down:user_guids': Array<string>;
+  'thumbs:up:user_guids': Array<string>;
   seen?: boolean;
   rowKey?: string;
   boosted_guid?: string;
