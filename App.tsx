@@ -13,7 +13,6 @@ import {
   AppState,
   Linking,
   Text,
-  StatusBar,
   UIManager,
   RefreshControl,
 } from 'react-native';
@@ -208,12 +207,6 @@ class App extends Component<Props, State> {
                       <ErrorBoundary
                         message="An error occurred"
                         containerStyle={ThemedStyles.style.centered}>
-                        <StatusBar
-                          barStyle={statusBarStyle}
-                          backgroundColor={ThemedStyles.getColor(
-                            'SecondaryBackground',
-                          )}
-                        />
                         <WCContextProvider>
                           <NavigationStack
                             key={ThemedStyles.theme + i18n.locale}
