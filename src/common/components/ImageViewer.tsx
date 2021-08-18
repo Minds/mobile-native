@@ -21,7 +21,7 @@ export default class ImageViewer extends Component {
           /**
            * Hack to fix https://gitlab.com/minds/mobile-native/-/issues/3466
            **/
-          imageWidth={this.props.width - 1}
+          imageWidth={this.props.width}
           imageHeight={this.props.height - 1}>
           <SharedElement id={`${this.props.urn}.image`}>
             <SmartImage
