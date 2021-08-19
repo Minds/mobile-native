@@ -22,6 +22,8 @@
 	<string>4.17.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleLightContent</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -131,6 +133,6 @@
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
+  <false/>
 </dict>
 </plist>

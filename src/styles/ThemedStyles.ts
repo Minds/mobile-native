@@ -141,8 +141,6 @@ export class ThemedStylesStore {
       contentStyle: {
         backgroundColor: theme.PrimaryBackground,
       },
-      statusBarColor: theme.SecondaryBackground,
-      statusBarStyle: this.theme ? 'light' : 'dark',
       stackAnimation: Platform.select({
         ios: 'default',
         android: 'fade',
@@ -155,6 +153,8 @@ export class ThemedStylesStore {
     // Fix for the header's extra padding on android
     if (Platform.OS === 'android') {
       this.defaultScreenOptions.headerTopInsetEnabled = false;
+      this.defaultScreenOptions.statusBarColor = theme.SecondaryBackground;
+      this.defaultScreenOptions.statusBarStyle = this.theme ? 'light' : 'dark';
     }
   }
 }
