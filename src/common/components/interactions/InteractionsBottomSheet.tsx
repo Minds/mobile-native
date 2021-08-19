@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useMemo } from 'react';
 import BottomSheet, {
   BottomSheetBackdrop,
   BottomSheetBackgroundProps,
@@ -16,10 +16,10 @@ import ThemedStyles from '../../../styles/ThemedStyles';
 import Handle from '../../../comments/v2/Handle';
 import capitalize from '../../helpers/capitalize';
 import i18n from '../../services/i18n.service';
-import DiscoveryUserV3 from '../../../discovery/DiscoveryUserV3';
 import { BottomSheetButton } from '../bottom-sheet';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
+import ChannelListItem from '../ChannelListItem';
 
 type Interactions =
   | 'upVotes'
@@ -35,19 +35,17 @@ type PropsType = {
 const { height: windowHeight } = Dimensions.get('window');
 
 const snapPoints = [-150, Math.floor(windowHeight * 0.85)];
-const renderItemUser = (row: { item: any; index: number }) => {
-  return <DiscoveryUserV3 row={row} navigation={navigationService} />;
-};
-const renderItemActivity = (row: { item: any; index: number }) => {
-  return (
-    <Activity
-      entity={row.item}
-      hideTabs={true}
-      hideRemind={true}
-      navigation={navigationService}
-    />
-  );
-};
+const renderItemUser = (row: { item: any; index: number }) => (
+  <ChannelListItem channel={row.item} navigation={navigationService} />
+);
+const renderItemActivity = (row: { item: any; index: number }) => (
+  <Activity
+    entity={row.item}
+    hideTabs={true}
+    hideRemind={true}
+    navigation={navigationService}
+  />
+);
 const mapUser = data => data.map(d => UserModel.create(d.actor));
 const mapSubscriber = data => data.map(d => UserModel.create(d));
 const mapActivity = data =>
@@ -90,26 +88,34 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
       store.interaction = interaction;
     },
     get endpoint() {
-      return store.interaction === 'upVotes' ||
-        store.interaction === 'downVotes'
-        ? `api/v3/votes/list/${entity.guid}`
-        : store.interaction === 'subscribers'
-        ? `api/v3/subscriptions/graph/${entity.guid}/subscribers`
-        : 'api/v3/newsfeed';
+      switch (store.interaction) {
+        case 'upVotes':
+        case 'downVotes':
+          return `api/v3/votes/list/${entity.guid}`;
+        case 'subscribers':
+          return `api/v3/subscriptions/graph/${entity.guid}/subscribers`;
+        default:
+          return 'api/v3/newsfeed';
+      }
     },
     get opts() {
       const opts: any = {
         limit: 24,
       };
 
-      if (store.interaction === 'reminds') {
-        opts.remind_guid = entity.guid;
-        opts.hide_reminds = false;
-      } else if (store.interaction === 'quotes') {
-        opts.quote_guid = entity.guid;
-      } else {
-        opts.direction = store.interaction === 'upVotes' ? 'up' : 'down';
+      switch (store.interaction) {
+        case 'reminds':
+          opts.remind_guid = entity.guid;
+          opts.hide_reminds = false;
+          break;
+        case 'quotes':
+          opts.quote_guid = entity.guid;
+          break;
+        default:
+          opts.direction = store.interaction === 'upVotes' ? 'up' : 'down';
+          break;
       }
+
       return opts;
     },
     get offsetField() {
@@ -125,9 +131,7 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
   }));
   const isVote =
     store.interaction === 'upVotes' || store.interaction === 'downVotes';
-
   const isSubscriber = store.interaction === 'subscribers';
-
   const dataField = isVote ? 'votes' : 'entities';
 
   // =====================| METHODS |=====================>
@@ -141,48 +145,45 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
     },
   }));
 
-  const close = React.useCallback(() => {
-    bottomSheetRef.current?.close();
-  }, [bottomSheetRef]);
+  const close = React.useCallback(() => bottomSheetRef.current?.close(), [
+    bottomSheetRef,
+  ]);
 
   // =====================| RENDERS |=====================>
-  const Header = React.useCallback(() => {
-    return (
-      <View style={styles.navbarContainer}>
-        <Text style={styles.titleStyle}>
-          {capitalize(
-            i18n.t(`interactions.${store.interaction}`, { count: 2 }),
-          )}
-        </Text>
-      </View>
-    );
-  }, []);
+  const header = (
+    <View style={styles.navbarContainer}>
+      <Text style={styles.titleStyle}>
+        {capitalize(i18n.t(`interactions.${store.interaction}`, { count: 2 }))}
+      </Text>
+    </View>
+  );
 
-  const Footer = React.useCallback(() => {
-    return (
-      <View
-        style={[
-          styles.cancelContainer,
-          { paddingBottom: insets.bottom, paddingTop: insets.bottom * 1.5 },
-        ]}>
-        <LinearGradient
-          style={StyleSheet.absoluteFill}
-          locations={[0, 0.8]}
-          colors={['transparent', ThemedStyles.getColor('PrimaryBackground')]}
-        />
+  const footer = (
+    <View
+      style={[
+        styles.cancelContainer,
+        { paddingBottom: insets.bottom, paddingTop: insets.bottom * 1.5 },
+      ]}>
+      <LinearGradient
+        style={StyleSheet.absoluteFill}
+        // locations={[0, 0.8]}
+        colors={[
+          ThemedStyles.getColor('PrimaryBackground') + '00',
+          ThemedStyles.getColor('PrimaryBackground'),
+        ]}
+      />
 
-        <BottomSheetButton text={i18n.t('cancel')} onPress={close} />
-      </View>
-    );
-  }, [store, insets.bottom]);
+      <BottomSheetButton text={i18n.t('cancel')} onPress={close} />
+    </View>
+  );
 
   /**
    * Custom background
    * (fixes visual issues on Android dark mode)
    */
-  const CustomBackground = ({ style }: BottomSheetBackgroundProps) => {
-    return <View style={style} />;
-  };
+  const CustomBackground = ({ style }: BottomSheetBackgroundProps) => (
+    <View style={style} />
+  );
 
   const renderBackdrop = React.useCallback(
     props => <BottomSheetBackdrop {...props} pressBehavior="collapse" />,
@@ -200,7 +201,7 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
       backgroundComponent={CustomBackground}
       backdropComponent={renderBackdrop}>
       <View style={styles.container}>
-        <Header />
+        {header}
         <OffsetList
           fetchEndpoint={store.endpoint}
           endpointData={dataField}
@@ -214,7 +215,7 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
           offsetField={store.offsetField}
           contentContainerStyle={styles.contentContainerStyle}
         />
-        <Footer />
+        {footer}
       </View>
     </BottomSheet>
   );
