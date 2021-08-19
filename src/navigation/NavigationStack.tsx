@@ -290,136 +290,146 @@ const MainScreen = () => {
 
 const AppStack = function () {
   const EditChannelScreens = EditChannelStack(AppStackNav);
+  const statusBarStyle =
+    ThemedStyles.theme === 0 ? 'dark-content' : 'light-content';
   return (
-    <AppStackNav.Navigator screenOptions={ThemedStyles.defaultScreenOptions}>
-      <AppStackNav.Screen
-        name="Main"
-        component={MainScreen}
-        options={hideHeader}
+    <>
+      <StatusBar
+        barStyle={statusBarStyle}
+        backgroundColor={ThemedStyles.getColor('SecondaryBackground')}
       />
-      <AppStackNav.Screen
-        name="PortraitViewerScreen"
-        component={PortraitViewerScreen}
-        options={{
-          stackAnimation: 'fade_from_bottom',
-          ...hideHeader,
-        }}
-      />
-      <AppStackNav.Screen
-        name="ExportLegacyWallet"
-        component={ExportLegacyWallet}
-        options={{ title: 'Export Wallet' }}
-      />
-      <AppStackNav.Screen
-        name="Messenger"
-        component={MessengerScreen}
-        options={{ title: i18n.t('messenger.legacyMessenger') }}
-      />
-      <AppStackNav.Screen
-        name="Capture"
-        component={ComposeScreen}
-        options={captureOptions}
-      />
-      <AppStackNav.Screen
-        name="TagSelector"
-        component={TagSelector}
-        options={hideHeader}
-      />
-      <AppStackNav.Screen
-        name="NsfwSelector"
-        component={NsfwSelector}
-        options={hideHeader}
-      />
-      <AppStackNav.Screen
-        name="PermawebSelector"
-        component={PermawebSelector}
-        options={hideHeader}
-      />
-      <AppStackNav.Screen
-        name="ScheduleSelector"
-        component={ScheduleSelector}
-        options={hideHeader}
-      />
-      <AppStackNav.Screen
-        name="MonetizeSelector"
-        component={
-          featuresService.has('paywall-2020')
-            ? MonetizeScreen
-            : MonetizeSelector
-        }
-        options={hideHeader}
-      />
-      <AppStackNav.Screen
-        name="PlusMonetize"
-        component={PlusMonetizeScreen}
-        options={hideHeader}
-      />
-      <AppStackNav.Screen
-        name="MembershipMonetize"
-        component={MembershipMonetizeScreeen}
-        options={hideHeader}
-      />
-      <AppStackNav.Screen
-        name="CustomMonetize"
-        component={CustomMonetizeScreen}
-        options={hideHeader}
-      />
-      <AppStackNav.Screen
-        name="LicenseSelector"
-        component={LicenseSelector}
-        options={hideHeader}
-      />
-      <AppStackNav.Screen
-        name="AccessSelector"
-        component={AccessSelector}
-        options={hideHeader}
-      />
-      <AppStackNav.Screen
-        name="EmailConfirmation"
-        component={EmailConfirmationScreen}
-      />
-      <AppStackNav.Screen
-        name="Update"
-        component={UpdatingScreen}
-        options={hideHeader}
-      />
-      <AppStackNav.Screen
-        name="Notifications"
-        component={NotificationsScreen}
-      />
-      <AppStackNav.Screen
-        name="Channel"
-        component={ChannelScreenV2}
-        options={hideHeader}
-      />
-      {EditChannelScreens}
-      <AppStackNav.Screen
-        name="Activity"
-        component={ActivityScreen}
-        options={hideHeader}
-      />
-      <AppStackNav.Screen name="Conversation" component={ConversationScreen} />
-      <AppStackNav.Screen
-        name="DiscoverySearch"
-        component={DiscoverySearchScreen}
-      />
-      <AppStackNav.Screen name="Subscribers" component={ChannelSubscribers} />
-      <AppStackNav.Screen
-        name="GroupView"
-        component={GroupViewScreen}
-        options={hideHeader}
-      />
-      <AppStackNav.Screen
-        name="BlogView"
-        component={BlogsViewScreen}
-        options={hideHeader}
-      />
-      <AppStackNav.Screen
-        name="WireFab"
-        component={FabScreenV2}
-        options={hideHeader}
-      />
-      {/* <AppStackNav.Screen
+      <AppStackNav.Navigator screenOptions={ThemedStyles.defaultScreenOptions}>
+        <AppStackNav.Screen
+          name="Main"
+          component={MainScreen}
+          options={hideHeader}
+        />
+        <AppStackNav.Screen
+          name="PortraitViewerScreen"
+          component={PortraitViewerScreen}
+          options={{
+            stackAnimation: 'fade_from_bottom',
+            ...hideHeader,
+          }}
+        />
+        <AppStackNav.Screen
+          name="ExportLegacyWallet"
+          component={ExportLegacyWallet}
+          options={{ title: 'Export Wallet' }}
+        />
+        <AppStackNav.Screen
+          name="Messenger"
+          component={MessengerScreen}
+          options={{ title: i18n.t('messenger.legacyMessenger') }}
+        />
+        <AppStackNav.Screen
+          name="Capture"
+          component={ComposeScreen}
+          options={captureOptions}
+        />
+        <AppStackNav.Screen
+          name="TagSelector"
+          component={TagSelector}
+          options={hideHeader}
+        />
+        <AppStackNav.Screen
+          name="NsfwSelector"
+          component={NsfwSelector}
+          options={hideHeader}
+        />
+        <AppStackNav.Screen
+          name="PermawebSelector"
+          component={PermawebSelector}
+          options={hideHeader}
+        />
+        <AppStackNav.Screen
+          name="ScheduleSelector"
+          component={ScheduleSelector}
+          options={hideHeader}
+        />
+        <AppStackNav.Screen
+          name="MonetizeSelector"
+          component={
+            featuresService.has('paywall-2020')
+              ? MonetizeScreen
+              : MonetizeSelector
+          }
+          options={hideHeader}
+        />
+        <AppStackNav.Screen
+          name="PlusMonetize"
+          component={PlusMonetizeScreen}
+          options={hideHeader}
+        />
+        <AppStackNav.Screen
+          name="MembershipMonetize"
+          component={MembershipMonetizeScreeen}
+          options={hideHeader}
+        />
+        <AppStackNav.Screen
+          name="CustomMonetize"
+          component={CustomMonetizeScreen}
+          options={hideHeader}
+        />
+        <AppStackNav.Screen
+          name="LicenseSelector"
+          component={LicenseSelector}
+          options={hideHeader}
+        />
+        <AppStackNav.Screen
+          name="AccessSelector"
+          component={AccessSelector}
+          options={hideHeader}
+        />
+        <AppStackNav.Screen
+          name="EmailConfirmation"
+          component={EmailConfirmationScreen}
+        />
+        <AppStackNav.Screen
+          name="Update"
+          component={UpdatingScreen}
+          options={hideHeader}
+        />
+        <AppStackNav.Screen
+          name="Notifications"
+          component={NotificationsScreen}
+        />
+        <AppStackNav.Screen
+          name="Channel"
+          component={ChannelScreenV2}
+          options={hideHeader}
+        />
+        {EditChannelScreens}
+        <AppStackNav.Screen
+          name="Activity"
+          component={ActivityScreen}
+          options={hideHeader}
+        />
+        <AppStackNav.Screen
+          name="Conversation"
+          component={ConversationScreen}
+        />
+        <AppStackNav.Screen
+          name="DiscoverySearch"
+          component={DiscoverySearchScreen}
+        />
+        <AppStackNav.Screen name="Subscribers" component={ChannelSubscribers} />
+        <AppStackNav.Screen
+          name="GroupView"
+          component={GroupViewScreen}
+          options={hideHeader}
+        />
+        <AppStackNav.Screen
+          name="BlogView"
+          component={BlogsViewScreen}
+          options={hideHeader}
+        />
+        <AppStackNav.Screen
+          name="WireFab"
+          component={FabScreenV2}
+          options={hideHeader}
+        />
+        {/* <AppStackNav.Screen
         name="BlockchainWallet"
         component={BlockchainWalletScreen}
         options={BlockchainWalletScreen.navigationOptions}
@@ -432,224 +442,225 @@ const AppStack = function () {
         name="BlockchainWalletDetails"
         component={BlockchainWalletDetailsScreen}
       /> */}
-      <AppStackNav.Screen
-        name="Report"
-        component={ReportScreen}
-        options={{ title: i18n.t('report') }}
-      />
-      <AppStackNav.Screen
-        name="OnboardingScreen"
-        component={OnboardingScreen}
-        options={hideHeader}
-      />
-      <AppStackNav.Screen
-        name="TierScreen"
-        component={TierScreen}
-        options={{ title: 'Tier Management' }}
-      />
-      <AppStackNav.Screen
-        name="ReceiverAddressScreen"
-        component={ReceiverAddressScreen}
-        options={{
-          title: 'Receiver Address',
-          headerStyle: {
-            backgroundColor: ThemedStyles.getColor('PrimaryBackground'),
-          },
-          headerHideShadow: true,
-        }}
-      />
-      <AppStackNav.Screen
-        name="BtcAddressScreen"
-        component={BtcReceiverAddressScreen}
-        options={{
-          title: i18n.t('wallet.bitcoins.update'),
-          headerStyle: {
-            backgroundColor: ThemedStyles.getColor('PrimaryBackground'),
-          },
-          headerHideShadow: true,
-        }}
-      />
-      <AppStackNav.Screen
-        name="BankInfoScreen"
-        component={BankInfoScreen}
-        options={{
-          title: i18n.t('wallet.bank.title'),
-          headerStyle: {
-            backgroundColor: ThemedStyles.getColor('PrimaryBackground'),
-          },
-          headerHideShadow: true,
-        }}
-      />
-      <AppStackNav.Screen
-        name="Account"
-        component={OptionsDrawer}
-        options={{
-          title: i18n.t('settings.account'),
-        }}
-        initialParams={{ options: AccountScreenOptions }}
-      />
-      <AppStackNav.Screen
-        name="Security"
-        component={OptionsDrawer}
-        options={{ title: i18n.t('settings.security') }}
-        initialParams={{ options: SecurityScreenOptions }}
-      />
-      <AppStackNav.Screen
-        name="Billing"
-        component={OptionsDrawer}
-        options={{ title: i18n.t('settings.billing') }}
-        initialParams={{ options: BillingScreenOptions }}
-      />
-      <AppStackNav.Screen
-        name="Referrals"
-        component={ReferralsScreen}
-        options={{ title: i18n.t('settings.referrals') }}
-      />
-      <AppStackNav.Screen
-        name="BoostConsole"
-        component={BoostConsoleScreen}
-        options={{ title: i18n.t('boost') }}
-      />
-      <AppStackNav.Screen
-        name="Other"
-        component={OtherScreen}
-        options={{ title: i18n.t('settings.other') }}
-      />
-      <AppStackNav.Screen
-        name="SettingsNotifications"
-        component={OptionsDrawer}
-        options={{
-          title: i18n.t('settings.accountOptions.4'),
-        }}
-        initialParams={{ options: NotificationsScreenOptions }}
-      />
-      <AppStackNav.Screen
-        name="SettingsEmail"
-        component={EmailScreen}
-        options={{ title: i18n.t('settings.accountOptions.1') }}
-      />
-      <AppStackNav.Screen
-        name="SettingsPassword"
-        component={PasswordScreen}
-        options={{ title: i18n.t('settings.accountOptions.3') }}
-      />
-      <AppStackNav.Screen
-        name="PushNotificationsSettings"
-        component={PushNotificationsSettings}
-        options={{ title: i18n.t('settings.pushNotification') }}
-      />
-      <AppStackNav.Screen
-        name="EmailNotificationsSettings"
-        component={EmailNotificationsSettings}
-        options={{ title: i18n.t('settings.pushNotification') }}
-      />
-      <AppStackNav.Screen
-        name="DataSaverScreen"
-        component={DataSaverScreen}
-        options={{ title: i18n.t('settings.networkOptions.1') }}
-      />
-      <AppStackNav.Screen
-        name="BlockedChannels"
-        component={BlockedChannelsScreen}
-        options={{ title: i18n.t('settings.blockedChannels') }}
-      />
-      <AppStackNav.Screen
-        name="TierManagementScreen"
-        component={TierManagementScreen}
-        options={{ title: i18n.t('settings.otherOptions.b1') }}
-        initialParams={{ useForSelection: false }}
-      />
-      <AppStackNav.Screen
-        name="DeleteChannel"
-        component={DeleteChannelScreen}
-        options={{ title: i18n.t('settings.deleteChannel') }}
-      />
-      <AppStackNav.Screen
-        name="DeactivateChannel"
-        component={DeactivateChannelScreen}
-        options={{ title: i18n.t('settings.disableChannel') }}
-      />
-      <AppStackNav.Screen
-        name="LanguageScreen"
-        component={LanguageScreen}
-        options={{ title: i18n.t('settings.accountOptions.2') }}
-      />
-      <AppStackNav.Screen
-        name="NSFWScreen"
-        component={NSFWScreen}
-        options={{ title: i18n.t('settings.accountOptions.5') }}
-      />
-      <AppStackNav.Screen
-        name="MessengerSettingsScreen"
-        component={MessengerSettingsScreen}
-        options={{ title: i18n.t('settings.accountOptions.6') }}
-      />
-      <AppStackNav.Screen
-        name="RekeyScreen"
-        component={RekeyScreen}
-        options={{ title: i18n.t('settings.accountOptions.6') }}
-      />
-      <AppStackNav.Screen
-        name="AutoplaySettingsScreen"
-        component={AutoplaySettingsScreen}
-        options={{ title: i18n.t('settings.accountOptions.7') }}
-      />
-      <AppStackNav.Screen
-        name="BoostSettingsScreen"
-        component={BoostSettingsScreen}
-        options={{ title: i18n.t('settings.accountOptions.8') }}
-      />
-      <AppStackNav.Screen
-        name="TwoFactorAuthSettingsScreen"
-        component={TwoFactorAuthSettingsScreen}
-        options={{ title: i18n.t('settings.securityOptions.1') }}
-      />
-      <AppStackNav.Screen
-        name="RecoveryCodesScreen"
-        component={RecoveryCodesScreen}
-        options={{ title: i18n.t('settings.TFA') }}
-      />
-      <AppStackNav.Screen
-        name="VerifyAuthAppScreen"
-        component={VerifyAuthAppScreen}
-        options={{ title: i18n.t('settings.TFA') }}
-      />
-      <AppStackNav.Screen
-        name="VerifyPhoneNumberScreen"
-        component={VerifyPhoneNumberScreen}
-        options={{ title: i18n.t('settings.TFA') }}
-      />
-      <AppStackNav.Screen
-        name="DisableTFA"
-        component={DisableTFA}
-        options={{ title: i18n.t('settings.TFA') }}
-      />
-      <AppStackNav.Screen
-        name="DevicesScreen"
-        component={DevicesScreen}
-        options={{ title: i18n.t('settings.securityOptions.2') }}
-      />
-      {Platform.OS !== 'ios' && (
         <AppStackNav.Screen
-          name="PaymentMethods"
-          component={BillingScreen}
-          options={{ title: i18n.t('settings.billingOptions.1') }}
+          name="Report"
+          component={ReportScreen}
+          options={{ title: i18n.t('report') }}
         />
-      )}
-      {Platform.OS !== 'ios' && (
         <AppStackNav.Screen
-          name="RecurringPayments"
-          component={RecurringPayments}
-          options={{ title: i18n.t('settings.billingOptions.2') }}
+          name="OnboardingScreen"
+          component={OnboardingScreen}
+          options={hideHeader}
         />
-      )}
-      <AppStackNav.Screen
-        name="ReportedContent"
-        component={ReportedContentScreen}
-        options={{ title: i18n.t('settings.otherOptions.a1') }}
-      />
-      <AppStackNav.Screen name="AppInfo" component={AppInfoScreen} />
-    </AppStackNav.Navigator>
+        <AppStackNav.Screen
+          name="TierScreen"
+          component={TierScreen}
+          options={{ title: 'Tier Management' }}
+        />
+        <AppStackNav.Screen
+          name="ReceiverAddressScreen"
+          component={ReceiverAddressScreen}
+          options={{
+            title: 'Receiver Address',
+            headerStyle: {
+              backgroundColor: ThemedStyles.getColor('PrimaryBackground'),
+            },
+            headerHideShadow: true,
+          }}
+        />
+        <AppStackNav.Screen
+          name="BtcAddressScreen"
+          component={BtcReceiverAddressScreen}
+          options={{
+            title: i18n.t('wallet.bitcoins.update'),
+            headerStyle: {
+              backgroundColor: ThemedStyles.getColor('PrimaryBackground'),
+            },
+            headerHideShadow: true,
+          }}
+        />
+        <AppStackNav.Screen
+          name="BankInfoScreen"
+          component={BankInfoScreen}
+          options={{
+            title: i18n.t('wallet.bank.title'),
+            headerStyle: {
+              backgroundColor: ThemedStyles.getColor('PrimaryBackground'),
+            },
+            headerHideShadow: true,
+          }}
+        />
+        <AppStackNav.Screen
+          name="Account"
+          component={OptionsDrawer}
+          options={{
+            title: i18n.t('settings.account'),
+          }}
+          initialParams={{ options: AccountScreenOptions }}
+        />
+        <AppStackNav.Screen
+          name="Security"
+          component={OptionsDrawer}
+          options={{ title: i18n.t('settings.security') }}
+          initialParams={{ options: SecurityScreenOptions }}
+        />
+        <AppStackNav.Screen
+          name="Billing"
+          component={OptionsDrawer}
+          options={{ title: i18n.t('settings.billing') }}
+          initialParams={{ options: BillingScreenOptions }}
+        />
+        <AppStackNav.Screen
+          name="Referrals"
+          component={ReferralsScreen}
+          options={{ title: i18n.t('settings.referrals') }}
+        />
+        <AppStackNav.Screen
+          name="BoostConsole"
+          component={BoostConsoleScreen}
+          options={{ title: i18n.t('boost') }}
+        />
+        <AppStackNav.Screen
+          name="Other"
+          component={OtherScreen}
+          options={{ title: i18n.t('settings.other') }}
+        />
+        <AppStackNav.Screen
+          name="SettingsNotifications"
+          component={OptionsDrawer}
+          options={{
+            title: i18n.t('settings.accountOptions.4'),
+          }}
+          initialParams={{ options: NotificationsScreenOptions }}
+        />
+        <AppStackNav.Screen
+          name="SettingsEmail"
+          component={EmailScreen}
+          options={{ title: i18n.t('settings.accountOptions.1') }}
+        />
+        <AppStackNav.Screen
+          name="SettingsPassword"
+          component={PasswordScreen}
+          options={{ title: i18n.t('settings.accountOptions.3') }}
+        />
+        <AppStackNav.Screen
+          name="PushNotificationsSettings"
+          component={PushNotificationsSettings}
+          options={{ title: i18n.t('settings.pushNotification') }}
+        />
+        <AppStackNav.Screen
+          name="EmailNotificationsSettings"
+          component={EmailNotificationsSettings}
+          options={{ title: i18n.t('settings.pushNotification') }}
+        />
+        <AppStackNav.Screen
+          name="DataSaverScreen"
+          component={DataSaverScreen}
+          options={{ title: i18n.t('settings.networkOptions.1') }}
+        />
+        <AppStackNav.Screen
+          name="BlockedChannels"
+          component={BlockedChannelsScreen}
+          options={{ title: i18n.t('settings.blockedChannels') }}
+        />
+        <AppStackNav.Screen
+          name="TierManagementScreen"
+          component={TierManagementScreen}
+          options={{ title: i18n.t('settings.otherOptions.b1') }}
+          initialParams={{ useForSelection: false }}
+        />
+        <AppStackNav.Screen
+          name="DeleteChannel"
+          component={DeleteChannelScreen}
+          options={{ title: i18n.t('settings.deleteChannel') }}
+        />
+        <AppStackNav.Screen
+          name="DeactivateChannel"
+          component={DeactivateChannelScreen}
+          options={{ title: i18n.t('settings.disableChannel') }}
+        />
+        <AppStackNav.Screen
+          name="LanguageScreen"
+          component={LanguageScreen}
+          options={{ title: i18n.t('settings.accountOptions.2') }}
+        />
+        <AppStackNav.Screen
+          name="NSFWScreen"
+          component={NSFWScreen}
+          options={{ title: i18n.t('settings.accountOptions.5') }}
+        />
+        <AppStackNav.Screen
+          name="MessengerSettingsScreen"
+          component={MessengerSettingsScreen}
+          options={{ title: i18n.t('settings.accountOptions.6') }}
+        />
+        <AppStackNav.Screen
+          name="RekeyScreen"
+          component={RekeyScreen}
+          options={{ title: i18n.t('settings.accountOptions.6') }}
+        />
+        <AppStackNav.Screen
+          name="AutoplaySettingsScreen"
+          component={AutoplaySettingsScreen}
+          options={{ title: i18n.t('settings.accountOptions.7') }}
+        />
+        <AppStackNav.Screen
+          name="BoostSettingsScreen"
+          component={BoostSettingsScreen}
+          options={{ title: i18n.t('settings.accountOptions.8') }}
+        />
+        <AppStackNav.Screen
+          name="TwoFactorAuthSettingsScreen"
+          component={TwoFactorAuthSettingsScreen}
+          options={{ title: i18n.t('settings.securityOptions.1') }}
+        />
+        <AppStackNav.Screen
+          name="RecoveryCodesScreen"
+          component={RecoveryCodesScreen}
+          options={{ title: i18n.t('settings.TFA') }}
+        />
+        <AppStackNav.Screen
+          name="VerifyAuthAppScreen"
+          component={VerifyAuthAppScreen}
+          options={{ title: i18n.t('settings.TFA') }}
+        />
+        <AppStackNav.Screen
+          name="VerifyPhoneNumberScreen"
+          component={VerifyPhoneNumberScreen}
+          options={{ title: i18n.t('settings.TFA') }}
+        />
+        <AppStackNav.Screen
+          name="DisableTFA"
+          component={DisableTFA}
+          options={{ title: i18n.t('settings.TFA') }}
+        />
+        <AppStackNav.Screen
+          name="DevicesScreen"
+          component={DevicesScreen}
+          options={{ title: i18n.t('settings.securityOptions.2') }}
+        />
+        {Platform.OS !== 'ios' && (
+          <AppStackNav.Screen
+            name="PaymentMethods"
+            component={BillingScreen}
+            options={{ title: i18n.t('settings.billingOptions.1') }}
+          />
+        )}
+        {Platform.OS !== 'ios' && (
+          <AppStackNav.Screen
+            name="RecurringPayments"
+            component={RecurringPayments}
+            options={{ title: i18n.t('settings.billingOptions.2') }}
+          />
+        )}
+        <AppStackNav.Screen
+          name="ReportedContent"
+          component={ReportedContentScreen}
+          options={{ title: i18n.t('settings.otherOptions.a1') }}
+        />
+        <AppStackNav.Screen name="AppInfo" component={AppInfoScreen} />
+      </AppStackNav.Navigator>
+    </>
   );
 };
 

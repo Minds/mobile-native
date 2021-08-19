@@ -188,9 +188,6 @@ class App extends Component<Props, State> {
 
     const isLoggedIn = sessionService.userLoggedIn;
 
-    const statusBarStyle =
-      ThemedStyles.theme === 0 ? 'dark-content' : 'light-content';
-
     return (
       <>
         <SafeAreaProvider>
