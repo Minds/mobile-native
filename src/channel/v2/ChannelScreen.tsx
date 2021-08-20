@@ -102,7 +102,6 @@ const ChannelScreen = observer((props: PropsType) => {
     [feedRef],
   );
   const bannerUri = store.channel?.getBannerSource().uri;
-  const { chat } = useStores();
   const feedListRef = useRef<FeedList<any>>();
   const subscribersActionSheetRef = useRef<any>(null);
   const subscriptionsActionSheetRef = useRef<any>(null);
@@ -135,7 +134,7 @@ const ChannelScreen = observer((props: PropsType) => {
     ThemedStyles.theme ? 'light-content' : 'dark-content',
   );
   /**
-   * The distance that topbar and chat button have to
+   * The distance that topbar has to
    * move to get out of view
    **/
   const contentOffset = useSharedValue(0);
@@ -143,13 +142,6 @@ const ChannelScreen = observer((props: PropsType) => {
     transform: [
       {
         translateY: contentOffset.value,
-      },
-    ],
-  }));
-  const chatIconAnimatedStyle = useAnimatedStyle(() => ({
-    transform: [
-      {
-        translateY: -contentOffset.value,
       },
     ],
   }));
@@ -164,10 +156,6 @@ const ChannelScreen = observer((props: PropsType) => {
       topBarAnimatedStyle,
     ],
     [topBarAnimatedStyle],
-  );
-  const chatIconAnimatedViewStyle = useMemoStyle(
-    [{ position: 'absolute', bottom: 16, right: 16 }, chatIconAnimatedStyle],
-    [chatIconAnimatedStyle],
   );
   /**
    * text color of topbar contents such as name and icons
@@ -277,30 +265,6 @@ const ChannelScreen = observer((props: PropsType) => {
     },
     [topBarBackgroundVisible, backgroundColor],
   );
-
-  /**
-   * Opens messenger
-   **/
-  const openMessenger = useCallback(() => {
-    if (!store.channel) return null;
-
-    if (Platform.OS === 'android') {
-      try {
-        chat.checkAppInstalled().then(installed => {
-          if (!installed) {
-            return;
-          }
-          if (store.channel) {
-            chat.directMessage(store.channel.guid);
-          }
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    } else {
-      chat.directMessage(store.channel.guid);
-    }
-  }, [chat, store.channel]);
 
   /**
    * set the statusBarColor and statusBarStyle
@@ -475,16 +439,6 @@ const ChannelScreen = observer((props: PropsType) => {
           navigation={props.navigation}
           store={store}
           onPress={onTopBarPress}
-        />
-      </Animated.View>
-
-      <Animated.View style={chatIconAnimatedViewStyle}>
-        <ChatButton
-          size={25}
-          chat={chat}
-          onPress={openMessenger}
-          color={backgroundColor}
-          reverseColor={textColor}
         />
       </Animated.View>
 

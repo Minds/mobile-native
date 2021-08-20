@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useCallback } from 'react';
 import type { NativeStackNavigationProp } from 'react-native-screens/native-stack';
 import { useNavigation } from '@react-navigation/native';
 
@@ -14,6 +14,7 @@ import {
   MenuItem,
 } from '../../common/components/bottom-sheet';
 import { Platform } from 'react-native';
+import { useStores } from '../../common/hooks/use-stores';
 
 function dismiss(ref) {
   setTimeout(() => {
@@ -30,6 +31,7 @@ const getOptions = (
   isSubscribedToTier: boolean,
   onSearchChannelPressed: () => void,
   onEditPress: () => void,
+  openChat: () => void,
   navigation,
   ref: any,
 ) => {
@@ -39,6 +41,33 @@ const getOptions = (
     title: string;
     onPress: () => void;
   }> = [];
+
+  const shareOption = {
+    iconName: 'share',
+    iconType: 'material',
+    title: i18n.t('channel.share'),
+    onPress: () => {
+      shareService.share(i18n.t('channel.share'), MINDS_URI + channel.username);
+      ref.current.dismiss();
+    },
+  };
+
+  if (!channel.isOwner()) {
+    options.push(shareOption);
+  }
+
+  if (!channel.isOwner()) {
+    options.push({
+      iconName: 'message-outline',
+      iconType: 'material-community',
+      title: i18n.t('channel.message'),
+      onPress: () => {
+        // shareService.share(i18n.t('channel.share'), MINDS_URI + channel.username);
+        openChat();
+        ref.current.dismiss();
+      },
+    });
+  }
 
   if (channel.isOwner()) {
     options.push({
@@ -50,28 +79,6 @@ const getOptions = (
         dismiss(ref);
       },
     });
-  } else {
-    if (channel.isSubscribed()) {
-      options.push({
-        iconName: 'person-remove-outline',
-        iconType: 'ionicon',
-        title: i18n.t('channel.unsubscribe'),
-        onPress: () => {
-          channel.toggleSubscription();
-          dismiss(ref);
-        },
-      });
-    } else {
-      options.push({
-        iconName: 'person-add-outline',
-        iconType: 'ionicon',
-        title: i18n.t('channel.subscribe'),
-        onPress: () => {
-          channel.toggleSubscription();
-          dismiss(ref);
-        },
-      });
-    }
   }
 
   if (channel.isOwner()) {
@@ -87,18 +94,8 @@ const getOptions = (
   }
 
   options.push({
-    iconName: 'share-social',
-    iconType: 'ionicon',
-    title: i18n.t('channel.share'),
-    onPress: () => {
-      shareService.share(i18n.t('channel.share'), MINDS_URI + channel.username);
-      ref.current.dismiss();
-    },
-  });
-
-  options.push({
-    iconName: 'search-outline',
-    iconType: 'ionicon',
+    iconName: 'search',
+    iconType: 'material',
     title: 'Search Channel',
     onPress: () => {
       onSearchChannelPressed();
@@ -106,40 +103,31 @@ const getOptions = (
     },
   });
 
-  if (!channel.blocked) {
-    options.push({
-      iconName: 'remove-circle-outline',
-      iconType: 'ionicon',
-      title: i18n.t('channel.block'),
-      onPress: () => {
-        channel.toggleBlock();
-        ref.current.dismiss();
-      },
-    });
-  } else {
-    options.push({
-      iconName: 'remove-circle-outline',
-      iconType: 'ionicon',
-      title: i18n.t('channel.unblock'),
-      onPress: () => {
-        channel.toggleBlock();
-        ref.current.dismiss();
-      },
-    });
-  }
-  options.push({
-    title: i18n.t('channel.report'),
-    iconName: 'ios-flag-outline',
-    iconType: 'ionicon',
-    onPress: () => {
-      navigation.push('Report', {
-        entity: channel,
+  if (!channel.isOwner()) {
+    if (channel.isSubscribed()) {
+      options.push({
+        iconName: 'person-remove',
+        iconType: 'material',
+        title: i18n.t('channel.unsubscribe'),
+        onPress: () => {
+          channel.toggleSubscription();
+          dismiss(ref);
+        },
       });
-      ref.current.dismiss();
-    },
-  });
-  isSubscribedToTier &&
-    Platform.OS !== 'ios' &&
+    } else {
+      options.push({
+        iconName: 'person-add',
+        iconType: 'material',
+        title: i18n.t('channel.subscribe'),
+        onPress: () => {
+          channel.toggleSubscription();
+          dismiss(ref);
+        },
+      });
+    }
+  }
+
+  if (isSubscribedToTier) {
     options.push({
       iconName: 'attach-money',
       iconType: 'material',
@@ -149,6 +137,48 @@ const getOptions = (
         ref.current.dismiss();
       },
     });
+  }
+
+  if (!channel.isOwner()) {
+    if (!channel.blocked) {
+      options.push({
+        iconName: 'block',
+        iconType: 'material',
+        title: i18n.t('channel.block'),
+        onPress: () => {
+          channel.toggleBlock();
+          ref.current.dismiss();
+        },
+      });
+    } else {
+      options.push({
+        iconName: 'block',
+        iconType: 'material',
+        title: i18n.t('channel.unblock'),
+        onPress: () => {
+          channel.toggleBlock();
+          ref.current.dismiss();
+        },
+      });
+    }
+
+    options.push({
+      title: i18n.t('channel.report'),
+      iconName: 'outlined-flag',
+      iconType: 'material',
+      onPress: () => {
+        navigation.push('Report', {
+          entity: channel,
+        });
+        ref.current.dismiss();
+      },
+    });
+  }
+
+  if (channel.isOwner()) {
+    options.push(shareOption);
+  }
+
   return options;
 };
 
@@ -167,12 +197,38 @@ type NavigationType = NativeStackNavigationProp<AppStackParamList, 'Channel'>;
  */
 const ChannelMoreMenu = forwardRef((props: PropsType, ref: any) => {
   const navigation = useNavigation<NavigationType>();
+  const { chat } = useStores();
+
+  /**
+   * Opens chat
+   **/
+  const openChat = useCallback(() => {
+    if (!props.channel) return null;
+
+    if (Platform.OS === 'android') {
+      try {
+        chat.checkAppInstalled().then(installed => {
+          if (!installed) {
+            return;
+          }
+          if (props.channel) {
+            chat.directMessage(props.channel.guid);
+          }
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      chat.directMessage(props.channel.guid);
+    }
+  }, [chat, props.channel]);
 
   const options = getOptions(
     props.channel,
     props.isSubscribedToTier,
     props.onSearchChannelPressed,
     props.onEditPress,
+    openChat,
     navigation,
     ref,
   );
