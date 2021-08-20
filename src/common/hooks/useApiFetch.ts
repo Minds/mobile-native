@@ -24,7 +24,7 @@ export interface FetchStore<T> {
   clearRetryTimer: (boolean) => void;
   setLoading: (v: boolean) => void;
   setError: (v: any) => void;
-  fetch: (object?) => Promise<any>;
+  fetch: (data?: any, retry?: any, options?: FetchOptions) => Promise<any>;
   hydrate: (params: any) => any;
 }
 
@@ -83,12 +83,13 @@ const createStore = ({
   setError(e) {
     this.error = e;
   },
-  async fetch(data?: object, retry = false) {
+  async fetch(data?: object, retry = false, opts: any = {}) {
     if (!data) {
       data = options?.params || {};
     }
     this.clearRetryTimer(!retry);
-    const updateStateMethod = options?.updateState || updateState;
+    const updateStateMethod =
+      opts?.updateState || options?.updateState || updateState;
     this.setLoading(true);
     this.setError(null);
     try {

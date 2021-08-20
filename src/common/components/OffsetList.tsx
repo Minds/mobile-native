@@ -38,6 +38,7 @@ const mapping = data => data;
 export default observer(function OffsetList<T>(props: PropsType) {
   const theme = ThemedStyles.style;
   const [offset, setOffset] = useState<string | number>('');
+  const [refreshing, setRefreshing] = useState<boolean>(false);
   const opts = {
     limit: 12,
     [props.offsetField || 'offset']: offset,
@@ -72,10 +73,23 @@ export default observer(function OffsetList<T>(props: PropsType) {
       } as ApiFetchType),
   });
 
-  const refresh = React.useCallback(() => {
+  const refresh = React.useCallback(async () => {
     setOffset('');
-    setResult(null);
-    fetch();
+    setRefreshing(true);
+    await fetch(undefined, undefined, {
+      updateState: (newData: ApiFetchType) =>
+        ({
+          ...newData,
+          [props.endpointData]: [
+            ...map(
+              newData && newData[props.endpointData]
+                ? newData[props.endpointData]
+                : [],
+            ),
+          ],
+        } as ApiFetchType),
+    });
+    setRefreshing(false);
   }, [fetch, setResult]);
 
   const onFetchMore = useCallback(() => {
@@ -104,21 +118,17 @@ export default observer(function OffsetList<T>(props: PropsType) {
     return <CenteredLoading />;
   }
 
-  if (!result) {
-    return null;
-  }
-
   const List = props.ListComponent || FlatList;
 
   return (
     <List
       ListHeaderComponent={props.header}
-      data={result[props.endpointData].slice()}
+      data={result ? result[props.endpointData].slice() : []}
       renderItem={props.renderItem}
       keyExtractor={keyExtractor}
       onEndReached={onFetchMore}
       onRefresh={refresh}
-      refreshing={false}
+      refreshing={refreshing}
       contentContainerStyle={props.contentContainerStyle}
       style={props.style || listStyle}
     />
