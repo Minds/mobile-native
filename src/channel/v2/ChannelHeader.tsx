@@ -361,7 +361,7 @@ const ChannelHeader = withErrorBoundary(
   }),
 );
 
-const styles = StyleSheet.create({
+const styles = ThemedStyles.create({
   buttonsMarginContainer: {
     marginTop: 5,
     position: 'absolute',
@@ -418,18 +418,17 @@ const styles = StyleSheet.create({
     aspectRatio: bannerAspectRatio,
     width: '100%',
   },
-  avatarContainer: {
-    backgroundColor: '#fff',
-    position: 'absolute',
-    top: -avatarSize / 1.8,
-    left: CENTERED ? undefined : 20,
-    alignSelf: 'center',
-    borderWidth: 3,
-    // elevation: 10,
-    width: avatarSize + 6,
-    height: avatarSize + 6,
-    borderRadius: (avatarSize + 6) / 2,
-  },
+  avatarContainer: [
+    'bgSecondaryBackground',
+    {
+      position: 'absolute',
+      top: -avatarSize / 1.8,
+      left: CENTERED ? undefined : 20,
+      alignSelf: 'center',
+      borderWidth: 5,
+      borderRadius: (avatarSize + 6) / 2,
+    },
+  ],
   avatar: {
     width: avatarSize,
     height: avatarSize,
