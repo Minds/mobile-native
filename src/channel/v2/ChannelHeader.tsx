@@ -21,6 +21,7 @@ import TierManagementScreen from '../../common/components/tier-management/TierMa
 import { withErrorBoundary } from '../../common/components/ErrorBoundary';
 import FadeView from '../../common/components/FadeView';
 import JoinMembershipScreen from '../../wire/v2/tiers/JoinMembership';
+import FastImage from 'react-native-fast-image';
 
 const CENTERED = false;
 
@@ -188,7 +189,7 @@ const ChannelHeader = withErrorBoundary(
             {props.store && channel && !props.hideImages && (
               <View
                 style={[styles.avatarContainer, theme.bcolorPrimaryBackground]}>
-                <Image
+                <FastImage
                   style={styles.avatar}
                   source={channel.getAvatarSource()}
                   resizeMode="cover"
