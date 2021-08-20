@@ -8,9 +8,12 @@ const Handle = ({ children }) => (
       {
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
-        paddingVertical: 10,
+        paddingTop: 10,
+        paddingBottom: 5,
       },
       ThemedStyles.style.bgPrimaryBackground,
+      ThemedStyles.style.borderBottomHair,
+      ThemedStyles.style.bcolorPrimaryBorder,
     ]}>
     <View style={[ThemedStyles.style.alignCenter]}>
       <View
