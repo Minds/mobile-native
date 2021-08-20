@@ -102,7 +102,7 @@ const ChannelScreen = observer((props: PropsType) => {
     [feedRef],
   );
   const bannerUri = store.channel?.getBannerSource().uri;
-  const feedListRef = useRef<FeedList<any>>();
+  const feedListRef = useRef<FeedList<any> | null>(null);
   const subscribersActionSheetRef = useRef<any>(null);
   const subscriptionsActionSheetRef = useRef<any>(null);
   /**
