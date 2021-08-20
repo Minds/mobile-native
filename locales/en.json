@@ -270,6 +270,8 @@
     "editChannel": "Edit Channel",
     "confirmUnsubscribe": "Are you sure you want to unsubscribe from this channel?",
     "subscribe": "Subscribe",
+    "subscribed": "Subscribed",
+    "message": "Message via Chat",
     "requestSubscription": "Request Subscription",
     "briefDescription": "Brief description about you...",
     "block": "Block",

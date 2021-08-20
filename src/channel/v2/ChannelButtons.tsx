@@ -71,9 +71,7 @@ const check = {
     store.tiers.length > 0 &&
     !isSubscribedToTier(store.tiers),
   subscribe: (store: ChannelStoreType) =>
-    !store.channel!.isOwner() &&
-    store.channel!.can(FLAG_SUBSCRIBE) &&
-    !store.channel!.subscribed,
+    !store.channel!.isOwner() && store.channel!.can(FLAG_SUBSCRIBE),
   boost: (store: ChannelStoreType) => store.channel!.isOwner(),
 };
 
@@ -155,7 +153,7 @@ const ChannelButtons = withErrorBoundary(
             iconStyle={iconStyle}
           />
         )}
-        {showSubscribe && <Subscribe {...props} />}
+        {showSubscribe && <Subscribe channel={props.store.channel} />}
         {shouldShow('more') && (
           <ChannelMoreMenu
             channel={props.store.channel}

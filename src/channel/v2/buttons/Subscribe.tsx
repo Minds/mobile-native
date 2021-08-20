@@ -1,29 +1,24 @@
 import React from 'react';
 import Button from '../../../common/components/Button';
 import i18n from '../../../common/services/i18n.service';
-import ThemedStyles, { useStyle } from '../../../styles/ThemedStyles';
-import { ChannelButtonsPropsType } from '../ChannelButtons';
+import UserModel from '../../UserModel';
+import { observer } from 'mobx-react';
 
-const Subscribe = (props: ChannelButtonsPropsType) => {
-  const subscriptionText = i18n.t('channel.subscribe');
-  const buttonStyle = useStyle({
-    borderWidth: 2,
-    borderColor: ThemedStyles.getColor('Link'),
-    padding: 8,
-    paddingHorizontal: 10,
-    backgroundColor: ThemedStyles.getColor('Link'),
-    borderRadius: 100,
-  });
+const Subscribe = (props: { channel: UserModel; testID?: string }) => {
+  const subscriptionText = props.channel.subscribed
+    ? i18n.t('channel.subscribed')
+    : i18n.t('channel.subscribe');
 
   return (
     <Button
+      action={!props.channel.subscribed}
+      activeOpacity={0.7}
       text={subscriptionText}
-      onPress={props.store.channel!.toggleSubscription}
+      onPress={props.channel!.toggleSubscription}
       xSmall
-      color={ThemedStyles.getColor('White')}
-      style={buttonStyle}
+      testID={props.testID}
     />
   );
 };
 
-export default Subscribe;
+export default observer(Subscribe);
