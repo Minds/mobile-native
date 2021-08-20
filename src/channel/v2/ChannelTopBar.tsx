@@ -146,7 +146,7 @@ const ChannelTopBar = observer(
      **/
     const onSearchClosePressed = useCallback(() => {
       toggleSearchInput(false);
-      store?.setChannelSearch('');
+      store?.clearSearch();
     }, []);
 
     /**
