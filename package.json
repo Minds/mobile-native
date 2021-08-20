@@ -105,6 +105,7 @@
     "react-native-permissions": "^3.0.4",
     "react-native-phone-input": "thegamenicorus/react-native-phone-input#6ab1a91a09ddd4272fe85e30ecedf092f0fcb1a7",
     "react-native-photo-editor": "^1.0.12",
+    "react-native-popable": "^0.4.2",
     "react-native-progress": "^4.0.3",
     "react-native-qrcode-svg": "^5.2.0",
     "react-native-randombytes": "^3.5.3",

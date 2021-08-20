@@ -1,18 +1,24 @@
 import React, { FC, PureComponent } from 'react';
-import { Text, TextStyle, ViewStyle } from 'react-native';
+import { TextStyle, ViewStyle } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import type UserModel from '../UserModel';
 import ThemedStyles from '../../styles/ThemedStyles';
-import { Tooltip } from 'react-native-elements';
 import i18n from '../../common/services/i18n.service';
+import { Popable } from 'react-native-popable';
 
-const BadgeTooltip: FC<any> = ({ label, children }) => {
+/**
+ * Badge tooltip using Poppable because react-native-elements/Tooltip
+ * doesn't have a way to show the Tooltip on top
+ **/
+const BadgeTooltip: FC<any> = ({ label, color, children }) => {
   return (
-    <Tooltip
-      overlayColor={ThemedStyles.getColor('PrimaryBackground') + 'D0'}
-      popover={<Text style={styles.badgeLabelStyle}>{label}</Text>}>
+    <Popable
+      backgroundColor={color}
+      position={'top'}
+      animationType={'spring'}
+      content={label}>
       {children}
-    </Tooltip>
+    </Popable>
   );
 };
 
@@ -42,7 +48,9 @@ export default class ChannelBadges extends PureComponent<PropsType> {
 
     if (channel.plus) {
       badges.push(
-        <BadgeTooltip label={i18n.t('channel.badge.plus')}>
+        <BadgeTooltip
+          label={i18n.t('channel.badge.plus')}
+          color={ThemedStyles.getColor('Link')}>
           {/* @ts-ignore style not defined in types */}
           <Icon name="add-circle-outline" size={size} style={style} key={1} />
         </BadgeTooltip>,
@@ -51,7 +59,9 @@ export default class ChannelBadges extends PureComponent<PropsType> {
 
     if (channel.verified) {
       badges.push(
-        <BadgeTooltip label={i18n.t('channel.badge.verified')}>
+        <BadgeTooltip
+          label={i18n.t('channel.badge.verified')}
+          color={ThemedStyles.getColor('SuccessBackground')}>
           <Icon
             name="verified-user"
             size={size}
@@ -68,7 +78,9 @@ export default class ChannelBadges extends PureComponent<PropsType> {
 
     if (channel.founder) {
       badges.push(
-        <BadgeTooltip label={i18n.t('channel.badge.founder')}>
+        <BadgeTooltip
+          label={i18n.t('channel.badge.founder')}
+          color={ThemedStyles.getColor('Link')}>
           {/* @ts-ignore style not defined in types */}
           <Icon name="flight-takeoff" size={size} style={style} key={3} />
         </BadgeTooltip>,
