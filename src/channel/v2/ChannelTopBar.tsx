@@ -227,7 +227,9 @@ const ChannelTopBar = observer(
           color={
             withBg
               ? tinycolor(backgroundColor).setAlpha(0.15).toRgbString()
-              : undefined
+              : tinycolor(ThemedStyles.getColor('PrimaryBackground'))
+                  .setAlpha(0.75)
+                  .toRgbString()
           }
           iconStyle={styles.iconStyle}
           reverseColor={withBg ? textColor : undefined}
@@ -244,7 +246,9 @@ const ChannelTopBar = observer(
             iconColor={
               withBg
                 ? tinycolor(backgroundColor).setAlpha(0.15).toRgbString()
-                : undefined
+                : tinycolor(ThemedStyles.getColor('PrimaryBackground'))
+                    .setAlpha(0.75)
+                    .toRgbString()
             }
             iconReverseColor={withBg ? textColor : undefined}
           />
