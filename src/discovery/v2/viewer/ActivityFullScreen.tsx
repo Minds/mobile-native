@@ -133,7 +133,10 @@ const ActivityFullScreen = observer((props: PropsType) => {
   const remindRef = useRef<Activity>(null);
   const translateRef = useRef<typeof Translate>(null);
   const commentsRef = useRef<BottomSheet>(null);
-  const interactionsRef = useRef<any>(null);
+  const upVotesInteractionsRef = useRef<any>(null);
+  const downVotesInteractionsRef = useRef<any>(null);
+  const remindsInteractionsRef = useRef<any>(null);
+  const quotesInteractionsRef = useRef<any>(null);
   const navigation = useNavigation();
   const hasMedia = entity.hasMedia();
   const hasRemind = !!entity.remind_object;
@@ -224,17 +227,17 @@ const ActivityFullScreen = observer((props: PropsType) => {
   const showNSFW = entity.shouldBeBlured() && !entity.mature_visibility;
 
   const showUpVotes = useCallback(() => {
-    interactionsRef.current?.show('upVotes');
-  }, [interactionsRef]);
+    upVotesInteractionsRef.current?.show('upVotes');
+  }, [upVotesInteractionsRef]);
   const showDownVotes = useCallback(() => {
-    interactionsRef.current?.show('downVotes');
-  }, [interactionsRef]);
+    downVotesInteractionsRef.current?.show('downVotes');
+  }, [downVotesInteractionsRef]);
   const showReminds = useCallback(() => {
-    interactionsRef.current?.show('reminds');
-  }, [interactionsRef]);
+    remindsInteractionsRef.current?.show('reminds');
+  }, [remindsInteractionsRef]);
   const showQuotes = useCallback(() => {
-    interactionsRef.current?.show('quotes');
-  }, [interactionsRef]);
+    quotesInteractionsRef.current?.show('quotes');
+  }, [quotesInteractionsRef]);
 
   const copyText = useCallback(() => {
     Clipboard.setString(
@@ -392,7 +395,10 @@ const ActivityFullScreen = observer((props: PropsType) => {
           onPressComment={onPressComment}
         />
       </View>
-      <InteractionsActionSheet entity={entity} ref={interactionsRef} />
+      <InteractionsActionSheet entity={entity} ref={upVotesInteractionsRef} />
+      <InteractionsActionSheet entity={entity} ref={downVotesInteractionsRef} />
+      <InteractionsActionSheet entity={entity} ref={remindsInteractionsRef} />
+      <InteractionsActionSheet entity={entity} ref={quotesInteractionsRef} />
       <CommentBottomSheet
         ref={commentsRef}
         hideContent={Boolean(!store.displayComment)}

@@ -88,7 +88,7 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
     },
     hide() {
       bottomSheetRef.current?.close();
-      store.visible = false;
+      // store.visible = false;
     },
     setInteraction(interaction: Interactions) {
       store.interaction = interaction;
@@ -160,6 +160,10 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
   React.useImperativeHandle(ref, () => ({
     show: (interaction: Interactions) => {
       store.setInteraction(interaction);
+      if (store.visible) {
+        // refresh the offset list
+        offsetListRef.current?.refreshList();
+      }
       store.show();
     },
     hide: () => {
@@ -172,7 +176,9 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
   ]);
 
   const onBottomSheetVisibilityChange = useCallback((visible: number) => {
-    store.setVisibility(Boolean(visible));
+    if (Boolean(visible)) {
+      store.setVisibility(Boolean(visible));
+    }
   }, []);
 
   // =====================| RENDERS |=====================>
