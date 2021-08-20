@@ -2,7 +2,7 @@ import { View } from 'react-native';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import React from 'react';
 
-const Handle = ({ children }) => (
+const Handle = ({ children, showHandle = false }) => (
   <View
     style={[
       {
@@ -15,18 +15,20 @@ const Handle = ({ children }) => (
       ThemedStyles.style.borderBottomHair,
       ThemedStyles.style.bcolorPrimaryBorder,
     ]}>
-    <View style={[ThemedStyles.style.alignCenter]}>
-      <View
-        style={[
-          {
-            width: 30,
-            height: 5,
-            borderRadius: 10,
-          },
-          ThemedStyles.style.bgTertiaryBackground,
-        ]}
-      />
-    </View>
+    {showHandle && (
+      <View style={[ThemedStyles.style.alignCenter]}>
+        <View
+          style={[
+            {
+              width: 30,
+              height: 5,
+              borderRadius: 10,
+            },
+            ThemedStyles.style.bgTertiaryBackground,
+          ]}
+        />
+      </View>
+    )}
 
     {children}
   </View>
