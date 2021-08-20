@@ -126,7 +126,7 @@ const ChannelTopBar = observer(
     const toggleSearchInput = (on: boolean) => {
       searchInputPositionOffset.value = withTiming(
         on
-          ? Platform.select({ ios: insets.top, android: 8, default: 0 })
+          ? Platform.select({ ios: insets.top + 4, android: 8, default: 0 })
           : -200,
         {
           duration: 500,
@@ -168,7 +168,7 @@ const ChannelTopBar = observer(
             ref={ref => (textInputRef.current = ref)}
             style={[
               styles.searchInput,
-              Platform.OS === 'ios' && { padding: 20 },
+              Platform.OS === 'ios' && { padding: 15 },
             ]}
             placeholderTextColor={ThemedStyles.getColor('SecondaryText')}
             value={store?.channelSearch}
@@ -189,7 +189,7 @@ const ChannelTopBar = observer(
           />
         </>
       ),
-      [],
+      [store?.channelSearch],
     );
 
     return (
@@ -290,7 +290,7 @@ const styles = ThemedStyles.create({
   searchInputIconContainerStyle: [
     'colorIcon',
     'positionAbsoluteTopRight',
-    Platform.OS === 'android' ? { top: -4.5 } : {},
+    Platform.OS === 'android' ? { top: -4.5 } : { top: -4.5 },
   ],
   channelButtonsIconsStyle: ['paddingLeft4x', 'colorSecondaryText'],
   iconStyle: { fontSize: 25 },
