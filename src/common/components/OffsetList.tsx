@@ -1,5 +1,11 @@
 import { observer } from 'mobx-react';
-import React, { useCallback, useState } from 'react';
+import React, {
+  forwardRef,
+  useCallback,
+  useImperativeHandle,
+  useMemo,
+  useState,
+} from 'react';
 import {
   FlatList,
   ListRenderItem,
@@ -26,6 +32,8 @@ type PropsType = {
   offsetField?: string;
   map?: (data: any) => any;
   params?: Object;
+  placeholderCount?: number;
+  renderPlaceholder?: () => JSX.Element;
 };
 
 type FetchResponseType = {
@@ -35,52 +43,41 @@ type FetchResponseType = {
 
 const mapping = data => data;
 
-export default observer(function OffsetList<T>(props: PropsType) {
-  const theme = ThemedStyles.style;
-  const [offset, setOffset] = useState<string | number>('');
-  const [refreshing, setRefreshing] = useState<boolean>(false);
-  const opts = {
-    limit: 12,
-    [props.offsetField || 'offset']: offset,
-  };
-  if (props.params) {
-    Object.assign(opts, props.params);
-  }
+export default observer(
+  // TODO: add ref types
+  forwardRef(function OffsetList<T>(props: PropsType, ref: any) {
+    const theme = ThemedStyles.style;
+    const [offset, setOffset] = useState<string | number>('');
+    const [refreshing, setRefreshing] = useState<boolean>(false);
+    const opts = {
+      limit: 12,
+      [props.offsetField || 'offset']: offset,
+    };
+    if (props.params) {
+      Object.assign(opts, props.params);
+    }
 
-  type ApiFetchType = FetchResponseType & T;
+    useImperativeHandle(ref, () => ({
+      refreshList: () => refresh(),
+    }));
 
-  const map = props.map || mapping;
+    type ApiFetchType = FetchResponseType & T;
 
-  const {
-    result,
-    loading,
-    error,
-    fetch,
-    setResult,
-  } = useApiFetch<ApiFetchType>(props.fetchEndpoint, {
-    params: opts,
-    updateState: (newData: ApiFetchType, oldData: ApiFetchType) =>
-      ({
-        ...newData,
-        [props.endpointData]: [
-          ...(oldData ? oldData[props.endpointData] : []),
-          ...map(
-            newData && newData[props.endpointData]
-              ? newData[props.endpointData]
-              : [],
-          ),
-        ],
-      } as ApiFetchType),
-  });
+    const map = props.map || mapping;
 
-  const refresh = React.useCallback(async () => {
-    setOffset('');
-    setRefreshing(true);
-    await fetch(undefined, undefined, {
-      updateState: (newData: ApiFetchType) =>
+    const {
+      result,
+      loading,
+      error,
+      fetch,
+      setResult,
+    } = useApiFetch<ApiFetchType>(props.fetchEndpoint, {
+      params: opts,
+      updateState: (newData: ApiFetchType, oldData: ApiFetchType) =>
         ({
           ...newData,
           [props.endpointData]: [
+            ...(oldData ? oldData[props.endpointData] : []),
             ...map(
               newData && newData[props.endpointData]
                 ? newData[props.endpointData]
@@ -89,50 +86,92 @@ export default observer(function OffsetList<T>(props: PropsType) {
           ],
         } as ApiFetchType),
     });
-    setRefreshing(false);
-  }, [fetch, setResult]);
 
-  const onFetchMore = useCallback(() => {
-    !loading && result && result['load-next'] && setOffset(result['load-next']);
-  }, [loading, result]);
+    const refresh = React.useCallback(async () => {
+      setOffset('');
+      setRefreshing(true);
+      await fetch(undefined, undefined, {
+        updateState: (newData: ApiFetchType) =>
+          ({
+            ...newData,
+            [props.endpointData]: [
+              ...map(
+                newData && newData[props.endpointData]
+                  ? newData[props.endpointData]
+                  : [],
+              ),
+            ],
+          } as ApiFetchType),
+      });
+      setRefreshing(false);
+    }, [fetch, setResult]);
 
-  const keyExtractor = (item, index: any) => `${item.urn}${index}`;
+    const onFetchMore = useCallback(() => {
+      !loading &&
+        result &&
+        result['load-next'] &&
+        setOffset(result['load-next']);
+    }, [loading, result]);
 
-  if (error && !loading) {
+    const keyExtractor = (item, index: any) =>
+      item ? `${item.urn}${index}` : index;
+
+    if (error && !loading) {
+      return (
+        <Text
+          style={[
+            theme.colorSecondaryText,
+            theme.textCenter,
+            theme.fontL,
+            theme.marginVertical4x,
+          ]}
+          onPress={() => fetch()}>
+          {i18n.t('error') + '\n'}
+          <Text style={theme.colorLink}>{i18n.t('tryAgain')}</Text>
+        </Text>
+      );
+    }
+
+    const data = useMemo(() => {
+      if (result) {
+        return result[props.endpointData].slice();
+      }
+
+      if (props.placeholderCount) {
+        return new Array(props.placeholderCount).fill(null);
+      }
+
+      return [];
+    }, [result, props.placeholderCount]);
+
+    const renderItem = useMemo(() => {
+      if (result && result[props.endpointData]) {
+        return props.renderItem;
+      }
+
+      return props.renderPlaceholder || props.renderItem;
+    }, [result, props.renderPlaceholder, props.renderItem]);
+
+    if (!props.placeholderCount && loading && !result) {
+      return <CenteredLoading />;
+    }
+
+    const List = props.ListComponent || FlatList;
+
     return (
-      <Text
-        style={[
-          theme.colorSecondaryText,
-          theme.textCenter,
-          theme.fontL,
-          theme.marginVertical4x,
-        ]}
-        onPress={() => fetch()}>
-        {i18n.t('error') + '\n'}
-        <Text style={theme.colorLink}>{i18n.t('tryAgain')}</Text>
-      </Text>
+      <List
+        ListHeaderComponent={props.header}
+        data={data}
+        renderItem={renderItem}
+        keyExtractor={keyExtractor}
+        onEndReached={onFetchMore}
+        onRefresh={refresh}
+        refreshing={refreshing}
+        contentContainerStyle={props.contentContainerStyle}
+        style={props.style || listStyle}
+      />
     );
-  }
-
-  if (loading && !result) {
-    return <CenteredLoading />;
-  }
-
-  const List = props.ListComponent || FlatList;
-
-  return (
-    <List
-      ListHeaderComponent={props.header}
-      data={result ? result[props.endpointData].slice() : []}
-      renderItem={props.renderItem}
-      keyExtractor={keyExtractor}
-      onEndReached={onFetchMore}
-      onRefresh={refresh}
-      refreshing={refreshing}
-      contentContainerStyle={props.contentContainerStyle}
-      style={props.style || listStyle}
-    />
-  );
-});
+  }),
+);
 
 const listStyle = ThemedStyles.combine('flexContainer', 'bgPrimaryBackground');

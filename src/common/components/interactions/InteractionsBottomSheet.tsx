@@ -1,4 +1,4 @@
-import React, { forwardRef, useCallback, useMemo } from 'react';
+import React, { forwardRef, useCallback, useMemo, useRef } from 'react';
 import BottomSheet, {
   BottomSheetBackdrop,
   BottomSheetBackgroundProps,
@@ -20,6 +20,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import ChannelListItem from '../ChannelListItem';
 import Handle from '../bottom-sheet/HandleV2';
+import ChannelListItemPlaceholder from '../ChannelListItemPlaceholder';
+import ActivityPlaceHolder from '../../../newsfeed/ActivityPlaceHolder';
 
 type Interactions =
   | 'upVotes'
@@ -72,6 +74,7 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
   const bottomSheetRef = React.useRef<BottomSheet>(null);
   const insets = useSafeAreaInsets();
   const entity = props.entity;
+  const offsetListRef = useRef<any>();
   const store = useLocalStore(() => ({
     visible: false,
     interaction: 'upVotes' as Interactions,
@@ -136,6 +139,22 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
     store.interaction === 'upVotes' || store.interaction === 'downVotes';
   const isSubscriber = store.interaction === 'subscribers';
   const dataField = isVote ? 'votes' : 'entities';
+  const placeholderCount = useMemo(() => {
+    switch (store.interaction) {
+      case 'upVotes':
+        return Math.min(entity['thumbs:up:count'], 15);
+      case 'downVotes':
+        return Math.min(entity['thumbs:down:count'], 15);
+      case 'reminds':
+        // @ts-ignore
+        return entity.reminds ? Math.min(entity.reminds, 15) : undefined;
+      case 'quotes':
+        // @ts-ignore
+        return entity.quotes ? Math.min(entity.quotes, 15) : undefined;
+      default:
+        return undefined;
+    }
+  }, [entity]);
 
   // =====================| METHODS |=====================>
   React.useImperativeHandle(ref, () => ({
@@ -204,6 +223,14 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
     [],
   );
 
+  const renderPlaceholder = useCallback(() => {
+    if (isVote || isSubscriber) {
+      return <ChannelListItemPlaceholder />;
+    }
+
+    return <ActivityPlaceHolder />;
+  }, [isVote, isSubscriber]);
+
   return (
     <BottomSheet
       key="interactionsSheet"
@@ -220,9 +247,12 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
       {store.visible && (
         <View style={styles.container}>
           <OffsetList
+            ref={offsetListRef}
             fetchEndpoint={store.endpoint}
             endpointData={dataField}
             params={store.opts}
+            placeholderCount={placeholderCount}
+            renderPlaceholder={renderPlaceholder}
             // focusHook={useFocusEffect}
             map={isVote ? mapUser : isSubscriber ? mapSubscriber : mapActivity}
             renderItem={
