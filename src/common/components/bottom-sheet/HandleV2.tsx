@@ -3,30 +3,10 @@ import ThemedStyles from '../../../styles/ThemedStyles';
 import React from 'react';
 
 const Handle = ({ children, showHandle = false }) => (
-  <View
-    style={[
-      {
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
-        paddingTop: 10,
-        paddingBottom: 5,
-      },
-      ThemedStyles.style.bgPrimaryBackground,
-      ThemedStyles.style.borderBottomHair,
-      ThemedStyles.style.bcolorPrimaryBorder,
-    ]}>
+  <View style={styles.container}>
     {showHandle && (
-      <View style={[ThemedStyles.style.alignCenter]}>
-        <View
-          style={[
-            {
-              width: 30,
-              height: 5,
-              borderRadius: 10,
-            },
-            ThemedStyles.style.bgTertiaryBackground,
-          ]}
-        />
+      <View style={ThemedStyles.style.alignCenter}>
+        <View style={styles.handleBar} />
       </View>
     )}
 
@@ -35,3 +15,25 @@ const Handle = ({ children, showHandle = false }) => (
 );
 
 export default Handle;
+
+const styles = ThemedStyles.create({
+  container: [
+    {
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
+      paddingTop: 10,
+      paddingBottom: 5,
+    },
+    'bgPrimaryBackground',
+    'borderBottomHair',
+    'bcolorPrimaryBorder',
+  ],
+  handleBar: [
+    {
+      width: 30,
+      height: 5,
+      borderRadius: 10,
+    },
+    'bgTertiaryBackground',
+  ],
+});

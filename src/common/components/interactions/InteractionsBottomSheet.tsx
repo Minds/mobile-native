@@ -12,7 +12,10 @@ import Activity from '../../../newsfeed/activity/Activity';
 import UserModel from '../../../channel/UserModel';
 import ActivityModel from '../../../newsfeed/ActivityModel';
 import OffsetList from '../OffsetList';
-import ThemedStyles from '../../../styles/ThemedStyles';
+import ThemedStyles, {
+  useMemoStyle,
+  useStyle,
+} from '../../../styles/ThemedStyles';
 import capitalize from '../../helpers/capitalize';
 import i18n from '../../services/i18n.service';
 import { BottomSheetButton } from '../bottom-sheet';
@@ -73,6 +76,17 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
   // =====================| STATES & VARIABLES |=====================>
   const bottomSheetRef = React.useRef<BottomSheet>(null);
   const insets = useSafeAreaInsets();
+  const footerStyle = useStyle(styles.cancelContainer, {
+    paddingBottom: insets.bottom,
+    paddingTop: insets.bottom * 1.5,
+  });
+  const footerGradientColors = useMemo(
+    () => [
+      ThemedStyles.getColor('PrimaryBackground') + '00',
+      ThemedStyles.getColor('PrimaryBackground'),
+    ],
+    [ThemedStyles.theme],
+  );
   const entity = props.entity;
   const offsetListRef = useRef<any>();
   const store = useLocalStore(() => ({
@@ -88,6 +102,11 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
     },
     hide() {
       bottomSheetRef.current?.close();
+      /**
+       * we don't turn visibility off, because then
+       * the offsetlist will be unmounted and the data,
+       * will be reset. we want to keep the data
+       **/
       // store.visible = false;
     },
     setInteraction(interaction: Interactions) {
@@ -142,15 +161,15 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
   const placeholderCount = useMemo(() => {
     switch (store.interaction) {
       case 'upVotes':
-        return Math.min(entity['thumbs:up:count'], 15);
+        return Math.min(entity['thumbs:up:count'], 24);
       case 'downVotes':
-        return Math.min(entity['thumbs:down:count'], 15);
+        return Math.min(entity['thumbs:down:count'], 24);
       case 'reminds':
         // @ts-ignore
-        return entity.reminds ? Math.min(entity.reminds, 15) : undefined;
+        return entity.reminds ? Math.min(entity.reminds, 24) : undefined;
       case 'quotes':
         // @ts-ignore
-        return entity.quotes ? Math.min(entity.quotes, 15) : undefined;
+        return entity.quotes ? Math.min(entity.quotes, 24) : undefined;
       default:
         return undefined;
     }
@@ -160,6 +179,10 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
   React.useImperativeHandle(ref, () => ({
     show: (interaction: Interactions) => {
       store.setInteraction(interaction);
+      /**
+       * if the list was already visible, refresh its existing data,
+       * other wise just show the list
+       **/
       if (store.visible) {
         // refresh the offset list
         offsetListRef.current?.refreshList();
@@ -175,6 +198,12 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
     bottomSheetRef,
   ]);
 
+  /**
+   * only turn visibility on, never off.
+   * because we don't turn visibility off. because then
+   * the offsetlist will be unmounted and the data,
+   * will be reset. we want to keep the data
+   **/
   const onBottomSheetVisibilityChange = useCallback((visible: number) => {
     if (Boolean(visible)) {
       store.setVisibility(Boolean(visible));
@@ -198,20 +227,11 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
   );
 
   const footer = (
-    <View
-      style={[
-        styles.cancelContainer,
-        { paddingBottom: insets.bottom, paddingTop: insets.bottom * 1.5 },
-      ]}>
+    <View style={footerStyle}>
       <LinearGradient
         style={StyleSheet.absoluteFill}
-        // locations={[0, 0.8]}
-        colors={[
-          ThemedStyles.getColor('PrimaryBackground') + '00',
-          ThemedStyles.getColor('PrimaryBackground'),
-        ]}
+        colors={footerGradientColors}
       />
-
       <BottomSheetButton text={i18n.t('cancel')} onPress={close} />
     </View>
   );
