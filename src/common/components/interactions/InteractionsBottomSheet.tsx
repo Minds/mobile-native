@@ -1,4 +1,4 @@
-import React, { forwardRef, useMemo } from 'react';
+import React, { forwardRef, useCallback, useMemo } from 'react';
 import BottomSheet, {
   BottomSheetBackdrop,
   BottomSheetBackgroundProps,
@@ -76,6 +76,9 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
     visible: false,
     interaction: 'upVotes' as Interactions,
     offset: '' as any,
+    setVisibility(visible: boolean) {
+      this.visible = visible;
+    },
     show() {
       bottomSheetRef.current?.expand();
       store.visible = true;
@@ -149,6 +152,10 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
     bottomSheetRef,
   ]);
 
+  const onBottomSheetVisibilityChange = useCallback((visible: number) => {
+    store.setVisibility(Boolean(visible));
+  }, []);
+
   // =====================| RENDERS |=====================>
   const header = (
     <View style={styles.navbarContainer}>
@@ -198,25 +205,28 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
       containerHeight={windowHeight}
       snapPoints={snapPoints}
       handleComponent={Handle}
+      onChange={onBottomSheetVisibilityChange}
       backgroundComponent={CustomBackground}
       backdropComponent={renderBackdrop}>
-      <View style={styles.container}>
-        {header}
-        <OffsetList
-          fetchEndpoint={store.endpoint}
-          endpointData={dataField}
-          params={store.opts}
-          ListComponent={BottomSheetFlatList}
-          // focusHook={useFocusEffect}
-          map={isVote ? mapUser : isSubscriber ? mapSubscriber : mapActivity}
-          renderItem={
-            isVote || isSubscriber ? renderItemUser : renderItemActivity
-          }
-          offsetField={store.offsetField}
-          contentContainerStyle={styles.contentContainerStyle}
-        />
-        {footer}
-      </View>
+      {store.visible && (
+        <View style={styles.container}>
+          {header}
+          <OffsetList
+            fetchEndpoint={store.endpoint}
+            endpointData={dataField}
+            params={store.opts}
+            ListComponent={BottomSheetFlatList}
+            // focusHook={useFocusEffect}
+            map={isVote ? mapUser : isSubscriber ? mapSubscriber : mapActivity}
+            renderItem={
+              isVote || isSubscriber ? renderItemUser : renderItemActivity
+            }
+            offsetField={store.offsetField}
+            contentContainerStyle={styles.contentContainerStyle}
+          />
+          {footer}
+        </View>
+      )}
     </BottomSheet>
   );
 };
