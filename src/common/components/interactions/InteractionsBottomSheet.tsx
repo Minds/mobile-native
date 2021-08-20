@@ -2,7 +2,6 @@ import React, { forwardRef, useCallback, useMemo, useRef } from 'react';
 import BottomSheet, {
   BottomSheetBackdrop,
   BottomSheetBackgroundProps,
-  BottomSheetFlatList,
 } from '@gorhom/bottom-sheet';
 import { observer, useLocalStore } from 'mobx-react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
@@ -12,10 +11,7 @@ import Activity from '../../../newsfeed/activity/Activity';
 import UserModel from '../../../channel/UserModel';
 import ActivityModel from '../../../newsfeed/ActivityModel';
 import OffsetList from '../OffsetList';
-import ThemedStyles, {
-  useMemoStyle,
-  useStyle,
-} from '../../../styles/ThemedStyles';
+import ThemedStyles, { useStyle } from '../../../styles/ThemedStyles';
 import capitalize from '../../helpers/capitalize';
 import i18n from '../../services/i18n.service';
 import { BottomSheetButton } from '../bottom-sheet';
