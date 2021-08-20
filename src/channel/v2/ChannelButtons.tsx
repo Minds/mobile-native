@@ -117,18 +117,6 @@ const ChannelButtons = withErrorBoundary(
           props.containerStyle,
         ]}>
         {props.children}
-
-        {shouldShow('boost') && (
-          <SmallCircleButton
-            raised={props.raisedIcons}
-            name="trending-up"
-            type="material"
-            onPress={boostChannel}
-            color={props.iconColor}
-            reverseColor={props.iconReverseColor}
-            iconStyle={iconStyle}
-          />
-        )}
         {shouldShow('wire') && (
           <SmallCircleButton
             raised={props.raisedIcons}
