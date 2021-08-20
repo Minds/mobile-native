@@ -18,9 +18,6 @@ export default class ImageViewer extends Component {
           onSwipeDown={this.props.onSwipeDown}
           cropWidth={Dimensions.get('window').width}
           cropHeight={Dimensions.get('window').height}
-          /**
-           * Hack to fix https://gitlab.com/minds/mobile-native/-/issues/3466
-           **/
           imageWidth={this.props.width}
           imageHeight={this.props.height}>
           <SharedElement id={`${this.props.urn}.image`}>
