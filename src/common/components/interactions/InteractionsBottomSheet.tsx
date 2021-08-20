@@ -13,13 +13,13 @@ import UserModel from '../../../channel/UserModel';
 import ActivityModel from '../../../newsfeed/ActivityModel';
 import OffsetList from '../OffsetList';
 import ThemedStyles from '../../../styles/ThemedStyles';
-import Handle from '../../../comments/v2/Handle';
 import capitalize from '../../helpers/capitalize';
 import i18n from '../../services/i18n.service';
 import { BottomSheetButton } from '../bottom-sheet';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import ChannelListItem from '../ChannelListItem';
+import Handle from '../bottom-sheet/HandleV2';
 
 type Interactions =
   | 'upVotes'
@@ -34,7 +34,7 @@ type PropsType = {
 
 const { height: windowHeight } = Dimensions.get('window');
 
-const snapPoints = [-150, Math.floor(windowHeight * 0.85)];
+const snapPoints = [-150, Math.floor(windowHeight * 0.8)];
 const renderItemUser = (row: { item: any; index: number }) => (
   <ChannelListItem channel={row.item} navigation={navigationService} />
 );
@@ -157,12 +157,19 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
   }, []);
 
   // =====================| RENDERS |=====================>
-  const header = (
-    <View style={styles.navbarContainer}>
-      <Text style={styles.titleStyle}>
-        {capitalize(i18n.t(`interactions.${store.interaction}`, { count: 2 }))}
-      </Text>
-    </View>
+  const Header = useCallback(
+    () => (
+      <Handle>
+        <View style={styles.navbarContainer}>
+          <Text style={styles.titleStyle}>
+            {capitalize(
+              i18n.t(`interactions.${store.interaction}`, { count: 2 }),
+            )}
+          </Text>
+        </View>
+      </Handle>
+    ),
+    [store.interaction],
   );
 
   const footer = (
@@ -204,18 +211,18 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
       index={0}
       containerHeight={windowHeight}
       snapPoints={snapPoints}
-      handleComponent={Handle}
+      handleComponent={Header}
+      enableContentPanningGesture={false}
+      enableHandlePanningGesture={true}
       onChange={onBottomSheetVisibilityChange}
       backgroundComponent={CustomBackground}
       backdropComponent={renderBackdrop}>
       {store.visible && (
         <View style={styles.container}>
-          {header}
           <OffsetList
             fetchEndpoint={store.endpoint}
             endpointData={dataField}
             params={store.opts}
-            ListComponent={BottomSheetFlatList}
             // focusHook={useFocusEffect}
             map={isVote ? mapUser : isSubscriber ? mapSubscriber : mapActivity}
             renderItem={
