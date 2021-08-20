@@ -46,6 +46,7 @@ import {
   IOSImageColors,
 } from 'react-native-image-colors/lib/typescript/types';
 import AnimatedBanner from './AnimatedBanner';
+import ChannelsActionSheet from '../../common/components/ChannelsActionSheet';
 
 const tinycolor = require('tinycolor2');
 
@@ -103,6 +104,8 @@ const ChannelScreen = observer((props: PropsType) => {
   const bannerUri = store.channel?.getBannerSource().uri;
   const { chat } = useStores();
   const feedListRef = useRef<FeedList<any>>();
+  const subscribersActionSheetRef = useRef<any>(null);
+  const subscriptionsActionSheetRef = useRef<any>(null);
   /**
    * scroll offset
    **/
@@ -319,6 +322,16 @@ const ChannelScreen = observer((props: PropsType) => {
     [],
   );
 
+  const openSubscribers = useCallback(
+    () => subscribersActionSheetRef.current?.show('subscribers'),
+    [],
+  );
+
+  const openSubscriptions = useCallback(
+    () => subscriptionsActionSheetRef.current?.show('subscriptions'),
+    [],
+  );
+
   // =====================| RENDERS |=====================>
   const renderBlog = useCallback(
     (row: { item: BlogModel }) => {
@@ -444,6 +457,8 @@ const ChannelScreen = observer((props: PropsType) => {
             store={store}
             navigation={props.navigation}
             route={props.route}
+            onOpenSubscribers={openSubscribers}
+            onOpenSubscriptions={openSubscriptions}
           />
         }
         navigation={props.navigation}
@@ -472,6 +487,15 @@ const ChannelScreen = observer((props: PropsType) => {
           reverseColor={textColor}
         />
       </Animated.View>
+
+      <ChannelsActionSheet
+        channel={store.channel}
+        ref={subscribersActionSheetRef}
+      />
+      <ChannelsActionSheet
+        channel={store.channel}
+        ref={subscriptionsActionSheetRef}
+      />
     </ChannelContext.Provider>
   );
 });

@@ -34,6 +34,8 @@ type PropsType = {
   hideTabs?: boolean;
   hideImages?: boolean;
   channelName?: string;
+  onOpenSubscribers?: () => void;
+  onOpenSubscriptions?: () => void;
 };
 
 const bannerAspectRatio = 2.9;
@@ -198,7 +200,7 @@ const ChannelHeader = withErrorBoundary(
             )}
 
             {/**
-             * When there wasn't a chanel, show a bulb as profile picture
+             * When there wasn't a channel, show a bulb as profile picture
              **/}
             {!channel && (
               <View
@@ -294,13 +296,13 @@ const ChannelHeader = withErrorBoundary(
                     theme.paddingTop,
                   ]}>
                   <Text
-                    onPress={navToSubscribers}
+                    onPress={props.onOpenSubscribers}
                     style={theme.colorSecondaryText}>
                     <Text> {abbrev(channel.subscribers_count, 0)}</Text>
                     {' ' + i18n.t('subscribers') + '    '}
                   </Text>
                   <Text
-                    onPress={navToSubscriptions}
+                    onPress={props.onOpenSubscriptions}
                     style={theme.colorSecondaryText}>
                     <Text> {abbrev(channel.subscriptions_count, 0)}</Text>
                     {' ' + i18n.t('subscriptions')}
