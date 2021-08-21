@@ -155,21 +155,23 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
   const isSubscriber = store.interaction === 'subscribers';
   const dataField = isVote ? 'votes' : 'entities';
   const placeholderCount = useMemo(() => {
+    const LIMIT = 24;
+
     switch (store.interaction) {
       case 'upVotes':
-        return Math.min(entity['thumbs:up:count'], 24);
+        return Math.min(entity['thumbs:up:count'], LIMIT);
       case 'downVotes':
-        return Math.min(entity['thumbs:down:count'], 24);
+        return Math.min(entity['thumbs:down:count'], LIMIT);
       case 'reminds':
         // @ts-ignore
-        return entity.reminds ? Math.min(entity.reminds, 24) : undefined;
+        return entity.reminds ? Math.min(entity.reminds, LIMIT) : undefined;
       case 'quotes':
         // @ts-ignore
-        return entity.quotes ? Math.min(entity.quotes, 24) : undefined;
+        return entity.quotes ? Math.min(entity.quotes, LIMIT) : undefined;
       default:
         return undefined;
     }
-  }, [entity]);
+  }, [entity, store.interaction]);
 
   // =====================| METHODS |=====================>
   React.useImperativeHandle(ref, () => ({
