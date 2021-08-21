@@ -143,12 +143,12 @@ export default observer(
      **/
     const loadingFooter = useMemo(
       () =>
-        loading && result?.[props.endpointData] ? (
+        loading && !refreshing && result?.[props.endpointData] ? (
           <View style={theme.paddingVertical2x}>
             <ActivityIndicator size={30} />
           </View>
         ) : undefined,
-      [loading],
+      [loading, refreshing, result?.[props.endpointData]],
     );
 
     if (error && !loading) {
