@@ -29,10 +29,14 @@ const ChannelListItemPlaceholder = () => {
       <PlaceholderLine
         width={30}
         color={color}
-        height={14}
-        style={{ marginBottom: 5 }}
+        height={16}
+        style={styles.namePlaceholder}
       />
-      <PlaceholderLine width={20} color={color} height={8} />
+      <PlaceholderLine
+        width={20}
+        color={color}
+        style={styles.usernamePlaceholder}
+      />
     </Placeholder>
   );
 };
@@ -42,7 +46,6 @@ export default ChannelListItemPlaceholder;
 const styles = ThemedStyles.create({
   container: [
     {
-      flexDirection: 'row',
       alignItems: 'center',
       flexWrap: 'wrap',
       paddingTop: 10,
@@ -53,13 +56,6 @@ const styles = ThemedStyles.create({
     'borderBottomHair',
     'bgPrimaryBackground',
   ],
-  nameContainer: ['flexContainerCenter', 'paddingLeft', 'justifyCenter'],
-  avatar: [
-    {
-      height: 40,
-      width: 40,
-      borderRadius: 20,
-    },
-    'bgTertiaryBackground',
-  ],
+  namePlaceholder: { marginBottom: 8 },
+  usernamePlaceholder: { marginBottom: 0 },
 });
