@@ -113,8 +113,7 @@ export default observer(
         setOffset(result['load-next']);
     }, [loading, result]);
 
-    const keyExtractor = (item, index: any) =>
-      item ? `${item.urn}${index}` : index;
+    const keyExtractor = (item, index: any) => `${item.urn}${index}`;
 
     if (error && !loading) {
       return (
@@ -138,7 +137,9 @@ export default observer(
       }
 
       if (props.placeholderCount) {
-        return new Array(props.placeholderCount).fill(null);
+        return new Array(props.placeholderCount)
+          .fill(null)
+          .map((i, index) => ({ urn: `placeholder-${index}` }));
       }
 
       return [];

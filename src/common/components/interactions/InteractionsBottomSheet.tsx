@@ -73,7 +73,7 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
   const bottomSheetRef = React.useRef<BottomSheet>(null);
   const insets = useSafeAreaInsets();
   const footerStyle = useStyle(styles.cancelContainer, {
-    paddingBottom: insets.bottom,
+    paddingBottom: insets.bottom + 25,
     paddingTop: insets.bottom * 1.5,
   });
   const footerGradientColors = useMemo(
@@ -266,26 +266,30 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
       onChange={onBottomSheetVisibilityChange}
       backgroundComponent={CustomBackground}
       backdropComponent={renderBackdrop}>
-      {store.visible && (
-        <View style={styles.container}>
-          <OffsetList
-            ref={offsetListRef}
-            fetchEndpoint={store.endpoint}
-            endpointData={dataField}
-            params={store.opts}
-            placeholderCount={placeholderCount}
-            renderPlaceholder={renderPlaceholder}
-            // focusHook={useFocusEffect}
-            map={isVote ? mapUser : isSubscriber ? mapSubscriber : mapActivity}
-            renderItem={
-              isVote || isSubscriber ? renderItemUser : renderItemActivity
-            }
-            offsetField={store.offsetField}
-            contentContainerStyle={styles.contentContainerStyle}
-          />
-          {footer}
-        </View>
-      )}
+      <View style={styles.container}>
+        {store.visible && (
+          <>
+            <OffsetList
+              ref={offsetListRef}
+              fetchEndpoint={store.endpoint}
+              endpointData={dataField}
+              params={store.opts}
+              placeholderCount={placeholderCount}
+              renderPlaceholder={renderPlaceholder}
+              // focusHook={useFocusEffect}
+              map={
+                isVote ? mapUser : isSubscriber ? mapSubscriber : mapActivity
+              }
+              renderItem={
+                isVote || isSubscriber ? renderItemUser : renderItemActivity
+              }
+              offsetField={store.offsetField}
+              contentContainerStyle={styles.contentContainerStyle}
+            />
+            {footer}
+          </>
+        )}
+      </View>
     </BottomSheet>
   );
 };
