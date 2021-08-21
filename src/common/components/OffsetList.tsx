@@ -11,12 +11,14 @@ import {
   ListRenderItem,
   StyleProp,
   Text,
+  View,
   ViewStyle,
 } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import useApiFetch from '../hooks/useApiFetch';
 import i18n from '../services/i18n.service';
 import CenteredLoading from './CenteredLoading';
+import ActivityIndicator from './ActivityIndicator';
 
 type PropsType = {
   header?: React.ComponentType<any> | React.ReactElement;
@@ -46,6 +48,8 @@ const mapping = data => data;
 export default observer(
   // TODO: add ref types
   forwardRef(function OffsetList<T>(props: PropsType, ref: any) {
+    // =====================| STATES & VARIABLES |=====================>
+    type ApiFetchType = FetchResponseType & T;
     const theme = ThemedStyles.style;
     const [offset, setOffset] = useState<string | number>('');
     const [refreshing, setRefreshing] = useState<boolean>(false);
@@ -56,15 +60,8 @@ export default observer(
     if (props.params) {
       Object.assign(opts, props.params);
     }
-
-    useImperativeHandle(ref, () => ({
-      refreshList: () => refresh(),
-    }));
-
-    type ApiFetchType = FetchResponseType & T;
-
     const map = props.map || mapping;
-
+    const keyExtractor = (item, index: any) => `${item.urn}${index}`;
     const {
       result,
       loading,
@@ -86,6 +83,24 @@ export default observer(
           ],
         } as ApiFetchType),
     });
+    const data = useMemo(() => {
+      if (result) {
+        return result[props.endpointData].slice();
+      }
+
+      if (props.placeholderCount) {
+        return new Array(props.placeholderCount)
+          .fill(null)
+          .map((i, index) => ({ urn: `placeholder-${index}` }));
+      }
+
+      return [];
+    }, [result, props.placeholderCount]);
+
+    // =====================| METHODS |=====================>
+    useImperativeHandle(ref, () => ({
+      refreshList: () => refresh(),
+    }));
 
     const refresh = React.useCallback(async () => {
       setOffset('');
@@ -113,7 +128,28 @@ export default observer(
         setOffset(result['load-next']);
     }, [loading, result]);
 
-    const keyExtractor = (item, index: any) => `${item.urn}${index}`;
+    // =====================| RENDERS |=====================>
+    const renderItem = useMemo(() => {
+      if (result && result[props.endpointData]) {
+        return props.renderItem;
+      }
+
+      return props.renderPlaceholder || props.renderItem;
+    }, [result, props.renderPlaceholder, props.renderItem]);
+
+    /**
+     * if it was loading and we already had some results,
+     * show the loading footer
+     **/
+    const loadingFooter = useMemo(
+      () =>
+        loading && result?.[props.endpointData] ? (
+          <View style={theme.paddingVertical2x}>
+            <ActivityIndicator size={30} />
+          </View>
+        ) : undefined,
+      [loading],
+    );
 
     if (error && !loading) {
       return (
@@ -131,28 +167,6 @@ export default observer(
       );
     }
 
-    const data = useMemo(() => {
-      if (result) {
-        return result[props.endpointData].slice();
-      }
-
-      if (props.placeholderCount) {
-        return new Array(props.placeholderCount)
-          .fill(null)
-          .map((i, index) => ({ urn: `placeholder-${index}` }));
-      }
-
-      return [];
-    }, [result, props.placeholderCount]);
-
-    const renderItem = useMemo(() => {
-      if (result && result[props.endpointData]) {
-        return props.renderItem;
-      }
-
-      return props.renderPlaceholder || props.renderItem;
-    }, [result, props.renderPlaceholder, props.renderItem]);
-
     if (!props.placeholderCount && loading && !result) {
       return <CenteredLoading />;
     }
@@ -164,6 +178,7 @@ export default observer(
         ListHeaderComponent={props.header}
         data={data}
         renderItem={renderItem}
+        ListFooterComponent={loadingFooter}
         keyExtractor={keyExtractor}
         onEndReached={onFetchMore}
         onRefresh={refresh}
