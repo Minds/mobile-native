@@ -13,6 +13,7 @@ import {
   BottomSheetButton,
   MenuItem,
 } from '../../common/components/bottom-sheet';
+import { Platform } from 'react-native';
 
 function dismiss(ref) {
   setTimeout(() => {
@@ -110,6 +111,7 @@ const getOptions = (
     },
   });
   isSubscribedToTier &&
+    Platform.OS !== 'ios' &&
     options.push({
       iconName: 'attach-money',
       iconType: 'material',

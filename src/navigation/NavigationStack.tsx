@@ -211,13 +211,6 @@ if (!isIos) {
       onPress: () => navigation.push('RecurringPayments'),
     },
   ];
-} else {
-  BillingScreenOptions = navigation => [
-    {
-      title: i18n.t('settings.billingOptions.2'),
-      onPress: () => navigation.push('RecurringPayments'),
-    },
-  ];
 }
 
 const WalletOptions = () => ({
