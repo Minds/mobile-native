@@ -1,28 +1,23 @@
 import React, { PropsWithChildren, useCallback, useRef } from 'react';
-import { View, Platform } from 'react-native';
+import type { GestureResponderEvent } from 'react-native';
+import { Platform, View } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { useNavigation } from '@react-navigation/native';
-import MIcon from 'react-native-vector-icons/MaterialIcons';
 import { observer } from 'mobx-react';
 import type { NativeStackNavigationProp } from 'react-native-screens/native-stack';
 import type { AppStackParamList } from '../../navigation/NavigationTypes';
 import {
-  FLAG_SUBSCRIBE,
-  FLAG_MESSAGE,
   FLAG_EDIT_CHANNEL,
+  FLAG_MESSAGE,
+  FLAG_SUBSCRIBE,
   FLAG_WIRE,
 } from '../../common/Permissions';
 import ChannelMoreMenu from './ChannelMoreMenu';
-
-import type { GestureResponderEvent } from 'react-native';
 import { ChannelStoreType } from './createChannelStore';
 import { SupportTiersType } from '../../wire/WireTypes';
 
 import Subscribe from './buttons/Subscribe';
-import Join from './buttons/Join';
 import SmallCircleButton from '../../common/components/SmallCircleButton';
-import { useStores } from '../../common/hooks/use-stores';
-import ChatButton from './ChatButton';
 import { withErrorBoundary } from '../../common/components/ErrorBoundary';
 
 type ButtonsType =
@@ -86,9 +81,6 @@ const ChannelButtons = withErrorBoundary(
       NativeStackNavigationProp<AppStackParamList>
     >();
 
-    const boostChannel = useCallback(() => {
-      navigation.navigate('BoostChannelScreen', {});
-    }, [navigation]);
     const openWire = useCallback(() => {
       navigation.push('WireFab', {
         owner: props.store.channel,

@@ -1,18 +1,16 @@
 import React, { useCallback, useState } from 'react';
-import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, ScrollView, Text, View } from 'react-native';
 import IconM from 'react-native-vector-icons/MaterialIcons';
 import { observer } from 'mobx-react';
 import type { ChannelStoreType, ChannelTabType } from './createChannelStore';
 import { Image } from 'react-native-animatable';
-import ThemedStyles, { useStyle } from '../../styles/ThemedStyles';
+import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
 import abbrev from '../../common/helpers/abbrev';
 import ChannelDescription from './ChannelDescription';
 import ChannelButtons from './ChannelButtons';
 import FeedFilter from '../../common/components/FeedFilter';
 import ChannelBadges from '../badges/ChannelBadges';
-import { FLAG_EDIT_CHANNEL } from '../../common/Permissions';
-import * as Progress from 'react-native-progress';
 import TopbarTabbar, {
   TabType,
 } from '../../common/components/topbar-tabbar/TopbarTabbar';
@@ -48,35 +46,11 @@ const avatarSize = Math.min(170, Math.round(0.6 * bannerHeight));
  */
 const ChannelHeader = withErrorBoundary(
   observer((props: PropsType) => {
+    // =====================| STATES & VARIABLES |=====================>
     const theme = ThemedStyles.style;
-    const feedFilterStyles = useStyle(
-      'paddingVertical3x',
-      'paddingRight3x',
-      'paddingLeft2x',
-      'borderRadius4x',
-      'bgPrimaryBackground',
-    );
-    if (props.store && !props.store.channel) {
-      return null;
-    }
+    const [fadeViewWidth, setFadeViewWidth] = useState(50);
+    const FADE_LENGTH = 30;
     const channel = props.store?.channel;
-    const navToSubscribers = useCallback(() => {
-      if (props.store?.channel) {
-        props.navigation.push('Subscribers', {
-          guid: props.store.channel.guid,
-        });
-      }
-    }, [props.navigation, props.store]);
-
-    const navToSubscriptions = useCallback(() => {
-      if (props.store?.channel) {
-        props.navigation.push('Subscribers', {
-          guid: props.store.channel.guid,
-          filter: 'subscriptions',
-        });
-      }
-    }, [props.navigation, props.store]);
-
     const tabs: Array<TabType<ChannelTabType>> = channel?.isOwner()
       ? [
           { id: 'feed', title: i18n.t('feed') },
@@ -92,6 +66,16 @@ const ChannelHeader = withErrorBoundary(
           // { id: 'shop', title: 'Shop' },
           { id: 'about', title: i18n.t('about') },
         ].filter(Boolean);
+
+    // =====================| METHODS |=====================>
+    const onFadeViewLayout = useCallback(event => {
+      setFadeViewWidth(event.nativeEvent.layout.width);
+    }, []);
+
+    // =====================| RENDERS |=====================>
+    if (props.store && !props.store.channel) {
+      return null;
+    }
 
     const screen = () => {
       switch (props.store?.tab) {
@@ -165,12 +149,6 @@ const ChannelHeader = withErrorBoundary(
           return <View />;
       }
     };
-
-    const [fadeViewWidth, setFadeViewWidth] = useState(50);
-    const FADE_LENGTH = 30;
-    const onFadeViewLayout = useCallback(event => {
-      setFadeViewWidth(event.nativeEvent.layout.width);
-    }, []);
 
     return (
       <>
@@ -346,7 +324,7 @@ const ChannelHeader = withErrorBoundary(
                     }}>
                     <FeedFilter
                       store={props.store}
-                      containerStyles={feedFilterStyles}
+                      containerStyles={styles.feedFilter}
                     />
                   </FadeView>
                 )}
@@ -448,6 +426,13 @@ const styles = ThemedStyles.create({
   wrappedAvatarOverlayView: {
     borderRadius: 55,
   },
+  feedFilter: [
+    'paddingVertical3x',
+    'paddingRight3x',
+    'paddingLeft2x',
+    'borderRadius4x',
+    'bgPrimaryBackground',
+  ],
 });
 
 export default ChannelHeader;

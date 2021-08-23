@@ -6,6 +6,7 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import type UserModel from '../../channel/UserModel';
 import FastImage from 'react-native-fast-image';
 import SubscriptionButtonNew from '../../channel/subscription/SubscriptionButtonNew';
+import Subscribe from '../../channel/v2/buttons/Subscribe';
 
 type PropsType = {
   channel: UserModel;
@@ -50,8 +51,7 @@ class ChannelListItem extends Component<PropsType> {
       return;
     }
 
-    // TODO: change with the new subscribe button
-    return <SubscriptionButtonNew channel={channel} />;
+    return <Subscribe channel={channel} />;
   }
 
   /**
