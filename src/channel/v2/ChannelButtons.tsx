@@ -4,7 +4,7 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import { useNavigation } from '@react-navigation/native';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import { observer } from 'mobx-react';
-import type { NativeStackNavigationProp } from 'react-native-screens/native-stack';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack/native-stack';
 import type { AppStackParamList } from '../../navigation/NavigationTypes';
 import {
   FLAG_SUBSCRIBE,

@@ -2,7 +2,7 @@ import React from 'react';
 import {
   createNativeStackNavigator,
   NativeStackNavigationOptions,
-} from 'react-native-screens/native-stack';
+} from '@react-navigation/native-stack';
 import { useDimensions } from '@react-native-community/hooks';
 import {
   createDrawerNavigator,
@@ -128,7 +128,7 @@ const isIos = Platform.OS === 'ios';
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 const captureOptions = {
   title: '',
-  stackAnimation: 'fade',
+  animation: 'fade',
   headerShown: false,
   ...Platform.select({
     android: { statusBarColor: 'black', statusBarStyle: 'auto' },
@@ -229,7 +229,7 @@ export const InternalStack = () => {
   const internalOptions = {
     ...ThemedStyles.defaultScreenOptions,
     headerShown: false,
-    stackAnimation: 'none',
+    animation: 'none',
   } as NativeStackNavigationOptions;
   return (
     <InternalStackNav.Navigator screenOptions={internalOptions}>
@@ -273,6 +273,9 @@ const MainScreen = () => {
       gestureHandlerProps={gestureHandlerProps}
       drawerType="slide"
       drawerContent={Drawer}
+      screenOptions={{
+        headerShown: false,
+      }}
       drawerStyle={isLargeScreen ? null : ThemedStyles.style.width90}>
       <DrawerNav.Screen
         name="Tabs"
@@ -468,7 +471,7 @@ const AppStack = function () {
             headerStyle: {
               backgroundColor: ThemedStyles.getColor('PrimaryBackground'),
             },
-            headerHideShadow: true,
+            headerShadowVisible: false,
           }}
         />
         <AppStackNav.Screen
@@ -479,7 +482,7 @@ const AppStack = function () {
             headerStyle: {
               backgroundColor: ThemedStyles.getColor('PrimaryBackground'),
             },
-            headerHideShadow: true,
+            headerShadowVisible: false,
           }}
         />
         <AppStackNav.Screen
@@ -490,7 +493,7 @@ const AppStack = function () {
             headerStyle: {
               backgroundColor: ThemedStyles.getColor('PrimaryBackground'),
             },
-            headerHideShadow: true,
+            headerShadowVisible: false,
           }}
         />
         <AppStackNav.Screen
