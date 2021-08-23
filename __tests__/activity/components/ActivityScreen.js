@@ -59,6 +59,10 @@ jest.mock(
   '../../../src/comments/v2/CommentBottomSheet',
   () => 'CommentBottomSheet',
 );
+jest.mock(
+  '../../../src/common/components/interactions/InteractionsBottomSheet',
+  () => 'InteractionsBottomSheet',
+);
 
 // react testing library has a problem with the fake timers
 // https://github.com/callstack/react-native-testing-library/issues/391
