@@ -4,24 +4,17 @@ import { storages } from '../../common/services/storage/storages.service';
 
 export type userItem = { user: UserModel };
 
+const storageKey = 'searchHistory';
+
 class SearchBarService {
   /**
    * The user search history
    */
   searchHistory: Array<userItem | string> = [];
 
-  /**
-   * The key to look in storage
-   * composed by user guid
-   */
-  storageKey;
-
-  init(guid) {
-    this.storageKey = `${guid}:searchHistory`;
-  }
-
   getSearchHistoryFromStorage() {
-    const searchHistory = storages.user?.getArray(this.storageKey);
+    let searchHistory: any = [];
+    searchHistory = storages.user?.getMap(storageKey);
     if (searchHistory && Array.isArray(searchHistory)) {
       this.searchHistory = searchHistory;
     }
@@ -71,12 +64,12 @@ class SearchBarService {
       this.searchHistory.pop();
     }
 
-    storages.user?.setArray(this.storageKey, this.searchHistory);
+    storages.user?.setMap(storageKey, this.searchHistory);
   }
 
   async clearSearchHistory() {
     this.searchHistory = [];
-    storages.user?.setArray(this.storageKey, this.searchHistory);
+    storages.user?.setMap(storageKey, this.searchHistory);
   }
 }
 
