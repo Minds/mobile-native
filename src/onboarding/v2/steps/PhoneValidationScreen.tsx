@@ -47,9 +47,10 @@ export default observer(function PhoneValidationScreen() {
     },
     async send() {
       try {
-        await phoneValidationStore.joinAction();
-        store.buttonText = 'confirm';
-        store.labelText = 'onboarding.confirmationCode';
+        if (await phoneValidationStore.joinAction()) {
+          store.buttonText = 'confirm';
+          store.labelText = 'onboarding.confirmationCode';
+        }
       } catch (err) {}
     },
   }));
