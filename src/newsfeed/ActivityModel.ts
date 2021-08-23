@@ -12,7 +12,7 @@ import {
   unfollow,
   follow,
 } from '../newsfeed/NewsfeedService';
-import api from '../common/services/api.service';
+import api, { isApiError, isNetworkError } from '../common/services/api.service';
 
 import { GOOGLE_PLAY_STORE, MINDS_CDN_URI, MINDS_URI } from '../config/Config';
 import i18n from '../common/services/i18n.service';
@@ -378,10 +378,21 @@ export default class ActivityModel extends BaseModel {
 
       return result;
     } catch (err) {
-      if (!ignoreError) {
-        Alert.alert(err.message);
+      const isApiErr = isApiError(err);
+
+      if (isApiErr && !ignoreError) {
+        showNotification(err.message, 'warning', 3000, 'top');
       }
-      return false;
+
+      if (isApiErr) {
+        return false;
+      }
+
+      if (isNetworkError(err)) {
+        showNotification(i18n.t('cantReachServer'), 'warning', 3000, 'top');
+      }
+
+      return -1;
     }
   }
 
@@ -411,7 +422,7 @@ export default class ActivityModel extends BaseModel {
   async unlockOrPay() {
     const result = await this.unlock(true);
 
-    if (result) {
+    if (result !== false) {
       return;
     }
 
