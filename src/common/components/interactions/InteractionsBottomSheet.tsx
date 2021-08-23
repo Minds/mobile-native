@@ -73,7 +73,7 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
   const bottomSheetRef = React.useRef<BottomSheet>(null);
   const insets = useSafeAreaInsets();
   const footerStyle = useStyle(styles.cancelContainer, {
-    paddingBottom: insets.bottom,
+    paddingBottom: insets.bottom + 25,
     paddingTop: insets.bottom * 1.5,
   });
   const footerGradientColors = useMemo(
@@ -155,21 +155,23 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
   const isSubscriber = store.interaction === 'subscribers';
   const dataField = isVote ? 'votes' : 'entities';
   const placeholderCount = useMemo(() => {
+    const LIMIT = 24;
+
     switch (store.interaction) {
       case 'upVotes':
-        return Math.min(entity['thumbs:up:count'], 24);
+        return Math.min(entity['thumbs:up:count'], LIMIT);
       case 'downVotes':
-        return Math.min(entity['thumbs:down:count'], 24);
+        return Math.min(entity['thumbs:down:count'], LIMIT);
       case 'reminds':
         // @ts-ignore
-        return entity.reminds ? Math.min(entity.reminds, 24) : undefined;
+        return entity.reminds ? Math.min(entity.reminds, LIMIT) : undefined;
       case 'quotes':
         // @ts-ignore
-        return entity.quotes ? Math.min(entity.quotes, 24) : undefined;
+        return entity.quotes ? Math.min(entity.quotes, LIMIT) : undefined;
       default:
         return undefined;
     }
-  }, [entity]);
+  }, [entity, store.interaction]);
 
   // =====================| METHODS |=====================>
   React.useImperativeHandle(ref, () => ({
@@ -266,26 +268,30 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
       onChange={onBottomSheetVisibilityChange}
       backgroundComponent={CustomBackground}
       backdropComponent={renderBackdrop}>
-      {store.visible && (
-        <View style={styles.container}>
-          <OffsetList
-            ref={offsetListRef}
-            fetchEndpoint={store.endpoint}
-            endpointData={dataField}
-            params={store.opts}
-            placeholderCount={placeholderCount}
-            renderPlaceholder={renderPlaceholder}
-            // focusHook={useFocusEffect}
-            map={isVote ? mapUser : isSubscriber ? mapSubscriber : mapActivity}
-            renderItem={
-              isVote || isSubscriber ? renderItemUser : renderItemActivity
-            }
-            offsetField={store.offsetField}
-            contentContainerStyle={styles.contentContainerStyle}
-          />
-          {footer}
-        </View>
-      )}
+      <View style={styles.container}>
+        {store.visible && (
+          <>
+            <OffsetList
+              ref={offsetListRef}
+              fetchEndpoint={store.endpoint}
+              endpointData={dataField}
+              params={store.opts}
+              placeholderCount={placeholderCount}
+              renderPlaceholder={renderPlaceholder}
+              // focusHook={useFocusEffect}
+              map={
+                isVote ? mapUser : isSubscriber ? mapSubscriber : mapActivity
+              }
+              renderItem={
+                isVote || isSubscriber ? renderItemUser : renderItemActivity
+              }
+              offsetField={store.offsetField}
+              contentContainerStyle={styles.contentContainerStyle}
+            />
+            {footer}
+          </>
+        )}
+      </View>
     </BottomSheet>
   );
 };
