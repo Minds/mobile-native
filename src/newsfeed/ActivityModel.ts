@@ -12,7 +12,10 @@ import {
   unfollow,
   follow,
 } from '../newsfeed/NewsfeedService';
-import api, { isApiError, isNetworkError } from '../common/services/api.service';
+import api, {
+  isApiError,
+  isNetworkError,
+} from '../common/services/api.service';
 
 import { GOOGLE_PLAY_STORE, MINDS_CDN_URI, MINDS_URI } from '../config/Config';
 import i18n from '../common/services/i18n.service';
