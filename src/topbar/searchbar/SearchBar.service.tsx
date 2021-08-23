@@ -13,8 +13,7 @@ class SearchBarService {
   searchHistory: Array<userItem | string> = [];
 
   getSearchHistoryFromStorage() {
-    let searchHistory: any = [];
-    searchHistory = storages.user?.getMap(storageKey);
+    const searchHistory = storages.user?.getMap(storageKey);
     if (searchHistory && Array.isArray(searchHistory)) {
       this.searchHistory = searchHistory;
     }
