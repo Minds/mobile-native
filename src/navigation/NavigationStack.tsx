@@ -46,6 +46,7 @@ import LicenseSelector from '../compose/LicenseSelector';
 import ChannelScreenV2 from '../channel/v2/ChannelScreen';
 import SettingsScreen from '../settings/SettingsScreen';
 import OtherScreen from '../settings/screens/OtherScreen';
+import ResourcesScreen from '../settings/screens/ResourcesScreen';
 import EmailScreen from '../settings/screens/EmailScreen';
 import EditChannelStack from '../channel/v2/edit/EditChannelStack';
 import ReceiverAddressScreen from '../wallet/v2/address/ReceiverAddressScreen';
@@ -524,6 +525,11 @@ const AppStack = function () {
           name="Other"
           component={OtherScreen}
           options={{ title: i18n.t('settings.other') }}
+        />
+        <AppStackNav.Screen
+          name="Resources"
+          component={ResourcesScreen}
+          options={{ title: i18n.t('settings.resources') }}
         />
         <AppStackNav.Screen
           name="SettingsNotifications"

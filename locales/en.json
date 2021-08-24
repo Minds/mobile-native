@@ -641,6 +641,7 @@
     "darkMode": "Dark mode",
     "lightMode": "Light mode",
     "other": "Other",
+    "resources": "Resources",
     "referrals": "Referrals",
     "account": "Account",
     "network": "Network",
@@ -780,6 +781,24 @@
       "optOut": "Opt-out",
       "enable": "Enable",
       "disable": "Disable"
+    },
+    "about": {
+      "title": "about",
+      "mobile": "Mobile",
+      "careers": "Careers",
+      "blog": "Blog",
+      "whitepaper": "Whitepaper",
+      "rights": "Bill of Rights",
+      "events": "Events",
+      "store": "Store"
+    },
+    "support": {
+      "title": "support",
+      "help": "Help Desk",
+      "contact": "Contact",
+      "community": "Community",
+      "languages": "Languages",
+      "status": "Status"
     }
   },
   "comingSoon": {
