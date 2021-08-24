@@ -194,7 +194,7 @@ const ChannelHeader = withErrorBoundary(
               <ChannelButtons
                 store={props.store}
                 onEditPress={() =>
-                  props.navigation.push('EditChannelScreen', {
+                  props.navigation.push('ChannelEdit', {
                     store: props.store,
                   })
                 }

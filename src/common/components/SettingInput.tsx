@@ -47,7 +47,7 @@ const styles = {
     height: 40,
   },
   areaHeight: {
-    height: 230,
+    height: 130,
   },
 };
 

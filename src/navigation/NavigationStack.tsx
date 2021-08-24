@@ -48,7 +48,6 @@ import SettingsScreen from '../settings/SettingsScreen';
 import OtherScreen from '../settings/screens/OtherScreen';
 import ResourcesScreen from '../settings/screens/ResourcesScreen';
 import EmailScreen from '../settings/screens/EmailScreen';
-import EditChannelStack from '../channel/v2/edit/EditChannelStack';
 import ReceiverAddressScreen from '../wallet/v2/address/ReceiverAddressScreen';
 import BtcReceiverAddressScreen from '../wallet/v2/address/BtcAddressScreen';
 import BankInfoScreen from '../wallet/v2/address/BankInfoScreen';
@@ -122,6 +121,7 @@ import RecoveryCodeUsedScreen from '../auth/twoFactorAuth/RecoveryCodeUsedScreen
 import MessengerScreen from '../messenger/MessengerScreen';
 import PushNotificationsSettings from '../notifications/v3/settings/push/PushNotificationsSettings';
 import EmailNotificationsSettings from '../notifications/v3/settings/email/EmailNotificationsSettings';
+import ChannelEditScreen from '../channel/v2/edit/ChannelEditScreen';
 
 const isIos = Platform.OS === 'ios';
 
@@ -284,7 +284,6 @@ const MainScreen = () => {
 };
 
 const AppStack = function () {
-  const EditChannelScreens = EditChannelStack(AppStackNav);
   const statusBarStyle =
     ThemedStyles.theme === 0 ? 'dark-content' : 'light-content';
   return (
@@ -395,7 +394,18 @@ const AppStack = function () {
           component={ChannelScreenV2}
           options={hideHeader}
         />
-        {EditChannelScreens}
+        <AppStackNav.Screen
+          name="ChannelEdit"
+          component={ChannelEditScreen}
+          options={{
+            headerStyle: {
+              backgroundColor: ThemedStyles.getColor('PrimaryBackground'),
+            },
+            headerHideShadow: true,
+            stackAnimation: 'slide_from_bottom',
+            title: i18n.t('channel.editChannel'),
+          }}
+        />
         <AppStackNav.Screen
           name="Activity"
           component={ActivityScreen}
