@@ -5,7 +5,6 @@ import ThemedStyles from '../styles/ThemedStyles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import i18n from '../common/services/i18n.service';
 import StripeCardSelector from '../wire/methods/v2/StripeCardSelector';
-import CenteredLoading from '../common/components/CenteredLoading';
 
 import { UserError } from '../common/UserError';
 import Button from '../common/components/Button';
