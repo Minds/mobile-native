@@ -9,7 +9,10 @@ import {
   DrawerNavigationOptions,
 } from '@react-navigation/drawer';
 import { Dimensions, Platform, StatusBar, View } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
+import {
+  createStackNavigator,
+  StackNavigationOptions,
+} from '@react-navigation/stack';
 import AnalyticsScreen from '../analytics/AnalyticsScreen';
 
 import LoginScreen from '../auth/LoginScreen';
@@ -221,7 +224,7 @@ const WalletOptions = () => ({
 });
 
 const modalOptions = {
-  gestureResponseDistance: { vertical: 240 },
+  gestureResponseDistance: 240,
   gestureEnabled: true,
 };
 
@@ -270,13 +273,13 @@ const MainScreen = () => {
   return (
     <DrawerNav.Navigator
       initialRouteName="Tabs"
-      gestureHandlerProps={gestureHandlerProps}
-      drawerType="slide"
       drawerContent={Drawer}
       screenOptions={{
         headerShown: false,
-      }}
-      drawerStyle={isLargeScreen ? null : ThemedStyles.style.width90}>
+        gestureHandlerProps,
+        drawerType: 'slide',
+        drawerStyle: isLargeScreen ? null : ThemedStyles.style.width90,
+      }}>
       <DrawerNav.Screen
         name="Tabs"
         component={TabsScreen}
@@ -692,10 +695,11 @@ const AuthStack = function () {
   );
 };
 
-const defaultScreenOptions = {
+const defaultScreenOptions: StackNavigationOptions = {
   headerShown: false,
   cardStyle: { backgroundColor: 'transparent' },
   gestureEnabled: false,
+  keyboardHandlingEnabled: false,
   ...ModalTransition,
   cardOverlayEnabled: true,
 };
@@ -706,8 +710,10 @@ const RootStack = function (props) {
   return (
     <RootStackNav.Navigator
       initialRouteName={initial}
-      mode="modal"
-      keyboardHandlingEnabled={false}
+      defaultScreenOptions={{
+        presentation: 'modal',
+      }}
+      // mode="modal"
       // @ts-ignore
       screenOptions={defaultScreenOptions}>
       {props.isLoggedIn ? (
