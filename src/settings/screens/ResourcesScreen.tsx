@@ -88,6 +88,7 @@ const ResourcesScreen = ({}: PropsType) => {
               item={{
                 title: i18n.t(`settings.${item.id}.${option.id}`),
                 onPress: option.onPress,
+                noIcon: true,
               }}
             />
           ))}
