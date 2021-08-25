@@ -799,6 +799,26 @@
       "community": "Community",
       "languages": "Languages",
       "status": "Status"
+    },
+    "business": {
+      "title": "Business",
+      "upgrade": "Upgrade",
+      "token": "Token",
+      "plus": "Plus",
+      "pro": "Pro",
+      "pay": "Pay",
+      "nodes": "Nodes",
+      "boost": "Boost",
+      "rewards": "Rewards",
+      "youtube": "YouTube Migration"
+    },
+    "developers": {
+      "title": "Developers",
+      "docs": "Docs",
+      "community": "Community",
+      "code": "Code",
+      "canary": "Canary",
+      "branding": "Branding"
     }
   },
   "comingSoon": {

@@ -60,7 +60,7 @@ const items = [
         id: 'community',
         onPress: () =>
           Linking.openURL(
-            'https://www.minds.com/groups/profile/100000000000000681',
+            'https://mobile.minds.com/groups/profile/100000000000000681',
           ),
       },
       {
@@ -70,6 +70,76 @@ const items = [
       {
         id: 'status',
         onPress: () => Linking.openURL('https://status.minds.com/'),
+      },
+    ],
+  },
+  {
+    id: 'business',
+    options: [
+      {
+        id: 'upgrade',
+        onPress: () => Linking.openURL('https://mobile.minds.com/upgrades'),
+      },
+      {
+        id: 'token',
+        onPress: () => Linking.openURL('https://mobile.minds.com/token'),
+      },
+      {
+        id: 'plus',
+        onPress: () => Linking.openURL('https://mobile.minds.com/plus'),
+      },
+      {
+        id: 'pro',
+        onPress: () => Linking.openURL('https://mobile.minds.com/pro'),
+      },
+      {
+        id: 'pay',
+        onPress: () => Linking.openURL('https://mobile.minds.com/pay'),
+      },
+      {
+        id: 'nodes',
+        onPress: () => Linking.openURL('https://mobile.minds.com/nodes'),
+      },
+      {
+        id: 'boost',
+        onPress: () => Linking.openURL('https://mobile.minds.com/boost'),
+      },
+      {
+        id: 'rewards',
+        onPress: () => Linking.openURL('https://mobile.minds.com/rewards'),
+      },
+      {
+        id: 'youtube',
+        onPress: () =>
+          Linking.openURL('https://mobile.minds.com/youtube-migration'),
+      },
+    ],
+  },
+  {
+    id: 'developers',
+    options: [
+      {
+        id: 'docs',
+        onPress: () => Linking.openURL('https://developers.minds.com/'),
+      },
+      {
+        id: 'community',
+        onPress: () =>
+          Linking.openURL(
+            'https://mobile.minds.com/groups/profile/365903183068794880',
+          ),
+      },
+      {
+        id: 'code',
+        onPress: () => Linking.openURL('https://gitlab.com/minds'),
+      },
+      {
+        id: 'canary',
+        onPress: () => Linking.openURL('https://mobile.minds.com/canary'),
+      },
+      {
+        id: 'branding',
+        onPress: () => Linking.openURL('https://mobile.minds.com/branding'),
       },
     ],
   },
