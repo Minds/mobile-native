@@ -6,23 +6,22 @@ import { observer } from 'mobx-react';
 import * as Progress from 'react-native-progress';
 
 import updateService from '../common/services/update.service';
-import { ComponentsStyle } from '../styles/Components';
 import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
 
 const UpdatingScreen = observer(() => {
   return (
     <View style={styles.mainContainer}>
-      <Text style={styles.title}>
-        {i18n.t('update.title', { version: updateService.version })}
-      </Text>
       <View style={styles.container}>
+        <Image
+          resizeMode={'contain'}
+          style={styles.logo}
+          source={require('../assets/logos/bulb.png')}
+        />
         <View>
-          <Image
-            resizeMode={'contain'}
-            style={ComponentsStyle.logo}
-            source={require('../assets/logos/logo.png')}
-          />
+          <Text style={styles.title}>
+            {i18n.t('update.title', { version: updateService.version })}
+          </Text>
           <Progress.Bar
             progress={updateService.progress / 100}
             width={null}
@@ -38,15 +37,26 @@ const UpdatingScreen = observer(() => {
 });
 
 const styles = ThemedStyles.create({
-  mainContainer: ['bgPrimaryBackground', 'padding', 'flexContainer'],
-  title: ['fontXXL', 'textCenter', 'padding'],
-  container: ['centered', 'flexContainer'],
+  mainContainer: [
+    'flexContainer',
+    'bgSecondaryBackground',
+    'alignCenter',
+    'justifyCenter',
+  ],
+  title: ['fontXXL', 'textCenter', 'paddingVertical3x'],
+  container: [
+    'centered',
+    'padding5x',
+    'borderRadius14x',
+    'bgPrimaryBackground',
+  ],
+  logo: { width: 80, height: 90 },
   downloading: [
     'fontM',
     'fontMedium',
     'textCenter',
     'colorPrimaryText',
-    'marginTop',
+    'marginTop2x',
   ],
 });
 

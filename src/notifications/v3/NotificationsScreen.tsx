@@ -106,6 +106,13 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
     return unsubscribe;
   }, [navigation, onFocus]);
 
+  React.useEffect(() => {
+    if (!notifications.loaded) {
+      notifications.setLoaded(true);
+      onFocus();
+    }
+  }, [notifications, onFocus]);
+
   const headerComponent = React.useMemo(
     () => <NotificationsTopBar store={notifications} setResult={setResult} />,
     [notifications, setResult],

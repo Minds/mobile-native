@@ -4,6 +4,7 @@ import FastImage from 'react-native-fast-image';
 import { Platform, Dimensions } from 'react-native';
 import SmartImage from '../../src/common/components/SmartImage';
 import ThemedStyles from '../styles/ThemedStyles';
+import ImageZoom from 'react-native-image-pan-zoom';
 
 const { width } = Dimensions.get('window');
 
@@ -40,11 +41,21 @@ export default observer(function (props) {
   const uri = props.image.sourceURL || props.image.uri;
 
   return (
-    <SmartImage
-      key={props.image.key || 'imagePreview'}
-      source={{ uri: uri + `?${props.image.key}` }} // // we need to change the uri in order to force the reload of the image
-      style={[imageStyle, props.style, ThemedStyles.style.bgTertiaryBackground]}
-      resizeMode={FastImage.resizeMode.contain}
-    />
+    <ImageZoom
+      cropWidth={Dimensions.get('window').width}
+      cropHeight={Dimensions.get('window').height}
+      imageWidth={Dimensions.get('window').width}
+      imageHeight={imageHeight}>
+      <SmartImage
+        key={props.image.key || 'imagePreview'}
+        source={{ uri: uri + `?${props.image.key}` }} // // we need to change the uri in order to force the reload of the image
+        style={[
+          imageStyle,
+          props.style,
+          ThemedStyles.style.bgTertiaryBackground,
+        ]}
+        resizeMode={FastImage.resizeMode.contain}
+      />
+    </ImageZoom>
   );
 });

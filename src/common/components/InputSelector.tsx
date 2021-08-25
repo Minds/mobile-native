@@ -2,7 +2,7 @@
 import React, { useCallback, useState, useRef } from 'react';
 import { View, Text } from 'react-native-animatable';
 import ThemedStyles from '../../styles/ThemedStyles';
-import Selector from '../../common/components/Selector';
+import Selector from '../../common/components/SelectorV2';
 import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 
 type PropsType = {

@@ -18,7 +18,7 @@ import supportTiersService from '../../../common/services/support-tiers.service'
 import type { SupportTiersType } from '../../../wire/WireTypes';
 import UserModel from '../../../channel/UserModel';
 import { DotIndicator } from 'react-native-reanimated-indicators';
-import Selector from '../../../common/components/Selector';
+import Selector from '../../../common/components/SelectorV2';
 import MenuItem, {
   MenuItemItem,
 } from '../../../common/components/menus/MenuItem';
@@ -117,7 +117,7 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
    * show input if tokens is selected payment
    */
   const store = useLocalStore(createJoinMembershipStore, { tiers });
-  const selectorRef = useRef<Selector>(null);
+  const selectorRef = useRef<any>(null);
 
   const { onComplete } = route.params;
 

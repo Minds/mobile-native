@@ -1,5 +1,6 @@
 import { Platform, ViewStyle, TextStyle, ImageStyle } from 'react-native';
 import { observable, action, reaction } from 'mobx';
+import changeNavColor from 'react-native-navigation-bar-color';
 import React from 'react';
 
 import { ColorsNameType, DARK_THEME, LIGHT_THEME } from './Colors';
@@ -126,7 +127,7 @@ export class ThemedStylesStore {
       colors: {
         ...baseTheme.colors,
         background: 'transparent',
-        // card: theme.bgSecondaryBackground, // generates an error on ios
+        // card: theme.PrimaryBackground, // generates an error on ios
         text: theme.PrimaryText,
         primary: theme.Icon,
       },
@@ -147,9 +148,13 @@ export class ThemedStylesStore {
       screenOrientation: 'portrait',
     };
 
+    changeNavColor(theme.PrimaryBackground, this.theme === 0, true);
+
     // Fix for the header's extra padding on android
     if (Platform.OS === 'android') {
       this.defaultScreenOptions.headerTopInsetEnabled = false;
+      this.defaultScreenOptions.statusBarColor = theme.SecondaryBackground;
+      this.defaultScreenOptions.statusBarStyle = this.theme ? 'light' : 'dark';
     }
   }
 }

@@ -37,6 +37,7 @@ import BoxShadow from '../../../common/components/BoxShadow';
 import ActivityMetrics from '../../../newsfeed/activity/metrics/ActivityMetrics';
 import CommentBottomSheet from '../../../comments/v2/CommentBottomSheet';
 import InteractionsBar from '../../../common/components/interactions/InteractionsBar';
+import InteractionsActionSheet from '../../../common/components/interactions/InteractionsBottomSheet';
 
 type ActivityRoute = RouteProp<AppStackParamList, 'Activity'>;
 
@@ -132,6 +133,10 @@ const ActivityFullScreen = observer((props: PropsType) => {
   const remindRef = useRef<Activity>(null);
   const translateRef = useRef<typeof Translate>(null);
   const commentsRef = useRef<BottomSheet>(null);
+  const upVotesInteractionsRef = useRef<any>(null);
+  const downVotesInteractionsRef = useRef<any>(null);
+  const remindsInteractionsRef = useRef<any>(null);
+  const quotesInteractionsRef = useRef<any>(null);
   const navigation = useNavigation();
   const hasMedia = entity.hasMedia();
   const hasRemind = !!entity.remind_object;
@@ -220,6 +225,19 @@ const ActivityFullScreen = observer((props: PropsType) => {
   const gradientColors = useRef([startColor, endColor]).current;
 
   const showNSFW = entity.shouldBeBlured() && !entity.mature_visibility;
+
+  const showUpVotes = useCallback(() => {
+    upVotesInteractionsRef.current?.show('upVotes');
+  }, [upVotesInteractionsRef]);
+  const showDownVotes = useCallback(() => {
+    downVotesInteractionsRef.current?.show('downVotes');
+  }, [downVotesInteractionsRef]);
+  const showReminds = useCallback(() => {
+    remindsInteractionsRef.current?.show('reminds');
+  }, [remindsInteractionsRef]);
+  const showQuotes = useCallback(() => {
+    quotesInteractionsRef.current?.show('quotes');
+  }, [quotesInteractionsRef]);
 
   const copyText = useCallback(() => {
     Clipboard.setString(
@@ -363,7 +381,13 @@ const ActivityFullScreen = observer((props: PropsType) => {
         )}
       </View>
       <View style={cleanBottom}>
-        <InteractionsBar entity={entity} />
+        <InteractionsBar
+          onShowUpVotesPress={showUpVotes}
+          onShowDownVotesPress={showDownVotes}
+          onShowRemindsPress={showReminds}
+          onShowQuotesPress={showQuotes}
+          entity={entity}
+        />
         <Actions
           entity={entity}
           hideCount
@@ -371,6 +395,10 @@ const ActivityFullScreen = observer((props: PropsType) => {
           onPressComment={onPressComment}
         />
       </View>
+      <InteractionsActionSheet entity={entity} ref={upVotesInteractionsRef} />
+      <InteractionsActionSheet entity={entity} ref={downVotesInteractionsRef} />
+      <InteractionsActionSheet entity={entity} ref={remindsInteractionsRef} />
+      <InteractionsActionSheet entity={entity} ref={quotesInteractionsRef} />
       <CommentBottomSheet
         ref={commentsRef}
         hideContent={Boolean(!store.displayComment)}

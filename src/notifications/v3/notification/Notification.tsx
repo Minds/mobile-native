@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import FastImage from 'react-native-fast-image';
@@ -25,12 +25,18 @@ const DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
 
 const NotificationItem = React.memo(({ notification }: PropsType) => {
   const fromUser = notification.from;
+  const toGuid = notification.to_guid;
   const avatarSrc = React.useMemo(() => {
     return fromUser.getAvatarSource();
   }, [fromUser]);
   const modalRef = React.useRef<any>(null);
   const router = useNotificationRouter(notification, modalRef);
   const user = sessionService.getUser();
+
+  const navToOwnChannel = React.useCallback(() => router.navToChannel(user), [
+    user,
+    router,
+  ]);
 
   const navToFromChannel = React.useCallback(
     () => router.navToChannel(fromUser),
@@ -41,9 +47,17 @@ const NotificationItem = React.memo(({ notification }: PropsType) => {
     return null;
   }
 
+  const navToChannel = useCallback(() => {
+    // If the navigation was targeted to us navigate to own channel
+    if (toGuid === user.guid) return navToOwnChannel();
+
+    // otherwise navigate to the sender channel
+    return navToFromChannel();
+  }, [toGuid, user, router]);
+
   const Noun =
     notification.Noun !== '' ? (
-      <Text style={bodyTextImportantStyle} onPress={router.navToEntity}>
+      <Text style={bodyTextImportantStyle} onPress={navToChannel}>
         {notification.Noun}
       </Text>
     ) : null;

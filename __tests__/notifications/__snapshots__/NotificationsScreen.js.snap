@@ -24,10 +24,27 @@ exports[`Notifications Screen Component renders correctly 1`] = `
         setResult={[Function]}
         store={
           Object {
+            "filter": "",
             "init": [Function],
-            "pollInterval": 1,
+            "listen": [Function],
+            "loadMailNotificationsSettings": [Function],
+            "loadPushNotificationsSettings": [Function],
+            "loadUnreadCount": [Function],
+            "loaded": true,
+            "mailsNotificationsSettings": Array [],
+            "markAsRead": [Function],
+            "offset": "",
+            "onSocket": [Function],
+            "pollInterval": null,
+            "pushNotificationsSettings": Array [],
+            "setFilter": [Function],
+            "setLoaded": [Function],
+            "setOffset": [Function],
             "setUnread": [Function],
-            "unread": 1,
+            "startPollCount": [Function],
+            "stopPollCount": [Function],
+            "unlisten": [Function],
+            "unread": 0,
           }
         }
       />

@@ -11,4 +11,5 @@ const style = ThemedStyles.combine(
   'fontL',
   'fontMedium',
   'marginVertical2x',
+  'marginHorizontal5x',
 );

@@ -8,6 +8,13 @@ export type TDiscoveryV2Tabs =
   | 'trending-tags'
   | 'boosts';
 
+const tabIndex: Record<TDiscoveryV2Tabs, number> = {
+  foryou: 0,
+  'your-tags': 1,
+  'trending-tags': 2,
+  boosts: 3,
+};
+
 export type TDiscoveryTrendsTrend = {};
 
 export type TDiscoveryTagsTag = {
@@ -20,6 +27,10 @@ export default class DiscoveryV2Store {
   @observable tags: TDiscoveryTagsTag[] = [];
   @observable trendingTags: TDiscoveryTagsTag[] = [];
   @observable loading = false;
+  /**
+   * Tab animation direction
+   */
+  @observable direction = -1;
   @observable loadingTags = false;
   @observable refreshing = false;
   @observable showManageTags = false;
@@ -57,18 +68,21 @@ export default class DiscoveryV2Store {
 
   @action
   setTabId(id: TDiscoveryV2Tabs) {
-    switch (id) {
-      case 'foryou':
-        if (id === this.activeTabId) {
-          // already on tab
-          this.refreshTrends();
-        }
-        break;
-      case 'trending-tags':
-        break;
-      case 'boosts':
-        break;
-    }
+    // set animation direction based on current and target tabs
+    this.direction = tabIndex[id] > tabIndex[this.activeTabId] ? 1 : 0;
+    if (tabIndex)
+      switch (id) {
+        case 'foryou':
+          if (id === this.activeTabId) {
+            // already on tab
+            this.refreshTrends();
+          }
+          break;
+        case 'trending-tags':
+          break;
+        case 'boosts':
+          break;
+      }
     this.activeTabId = id;
   }
 

@@ -489,7 +489,7 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
       if (err.code === 'Abort') return;
       console.log(err);
       logService.exception('[FeedStore]', err);
-      this.setErrorLoading(true);
+      if (this.entities.length === 0) this.setErrorLoading(true);
     } finally {
       this.setLoading(false);
     }

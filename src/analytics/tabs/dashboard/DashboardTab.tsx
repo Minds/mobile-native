@@ -7,7 +7,7 @@ import MIcon from 'react-native-vector-icons/MaterialIcons';
 import ActivityIndicator from '../../../common/components/ActivityIndicator';
 import LineChart from '../../../common/components/charts/LineChart';
 import Select from '../../../common/components/controls/Select';
-import Selector from '../../../common/components/Selector';
+import Selector from '../../../common/components/SelectorV2';
 import useApiFetch from '../../../common/hooks/useApiFetch';
 import i18n from '../../../common/services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';

@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { ActivityFullScreenParamList } from '../navigation/NavigationTypes';
+import { AppStackParamList } from '../navigation/NavigationTypes';
 import {
   NavigationProp,
   RouteProp,
@@ -20,11 +20,11 @@ import { useStores } from '../common/hooks/use-stores';
 import { useSafeAreaFrame } from 'react-native-safe-area-context';
 
 type ActivityFullScreenRouteProp = RouteProp<
-  ActivityFullScreenParamList,
+  AppStackParamList,
   'PortraitViewerScreen'
 >;
 type ActivityFullScreenNavProp = NavigationProp<
-  ActivityFullScreenParamList,
+  AppStackParamList,
   'PortraitViewerScreen'
 >;
 

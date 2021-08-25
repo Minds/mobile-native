@@ -9,7 +9,7 @@ import {
   setWallets,
 } from '../../blockchain/ExportOldWallet';
 import Button from '../../common/components/Button';
-import Selector from '../../common/components/Selector';
+import Selector from '../../common/components/SelectorV2';
 import TextInput from '../../common/components/TextInput';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -26,7 +26,7 @@ const keyExtractor = (wallet: any) => wallet.address;
 
 export default observer(function ExportLegacyWallet() {
   const theme = ThemedStyles.style;
-  const selectorRef = React.useRef<Selector>(null);
+  const selectorRef = React.useRef<any>(null);
   const store = useLocalStore(() => ({
     wallets: [] as Array<any>,
     password: '',

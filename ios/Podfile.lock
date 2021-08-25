@@ -421,7 +421,7 @@ PODS:
     - React-Core
   - RNPermissions (3.0.4):
     - React-Core
-  - RNPhotoEditor (1.0.10):
+  - RNPhotoEditor (1.0.12):
     - iOSPhotoEditor
     - React
   - RNReanimated (2.2.0):
@@ -524,7 +524,7 @@ DEPENDENCIES:
   - FBReactNativeSpec (from `../node_modules/react-native/React/FBReactNativeSpec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - hermes-engine (~> 0.7.2)
-  - iOSPhotoEditor (from `../node_modules/photo-editor`)
+  - iOSPhotoEditor (from `https://github.com/prscX/photo-editor`, branch `master`)
   - libevent (~> 2.1.12)
   - lottie-ios (from `../node_modules/lottie-ios`)
   - lottie-react-native (from `../node_modules/lottie-react-native`)
@@ -663,7 +663,8 @@ EXTERNAL SOURCES:
   glog:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
   iOSPhotoEditor:
-    :path: "../node_modules/photo-editor"
+    :branch: master
+    :git: https://github.com/prscX/photo-editor
   lottie-ios:
     :path: "../node_modules/lottie-ios"
   lottie-react-native:
@@ -825,6 +826,11 @@ EXTERNAL SOURCES:
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
+CHECKOUT OPTIONS:
+  iOSPhotoEditor:
+    :commit: 4924e9ec984d25d03644e58aa148282642171de9
+    :git: https://github.com/prscX/photo-editor
+
 SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   Crypto: 523c2f143c741d3f61371c811c0983ee9c7d18ec
@@ -908,7 +914,7 @@ SPEC CHECKSUMS:
   RNImageCropPicker: 08ba3a2e2f4f8833d606f01906c371e382c4dea9
   RNLocalize: 7c7aeda16c01db7a0918981c14875c0a53be9b79
   RNPermissions: c46788f4cd402287425983e04a4c9bb4356036eb
-  RNPhotoEditor: 732f185b28e22c7fdfbe65217db6842c644d5aec
+  RNPhotoEditor: 2a4c8501057612652c0badcd5e23c435d5c2c8cd
   RNReanimated: 654354ac62644c9b7256b6a37ca657f6fa754ffb
   RNScreens: 01ab149b5dd5c27f5ff26741b1d2bdf2cee1af35
   RNSentry: a2b02b326ae4fce91ce7c57d3f7dcf8df4f72269
@@ -938,6 +944,6 @@ SPEC CHECKSUMS:
   UMTaskManagerInterface: 4c60b43eaf3cb05a164bc9113258a171c18b7bf7
   Yoga: 575c581c63e0d35c9a83f4b46d01d63abc1100ac
 
-PODFILE CHECKSUM: 69838539fecfdef180bdb0a9e3b1450e64b3a130
+PODFILE CHECKSUM: 7121d0d84f50a98fdc1423cd92201b3b16a73d02
 
 COCOAPODS: 1.10.1

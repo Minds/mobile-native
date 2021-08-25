@@ -72,19 +72,17 @@ function createPortraitStore() {
       try {
         feedStore.setParams({
           portrait: true,
-          to_timestamp: moment()
-            .subtract(2, 'days')
-            .hour(0)
-            .minutes(0)
-            .seconds(0)
-            .unix(),
+          to_timestamp: moment().unix() * 1000,
+          from_timestamp:
+            moment().subtract(7, 'days').hour(0).minutes(0).seconds(0).unix() *
+            1000,
         });
 
         this.loading = true;
 
         const [seenList] = await Promise.all([
           portraitContentService.getSeen(),
-          feedStore.fetchRemoteOrLocal(),
+          feedStore.fetch(),
         ]);
 
         // fallback to minds portrait

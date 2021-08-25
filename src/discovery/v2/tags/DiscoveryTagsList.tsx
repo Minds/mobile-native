@@ -146,7 +146,7 @@ export const DiscoveryTagsList = withErrorBoundary(
           renderSectionHeader={SectionHeaderPatrial}
           ListEmptyComponent={EmptyPartial}
           onRefresh={onRefresh}
-          refreshing={store.loadingTags}
+          refreshing={store.refreshing}
           sections={[
             {
               title: title,

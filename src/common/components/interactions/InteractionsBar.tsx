@@ -8,41 +8,28 @@ import ThemedStyles from '../../../styles/ThemedStyles';
 import abbrev from '../../helpers/abbrev';
 import i18n from '../../services/i18n.service';
 import PressableScale from '../PressableScale';
-import InteractionsModal from './InteractionsModal';
 
 interface PropsType {
   entity: ActivityModel | CommentModel | BlogModel;
+  onShowUpVotesPress: () => void;
+  onShowDownVotesPress: () => void;
+  onShowRemindsPress: () => void;
+  onShowQuotesPress: () => void;
 }
 /**
  * Interactions Bar
  */
-export default observer(function InteractionsBar({ entity }: PropsType) {
-  const modalRef = React.useRef<any>(null);
-  const showUpVotes = React.useCallback(() => {
-    if (modalRef.current) {
-      modalRef.current.show('upVotes');
-    }
-  }, []);
-  const showDownVotes = React.useCallback(() => {
-    if (modalRef.current) {
-      modalRef.current.show('downVotes');
-    }
-  }, []);
-  const showReminds = React.useCallback(() => {
-    if (modalRef.current) {
-      modalRef.current.show('reminds');
-    }
-  }, []);
-  const showQuotes = React.useCallback(() => {
-    if (modalRef.current) {
-      modalRef.current.show('quotes');
-    }
-  }, []);
+export default observer(function InteractionsBar({
+  entity,
+  onShowUpVotesPress,
+  onShowDownVotesPress,
+  onShowRemindsPress,
+  onShowQuotesPress,
+}: PropsType) {
   return (
     <View style={containerStyle}>
-      <InteractionsModal entity={entity} ref={modalRef} />
       {entity['thumbs:up:count'] > 0 && (
-        <PressableScale style={buttonStyle} onPress={showUpVotes}>
+        <PressableScale style={buttonStyle} onPress={onShowUpVotesPress}>
           <Text style={textStyle}>
             <Text style={countStyle}>
               {abbrev(entity['thumbs:up:count'], 0)}
@@ -54,7 +41,7 @@ export default observer(function InteractionsBar({ entity }: PropsType) {
         </PressableScale>
       )}
       {entity['thumbs:down:count'] > 0 && (
-        <PressableScale style={buttonStyle} onPress={showDownVotes}>
+        <PressableScale style={buttonStyle} onPress={onShowDownVotesPress}>
           <Text style={textStyle}>
             <Text style={countStyle}>
               {abbrev(entity['thumbs:down:count'], 0)}
@@ -66,7 +53,7 @@ export default observer(function InteractionsBar({ entity }: PropsType) {
         </PressableScale>
       )}
       {entity.reminds > 0 && (
-        <PressableScale style={buttonStyle} onPress={showReminds}>
+        <PressableScale style={buttonStyle} onPress={onShowRemindsPress}>
           <Text style={textStyle}>
             <Text style={countStyle}>{abbrev(entity.reminds, 0)}</Text>{' '}
             {i18n.t('interactions.reminds', {
@@ -76,7 +63,7 @@ export default observer(function InteractionsBar({ entity }: PropsType) {
         </PressableScale>
       )}
       {entity.quotes > 0 && (
-        <PressableScale style={buttonStyle} onPress={showQuotes}>
+        <PressableScale style={buttonStyle} onPress={onShowQuotesPress}>
           <Text style={textStyle}>
             <Text style={countStyle}>{abbrev(entity.quotes, 0)}</Text>{' '}
             {i18n.t('interactions.quotes', {

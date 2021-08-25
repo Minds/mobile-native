@@ -26,9 +26,14 @@ export default function BottomSheetButton({
   );
 }
 
-const buttonStyle = ThemedStyles.combine('alignSelfStretch', 'marginTop3x');
+const buttonStyle = ThemedStyles.combine(
+  'alignSelfStretch',
+  'marginTop3x',
+  'marginHorizontal5x',
+);
 const buttonActionStyle = ThemedStyles.combine(
   'alignSelfStretch',
   'marginTop3x',
+  'marginHorizontal5x',
   'bgTransparent',
 );

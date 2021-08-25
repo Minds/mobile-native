@@ -19,6 +19,10 @@ const createNotificationsStore = () => ({
   pollInterval: null as number | null,
   pushNotificationsSettings: [] as PushNotificationsSettingModel[],
   mailsNotificationsSettings: [] as EmailNotificationsSettingModel[],
+  loaded: false,
+  setLoaded(loaded: boolean) {
+    this.loaded = loaded;
+  },
   init() {
     sessionService.onSession((token: string) => {
       if (token) {
