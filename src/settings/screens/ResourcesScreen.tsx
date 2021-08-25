@@ -43,6 +43,23 @@ const items = [
         id: 'store',
         onPress: () => Linking.openURL('https://teespring.com/stores/minds'),
       },
+      {
+        id: 'terms',
+        onPress: () => Linking.openURL('https://mobile.minds.com/p/terms'),
+      },
+      {
+        id: 'privacy',
+        onPress: () => Linking.openURL('https://mobile.minds.com/p/privacy'),
+      },
+      {
+        id: 'content',
+        onPress: () =>
+          Linking.openURL('https://mobile.minds.com/content-policy'),
+      },
+      {
+        id: 'dmca',
+        onPress: () => Linking.openURL('https://mobile.minds.com/p/dmca'),
+      },
     ],
   },
   {

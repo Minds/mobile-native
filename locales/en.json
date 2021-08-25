@@ -790,7 +790,11 @@
       "whitepaper": "Whitepaper",
       "rights": "Bill of Rights",
       "events": "Events",
-      "store": "Store"
+      "store": "Store",
+      "terms": "Terms of Service",
+      "privacy": "Privacy Policy",
+      "content": "Content Policy",
+      "dmca": "DMCA"
     },
     "support": {
       "title": "support",
