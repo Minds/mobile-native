@@ -27,11 +27,12 @@ const PhoneValidator = observer(({ bottomStore }: PhoneValidatorPropsType) => {
   };
 
   const send = async () => {
-    await localStore.joinAction();
-    bottomStore.doneText = i18n.t('verify');
-    bottomStore.setOnPressDone(verify);
-    setMsg('');
-    setLabel(i18n.t('onboarding.confirmationCode'));
+    if (await localStore.joinAction()) {
+      bottomStore.doneText = i18n.t('verify');
+      bottomStore.setOnPressDone(verify);
+      setMsg('');
+      setLabel(i18n.t('onboarding.confirmationCode'));
+    }
   };
 
   bottomStore.setOnPressDone(send);
