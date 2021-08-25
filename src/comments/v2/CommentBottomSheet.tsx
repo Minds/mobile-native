@@ -133,7 +133,7 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
       backgroundComponent={CustomBackground}
       backdropComponent={renderBackdrop}>
       {!props.hideContent && ( // we disable the navigator until the screen is focused (for the post swiper)
-        <Stack.Navigator screenOptions={screenOptions} headerMode="none">
+        <Stack.Navigator screenOptions={screenOptions}>
           <Stack.Screen
             name="Comments"
             component={ScreenComment}
