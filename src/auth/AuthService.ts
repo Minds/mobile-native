@@ -3,6 +3,7 @@ import session from './../common/services/session.service';
 import delay from '../common/helpers/delay';
 import logService from '../common/services/log.service';
 import type UserModel from '../channel/UserModel';
+import pushService from '../common/services/push.service';
 
 export const TWO_FACTOR_ERROR =
   'Minds::Core::Security::TwoFactor::TwoFactorRequiredException';
@@ -88,6 +89,12 @@ class AuthService {
     await api.clearCookies();
     await delay(100);
     await session.login(data);
+
+    /**
+     * Request for permission (applies to iOS)
+     **/
+    pushService.requestNotificationPermission();
+
     return data;
   }
 

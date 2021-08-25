@@ -34,5 +34,5 @@ export default class AbstractPlatform {
     }
   }
 
-  abstract requestPermission(): void;
+  requestPermission(): void;
 }

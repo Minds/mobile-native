@@ -74,7 +74,7 @@ export default class IosPlatfom extends AbstractPlatform {
   }
 
   requestPermission() {
-    NotificationsIOS.requestPermissions();
+    return NotificationsIOS.requestPermissions();
   }
 
   /**
