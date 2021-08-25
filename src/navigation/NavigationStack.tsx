@@ -700,6 +700,7 @@ const defaultScreenOptions: StackNavigationOptions = {
   cardStyle: { backgroundColor: 'transparent' },
   gestureEnabled: false,
   keyboardHandlingEnabled: false,
+  presentation: 'transparentModal',
   ...ModalTransition,
   cardOverlayEnabled: true,
 };
@@ -710,11 +711,6 @@ const RootStack = function (props) {
   return (
     <RootStackNav.Navigator
       initialRouteName={initial}
-      defaultScreenOptions={{
-        presentation: 'modal',
-      }}
-      // mode="modal"
-      // @ts-ignore
       screenOptions={defaultScreenOptions}>
       {props.isLoggedIn ? (
         <>
