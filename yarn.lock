@@ -12590,13 +12590,6 @@ react-native-bootsplash@^2.1.0:
     jimp "0.14.0"
     prompts "2.3.2"
 
-react-native-camera@^3.18.0:
-  version "3.43.0"
-  resolved "https://registry.yarnpkg.com/react-native-camera/-/react-native-camera-3.43.0.tgz#12b8d2fadf008af252abb99c7d4a964bbf4cdbf0"
-  integrity sha512-I+04f5L+7Z6ZwUarw+79VePAB//VxidPVsv1Ec7+uuKv3rAkZ+8OBxtm1487OVrY6V3dMdl7BKByv4BIDUY1pQ==
-  dependencies:
-    prop-types "^15.6.2"
-
 react-native-chart-kit@^5.6.0:
   version "5.6.1"
   resolved "https://registry.yarnpkg.com/react-native-chart-kit/-/react-native-chart-kit-5.6.1.tgz#383c27dd70b02e22ba364207face16fbb7addd51"
@@ -13053,6 +13046,11 @@ react-native-vector-icons@^7.1.0:
     lodash.template "^4.5.0"
     prop-types "^15.7.2"
     yargs "^15.0.2"
+
+react-native-vision-camera@^2.6.1:
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/react-native-vision-camera/-/react-native-vision-camera-2.6.1.tgz#820cc480e5c3ca88da8c7901f96878095b44bec9"
+  integrity sha512-BPzmdq9Rel1jgJ5TKG5Gv2qTQNLEHFObJtesI5fRGkzd8l3iC+2frHHRHJRwQ/LJUl8ZS1V/+XAbKRPn10e1aw==
 
 react-native-webview@^8.1.0:
   version "8.2.1"

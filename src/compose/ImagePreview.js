@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import FastImage from 'react-native-fast-image';
-import { Platform, Dimensions } from 'react-native';
+import { Platform, Dimensions, Image } from 'react-native';
 import SmartImage from '../../src/common/components/SmartImage';
 import ThemedStyles from '../styles/ThemedStyles';
 import ImageZoom from 'react-native-image-pan-zoom';
@@ -38,7 +38,9 @@ export default observer(function (props) {
   };
 
   // workaround: we use sourceURL for the preview on iOS because the image is not displayed with the uri
-  const uri = props.image.sourceURL || props.image.uri;
+  const uri = props.image.sourceURL || props.image.uri || props.image.path;
+
+  const source = React.useMemo(() => ({ uri }), [uri]);
 
   return (
     <ImageZoom

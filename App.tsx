@@ -15,6 +15,7 @@ import {
   Text,
   UIManager,
   RefreshControl,
+  YellowBox,
 } from 'react-native';
 import { Provider, observer } from 'mobx-react';
 
@@ -46,6 +47,8 @@ import AppInitManager from './AppInitManager';
 import { ScreenHeightProvider } from './src/common/components/KeyboardSpacingView';
 import { WCContextProvider } from './src/blockchain/v2/walletconnect/WalletConnectContext';
 import analyticsService from './src/common/services/analytics.service';
+
+YellowBox.ignoreWarnings(['']);
 
 const appInitManager = new AppInitManager();
 appInitManager.initializeServices();

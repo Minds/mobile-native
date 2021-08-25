@@ -29,6 +29,8 @@ export default observer(function (props) {
 
   const isImage = props.store.mediaToConfirm.type.startsWith('image');
 
+  console.log('mediaToConfirm', props.store.mediaToConfirm);
+
   const previewComponent = isImage ? (
     <ImagePreview image={props.store.mediaToConfirm} />
   ) : (
