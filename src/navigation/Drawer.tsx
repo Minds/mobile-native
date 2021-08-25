@@ -238,8 +238,7 @@ const styles = StyleSheet.create({
   listItem: {
     borderBottomWidth: 0,
     backgroundColor: 'transparent',
-    paddingTop: 0,
-    paddingBottom: Platform.select({ ios: 30, android: 25 }),
+    paddingVertical: Platform.select({ ios: 15, android: 12.5 }),
   },
 });
 const menuTitleStyle = ThemedStyles.combine(
