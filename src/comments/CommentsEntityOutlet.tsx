@@ -6,7 +6,7 @@ import ActivityModel from '../newsfeed/ActivityModel';
 import ThemedStyles from '../styles/ThemedStyles';
 import { useNavigation } from '@react-navigation/native';
 import { AppStackParamList } from '../navigation/NavigationTypes';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack/native-stack';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 type Props = {
   entity: ActivityModel;
