@@ -3,6 +3,7 @@ import { showNotification } from '../../../../AppMessages';
 import { StripeCard } from '../../../wire/WireTypes';
 import api, { ApiResponse } from '../../services/api.service';
 import i18nService from '../../services/i18n.service';
+import { initStripe } from '../../services/stripe.service';
 
 interface StripeResponse extends ApiResponse {
   paymentmethods: Array<StripeCard>;
@@ -32,6 +33,7 @@ const createCardSelectorStore = ({ onCardSelected }) => ({
   intentKey: '',
   intentId: '',
   async init() {
+    await initStripe();
     await this.loadCards();
     this.getSetupIntent();
     this.setLoaded(true);
@@ -81,7 +83,6 @@ const createCardSelectorStore = ({ onCardSelected }) => ({
       const { intent }: IntentResponse = await api.put<IntentResponse>(
         'api/v2/payments/stripe/intents/setup',
       );
-      console.log('api/v2/payments/stripe/intents/setup', intent);
       this.intentKey = intent.client_secret;
       this.intentId = intent.id;
     } catch (err) {
