@@ -105,6 +105,7 @@ const createLocationAutoSuggestStore = () => {
       }, 400)();
     },
     onBlur() {
+      this.onEdit?.(false);
       this.isFocused = false;
     },
   };
