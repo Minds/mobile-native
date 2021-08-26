@@ -1,5 +1,5 @@
-import React, { useEffect, useCallback } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import React, { useCallback, useEffect, useRef } from 'react';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import FeedList from '../../common/components/FeedList';
 import createChannelStore from './createChannelStore';
@@ -18,6 +18,7 @@ import UserNotFound from './UserNotFound';
 import ActivityModel from '../../newsfeed/ActivityModel';
 import Button from '../../common/components/Button';
 import { withErrorBoundary } from '../../common/components/ErrorBoundary';
+import { ChannelContext } from './ChannelContext';
 
 type PropsType = {
   navigation: any;
@@ -29,6 +30,7 @@ type PropsType = {
  */
 const ChannelScreen = observer((props: PropsType) => {
   const theme = ThemedStyles.style;
+  const feedRef = useRef<FeedList<any>>(null);
   const store = useLocalStore(createChannelStore);
 
   useEffect(() => {
@@ -58,6 +60,14 @@ const ChannelScreen = observer((props: PropsType) => {
       }
     }, [props.navigation, props.route.params, store.channel, store.feedStore]),
   );
+
+  /**
+   * when the user tapped on channel when they were
+   * on that channel page, wiggle the feedList scroll
+   **/
+  const onSelfNavigation = useCallback(() => {
+    feedRef.current?.wiggle();
+  }, [feedRef]);
 
   const renderBlog = useCallback(
     (row: { item: BlogModel }) => {
@@ -137,9 +147,13 @@ const ChannelScreen = observer((props: PropsType) => {
   ) : undefined;
 
   return (
-    <>
+    <ChannelContext.Provider
+      value={{
+        onSelfNavigation,
+      }}>
       <ChannelTopBar navigation={props.navigation} store={store} />
       <FeedList
+        ref={feedRef}
         feedStore={store.feedStore}
         renderActivity={renderActivity}
         header={
@@ -154,7 +168,7 @@ const ChannelScreen = observer((props: PropsType) => {
         style={[theme.bgPrimaryBackground, theme.flexContainer]}
         hideItems={store.tab !== 'feed'}
       />
-    </>
+    </ChannelContext.Provider>
   );
 });
 
