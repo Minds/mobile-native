@@ -4,7 +4,6 @@ import { StyleSheet, View, Platform } from 'react-native';
 import ThemedStyles from '../styles/ThemedStyles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import i18n from '../common/services/i18n.service';
-import StripeCardSelector from '../wire/methods/v2/StripeCardSelector';
 import CenteredLoading from '../common/components/CenteredLoading';
 
 import { UserError } from '../common/UserError';
@@ -21,6 +20,7 @@ import {
 } from './types';
 import PlanOptions from './PlanOptions';
 import { useDimensions } from '@react-native-community/hooks';
+import StripeCardSelector from '../common/components/stripe-card-selector/StripeCardSelector';
 
 const isIos = Platform.OS === 'ios';
 
@@ -104,7 +104,9 @@ const UpgradeScreen = observer(({ navigation, route }: PropsType) => {
         <PlanOptions store={localStore} pro={pro} />
         {localStore.method === 'usd' && (
           <View style={theme.marginTop6x}>
-            <StripeCardSelector onCardSelected={localStore.setCard} />
+            <StripeCardSelector
+              onCardSelected={card => localStore.setCard(card)}
+            />
           </View>
         )}
         <View

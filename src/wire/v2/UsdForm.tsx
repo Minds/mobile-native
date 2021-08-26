@@ -5,9 +5,9 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import type { FabScreenStore } from './FabScreen';
 import LabeledComponent from '../../common/components/LabeledComponent';
 import { CheckBox } from 'react-native-elements';
-import StripeCardSelector from '../methods/StripeCardSelector';
 import { styles } from './TokensForm';
 import InputContainer from '../../common/components/InputContainer';
+import StripeCardSelector from '../../common/components/stripe-card-selector/StripeCardSelector';
 
 type propsType = {
   store: FabScreenStore;

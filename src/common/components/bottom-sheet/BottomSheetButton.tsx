@@ -6,12 +6,14 @@ interface PropsType {
   text: string;
   action?: boolean;
   onPress: () => void;
+  loading?: boolean;
 }
 
 export default function BottomSheetButton({
   text,
   onPress,
   action,
+  loading,
 }: PropsType) {
   return (
     <Button
@@ -22,6 +24,7 @@ export default function BottomSheetButton({
       textStyle={ThemedStyles.style.colorPrimaryText}
       text={text}
       onPress={onPress}
+      loading={loading}
     />
   );
 }

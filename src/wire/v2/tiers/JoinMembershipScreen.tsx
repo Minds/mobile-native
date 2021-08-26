@@ -6,7 +6,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import HeaderComponent from '../../../common/components/HeaderComponent';
 import UserNamesComponent from '../../../common/components/UserNamesComponent';
 import capitalize from '../../../common/helpers/capitalize';
-import StripeCardSelector from '../../methods/v2/StripeCardSelector';
 import Switch from 'react-native-switch-pro';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -24,6 +23,7 @@ import MenuItem, {
 } from '../../../common/components/menus/MenuItem';
 import { showNotification } from '../../../../AppMessages';
 import WireStore from '../../WireStore';
+import StripeCardSelector from '../../../common/components/stripe-card-selector/StripeCardSelector';
 
 const isIos = Platform.OS === 'ios';
 

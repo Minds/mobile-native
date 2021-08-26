@@ -1122,7 +1122,9 @@
     "lock": {
       "plus": "Minds+",
       "members": "Members Only"
-    }
+    },
+    "selectCard": "Select Card",
+    "addCard": "Add Card"
   },
   "validation": {
     "email": "Invalid email",

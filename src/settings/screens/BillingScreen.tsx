@@ -2,9 +2,9 @@
 import React, { Component } from 'react';
 
 import { View, Text } from 'react-native';
+import StripeCardSelector from '../../common/components/stripe-card-selector/StripeCardSelector';
 
 import i18n from '../../common/services/i18n.service';
-import StripeCardSelector from '../../wire/methods/StripeCardSelector';
 import ThemedStyles from '../../styles/ThemedStyles';
 
 export default class BillingScreen extends Component {
