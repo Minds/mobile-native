@@ -16,6 +16,7 @@ const createCameraStore = p => {
     cameraType: <CameraType>'back',
     flashMode: <FlashType>'off',
     hdr: <boolean>false,
+    lowLightBoost: <boolean>false,
     recording: false,
     show: false,
     pulse: false,
@@ -26,13 +27,6 @@ const createCameraStore = p => {
     },
     isReady() {
       this.ready = true;
-      // We hide the scroll status bar latter to avoid transitions glitches on android
-      // setTimeout(() => {
-      //   p?.navigation?.setOptions({
-      //     statusBarAnimation: 'none',
-      //     statusBarTranslucent: true,
-      //   });
-      // }, 250);
     },
     setFocus(focus: false | FocusPoint) {
       this.focusPoint = focus;
@@ -44,6 +38,9 @@ const createCameraStore = p => {
         () => this && this.hideFocus && this.hideFocus(),
         1300,
       );
+    },
+    toggleLowLightBoost() {
+      this.lowLightBoost = !this.lowLightBoost;
     },
     toggleHdr() {
       this.hdr = !this.hdr;

@@ -1,14 +1,9 @@
 import React, { useRef, useCallback, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 
-import {
-  CameraDeviceFormat,
-  sortFormats,
-  useCameraDevices,
-  frameRateIncluded,
-  Camera,
-} from 'react-native-vision-camera';
+import { Camera } from 'react-native-vision-camera';
 import FIcon from 'react-native-vector-icons/Feather';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { when } from 'mobx';
 import { observer, useLocalStore } from 'mobx-react';
@@ -29,17 +24,18 @@ import createCameraStore from './createCameraStore';
 import FlashIcon from './FlashIcon';
 import CamIcon from './CamIcon';
 import HdrIcon from './HdrIcon';
-import FadeFromBottom from '../../common/components/animations/FadeFromBottom';
+import FadeFrom from '../../common/components/animations/FadeFrom';
 import ZoomGesture from './ZoomGesture';
 import FocusGesture from './FocusGesture';
 import { MotiView } from 'moti';
+import useBestCameraAndFormat from './useBestCameraAndFormat';
 
 const ReanimatedCamera = Reanimated.createAnimatedComponent(Camera);
 Reanimated.addWhitelistedNativeProps({
   zoom: true,
 });
 
-const camAnimTransition = { type: 'timing', duration: 100 };
+const camAnimTransition: any = { type: 'timing', duration: 100 };
 
 /**
  * Camera
@@ -53,22 +49,17 @@ export default observer(function (props) {
   const zoom = useSharedValue(0);
   const zoomVisible = useSharedValue<boolean>(false);
 
-  const devices = useCameraDevices();
-
   // local store
-  const store = useLocalStore(createCameraStore, { navigation, ...props });
+  const store = useLocalStore(createCameraStore, props);
 
-  const device = devices[store.cameraType];
+  const [devices, device, formats, format] = useBestCameraAndFormat(store);
+
+  console.log(devices.front?.devices);
+
   const supportsCameraFlipping = React.useMemo(
     () => devices.back != null && devices.front != null,
     [devices.back, devices.front],
   );
-  const formats = React.useMemo<CameraDeviceFormat[]>(() => {
-    if (device?.formats == null) return [];
-    return device.formats.sort((a, b) =>
-      a.photoWidth < b.photoWidth ? 1 : a.photoWidth > b.photoWidth ? -1 : 0,
-    );
-  }, [device?.formats]);
 
   const supportsFlash = device?.hasFlash ?? false;
   const supportsHdr = React.useMemo(
@@ -80,7 +71,6 @@ export default observer(function (props) {
   const cleanTop = { marginTop: insets.top || 0 };
   const minZoom = device?.minZoom ?? 1;
   const maxZoom = Math.min(device?.maxZoom ?? 1, 3);
-  const fps = 30;
 
   const cameraAnimatedProps = useAnimatedProps(() => {
     const z = Math.max(Math.min(zoom.value, maxZoom), minZoom);
@@ -88,35 +78,6 @@ export default observer(function (props) {
       zoom: z,
     };
   }, [maxZoom, minZoom, zoom]);
-
-  const format = React.useMemo(() => {
-    const result = formats
-      .slice()
-      .reverse()
-      .find(
-        f =>
-          f.frameRateRanges.some(r => frameRateIncluded(r, fps)) &&
-          // any format close to 16/9
-          f.photoWidth / f.photoHeight >= 1.7 &&
-          f.photoWidth / f.photoHeight <= 1.8 &&
-          // full hd resolution
-          f.photoWidth >= 1920,
-      );
-
-    formats.forEach(f =>
-      console.log(
-        f.photoWidth,
-        f.photoHeight,
-        '-',
-        f.videoWidth,
-        f.videoHeight,
-        'PhotoHDR:' + f.supportsPhotoHDR,
-        'VideoHDR:' + f.supportsVideoHDR,
-      ),
-    );
-
-    return result || formats[0];
-  }, [formats, fps]);
 
   useEffect(() => {
     const t = setTimeout(() => {
@@ -184,11 +145,11 @@ export default observer(function (props) {
                 style={StyleSheet.absoluteFill}
                 device={device}
                 format={format}
-                fps={fps}
+                fps={30}
+                lowLightBoost={
+                  device.supportsLowLightBoost && store.lowLightBoost
+                }
                 hdr={store.hdr}
-                // lowLightBoost={
-                //   device.supportsLowLightBoost && enableNightMode
-                // }
                 isActive={store.show}
                 onInitialized={store.isReady}
                 onError={e => console.log(e)}
@@ -197,12 +158,6 @@ export default observer(function (props) {
                 photo={true}
                 video={true}
                 audio={true}
-                // frameProcessor={
-                //   device.supportsParallelVideoProcessing
-                //     ? frameProcessor
-                //     : undefined
-                // }
-                // frameProcessorFps={1}
               />
             </FocusGesture>
           </ZoomGesture>
@@ -218,6 +173,17 @@ export default observer(function (props) {
           minZoom={minZoom}
           style={styles.zoomIndicator}
         />
+        <FadeFrom
+          direction="right"
+          delay={190}
+          style={{ position: 'absolute', right: 20, top: 40 }}>
+          <Icon
+            size={30}
+            name={store.lowLightBoost ? 'moon-sharp' : 'moon-outline'}
+            style={styles.galleryIcon}
+            onPress={() => store.toggleLowLightBoost()}
+          />
+        </FadeFrom>
       </MotiView>
       {store.recording && (
         <VideoClock
@@ -226,51 +192,53 @@ export default observer(function (props) {
           onTimer={onPress}
         />
       )}
-      <View style={styles.buttonContainer}>
-        <View style={styles.leftIconContainer}>
-          <FadeFromBottom delay={190}>
-            <FIcon
-              size={30}
-              name="image"
-              style={styles.galleryIcon}
-              onPress={props.onPressGallery}
+      {device && store.ready && (
+        <View style={styles.buttonContainer}>
+          <View style={styles.leftIconContainer}>
+            <FadeFrom delay={190}>
+              <FIcon
+                size={30}
+                name="image"
+                style={styles.galleryIcon}
+                onPress={props.onPressGallery}
+              />
+            </FadeFrom>
+            {supportsHdr ? (
+              <FadeFrom delay={130}>
+                <HdrIcon store={store} />
+              </FadeFrom>
+            ) : (
+              <View />
+            )}
+          </View>
+          <View style={styles.rightButtonsContainer}>
+            {supportsFlash ? (
+              <FadeFrom delay={130}>
+                <FlashIcon store={store} />
+              </FadeFrom>
+            ) : (
+              <View />
+            )}
+            {supportsCameraFlipping && (!store.recording || IS_IOS) ? (
+              <FadeFrom delay={190}>
+                <CamIcon store={store} />
+              </FadeFrom>
+            ) : (
+              <View />
+            )}
+          </View>
+          <FadeFrom delay={50}>
+            <RecordButton
+              size={70}
+              store={store}
+              onLongPress={onLongPress}
+              onPressOut={onPress}
+              pulse={store.pulse}
+              isPhoto={props.mode === 'photo'}
             />
-          </FadeFromBottom>
-          {supportsHdr ? (
-            <FadeFromBottom delay={130}>
-              <HdrIcon store={store} />
-            </FadeFromBottom>
-          ) : (
-            <View />
-          )}
+          </FadeFrom>
         </View>
-        <View style={styles.rightButtonsContainer}>
-          {supportsFlash ? (
-            <FadeFromBottom delay={130}>
-              <FlashIcon store={store} />
-            </FadeFromBottom>
-          ) : (
-            <View />
-          )}
-          {supportsCameraFlipping && (!store.recording || IS_IOS) ? (
-            <FadeFromBottom delay={190}>
-              <CamIcon store={store} />
-            </FadeFromBottom>
-          ) : (
-            <View />
-          )}
-        </View>
-        <FadeFromBottom delay={50}>
-          <RecordButton
-            size={70}
-            store={store}
-            onLongPress={onLongPress}
-            onPressOut={onPress}
-            pulse={store.pulse}
-            isPhoto={props.mode === 'photo'}
-          />
-        </FadeFromBottom>
-      </View>
+      )}
     </View>
   );
 });
@@ -322,6 +290,6 @@ const styles = StyleSheet.create({
   zoomIndicator: {
     position: 'absolute',
     alignSelf: 'center',
-    top: 60,
+    top: 50,
   },
 });

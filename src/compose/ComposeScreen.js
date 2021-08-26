@@ -12,7 +12,7 @@ import Poster from './Poster';
 import useComposeStore from './useComposeStore';
 import MediaConfirm from './MediaConfirm';
 import i18nService from '../common/services/i18n.service';
-import FadeFromBottom from '../common/components/animations/FadeFromBottom';
+import FadeFromBottom from '../common/components/animations/FadeFrom';
 
 /**
  * Compose Screen
