@@ -41,14 +41,14 @@ const ZoomGesture: FC<PropsType> = ({
   >({
     onStart: (_, context) => {
       context.startZoom = zoom.value;
-      // display the zoom indicator
-      zoomVisible.value = true;
     },
     onEnd: () => {
       // hide the zoom indicator
       zoomVisible.value = false;
     },
     onActive: (event, context) => {
+      // display the zoom indicator
+      zoomVisible.value = true;
       // we're trying to map the scale gesture to a linear zoom here
       const startZoom = context.startZoom ?? 0;
       const scale = interpolate(
