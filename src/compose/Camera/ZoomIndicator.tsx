@@ -80,11 +80,15 @@ const styles = ThemedStyles.create({
     'paddingTop',
     { textShadowColor: '#000000', textShadowRadius: 1 },
   ],
-  barStyle: {
-    width: 152,
-    backgroundColor: '#00000045',
-    height: 15,
-    flexDirection: 'row',
-    borderRadius: 3,
-  },
+  barStyle: [
+    'borderHair',
+    'bcolorWhite',
+    {
+      width: 152,
+      backgroundColor: '#00000045',
+      height: 15,
+      flexDirection: 'row',
+      borderRadius: 3,
+    },
+  ],
 });
