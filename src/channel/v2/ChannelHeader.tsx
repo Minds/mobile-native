@@ -215,14 +215,9 @@ const ChannelHeader = withErrorBoundary(
                   numberOfLines={1}>
                   @{channel ? channel.username : props.channelName}
                 </Text>
-                {channel!.subscriber === true && (
-                  <Text
-                    style={[
-                      styles.subscriber,
-                      theme.colorSecondaryText,
-                      theme.bgPrimaryBorder,
-                      theme.fontS,
-                    ]}>
+                {channel!.subscriber && (
+                  <Text style={theme.colorSecondaryText}>
+                    {` · `}
                     {i18n.t('channel.subscriber')}
                   </Text>
                 )}
@@ -377,14 +372,6 @@ const styles = ThemedStyles.create({
   username: {
     // fontSize: 16,
     textAlign: 'center',
-  },
-  subscriber: {
-    fontSize: 14,
-    textAlign: 'center',
-    paddingHorizontal: 5,
-    paddingVertical: 2,
-    borderRadius: 2,
-    marginLeft: 5,
   },
   name: {
     fontSize: 18,
