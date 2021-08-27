@@ -24,14 +24,11 @@ export default observer(function (props) {
   const cleanBottom = useMemo(() => ({ height: insets.bottom + 50 }), [
     insets.bottom,
   ]);
-  const videoStyle = useMemo(
-    () => ({
-      marginBottom: insets.bottom,
-      flex: 1,
-      width: '100%',
-    }),
-    [insets.bottom],
-  );
+  const [videoPortrait, setVideoPortrait] = React.useState(true);
+  const onVideoLoaded = React.useCallback(e => {
+    setVideoPortrait(e.naturalSize.height > e.naturalSize.width);
+  }, []);
+
   const video = useRef({ uri: props.store.mediaToConfirm.uri }).current;
 
   const isImage = props.store.mediaToConfirm.type.startsWith('image');
@@ -39,32 +36,34 @@ export default observer(function (props) {
   const previewComponent = isImage ? (
     <ImagePreview image={props.store.mediaToConfirm} />
   ) : (
-    <MindsVideoV2
-      video={video}
-      resizeMode={ResizeMode.COVER}
-      autoplay
-      repeat={true}
-      containerStyle={videoStyle}
-    />
+    <View style={theme.flexContainer}>
+      <MindsVideoV2
+        video={video}
+        resizeMode={videoPortrait ? ResizeMode.COVER : ResizeMode.CONTAIN}
+        autoplay
+        onReadyForDisplay={onVideoLoaded}
+        repeat={true}
+      />
+    </View>
   );
 
   const bottomBarStyle = useMemoStyle(
     [
       styles.bottomBar,
       cleanBottom,
-      theme.bgSecondaryBackground,
+      'bgSecondaryBackground',
       isImage ? styles.floating : null,
     ],
     [cleanBottom, isImage],
   );
 
   const backStyle = useMemoStyle(
-    [styles.backIcon, theme.colorWhite, cleanTop],
+    [styles.backIcon, 'colorWhite', cleanTop],
     [cleanTop],
   );
 
   return (
-    <View style={theme.flexContainer}>
+    <View style={styles.container}>
       <View style={styles.mediaContainer}>{previewComponent}</View>
       <View style={bottomBarStyle}>
         {isImage ? (
@@ -89,7 +88,8 @@ export default observer(function (props) {
 });
 
 const styles = ThemedStyles.create({
-  mediaContainer: ['flexContainer', 'justifyCenter'],
+  container: ['flexContainer', 'bgSecondaryBackground'],
+  mediaContainer: ['flexContainer', 'justifyEnd'],
   leftText: [
     'fontXL',
     'colorSecondaryText',

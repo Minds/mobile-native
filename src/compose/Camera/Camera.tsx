@@ -62,7 +62,7 @@ export default observer(function (props) {
 
   const supportsFlash = device?.hasFlash ?? false;
   const supportsHdr = React.useMemo(
-    () => formats.some(f => f.supportsVideoHDR || f.supportsPhotoHDR) || true,
+    () => formats.some(f => f.supportsVideoHDR || f.supportsPhotoHDR),
     [formats],
   );
 

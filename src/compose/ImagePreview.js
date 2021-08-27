@@ -14,13 +14,10 @@ import { useDimensions } from '@react-native-community/hooks';
 export default observer(function (props) {
   const { width } = useDimensions().window;
   // calculate the aspect ratio
-  let aspectRatio = Platform.select({
-    ios: props.image.width / props.image.height,
-    android:
-      props.image.pictureOrientation > 2 || !props.image.pictureOrientation
-        ? props.image.width / props.image.height
-        : props.image.height / props.image.width,
-  });
+  let aspectRatio =
+    props.image.pictureOrientation > 2 || !props.image.pictureOrientation
+      ? props.image.height / props.image.width
+      : props.image.width / props.image.height;
 
   if (props.maxRatio && props.maxRatio < aspectRatio) {
     aspectRatio = props.maxRatio;
