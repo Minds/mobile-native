@@ -1,23 +1,54 @@
-import React from 'react';
-import { StyleProp, ViewStyle, View } from 'react-native';
-import { BottomSheetHandleProps } from '@gorhom/bottom-sheet';
-import ThemedStyles from '../../../styles/ThemedStyles';
+import { View } from 'react-native';
+import ThemedStyles, { useMemoStyle } from '../../../styles/ThemedStyles';
+import React, { FC } from 'react';
 
-interface HandleProps extends BottomSheetHandleProps {
-  style?: StyleProp<ViewStyle>;
+interface HandleProps {
+  showHandleBar?: boolean;
+  style?: any;
 }
 
-const Handle: React.FC<HandleProps> = () => {
-  // render
-  return <View style={style} />;
-};
+const Handle: FC<HandleProps> = ({ children, showHandleBar = true, style }) => (
+  <View
+    style={useMemoStyle(
+      [children ? styles.containerWithChildren : styles.container, style],
+      [style],
+    )}>
+    {showHandleBar && (
+      <View style={ThemedStyles.style.alignCenter}>
+        <View style={styles.handleBar} />
+      </View>
+    )}
+
+    {children}
+  </View>
+);
 
 export default Handle;
 
-const style = ThemedStyles.combine('bgPrimaryBackgroundHighlight', {
-  alignContent: 'center',
-  justifyContent: 'center',
-  height: 24,
-  borderTopLeftRadius: 15,
-  borderTopRightRadius: 15,
+const styles = ThemedStyles.create({
+  container: [
+    {
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
+      paddingTop: 10,
+      paddingBottom: 5,
+    },
+    'bgPrimaryBackgroundHighlight',
+  ],
+  get containerWithChildren() {
+    return [
+      ...this.container,
+      'borderBottomHair',
+      'bcolorPrimaryBorder',
+      'bgPrimaryBackground',
+    ];
+  },
+  handleBar: [
+    {
+      width: 30,
+      height: 5,
+      borderRadius: 10,
+    },
+    'bgTertiaryBackground',
+  ],
 });
