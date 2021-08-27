@@ -4,6 +4,7 @@ import {
   CameraDeviceFormat,
   CameraPosition,
   frameRateIncluded,
+  sortFormats,
   useCameraDevices,
 } from 'react-native-vision-camera';
 import { CameraStore } from './createCameraStore';
@@ -20,46 +21,29 @@ export default function useBestCameraAndFormat(
   CameraDevices,
   CameraDevice | undefined,
   CameraDeviceFormat[],
-  CameraDeviceFormat,
+  CameraDeviceFormat | undefined,
 ] {
   const devices = useCameraDevices();
   const device = devices[store.cameraType];
 
   const formats = React.useMemo<CameraDeviceFormat[]>(() => {
     if (device?.formats == null) return [];
-    return device.formats.sort((a, b) =>
-      a.photoWidth < b.photoWidth ? 1 : a.photoWidth > b.photoWidth ? -1 : 0,
-    );
+    return device.formats.sort(sortFormats);
   }, [device]);
 
   const format = React.useMemo(() => {
-    const result = formats
-      .slice()
-      .reverse()
-      .find(
-        f =>
-          f.frameRateRanges.some(r => frameRateIncluded(r, FPS)) &&
-          // any format close to 16/9
-          f.photoWidth / f.photoHeight >= 1.7 &&
-          f.photoWidth / f.photoHeight <= 1.8 &&
-          // full hd resolution
-          f.photoWidth >= 1920,
-      );
+    let result = formats;
+    if (store.hdr) {
+      // We only filter by HDR capable formats if HDR is set to true.
+      // Otherwise we ignore the `supportsVideoHDR` property and accept formats which support HDR `true` or `false`
+      result = result.filter(f => f.supportsVideoHDR || f.supportsPhotoHDR);
+    }
 
-    // formats.forEach(f =>
-    //   console.log(
-    //     f.photoWidth,
-    //     f.photoHeight,
-    //     '-',
-    //     f.videoWidth,
-    //     f.videoHeight,
-    //     'PhotoHDR:' + f.supportsPhotoHDR,
-    //     'VideoHDR:' + f.supportsVideoHDR,
-    //   ),
-    // );
-
-    return result || formats[0];
-  }, [formats]);
+    // find the first format that includes the given FPS
+    return result.find(f =>
+      f.frameRateRanges.some(r => frameRateIncluded(r, FPS)),
+    );
+  }, [formats, store.hdr]);
 
   return [devices, device, formats, format];
 }

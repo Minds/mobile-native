@@ -8,7 +8,7 @@ import { useRoute, useNavigation } from '@react-navigation/native';
 import { when } from 'mobx';
 import { observer, useLocalStore } from 'mobx-react';
 
-import { useSafeArea } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Reanimated, {
   useAnimatedProps,
   useSharedValue,
@@ -29,6 +29,7 @@ import ZoomGesture from './ZoomGesture';
 import FocusGesture from './FocusGesture';
 import { MotiView } from 'moti';
 import useBestCameraAndFormat from './useBestCameraAndFormat';
+import useCameraStyle from './useCameraStyle';
 
 const ReanimatedCamera = Reanimated.createAnimatedComponent(Camera);
 Reanimated.addWhitelistedNativeProps({
@@ -50,11 +51,9 @@ export default observer(function (props) {
   const zoomVisible = useSharedValue<boolean>(false);
 
   // local store
-  const store = useLocalStore(createCameraStore, props);
+  const store = useLocalStore(createCameraStore, { navigation, ...props });
 
   const [devices, device, formats, format] = useBestCameraAndFormat(store);
-
-  console.log(devices.front?.devices);
 
   const supportsCameraFlipping = React.useMemo(
     () => devices.back != null && devices.front != null,
@@ -63,11 +62,11 @@ export default observer(function (props) {
 
   const supportsFlash = device?.hasFlash ?? false;
   const supportsHdr = React.useMemo(
-    () => formats.some(f => f.supportsVideoHDR || f.supportsPhotoHDR),
+    () => formats.some(f => f.supportsVideoHDR || f.supportsPhotoHDR) || true,
     [formats],
   );
 
-  const insets = useSafeArea();
+  const insets = useSafeAreaInsets();
   const cleanTop = { marginTop: insets.top || 0 };
   const minZoom = device?.minZoom ?? 1;
   const maxZoom = Math.min(device?.maxZoom ?? 1, 3);
@@ -84,6 +83,8 @@ export default observer(function (props) {
       store.showCam();
     }, 50);
 
+    navigation.setOptions({ screenOrientation: 'all' });
+
     let unlisten;
 
     if (route.params && route.params.start) {
@@ -99,6 +100,7 @@ export default observer(function (props) {
     }
 
     return () => {
+      navigation.setOptions({ screenOrientation: 'portrait' });
       clearTimeout(t);
       unlisten && unlisten();
     };
@@ -125,6 +127,8 @@ export default observer(function (props) {
     () => (store.ready ? { opacity: 1 } : { opacity: 0 }),
     [store.ready],
   );
+
+  const orientationStyle = useCameraStyle();
 
   return (
     <View style={theme.flexContainer}>
@@ -165,7 +169,6 @@ export default observer(function (props) {
         {store.focusPoint && (
           <FocusIndicator x={store.focusPoint.x} y={store.focusPoint.y} />
         )}
-
         <ZoomIndicator
           zoomVisible={zoomVisible}
           zoom={zoom}
@@ -176,11 +179,11 @@ export default observer(function (props) {
         <FadeFrom
           direction="right"
           delay={190}
-          style={{ position: 'absolute', right: 20, top: 40 }}>
+          style={orientationStyle.lowLight}>
           <Icon
             size={30}
             name={store.lowLightBoost ? 'moon-sharp' : 'moon-outline'}
-            style={styles.galleryIcon}
+            style={orientationStyle.galleryIcon}
             onPress={() => store.toggleLowLightBoost()}
           />
         </FadeFrom>
@@ -193,35 +196,35 @@ export default observer(function (props) {
         />
       )}
       {device && store.ready && (
-        <View style={styles.buttonContainer}>
-          <View style={styles.leftIconContainer}>
+        <View style={orientationStyle.buttonContainer}>
+          <View style={orientationStyle.leftIconContainer}>
             <FadeFrom delay={190}>
               <FIcon
                 size={30}
                 name="image"
-                style={styles.galleryIcon}
+                style={orientationStyle.galleryIcon}
                 onPress={props.onPressGallery}
               />
             </FadeFrom>
             {supportsHdr ? (
               <FadeFrom delay={130}>
-                <HdrIcon store={store} />
+                <HdrIcon store={store} style={orientationStyle.icon} />
               </FadeFrom>
             ) : (
               <View />
             )}
           </View>
-          <View style={styles.rightButtonsContainer}>
+          <View style={orientationStyle.rightButtonsContainer}>
             {supportsFlash ? (
               <FadeFrom delay={130}>
-                <FlashIcon store={store} />
+                <FlashIcon store={store} style={orientationStyle.icon} />
               </FadeFrom>
             ) : (
               <View />
             )}
             {supportsCameraFlipping && (!store.recording || IS_IOS) ? (
               <FadeFrom delay={190}>
-                <CamIcon store={store} />
+                <CamIcon store={store} style={orientationStyle.icon} />
               </FadeFrom>
             ) : (
               <View />
@@ -251,41 +254,6 @@ const styles = StyleSheet.create({
     left: 0,
     color: 'white',
     textAlign: 'center',
-  },
-  leftIconContainer: {
-    position: 'absolute',
-    left: 0,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    height: '100%',
-    width: '50%',
-    paddingRight: 40,
-    alignItems: 'center',
-  },
-  rightButtonsContainer: {
-    position: 'absolute',
-    right: 0,
-    width: '50%',
-    paddingLeft: 40,
-    justifyContent: 'space-around',
-    flexDirection: 'row',
-    height: '100%',
-    alignItems: 'center',
-  },
-  galleryIcon: {
-    padding: 10,
-    color: 'white',
-    alignSelf: 'center',
-    marginLeft: 15,
-    textShadowColor: 'rgba(0, 0, 0, 0.35)',
-    textShadowOffset: { width: -1, height: 1 },
-    textShadowRadius: 2.22,
-  },
-  buttonContainer: {
-    position: 'absolute',
-    bottom: 25,
-    width: '100%',
-    alignItems: 'center',
   },
   zoomIndicator: {
     position: 'absolute',

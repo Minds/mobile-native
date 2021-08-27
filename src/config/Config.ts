@@ -3,6 +3,8 @@ import { Platform } from 'react-native';
 
 import DeviceInfo from 'react-native-device-info';
 
+export const IS_IOS = Platform.OS === 'ios';
+
 // Send staging cookie to api
 export const MINDS_STAGING = false;
 export const MINDS_CANARY = false;

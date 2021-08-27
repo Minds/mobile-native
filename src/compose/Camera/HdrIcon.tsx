@@ -1,18 +1,18 @@
 import React, { FC } from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { styles } from './styles';
 import type { CameraStore } from './createCameraStore';
 import { observer } from 'mobx-react';
 
 type PropsType = {
   store: CameraStore;
+  style: any;
 };
 
 /**
  * Camera switch Icon
  */
-const HdrIcon: FC<PropsType> = ({ store }: PropsType) => {
+const HdrIcon: FC<PropsType> = ({ store, style }: PropsType) => {
   // Toggle callback
   const onPress = React.useCallback(() => store.toggleHdr(), [store]);
 
@@ -20,7 +20,7 @@ const HdrIcon: FC<PropsType> = ({ store }: PropsType) => {
     <Icon
       name={store.hdr ? 'hdr' : 'hdr-off'}
       size={30}
-      style={styles.icon}
+      style={style}
       onPress={onPress}
     />
   );

@@ -1,18 +1,18 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import FastImage from 'react-native-fast-image';
-import { Platform, Dimensions, Image } from 'react-native';
+import { Platform, Dimensions } from 'react-native';
 import SmartImage from '../../src/common/components/SmartImage';
 import ThemedStyles from '../styles/ThemedStyles';
 import ImageZoom from 'react-native-image-pan-zoom';
-
-const { width } = Dimensions.get('window');
+import { useDimensions } from '@react-native-community/hooks';
 
 /**
  * Image preview with max and min aspect ratio support
  * @param {Object} props
  */
 export default observer(function (props) {
+  const { width } = useDimensions().window;
   // calculate the aspect ratio
   let aspectRatio = Platform.select({
     ios: props.image.width / props.image.height,

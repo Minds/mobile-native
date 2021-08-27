@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import React, { useMemo, useRef } from 'react';
+import { View, Text } from 'react-native';
 import { observer } from 'mobx-react';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -18,18 +18,23 @@ export default observer(function (props) {
   const theme = ThemedStyles.style;
 
   const insets = useSafeArea();
-  const cleanTop = useRef({ paddingTop: insets.top || 0 }).current;
-  const cleanBottom = useRef({ height: insets.bottom + 50 }).current;
-  const videoStyle = useRef({
-    marginBottom: insets.bottom,
-    flex: 1,
-    width: '100%',
-  }).current;
+  const cleanTop = useMemo(() => ({ paddingTop: insets.top || 0 }), [
+    insets.top,
+  ]);
+  const cleanBottom = useMemo(() => ({ height: insets.bottom + 50 }), [
+    insets.bottom,
+  ]);
+  const videoStyle = useMemo(
+    () => ({
+      marginBottom: insets.bottom,
+      flex: 1,
+      width: '100%',
+    }),
+    [insets.bottom],
+  );
   const video = useRef({ uri: props.store.mediaToConfirm.uri }).current;
 
   const isImage = props.store.mediaToConfirm.type.startsWith('image');
-
-  console.log('mediaToConfirm', props.store.mediaToConfirm);
 
   const previewComponent = isImage ? (
     <ImagePreview image={props.store.mediaToConfirm} />

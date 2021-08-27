@@ -10,11 +10,13 @@ import { buildStyle, updateTheme } from './Style';
 import type { Styles } from './Style';
 import RNBootSplash from 'react-native-bootsplash';
 import { storages } from '../common/services/storage/storages.service';
+import useIsPortrait from '../common/hooks/useIsPortrait';
 
 type Style = keyof Styles;
 
 type CustomStyle = ViewStyle | TextStyle | ImageStyle;
 
+type StyleOrCustom = Style | CustomStyle;
 /**
  * ThemedStylesStore
  */
@@ -45,15 +47,15 @@ export class ThemedStylesStore {
   /**
    * Combine styles into an array
    */
-  combine(...styles: Array<Style | CustomStyle>) {
+  combine(...styles: Array<StyleOrCustom>) {
     return styles.map(s => (typeof s === 'string' ? this.style[s] : s));
   }
 
-  create(styles: { [key: string]: Array<Style | CustomStyle> | CustomStyle }) {
+  create(styles: { [key: string]: Array<StyleOrCustom> | CustomStyle }) {
     const s: any = {};
     Object.keys(styles).forEach(key => {
       if (Array.isArray(styles[key])) {
-        s[key] = this.combine(...(styles[key] as Array<Style | CustomStyle>));
+        s[key] = this.combine(...(styles[key] as Array<StyleOrCustom>));
       } else {
         s[key] = styles[key];
       }
@@ -166,7 +168,7 @@ export default ThemedStyles;
 /**
  * Returns an stable reference
  */
-export function useStyle(...styles: Array<Style | CustomStyle>) {
+export function useStyle(...styles: Array<StyleOrCustom>) {
   const ref = React.useRef<any[]>();
   if (!ref.current) {
     ref.current = ThemedStyles.combine(...styles);
@@ -175,7 +177,7 @@ export function useStyle(...styles: Array<Style | CustomStyle>) {
 }
 
 export function useMemoStyle(
-  styles: Array<Style | CustomStyle>,
+  styles: Array<StyleOrCustom>,
   dependencies: React.DependencyList | undefined,
 ) {
   return React.useMemo(() => ThemedStyles.combine(...styles), dependencies);
@@ -194,4 +196,60 @@ export function useStyleFromProps(props: Object) {
     ref.current = ThemedStyles.combine(...styles);
   }
   return ref.current;
+}
+
+/**
+ * Generate styles based on the device's orientation
+ */
+export function useOrientationStyles(styles: {
+  [key: string]: Array<StyleOrCustom | OrientationStyle> | CustomStyle;
+}) {
+  const orientation = useIsPortrait();
+
+  return React.useMemo(() => {
+    Object.keys(styles).forEach(style => {
+      if (Array.isArray(styles[style])) {
+        (styles[style] as Array<StyleOrCustom>).forEach((item, index) => {
+          if (Array.isArray(item)) {
+            styles[style][index] = item[0] === orientation ? item[1] : item[2];
+          } else {
+            Object.keys(item).forEach(prop => {
+              if (Array.isArray(item[prop])) {
+                item[prop] =
+                  item[prop][0] === orientation ? item[prop][1] : item[prop][2];
+              }
+            });
+          }
+        });
+      } else {
+        Object.keys(styles[style]).forEach(prop => {
+          if (Array.isArray(styles[style][prop])) {
+            styles[style][prop] =
+              styles[style][prop][0] === orientation
+                ? styles[style][prop][1]
+                : styles[style][prop][2];
+          }
+        });
+      }
+    });
+    return ThemedStyles.create(styles);
+  }, [orientation]);
+}
+
+export type OrientationStyle =
+  | [boolean, StyleOrCustom]
+  | [boolean, StyleOrCustom, Style | CustomStyle];
+
+export function portrait<T>(
+  value: T extends StyleOrCustom ? StyleOrCustom : T,
+  value2?: T extends StyleOrCustom ? StyleOrCustom : T,
+): T extends StyleOrCustom ? StyleOrCustom : T {
+  return value2 ? [true, value, value2] : [true, value];
+}
+
+export function landscape<T>(
+  value: T extends StyleOrCustom ? StyleOrCustom : T,
+  value2?: T extends StyleOrCustom ? StyleOrCustom : T,
+): T extends StyleOrCustom ? StyleOrCustom : T {
+  return value2 ? [true, value, value2] : [true, value];
 }
