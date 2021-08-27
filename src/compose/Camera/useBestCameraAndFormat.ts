@@ -15,6 +15,9 @@ type CameraDevices = {
 
 const FPS = 30;
 
+/**
+ * Returns the best camera device and format
+ */
 export default function useBestCameraAndFormat(
   store: CameraStore,
 ): [
