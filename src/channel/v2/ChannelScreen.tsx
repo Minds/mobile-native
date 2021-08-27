@@ -53,9 +53,7 @@ const tinycolor = require('tinycolor2');
 /**
  * determines whether a color is light
  **/
-const isLight = (color: string) => {
-  return tinycolor(color).getLuminance() > 0.6;
-};
+const isLight = (color: string) => tinycolor(color).isLight();
 
 /**
  * given an image uri, returns the average/dominant color
@@ -68,7 +66,7 @@ const getColorFromURI = async uri => {
   if (Platform.OS === 'android') {
     color = (colors as AndroidImageColors).average!;
   } else {
-    color = (colors as IOSImageColors).primary!;
+    color = (colors as IOSImageColors).background!;
   }
 
   return color;
