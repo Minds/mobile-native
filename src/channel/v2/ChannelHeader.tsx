@@ -241,7 +241,7 @@ const ChannelHeader = withErrorBoundary(
             {channel && (
               <>
                 {!props.hideDescription && (
-                  <View style={[theme.paddingTop2x, theme.paddingBottom]}>
+                  <View style={styles.channelDescription}>
                     <ChannelDescription channel={channel} />
                   </View>
                 )}
@@ -335,6 +335,7 @@ const ChannelHeader = withErrorBoundary(
 );
 
 const styles = ThemedStyles.create({
+  channelDescription: ['paddingVertical'],
   buttonsMarginContainer: {
     marginTop: 5,
     position: 'absolute',
