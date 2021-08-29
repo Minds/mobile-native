@@ -17,6 +17,9 @@ type Style = keyof Styles;
 type CustomStyle = ViewStyle | TextStyle | ImageStyle;
 
 type StyleOrCustom = Style | CustomStyle;
+
+type CustomStyles = { [key: string]: Array<StyleOrCustom> | CustomStyle };
+
 /**
  * ThemedStylesStore
  */
@@ -51,7 +54,7 @@ export class ThemedStylesStore {
     return styles.map(s => (typeof s === 'string' ? this.style[s] : s));
   }
 
-  create(styles: { [key: string]: Array<StyleOrCustom> | CustomStyle }) {
+  create(styles: CustomStyles) {
     const s: any = {};
     Object.keys(styles).forEach(key => {
       if (Array.isArray(styles[key])) {
@@ -232,7 +235,7 @@ export function useOrientationStyles(styles: {
         });
       }
     });
-    return ThemedStyles.create(styles);
+    return ThemedStyles.create(styles as CustomStyles);
   }, [orientation]);
 }
 
@@ -244,12 +247,12 @@ export function portrait<T>(
   value: T extends StyleOrCustom ? StyleOrCustom : T,
   value2?: T extends StyleOrCustom ? StyleOrCustom : T,
 ): T extends StyleOrCustom ? StyleOrCustom : T {
-  return value2 ? [true, value, value2] : [true, value];
+  return (value2 ? [true, value, value2] : [true, value]) as any;
 }
 
 export function landscape<T>(
   value: T extends StyleOrCustom ? StyleOrCustom : T,
   value2?: T extends StyleOrCustom ? StyleOrCustom : T,
 ): T extends StyleOrCustom ? StyleOrCustom : T {
-  return value2 ? [true, value, value2] : [true, value];
+  return (value2 ? [true, value, value2] : [true, value]) as any;
 }

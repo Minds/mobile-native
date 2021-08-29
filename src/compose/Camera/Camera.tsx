@@ -4,7 +4,7 @@ import { View, StyleSheet } from 'react-native';
 import { Camera } from 'react-native-vision-camera';
 import FIcon from 'react-native-vector-icons/Feather';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { useRoute, useNavigation } from '@react-navigation/native';
+import { useRoute, useNavigation, RouteProp } from '@react-navigation/native';
 import { when } from 'mobx';
 import { observer, useLocalStore } from 'mobx-react';
 
@@ -30,6 +30,9 @@ import FocusGesture from './FocusGesture';
 import { MotiView } from 'moti';
 import useBestCameraAndFormat from './useBestCameraAndFormat';
 import useCameraStyle from './useCameraStyle';
+import { AppStackParamList } from '../../navigation/NavigationTypes';
+
+type CaptureScreenRouteProp = RouteProp<AppStackParamList, 'Capture'>;
 
 const ReanimatedCamera = Reanimated.createAnimatedComponent(Camera);
 Reanimated.addWhitelistedNativeProps({
@@ -45,7 +48,7 @@ const camAnimTransition: any = { type: 'timing', duration: 100 };
 export default observer(function (props) {
   const theme = ThemedStyles.style;
   const camera = useRef<Camera>(null);
-  const route = useRoute();
+  const route = useRoute<CaptureScreenRouteProp>();
   const navigation = useNavigation();
   const zoom = useSharedValue(0);
   const zoomVisible = useSharedValue<boolean>(false);
@@ -78,6 +81,15 @@ export default observer(function (props) {
     };
   }, [maxZoom, minZoom, zoom]);
 
+  // capture press handler
+  const onPress = useCallback(async () => {
+    if (props.mode === 'photo') {
+      store.takePicture(camera);
+    } else {
+      store.recordVideo(false, format, camera);
+    }
+  }, [props, store, format, camera]);
+
   useEffect(() => {
     const t = setTimeout(() => {
       store.showCam();
@@ -105,15 +117,6 @@ export default observer(function (props) {
       unlisten && unlisten();
     };
   }, [store, onPress, route.params, navigation]);
-
-  // capture press handler
-  const onPress = useCallback(async () => {
-    if (props.mode === 'photo') {
-      store.takePicture(camera);
-    } else {
-      store.recordVideo(false, format, camera);
-    }
-  }, [props, store, format, camera]);
 
   // capture long press handler
   const onLongPress = useCallback(async () => {
