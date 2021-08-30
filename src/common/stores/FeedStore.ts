@@ -334,14 +334,19 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
    * Fetch from the endpoint
    */
   @action
-  async fetch() {
+  async fetch(local: boolean = false) {
     this.setLoading(true).setErrorLoading(false);
 
     const endpoint = this.feedsService.endpoint;
     const params = this.feedsService.params;
 
     try {
-      await this.feedsService.fetch();
+      if (local) {
+        await this.feedsService.fetchLocal();
+      } else {
+        await this.feedsService.fetch();
+      }
+
       const entities = await this.feedsService.getEntities();
 
       // if the endpoint or the params are changed we ignore the result
@@ -360,6 +365,14 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
     } finally {
       this.setLoading(false);
     }
+  }
+
+  /**
+   * Fetch from cache
+   */
+  @action
+  async fetchLocal() {
+    return this.fetch(true);
   }
 
   /**
