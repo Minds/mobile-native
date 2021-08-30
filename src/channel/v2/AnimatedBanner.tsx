@@ -7,8 +7,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import ThemedStyles from '../../styles/ThemedStyles';
 import settingsStore from '../../settings/SettingsStore';
-import { ImageBackground, View } from 'react-native';
-import { Icon } from 'react-native-elements';
+import { View } from 'react-native';
 import SmallCircleButton from '../../common/components/SmallCircleButton';
 
 interface AnimatedBannerProps {

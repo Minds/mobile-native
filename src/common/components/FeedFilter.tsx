@@ -28,6 +28,7 @@ const FeedFilter = (props: PropsType) => {
   const show = React.useCallback(() => {
     ref.current?.present();
   }, [ref]);
+  const iconStyle = useStyle('colorIcon', { top: -1 });
 
   const options = React.useMemo(
     () =>
@@ -58,11 +59,7 @@ const FeedFilter = (props: PropsType) => {
         style={containerStyle}
         onPress={show}
         testID="FilterToggle">
-        <MdIcon
-          name="filter-variant"
-          size={18}
-          style={[ThemedStyles.style.colorIcon, { top: -1 }]}
-        />
+        <MdIcon name="filter-variant" size={18} style={iconStyle} />
         {!props.hideLabel && <Text style={itemStyle}>{i18n.t('filter')}</Text>}
       </TouchableOpacity>
       <BottomSheet ref={ref} title={i18n.t('filter') + ' ' + i18n.t('feed')}>
