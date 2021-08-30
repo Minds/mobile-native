@@ -6,7 +6,6 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View,
 } from 'react-native';
 import ThemedStyles, {
   useMemoStyle,
@@ -159,7 +158,6 @@ const ChannelTopBar = observer(
     );
 
     // =====================| RENDER |=====================>
-
     const searchInput = useMemo(
       () => (
         <>
@@ -210,13 +208,6 @@ const ChannelTopBar = observer(
             <Text style={nameStyles} numberOfLines={1}>
               {store?.channel?.name}
             </Text>
-            {/*{store?.channel && (
-              <ChannelBadges
-                channel={store?.channel}
-                size={20}
-                iconStyle={theme.colorLink}
-              />
-            )}*/}
           </SafeAreaView>
         </Animated.View>
         <SmallCircleButton
