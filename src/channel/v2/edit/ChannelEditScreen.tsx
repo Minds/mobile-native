@@ -1,9 +1,10 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect } from 'react';
 import ThemedStyles, { useStyle } from '../../../styles/ThemedStyles';
 import { observer, useLocalStore } from 'mobx-react';
 import {
   ImageBackground,
   KeyboardAvoidingView,
+  Platform,
   ScrollView,
   View,
 } from 'react-native';
@@ -17,10 +18,12 @@ import { ChannelStoreType } from '../createChannelStore';
 import SaveButton from '../../../common/components/SaveButton';
 import LocationAutoSuggest from '../../../common/components/LocationAutoSuggest';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { NavigationProp } from '@react-navigation/native';
 
 type PropsType = {
   route: any;
-  navigation: any;
+  navigation: NavigationProp<any>;
   store: any;
 };
 
@@ -176,7 +179,7 @@ const About = observer(({ store }: PropsType) => {
   );
 });
 
-const ChannelEditScreen = props => {
+const ChannelEditScreen = (props: PropsType) => {
   const { navigation, route } = props;
   const theme = ThemedStyles.style;
   const insets = useSafeAreaInsets();
@@ -204,12 +207,25 @@ const ChannelEditScreen = props => {
   /**
    * Set save button on header right
    */
-  useEffect(
+  useLayoutEffect(
     () =>
       navigation.setOptions({
         headerRight: () => <SaveButton onPress={save} />,
+        title: i18n.t('channel.editChannel'),
+        headerLeft:
+          Platform.OS === 'ios'
+            ? () => (
+                <Icon
+                  name="close"
+                  style={theme.colorPrimaryText}
+                  size={25}
+                  onPress={navigation.goBack}
+                />
+              )
+            : undefined,
+        headerHideBackButton: Platform.OS === 'ios',
       }),
-    [],
+    [navigation],
   );
 
   useEffect(() => {
@@ -225,7 +241,7 @@ const ChannelEditScreen = props => {
       contentContainerStyle={useStyle({
         paddingBottom: insets.bottom + 100,
       })}
-      keyboardShouldPersistTaps="always">
+      keyboardShouldPersistTaps="handled">
       <KeyboardAvoidingView
         style={useStyle('flexContainer', 'paddingTop3x')}
         behavior="position"

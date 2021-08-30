@@ -62,11 +62,11 @@ import featuresService from '../common/services/features.service';
 import JoinMembershipScreen from '../wire/v2/tiers/JoinMembershipScreen';
 
 import {
-  RootStackParamList,
-  AuthStackParamList,
   AppStackParamList,
+  AuthStackParamList,
   DrawerParamList,
   InternalStackParamList,
+  RootStackParamList,
 } from './NavigationTypes';
 
 import Drawer from './Drawer';
@@ -398,10 +398,7 @@ const AppStack = function () {
           name="ChannelEdit"
           component={ChannelEditScreen}
           options={{
-            headerStyle: {
-              backgroundColor: ThemedStyles.getColor('PrimaryBackground'),
-            },
-            headerHideShadow: true,
+            headerHideBackButton: true,
             stackAnimation: 'slide_from_bottom',
             title: i18n.t('channel.editChannel'),
           }}
