@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import FeedList from '../../common/components/FeedList';
@@ -32,6 +32,18 @@ const ChannelScreen = observer((props: PropsType) => {
   const theme = ThemedStyles.style;
   const feedRef = useRef<FeedList<any>>(null);
   const store = useLocalStore(createChannelStore);
+  const channelContext = useMemo(
+    () => ({
+      /**
+       * when the user tapped on channel when they were
+       * on that channel page, wiggle the feedList scroll
+       **/
+      onSelfNavigation: () => {
+        feedRef.current?.wiggle();
+      },
+    }),
+    [feedRef],
+  );
 
   useEffect(() => {
     const params = props.route.params;
@@ -60,14 +72,6 @@ const ChannelScreen = observer((props: PropsType) => {
       }
     }, [props.navigation, props.route.params, store.channel, store.feedStore]),
   );
-
-  /**
-   * when the user tapped on channel when they were
-   * on that channel page, wiggle the feedList scroll
-   **/
-  const onSelfNavigation = useCallback(() => {
-    feedRef.current?.wiggle();
-  }, [feedRef]);
 
   const renderBlog = useCallback(
     (row: { item: BlogModel }) => {
@@ -147,10 +151,7 @@ const ChannelScreen = observer((props: PropsType) => {
   ) : undefined;
 
   return (
-    <ChannelContext.Provider
-      value={{
-        onSelfNavigation,
-      }}>
+    <ChannelContext.Provider value={channelContext}>
       <ChannelTopBar navigation={props.navigation} store={store} />
       <FeedList
         ref={feedRef}
