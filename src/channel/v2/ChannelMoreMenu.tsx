@@ -114,7 +114,7 @@ const getOptions = (
     }
   }
 
-  if (isSubscribedToTier) {
+  if (Platform.OS !== 'ios' && isSubscribedToTier) {
     options.push({
       iconName: 'attach-money',
       iconType: 'material',
