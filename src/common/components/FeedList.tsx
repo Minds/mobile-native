@@ -72,6 +72,25 @@ export default class FeedList<T> extends Component<PropsType> {
   }
 
   /**
+   * moves scroll offset up and down
+   **/
+  wiggle() {
+    const DISTANCE = 25;
+    const currentScrollOffset = this.props.feedStore.scrollOffset;
+
+    this.listRef?.scrollToOffset({
+      animated: true,
+      offset: currentScrollOffset - DISTANCE,
+    });
+    setTimeout(() => {
+      this.listRef?.scrollToOffset({
+        animated: true,
+        offset: currentScrollOffset,
+      });
+    }, 150);
+  }
+
+  /**
    * Set list reference
    */
   setListRef = (r: FlatList<T> | undefined) => (this.listRef = r);
