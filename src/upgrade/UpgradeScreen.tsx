@@ -5,7 +5,6 @@ import ThemedStyles from '../styles/ThemedStyles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import i18n from '../common/services/i18n.service';
 import StripeCardSelector from '../wire/methods/v2/StripeCardSelector';
-import CenteredLoading from '../common/components/CenteredLoading';
 
 import { UserError } from '../common/UserError';
 import Button from '../common/components/Button';
@@ -21,6 +20,7 @@ import {
 } from './types';
 import PlanOptions from './PlanOptions';
 import { useDimensions } from '@react-native-community/hooks';
+import UpgradeScreenPlaceHolder from './UpgradeScreenPlaceHolder';
 
 const isIos = Platform.OS === 'ios';
 
@@ -87,10 +87,6 @@ const UpgradeScreen = observer(({ navigation, route }: PropsType) => {
     init();
   }, [localStore, pro, wallet]);
 
-  if (localStore.settings === false) {
-    return <CenteredLoading />;
-  }
-
   const topMargin = height / 18;
   const cleanTop = {
     marginTop: insets.top + (isIos ? topMargin : topMargin + 10),
@@ -99,25 +95,32 @@ const UpgradeScreen = observer(({ navigation, route }: PropsType) => {
   return (
     <View style={[cleanTop, styles.container, theme.bgSecondaryBackground]}>
       <Header pro={pro} />
-      <FitScrollView style={theme.flexContainer}>
-        {!isIos && <PaymentMethod store={localStore} />}
-        <PlanOptions store={localStore} pro={pro} />
-        {localStore.method === 'usd' && (
-          <View style={theme.marginTop6x}>
-            <StripeCardSelector onCardSelected={localStore.setCard} />
+      {localStore.settings === false && <UpgradeScreenPlaceHolder />}
+      {localStore.settings !== false && (
+        <FitScrollView style={theme.flexContainer}>
+          {!isIos && <PaymentMethod store={localStore} />}
+          <PlanOptions store={localStore} pro={pro} />
+          {localStore.method === 'usd' && (
+            <View style={theme.marginTop6x}>
+              <StripeCardSelector onCardSelected={localStore.setCard} />
+            </View>
+          )}
+          <View
+            style={[
+              theme.padding2x,
+              theme.borderTop,
+              theme.bcolorPrimaryBorder,
+            ]}>
+            <Button
+              onPress={confirmSend}
+              text={i18n.t(`monetize.${pro ? 'pro' : 'plus'}Join`)}
+              containerStyle={styles.buttonRight}
+              loading={localStore.loading}
+              action
+            />
           </View>
-        )}
-        <View
-          style={[theme.padding2x, theme.borderTop, theme.bcolorPrimaryBorder]}>
-          <Button
-            onPress={confirmSend}
-            text={i18n.t(`monetize.${pro ? 'pro' : 'plus'}Join`)}
-            containerStyle={styles.buttonRight}
-            loading={localStore.loading}
-            action
-          />
-        </View>
-      </FitScrollView>
+        </FitScrollView>
+      )}
     </View>
   );
 });
