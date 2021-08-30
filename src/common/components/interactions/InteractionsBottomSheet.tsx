@@ -18,7 +18,7 @@ import { BottomSheetButton } from '../bottom-sheet';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import ChannelListItem from '../ChannelListItem';
-import Handle from '../bottom-sheet/HandleV2';
+import Handle from '../bottom-sheet/Handle';
 import ChannelListItemPlaceholder from '../ChannelListItemPlaceholder';
 import ActivityPlaceHolder from '../../../newsfeed/ActivityPlaceHolder';
 

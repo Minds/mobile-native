@@ -1,12 +1,10 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useCallback } from 'react';
 import BottomSheet, {
   BottomSheetBackdrop,
   BottomSheetBackgroundProps,
 } from '@gorhom/bottom-sheet';
 import { Dimensions, View } from 'react-native';
-
 import ThemedStyles from '../../styles/ThemedStyles';
-import Handle from './Handle';
 import CommentList from './CommentList';
 import CommentsStore from './CommentsStore';
 import {
@@ -18,6 +16,7 @@ import { useRoute } from '@react-navigation/native';
 import CommentInput from './CommentInput';
 import { useLocalStore } from 'mobx-react';
 import { GOOGLE_PLAY_STORE } from '../../config/Config';
+import Handle from '../../common/components/bottom-sheet/Handle';
 
 const BottomSheetLocalStore = ({ onChange }) => ({
   isOpen: 0,
@@ -113,6 +112,15 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
     [],
   );
 
+  const renderHandle = useCallback(
+    () => (
+      <Handle
+        style={{ backgroundColor: ThemedStyles.getColor('PrimaryBackground') }}
+      />
+    ),
+    [],
+  );
+
   return [
     <BottomSheet
       key="commentSheet"
@@ -121,7 +129,7 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
       onChange={localStore.setOpen}
       containerHeight={windowHeight}
       snapPoints={snapPoints}
-      handleComponent={Handle}
+      handleComponent={renderHandle}
       backgroundComponent={CustomBackground}
       backdropComponent={renderBackdrop}>
       {!props.hideContent && ( // we disable the navigator until the screen is focused (for the post swiper)
