@@ -1,6 +1,3 @@
-/**
- * a View that has two linear gradients on top and bottom
- **/
 import React, { useMemo } from 'react';
 import { View, ViewProps } from 'react-native';
 import { FC } from 'react';
@@ -12,6 +9,9 @@ interface FadeViewProps extends ViewProps {
   fadeLength?: number;
 }
 
+/**
+ * a View that has linear gradients on selected sides (top, bottom, left, right)
+ **/
 const FadeView: FC<FadeViewProps> = ({
   children,
   fades,
