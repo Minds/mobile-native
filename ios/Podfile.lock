@@ -302,7 +302,7 @@ PODS:
     - React
   - react-native-randombytes (3.6.0):
     - React-Core
-  - react-native-safe-area-context (3.2.0):
+  - react-native-safe-area-context (3.3.0):
     - React-Core
   - react-native-slider (3.0.3):
     - React
@@ -878,7 +878,7 @@ SPEC CHECKSUMS:
   react-native-netinfo: 30fb89fa913c342be82a887b56e96be6d71201dd
   react-native-notifications: b67765827723f605d9267922977c8b0ad93e96ee
   react-native-randombytes: b6677f7d495c27e9ee0dbd77ebc97b3c59173729
-  react-native-safe-area-context: f0906bf8bc9835ac9a9d3f97e8bde2a997d8da79
+  react-native-safe-area-context: 61c8c484a3a9e7d1fda19f7b1794b35bbfd2262a
   react-native-slider: e99fc201cefe81270fc9d81714a7a0f5e566b168
   react-native-webview: 160ac8d6bb974e2933f2de6bb7464a8e934ff31d
   React-perflogger: 25373e382fed75ce768a443822f07098a15ab737
