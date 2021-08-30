@@ -94,7 +94,7 @@ const AboutScreen = observer(({ route, navigation }: PropsType) => {
   return (
     <ScrollView
       style={[theme.flexContainer, theme.bgPrimaryBackground]}
-      keyboardShouldPersistTaps="always">
+      keyboardShouldPersistTaps="handled">
       <KeyboardAvoidingView
         style={[theme.flexContainer, theme.paddingTop3x]}
         behavior="position"
