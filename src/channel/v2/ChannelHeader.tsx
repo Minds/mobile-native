@@ -212,7 +212,7 @@ const ChannelHeader = withErrorBoundary(
               <Text style={styles.username} numberOfLines={1}>
                 @{channel ? channel.username : props.channelName}
               </Text>
-              {channel!.subscriber && (
+              {Boolean(channel!.subscriber) && (
                 <Text style={theme.colorSecondaryText}>
                   {` · `}
                   {i18n.t('channel.subscriber')}
