@@ -26,19 +26,19 @@ const renderItemUser = (row: { item: any; index: number }) => {
 };
 const mapSubscriber = data => data.map(d => UserModel.create(d));
 
-export interface FiltersActionSheetHandles {
+export interface ChannelsActionSheetHandles {
   show(filters: 'subscribers' | 'subscriptions'): void;
 
   hide(): void;
 }
 
 /**
- * Filters Action Sheet
+ * Channels Action Sheet
  * @param props
  * @param ref
  */
-const FiltersBottomSheet: React.ForwardRefRenderFunction<
-  FiltersActionSheetHandles,
+const ChannelsActionSheet: React.ForwardRefRenderFunction<
+  ChannelsActionSheetHandles,
   PropsType
 > = (props: PropsType, ref) => {
   // =====================| STATES & VARIABLES |=====================>
@@ -161,4 +161,4 @@ const styles = ThemedStyles.create({
   titleStyle: ['fontXL', 'marginLeft2x', 'marginBottom', 'bold'],
   contentContainerStyle: { paddingBottom: 200 },
 });
-export default observer(forwardRef(FiltersBottomSheet));
+export default observer(forwardRef(ChannelsActionSheet));
