@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, Text, ViewStyle } from 'react-native';
+import { Text, TouchableOpacity, ViewStyle } from 'react-native';
 import i18n from '../services/i18n.service';
 import ThemedStyles, { useStyle } from '../../styles/ThemedStyles';
 import MdIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -7,7 +7,6 @@ import { observer } from 'mobx-react';
 import BottomSheet from './bottom-sheet/BottomSheet';
 import BottomSheetButton from './bottom-sheet/BottomSheetButton';
 import RadioButton from './bottom-sheet/RadioButton';
-import MPressable from './MPressable';
 
 type PropsType = {
   hideLabel?: boolean;
@@ -55,21 +54,17 @@ const FeedFilter = (props: PropsType) => {
 
   return (
     <>
-      <MPressable style={containerStyle} onPress={show} testID="FilterToggle">
+      <TouchableOpacity
+        style={containerStyle}
+        onPress={show}
+        testID="FilterToggle">
         <MdIcon
           name="filter-variant"
           size={18}
           style={[ThemedStyles.style.colorIcon, { top: -1 }]}
         />
         {!props.hideLabel && <Text style={itemStyle}>{i18n.t('filter')}</Text>}
-      </MPressable>
-      {/*<TouchableOpacity
-        style={containerStyle}
-        onPress={show}
-        testID="FilterToggle">
-        <MdIcon name="filter" size={18} style={ThemedStyles.style.colorIcon} />
-        {!props.hideLabel && <Text style={itemStyle}>{i18n.t('filter')}</Text>}
-      </TouchableOpacity>*/}
+      </TouchableOpacity>
       <BottomSheet ref={ref} title={i18n.t('filter') + ' ' + i18n.t('feed')}>
         {options.map((b, i) => (
           <RadioButton {...b} key={i} />
