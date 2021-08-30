@@ -289,14 +289,6 @@ PODS:
     - React-jsi (= 0.64.2)
     - React-perflogger (= 0.64.2)
   - React-jsinspector (0.64.2)
-  - react-native-camera (3.43.0):
-    - React-Core
-    - react-native-camera/RCT (= 3.43.0)
-    - react-native-camera/RN (= 3.43.0)
-  - react-native-camera/RCT (3.43.0):
-    - React-Core
-  - react-native-camera/RN (3.43.0):
-    - React-Core
   - react-native-cameraroll (4.0.4):
     - React-Core
   - react-native-mmkv-storage (0.6.0):
@@ -310,7 +302,7 @@ PODS:
     - React
   - react-native-randombytes (3.6.0):
     - React-Core
-  - react-native-safe-area-context (3.2.0):
+  - react-native-safe-area-context (3.3.0):
     - React-Core
   - react-native-slider (3.0.3):
     - React
@@ -502,6 +494,10 @@ PODS:
     - UMFontInterface
   - UMSensorsInterface (5.4.0)
   - UMTaskManagerInterface (5.4.0)
+  - VisionCamera (2.6.1):
+    - React
+    - React-callinvoker
+    - React-Core
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -547,7 +543,6 @@ DEPENDENCIES:
   - React-jsi (from `../node_modules/react-native/ReactCommon/jsi`)
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
-  - react-native-camera (from `../node_modules/react-native-camera`)
   - "react-native-cameraroll (from `../node_modules/@react-native-community/cameraroll`)"
   - react-native-mmkv-storage (from `../node_modules/react-native-mmkv-storage`)
   - react-native-month-year-picker (from `../node_modules/react-native-month-year-picker`)
@@ -608,6 +603,7 @@ DEPENDENCIES:
   - "UMReactNativeAdapter (from `../node_modules/@unimodules/react-native-adapter/ios`)"
   - UMSensorsInterface (from `../node_modules/unimodules-sensors-interface/ios`)
   - UMTaskManagerInterface (from `../node_modules/unimodules-task-manager-interface/ios`)
+  - VisionCamera (from `../node_modules/react-native-vision-camera`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -701,8 +697,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsiexecutor"
   React-jsinspector:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
-  react-native-camera:
-    :path: "../node_modules/react-native-camera"
   react-native-cameraroll:
     :path: "../node_modules/@react-native-community/cameraroll"
   react-native-mmkv-storage:
@@ -823,6 +817,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/unimodules-sensors-interface/ios"
   UMTaskManagerInterface:
     :path: "../node_modules/unimodules-task-manager-interface/ios"
+  VisionCamera:
+    :path: "../node_modules/react-native-vision-camera"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -876,14 +872,13 @@ SPEC CHECKSUMS:
   React-jsi: 67747b9722f6dab2ffe15b011bcf6b3f2c3f1427
   React-jsiexecutor: 80c46bd381fd06e418e0d4f53672dc1d1945c4c3
   React-jsinspector: cc614ec18a9ca96fd275100c16d74d62ee11f0ae
-  react-native-camera: f432fcf1b32b528bbf7c3543d3e3b1deb0c5b72a
   react-native-cameraroll: 88f4e62d9ecd0e1f253abe4f685474f2ea14bfa2
   react-native-mmkv-storage: 684f1adf671592c18fb023e0cf1305a84108b59d
   react-native-month-year-picker: 9a59b4b8c4802a23123b0ce4ccadce880ad55f8a
   react-native-netinfo: 30fb89fa913c342be82a887b56e96be6d71201dd
   react-native-notifications: b67765827723f605d9267922977c8b0ad93e96ee
   react-native-randombytes: b6677f7d495c27e9ee0dbd77ebc97b3c59173729
-  react-native-safe-area-context: f0906bf8bc9835ac9a9d3f97e8bde2a997d8da79
+  react-native-safe-area-context: 61c8c484a3a9e7d1fda19f7b1794b35bbfd2262a
   react-native-slider: e99fc201cefe81270fc9d81714a7a0f5e566b168
   react-native-webview: 160ac8d6bb974e2933f2de6bb7464a8e934ff31d
   React-perflogger: 25373e382fed75ce768a443822f07098a15ab737
@@ -942,8 +937,9 @@ SPEC CHECKSUMS:
   UMReactNativeAdapter: 172def7895b2cb44a7dd021336e316d5fa8ea958
   UMSensorsInterface: 4df9ec662134de5614ae61acc249d6912db87ca5
   UMTaskManagerInterface: 4c60b43eaf3cb05a164bc9113258a171c18b7bf7
+  VisionCamera: dc481620431e31c1d6bbbc438d8a1d9c56f3d304
   Yoga: 575c581c63e0d35c9a83f4b46d01d63abc1100ac
 
-PODFILE CHECKSUM: 7121d0d84f50a98fdc1423cd92201b3b16a73d02
+PODFILE CHECKSUM: a8f29d139e7a900cdfca7925e3808478b9acdfad
 
 COCOAPODS: 1.10.1

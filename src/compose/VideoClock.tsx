@@ -4,17 +4,22 @@ import { Text, TextStyle } from 'react-native';
 
 type PropsType = {
   style?: TextStyle | Array<TextStyle>;
+  timer?: number;
+  onTimer?: () => void;
 };
 
 /**
  * Video clock component
  */
-const VideoClock = (props: PropsType) => {
+const VideoClock = ({ style, timer, onTimer }: PropsType) => {
   const [time, setTime] = useState('00:00');
 
   useEffect(() => {
     let counter = 0;
     const interval = setInterval(() => {
+      if (timer && onTimer && counter + 1 === timer) {
+        onTimer();
+      }
       setTime(
         moment()
           .hour(0)
@@ -28,7 +33,7 @@ const VideoClock = (props: PropsType) => {
     };
   }, []);
 
-  return <Text style={props.style}>{time}</Text>;
+  return <Text style={style}>{time}</Text>;
 };
 
 export default VideoClock;

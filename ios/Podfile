@@ -51,7 +51,7 @@ target 'Minds' do
     installer.pods_project.targets.each do |target|
       target.build_configurations.each do |config|
         config.build_settings['APPLICATION_EXTENSION_API_ONLY'] = 'NO'
-        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '10.0'
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '11.0'
         # Note for M1 Mac: uncomment next line
         # config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
       end
@@ -75,6 +75,7 @@ end
 target 'Share' do
   # use_react_native!
   config = use_native_modules!
+
   use_react_native!(:path => config["reactNativePath"], :hermes_enabled => true)
 
   pod 'RNShareMenu', :path => '../node_modules/react-native-share-menu'

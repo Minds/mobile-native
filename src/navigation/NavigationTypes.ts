@@ -114,6 +114,7 @@ export type AppStackParamList = {
     entity?: any;
     text?: string;
     media?: any;
+    start?: boolean;
     mode?: 'photo' | 'video' | 'text';
   };
   Main: {};
