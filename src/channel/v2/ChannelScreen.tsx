@@ -44,7 +44,7 @@ import {
   IOSImageColors,
 } from 'react-native-image-colors/lib/typescript/types';
 import AnimatedBanner from './AnimatedBanner';
-import ChannelsActionSheet from '../../common/components/ChannelsActionSheet';
+import InteractionsBottomSheet from '../../common/components/interactions/InteractionsBottomSheet';
 
 const tinycolor = require('tinycolor2');
 
@@ -283,12 +283,12 @@ const ChannelScreen = observer((props: PropsType) => {
   );
 
   const openSubscribers = useCallback(
-    () => subscribersActionSheetRef.current?.show('subscribers'),
+    () => subscribersActionSheetRef.current?.show('channelSubscribers'),
     [],
   );
 
   const openSubscriptions = useCallback(
-    () => subscriptionsActionSheetRef.current?.show('subscriptions'),
+    () => subscriptionsActionSheetRef.current?.show('channelSubscriptions'),
     [],
   );
 
@@ -438,12 +438,12 @@ const ChannelScreen = observer((props: PropsType) => {
         />
       </Animated.View>
 
-      <ChannelsActionSheet
-        channel={store.channel}
+      <InteractionsBottomSheet
+        entity={store.channel}
         ref={subscribersActionSheetRef}
       />
-      <ChannelsActionSheet
-        channel={store.channel}
+      <InteractionsBottomSheet
+        entity={store.channel}
         ref={subscriptionsActionSheetRef}
       />
     </ChannelContext.Provider>

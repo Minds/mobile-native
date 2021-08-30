@@ -27,6 +27,8 @@ type Interactions =
   | 'downVotes'
   | 'reminds'
   | 'quotes'
+  | 'channelSubscribers'
+  | 'channelSubscriptions'
   | 'subscribers';
 
 type PropsType = {
@@ -115,6 +117,10 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
           return `api/v3/votes/list/${entity.guid}`;
         case 'subscribers':
           return `api/v3/subscriptions/graph/${entity.guid}/subscribers`;
+        case 'channelSubscribers':
+          return 'api/v1/subscribe/subscribers/' + entity.guid;
+        case 'channelSubscriptions':
+          return 'api/v1/subscribe/subscriptions/' + entity.guid;
         default:
           return 'api/v3/newsfeed';
       }
@@ -132,6 +138,9 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
         case 'quotes':
           opts.quote_guid = entity.guid;
           break;
+        case 'channelSubscriptions':
+        case 'channelSubscribers':
+          break;
         default:
           opts.direction = store.interaction === 'upVotes' ? 'up' : 'down';
           break;
@@ -140,9 +149,15 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
       return opts;
     },
     get offsetField() {
-      let offsetField = 'next-page';
+      let offsetField: string | undefined = 'next-page';
       if (store.interaction === 'subscribers') {
         offsetField = 'from_timestamp';
+      }
+      if (
+        store.interaction === 'channelSubscribers' ||
+        store.interaction === 'channelSubscriptions'
+      ) {
+        offsetField = undefined;
       }
       return offsetField;
     },
@@ -152,8 +167,17 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
   }));
   const isVote =
     store.interaction === 'upVotes' || store.interaction === 'downVotes';
-  const isSubscriber = store.interaction === 'subscribers';
-  const dataField = isVote ? 'votes' : 'entities';
+  const isChannels =
+    store.interaction === 'subscribers' ||
+    store.interaction === 'channelSubscriptions' ||
+    store.interaction === 'channelSubscribers';
+  let dataField = isVote ? 'votes' : 'entities';
+  if (
+    store.interaction === 'channelSubscriptions' ||
+    store.interaction === 'channelSubscribers'
+  ) {
+    dataField = 'users';
+  }
   const placeholderCount = useMemo(() => {
     const LIMIT = 24;
 
@@ -169,7 +193,7 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
         // @ts-ignore
         return entity.quotes ? Math.min(entity.quotes, LIMIT) : undefined;
       default:
-        return undefined;
+        return 24;
     }
   }, [entity, store.interaction]);
 
@@ -208,20 +232,27 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
     }
   }, []);
 
+  const title = useMemo(() => {
+    switch (store.interaction) {
+      case 'channelSubscribers':
+        return i18n.t('subscribers');
+      case 'channelSubscriptions':
+        return i18n.t('subscriptions');
+      default:
+        return i18n.t(`interactions.${store.interaction}`, { count: 2 });
+    }
+  }, [store.interaction]);
+
   // =====================| RENDERS |=====================>
   const Header = useCallback(
     () => (
       <Handle>
         <View style={styles.navbarContainer}>
-          <Text style={styles.titleStyle}>
-            {capitalize(
-              i18n.t(`interactions.${store.interaction}`, { count: 2 }),
-            )}
-          </Text>
+          <Text style={styles.titleStyle}>{capitalize(title)}</Text>
         </View>
       </Handle>
     ),
-    [store.interaction],
+    [store.interaction, title],
   );
 
   const footer = (
@@ -248,16 +279,15 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
   );
 
   const renderPlaceholder = useCallback(() => {
-    if (isVote || isSubscriber) {
+    if (isVote || isChannels) {
       return <ChannelListItemPlaceholder />;
     }
 
     return <ActivityPlaceHolder />;
-  }, [isVote, isSubscriber]);
+  }, [isVote, isChannels]);
 
   return (
     <BottomSheet
-      key="interactionsSheet"
       ref={bottomSheetRef}
       index={0}
       containerHeight={windowHeight}
@@ -279,11 +309,9 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
               placeholderCount={placeholderCount}
               renderPlaceholder={renderPlaceholder}
               // focusHook={useFocusEffect}
-              map={
-                isVote ? mapUser : isSubscriber ? mapSubscriber : mapActivity
-              }
+              map={isVote ? mapUser : isChannels ? mapSubscriber : mapActivity}
               renderItem={
-                isVote || isSubscriber ? renderItemUser : renderItemActivity
+                isVote || isChannels ? renderItemUser : renderItemActivity
               }
               offsetField={store.offsetField}
               contentContainerStyle={styles.contentContainerStyle}
