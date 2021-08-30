@@ -254,13 +254,3 @@ export type AboutScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
   'About'
 >;
-export type AvatarScreenRouteProp = RouteProp<AppStackParamList, 'Bio'>;
-export type AvatarScreenNavigationProp = StackNavigationProp<
-  AppStackParamList,
-  'Bio'
->;
-export type BannerScreenRouteProp = RouteProp<AppStackParamList, 'About'>;
-export type BannerScreenNavigationProp = StackNavigationProp<
-  AppStackParamList,
-  'About'
->;
