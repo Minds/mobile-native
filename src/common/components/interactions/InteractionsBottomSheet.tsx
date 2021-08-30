@@ -4,7 +4,7 @@ import BottomSheet, {
   BottomSheetBackgroundProps,
 } from '@gorhom/bottom-sheet';
 import { observer, useLocalStore } from 'mobx-react';
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, Platform, StyleSheet, Text, View } from 'react-native';
 import BaseModel from '../../BaseModel';
 import navigationService from '../../../navigation/NavigationService';
 import Activity from '../../../newsfeed/activity/Activity';
@@ -75,7 +75,8 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
   const bottomSheetRef = React.useRef<BottomSheet>(null);
   const insets = useSafeAreaInsets();
   const footerStyle = useStyle(styles.cancelContainer, {
-    paddingBottom: insets.bottom + 25,
+    paddingBottom:
+      insets.bottom + Platform.select({ default: 25, android: 45 }),
     paddingTop: insets.bottom * 1.5,
   });
   const footerGradientColors = useMemo(
