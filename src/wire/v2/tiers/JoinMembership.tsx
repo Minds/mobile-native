@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
-import { View, StyleSheet, ScrollView, Text, Platform } from 'react-native';
-import ThemedStyles from '../../../styles/ThemedStyles';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import HeaderComponent from '../../../common/components/HeaderComponent';
-import UserNamesComponent from '../../../common/components/UserNamesComponent';
+import { Platform, Text, View } from 'react-native';
+import ThemedStyles, {
+  useMemoStyle,
+  useStyle,
+} from '../../../styles/ThemedStyles';
 import capitalize from '../../../common/helpers/capitalize';
 import StripeCardSelector from '../../methods/v2/StripeCardSelector';
 import Switch from 'react-native-switch-pro';
@@ -15,7 +15,7 @@ import Button from '../../../common/components/Button';
 import i18n from '../../../common/services/i18n.service';
 import { UserError } from '../../../common/UserError';
 import supportTiersService from '../../../common/services/support-tiers.service';
-import type { SupportTiersType } from '../../../wire/WireTypes';
+import type { SupportTiersType } from '../../WireTypes';
 import UserModel from '../../../channel/UserModel';
 import { DotIndicator } from 'react-native-reanimated-indicators';
 import Selector from '../../../common/components/SelectorV2';
@@ -46,70 +46,68 @@ type PropsType = {
 const selectValueExtractor = item => item.name;
 const selectIdExtractor = item => item.urn;
 
-const createJoinMembershipStore = ({ tiers }) => {
-  const store = {
-    wire: new WireStore(),
-    user: null as UserModel | null,
-    card: '' as any,
-    currentTier: tiers ? tiers[0] : (null as SupportTiersType | null),
-    list: (tiers || []) as Array<SupportTiersType>,
-    payMethod: 'tokens' as payMethod,
-    loading: false,
-    loadingData: tiers ? false : true,
-    get currentItem(): MenuItemItem {
-      return {
-        title: this.currentTier ? capitalize(this.currentTier.name) : '',
-        icon: { name: 'chevron-down', type: 'material-community' },
-      };
-    },
-    setUser(user: UserModel) {
-      this.user = user;
-    },
-    setCurrent(tier: SupportTiersType, isInitial = false) {
-      this.currentTier = tier;
-      if (isInitial) {
-        this.payMethod = !isIos && tier.has_usd ? 'usd' : 'tokens';
-      }
-    },
-    async loadList() {
-      if (!this.user) {
-        return;
-      }
-      this.setLoadingData(true);
-      try {
-        const response = await supportTiersService.getAllFromGuid(
-          this.user.guid,
-        );
-        this.list = response as Array<SupportTiersType>;
+const createJoinMembershipStore = ({ tiers }) => ({
+  wire: new WireStore(),
+  user: null as UserModel | null,
+  card: '' as any,
+  currentTier: tiers ? tiers[0] : (null as SupportTiersType | null),
+  list: (tiers || []) as Array<SupportTiersType>,
+  payMethod: 'tokens' as payMethod,
+  loading: false,
+  loadingData: !tiers,
+  get currentItem(): MenuItemItem {
+    return {
+      title: this.currentTier ? capitalize(this.currentTier.name) : '',
+      icon: { name: 'chevron-down', type: 'material-community' },
+    };
+  },
+  setUser(user: UserModel) {
+    this.user = user;
+  },
+  setCurrent(tier: SupportTiersType, isInitial = false) {
+    this.currentTier = tier;
+    if (isInitial) {
+      this.payMethod = !isIos && tier.has_usd ? 'usd' : 'tokens';
+    }
+  },
+  async loadList() {
+    if (!this.user) {
+      return;
+    }
+    this.setLoadingData(true);
+    try {
+      const response = await supportTiersService.getAllFromGuid(this.user.guid);
+      this.list = response as Array<SupportTiersType>;
 
-        if (!this.currentTier && this.list[0]) {
-          this.setCurrent(this.list[0], true);
-        }
-      } catch (error) {
-        console.log(error);
-      } finally {
-        this.setLoadingData(false);
+      if (!this.currentTier && this.list[0]) {
+        this.setCurrent(this.list[0], true);
       }
-    },
-    setLoading(loading: boolean) {
-      this.loading = loading;
-    },
-    setLoadingData(loading: boolean) {
-      this.loadingData = loading;
-    },
-    setPayMethod() {
-      this.payMethod = this.payMethod === 'usd' ? 'tokens' : 'usd';
-    },
-    setCard(card: any) {
-      this.card = card;
-    },
-  };
-
-  return store;
-};
+    } catch (error) {
+      console.log(error);
+    } finally {
+      this.setLoadingData(false);
+    }
+  },
+  setLoading(loading: boolean) {
+    this.loading = loading;
+  },
+  setLoadingData(loading: boolean) {
+    this.loadingData = loading;
+  },
+  setPayMethod() {
+    this.payMethod = this.payMethod === 'usd' ? 'tokens' : 'usd';
+  },
+  setCard(card: any) {
+    this.card = card;
+  },
+});
 
 const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
+  const theme = ThemedStyles.style;
+  const switchTextStyle = [styles.switchText, theme.colorPrimaryText];
   const tiers = route.params ? route.params.tiers : undefined;
+  const selectorRef = useRef<any>(null);
+  const { onComplete } = route.params;
   /**
    * TODO
    * Get amounts
@@ -117,9 +115,6 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
    * show input if tokens is selected payment
    */
   const store = useLocalStore(createJoinMembershipStore, { tiers });
-  const selectorRef = useRef<any>(null);
-
-  const { onComplete } = route.params;
 
   useEffect(() => {
     const { entity, user } = route.params;
@@ -141,12 +136,6 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
       store.loadList();
     }
   }, [route.params, store, tiers]);
-
-  const theme = ThemedStyles.style;
-
-  const insets = useSafeAreaInsets();
-  const cleanTop = { marginTop: insets.top + (isIos ? 60 : 50) };
-  const switchTextStyle = [styles.switchText, theme.colorPrimaryText];
 
   const complete = useCallback(() => {
     store.setLoading(false);
@@ -237,30 +226,24 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
   }, [store, payWithTokens, payWithUsd]);
 
   let costText;
-  const costTextStyle = [
-    theme.fontXL,
-    theme.colorSecondaryText,
-    theme.fontMedium,
-    theme.marginTop6x,
-  ];
   if (store.payMethod === 'usd') {
     if (store.currentTier?.has_usd) {
       costText = (
-        <Text style={costTextStyle}>
+        <Text style={styles.costTextStyle}>
           <Text
             style={theme.colorPrimaryText}>{`$${store.currentTier.usd} `}</Text>
           per month
         </Text>
       );
     } else {
-      costText = <Text style={costTextStyle}>Doesn't accept USD</Text>;
+      costText = <Text style={styles.costTextStyle}>Doesn't accept USD</Text>;
     }
   }
 
   if (store.payMethod === 'tokens') {
     if (store.currentTier?.has_tokens) {
       costText = (
-        <Text style={costTextStyle}>
+        <Text style={styles.costTextStyle}>
           <Text
             style={
               theme.colorPrimaryText
@@ -269,7 +252,9 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
         </Text>
       );
     } else {
-      costText = <Text style={costTextStyle}>Doesn't accept Tokens</Text>;
+      costText = (
+        <Text style={styles.costTextStyle}>Doesn't accept Tokens</Text>
+      );
     }
   }
 
@@ -285,17 +270,9 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
       {!store.loadingData ? (
         <>
           {!isIos && (
-            <View
-              style={[
-                theme.rowJustifyCenter,
-                theme.paddingHorizontal4x,
-                theme.paddingTop4x,
-                theme.alignCenter,
-              ]}>
+            <View style={styles.headerContainer}>
               {store.currentTier?.public && (
-                <Text style={[styles.joinTitle, theme.colorPrimaryText]}>
-                  Join a membership
-                </Text>
+                <Text style={styles.joinTitle}>Join a membership</Text>
               )}
               <View style={theme.flexContainer} />
               <Text style={switchTextStyle}>USD</Text>
@@ -316,14 +293,8 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
           </View>
           <View style={theme.paddingHorizontal4x}>
             {!!store.currentTier?.description && (
-              <View
-                style={[
-                  styles.description,
-                  theme.marginTop6x,
-                  theme.paddingLeft2x,
-                  theme.bcolorTertiaryBackground,
-                ]}>
-                <Text style={[theme.fontXL, theme.colorPrimaryText]}>
+              <View style={styles.descriptionWrapper}>
+                <Text style={styles.descriptionText}>
                   {store.currentTier?.description}
                 </Text>
               </View>
@@ -333,23 +304,26 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
           {store.payMethod === 'usd' &&
             store.currentTier &&
             store.currentTier.has_usd && (
-              <View style={[theme.marginTop6x, theme.marginHorizontal3x]}>
+              <View style={styles.stripeCardSelectorWrapper}>
                 <StripeCardSelector onCardSelected={store.setCard} />
               </View>
             )}
-          <View style={[theme.padding4x, theme.marginTop2x]}>
+          <View style={styles.alreadyAMemberWrapper}>
             <View
-              style={[
-                store.currentTier?.subscription_urn
-                  ? theme.rowJustifySpaceBetween
-                  : theme.rowJustifyEnd,
-                {
-                  flexDirection: 'column',
-                  alignItems: 'stretch',
-                },
-              ]}>
+              style={useMemoStyle(
+                [
+                  store.currentTier?.subscription_urn
+                    ? 'rowJustifySpaceBetween'
+                    : 'rowJustifyEnd',
+                  {
+                    flexDirection: 'column',
+                    alignItems: 'stretch',
+                  },
+                ],
+                [store.currentTier?.subscription_urn],
+              )}>
               {!!store.currentTier?.subscription_urn && (
-                <Text style={[theme.fontL, theme.colorAlert]}>
+                <Text style={styles.alreadyAMemberText}>
                   {i18n.t('membership.alreadyMember')}
                 </Text>
               )}
@@ -357,13 +331,18 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
                 action
                 onPress={confirmSend}
                 text={payText}
-                containerStyle={[
-                  theme.paddingVertical2x,
-                  theme.marginHorizontal4x,
-                  store.currentTier?.subscription_urn ? styles.disabled : null,
-                  theme.alignSelfStretch,
-                ]}
-                textStyle={[theme.fontMedium, theme.fontL]}
+                containerStyle={useMemoStyle(
+                  [
+                    'paddingVertical2x',
+                    'marginHorizontal4x',
+                    'alignSelfStretch',
+                    store.currentTier?.subscription_urn
+                      ? styles.disabled
+                      : null,
+                  ],
+                  [store.currentTier?.subscription_urn],
+                )}
+                textStyle={useStyle('fontMedium', 'fontL')}
                 loading={store.loading}
                 disabled={!!store.currentTier?.subscription_urn}
               />
@@ -390,20 +369,33 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
   );
 });
 
-const styles = StyleSheet.create({
-  joinTitle: {
-    fontSize: 20,
-    fontWeight: '800',
-  },
-  description: {
-    borderLeftWidth: 5,
-  },
-  contentContainer: {
-    flex: 1,
-    borderTopRightRadius: 15,
-    borderTopLeftRadius: 15,
-    overflow: 'hidden',
-  },
+const styles = ThemedStyles.create({
+  alreadyAMemberText: ['fontL', 'colorAlert'],
+  alreadyAMemberWrapper: ['padding4x', 'marginTop2x'],
+  stripeCardSelectorWrapper: ['marginTop6x', 'marginHorizontal3x'],
+  headerContainer: [
+    'rowJustifyCenter',
+    'paddingHorizontal4x',
+    'paddingTop4x',
+    'alignCenter',
+  ],
+  costTextStyle: ['fontXL', 'colorSecondaryText', 'fontMedium', 'marginTop6x'],
+  joinTitle: [
+    'colorPrimaryText',
+    {
+      fontSize: 20,
+      fontWeight: '800',
+    },
+  ],
+  descriptionWrapper: [
+    'marginTop6x',
+    'paddingLeft2x',
+    'bcolorTertiaryBackground',
+    {
+      borderLeftWidth: 5,
+    },
+  ],
+  descriptionText: ['fontXL', 'colorPrimaryText'],
   disabled: {
     opacity: 0.5,
   },
