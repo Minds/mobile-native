@@ -3,7 +3,6 @@ import { ChannelStoreType } from '../channel/v2/createChannelStore';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import type { WalletStoreType } from '../wallet/v2/createWalletStore';
-import type FeedStore from '../common/stores/FeedStore';
 import type { ComposeStoreType } from '../compose/useComposeStore';
 import type ActivityModel from '../newsfeed/ActivityModel';
 import type { SupportTiersType } from '../wire/WireTypes';
@@ -125,6 +124,7 @@ export type AppStackParamList = {
   Referrals: {};
   BoostConsole: {};
   Other: {};
+  Resources: {};
   SettingsEmail: {};
   MessengerSettingsScreen: {};
   RekeyScreen: {};

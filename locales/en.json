@@ -641,6 +641,7 @@
     "darkMode": "Dark mode",
     "lightMode": "Light mode",
     "other": "Other",
+    "resources": "Resources",
     "referrals": "Referrals",
     "account": "Account",
     "network": "Network",
@@ -780,6 +781,48 @@
       "optOut": "Opt-out",
       "enable": "Enable",
       "disable": "Disable"
+    },
+    "about": {
+      "title": "about",
+      "mobile": "Mobile",
+      "careers": "Careers",
+      "blog": "Blog",
+      "whitepaper": "Whitepaper",
+      "rights": "Bill of Rights",
+      "events": "Events",
+      "store": "Store",
+      "terms": "Terms of Service",
+      "privacy": "Privacy Policy",
+      "content": "Content Policy",
+      "dmca": "DMCA"
+    },
+    "support": {
+      "title": "support",
+      "help": "Help Desk",
+      "contact": "Contact",
+      "community": "Community",
+      "languages": "Languages",
+      "status": "Status"
+    },
+    "business": {
+      "title": "Business",
+      "upgrade": "Upgrade",
+      "token": "Token",
+      "plus": "Plus",
+      "pro": "Pro",
+      "pay": "Pay",
+      "nodes": "Nodes",
+      "boost": "Boost",
+      "rewards": "Rewards",
+      "youtube": "YouTube Migration"
+    },
+    "developers": {
+      "title": "Developers",
+      "docs": "Docs",
+      "community": "Community",
+      "code": "Code",
+      "canary": "Canary",
+      "branding": "Branding"
     }
   },
   "comingSoon": {

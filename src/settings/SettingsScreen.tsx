@@ -85,6 +85,12 @@ export default function ({ navigation }) {
     params: {},
   });
 
+  itemsMapping.push({
+    title: i18n.t('settings.resources'),
+    screen: 'Resources',
+    params: {},
+  });
+
   const items = itemsMapping.map(({ title, screen, params }) => ({
     title,
     onPress: () => navigation.push(screen, params),
