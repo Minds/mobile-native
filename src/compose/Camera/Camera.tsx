@@ -42,11 +42,19 @@ Reanimated.addWhitelistedNativeProps({
 const camAnimTransition: any = { type: 'timing', duration: 100 };
 const MAX_ZOOM_FACTOR = 20;
 
+type PropsType = {
+  onMedia: (media) => void;
+  mode: 'photo' | 'video';
+  onForceVideo?: () => void;
+  onPressGallery: () => void;
+  portraitMode?: boolean;
+};
+
 /**
  * Camera
  * @param {Object} props
  */
-export default observer(function (props) {
+export default observer(function (props: PropsType) {
   const theme = ThemedStyles.style;
   const camera = useRef<Camera>(null);
   const route = useRoute<CaptureScreenRouteProp>();
@@ -127,7 +135,9 @@ export default observer(function (props) {
   // capture long press handler
   const onLongPress = useCallback(async () => {
     if (!store.recording) {
-      props.onForceVideo();
+      if (props.onForceVideo) {
+        props.onForceVideo();
+      }
       store.recordVideo(true, format, camera);
     }
   }, [props, store, format, camera]);
