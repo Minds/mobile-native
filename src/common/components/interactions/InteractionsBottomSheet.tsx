@@ -257,10 +257,11 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
   );
 
   const footer = (
-    <View style={footerStyle}>
+    <View style={footerStyle} pointerEvents={'box-none'}>
       <LinearGradient
         style={StyleSheet.absoluteFill}
         colors={footerGradientColors}
+        pointerEvents={'none'}
       />
       <BottomSheetButton text={i18n.t('cancel')} onPress={close} />
     </View>
