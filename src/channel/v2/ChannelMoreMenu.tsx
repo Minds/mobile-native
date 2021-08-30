@@ -30,7 +30,6 @@ const getOptions = (
   channel: UserModel,
   isSubscribedToTier: boolean,
   onSearchChannelPressed: () => void,
-  onEditPress: () => void,
   openChat: () => void,
   navigation,
   ref: any,
@@ -65,18 +64,6 @@ const getOptions = (
         // shareService.share(i18n.t('channel.share'), MINDS_URI + channel.username);
         openChat();
         ref.current.dismiss();
-      },
-    });
-  }
-
-  if (channel.isOwner()) {
-    options.push({
-      iconName: 'edit',
-      iconType: 'material',
-      title: i18n.t('channel.editChannel'),
-      onPress: () => {
-        onEditPress();
-        dismiss(ref);
       },
     });
   }
@@ -227,7 +214,6 @@ const ChannelMoreMenu = forwardRef((props: PropsType, ref: any) => {
     props.channel,
     props.isSubscribedToTier,
     props.onSearchChannelPressed,
-    props.onEditPress,
     openChat,
     navigation,
     ref,

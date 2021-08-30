@@ -19,6 +19,7 @@ import { SupportTiersType } from '../../wire/WireTypes';
 import Subscribe from './buttons/Subscribe';
 import SmallCircleButton from '../../common/components/SmallCircleButton';
 import { withErrorBoundary } from '../../common/components/ErrorBoundary';
+import Edit from './buttons/Edit';
 
 type ButtonsType =
   | 'edit'
@@ -109,6 +110,7 @@ const ChannelButtons = withErrorBoundary(
           props.containerStyle,
         ]}>
         {props.children}
+        {shouldShow('edit') && <Edit {...props} />}
         {shouldShow('wire') && (
           <SmallCircleButton
             raised={props.raisedIcons}
