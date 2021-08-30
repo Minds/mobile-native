@@ -5,7 +5,6 @@ import { FLAG_SUBSCRIBE, FLAG_VIEW } from '../Permissions';
 import ThemedStyles from '../../styles/ThemedStyles';
 import type UserModel from '../../channel/UserModel';
 import FastImage from 'react-native-fast-image';
-import SubscriptionButtonNew from '../../channel/subscription/SubscriptionButtonNew';
 import Subscribe from '../../channel/v2/buttons/Subscribe';
 
 type PropsType = {
