@@ -32,7 +32,6 @@ import ActivityModel from '../../newsfeed/ActivityModel';
 import Button from '../../common/components/Button';
 import { withErrorBoundary } from '../../common/components/ErrorBoundary';
 import { ChannelContext } from './ChannelContext';
-import ChatButton from './ChatButton';
 import { useStores } from '../../common/hooks/__mocks__/use-stores';
 import Animated, {
   Easing,
