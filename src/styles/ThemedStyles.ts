@@ -204,9 +204,12 @@ export function useStyleFromProps(props: Object) {
 /**
  * Generate styles based on the device's orientation
  */
-export function useOrientationStyles(styles: {
-  [key: string]: Array<StyleOrCustom | OrientationStyle> | CustomStyle;
-}) {
+export function useOrientationStyles(
+  styles: {
+    [key: string]: Array<StyleOrCustom | OrientationStyle> | CustomStyle;
+  },
+  dependencies?: Array<any>,
+) {
   const orientation = useIsPortrait();
 
   return React.useMemo(() => {
@@ -236,7 +239,7 @@ export function useOrientationStyles(styles: {
       }
     });
     return ThemedStyles.create(styles as CustomStyles);
-  }, [orientation]);
+  }, [orientation, ...(dependencies || [])]);
 }
 
 export type OrientationStyle =

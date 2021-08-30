@@ -40,6 +40,7 @@ Reanimated.addWhitelistedNativeProps({
 });
 
 const camAnimTransition: any = { type: 'timing', duration: 100 };
+const MAX_ZOOM_FACTOR = 20;
 
 /**
  * Camera
@@ -72,7 +73,7 @@ export default observer(function (props) {
   const insets = useSafeAreaInsets();
   const cleanTop = { marginTop: insets.top || 0 };
   const minZoom = device?.minZoom ?? 1;
-  const maxZoom = Math.min(device?.maxZoom ?? 1, 3);
+  const maxZoom = Math.min(device?.maxZoom ?? 1, MAX_ZOOM_FACTOR);
 
   const cameraAnimatedProps = useAnimatedProps(() => {
     const z = Math.max(Math.min(zoom.value, maxZoom), minZoom);
@@ -89,6 +90,11 @@ export default observer(function (props) {
       store.recordVideo(false, format, camera);
     }
   }, [props, store, format, camera]);
+
+  const neutralZoom = device?.neutralZoom ?? 1;
+  useEffect(() => {
+    zoom.value = neutralZoom;
+  }, [neutralZoom, zoom]);
 
   useEffect(() => {
     const t = setTimeout(() => {
@@ -131,7 +137,7 @@ export default observer(function (props) {
     [store.ready],
   );
 
-  const orientationStyle = useCameraStyle();
+  const orientationStyle = useCameraStyle(insets);
 
   return (
     <View style={theme.flexContainer}>
@@ -177,7 +183,7 @@ export default observer(function (props) {
           zoom={zoom}
           maxZoom={maxZoom}
           minZoom={minZoom}
-          style={styles.zoomIndicator}
+          style={orientationStyle.zoomIndicator}
         />
         <FadeFrom
           direction="right"
@@ -193,7 +199,7 @@ export default observer(function (props) {
       </MotiView>
       {store.recording && (
         <VideoClock
-          style={[styles.clock, cleanTop]}
+          style={[orientationStyle.clock, cleanTop]}
           timer={store.videoLimit}
           onTimer={onPress}
         />
@@ -247,20 +253,4 @@ export default observer(function (props) {
       )}
     </View>
   );
-});
-
-const styles = StyleSheet.create({
-  clock: {
-    position: 'absolute',
-    width: '100%',
-    top: 20,
-    left: 0,
-    color: 'white',
-    textAlign: 'center',
-  },
-  zoomIndicator: {
-    position: 'absolute',
-    alignSelf: 'center',
-    top: 50,
-  },
 });
