@@ -2,6 +2,17 @@
 
 Minds Mobile
 
+## 4.17.0 - 2021-08-27
+
+### Changed
+
+- Performance improvements
+- New and faster storage system
+- Keeps awake device while playing a video
+- Improved UI/UX in discovery
+- New interaction modals design
+- Bug fixing
+
 ## 4.16.0 - 2021-07-26
 
 ### Changed
