@@ -70,9 +70,7 @@ const ChannelTopBar = observer(
           <ChannelButtons
             iconSize={25}
             store={store}
-            onEditPress={() =>
-              navigation.push('EditChannelScreen', { store: store })
-            }
+            onEditPress={() => navigation.push('ChannelEdit', { store: store })}
             notShow={['edit', 'join', 'subscribe', 'boost']}
             containerStyle={theme.centered}
             iconsStyle={[theme.paddingLeft4x, theme.colorSecondaryText]}

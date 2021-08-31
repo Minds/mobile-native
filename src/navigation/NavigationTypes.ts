@@ -189,7 +189,6 @@ export type AppStackParamList = {
   Notifications: {};
   Channel: {};
   ChannelEdit: {};
-  EditChannelScreen: {};
   Bio: {
     store: ChannelStoreType;
   };
