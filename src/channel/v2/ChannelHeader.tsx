@@ -100,6 +100,14 @@ const ChannelHeader = withErrorBoundary(
       setFadeViewWidth(event.nativeEvent.layout.width);
     }, []);
 
+    const onEditPress = useCallback(
+      () =>
+        props.navigation.push('ChannelEdit', {
+          store: props.store,
+        }),
+      [props.store, props.navigation],
+    );
+
     // =====================| RENDERS |=====================>
     if (props.store && !props.store.channel) {
       return null;
@@ -224,11 +232,7 @@ const ChannelHeader = withErrorBoundary(
           {!props.hideButtons && (
             <ChannelButtons
               store={props.store}
-              onEditPress={() =>
-                props.navigation.push('EditChannelScreen', {
-                  store: props.store,
-                })
-              }
+              onEditPress={onEditPress}
               notShow={['message', 'wire', 'more']}
               iconsStyle={theme.colorSecondaryText}
               containerStyle={styles.buttonsMarginContainer}

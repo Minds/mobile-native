@@ -229,6 +229,7 @@ const ChannelTopBar = observer(
           <ChannelButtons
             iconSize={25}
             store={store}
+            onEditPress={() => navigation.push('ChannelEdit', { store: store })}
             onSearchChannelPressed={onSearchChannelPressed}
             notShow={hiddenChannelButtons}
             containerStyle={theme.centered}

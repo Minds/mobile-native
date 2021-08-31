@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import mindsConfigService from '../../common/services/minds-config.service';
 
 type FocusPoint = {
@@ -72,13 +73,14 @@ const createCameraStore = p => {
 
       this.setRecording(true, pulse);
 
-      //TODO: LIMIT DURATION AND PORTRAIT?
-
       camera.current?.startRecording({
         fileType: 'mp4',
         onRecordingFinished: video => {
-          console.log(video);
+          console.log('video recorded', video);
           if (video && p.onMedia) {
+            if (Platform.OS === 'android' && video.path.startsWith('/')) {
+              video.path = `file://${video.path}`;
+            }
             p.onMedia({
               type: 'video/mp4',
               ...video,

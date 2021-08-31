@@ -34,7 +34,7 @@ export default observer(function (props) {
   const isImage = props.store.mediaToConfirm.type.startsWith('image');
 
   const previewComponent = isImage ? (
-    <ImagePreview image={props.store.mediaToConfirm} />
+    <ImagePreview image={props.store.mediaToConfirm} zoom={true} />
   ) : (
     <View style={theme.flexContainer}>
       <MindsVideoV2

@@ -92,7 +92,7 @@ const ChannelButtons = withErrorBoundary(
      * called when edit button is pressed
      **/
     const onEditPress = useCallback(
-      () => navigation.push('EditChannelScreen', { store: props.store }),
+      () => navigation.push('ChannelEdit', { store: props.store }),
       [],
     );
     if (!props.store.channel) return null;
@@ -140,7 +140,6 @@ const ChannelButtons = withErrorBoundary(
           <ChannelMoreMenu
             channel={props.store.channel}
             ref={menuRef}
-            onEditPress={onEditPress}
             onSearchChannelPressed={props.onSearchChannelPressed}
             isSubscribedToTier={isSubscribedToTier(props.store.tiers)}
           />

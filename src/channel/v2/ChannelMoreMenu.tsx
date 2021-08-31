@@ -173,7 +173,6 @@ type PropsType = {
   channel: UserModel;
   isSubscribedToTier: boolean;
   onSearchChannelPressed: () => void;
-  onEditPress: () => void;
 };
 
 type NavigationType = NativeStackNavigationProp<AppStackParamList, 'Channel'>;
