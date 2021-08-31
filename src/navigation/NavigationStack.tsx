@@ -404,8 +404,8 @@ const AppStack = function () {
           name="ChannelEdit"
           component={ChannelEditScreen}
           options={{
-            headerHideBackButton: true,
-            stackAnimation: 'slide_from_bottom',
+            headerBackVisible: false,
+            animation: 'slide_from_bottom',
             title: i18n.t('channel.editChannel'),
           }}
         />
