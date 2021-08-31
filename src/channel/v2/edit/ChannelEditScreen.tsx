@@ -245,7 +245,9 @@ const ChannelEditScreen = (props: PropsType) => {
       <KeyboardAvoidingView
         style={useStyle('flexContainer', 'paddingTop3x')}
         behavior="position"
-        keyboardVerticalOffset={isIphoneX ? 100 : 64}>
+        keyboardVerticalOffset={Platform.select({
+          ios: 64,
+        })}>
         <LabeledComponent label={'Banner'} labelStyle={styles.labelStyle}>
           <Banner {...props} store={store} />
         </LabeledComponent>
