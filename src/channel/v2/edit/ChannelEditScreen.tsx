@@ -136,7 +136,7 @@ const Banner = observer(({ route }: PropsType) => {
 
 const Bio = observer(({ route, navigation, store }: PropsType) => (
   <SettingInput
-    placeholder={i18n.t('channel.briefDescription')}
+    placeholder={i18n.t('channel.edit.bio')}
     onChangeText={store.setBriefDescription}
     value={store.briefDescription}
     testID="displayNameInput"
