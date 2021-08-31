@@ -31,6 +31,7 @@ import { MotiView } from 'moti';
 import useBestCameraAndFormat from './useBestCameraAndFormat';
 import useCameraStyle from './useCameraStyle';
 import { AppStackParamList } from '../../navigation/NavigationTypes';
+import { PermissionsContext } from '../PermissionsCheck';
 
 type CaptureScreenRouteProp = RouteProp<AppStackParamList, 'Capture'>;
 
@@ -55,6 +56,7 @@ type PropsType = {
  * @param {Object} props
  */
 export default observer(function (props: PropsType) {
+  const permissions = React.useContext(PermissionsContext);
   const theme = ThemedStyles.style;
   const camera = useRef<Camera>(null);
   const route = useRoute<CaptureScreenRouteProp>();
@@ -180,7 +182,7 @@ export default observer(function (props: PropsType) {
                 animatedProps={cameraAnimatedProps}
                 photo={true}
                 video={true}
-                audio={true}
+                audio={permissions !== null && permissions[0] === 'authorized'}
               />
             </FocusGesture>
           </ZoomGesture>
