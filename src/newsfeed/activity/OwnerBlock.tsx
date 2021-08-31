@@ -59,12 +59,13 @@ class OwnerBlock extends PureComponent<PropsType> {
       this.props.searchResultStore.user.searchBarItemTap(channel);
     }
 
+    const lastRoute = getLastRoute(this.props.navigation);
     /**
      * do not navigate to channel if we were already in its page
      **/
-    if (getLastRoute(this.props.navigation).name === 'Channel') {
-      const currentScreenChannelGuid = getLastRoute(this.props.navigation)
-        .params?.guid;
+    if (lastRoute.name === 'Channel') {
+      const currentScreenChannelGuid =
+        lastRoute.params?.guid || lastRoute.params?.entity?.guid;
       if (currentScreenChannelGuid === channel.guid) {
         this.context?.onSelfNavigation?.();
         return;

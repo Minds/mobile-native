@@ -1,29 +1,25 @@
 import React, { PropsWithChildren, useCallback, useRef } from 'react';
-import { View, Platform } from 'react-native';
+import type { GestureResponderEvent } from 'react-native';
+import { Platform, View } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { useNavigation } from '@react-navigation/native';
-import MIcon from 'react-native-vector-icons/MaterialIcons';
 import { observer } from 'mobx-react';
 import type { NativeStackNavigationProp } from 'react-native-screens/native-stack';
 import type { AppStackParamList } from '../../navigation/NavigationTypes';
 import {
-  FLAG_SUBSCRIBE,
-  FLAG_MESSAGE,
   FLAG_EDIT_CHANNEL,
+  FLAG_MESSAGE,
+  FLAG_SUBSCRIBE,
   FLAG_WIRE,
 } from '../../common/Permissions';
 import ChannelMoreMenu from './ChannelMoreMenu';
-
-import type { GestureResponderEvent } from 'react-native';
 import { ChannelStoreType } from './createChannelStore';
 import { SupportTiersType } from '../../wire/WireTypes';
 
 import Subscribe from './buttons/Subscribe';
-import Join from './buttons/Join';
 import SmallCircleButton from '../../common/components/SmallCircleButton';
-import { useStores } from '../../common/hooks/use-stores';
-import ChatButton from './ChatButton';
 import { withErrorBoundary } from '../../common/components/ErrorBoundary';
+import Edit from './buttons/Edit';
 
 type ButtonsType =
   | 'edit'
@@ -37,10 +33,14 @@ type ButtonsType =
 export type ChannelButtonsPropsType = {
   store: ChannelStoreType;
   onEditPress: (ev: GestureResponderEvent) => void;
+  onSearchChannelPressed: () => void;
   notShow?: Array<ButtonsType>;
   containerStyle?: any;
   iconsStyle?: any;
   iconSize?: number;
+  iconColor?: string;
+  iconReverseColor?: string;
+  raisedIcons?: boolean;
 };
 
 const isIos = Platform.OS === 'ios';
@@ -67,9 +67,7 @@ const check = {
     store.tiers.length > 0 &&
     !isSubscribedToTier(store.tiers),
   subscribe: (store: ChannelStoreType) =>
-    !store.channel!.isOwner() &&
-    store.channel!.can(FLAG_SUBSCRIBE) &&
-    !store.channel!.subscribed,
+    !store.channel!.isOwner() && store.channel!.can(FLAG_SUBSCRIBE),
   boost: (store: ChannelStoreType) => store.channel!.isOwner(),
 };
 
@@ -83,34 +81,6 @@ const ChannelButtons = withErrorBoundary(
     const navigation = useNavigation<
       NativeStackNavigationProp<AppStackParamList>
     >();
-    const { chat } = useStores();
-
-    const SIZE = props.iconSize || 18;
-
-    const boostChannel = useCallback(() => {
-      navigation.navigate('BoostChannelScreen', {});
-    }, [navigation]);
-
-    const openMessenger = useCallback(() => {
-      if (!props.store.channel) return null;
-
-      if (Platform.OS === 'android') {
-        try {
-          chat.checkAppInstalled().then(installed => {
-            if (!installed) {
-              return;
-            }
-            if (props.store.channel) {
-              chat.directMessage(props.store.channel.guid);
-            }
-          });
-        } catch (error) {
-          console.log(error);
-        }
-      } else {
-        chat.directMessage(props.store.channel.guid);
-      }
-    }, [chat, props.store.channel]);
 
     const openWire = useCallback(() => {
       navigation.push('WireFab', {
@@ -118,6 +88,13 @@ const ChannelButtons = withErrorBoundary(
       });
     }, [navigation, props.store.channel]);
 
+    /**
+     * called when edit button is pressed
+     **/
+    const onEditPress = useCallback(
+      () => navigation.push('ChannelEdit', { store: props.store }),
+      [],
+    );
     if (!props.store.channel) return null;
 
     const shouldShow = (button: ButtonsType) =>
@@ -125,7 +102,6 @@ const ChannelButtons = withErrorBoundary(
       (!props.notShow.includes(button) && check[button](props.store));
 
     const showSubscribe = shouldShow('subscribe');
-
     return (
       <View
         style={[
@@ -134,62 +110,37 @@ const ChannelButtons = withErrorBoundary(
           props.containerStyle,
         ]}>
         {props.children}
-
-        {shouldShow('boost') && (
-          <SmallCircleButton
-            name="trending-up"
-            type="material"
-            onPress={boostChannel}
-          />
-        )}
-        {shouldShow('edit') && (
-          <SmallCircleButton
-            name="edit"
-            type="material"
-            onPress={props.onEditPress}
-          />
-          // <View style={theme.paddingTop2x}>
-          //   <Edit {...props} />
-          // </View>
-        )}
-        {shouldShow('message') && (
-          <ChatButton
-            size={SIZE}
-            chat={chat}
-            onPress={openMessenger}
-            style={props.iconsStyle}
-          />
-        )}
+        {shouldShow('edit') && <Edit {...props} />}
         {shouldShow('wire') && (
-          <MIcon
+          <SmallCircleButton
+            raised={props.raisedIcons}
             name="attach-money"
-            size={SIZE}
+            type="material"
             onPress={openWire}
-            style={props.iconsStyle}
+            color={props.iconColor}
+            reverseColor={props.iconReverseColor}
+            iconStyle={iconStyle}
           />
         )}
         {shouldShow('more') && (
-          <MIcon
+          <SmallCircleButton
+            raised={props.raisedIcons}
             name="more-horiz"
-            size={22}
+            type="material"
             onPress={() => {
               menuRef.current?.present();
             }}
-            style={[theme.paddingRight, props.iconsStyle]}
+            color={props.iconColor}
+            reverseColor={props.iconReverseColor}
+            iconStyle={iconStyle}
           />
         )}
-        {shouldShow('join') && (
-          <Join
-            showSubscribe={showSubscribe}
-            navigation={navigation}
-            {...props}
-          />
-        )}
-        {showSubscribe && <Subscribe {...props} />}
+        {showSubscribe && <Subscribe channel={props.store.channel} />}
         {shouldShow('more') && (
           <ChannelMoreMenu
             channel={props.store.channel}
             ref={menuRef}
+            onSearchChannelPressed={props.onSearchChannelPressed}
             isSubscribedToTier={isSubscribedToTier(props.store.tiers)}
           />
         )}
@@ -197,5 +148,7 @@ const ChannelButtons = withErrorBoundary(
     );
   }),
 );
+
+const iconStyle = { fontSize: 25 };
 
 export default ChannelButtons;

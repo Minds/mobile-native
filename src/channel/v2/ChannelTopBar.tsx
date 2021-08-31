@@ -1,84 +1,293 @@
-import React from 'react';
-import { TextInput, View } from 'react-native';
-import ThemedStyles from '../../styles/ThemedStyles';
-import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import React, { useCallback, useMemo, useRef } from 'react';
+import {
+  Image,
+  Platform,
+  SafeAreaView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
+import ThemedStyles, {
+  useMemoStyle,
+  useStyle,
+} from '../../styles/ThemedStyles';
+import { Icon } from 'react-native-elements';
 import type { ChannelStoreType } from './createChannelStore';
 import ChannelButtons from './ChannelButtons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { observer } from 'mobx-react';
-
 import { styles as headerStyles } from '../../topbar/Topbar';
+import SmallCircleButton from '../../common/components/SmallCircleButton';
+import Animated, {
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
+
+const BLURRED_BANNER_BACKGROUND = true;
+
+const tinycolor = require('tinycolor2');
 
 type PropsType = {
   navigation: any;
   store?: ChannelStoreType;
   hideButtons?: boolean;
   hideInput?: boolean;
+  /**
+   * should the topbar have a background?
+   **/
+  withBg?: boolean;
+  /**
+   * background color of the topbar
+   **/
+  backgroundColor?: string;
+  /**
+   * the color of the readable material on the topbar
+   **/
+  textColor?: string;
+  /**
+   * onPress of the topbar
+   **/
+  onPress?: () => void;
 };
 
+/**
+ * Channel Top Bar
+ **/
 const ChannelTopBar = observer(
-  ({ navigation, store, hideButtons, hideInput }: PropsType) => {
+  ({
+    navigation,
+    store,
+    hideButtons,
+    hideInput,
+    backgroundColor,
+    textColor,
+    withBg,
+    onPress,
+  }: PropsType) => {
+    // =====================| STATES & VARIABLES |=====================>
     const theme = ThemedStyles.style;
-
     const insets = useSafeAreaInsets();
     const cleanTop = insets.top ? { paddingTop: insets.top } : null;
+    const hiddenChannelButtons = useRef(['edit', 'join', 'subscribe', 'boost'])
+      .current;
+    /**
+     * shows and hides the background with animation based
+     * on the {withBg} prop
+     **/
+    const backgroundOpacityAnimatedStyle = useAnimatedStyle(() => ({
+      opacity: withTiming(withBg ? 1 : 0, {
+        duration: 300,
+      }),
+    }));
+    /**
+     * search input position offset. The initial value is negative
+     * because the searchInput is initially hidden
+     **/
+    const searchInputPositionOffset = useSharedValue(-200);
+    const searchInputAnimatedStyle = useAnimatedStyle(() => ({
+      top: searchInputPositionOffset.value,
+    }));
+    const nameStyles = useMemoStyle(
+      [styles.name, { color: textColor }],
+      [textColor],
+    );
+    const containerStyle = useStyle(
+      headerStyles.container,
+      headerStyles.shadow,
+      'rowJustifySpaceBetween',
+      'alignCenter',
+      'paddingLeft2x',
+      'paddingBottom',
+      cleanTop!,
+    );
+    const topBarInnerWrapperStyle = useMemoStyle(
+      [
+        'positionAbsolute',
+        {
+          opacity: 0.8,
+          backgroundColor:
+            backgroundColor || theme.bgPrimaryBackground.backgroundColor,
+          paddingLeft: 70,
+          paddingTop: 16,
+        },
+        backgroundOpacityAnimatedStyle,
+      ],
+      [backgroundColor, backgroundOpacityAnimatedStyle],
+    );
+    const textInputRef = useRef<TextInput | null>(null);
 
-    return (
-      <View
-        style={[
-          headerStyles.container,
-          headerStyles.shadow,
-          theme.rowJustifyStart,
-          theme.alignCenter,
-          cleanTop,
-          theme.paddingLeft2x,
-          theme.paddingBottom,
-          theme.bgPrimaryBackground,
-        ]}>
-        <MIcon
-          size={40}
-          name="chevron-left"
-          style={[theme.colorIcon, theme.centered]}
-          onPress={navigation.goBack}
-        />
-        {store && !hideInput && (
+    // =====================| METHODS |=====================>
+    /**
+     * shows or hides the search input with animation while handling its focus
+     **/
+    const toggleSearchInput = (on: boolean) => {
+      searchInputPositionOffset.value = withTiming(
+        on
+          ? Platform.select({ ios: insets.top + 4, android: 8, default: 0 })
+          : -200,
+        {
+          duration: 500,
+          easing: Easing.bezier(0.16, 0.4, 0.3, 1),
+        },
+      );
+      if (on) {
+        textInputRef.current?.focus();
+      } else {
+        textInputRef.current?.blur();
+      }
+    };
+
+    /**
+     * clear the search input and hide it when the
+     * close button on the search input is pressed
+     **/
+    const onSearchClosePressed = useCallback(() => {
+      toggleSearchInput(false);
+      store?.clearSearch();
+    }, []);
+
+    /**
+     * called when search channel option from
+     * more menu is pressed
+     **/
+    const onSearchChannelPressed = useCallback(
+      () => toggleSearchInput(true),
+      [],
+    );
+
+    // =====================| RENDER |=====================>
+    const searchInput = useMemo(
+      () => (
+        <>
           <TextInput
             placeholder="Search Channel"
+            ref={ref => (textInputRef.current = ref)}
             style={[
-              theme.fontL,
-              theme.flexContainer,
-              theme.colorSecondaryText,
-              theme.paddingLeft3x,
-              theme.paddingVertical2x,
+              styles.searchInput,
+              Platform.OS === 'ios' && { padding: 15 },
             ]}
             placeholderTextColor={ThemedStyles.getColor('SecondaryText')}
-            value={store.channelSearch}
-            onChangeText={store.setChannelSearch}
+            value={store?.channelSearch}
+            onChangeText={store?.setChannelSearch}
             returnKeyType={'search'}
-            onSubmitEditing={store.searchInChannel}
+            onSubmitEditing={store?.searchInChannel}
           />
-        )}
-        {store && store.channelSearch.length > 0 && (
-          <MIcon
-            size={25}
-            name="close-circle-outline"
-            style={[theme.colorIcon, theme.centered]}
-            onPress={store.clearSearch}
+          <Icon
+            reverse
+            name={'close'}
+            type={'material-community'}
+            color={ThemedStyles.getColor('PrimaryBackground')}
+            reverseColor={theme.colorIcon.color}
+            // reverseColor={props.reverseColor || ThemedStyles.getColor('PrimaryText')}
+            size={20}
+            onPress={onSearchClosePressed}
+            containerStyle={styles.searchInputIconContainerStyle}
           />
-        )}
+        </>
+      ),
+      [store?.channelSearch],
+    );
+
+    return (
+      <TouchableOpacity
+        activeOpacity={1}
+        onPress={onPress}
+        style={containerStyle}>
+        <Animated.View style={topBarInnerWrapperStyle}>
+          {BLURRED_BANNER_BACKGROUND && (
+            <Image
+              blurRadius={90}
+              style={theme.positionAbsolute}
+              source={store?.channel?.getBannerSource()!}
+              resizeMode="cover"
+            />
+          )}
+          <SafeAreaView style={styles.nameWrapper}>
+            <Text style={nameStyles} numberOfLines={1}>
+              {store?.channel?.name}
+            </Text>
+          </SafeAreaView>
+        </Animated.View>
+        <SmallCircleButton
+          name="chevron-left"
+          raised={!withBg}
+          style={theme.colorIcon}
+          onPress={navigation.goBack}
+          color={
+            withBg
+              ? tinycolor(backgroundColor).setAlpha(0.15).toRgbString()
+              : tinycolor(ThemedStyles.getColor('PrimaryBackground'))
+                  .setAlpha(0.75)
+                  .toRgbString()
+          }
+          iconStyle={styles.iconStyle}
+          reverseColor={withBg ? textColor : undefined}
+        />
         {store && !hideButtons && (
           <ChannelButtons
             iconSize={25}
             store={store}
             onEditPress={() => navigation.push('ChannelEdit', { store: store })}
-            notShow={['edit', 'join', 'subscribe', 'boost']}
+            onSearchChannelPressed={onSearchChannelPressed}
+            notShow={hiddenChannelButtons}
             containerStyle={theme.centered}
-            iconsStyle={[theme.paddingLeft4x, theme.colorSecondaryText]}
+            iconsStyle={styles.channelButtonsIconsStyle}
+            raisedIcons={!withBg}
+            iconColor={
+              withBg
+                ? tinycolor(backgroundColor).setAlpha(0.15).toRgbString()
+                : tinycolor(ThemedStyles.getColor('PrimaryBackground'))
+                    .setAlpha(0.75)
+                    .toRgbString()
+            }
+            iconReverseColor={withBg ? textColor : undefined}
           />
         )}
-      </View>
+        {store && !hideInput && (
+          <Animated.View
+            style={[
+              { position: 'absolute', left: 65, right: 65, elevation: 5 },
+              searchInputAnimatedStyle,
+            ]}>
+            {searchInput}
+          </Animated.View>
+        )}
+      </TouchableOpacity>
     );
   },
 );
 
 export default ChannelTopBar;
+
+const styles = ThemedStyles.create({
+  name: {
+    fontSize: 18,
+    fontWeight: '600',
+    textAlign: 'center',
+    marginRight: 5,
+  },
+  nameWrapper: [
+    'rowJustifyStart',
+    'flexContainer',
+    'alignEnd',
+    'marginBottom5x',
+  ],
+  searchInput: [
+    'fontL',
+    'colorSecondaryText',
+    'paddingLeft3x',
+    'bgPrimaryBackground',
+    'borderRadius20x',
+    'borderHair',
+    'bcolorPrimaryBorder',
+  ],
+  searchInputIconContainerStyle: [
+    'colorIcon',
+    'positionAbsoluteTopRight',
+    Platform.OS === 'android' ? { top: -4.5 } : { top: -4.5 },
+  ],
+  channelButtonsIconsStyle: ['paddingLeft4x', 'colorSecondaryText'],
+  iconStyle: { fontSize: 25 },
+});

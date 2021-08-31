@@ -24,7 +24,7 @@ exports[`Comment action component renders correctly 1`] = `
   <Icon
     allowFontScaling={false}
     name="speaker-notes-off"
-    size={21}
+    size={19}
     style={
       Array [
         Object {

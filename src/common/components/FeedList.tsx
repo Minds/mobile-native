@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { FlatList, View, Text, StyleProp, ViewStyle } from 'react-native';
+import {
+  FlatList,
+  View,
+  Text,
+  StyleProp,
+  ViewStyle,
+  RefreshControl,
+} from 'react-native';
 import { observer } from 'mobx-react';
 
 import Activity from '../../newsfeed/activity/Activity';
@@ -26,6 +33,8 @@ type PropsType = {
   ListEmptyComponent?: React.ReactNode;
   onRefresh?: () => void;
   afterRefresh?: () => void;
+  onScroll?: (e: any) => void;
+  refreshControlTintColor?: string;
 };
 
 /**
@@ -97,6 +106,8 @@ export default class FeedList<T> extends Component<PropsType> {
 
   onScroll = (e: { nativeEvent: { contentOffset: { y: number } } }) => {
     this.props.feedStore.scrollOffset = e.nativeEvent.contentOffset.y;
+
+    this.props.onScroll?.(e);
   };
 
   /**
@@ -155,6 +166,15 @@ export default class FeedList<T> extends Component<PropsType> {
         onRefresh={this.refresh}
         refreshing={feedStore.refreshing}
         onEndReached={this.loadMore}
+        refreshControl={
+          Boolean(this.props.refreshControlTintColor) && (
+            <RefreshControl
+              tintColor={this.props.refreshControlTintColor}
+              refreshing={feedStore.refreshing}
+              onRefresh={this.refresh}
+            />
+          )
+        }
         // onEndReachedThreshold={0}
         numColumns={feedStore.isTiled ? 3 : 1}
         style={style}
@@ -165,10 +185,10 @@ export default class FeedList<T> extends Component<PropsType> {
         ListEmptyComponent={!this.props.hideItems ? empty : null}
         viewabilityConfig={this.viewOpts}
         onViewableItemsChanged={this.onViewableItemsChanged}
-        onScroll={this.onScroll}
         keyboardShouldPersistTaps="always"
         testID="feedlistCMP"
         {...passThroughProps}
+        onScroll={this.onScroll}
       />
     );
   }

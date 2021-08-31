@@ -12736,6 +12736,11 @@ react-native-gesture-handler@^1.8.0:
     invariant "^2.2.4"
     prop-types "^15.7.2"
 
+react-native-image-colors@^1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/react-native-image-colors/-/react-native-image-colors-1.3.1.tgz#0a995399e4bc4d7fa0ef917cfd4ff04ea88a7a41"
+  integrity sha512-uGge+VIi7e3NHr7HJ4lE1lPsezrEFZ22QQCQAcDAYmky7RI+gp5HXt6aVHTxYEORmQUYepC93LHiJFAlopmPpA==
+
 react-native-image-crop-picker@^0.35.1:
   version "0.35.3"
   resolved "https://registry.yarnpkg.com/react-native-image-crop-picker/-/react-native-image-crop-picker-0.35.3.tgz#cc9ae109ae5ac2d0877a0c5ac51935421a3651d8"
@@ -12845,6 +12850,11 @@ react-native-photo-editor@^1.0.12:
   version "1.0.12"
   resolved "https://registry.yarnpkg.com/react-native-photo-editor/-/react-native-photo-editor-1.0.12.tgz#bd2dff20e8f35445e875a05dd88b40d024e6365f"
   integrity sha512-HDBCPluN2qqNm/RLUq7H+N5FNcgA+BLqELYs5lofUhKk3rfP/lP/iR3Jz3Oo8rXomEu7R6Dp3YKJ8+EukcN9XQ==
+
+react-native-popable@^0.4.2:
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/react-native-popable/-/react-native-popable-0.4.2.tgz#8c077b2f81da3d9982049063b81a460650a1323f"
+  integrity sha512-er1OXWHBQ1QW/3eMiLClxkXuTq3+01H/kAC5oBOTIXOwuuO0Y6hhAaIRAVKviPpwOoIAHTF/prNMrJkvgDwgLA==
 
 react-native-progress@^4.0.3:
   version "4.1.2"
@@ -14661,7 +14671,7 @@ tiny-queue@^0.2.1:
   resolved "https://registry.yarnpkg.com/tiny-queue/-/tiny-queue-0.2.1.tgz#25a67f2c6e253b2ca941977b5ef7442ef97a6046"
   integrity sha1-JaZ/LG4lOyypQZd7XvdELvl6YEY=
 
-tinycolor2@^1.4.1:
+tinycolor2@^1.4.1, tinycolor2@^1.4.2:
   version "1.4.2"
   resolved "https://registry.yarnpkg.com/tinycolor2/-/tinycolor2-1.4.2.tgz#3f6a4d1071ad07676d7fa472e1fac40a719d8803"
   integrity sha512-vJhccZPs965sV/L2sU4oRQVAos0pQXwsvTLkWYdqJ+a8Q5kPFzJTuOFwy7UniPli44NKQGAglksjvOcpo95aZA==
