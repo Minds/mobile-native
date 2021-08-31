@@ -308,8 +308,8 @@ const AppStack = function () {
           name="PortraitViewerScreen"
           component={PortraitViewerScreen}
           options={{
-            stackAnimation: 'fade_from_bottom',
-            screenOrientation: 'all',
+            animation: 'fade_from_bottom',
+            orientation: 'all',
             ...hideHeader,
           }}
         />

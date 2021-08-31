@@ -111,7 +111,7 @@ export default observer(function (props: PropsType) {
       store.showCam();
     }, 50);
 
-    navigation.setOptions({ screenOrientation: 'all' });
+    navigation.setOptions({ orientation: 'all' });
 
     let unlisten;
 
@@ -128,7 +128,7 @@ export default observer(function (props: PropsType) {
     }
 
     return () => {
-      navigation.setOptions({ screenOrientation: 'portrait' });
+      navigation.setOptions({ orientation: 'portrait' });
       clearTimeout(t);
       unlisten && unlisten();
     };

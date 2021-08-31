@@ -150,7 +150,7 @@ export class ThemedStylesStore {
         ios: 'default',
         android: 'fade',
       }),
-      screenOrientation: 'portrait',
+      orientation: 'portrait',
     };
 
     changeNavColor(theme.PrimaryBackground, this.theme === 0, true);
