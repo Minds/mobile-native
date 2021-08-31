@@ -1,4 +1,25 @@
+import type UserModel from '../../../channel/UserModel';
+import logService from '../log.service';
 import { storages } from './storages.service';
+
+const KEY = 'SESSIONS_DATA';
+
+export type TokensData = {
+  user: UserModel;
+  refreshToken: {
+    refresh_token: string;
+    refresh_token_expires: number | null;
+  };
+  accessToken: {
+    access_token: string;
+    access_token_expires: number | null;
+  };
+};
+
+export type SessionsData = {
+  activeIndex: number;
+  tokensData: Array<TokensData>;
+};
 
 /**
  * Session service
@@ -9,23 +30,18 @@ export class SessionStorageService {
    */
   getAll() {
     try {
-      const data = storages.session.getMultipleItems([
-        'access_token',
-        'refresh_token',
-        'user',
-      ]);
-
-      const accessToken = data[0][1],
-        refreshToken = data[1][1],
-        user = data[2][1];
-
-      if (!accessToken || !refreshToken || !user) {
-        return null;
-      }
-
-      return [accessToken, refreshToken, user];
+      const data = storages.session.getMap<SessionsData>(KEY);
+      return data;
     } catch (err) {
       return null;
+    }
+  }
+
+  save(sessionsData: SessionsData) {
+    try {
+      storages.session.setMap(KEY, sessionsData);
+    } catch (err) {
+      logService.exception('[SessionStorage] save', err);
     }
   }
 

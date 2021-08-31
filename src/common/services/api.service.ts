@@ -193,7 +193,7 @@ export class ApiService {
    * Build headers
    */
   buildHeaders(customHeaders: any = {}) {
-    const headers: any = {
+    let headers: any = {
       'Content-Type': 'application/json',
       'Cache-Control': 'no-cache, no-store, must-revalidate',
       Pragma: 'no-cache',
@@ -208,11 +208,15 @@ export class ApiService {
       headers.Cookie = `${headers.Cookie};canary=1`;
     }
 
-    if (session.token) {
-      headers.Authorization = 'Bearer ' + session.token;
+    if (session.token && !headers.Authorization) {
+      headers = { ...headers, ...this.buildAuthorizationHeader(session.token) };
     }
 
     return headers;
+  }
+
+  buildAuthorizationHeader(token: string) {
+    return { Authorization: `Bearer ${token}` };
   }
 
   /**
@@ -259,8 +263,9 @@ export class ApiService {
     url: string,
     params: object = {},
     tag: any = null,
+    headers: any = null,
   ): Promise<T> {
-    let opt;
+    let opt: any = {};
     if (tag) {
       const source = this.abortTags.get(tag);
       // cancel previous if exists
@@ -271,7 +276,9 @@ export class ApiService {
       opt = { cancelToken: s.token };
       this.abortTags.set(tag, opt.cancelToken);
     }
-
+    if (headers) {
+      opt.headers = headers;
+    }
     const response = await this.axios.get(this.buildUrl(url, params), opt);
 
     return response.data;

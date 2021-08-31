@@ -32,6 +32,7 @@ type PropsType = {
   onRegisterPress?: () => void;
   store: TwoFactorStore;
   route: LoginScreenRouteProp;
+  multiUser?: boolean;
 };
 
 const { height } = Dimensions.get('window');
@@ -146,6 +147,7 @@ export default observer(function LoginForm(props: PropsType) {
         value={localStore.username}
         testID="usernameInput"
         noBottomBorder
+        autoFocus={props.multiUser}
       />
       <View>
         <InputContainer
@@ -198,15 +200,17 @@ export default observer(function LoginForm(props: PropsType) {
           </Text>
         </View>
         <View style={theme.flexContainer} />
-        <Button
-          onPress={props.onRegisterPress}
-          text={i18n.t('auth.createChannel')}
-          containerStyle={[theme.fullWidth, theme.marginTop6x]}
-          disabled={localStore.inProgress}
-          testID="registerButton"
-          transparent
-          large
-        />
+        {!props.multiUser && (
+          <Button
+            onPress={props.onRegisterPress}
+            text={i18n.t('auth.createChannel')}
+            containerStyle={[theme.fullWidth, theme.marginTop6x]}
+            disabled={localStore.inProgress}
+            testID="registerButton"
+            transparent
+            large
+          />
+        )}
       </View>
       <ResetPasswordModal ref={resetRef} />
     </View>

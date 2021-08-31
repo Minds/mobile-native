@@ -98,6 +98,11 @@
     "waitMoment": "You have to wait 10 seconds after last time you've requested the email",
     "newPassword": "Create a new password. You’ll use this to access your account."
   },
+  "multiUser": {
+    "switchChannel": "Switch Channel",
+    "login": "Log in to existing channel",
+    "create": "Create new channel"
+  },
   "blockchain": {
     "exportLegacyWallet": "Export legacy wallets",
     "exportLegacy1": "You have the private keys of at least one wallet in the app.",

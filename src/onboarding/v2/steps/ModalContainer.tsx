@@ -8,6 +8,7 @@ type PropsType = {
   title: string;
   onPressBack: () => void;
   children: React.ReactNode;
+  marginTop?: number;
 };
 
 /**
@@ -17,8 +18,9 @@ type PropsType = {
 export default function ModalContainer(props: PropsType) {
   const theme = ThemedStyles.style;
   const insets = useSafeAreaInsets();
+  const margin = props.marginTop || 50;
   const { current: cleanTop } = useRef({
-    marginTop: insets.top + (Platform.OS === 'ios' ? 60 : 50),
+    marginTop: insets.top + (Platform.OS === 'ios' ? margin + 10 : margin),
     paddingBottom: insets.bottom,
   });
   return (

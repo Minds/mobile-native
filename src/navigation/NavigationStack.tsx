@@ -13,6 +13,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import AnalyticsScreen from '../analytics/AnalyticsScreen';
 
 import LoginScreen from '../auth/LoginScreen';
+import MultiUserLoginScreen from '../auth/multi-user/LoginScreen';
+import MultiUserRegisterScreen from '../auth/multi-user/RegisterScreen';
 import ReferralsScreen from '../referral/ReferralsScreen';
 import DataSaverScreen from '../settings/screens/DataSaverScreen';
 import TabsScreen from '../tabs/TabsScreen';
@@ -122,6 +124,7 @@ import MessengerScreen from '../messenger/MessengerScreen';
 import PushNotificationsSettings from '../notifications/v3/settings/push/PushNotificationsSettings';
 import EmailNotificationsSettings from '../notifications/v3/settings/email/EmailNotificationsSettings';
 import ChannelEditScreen from '../channel/v2/edit/ChannelEditScreen';
+import MultiUserScreen from '../auth/multi-user/MultiUserScreen';
 
 const isIos = Platform.OS === 'ios';
 
@@ -667,6 +670,11 @@ const AppStack = function () {
           options={{ title: i18n.t('settings.otherOptions.a1') }}
         />
         <AppStackNav.Screen name="AppInfo" component={AppInfoScreen} />
+        <AppStackNav.Screen
+          name="MultiUserScreen"
+          component={MultiUserScreen}
+          options={{ title: i18n.t('multiUser.switchChannel') }}
+        />
       </AppStackNav.Navigator>
     </>
   );
@@ -797,6 +805,16 @@ const RootStack = function (props) {
           <RootStackNav.Screen
             name="RecoveryCodeUsedScreen"
             component={RecoveryCodeUsedScreen}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen
+            name="MultiUserLogin"
+            component={MultiUserLoginScreen}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen
+            name="MultiUserRegister"
+            component={MultiUserRegisterScreen}
             options={modalOptions}
           />
         </>

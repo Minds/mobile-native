@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { Keyboard, Text, TouchableHighlight, View } from 'react-native';
+import {
+  Keyboard,
+  Text,
+  TextStyle,
+  TouchableHighlight,
+  View,
+  ViewStyle,
+} from 'react-native';
 import { observer } from 'mobx-react';
 import { FLAG_SUBSCRIBE, FLAG_VIEW } from '../Permissions';
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -13,6 +20,10 @@ type PropsType = {
   onUserTap?: Function;
   hideButtons?: boolean;
   testID?: string;
+  containerStyles?: ViewStyle;
+  renderRight?: any;
+  nameStyles?: TextStyle;
+  usernameStyles?: TextStyle;
 };
 
 @observer
@@ -40,6 +51,11 @@ class ChannelListItem extends Component<PropsType> {
    * Render right button
    */
   renderRightButton() {
+    if (this.props.renderRight) {
+      const RenderRight = this.props.renderRight;
+
+      return <RenderRight />;
+    }
     const channel = this.props.channel;
 
     if (
@@ -57,18 +73,27 @@ class ChannelListItem extends Component<PropsType> {
    * Render
    */
   render() {
-    const { ...otherProps } = this.props;
+    const {
+      containerStyles,
+      nameStyles,
+      usernameStyles,
+      ...otherProps
+    } = this.props;
 
     return (
       <TouchableHighlight activeOpacity={0.9} onPress={this._navToChannel}>
-        <View style={styles.container} {...otherProps}>
+        <View style={[styles.container, containerStyles]} {...otherProps}>
           <FastImage
             source={this.props.channel.getAvatarSource('medium')}
             style={styles.avatar}
           />
           <View style={styles.nameContainer}>
-            <Text style={styles.name}>{this.props.channel.name}</Text>
-            <Text style={styles.username}>@{this.props.channel.username}</Text>
+            <Text style={[styles.name, nameStyles]}>
+              {this.props.channel.name}
+            </Text>
+            <Text style={[styles.username, usernameStyles]}>
+              @{this.props.channel.username}
+            </Text>
           </View>
           {this.renderRightButton()}
         </View>

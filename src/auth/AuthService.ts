@@ -3,6 +3,7 @@ import session from './../common/services/session.service';
 import delay from '../common/helpers/delay';
 import logService from '../common/services/log.service';
 import type UserModel from '../channel/UserModel';
+import RNBootSplash from 'react-native-bootsplash';
 
 export const TWO_FACTOR_ERROR =
   'Minds::Core::Security::TwoFactor::TwoFactorRequiredException';
@@ -61,34 +62,72 @@ type validateParams = {
 class AuthService {
   justRegistered = false;
 
+  showSplash() {
+    RNBootSplash.show({ duration: 150 });
+  }
+
+  hideSplash() {
+    setTimeout(() => {
+      RNBootSplash.hide({ duration: 150 });
+    }, 500);
+  }
+
   /**
-   * Login user
+   * Login user. Can be an existing user from session or a new user
    * @param username
    * @param password
+   * @param headers
+   * @param sessionIndex the index in where the user data is stored
    */
   async login(
-    username: string,
-    password: string,
+    username: string = '',
+    password: string = '',
     headers: any = {},
-  ): Promise<LoginResponse> {
-    const params = {
-      grant_type: 'password',
-      client_id: 'mobile',
-      //client_secret: '',
-      username,
-      password,
-    } as loginParms;
+    sessionIndex?: number,
+  ) {
+    let data;
 
-    const data: LoginResponse = await api.post<LoginResponse>(
-      'api/v3/oauth/token',
-      params,
-      headers,
-    );
+    if (sessionIndex === undefined) {
+      const params = {
+        grant_type: 'password',
+        client_id: 'mobile',
+        //client_secret: '',
+        username,
+        password,
+      } as loginParms;
+      data = await api.post<LoginResponse>(
+        'api/v3/oauth/token',
+        params,
+        headers,
+      );
 
-    await api.clearCookies();
-    await delay(100);
-    await session.login(data);
+      // if already have other sessions...
+      if (session.tokensData.length > 0) {
+        this.showSplash();
+        this.sessionLogout();
+      }
+
+      await api.clearCookies();
+      await delay(100);
+
+      await session.addSession(data);
+    } else {
+      await api.clearCookies();
+      await delay(100);
+      await session.switchUser(sessionIndex);
+    }
+    await session.login();
+    this.hideSplash();
     return data;
+  }
+
+  async handleActiveAccount() {
+    // if after logout we have other accounts...
+    if (session.tokensData.length > 0) {
+      await delay(100);
+      await session.switchUser(session.activeIndex);
+      await session.login();
+    }
   }
 
   /**
@@ -98,11 +137,51 @@ class AuthService {
     this.justRegistered = false;
     try {
       api.post('api/v3/oauth/revoke');
+      this.showSplash();
       session.logout();
 
       // Fixes autosubscribe issue on register
       await api.clearCookies();
+      await this.handleActiveAccount();
+      this.hideSplash();
+      return true;
+    } catch (err) {
+      logService.exception('[AuthService] logout', err);
+      return false;
+    }
+  }
 
+  /**
+   * Logout user specified by index on session
+   */
+  async logoutFrom(index: number): Promise<boolean> {
+    this.justRegistered = false;
+    try {
+      api.post(
+        'api/v3/oauth/revoke',
+        undefined,
+        api.buildAuthorizationHeader(session.getTokenWithIndex(index)),
+      );
+      this.showSplash();
+      session.logoutFrom(index);
+
+      // Fixes autosubscribe issue on register
+      await api.clearCookies();
+      await this.handleActiveAccount();
+      this.hideSplash();
+      return true;
+    } catch (err) {
+      logService.exception('[AuthService] logout', err);
+      return false;
+    }
+  }
+
+  async sessionLogout() {
+    try {
+      this.justRegistered = false;
+      session.logout(false);
+      // Fixes autosubscribe issue on register
+      await api.clearCookies();
       return true;
     } catch (err) {
       logService.exception('[AuthService] logout', err);

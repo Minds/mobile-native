@@ -69,7 +69,7 @@ export default function LoginScreen(props: PropsType) {
               testID="loginscreentext">
               {i18n.t('auth.login')}
             </Text>
-            <Form
+            <LoginFormHandler
               navigation={props.navigation}
               store={twoFactorStore}
               route={props.route}
@@ -82,15 +82,19 @@ export default function LoginScreen(props: PropsType) {
 }
 
 // separate component so we only reload this part between auth steps
-const Form = observer(
+export const LoginFormHandler = observer(
   ({
     store,
     navigation,
     route,
+    multiUser,
+    onLogin,
   }: {
     store: TwoFactorStore;
     navigation: any;
     route: LoginScreenRouteProp;
+    multiUser?: boolean;
+    onLogin?: Function;
   }) => {
     const form =
       store.twoFactorAuthStep === 'login' ? (
@@ -98,6 +102,8 @@ const Form = observer(
           onRegisterPress={() => navigation.push('Register')}
           store={store}
           route={route}
+          multiUser={multiUser}
+          onLogin={onLogin}
         />
       ) : (
         <TwoFactorTotpForm store={store} />

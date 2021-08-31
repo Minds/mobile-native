@@ -1,5 +1,8 @@
 import { observable, action, reaction } from 'mobx';
-import { SessionStorageService } from './storage/session.storage.service';
+import {
+  SessionStorageService,
+  TokensData,
+} from './storage/session.storage.service';
 import AuthService from '../../auth/AuthService';
 import { getStores } from '../../../AppStores';
 import logService from './log.service';
@@ -19,6 +22,9 @@ export const isTokenExpired = error => {
 export class SessionService {
   @observable userLoggedIn = false;
   @observable ready = false;
+
+  @observable tokensData: Array<TokensData> = [];
+  @observable activeIndex: number = 0;
 
   /**
    * Session token
@@ -69,16 +75,20 @@ export class SessionService {
   async init() {
     try {
       const sessionData = this.sessionStorage.getAll();
-
       // if there is no session active we clean up and return;
-      if (sessionData === null) {
+      if (sessionData === null || sessionData === undefined) {
         this.setToken(null);
         this.setRefreshToken(null);
         this.setReady();
         return null;
       }
 
-      const [accessToken, refreshToken, user] = sessionData;
+      this.setActiveIndex(sessionData.activeIndex);
+      this.setTokensData(sessionData.tokensData);
+
+      const { accessToken, refreshToken, user } = this.tokensData[
+        this.activeIndex
+      ];
 
       const { access_token, access_token_expires } = accessToken;
       const { refresh_token, refresh_token_expires } = refreshToken;
@@ -122,8 +132,8 @@ export class SessionService {
       const tokens = await AuthService.refreshToken();
       this.setRefreshToken(tokens.refresh_token);
       this.setToken(tokens.access_token);
-
-      this.storeTokens(tokens);
+      this.tokensData[this.activeIndex] = this.buildSessionData(tokens);
+      this.saveToStore();
     } else {
       throw new TokenExpiredError('Session Expired');
     }
@@ -133,14 +143,9 @@ export class SessionService {
     if (user) {
       getStores().user.setUser(user);
       // we update the user without wait
-      getStores()
-        .user.load(true)
-        .then(user => {
-          if (user) this.sessionStorage.setUser(user);
-        });
+      getStores().user.load(true);
     } else {
       user = await getStores().user.load();
-      this.sessionStorage.setUser(user);
     }
 
     this.guid = user.guid;
@@ -185,6 +190,11 @@ export class SessionService {
   }
 
   @action
+  setTokensData(tokensData: Array<TokensData>) {
+    this.tokensData = tokensData;
+  }
+
+  @action
   setLoggedIn(value) {
     this.userLoggedIn = value;
   }
@@ -214,20 +224,12 @@ export class SessionService {
   }
 
   /**
-   * Login
+   * Login the current active index
    * @param {string} token
    * @param {boolean} loadUser
    */
   @action
-  async login(tokens, loadUser = true) {
-    this.setToken(tokens.access_token);
-    this.setRefreshToken(tokens.refresh_token);
-
-    // ensure user loaded before activate the session
-    if (loadUser) {
-      await this.loadUser();
-    }
-
+  async login() {
     // create user data storage
     if (this.guid) {
       createUserStore(this.guid);
@@ -235,33 +237,121 @@ export class SessionService {
     }
 
     this.setLoggedIn(true);
-
-    this.storeTokens(tokens);
   }
 
   /**
-   * save token to storage
+   * Add new tokens info from login to tokens data;
+   * @param tokens
    */
-  async storeTokens(tokens) {
+  async addSession(tokens) {
+    try {
+      await this.setTokens(tokens);
+
+      // get session data from tokens returned by login
+      const sessionData = this.buildSessionData(tokens);
+
+      // add data to current tokens data array
+      const tokensData = this.tokensData;
+      tokensData.push(sessionData);
+      this.setTokensData(tokensData);
+
+      // set the active index wich will be logged
+      this.setActiveIndex(this.tokensData.length - 1);
+
+      // save all data into session storage
+      this.saveToStore();
+    } catch (err) {
+      logService.exception('[SessionService addSession]', err);
+    }
+  }
+
+  async switchUser(sessionIndex: number) {
+    this.setActiveIndex(sessionIndex);
+    const tokensData = this.tokensData[sessionIndex];
+    await this.setTokens(
+      {
+        access_token: tokensData.accessToken.access_token,
+        refresh_token: tokensData.refreshToken.refresh_token,
+      },
+      this.tokensData[this.activeIndex].user,
+    );
+    this.saveToStore();
+  }
+
+  async setTokens(tokens, user?: UserModel) {
+    this.setToken(tokens.access_token);
+    this.setRefreshToken(tokens.refresh_token);
+    await this.loadUser(user);
+  }
+
+  saveToStore() {
+    this.sessionStorage.save({
+      tokensData: this.tokensData,
+      activeIndex: this.activeIndex,
+    });
+  }
+
+  /**
+   * Get the token for a given index on tokensData
+   * @param index
+   * @returns the access token
+   */
+  getTokenWithIndex(index: number) {
+    return this.tokensData[index].accessToken.access_token;
+  }
+
+  buildSessionData(tokens) {
     const token_expire = this.getTokenExpiration(tokens.access_token);
     const token_refresh_expire = token_expire + 60 * 60 * 24 * 30;
+    return {
+      user: getStores().user.me,
+      accessToken: {
+        access_token: tokens.access_token,
+        access_token_expires: token_expire,
+      },
+      refreshToken: {
+        refresh_token: tokens.refresh_token,
+        refresh_token_expires: token_refresh_expire,
+      },
+    };
+  }
 
-    this.sessionStorage.setAccessToken(tokens.access_token, token_expire);
-    this.sessionStorage.setRefreshToken(
-      tokens.refresh_token,
-      token_refresh_expire,
-    );
+  @action
+  setActiveIndex(activeIndex: number) {
+    this.activeIndex = activeIndex;
   }
 
   /**
-   * Logout
+   * Logout current user
    */
-  logout() {
+  logout(clearStorage = true) {
     this.guid = null;
     this.setToken(null);
     this.setRefreshToken(null);
     this.setLoggedIn(false);
-    this.sessionStorage.clear();
+    if (clearStorage) {
+      const tokensData = this.tokensData;
+      tokensData.splice(this.activeIndex, 1);
+      this.setTokensData(tokensData);
+      this.setActiveIndex(0);
+      this.saveToStore();
+    }
+  }
+
+  /**
+   * Logout user for a given index
+   */
+  logoutFrom(index: number) {
+    if (index === this.activeIndex) {
+      this.logout();
+    } else {
+      const guid = this.tokensData[this.activeIndex].user.guid;
+      const tokensData = this.tokensData;
+      tokensData.splice(index, 1);
+      this.setTokensData(tokensData);
+      const newIndex = this.tokensData.findIndex(v => guid === v.user.guid);
+      this.setActiveIndex(newIndex >= 0 ? newIndex : 0);
+    }
   }
 
   /**
