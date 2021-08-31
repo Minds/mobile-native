@@ -33,6 +33,7 @@ import Button from '../../common/components/Button';
 import { withErrorBoundary } from '../../common/components/ErrorBoundary';
 import { ChannelContext } from './ChannelContext';
 import Animated, {
+  cancelAnimation,
   Easing,
   useAnimatedStyle,
   useSharedValue,
@@ -85,6 +86,12 @@ const ChannelScreen = observer((props: PropsType) => {
   const theme = ThemedStyles.style;
   const feedRef = useRef<FeedList<any>>(null);
   const store = useLocalStore(createChannelStore);
+  /**
+   * disables topbar animation. useful when we want to
+   * wiggle the scroll but we don't want the topbar to
+   * be affected
+   **/
+  const topBarAnimationEnabled = useRef(true);
   const channelContext = useMemo(
     () => ({
       /**
@@ -92,13 +99,14 @@ const ChannelScreen = observer((props: PropsType) => {
        * on that channel page, wiggle the feedList scroll
        **/
       onSelfNavigation: () => {
+        topBarAnimationEnabled.current = false;
         feedRef.current?.wiggle();
+        setTimeout(() => (topBarAnimationEnabled.current = true), 500);
       },
     }),
     [feedRef],
   );
   const bannerUri = store.channel?.getBannerSource().uri;
-  const feedListRef = useRef<FeedList<any> | null>(null);
   const subscribersActionSheetRef = useRef<any>(null);
   const subscriptionsActionSheetRef = useRef<any>(null);
   /**
@@ -210,6 +218,10 @@ const ChannelScreen = observer((props: PropsType) => {
       const direction = y > offset.value ? 'down' : 'up';
       offset.value = y;
 
+      if (!topBarAnimationEnabled.current) return;
+
+      cancelAnimation(contentOffset);
+
       /**
        * If the scroll had a down direction, hide the topbar
        **/
@@ -259,7 +271,7 @@ const ChannelScreen = observer((props: PropsType) => {
         }
       }
     },
-    [topBarBackgroundVisible, backgroundColor],
+    [topBarBackgroundVisible, backgroundColor, topBarAnimationEnabled],
   );
 
   /**
@@ -277,10 +289,9 @@ const ChannelScreen = observer((props: PropsType) => {
   /**
    * Scroll to top when topbar is pressed
    **/
-  const onTopBarPress = useCallback(
-    () => feedListRef.current?.scrollToTop(),
-    [],
-  );
+  const onTopBarPress = useCallback(() => feedRef.current?.scrollToTop(), [
+    feedRef,
+  ]);
 
   const openSubscribers = useCallback(
     () => subscribersActionSheetRef.current?.show('channelSubscribers'),

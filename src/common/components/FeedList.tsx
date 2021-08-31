@@ -185,10 +185,10 @@ export default class FeedList<T> extends Component<PropsType> {
         ListEmptyComponent={!this.props.hideItems ? empty : null}
         viewabilityConfig={this.viewOpts}
         onViewableItemsChanged={this.onViewableItemsChanged}
-        onScroll={this.onScroll}
         keyboardShouldPersistTaps="always"
         testID="feedlistCMP"
         {...passThroughProps}
+        onScroll={this.onScroll}
       />
     );
   }
