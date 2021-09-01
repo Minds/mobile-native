@@ -266,6 +266,7 @@ const styles = ThemedStyles.create({
     fontWeight: '600',
     textAlign: 'center',
     marginRight: 5,
+    bottom: 2, // minor alignment of text
   },
   nameWrapper: ['rowJustifyStart', 'flexContainer', 'alignCenter'],
   searchInput: [
