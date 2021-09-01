@@ -148,7 +148,7 @@ function createPortraitStore() {
         const seenList = await portraitContentService.getSeen();
 
         // =====================| 1. LOAD DATA FROM CACHE |=====================>
-        await feedStore.fetchLocal();
+        await feedStore.fetch(true, true);
         this.items = postProcessPortraitEntities(
           feedStore.entities,
           seenList,
@@ -160,7 +160,7 @@ function createPortraitStore() {
          * start loading after you load the cache
          **/
         this.loading = true;
-        await feedStore.fetch();
+        await feedStore.fetch(false, true);
 
         /**
          * fallback to minds portrait
