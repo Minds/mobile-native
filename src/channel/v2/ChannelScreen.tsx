@@ -137,6 +137,9 @@ const ChannelScreen = observer((props: PropsType) => {
   const [textStyle, setTextStyle] = useState<StatusBarStyle>(
     ThemedStyles.theme ? 'light-content' : 'dark-content',
   );
+  const [statusBarTextStyle, setStatusBarTextStyle] = useState<StatusBarStyle>(
+    ThemedStyles.theme ? 'light-content' : 'dark-content',
+  );
   /**
    * The distance that topbar has to
    * move to get out of view
@@ -236,7 +239,9 @@ const ChannelScreen = observer((props: PropsType) => {
          * the statusbar is transparent there
          **/
         if (Platform.OS === 'ios') {
-          setTextStyle(ThemedStyles.theme ? 'light-content' : 'dark-content');
+          setStatusBarTextStyle(
+            ThemedStyles.theme ? 'light-content' : 'dark-content',
+          );
         }
       } else if (direction === 'up') {
         contentOffset.value = withTiming(0, {
@@ -244,7 +249,7 @@ const ChannelScreen = observer((props: PropsType) => {
           easing: EASING,
         });
         if (backgroundColor) {
-          setTextStyle(
+          setStatusBarTextStyle(
             isLight(backgroundColor) ? 'dark-content' : 'light-content',
           );
         }
@@ -281,6 +286,7 @@ const ChannelScreen = observer((props: PropsType) => {
       const color = await getColorFromURI(bannerUri);
       setBackgroundColor(color);
       setTextStyle(isLight(color) ? 'dark-content' : 'light-content');
+      setStatusBarTextStyle(isLight(color) ? 'dark-content' : 'light-content');
     }
   }, [bannerUri]);
 
