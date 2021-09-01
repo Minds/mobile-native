@@ -220,8 +220,6 @@ const ChannelScreen = observer((props: PropsType) => {
 
       if (!topBarAnimationEnabled.current) return;
 
-      cancelAnimation(contentOffset);
-
       /**
        * If the scroll had a down direction, hide the topbar
        **/
