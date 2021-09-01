@@ -19,6 +19,7 @@
 #import <UMReactNativeAdapter/UMModuleRegistryAdapter.h>
 #import <RNShareMenu/ShareMenuManager.h>
 #import "ReactNativeExceptionHandler.h"
+#import "Orientation.h"
 
 @interface AppDelegate () <RCTBridgeDelegate>
 
@@ -46,10 +47,14 @@ static void InitializeFlipper(UIApplication *application) {
 
 @implementation AppDelegate
 
+- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
+  return [Orientation getOrientation];
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   self.moduleRegistryAdapter = [[UMModuleRegistryAdapter alloc] initWithModuleRegistryProvider:[[UMModuleRegistryProvider alloc] init]];
-
+  [Orientation setOrientation:UIInterfaceOrientationMaskPortrait];
   #ifdef FB_SONARKIT_ENABLED
     InitializeFlipper(application);
   #endif
