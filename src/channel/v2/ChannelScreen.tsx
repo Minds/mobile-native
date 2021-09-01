@@ -413,7 +413,10 @@ const ChannelScreen = observer((props: PropsType) => {
   return (
     <ChannelContext.Provider value={channelContext}>
       {Boolean(backgroundColor) && (
-        <StatusBar backgroundColor={backgroundColor} barStyle={textStyle} />
+        <StatusBar
+          backgroundColor={backgroundColor}
+          barStyle={statusBarTextStyle}
+        />
       )}
 
       <AnimatedBanner
