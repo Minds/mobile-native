@@ -1,8 +1,13 @@
 export default {
-  Header: {}
+  Header: {},
+  TransitionPresets: {
+    ScaleFromCenterAndroid: {},
+    ModalTransition: {},
+    SlideFromRightIOS: {},
+  },
 };
 
 export const createStackNavigator = jest.fn();
 export const Header = {
-  HEIGHT:80,
+  HEIGHT: 80,
 };

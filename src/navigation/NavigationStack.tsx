@@ -12,6 +12,7 @@ import { Dimensions, Platform, StatusBar, View } from 'react-native';
 import {
   createStackNavigator,
   StackNavigationOptions,
+  TransitionPresets,
 } from '@react-navigation/stack';
 import AnalyticsScreen from '../analytics/AnalyticsScreen';
 
@@ -131,17 +132,25 @@ const isIos = Platform.OS === 'ios';
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 const captureOptions = {
   title: '',
-  animation: 'fade',
+  ...TransitionPresets.ScaleFromCenterAndroid,
   headerShown: false,
   ...Platform.select({
     android: { statusBarColor: 'black', statusBarStyle: 'auto' },
   }),
-} as NativeStackNavigationOptions;
+} as StackNavigationOptions & NativeStackNavigationOptions;
 
-const AppStackNav = createNativeStackNavigator<AppStackParamList>();
+const AppStackNav: any = Platform.select({
+  ios: createNativeStackNavigator<AppStackParamList>(),
+  // @ts-ignore
+  android: createStackNavigator<AppStackParamList>(),
+});
+const InternalStackNav = Platform.select({
+  ios: createNativeStackNavigator<InternalStackParamList>(),
+  // @ts-ignore
+  android: createStackNavigator<InternalStackParamList>(),
+});
 const AuthStackNav = createStackNavigator<AuthStackParamList>();
 const RootStackNav = createStackNavigator<RootStackParamList>();
-const InternalStackNav = createNativeStackNavigator<InternalStackParamList>();
 // const MainSwiper = createMaterialTopTabNavigator<MainSwiperParamList>();
 const DrawerNav = createDrawerNavigator<DrawerParamList>();
 
@@ -307,11 +316,15 @@ const AppStack = function () {
         <AppStackNav.Screen
           name="PortraitViewerScreen"
           component={PortraitViewerScreen}
-          options={{
-            animation: 'fade_from_bottom',
-            orientation: 'all',
-            ...hideHeader,
-          }}
+          options={
+            {
+              ...TransitionPresets.ModalTransition,
+              gestureEnabled: true,
+              gestureDirection: 'vertical',
+              orientation: 'all',
+              ...hideHeader,
+            } as any
+          }
         />
         <AppStackNav.Screen
           name="ExportLegacyWallet"

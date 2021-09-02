@@ -10,6 +10,10 @@ import { buildStyle, updateTheme } from './Style';
 import type { Styles } from './Style';
 import RNBootSplash from 'react-native-bootsplash';
 import { storages } from '../common/services/storage/storages.service';
+import {
+  StackNavigationOptions,
+  TransitionPresets,
+} from '@react-navigation/stack';
 import useIsPortrait from '../common/hooks/useIsPortrait';
 
 type Style = keyof Styles;
@@ -146,12 +150,24 @@ export class ThemedStylesStore {
       contentStyle: {
         backgroundColor: theme.PrimaryBackground,
       },
+      gestureEnabled: true,
+      cardStyle: {
+        backgroundColor: theme.PrimaryBackground,
+      },
+
       animation: Platform.select({
         ios: 'default',
         android: 'fade',
       }),
       orientation: 'portrait',
     };
+
+    if (Platform.OS === 'android') {
+      this.defaultScreenOptions = {
+        ...this.defaultScreenOptions,
+        ...TransitionPresets.SlideFromRightIOS,
+      };
+    }
 
     changeNavColor(theme.PrimaryBackground, this.theme === 0, true);
 
