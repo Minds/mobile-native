@@ -1,5 +1,11 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleProp } from 'react-native';
+import {
+  Platform,
+  StyleProp,
+  Text,
+  TouchableNativeFeedback,
+  View,
+} from 'react-native';
 import { ImageStyle, ResizeMode, Source } from 'react-native-fast-image';
 import { SharedElement } from 'react-navigation-shared-element';
 import { DATA_SAVER_THUMB_RES } from '../../../config/Config';
@@ -11,7 +17,7 @@ import i18n from '../../services/i18n.service';
 import DoubleTap from '../DoubleTap';
 import ExplicitImage from '../explicit/ExplicitImage';
 
-const DoubleTapTouchable = DoubleTap(TouchableOpacity);
+const DoubleTapTouchable = DoubleTap(TouchableNativeFeedback);
 
 type PropsType = {
   entity: ActivityModel;
@@ -83,12 +89,12 @@ export default function MediaViewImage({
    */
   const onLoadImage = React.useCallback(
     e => {
-      if (autoHeight) {
-        setSize({
-          height: e.nativeEvent.height,
-          width: e.nativeEvent.width,
-        });
-      }
+      // if (autoHeight) {
+      setSize({
+        height: e.nativeEvent.height,
+        width: e.nativeEvent.width,
+      });
+      // }
     },
     [autoHeight],
   );
@@ -120,18 +126,30 @@ export default function MediaViewImage({
         onPress={onImagePress}
         onLongPress={onImageLongPress}
         style={containerStyle}
-        activeOpacity={1}
+        useForeground
+        background={TouchableNativeFeedback.Ripple(
+          ThemedStyles.theme
+            ? 'rgba(0, 0, 0, 0.2)'
+            : 'rgba(255, 255, 255, 0.2)',
+          false,
+        )}
         testID="Posted Image">
-        <ExplicitImage
-          resizeMode={mode}
-          style={imageStyle}
-          source={source}
-          thumbnail={thumbnail}
-          entity={entity}
-          onLoad={onLoadImage}
-          onError={imageError}
-          ignoreDataSaver={ignoreDataSaver}
-        />
+        <View
+          style={{
+            width: '100%',
+            height: 300,
+          }}>
+          <ExplicitImage
+            resizeMode={mode}
+            style={imageStyle}
+            source={source}
+            thumbnail={thumbnail}
+            entity={entity}
+            onLoad={onLoadImage}
+            onError={imageError}
+            ignoreDataSaver={ignoreDataSaver}
+          />
+        </View>
       </DoubleTapTouchable>
     </SharedElement>
   );
