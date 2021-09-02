@@ -340,6 +340,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
                 <>{lock}</>
               )}
               <TouchableOpacity
+                activeOpacity={1}
                 accessibilityLabel="touchableTextCopy"
                 onLongPress={copyText}
                 style={textCopyTouchableStyle}>
