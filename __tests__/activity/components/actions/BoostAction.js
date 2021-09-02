@@ -43,12 +43,12 @@ describe('Boost action component', () => {
     let entity = activityResponse.activities[0];
     screen = shallow(<BoostAction entity={entity} navigation={navigation} />);
     screen.update();
-    let touchables = screen.find('preventDoubleTap(TouchableHighlight)');
+    let touchables = screen.find('preventDoubleTap(PressableScale)');
     touchables.at(0).props().onPress();
     jest.runAllTimers();
 
     expect(navigation.push).toHaveBeenCalled();
 
-    expect(screen.find('preventDoubleTap(TouchableHighlight)')).toHaveLength(1);
+    expect(screen.find('preventDoubleTap(PressableScale)')).toHaveLength(1);
   });
 });

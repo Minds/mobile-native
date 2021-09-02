@@ -3,64 +3,81 @@
 exports[`Boost action component renders correctly 1`] = `
 <View>
   <View
-    onPress={[Function]}
-    style={
-      Array [
-        Object {
-          "flexDirection": "row",
-          "justifyContent": "center",
-        },
-        Object {
-          "paddingHorizontal": 15,
-        },
-        Object {
-          "paddingVertical": 20,
-        },
-        Object {
-          "alignItems": "center",
-        },
-      ]
-    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
     underlayColor="transparent"
   >
     <View
       style={
         Array [
-          Object {
-            "flexDirection": "row",
-            "justifyContent": "flex-start",
-          },
-          Object {
-            "alignContent": "center",
-            "alignItems": "center",
-            "alignSelf": "center",
-            "justifyContent": "center",
-          },
+          Array [
+            Object {
+              "flexDirection": "row",
+              "justifyContent": "center",
+            },
+            Object {
+              "paddingHorizontal": 15,
+            },
+            Object {
+              "paddingVertical": 20,
+            },
+            Object {
+              "alignItems": "center",
+            },
+          ],
+          [Function],
         ]
       }
     >
-      <Text
-        allowFontScaling={false}
+      <View
         style={
           Array [
             Object {
-              "color": undefined,
-              "fontSize": 21,
+              "flexDirection": "row",
+              "justifyContent": "flex-start",
             },
             Object {
-              "color": "#72727C",
+              "alignContent": "center",
+              "alignItems": "center",
+              "alignSelf": "center",
+              "justifyContent": "center",
             },
-            Object {
-              "fontFamily": "Material Design Icons",
-              "fontStyle": "normal",
-              "fontWeight": "normal",
-            },
-            Object {},
           ]
         }
       >
-        󰔵
-      </Text>
+        <Text
+          allowFontScaling={false}
+          style={
+            Array [
+              Object {
+                "color": undefined,
+                "fontSize": 21,
+              },
+              Object {
+                "color": "#72727C",
+              },
+              Object {
+                "fontFamily": "Material Design Icons",
+                "fontStyle": "normal",
+                "fontWeight": "normal",
+              },
+              Object {},
+            ]
+          }
+        >
+          󰔵
+        </Text>
+      </View>
     </View>
   </View>
 </View>

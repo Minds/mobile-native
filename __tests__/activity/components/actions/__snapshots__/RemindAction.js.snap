@@ -2,7 +2,7 @@
 
 exports[`Thumb action component renders correctly 1`] = `
 <Fragment>
-  <preventDoubleTap(TouchableOpacity)
+  <preventDoubleTap(PressableScale)
     onPress={[Function]}
     style={
       Array [
@@ -42,6 +42,6 @@ exports[`Thumb action component renders correctly 1`] = `
       count={0}
       size={15}
     />
-  </preventDoubleTap(TouchableOpacity)>
+  </preventDoubleTap(PressableScale)>
 </Fragment>
 `;

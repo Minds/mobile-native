@@ -425,28 +425,8 @@ exports[`LoginScreen component should renders correctly 1`] = `
             }
           >
             <View
-              disabled={false}
-              onPress={[Function]}
               style={
                 Array [
-                  Object {
-                    "flexDirection": "row",
-                    "justifyContent": "center",
-                  },
-                  Object {
-                    "alignContent": "center",
-                    "alignItems": "center",
-                    "alignSelf": "center",
-                    "justifyContent": "center",
-                  },
-                  Object {
-                    "backgroundColor": "rgba(0,0,0,0.40)",
-                    "borderColor": "rgba(255,255,255,0.60)",
-                    "borderRadius": 21,
-                    "borderWidth": 1,
-                    "paddingHorizontal": 23,
-                    "paddingVertical": 10,
-                  },
                   Array [
                     Object {
                       "marginTop": 24.254545454545454,
@@ -455,31 +435,84 @@ exports[`LoginScreen component should renders correctly 1`] = `
                       "width": "100%",
                     },
                   ],
+                  Object {
+                    "borderRadius": 21,
+                    "flexDirection": "row",
+                    "overflow": "hidden",
+                  },
                 ]
               }
-              testID="loginButton"
-              text="Login"
             >
-              <Text
+              <View
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                fullWidth={true}
+                onBlur={[Function]}
+                onClick={[Function]}
+                onFocus={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                rippleColor="#f3d028b8"
                 style={
                   Array [
                     Object {
-                      "fontSize": 19,
+                      "backgroundColor": undefined,
                     },
-                    Object {
-                      "color": "#FFFFFF",
-                    },
-                    undefined,
-                    Object {
-                      "fontWeight": "500",
-                    },
+                    Array [
+                      Object {
+                        "flex": 1,
+                      },
+                      Object {
+                        "flexDirection": "row",
+                        "justifyContent": "center",
+                      },
+                      Object {
+                        "alignContent": "center",
+                        "alignItems": "center",
+                        "alignSelf": "center",
+                        "justifyContent": "center",
+                      },
+                      Object {
+                        "backgroundColor": "rgba(0,0,0,0.40)",
+                        "borderColor": "rgba(255,255,255,0.60)",
+                        "borderRadius": 21,
+                        "borderWidth": 1,
+                        "paddingHorizontal": 23,
+                        "paddingVertical": 10,
+                        "styleProp": undefined,
+                      },
+                    ],
                   ]
                 }
+                testID="loginButton"
+                text="Login"
               >
-                 
-                Login
-                 
-              </Text>
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "fontSize": 19,
+                      },
+                      Object {
+                        "color": "#FFFFFF",
+                      },
+                      undefined,
+                      Object {
+                        "fontWeight": "500",
+                      },
+                    ]
+                  }
+                >
+                   
+                  Login
+                   
+                </Text>
+              </View>
             </View>
             <View
               style={
@@ -515,28 +548,8 @@ exports[`LoginScreen component should renders correctly 1`] = `
               }
             />
             <View
-              disabled={false}
-              onPress={[Function]}
               style={
                 Array [
-                  Object {
-                    "flexDirection": "row",
-                    "justifyContent": "center",
-                  },
-                  Object {
-                    "alignContent": "center",
-                    "alignItems": "center",
-                    "alignSelf": "center",
-                    "justifyContent": "center",
-                  },
-                  Object {
-                    "backgroundColor": "rgba(0,0,0,0.40)",
-                    "borderColor": "rgba(255,255,255,0.60)",
-                    "borderRadius": 21,
-                    "borderWidth": 1,
-                    "paddingHorizontal": 23,
-                    "paddingVertical": 10,
-                  },
                   Array [
                     Object {
                       "width": "100%",
@@ -545,31 +558,84 @@ exports[`LoginScreen component should renders correctly 1`] = `
                       "marginTop": 30,
                     },
                   ],
+                  Object {
+                    "borderRadius": 21,
+                    "flexDirection": "row",
+                    "overflow": "hidden",
+                  },
                 ]
               }
-              testID="registerButton"
-              text="Join Minds"
             >
-              <Text
+              <View
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                fullWidth={true}
+                onBlur={[Function]}
+                onClick={[Function]}
+                onFocus={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                rippleColor="#f3d028b8"
                 style={
                   Array [
                     Object {
-                      "fontSize": 19,
+                      "backgroundColor": undefined,
                     },
-                    Object {
-                      "color": "#FFFFFF",
-                    },
-                    undefined,
-                    Object {
-                      "fontWeight": "500",
-                    },
+                    Array [
+                      Object {
+                        "flex": 1,
+                      },
+                      Object {
+                        "flexDirection": "row",
+                        "justifyContent": "center",
+                      },
+                      Object {
+                        "alignContent": "center",
+                        "alignItems": "center",
+                        "alignSelf": "center",
+                        "justifyContent": "center",
+                      },
+                      Object {
+                        "backgroundColor": "rgba(0,0,0,0.40)",
+                        "borderColor": "rgba(255,255,255,0.60)",
+                        "borderRadius": 21,
+                        "borderWidth": 1,
+                        "paddingHorizontal": 23,
+                        "paddingVertical": 10,
+                        "styleProp": undefined,
+                      },
+                    ],
                   ]
                 }
+                testID="registerButton"
+                text="Join Minds"
               >
-                 
-                Join Minds
-                 
-              </Text>
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "fontSize": 19,
+                      },
+                      Object {
+                        "color": "#FFFFFF",
+                      },
+                      undefined,
+                      Object {
+                        "fontWeight": "500",
+                      },
+                    ]
+                  }
+                >
+                   
+                  Join Minds
+                   
+                </Text>
+              </View>
             </View>
           </View>
           <Modal

@@ -110,47 +110,63 @@ exports[`blog view screen component should renders correctly 1`] = `
             }
           >
             <View
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onBlur={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
               style={
-                Object {
-                  "alignItems": "center",
-                  "display": "flex",
-                  "flexDirection": "row",
-                  "paddingHorizontal": 20,
-                  "paddingVertical": 13,
-                }
+                Array [
+                  Object {
+                    "backgroundColor": undefined,
+                  },
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                      "display": "flex",
+                      "flexDirection": "row",
+                      "height": 60,
+                      "paddingLeft": 20,
+                    },
+                    null,
+                  ],
+                ]
               }
             >
               <View
-                onPress={[Function]}
+                style={
+                  Array [
+                    Object {
+                      "overflow": "hidden",
+                    },
+                    Object {
+                      "borderRadius": 18.5,
+                      "height": 37,
+                      "width": 37,
+                    },
+                  ]
+                }
               >
-                <View
+                <FastImageView
+                  resizeMode="cover"
+                  source={null}
                   style={
-                    Array [
-                      Object {
-                        "overflow": "hidden",
-                      },
-                      Object {
-                        "borderRadius": 18.5,
-                        "height": 37,
-                        "width": 37,
-                      },
-                    ]
-                  }
-                >
-                  <FastImageView
-                    resizeMode="cover"
-                    source={null}
-                    style={
-                      Object {
-                        "bottom": 0,
-                        "left": 0,
-                        "position": "absolute",
-                        "right": 0,
-                        "top": 0,
-                      }
+                    Object {
+                      "bottom": 0,
+                      "left": 0,
+                      "position": "absolute",
+                      "right": 0,
+                      "top": 0,
                     }
-                  />
-                </View>
+                  }
+                />
               </View>
               <View
                 style={
@@ -184,7 +200,6 @@ exports[`blog view screen component should renders correctly 1`] = `
                   >
                     <Text
                       numberOfLines={1}
-                      onPress={[Function]}
                       style={
                         Array [
                           Object {
@@ -852,34 +867,45 @@ exports[`blog view screen component should renders correctly 1`] = `
               <View
                 style={
                   Object {
-                    "paddingLeft": 5,
+                    "alignItems": "center",
+                    "alignSelf": "stretch",
+                    "justifyContent": "center",
+                    "paddingRight": 15,
                   }
                 }
               >
-                <View>
-                  <Text
-                    allowFontScaling={false}
-                    onPress={[Function]}
-                    style={
-                      Array [
-                        Object {
-                          "color": undefined,
-                          "fontSize": 28,
-                        },
-                        Object {
-                          "color": "#9B9B9B",
-                        },
-                        Object {
-                          "fontFamily": "Material Icons",
-                          "fontStyle": "normal",
-                          "fontWeight": "normal",
-                        },
-                        Object {},
-                      ]
+                <View
+                  style={
+                    Object {
+                      "paddingLeft": 5,
                     }
-                  >
-                    
-                  </Text>
+                  }
+                >
+                  <View>
+                    <Text
+                      allowFontScaling={false}
+                      onPress={[Function]}
+                      style={
+                        Array [
+                          Object {
+                            "color": undefined,
+                            "fontSize": 28,
+                          },
+                          Object {
+                            "color": "#9B9B9B",
+                          },
+                          Object {
+                            "fontFamily": "Material Icons",
+                            "fontStyle": "normal",
+                            "fontWeight": "normal",
+                          },
+                          Object {},
+                        ]
+                      }
+                    >
+                      
+                    </Text>
+                  </View>
                 </View>
               </View>
             </View>
