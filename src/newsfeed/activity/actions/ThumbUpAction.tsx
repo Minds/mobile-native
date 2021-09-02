@@ -15,9 +15,10 @@ import {
   iconDisabledStyle,
   iconNormalStyle,
 } from './styles';
+import PressableScale from '../../../common/components/PressableScale';
 
 // prevent double tap in touchable
-const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
+const PressableCustom = withPreventDoubleTap(PressableScale);
 
 type PropsType = {
   entity: ActivityModel;
@@ -139,7 +140,7 @@ class ThumbUpAction extends Component<PropsType> {
 
     const canVote = entity.can(FLAG_VOTE);
 
-    const Touchable = this.props.touchableComponent || TouchableOpacityCustom;
+    const Touchable = this.props.touchableComponent || PressableCustom;
 
     return (
       <Touchable

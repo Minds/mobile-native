@@ -6,9 +6,10 @@ import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import type UserModel from '../../../channel/UserModel';
 import { actionsContainerStyle } from './styles';
+import PressableScale from '../../../common/components/PressableScale';
 
 // prevent double tap in touchable
-const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
+const PressableCustom = withPreventDoubleTap(PressableScale);
 
 type PropsType = {
   owner: UserModel;
@@ -24,15 +25,13 @@ export default class WireAction extends PureComponent<PropsType> {
    */
   render() {
     return (
-      <TouchableOpacityCustom
-        style={actionsContainerStyle}
-        onPress={this.openWire}>
+      <PressableCustom style={actionsContainerStyle} onPress={this.openWire}>
         <Icon
           style={ThemedStyles.style.colorIconActive}
           name="attach-money"
           size={20}
         />
-      </TouchableOpacityCustom>
+      </PressableCustom>
     );
   }
 

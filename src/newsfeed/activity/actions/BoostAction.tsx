@@ -8,9 +8,10 @@ import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import ActivityModel from '../../../newsfeed/ActivityModel';
 import { actionsContainerStyle } from './styles';
+import PressableScale from '../../../common/components/PressableScale';
 
 // prevent double tap in touchable
-const TouchableHighlightCustom = withPreventDoubleTap(TouchableHighlight);
+const PressableCustom = withPreventDoubleTap(PressableScale);
 
 type PropsType = {
   navigation: any;
@@ -28,7 +29,7 @@ export default class BoostAction extends PureComponent<PropsType> {
     const theme = ThemedStyles.style;
     return (
       <View>
-        <TouchableHighlightCustom
+        <PressableCustom
           style={actionsContainerStyle}
           underlayColor="transparent"
           onPress={this.openBoost}>
@@ -39,7 +40,7 @@ export default class BoostAction extends PureComponent<PropsType> {
               size={21}
             />
           </View>
-        </TouchableHighlightCustom>
+        </PressableCustom>
       </View>
     );
   }

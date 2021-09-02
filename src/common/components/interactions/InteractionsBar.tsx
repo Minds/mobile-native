@@ -7,7 +7,7 @@ import type ActivityModel from '../../../newsfeed/ActivityModel';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import abbrev from '../../helpers/abbrev';
 import i18n from '../../services/i18n.service';
-import PressableScale from '../PressableScale';
+import MPressable from '../MPressable';
 
 interface PropsType {
   entity: ActivityModel | CommentModel | BlogModel;
@@ -29,7 +29,7 @@ export default observer(function InteractionsBar({
   return (
     <View style={containerStyle}>
       {entity['thumbs:up:count'] > 0 && (
-        <PressableScale style={buttonStyle} onPress={onShowUpVotesPress}>
+        <MPressable style={buttonStyle} onPress={onShowUpVotesPress}>
           <Text style={textStyle}>
             <Text style={countStyle}>
               {abbrev(entity['thumbs:up:count'], 0)}
@@ -38,10 +38,10 @@ export default observer(function InteractionsBar({
               count: entity['thumbs:up:count'],
             })}
           </Text>
-        </PressableScale>
+        </MPressable>
       )}
       {entity['thumbs:down:count'] > 0 && (
-        <PressableScale style={buttonStyle} onPress={onShowDownVotesPress}>
+        <MPressable style={buttonStyle} onPress={onShowDownVotesPress}>
           <Text style={textStyle}>
             <Text style={countStyle}>
               {abbrev(entity['thumbs:down:count'], 0)}
@@ -50,33 +50,36 @@ export default observer(function InteractionsBar({
               count: entity['thumbs:down:count'],
             })}
           </Text>
-        </PressableScale>
+        </MPressable>
       )}
       {entity.reminds > 0 && (
-        <PressableScale style={buttonStyle} onPress={onShowRemindsPress}>
+        <MPressable style={buttonStyle} onPress={onShowRemindsPress}>
           <Text style={textStyle}>
             <Text style={countStyle}>{abbrev(entity.reminds, 0)}</Text>{' '}
             {i18n.t('interactions.reminds', {
               count: entity.reminds,
             })}
           </Text>
-        </PressableScale>
+        </MPressable>
       )}
       {entity.quotes > 0 && (
-        <PressableScale style={buttonStyle} onPress={onShowQuotesPress}>
+        <MPressable style={buttonStyle} onPress={onShowQuotesPress}>
           <Text style={textStyle}>
             <Text style={countStyle}>{abbrev(entity.quotes, 0)}</Text>{' '}
             {i18n.t('interactions.quotes', {
               count: entity.quotes,
             })}
           </Text>
-        </PressableScale>
+        </MPressable>
       )}
     </View>
   );
 });
 
-const buttonStyle = ThemedStyles.combine('marginLeft2x', 'paddingVertical3x');
+const buttonStyle = ThemedStyles.combine(
+  'paddingHorizontal',
+  'paddingVertical3x',
+);
 const containerStyle = ThemedStyles.combine(
   'rowJustifyStart',
   'bgPrimaryBackground',

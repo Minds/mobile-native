@@ -1,11 +1,6 @@
-import React, { Component, useCallback, useEffect } from 'react';
-
+import React, { useCallback } from 'react';
 import { observer } from 'mobx-react';
-
-import { TouchableOpacity } from 'react-native';
-
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-
 import Counter from './Counter';
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import ThemedStyles from '../../../styles/ThemedStyles';
@@ -14,9 +9,10 @@ import type BlogModel from '../../../blogs/BlogModel';
 import { useRoute } from '@react-navigation/native';
 import { ActivityRouteProp } from '../../ActivityScreen';
 import { actionsContainerStyle } from './styles';
+import PressableScale from '../../../common/components/PressableScale';
 
 // prevent double tap in touchable
-const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
+const PressableCustom = withPreventDoubleTap(PressableScale);
 
 type PropsType = {
   entity: ActivityModel | BlogModel;
@@ -64,7 +60,7 @@ const CommentsAction = observer((props: PropsType) => {
   }, [props, route]);
 
   return (
-    <TouchableOpacityCustom
+    <PressableCustom
       style={actionsContainerStyle}
       onPress={openComments}
       testID={props.testID}>
@@ -74,7 +70,7 @@ const CommentsAction = observer((props: PropsType) => {
         size={19}
       />
       {!props.hideCount && <Counter count={props.entity['comments:count']} />}
-    </TouchableOpacityCustom>
+    </PressableCustom>
   );
 });
 

@@ -17,9 +17,10 @@ import { ANDROID_CHAT_APP, MINDS_URI } from '../../../config/Config';
 import logService from '../../../common/services/log.service';
 import ShareService from '../../../share/ShareService';
 import { actionsContainerStyle } from './styles';
+import PressableScale from '../../../common/components/PressableScale';
 
 // prevent double tap in touchable
-const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
+const PressableCustom = withPreventDoubleTap(PressableScale);
 
 type PropsType = {
   entity: ActivityModel;
@@ -91,15 +92,13 @@ export default observer(function ShareAction({ entity }: PropsType) {
   ]).current;
 
   return (
-    <TouchableOpacityCustom
-      style={actionsContainerStyle}
-      onPress={localStore.onPress}>
+    <PressableCustom style={actionsContainerStyle} onPress={localStore.onPress}>
       <Icon style={ThemedStyles.style.colorIcon} name="share" size={18} />
       <BottomButtonOptions
         list={options}
         isVisible={localStore.showMenu}
         onPressClose={localStore.hide}
       />
-    </TouchableOpacityCustom>
+    </PressableCustom>
   );
 });

@@ -24,9 +24,10 @@ import {
   BottomSheetButton,
   MenuItem,
 } from '../../../common/components/bottom-sheet';
+import PressableScale from '../../../common/components/PressableScale';
 
 // prevent double tap in touchable
-const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
+const PressableCustom = withPreventDoubleTap(PressableScale);
 
 type PropsTypes = {
   entity: ActivityModel | BlogModel;
@@ -128,13 +129,13 @@ export default function ({ entity, size = 19, hideCount }: PropsTypes) {
 
   return (
     <>
-      <TouchableOpacityCustom
+      <PressableCustom
         style={actionsContainerStyle}
         onPress={showDropdown}
         testID="Remind activity button">
         <Icon style={buttonIconStyle} name="repeat" size={size} />
         {!hideCount && <Counter count={entity.reminds} />}
-      </TouchableOpacityCustom>
+      </PressableCustom>
       {shown && (
         <BottomSheet ref={ref} autoShow>
           {reminded ? (
