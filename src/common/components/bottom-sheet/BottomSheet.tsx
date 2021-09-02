@@ -63,6 +63,7 @@ export default forwardRef<BottomSheetModal, PropsType>((props, ref) => {
       topInset={StatusBar.currentHeight || 0}
       handleComponent={renderHandle}
       snapPoints={snapPointsMemo}
+      backgroundComponent={null}
       backdropComponent={renderBackdrop}
       style={styles.sheetContainer as any}
       {...other}>

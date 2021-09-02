@@ -381,7 +381,7 @@ const styles = ThemedStyles.create({
       top: -avatarSize / 1.8,
       left: CENTERED ? undefined : 20,
       alignSelf: 'center',
-      borderWidth: 5,
+      borderWidth: 3,
       borderRadius: (avatarSize + 6) / 2,
     },
   ],

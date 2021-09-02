@@ -52,7 +52,7 @@ const tinycolor = require('tinycolor2');
 /**
  * determines whether a color is light
  **/
-const isLight = (color: string) => tinycolor(color).isLight();
+const isLight = (color: string) => tinycolor(color).getBrightness() > 170;
 
 /**
  * given an image uri, returns the average/dominant color
@@ -65,7 +65,7 @@ const getColorFromURI = async uri => {
   if (Platform.OS === 'android') {
     color = (colors as AndroidImageColors).average!;
   } else {
-    color = (colors as IOSImageColors).background!;
+    color = (colors as IOSImageColors).primary!;
   }
 
   return color;
@@ -135,6 +135,9 @@ const ChannelScreen = observer((props: PropsType) => {
    * whether texts should be light or dark
    **/
   const [textStyle, setTextStyle] = useState<StatusBarStyle>(
+    ThemedStyles.theme ? 'light-content' : 'dark-content',
+  );
+  const [statusBarTextStyle, setStatusBarTextStyle] = useState<StatusBarStyle>(
     ThemedStyles.theme ? 'light-content' : 'dark-content',
   );
   /**
@@ -220,8 +223,6 @@ const ChannelScreen = observer((props: PropsType) => {
 
       if (!topBarAnimationEnabled.current) return;
 
-      cancelAnimation(contentOffset);
-
       /**
        * If the scroll had a down direction, hide the topbar
        **/
@@ -238,7 +239,9 @@ const ChannelScreen = observer((props: PropsType) => {
          * the statusbar is transparent there
          **/
         if (Platform.OS === 'ios') {
-          setTextStyle(ThemedStyles.theme ? 'light-content' : 'dark-content');
+          setStatusBarTextStyle(
+            ThemedStyles.theme ? 'light-content' : 'dark-content',
+          );
         }
       } else if (direction === 'up') {
         contentOffset.value = withTiming(0, {
@@ -246,7 +249,7 @@ const ChannelScreen = observer((props: PropsType) => {
           easing: EASING,
         });
         if (backgroundColor) {
-          setTextStyle(
+          setStatusBarTextStyle(
             isLight(backgroundColor) ? 'dark-content' : 'light-content',
           );
         }
@@ -283,6 +286,7 @@ const ChannelScreen = observer((props: PropsType) => {
       const color = await getColorFromURI(bannerUri);
       setBackgroundColor(color);
       setTextStyle(isLight(color) ? 'dark-content' : 'light-content');
+      setStatusBarTextStyle(isLight(color) ? 'dark-content' : 'light-content');
     }
   }, [bannerUri]);
 
@@ -409,7 +413,10 @@ const ChannelScreen = observer((props: PropsType) => {
   return (
     <ChannelContext.Provider value={channelContext}>
       {Boolean(backgroundColor) && (
-        <StatusBar backgroundColor={backgroundColor} barStyle={textStyle} />
+        <StatusBar
+          backgroundColor={backgroundColor}
+          barStyle={statusBarTextStyle}
+        />
       )}
 
       <AnimatedBanner
