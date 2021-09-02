@@ -14,9 +14,10 @@ export default class Router {
    * @param {object} notification
    */
   async navigate(data: any) {
+    console.log('ROUTER NAVIGATE', data.getData());
     //switch to corresponding user account if needed
-    if (data.targetGuid) {
-      await AuthService.loginWithGuid(data.targetGuid);
+    if (data.user_guid) {
+      await AuthService.loginWithGuid(data.json.user_guid);
     }
 
     if (data.uri && data.uri.startsWith(MINDS_URI)) {

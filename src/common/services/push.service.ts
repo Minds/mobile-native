@@ -28,6 +28,7 @@ export class PushService {
       // get notification data
       const data = notification.getData();
       if (data.json) data.json = JSON.parse(data.json);
+      data.user_guid = '968187695744425997';
       // navigate
       this.router.navigate(data);
     });
