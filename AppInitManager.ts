@@ -114,8 +114,10 @@ export default class AppInitManager {
     logService.info('[App] Getting minds settings and onboarding progress');
 
     // register device token into backend on login
-
     pushService.registerToken();
+
+    // request for permission (applies to iOS)
+    pushService.requestNotificationPermission();
 
     // check update
     if (Platform.OS !== 'ios' && !GOOGLE_PLAY_STORE) {

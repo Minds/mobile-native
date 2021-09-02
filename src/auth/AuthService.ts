@@ -88,6 +88,7 @@ class AuthService {
     await api.clearCookies();
     await delay(100);
     await session.login(data);
+
     return data;
   }
 
