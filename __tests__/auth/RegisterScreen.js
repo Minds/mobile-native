@@ -2,7 +2,7 @@ import 'react-native';
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
 import { NativeModules } from 'react-native';
-import RegisterScreen from '../../src/auth/RegisterScreen';
+import RegisterScreen from '../../src/auth/register/RegisterScreen';
 import authService from '../../src/auth/AuthService';
 import { showNotification } from '../../AppMessages';
 

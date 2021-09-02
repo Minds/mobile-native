@@ -6,6 +6,15 @@ import auth from '../../../src/auth/AuthService';
 import { MINDS_API_URI } from '../../../src/config/Config';
 import { UserError } from '../../../src/common/UserError';
 import sessionService from '../../../src/common/services/session.service';
+import { getStores } from '../../../AppStores';
+
+getStores.mockReturnValue({
+  user: {
+    me: {},
+    load: jest.fn(),
+    setUser: jest.fn(),
+  },
+});
 
 jest.mock('../../../src/auth/AuthService');
 
