@@ -6,6 +6,7 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import type UserModel from '../../channel/UserModel';
 import FastImage from 'react-native-fast-image';
 import Subscribe from '../../channel/v2/buttons/Subscribe';
+import MPressable from './MPressable';
 
 type PropsType = {
   channel: UserModel;
@@ -60,7 +61,7 @@ class ChannelListItem extends Component<PropsType> {
     const { ...otherProps } = this.props;
 
     return (
-      <TouchableHighlight activeOpacity={0.9} onPress={this._navToChannel}>
+      <MPressable onPress={this._navToChannel}>
         <View style={styles.container} {...otherProps}>
           <FastImage
             source={this.props.channel.getAvatarSource('medium')}
@@ -72,7 +73,7 @@ class ChannelListItem extends Component<PropsType> {
           </View>
           {this.renderRightButton()}
         </View>
-      </TouchableHighlight>
+      </MPressable>
     );
   }
 }
@@ -95,7 +96,7 @@ const styles = ThemedStyles.create({
     'paddingHorizontal2x',
     'bcolorPrimaryBorder',
     'borderBottomHair',
-    'bgPrimaryBackground',
+    // 'bgPrimaryBackground',
   ],
   nameContainer: ['flexContainerCenter', 'paddingLeft', 'justifyCenter'],
   name: [bodyStyle, 'fontL'],

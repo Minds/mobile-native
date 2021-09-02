@@ -21,6 +21,7 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 import UserModel from '../../channel/UserModel';
 import { NavigationRouteV5 } from '@sentry/react-native/dist/js/tracing/reactnavigationv5';
 import { ChannelContext } from '../../channel/v2/ChannelContext';
+import MPressable from '../../common/components/MPressable';
 
 const DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
 
@@ -166,18 +167,19 @@ class OwnerBlock extends PureComponent<PropsType> {
     return (
       <View style={this.containerStyle}>
         {remind}
-        <View style={styles.container}>
+        <MPressable
+          onPress={this._onNavToChannelPress}
+          style={[
+            styles.container,
+            rightToolbar ? null : { paddingRight: 20 },
+          ]}>
           {this.props.leftToolbar}
-          <DebouncedTouchableOpacity onPress={this._onNavToChannelPress}>
-            <FastImage source={this.avatarSrc} style={styles.avatar} />
-          </DebouncedTouchableOpacity>
+          <FastImage source={this.avatarSrc} style={styles.avatar} />
+
           <View style={styles.body}>
             <View style={styles.nameContainer}>
               <View pointerEvents="box-none" style={nameTouchableStyle}>
-                <Text
-                  numberOfLines={1}
-                  style={nameStyle}
-                  onPress={this._onNavToChannelPress}>
+                <Text numberOfLines={1} style={nameStyle}>
                   {name || channel.username}
                   {Boolean(name) && (
                     <Text numberOfLines={1} style={usernameStyle}>
@@ -196,8 +198,10 @@ class OwnerBlock extends PureComponent<PropsType> {
             channel={this.props.entity.ownerObj}
             iconStyle={theme.colorLink}
           />
-          {rightToolbar}
-        </View>
+          {rightToolbar && (
+            <View style={styles.rightToolbarContainer}>{rightToolbar}</View>
+          )}
+        </MPressable>
       </View>
     );
   }
@@ -212,10 +216,10 @@ const styles = StyleSheet.create({
   },
   container: {
     display: 'flex',
-    paddingHorizontal: 20,
-    paddingVertical: 13,
+    paddingLeft: 20,
     alignItems: 'center',
     flexDirection: 'row',
+    height: 60,
   },
   avatar: {
     height: 37,
@@ -232,6 +236,12 @@ const styles = StyleSheet.create({
   },
   groupContainer: {
     paddingTop: 3,
+  },
+  rightToolbarContainer: {
+    alignSelf: 'stretch',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingRight: 15,
   },
 });
 

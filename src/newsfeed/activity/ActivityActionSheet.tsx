@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 
-import { View, Alert, Linking } from 'react-native';
+import { View, Alert, Linking, TouchableOpacity } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -22,6 +22,7 @@ import {
   BottomSheetButton,
   MenuItem,
 } from '../../common/components/bottom-sheet';
+import MPressable from '../../common/components/MPressable';
 
 type PropsType = {
   entity: ActivityModel;
@@ -38,6 +39,8 @@ type StateType = {
   userBlocked: boolean;
   shown: boolean;
 };
+
+const hitSlopInsets = { top: 20, bottom: 20, left: 20, right: 20 };
 
 /**
  * Activity Actions Component
@@ -383,13 +386,17 @@ export default withSafeAreaInsets(
 
       return (
         <View style={theme.paddingLeft2x}>
-          <Icon
-            name="more-vert"
+          <TouchableOpacity
             onPress={this.showActionSheet}
-            size={28}
-            style={theme.colorTertiaryText}
-            testID={this.props.testID}
-          />
+            hitSlop={hitSlopInsets}>
+            <Icon
+              name="more-vert"
+              size={28}
+              style={theme.colorTertiaryText}
+              testID={this.props.testID}
+            />
+          </TouchableOpacity>
+
           {this.state.shown && (
             <BottomSheet ref={this.ref} autoShow>
               {this.state.options.map((a, i) => (

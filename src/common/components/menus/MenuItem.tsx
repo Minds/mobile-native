@@ -3,6 +3,7 @@ import { TextStyle } from 'react-native';
 
 import { ListItem } from 'react-native-elements';
 import ThemedStyles from '../../../styles/ThemedStyles';
+import MPressable from '../MPressable';
 
 export type MenuItemItem = {
   onPress?: () => void;
@@ -65,7 +66,7 @@ export default function ({
 
   return (
     <ListItem
-      Component={component}
+      Component={component || MPressable}
       onPress={item.onPress}
       containerStyle={containerStyle}
       underlayColor="transparent"

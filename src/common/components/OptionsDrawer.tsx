@@ -12,7 +12,12 @@ export default function ({ navigation, route }) {
 
   const list = route.params.options(navigation, route).filter(r => r);
 
-  const innerWrapper = [theme.borderBottomHair, theme.bcolorPrimaryBorder];
+  const innerWrapper = [
+    theme.borderBottomHair,
+    theme.bcolorPrimaryBorder,
+    theme.marginTop4x,
+    theme.bgSecondaryBackground,
+  ];
 
   return (
     <View style={[theme.flexContainer, theme.bgPrimaryBackground]}>
@@ -20,7 +25,6 @@ export default function ({ navigation, route }) {
         <FlatList
           data={list}
           renderItem={MenuItem}
-          style={[theme.bgPrimaryBackground, theme.paddingTop4x]}
           keyExtractor={(item, index) => index.toString()}
         />
       </View>

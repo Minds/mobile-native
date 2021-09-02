@@ -1,38 +1,46 @@
 import React, { useMemo, useState } from 'react';
-import { Platform, Pressable } from 'react-native';
+import { Platform, Pressable, PressableProps } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
+
+interface MPressableProps extends PressableProps {
+  noFeedback?: boolean;
+  opacity?: boolean;
+}
 
 /**
  * A Pressable-extended component to have more control over
  * touchable elements across the app and in different platforms.
  */
-const MPressable = ({ ...props }) => {
+const MPressable = ({ noFeedback, opacity, ...props }: MPressableProps) => {
   const [pressed, setPressed] = useState(false);
 
   const platformSpecificProps = useMemo(
     () =>
-      Platform.select({
-        android: {
-          android_ripple: {
-            color: ThemedStyles.getColor('TertiaryBackground'),
-          },
-        },
-        default: {
-          onPressIn: () => setPressed(true),
-          onPressOut: () => setPressed(false),
-          style: [
-            {
-              backgroundColor: pressed
-                ? ThemedStyles.getColor('TertiaryBackground')
-                : undefined,
+      noFeedback
+        ? null
+        : Platform.select({
+            android: {
+              android_ripple: props.android_ripple || {
+                color: ThemedStyles.getColor('TertiaryBackground'),
+              },
             },
-            props.style,
-          ],
-        },
-      }),
+            default: {
+              onPressIn: () => setPressed(true),
+              onPressOut: () => setPressed(false),
+              style: [
+                {
+                  backgroundColor: pressed
+                    ? ThemedStyles.getColor('HighlightBackground')
+                    : undefined,
+                },
+                props.style,
+              ],
+            },
+          }),
     [pressed],
   );
 
+  // @ts-ignore
   return <Pressable {...props} {...platformSpecificProps} />;
 };
 

@@ -143,12 +143,13 @@ export default function ({ navigation }) {
         style={[theme.titleText, theme.paddingLeft4x, theme.paddingVertical2x]}>
         {i18n.t('moreScreen.settings')}
       </Text>
-      <View style={[innerWrapper, theme.bgPrimaryBackground]}>
+      <View style={[innerWrapper, theme.bgSecondaryBackground]}>
         {items.map(item => (
-          <MenuItem item={item} />
+          <MenuItem containerItemStyle={transparentBg} item={item} />
         ))}
       </View>
-      <View style={[innerWrapper, theme.marginTop7x]}>
+      <View
+        style={[innerWrapper, theme.marginTop7x, theme.bgSecondaryBackground]}>
         <MenuItem item={themeChange} i={4} />
         <MenuItem item={help} i={5} />
         <MenuItem item={logOut} i={6} />
@@ -156,3 +157,5 @@ export default function ({ navigation }) {
     </ScrollView>
   );
 }
+
+const transparentBg = { backgroundColor: 'transparent' };

@@ -22,6 +22,8 @@ import mindsService from '../common/services/minds-config.service';
 import CenteredLoading from '../common/components/CenteredLoading';
 import ThemedStyles from '../styles/ThemedStyles';
 import TextInput from '../common/components/TextInput';
+import MPressable from '../common/components/MPressable';
+import MenuItem from '../common/components/menus/MenuItem';
 
 export default class ReportScreen extends Component {
   state = {
@@ -235,35 +237,19 @@ export default class ReportScreen extends Component {
         ? this.state.reason.reasons
         : this.state.reasons;
 
-    const reasonItems = reasons.map((reason, i) => {
-      return (
-        <TouchableOpacity
-          style={[styles.reasonItem, ThemedStyles.bgTertiaryBackground]}
-          key={i}
-          onPress={() =>
+    return reasons.map(reason => (
+      <MenuItem
+        containerItemStyle={styles.transparentBg}
+        item={{
+          onPress: () =>
             this.state.reason
               ? this.selectSubreason(reason)
-              : this.selectReason(reason)
-          }>
-          <View style={styles.reasonItemLabelContainer}>
-            <View style={theme.rowStretch}>
-              <Text style={styles.reasonItemLabel}>{reason.label}</Text>
-            </View>
-          </View>
-          <View style={styles.chevronContainer}>
-            <Icon
-              name="chevron-right"
-              size={36}
-              style={
-                reason.hasMore ? theme.colorLink : theme.colorSecondaryText
-              }
-            />
-          </View>
-        </TouchableOpacity>
-      );
-    });
-
-    return reasonItems;
+              : this.selectReason(reason),
+          title: reason.label,
+          noIcon: !reason.hasMore,
+        }}
+      />
+    ));
   }
 
   /**
@@ -352,4 +338,5 @@ const styles = StyleSheet.create({
   chevron: {
     color: '#ececec',
   },
+  transparentBg: { backgroundColor: 'transparent' },
 });

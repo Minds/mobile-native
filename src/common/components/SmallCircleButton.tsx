@@ -16,6 +16,8 @@ type PropsType = {
   iconStyle?: any;
 };
 
+const hitSlopInsets = { bottom: 10, top: 10, left: 10, right: 10 };
+
 const SmallCircleButton = ({ raised = true, ...props }: PropsType) => {
   return (
     <Icon
@@ -29,6 +31,7 @@ const SmallCircleButton = ({ raised = true, ...props }: PropsType) => {
       onPress={props.onPress}
       containerStyle={props.style}
       iconStyle={props.iconStyle}
+      hitSlop={hitSlopInsets}
     />
   );
 };

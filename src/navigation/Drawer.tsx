@@ -15,6 +15,7 @@ import featuresService from '../common/services/features.service';
 import sessionService from '../common/services/session.service';
 import { GOOGLE_PLAY_STORE } from '../config/Config';
 import FitScrollView from '../common/components/FitScrollView';
+import MPressable from '../common/components/MPressable';
 
 const ICON_SIZE = 25;
 
@@ -173,7 +174,7 @@ export default function Drawer(props) {
           {optionsList.map((l, i) =>
             !l ? null : (
               <ListItem
-                Component={TouchableOpacity}
+                Component={MPressable}
                 pad={5}
                 key={i}
                 onPress={l.onPress}
@@ -227,18 +228,13 @@ const styles = StyleSheet.create({
     borderRadius: 55,
   },
   body: {
-    paddingLeft: Platform.select({ ios: 35, android: 25 }),
     paddingTop: Platform.select({ ios: 50, android: 30 }),
-  },
-  container: {
-    borderTopWidth: 0,
-    borderBottomWidth: 0,
-    paddingLeft: 30,
   },
   listItem: {
     borderBottomWidth: 0,
     backgroundColor: 'transparent',
     paddingVertical: Platform.select({ ios: 15, android: 12.5 }),
+    paddingLeft: Platform.select({ ios: 35, android: 40 }),
   },
 });
 const menuTitleStyle = ThemedStyles.combine(
