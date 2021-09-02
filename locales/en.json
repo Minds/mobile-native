@@ -270,6 +270,8 @@
     "editChannel": "Edit Channel",
     "confirmUnsubscribe": "Are you sure you want to unsubscribe from this channel?",
     "subscribe": "Subscribe",
+    "subscribed": "Subscribed",
+    "message": "Message via Chat",
     "requestSubscription": "Request Subscription",
     "briefDescription": "Brief description about you...",
     "block": "Block",
@@ -295,6 +297,11 @@
       "dob": "Date of Birth"
     },
     "badges": "Badges",
+    "badge": {
+      "plus": "Minds Plus",
+      "verified": "Verified",
+      "founder": "Founder"
+    },
     "fabSend": "Send Tip",
     "fabPay": "Tip",
     "share": "Share Channel"
@@ -1417,6 +1424,7 @@
   "uploadFailed": "Upload failed",
   "imageViewer": "View image",
   "remindedBy": "Reminded by",
+  "pinnedPost": "Pinned post",
   "postReminded": "Post has been reminded",
   "remindRemoved": "Remind has been removed",
   "deletedRemind": "This reminded content is unavailable. It may have been deleted or you do not have permission to view it",
