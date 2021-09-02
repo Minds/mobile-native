@@ -10,8 +10,9 @@ import { extendObservable, computed } from 'mobx';
 import logService from '../common/services/log.service';
 import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { MINDS_GUID } from '../config/Config';
+import { GOOGLE_PLAY_STORE, MINDS_GUID } from '../config/Config';
 import sessionService from '../common/services/session.service';
+import { Platform } from 'react-native';
 
 export class PortraitBarItem {
   user: UserModel;
@@ -22,6 +23,7 @@ export class PortraitBarItem {
     this.user = user;
     this.activities = activities;
   }
+
   preloadImages() {
     const images = this.activities
       .map(e => {
@@ -137,14 +139,24 @@ function createPortraitStore() {
       const user = sessionService.getUser();
       feedStore.clear();
 
+      const params: any = {
+        limit: 150,
+        hide_reminds: true,
+        as_activities: feedStore.feedsService.asActivities ? 1 : 0,
+        portrait: true,
+        to_timestamp: moment().unix() * 1000,
+        from_timestamp:
+          moment().subtract(7, 'days').hour(0).minutes(0).seconds(0).unix() *
+          1000,
+      };
+
+      // For iOS and play store force safe content
+      if (Platform.OS === 'ios' || GOOGLE_PLAY_STORE) {
+        params.nsfw = [];
+      }
+
       try {
-        feedStore.setParams({
-          portrait: true,
-          to_timestamp: moment().unix() * 1000,
-          from_timestamp:
-            moment().subtract(7, 'days').hour(0).minutes(0).seconds(0).unix() *
-            1000,
-        });
+        feedStore.setParams(params).setPaginated(false);
         const seenList = await portraitContentService.getSeen();
 
         // =====================| 1. LOAD DATA FROM CACHE |=====================>
