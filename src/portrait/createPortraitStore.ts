@@ -116,7 +116,7 @@ const postProcessPortraitEntities = (
 function createPortraitStore() {
   const feedStore = new FeedStore();
 
-  feedStore.setEndpoint(portraitEndpoint).setLimit(150);
+  feedStore.setEndpoint(portraitEndpoint).setLimit(150).setPaginated(false);
   const joins = fromEvent<UserModel>(UserModel.events, 'toggleSubscription');
   let subscription$: Subscription | null = null;
 
@@ -140,13 +140,13 @@ function createPortraitStore() {
       try {
         feedStore.setParams({
           portrait: true,
-          to_timestamp: moment().unix() * 1000,
+          to_timestamp:
+            moment().add(1, 'days').hour(0).minutes(0).seconds(0).unix() * 1000,
           from_timestamp:
-            moment().subtract(7, 'days').hour(0).minutes(0).seconds(0).unix() *
+            moment().subtract(2, 'days').hour(0).minutes(0).seconds(0).unix() *
             1000,
         });
         const seenList = await portraitContentService.getSeen();
-
         // =====================| 1. LOAD DATA FROM CACHE |=====================>
         await feedStore.fetch(true, true);
         this.items = postProcessPortraitEntities(
