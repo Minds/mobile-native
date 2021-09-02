@@ -286,6 +286,7 @@ exports[`Activity screen component renders correctly  1`] = `
       <View>
         <View
           accessibilityLabel="touchableTextCopy"
+          activeOpacity={1}
           onLongPress={[Function]}
           style={
             Array [

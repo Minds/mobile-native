@@ -15,7 +15,7 @@ import authService, { TWO_FACTOR_ERROR } from './AuthService';
 
 import i18n from '../common/services/i18n.service';
 import logService from '../common/services/log.service';
-import Button from '../common/components/Button';
+import Button from '../common/components/ButtonV2';
 import ThemedStyles from '../styles/ThemedStyles';
 import InputContainer from '../common/components/InputContainer';
 import BoxShadow from '../common/components/BoxShadow';
@@ -189,6 +189,8 @@ export default observer(function LoginForm(props: PropsType) {
           testID="loginButton"
           transparent
           large
+          fullWidth
+          rippleColor={ThemedStyles.getColor('Yellow')}
         />
         <View style={theme.marginTop4x}>
           <Text
@@ -206,6 +208,8 @@ export default observer(function LoginForm(props: PropsType) {
           testID="registerButton"
           transparent
           large
+          fullWidth
+          rippleColor={ThemedStyles.getColor('Yellow')}
         />
       </View>
       <ResetPasswordModal ref={resetRef} />

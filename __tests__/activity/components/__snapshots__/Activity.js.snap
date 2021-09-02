@@ -346,7 +346,7 @@ exports[`Activity component renders correctly 1`] = `
     }
   />
   <TouchableOpacity
-    activeOpacity={0.8}
+    activeOpacity={1}
     delayPressIn={60}
     onLayout={[Function]}
     onLongPress={[Function]}

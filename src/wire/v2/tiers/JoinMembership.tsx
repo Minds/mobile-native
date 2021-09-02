@@ -11,7 +11,7 @@ import Switch from 'react-native-switch-pro';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../../navigation/NavigationTypes';
-import Button from '../../../common/components/Button';
+import Button from '../../../common/components/ButtonV2';
 import i18n from '../../../common/services/i18n.service';
 import { UserError } from '../../../common/UserError';
 import supportTiersService from '../../../common/services/support-tiers.service';
@@ -331,11 +331,11 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
                 action
                 onPress={confirmSend}
                 text={payText}
+                fullWidth
+                style={useStyle('paddingVertical2x', 'alignSelfStretch')}
                 containerStyle={useMemoStyle(
                   [
-                    'paddingVertical2x',
                     'marginHorizontal4x',
-                    'alignSelfStretch',
                     store.currentTier?.subscription_urn
                       ? styles.disabled
                       : null,

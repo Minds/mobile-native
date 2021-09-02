@@ -1,6 +1,6 @@
 import React from 'react';
 import ThemedStyles from '../../../styles/ThemedStyles';
-import Button from '../Button';
+import Button from '../ButtonV2';
 
 interface PropsType {
   text: string;
@@ -22,6 +22,8 @@ export default function BottomSheetButton({
       textStyle={ThemedStyles.style.colorPrimaryText}
       text={text}
       onPress={onPress}
+      fullWidth
+      rippleColor={ThemedStyles.getColor('Yellow')}
     />
   );
 }

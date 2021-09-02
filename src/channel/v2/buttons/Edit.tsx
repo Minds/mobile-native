@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from '../../../common/components/Button';
+import Button from '../../../common/components/ButtonV2';
 import i18n from '../../../common/services/i18n.service';
 import { ChannelButtonsPropsType } from '../ChannelButtons';
 
