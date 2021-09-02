@@ -23,6 +23,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import ShareMenu from 'react-native-share-menu';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import Orientation from 'react-native-orientation-locker';
 
 import NavigationService, {
   setTopLevelNavigator,
@@ -96,6 +97,7 @@ class App extends Component<Props, State> {
 
   constructor(props) {
     super(props);
+    Orientation.lockToPortrait();
 
     // workaround to set default font;
 

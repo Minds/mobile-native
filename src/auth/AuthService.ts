@@ -105,6 +105,7 @@ class AuthService {
     await session.addSession(data);
     await session.login();
     this.hideSplash();
+
     return data;
   }
 

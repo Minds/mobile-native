@@ -71,13 +71,13 @@ export class ThemedStylesStore {
    */
   @action
   setDark() {
-    RNBootSplash.show({ duration: 150 });
+    RNBootSplash.show({ fade: true });
     this.theme = 1;
     storages.app.setInt('theme', this.theme);
     this.generateNavStyle();
     updateTheme(this.style);
     setTimeout(() => {
-      RNBootSplash.hide({ duration: 150 });
+      RNBootSplash.hide({ fade: true });
     }, 1000);
   }
 
@@ -86,13 +86,13 @@ export class ThemedStylesStore {
    */
   @action
   setLight() {
-    RNBootSplash.show({ duration: 150 });
+    RNBootSplash.show({ fade: true });
     this.theme = 0;
     storages.app.setInt('theme', this.theme);
     this.generateNavStyle();
     updateTheme(this.style);
     setTimeout(() => {
-      RNBootSplash.hide({ duration: 150 });
+      RNBootSplash.hide({ fade: true });
     }, 2000);
   }
 
@@ -150,7 +150,6 @@ export class ThemedStylesStore {
         ios: 'default',
         android: 'fade',
       }),
-      screenOrientation: 'portrait',
     };
 
     changeNavColor(theme.PrimaryBackground, this.theme === 0, true);

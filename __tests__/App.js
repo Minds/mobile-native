@@ -5,6 +5,9 @@ import { BackHandler } from 'react-native';
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
 import { getStores } from '../AppStores';
+jest.mock('react-native-orientation-locker', () => ({
+  lockToPortrait: jest.fn(),
+}));
 jest.mock('react-native-reanimated', () =>
   require('react-native-reanimated/mock'),
 );

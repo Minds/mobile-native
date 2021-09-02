@@ -71,4 +71,8 @@ export default class AndroidPlatfom extends AbstractPlatform {
   checkPermissions() {
     return Promise.resolve(true);
   }
+
+  requestPermission() {
+    return null;
+  }
 }
