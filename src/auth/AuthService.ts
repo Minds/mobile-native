@@ -118,10 +118,11 @@ class AuthService {
     this.hideSplash();
   }
 
-  async loginWithGuid(guid: string) {
+  async loginWithGuid(guid: string, callback: Function) {
     const index = session.getIndexSessionFromGuid(guid);
-    if (index && index !== session.activeIndex) {
+    if (index !== false && index !== session.activeIndex) {
       await this.loginWithIndex(index);
+      callback();
     }
   }
 
