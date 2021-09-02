@@ -128,6 +128,7 @@ class NewsfeedScreen extends Component<PropsType> {
         feedStore={newsfeed.feedStore}
         navigation={this.props.navigation}
         afterRefresh={this.refreshPortrait}
+        onScroll={newsfeed.setScroll}
         {...additionalProps}
       />
     );

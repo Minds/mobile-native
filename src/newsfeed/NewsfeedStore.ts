@@ -5,6 +5,7 @@ import ActivityModel from './ActivityModel';
 import FeedStore from '../common/stores/FeedStore';
 import UserModel from '../channel/UserModel';
 import type FeedList from '../common/components/FeedList';
+import { NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 
 /**
  * News feed store
@@ -20,6 +21,11 @@ class NewsfeedStore<T> {
   listRef?: FeedList<T>;
 
   service = new NewsfeedService();
+
+  /**
+   * scroll position
+   **/
+  scrollOffset = 0;
 
   /**
    * Constructors
@@ -55,8 +61,13 @@ class NewsfeedStore<T> {
    */
   scrollToTop() {
     if (this.listRef) {
-      this.listRef.scrollToTop(false);
+      // smooth scroll if we were close to top, jump if we were far
+      this.listRef.scrollToTop(this.scrollOffset < 1000);
     }
+  }
+
+  setScroll(e: NativeSyntheticEvent<NativeScrollEvent>): void {
+    this.scrollOffset = e.nativeEvent.contentOffset.y;
   }
 
   /**

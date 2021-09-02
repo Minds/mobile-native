@@ -6,6 +6,8 @@ import {
   StyleProp,
   ViewStyle,
   RefreshControl,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
 } from 'react-native';
 import { observer } from 'mobx-react';
 
@@ -33,7 +35,7 @@ type PropsType = {
   ListEmptyComponent?: React.ReactNode;
   onRefresh?: () => void;
   afterRefresh?: () => void;
-  onScroll?: (e: any) => void;
+  onScroll?: (e: NativeSyntheticEvent<NativeScrollEvent>) => void;
   refreshControlTintColor?: string;
 };
 
@@ -104,9 +106,8 @@ export default class FeedList<T> extends Component<PropsType> {
    */
   setListRef = (r: FlatList<T> | undefined) => (this.listRef = r);
 
-  onScroll = (e: { nativeEvent: { contentOffset: { y: number } } }) => {
+  onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
     this.props.feedStore.scrollOffset = e.nativeEvent.contentOffset.y;
-
     this.props.onScroll?.(e);
   };
 
