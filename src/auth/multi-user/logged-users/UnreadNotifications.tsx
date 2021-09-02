@@ -23,6 +23,7 @@ const UnreadNotifications = ({ index }: PropsType) => {
             sessionService.getTokenWithIndex(index),
           ),
         );
+        console.log(response);
         if (response.count) {
           setCount(response.count);
         }

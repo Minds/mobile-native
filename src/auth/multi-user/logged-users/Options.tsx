@@ -42,7 +42,7 @@ const Options = ({ index, isActive, username, onSwitchPress }: PropsType) => {
       },
     ];
 
-    if (isActive) {
+    if (!isActive) {
       actions.unshift({
         title: i18n.t('multiUser.switchChannel'),
         iconName: 'account-box-multiple',

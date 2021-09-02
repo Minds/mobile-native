@@ -39,7 +39,8 @@ export class SessionStorageService {
 
   save(sessionsData: SessionsData) {
     try {
-      storages.session.setMap(KEY, sessionsData);
+      const res = storages.session.setMap(KEY, sessionsData);
+      console.log('save(sessionsData: SessionsData)', res);
     } catch (err) {
       logService.exception('[SessionStorage] save', err);
     }

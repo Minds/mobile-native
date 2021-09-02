@@ -321,6 +321,11 @@ export class SessionService {
     this.activeIndex = activeIndex;
   }
 
+  getIndexSessionFromGuid(guid: string) {
+    const index = this.tokensData.findIndex(v => guid === v.user.guid);
+    return index >= 0 ? index : false;
+  }
+
   /**
    * Logout current user
    */
@@ -349,8 +354,8 @@ export class SessionService {
       const tokensData = this.tokensData;
       tokensData.splice(index, 1);
       this.setTokensData(tokensData);
-      const newIndex = this.tokensData.findIndex(v => guid === v.user.guid);
-      this.setActiveIndex(newIndex >= 0 ? newIndex : 0);
+      const newIndex = this.getIndexSessionFromGuid(guid);
+      this.setActiveIndex(newIndex || 0);
     }
   }
 

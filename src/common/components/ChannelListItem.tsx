@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   Keyboard,
   Text,
@@ -7,9 +7,8 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import { observer } from 'mobx-react';
 import { FLAG_SUBSCRIBE, FLAG_VIEW } from '../Permissions';
-import ThemedStyles from '../../styles/ThemedStyles';
+import ThemedStyles, { useStyle } from '../../styles/ThemedStyles';
 import type UserModel from '../../channel/UserModel';
 import FastImage from 'react-native-fast-image';
 import Subscribe from '../../channel/v2/buttons/Subscribe';
@@ -26,81 +25,63 @@ type PropsType = {
   usernameStyles?: TextStyle;
 };
 
-@observer
-class ChannelListItem extends Component<PropsType> {
-  /**
-   * Navigate To channel
-   */
-  _navToChannel = () => {
+const ChannelListItem = (props: PropsType) => {
+  const containerStyle = useStyle(
+    styles.container,
+    props.containerStyles || {},
+  );
+  const nameStyles = useStyle(props.nameStyles || {}, styles.name);
+  const usernameStyles = useStyle(props.usernameStyles || {}, styles.username);
+  const _navToChannel = React.useCallback(() => {
     Keyboard.dismiss();
-    if (this.props.onUserTap) {
-      this.props.onUserTap(this.props.channel);
+    if (props.onUserTap) {
+      props.onUserTap(props.channel);
     }
-    if (this.props.navigation) {
-      if (
-        this.props.channel.isOpen() &&
-        !this.props.channel.can(FLAG_VIEW, true)
-      ) {
+    if (props.navigation) {
+      if (props.channel.isOpen() && !props.channel.can(FLAG_VIEW, true)) {
         return;
       }
-      this.props.navigation.push('Channel', { entity: this.props.channel });
+      props.navigation.push('Channel', { entity: props.channel });
     }
-  };
+  }, [props]);
 
-  /**
-   * Render right button
-   */
-  renderRightButton() {
-    if (this.props.renderRight) {
-      const RenderRight = this.props.renderRight;
+  const renderRightButton = React.useCallback(() => {
+    if (props.renderRight) {
+      const RenderRight = props.renderRight;
 
       return <RenderRight />;
     }
-    const channel = this.props.channel;
+    const channel = props.channel;
 
     if (
       channel.isOwner() ||
-      this.props.hideButtons ||
+      props.hideButtons ||
       (channel.isOpen() && !channel.can(FLAG_SUBSCRIBE))
     ) {
       return;
     }
 
     return <Subscribe channel={channel} />;
-  }
+  }, [props]);
 
-  /**
-   * Render
-   */
-  render() {
-    const {
-      containerStyles,
-      nameStyles,
-      usernameStyles,
-      ...otherProps
-    } = this.props;
+  const { ...otherProps } = props;
 
-    return (
-      <TouchableHighlight activeOpacity={0.9} onPress={this._navToChannel}>
-        <View style={[styles.container, containerStyles]} {...otherProps}>
-          <FastImage
-            source={this.props.channel.getAvatarSource('medium')}
-            style={styles.avatar}
-          />
-          <View style={styles.nameContainer}>
-            <Text style={[styles.name, nameStyles]}>
-              {this.props.channel.name}
-            </Text>
-            <Text style={[styles.username, usernameStyles]}>
-              @{this.props.channel.username}
-            </Text>
-          </View>
-          {this.renderRightButton()}
+  return (
+    <TouchableHighlight activeOpacity={0.9} onPress={_navToChannel}>
+      <View style={containerStyle} {...otherProps}>
+        <FastImage
+          source={props.channel.getAvatarSource('medium')}
+          style={styles.avatar}
+        />
+        <View style={styles.nameContainer}>
+          <Text style={nameStyles}>{props.channel.name}</Text>
+          <Text style={usernameStyles}>@{props.channel.username}</Text>
         </View>
-      </TouchableHighlight>
-    );
-  }
-}
+        {renderRightButton()}
+      </View>
+    </TouchableHighlight>
+  );
+};
 
 export default ChannelListItem;
 

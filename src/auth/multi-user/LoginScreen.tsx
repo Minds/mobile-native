@@ -15,11 +15,15 @@ type PropsType = {
 const LoginScreen = ({ navigation, route }: PropsType) => {
   const twoFactorStore = useLocalStore(createTwoFactorStore);
   const onLogin = React.useCallback(() => navigation.goBack(), [navigation]);
+  const theme = ThemedStyles.style;
   return (
     <ModalContainer
       title={i18n.t('auth.login')}
       onPressBack={navigation.goBack}
-      marginTop={20}>
+      marginTop={20}
+      contentContainer={theme.bgPrimaryBackground_Dark}
+      titleStyle={theme.colorPrimaryText_Dark}
+      backIconStyle={theme.colorPrimaryText_Dark}>
       <BackButton store={twoFactorStore} />
       <LoginFormHandler
         navigation={navigation}
@@ -31,17 +35,5 @@ const LoginScreen = ({ navigation, route }: PropsType) => {
     </ModalContainer>
   );
 };
-
-export const commonStyles = ThemedStyles.create({
-  container: [
-    'flexContainer',
-    'bgPrimaryBackground',
-    {
-      borderTopRightRadius: 10,
-      borderTopLeftRadius: 10,
-      overflow: 'hidden',
-    },
-  ],
-});
 
 export default LoginScreen;

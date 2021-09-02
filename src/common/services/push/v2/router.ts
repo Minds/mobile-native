@@ -1,3 +1,4 @@
+import AuthService from '../../../../auth/AuthService';
 import { MINDS_URI } from '../../../../config/Config';
 import navigation from '../../../../navigation/NavigationService';
 import deeplinksRouterService from '../../deeplinks-router.service';
@@ -12,7 +13,12 @@ export default class Router {
    * Navigate to the screen based on the notification data
    * @param {object} notification
    */
-  navigate(data: any) {
+  async navigate(data: any) {
+    //switch to corresponding user account if needed
+    if (data.targetGuid) {
+      await AuthService.loginWithGuid(data.targetGuid);
+    }
+
     if (data.uri && data.uri.startsWith(MINDS_URI)) {
       deeplinksRouterService.navigate(data.uri);
       return;

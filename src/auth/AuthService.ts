@@ -79,46 +79,50 @@ class AuthService {
    * @param headers
    * @param sessionIndex the index in where the user data is stored
    */
-  async login(
-    username: string = '',
-    password: string = '',
-    headers: any = {},
-    sessionIndex?: number,
-  ) {
-    let data;
+  async login(username: string, password: string, headers: any = {}) {
+    const params = {
+      grant_type: 'password',
+      client_id: 'mobile',
+      //client_secret: '',
+      username,
+      password,
+    } as loginParms;
+    const data = await api.post<LoginResponse>(
+      'api/v3/oauth/token',
+      params,
+      headers,
+    );
 
-    if (sessionIndex === undefined) {
-      const params = {
-        grant_type: 'password',
-        client_id: 'mobile',
-        //client_secret: '',
-        username,
-        password,
-      } as loginParms;
-      data = await api.post<LoginResponse>(
-        'api/v3/oauth/token',
-        params,
-        headers,
-      );
-
-      // if already have other sessions...
-      if (session.tokensData.length > 0) {
-        this.showSplash();
-        this.sessionLogout();
-      }
-
-      await api.clearCookies();
-      await delay(100);
-
-      await session.addSession(data);
-    } else {
-      await api.clearCookies();
-      await delay(100);
-      await session.switchUser(sessionIndex);
+    // if already have other sessions...
+    if (session.tokensData.length > 0) {
+      this.showSplash();
+      this.sessionLogout();
     }
+
+    await api.clearCookies();
+    await delay(100);
+
+    await session.addSession(data);
     await session.login();
     this.hideSplash();
     return data;
+  }
+
+  async loginWithIndex(sessionIndex: number) {
+    this.showSplash();
+    await this.sessionLogout();
+    await api.clearCookies();
+    await delay(100);
+    await session.switchUser(sessionIndex);
+    await session.login();
+    this.hideSplash();
+  }
+
+  async loginWithGuid(guid: string) {
+    const index = session.getIndexSessionFromGuid(guid);
+    if (index && index !== session.activeIndex) {
+      await this.loginWithIndex(index);
+    }
   }
 
   async handleActiveAccount() {

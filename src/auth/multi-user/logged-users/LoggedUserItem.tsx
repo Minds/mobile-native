@@ -3,7 +3,6 @@ import UserModel from '../../../channel/UserModel';
 import sessionService from '../../../common/services/session.service';
 import { TokensData } from '../../../common/services/storage/session.storage.service';
 import AuthService from '../../AuthService';
-import RNBootSplash from 'react-native-bootsplash';
 import ChannelListItem from '../../../common/components/ChannelListItem';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import LoggedUserDetails from './LoggedUserDetails';
@@ -13,30 +12,24 @@ type PropsType = {
   index: number;
 };
 
-const switchToUser = async (index: number) => {
-  RNBootSplash.show({ duration: 150 });
-  await AuthService.sessionLogout();
-  await AuthService.login('', '', {}, index);
-  setTimeout(() => {
-    RNBootSplash.hide({ duration: 150 });
-  }, 500);
-};
-
 const LoggedUserItem = ({ tokenData, index }: PropsType) => {
   const user = UserModel.checkOrCreate(tokenData.user);
   const login = React.useCallback(() => {
     if (index === sessionService.activeIndex) {
       return;
     }
-    switchToUser(index);
+    AuthService.loginWithIndex(index);
   }, [index]);
-  const renderRight = () => (
-    <LoggedUserDetails
-      index={index}
-      isActive={index === sessionService.activeIndex}
-      username={user.username}
-      onSwitchPress={login}
-    />
+  const renderRight = React.useMemo(
+    () => () => (
+      <LoggedUserDetails
+        index={index}
+        isActive={index === sessionService.activeIndex}
+        username={user.username}
+        onSwitchPress={login}
+      />
+    ),
+    [index, login, user.username],
   );
   return (
     <ChannelListItem

@@ -10,12 +10,13 @@ import type AndroidPlatfom from './push/android-platform';
  */
 export class PushService {
   push: IosPlatfom | AndroidPlatfom;
-  router;
+  router: Router;
 
   /**
    * Constructor
    */
   constructor() {
+    this.router = new Router();
     // build platform instance
     const platform =
       Platform.OS === 'ios'
@@ -46,7 +47,6 @@ export class PushService {
    * Init
    */
   init() {
-    this.router = new Router();
     try {
       this.push.init();
     } catch (err) {

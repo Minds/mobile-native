@@ -121,6 +121,11 @@ const createNotificationsStore = () => ({
       logService.exception('[NotificationsStore] loadSettings', err);
     }
   },
+  reset() {
+    this.unlisten();
+    this.stopPollCount();
+    this.setUnread(0);
+  },
 });
 
 export default createNotificationsStore;

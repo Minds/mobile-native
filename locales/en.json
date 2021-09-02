@@ -99,8 +99,8 @@
     "newPassword": "Create a new password. You’ll use this to access your account."
   },
   "multiUser": {
-    "switchChannel": "Switch Channel",
-    "login": "Log in to existing channel",
+    "switchChannel": "Switch Account",
+    "login": "Add existing account",
     "create": "Create new channel"
   },
   "blockchain": {

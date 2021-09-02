@@ -21,7 +21,7 @@ import TabsScreen from '../tabs/TabsScreen';
 import NotificationsScreen from '../notifications/v3/NotificationsScreen';
 import ActivityScreen from '../newsfeed/ActivityScreen';
 import ChannelSubscribers from '../channel/subscribers/ChannelSubscribers';
-import RegisterScreen from '../auth/RegisterScreen';
+import RegisterScreen from '../auth/register/RegisterScreen';
 import ConversationScreen from '../messenger/ConversationScreen';
 import GroupsListScreen from '../groups/GroupsListScreen';
 import GroupViewScreen from '../groups/GroupViewScreen';
