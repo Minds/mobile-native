@@ -37,6 +37,7 @@ const MultiUserScreen = ({}: PropsType) => {
         <MenuItem
           item={options.login}
           containerItemStyle={theme.bgPrimaryBackgroundHighlight}
+          testID="multiUserLogin"
         />
       </View>
     </View>

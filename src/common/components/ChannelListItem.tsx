@@ -75,7 +75,11 @@ const ChannelListItem = (props: PropsType) => {
         />
         <View style={styles.nameContainer}>
           <Text style={nameStyles}>{props.channel.name}</Text>
-          <Text style={usernameStyles}>@{props.channel.username}</Text>
+          <Text
+            style={usernameStyles}
+            testID={`username${props.channel.username}`}>
+            @{props.channel.username}
+          </Text>
         </View>
         {renderRightButton()}
       </View>

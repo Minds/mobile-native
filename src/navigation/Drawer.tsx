@@ -164,7 +164,10 @@ export default function Drawer(props) {
                 {channel.name || `@${channel.username}`}
               </Text>
               {channel.name && (
-                <Text onPress={navToChannel} style={subtitleStyle}>
+                <Text
+                  onPress={navToChannel}
+                  style={subtitleStyle}
+                  testID="channelUsername">
                   @{channel.username}
                 </Text>
               )}
@@ -175,6 +178,7 @@ export default function Drawer(props) {
               style={ThemedStyles.style.centered}
               color={ThemedStyles.getColor('SecondaryText')}
               onPress={() => props.navigation.navigate('MultiUserScreen')}
+              testID="multiUserIcon"
             />
           </View>
         </View>
