@@ -30,11 +30,44 @@ export class SessionStorageService {
    */
   getAll() {
     try {
-      const data = storages.session.getMap<SessionsData>(KEY);
-      return data;
+      const sessionData = storages.session.getMap<SessionsData>(KEY);
+      if (sessionData === null || sessionData === undefined) {
+        return this.checkAndMigrate();
+      }
+      return sessionData;
     } catch (err) {
       return null;
     }
+  }
+
+  checkAndMigrate() {
+    const data = storages.session.getMultipleItems([
+      'access_token',
+      'refresh_token',
+      'user',
+    ]);
+
+    const accessToken = data[0][1],
+      refreshToken = data[1][1],
+      user = data[2][1];
+
+    if (!accessToken || !refreshToken || !user) {
+      return null;
+    }
+
+    const sessionsData: SessionsData = {
+      activeIndex: 0,
+      tokensData: [
+        {
+          user,
+          refreshToken,
+          accessToken,
+        },
+      ],
+    };
+
+    this.save(sessionsData);
+    return sessionsData;
   }
 
   save(sessionsData: SessionsData) {
