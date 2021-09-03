@@ -357,7 +357,7 @@ export class ApiService {
         }
       };
       xhr.onerror = function () {
-        reject(new TypeError('Network request failed'));
+        reject(new NetworkError('Network request failed'));
       };
 
       xhr.send(file);
