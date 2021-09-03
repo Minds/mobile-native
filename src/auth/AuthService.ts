@@ -63,12 +63,12 @@ class AuthService {
   justRegistered = false;
 
   showSplash() {
-    RNBootSplash.show({ duration: 150 });
+    RNBootSplash.show({ fade: true });
   }
 
   hideSplash() {
     setTimeout(() => {
-      RNBootSplash.hide({ duration: 150 });
+      RNBootSplash.hide({ fade: true });
     }, 500);
   }
 
