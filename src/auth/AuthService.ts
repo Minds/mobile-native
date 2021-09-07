@@ -61,6 +61,7 @@ type validateParams = {
  */
 class AuthService {
   justRegistered = false;
+  showLoginPasswordModal: null | Function = null;
 
   showSplash() {
     RNBootSplash.show({ fade: true });
@@ -217,20 +218,25 @@ class AuthService {
   /**
    * Refresh user token
    */
-  async refreshToken(): Promise<LoginResponse> {
+  async refreshToken(refreshToken?, accessToken?): Promise<LoginResponse> {
     logService.info('[AuthService] Refreshing token');
 
     const params = {
       grant_type: 'refresh_token',
       client_id: 'mobile',
       //client_secret: '',
-      refresh_token: session.refreshToken,
+      refresh_token: refreshToken || session.refreshToken,
     } as loginParms;
+
+    const headers = accessToken
+      ? api.buildAuthorizationHeader(accessToken)
+      : {};
 
     try {
       const data: LoginResponse = await api.post<LoginResponse>(
         'api/v3/oauth/token',
         params,
+        headers,
       );
       return data;
     } catch (err) {

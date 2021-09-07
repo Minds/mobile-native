@@ -4,6 +4,11 @@ import { storages } from './storages.service';
 
 const KEY = 'SESSIONS_DATA';
 
+export type RefreshToken = {
+  refresh_token: string;
+  refresh_token_expires: number | null;
+};
+
 export type TokensData = {
   user: UserModel;
   refreshToken: {

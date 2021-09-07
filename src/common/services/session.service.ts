@@ -1,5 +1,6 @@
 import { observable, action, reaction } from 'mobx';
 import {
+  RefreshToken,
   SessionStorageService,
   TokensData,
 } from './storage/session.storage.service';
@@ -118,11 +119,19 @@ export class SessionService {
     }
   }
 
-  tokenCanRefresh() {
+  tokenCanRefresh(refreshToken?: RefreshToken) {
+    if (!refreshToken) {
+      return (
+        this.refreshToken &&
+        this.refreshTokenExpires &&
+        this.refreshTokenExpires * 1000 > Date.now()
+      );
+    }
+    const { refresh_token, refresh_token_expires } = refreshToken;
     return (
-      this.refreshToken &&
-      this.refreshTokenExpires &&
-      this.refreshTokenExpires * 1000 > Date.now()
+      refresh_token &&
+      refresh_token_expires &&
+      refresh_token_expires * 1000 > Date.now()
     );
   }
 
@@ -133,6 +142,21 @@ export class SessionService {
       this.setRefreshToken(tokens.refresh_token);
       this.setToken(tokens.access_token);
       this.tokensData[this.activeIndex] = this.buildSessionData(tokens);
+      this.saveToStore();
+    } else {
+      throw new TokenExpiredError('Session Expired');
+    }
+  }
+
+  async refreshAuthTokenFrom(index: number) {
+    logService.info('[SessionService] refreshing token from');
+    const { refreshToken, accessToken } = this.tokensData[index];
+    if (this.tokenCanRefresh(refreshToken)) {
+      const tokens = await AuthService.refreshToken(
+        refreshToken.refresh_token,
+        accessToken.access_token,
+      );
+      this.tokensData[index] = this.buildSessionData(tokens);
       this.saveToStore();
     } else {
       throw new TokenExpiredError('Session Expired');
@@ -429,6 +453,31 @@ export class SessionService {
 
   setRecoveryCodeUsed(used: boolean) {
     this.recoveryCodeUsed = used;
+  }
+
+  /**
+   * return true if the current auth header is the same of the active index otherwise return the corresponding index
+   * @param authorizationHeader Bearer ${token}
+   * @returns
+   */
+  isRequestFromActiveIndex(authorizationHeader) {
+    let res: boolean | number = `Bearer ${this.token}` === authorizationHeader;
+
+    if (!res) {
+      res = this.tokensData.findIndex(
+        v => authorizationHeader === `Bearer ${v.accessToken.access_token}`,
+      );
+    }
+
+    return res;
+  }
+
+  checkToken(index: number | true) {
+    if (index === true) {
+      return this.token;
+    } else {
+      return this.tokensData[index].accessToken;
+    }
   }
 }
 
