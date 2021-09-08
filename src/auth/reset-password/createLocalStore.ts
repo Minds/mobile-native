@@ -73,8 +73,11 @@ const createLocalStore = ({ ref }: { ref: RefObject<BottomModalHandles> }) => ({
         if (this.currentStep === 'inputUser') {
           this.navToEmailSended();
         }
-      } catch (err) {
-        ref.current?.store.setError(i18n.t('messenger.errorDirectMessage'));
+      } catch (err: any) {
+        const message =
+          (typeof err === 'object' && err !== null && err.message) ||
+          i18n.t('messenger.errorDirectMessage');
+        ref.current?.store.setError(message);
         logService.exception('[ForgotPassword]', err);
       } finally {
         this.setSending(false);
