@@ -10,6 +10,7 @@ import logService from './log.service';
 import type UserModel from '../../channel/UserModel';
 import { createUserStore } from './storage/storages.service';
 import SettingsStore from '../../settings/SettingsStore';
+import { ApiService } from './api.service';
 
 export class TokenExpiredError extends Error {}
 
@@ -26,6 +27,8 @@ export class SessionService {
 
   @observable tokensData: Array<TokensData> = [];
   @observable activeIndex: number = 0;
+
+  apiServiceInstances: Array<ApiService> = [];
 
   /**
    * Session token
@@ -107,6 +110,11 @@ export class SessionService {
         createUserStore(this.guid);
         SettingsStore.loadUserSettings();
       }
+
+      for (let i = 0; i < this.tokensData.length; i++) {
+        this.apiServiceInstances.push(new ApiService(i));
+      }
+
       this.setReady();
       this.setLoggedIn(true);
 
@@ -281,6 +289,7 @@ export class SessionService {
 
       // set the active index wich will be logged
       this.setActiveIndex(this.tokensData.length - 1);
+      this.apiServiceInstances.push(new ApiService(this.activeIndex));
 
       // save all data into session storage
       this.saveToStore();
@@ -363,7 +372,18 @@ export class SessionService {
       tokensData.splice(this.activeIndex, 1);
       this.setTokensData(tokensData);
       this.setActiveIndex(0);
+      this.popApiServiceInstance();
       this.saveToStore();
+    }
+  }
+
+  /**
+   * Remove last element from array and re-index session indices
+   */
+  popApiServiceInstance() {
+    this.apiServiceInstances.pop();
+    for (let i = 0; i < this.tokensData.length; i++) {
+      this.apiServiceInstances[i].setSessionIndex(i);
     }
   }
 
@@ -380,6 +400,7 @@ export class SessionService {
       this.setTokensData(tokensData);
       const newIndex = this.getIndexSessionFromGuid(guid);
       this.setActiveIndex(newIndex || 0);
+      this.popApiServiceInstance();
     }
   }
 
@@ -455,29 +476,12 @@ export class SessionService {
     this.recoveryCodeUsed = used;
   }
 
-  /**
-   * return true if the current auth header is the same of the active index otherwise return the corresponding index
-   * @param authorizationHeader Bearer ${token}
-   * @returns
-   */
-  isRequestFromActiveIndex(authorizationHeader) {
-    let res: boolean | number = `Bearer ${this.token}` === authorizationHeader;
-
-    if (!res) {
-      res = this.tokensData.findIndex(
-        v => authorizationHeader === `Bearer ${v.accessToken.access_token}`,
-      );
-    }
-
-    return res;
+  getAccessTokenFrom(index) {
+    return this.tokensData[index].accessToken.access_token;
   }
 
-  checkToken(index: number | true) {
-    if (index === true) {
-      return this.token;
-    } else {
-      return this.tokensData[index].accessToken;
-    }
+  getRefreshTokenFrom(index) {
+    return this.tokensData[index].refreshToken.refresh_token;
   }
 }
 

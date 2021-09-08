@@ -70,13 +70,15 @@ export class ApiService {
   axios: AxiosInstance;
   abortTags = new Map<any, CancelTokenSource>();
   @observable mustVerify = false;
+  sessionIndex: number | null;
 
   @action
   setMustVerify(value) {
     this.mustVerify = value;
   }
 
-  constructor(axiosInstance = null) {
+  constructor(sessionIndex: number | null = null, axiosInstance = null) {
+    this.sessionIndex = sessionIndex;
     this.axios =
       axiosInstance ||
       axios.create({
@@ -104,7 +106,7 @@ export class ApiService {
             !originalReq._isRetry &&
             isNot401Exception(originalReq.url)
           ) {
-            await this.refreshToken();
+            await this.tokenRefresh();
             originalReq._isRetry = true;
             return this.axios.request(originalReq);
           }
@@ -125,12 +127,34 @@ export class ApiService {
     );
   }
 
+  setSessionIndex(index) {
+    this.sessionIndex = index;
+  }
+
+  get accessToken() {
+    return this.sessionIndex
+      ? session.getAccessTokenFrom(this.sessionIndex)
+      : session.token;
+  }
+
+  get refreshToken() {
+    return this.sessionIndex
+      ? session.getRefreshTokenFrom(this.sessionIndex)
+      : session.refreshToken;
+  }
+
+  get refreshAuthTokenPromise() {
+    return this.sessionIndex
+      ? session.refreshAuthTokenFrom(this.sessionIndex)
+      : session.refreshAuthToken();
+  }
+
   /**
    * Refresh token (only one call at the time)
    */
-  async refreshToken() {
+  async tokenRefresh() {
     if (!this.refreshPromise) {
-      this.refreshPromise = session.refreshAuthToken();
+      this.refreshPromise = this.refreshAuthTokenPromise;
     }
     try {
       await this.refreshPromise;
@@ -138,7 +162,7 @@ export class ApiService {
       if (
         (isTokenExpired(error) ||
           (error.response && error.response.status === 401)) &&
-        session.token
+        this.accessToken
       ) {
         session.logout();
         throw new UserError('Session expired');
@@ -208,8 +232,11 @@ export class ApiService {
       headers.Cookie = `${headers.Cookie};canary=1`;
     }
 
-    if (session.token && !headers.Authorization) {
-      headers = { ...headers, ...this.buildAuthorizationHeader(session.token) };
+    if (this.accessToken && !headers.Authorization) {
+      headers = {
+        ...headers,
+        ...this.buildAuthorizationHeader(this.accessToken),
+      };
     }
 
     return headers;
@@ -409,7 +436,7 @@ export class ApiService {
         xhr.upload.addEventListener('progress', progress);
       }
       xhr.open('POST', MINDS_API_URI + this.buildUrl(url));
-      xhr.setRequestHeader('Authorization', `Bearer ${session.token}`);
+      xhr.setRequestHeader('Authorization', `Bearer ${this.accessToken}`);
       xhr.setRequestHeader('Accept', 'application/json');
       xhr.setRequestHeader('Content-Type', 'multipart/form-data;');
       xhr.setRequestHeader('App-Version', Version.VERSION);

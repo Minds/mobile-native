@@ -15,14 +15,9 @@ const UnreadNotifications = ({ index }: PropsType) => {
   React.useEffect(() => {
     const loadUnreadCount = async () => {
       try {
-        const response: any = await apiService.get(
-          'api/v3/notifications/unread-count',
-          {},
-          undefined,
-          apiService.buildAuthorizationHeader(
-            sessionService.getTokenWithIndex(index),
-          ),
-        );
+        const response: any = await sessionService.apiServiceInstances[
+          index
+        ].get('api/v3/notifications/unread-count');
         console.log(response);
         if (response.count) {
           setCount(response.count);
