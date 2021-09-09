@@ -15,6 +15,7 @@ import {
   BottomSheetButton,
   MenuItem,
 } from '../../../../common/components/bottom-sheet';
+import { ONCHAIN_ENABLED } from '../../../../config/Config';
 
 type PropsType = {
   walletStore: WalletStoreType;
@@ -45,15 +46,16 @@ const TokenTabOptions = observer((props: PropsType) => {
 
   const dismissOptions: Array<ItemType> = React.useMemo(() => {
     const actions: Array<ItemType> = [];
-    actions.push({
-      title: i18n.t('wallet.transferToOnchain'),
-      onPress: () => {
-        close();
-        navigation.navigate('WalletWithdrawal');
-      },
-      iconName: 'arrow-right',
-      iconType: 'material-community',
-    });
+    ONCHAIN_ENABLED &&
+      actions.push({
+        title: i18n.t('wallet.transferToOnchain'),
+        onPress: () => {
+          close();
+          navigation.navigate('WalletWithdrawal');
+        },
+        iconName: 'arrow-right',
+        iconType: 'material-community',
+      });
     actions.push({
       title: i18n.t('buyTokensScreen.title'),
       onPress: () => {
