@@ -2,14 +2,17 @@ import React from 'react';
 import {
   createNativeStackNavigator,
   NativeStackNavigationOptions,
-} from 'react-native-screens/native-stack';
+} from '@react-navigation/native-stack';
 import { useDimensions } from '@react-native-community/hooks';
 import {
   createDrawerNavigator,
   DrawerNavigationOptions,
 } from '@react-navigation/drawer';
 import { Dimensions, Platform, StatusBar, View } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
+import {
+  createStackNavigator,
+  StackNavigationOptions,
+} from '@react-navigation/stack';
 import AnalyticsScreen from '../analytics/AnalyticsScreen';
 
 import LoginScreen from '../auth/LoginScreen';
@@ -128,7 +131,7 @@ const isIos = Platform.OS === 'ios';
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 const captureOptions = {
   title: '',
-  stackAnimation: 'fade',
+  animation: 'fade',
   headerShown: false,
   ...Platform.select({
     android: { statusBarColor: 'black', statusBarStyle: 'auto' },
@@ -221,7 +224,7 @@ const WalletOptions = () => ({
 });
 
 const modalOptions = {
-  gestureResponseDistance: { vertical: 240 },
+  gestureResponseDistance: 240,
   gestureEnabled: true,
 };
 
@@ -229,7 +232,7 @@ export const InternalStack = () => {
   const internalOptions = {
     ...ThemedStyles.defaultScreenOptions,
     headerShown: false,
-    stackAnimation: 'none',
+    animation: 'none',
   } as NativeStackNavigationOptions;
   return (
     <InternalStackNav.Navigator screenOptions={internalOptions}>
@@ -270,10 +273,13 @@ const MainScreen = () => {
   return (
     <DrawerNav.Navigator
       initialRouteName="Tabs"
-      gestureHandlerProps={gestureHandlerProps}
-      drawerType="slide"
       drawerContent={Drawer}
-      drawerStyle={isLargeScreen ? null : ThemedStyles.style.width90}>
+      screenOptions={{
+        headerShown: false,
+        gestureHandlerProps,
+        drawerType: 'slide',
+        drawerStyle: isLargeScreen ? null : ThemedStyles.style.width90,
+      }}>
       <DrawerNav.Screen
         name="Tabs"
         component={TabsScreen}
@@ -397,8 +403,8 @@ const AppStack = function () {
           name="ChannelEdit"
           component={ChannelEditScreen}
           options={{
-            headerHideBackButton: true,
-            stackAnimation: 'slide_from_bottom',
+            headerBackVisible: false,
+            animation: 'slide_from_bottom',
             title: i18n.t('channel.editChannel'),
           }}
         />
@@ -467,7 +473,7 @@ const AppStack = function () {
             headerStyle: {
               backgroundColor: ThemedStyles.getColor('PrimaryBackground'),
             },
-            headerHideShadow: true,
+            headerShadowVisible: false,
           }}
         />
         <AppStackNav.Screen
@@ -478,7 +484,7 @@ const AppStack = function () {
             headerStyle: {
               backgroundColor: ThemedStyles.getColor('PrimaryBackground'),
             },
-            headerHideShadow: true,
+            headerShadowVisible: false,
           }}
         />
         <AppStackNav.Screen
@@ -489,7 +495,7 @@ const AppStack = function () {
             headerStyle: {
               backgroundColor: ThemedStyles.getColor('PrimaryBackground'),
             },
-            headerHideShadow: true,
+            headerShadowVisible: false,
           }}
         />
         <AppStackNav.Screen
@@ -688,10 +694,12 @@ const AuthStack = function () {
   );
 };
 
-const defaultScreenOptions = {
+const defaultScreenOptions: StackNavigationOptions = {
   headerShown: false,
   cardStyle: { backgroundColor: 'transparent' },
   gestureEnabled: false,
+  keyboardHandlingEnabled: false,
+  presentation: 'transparentModal',
   ...ModalTransition,
   cardOverlayEnabled: true,
 };
@@ -702,9 +710,6 @@ const RootStack = function (props) {
   return (
     <RootStackNav.Navigator
       initialRouteName={initial}
-      mode="modal"
-      keyboardHandlingEnabled={false}
-      // @ts-ignore
       screenOptions={defaultScreenOptions}>
       {props.isLoggedIn ? (
         <>

@@ -37,7 +37,7 @@ type PropsType = {
 };
 
 const getLastRoute = (navigation: NavigationProp<any>): NavigationRouteV5 => {
-  const routes = navigation.dangerouslyGetState().routes;
+  const routes = navigation.getState().routes;
   return routes[routes.length - 1];
 };
 

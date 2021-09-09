@@ -174,9 +174,13 @@ export default observer(function OnboardingScreen() {
               onPress:
                 stepsMapping[s.id].onPress ||
                 (() =>
-                  navigation.navigate(stepsMapping[s.id].screen, {
-                    store: progressStore,
-                  })),
+                  navigation.navigate(
+                    stepsMapping[s.id]
+                      .screen as keyof ReactNavigation.RootParamList,
+                    {
+                      store: progressStore,
+                    },
+                  )),
             }
           : null,
       )

@@ -146,7 +146,7 @@ export class ThemedStylesStore {
       contentStyle: {
         backgroundColor: theme.PrimaryBackground,
       },
-      stackAnimation: Platform.select({
+      animation: Platform.select({
         ios: 'default',
         android: 'fade',
       }),
