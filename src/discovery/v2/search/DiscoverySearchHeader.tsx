@@ -93,7 +93,10 @@ const styles = ThemedStyles.create({
   feedFilterContainer: [
     'paddingHorizontal2x',
     'bgPrimaryBackground',
-    { alignItems: 'center' },
+    {
+      alignItems: 'center',
+      bottom: 1,
+    },
   ],
   topbarContainer: ['rowStretch', 'borderBottom', 'bcolorPrimaryBorder'],
   topbarTabbar: {
