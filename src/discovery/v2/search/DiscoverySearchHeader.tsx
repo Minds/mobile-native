@@ -59,16 +59,18 @@ export const DiscoverySearchHeader = observer(() => {
           />
         }
       </View>
-      <View style={ThemedStyles.style.rowStretch}>
+      <View style={styles.topbarContainer}>
         <TopbarTabbar
           current={store.algorithm}
           onChange={store.setAlgorithm}
           tabs={tabs}
+          containerStyle={styles.topbarTabbar}
         />
         {shouldRenderFilter && (
           <FeedFilter
             store={store}
             containerStyles={styles.feedFilterContainer}
+            textStyle={ThemedStyles.style.colorSecondaryText}
           />
         )}
       </View>
@@ -89,12 +91,14 @@ const styles = ThemedStyles.create({
   secondaryContainer: ['rowJustifyStart', 'alignCenter'],
   iconContainer: ['padding2x'],
   feedFilterContainer: [
-    'borderBottom',
-    'bcolorPrimaryBorder',
-    'paddingRight4x',
-    'alignCenter',
-    'flexContainer',
+    'paddingHorizontal2x',
+    'bgPrimaryBackground',
+    { alignItems: 'center' },
   ],
+  topbarContainer: ['rowStretch', 'borderBottom', 'bcolorPrimaryBorder'],
+  topbarTabbar: {
+    borderBottomWidth: 0,
+  },
   searchView: [
     'marginVertical',
     'marginRight4x',
