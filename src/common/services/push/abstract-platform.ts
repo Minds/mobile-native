@@ -33,4 +33,6 @@ export default class AbstractPlatform {
       this.shouldRegister = true;
     }
   }
+
+  requestPermission(): void;
 }

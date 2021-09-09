@@ -32,6 +32,7 @@ import useBestCameraAndFormat from './useBestCameraAndFormat';
 import useCameraStyle from './useCameraStyle';
 import { AppStackParamList } from '../../navigation/NavigationTypes';
 import { PermissionsContext } from '../PermissionsCheck';
+import Orientation from 'react-native-orientation-locker';
 
 type CaptureScreenRouteProp = RouteProp<AppStackParamList, 'Capture'>;
 
@@ -107,11 +108,15 @@ export default observer(function (props: PropsType) {
   }, [neutralZoom, zoom]);
 
   useEffect(() => {
+    console.log('UNLOCKING ORIENTATIONS');
+    Orientation.unlockAllOrientations();
+    return () => Orientation.lockToPortrait();
+  }, []);
+
+  useEffect(() => {
     const t = setTimeout(() => {
       store.showCam();
     }, 50);
-
-    navigation.setOptions({ orientation: 'all' });
 
     let unlisten;
 
@@ -128,7 +133,6 @@ export default observer(function (props: PropsType) {
     }
 
     return () => {
-      navigation.setOptions({ orientation: 'portrait' });
       clearTimeout(t);
       unlisten && unlisten();
     };

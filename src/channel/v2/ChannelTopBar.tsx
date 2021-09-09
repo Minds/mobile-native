@@ -110,7 +110,6 @@ const ChannelTopBar = observer(
           backgroundColor:
             backgroundColor || theme.bgPrimaryBackground.backgroundColor,
           paddingLeft: 70,
-          paddingTop: 16,
         },
         backgroundOpacityAnimatedStyle,
       ],
@@ -267,13 +266,9 @@ const styles = ThemedStyles.create({
     fontWeight: '600',
     textAlign: 'center',
     marginRight: 5,
+    bottom: 2, // minor alignment of text
   },
-  nameWrapper: [
-    'rowJustifyStart',
-    'flexContainer',
-    'alignEnd',
-    'marginBottom5x',
-  ],
+  nameWrapper: ['rowJustifyStart', 'flexContainer', 'alignCenter'],
   searchInput: [
     'fontL',
     'colorSecondaryText',

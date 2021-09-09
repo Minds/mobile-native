@@ -93,6 +93,13 @@ export class PushService {
   handleInitialNotification() {
     this.push.handleInitialNotification();
   }
+
+  /**
+   * Request notification permission
+   */
+  requestNotificationPermission() {
+    return this.push.requestPermission();
+  }
 }
 
 export default new PushService();

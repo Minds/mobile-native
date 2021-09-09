@@ -291,6 +291,7 @@ const ChannelHeader = withErrorBoundary(
                   <FeedFilter
                     store={props.store}
                     containerStyles={styles.feedFilter}
+                    textStyle={styles.feedFilterText}
                   />
                 </FadeView>
               )}
@@ -381,7 +382,7 @@ const styles = ThemedStyles.create({
       top: -avatarSize / 1.8,
       left: CENTERED ? undefined : 20,
       alignSelf: 'center',
-      borderWidth: 5,
+      borderWidth: 3,
       borderRadius: (avatarSize + 6) / 2,
     },
   ],
@@ -405,12 +406,15 @@ const styles = ThemedStyles.create({
     borderRadius: 55,
   },
   feedFilter: [
-    'paddingVertical3x',
+    {
+      paddingVertical: 13,
+    },
     'paddingRight3x',
     'paddingLeft2x',
     'borderRadius4x',
     'bgPrimaryBackground',
   ],
+  feedFilterText: ['colorSecondaryText'],
   viewScheduled: ['fontL', 'colorSecondaryText'],
   subscribersWrapper: ['colorSecondaryText', 'fontM', 'paddingTop'],
   city: ['fontM', 'paddingLeft'],
