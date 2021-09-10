@@ -74,7 +74,7 @@ class AuthService {
   }
 
   /**
-   * Login user. Can be an existing user from session or a new user
+   * Login user
    * @param username
    * @param password
    * @param headers
@@ -108,6 +108,23 @@ class AuthService {
     this.hideSplash();
 
     return data;
+  }
+
+  async reLogin(password: string, headers: any = {}) {
+    const username = session.getUser().username;
+    const params = {
+      grant_type: 'password',
+      client_id: 'mobile',
+      //client_secret: '',
+      username,
+      password,
+    } as loginParms;
+
+    const data = await api.post<LoginResponse>(
+      'api/v3/oauth/token',
+      params,
+      headers,
+    );
   }
 
   async loginWithIndex(sessionIndex: number) {

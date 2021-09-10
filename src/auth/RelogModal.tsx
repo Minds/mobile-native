@@ -4,6 +4,7 @@ import {
   BottomSheetButton,
 } from '../common/components/bottom-sheet';
 import i18n from '../common/services/i18n.service';
+import sessionService from '../common/services/session.service';
 import AuthService from './AuthService';
 import PasswordConfirmScreen from './PasswordConfirmScreen';
 
@@ -13,16 +14,20 @@ const RelogModal = () => {
 
   const close = React.useCallback(() => {
     ref.current?.dismiss();
+    sessionService.logout();
   }, []);
 
   const show = React.useCallback(() => {
     ref.current?.present();
   }, []);
 
-  AuthService.showLoginPasswordModal = show;
+  React.useEffect(() => {
+    const dispose = sessionService.onSessionExpired(show);
+    return dispose;
+  }, [show]);
 
   return (
-    <BottomSheet ref={ref} autoShow>
+    <BottomSheet ref={ref}>
       <PasswordConfirmScreen onConfirm={onConfirm} />
       <BottomSheetButton text={i18n.t('cancel')} onPress={close} />
     </BottomSheet>

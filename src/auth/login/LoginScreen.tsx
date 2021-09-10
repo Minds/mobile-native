@@ -3,24 +3,20 @@ import { StyleSheet, View, Dimensions, Text } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { useTransition, mix } from 'react-native-redash';
 
-import LoginForm from './LoginForm';
-
-import ThemedStyles from '../styles/ThemedStyles';
+import ThemedStyles from '../../styles/ThemedStyles';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import FitScrollView from '../common/components/FitScrollView';
-import DismissKeyboard from '../common/components/DismissKeyboard';
+import FitScrollView from '../../common/components/FitScrollView';
+import DismissKeyboard from '../../common/components/DismissKeyboard';
 import { useKeyboard } from '@react-native-community/hooks';
-import i18n from '../common/services/i18n.service';
-import { RouteProp, useRoute } from '@react-navigation/native';
-import { AuthStackParamList } from '../navigation/NavigationTypes';
-import TwoFactorTotpForm from './twoFactorAuth/TwoFactorTotpForm';
+import i18n from '../../common/services/i18n.service';
+import { RouteProp } from '@react-navigation/native';
+import { AuthStackParamList } from '../../navigation/NavigationTypes';
+
 import { useLocalStore } from 'mobx-react-lite';
-import createTwoFactorStore, {
-  TwoFactorStore,
-} from './twoFactorAuth/createTwoFactorStore';
-import BackButton from './twoFactorAuth/BackButton';
-import { observer } from 'mobx-react';
+import createTwoFactorStore from '../twoFactorAuth/createTwoFactorStore';
+import BackButton from '../twoFactorAuth/BackButton';
+import LoginFormHandler from './LoginFormHandler';
 
 const { height, width } = Dimensions.get('window');
 const LOGO_HEIGHT = height / 7;
@@ -55,7 +51,7 @@ export default function LoginScreen(props: PropsType) {
             <Animated.View style={[styles.bulb, { height: containerHeight }]}>
               <Animated.Image
                 resizeMode="contain"
-                source={require('./../assets/logos/logo-white.png')}
+                source={require('./../../assets/logos/logo-white.png')}
                 style={[styles.image, { transform: [{ translateY }], opacity }]}
               />
             </Animated.View>
@@ -80,37 +76,6 @@ export default function LoginScreen(props: PropsType) {
     </SafeAreaView>
   );
 }
-
-// separate component so we only reload this part between auth steps
-export const LoginFormHandler = observer(
-  ({
-    store,
-    navigation,
-    route,
-    multiUser,
-    onLogin,
-  }: {
-    store: TwoFactorStore;
-    navigation: any;
-    route: LoginScreenRouteProp;
-    multiUser?: boolean;
-    onLogin?: Function;
-  }) => {
-    const form =
-      store.twoFactorAuthStep === 'login' ? (
-        <LoginForm
-          onRegisterPress={() => navigation.push('Register')}
-          store={store}
-          route={route}
-          multiUser={multiUser}
-          onLogin={onLogin}
-        />
-      ) : (
-        <TwoFactorTotpForm store={store} />
-      );
-    return form;
-  },
-);
 
 const styles = StyleSheet.create({
   bulb: {

@@ -11,6 +11,7 @@ import type UserModel from '../../channel/UserModel';
 import { createUserStore } from './storage/storages.service';
 import SettingsStore from '../../settings/SettingsStore';
 import { ApiService } from './api.service';
+import delay from '../helpers/delay';
 
 export class TokenExpiredError extends Error {}
 
@@ -27,6 +28,7 @@ export class SessionService {
 
   @observable tokensData: Array<TokensData> = [];
   @observable activeIndex: number = 0;
+  @observable sessionExpired: boolean = false;
 
   apiServiceInstances: Array<ApiService> = [];
 
@@ -80,7 +82,11 @@ export class SessionService {
     try {
       const sessionData = this.sessionStorage.getAll();
       // if there is no session active we clean up and return;
-      if (sessionData === null || sessionData === undefined) {
+      if (
+        sessionData === null ||
+        sessionData === undefined ||
+        sessionData.tokensData.length === 0
+      ) {
         this.setToken(null);
         this.setRefreshToken(null);
         this.setReady();
@@ -306,7 +312,7 @@ export class SessionService {
         access_token: tokensData.accessToken.access_token,
         refresh_token: tokensData.refreshToken.refresh_token,
       },
-      this.tokensData[this.activeIndex].user,
+      tokensData.user,
     );
     this.saveToStore();
   }
@@ -338,6 +344,7 @@ export class SessionService {
     const token_refresh_expire = token_expire + 60 * 60 * 24 * 30;
     return {
       user: getStores().user.me,
+      sessionExpired: this.sessionExpired,
       accessToken: {
         access_token: tokens.access_token,
         access_token_expires: token_expire,
@@ -352,6 +359,17 @@ export class SessionService {
   @action
   setActiveIndex(activeIndex: number) {
     this.activeIndex = activeIndex;
+  }
+
+  @action
+  setSessionExpired(sessionExpired: boolean) {
+    this.setSessionExpiredFor(sessionExpired, this.activeIndex);
+    this.sessionExpired = sessionExpired;
+  }
+
+  setSessionExpiredFor(sessionExpired: boolean, index: number) {
+    this.tokensData[index].sessionExpired = sessionExpired;
+    this.saveToStore();
   }
 
   getIndexSessionFromGuid(guid: string) {
@@ -463,6 +481,33 @@ export class SessionService {
       },
       { fireImmediately: false },
     );
+  }
+
+  /**
+   * Run on session expired change
+   * @returns dispose (remember to dispose!)
+   * @param {function} fn
+   */
+  onSessionExpired(fn) {
+    return reaction(
+      () => (this.userLoggedIn ? this.sessionExpired : null),
+      async sessionExpired => {
+        if (sessionExpired) {
+          try {
+            await fn(sessionExpired);
+          } catch (error) {
+            logService.exception('[SessionService] onSessionExpired', error);
+          }
+        }
+      },
+      { fireImmediately: true },
+    );
+  }
+
+  async waitRelogin() {
+    while (this.sessionExpired) {
+      await delay(3000);
+    }
   }
 
   /**

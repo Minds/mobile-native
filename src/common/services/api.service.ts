@@ -164,8 +164,12 @@ export class ApiService {
           (error.response && error.response.status === 401)) &&
         this.accessToken
       ) {
-        session.logout();
-        throw new UserError('Session expired');
+        if (this.sessionIndex) {
+          session.setSessionExpiredFor(true, this.sessionIndex);
+        } else {
+          session.setSessionExpired(true);
+          await session.waitRelogin();
+        }
       }
       throw error;
     } finally {

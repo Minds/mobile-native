@@ -3,7 +3,7 @@ import React from 'react';
 import i18n from '../../common/services/i18n.service';
 import ModalContainer from '../../onboarding/v2/steps/ModalContainer';
 import ThemedStyles from '../../styles/ThemedStyles';
-import { LoginFormHandler } from '../LoginScreen';
+import LoginFormHandler from '../login/LoginFormHandler';
 import BackButton from '../twoFactorAuth/BackButton';
 import createTwoFactorStore from '../twoFactorAuth/createTwoFactorStore';
 

@@ -11,6 +11,7 @@ export type RefreshToken = {
 
 export type TokensData = {
   user: UserModel;
+  sessionExpired: boolean;
   refreshToken: {
     refresh_token: string;
     refresh_token_expires: number | null;
@@ -36,6 +37,11 @@ export class SessionStorageService {
   getAll() {
     try {
       const sessionData = storages.session.getMap<SessionsData>(KEY);
+      console.log(
+        'sessionData === null || sessionData === undefined',
+        sessionData === null || sessionData === undefined,
+      );
+      console.log('sessionData', sessionData);
       if (sessionData === null || sessionData === undefined) {
         return this.checkAndMigrate();
       }
@@ -56,6 +62,10 @@ export class SessionStorageService {
       refreshToken = data[1][1],
       user = data[2][1];
 
+    console.log(
+      '!accessToken || !refreshToken || !user',
+      !accessToken || !refreshToken || !user,
+    );
     if (!accessToken || !refreshToken || !user) {
       return null;
     }
@@ -67,6 +77,7 @@ export class SessionStorageService {
           user,
           refreshToken,
           accessToken,
+          sessionExpired: false,
         },
       ],
     };

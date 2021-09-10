@@ -12,7 +12,7 @@ import { Dimensions, Platform, StatusBar, View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import AnalyticsScreen from '../analytics/AnalyticsScreen';
 
-import LoginScreen from '../auth/LoginScreen';
+import LoginScreen from '../auth/login/LoginScreen';
 import MultiUserLoginScreen from '../auth/multi-user/LoginScreen';
 import MultiUserRegisterScreen from '../auth/multi-user/RegisterScreen';
 import ReferralsScreen from '../referral/ReferralsScreen';
