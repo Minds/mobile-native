@@ -120,6 +120,7 @@ import VerifyPhoneNumberScreen from '../auth/twoFactorAuth/VerifyPhoneNumberScre
 import DisableTFA from '../auth/twoFactorAuth/DisableTFA';
 import SearchScreen from '../topbar/searchbar/SearchScreen';
 import PasswordConfirmScreen from '../auth/PasswordConfirmScreen';
+import TwoFactorConfirmScreen from '../auth/TwoFactorConfirmScreen';
 import RecoveryCodeUsedScreen from '../auth/twoFactorAuth/RecoveryCodeUsedScreen';
 import MessengerScreen from '../messenger/MessengerScreen';
 import PushNotificationsSettings from '../notifications/v3/settings/push/PushNotificationsSettings';
@@ -689,6 +690,11 @@ const AuthStack = function () {
         screenOptions={AuthTransition}>
         <AuthStackNav.Screen name="Login" component={LoginScreen} />
         <AuthStackNav.Screen name="Register" component={RegisterScreen} />
+        <AuthStackNav.Screen
+          name="TwoFactorConfirmation"
+          component={TwoFactorConfirmScreen}
+          options={modalOptions}
+        />
       </AuthStackNav.Navigator>
     </View>
   );
@@ -796,6 +802,11 @@ const RootStack = function (props) {
           <RootStackNav.Screen
             name="PasswordConfirmation"
             component={PasswordConfirmScreen}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen
+            name="TwoFactorConfirmation"
+            component={TwoFactorConfirmScreen}
             options={modalOptions}
           />
           <RootStackNav.Screen

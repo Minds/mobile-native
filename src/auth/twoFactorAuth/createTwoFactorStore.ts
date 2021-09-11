@@ -152,24 +152,6 @@ const createTwoFactorStore = () => ({
     this.appAuthEnabled = false;
     this.smsAuthEnabled = false;
   },
-  async login() {
-    this.setLoading(true);
-    let headers: any = {
-      'X-MINDS-2FA-CODE': this.appCode,
-    };
-    if (this.smsAuthEnabled) {
-      headers['X-MINDS-SMS-2FA-KEY'] = this.smsSecret;
-    }
-    try {
-      await authService.login(this.username, this.password, headers);
-    } catch (err) {
-      logService.exception(err);
-      showNotification(err.message, 'warning');
-    } finally {
-      this.setLoading(false);
-      this.setAppCode('');
-    }
-  },
   async useRecoveryCode() {
     this.setLoading(true);
     try {

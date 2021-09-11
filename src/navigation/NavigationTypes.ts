@@ -9,6 +9,7 @@ import type { SupportTiersType } from '../wire/WireTypes';
 import type { PortraitBarItem } from '../portrait/createPortraitStore';
 import type BlogModel from '../blogs/BlogModel';
 import { TwoFactorStore } from '../auth/twoFactorAuth/createTwoFactorStore';
+import { TwoFactorType } from '../common/services/api.service';
 
 type AnyType = any;
 
@@ -39,6 +40,13 @@ export type InternalStackParamList = {
 };
 
 export type RootStackParamList = {
+  TwoFactorConfirmation: {
+    onConfirm: (string) => void;
+    title?: string;
+    onCancel: () => void;
+    mfaType: TwoFactorType;
+    oldCode: string;
+  };
   Splash: {};
   App: {};
   Auth: {};
