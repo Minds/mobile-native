@@ -7,14 +7,24 @@ import { LoginScreenRouteProp } from './LoginScreen';
 
 type PropsType = {
   store: TwoFactorStore;
-  navigation: any;
-  route: LoginScreenRouteProp;
+  navigation?: any;
+  route?: LoginScreenRouteProp;
   multiUser?: boolean;
   onLogin?: Function;
+  relogin?: boolean;
+  sessionIndex?: number;
 };
 
 const LoginFormHandler = observer(
-  ({ store, navigation, route, multiUser, onLogin }: PropsType) => {
+  ({
+    store,
+    navigation,
+    route,
+    multiUser,
+    onLogin,
+    relogin,
+    sessionIndex,
+  }: PropsType) => {
     const form =
       store.twoFactorAuthStep === 'login' ? (
         <LoginForm
@@ -23,6 +33,8 @@ const LoginFormHandler = observer(
           route={route}
           multiUser={multiUser}
           onLogin={onLogin}
+          relogin={relogin}
+          sessionIndex={sessionIndex}
         />
       ) : (
         <TwoFactorTotpForm store={store} />

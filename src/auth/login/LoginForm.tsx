@@ -17,8 +17,10 @@ type PropsType = {
   onLogin?: Function;
   onRegisterPress?: () => void;
   store: TwoFactorStore;
-  route: LoginScreenRouteProp;
+  route?: LoginScreenRouteProp;
   multiUser?: boolean;
+  relogin?: boolean;
+  sessionIndex?: number;
 };
 
 export default observer(function LoginForm(props: PropsType) {
@@ -39,11 +41,17 @@ export default observer(function LoginForm(props: PropsType) {
   return (
     <View style={theme.flexContainer}>
       <AnimatableText msg={localStore.msg} />
-      <LoginInputs localStore={localStore} multiUser={props.multiUser} />
+      <LoginInputs
+        localStore={localStore}
+        multiUser={props.multiUser}
+        relogin={props.relogin}
+        sessionIndex={props.sessionIndex}
+      />
       <LoginButtons
         localStore={localStore}
         multiUser={props.multiUser}
         onRegisterPress={props.onRegisterPress}
+        relogin={props.relogin}
       />
       <ResetPasswordModal ref={resetRef} />
     </View>

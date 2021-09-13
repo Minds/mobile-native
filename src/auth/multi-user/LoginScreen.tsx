@@ -21,9 +21,9 @@ const LoginScreen = ({ navigation, route }: PropsType) => {
       title={i18n.t('auth.login')}
       onPressBack={navigation.goBack}
       marginTop={20}
-      contentContainer={theme.bgPrimaryBackground_Dark}
-      titleStyle={theme.colorPrimaryText_Dark}
-      backIconStyle={theme.colorPrimaryText_Dark}>
+      contentContainer={theme.bgPrimaryBackgroundHighlight}
+      titleStyle={theme.colorPrimaryText}
+      backIconStyle={theme.colorPrimaryText}>
       <BackButton store={twoFactorStore} />
       <LoginFormHandler
         navigation={navigation}

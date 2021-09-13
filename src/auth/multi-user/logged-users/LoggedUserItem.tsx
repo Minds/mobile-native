@@ -6,19 +6,34 @@ import AuthService from '../../AuthService';
 import ChannelListItem from '../../../common/components/ChannelListItem';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import LoggedUserDetails from './LoggedUserDetails';
+import NavigationService from '../../../navigation/NavigationService';
 
 type PropsType = {
   tokenData: TokensData;
   index: number;
 };
 
+const doLogin = async (index: number) => {
+  if (index === sessionService.activeIndex) {
+    return;
+  }
+  if (sessionService.tokensData[index].sessionExpired) {
+    const promise = new Promise((resolve, reject) => {
+      NavigationService.navigate('RelogScreen', {
+        sessionIndex: index,
+        onLogin: () => AuthService.loginWithIndex(index),
+      });
+    });
+    await promise;
+  } else {
+    AuthService.loginWithIndex(index);
+  }
+};
+
 const LoggedUserItem = ({ tokenData, index }: PropsType) => {
   const user = UserModel.checkOrCreate(tokenData.user);
   const login = React.useCallback(() => {
-    if (index === sessionService.activeIndex) {
-      return;
-    }
-    AuthService.loginWithIndex(index);
+    doLogin(index);
   }, [index]);
   const renderRight = React.useMemo(
     () => () => (

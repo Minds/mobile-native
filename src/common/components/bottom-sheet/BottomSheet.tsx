@@ -12,6 +12,7 @@ interface PropsType extends Omit<BottomSheetModalProps, 'snapPoints'> {
   detail?: string;
   autoShow?: boolean;
   snapPoints?: Array<number | string>;
+  forceHeight?: number;
 }
 
 export default forwardRef<BottomSheetModal, PropsType>((props, ref) => {
@@ -44,9 +45,9 @@ export default forwardRef<BottomSheetModal, PropsType>((props, ref) => {
         layout: { height },
       },
     }) => {
-      height && setContentHeight(height);
+      height && setContentHeight(props.forceHeight || height);
     },
-    [],
+    [props.forceHeight],
   );
 
   // renders

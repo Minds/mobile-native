@@ -170,7 +170,10 @@ export class SessionService {
         refreshToken.refresh_token,
         accessToken.access_token,
       );
-      this.tokensData[index] = this.buildSessionData(tokens);
+      this.tokensData[index] = this.buildSessionData(
+        tokens,
+        this.tokensData[index].user,
+      );
       this.saveToStore();
     } else {
       throw new TokenExpiredError('Session Expired');
@@ -339,12 +342,12 @@ export class SessionService {
     return this.tokensData[index].accessToken.access_token;
   }
 
-  buildSessionData(tokens) {
+  buildSessionData(tokens, user?: UserModel) {
     const token_expire = this.getTokenExpiration(tokens.access_token);
     const token_refresh_expire = token_expire + 60 * 60 * 24 * 30;
     return {
-      user: getStores().user.me,
-      sessionExpired: this.sessionExpired,
+      user: user || getStores().user.me,
+      sessionExpired: false,
       accessToken: {
         access_token: tokens.access_token,
         access_token_expires: token_expire,
@@ -367,9 +370,27 @@ export class SessionService {
     this.sessionExpired = sessionExpired;
   }
 
+  @action
   setSessionExpiredFor(sessionExpired: boolean, index: number) {
     this.tokensData[index].sessionExpired = sessionExpired;
     this.saveToStore();
+  }
+
+  isRelogin(username: string, data) {
+    const index = this.tokensData.findIndex(
+      value => value.user.username === username,
+    );
+
+    if (index !== -1) {
+      const sessionData = this.buildSessionData(
+        data,
+        this.tokensData[index].user,
+      );
+      this.tokensData[index] = sessionData;
+      return true;
+    }
+
+    return false;
   }
 
   getIndexSessionFromGuid(guid: string) {
@@ -481,33 +502,6 @@ export class SessionService {
       },
       { fireImmediately: false },
     );
-  }
-
-  /**
-   * Run on session expired change
-   * @returns dispose (remember to dispose!)
-   * @param {function} fn
-   */
-  onSessionExpired(fn) {
-    return reaction(
-      () => (this.userLoggedIn ? this.sessionExpired : null),
-      async sessionExpired => {
-        if (sessionExpired) {
-          try {
-            await fn(sessionExpired);
-          } catch (error) {
-            logService.exception('[SessionService] onSessionExpired', error);
-          }
-        }
-      },
-      { fireImmediately: true },
-    );
-  }
-
-  async waitRelogin() {
-    while (this.sessionExpired) {
-      await delay(3000);
-    }
   }
 
   /**

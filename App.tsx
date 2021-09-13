@@ -48,7 +48,6 @@ import AppInitManager from './AppInitManager';
 import { ScreenHeightProvider } from './src/common/components/KeyboardSpacingView';
 import { WCContextProvider } from './src/blockchain/v2/walletconnect/WalletConnectContext';
 import analyticsService from './src/common/services/analytics.service';
-import RelogModal from './src/auth/RelogModal';
 
 YellowBox.ignoreWarnings(['']);
 
@@ -217,7 +216,6 @@ class App extends Component<Props, State> {
                           />
                         </WCContextProvider>
                         <AppMessages />
-                        {isLoggedIn && <RelogModal />}
                       </ErrorBoundary>
                     </BottomSheetModalProvider>
                   </Provider>

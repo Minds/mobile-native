@@ -9,6 +9,7 @@ type PropsType = {
   localStore: LoginStore;
   multiUser?: boolean;
   onRegisterPress?: () => void;
+  relogin?: boolean;
 };
 
 const { height } = Dimensions.get('window');
@@ -17,8 +18,10 @@ const LoginButtons = ({
   localStore,
   multiUser,
   onRegisterPress,
+  relogin,
 }: PropsType) => {
   const theme = ThemedStyles.style;
+  const alt = !!(relogin || multiUser);
   return (
     <View style={styles.container}>
       <Button
@@ -32,12 +35,14 @@ const LoginButtons = ({
         large
       />
       <View style={theme.marginTop4x}>
-        <Text style={styles.forgotText} onPress={localStore.onForgotPress}>
+        <Text
+          style={alt ? styles.forgotTextAlt : styles.forgotText}
+          onPress={localStore.onForgotPress}>
           {i18n.t('auth.forgot')}
         </Text>
       </View>
       <View style={theme.flexContainer} />
-      {!multiUser && (
+      {!alt && (
         <Button
           onPress={onRegisterPress}
           text={i18n.t('auth.createChannel')}
@@ -56,6 +61,7 @@ const styles = ThemedStyles.create({
   container: ['margin6x', 'flexContainer'],
   buttonLoginContainer: ['fullWidth', { marginTop: height / 55 }],
   forgotText: ['colorWhite', 'fontL', 'textCenter'],
+  forgotTextAlt: ['colorPrimaryText', 'fontL', 'textCenter'],
   buttonRegisterContainer: ['fullWidth', 'marginTop6x'],
 });
 

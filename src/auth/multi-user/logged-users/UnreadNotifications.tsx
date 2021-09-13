@@ -1,6 +1,7 @@
+import { observer } from 'mobx-react';
 import React from 'react';
 import { View, Text } from 'react-native';
-import apiService from '../../../common/services/api.service';
+import i18n from '../../../common/services/i18n.service';
 import logService from '../../../common/services/log.service';
 import sessionService from '../../../common/services/session.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
@@ -9,7 +10,7 @@ type PropsType = {
   index: number;
 };
 
-const UnreadNotifications = ({ index }: PropsType) => {
+const UnreadNotifications = observer(({ index }: PropsType) => {
   const [count, setCount] = React.useState<number>(0);
 
   React.useEffect(() => {
@@ -18,7 +19,6 @@ const UnreadNotifications = ({ index }: PropsType) => {
         const response: any = await sessionService.apiServiceInstances[
           index
         ].get('api/v3/notifications/unread-count');
-        console.log(response);
         if (response.count) {
           setCount(response.count);
         }
@@ -28,17 +28,19 @@ const UnreadNotifications = ({ index }: PropsType) => {
     };
     loadUnreadCount();
   }, [index]);
-
-  if (count === 0) {
-    return null;
-  }
-
   return (
-    <View style={styles.container}>
-      <Text style={styles.notifications}>{count}</Text>
-    </View>
+    <>
+      {count > 0 && (
+        <View style={styles.container}>
+          <Text style={styles.notifications}>{count}</Text>
+        </View>
+      )}
+      {sessionService.tokensData[index].sessionExpired && (
+        <Text style={styles.expired}>{i18n.t('multiUser.sessionExpired')}</Text>
+      )}
+    </>
   );
-};
+});
 
 const styles = ThemedStyles.create({
   container: [
@@ -50,6 +52,7 @@ const styles = ThemedStyles.create({
     { paddingVertical: 2 },
   ],
   notifications: ['colorWhite', 'fontMedium'],
+  expired: ['colorSecondaryText', 'centered', 'marginRight'],
 });
 
 export default UnreadNotifications;

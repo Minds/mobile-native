@@ -68,6 +68,10 @@ export type RootStackParamList = {
   RecoveryCodeUsedScreen: {};
   MultiUserLogin: {};
   MultiUserRegister: {};
+  RelogScreen: {
+    sessionIndex?: number;
+    onLogin?: Function;
+  };
 };
 
 export type AuthStackParamList = {

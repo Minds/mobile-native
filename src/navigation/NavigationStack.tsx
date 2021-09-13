@@ -125,6 +125,7 @@ import PushNotificationsSettings from '../notifications/v3/settings/push/PushNot
 import EmailNotificationsSettings from '../notifications/v3/settings/email/EmailNotificationsSettings';
 import ChannelEditScreen from '../channel/v2/edit/ChannelEditScreen';
 import MultiUserScreen from '../auth/multi-user/MultiUserScreen';
+import RelogScreen from '../auth/RelogScreen';
 
 const isIos = Platform.OS === 'ios';
 
@@ -814,6 +815,11 @@ const RootStack = function (props) {
           <RootStackNav.Screen
             name="MultiUserRegister"
             component={MultiUserRegisterScreen}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen
+            name="RelogScreen"
+            component={RelogScreen}
             options={modalOptions}
           />
         </>

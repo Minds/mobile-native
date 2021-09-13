@@ -22,6 +22,7 @@ import logService from './log.service';
 import { observable, action } from 'mobx';
 import { UserError } from '../UserError';
 import i18n from './i18n.service';
+import NavigationService from '../../navigation/NavigationService';
 
 export interface ApiResponse {
   status: 'success' | 'error';
@@ -98,7 +99,6 @@ export class ApiService {
       },
       async error => {
         const { config: originalReq, response, request } = error;
-
         if (response) {
           // refresh token if possible and repeat the call
           if (
@@ -132,21 +132,27 @@ export class ApiService {
   }
 
   get accessToken() {
-    return this.sessionIndex
+    return this.sessionIndex !== null
       ? session.getAccessTokenFrom(this.sessionIndex)
       : session.token;
   }
 
   get refreshToken() {
-    return this.sessionIndex
+    return this.sessionIndex !== null
       ? session.getRefreshTokenFrom(this.sessionIndex)
       : session.refreshToken;
   }
 
   get refreshAuthTokenPromise() {
-    return this.sessionIndex
+    return this.sessionIndex !== null
       ? session.refreshAuthTokenFrom(this.sessionIndex)
       : session.refreshAuthToken();
+  }
+
+  async tryToRelog(index?: number) {
+    const promise = new Promise((resolve, reject) => {
+      NavigationService.navigate('RelogScreen', { sessionIndex: index });
+    });
   }
 
   /**
@@ -164,11 +170,10 @@ export class ApiService {
           (error.response && error.response.status === 401)) &&
         this.accessToken
       ) {
-        if (this.sessionIndex) {
+        if (this.sessionIndex !== null) {
           session.setSessionExpiredFor(true, this.sessionIndex);
         } else {
-          session.setSessionExpired(true);
-          await session.waitRelogin();
+          await this.tryToRelog();
         }
       }
       throw error;

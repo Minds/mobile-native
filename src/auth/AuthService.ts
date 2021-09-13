@@ -94,6 +94,10 @@ class AuthService {
       headers,
     );
 
+    if (session.isRelogin(username, data)) {
+      return data;
+    }
+
     // if already have other sessions...
     if (session.tokensData.length > 0) {
       this.showSplash();

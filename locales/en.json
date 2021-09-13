@@ -101,7 +101,8 @@
   "multiUser": {
     "switchChannel": "Switch Account",
     "login": "Add existing account",
-    "create": "Create new channel"
+    "create": "Create new channel",
+    "sessionExpired": "Logged out"
   },
   "blockchain": {
     "exportLegacyWallet": "Export legacy wallets",
