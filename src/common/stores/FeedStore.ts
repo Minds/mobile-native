@@ -334,7 +334,7 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
    * Fetch from the endpoint
    */
   @action
-  async fetch(local: boolean = false) {
+  async fetch(local: boolean = false, replace?: boolean) {
     this.setLoading(true).setErrorLoading(false);
 
     const endpoint = this.feedsService.endpoint;
@@ -356,7 +356,7 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
       )
         return;
 
-      this.addEntities(entities);
+      this.addEntities(entities, replace);
     } catch (err) {
       // ignore aborts
       if (err.code === 'Abort') return;
@@ -365,14 +365,6 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
     } finally {
       this.setLoading(false);
     }
-  }
-
-  /**
-   * Fetch from cache
-   */
-  @action
-  async fetchLocal() {
-    return this.fetch(true);
   }
 
   /**

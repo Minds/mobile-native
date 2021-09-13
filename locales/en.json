@@ -58,6 +58,11 @@
     }
   },
   "auth": {
+    "2faRequired": "2FA required",
+    "2faEmailDescription": "To continue, please confirm the two-factor verification code sent to your email address ({{email}}) before continuing.",
+    "2faSmsDescription": "To continue, please confirm the two-factor verification code sent to your phone before continuing.",
+    "2faAppDescription": "To continue, insert a six-digit authentication code using your authenticator app.",
+    "2faInvalid": "Invalid code",
     "fieldRequired": "Required",
     "matchPattern": "Usernames can only have letters, numbers or underscores.",
     "login": "Login",
@@ -93,7 +98,7 @@
     "createNewPassword": "Create a new password",
     "inputUser": "Enter your channel name below to start the password recovery process.",
     "emailSent": "An email with reset instructions has been sent to your inbox.",
-    "followInstuctions": "Follow the intructions contained within to continue the reset process.",
+    "followInstuctions": "Follow the instructions contained within to continue the reset process.",
     "sendAgain": "Send email again",
     "waitMoment": "You have to wait 10 seconds after last time you've requested the email",
     "newPassword": "Create a new password. You’ll use this to access your account."

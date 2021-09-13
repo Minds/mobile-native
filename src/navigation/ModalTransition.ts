@@ -1,11 +1,14 @@
 import {
   StackCardInterpolationProps,
   StackCardInterpolatedStyle,
+  StackNavigationOptions,
 } from '@react-navigation/stack';
 import { Animated } from 'react-native';
+import { TransitionSpec } from '@react-navigation/stack/lib/typescript/src/types';
+
 const { multiply } = Animated;
 
-const animSpec = {
+const animSpec: TransitionSpec = {
   animation: 'spring',
   config: {
     stiffness: 1000,
@@ -17,7 +20,7 @@ const animSpec = {
   },
 };
 
-const ModalTransition = {
+const ModalTransition: Partial<StackNavigationOptions> = {
   gestureDirection: 'vertical',
   transitionSpec: {
     open: animSpec,

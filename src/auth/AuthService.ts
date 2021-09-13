@@ -5,9 +5,6 @@ import logService from '../common/services/log.service';
 import type UserModel from '../channel/UserModel';
 import RNBootSplash from 'react-native-bootsplash';
 
-export const TWO_FACTOR_ERROR =
-  'Minds::Core::Security::TwoFactor::TwoFactorRequiredException';
-
 export type TFA = 'sms' | 'totp';
 
 interface LoginResponse extends ApiResponse {

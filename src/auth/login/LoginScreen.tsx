@@ -12,10 +12,6 @@ import { useKeyboard } from '@react-native-community/hooks';
 import i18n from '../../common/services/i18n.service';
 import { RouteProp } from '@react-navigation/native';
 import { AuthStackParamList } from '../../navigation/NavigationTypes';
-
-import { useLocalStore } from 'mobx-react-lite';
-import createTwoFactorStore from '../twoFactorAuth/createTwoFactorStore';
-import BackButton from '../twoFactorAuth/BackButton';
 import LoginFormHandler from './LoginFormHandler';
 
 const { height, width } = Dimensions.get('window');
@@ -32,8 +28,6 @@ export type LoginScreenRouteProp = RouteProp<AuthStackParamList, 'Login'>;
 export default function LoginScreen(props: PropsType) {
   const theme = ThemedStyles.style;
 
-  const twoFactorStore = useLocalStore(createTwoFactorStore);
-
   const keyboard = useKeyboard();
   const transition = useTransition(keyboard.keyboardShown);
   const translateY = mix(transition, 0, -LOGO_HEIGHT);
@@ -42,7 +36,6 @@ export default function LoginScreen(props: PropsType) {
 
   return (
     <SafeAreaView style={theme.flexContainer}>
-      <BackButton store={twoFactorStore} />
       <DismissKeyboard>
         <FitScrollView
           style={theme.flexContainer}
@@ -67,7 +60,6 @@ export default function LoginScreen(props: PropsType) {
             </Text>
             <LoginFormHandler
               navigation={props.navigation}
-              store={twoFactorStore}
               route={props.route}
             />
           </View>

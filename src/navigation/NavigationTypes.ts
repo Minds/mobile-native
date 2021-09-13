@@ -9,6 +9,15 @@ import type { SupportTiersType } from '../wire/WireTypes';
 import type { PortraitBarItem } from '../portrait/createPortraitStore';
 import type BlogModel from '../blogs/BlogModel';
 import { TwoFactorStore } from '../auth/twoFactorAuth/createTwoFactorStore';
+import { TwoFactorType } from '../common/services/api.service';
+
+type AnyType = any;
+
+declare global {
+  namespace ReactNavigation {
+    interface RootParamList extends AnyType {}
+  }
+}
 
 export type DrawerParamList = {
   Tabs: {};
@@ -31,6 +40,14 @@ export type InternalStackParamList = {
 };
 
 export type RootStackParamList = {
+  TwoFactorConfirmation: {
+    onConfirm: (string) => void;
+    title?: string;
+    onCancel: () => void;
+    mfaType: TwoFactorType;
+    oldCode: string;
+    showRecovery?: boolean;
+  };
   Splash: {};
   App: {};
   Auth: {};
@@ -83,6 +100,14 @@ export type AuthStackParamList = {
     code?: string;
   };
   Register: {};
+  TwoFactorConfirmation: {
+    onConfirm: (string) => void;
+    title?: string;
+    onCancel: () => void;
+    mfaType: TwoFactorType;
+    oldCode: string;
+    showRecovery?: boolean;
+  };
 };
 
 export type AppStackParamList = {
