@@ -1,21 +1,21 @@
 import React from 'react';
 import { observer, useLocalStore } from 'mobx-react';
-import ThemedStyles from '../styles/ThemedStyles';
-import i18n from '../common/services/i18n.service';
-import { RootStackParamList } from '../navigation/NavigationTypes';
 import { RouteProp } from '@react-navigation/core';
 import {
   BackHandler,
   KeyboardAvoidingView,
   Platform,
-  SafeAreaView,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import ThemedStyles from '../styles/ThemedStyles';
+import i18n from '../common/services/i18n.service';
+import { RootStackParamList } from '../navigation/NavigationTypes';
 import InputContainer from '../common/components/InputContainer';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type ForgotScreenRouteProp = RouteProp<
   RootStackParamList,
@@ -32,7 +32,14 @@ type PropsType = {
  */
 const TwoFactorConfirmScreen = observer(({ route, navigation }: PropsType) => {
   const theme = ThemedStyles.style;
-  const { onConfirm, title, onCancel, mfaType, oldCode } = route.params;
+  const {
+    onConfirm,
+    title,
+    onCancel,
+    mfaType,
+    oldCode,
+    showRecovery,
+  } = route.params;
 
   // Disable back button on Android
   React.useEffect(() => {
@@ -44,9 +51,13 @@ const TwoFactorConfirmScreen = observer(({ route, navigation }: PropsType) => {
   // Local store
   const localStore = useLocalStore(() => ({
     code: oldCode,
+    recovery: false,
     error: !!oldCode,
     setCode(code: string) {
       this.code = code;
+    },
+    toggleRecovery() {
+      this.recovery = !this.recovery;
     },
     setError(error: boolean) {
       this.error = error;
@@ -103,22 +114,31 @@ const TwoFactorConfirmScreen = observer(({ route, navigation }: PropsType) => {
         <Text style={styles.description}>{description}</Text>
         <View style={theme.fullWidth}>
           <InputContainer
-            keyboardType="numeric"
+            maxLength={localStore.recovery ? undefined : 6}
+            keyboardType={localStore.recovery ? undefined : 'numeric'}
             labelStyle={theme.colorPrimaryText}
             style={theme.colorPrimaryText}
-            placeholder={i18n.t('auth.authCode')}
+            placeholder={
+              localStore.recovery
+                ? i18n.t('auth.recoveryCode')
+                : i18n.t('auth.authCode')
+            }
             onChangeText={localStore.setCode}
             error={localStore.error ? i18n.t('auth.2faInvalid') : ''}
             value={localStore.code}
           />
         </View>
         {mfaType === 'email' && (
-          <>
-            <Text style={styles.description} onPress={localStore.resend}>
-              {i18n.t('onboarding.verifyEmailDescription2')}
-              <Text style={styles.resend}> {i18n.t('onboarding.resend')}</Text>
-            </Text>
-          </>
+          <Text style={styles.description} onPress={localStore.resend}>
+            {i18n.t('onboarding.verifyEmailDescription2')}
+            <Text style={styles.resend}> {i18n.t('onboarding.resend')}</Text>
+          </Text>
+        )}
+        {mfaType === 'totp' && showRecovery && (
+          <Text style={styles.description} onPress={localStore.toggleRecovery}>
+            {i18n.t('auth.recoveryDesc')}
+            <Text style={styles.resend}> {i18n.t('auth.recoveryCode')}</Text>
+          </Text>
         )}
       </KeyboardAvoidingView>
     </SafeAreaView>
@@ -131,7 +151,7 @@ const styles = ThemedStyles.create({
   description: [
     'colorSecondaryText',
     'paddingVertical8x',
-    'paddingLeft4x',
+    'paddingHorizontal4x',
     'fontL',
   ],
   header: [

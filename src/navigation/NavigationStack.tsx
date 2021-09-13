@@ -693,7 +693,11 @@ const AuthStack = function () {
         <AuthStackNav.Screen
           name="TwoFactorConfirmation"
           component={TwoFactorConfirmScreen}
-          options={modalOptions}
+          options={{
+            headerMode: 'screen',
+            headerShown: false,
+            ...modalOptions,
+          }}
         />
       </AuthStackNav.Navigator>
     </View>

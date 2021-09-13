@@ -116,7 +116,6 @@ const createTwoFactorStore = () => ({
   },
   handleVerify() {
     if (this.twoFactorAuthStep === 'authCode') {
-      this.login();
       return;
     }
     if (this.twoFactorAuthStep === 'recoveryCode') {

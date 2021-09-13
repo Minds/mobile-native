@@ -105,8 +105,6 @@ export class ApiService {
       async error => {
         const { config: originalReq, response, request } = error;
 
-        console.log('response', response.data);
-
         if (response) {
           // 2FA authentication interceptor
           if (
@@ -140,29 +138,55 @@ export class ApiService {
               mfaType = 'totp';
             }
 
-            console.log('OPENING 2FA', response.data.errorId);
+            let data: any = {};
+
+            if (originalReq.data) {
+              data = JSON.parse(originalReq.data);
+            }
+
+            console.log(data);
+
+            const hasRecovery =
+              mfaType === 'totp' && data.password && data.username;
 
             try {
-              const promise = new Promise((resolve, reject) => {
+              const promise = new Promise<string>((resolve, reject) => {
                 NavigationService.navigate('TwoFactorConfirmation', {
                   onConfirm: resolve,
                   onCancel: reject,
                   mfaType,
                   oldCode,
+                  showRecovery: hasRecovery,
                 });
               });
               const code = await promise;
 
               if (code) {
-                originalReq.headers['X-MINDS-2FA-CODE'] = code;
+                // is a recovery code?
+                if (hasRecovery && code.length > 6) {
+                  const recoveryResponse = <any>await this.post(
+                    'api/v3/security/totp/recovery',
+                    {
+                      username: data.username,
+                      password: data.password,
+                      recovery_code: code,
+                    },
+                  );
+                  if (!recoveryResponse.matches) {
+                    throw new UserError(i18n.t('auth.recoveryFail'));
+                  }
+                } else {
+                  originalReq.headers['X-MINDS-2FA-CODE'] = code;
 
-                if (smsKey) {
-                  originalReq.headers['X-MINDS-SMS-2FA-KEY'] = smsKey;
+                  if (smsKey) {
+                    originalReq.headers['X-MINDS-SMS-2FA-KEY'] = smsKey;
+                  }
+
+                  if (emailKey) {
+                    originalReq.headers['X-MINDS-EMAIL-2FA-KEY'] = emailKey;
+                  }
                 }
 
-                if (emailKey) {
-                  originalReq.headers['X-MINDS-EMAIL-2FA-KEY'] = emailKey;
-                }
                 originalReq.oldCode = code;
               }
               return this.axios.request(originalReq);
@@ -224,8 +248,6 @@ export class ApiService {
 
   checkResponse<T extends ApiResponse>(response: AxiosResponse<T>): T {
     const data = response.data;
-
-    console.log('checkResponse data', response.status, response.data);
 
     // Failed on API side
     if (data && data.status && data.status !== 'success') {

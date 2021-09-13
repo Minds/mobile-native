@@ -46,6 +46,7 @@ export type RootStackParamList = {
     onCancel: () => void;
     mfaType: TwoFactorType;
     oldCode: string;
+    showRecovery?: boolean;
   };
   Splash: {};
   App: {};
@@ -93,6 +94,14 @@ export type AuthStackParamList = {
     code?: string;
   };
   Register: {};
+  TwoFactorConfirmation: {
+    onConfirm: (string) => void;
+    title?: string;
+    onCancel: () => void;
+    mfaType: TwoFactorType;
+    oldCode: string;
+    showRecovery?: boolean;
+  };
 };
 
 export type AppStackParamList = {
