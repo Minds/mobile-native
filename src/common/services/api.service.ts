@@ -144,12 +144,11 @@ export class ApiService {
               data = JSON.parse(originalReq.data);
             }
 
-            console.log(data);
-
             const hasRecovery =
               mfaType === 'totp' && data.password && data.username;
 
             try {
+              // console.log( NavigationService.navigate)
               const promise = new Promise<string>((resolve, reject) => {
                 NavigationService.navigate('TwoFactorConfirmation', {
                   onConfirm: resolve,
