@@ -88,6 +88,7 @@ export type RootStackParamList = {
   RelogScreen: {
     sessionIndex?: number;
     onLogin?: Function;
+    onCancel?: Function;
   };
 };
 

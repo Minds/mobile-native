@@ -837,11 +837,7 @@ const RootStack = function (props) {
             component={MultiUserRegisterScreen}
             options={modalOptions}
           />
-          <RootStackNav.Screen
-            name="RelogScreen"
-            component={RelogScreen}
-            options={modalOptions}
-          />
+          <RootStackNav.Screen name="RelogScreen" component={RelogScreen} />
         </>
       ) : (
         <>

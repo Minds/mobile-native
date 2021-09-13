@@ -145,8 +145,6 @@ export class ApiService {
               data = JSON.parse(originalReq.data);
             }
 
-            console.log(data);
-
             const hasRecovery =
               mfaType === 'totp' && data.password && data.username;
 
@@ -202,9 +200,10 @@ export class ApiService {
             !originalReq._isRetry &&
             isNot401Exception(originalReq.url)
           ) {
-            await this.tokenRefresh();
-            originalReq._isRetry = true;
-            return this.axios.request(originalReq);
+            await this.tokenRefresh(() => {
+              originalReq._isRetry = true;
+              this.axios.request(originalReq);
+            });
           }
 
           // prompt the user if email verification is needed for this endpoint
@@ -245,16 +244,25 @@ export class ApiService {
       : session.refreshAuthToken();
   }
 
-  async tryToRelog(index?: number) {
+  async tryToRelog(onLogin: Function) {
+    const onCancel = () => {
+      if (session.sessionExpired) {
+        session.logoutFrom(session.activeIndex);
+      }
+    };
     const promise = new Promise((resolve, reject) => {
-      NavigationService.navigate('RelogScreen', { sessionIndex: index });
+      NavigationService.navigate('RelogScreen', {
+        onLogin,
+        onCancel,
+      });
     });
+    await promise;
   }
 
   /**
    * Refresh token (only one call at the time)
    */
-  async tokenRefresh() {
+  async tokenRefresh(onLogin: Function) {
     if (!this.refreshPromise) {
       this.refreshPromise = this.refreshAuthTokenPromise;
     }
@@ -269,10 +277,10 @@ export class ApiService {
         if (this.sessionIndex !== null) {
           session.setSessionExpiredFor(true, this.sessionIndex);
         } else {
-          await this.tryToRelog();
+          session.setSessionExpired(true);
+          await this.tryToRelog(onLogin);
         }
       }
-      throw error;
     } finally {
       this.refreshPromise = null;
     }

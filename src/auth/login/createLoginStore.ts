@@ -1,5 +1,5 @@
 import i18n from '../../common/services/i18n.service';
-import AuthService, { TWO_FACTOR_ERROR } from '../AuthService';
+import AuthService from '../AuthService';
 import { LayoutAnimation } from 'react-native';
 import logService from '../../common/services/log.service';
 
@@ -47,15 +47,6 @@ const createLoginStore = ({ props, resetRef }) => ({
           errJson.error === 'invalid_client'
         ) {
           this.setError(i18n.t('auth.invalidGrant'));
-          return;
-        }
-
-        if (err.errId && err.errId === TWO_FACTOR_ERROR) {
-          props.store.showTwoFactorForm(
-            err.headers['x-minds-sms-2fa-key'],
-            this.username,
-            this.password,
-          );
           return;
         }
 

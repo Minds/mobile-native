@@ -2,7 +2,6 @@ import React from 'react';
 
 import { View } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
-import { TwoFactorStore } from '../twoFactorAuth/createTwoFactorStore';
 import { observer, useLocalStore } from 'mobx-react';
 import ResetPasswordModal, {
   ResetPasswordModalHandles,
@@ -16,7 +15,6 @@ import LoginButtons from './LoginButtons';
 type PropsType = {
   onLogin?: Function;
   onRegisterPress?: () => void;
-  store: TwoFactorStore;
   route?: LoginScreenRouteProp;
   multiUser?: boolean;
   relogin?: boolean;
