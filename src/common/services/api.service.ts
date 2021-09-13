@@ -8,6 +8,13 @@ const EXCEPTIONS_401 = [
   'api/v3/oauth/token',
 ];
 
+export const TWO_FACTOR_ERROR =
+  'Minds::Core::Security::TwoFactor::TwoFactorRequiredException';
+export const TWO_FACTOR_INVALID =
+  'Minds::Core::Security::TwoFactor::TwoFactorInvalidCodeException';
+
+export type TwoFactorType = 'sms' | 'email' | 'totp';
+
 import session, { isTokenExpired } from './session.service';
 import {
   MINDS_API_URI,
@@ -22,6 +29,7 @@ import logService from './log.service';
 import { observable, action } from 'mobx';
 import { UserError } from '../UserError';
 import i18n from './i18n.service';
+import NavigationService from '../../navigation/NavigationService';
 
 export interface ApiResponse {
   status: 'success' | 'error';
@@ -98,6 +106,95 @@ export class ApiService {
         const { config: originalReq, response, request } = error;
 
         if (response) {
+          // 2FA authentication interceptor
+          if (
+            response.data &&
+            (response.data.errorId === TWO_FACTOR_ERROR ||
+              response.data.errorId === TWO_FACTOR_INVALID)
+          ) {
+            let smsKey,
+              emailKey,
+              oldCode = '';
+
+            if (response.data.errorId === TWO_FACTOR_ERROR) {
+              smsKey = response.headers['x-minds-sms-2fa-key'];
+              emailKey = response.headers['x-minds-email-2fa-key'];
+              // We store the keys on the original request in case the code is invalid (The invalid response doesn't include it)
+              originalReq.smsKey = smsKey;
+              originalReq.emailKey = emailKey;
+            } else {
+              smsKey = originalReq.smsKey;
+              emailKey = originalReq.emailKey;
+              oldCode = originalReq.oldCode;
+            }
+
+            let mfaType: TwoFactorType = 'email';
+
+            if (smsKey) {
+              mfaType = 'sms';
+            } else if (emailKey) {
+              // already set above
+            } else {
+              mfaType = 'totp';
+            }
+
+            let data: any = {};
+
+            if (originalReq.data) {
+              data = JSON.parse(originalReq.data);
+            }
+
+            console.log(data);
+
+            const hasRecovery =
+              mfaType === 'totp' && data.password && data.username;
+
+            try {
+              const promise = new Promise<string>((resolve, reject) => {
+                NavigationService.navigate('TwoFactorConfirmation', {
+                  onConfirm: resolve,
+                  onCancel: reject,
+                  mfaType,
+                  oldCode,
+                  showRecovery: hasRecovery,
+                });
+              });
+              const code = await promise;
+
+              if (code) {
+                // is a recovery code?
+                if (hasRecovery && code.length > 6) {
+                  const recoveryResponse = <any>await this.post(
+                    'api/v3/security/totp/recovery',
+                    {
+                      username: data.username,
+                      password: data.password,
+                      recovery_code: code,
+                    },
+                  );
+                  if (!recoveryResponse.matches) {
+                    throw new UserError(i18n.t('auth.recoveryFail'));
+                  }
+                } else {
+                  originalReq.headers['X-MINDS-2FA-CODE'] = code;
+
+                  if (smsKey) {
+                    originalReq.headers['X-MINDS-SMS-2FA-KEY'] = smsKey;
+                  }
+
+                  if (emailKey) {
+                    originalReq.headers['X-MINDS-EMAIL-2FA-KEY'] = emailKey;
+                  }
+                }
+
+                originalReq.oldCode = code;
+              }
+              return this.axios.request(originalReq);
+            } catch (err) {
+              throw new UserError('Canceled');
+            }
+          }
+
           // refresh token if possible and repeat the call
           if (
             response.status === 401 &&

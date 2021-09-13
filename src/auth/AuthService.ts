@@ -4,9 +4,6 @@ import delay from '../common/helpers/delay';
 import logService from '../common/services/log.service';
 import type UserModel from '../channel/UserModel';
 
-export const TWO_FACTOR_ERROR =
-  'Minds::Core::Security::TwoFactor::TwoFactorRequiredException';
-
 export type TFA = 'sms' | 'totp';
 
 interface LoginResponse extends ApiResponse {

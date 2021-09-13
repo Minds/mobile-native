@@ -1,19 +1,21 @@
-//@ts-nocheck
 import React, { useCallback } from 'react';
+import { KeyboardAvoidingView } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
 import { observer, useLocalStore } from 'mobx-react';
 import { View, Text } from 'react-native-animatable';
+
 import Input from '../../common/components/Input';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
 import { DISABLE_PASSWORD_INPUTS } from '../../config/Config';
-import { useNavigation } from '@react-navigation/native';
 import validatePassword from '../../common/helpers/validatePassword';
 import authService from '../../auth/AuthService';
 import settingsService from '../SettingsService';
-import { KeyboardAvoidingView, Alert } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
 import isIphoneX from '../../common/helpers/isIphoneX';
 import PasswordValidator from '../../common/components/password-input/PasswordValidator';
+import { isUserError } from '../../common/UserError';
+import { showNotification } from '../../../AppMessages';
 
 export default observer(function () {
   const theme = ThemedStyles.style;
@@ -97,7 +99,7 @@ export default observer(function () {
       store.setNewPasswordError(i18n.t('settings.passwordsNotMatch'));
       return;
     } else {
-      store.setNewPasswordError(i18n.t(''));
+      store.setNewPasswordError('');
     }
 
     const params = {
@@ -108,9 +110,9 @@ export default observer(function () {
     try {
       await settingsService.submitSettings(params);
       store.clearInputs();
-      Alert.alert(i18n.t('success'), i18n.t('settings.passwordChanged'));
+      showNotification(i18n.t('settings.passwordChanged'), 'success');
     } catch (err) {
-      Alert.alert('Error', err.message);
+      if (!isUserError(err)) showNotification(err.message, 'danger');
     }
   }, [store]);
 
