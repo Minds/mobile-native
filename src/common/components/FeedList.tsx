@@ -167,13 +167,13 @@ export default class FeedList<T> extends Component<PropsType> {
         refreshing={feedStore.refreshing}
         onEndReached={this.loadMore}
         refreshControl={
-          Boolean(this.props.refreshControlTintColor) && (
+          Boolean(this.props.refreshControlTintColor) ? (
             <RefreshControl
               tintColor={this.props.refreshControlTintColor}
               refreshing={feedStore.refreshing}
               onRefresh={this.refresh}
             />
-          )
+          ) : undefined
         }
         // onEndReachedThreshold={0}
         numColumns={feedStore.isTiled ? 3 : 1}
