@@ -108,7 +108,6 @@ export default observer(function (props: PropsType) {
   }, [neutralZoom, zoom]);
 
   useEffect(() => {
-    console.log('UNLOCKING ORIENTATIONS');
     Orientation.unlockAllOrientations();
     return () => Orientation.lockToPortrait();
   }, []);
