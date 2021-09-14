@@ -11,6 +11,5 @@ export const initStripe = async () => {
 
   await stripeInit({
     publishableKey: settings.stripe_key,
-    //androidPayMode: 'test', // Android only
   });
 };

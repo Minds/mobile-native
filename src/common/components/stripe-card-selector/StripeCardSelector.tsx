@@ -66,7 +66,7 @@ const StripeCardSelector = observer(({ onCardSelected }: PropsType) => {
     }
   };
 
-  const currentCard = store.current
+  const currentCard = store.currentCard
     ? {
         title: store.currentCardTitle,
         icon: { name: 'chevron-down', type: 'material-community' },
@@ -80,7 +80,7 @@ const StripeCardSelector = observer(({ onCardSelected }: PropsType) => {
         <Text>{i18n.t('wire.selectCard').toUpperCase()}</Text>
         <Text onPress={show}>{i18n.t('wire.addCard')}</Text>
       </View>
-      {!!store.current && (
+      {!!store.currentCard && (
         <>
           {!!currentCard && <MenuItem item={currentCard} />}
           <Selector

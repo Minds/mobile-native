@@ -3,6 +3,7 @@ import { showNotification } from '../../../../AppMessages';
 import { StripeCard } from '../../../wire/WireTypes';
 import api, { ApiResponse } from '../../services/api.service';
 import i18nService from '../../services/i18n.service';
+import logService from '../../services/log.service';
 import { initStripe } from '../../services/stripe.service';
 
 interface StripeResponse extends ApiResponse {
@@ -67,9 +68,7 @@ const createCardSelectorStore = ({ onCardSelected }) => ({
           onCardSelected(result.paymentmethods[0]);
         }
 
-        if (result && result.paymentmethods) {
-          this.setCards(result.paymentmethods.reverse());
-        }
+        this.setCards(result.paymentmethods.reverse());
       }
     } catch (err) {
       console.log(err);
@@ -96,13 +95,20 @@ const createCardSelectorStore = ({ onCardSelected }) => ({
     }
   },
   async saveCard(): Promise<any> {
-    await api.post<ApiResponse>('api/v2/payments/stripe/paymentmethods/apply', {
-      intent_id: this.intentId,
-    });
-
-    this.intentKey = '';
-    await this.loadCards();
-    this.setInProgress(false);
+    try {
+      await api.post<ApiResponse>(
+        'api/v2/payments/stripe/paymentmethods/apply',
+        {
+          intent_id: this.intentId,
+        },
+      );
+      this.intentKey = '';
+      this.setInProgress(false);
+      this.loadCards();
+    } catch (err) {
+      logService.exception('[Stripe saveCard]', err);
+      this.setInProgress(false);
+    }
   },
   onCardChange(cardDetails: CardFieldInput.Details) {
     this.cardDetails = cardDetails;
