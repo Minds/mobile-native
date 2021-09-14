@@ -18,6 +18,13 @@ jest.mock(
   () => 'TransakWidget',
 );
 
+jest.mock('@stripe/stripe-react-native', () => ({
+  StripeProvider: jest.fn(({ children }) => children),
+  CardField: jest.fn(() => null),
+  presentPaymentSheet: jest.fn(),
+  initPaymentSheet: jest.fn(),
+}));
+
 // mock backhandler
 BackHandler.addEventListener = jest.fn();
 jest.mock('../src/common/services/log.service', () => {});
