@@ -83,6 +83,13 @@ export type RootStackParamList = {
   };
   ViewImage: {};
   RecoveryCodeUsedScreen: {};
+  MultiUserLogin: {};
+  MultiUserRegister: {};
+  RelogScreen: {
+    sessionIndex?: number;
+    onLogin?: Function;
+    onCancel?: Function;
+  };
 };
 
 export type AuthStackParamList = {
@@ -266,6 +273,7 @@ export type AppStackParamList = {
     onComplete: Function;
     pro?: boolean;
   };
+  MultiUserScreen: {};
 };
 
 // types for channel edit screens

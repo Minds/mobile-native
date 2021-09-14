@@ -1,55 +1,36 @@
 import React, { useRef } from 'react';
-import {
-  View,
-  Platform,
-  Text,
-  Linking,
-  KeyboardAvoidingView,
-} from 'react-native';
+import { View, Platform, Text, Linking } from 'react-native';
 
-import { StackNavigationProp } from '@react-navigation/stack';
 import { observer, useLocalStore } from 'mobx-react';
-import Icon from 'react-native-vector-icons/Ionicons';
 import { CheckBox } from 'react-native-elements';
 
-import InputContainer from '../common/components/InputContainer';
-import { AuthStackParamList } from '../navigation/NavigationTypes';
-import { styles, shadowOpt, icon } from './styles';
-import i18n from '../common/services/i18n.service';
-import ThemedStyles from '../styles/ThemedStyles';
-import BoxShadow from '../common/components/BoxShadow';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import Button from '../common/components/Button';
-import { DARK_THEME } from '../styles/Colors';
-import DismissKeyboard from '../common/components/DismissKeyboard';
-import validatePassword from '../common/helpers/validatePassword';
-import { showNotification } from '../../AppMessages';
-import validatorService from '../common/services/validator.service';
-import Captcha from '../common/components/Captcha';
-import authService, { registerParams } from './AuthService';
-import apiService from '../common/services/api.service';
-import delay from '../common/helpers/delay';
-import logService from '../common/services/log.service';
-import FitScrollView from '../common/components/FitScrollView';
-import sessionService from '../common/services/session.service';
-import featuresService from '../common/services/features.service';
-import PasswordInput from '../common/components/password-input/PasswordInput';
+import InputContainer from '../../common/components/InputContainer';
+import { styles, shadowOpt, icon } from '../styles';
+import i18n from '../../common/services/i18n.service';
+import ThemedStyles from '../../styles/ThemedStyles';
+import BoxShadow from '../../common/components/BoxShadow';
+import Button from '../../common/components/Button';
+import { DARK_THEME } from '../../styles/Colors';
+import validatePassword from '../../common/helpers/validatePassword';
+import { showNotification } from '../../../AppMessages';
+import validatorService from '../../common/services/validator.service';
+import Captcha from '../../common/components/Captcha';
+import authService, { registerParams } from '../AuthService';
+import apiService from '../../common/services/api.service';
+import delay from '../../common/helpers/delay';
+import logService from '../../common/services/log.service';
+import sessionService from '../../common/services/session.service';
+import featuresService from '../../common/services/features.service';
+import PasswordInput from '../../common/components/password-input/PasswordInput';
 
-export type WalletScreenNavigationProp = StackNavigationProp<
-  AuthStackParamList,
-  'Register'
->;
-
-type PropsType = {
-  navigation: WalletScreenNavigationProp;
-};
+type PropsType = {};
 
 const shadowOptLocal = Object.assign({}, shadowOpt);
 shadowOptLocal.height = 300;
 
 const alphanumericPattern = '^[a-zA-Z0-9_]+$';
 
-export default observer(function RegisterScreen(props: PropsType) {
+const RegisterForm = observer(({}: PropsType) => {
   const captchaRef = useRef<any>(null);
 
   const store = useLocalStore(() => ({
@@ -236,96 +217,64 @@ export default observer(function RegisterScreen(props: PropsType) {
   });
 
   return (
-    <DismissKeyboard>
-      <SafeAreaView style={theme.flexContainer}>
-        <KeyboardAvoidingView behavior="height">
-          <FitScrollView>
-            <View style={[theme.rowJustifyStart, theme.paddingVertical3x]}>
+    <>
+      {inputsWithShadow}
+      <View style={[theme.paddingHorizontal4x, theme.paddingVertical2x]}>
+        <CheckBox
+          containerStyle={[
+            theme.checkbox,
+            theme.paddingLeft,
+            theme.margin0x,
+            theme.paddingBottom0x,
+          ]}
+          title={
+            <Text style={[theme.colorWhite, theme.fontL, theme.paddingLeft2x]}>
+              {i18n.t('auth.accept')}{' '}
               <Text
-                style={[
-                  theme.titleText,
-                  theme.textCenter,
-                  theme.colorWhite,
-                  theme.paddingVertical3x,
-                  theme.positionAbsolute,
-                ]}>
-                {i18n.t('auth.createChannel')}
+                style={theme.link}
+                onPress={() =>
+                  Linking.openURL('https://www.minds.com/p/terms')
+                }>
+                {i18n.t('auth.termsAndConditions')}
               </Text>
-              <Icon
-                size={34}
-                name="ios-chevron-back"
-                style={[theme.colorWhite, theme.padding]}
-                onPress={props.navigation.goBack}
-              />
-            </View>
-            {inputsWithShadow}
-            <View style={[theme.paddingHorizontal4x, theme.paddingVertical2x]}>
-              <CheckBox
-                containerStyle={[
-                  theme.checkbox,
-                  theme.paddingLeft,
-                  theme.margin0x,
-                  theme.paddingBottom0x,
-                ]}
-                title={
-                  <Text
-                    style={[
-                      theme.colorWhite,
-                      theme.fontL,
-                      theme.paddingLeft2x,
-                    ]}>
-                    {i18n.t('auth.accept')}{' '}
-                    <Text
-                      style={theme.link}
-                      onPress={() =>
-                        Linking.openURL('https://www.minds.com/p/terms')
-                      }>
-                      {i18n.t('auth.termsAndConditions')}
-                    </Text>
-                  </Text>
-                }
-                checked={store.termsAccepted}
-                onPress={store.toggleTerms}
-              />
-              <CheckBox
-                containerStyle={[
-                  theme.checkbox,
-                  theme.paddingLeft,
-                  theme.margin0x,
-                  // theme.padding0x,
-                ]}
-                title={
-                  <Text
-                    style={[
-                      theme.colorWhite,
-                      theme.fontL,
-                      theme.paddingLeft2x,
-                    ]}>
-                    {i18n.t('auth.promotions')}
-                  </Text>
-                }
-                checked={store.exclusivePromotions}
-                onPress={store.togglePromotions}
-              />
-              <Button
-                onPress={store.onRegisterPress}
-                text={i18n.t('auth.createChannel')}
-                containerStyle={[theme.fullWidth, theme.marginTop]}
-                loading={store.inProgress}
-                disabled={store.inProgress}
-                testID="registerButton"
-                large
-                transparent
-              />
-            </View>
-          </FitScrollView>
-        </KeyboardAvoidingView>
-        <Captcha
-          ref={captchaRef}
-          onResult={store.onCaptchResult}
-          testID="captcha"
+            </Text>
+          }
+          checked={store.termsAccepted}
+          onPress={store.toggleTerms}
         />
-      </SafeAreaView>
-    </DismissKeyboard>
+        <CheckBox
+          containerStyle={[
+            theme.checkbox,
+            theme.paddingLeft,
+            theme.margin0x,
+            // theme.padding0x,
+          ]}
+          title={
+            <Text style={[theme.colorWhite, theme.fontL, theme.paddingLeft2x]}>
+              {i18n.t('auth.promotions')}
+            </Text>
+          }
+          checked={store.exclusivePromotions}
+          onPress={store.togglePromotions}
+        />
+        <Button
+          onPress={store.onRegisterPress}
+          text={i18n.t('auth.createChannel')}
+          containerStyle={[theme.fullWidth, theme.marginTop]}
+          loading={store.inProgress}
+          disabled={store.inProgress}
+          testID="registerButton"
+          large
+          transparent
+        />
+      </View>
+      <Captcha
+        ref={captchaRef}
+        onResult={store.onCaptchResult}
+        testID="captcha"
+      />
+    </>
   );
 });
+
+export default RegisterForm;

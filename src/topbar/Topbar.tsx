@@ -72,7 +72,7 @@ export const Topbar = observer((props: PropsType) => {
         ]}>
         <View style={styles.topbar}>
           <View style={styles.topbarLeft}>
-            <TouchableOpacity onPress={openMenu}>
+            <TouchableOpacity onPress={openMenu} testID="topbarAvatar">
               <FastImage
                 source={avatar}
                 style={avatarStyle}

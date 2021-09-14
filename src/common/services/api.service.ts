@@ -78,13 +78,15 @@ export class ApiService {
   axios: AxiosInstance;
   abortTags = new Map<any, CancelTokenSource>();
   @observable mustVerify = false;
+  sessionIndex: number | null;
 
   @action
   setMustVerify(value) {
     this.mustVerify = value;
   }
 
-  constructor(axiosInstance = null) {
+  constructor(sessionIndex: number | null = null, axiosInstance = null) {
+    this.sessionIndex = sessionIndex;
     this.axios =
       axiosInstance ||
       axios.create({
@@ -104,7 +106,6 @@ export class ApiService {
       },
       async error => {
         const { config: originalReq, response, request } = error;
-
         if (response) {
           // 2FA authentication interceptor
           if (
@@ -200,7 +201,10 @@ export class ApiService {
             !originalReq._isRetry &&
             isNot401Exception(originalReq.url)
           ) {
-            await this.refreshToken();
+            await this.tokenRefresh(() => {
+              originalReq._isRetry = true;
+              this.axios.request(originalReq);
+            });
             originalReq._isRetry = true;
             return this.axios.request(originalReq);
           }
@@ -221,27 +225,68 @@ export class ApiService {
     );
   }
 
+  setSessionIndex(index) {
+    this.sessionIndex = index;
+  }
+
+  get accessToken() {
+    return this.sessionIndex !== null
+      ? session.getAccessTokenFrom(this.sessionIndex)
+      : session.token;
+  }
+
+  get refreshToken() {
+    return this.sessionIndex !== null
+      ? session.getRefreshTokenFrom(this.sessionIndex)
+      : session.refreshToken;
+  }
+
+  get refreshAuthTokenPromise() {
+    return this.sessionIndex !== null
+      ? session.refreshAuthTokenFrom(this.sessionIndex)
+      : session.refreshAuthToken();
+  }
+
+  async tryToRelog(onLogin: Function) {
+    const onCancel = () => {
+      if (session.sessionExpired) {
+        session.logoutFrom(session.activeIndex);
+      }
+    };
+    const promise = new Promise((resolve, reject) => {
+      NavigationService.navigate('RelogScreen', {
+        onLogin,
+        onCancel,
+      });
+    });
+    await promise;
+  }
+
   /**
    * Refresh token (only one call at the time)
    */
-  async refreshToken() {
+  async tokenRefresh(onLogin: Function) {
     if (!this.refreshPromise) {
-      this.refreshPromise = session.refreshAuthToken();
+      this.refreshPromise = this.refreshAuthTokenPromise;
     }
     try {
       await this.refreshPromise;
+      this.refreshPromise = null;
     } catch (error) {
+      this.refreshPromise = null;
       if (
         (isTokenExpired(error) ||
           (error.response && error.response.status === 401)) &&
-        session.token
+        this.accessToken
       ) {
-        session.logout();
-        throw new UserError('Session expired');
+        if (this.sessionIndex !== null) {
+          session.setSessionExpiredFor(true, this.sessionIndex);
+        } else {
+          session.setSessionExpired(true);
+          await this.tryToRelog(onLogin);
+        }
       }
       throw error;
-    } finally {
-      this.refreshPromise = null;
     }
   }
 
@@ -289,7 +334,7 @@ export class ApiService {
    * Build headers
    */
   buildHeaders(customHeaders: any = {}) {
-    const headers: any = {
+    let headers: any = {
       'Content-Type': 'application/json',
       'Cache-Control': 'no-cache, no-store, must-revalidate',
       Pragma: 'no-cache',
@@ -304,11 +349,18 @@ export class ApiService {
       headers.Cookie = `${headers.Cookie};canary=1`;
     }
 
-    if (session.token) {
-      headers.Authorization = 'Bearer ' + session.token;
+    if (this.accessToken && !headers.Authorization) {
+      headers = {
+        ...headers,
+        ...this.buildAuthorizationHeader(this.accessToken),
+      };
     }
 
     return headers;
+  }
+
+  buildAuthorizationHeader(token: string) {
+    return { Authorization: `Bearer ${token}` };
   }
 
   /**
@@ -355,8 +407,9 @@ export class ApiService {
     url: string,
     params: object = {},
     tag: any = null,
+    headers: any = null,
   ): Promise<T> {
-    let opt;
+    let opt: any = {};
     if (tag) {
       const source = this.abortTags.get(tag);
       // cancel previous if exists
@@ -367,7 +420,9 @@ export class ApiService {
       opt = { cancelToken: s.token };
       this.abortTags.set(tag, opt.cancelToken);
     }
-
+    if (headers) {
+      opt.headers = headers;
+    }
     const response = await this.axios.get(this.buildUrl(url, params), opt);
 
     return response.data;
@@ -498,7 +553,7 @@ export class ApiService {
         xhr.upload.addEventListener('progress', progress);
       }
       xhr.open('POST', MINDS_API_URI + this.buildUrl(url));
-      xhr.setRequestHeader('Authorization', `Bearer ${session.token}`);
+      xhr.setRequestHeader('Authorization', `Bearer ${this.accessToken}`);
       xhr.setRequestHeader('Accept', 'application/json');
       xhr.setRequestHeader('Content-Type', 'multipart/form-data;');
       xhr.setRequestHeader('App-Version', Version.VERSION);

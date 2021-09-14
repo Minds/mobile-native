@@ -1,4 +1,31 @@
+import type UserModel from '../../../channel/UserModel';
+import logService from '../log.service';
 import { storages } from './storages.service';
+
+const KEY = 'SESSIONS_DATA';
+
+export type RefreshToken = {
+  refresh_token: string;
+  refresh_token_expires: number | null;
+};
+
+export type TokensData = {
+  user: UserModel;
+  sessionExpired: boolean;
+  refreshToken: {
+    refresh_token: string;
+    refresh_token_expires: number | null;
+  };
+  accessToken: {
+    access_token: string;
+    access_token_expires: number | null;
+  };
+};
+
+export type SessionsData = {
+  activeIndex: number;
+  tokensData: Array<TokensData>;
+};
 
 /**
  * Session service
@@ -9,23 +36,62 @@ export class SessionStorageService {
    */
   getAll() {
     try {
-      const data = storages.session.getMultipleItems([
-        'access_token',
-        'refresh_token',
-        'user',
-      ]);
-
-      const accessToken = data[0][1],
-        refreshToken = data[1][1],
-        user = data[2][1];
-
-      if (!accessToken || !refreshToken || !user) {
-        return null;
+      const sessionData = storages.session.getMap<SessionsData>(KEY);
+      console.log(
+        'sessionData === null || sessionData === undefined',
+        sessionData === null || sessionData === undefined,
+      );
+      console.log('sessionData', sessionData);
+      if (sessionData === null || sessionData === undefined) {
+        return this.checkAndMigrate();
       }
-
-      return [accessToken, refreshToken, user];
+      return sessionData;
     } catch (err) {
       return null;
+    }
+  }
+
+  checkAndMigrate() {
+    const data = storages.session.getMultipleItems([
+      'access_token',
+      'refresh_token',
+      'user',
+    ]);
+
+    const accessToken = data[0][1],
+      refreshToken = data[1][1],
+      user = data[2][1];
+
+    console.log(
+      '!accessToken || !refreshToken || !user',
+      !accessToken || !refreshToken || !user,
+    );
+    if (!accessToken || !refreshToken || !user) {
+      return null;
+    }
+
+    const sessionsData: SessionsData = {
+      activeIndex: 0,
+      tokensData: [
+        {
+          user,
+          refreshToken,
+          accessToken,
+          sessionExpired: false,
+        },
+      ],
+    };
+
+    this.save(sessionsData);
+    return sessionsData;
+  }
+
+  save(sessionsData: SessionsData) {
+    try {
+      const res = storages.session.setMap(KEY, sessionsData);
+      console.log('save(sessionsData: SessionsData)', res);
+    } catch (err) {
+      logService.exception('[SessionStorage] save', err);
     }
   }
 
