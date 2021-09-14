@@ -204,6 +204,8 @@ export class ApiService {
               originalReq._isRetry = true;
               this.axios.request(originalReq);
             });
+            originalReq._isRetry = true;
+            return this.axios.request(originalReq);
           }
 
           // prompt the user if email verification is needed for this endpoint
@@ -268,7 +270,9 @@ export class ApiService {
     }
     try {
       await this.refreshPromise;
+      this.refreshPromise = null;
     } catch (error) {
+      this.refreshPromise = null;
       if (
         (isTokenExpired(error) ||
           (error.response && error.response.status === 401)) &&
@@ -281,8 +285,7 @@ export class ApiService {
           await this.tryToRelog(onLogin);
         }
       }
-    } finally {
-      this.refreshPromise = null;
+      throw error;
     }
   }
 

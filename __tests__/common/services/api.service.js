@@ -7,11 +7,14 @@ import { MINDS_API_URI } from '../../../src/config/Config';
 import { UserError } from '../../../src/common/UserError';
 import sessionService from '../../../src/common/services/session.service';
 import { getStores } from '../../../AppStores';
+import NavigationService from '../../../src/navigation/NavigationService';
+
+jest.mock('../../../src/navigation/NavigationService');
 
 getStores.mockReturnValue({
   user: {
     me: {},
-    load: jest.fn(),
+    load: jest.fn().mockReturnValue({ guid: '1' }),
     setUser: jest.fn(),
   },
 });
@@ -23,7 +26,8 @@ var mock = new MockAdapter(axios);
 const axiosInstance = axios.create();
 // const axiosMock = new MockAdapter(axios);
 
-const api = new ApiService(axiosInstance);
+ApiService.prototype.tryToRelog = jest.fn().mockImplementation(() => false);
+const api = new ApiService(null, axiosInstance);
 
 /**
  * POST
@@ -101,6 +105,16 @@ describe('api service POST', () => {
  * GET
  */
 describe('api service GET', () => {
+  beforeAll(() => {
+    session.addSession({
+      access_token: 'sometoken',
+      refresh_token: 'sometoken',
+    });
+  });
+  beforeEach(() => {
+    NavigationService.getCurrentState.mockClear();
+    NavigationService.getCurrentState.mockReturnValue({});
+  });
   afterEach(() => {
     mock.reset();
   });
@@ -172,6 +186,16 @@ describe('api service GET', () => {
  * DELETE
  */
 describe('api service DELETE', () => {
+  beforeAll(() => {
+    session.addSession({
+      access_token: 'sometoken',
+      refresh_token: 'sometoken',
+    });
+  });
+  beforeEach(() => {
+    NavigationService.getCurrentState.mockClear();
+    NavigationService.getCurrentState.mockReturnValue({});
+  });
   afterEach(() => {
     mock.reset();
   });
@@ -244,6 +268,16 @@ describe('api service DELETE', () => {
  * PUT
  */
 describe('api service PUT', () => {
+  beforeAll(() => {
+    session.addSession({
+      access_token: 'sometoken',
+      refresh_token: 'sometoken',
+    });
+  });
+  beforeEach(() => {
+    NavigationService.getCurrentState.mockClear();
+    NavigationService.getCurrentState.mockReturnValue({});
+  });
   afterEach(() => {
     mock.reset();
   });
@@ -316,6 +350,16 @@ describe('api service PUT', () => {
  * GET
  */
 describe('api service auth refresh', () => {
+  beforeAll(() => {
+    session.addSession({
+      access_token: 'sometoken',
+      refresh_token: 'sometoken',
+    });
+  });
+  beforeEach(() => {
+    NavigationService.getCurrentState.mockClear();
+    NavigationService.getCurrentState.mockReturnValue({});
+  });
   afterEach(() => {
     mock.reset();
     auth.refreshToken.mockClear();
@@ -435,8 +479,7 @@ describe('api service auth refresh', () => {
     const [r1, r2] = await Promise.all([p1, p2].map(p => p.catch(e => e)));
 
     // assert on the response
-    expect(r1).toBeInstanceOf(UserError);
-    expect(r1.message).toEqual('Session expired');
+    expect(r1).toBe(error);
     expect(r2).toBe(error);
 
     expect(auth.refreshToken).toBeCalledTimes(1);
