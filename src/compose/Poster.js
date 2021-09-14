@@ -117,9 +117,11 @@ export default observer(function (props) {
 
   useEffect(() => {
     InteractionManager.runAfterInteractions(() => {
-      if (inputRef.current) {
-        inputRef.current.focus();
-      }
+      setTimeout(() => {
+        if (inputRef.current) {
+          inputRef.current.focus();
+        }
+      }, 300);
     });
   }, [inputRef]);
 

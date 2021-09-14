@@ -31,7 +31,7 @@ const MenuItem = ({
   const containerStyle = useStyle(styles.menuContainer, style);
 
   return (
-    <MPressable style={containerStyle} onPress={onPress}>
+    <MPressable style={containerStyle} onPress={onPress} testID={testID}>
       {Boolean(iconName) && (
         <View style={styles.iconContainer}>
           <Icon

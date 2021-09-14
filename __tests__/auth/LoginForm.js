@@ -4,12 +4,21 @@ import renderer from 'react-test-renderer';
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
 
-import LoginForm from '../../src/auth/LoginForm';
+import LoginForm from '../../src/auth/login/LoginForm';
 import authService from '../../src/auth/AuthService';
 import Input from '../../src/common/components/Input';
 import Button from '../../src/common/components/Button';
+import { getStores } from '../../AppStores';
 
 jest.mock('../../src/auth/AuthService');
+
+getStores.mockReturnValue({
+  user: {
+    me: {},
+    load: jest.fn().mockReturnValue({ guid: '1' }),
+    setUser: jest.fn(),
+  },
+});
 
 describe('LoginForm component', () => {
   beforeEach(() => {

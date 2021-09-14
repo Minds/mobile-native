@@ -69,7 +69,7 @@ export default class AppInitManager {
 
             if (!token) {
               logService.info('[App] there is no active session');
-              RNBootSplash.hide({ duration: 250 });
+              RNBootSplash.hide({ fade: true });
             } else {
               logService.info('[App] session initialized');
             }
@@ -114,8 +114,10 @@ export default class AppInitManager {
     logService.info('[App] Getting minds settings and onboarding progress');
 
     // register device token into backend on login
-
     pushService.registerToken();
+
+    // request for permission (applies to iOS)
+    pushService.requestNotificationPermission();
 
     // check update
     if (Platform.OS !== 'ios' && !GOOGLE_PLAY_STORE) {
@@ -128,7 +130,7 @@ export default class AppInitManager {
 
   async initialNavigationHandling() {
     // hide splash
-    RNBootSplash.hide({ duration: 250 });
+    RNBootSplash.hide({ fade: true });
     // load minds settings and boosted content
     await boostedContentService.load();
     try {
@@ -199,7 +201,7 @@ export default class AppInitManager {
    * Handle pre login deep links
    */
   handlePasswordResetDeepLink() {
-    RNBootSplash.hide({ duration: 250 });
+    RNBootSplash.hide({ fade: true });
 
     deeplinkService.navToPasswordReset(this.deepLinkUrl);
 

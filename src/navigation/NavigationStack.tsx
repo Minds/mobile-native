@@ -2,24 +2,29 @@ import React from 'react';
 import {
   createNativeStackNavigator,
   NativeStackNavigationOptions,
-} from 'react-native-screens/native-stack';
+} from '@react-navigation/native-stack';
 import { useDimensions } from '@react-native-community/hooks';
 import {
   createDrawerNavigator,
   DrawerNavigationOptions,
 } from '@react-navigation/drawer';
 import { Dimensions, Platform, StatusBar, View } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
+import {
+  createStackNavigator,
+  StackNavigationOptions,
+} from '@react-navigation/stack';
 import AnalyticsScreen from '../analytics/AnalyticsScreen';
 
-import LoginScreen from '../auth/LoginScreen';
+import LoginScreen from '../auth/login/LoginScreen';
+import MultiUserLoginScreen from '../auth/multi-user/LoginScreen';
+import MultiUserRegisterScreen from '../auth/multi-user/RegisterScreen';
 import ReferralsScreen from '../referral/ReferralsScreen';
 import DataSaverScreen from '../settings/screens/DataSaverScreen';
 import TabsScreen from '../tabs/TabsScreen';
 import NotificationsScreen from '../notifications/v3/NotificationsScreen';
 import ActivityScreen from '../newsfeed/ActivityScreen';
 import ChannelSubscribers from '../channel/subscribers/ChannelSubscribers';
-import RegisterScreen from '../auth/RegisterScreen';
+import RegisterScreen from '../auth/register/RegisterScreen';
 import ConversationScreen from '../messenger/ConversationScreen';
 import GroupsListScreen from '../groups/GroupsListScreen';
 import GroupViewScreen from '../groups/GroupViewScreen';
@@ -46,8 +51,8 @@ import LicenseSelector from '../compose/LicenseSelector';
 import ChannelScreenV2 from '../channel/v2/ChannelScreen';
 import SettingsScreen from '../settings/SettingsScreen';
 import OtherScreen from '../settings/screens/OtherScreen';
+import ResourcesScreen from '../settings/screens/ResourcesScreen';
 import EmailScreen from '../settings/screens/EmailScreen';
-import EditChannelStack from '../channel/v2/edit/EditChannelStack';
 import ReceiverAddressScreen from '../wallet/v2/address/ReceiverAddressScreen';
 import BtcReceiverAddressScreen from '../wallet/v2/address/BtcAddressScreen';
 import BankInfoScreen from '../wallet/v2/address/BankInfoScreen';
@@ -62,11 +67,11 @@ import featuresService from '../common/services/features.service';
 import JoinMembershipScreen from '../wire/v2/tiers/JoinMembershipScreen';
 
 import {
-  RootStackParamList,
-  AuthStackParamList,
   AppStackParamList,
+  AuthStackParamList,
   DrawerParamList,
   InternalStackParamList,
+  RootStackParamList,
 } from './NavigationTypes';
 
 import Drawer from './Drawer';
@@ -117,20 +122,25 @@ import VerifyPhoneNumberScreen from '../auth/twoFactorAuth/VerifyPhoneNumberScre
 import DisableTFA from '../auth/twoFactorAuth/DisableTFA';
 import SearchScreen from '../topbar/searchbar/SearchScreen';
 import PasswordConfirmScreen from '../auth/PasswordConfirmScreen';
+import TwoFactorConfirmScreen from '../auth/TwoFactorConfirmScreen';
 import RecoveryCodeUsedScreen from '../auth/twoFactorAuth/RecoveryCodeUsedScreen';
 import MessengerScreen from '../messenger/MessengerScreen';
 import PushNotificationsSettings from '../notifications/v3/settings/push/PushNotificationsSettings';
 import EmailNotificationsSettings from '../notifications/v3/settings/email/EmailNotificationsSettings';
+import ChannelEditScreen from '../channel/v2/edit/ChannelEditScreen';
+import MultiUserScreen from '../auth/multi-user/MultiUserScreen';
+import RelogScreen from '../auth/RelogScreen';
 
 const isIos = Platform.OS === 'ios';
 
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 const captureOptions = {
   title: '',
-  stackAnimation: 'fade',
+  animation: 'fade',
   headerShown: false,
-  statusBarTranslucent: true,
-  statusBarColor: 'transparent',
+  ...Platform.select({
+    android: { statusBarColor: 'black', statusBarStyle: 'auto' },
+  }),
 } as NativeStackNavigationOptions;
 
 const AppStackNav = createNativeStackNavigator<AppStackParamList>();
@@ -211,13 +221,6 @@ if (!isIos) {
       onPress: () => navigation.push('RecurringPayments'),
     },
   ];
-} else {
-  BillingScreenOptions = navigation => [
-    {
-      title: i18n.t('settings.billingOptions.2'),
-      onPress: () => navigation.push('RecurringPayments'),
-    },
-  ];
 }
 
 const WalletOptions = () => ({
@@ -226,7 +229,7 @@ const WalletOptions = () => ({
 });
 
 const modalOptions = {
-  gestureResponseDistance: { vertical: 240 },
+  gestureResponseDistance: 240,
   gestureEnabled: true,
 };
 
@@ -234,7 +237,7 @@ export const InternalStack = () => {
   const internalOptions = {
     ...ThemedStyles.defaultScreenOptions,
     headerShown: false,
-    stackAnimation: 'none',
+    animation: 'none',
   } as NativeStackNavigationOptions;
   return (
     <InternalStackNav.Navigator screenOptions={internalOptions}>
@@ -275,10 +278,13 @@ const MainScreen = () => {
   return (
     <DrawerNav.Navigator
       initialRouteName="Tabs"
-      gestureHandlerProps={gestureHandlerProps}
-      drawerType="slide"
       drawerContent={Drawer}
-      drawerStyle={isLargeScreen ? null : ThemedStyles.style.width90}>
+      screenOptions={{
+        headerShown: false,
+        gestureHandlerProps,
+        drawerType: 'slide',
+        drawerStyle: isLargeScreen ? null : ThemedStyles.style.width90,
+      }}>
       <DrawerNav.Screen
         name="Tabs"
         component={TabsScreen}
@@ -289,7 +295,6 @@ const MainScreen = () => {
 };
 
 const AppStack = function () {
-  const EditChannelScreens = EditChannelStack(AppStackNav);
   const statusBarStyle =
     ThemedStyles.theme === 0 ? 'dark-content' : 'light-content';
   return (
@@ -308,7 +313,7 @@ const AppStack = function () {
           name="PortraitViewerScreen"
           component={PortraitViewerScreen}
           options={{
-            stackAnimation: 'fade_from_bottom',
+            animation: 'fade_from_bottom',
             ...hideHeader,
           }}
         />
@@ -399,7 +404,15 @@ const AppStack = function () {
           component={ChannelScreenV2}
           options={hideHeader}
         />
-        {EditChannelScreens}
+        <AppStackNav.Screen
+          name="ChannelEdit"
+          component={ChannelEditScreen}
+          options={{
+            headerBackVisible: false,
+            animation: 'slide_from_bottom',
+            title: i18n.t('channel.editChannel'),
+          }}
+        />
         <AppStackNav.Screen
           name="Activity"
           component={ActivityScreen}
@@ -465,7 +478,7 @@ const AppStack = function () {
             headerStyle: {
               backgroundColor: ThemedStyles.getColor('PrimaryBackground'),
             },
-            headerHideShadow: true,
+            headerShadowVisible: false,
           }}
         />
         <AppStackNav.Screen
@@ -476,7 +489,7 @@ const AppStack = function () {
             headerStyle: {
               backgroundColor: ThemedStyles.getColor('PrimaryBackground'),
             },
-            headerHideShadow: true,
+            headerShadowVisible: false,
           }}
         />
         <AppStackNav.Screen
@@ -487,7 +500,7 @@ const AppStack = function () {
             headerStyle: {
               backgroundColor: ThemedStyles.getColor('PrimaryBackground'),
             },
-            headerHideShadow: true,
+            headerShadowVisible: false,
           }}
         />
         <AppStackNav.Screen
@@ -524,6 +537,11 @@ const AppStack = function () {
           name="Other"
           component={OtherScreen}
           options={{ title: i18n.t('settings.other') }}
+        />
+        <AppStackNav.Screen
+          name="Resources"
+          component={ResourcesScreen}
+          options={{ title: i18n.t('settings.resources') }}
         />
         <AppStackNav.Screen
           name="SettingsNotifications"
@@ -659,6 +677,11 @@ const AppStack = function () {
           options={{ title: i18n.t('settings.otherOptions.a1') }}
         />
         <AppStackNav.Screen name="AppInfo" component={AppInfoScreen} />
+        <AppStackNav.Screen
+          name="MultiUserScreen"
+          component={MultiUserScreen}
+          options={{ title: i18n.t('multiUser.switchChannel') }}
+        />
       </AppStackNav.Navigator>
     </>
   );
@@ -676,15 +699,26 @@ const AuthStack = function () {
         screenOptions={AuthTransition}>
         <AuthStackNav.Screen name="Login" component={LoginScreen} />
         <AuthStackNav.Screen name="Register" component={RegisterScreen} />
+        <AuthStackNav.Screen
+          name="TwoFactorConfirmation"
+          component={TwoFactorConfirmScreen}
+          options={{
+            headerMode: 'screen',
+            headerShown: false,
+            ...modalOptions,
+          }}
+        />
       </AuthStackNav.Navigator>
     </View>
   );
 };
 
-const defaultScreenOptions = {
+const defaultScreenOptions: StackNavigationOptions = {
   headerShown: false,
   cardStyle: { backgroundColor: 'transparent' },
   gestureEnabled: false,
+  keyboardHandlingEnabled: false,
+  presentation: 'transparentModal',
   ...ModalTransition,
   cardOverlayEnabled: true,
 };
@@ -695,9 +729,6 @@ const RootStack = function (props) {
   return (
     <RootStackNav.Navigator
       initialRouteName={initial}
-      mode="modal"
-      keyboardHandlingEnabled={false}
-      // @ts-ignore
       screenOptions={defaultScreenOptions}>
       {props.isLoggedIn ? (
         <>
@@ -787,10 +818,26 @@ const RootStack = function (props) {
             options={modalOptions}
           />
           <RootStackNav.Screen
+            name="TwoFactorConfirmation"
+            component={TwoFactorConfirmScreen}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen
             name="RecoveryCodeUsedScreen"
             component={RecoveryCodeUsedScreen}
             options={modalOptions}
           />
+          <RootStackNav.Screen
+            name="MultiUserLogin"
+            component={MultiUserLoginScreen}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen
+            name="MultiUserRegister"
+            component={MultiUserRegisterScreen}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen name="RelogScreen" component={RelogScreen} />
         </>
       ) : (
         <>

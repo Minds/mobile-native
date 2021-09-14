@@ -15,6 +15,7 @@ import {
   Text,
   UIManager,
   RefreshControl,
+  YellowBox,
 } from 'react-native';
 import { Provider, observer } from 'mobx-react';
 
@@ -22,6 +23,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import ShareMenu from 'react-native-share-menu';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import Orientation from 'react-native-orientation-locker';
 
 import NavigationService, {
   setTopLevelNavigator,
@@ -46,6 +48,8 @@ import AppInitManager from './AppInitManager';
 import { ScreenHeightProvider } from './src/common/components/KeyboardSpacingView';
 import { WCContextProvider } from './src/blockchain/v2/walletconnect/WalletConnectContext';
 import analyticsService from './src/common/services/analytics.service';
+
+YellowBox.ignoreWarnings(['']);
 
 const appInitManager = new AppInitManager();
 appInitManager.initializeServices();
@@ -93,6 +97,7 @@ class App extends Component<Props, State> {
 
   constructor(props) {
     super(props);
+    Orientation.lockToPortrait();
 
     // workaround to set default font;
 

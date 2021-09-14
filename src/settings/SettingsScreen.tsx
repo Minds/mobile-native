@@ -1,7 +1,6 @@
 //@ts-nocheck
 import React, { useCallback } from 'react';
 import { Linking, ScrollView, Text, View } from 'react-native';
-import authService from '../auth/AuthService';
 import MenuItem from '../common/components/menus/MenuItem';
 import i18n from '../common/services/i18n.service';
 import sessionService from '../common/services/session.service';
@@ -85,6 +84,12 @@ export default function ({ navigation }) {
     params: {},
   });
 
+  itemsMapping.push({
+    title: i18n.t('settings.resources'),
+    screen: 'Resources',
+    params: {},
+  });
+
   const items = itemsMapping.map(({ title, screen, params }) => ({
     title,
     onPress: () => navigation.push(screen, params),
@@ -103,15 +108,6 @@ export default function ({ navigation }) {
     theme.borderBottomHair,
     theme.bcolorPrimaryBorder,
   ];
-
-  const logOut = {
-    title: i18n.t('settings.logout'),
-    onPress: authService.logout,
-    icon: {
-      name: 'login-variant',
-      type: 'material-community',
-    },
-  };
 
   const themeChange = {
     title: i18n.t(
@@ -145,7 +141,6 @@ export default function ({ navigation }) {
       <View style={[innerWrapper, theme.marginTop7x]}>
         <MenuItem item={themeChange} i={4} />
         <MenuItem item={help} i={5} />
-        <MenuItem item={logOut} i={6} />
       </View>
     </ScrollView>
   );

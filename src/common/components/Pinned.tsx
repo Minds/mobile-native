@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
-import IconMaterial from 'react-native-vector-icons/MaterialIcons';
 import type ActivityModel from '../../newsfeed/ActivityModel';
 import ThemedStyles from '../../styles/ThemedStyles';
+import IconMa from 'react-native-vector-icons/MaterialIcons';
+import { Platform, StyleSheet, Text, View } from 'react-native';
+import i18nService from '../services/i18n.service';
 
 // types
 type PropsType = {
@@ -18,16 +20,38 @@ export default class Pinned extends Component<PropsType> {
    * Render
    */
   render() {
+    const theme = ThemedStyles.style;
     if (!this.props.entity.pinned) return null;
-    return <IconMaterial name="turned-in" size={25} style={pinnedStyle} />;
+
+    return (
+      <View style={pinnedContainer}>
+        <IconMa name="push-pin" size={15} style={pinnedIconStyle} />
+        <Text>
+          <Text style={theme.colorSecondaryText}>
+            {i18nService.t('pinnedPost')}{' '}
+          </Text>
+        </Text>
+      </View>
+    );
   }
 }
 
-const pinnedStyle = ThemedStyles.combine(
-  {
-    position: 'absolute',
-    right: 10,
-    top: -5,
+const styles = StyleSheet.create({
+  pinnedIcon: {
+    paddingTop: Platform.select({ android: 3, ios: 1 }),
+    paddingRight: 5,
   },
-  'colorIcon',
+});
+
+const pinnedContainer = ThemedStyles.combine(
+  'paddingVertical2x',
+  'paddingHorizontal4x',
+  'borderBottomHair',
+  'bcolorPrimaryBorder',
+  'rowJustifyStart',
+);
+
+const pinnedIconStyle = ThemedStyles.combine(
+  'colorIconActive',
+  styles.pinnedIcon,
 );

@@ -10,10 +10,15 @@ import { buildStyle, updateTheme } from './Style';
 import type { Styles } from './Style';
 import RNBootSplash from 'react-native-bootsplash';
 import { storages } from '../common/services/storage/storages.service';
+import useIsPortrait from '../common/hooks/useIsPortrait';
 
 type Style = keyof Styles;
 
 type CustomStyle = ViewStyle | TextStyle | ImageStyle;
+
+type StyleOrCustom = Style | CustomStyle;
+
+type CustomStyles = { [key: string]: Array<StyleOrCustom> | CustomStyle };
 
 /**
  * ThemedStylesStore
@@ -45,15 +50,15 @@ export class ThemedStylesStore {
   /**
    * Combine styles into an array
    */
-  combine(...styles: Array<Style | CustomStyle>) {
+  combine(...styles: Array<StyleOrCustom>) {
     return styles.map(s => (typeof s === 'string' ? this.style[s] : s));
   }
 
-  create(styles: { [key: string]: Array<Style | CustomStyle> | CustomStyle }) {
+  create(styles: CustomStyles) {
     const s: any = {};
     Object.keys(styles).forEach(key => {
       if (Array.isArray(styles[key])) {
-        s[key] = this.combine(...(styles[key] as Array<Style | CustomStyle>));
+        s[key] = this.combine(...(styles[key] as Array<StyleOrCustom>));
       } else {
         s[key] = styles[key];
       }
@@ -66,13 +71,13 @@ export class ThemedStylesStore {
    */
   @action
   setDark() {
-    RNBootSplash.show({ duration: 150 });
+    RNBootSplash.show({ fade: true });
     this.theme = 1;
     storages.app.setInt('theme', this.theme);
     this.generateNavStyle();
     updateTheme(this.style);
     setTimeout(() => {
-      RNBootSplash.hide({ duration: 150 });
+      RNBootSplash.hide({ fade: true });
     }, 1000);
   }
 
@@ -81,13 +86,13 @@ export class ThemedStylesStore {
    */
   @action
   setLight() {
-    RNBootSplash.show({ duration: 150 });
+    RNBootSplash.show({ fade: true });
     this.theme = 0;
     storages.app.setInt('theme', this.theme);
     this.generateNavStyle();
     updateTheme(this.style);
     setTimeout(() => {
-      RNBootSplash.hide({ duration: 150 });
+      RNBootSplash.hide({ fade: true });
     }, 2000);
   }
 
@@ -141,11 +146,10 @@ export class ThemedStylesStore {
       contentStyle: {
         backgroundColor: theme.PrimaryBackground,
       },
-      stackAnimation: Platform.select({
+      animation: Platform.select({
         ios: 'default',
         android: 'fade',
       }),
-      screenOrientation: 'portrait',
     };
 
     changeNavColor(theme.PrimaryBackground, this.theme === 0, true);
@@ -166,7 +170,7 @@ export default ThemedStyles;
 /**
  * Returns an stable reference
  */
-export function useStyle(...styles: Array<Style | CustomStyle>) {
+export function useStyle(...styles: Array<StyleOrCustom>) {
   const ref = React.useRef<any[]>();
   if (!ref.current) {
     ref.current = ThemedStyles.combine(...styles);
@@ -175,7 +179,7 @@ export function useStyle(...styles: Array<Style | CustomStyle>) {
 }
 
 export function useMemoStyle(
-  styles: Array<Style | CustomStyle>,
+  styles: Array<StyleOrCustom>,
   dependencies: React.DependencyList | undefined,
 ) {
   return React.useMemo(() => ThemedStyles.combine(...styles), dependencies);
@@ -194,4 +198,63 @@ export function useStyleFromProps(props: Object) {
     ref.current = ThemedStyles.combine(...styles);
   }
   return ref.current;
+}
+
+/**
+ * Generate styles based on the device's orientation
+ */
+export function useOrientationStyles(
+  styles: {
+    [key: string]: Array<StyleOrCustom | OrientationStyle> | CustomStyle;
+  },
+  dependencies?: Array<any>,
+) {
+  const orientation = useIsPortrait();
+
+  return React.useMemo(() => {
+    Object.keys(styles).forEach(style => {
+      if (Array.isArray(styles[style])) {
+        (styles[style] as Array<StyleOrCustom>).forEach((item, index) => {
+          if (Array.isArray(item)) {
+            styles[style][index] = item[0] === orientation ? item[1] : item[2];
+          } else {
+            Object.keys(item).forEach(prop => {
+              if (Array.isArray(item[prop])) {
+                item[prop] =
+                  item[prop][0] === orientation ? item[prop][1] : item[prop][2];
+              }
+            });
+          }
+        });
+      } else {
+        Object.keys(styles[style]).forEach(prop => {
+          if (Array.isArray(styles[style][prop])) {
+            styles[style][prop] =
+              styles[style][prop][0] === orientation
+                ? styles[style][prop][1]
+                : styles[style][prop][2];
+          }
+        });
+      }
+    });
+    return ThemedStyles.create(styles as CustomStyles);
+  }, [orientation, ...(dependencies || [])]);
+}
+
+export type OrientationStyle =
+  | [boolean, StyleOrCustom]
+  | [boolean, StyleOrCustom, Style | CustomStyle];
+
+export function portrait<T>(
+  value: T extends StyleOrCustom ? StyleOrCustom : T,
+  value2?: T extends StyleOrCustom ? StyleOrCustom : T,
+): T extends StyleOrCustom ? StyleOrCustom : T {
+  return (value2 ? [true, value, value2] : [true, value]) as any;
+}
+
+export function landscape<T>(
+  value: T extends StyleOrCustom ? StyleOrCustom : T,
+  value2?: T extends StyleOrCustom ? StyleOrCustom : T,
+): T extends StyleOrCustom ? StyleOrCustom : T {
+  return (value2 ? [true, value, value2] : [true, value]) as any;
 }

@@ -37,6 +37,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
             "onSocket": [Function],
             "pollInterval": null,
             "pushNotificationsSettings": Array [],
+            "reset": [Function],
             "setFilter": [Function],
             "setLoaded": [Function],
             "setOffset": [Function],

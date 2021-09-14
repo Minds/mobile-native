@@ -45,12 +45,78 @@ export class PortraitBarItem {
 const portraitEndpoint = 'api/v2/feeds/subscribed/activities';
 
 /**
+ * gets entities, user, and seenList and returns a
+ * grouped, sorted, and filtered list of {PortraitBarItem}s
+ **/
+const postProcessPortraitEntities = (
+  entities: Array<ActivityModel>,
+  seenList: Map<string, number> | null,
+  user: UserModel,
+): Array<PortraitBarItem> => {
+  if (!entities.length) return [];
+
+  /**
+   * Mark as seen
+   **/
+  if (seenList) {
+    entities.forEach(entity => {
+      const seen = seenList.has(entity.urn);
+
+      if (entity.seen === undefined) {
+        extendObservable(entity, { seen });
+      } else {
+        entity.seen = seen;
+      }
+    });
+  }
+
+  /**
+   * 1. group posts by owner_guid
+   * 2. filter paywalled contents
+   * 3. create {PortraitBarItem} instances
+   **/
+  let items = _.map(
+    _.groupBy(
+      user.plus
+        ? entities.filter(
+            a =>
+              a.paywall !== '1' ||
+              a.wire_threshold?.support_tier?.urn ===
+                'urn:support-tier:730071191229833224/10000000025000000',
+          )
+        : entities.filter(a => a.paywall !== '1'),
+      'owner_guid',
+    ),
+    activities =>
+      new PortraitBarItem(activities[0].ownerObj, activities.reverse()),
+  );
+
+  /**
+   * Sort to show unseen first
+   **/
+  items = _.sortBy(items, d => !d.unseen);
+
+  /**
+   * Set item positions (used for analytics metadata)
+   **/
+  let i = 1;
+  items.forEach(barItem => {
+    barItem.activities.forEach(a => {
+      a.position = i;
+      i++;
+    });
+  });
+
+  return items;
+};
+
+/**
  * Portrait store generator
  */
 function createPortraitStore() {
   const feedStore = new FeedStore();
 
-  feedStore.setEndpoint(portraitEndpoint).setLimit(150);
+  feedStore.setEndpoint(portraitEndpoint).setLimit(150).setPaginated(false);
   const joins = fromEvent<UserModel>(UserModel.events, 'toggleSubscription');
   let subscription$: Subscription | null = null;
 
@@ -68,24 +134,37 @@ function createPortraitStore() {
     },
     async load() {
       this.listenSubscriptions();
+      const user = sessionService.getUser();
       feedStore.clear();
+
       try {
         feedStore.setParams({
           portrait: true,
-          to_timestamp: moment().unix() * 1000,
+          to_timestamp:
+            moment().add(1, 'days').hour(0).minutes(0).seconds(0).unix() * 1000,
           from_timestamp:
-            moment().subtract(7, 'days').hour(0).minutes(0).seconds(0).unix() *
+            moment().subtract(2, 'days').hour(0).minutes(0).seconds(0).unix() *
             1000,
         });
+        const seenList = await portraitContentService.getSeen();
+        // =====================| 1. LOAD DATA FROM CACHE |=====================>
+        await feedStore.fetch(true, true);
+        this.items = postProcessPortraitEntities(
+          feedStore.entities,
+          seenList,
+          user,
+        );
 
+        // =====================| 2. FETCH & LOAD DATA FROM REMOTE |=====================>
+        /**
+         * start loading after you load the cache
+         **/
         this.loading = true;
+        await feedStore.fetch(false, true);
 
-        const [seenList] = await Promise.all([
-          portraitContentService.getSeen(),
-          feedStore.fetch(),
-        ]);
-
-        // fallback to minds portrait
+        /**
+         * fallback to minds portrait
+         **/
         if (!feedStore.entities.length) {
           feedStore.setEndpoint(
             `api/v2/feeds/container/${MINDS_GUID}/activities`,
@@ -98,50 +177,11 @@ function createPortraitStore() {
           feedStore.setEndpoint(portraitEndpoint);
         }
 
-        if (feedStore.entities.length) {
-          if (seenList) {
-            feedStore.entities.forEach(entity => {
-              const seen = seenList.has(entity.urn);
-
-              if (entity.seen === undefined) {
-                extendObservable(entity, { seen });
-              } else {
-                entity.seen = seen;
-              }
-            });
-          }
-
-          const user = sessionService.getUser();
-
-          const items = _.map(
-            _.groupBy(
-              user.plus
-                ? feedStore.entities.filter(
-                    a =>
-                      a.paywall !== '1' ||
-                      (a.wire_threshold &&
-                        a.wire_threshold.support_tier &&
-                        a.wire_threshold.support_tier?.urn ===
-                          'urn:support-tier:730071191229833224/10000000025000000'),
-                  )
-                : feedStore.entities.filter(a => a.paywall !== '1'),
-              'owner_guid',
-            ),
-            activities =>
-              new PortraitBarItem(activities[0].ownerObj, activities.reverse()),
-          );
-
-          this.items = _.sortBy(items, d => !d.unseen);
-
-          // set positions used for analytics metadata
-          let i = 1;
-          this.items.forEach(barItem => {
-            barItem.activities.forEach(a => {
-              a.position = i;
-              i++;
-            });
-          });
-        }
+        this.items = postProcessPortraitEntities(
+          feedStore.entities,
+          seenList,
+          user,
+        );
       } catch (err) {
         logService.exception(err);
       } finally {

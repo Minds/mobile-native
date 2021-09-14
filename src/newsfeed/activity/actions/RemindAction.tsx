@@ -38,7 +38,7 @@ type PropsTypes = {
 /**
  * Remind Action Component
  */
-export default function ({ entity, size = 21, hideCount }: PropsTypes) {
+export default function ({ entity, size = 19, hideCount }: PropsTypes) {
   // Do not render BottomSheet unless it is necessary
   const [shown, setShown] = React.useState(false);
 
@@ -85,10 +85,13 @@ export default function ({ entity, size = 21, hideCount }: PropsTypes) {
       return;
     }
     const { key } = route;
-    if (ref.current) {
-      ref.current.dismiss();
-    }
-    navigation.navigate('Capture', { isRemind: true, entity, parentKey: key });
+    // We remove it instead of hiding it because it causes some issues in some versions of Android (issue 3543)
+    setShown(false);
+    navigation.navigate('Capture', {
+      isRemind: true,
+      entity,
+      parentKey: key,
+    });
   }, [route, entity, navigation]);
 
   const undo = useCallback(() => {

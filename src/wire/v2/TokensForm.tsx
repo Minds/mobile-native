@@ -8,6 +8,7 @@ import { CheckBox } from 'react-native-elements';
 import MindsSwitch from '../../common/components/MindsSwitch';
 import i18nService from '../../common/services/i18n.service';
 import InputContainer from '../../common/components/InputContainer';
+import { ONCHAIN_ENABLED } from '../../config/Config';
 
 type propsType = {
   store: FabScreenStore;
@@ -40,14 +41,20 @@ const TokensForm = observer(({ store }: propsType) => {
         <LabeledComponent
           label="Wallet Type"
           wrapperStyle={theme.marginBottom4x}>
-          <MindsSwitch
-            leftText={i18nService.t('blockchain.offchain')}
-            rightText={i18nService.t('blockchain.onchain')}
-            initialValue={true}
-            rightValue={false}
-            leftValue={true}
-            onSelectedValueChange={v => store.wire.setTokenType(v)}
-          />
+          {ONCHAIN_ENABLED ? (
+            <MindsSwitch
+              leftText={i18nService.t('blockchain.offchain')}
+              rightText={i18nService.t('blockchain.onchain')}
+              initialValue={true}
+              rightValue={false}
+              leftValue={true}
+              onSelectedValueChange={v => store.wire.setTokenType(v)}
+            />
+          ) : (
+            <Text style={styles.type}>
+              {i18nService.t('blockchain.offchain')}
+            </Text>
+          )}
         </LabeledComponent>
 
         <LabeledComponent
@@ -84,6 +91,7 @@ const TokensForm = observer(({ store }: propsType) => {
 });
 
 export const styles = ThemedStyles.create({
+  type: ['fontL', 'fontMedium'],
   inputContainer: [
     'bgPrimaryBackgroundHighlight_Dark',
     'bcolorPrimaryBorder_Dark',

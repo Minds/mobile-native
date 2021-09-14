@@ -1,11 +1,27 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { ApiError, ApiService } from '../../../src/common/services/api.service';
+import {
+  ApiError,
+  ApiService,
+  TWO_FACTOR_ERROR,
+} from '../../../src/common/services/api.service';
 import session from '../../../src/common/services/session.service';
 import auth from '../../../src/auth/AuthService';
 import { MINDS_API_URI } from '../../../src/config/Config';
 import { UserError } from '../../../src/common/UserError';
 import sessionService from '../../../src/common/services/session.service';
+import { getStores } from '../../../AppStores';
+import NavigationService from '../../../src/navigation/NavigationService';
+
+jest.mock('../../../src/navigation/NavigationService');
+
+getStores.mockReturnValue({
+  user: {
+    me: {},
+    load: jest.fn().mockReturnValue({ guid: '1' }),
+    setUser: jest.fn(),
+  },
+});
 
 jest.mock('../../../src/auth/AuthService');
 
@@ -14,7 +30,8 @@ var mock = new MockAdapter(axios);
 const axiosInstance = axios.create();
 // const axiosMock = new MockAdapter(axios);
 
-const api = new ApiService(axiosInstance);
+ApiService.prototype.tryToRelog = jest.fn().mockImplementation(() => false);
+const api = new ApiService(null, axiosInstance);
 
 /**
  * POST
@@ -22,6 +39,7 @@ const api = new ApiService(axiosInstance);
 describe('api service POST', () => {
   afterEach(() => {
     mock.reset();
+    NavigationService.navigate.mockClear();
   });
 
   it('POST should fetch and return json decoded', async () => {
@@ -92,6 +110,16 @@ describe('api service POST', () => {
  * GET
  */
 describe('api service GET', () => {
+  beforeAll(() => {
+    session.addSession({
+      access_token: 'sometoken',
+      refresh_token: 'sometoken',
+    });
+  });
+  beforeEach(() => {
+    NavigationService.getCurrentState.mockClear();
+    NavigationService.getCurrentState.mockReturnValue({});
+  });
   afterEach(() => {
     mock.reset();
   });
@@ -163,6 +191,16 @@ describe('api service GET', () => {
  * DELETE
  */
 describe('api service DELETE', () => {
+  beforeAll(() => {
+    session.addSession({
+      access_token: 'sometoken',
+      refresh_token: 'sometoken',
+    });
+  });
+  beforeEach(() => {
+    NavigationService.getCurrentState.mockClear();
+    NavigationService.getCurrentState.mockReturnValue({});
+  });
   afterEach(() => {
     mock.reset();
   });
@@ -235,6 +273,16 @@ describe('api service DELETE', () => {
  * PUT
  */
 describe('api service PUT', () => {
+  beforeAll(() => {
+    session.addSession({
+      access_token: 'sometoken',
+      refresh_token: 'sometoken',
+    });
+  });
+  beforeEach(() => {
+    NavigationService.getCurrentState.mockClear();
+    NavigationService.getCurrentState.mockReturnValue({});
+  });
   afterEach(() => {
     mock.reset();
   });
@@ -307,6 +355,16 @@ describe('api service PUT', () => {
  * GET
  */
 describe('api service auth refresh', () => {
+  beforeAll(() => {
+    session.addSession({
+      access_token: 'sometoken',
+      refresh_token: 'sometoken',
+    });
+  });
+  beforeEach(() => {
+    NavigationService.getCurrentState.mockClear();
+    NavigationService.getCurrentState.mockReturnValue({});
+  });
   afterEach(() => {
     mock.reset();
     auth.refreshToken.mockClear();
@@ -398,7 +456,7 @@ describe('api service auth refresh', () => {
     expect(auth.refreshToken).toBeCalledTimes(1);
   });
 
-  it('it should logout if refresh fails with response is 401', async () => {
+  it('should logout if refresh fails with response is 401', async () => {
     // not expired session token
     sessionService.refreshTokenExpires = Date.now() / 1000 + 10000;
     // has session token
@@ -426,10 +484,71 @@ describe('api service auth refresh', () => {
     const [r1, r2] = await Promise.all([p1, p2].map(p => p.catch(e => e)));
 
     // assert on the response
-    expect(r1).toBeInstanceOf(UserError);
-    expect(r1.message).toEqual('Session expired');
+    expect(r1).toBe(error);
     expect(r2).toBe(error);
 
     expect(auth.refreshToken).toBeCalledTimes(1);
+  });
+
+  it('should prompt for 2fa if required and repeat the call', async done => {
+    try {
+      NavigationService.navigate.mockImplementation((screen, params) => {
+        // mock user entered code
+        params && params.onConfirm && params.onConfirm('123123');
+      });
+
+      const params = { p: 1 };
+
+      mock
+        .onPost('api/channels/me1')
+        .replyOnce(
+          401,
+          { status: 'error', errorId: TWO_FACTOR_ERROR },
+          { 'x-minds-email-2fa-key': 'kkkey' },
+        )
+        .onPost('api/channels/me1')
+        .reply(config => {
+          expect(config.url).toBe('api/channels/me1');
+          expect(config.data).toBe(JSON.stringify(params));
+          expect(config.headers['X-MINDS-2FA-CODE']).toBe('123123');
+          expect(config.headers['X-MINDS-EMAIL-2FA-KEY']).toBe('kkkey');
+          return [200, { status: 'success' }];
+        });
+
+      await api.post('api/channels/me1', params);
+      expect(NavigationService.navigate).toBeCalled();
+
+      done();
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
+  it('should throw if 2FA is canceled', async done => {
+    try {
+      NavigationService.navigate.mockImplementation((screen, params) => {
+        // mock user entered code
+        params && params.onCancel && params.onCancel();
+      });
+
+      const params = { p: 1 };
+
+      mock
+        .onPost('api/channels/me1')
+        .replyOnce(
+          401,
+          { status: 'error', errorId: TWO_FACTOR_ERROR },
+          { 'x-minds-email-2fa-key': 'kkkey' },
+        );
+
+      await api.post('api/channels/me1', params);
+      expect(NavigationService.navigate).toBeCalled();
+
+      done();
+    } catch (error) {
+      expect(error).toBeInstanceOf(UserError);
+      console.log(error);
+      done();
+    }
   });
 });

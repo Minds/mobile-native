@@ -18,20 +18,32 @@ import IonIcon from 'react-native-vector-icons/Ionicons';
 import InputContainer from '../common/components/InputContainer';
 import { icon } from './styles';
 import authService from './AuthService';
+import NavigationService from '../navigation/NavigationService';
 
-type ForgotScreenRouteProp = RouteProp<
+type PasswordConfirmation = RouteProp<
   RootStackParamList,
   'PasswordConfirmation'
 >;
 
 type PropsType = {
-  route: ForgotScreenRouteProp;
-  navigation: any;
+  route?: PasswordConfirmation;
+  navigation?: any;
+  onConfirm?: (password: string) => void;
+  title?: string;
+  onGoBackPress?: Function;
 };
 
-const PasswordConfirmScreen = observer(({ route, navigation }: PropsType) => {
+const PasswordConfirmScreen = observer((props: PropsType) => {
   const theme = ThemedStyles.style;
-  const { onConfirm, title } = route.params;
+  const onConfirm = props.route?.params?.onConfirm || props.onConfirm;
+  const title = props.route?.params?.title || props.title;
+  const onGoBackPress = React.useCallback(() => {
+    if (props.route?.params?.onConfirm !== undefined) {
+      NavigationService.goBack();
+    } else {
+      props.onGoBackPress && props.onGoBackPress();
+    }
+  }, [props]);
   const localStore = useLocalStore(() => ({
     password: '',
     error: false,
@@ -49,7 +61,7 @@ const PasswordConfirmScreen = observer(({ route, navigation }: PropsType) => {
       this.error = false;
       try {
         await authService.validatePassword(this.password);
-        onConfirm(this.password);
+        onConfirm && onConfirm(this.password);
         this.password = '';
       } catch (err) {
         this.error = true;
@@ -73,7 +85,7 @@ const PasswordConfirmScreen = observer(({ route, navigation }: PropsType) => {
             size={32}
             color={ThemedStyles.getColor('SecondaryText')}
             style={iconStyle}
-            onPress={navigation.goBack}
+            onPress={onGoBackPress}
           />
           <Text style={styles.titleText}>
             {title || i18n.t('auth.confirmpassword')}
