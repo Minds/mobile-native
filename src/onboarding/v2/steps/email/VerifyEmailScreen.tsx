@@ -19,7 +19,6 @@ export default observer(function VerifyEmailScreen() {
   const { params } = useRoute<VerifyEmailScreenRouteProp>();
   const isVerifying = params && params.__e_cnf_token;
   const navigation = useNavigation();
-  const ResendCmp = React.useMemo(() => <Resend />, []);
 
   React.useEffect(() => {
     return () => {
@@ -34,8 +33,8 @@ export default observer(function VerifyEmailScreen() {
       title={i18n.t('onboarding.verifyEmail')}
       onPressBack={NavigationService.goBack}>
       <View style={styles.container}>
-        {!isVerifying && ResendCmp}
-        {isVerifying && <Verify />}
+        {!isVerifying && <Resend />}
+        {isVerifying && <Verify params={params} />}
       </View>
     </ModalContainer>
   );

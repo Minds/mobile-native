@@ -909,7 +909,9 @@
     "buyTokens": "Buy Tokens",
     "onboardingCompleted": "Now you can earn tokens",
     "improvedExperience": "Your feed should be livelier!",
-    "mustVerify": "Before you can start earning or purchase tokens, it is important that we can simply verify your uniqueness. The less tokens spammers take, the more that are left for you! To learn about how we keep your data private,"
+    "mustVerify": "Before you can start earning or purchase tokens, it is important that we can simply verify your uniqueness. The less tokens spammers take, the more that are left for you! To learn about how we keep your data private,",
+    "emailLinkExpired": "Sorry, the code is no longer valid",
+    "emailLinkInvalidUser": "Sorry, this code was meant for another user"
   },
   "membership": {
     "noTokens": "It doesn't accept Tokens",

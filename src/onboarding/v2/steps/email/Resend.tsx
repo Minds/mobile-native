@@ -8,7 +8,9 @@ import emailConfirmationService from '../../../../common/services/email-confirma
 import i18n from '../../../../common/services/i18n.service';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 
-type PropsType = {};
+type PropsType = {
+  buttonOnly?: boolean;
+};
 
 const sendEmail = async () => {
   if (await emailConfirmationService.send()) {
@@ -18,7 +20,7 @@ const sendEmail = async () => {
   }
 };
 
-const Resend = observer(({}: PropsType) => {
+const Resend = observer(({ buttonOnly }: PropsType) => {
   const settings = useApiFetch<{ channel: { email: string } }>(
     'api/v1/settings',
   );
@@ -28,10 +30,12 @@ const Resend = observer(({}: PropsType) => {
 
   return (
     <>
-      <Text style={ThemedStyles.style.fontLM}>
-        {i18n.t('onboarding.verifyEmailDescription1', { email }) + '\n\n'}
-        {i18n.t('onboarding.verifyEmailDescription2')}
-      </Text>
+      {!buttonOnly && (
+        <Text style={ThemedStyles.style.fontLM}>
+          {i18n.t('onboarding.verifyEmailDescription1', { email }) + '\n\n'}
+          {i18n.t('onboarding.verifyEmailDescription2')}
+        </Text>
+      )}
       <Button
         onPress={onPress}
         text={i18n.t('onboarding.resendEmail')}

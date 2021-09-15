@@ -36,7 +36,6 @@ import ReportScreen from '../report/ReportScreen';
 // import OnboardingScreen from '../onboarding/OnboardingScreen';
 import UpdatingScreen from '../update/UpdateScreen';
 import { DiscoverySearchScreen } from '../discovery/v2/search/DiscoverySearchScreen';
-import EmailConfirmationScreen from '../onboarding/EmailConfirmationScreen';
 import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
 import ComposeScreen from '../compose/ComposeScreen';
@@ -385,10 +384,6 @@ const AppStack = function () {
           name="AccessSelector"
           component={AccessSelector}
           options={hideHeader}
-        />
-        <AppStackNav.Screen
-          name="EmailConfirmation"
-          component={EmailConfirmationScreen}
         />
         <AppStackNav.Screen
           name="Update"

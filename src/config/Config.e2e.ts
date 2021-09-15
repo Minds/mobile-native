@@ -84,7 +84,7 @@ export const MINDS_DEEPLINK = [
   ...redirectPages,
   ['forgot-password;:username;:code', 'Forgot'],
   ['settings/other/referrals', 'Referrals'],
-  ['email-confirmation', 'EmailConfirmation'],
+  ['email-confirmation', 'VerifyEmail', 'navigate'],
   ['groups/profile/:guid/feed', 'GroupView'],
   ['groups/profile/:guid', 'GroupView'],
   ['notifications', 'Notifications', 'navigate'],

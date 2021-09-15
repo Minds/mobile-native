@@ -17,8 +17,6 @@ import FastImage from 'react-native-fast-image';
 import { useStores } from '../common/hooks/use-stores';
 import useCurrentUser from '../common/hooks/useCurrentUser';
 import intword from '../common/helpers/intword';
-import featuresService from '../common/services/features.service';
-import EmailConfirmation from './EmailConfirmation';
 
 type PropsType = {
   navigation: any;
@@ -113,7 +111,6 @@ export const Topbar = observer((props: PropsType) => {
           </View>
         </View>
       </View>
-      {!featuresService.has('onboarding-october-2020') && <EmailConfirmation />}
     </View>
   );
 });
