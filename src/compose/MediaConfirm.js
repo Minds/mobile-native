@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import React, { useMemo, useRef } from 'react';
+import { View, Text } from 'react-native';
 import { observer } from 'mobx-react';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -18,46 +18,52 @@ export default observer(function (props) {
   const theme = ThemedStyles.style;
 
   const insets = useSafeArea();
-  const cleanTop = useRef({ paddingTop: insets.top || 0 }).current;
-  const cleanBottom = useRef({ height: insets.bottom + 50 }).current;
-  const videoStyle = useRef({
-    marginBottom: insets.bottom,
-    flex: 1,
-    width: '100%',
-  }).current;
+  const cleanTop = useMemo(() => ({ paddingTop: insets.top || 0 }), [
+    insets.top,
+  ]);
+  const cleanBottom = useMemo(() => ({ height: insets.bottom + 50 }), [
+    insets.bottom,
+  ]);
+  const [videoPortrait, setVideoPortrait] = React.useState(true);
+  const onVideoLoaded = React.useCallback(e => {
+    setVideoPortrait(e.naturalSize.height > e.naturalSize.width);
+  }, []);
+
   const video = useRef({ uri: props.store.mediaToConfirm.uri }).current;
 
   const isImage = props.store.mediaToConfirm.type.startsWith('image');
 
   const previewComponent = isImage ? (
-    <ImagePreview image={props.store.mediaToConfirm} />
+    <ImagePreview image={props.store.mediaToConfirm} zoom={true} />
   ) : (
-    <MindsVideoV2
-      video={video}
-      resizeMode={ResizeMode.COVER}
-      autoplay
-      repeat={true}
-      containerStyle={videoStyle}
-    />
+    <View style={theme.flexContainer}>
+      <MindsVideoV2
+        video={video}
+        resizeMode={videoPortrait ? ResizeMode.COVER : ResizeMode.CONTAIN}
+        autoplay
+        onReadyForDisplay={onVideoLoaded}
+        repeat={true}
+      />
+    </View>
   );
 
   const bottomBarStyle = useMemoStyle(
     [
       styles.bottomBar,
       cleanBottom,
-      theme.bgSecondaryBackground,
+      'bgSecondaryBackground',
       isImage ? styles.floating : null,
     ],
     [cleanBottom, isImage],
   );
 
   const backStyle = useMemoStyle(
-    [styles.backIcon, theme.colorWhite, cleanTop],
+    [styles.backIcon, 'colorWhite', cleanTop],
     [cleanTop],
   );
 
   return (
-    <View style={theme.flexContainer}>
+    <View style={styles.container}>
       <View style={styles.mediaContainer}>{previewComponent}</View>
       <View style={bottomBarStyle}>
         {isImage ? (
@@ -82,7 +88,8 @@ export default observer(function (props) {
 });
 
 const styles = ThemedStyles.create({
-  mediaContainer: ['flexContainer', 'justifyCenter'],
+  container: ['flexContainer', 'bgSecondaryBackground'],
+  mediaContainer: ['flexContainer', 'justifyEnd'],
   leftText: [
     'fontXL',
     'colorSecondaryText',

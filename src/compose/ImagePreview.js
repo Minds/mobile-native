@@ -5,22 +5,19 @@ import { Platform, Dimensions } from 'react-native';
 import SmartImage from '../../src/common/components/SmartImage';
 import ThemedStyles from '../styles/ThemedStyles';
 import ImageZoom from 'react-native-image-pan-zoom';
-
-const { width } = Dimensions.get('window');
+import { useDimensions } from '@react-native-community/hooks';
 
 /**
  * Image preview with max and min aspect ratio support
  * @param {Object} props
  */
 export default observer(function (props) {
+  const { width } = useDimensions().window;
   // calculate the aspect ratio
-  let aspectRatio = Platform.select({
-    ios: props.image.width / props.image.height,
-    android:
-      props.image.pictureOrientation > 2 || !props.image.pictureOrientation
-        ? props.image.width / props.image.height
-        : props.image.height / props.image.width,
-  });
+  let aspectRatio =
+    props.image.pictureOrientation > 2 || !props.image.pictureOrientation
+      ? props.image.height / props.image.width
+      : props.image.width / props.image.height;
 
   if (props.maxRatio && props.maxRatio < aspectRatio) {
     aspectRatio = props.maxRatio;
@@ -38,17 +35,15 @@ export default observer(function (props) {
   };
 
   // workaround: we use sourceURL for the preview on iOS because the image is not displayed with the uri
-  const uri = props.image.sourceURL || props.image.uri;
+  const uri = props.image.sourceURL || props.image.uri || props.image.path;
 
-  return (
-    <ImageZoom
-      cropWidth={Dimensions.get('window').width}
-      cropHeight={Dimensions.get('window').height}
-      imageWidth={Dimensions.get('window').width}
-      imageHeight={imageHeight}>
+  const source = React.useMemo(() => ({ uri }), [uri]);
+
+  if (!props.zoom) {
+    return (
       <SmartImage
         key={props.image.key || 'imagePreview'}
-        source={{ uri: uri + `?${props.image.key}` }} // // we need to change the uri in order to force the reload of the image
+        source={{ uri: uri + `?${props.image.key}` }} // we need to change the uri in order to force the reload of the image
         style={[
           imageStyle,
           props.style,
@@ -56,6 +51,25 @@ export default observer(function (props) {
         ]}
         resizeMode={FastImage.resizeMode.contain}
       />
-    </ImageZoom>
-  );
+    );
+  } else {
+    return (
+      <ImageZoom
+        cropWidth={Dimensions.get('window').width}
+        cropHeight={Dimensions.get('window').height}
+        imageWidth={Dimensions.get('window').width}
+        imageHeight={imageHeight}>
+        <SmartImage
+          key={props.image.key || 'imagePreview'}
+          source={{ uri: uri + `?${props.image.key}` }} // we need to change the uri in order to force the reload of the image
+          style={[
+            imageStyle,
+            props.style,
+            ThemedStyles.style.bgTertiaryBackground,
+          ]}
+          resizeMode={FastImage.resizeMode.contain}
+        />
+      </ImageZoom>
+    );
+  }
 });

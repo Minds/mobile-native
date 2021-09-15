@@ -6,6 +6,7 @@ import { WCStore } from '../../blockchain/v2/walletconnect/WalletConnectContext'
 import type UserModel from '../../channel/UserModel';
 import apiService from '../../common/services/api.service';
 import i18n from '../../common/services/i18n.service';
+import { ONCHAIN_ENABLED } from '../../config/Config';
 import NavigationService from '../../navigation/NavigationService';
 import type ActivityModel from '../../newsfeed/ActivityModel';
 import { Wallet, WalletCurrency } from '../../wallet/v2/WalletTypes';
@@ -72,7 +73,9 @@ const createBoostStore = ({
       this.boostType = value;
     },
     get paymentMethods() {
-      return [wallet.onchain, wallet.offchain];
+      return ONCHAIN_ENABLED
+        ? [wallet.onchain, wallet.offchain]
+        : [wallet.offchain];
     },
     get buttonText() {
       switch (this.boostType) {

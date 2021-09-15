@@ -81,9 +81,6 @@ class UserStore {
 
     this.setUser(response.channel);
 
-    // Load search history
-    searchBarService.init(this.me.guid);
-
     return this.me;
   }
 

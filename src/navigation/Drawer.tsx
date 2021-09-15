@@ -158,15 +158,28 @@ export default function Drawer(props) {
           <TouchableOpacity onPress={navToChannel}>
             <Image source={avatar} style={styles.wrappedAvatar} />
           </TouchableOpacity>
-          <View style={titleContainerStyle}>
-            <Text style={titleStyle} onPress={navToChannel}>
-              {channel.name || `@${channel.username}`}
-            </Text>
-            {channel.name && (
-              <Text onPress={navToChannel} style={subtitleStyle}>
-                @{channel.username}
+          <View style={styles.row}>
+            <View style={titleContainerStyle}>
+              <Text style={titleStyle} onPress={navToChannel}>
+                {channel.name || `@${channel.username}`}
               </Text>
-            )}
+              {channel.name && (
+                <Text
+                  onPress={navToChannel}
+                  style={subtitleStyle}
+                  testID="channelUsername">
+                  @{channel.username}
+                </Text>
+              )}
+            </View>
+            <IconMC
+              name="account-box-multiple"
+              size={ICON_SIZE}
+              style={ThemedStyles.style.centered}
+              color={ThemedStyles.getColor('SecondaryText')}
+              onPress={() => props.navigation.navigate('MultiUserScreen')}
+              testID="multiUserIcon"
+            />
           </View>
         </View>
         <View style={styles.body}>
@@ -238,8 +251,12 @@ const styles = StyleSheet.create({
   listItem: {
     borderBottomWidth: 0,
     backgroundColor: 'transparent',
-    paddingTop: 0,
-    paddingBottom: Platform.select({ ios: 30, android: 25 }),
+    paddingVertical: Platform.select({ ios: 15, android: 12.5 }),
+  },
+  row: {
+    flexDirection: 'row',
+    flex: 1,
+    paddingRight: 30,
   },
 });
 const menuTitleStyle = ThemedStyles.combine(

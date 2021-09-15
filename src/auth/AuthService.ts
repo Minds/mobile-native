@@ -3,9 +3,7 @@ import session from './../common/services/session.service';
 import delay from '../common/helpers/delay';
 import logService from '../common/services/log.service';
 import type UserModel from '../channel/UserModel';
-
-export const TWO_FACTOR_ERROR =
-  'Minds::Core::Security::TwoFactor::TwoFactorRequiredException';
+import RNBootSplash from 'react-native-bootsplash';
 
 export type TFA = 'sms' | 'totp';
 
@@ -60,17 +58,61 @@ type validateParams = {
  */
 class AuthService {
   justRegistered = false;
+  showLoginPasswordModal: null | Function = null;
+
+  showSplash() {
+    RNBootSplash.show({ fade: true });
+  }
+
+  hideSplash() {
+    setTimeout(() => {
+      RNBootSplash.hide({ fade: true });
+    }, 500);
+  }
 
   /**
    * Login user
    * @param username
    * @param password
+   * @param headers
+   * @param sessionIndex the index in where the user data is stored
    */
-  async login(
-    username: string,
-    password: string,
-    headers: any = {},
-  ): Promise<LoginResponse> {
+  async login(username: string, password: string, headers: any = {}) {
+    const params = {
+      grant_type: 'password',
+      client_id: 'mobile',
+      //client_secret: '',
+      username,
+      password,
+    } as loginParms;
+    const data = await api.post<LoginResponse>(
+      'api/v3/oauth/token',
+      params,
+      headers,
+    );
+
+    if (session.isRelogin(username, data)) {
+      return data;
+    }
+
+    // if already have other sessions...
+    if (session.tokensData.length > 0) {
+      this.showSplash();
+      this.sessionLogout();
+    }
+
+    await api.clearCookies();
+    await delay(100);
+
+    await session.addSession(data);
+    await session.login();
+    this.hideSplash();
+
+    return data;
+  }
+
+  async reLogin(password: string, headers: any = {}) {
+    const username = session.getUser().username;
     const params = {
       grant_type: 'password',
       client_id: 'mobile',
@@ -79,16 +121,38 @@ class AuthService {
       password,
     } as loginParms;
 
-    const data: LoginResponse = await api.post<LoginResponse>(
+    const data = await api.post<LoginResponse>(
       'api/v3/oauth/token',
       params,
       headers,
     );
+  }
 
+  async loginWithIndex(sessionIndex: number) {
+    this.showSplash();
+    await this.sessionLogout();
     await api.clearCookies();
     await delay(100);
-    await session.login(data);
-    return data;
+    await session.switchUser(sessionIndex);
+    await session.login();
+    this.hideSplash();
+  }
+
+  async loginWithGuid(guid: string, callback: Function) {
+    const index = session.getIndexSessionFromGuid(guid);
+    if (index !== false && index !== session.activeIndex) {
+      await this.loginWithIndex(index);
+      callback();
+    }
+  }
+
+  async handleActiveAccount() {
+    // if after logout we have other accounts...
+    if (session.tokensData.length > 0) {
+      await delay(100);
+      await session.switchUser(session.activeIndex);
+      await session.login();
+    }
   }
 
   /**
@@ -98,11 +162,51 @@ class AuthService {
     this.justRegistered = false;
     try {
       api.post('api/v3/oauth/revoke');
+      this.showSplash();
       session.logout();
 
       // Fixes autosubscribe issue on register
       await api.clearCookies();
+      await this.handleActiveAccount();
+      this.hideSplash();
+      return true;
+    } catch (err) {
+      logService.exception('[AuthService] logout', err);
+      return false;
+    }
+  }
 
+  /**
+   * Logout user specified by index on session
+   */
+  async logoutFrom(index: number): Promise<boolean> {
+    this.justRegistered = false;
+    try {
+      api.post(
+        'api/v3/oauth/revoke',
+        undefined,
+        api.buildAuthorizationHeader(session.getTokenWithIndex(index)),
+      );
+      this.showSplash();
+      session.logoutFrom(index);
+
+      // Fixes autosubscribe issue on register
+      await api.clearCookies();
+      await this.handleActiveAccount();
+      this.hideSplash();
+      return true;
+    } catch (err) {
+      logService.exception('[AuthService] logout', err);
+      return false;
+    }
+  }
+
+  async sessionLogout() {
+    try {
+      this.justRegistered = false;
+      session.logout(false);
+      // Fixes autosubscribe issue on register
+      await api.clearCookies();
       return true;
     } catch (err) {
       logService.exception('[AuthService] logout', err);
@@ -132,20 +236,25 @@ class AuthService {
   /**
    * Refresh user token
    */
-  async refreshToken(): Promise<LoginResponse> {
+  async refreshToken(refreshToken?, accessToken?): Promise<LoginResponse> {
     logService.info('[AuthService] Refreshing token');
 
     const params = {
       grant_type: 'refresh_token',
       client_id: 'mobile',
       //client_secret: '',
-      refresh_token: session.refreshToken,
+      refresh_token: refreshToken || session.refreshToken,
     } as loginParms;
+
+    const headers = accessToken
+      ? api.buildAuthorizationHeader(accessToken)
+      : {};
 
     try {
       const data: LoginResponse = await api.post<LoginResponse>(
         'api/v3/oauth/token',
         params,
+        headers,
       );
       return data;
     } catch (err) {

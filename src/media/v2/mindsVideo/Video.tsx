@@ -6,6 +6,7 @@ import type CommentModel from '../../../comments/v2/CommentModel';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { MindsVideoStoreType } from './createMindsVideoStore';
+import { deactivateKeepAwake } from 'expo-keep-awake';
 
 type PropsType = {
   entity?: ActivityModel | CommentModel;
@@ -28,6 +29,22 @@ const ExpoVideo = observer(
       }
     }, [localStore]);
 
+    // deactivate keepAwake when this component was unmounted
+    useEffect(() => {
+      return () => {
+        deactivateKeepAwake();
+      };
+    }, []);
+
+    const readyForDisplay = React.useCallback(
+      (event: VideoReadyForDisplayEvent) => {
+        onReadyForDisplay && onReadyForDisplay(event);
+
+        localStore.setShowThumbnail(false);
+      },
+      [localStore, onReadyForDisplay],
+    );
+
     return (
       <Video
         onPlaybackStatusUpdate={localStore.updatePlaybackCallback}
@@ -42,7 +59,7 @@ const ExpoVideo = observer(
         style={theme.flexContainer}
         ref={playbackObject}
         volume={1}
-        onReadyForDisplay={onReadyForDisplay}
+        onReadyForDisplay={readyForDisplay}
       />
     );
   },

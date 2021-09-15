@@ -1,35 +1,30 @@
-import React, { useCallback, useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ImageBackground,
-  Dimensions,
-  ScrollView,
-} from 'react-native';
-import { Icon } from 'react-native-elements';
+import React, { useCallback, useMemo, useState } from 'react';
+import { Dimensions, ScrollView, Text, View } from 'react-native';
 import IconM from 'react-native-vector-icons/MaterialIcons';
-import McIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { observer } from 'mobx-react';
-import settingsStore from '../../settings/SettingsStore';
 import type { ChannelStoreType, ChannelTabType } from './createChannelStore';
 import { Image } from 'react-native-animatable';
-import ThemedStyles from '../../styles/ThemedStyles';
+import ThemedStyles, {
+  useMemoStyle,
+  useStyle,
+} from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
 import abbrev from '../../common/helpers/abbrev';
 import ChannelDescription from './ChannelDescription';
 import ChannelButtons from './ChannelButtons';
 import FeedFilter from '../../common/components/FeedFilter';
 import ChannelBadges from '../badges/ChannelBadges';
-import SmallCircleButton from '../../common/components/SmallCircleButton';
-import { FLAG_EDIT_CHANNEL } from '../../common/Permissions';
-import * as Progress from 'react-native-progress';
 import TopbarTabbar, {
   TabType,
 } from '../../common/components/topbar-tabbar/TopbarTabbar';
 import AboutTab from './tabs/AboutTab';
 import TierManagementScreen from '../../common/components/tier-management/TierManagementScreen';
 import { withErrorBoundary } from '../../common/components/ErrorBoundary';
+import FadeView from '../../common/components/FadeView';
+import JoinMembershipScreen from '../../wire/v2/tiers/JoinMembership';
+import FastImage from 'react-native-fast-image';
+
+const CENTERED = false;
 
 type PropsType = {
   store?: ChannelStoreType;
@@ -40,49 +35,25 @@ type PropsType = {
   hideTabs?: boolean;
   hideImages?: boolean;
   channelName?: string;
+  onOpenSubscribers?: () => void;
+  onOpenSubscriptions?: () => void;
 };
 
 const bannerAspectRatio = 2.9;
 const { width } = Dimensions.get('window');
 const bannerHeight = width / bannerAspectRatio;
-const avatarSize = Math.min(180, Math.round(0.7 * bannerHeight));
+const avatarSize = Math.min(170, Math.round(0.6 * bannerHeight));
+const FADE_LENGTH = 30;
 
 /**
  * Channel Header
  */
 const ChannelHeader = withErrorBoundary(
   observer((props: PropsType) => {
+    // =====================| STATES & VARIABLES |=====================>
     const theme = ThemedStyles.style;
-    if (props.store && !props.store.channel) {
-      return null;
-    }
+    const [fadeViewWidth, setFadeViewWidth] = useState(50);
     const channel = props.store?.channel;
-    const [showBanner, setShowBanner] = useState(
-      !settingsStore.dataSaverEnabled,
-    );
-
-    const _onBannerDownload = useCallback(() => setShowBanner(true), []);
-    const canEdit = !channel
-      ? false
-      : channel.isOwner() && channel.can(FLAG_EDIT_CHANNEL);
-
-    const navToSubscribers = useCallback(() => {
-      if (props.store?.channel) {
-        props.navigation.push('Subscribers', {
-          guid: props.store.channel.guid,
-        });
-      }
-    }, [props.navigation, props.store]);
-
-    const navToSubscriptions = useCallback(() => {
-      if (props.store?.channel) {
-        props.navigation.push('Subscribers', {
-          guid: props.store.channel.guid,
-          filter: 'subscriptions',
-        });
-      }
-    }, [props.navigation, props.store]);
-
     const tabs: Array<TabType<ChannelTabType>> = channel?.isOwner()
       ? [
           { id: 'feed', title: i18n.t('feed') },
@@ -92,32 +63,69 @@ const ChannelHeader = withErrorBoundary(
         ]
       : [
           { id: 'feed', title: i18n.t('feed') },
+          props.store?.tiers?.length
+            ? { id: 'memberships', title: i18n.t('settings.otherOptions.b1') }
+            : (null as any),
           // { id: 'shop', title: 'Shop' },
           { id: 'about', title: i18n.t('about') },
-        ];
+        ].filter(Boolean);
+    const bottomBarInnerWrapper = useMemoStyle(
+      [
+        'borderBottom',
+        props.store?.showScheduled
+          ? theme.bcolorTabBorder
+          : theme.bcolorTransparent,
+      ],
+      [props.store?.showScheduled],
+    );
+    const topbarWrapper = useMemoStyle(
+      [
+        {
+          justifyContent: 'flex-end',
+          paddingTop: 16,
+          paddingRight:
+            props.store?.tab === 'feed'
+              ? fadeViewWidth - FADE_LENGTH
+              : undefined,
+        },
+        'bcolorPrimaryBorder',
+        'borderBottom8x',
+        'bcolorTertiaryBackground',
+      ],
+      [props.store?.tab],
+    );
+
+    // =====================| METHODS |=====================>
+    const onFadeViewLayout = useCallback(event => {
+      setFadeViewWidth(event.nativeEvent.layout.width);
+    }, []);
+
+    const onEditPress = useCallback(
+      () =>
+        props.navigation.push('ChannelEdit', {
+          store: props.store,
+        }),
+      [props.store, props.navigation],
+    );
+
+    // =====================| RENDERS |=====================>
+    if (props.store && !props.store.channel) {
+      return null;
+    }
 
     const screen = () => {
       switch (props.store?.tab) {
         case 'feed':
-          if (props.store.feedStore.entities.length) {
+          if (
+            props.store.feedStore.entities.length &&
+            props.store.feedStore.scheduledCount > 0
+          ) {
             return (
-              <View
-                style={[
-                  styles.bottomBar,
-                  theme.bcolorPrimaryBorder,
-                  theme.paddingHorizontal4x,
-                  theme.rowJustifySpaceBetween,
-                ]}>
+              <View style={styles.bottomBar}>
                 {props.store.feedStore.scheduledCount > 0 ? (
-                  <View
-                    style={[
-                      theme.borderBottom,
-                      props.store.showScheduled
-                        ? theme.bcolorTabBorder
-                        : theme.bcolorTransparent,
-                    ]}>
+                  <View style={bottomBarInnerWrapper}>
                     <Text
-                      style={[theme.fontL, theme.colorSecondaryText]}
+                      style={styles.viewScheduled}
                       onPress={props.store.toggleScheduled}>
                       {i18n.t('channel.viewScheduled')}:{' '}
                       <Text style={theme.colorPrimaryText}>
@@ -128,7 +136,6 @@ const ChannelHeader = withErrorBoundary(
                 ) : (
                   <View />
                 )}
-                <FeedFilter store={props.store} />
               </View>
             );
           } else {
@@ -141,194 +148,155 @@ const ChannelHeader = withErrorBoundary(
             </ScrollView>
           );
         case 'memberships':
-          return (
-            <TierManagementScreen
-              route={props.route}
-              navigation={props.navigation}
-            />
-          );
+          if (props.store?.channel?.isOwner()) {
+            return (
+              <TierManagementScreen
+                route={props.route}
+                navigation={props.navigation}
+              />
+            );
+          } else {
+            return (
+              <JoinMembershipScreen
+                route={{
+                  ...props.route,
+                  params: {
+                    user: props.store.channel,
+                    tiers: props.store.tiers,
+                  },
+                }}
+                navigation={props.navigation}
+              />
+            );
+          }
         default:
           return <View />;
       }
     };
 
-    const Background: any = showBanner ? ImageBackground : View;
-
     return (
       <View style={styles.container}>
-        {props.store && channel && !props.hideImages && (
-          <Background
-            style={styles.banner}
-            source={channel.getBannerSource()}
-            resizeMode="cover">
-            <View
-              style={[styles.avatarContainer, theme.bcolorTertiaryBackground]}>
-              <Image
-                style={[styles.avatar, theme.bcolorPrimaryBorder]}
+        <View style={theme.paddingHorizontal4x}>
+          {/**
+           * Avatar
+           **/}
+          {props.store && channel && !props.hideImages && (
+            <View style={styles.avatarContainer}>
+              <FastImage
+                style={styles.avatar}
                 source={channel.getAvatarSource()}
                 resizeMode="cover"
               />
-              {canEdit && (
-                <SmallCircleButton
-                  name="camera"
-                  style={styles.avatarSmallButton}
-                  onPress={() => props.store && props.store.upload('avatar')}
-                />
-              )}
-              {props.store.uploading && props.store.avatarProgress ? (
-                <View
-                  style={[
-                    styles.tapOverlayView,
-                    styles.wrappedAvatarOverlayView,
-                  ]}>
-                  <Progress.Pie
-                    progress={props.store.avatarProgress}
-                    size={36}
-                  />
-                </View>
-              ) : null}
             </View>
-            {!props.hideButtons && (
-              <ChannelButtons
-                store={props.store}
-                onEditPress={() =>
-                  props.navigation.push('EditChannelScreen', {
-                    store: props.store,
-                  })
-                }
-                notShow={['message', 'wire', 'more']}
-                iconsStyle={theme.colorSecondaryText}
-                containerStyle={styles.buttonsMarginContainer}>
-                {!showBanner && settingsStore.dataSaverEnabled && (
-                  <Icon
-                    raised
-                    reverse
-                    name="file-download"
-                    type="material"
-                    color={ThemedStyles.getColor('SecondaryBackground')}
-                    reverseColor={ThemedStyles.getColor('PrimaryText')}
-                    size={15}
-                    onPress={_onBannerDownload}
-                  />
-                )}
-              </ChannelButtons>
-            )}
-            {props.store &&
-            props.store.uploading &&
-            props.store.bannerProgress ? (
-              <View style={styles.tapOverlayView}>
-                <Progress.Pie progress={props.store.bannerProgress} size={36} />
-              </View>
-            ) : null}
-          </Background>
-        )}
-        {!channel && (
-          <View style={[theme.fullWidth, theme.height25]}>
-            <View
-              style={[styles.avatarContainer, theme.bcolorTertiaryBackground]}>
+          )}
+
+          {/**
+           * When there wasn't a channel, show a bulb as profile picture
+           **/}
+          {!channel && (
+            <View style={styles.avatarContainer}>
               <Image
-                style={[styles.avatar, theme.bcolorPrimaryBorder]}
+                style={styles.avatar}
                 source={require('./../../assets/logos/bulb.png')}
                 resizeMode="cover"
               />
             </View>
+          )}
+
+          <View style={CENTERED ? theme.centered : undefined}>
+            <View style={styles.nameWrapper}>
+              <Text style={styles.name} numberOfLines={1}>
+                {channel ? channel.name : props.channelName}
+              </Text>
+              {channel && (
+                <ChannelBadges
+                  channel={channel}
+                  size={20}
+                  iconStyle={theme.colorLink}
+                />
+              )}
+            </View>
+            <View style={styles.usernameWrapper}>
+              <Text style={styles.username} numberOfLines={1}>
+                @{channel ? channel.username : props.channelName}
+              </Text>
+              {Boolean(channel!.subscriber) && (
+                <Text style={theme.colorSecondaryText}>
+                  {` · `}
+                  {i18n.t('channel.subscriber')}
+                </Text>
+              )}
+            </View>
           </View>
-        )}
-        {canEdit && (
-          <SmallCircleButton
-            name="camera"
-            style={styles.bannerSmallButton}
-            onPress={() => props.store?.upload('banner')}
-          />
-        )}
-        <View
-          style={[
-            theme.rowJustifyCenter,
-            theme.alignCenter,
-            theme.paddingTop8x,
-          ]}>
-          <Text style={styles.name} numberOfLines={1}>
-            {channel ? channel.name : props.channelName}
-          </Text>
-          {channel && (
-            <ChannelBadges
-              channel={channel}
-              size={22}
-              iconStyle={theme.colorLink}
+
+          {!props.hideButtons && (
+            <ChannelButtons
+              store={props.store}
+              onEditPress={onEditPress}
+              notShow={['message', 'wire', 'more']}
+              iconsStyle={theme.colorSecondaryText}
+              containerStyle={styles.buttonsMarginContainer}
             />
           )}
-        </View>
-        <View
-          style={[
-            theme.rowStretch,
-            theme.centered,
-            theme.paddingTop,
-            theme.paddingBottom3x,
-          ]}>
-          <Text
-            style={[styles.username, theme.colorSecondaryText]}
-            numberOfLines={1}>
-            @{channel ? channel.username : props.channelName}
-          </Text>
-          {channel!.subscriber === true && (
-            <Text
-              style={[
-                styles.subscriber,
-                theme.colorSecondaryText,
-                theme.bgPrimaryBorder,
-              ]}>
-              {i18n.t('channel.subscriber')}
-            </Text>
+
+          {channel && (
+            <>
+              {!props.hideDescription && (
+                <View style={styles.channelDescription}>
+                  <ChannelDescription channel={channel} />
+                </View>
+              )}
+              {!!channel.city && (
+                <View style={styles.location}>
+                  <IconM
+                    name="location-on"
+                    style={theme.colorPrimaryText}
+                    size={15}
+                  />
+                  <Text style={styles.city}>{channel.city}</Text>
+                </View>
+              )}
+              <Text style={styles.subscribersWrapper}>
+                <Text
+                  onPress={props.onOpenSubscribers}
+                  style={theme.colorSecondaryText}>
+                  <Text> {abbrev(channel.subscribers_count, 0)}</Text>
+                  {' ' + i18n.t('subscribers') + '    '}
+                </Text>
+                <Text
+                  onPress={props.onOpenSubscriptions}
+                  style={theme.colorSecondaryText}>
+                  <Text> {abbrev(channel.subscriptions_count, 0)}</Text>
+                  {' ' + i18n.t('subscriptions')}
+                </Text>
+              </Text>
+            </>
           )}
         </View>
-        {channel && (
-          <View style={theme.paddingHorizontal4x}>
-            <Text
-              style={[
-                theme.colorSecondaryText,
-                theme.fontL,
-                styles.channelMetrics,
-              ]}>
-              <Text onPress={navToSubscribers} style={theme.colorSecondaryText}>
-                {i18n.t('subscribers')}
-                <Text> {abbrev(channel.subscribers_count, 0)}</Text>
-              </Text>
-              <Text
-                onPress={navToSubscriptions}
-                style={theme.colorSecondaryText}>
-                {' · ' + i18n.t('subscriptions')}
-                <Text> {abbrev(channel.subscriptions_count, 0)}</Text>
-              </Text>
-              {' · '}{' '}
-              <McIcon name="eye" size={17} style={theme.colorPrimaryText} />
-              <Text> {abbrev(channel.impressions, 1)}</Text>
-            </Text>
-            {!!channel.city && (
-              <View style={styles.location}>
-                <IconM
-                  name="location-on"
-                  style={theme.colorPrimaryText}
-                  size={19}
-                />
-                <Text style={[theme.fontL, theme.paddingLeft]}>
-                  {channel.city}
-                </Text>
-              </View>
-            )}
-            {!props.hideDescription && (
-              <View style={[theme.paddingTop3x, theme.paddingBottom2x]}>
-                <ChannelDescription channel={channel} />
-              </View>
-            )}
-          </View>
-        )}
         {props.store && !props.hideTabs && (
           <>
-            <TopbarTabbar
-              tabs={tabs}
-              onChange={props.store.setTab}
-              current={props.store.tab}
-            />
+            <View style={topbarWrapper}>
+              <TopbarTabbar
+                tabs={tabs}
+                onChange={props.store.setTab}
+                current={props.store.tab}
+                containerStyle={styles.topbarContainerStyle}
+              />
+              {props.store?.tab === 'feed' && (
+                <FadeView
+                  fades={['left']}
+                  fadeLength={FADE_LENGTH}
+                  onLayout={onFadeViewLayout}
+                  style={styles.fadeView}>
+                  <FeedFilter
+                    store={props.store}
+                    containerStyles={styles.feedFilter}
+                    textStyle={styles.feedFilterText}
+                  />
+                </FadeView>
+              )}
+            </View>
+
             {screen()}
           </>
         )}
@@ -337,14 +305,13 @@ const ChannelHeader = withErrorBoundary(
   }),
 );
 
-const styles = StyleSheet.create({
-  channelMetrics: {
-    marginTop: 8,
-    marginBottom: 10,
-    textAlign: 'center',
-  },
+const styles = ThemedStyles.create({
+  channelDescription: ['paddingVertical'],
   buttonsMarginContainer: {
     marginTop: 5,
+    position: 'absolute',
+    right: 0,
+    top: 5,
   },
   bannerSmallButton: {
     position: 'absolute',
@@ -360,57 +327,65 @@ const styles = StyleSheet.create({
     height: 120,
     width: '100%',
   },
-  bottomBar: {
-    borderBottomWidth: 1,
-    height: 50,
-    alignItems: 'center',
-    width: '100%',
-  },
-  location: {
-    paddingTop: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  container: {
-    marginBottom: 10,
-  },
-  username: {
-    fontSize: 16,
-    textAlign: 'center',
-  },
-  subscriber: {
-    fontSize: 14,
-    textAlign: 'center',
-    paddingHorizontal: 5,
-    paddingVertical: 2,
-    borderRadius: 2,
-    marginLeft: 5,
-  },
+  bottomBar: [
+    'bcolorPrimaryBorder',
+    'paddingHorizontal4x',
+    'rowJustifySpaceBetween',
+    {
+      borderBottomWidth: 1,
+      height: 50,
+      alignItems: 'center',
+      width: '100%',
+    },
+  ],
+  location: [
+    'paddingTop',
+    'paddingBottom2x',
+    {
+      // paddingTop: 10,
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+  ],
+  container: [
+    'bgPrimaryBackground',
+    {
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
+      marginTop: 155,
+    },
+  ],
+  username: [
+    'colorSecondaryText',
+    {
+      // fontSize: 16,
+      textAlign: 'center',
+    },
+  ],
+  usernameWrapper: ['rowStretch', 'paddingBottom1x'],
   name: {
-    fontSize: 22,
+    fontSize: 18,
     fontWeight: '600',
     textAlign: 'center',
+    marginRight: 5,
   },
+  nameWrapper: ['rowJustifyStart', 'alignCenter', 'paddingTop10x'],
   banner: {
     aspectRatio: bannerAspectRatio,
     width: '100%',
   },
-  avatarContainer: {
-    backgroundColor: '#fff',
-    position: 'absolute',
-    bottom: -avatarSize / 4,
-    alignSelf: 'center',
-    borderWidth: 3,
-    elevation: 10,
-    width: avatarSize + 6,
-    height: avatarSize + 6,
-    borderRadius: (avatarSize + 6) / 2,
-    zIndex: 10000,
-    shadowOpacity: 0.5,
-    shadowRadius: 3,
-    shadowOffset: { width: 0, height: 2 },
-    shadowColor: '#000',
-  },
+  avatarContainer: [
+    'bgSecondaryBackground',
+    'bcolorPrimaryBackground',
+    {
+      position: 'absolute',
+      top: -avatarSize / 1.8,
+      left: CENTERED ? undefined : 20,
+      alignSelf: 'center',
+      borderWidth: 3,
+      borderRadius: (avatarSize + 6) / 2,
+    },
+  ],
   avatar: {
     width: avatarSize,
     height: avatarSize,
@@ -429,6 +404,26 @@ const styles = StyleSheet.create({
   },
   wrappedAvatarOverlayView: {
     borderRadius: 55,
+  },
+  feedFilter: [
+    {
+      paddingVertical: 13,
+    },
+    'paddingRight3x',
+    'paddingLeft2x',
+    'borderRadius4x',
+    'bgPrimaryBackground',
+  ],
+  feedFilterText: ['colorSecondaryText'],
+  viewScheduled: ['fontL', 'colorSecondaryText'],
+  subscribersWrapper: ['colorSecondaryText', 'fontM', 'paddingTop'],
+  city: ['fontM', 'paddingLeft'],
+  topbarContainerStyle: { borderBottomWidth: 0 },
+  fadeView: {
+    position: 'absolute',
+    right: 0,
+    paddingLeft: FADE_LENGTH / 1.5,
+    bottom: 1,
   },
 });
 

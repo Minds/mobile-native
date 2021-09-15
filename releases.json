@@ -1,6 +1,33 @@
 {
   "versions": [
     {
+      "version": "4.16.0",
+      "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-16-0.apk",
+      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.16.0",
+      "changelog": [
+        "Fix comments scroll problems",
+        "Date format",
+        "Detect chat app installed on iOS",
+        "Improves UX on comments",
+        "Bug fixing"
+      ],
+      "unstable": false,
+      "hashes": [
+        {
+          "type": "md5",
+          "value": "2d0dbfcca13a8548935c95bb2cfbdf0a"
+        },
+        {
+          "type": "sha256",
+          "value": "7f2d2860280ad8d0eb399946c6d0ddd0330251cc23c389b944655459b1fea9f8"
+        },
+        {
+          "type": "sha512",
+          "value": "606d5a2f7f532a76be44fdd945ed29494f5ac1e7897c786a974cf75e52c6fa5fa93a6a41ec570eacdb169fc8e81d209d812ddebb48ab904fdd3532444db4c290"
+        }
+      ]
+    },
+    {
       "version": "4.15.0",
       "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-15-0.apk",
       "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.15.0",

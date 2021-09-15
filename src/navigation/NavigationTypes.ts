@@ -3,13 +3,21 @@ import { ChannelStoreType } from '../channel/v2/createChannelStore';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import type { WalletStoreType } from '../wallet/v2/createWalletStore';
-import type FeedStore from '../common/stores/FeedStore';
 import type { ComposeStoreType } from '../compose/useComposeStore';
 import type ActivityModel from '../newsfeed/ActivityModel';
 import type { SupportTiersType } from '../wire/WireTypes';
 import type { PortraitBarItem } from '../portrait/createPortraitStore';
 import type BlogModel from '../blogs/BlogModel';
 import { TwoFactorStore } from '../auth/twoFactorAuth/createTwoFactorStore';
+import { TwoFactorType } from '../common/services/api.service';
+
+type AnyType = any;
+
+declare global {
+  namespace ReactNavigation {
+    interface RootParamList extends AnyType {}
+  }
+}
 
 export type DrawerParamList = {
   Tabs: {};
@@ -32,6 +40,14 @@ export type InternalStackParamList = {
 };
 
 export type RootStackParamList = {
+  TwoFactorConfirmation: {
+    onConfirm: (string) => void;
+    title?: string;
+    onCancel: () => void;
+    mfaType: TwoFactorType;
+    oldCode: string;
+    showRecovery?: boolean;
+  };
   Splash: {};
   App: {};
   Auth: {};
@@ -69,6 +85,13 @@ export type RootStackParamList = {
   };
   ViewImage: {};
   RecoveryCodeUsedScreen: {};
+  MultiUserLogin: {};
+  MultiUserRegister: {};
+  RelogScreen: {
+    sessionIndex?: number;
+    onLogin?: Function;
+    onCancel?: Function;
+  };
 };
 
 export type AuthStackParamList = {
@@ -80,6 +103,14 @@ export type AuthStackParamList = {
     code?: string;
   };
   Register: {};
+  TwoFactorConfirmation: {
+    onConfirm: (string) => void;
+    title?: string;
+    onCancel: () => void;
+    mfaType: TwoFactorType;
+    oldCode: string;
+    showRecovery?: boolean;
+  };
 };
 
 export type AppStackParamList = {
@@ -117,6 +148,7 @@ export type AppStackParamList = {
     entity?: any;
     text?: string;
     media?: any;
+    start?: boolean;
     mode?: 'photo' | 'video' | 'text';
   };
   Main: {};
@@ -127,6 +159,7 @@ export type AppStackParamList = {
   Referrals: {};
   BoostConsole: {};
   Other: {};
+  Resources: {};
   SettingsEmail: {};
   MessengerSettingsScreen: {};
   RekeyScreen: {};
@@ -189,7 +222,7 @@ export type AppStackParamList = {
   Analytics: {};
   Notifications: {};
   Channel: {};
-  EditChannelScreen: {};
+  ChannelEdit: {};
   Bio: {
     store: ChannelStoreType;
   };
@@ -242,6 +275,7 @@ export type AppStackParamList = {
     onComplete: Function;
     pro?: boolean;
   };
+  MultiUserScreen: {};
 };
 
 // types for channel edit screens

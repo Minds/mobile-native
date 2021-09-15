@@ -2,7 +2,6 @@
 import _ from 'lodash';
 
 import apiService, { isApiForbidden } from './api.service';
-import sessionService from './session.service';
 import GroupModel from '../../groups/GroupModel';
 import UserModel from '../../channel/UserModel';
 import BlogModel from '../../blogs/BlogModel';
@@ -258,32 +257,7 @@ class EntitiesService {
   }
 
   save(entity: any) {
-    this.cleanEntity(entity);
     entitiesStorage.save(entity);
-  }
-
-  /**
-   * Clean properties to save memory and storage space
-   * @param {Object} entity
-   */
-  cleanEntity(entity: Object) {
-    if (
-      entity['thumbs:up:user_guids'] &&
-      Array.isArray(entity['thumbs:up:user_guids'])
-    ) {
-      entity['thumbs:up:user_guids'] = entity['thumbs:up:user_guids'].filter(
-        (guid: string): boolean => guid == sessionService.guid,
-      );
-    }
-
-    if (
-      entity['thumbs:down:user_guids'] &&
-      Array.isArray(entity['thumbs:down:user_guids'])
-    ) {
-      entity['thumbs:down:user_guids'] = entity[
-        'thumbs:down:user_guids'
-      ].filter((guid: string): boolean => guid == sessionService.guid);
-    }
   }
 
   /**

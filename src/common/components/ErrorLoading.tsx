@@ -38,17 +38,19 @@ export default class ErrorLoading extends Component<Props> {
             ? styles.errorLoadingInverted
             : styles.errorLoading,
         ]}>
-        <Text style={[theme.fontM, theme.colorDarkGreyed, theme.marginBottom]}>
-          <Text style={theme.fontSemibold}>{i18n.t('ops')}</Text>{' '}
-          {this.props.message}
+        <Text style={[theme.fontSemibold, theme.marginBottom]}>
+          {i18n.t('ops')}
         </Text>
-        {!connectivityService.isConnected && (
-          <Text
-            style={[theme.fontM, theme.colorDarkGreyed, theme.marginBottom]}>
-            {' '}
-            {i18n.t('noInternet')}
-          </Text>
-        )}
+        <Text
+          style={[theme.fontM, theme.colorSecondaryText, theme.marginBottom2x]}>
+          {this.props.message}
+          {'. '}
+          {!connectivityService.isConnected && (
+            <Text style={[theme.fontM, theme.colorSecondaryText]}>
+              {i18n.t('noInternet')}
+            </Text>
+          )}
+        </Text>
         <Button onPress={this.props.tryAgain} text={i18n.t('tryAgain')} />
       </View>
     );

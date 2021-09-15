@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, Text, ViewStyle } from 'react-native';
+import { Text, TextStyle, TouchableOpacity, ViewStyle } from 'react-native';
 import i18n from '../services/i18n.service';
 import ThemedStyles, { useStyle } from '../../styles/ThemedStyles';
 import MdIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -15,6 +15,7 @@ type PropsType = {
     setFilter: Function;
   };
   containerStyles?: ViewStyle | ViewStyle[];
+  textStyle?: TextStyle | TextStyle[];
 };
 
 /**
@@ -28,6 +29,7 @@ const FeedFilter = (props: PropsType) => {
   const show = React.useCallback(() => {
     ref.current?.present();
   }, [ref]);
+  const iconStyle = useStyle('colorIcon');
 
   const options = React.useMemo(
     () =>
@@ -51,6 +53,11 @@ const FeedFilter = (props: PropsType) => {
     'rowJustifyEnd',
     props.containerStyles as ViewStyle,
   );
+  const textStyle = useStyle(
+    'paddingLeft',
+    { fontSize: 15 },
+    props.textStyle as ViewStyle,
+  );
 
   return (
     <>
@@ -58,8 +65,8 @@ const FeedFilter = (props: PropsType) => {
         style={containerStyle}
         onPress={show}
         testID="FilterToggle">
-        <MdIcon name="filter" size={18} style={ThemedStyles.style.colorIcon} />
-        {!props.hideLabel && <Text style={itemStyle}>{i18n.t('filter')}</Text>}
+        <MdIcon name="filter-variant" size={18} style={iconStyle} />
+        {!props.hideLabel && <Text style={textStyle}>{i18n.t('filter')}</Text>}
       </TouchableOpacity>
       <BottomSheet ref={ref} title={i18n.t('filter') + ' ' + i18n.t('feed')}>
         {options.map((b, i) => (
@@ -70,7 +77,5 @@ const FeedFilter = (props: PropsType) => {
     </>
   );
 };
-
-const itemStyle = ThemedStyles.combine('fontL', 'paddingLeft');
 
 export default observer(FeedFilter);

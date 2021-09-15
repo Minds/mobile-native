@@ -639,163 +639,7 @@ exports[`Activity screen component renders correctly  1`] = `
           },
         ]
       }
-    >
-      <Modal
-        animationType="none"
-        deviceHeight={null}
-        deviceWidth={null}
-        hardwareAccelerated={false}
-        hideModalContentWhileAnimating={false}
-        onBackdropPress={[Function]}
-        onModalHide={[Function]}
-        onModalWillHide={[Function]}
-        onModalWillShow={[Function]}
-        onRequestClose={[Function]}
-        panResponderThreshold={4}
-        scrollHorizontal={false}
-        scrollOffset={0}
-        scrollOffsetMax={0}
-        scrollTo={null}
-        supportedOrientations={
-          Array [
-            "portrait",
-            "landscape",
-          ]
-        }
-        swipeThreshold={100}
-        transparent={true}
-        visible={false}
-      >
-        <View
-          accessible={true}
-          focusable={true}
-          forwardedRef={[Function]}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "backgroundColor": "black",
-              "bottom": 0,
-              "height": 1334,
-              "left": 0,
-              "opacity": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "width": 750,
-            }
-          }
-        />
-        <View
-          deviceHeight={null}
-          deviceWidth={null}
-          forwardedRef={[Function]}
-          hideModalContentWhileAnimating={false}
-          onBackdropPress={[Function]}
-          onModalHide={[Function]}
-          onModalWillHide={[Function]}
-          onModalWillShow={[Function]}
-          panResponderThreshold={4}
-          pointerEvents="box-none"
-          scrollHorizontal={false}
-          scrollOffset={0}
-          scrollOffsetMax={0}
-          scrollTo={null}
-          style={
-            Object {
-              "flex": 1,
-              "justifyContent": "center",
-              "margin": 37.5,
-              "transform": Array [
-                Object {
-                  "translateY": 0,
-                },
-              ],
-            }
-          }
-          supportedOrientations={
-            Array [
-              "portrait",
-              "landscape",
-            ]
-          }
-          swipeThreshold={100}
-        >
-          <View
-            style={
-              Array [
-                Object {
-                  "height": "75%",
-                },
-                Object {
-                  "backgroundColor": "#FFFFFF",
-                },
-                Object {
-                  "padding": 15,
-                },
-                Object {
-                  "borderRadius": 5,
-                },
-              ]
-            }
-          >
-            <Text
-              style={
-                Array [
-                  Object {
-                    "fontSize": 22,
-                  },
-                  Object {
-                    "marginLeft": 10,
-                  },
-                  Object {
-                    "marginBottom": 5,
-                  },
-                ]
-              }
-            >
-              Upvotes
-            </Text>
-            <Text
-              onPress={[Function]}
-              style={
-                Array [
-                  Object {
-                    "color": "#72727C",
-                  },
-                  Object {
-                    "textAlign": "center",
-                  },
-                  Object {
-                    "fontSize": 16,
-                  },
-                  Object {
-                    "marginVertical": 20,
-                  },
-                ]
-              }
-            >
-              Error
-
-              <Text
-                style={
-                  Object {
-                    "color": "#1B85D6",
-                  }
-                }
-              >
-                Try again
-              </Text>
-            </Text>
-          </View>
-        </View>
-      </Modal>
-    </View>
+    />
     <View>
       <View
         style={
@@ -840,7 +684,7 @@ exports[`Activity screen component renders correctly  1`] = `
               Array [
                 Object {
                   "color": undefined,
-                  "fontSize": 21,
+                  "fontSize": 19,
                 },
                 Array [
                   Array [
@@ -854,7 +698,7 @@ exports[`Activity screen component renders correctly  1`] = `
                   [Function],
                 ],
                 Object {
-                  "fontFamily": "Material Icons",
+                  "fontFamily": "anticon",
                   "fontStyle": "normal",
                   "fontWeight": "normal",
                 },
@@ -862,7 +706,7 @@ exports[`Activity screen component renders correctly  1`] = `
               ]
             }
           >
-            
+            
           </Text>
         </View>
         <View
@@ -892,7 +736,7 @@ exports[`Activity screen component renders correctly  1`] = `
               Array [
                 Object {
                   "color": undefined,
-                  "fontSize": 21,
+                  "fontSize": 19,
                 },
                 Array [
                   Array [
@@ -906,7 +750,7 @@ exports[`Activity screen component renders correctly  1`] = `
                   [Function],
                 ],
                 Object {
-                  "fontFamily": "Material Icons",
+                  "fontFamily": "anticon",
                   "fontStyle": "normal",
                   "fontWeight": "normal",
                 },
@@ -914,7 +758,7 @@ exports[`Activity screen component renders correctly  1`] = `
               ]
             }
           >
-            
+            
           </Text>
         </View>
         <View
@@ -944,7 +788,7 @@ exports[`Activity screen component renders correctly  1`] = `
               Array [
                 Object {
                   "color": undefined,
-                  "fontSize": 21,
+                  "fontSize": 19,
                 },
                 Array [
                   Object {
@@ -955,7 +799,7 @@ exports[`Activity screen component renders correctly  1`] = `
                   },
                 ],
                 Object {
-                  "fontFamily": "Material Icons",
+                  "fontFamily": "Material Design Icons",
                   "fontStyle": "normal",
                   "fontWeight": "normal",
                 },
@@ -963,7 +807,7 @@ exports[`Activity screen component renders correctly  1`] = `
               ]
             }
           >
-            
+            󰆂
           </Text>
           <View
             style={
@@ -1007,7 +851,7 @@ exports[`Activity screen component renders correctly  1`] = `
               Array [
                 Object {
                   "color": undefined,
-                  "fontSize": 21,
+                  "fontSize": 19,
                 },
                 Array [
                   Object {
@@ -1055,13 +899,13 @@ exports[`Activity screen component renders correctly  1`] = `
               Array [
                 Object {
                   "color": undefined,
-                  "fontSize": 20,
+                  "fontSize": 18,
                 },
                 Object {
                   "color": "#7D7D82",
                 },
                 Object {
-                  "fontFamily": "Ionicons",
+                  "fontFamily": "Feather",
                   "fontStyle": "normal",
                   "fontWeight": "normal",
                 },
@@ -1069,7 +913,7 @@ exports[`Activity screen component renders correctly  1`] = `
               ]
             }
           >
-            
+            
           </Text>
           <Modal
             animationType="none"
@@ -1522,6 +1366,438 @@ exports[`Activity screen component renders correctly  1`] = `
       </View>
     </View>
   </View>
+  <InteractionsBottomSheet
+    entity={
+      Object {
+        "allow_comments": true,
+        "attachment_guid": false,
+        "blurb": false,
+        "comments:count": undefined,
+        "containerObj": undefined,
+        "container_guid": "activityguid0",
+        "custom_data": false,
+        "custom_type": false,
+        "description": "Congratulations! ",
+        "edited": "",
+        "entity_guid": "",
+        "getLockType": [Function],
+        "guid": "activityguid0",
+        "impressions": 0,
+        "isOwner": [Function],
+        "is_visible": false,
+        "mature": false,
+        "mature_visibility": false,
+        "message": "Message",
+        "ownerObj": Object {
+          "__list": null,
+          "allow_comments": true,
+          "blocked": undefined,
+          "canary": false,
+          "confirmEmail": [Function],
+          "disable_autoplay_videos": undefined,
+          "email_confirmed": false,
+          "eth_wallet": "",
+          "founder": false,
+          "groupsCount": 0,
+          "guid": "824853017709780997",
+          "impressions": undefined,
+          "isOwner": [Function],
+          "is_admin": false,
+          "last_accepted_tos": 0,
+          "mature": false,
+          "mature_visibility": false,
+          "mode": 0,
+          "nsfw": Array [],
+          "onchain_booster": 0,
+          "pending_subscribe": false,
+          "permissions": Object {},
+          "plus": false,
+          "plus_method": "tokens",
+          "pro": false,
+          "pro_method": "tokens",
+          "rewards": false,
+          "subscribed": undefined,
+          "subscriber": false,
+          "subscribers_count": undefined,
+          "subscriptions_count": 0,
+          "subtype": false,
+          "tags": Array [],
+          "time_created": "1522036284",
+          "time_updated": "",
+          "type": "user",
+          "urn": "",
+          "username": "",
+          "verified": false,
+          "wire_rewards": undefined,
+        },
+        "owner_guid": "824853017709780997",
+        "parent_guid": "838106762591510528",
+        "paywall": "",
+        "paywall_unlocked": false,
+        "perma_url": false,
+        "permissions": Object {},
+        "pinned": false,
+        "quotes": 0,
+        "reminds": 0,
+        "rowKey": "something0",
+        "shouldBeBlured": [MockFunction] {
+          "calls": Array [
+            Array [],
+            Array [],
+          ],
+          "results": Array [
+            Object {
+              "type": "return",
+              "value": undefined,
+            },
+            Object {
+              "type": "return",
+              "value": undefined,
+            },
+          ],
+        },
+        "subtype": "",
+        "thumbnail_src": false,
+        "thumbs:down:count": undefined,
+        "thumbs:down:user_guids": undefined,
+        "thumbs:up:count": undefined,
+        "thumbs:up:user_guids": undefined,
+        "time_created": "1522036284",
+        "time_updated": "",
+        "title": "TITLE",
+        "type": "activity",
+        "urn": "",
+        "username": "",
+        "wire_totals": Object {
+          "tokens": 1000000000000000000,
+        },
+      }
+    }
+  />
+  <InteractionsBottomSheet
+    entity={
+      Object {
+        "allow_comments": true,
+        "attachment_guid": false,
+        "blurb": false,
+        "comments:count": undefined,
+        "containerObj": undefined,
+        "container_guid": "activityguid0",
+        "custom_data": false,
+        "custom_type": false,
+        "description": "Congratulations! ",
+        "edited": "",
+        "entity_guid": "",
+        "getLockType": [Function],
+        "guid": "activityguid0",
+        "impressions": 0,
+        "isOwner": [Function],
+        "is_visible": false,
+        "mature": false,
+        "mature_visibility": false,
+        "message": "Message",
+        "ownerObj": Object {
+          "__list": null,
+          "allow_comments": true,
+          "blocked": undefined,
+          "canary": false,
+          "confirmEmail": [Function],
+          "disable_autoplay_videos": undefined,
+          "email_confirmed": false,
+          "eth_wallet": "",
+          "founder": false,
+          "groupsCount": 0,
+          "guid": "824853017709780997",
+          "impressions": undefined,
+          "isOwner": [Function],
+          "is_admin": false,
+          "last_accepted_tos": 0,
+          "mature": false,
+          "mature_visibility": false,
+          "mode": 0,
+          "nsfw": Array [],
+          "onchain_booster": 0,
+          "pending_subscribe": false,
+          "permissions": Object {},
+          "plus": false,
+          "plus_method": "tokens",
+          "pro": false,
+          "pro_method": "tokens",
+          "rewards": false,
+          "subscribed": undefined,
+          "subscriber": false,
+          "subscribers_count": undefined,
+          "subscriptions_count": 0,
+          "subtype": false,
+          "tags": Array [],
+          "time_created": "1522036284",
+          "time_updated": "",
+          "type": "user",
+          "urn": "",
+          "username": "",
+          "verified": false,
+          "wire_rewards": undefined,
+        },
+        "owner_guid": "824853017709780997",
+        "parent_guid": "838106762591510528",
+        "paywall": "",
+        "paywall_unlocked": false,
+        "perma_url": false,
+        "permissions": Object {},
+        "pinned": false,
+        "quotes": 0,
+        "reminds": 0,
+        "rowKey": "something0",
+        "shouldBeBlured": [MockFunction] {
+          "calls": Array [
+            Array [],
+            Array [],
+          ],
+          "results": Array [
+            Object {
+              "type": "return",
+              "value": undefined,
+            },
+            Object {
+              "type": "return",
+              "value": undefined,
+            },
+          ],
+        },
+        "subtype": "",
+        "thumbnail_src": false,
+        "thumbs:down:count": undefined,
+        "thumbs:down:user_guids": undefined,
+        "thumbs:up:count": undefined,
+        "thumbs:up:user_guids": undefined,
+        "time_created": "1522036284",
+        "time_updated": "",
+        "title": "TITLE",
+        "type": "activity",
+        "urn": "",
+        "username": "",
+        "wire_totals": Object {
+          "tokens": 1000000000000000000,
+        },
+      }
+    }
+  />
+  <InteractionsBottomSheet
+    entity={
+      Object {
+        "allow_comments": true,
+        "attachment_guid": false,
+        "blurb": false,
+        "comments:count": undefined,
+        "containerObj": undefined,
+        "container_guid": "activityguid0",
+        "custom_data": false,
+        "custom_type": false,
+        "description": "Congratulations! ",
+        "edited": "",
+        "entity_guid": "",
+        "getLockType": [Function],
+        "guid": "activityguid0",
+        "impressions": 0,
+        "isOwner": [Function],
+        "is_visible": false,
+        "mature": false,
+        "mature_visibility": false,
+        "message": "Message",
+        "ownerObj": Object {
+          "__list": null,
+          "allow_comments": true,
+          "blocked": undefined,
+          "canary": false,
+          "confirmEmail": [Function],
+          "disable_autoplay_videos": undefined,
+          "email_confirmed": false,
+          "eth_wallet": "",
+          "founder": false,
+          "groupsCount": 0,
+          "guid": "824853017709780997",
+          "impressions": undefined,
+          "isOwner": [Function],
+          "is_admin": false,
+          "last_accepted_tos": 0,
+          "mature": false,
+          "mature_visibility": false,
+          "mode": 0,
+          "nsfw": Array [],
+          "onchain_booster": 0,
+          "pending_subscribe": false,
+          "permissions": Object {},
+          "plus": false,
+          "plus_method": "tokens",
+          "pro": false,
+          "pro_method": "tokens",
+          "rewards": false,
+          "subscribed": undefined,
+          "subscriber": false,
+          "subscribers_count": undefined,
+          "subscriptions_count": 0,
+          "subtype": false,
+          "tags": Array [],
+          "time_created": "1522036284",
+          "time_updated": "",
+          "type": "user",
+          "urn": "",
+          "username": "",
+          "verified": false,
+          "wire_rewards": undefined,
+        },
+        "owner_guid": "824853017709780997",
+        "parent_guid": "838106762591510528",
+        "paywall": "",
+        "paywall_unlocked": false,
+        "perma_url": false,
+        "permissions": Object {},
+        "pinned": false,
+        "quotes": 0,
+        "reminds": 0,
+        "rowKey": "something0",
+        "shouldBeBlured": [MockFunction] {
+          "calls": Array [
+            Array [],
+            Array [],
+          ],
+          "results": Array [
+            Object {
+              "type": "return",
+              "value": undefined,
+            },
+            Object {
+              "type": "return",
+              "value": undefined,
+            },
+          ],
+        },
+        "subtype": "",
+        "thumbnail_src": false,
+        "thumbs:down:count": undefined,
+        "thumbs:down:user_guids": undefined,
+        "thumbs:up:count": undefined,
+        "thumbs:up:user_guids": undefined,
+        "time_created": "1522036284",
+        "time_updated": "",
+        "title": "TITLE",
+        "type": "activity",
+        "urn": "",
+        "username": "",
+        "wire_totals": Object {
+          "tokens": 1000000000000000000,
+        },
+      }
+    }
+  />
+  <InteractionsBottomSheet
+    entity={
+      Object {
+        "allow_comments": true,
+        "attachment_guid": false,
+        "blurb": false,
+        "comments:count": undefined,
+        "containerObj": undefined,
+        "container_guid": "activityguid0",
+        "custom_data": false,
+        "custom_type": false,
+        "description": "Congratulations! ",
+        "edited": "",
+        "entity_guid": "",
+        "getLockType": [Function],
+        "guid": "activityguid0",
+        "impressions": 0,
+        "isOwner": [Function],
+        "is_visible": false,
+        "mature": false,
+        "mature_visibility": false,
+        "message": "Message",
+        "ownerObj": Object {
+          "__list": null,
+          "allow_comments": true,
+          "blocked": undefined,
+          "canary": false,
+          "confirmEmail": [Function],
+          "disable_autoplay_videos": undefined,
+          "email_confirmed": false,
+          "eth_wallet": "",
+          "founder": false,
+          "groupsCount": 0,
+          "guid": "824853017709780997",
+          "impressions": undefined,
+          "isOwner": [Function],
+          "is_admin": false,
+          "last_accepted_tos": 0,
+          "mature": false,
+          "mature_visibility": false,
+          "mode": 0,
+          "nsfw": Array [],
+          "onchain_booster": 0,
+          "pending_subscribe": false,
+          "permissions": Object {},
+          "plus": false,
+          "plus_method": "tokens",
+          "pro": false,
+          "pro_method": "tokens",
+          "rewards": false,
+          "subscribed": undefined,
+          "subscriber": false,
+          "subscribers_count": undefined,
+          "subscriptions_count": 0,
+          "subtype": false,
+          "tags": Array [],
+          "time_created": "1522036284",
+          "time_updated": "",
+          "type": "user",
+          "urn": "",
+          "username": "",
+          "verified": false,
+          "wire_rewards": undefined,
+        },
+        "owner_guid": "824853017709780997",
+        "parent_guid": "838106762591510528",
+        "paywall": "",
+        "paywall_unlocked": false,
+        "perma_url": false,
+        "permissions": Object {},
+        "pinned": false,
+        "quotes": 0,
+        "reminds": 0,
+        "rowKey": "something0",
+        "shouldBeBlured": [MockFunction] {
+          "calls": Array [
+            Array [],
+            Array [],
+          ],
+          "results": Array [
+            Object {
+              "type": "return",
+              "value": undefined,
+            },
+            Object {
+              "type": "return",
+              "value": undefined,
+            },
+          ],
+        },
+        "subtype": "",
+        "thumbnail_src": false,
+        "thumbs:down:count": undefined,
+        "thumbs:down:user_guids": undefined,
+        "thumbs:up:count": undefined,
+        "thumbs:up:user_guids": undefined,
+        "time_created": "1522036284",
+        "time_updated": "",
+        "title": "TITLE",
+        "type": "activity",
+        "urn": "",
+        "username": "",
+        "wire_totals": Object {
+          "tokens": 1000000000000000000,
+        },
+      }
+    }
+  />
   <CommentBottomSheet
     commentsStore={
       CommentsStore {
@@ -1593,6 +1869,7 @@ exports[`Activity screen component renders correctly  1`] = `
             "subtype": false,
             "tags": Array [],
             "time_created": "1522036284",
+            "time_updated": "",
             "type": "user",
             "urn": "",
             "username": "",
@@ -1632,6 +1909,7 @@ exports[`Activity screen component renders correctly  1`] = `
           "thumbs:up:count": undefined,
           "thumbs:up:user_guids": undefined,
           "time_created": "1522036284",
+          "time_updated": "",
           "title": "TITLE",
           "type": "activity",
           "urn": "",

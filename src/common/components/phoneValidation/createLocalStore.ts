@@ -2,6 +2,7 @@ import type UserStore from '../../../auth/UserStore';
 import walletService from '../../../wallet/WalletService';
 import logService from '../../services/log.service';
 import twoFactorAuthenticationService from '../../services/two-factor-authentication.service';
+import i18n from '../../services/i18n.service';
 
 const createLocalStore = () => ({
   inProgress: false,
@@ -61,6 +62,9 @@ const createLocalStore = () => ({
     return this.code.length > 0;
   },
   canJoin() {
+    return this.isPhoneNumberValid();
+  },
+  isPhoneNumberValid() {
     return this.phoneInputRef?.current?.isValidNumber();
   },
   async join(TFA = false, retry = false) {
@@ -70,6 +74,7 @@ const createLocalStore = () => ({
         : await walletService.join(this.phone, retry);
 
       this.isConfirming(secret);
+      return true;
     } catch (e) {
       const error = (e && e.message) || 'Unknown server error';
       this.setInProgress(false);
@@ -78,6 +83,10 @@ const createLocalStore = () => ({
     }
   },
   joinAction(TFA = false, retry = false) {
+    if (!this.canJoin()) {
+      this.setError(i18n.t('onboarding.phoneNumberInvalid'));
+      return null;
+    }
     if (this.inProgress || (!retry && !this.canJoin())) {
       return null;
     }

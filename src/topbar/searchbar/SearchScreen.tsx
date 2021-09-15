@@ -25,7 +25,15 @@ const SearchScreen = observer(() => {
   const paddingBottom = { paddingBottom: insets.bottom };
   useEffect(() => {
     localStore.init(user);
-  });
+
+    // #3522 autofocus wasn't working
+    const timeout = setTimeout(() => inputRef.current?.focus(), 300);
+    return () => {
+      if (timeout) {
+        clearTimeout(timeout);
+      }
+    };
+  }, [localStore, user]);
   return (
     <KeyboardSpacingView
       style={[

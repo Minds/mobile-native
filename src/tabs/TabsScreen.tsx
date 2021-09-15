@@ -1,6 +1,9 @@
 import React, { useCallback } from 'react';
 
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {
+  createBottomTabNavigator,
+  BottomTabNavigationOptions,
+} from '@react-navigation/bottom-tabs';
 import {
   View,
   Platform,
@@ -270,7 +273,8 @@ const userOptions = {
   tabBarButton: props => <TouchableOpacity {...props} onPress={navToChannel} />,
 };
 const empty = () => null;
-const tabOptions = ({ route }) => ({
+const tabOptions = ({ route }): BottomTabNavigationOptions => ({
+  headerShown: false,
   tabBarIcon: ({ focused }) => {
     const color = focused
       ? ThemedStyles.getColor('Link')

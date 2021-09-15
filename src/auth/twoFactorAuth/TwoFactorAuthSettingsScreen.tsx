@@ -15,7 +15,7 @@ const TwoFactorAuthSettingsScreen = observer(() => {
 
   useEffect(() => {
     const getSettings = async () => {
-      const settings: any = settingsService.getSettings();
+      const settings: any = await settingsService.getSettings();
       if (settings && settings.channel) {
         localStore.has2fa(settings.channel.has2fa);
       }
