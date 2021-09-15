@@ -117,7 +117,7 @@ test:jest:
 
 # Web version (Higher version code)
 build:androidproduction:
-  image: circleci/android:api-28-node
+  image: circleci/android:api-30-node
   stage: build
   cache:
     key: '$CI_JOB_NAME-$CI_COMMIT_REF_SLUG'
@@ -152,7 +152,7 @@ build:androidproduction:
 
 # Play store version (Lowest version code)
 build:androidproduction-playstore:
-  image: circleci/android:api-28-node
+  image: circleci/android:api-30-node
   stage: build
   cache:
     key: '$CI_JOB_NAME-$CI_COMMIT_REF_SLUG'
