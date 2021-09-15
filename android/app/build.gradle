@@ -126,6 +126,10 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
 
+    packagingOptions {
+        pickFirst '**/*.so'
+    } 
+
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
