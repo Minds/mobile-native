@@ -13,7 +13,6 @@ import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
 import featuresService from '../common/services/features.service';
 import sessionService from '../common/services/session.service';
-import { GOOGLE_PLAY_STORE } from '../config/Config';
 import FitScrollView from '../common/components/FitScrollView';
 
 const ICON_SIZE = 25;
@@ -29,16 +28,14 @@ const getOptionsList = navigation => {
         navigation.navigate('Newsfeed');
       },
     },
-    !GOOGLE_PLAY_STORE
-      ? {
-          name: i18n.t('discovery.title'),
-          icon: <IconFo name="hash" size={ICON_SIZE - 4} style={iconStyle} />,
-          onPress: () => {
-            navigation.navigate('Discovery');
-          },
-        }
-      : null,
-    featuresService.has('plus-2020') && !GOOGLE_PLAY_STORE
+    {
+      name: i18n.t('discovery.title'),
+      icon: <IconFo name="hash" size={ICON_SIZE - 4} style={iconStyle} />,
+      onPress: () => {
+        navigation.navigate('Discovery');
+      },
+    },
+    featuresService.has('plus-2020')
       ? {
           name: i18n.t('wire.lock.plus'),
           icon: (

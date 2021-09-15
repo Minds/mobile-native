@@ -11,7 +11,6 @@ import {
   StyleSheet,
   Dimensions,
   PlatformIOSStatic,
-  Text,
 } from 'react-native';
 
 import NewsfeedScreen from '../newsfeed/NewsfeedScreen';
@@ -27,8 +26,6 @@ import Topbar from '../topbar/Topbar';
 import { InternalStack } from '../navigation/NavigationStack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import TopShadow from '../common/components/TopShadow';
-import { GOOGLE_PLAY_STORE } from '../config/Config';
-import i18n from '../common/services/i18n.service';
 import sessionService from '../common/services/session.service';
 import { useStores } from '../common/hooks/use-stores';
 import ChatTabIcon from '../chat/ChatTabIcon';
@@ -59,19 +56,6 @@ const shadowOpt = {
 const isPad = (Platform as PlatformIOSStatic).isPad;
 
 const Tab = createBottomTabNavigator<TabParamList>();
-
-const Discovery = GOOGLE_PLAY_STORE
-  ? () => {
-      const theme = ThemedStyles.style;
-      return (
-        <View style={[theme.flexContainer, theme.centered, theme.padding4x]}>
-          <Text style={[theme.fontXL, theme.textCenter]}>
-            {i18n.t('postCantBeShown')}
-          </Text>
-        </View>
-      );
-    }
-  : DiscoveryV2Screen;
 
 const TabBar = ({ state, descriptors, navigation }) => {
   const focusedOptions = descriptors[state.routes[state.index].key].options;
@@ -172,30 +156,6 @@ const Tabs = observer(function ({ navigation }) {
     return null;
   }
 
-  const messenger = (
-    <Tab.Screen
-      name="MessengerTab"
-      component={empty}
-      options={messengerOptions}
-    />
-  );
-
-  const discovery = (
-    <Tab.Screen
-      name="Discovery"
-      component={Discovery}
-      options={discoveryOptions}
-    />
-  );
-
-  const lastTab = GOOGLE_PLAY_STORE ? (
-    <Tab.Screen name="User" component={empty} options={userOptions} />
-  ) : (
-    messenger
-  );
-
-  const secondTab = GOOGLE_PLAY_STORE ? messenger : discovery;
-
   return (
     <View style={theme.flexContainer}>
       <Topbar navigation={navigation} />
@@ -208,7 +168,11 @@ const Tabs = observer(function ({ navigation }) {
           component={NewsfeedScreen}
           options={{ tabBarTestID: 'Menu tab button' }}
         />
-        {secondTab}
+        <Tab.Screen
+          name="Discovery"
+          component={DiscoveryV2Screen}
+          options={discoveryOptions}
+        />
         <Tab.Screen
           name="CaptureTab"
           component={InternalStack}
@@ -229,7 +193,11 @@ const Tabs = observer(function ({ navigation }) {
           component={NotificationsScreen}
           options={notificationOptions}
         />
-        {lastTab}
+        <Tab.Screen
+          name="MessengerTab"
+          component={empty}
+          options={messengerOptions}
+        />
       </Tab.Navigator>
     </View>
   );

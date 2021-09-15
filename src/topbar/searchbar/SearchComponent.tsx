@@ -1,26 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { observer } from 'mobx-react';
 
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import {
-  StyleSheet,
-  View,
-  SafeAreaView,
-  Platform,
-  TextInput,
-  TouchableHighlight,
-  Text,
-} from 'react-native';
+import { View, TouchableHighlight, Text } from 'react-native';
 import i18n from '../../common/services/i18n.service';
-// import TextInput from '../common/components/TextInput';
-import SearchResult from './SearchResultComponent';
-
-import Modal from 'react-native-modal';
 import ThemedStyles from '../../styles/ThemedStyles';
-import { useLegacyStores, useStores } from '../../common/hooks/use-stores';
-import { GOOGLE_PLAY_STORE } from '../../config/Config';
-import DisabledStoreFeature from '../../common/components/DisabledStoreFeature';
-
 interface Props {
   navigation: any;
 }
