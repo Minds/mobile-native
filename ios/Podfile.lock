@@ -500,7 +500,7 @@ PODS:
     - UMFontInterface
   - UMSensorsInterface (5.4.0)
   - UMTaskManagerInterface (5.4.0)
-  - VisionCamera (2.6.1):
+  - VisionCamera (2.7.0):
     - React
     - React-callinvoker
     - React-Core
@@ -955,7 +955,7 @@ SPEC CHECKSUMS:
   UMReactNativeAdapter: 172def7895b2cb44a7dd021336e316d5fa8ea958
   UMSensorsInterface: 4df9ec662134de5614ae61acc249d6912db87ca5
   UMTaskManagerInterface: 4c60b43eaf3cb05a164bc9113258a171c18b7bf7
-  VisionCamera: dc481620431e31c1d6bbbc438d8a1d9c56f3d304
+  VisionCamera: 575e691d9eda91dce798f9958770b39841bbd981
   Yoga: 575c581c63e0d35c9a83f4b46d01d63abc1100ac
 
 PODFILE CHECKSUM: a8f29d139e7a900cdfca7925e3808478b9acdfad
