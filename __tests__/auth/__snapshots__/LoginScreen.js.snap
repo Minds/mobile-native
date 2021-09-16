@@ -36,11 +36,13 @@ exports[`LoginScreen component should renders correctly 1`] = `
         <View
           style={
             Array [
-              Object {
-                "height": 190.57142857142858,
-                "justifyContent": "flex-end",
-                "width": "100%",
-              },
+              Array [
+                Object {
+                  "height": 190.57142857142858,
+                  "justifyContent": "flex-end",
+                  "width": "100%",
+                },
+              ],
               Object {
                 "height": undefined,
               },
@@ -56,11 +58,13 @@ exports[`LoginScreen component should renders correctly 1`] = `
             }
             style={
               Array [
-                Object {
-                  "alignSelf": "center",
-                  "height": 118.64775,
-                  "width": "43%",
-                },
+                Array [
+                  Object {
+                    "alignSelf": "center",
+                    "height": 118.64775,
+                    "width": "43%",
+                  },
+                ],
                 Object {
                   "opacity": undefined,
                   "transform": Array [

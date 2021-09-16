@@ -170,7 +170,7 @@ export default observer(function Comment(props: PropsType) {
         <View>
           <TouchableOpacity
             onPress={props.comment.toggleMatureVisibility}
-            style={styles.touchable}>
+            style={styles.confirmTouchable}>
             <Text style={styles.explicitCommentBold}>
               {i18n.t('activity.explicitComment')}
             </Text>
@@ -193,7 +193,7 @@ export default observer(function Comment(props: PropsType) {
 const styles = ThemedStyles.create({
   commentView: ['rowJustifyEnd', 'padding3x'],
   confirmText: ['bold', 'fontL', 'colorLink', 'paddingVertical2x'],
-  touchable: ['centered', 'marginTop4x'],
+  confirmTouchable: ['centered', 'marginTop4x'],
   explicitComment: ['fontL', 'colorTertiaryText'],
   explicitCommentBold: ['bold', 'fontL', 'colorSecondaryText'],
   revealedFooter: ['fontL', 'bold', 'marginTop3x', 'textCenter'],
