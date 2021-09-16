@@ -1111,7 +1111,9 @@
       "completeToTransfer": "Please complete the following before transferring MINDS tokens on-chain.",
       "tokenAmount": "Amount",
       "transferRequest": "You can request to transfer up to 25,000 tokens from your rewards to your on-chain wallet. You can only have one pending withdrawal at a time.",
-      "transferNote": "Note: a small amount of ETH will be charged to cover the transaction fee."
+      "transferNote": "Note: a small amount of ETH will be charged to cover the transaction fee.",
+      "walletConnectIssues": "Due to wallet connect unreliability please make this transaction on web",
+      "goToMobileWeb": "Open mobile web"
     }
   },
   "analytics": {

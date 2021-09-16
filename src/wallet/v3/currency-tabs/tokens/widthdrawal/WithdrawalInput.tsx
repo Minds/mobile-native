@@ -1,8 +1,7 @@
 import { observer, useLocalStore } from 'mobx-react';
 import React, { useEffect } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import { Linking, Platform, StyleSheet, Text, View } from 'react-native';
 import { WCStore } from '../../../../../blockchain/v2/walletconnect/WalletConnectContext';
-import Button from '../../../../../common/components/Button';
 import InputContainer from '../../../../../common/components/InputContainer';
 import i18n from '../../../../../common/services/i18n.service';
 import ThemedStyles from '../../../../../styles/ThemedStyles';
@@ -14,6 +13,8 @@ type TypeProps = {
   navigation: any;
   wc: WCStore;
 };
+
+const goToWeb = () => Linking.openURL('https://mobile.minds.com/');
 
 const WithdrawalInput = observer((props: TypeProps) => {
   const theme = ThemedStyles.style;
@@ -51,20 +52,11 @@ const WithdrawalInput = observer((props: TypeProps) => {
       </Text>
       <Text
         style={[theme.colorSecondaryText, styles.text, theme.marginBottom3x]}>
-        {i18n.t('wallet.tokens.transferRequest')}
+        {i18n.t('wallet.tokens.walletConnectIssues')}
       </Text>
-      <Text style={[theme.colorSecondaryText, styles.text]}>
-        {i18n.t('wallet.tokens.transferNote')}
+      <Text style={[theme.colorLink, styles.text]} onPress={goToWeb}>
+        {i18n.t('wallet.tokens.goToMobileWeb')}
       </Text>
-      <View style={styles.buttonContainer}>
-        <Button
-          onPress={store.onPressTransfer}
-          text={i18n.t('wallet.withdraw.transfer')}
-          containerStyle={theme.alignSelfEnd}
-          action
-          loading={store.inProgress}
-        />
-      </View>
     </View>
   );
 });
