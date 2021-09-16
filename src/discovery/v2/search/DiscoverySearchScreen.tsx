@@ -8,8 +8,6 @@ import { AppStackParamList } from '../../../navigation/NavigationTypes';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { DiscoverySearchList } from './DiscoverySearchList';
 import { useDiscoveryV2SearchStore } from './DiscoveryV2SearchContext';
-import { GOOGLE_PLAY_STORE } from '../../../config/Config';
-import DisabledStoreFeature from '../../../common/components/DisabledStoreFeature';
 import { DiscoverySearchHeader } from './DiscoverySearchHeader';
 
 interface Props {
@@ -42,14 +40,11 @@ export const DiscoverySearchScreen = observer((props: Props) => {
   return (
     <View style={theme.flexContainer}>
       <DiscoverySearchHeader />
-      {GOOGLE_PLAY_STORE ? (
-        <DisabledStoreFeature style={theme.flexContainer} />
-      ) : (
-        <DiscoverySearchList
-          navigation={navigation}
-          style={theme.flexContainer}
-        />
-      )}
+
+      <DiscoverySearchList
+        navigation={navigation}
+        style={theme.flexContainer}
+      />
     </View>
   );
 });

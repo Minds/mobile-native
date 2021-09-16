@@ -6,9 +6,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import i18n from '../../common/services/i18n.service';
 import { useLegacyStores, useStores } from '../../common/hooks/use-stores';
 import { useNavigation } from '@react-navigation/core';
-import DisabledStoreFeature from '../../common/components/DisabledStoreFeature';
 import SearchResultComponent from './SearchResultComponent';
-import { GOOGLE_PLAY_STORE } from '../../config/Config';
 import { observer } from 'mobx-react';
 import KeyboardSpacingView from '../../common/components/KeyboardSpacingView';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -82,16 +80,8 @@ const SearchScreen = observer(() => {
           ]}
         />
       </View>
-      {GOOGLE_PLAY_STORE ? (
-        <DisabledStoreFeature
-          style={[styles.height, theme.bgPrimaryBackground]}
-        />
-      ) : (
-        <SearchResultComponent
-          navigation={navigation}
-          localStore={localStore}
-        />
-      )}
+
+      <SearchResultComponent navigation={navigation} localStore={localStore} />
     </KeyboardSpacingView>
   );
 });
