@@ -14,6 +14,7 @@ import { observer, useLocalStore } from 'mobx-react';
 import createLocalStore from './createLocalStore';
 import ModalScreen from '../common/components/ModalScreen';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { ONCHAIN_ENABLED } from '../config/Config';
 
 const linkTo = (dest: string) =>
   Linking.openURL(`https://www.minds.com/${dest}`);
@@ -84,11 +85,7 @@ export default observer(function ({ navigation }) {
       icon: 'plus-circle-outline',
       onPress: localStore.toggleUniswapWidget,
     },
-    {
-      name: 'transfer',
-      icon: 'swap-horizontal',
-      onPress: openWithdrawal,
-    },
+
     {
       name: 'create',
       icon: 'plus-box',
@@ -100,6 +97,14 @@ export default observer(function ({ navigation }) {
       onPress: () => navTo('Referrals'),
     },
   ];
+
+  if (ONCHAIN_ENABLED) {
+    earnItems.push({
+      name: 'transfer',
+      icon: 'swap-horizontal',
+      onPress: openWithdrawal,
+    });
+  }
 
   const resourcesItems = [
     {
