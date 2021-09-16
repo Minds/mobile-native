@@ -27,37 +27,23 @@ export const CommentsEntityOutlet = observer((props: Props) => {
 
   const ViewCommentsButton = () => {
     return (
-      <Text
-        style={[
-          ThemedStyles.style.colorIconActive,
-          ThemedStyles.style.paddingHorizontal2x,
-          ThemedStyles.style.marginBottom3x,
-        ]}
-        onPress={() => GoToComments()}>
+      <Text style={styles.text} onPress={() => GoToComments()}>
         View {count} comments
       </Text>
     );
-  };
-
-  const onNewComment = comment => {
-    GoToComments();
   };
 
   return (
     <KeyboardAvoidingView
       style={ThemedStyles.style.paddingBottom3x}
       behavior={Platform.OS == 'ios' ? 'padding' : undefined}>
-      <View>
-        {count > 0 ? ViewCommentsButton() : undefined}
-
-        {/* <View style={[ThemedStyles.style.paddingBottom3x]}>
-        <CommentsInput
-          entity={props.entity}
-          onPosted={onNewComment}></CommentsInput>
-          </View> */}
-      </View>
+      <View>{count > 0 ? ViewCommentsButton() : undefined}</View>
     </KeyboardAvoidingView>
   );
+});
+
+const styles = ThemedStyles.create({
+  text: ['colorIconActive', 'paddingHorizontal2x', 'marginBottom3x'],
 });
 
 export default CommentsEntityOutlet;

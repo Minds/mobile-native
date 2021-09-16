@@ -30,21 +30,14 @@ export default observer(function RegisterScreen(props: PropsType) {
       <SafeAreaView style={theme.flexContainer}>
         <KeyboardAvoidingView behavior="height">
           <FitScrollView>
-            <View style={[theme.rowJustifyStart, theme.paddingVertical3x]}>
-              <Text
-                style={[
-                  theme.titleText,
-                  theme.textCenter,
-                  theme.colorWhite,
-                  theme.paddingVertical3x,
-                  theme.positionAbsolute,
-                ]}>
+            <View style={styles.container}>
+              <Text style={styles.createChannel}>
                 {i18n.t('auth.createChannel')}
               </Text>
               <Icon
                 size={34}
                 name="ios-chevron-back"
-                style={[theme.colorWhite, theme.padding]}
+                style={styles.icon}
                 onPress={props.navigation.goBack}
               />
             </View>
@@ -54,4 +47,16 @@ export default observer(function RegisterScreen(props: PropsType) {
       </SafeAreaView>
     </DismissKeyboard>
   );
+});
+
+const styles = ThemedStyles.create({
+  container: ['rowJustifyStart', 'paddingVertical3x'],
+  createChannel: [
+    'titleText',
+    'textCenter',
+    'colorWhite',
+    'paddingVertical3x',
+    'positionAbsolute',
+  ],
+  icon: ['colorWhite', 'padding'],
 });

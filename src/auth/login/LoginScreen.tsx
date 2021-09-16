@@ -48,14 +48,7 @@ export default function LoginScreen(props: PropsType) {
                 style={[styles.image, { transform: [{ translateY }], opacity }]}
               />
             </Animated.View>
-            <Text
-              style={[
-                theme.titleText,
-                theme.textCenter,
-                theme.colorWhite,
-                titleMargin,
-              ]}
-              testID="loginscreentext">
+            <Text style={styles.loginText} testID="loginscreentext">
               {i18n.t('auth.login')}
             </Text>
             <LoginFormHandler
@@ -69,16 +62,20 @@ export default function LoginScreen(props: PropsType) {
   );
 }
 
-const styles = StyleSheet.create({
-  bulb: {
-    width: '100%',
-    height: LOGO_HEIGHT,
-    justifyContent: 'flex-end',
-    // height: 70,
-  },
-  image: {
-    height: 0.3679 * (width * 0.43),
-    width: '43%',
-    alignSelf: 'center',
-  },
+const styles = ThemedStyles.create({
+  loginText: ['titleText', 'textCenter', 'colorWhite', titleMargin],
+  bulb: [
+    {
+      width: '100%',
+      height: LOGO_HEIGHT,
+      justifyContent: 'flex-end',
+    },
+  ],
+  image: [
+    {
+      height: 0.3679 * (width * 0.43),
+      width: '43%',
+      alignSelf: 'center',
+    },
+  ],
 });

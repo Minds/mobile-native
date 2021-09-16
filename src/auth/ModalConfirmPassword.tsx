@@ -48,7 +48,7 @@ export default class ModalConfirmPassword extends Component<PropsType> {
   }
 
   render() {
-    const CS = ThemedStyles.style;
+    const theme = ThemedStyles.style;
     const msg = this.state.error ? (
       <Text style={styles.error}>{i18n.t('auth.invalidPassword')}</Text>
     ) : null;
@@ -57,21 +57,19 @@ export default class ModalConfirmPassword extends Component<PropsType> {
         isVisible={this.props.isVisible}
         backdropColor={ThemedStyles.getColor('PrimaryBackground')}
         backdropOpacity={1}>
-        <SafeAreaView style={[CS.flexContainer]}>
+        <SafeAreaView style={theme.flexContainer}>
           <KeyboardAvoidingView
-            style={CS.flexContainer}
+            style={theme.flexContainer}
             behavior={Platform.OS === 'ios' ? 'padding' : null}>
             {msg}
             <View style={styles.textCotainer}>
               <Text>{i18n.t('auth.confirmpassword')}</Text>
-              <Text
-                style={[CS.colorSecondaryText, CS.textRight]}
-                onPress={this.props.close}>
+              <Text style={styles.closeText} onPress={this.props.close}>
                 {i18n.t('close')}
               </Text>
             </View>
             <TextInput
-              style={[ComponentsStyle.loginInput, CS.marginTop2x]}
+              style={styles.passwordInput}
               placeholder={i18n.t('auth.password')}
               secureTextEntry={true}
               autoCapitalize={'none'}
@@ -98,15 +96,21 @@ export default class ModalConfirmPassword extends Component<PropsType> {
   }
 }
 
-const styles = StyleSheet.create({
-  error: {
-    marginTop: 8,
-    marginBottom: 8,
-    color: '#c00',
-    textAlign: 'center',
-  },
-  textCotainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
+const styles = ThemedStyles.create({
+  passwordInput: [ComponentsStyle.loginInput, 'marginTop2x'],
+  closeText: ['colorSecondaryText', 'textRight'],
+  error: [
+    {
+      marginTop: 8,
+      marginBottom: 8,
+      color: '#c00',
+      textAlign: 'center',
+    },
+  ],
+  textCotainer: [
+    {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+    },
+  ],
 });

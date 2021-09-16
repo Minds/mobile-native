@@ -77,10 +77,10 @@ const CommentInput = observer(() => {
       style={StyleSheet.absoluteFill}
       enabled={Platform.OS === 'ios'}
       pointerEvents="box-none">
-      <View style={[theme.justifyEnd, theme.flexContainer]}>
+      <View style={styles.mainContainer}>
         <View style={theme.flexContainer}>
           <Touchable
-            style={[theme.flexContainer, theme.bgBlack, theme.opacity50]}
+            style={styles.touchable}
             activeOpacity={0.5}
             onPress={() => provider.store?.setShowInput(false)}
           />
@@ -93,16 +93,9 @@ const CommentInput = observer(() => {
             />
           )}
         </View>
-        <View style={[theme.bgPrimaryBackground, styles.inputContainer]}>
+        <View style={styles.inputContainer}>
           {(provider.store.parent || provider.store.edit) && (
-            <View
-              style={[
-                theme.borderBottomHair,
-                theme.bcolorPrimaryBorder,
-                theme.paddingBottom2x,
-                theme.paddingHorizontal4x,
-                theme.marginBottom2x,
-              ]}>
+            <View style={styles.editView}>
               <Text style={theme.colorSecondaryText}>
                 {provider.store.edit
                   ? i18n.t('edit')
@@ -113,12 +106,7 @@ const CommentInput = observer(() => {
             </View>
           )}
 
-          <View
-            style={[
-              theme.rowJustifyStart,
-              theme.alignEnd,
-              theme.paddingHorizontal4x,
-            ]}>
+          <View style={styles.inputContainerView}>
             <TextInput
               ref={ref}
               autoFocus={true}
@@ -132,22 +120,11 @@ const CommentInput = observer(() => {
               value={provider.store.text}
               maxLength={CHAR_LIMIT}
               // onBlur={() => provider.store?.setShowInput(false)}
-              style={[
-                theme.fullWidth,
-                theme.colorPrimaryText,
-                theme.fontL,
-                styles.input,
-                inputMaxHeight,
-              ]}
+              style={[styles.input, inputMaxHeight]}
             />
             {!provider.store.saving ? (
               <View>
-                <View
-                  style={[
-                    theme.rowJustifySpaceBetween,
-                    styles.sendIconCont,
-                    theme.alignCenter,
-                  ]}>
+                <View style={styles.sendIconCont}>
                   <Touchable
                     onPress={provider.store.post}
                     style={theme.paddingRight2x}
@@ -165,14 +142,14 @@ const CommentInput = observer(() => {
                     beforeSelect={beforeSelect}
                   />
                 </View>
-                <Text style={[theme.fontXS, theme.colorSecondaryText]}>
+                <Text style={styles.textCount}>
                   {provider.store.text.length} / {CHAR_LIMIT}
                 </Text>
               </View>
             ) : (
               <View>
                 <DotIndicator
-                  containerStyle={[theme.alignSelfCenter, theme.justifyEnd]}
+                  containerStyle={styles.dotIndicator}
                   color={ThemedStyles.getColor('PrimaryText')}
                   scaleEnabled={true}
                 />
@@ -187,52 +164,80 @@ const CommentInput = observer(() => {
 
 export default CommentInput;
 
-const styles = StyleSheet.create({
-  meta: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    marginBottom: 20,
-    shadowColor: 'black',
-    shadowOffset: {
-      width: 0,
-      height: 6,
+const styles = ThemedStyles.create({
+  mainContainer: ['justifyEnd', 'flexContainer'],
+  touchable: ['flexContainer', 'bgBlack', 'opacity50'],
+  editView: [
+    'borderBottomHair',
+    'bcolorPrimaryBorder',
+    'paddingBottom2x',
+    'paddingHorizontal4x',
+    'marginBottom2x',
+  ],
+  inputContainerView: ['rowJustifyStart', 'alignEnd', 'paddingHorizontal4x'],
+  textCount: ['fontXS', 'colorSecondaryText'],
+  dotIndicator: ['alignSelfCenter', 'justifyEnd'],
+  meta: [
+    {
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      right: 0,
+      marginBottom: 20,
+      shadowColor: 'black',
+      shadowOffset: {
+        width: 0,
+        height: 6,
+      },
+      shadowOpacity: 0.5,
+      shadowRadius: 4,
+      elevation: 16,
     },
-    shadowOpacity: 0.5,
-    shadowRadius: 4,
-    elevation: 16,
-  },
-  preview: {
-    minHeight: 80,
-    margin: 10,
-  },
-  sendIconCont: {
-    paddingBottom: Platform.select({
-      android: 13,
-      ios: 8,
-    }),
-  },
-  input: {
-    minHeight: 35,
-    flex: 3,
-    lineHeight: 22,
-  },
-  inputContainer: {
-    shadowColor: 'black',
-    maxHeight: height * 0.4,
-    width: '100%',
-    borderColor: 'transparent',
-    ...Platform.select({
-      android: { paddingTop: 7, paddingBottom: 9 },
-      ios: { paddingTop: 10, paddingBottom: 12 },
-    }),
-    shadowOffset: {
-      width: 0,
-      height: -4,
+  ],
+  preview: [
+    {
+      minHeight: 80,
+      margin: 10,
     },
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
-    elevation: 16,
-  },
+  ],
+  sendIconCont: [
+    'rowJustifySpaceBetween',
+    'alignCenter',
+    {
+      paddingBottom: Platform.select({
+        android: 13,
+        ios: 8,
+      }),
+    },
+  ],
+  input: [
+    'fullWidth',
+    'colorPrimaryText',
+    'fontL',
+    {
+      minHeight: 35,
+      flex: 3,
+      lineHeight: 22,
+    },
+  ],
+  inputContainer: [
+    'bgPrimaryBackground',
+    {
+      shadowColor: 'black',
+      maxHeight: height * 0.4,
+      width: '100%',
+      borderColor: 'transparent',
+      ...Platform.select({
+        android: { paddingTop: 7, paddingBottom: 9 },
+        ios: { paddingTop: 10, paddingBottom: 12 },
+      }),
+      shadowOffset: {
+        width: 0,
+        height: -4,
+      },
+      shadowOpacity: 0.1,
+      shadowRadius: 3,
+      elevation: 16,
+    },
+  ],
 });

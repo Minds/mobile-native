@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
 import MenuItem from '../../common/components/menus/MenuItem';
 import i18n from '../../common/services/i18n.service';
-import ThemedStyles from '../../styles/ThemedStyles';
+import ThemedStyles, { useStyle } from '../../styles/ThemedStyles';
 import createTwoFactorStore, { Options } from './createTwoFactorStore';
 import settingsService from '../../settings/SettingsService';
 
@@ -56,7 +56,7 @@ const TwoFactorAuthSettingsScreen = observer(() => {
 
   return (
     <View>
-      <Text style={[styles.description, theme.colorSecondaryText]}>
+      <Text style={styles.description}>
         {i18n.t('settings.TFAdescription')}
       </Text>
       {items.map(item => (
@@ -92,56 +92,61 @@ const TwoFactorAuthSettingsScreen = observer(() => {
 
 const ItemTitle = ({ id, enabled }) => {
   const theme = ThemedStyles.style;
-  const enabledColors = {
-    backgroundColor: ThemedStyles.theme ? '#FFFFFF' : '#242A30',
-    color: ThemedStyles.theme ? '#43434D' : '#FFFFFF',
-  };
-  return (
-    <View style={styles.container}>
-      <View style={[theme.rowJustifyStart, theme.marginBottom2x]}>
-        <Text style={styles.title}>
-          {i18n.t(`settings.TFAOptions.${id}Title`)}
-        </Text>
-        {enabled && (
-          <Text style={[styles.enabled, enabledColors]}>
-            {i18n.t('enabled')}
-          </Text>
-        )}
-      </View>
-      <Text style={[theme.colorSecondaryText, theme.fontL]}>
-        {i18n.t(`settings.TFAOptions.${id}Description`)}
-      </Text>
-    </View>
-  );
-};
-
-const styles = StyleSheet.create({
-  titleContainer: {
-    marginTop: Platform.select({ ios: 20, android: 10 }),
-    paddingTop: 0,
-  },
-  description: {
-    fontSize: 15,
-    paddingLeft: 21,
-    paddingRight: 23,
-    marginVertical: 30,
-  },
-  container: {
-    width: 300,
-  },
-  title: {
-    fontWeight: '500',
-    fontFamily: 'Roboto-Medium',
-    fontSize: 16,
-  },
-  enabled: {
+  const enabledStyles = useStyle({
     marginLeft: 18,
     paddingHorizontal: 6,
     paddingVertical: 2,
     fontSize: 14,
     fontWeight: '700',
     borderRadius: 3,
-  },
+    backgroundColor: ThemedStyles.theme ? '#FFFFFF' : '#242A30',
+    color: ThemedStyles.theme ? '#43434D' : '#FFFFFF',
+  });
+  return (
+    <View style={styles.container}>
+      <View style={styles.secondaryContainer}>
+        <Text style={styles.title}>
+          {i18n.t(`settings.TFAOptions.${id}Title`)}
+        </Text>
+        {enabled && <Text style={enabledStyles}>{i18n.t('enabled')}</Text>}
+      </View>
+      <Text style={styles.descriptionText}>
+        {i18n.t(`settings.TFAOptions.${id}Description`)}
+      </Text>
+    </View>
+  );
+};
+
+const styles = ThemedStyles.create({
+  descriptionText: ['colorSecondaryText', 'fontL'],
+  secondaryContainer: ['rowJustifyStart', 'marginBottom2x'],
+  titleContainer: [
+    {
+      marginTop: Platform.select({ ios: 20, android: 10 }),
+      paddingTop: 0,
+    },
+  ],
+  description: [
+    'colorSecondaryText',
+    {
+      fontSize: 15,
+      paddingLeft: 21,
+      paddingRight: 23,
+      marginVertical: 30,
+    },
+  ],
+  container: [
+    {
+      width: 300,
+    },
+  ],
+  title: [
+    {
+      fontWeight: '500',
+      fontFamily: 'Roboto-Medium',
+      fontSize: 16,
+    },
+  ],
 });
 
 export default TwoFactorAuthSettingsScreen;

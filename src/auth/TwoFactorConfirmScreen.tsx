@@ -93,7 +93,7 @@ const TwoFactorConfirmScreen = observer(({ route, navigation }: PropsType) => {
       : i18n.t('auth.2faSmsDescription');
 
   return (
-    <SafeAreaView style={[theme.flexContainer, theme.bgPrimaryBackground]}>
+    <SafeAreaView style={styles.areaView}>
       <KeyboardAvoidingView
         style={theme.flexContainer}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
@@ -146,6 +146,7 @@ const TwoFactorConfirmScreen = observer(({ route, navigation }: PropsType) => {
 });
 
 const styles = ThemedStyles.create({
+  areaView: ['flexContainer', 'bgPrimaryBackground'],
   continue: ['fontL', 'fontMedium', 'colorLink', 'paddingTop'],
   resend: ['fontMedium', 'colorLink'],
   description: [

@@ -66,11 +66,7 @@ export default observer(function MediaPreview({
       {body}
       {attachment.uploading && (
         <DotIndicator
-          containerStyle={[
-            theme.centered,
-            theme.positionAbsolute,
-            styles.overlay,
-          ]}
+          containerStyle={styles.overlay}
           color="white"
           scaleEnabled={true}
         />
@@ -85,37 +81,47 @@ export default observer(function MediaPreview({
   );
 });
 
-const styles = StyleSheet.create({
-  overlay: {
-    backgroundColor: '#00000090',
-    borderRadius: 15,
-  },
-  close: {
-    position: 'absolute',
-    top: -15,
-    right: -15,
-  },
-  wrapper: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    marginHorizontal: 20,
-    marginBottom: 15,
-    maxHeight: 150,
-    shadowColor: 'black',
-    shadowOffset: {
-      width: 0,
-      height: 6,
+const styles = ThemedStyles.create({
+  overlay: [
+    'centered',
+    'positionAbsolute',
+    {
+      backgroundColor: '#00000090',
+      borderRadius: 15,
     },
-    shadowOpacity: 0.5,
-    shadowRadius: 2,
-    elevation: 16,
-    zIndex: 1000,
-  },
-  preview: {
-    flex: 1,
-    width,
-    maxHeight: 150,
-    borderRadius: 15,
-  },
+  ],
+  close: [
+    {
+      position: 'absolute',
+      top: -15,
+      right: -15,
+    },
+  ],
+  wrapper: [
+    {
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      marginHorizontal: 20,
+      marginBottom: 15,
+      maxHeight: 150,
+      shadowColor: 'black',
+      shadowOffset: {
+        width: 0,
+        height: 6,
+      },
+      shadowOpacity: 0.5,
+      shadowRadius: 2,
+      elevation: 16,
+      zIndex: 1000,
+    },
+  ],
+  preview: [
+    {
+      flex: 1,
+      width,
+      maxHeight: 150,
+      borderRadius: 15,
+    },
+  ],
 });

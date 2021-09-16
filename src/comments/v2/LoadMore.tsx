@@ -1,7 +1,7 @@
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
 import React from 'react';
 import { View, Text } from 'react-native';
-import ThemedStyles from '../../styles/ThemedStyles';
+import ThemedStyles, { useStyle } from '../../styles/ThemedStyles';
 import IconMC from 'react-native-vector-icons/MaterialCommunityIcons';
 import type CommentsStore from './CommentsStore';
 import ActivityIndicator from '../../common/components/ActivityIndicator';
@@ -28,6 +28,14 @@ export default observer(function LoadMore({
     ? store.loadingNext && store.loaded
     : store.loadingPrevious && store.loaded;
 
+  const touchableStyles = useStyle(
+    'rowJustifyCenter',
+    'padding2x',
+    'paddingTop4x',
+  );
+
+  const textStyles = useStyle('fontM', 'colorSecondaryText');
+
   return (
     <View>
       {show ? (
@@ -35,8 +43,8 @@ export default observer(function LoadMore({
           onPress={() => {
             store.loadComments(!next);
           }}
-          style={[theme.rowJustifyCenter, theme.padding2x, theme.paddingTop4x]}>
-          <Text style={[theme.fontM, theme.colorSecondaryText]}>
+          style={touchableStyles}>
+          <Text style={textStyles}>
             <IconMC name="update" size={16} />{' '}
             {i18n.t(next ? 'activity.loadLater' : 'activity.loadEarlier')}{' '}
           </Text>
