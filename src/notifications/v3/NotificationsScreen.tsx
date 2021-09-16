@@ -53,6 +53,7 @@ const updateState = (newData: NotificationList, oldData: NotificationList) => {
       ],
     } as NotificationList;
   }
+  return { notifications: [] };
 };
 
 const Empty = <EmptyList />;
@@ -134,6 +135,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
 
   const ListEmptyComponent = React.useMemo(() => {
     if (error && !loading) {
+      console.log(error);
       return (
         <Text style={errorStyle} onPress={() => fetch()}>
           {i18n.t('cantReachServer') + '\n'}
