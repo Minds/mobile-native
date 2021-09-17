@@ -205,6 +205,8 @@ class ImagePickerService {
       cropping: crop && type !== 'video',
       showCropGuidelines: false,
       compressVideoPreset: 'Passthrough',
+      compressImageMaxHeight: 2048, // twice the size of xlarge image on the backend
+      compressImageMaxWidth: 2048, // twice the size of xlarge image on the backend
       cropperCircleOverlay,
     };
   }
