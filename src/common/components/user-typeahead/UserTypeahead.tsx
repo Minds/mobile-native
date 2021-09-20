@@ -24,7 +24,7 @@ type PropsType = {
   isModalVisible: boolean;
   onSelect: Function;
   onClose: Function;
-  value: any;
+  value?: any;
 };
 
 export default class UserTypeahead extends PureComponent<PropsType> {
