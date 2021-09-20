@@ -20,7 +20,14 @@ import i18nService from '../../services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import TextInput from '../TextInput';
 
-export default class UserTypeahead extends PureComponent {
+type PropsType = {
+  isModalVisible: boolean;
+  onSelect: Function;
+  onClose: Function;
+  value: any;
+};
+
+export default class UserTypeahead extends PureComponent<PropsType> {
   textInput = void 0;
 
   state = {

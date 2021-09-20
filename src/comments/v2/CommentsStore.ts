@@ -58,6 +58,21 @@ export default class CommentsStore {
   socketRoomName = '';
   edit?: CommentModel;
 
+  selection = {
+    start: 0,
+    end: 0,
+  };
+
+  @action
+  onSelectionChanges = event => {
+    this.selection = event.nativeEvent.selection;
+  };
+
+  @action
+  onSelectTag = text => {
+    this.setText(text);
+  };
+
   // parent for reply
   parent: CommentModel | null = null;
 
@@ -190,7 +205,6 @@ export default class CommentsStore {
 
       this.checkListen(response);
     } catch (err) {
-      console.log(err);
       if (descending) {
         this.setErrorLoadingPrevious(true);
       } else {

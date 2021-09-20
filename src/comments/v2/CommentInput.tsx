@@ -25,6 +25,7 @@ import preventDoubleTap from '../../common/components/PreventDoubleTap';
 import { DotIndicator } from 'react-native-reanimated-indicators';
 import { CHAR_LIMIT } from '../../config/Config';
 import TextInput from '../../common/components/TextInput';
+import UserAutocomplete from '../../common/components/user-autocomplete/UserAutocomplete';
 
 const { height } = Dimensions.get('window');
 
@@ -139,6 +140,7 @@ const CommentInput = observer(() => {
                 styles.input,
                 inputMaxHeight,
               ]}
+              onSelectionChange={provider.store.onSelectionChanges}
             />
             {!provider.store.saving ? (
               <View>
@@ -181,6 +183,12 @@ const CommentInput = observer(() => {
           </View>
         </View>
       </View>
+      <UserAutocomplete
+        text={provider.store.text}
+        selection={provider.store.selection}
+        onSelect={provider.store.onSelectTag}
+        addToBottom={65}
+      />
     </KeyboardSpacingView>
   );
 });

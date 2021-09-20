@@ -1,124 +1,118 @@
-//@ts-nocheck
-import React, { PureComponent } from 'react';
+import React from 'react';
 import {
   View,
   Platform,
   Keyboard,
   UIManager,
-  StyleSheet,
   LayoutAnimation,
+  KeyboardEventName,
 } from 'react-native';
+import ThemedStyles, { useStyle } from '../../styles/ThemedStyles';
 
 import isIphoneX from '../helpers/isIphoneX';
 
 const SAFE_AREA_BOTTOM_HEIGHT = 34;
 
+if (
+  Platform.OS === 'android' &&
+  UIManager.setLayoutAnimationEnabledExperimental
+) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
+
+let keyboardShowEvent: KeyboardEventName = 'keyboardWillShow';
+let keyboardHideEvent: KeyboardEventName = 'keyboardWillHide';
+
+if (Platform.OS === 'android') {
+  keyboardShowEvent = 'keyboardDidShow';
+  keyboardHideEvent = 'keyboardDidHide';
+}
+
+type PropsType = {
+  noFloat?: boolean;
+  addToBottom?: number;
+  children: React.ReactNode;
+  show: boolean;
+  backgroundColor?: string;
+};
+
 /**
  * Based on https://github.com/just4fun/react-native-sticky-keyboard-accessory
  * fixed for android
  */
-export default class KeyboardAccessory extends PureComponent {
-  static defaultProps = {
-    backgroundColor: '#f6f6f6',
-  };
+export default function (props: PropsType) {
+  const [bottom, setBottom] = React.useState(0);
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      bottom: 0,
-    };
-    // Enable `LayoutAnimation` for Android.
-    if (UIManager.setLayoutAnimationEnabledExperimental) {
-      UIManager.setLayoutAnimationEnabledExperimental(true);
-    }
-  }
-
-  /**
-   * Component did mount
-   */
-  componentDidMount() {
-    if (!this.props.noFloat) {
-      let keyboardShowEvent = 'keyboardWillShow';
-      let keyboardHideEvent = 'keyboardWillHide';
+  // calculate new bottom position when keyboard shows
+  const keyboardShow = React.useCallback(
+    e => {
+      let newBottom;
+      LayoutAnimation.easeInEaseOut();
 
       if (Platform.OS === 'android') {
-        keyboardShowEvent = 'keyboardDidShow';
-        keyboardHideEvent = 'keyboardDidHide';
+        newBottom = 0;
+      } else {
+        newBottom = isIphoneX
+          ? e.endCoordinates.height - SAFE_AREA_BOTTOM_HEIGHT
+          : e.endCoordinates.height;
       }
 
-      this.keyboardShowListener = Keyboard.addListener(keyboardShowEvent, e =>
-        this.keyboardShow(e),
-      );
-      this.keyboardHideListener = Keyboard.addListener(keyboardHideEvent, e =>
-        this.keyboardHide(e),
-      );
-    }
-  }
+      if (bottom !== newBottom) {
+        setBottom(newBottom);
+      }
+    },
+    [bottom],
+  );
 
-  /**
-   * Component will unmount
-   */
-  componentWillUnmount() {
-    this.keyboardShowListener && this.keyboardShowListener.remove();
-    this.keyboardHideListener && this.keyboardHideListener.remove();
-  }
-
-  keyboardShow(e) {
-    let bottom;
+  // when keyaboard hides, just set bottom to 0
+  const keyboardHide = React.useCallback(e => {
     LayoutAnimation.easeInEaseOut();
+    setBottom(0);
+  }, []);
 
-    if (Platform.OS === 'android') {
-      bottom = 0;
-    } else {
-      bottom = isIphoneX
-        ? e.endCoordinates.height - SAFE_AREA_BOTTOM_HEIGHT
-        : e.endCoordinates.height;
-    }
-
-    if (this.state.bottom != bottom) {
-      this.setState({ bottom });
-    }
-  }
-
-  /**
-   * On keyboard hide
-   * @param {event} e
-   */
-  keyboardHide(e) {
-    LayoutAnimation.easeInEaseOut();
-    this.setState({
-      bottom: 0,
-    });
-  }
-
-  /**
-   * Render
-   */
-  render() {
-    let { bottom } = this.state;
-    let { children, backgroundColor } = this.props;
-
-    if (!children) {
-      throw new Error(
-        '`children` Missing. You should wrap at least one component into <KeyboardAccessory />.',
+  // add listeners to keyaboard events
+  React.useEffect(() => {
+    if (props.noFloat) {
+      const showSubscription = Keyboard.addListener(keyboardShowEvent, e =>
+        keyboardShow(e),
       );
+
+      const hideSubscription = Keyboard.addListener(keyboardHideEvent, e =>
+        keyboardHide(e),
+      );
+
+      return () => {
+        showSubscription.remove();
+        hideSubscription.remove();
+      };
     }
+  }, [keyboardHide, keyboardShow, props.noFloat]);
 
-    if (!this.props.show) return null;
+  const { children, backgroundColor, noFloat, show, addToBottom } = props;
 
-    const containerStyle = this.props.noFloat
-      ? { backgroundColor, bottom }
-      : [styles.container, { backgroundColor, bottom }];
-
-    return <View style={containerStyle}>{this.props.children}</View>;
+  let basicStyle: any = { bottom: addToBottom ? bottom + addToBottom : bottom };
+  if (backgroundColor) {
+    basicStyle.backgroundColor = backgroundColor;
   }
+  const noFloatStyle = useStyle('bgPrimaryBackgroundHighlight', basicStyle);
+  const floatStyle = useStyle(styles.container, basicStyle);
+  const containerStyle = noFloat ? noFloatStyle : floatStyle;
+
+  if (!show) {
+    return null;
+  }
+
+  return <View style={containerStyle}>{children}</View>;
 }
 
-const styles = StyleSheet.create({
-  container: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0,
-  },
+const styles = ThemedStyles.create({
+  container: [
+    'bgPrimaryBackgroundHighlight',
+    {
+      position: 'absolute',
+      left: 0,
+      right: 0,
+      bottom: 0,
+    },
+  ],
 });

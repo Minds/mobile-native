@@ -28,6 +28,7 @@ import SoftInputMode from 'react-native-set-soft-input-mode';
 import TextInput from '../common/components/TextInput';
 import BottomSheet from '../common/components/bottom-sheet/BottomSheet';
 import BottomSheetButton from '../common/components/bottom-sheet/BottomSheetButton';
+import UserAutocomplete from '../common/components/user-autocomplete/UserAutocomplete';
 
 const { width } = Dimensions.get('window');
 
@@ -174,9 +175,16 @@ export default observer(function (props) {
               multiline={true}
               selectTextOnFocus={false}
               underlineColorAndroid="transparent"
+              onSelectionChange={props.store.onSelectionChanges}
               testID="PostInput">
               <Tags>{props.store.text}</Tags>
             </TextInput>
+            <UserAutocomplete
+              text={props.store.text}
+              selection={props.store.selection}
+              onSelect={props.store.onSelectTag}
+              addToBottom={70}
+            />
           </>
         )}
         <MediaPreview store={props.store} />

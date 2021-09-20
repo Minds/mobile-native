@@ -61,6 +61,16 @@ export default function (props) {
     wire_threshold: DEFAULT_MONETIZE,
     embed: new RichEmbedStore(),
     text: '',
+    selection: {
+      start: 0,
+      end: 0,
+    },
+    onSelectionChanges(event) {
+      this.selection = event.nativeEvent.selection;
+    },
+    onSelectTag(text) {
+      this.setText(text);
+    },
     title: '',
     time_created: null,
     mediaToConfirm: null,
