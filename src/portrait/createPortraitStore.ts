@@ -140,9 +140,9 @@ function createPortraitStore() {
       try {
         feedStore.setParams({
           portrait: true,
-          to_timestamp:
-            moment().add(1, 'days').hour(0).minutes(0).seconds(0).unix() * 1000,
           from_timestamp:
+            moment().add(1, 'days').hour(0).minutes(0).seconds(0).unix() * 1000,
+          to_timestamp:
             moment().subtract(2, 'days').hour(0).minutes(0).seconds(0).unix() *
             1000,
         });
