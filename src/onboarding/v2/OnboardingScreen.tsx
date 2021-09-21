@@ -39,7 +39,7 @@ export default observer(function OnboardingScreen() {
   const onOnboardingCompleted = (message: string) => {
     setTimeout(() => {
       navigation.navigate('Newsfeed');
-      showNotification(i18n.t(message), 'info', 4000);
+      showNotification(i18n.t(message), 'success', 4000);
     }, 300);
   };
   const updateState = (
