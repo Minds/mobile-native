@@ -11,7 +11,11 @@ const createLoginStore = ({ props, resetRef }) => ({
   hidePassword: true,
   inProgress: false,
   setUsername(value) {
-    const username = String(value).trim();
+    let username = String(value).trim();
+    // check for @ char at start, remove it if it is present.
+    if (username.charAt(0) === '@') {
+      username = username.substring(1);
+    }
     this.username = username;
   },
   setPassword(value) {
