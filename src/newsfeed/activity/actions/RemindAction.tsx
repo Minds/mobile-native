@@ -38,7 +38,7 @@ type PropsTypes = {
 /**
  * Remind Action Component
  */
-export default function ({ entity, size = 19, hideCount }: PropsTypes) {
+export default function ({ entity, size = 21, hideCount }: PropsTypes) {
   // Do not render BottomSheet unless it is necessary
   const [shown, setShown] = React.useState(false);
 

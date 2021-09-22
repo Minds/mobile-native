@@ -25,8 +25,8 @@ exports[`Thumb action component renders correctly 1`] = `
   <AnimatedThumb
     canVote={true}
     down={false}
-    name="like2"
-    size={19}
+    name="thumb-up"
+    size={21}
     voted={false}
   />
 </preventDoubleTap(TouchableOpacity)>
