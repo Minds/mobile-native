@@ -95,7 +95,6 @@ const VerifyPhoneNumberScreen = observer(({ route }: PropsType) => {
           inputStyles={[theme.colorPrimaryText, theme.border0x, styles.input]}
           inputWrapperStyle={styles.inputWrapperStyle}
           localStore={phoneValidationStore}
-          bottomStore={true}
           autoFocus
         />
       </LabeledComponent>

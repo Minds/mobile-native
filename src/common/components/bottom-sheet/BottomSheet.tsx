@@ -1,9 +1,13 @@
-import React, { forwardRef, useCallback, useMemo } from 'react';
-import { BottomSheetModal, BottomSheetModalProps } from '@gorhom/bottom-sheet';
+import React, { forwardRef, useCallback } from 'react';
+import {
+  BottomSheetModal,
+  BottomSheetModalProps,
+  useBottomSheetDynamicSnapPoints,
+  BottomSheetBackdrop,
+} from '@gorhom/bottom-sheet';
 import { StatusBar, Text, View } from 'react-native';
 import ThemedStyles, { useStyle } from '../../../styles/ThemedStyles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import Backdrop from './Backdrop';
 import Handle from './Handle';
 
 interface PropsType extends Omit<BottomSheetModalProps, 'snapPoints'> {
@@ -18,9 +22,18 @@ interface PropsType extends Omit<BottomSheetModalProps, 'snapPoints'> {
 export default forwardRef<BottomSheetModal, PropsType>((props, ref) => {
   const { title, detail, snapPoints, autoShow, children, ...other } = props;
 
-  const [contentHeight, setContentHeight] = React.useState(0);
-
   const insets = useSafeAreaInsets();
+
+  const snapPointsMemo = React.useMemo(() => snapPoints || ['CONTENT_HEIGHT'], [
+    snapPoints,
+  ]);
+
+  const {
+    animatedHandleHeight,
+    animatedSnapPoints,
+    animatedContentHeight,
+    handleContentLayout,
+  } = useBottomSheetDynamicSnapPoints(snapPointsMemo);
 
   const contStyle = useStyle(styles.contentContainer, {
     paddingBottom: insets.bottom || 24,
@@ -34,41 +47,35 @@ export default forwardRef<BottomSheetModal, PropsType>((props, ref) => {
     }
   }, [autoShow, ref]);
 
-  const snapPointsMemo = React.useMemo(() => snapPoints || [contentHeight], [
-    contentHeight,
-    snapPoints,
-  ]);
+  const renderHandle = useCallback(() => <Handle />, []);
 
-  const handleOnLayout = React.useCallback(
-    ({
-      nativeEvent: {
-        layout: { height },
-      },
-    }) => {
-      height && setContentHeight(props.forceHeight || height);
-    },
-    [props.forceHeight],
-  );
-
-  // renders
-  const renderBackdrop = React.useCallback(
-    props => <Backdrop {...props} pressBehavior="close" />,
+  const renderBackdrop = useCallback(
+    props => (
+      <BottomSheetBackdrop
+        {...props}
+        pressBehavior="close"
+        opacity={0.5}
+        appearsOnIndex={0}
+        disappearsOnIndex={-1}
+      />
+    ),
     [],
   );
-
-  const renderHandle = useCallback(() => <Handle />, []);
 
   return (
     <BottomSheetModal
       ref={ref}
       topInset={StatusBar.currentHeight || 0}
       handleComponent={renderHandle}
-      snapPoints={snapPointsMemo}
-      backgroundComponent={null}
+      snapPoints={animatedSnapPoints}
+      handleHeight={animatedHandleHeight}
+      contentHeight={animatedContentHeight}
       backdropComponent={renderBackdrop}
+      enablePanDownToClose={true}
+      backgroundComponent={null}
       style={styles.sheetContainer as any}
       {...other}>
-      <View style={contStyle} onLayout={handleOnLayout}>
+      <View style={contStyle} onLayout={handleContentLayout}>
         {Boolean(title) && <Text style={styles.title}>{title}</Text>}
         {Boolean(detail) && <Text style={styles.detail}>{detail}</Text>}
         {children}

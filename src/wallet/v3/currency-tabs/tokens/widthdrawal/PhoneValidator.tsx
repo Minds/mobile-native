@@ -1,7 +1,6 @@
 import { observer, useLocalStore } from 'mobx-react';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { BottomOptionsStoreType } from '../../../../../common/components/BottomOptionPopup';
 import createLocalStore from '../../../../../common/components/phoneValidation/createLocalStore';
 import PhoneValidationComponent from '../../../../../common/components/phoneValidation/PhoneValidationComponent';
 import { useLegacyStores } from '../../../../../common/hooks/use-stores';

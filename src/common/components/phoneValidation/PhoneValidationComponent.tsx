@@ -3,7 +3,6 @@ import React, { useEffect } from 'react';
 import { View, Text, TextInputProps } from 'react-native';
 
 import { observer, useLocalStore } from 'mobx-react';
-import { BottomOptionsStoreType } from '../BottomOptionPopup';
 import NumberConfirmed from './partials/NumberConfirmed';
 import InputNumber from './partials/InputNumber';
 import ConfirmNumber from './partials/ConfirmNumber';
@@ -13,7 +12,6 @@ import ThemedStyles from '../../../styles/ThemedStyles';
 export type PhoneValidationPropsType = {
   TFA?: any;
   TFAConfirmed?: boolean;
-  bottomStore?: BottomOptionsStoreType | boolean;
   inputStyles?: any;
   onNext?: Function;
   textStyle?: any;
