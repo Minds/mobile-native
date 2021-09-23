@@ -1,6 +1,7 @@
 //@ts-nocheck
 import React, { useCallback } from 'react';
 import { Linking, ScrollView, Text, View } from 'react-native';
+import AuthService from '../auth/AuthService';
 import MenuItem from '../common/components/menus/MenuItem';
 import i18n from '../common/services/i18n.service';
 import sessionService from '../common/services/session.service';
@@ -109,6 +110,15 @@ export default function ({ navigation }) {
     theme.bcolorPrimaryBorder,
   ];
 
+  const logOut = {
+    title: i18n.t('settings.logout'),
+    onPress: AuthService.logout,
+    icon: {
+      name: 'login-variant',
+      type: 'material-community',
+    },
+  };
+
   const themeChange = {
     title: i18n.t(
       ThemedStyles.theme ? 'settings.enterLight' : 'settings.enterDark',
@@ -141,6 +151,7 @@ export default function ({ navigation }) {
       <View style={[innerWrapper, theme.marginTop7x]}>
         <MenuItem item={themeChange} i={4} />
         <MenuItem item={help} i={5} />
+        <MenuItem item={logOut} i={6} />
       </View>
     </ScrollView>
   );
