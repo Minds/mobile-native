@@ -1,7 +1,7 @@
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { observer, useLocalStore } from 'mobx-react';
 import React from 'react';
-import { ScrollView, StyleSheet, Text } from 'react-native';
+import { ScrollView, Text } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { AppStackParamList } from '../../navigation/NavigationTypes';
 import SaveButton from '../../common/components/SaveButton';
@@ -76,23 +76,17 @@ const VerifyPhoneNumberScreen = observer(({ route }: PropsType) => {
   });
 
   return (
-    <ScrollView style={[theme.flexContainer, theme.paddingTop7x]}>
+    <ScrollView style={styles.scroll}>
       <Text style={styles.title}>{getTitle(localStore.buttonText)}</Text>
-      <Text style={[styles.text, theme.colorSecondaryText]}>
+      <Text style={styles.text}>
         {getDesc(localStore.buttonText, phoneValidationStore.phone)}
       </Text>
       <LabeledComponent
         label={i18n.t(localStore.labelText)}
-        wrapperStyle={[
-          theme.padding4x,
-          theme.borderTopHair,
-          theme.borderBottomHair,
-          theme.bcolorIcon,
-          theme.bgSecondaryBackground,
-        ]}>
+        wrapperStyle={styles.labeled}>
         <PhoneValidationComponent
           textStyle={theme.colorPrimaryText}
-          inputStyles={[theme.colorPrimaryText, theme.border0x, styles.input]}
+          inputStyles={styles.input}
           inputWrapperStyle={styles.inputWrapperStyle}
           localStore={phoneValidationStore}
           bottomStore={true}
@@ -103,34 +97,55 @@ const VerifyPhoneNumberScreen = observer(({ route }: PropsType) => {
   );
 });
 
-const styles = StyleSheet.create({
-  title: {
-    paddingLeft: 20,
-    fontWeight: '500',
-    fontFamily: 'Roboto-Medium',
-    fontSize: 20,
-  },
-  smallTitle: {
-    fontWeight: '500',
-    fontFamily: 'Roboto-Medium',
-    fontSize: 16,
-  },
-  text: {
-    fontSize: 16,
-    paddingLeft: 20,
-    paddingRight: 20,
-    marginVertical: 35,
-  },
-  input: {
-    height: 30,
-    flexBasis: 0,
-    flexGrow: 1,
-    padding: 0,
-  },
-  inputWrapperStyle: {
-    flexDirection: 'row',
-    alignItems: 'stretch',
-  },
+const styles = ThemedStyles.create({
+  labeled: [
+    'padding4x',
+    'borderTopHair',
+    'borderBottomHair',
+    'bcolorIcon',
+    'bgSecondaryBackground',
+  ],
+  scroll: ['flexContainer', 'paddingTop7x'],
+  title: [
+    {
+      paddingLeft: 20,
+      fontWeight: '500',
+      fontFamily: 'Roboto-Medium',
+      fontSize: 20,
+    },
+  ],
+  smallTitle: [
+    {
+      fontWeight: '500',
+      fontFamily: 'Roboto-Medium',
+      fontSize: 16,
+    },
+  ],
+  text: [
+    'colorSecondaryText',
+    {
+      fontSize: 16,
+      paddingLeft: 20,
+      paddingRight: 20,
+      marginVertical: 35,
+    },
+  ],
+  input: [
+    'colorPrimaryText',
+    'border0x',
+    {
+      height: 30,
+      flexBasis: 0,
+      flexGrow: 1,
+      padding: 0,
+    },
+  ],
+  inputWrapperStyle: [
+    {
+      flexDirection: 'row',
+      alignItems: 'stretch',
+    },
+  ],
 });
 
 export default VerifyPhoneNumberScreen;

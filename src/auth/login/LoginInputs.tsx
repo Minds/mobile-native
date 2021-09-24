@@ -91,7 +91,7 @@ const LoginInputs = observer(
               name={localStore.hidePassword ? 'md-eye' : 'md-eye-off'}
               size={25}
               onPress={localStore.toggleHidePassword}
-              style={[theme.inputIcon, icon]}
+              style={stylesLocal.icon}
             />
           </View>
         </View>
@@ -107,6 +107,7 @@ const LoginInputs = observer(
   },
 );
 const stylesLocal = ThemedStyles.create({
+  icon: ['inputIcon', icon],
   name: ['bold', 'fontXL'],
   username: ['fontMedium', 'fontM'],
   container: [

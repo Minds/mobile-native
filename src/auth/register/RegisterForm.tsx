@@ -200,7 +200,7 @@ const RegisterForm = observer(({}: PropsType) => {
           inputContainerStyle={styles.inputBackground}
           inputStyle={theme.colorWhite}
           inputLabelStyle={theme.colorWhite}
-          iconStyle={[theme.inputIcon, icon, theme.colorWhite]}
+          iconStyle={lstyles.icon}
         />
       </View>
     </View>
@@ -219,16 +219,11 @@ const RegisterForm = observer(({}: PropsType) => {
   return (
     <>
       {inputsWithShadow}
-      <View style={[theme.paddingHorizontal4x, theme.paddingVertical2x]}>
+      <View style={lstyles.buttonsContainer}>
         <CheckBox
-          containerStyle={[
-            theme.checkbox,
-            theme.paddingLeft,
-            theme.margin0x,
-            theme.paddingBottom0x,
-          ]}
+          containerStyle={lstyles.checkBox}
           title={
-            <Text style={[theme.colorWhite, theme.fontL, theme.paddingLeft2x]}>
+            <Text style={lstyles.acceptText}>
               {i18n.t('auth.accept')}{' '}
               <Text
                 style={theme.link}
@@ -243,14 +238,9 @@ const RegisterForm = observer(({}: PropsType) => {
           onPress={store.toggleTerms}
         />
         <CheckBox
-          containerStyle={[
-            theme.checkbox,
-            theme.paddingLeft,
-            theme.margin0x,
-            // theme.padding0x,
-          ]}
+          containerStyle={lstyles.checkBoxPromotions}
           title={
-            <Text style={[theme.colorWhite, theme.fontL, theme.paddingLeft2x]}>
+            <Text style={lstyles.acceptPromotions}>
               {i18n.t('auth.promotions')}
             </Text>
           }
@@ -260,7 +250,7 @@ const RegisterForm = observer(({}: PropsType) => {
         <Button
           onPress={store.onRegisterPress}
           text={i18n.t('auth.createChannel')}
-          containerStyle={[theme.fullWidth, theme.marginTop]}
+          containerStyle={lstyles.createButton}
           loading={store.inProgress}
           disabled={store.inProgress}
           testID="registerButton"
@@ -275,6 +265,16 @@ const RegisterForm = observer(({}: PropsType) => {
       />
     </>
   );
+});
+
+const lstyles = ThemedStyles.create({
+  icon: ['inputIcon', icon, 'colorWhite'],
+  buttonsContainer: ['paddingHorizontal4x', 'paddingVertical2x'],
+  checkBox: ['checkbox', 'paddingLeft', 'margin0x', 'paddingBottom0x'],
+  checkBoxPromotions: ['checkbox', 'paddingLeft', 'margin0x'],
+  acceptText: ['colorWhite', 'fontL', 'paddingLeft2x'],
+  acceptPromotions: ['colorWhite', 'fontL', 'paddingLeft2x'],
+  createButton: ['fullWidth', 'marginTop'],
 });
 
 export default RegisterForm;

@@ -49,24 +49,13 @@ export default observer(function Comment(props: PropsType) {
   const startColor = (ThemedStyles.theme ? '#242A30' : '#F5F5F5') + '00';
   const endColor = backgroundColor + 'FF';
 
-  const renderRevealedFooter = React.useCallback(
-    handlePress => {
-      return (
-        <TouchableOpacity onPress={handlePress}>
-          <Text
-            style={[
-              theme.fontL,
-              theme.bold,
-              theme.marginTop3x,
-              theme.textCenter,
-            ]}>
-            {i18n.t('showLess')}
-          </Text>
-        </TouchableOpacity>
-      );
-    },
-    [theme],
-  );
+  const renderRevealedFooter = React.useCallback(handlePress => {
+    return (
+      <TouchableOpacity onPress={handlePress}>
+        <Text style={styles.revealedFooter}>{i18n.t('showLess')}</Text>
+      </TouchableOpacity>
+    );
+  }, []);
 
   const renderTruncatedFooter = React.useCallback(
     handlePress => {
@@ -76,28 +65,11 @@ export default observer(function Comment(props: PropsType) {
             colors={[startColor, endColor]}
             style={styles.linear}
           />
-          <Text
-            style={[
-              theme.colorPrimaryText,
-              theme.fontL,
-              theme.bold,
-              theme.textCenter,
-              theme.marginTop2x,
-            ]}>
-            {i18n.t('readMore')}
-          </Text>
+          <Text style={styles.truncatedFooterText}>{i18n.t('readMore')}</Text>
         </TouchableOpacity>
       );
     },
-    [
-      startColor,
-      endColor,
-      theme.colorPrimaryText,
-      theme.fontL,
-      theme.bold,
-      theme.textCenter,
-      theme.marginTop2x,
-    ],
+    [startColor, endColor],
   );
   const translate = React.useCallback(() => {
     // delayed until the menu is closed
@@ -131,7 +103,7 @@ export default observer(function Comment(props: PropsType) {
 
       {!mature || props.comment.isOwner() ? (
         <>
-          <View style={[styles.body, theme.flexContainer]}>
+          <View style={styles.body}>
             {!!props.comment.description && (
               <>
                 <ReadMore
@@ -157,7 +129,7 @@ export default observer(function Comment(props: PropsType) {
             )}
             {mature && (
               <View style={theme.marginTop3x}>
-                <Text style={[theme.fontL, theme.colorTertiaryText]}>
+                <Text style={styles.explicitComment}>
                   {i18n.t('activity.explicitComment')}
                 </Text>
               </View>
@@ -185,7 +157,7 @@ export default observer(function Comment(props: PropsType) {
           </View>
           {!!props.comment.replies_count && !props.hideReply && (
             <TouchableOpacity onPress={viewReply} style={theme.marginBottom3x}>
-              <Text style={[styles.viewReply, theme.colorLink]}>
+              <Text style={styles.viewReply}>
                 {i18n.t('viewRepliesComments', {
                   count: props.comment.replies_count,
                 })}
@@ -198,21 +170,13 @@ export default observer(function Comment(props: PropsType) {
         <View>
           <TouchableOpacity
             onPress={props.comment.toggleMatureVisibility}
-            style={[theme.centered, theme.marginTop4x]}>
-            <Text style={[theme.bold, theme.fontL, theme.colorSecondaryText]}>
+            style={styles.confirmTouchable}>
+            <Text style={styles.explicitCommentBold}>
               {i18n.t('activity.explicitComment')}
             </Text>
-            <Text
-              style={[
-                theme.bold,
-                theme.fontL,
-                theme.colorLink,
-                theme.paddingVertical2x,
-              ]}>
-              {i18n.t('confirm18')}
-            </Text>
+            <Text style={styles.confirmText}>{i18n.t('confirm18')}</Text>
           </TouchableOpacity>
-          <View style={[theme.rowJustifyEnd, theme.padding3x]}>
+          <View style={styles.commentView}>
             <CommentBottomMenu
               store={props.store}
               entity={props.store.entity}
@@ -226,55 +190,88 @@ export default observer(function Comment(props: PropsType) {
   );
 });
 
-const styles = StyleSheet.create({
-  matureCloseContainer: {
-    marginLeft: -29,
-    marginTop: 40,
-  },
-  viewReply: {
-    marginLeft: 65,
-    fontSize: 15,
-    fontWeight: '700',
-  },
-  matureIcon: {
-    position: 'absolute',
-    right: 10,
-    top: 8,
-  },
-  body: {
-    paddingVertical: 0,
-    paddingLeft: 63,
-    paddingRight: 20,
-  },
-  actionsContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    paddingRight: 15,
-    paddingTop: 8,
-    paddingLeft: 50,
-  },
-  container: {
-    padding: 5,
-    paddingRight: 0,
-    display: 'flex',
-    // width: '100%',
-    alignItems: 'stretch',
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
-  touchable: {
-    position: 'relative',
-    height: 100,
-    width: '100%',
-    top: -52,
-  },
-  linear: {
-    height: 52,
-    width: '100%',
-  },
-  focused: {
-    borderLeftColor: LIGHT_THEME.Link,
-    borderLeftWidth: 4,
-  },
+const styles = ThemedStyles.create({
+  commentView: ['rowJustifyEnd', 'padding3x'],
+  confirmText: ['bold', 'fontL', 'colorLink', 'paddingVertical2x'],
+  confirmTouchable: ['centered', 'marginTop4x'],
+  explicitComment: ['fontL', 'colorTertiaryText'],
+  explicitCommentBold: ['bold', 'fontL', 'colorSecondaryText'],
+  revealedFooter: ['fontL', 'bold', 'marginTop3x', 'textCenter'],
+  truncatedFooterText: [
+    'colorPrimaryText',
+    'fontL',
+    'bold',
+    'textCenter',
+    'marginTop2x',
+  ],
+  matureCloseContainer: [
+    {
+      marginLeft: -29,
+      marginTop: 40,
+    },
+  ],
+  viewReply: [
+    'colorLink',
+    {
+      marginLeft: 65,
+      fontSize: 15,
+      fontWeight: '700',
+    },
+  ],
+  matureIcon: [
+    {
+      position: 'absolute',
+      right: 10,
+      top: 8,
+    },
+  ],
+  body: [
+    'flexContainer',
+    {
+      paddingVertical: 0,
+      paddingLeft: 63,
+      paddingRight: 20,
+    },
+  ],
+  actionsContainer: [
+    {
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'flex-start',
+      paddingRight: 15,
+      paddingTop: 8,
+      paddingLeft: 50,
+    },
+  ],
+  container: [
+    {
+      padding: 5,
+      paddingRight: 0,
+      display: 'flex',
+      // width: '100%',
+      alignItems: 'stretch',
+      borderBottomWidth: StyleSheet.hairlineWidth,
+    },
+  ],
+  touchable: [
+    {
+      position: 'relative',
+      height: 100,
+      width: '100%',
+      top: -52,
+    },
+  ],
+  linear: [
+    {
+      height: 52,
+      width: '100%',
+    },
+  ],
+  focused: [
+    {
+      borderLeftColor: LIGHT_THEME.Link,
+      borderLeftWidth: 4,
+    },
+  ],
 });

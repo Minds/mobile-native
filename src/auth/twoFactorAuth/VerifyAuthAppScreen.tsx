@@ -77,29 +77,18 @@ const VerifyAuthAppScreen = observer(({ route }: PropsType) => {
   }
 
   return (
-    <ScrollView style={[theme.flexContainer, theme.paddingTop7x]}>
+    <ScrollView style={styles.scroll}>
       <Text style={styles.title}>{i18n.t('settings.TFAVerifyTitle')}</Text>
-      <Text style={[styles.text, theme.colorSecondaryText]}>
-        {i18n.t('settings.TFAVerifyDesc')}
-      </Text>
-      <View
-        style={[
-          theme.rowJustifySpaceBetween,
-          theme.paddingHorizontal4x,
-          theme.marginBottom7x,
-        ]}>
+      <Text style={styles.text}>{i18n.t('settings.TFAVerifyDesc')}</Text>
+      <View style={styles.container}>
         <Text style={styles.smallTitle}>{store.secret}</Text>
-        <TouchableOpacity
-          style={[theme.rowJustifyStart, theme.centered]}
-          onPress={store.copySecret}>
+        <TouchableOpacity style={styles.touchable} onPress={store.copySecret}>
           <Icon
             name="content-copy"
             color={ThemedStyles.getColor('PrimaryText')}
             size={14}
           />
-          <Text style={[styles.smallTitle, theme.marginLeft]}>
-            {i18n.t('copy')}
-          </Text>
+          <Text style={styles.smallTitle}>{i18n.t('copy')}</Text>
         </TouchableOpacity>
       </View>
       <InputContainer
@@ -114,24 +103,39 @@ const VerifyAuthAppScreen = observer(({ route }: PropsType) => {
   );
 });
 
-const styles = StyleSheet.create({
-  title: {
-    paddingLeft: 20,
-    fontWeight: '500',
-    fontFamily: 'Roboto-Medium',
-    fontSize: 20,
-  },
-  smallTitle: {
-    fontWeight: '500',
-    fontFamily: 'Roboto-Medium',
-    fontSize: 16,
-  },
-  text: {
-    fontSize: 16,
-    paddingLeft: 20,
-    paddingRight: 20,
-    marginVertical: 35,
-  },
+const styles = ThemedStyles.create({
+  scroll: ['flexContainer', 'paddingTop7x'],
+  container: [
+    'rowJustifySpaceBetween',
+    'paddingHorizontal4x',
+    'marginBottom7x',
+  ],
+  touchable: ['rowJustifyStart', 'centered'],
+  title: [
+    {
+      paddingLeft: 20,
+      fontWeight: '500',
+      fontFamily: 'Roboto-Medium',
+      fontSize: 20,
+    },
+  ],
+  smallTitle: [
+    'marginLeft',
+    {
+      fontWeight: '500',
+      fontFamily: 'Roboto-Medium',
+      fontSize: 16,
+    },
+  ],
+  text: [
+    'colorSecondaryText',
+    {
+      fontSize: 16,
+      paddingLeft: 20,
+      paddingRight: 20,
+      marginVertical: 35,
+    },
+  ],
 });
 
 export default VerifyAuthAppScreen;

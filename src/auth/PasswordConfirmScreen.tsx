@@ -75,7 +75,7 @@ const PasswordConfirmScreen = observer((props: PropsType) => {
   const touchStyle = { flex: 3, alignItems: 'flex-end' };
 
   return (
-    <SafeAreaView style={[theme.flexContainer, theme.bgPrimaryBackground]}>
+    <SafeAreaView style={styles.areaView}>
       <KeyboardAvoidingView
         style={theme.flexContainer}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
@@ -94,24 +94,11 @@ const PasswordConfirmScreen = observer((props: PropsType) => {
             onPress={localStore.submit}
             //@ts-ignore
             style={touchStyle}>
-            <Text
-              style={[
-                theme.fontL,
-                theme.fontMedium,
-                theme.colorLink,
-                theme.paddingTop,
-              ]}>
-              {i18n.t('continue')}
-            </Text>
+            <Text style={styles.continue}>{i18n.t('continue')}</Text>
           </TouchableOpacity>
         </View>
         {msg}
-        <Text
-          style={[
-            theme.colorSecondaryText,
-            theme.marginBottom6x,
-            theme.paddingLeft4x,
-          ]}>
+        <Text style={styles.confirmPassword}>
           {i18n.t('auth.confirmPasswordModal')}
         </Text>
         <View style={theme.fullWidth}>
@@ -129,7 +116,7 @@ const PasswordConfirmScreen = observer((props: PropsType) => {
             name={localStore.hidePassword ? 'md-eye' : 'md-eye-off'}
             size={25}
             onPress={localStore.toggleHidePassword}
-            style={[theme.inputIcon, icon, theme.paddingRight]}
+            style={styles.icon}
           />
         </View>
       </KeyboardAvoidingView>
@@ -137,29 +124,39 @@ const PasswordConfirmScreen = observer((props: PropsType) => {
   );
 });
 
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    paddingBottom: 25,
-    paddingLeft: 10,
-    paddingRight: 20,
-    paddingTop: 20,
-    marginBottom: 25,
-  },
-  error: {
-    marginTop: 8,
-    marginBottom: 8,
-    color: '#c00',
-    textAlign: 'center',
-  },
-  titleText: {
-    fontSize: 22,
-    fontWeight: '700',
-    flex: 7,
-    textAlign: 'center',
-    paddingLeft: 10,
-  },
+const styles = ThemedStyles.create({
+  areaView: ['flexContainer', 'bgPrimaryBackground'],
+  confirmPassword: ['colorSecondaryText', 'marginBottom6x', 'paddingLeft4x'],
+  icon: ['inputIcon', icon, 'paddingRight'],
+  continue: ['fontL', 'fontMedium', 'colorLink', 'paddingTop'],
+  container: [
+    {
+      alignItems: 'center',
+      flexDirection: 'row',
+      paddingBottom: 25,
+      paddingLeft: 10,
+      paddingRight: 20,
+      paddingTop: 20,
+      marginBottom: 25,
+    },
+  ],
+  error: [
+    {
+      marginTop: 8,
+      marginBottom: 8,
+      color: '#c00',
+      textAlign: 'center',
+    },
+  ],
+  titleText: [
+    {
+      fontSize: 22,
+      fontWeight: '700',
+      flex: 7,
+      textAlign: 'center',
+      paddingLeft: 10,
+    },
+  ],
 });
 
 export default PasswordConfirmScreen;

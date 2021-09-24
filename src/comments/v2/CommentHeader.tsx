@@ -64,23 +64,11 @@ class CommentHeader extends PureComponent<PropsType> {
             <View style={styles.nameContainer}>
               <DebouncedTouchableOpacity
                 onPress={this._navToChannel}
-                style={[theme.rowJustifyStart, theme.alignCenter]}>
-                <Text
-                  numberOfLines={1}
-                  style={[
-                    styles.username,
-                    theme.colorPrimaryText,
-                    theme.flexContainer,
-                  ]}>
+                style={styles.touchable}>
+                <Text numberOfLines={1} style={styles.username}>
                   {name || channel.username}
                   {Boolean(name) && (
-                    <Text
-                      numberOfLines={1}
-                      style={[
-                        styles.username,
-                        theme.colorSecondaryText,
-                        theme.fontLight,
-                      ]}>
+                    <Text numberOfLines={1} style={styles.username}>
                       {' '}
                       @{channel.username}
                     </Text>
@@ -88,10 +76,7 @@ class CommentHeader extends PureComponent<PropsType> {
                 </Text>
               </DebouncedTouchableOpacity>
               <Text
-                style={[
-                  styles.groupName,
-                  ThemedStyles.style.colorSecondaryText,
-                ]}
+                style={styles.groupName}
                 lineBreakMode="tail"
                 numberOfLines={1}>
                 {date}
@@ -112,43 +97,63 @@ class CommentHeader extends PureComponent<PropsType> {
 
 export default CommentHeader;
 
-const styles = StyleSheet.create({
-  remindIcon: {
-    paddingTop: Platform.select({ android: 3, ios: 1 }),
-    paddingRight: 5,
-  },
-  mainContainer: {
-    flex: 1,
-  },
-  container: {
-    display: 'flex',
-    paddingHorizontal: 10,
-    paddingVertical: 13,
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
-  avatar: {
-    height: 37,
-    width: 37,
-    borderRadius: 18.5,
-    marginRight: 5,
-  },
-  body: {
-    marginLeft: 10,
-    paddingRight: 15,
-    flex: 1,
-  },
-  nameContainer: {
-    flexDirection: 'column',
-  },
-  username: {
-    fontWeight: 'bold',
-    fontFamily: 'Roboto',
-    fontSize: 15,
-  },
-  groupName: {
-    fontFamily: 'Roboto',
-    fontSize: 15,
-    marginTop: 1,
-  },
+const styles = ThemedStyles.create({
+  touchable: ['rowJustifyStart', 'alignCenter'],
+  remindIcon: [
+    {
+      paddingTop: Platform.select({ android: 3, ios: 1 }),
+      paddingRight: 5,
+    },
+  ],
+  mainContainer: [
+    {
+      flex: 1,
+    },
+  ],
+  container: [
+    {
+      display: 'flex',
+      paddingHorizontal: 10,
+      paddingVertical: 13,
+      alignItems: 'center',
+      flexDirection: 'row',
+    },
+  ],
+  avatar: [
+    {
+      height: 37,
+      width: 37,
+      borderRadius: 18.5,
+      marginRight: 5,
+    },
+  ],
+  body: [
+    {
+      marginLeft: 10,
+      paddingRight: 15,
+      flex: 1,
+    },
+  ],
+  nameContainer: [
+    {
+      flexDirection: 'column',
+    },
+  ],
+  username: [
+    'colorPrimaryText',
+    'flexContainer',
+    {
+      fontWeight: 'bold',
+      fontFamily: 'Roboto',
+      fontSize: 15,
+    },
+  ],
+  groupName: [
+    'colorSecondaryText',
+    {
+      fontFamily: 'Roboto',
+      fontSize: 15,
+      marginTop: 1,
+    },
+  ],
 });

@@ -36,40 +36,28 @@ const RecoveryCodesScreen = observer(({ route }: PropsType) => {
   });
 
   return (
-    <View style={[theme.flexContainer, theme.paddingTop7x]}>
+    <View style={styles.mainContainer}>
       <Text style={styles.title}>
         {i18n.t('settings.TFARecoveryCodesTitle')}
       </Text>
-      <Text style={[styles.text, theme.colorSecondaryText]}>
-        {i18n.t('settings.TFARecoveryCodesDesc')}
-      </Text>
-      <Text style={[styles.text, theme.colorSecondaryText]}>
+      <Text style={styles.text}>{i18n.t('settings.TFARecoveryCodesDesc')}</Text>
+      <Text style={styles.text}>
         {i18n.t('settings.TFARecoveryCodesBeSure')}
       </Text>
-      <View
-        style={[
-          theme.padding4x,
-          theme.borderTop,
-          theme.borderBottom,
-          theme.bcolorPrimaryBorder,
-          theme.bgPrimaryBackgroundHighlight,
-          theme.marginTop5x,
-        ]}>
+      <View style={styles.recoveryContainer}>
         <View style={theme.rowJustifySpaceBetween}>
           <Text style={styles.smallTitle}>
             {i18n.t('settings.TFARecoveryCodes')}
           </Text>
           <TouchableOpacity
-            style={[theme.rowJustifyStart, theme.centered]}
+            style={styles.touchable}
             onPress={store.copyRecoveryCode}>
             <Icon
               name="content-copy"
               color={ThemedStyles.getColor('PrimaryText')}
               size={14}
             />
-            <Text style={[styles.smallTitle, theme.marginLeft]}>
-              {i18n.t('copy')}
-            </Text>
+            <Text style={styles.smallTitle}>{i18n.t('copy')}</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.container}>
@@ -80,36 +68,58 @@ const RecoveryCodesScreen = observer(({ route }: PropsType) => {
   );
 });
 
-const styles = StyleSheet.create({
-  title: {
-    paddingLeft: 20,
-    fontWeight: '500',
-    fontFamily: 'Roboto-Medium',
-    fontSize: 20,
-  },
-  smallTitle: {
-    fontWeight: '500',
-    fontFamily: 'Roboto-Medium',
-    fontSize: 16,
-  },
-  text: {
-    fontSize: 16,
-    paddingLeft: 20,
-    paddingRight: 20,
-    marginVertical: 15,
-  },
-  container: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    alignItems: 'flex-start',
-    marginTop: 25,
-  },
-  textCode: {
-    width: '50%',
-    fontSize: 16,
-    fontWeight: '700',
-    paddingRight: 35,
-  },
+const styles = ThemedStyles.create({
+  mainContainer: ['flexContainer', 'paddingTop7x'],
+  recoveryContainer: [
+    'padding4x',
+    'borderTop',
+    'borderBottom',
+    'bcolorPrimaryBorder',
+    'bgPrimaryBackgroundHighlight',
+    'marginTop5x',
+  ],
+  touchable: ['rowJustifyStart', 'centered'],
+  title: [
+    {
+      paddingLeft: 20,
+      fontWeight: '500',
+      fontFamily: 'Roboto-Medium',
+      fontSize: 20,
+    },
+  ],
+  smallTitle: [
+    'marginLeft',
+    {
+      fontWeight: '500',
+      fontFamily: 'Roboto-Medium',
+      fontSize: 16,
+    },
+  ],
+  text: [
+    'colorSecondaryText',
+    {
+      fontSize: 16,
+      paddingLeft: 20,
+      paddingRight: 20,
+      marginVertical: 15,
+    },
+  ],
+  container: [
+    {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      alignItems: 'flex-start',
+      marginTop: 25,
+    },
+  ],
+  textCode: [
+    {
+      width: '50%',
+      fontSize: 16,
+      fontWeight: '700',
+      paddingRight: 35,
+    },
+  ],
 });
 
 export default RecoveryCodesScreen;

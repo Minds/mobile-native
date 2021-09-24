@@ -1,7 +1,7 @@
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import React from 'react';
-import { ScrollView, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { ScrollView, Text, TouchableOpacity } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { AppStackParamList } from '../../navigation/NavigationTypes';
 import InputContainer from '../../common/components/InputContainer';
@@ -42,10 +42,8 @@ const DisableTFA = observer(({ route }: PropsType) => {
   }
 
   return (
-    <ScrollView style={[theme.flexContainer]} keyboardShouldPersistTaps>
-      <Text style={[styles.text, theme.colorSecondaryText]}>
-        {i18n.t('settings.TFADisableDesc')}
-      </Text>
+    <ScrollView style={theme.flexContainer} keyboardShouldPersistTaps>
+      <Text style={styles.text}>{i18n.t('settings.TFADisableDesc')}</Text>
       {store.appAuthEnabled && (
         <InputContainer
           containerStyle={theme.bgPrimaryBackgroundHighlight}
@@ -59,13 +57,7 @@ const DisableTFA = observer(({ route }: PropsType) => {
       )}
       {(store.smsAuthEnabled ||
         (store.appAuthEnabled && store.appCode.length === 6)) && (
-        <TouchableOpacity
-          onPress={onPress}
-          style={[
-            styles.disableButton,
-            theme.bcolorPrimaryBorder,
-            theme.bgPrimaryBackgroundHighlight,
-          ]}>
+        <TouchableOpacity onPress={onPress} style={styles.disableButton}>
           <Text style={theme.fontL}>{i18n.t('settings.TFADisableYes')}</Text>
         </TouchableOpacity>
       )}
@@ -73,31 +65,42 @@ const DisableTFA = observer(({ route }: PropsType) => {
   );
 });
 
-const styles = StyleSheet.create({
-  title: {
-    paddingLeft: 20,
-    fontWeight: '500',
-    fontFamily: 'Roboto-Medium',
-    fontSize: 20,
-  },
-  smallTitle: {
-    fontWeight: '500',
-    fontFamily: 'Roboto-Medium',
-    fontSize: 16,
-  },
-  text: {
-    fontSize: 16,
-    paddingLeft: 20,
-    paddingRight: 20,
-    marginVertical: 35,
-  },
-  disableButton: {
-    marginTop: 35,
-    paddingVertical: 17,
-    paddingLeft: 22,
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-  },
+const styles = ThemedStyles.create({
+  title: [
+    {
+      paddingLeft: 20,
+      fontWeight: '500',
+      fontFamily: 'Roboto-Medium',
+      fontSize: 20,
+    },
+  ],
+  smallTitle: [
+    {
+      fontWeight: '500',
+      fontFamily: 'Roboto-Medium',
+      fontSize: 16,
+    },
+  ],
+  text: [
+    'colorSecondaryText',
+    {
+      fontSize: 16,
+      paddingLeft: 20,
+      paddingRight: 20,
+      marginVertical: 35,
+    },
+  ],
+  disableButton: [
+    'bcolorPrimaryBorder',
+    'bgPrimaryBackgroundHighlight',
+    {
+      marginTop: 35,
+      paddingVertical: 17,
+      paddingLeft: 22,
+      borderTopWidth: 1,
+      borderBottomWidth: 1,
+    },
+  ],
 });
 
 export default DisableTFA;

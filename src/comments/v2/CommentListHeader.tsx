@@ -2,7 +2,7 @@ import { TouchableOpacity } from '@gorhom/bottom-sheet';
 import Icon from 'react-native-vector-icons/Feather';
 import { observer } from 'mobx-react';
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text } from 'react-native';
 import NavigationService from '../../navigation/NavigationService';
 import ThemedStyles from '../../styles/ThemedStyles';
 import type CommentsStore from './CommentsStore';
@@ -23,8 +23,6 @@ export default observer(function CommentListHeader(props: {
       ? route.params.title
       : i18n.t('comments.comments');
 
-  const titleStyles = [theme.fontMedium, theme.paddingLeft3x];
-
   const closeButton = (
     <TouchableOpacity
       style={styles.iconContainer}
@@ -34,21 +32,10 @@ export default observer(function CommentListHeader(props: {
   );
 
   return (
-    <View
-      style={[
-        theme.borderBottomHair,
-        theme.bcolorPrimaryBorder,
-        theme.bgPrimaryBackground,
-        styles.shadow,
-      ]}>
+    <View style={styles.shadow}>
       {props.store.parent ? (
         <View>
-          <View
-            style={[
-              theme.rowJustifySpaceBetween,
-              theme.alignCenter,
-              theme.marginBottom3x,
-            ]}>
+          <View style={styles.view}>
             <TouchableOpacity
               onPress={NavigationService.goBack}
               style={theme.paddingHorizontal2x}>
@@ -62,16 +49,10 @@ export default observer(function CommentListHeader(props: {
           </View>
         </View>
       ) : (
-        <View
-          style={[
-            theme.rowJustifySpaceBetween,
-            theme.marginBottom3x,
-            theme.alignCenter,
-          ]}>
-          <View style={[theme.rowJustifyStart, theme.alignCenter]}>
-            <Text style={[theme.fontXL, ...titleStyles]}>{title}</Text>
-            <Text
-              style={[theme.fontLM, theme.colorSecondaryText, ...titleStyles]}>
+        <View style={styles.view}>
+          <View style={styles.justifyStart}>
+            <Text style={titleText}>{title}</Text>
+            <Text style={countText}>
               {props.store.entity['comments:count']}
             </Text>
           </View>
@@ -82,19 +63,36 @@ export default observer(function CommentListHeader(props: {
   );
 });
 
-const styles = StyleSheet.create({
-  iconContainer: {
-    paddingRight: 30,
-  },
-  shadow: {
-    shadowColor: 'black',
-    zIndex: 50,
-    shadowOffset: {
-      width: 0,
-      height: 4,
+const styles = ThemedStyles.create({
+  view: ['rowJustifySpaceBetween', 'marginBottom3x', 'alignCenter'],
+  justifyStart: ['rowJustifyStart', 'alignCenter'],
+  text: ['fontMedium', 'paddingLeft3x'],
+  iconContainer: [
+    {
+      paddingRight: 30,
     },
-    shadowOpacity: 0.06,
-    shadowRadius: 4,
-    elevation: 4,
-  },
+  ],
+  shadow: [
+    'borderBottomHair',
+    'bcolorPrimaryBorder',
+    'bgPrimaryBackground',
+    {
+      shadowColor: 'black',
+      zIndex: 50,
+      shadowOffset: {
+        width: 0,
+        height: 4,
+      },
+      shadowOpacity: 0.06,
+      shadowRadius: 4,
+      elevation: 4,
+    },
+  ],
 });
+
+const titleText = ThemedStyles.combine(styles.text, 'fontXL');
+const countText = ThemedStyles.combine(
+  styles.text,
+  'fontLM',
+  'colorSecondaryText',
+);
