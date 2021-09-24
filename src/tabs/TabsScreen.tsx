@@ -26,10 +26,10 @@ import Topbar from '../topbar/Topbar';
 import { InternalStack } from '../navigation/NavigationStack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import TopShadow from '../common/components/TopShadow';
-import sessionService from '../common/services/session.service';
+// import sessionService from '../common/services/session.service';
 import { useStores } from '../common/hooks/use-stores';
 import ChatTabIcon from '../chat/ChatTabIcon';
-import navigationService from '../navigation/NavigationService';
+// import navigationService from '../navigation/NavigationService';
 
 const isIOS = Platform.OS === 'ios';
 
@@ -228,18 +228,18 @@ const styles = StyleSheet.create({
   },
 });
 
-const navToChannel = () =>
-  navigationService.push('Channel', { entity: sessionService.getUser() });
+// const navToChannel = () =>
+//   navigationService.push('Channel', { entity: sessionService.getUser() });
 
 const notificationOptions = { tabBarTestID: 'Notifications tab button' };
 const messengerOptions = { tabBarTestID: 'Messenger tab button' };
 const discoveryOptions = { tabBarTestID: 'Discovery tab button' };
 const focusedState = { selected: true };
 const tabBar = props => <TabBar {...props} />;
-const userOptions = {
-  tabBarTestID: 'CaptureTabButton',
-  tabBarButton: props => <TouchableOpacity {...props} onPress={navToChannel} />,
-};
+// const userOptions = {
+//   tabBarTestID: 'CaptureTabButton',
+//   tabBarButton: props => <TouchableOpacity {...props} onPress={navToChannel} />,
+// };
 const empty = () => null;
 const tabOptions = ({ route }): BottomTabNavigationOptions => ({
   headerShown: false,
@@ -269,10 +269,6 @@ const tabOptions = ({ route }): BottomTabNavigationOptions => ({
         return <NotificationIcon color={color} size={iconsize} />;
       case 'CaptureTab':
         return <ComposeIcon style={styles.compose} />;
-    }
-
-    if (isPad) {
-      iconsize = Math.round(iconsize * 1.2);
     }
 
     // You can return any component that you like here!

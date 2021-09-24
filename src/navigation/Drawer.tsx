@@ -3,10 +3,9 @@ import { View, Text, Image, StyleSheet, Platform } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import IconFo from 'react-native-vector-icons/Feather';
-import IconFa from 'react-native-vector-icons/FontAwesome5';
-import IconMC from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from '~base/icons/Icon';
+import IconButton from '~base/icons/IconButton';
+
 import { ListItem } from 'react-native-elements';
 
 import i18n from '../common/services/i18n.service';
@@ -15,22 +14,20 @@ import featuresService from '../common/services/features.service';
 import sessionService from '../common/services/session.service';
 import FitScrollView from '../common/components/FitScrollView';
 
-const ICON_SIZE = 25;
-
 const getOptionsList = navigation => {
   const hasRewards = sessionService.getUser().rewards;
 
   let list = [
     {
       name: i18n.t('newsfeed.title'),
-      icon: <Icon name="home" size={ICON_SIZE - 4} style={iconStyle} />,
+      icon: <Icon name="home" />,
       onPress: () => {
         navigation.navigate('Newsfeed');
       },
     },
     {
       name: i18n.t('discovery.title'),
-      icon: <IconFo name="hash" size={ICON_SIZE - 4} style={iconStyle} />,
+      icon: <Icon name="hashtag" />,
       onPress: () => {
         navigation.navigate('Discovery');
       },
@@ -38,9 +35,7 @@ const getOptionsList = navigation => {
     featuresService.has('plus-2020')
       ? {
           name: i18n.t('wire.lock.plus'),
-          icon: (
-            <Icon name="add-to-queue" size={ICON_SIZE - 4} style={iconStyle} />
-          ),
+          icon: <Icon name="queue" />,
           onPress: () => {
             navigation.navigate('Tabs', {
               screen: 'CaptureTab',
@@ -52,7 +47,7 @@ const getOptionsList = navigation => {
     featuresService.has('crypto')
       ? {
           name: i18n.t('moreScreen.wallet'),
-          icon: <IconMC name="bank" size={ICON_SIZE} style={iconStyle} />,
+          icon: <Icon name="bank" />,
           onPress: () => {
             navigation.navigate('Tabs', {
               screen: 'CaptureTab',
@@ -63,14 +58,14 @@ const getOptionsList = navigation => {
       : null,
     {
       name: i18n.t('earnScreen.title'),
-      icon: <Icon name="attach-money" size={ICON_SIZE} style={iconStyle} />,
+      icon: <Icon name="money" />,
       onPress: () => {
         navigation.navigate('EarnModal');
       },
     },
     {
       name: 'Buy Tokens',
-      icon: <IconFa name="coins" size={ICON_SIZE} style={iconStyle} />,
+      icon: <Icon name="coins" />,
       onPress: () => {
         const navToBuyTokens = () => {
           navigation.navigate('Tabs', {
@@ -92,7 +87,7 @@ const getOptionsList = navigation => {
     ...list,
     {
       name: 'Analytics',
-      icon: <Icon name="analytics" size={ICON_SIZE} style={iconStyle} />,
+      icon: <Icon name="analytics" />,
 
       onPress: () => {
         navigation.navigate('Tabs', {
@@ -103,13 +98,7 @@ const getOptionsList = navigation => {
     },
     {
       name: i18n.t('discovery.groups'),
-      icon: (
-        <IconMC
-          name="account-multiple"
-          size={ICON_SIZE - 4}
-          style={iconStyle}
-        />
-      ),
+      icon: <Icon name="group" />,
       onPress: () => {
         navigation.navigate('Tabs', {
           screen: 'CaptureTab',
@@ -119,7 +108,7 @@ const getOptionsList = navigation => {
     },
     {
       name: i18n.t('moreScreen.settings'),
-      icon: <Icon name="settings" size={ICON_SIZE} style={iconStyle} />,
+      icon: <Icon name="settings" />,
       onPress: () => {
         navigation.navigate('Tabs', {
           screen: 'CaptureTab',
@@ -169,13 +158,11 @@ export default function Drawer(props) {
                 </Text>
               )}
             </View>
-            <IconMC
-              name="account-box-multiple"
-              size={ICON_SIZE}
-              style={ThemedStyles.style.centered}
-              color={ThemedStyles.getColor('SecondaryText')}
-              onPress={() => props.navigation.navigate('MultiUserScreen')}
+            <IconButton
+              color="SecondaryText"
+              name="accountMulti"
               testID="multiUserIcon"
+              onPress={() => props.navigation.navigate('MultiUserScreen')}
             />
           </View>
         </View>
@@ -270,4 +257,4 @@ const subtitleStyle = ThemedStyles.combine(
 );
 const titleContainerStyle = ThemedStyles.combine('flexColumn', 'marginLeft2x');
 const titleStyle = ThemedStyles.combine(styles.titleText, 'colorPrimaryText');
-const iconStyle = ThemedStyles.combine('colorIcon', styles.icon);
+// const iconStyle = ThemedStyles.combine('colorIcon', styles.icon);

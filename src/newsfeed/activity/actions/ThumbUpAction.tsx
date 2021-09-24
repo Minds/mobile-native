@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { observer } from 'mobx-react';
 import { motify, useAnimationState } from 'moti';
-
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Counter from './Counter';
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';

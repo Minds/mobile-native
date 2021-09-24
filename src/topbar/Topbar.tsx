@@ -6,9 +6,9 @@ import {
   TouchableOpacity,
   Text,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import IconFA from 'react-native-vector-icons/FontAwesome5';
+import IconButton from '~base/icons/IconButton';
 
+import Icon from 'react-native-vector-icons/Ionicons';
 import { observer } from 'mobx-react';
 import SearchComponent from './searchbar/SearchComponent';
 import ThemedStyles from '../styles/ThemedStyles';
@@ -104,11 +104,11 @@ export const Topbar = observer((props: PropsType) => {
               {usdBalance > 0 && '$' + intword(usdBalance)}
             </Text>
 
-            <IconFA
-              name="coins"
-              size={20}
-              style={theme.colorIcon}
+            <IconButton
               onPress={openWallet}
+              name="coins"
+              color="SecondaryText"
+              size="small"
             />
           </View>
         </View>

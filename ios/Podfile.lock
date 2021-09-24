@@ -860,7 +860,7 @@ SPEC CHECKSUMS:
   EXSecureStore: 1b571851e6068b30b8ec097be848a04603c03bae
   EXSQLite: bda6a286dded0637bb312ee781239dcca163ff4b
   FBLazyVector: e686045572151edef46010a6f819ade377dfeb4b
-  FBReactNativeSpec: aed77751d06df1313df482694720f097cc2b7a79
+  FBReactNativeSpec: 9ee71124deb3ad1c36b9cba0b9be90d0a4176c43
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
   hermes-engine: 7d97ba46a1e29bacf3e3c61ecb2804a5ddd02d4f

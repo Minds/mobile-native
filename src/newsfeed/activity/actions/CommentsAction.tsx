@@ -1,10 +1,10 @@
-import React, { Component, useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 
 import { observer } from 'mobx-react';
 
 import { TouchableOpacity } from 'react-native';
 
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from '~base/icons/Icon';
 
 import Counter from './Counter';
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
@@ -31,9 +31,7 @@ type PropsType = {
  */
 const CommentsAction = observer((props: PropsType) => {
   const theme = ThemedStyles.style;
-  const icon = props.entity.allow_comments
-    ? 'chat-bubble'
-    : 'speaker-notes-off';
+  const icon = props.entity.allow_comments ? 'chatSolid' : 'chatOff';
 
   const route: ActivityRouteProp = useRoute();
 
@@ -70,8 +68,9 @@ const CommentsAction = observer((props: PropsType) => {
       testID={props.testID}>
       <Icon
         style={[theme.colorIcon, theme.marginRight]}
+        size="small"
+        color="SecondaryText"
         name={icon}
-        size={21}
       />
       {!props.hideCount && <Counter count={props.entity['comments:count']} />}
     </TouchableOpacityCustom>

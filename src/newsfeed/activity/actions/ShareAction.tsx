@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Linking, Platform, TouchableOpacity } from 'react-native';
 
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from '~base/icons/Icon';
 
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import ThemedStyles from '../../../styles/ThemedStyles';
@@ -94,11 +94,7 @@ export default observer(function ShareAction({ entity }: PropsType) {
     <TouchableOpacityCustom
       style={actionsContainerStyle}
       onPress={localStore.onPress}>
-      <Icon
-        style={ThemedStyles.style.colorIcon}
-        name="share-outline"
-        size={20}
-      />
+      <Icon name="share" size="small" />
       <BottomButtonOptions
         list={options}
         isVisible={localStore.showMenu}

@@ -10,7 +10,9 @@ import type { ColorsType } from './Colors';
 const dynamicStyleHandler = {
   get: function (target, name) {
     // if already exist we return it
-    if (name in target) return target[name];
+    if (name in target) {
+      return target[name];
+    }
 
     // generate dynamic style
     const m =

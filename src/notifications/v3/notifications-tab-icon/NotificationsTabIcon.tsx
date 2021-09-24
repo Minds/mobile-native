@@ -1,8 +1,8 @@
 import { observer } from 'mobx-react';
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
+import Icon from '~base/icons/Icon';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
-import CIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useStores } from '../../../common/hooks/use-stores';
 import ThemedStyles from '../../../styles/ThemedStyles';
 
@@ -47,7 +47,7 @@ const NotificationsTabIcon = observer((props: PropsType) => {
 
   return (
     <View style={styles.container}>
-      <CIcon name="bell" size={size} color={color} />
+      <Icon name="notification" color={color} />
       {showIndicator && Indicator}
     </View>
   );

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from '~base/icons/Icon';
+// import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useStores } from '../common/hooks/use-stores';
 import ChatBubbleIcon from './ChatBubbleIcon';
 
@@ -20,7 +21,7 @@ const ChatTabIcon = ({ color }: PropsType) => {
 
   return (
     <View style={styles.container}>
-      <Icon name="message-outline" size={28} color={color} />
+      <Icon name="chat" color={color} />
       <ChatBubbleIcon chatStore={chat} />
     </View>
   );
