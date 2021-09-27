@@ -2,13 +2,13 @@ import React from 'react';
 import { StyleSheet, View, Dimensions, Text } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { useTransition, mix } from 'react-native-redash';
+import { useKeyboard } from '@react-native-community/hooks';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import ThemedStyles from '../../styles/ThemedStyles';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 import FitScrollView from '../../common/components/FitScrollView';
 import DismissKeyboard from '../../common/components/DismissKeyboard';
-import { useKeyboard } from '@react-native-community/hooks';
 import i18n from '../../common/services/i18n.service';
 import { RouteProp } from '@react-navigation/native';
 import { AuthStackParamList } from '../../navigation/NavigationTypes';

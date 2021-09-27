@@ -34,7 +34,6 @@ jest.mock('@react-navigation/native');
 jest.mock('react-native-gesture-handler');
 jest.mock('react-native-redash');
 jest.mock('../../../src/common/components/KeyboardSpacingView');
-jest.mock('reanimated-bottom-sheet', () => 'BottomSheet');
 jest.mock('@gorhom/bottom-sheet', () => {
   const react = require('react-native');
 

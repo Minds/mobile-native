@@ -16,6 +16,7 @@ import i18n from '../../../common/services/i18n.service';
 import MenuItem from '../../../common/components/menus/MenuItem';
 import { withErrorBoundary } from '../../../common/components/ErrorBoundary';
 import DiscoveryTagsManager from './DiscoveryTagsManager';
+import type { BottomSheetModal } from '@gorhom/bottom-sheet';
 
 interface Props {
   type: 'your' | 'trending';
@@ -34,7 +35,7 @@ const keyExtractor = item => String(item.value);
 export const DiscoveryTagsList = withErrorBoundary(
   observer(({ plus, store, type }: Props) => {
     const navigation = useNavigation<StackNavigationProp<any>>();
-    const ref = React.useRef();
+    const ref = React.useRef<BottomSheetModal>();
 
     useEffect(() => {
       store.loadTags(plus);
