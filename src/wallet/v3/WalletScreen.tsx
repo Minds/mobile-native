@@ -19,10 +19,6 @@ import type {
   AppStackParamList,
 } from '../../navigation/NavigationTypes';
 import CenteredLoading from '../../common/components/CenteredLoading';
-import BottomOptionPopup, {
-  BottomOptionsStoreType,
-  useBottomOption,
-} from '../../common/components/BottomOptionPopup';
 import UsdTab from './currency-tabs/cash/UsdTab';
 import i18n from '../../common/services/i18n.service';
 import { useStores } from '../../common/hooks/use-stores';
@@ -48,7 +44,6 @@ type PropsType = {
 const WalletScreen = observer((props: PropsType) => {
   const theme = ThemedStyles.style;
   const store: WalletStoreType = useStores().wallet;
-  const bottomStore: BottomOptionsStoreType = useBottomOption();
 
   const tokenTabStore = useLocalStore(createTokensTabStore, store);
   const usdTabStore = useLocalStore(createUsdTabStore);
@@ -118,7 +113,6 @@ const WalletScreen = observer((props: PropsType) => {
         body = (
           <TokensTab
             walletStore={store}
-            bottomStore={bottomStore}
             navigation={props.navigation}
             store={tokenTabStore}
           />
@@ -162,15 +156,6 @@ const WalletScreen = observer((props: PropsType) => {
         />
       </View>
       {body}
-      <BottomOptionPopup
-        height={500}
-        title={bottomStore.title}
-        show={bottomStore.visible}
-        onCancel={bottomStore.hide}
-        onDone={bottomStore.onPressDone}
-        content={bottomStore.content}
-        doneText={bottomStore.doneText}
-      />
     </View>
   );
 });

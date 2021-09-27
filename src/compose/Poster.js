@@ -192,7 +192,6 @@ export default observer(function (props) {
           />
         )}
       </ScrollView>
-      <PosterOptions ref={optionsRef} store={props.store} />
       {showBottomBar && (
         <KeyboardSpacingView
           enabled={Platform.OS === 'ios'}
@@ -206,6 +205,7 @@ export default observer(function (props) {
           />
         </KeyboardSpacingView>
       )}
+      <PosterOptions ref={optionsRef} store={props.store} />
       <BottomSheet
         ref={confirmRef}
         title={i18n.t('capture.discardPost')}

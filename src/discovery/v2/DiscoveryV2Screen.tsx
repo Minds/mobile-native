@@ -14,7 +14,6 @@ import { TDiscoveryV2Tabs } from './DiscoveryV2Store';
 import TopbarTabbar from '../../common/components/topbar-tabbar/TopbarTabbar';
 import { DiscoveryTagsList } from './tags/DiscoveryTagsList';
 import FeedList from '../../common/components/FeedList';
-import DiscoveryTagsManager from './tags/DiscoveryTagsManager';
 import InitialOnboardingButton from '../../onboarding/v2/InitialOnboardingButton';
 import { withErrorBoundary } from '../../common/components/ErrorBoundary';
 import { AnimatePresence } from 'moti';
@@ -69,11 +68,6 @@ export const DiscoveryV2Screen = withErrorBoundary(
       return unsubscribe;
     }, [store, navigation]);
 
-    const closeManageTags = () => {
-      store.setShowManageTags(false);
-      store.refreshTrends();
-    };
-
     const screen = () => {
       switch (store.activeTabId) {
         case 'foryou':
@@ -121,11 +115,6 @@ export const DiscoveryV2Screen = withErrorBoundary(
         <View style={theme.flexContainer}>
           <AnimatePresence>{screen()}</AnimatePresence>
         </View>
-        <DiscoveryTagsManager
-          show={store.showManageTags}
-          onCancel={closeManageTags}
-          onDone={closeManageTags}
-        />
       </View>
     );
   }),

@@ -7,6 +7,8 @@ import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import createTwoFactorStore, { Options } from './createTwoFactorStore';
 import settingsService from '../../settings/SettingsService';
+import requirePhoneValidation from '../../common/hooks/requirePhoneValidation';
+import { showNotification } from '../../../AppMessages';
 
 const TwoFactorAuthSettingsScreen = observer(() => {
   const theme = ThemedStyles.style;
@@ -34,17 +36,27 @@ const TwoFactorAuthSettingsScreen = observer(() => {
     },
   ];
 
-  const onConfirmPasswordSuccess = (password: string) => {
+  const onConfirmPasswordSuccess = async (password: string) => {
     const screen =
       localStore.selectedOption === 'app'
         ? 'VerifyAuthAppScreen'
         : localStore.selectedOption === 'sms'
         ? 'VerifyPhoneNumberScreen'
         : 'DisableTFA';
-    navigation.navigate(screen, {
-      store: localStore,
-      password,
-    });
+    if (screen === 'VerifyPhoneNumberScreen') {
+      const response = await requirePhoneValidation(
+        i18n.t('settings.TFAVerifyPhoneDesc1'),
+      );
+      if (response) {
+        navigation.goBack();
+        showNotification(i18n.t('settings.TFAEnabled'));
+      }
+    } else {
+      navigation.navigate(screen, {
+        store: localStore,
+        password,
+      });
+    }
   };
 
   const confirmPassword = () => {

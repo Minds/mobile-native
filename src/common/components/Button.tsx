@@ -1,7 +1,7 @@
+import { TouchableOpacity } from '@gorhom/bottom-sheet';
 import React, { Component } from 'react';
 import {
   Text,
-  TouchableOpacity,
   TextStyle,
   ViewStyle,
   GestureResponderEvent,

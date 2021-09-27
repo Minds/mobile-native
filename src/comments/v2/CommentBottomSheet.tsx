@@ -29,7 +29,7 @@ const BottomSheetLocalStore = ({ onChange }) => ({
 
 const { height: windowHeight } = Dimensions.get('window');
 
-const snapPoints = [-150, Math.floor(windowHeight * 0.85)];
+const snapPoints = ['85%'];
 
 /**
  * Custom background
@@ -104,17 +104,22 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
   );
 
   // renders
-  const renderBackdrop = React.useCallback(
-    props => <BottomSheetBackdrop {...props} pressBehavior="collapse" />,
+
+  const renderBackdrop = useCallback(
+    props => (
+      <BottomSheetBackdrop
+        {...props}
+        pressBehavior="close"
+        opacity={0.5}
+        appearsOnIndex={0}
+        disappearsOnIndex={-1}
+      />
+    ),
     [],
   );
 
   const renderHandle = useCallback(
-    () => (
-      <Handle
-        style={{ backgroundColor: ThemedStyles.getColor('PrimaryBackground') }}
-      />
-    ),
+    () => <Handle style={ThemedStyles.style.bgPrimaryBackground} />,
     [],
   );
 
@@ -122,7 +127,8 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
     <BottomSheet
       key="commentSheet"
       ref={ref}
-      index={0}
+      index={-1}
+      enablePanDownToClose={true}
       onChange={localStore.setOpen}
       containerHeight={windowHeight}
       snapPoints={snapPoints}

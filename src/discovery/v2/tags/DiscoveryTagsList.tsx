@@ -15,6 +15,8 @@ import DiscoveryV2Store, { TDiscoveryTagsTag } from '../DiscoveryV2Store';
 import i18n from '../../../common/services/i18n.service';
 import MenuItem from '../../../common/components/menus/MenuItem';
 import { withErrorBoundary } from '../../../common/components/ErrorBoundary';
+import DiscoveryTagsManager from './DiscoveryTagsManager';
+import type { BottomSheetModal } from '@gorhom/bottom-sheet';
 
 interface Props {
   type: 'your' | 'trending';
@@ -33,6 +35,7 @@ const keyExtractor = item => String(item.value);
 export const DiscoveryTagsList = withErrorBoundary(
   observer(({ plus, store, type }: Props) => {
     const navigation = useNavigation<StackNavigationProp<any>>();
+    const ref = React.useRef<BottomSheetModal>();
 
     useEffect(() => {
       store.loadTags(plus);
@@ -109,10 +112,11 @@ export const DiscoveryTagsList = withErrorBoundary(
           ]}>
           <View style={ThemedStyles.style.flexContainer} />
           <Text
-            onPress={() => store.setShowManageTags(true)}
+            onPress={() => ref.current?.present()}
             style={[ThemedStyles.style.colorTertiaryText]}>
             Manage Tags
           </Text>
+          <DiscoveryTagsManager ref={ref} />
         </View>
       );
     };
