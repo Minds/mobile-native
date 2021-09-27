@@ -12,7 +12,6 @@ import DateTimePicker from 'react-native-modal-datetime-picker';
 import InfoPopup from './InfoPopup';
 
 import ThemedStyles from '../../styles/ThemedStyles';
-import PhoneValidationComponent from './phoneValidation/PhoneValidationComponent';
 import TextInput from './TextInput';
 
 export interface PropsType extends TextInputProps {
@@ -132,23 +131,6 @@ export default class Input extends Component<PropsType> {
   };
 
   /**
-   * Phone input
-   */
-  phoneInput = () => {
-    const theme = ThemedStyles.style;
-    return (
-      <PhoneValidationComponent
-        style={[theme.input, this.props.style]}
-        textStyle={theme.colorPrimaryText}
-        onFocus={this.props.onFocus}
-        onBlur={this.props.onBlur}
-        TFA={this.props.TFA}
-        TFAConfirmed={this.props.TFAConfirmed}
-      />
-    );
-  };
-
-  /**
    * Date input
    */
   dateInput = () => {
@@ -190,8 +172,6 @@ export default class Input extends Component<PropsType> {
       switch (inputType) {
         case 'textInput':
           return this.textInput();
-        case 'phoneInput':
-          return this.phoneInput();
         case 'dateInput':
           return this.dateInput();
       }

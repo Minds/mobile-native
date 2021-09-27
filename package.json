@@ -106,7 +106,7 @@
     "react-native-notifications": "Minds/react-native-notifications#09c0e3278ec966a46c329dda6f79b3659464387f",
     "react-native-orientation-locker": "^1.3.1",
     "react-native-permissions": "^3.0.4",
-    "react-native-phone-input": "thegamenicorus/react-native-phone-input#6ab1a91a09ddd4272fe85e30ecedf092f0fcb1a7",
+    "react-native-phone-number-input": "^2.1.0",
     "react-native-photo-editor": "^1.0.12",
     "react-native-popable": "^0.4.2",
     "react-native-progress": "^4.0.3",

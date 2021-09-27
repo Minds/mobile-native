@@ -72,7 +72,9 @@ export type RootStackParamList = {
   SuggestedChannel: {};
   SuggestedGroups: {};
   PhoneValidation: {
-    onComplete?: Function;
+    onConfirm: Function;
+    onCancel: Function;
+    description?: string;
   };
   WalletWithdrawal: {};
   EarnModal: {};
@@ -184,9 +186,6 @@ export type AppStackParamList = {
     store: TwoFactorStore;
   };
   VerifyAuthAppScreen: {
-    store: TwoFactorStore;
-  };
-  VerifyPhoneNumberScreen: {
     store: TwoFactorStore;
   };
   DisableTFA: {

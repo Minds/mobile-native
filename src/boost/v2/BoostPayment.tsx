@@ -7,7 +7,6 @@ import { BoostStoreType } from './createBoostStore';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { WalletCurrency } from '../../wallet/v2/WalletTypes';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { style } from '../../common/components/phoneValidation/partials/styles';
 
 type PropsType = {
   localStore: BoostStoreType;
