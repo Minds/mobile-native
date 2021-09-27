@@ -1724,6 +1724,11 @@
     immer "^9.0.3"
     nanoid "^3.1.23"
 
+"@growthbook/growthbook@^0.13.0":
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/@growthbook/growthbook/-/growthbook-0.13.0.tgz#f39b2ee281af2f47a58b4bace9a4002f21e96f11"
+  integrity sha512-jjno8cdQC73xEfDK4kCzjjKbA14S+cwuSd7uGZQkQEr1W8D6WVls78SQmG0iika78YMsRI5vQzeWWfRObnywNA==
+
 "@hapi/hoek@^9.0.0":
   version "9.1.1"
   resolved "https://registry.yarnpkg.com/@hapi/hoek/-/hoek-9.1.1.tgz#9daf5745156fd84b8e9889a2dc721f0c58e894aa"
