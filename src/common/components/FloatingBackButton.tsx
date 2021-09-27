@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { StyleSheet } from 'react-native';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -24,6 +24,7 @@ const FloatingBackButton = (props: PropsType) => {
         props.style,
       ]}
       onPress={props.onPress}
+      testID="floatingBackButton"
     />
   );
 };

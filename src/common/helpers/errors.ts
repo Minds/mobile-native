@@ -1,5 +1,6 @@
 //@ts-nocheck
 import { isAbort, isApiError, isNetworkError } from '../services/api.service';
+import { isTokenExpired } from '../services/session.service';
 import { isUserError } from '../UserError';
 
 const isUnexpected = error => {
@@ -12,6 +13,7 @@ export default function shouldReportToSentry(error) {
     isNotUserError = !isUserError(error),
     isNotAbort = !isAbort(error),
     isNotApiError = !isApiError(error),
+    isNotTokenExpiredError = !isTokenExpired(error),
     isUnexpectedError = isUnexpected(error);
 
   return (
@@ -19,6 +21,7 @@ export default function shouldReportToSentry(error) {
     isNotNetworkFail &&
     isNotUserError &&
     isNotAbort &&
+    isNotTokenExpiredError &&
     (isNotApiError || isUnexpectedError)
   );
 }

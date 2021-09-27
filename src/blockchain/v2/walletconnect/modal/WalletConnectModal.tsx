@@ -49,8 +49,9 @@ export default observer(function () {
             <Text>Choose your preferred wallet</Text>
           </View>
 
-          {Wallets.map(wallet => (
+          {Wallets.map((wallet, index) => (
             <TouchableHighlight
+              key={`wallet${index}`}
               activeOpacity={0.9}
               underlayColor="#transparent"
               onPress={() => store.setSelectedWallet(wallet)}>

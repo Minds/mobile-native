@@ -4,13 +4,7 @@ import i18n from '../../../common/services/i18n.service';
 import { ChannelButtonsPropsType } from '../ChannelButtons';
 
 const Edit = (props: ChannelButtonsPropsType) => {
-  return (
-    <Button
-      text={i18n.t('channel.editChannel')}
-      onPress={props.onEditPress}
-      xSmall
-    />
-  );
+  return <Button text={i18n.t('edit')} onPress={props.onEditPress} small />;
 };
 
 export default Edit;

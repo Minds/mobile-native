@@ -58,6 +58,11 @@
     }
   },
   "auth": {
+    "2faRequired": "2FA required",
+    "2faEmailDescription": "To continue, please confirm the two-factor verification code sent to your email address ({{email}}) before continuing.",
+    "2faSmsDescription": "To continue, please confirm the two-factor verification code sent to your phone before continuing.",
+    "2faAppDescription": "To continue, insert a six-digit authentication code using your authenticator app.",
+    "2faInvalid": "Invalid code",
     "fieldRequired": "Required",
     "matchPattern": "Usernames can only have letters, numbers or underscores.",
     "login": "Login",
@@ -93,10 +98,16 @@
     "createNewPassword": "Create a new password",
     "inputUser": "Enter your channel name below to start the password recovery process.",
     "emailSent": "An email with reset instructions has been sent to your inbox.",
-    "followInstuctions": "Follow the intructions contained within to continue the reset process.",
+    "followInstuctions": "Follow the instructions contained within to continue the reset process.",
     "sendAgain": "Send email again",
     "waitMoment": "You have to wait 10 seconds after last time you've requested the email",
     "newPassword": "Create a new password. You’ll use this to access your account."
+  },
+  "multiUser": {
+    "switchChannel": "Switch Account",
+    "login": "Add existing account",
+    "create": "Create new channel",
+    "sessionExpired": "Logged out"
   },
   "blockchain": {
     "exportLegacyWallet": "Export legacy wallets",
@@ -270,6 +281,8 @@
     "editChannel": "Edit Channel",
     "confirmUnsubscribe": "Are you sure you want to unsubscribe from this channel?",
     "subscribe": "Subscribe",
+    "subscribed": "Subscribed",
+    "message": "Message via Chat",
     "requestSubscription": "Request Subscription",
     "briefDescription": "Brief description about you...",
     "block": "Block",
@@ -295,6 +308,11 @@
       "dob": "Date of Birth"
     },
     "badges": "Badges",
+    "badge": {
+      "plus": "Minds Plus",
+      "verified": "Verified",
+      "founder": "Founder"
+    },
     "fabSend": "Send Tip",
     "fabPay": "Tip",
     "share": "Share Channel"
@@ -641,6 +659,7 @@
     "darkMode": "Dark mode",
     "lightMode": "Light mode",
     "other": "Other",
+    "resources": "Resources",
     "referrals": "Referrals",
     "account": "Account",
     "network": "Network",
@@ -780,6 +799,48 @@
       "optOut": "Opt-out",
       "enable": "Enable",
       "disable": "Disable"
+    },
+    "about": {
+      "title": "about",
+      "mobile": "Mobile",
+      "careers": "Careers",
+      "blog": "Blog",
+      "whitepaper": "Whitepaper",
+      "rights": "Bill of Rights",
+      "events": "Events",
+      "store": "Store",
+      "terms": "Terms of Service",
+      "privacy": "Privacy Policy",
+      "content": "Content Policy",
+      "dmca": "DMCA"
+    },
+    "support": {
+      "title": "support",
+      "help": "Help Desk",
+      "contact": "Contact",
+      "community": "Community",
+      "languages": "Languages",
+      "status": "Status"
+    },
+    "business": {
+      "title": "Business",
+      "upgrade": "Upgrade",
+      "token": "Token",
+      "plus": "Plus",
+      "pro": "Pro",
+      "pay": "Pay",
+      "nodes": "Nodes",
+      "boost": "Boost",
+      "rewards": "Rewards",
+      "youtube": "YouTube Migration"
+    },
+    "developers": {
+      "title": "Developers",
+      "docs": "Docs",
+      "community": "Community",
+      "code": "Code",
+      "canary": "Canary",
+      "branding": "Branding"
     }
   },
   "comingSoon": {
@@ -835,6 +896,7 @@
     "infoDateBirth": "Date of Birth",
     "groupTitle": "Groups",
     "numberConfirmed": "Your number has been validated",
+    "phoneNumberInvalid": "Invalid phone number",
     "phoneNumberTooltip": "Your mobile number may be used for additional account security, unique identification and to help your friends find you. This data is private and encrypted.",
     "dateofBirthTooltip": "Please enter your birth date to confirm your age and help us improve our recommendations.",
     "locationTooltip": "Please enter your city to help us connect you with channels in your area. We do not track your exact location.",
@@ -879,6 +941,21 @@
     "totalPaidout": "Total paid out",
     "alltime": "All-time earnings",
     "addressCopied": "Address copied to clipboard",
+    "wire": "Minds Pay",
+    "wireAll": "Memberships & Tips",
+    "partner": "Revenue Share",
+    "plus": "Minds+ Content",
+    "wireReferral": "Minds Pay Commissions",
+    "yourScore": "Your Score",
+    "networkScore": "Network Score",
+    "yourShare": "Your Share",
+    "rewards": {
+      "one": "Reward",
+      "other": "Rewards"
+    },
+    "completeStep": "Please complete the step in your wallet app",
+    "connectFirst": "Connect the wallet first",
+    "verified": "Your On-chain address is now setup and verified",
     "withdraw": {
       "errorOnlyOnceDay": "You can only have one pending withdrawal at a time",
       "errorWithdrawing": "Error withdrawing tokens",
@@ -1153,7 +1230,7 @@
     "button": "NSFW"
   },
   "update": {
-    "title": "Update to v{{version}}",
+    "title": "Updating to v{{version}}",
     "failed": "Error updating the App"
   },
   "searchBar": {
@@ -1358,6 +1435,7 @@
   "uploadFailed": "Upload failed",
   "imageViewer": "View image",
   "remindedBy": "Reminded by",
+  "pinnedPost": "Pinned post",
   "postReminded": "Post has been reminded",
   "remindRemoved": "Remind has been removed",
   "deletedRemind": "This reminded content is unavailable. It may have been deleted or you do not have permission to view it",

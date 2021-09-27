@@ -29,6 +29,7 @@ export default class UserModel extends BaseModel {
    * Eth wallet
    */
   eth_wallet: string = '';
+  time_updated: string = '';
   sums;
   btc_address?: string;
   icontime!: string;

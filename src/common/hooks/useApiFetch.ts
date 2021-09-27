@@ -1,14 +1,11 @@
 import { reaction } from 'mobx';
 import { useAsObservableSource, useLocalStore } from 'mobx-react';
 import { useEffect } from 'react';
-import storageService from '../../common/services/storage.service';
 import apiService, { isAbort } from '../services/api.service';
-import sessionService from '../services/session.service';
+import { storages } from '../services/storage/storages.service';
 
 const getCacheKey = (url: string, params: any) =>
-  `persist:${sessionService.guid}:${url}${
-    params ? `?${JSON.stringify(params)}` : ''
-  }`;
+  `useFetch:${url}${params ? `?${JSON.stringify(params)}` : ''}`;
 
 export interface FetchOptions {
   updateState?: (newData: any, oldData: any) => any;
@@ -27,8 +24,8 @@ export interface FetchStore<T> {
   clearRetryTimer: (boolean) => void;
   setLoading: (v: boolean) => void;
   setError: (v: any) => void;
-  fetch: (object?) => Promise<any>;
-  hydrate: (params: any) => Promise<any>;
+  fetch: (data?: any, retry?: any, options?: FetchOptions) => Promise<any>;
+  hydrate: (params: any) => any;
 }
 
 export interface PostStore<T> extends FetchStore<T> {
@@ -51,7 +48,7 @@ const createStore = ({
   retryTimer: <any>null,
   retryCount: 0,
   loading: false,
-  result: null,
+  result: <any>null,
   error: null,
   clearRetryTimer(clearCount: boolean) {
     if (this.retryTimer !== undefined) {
@@ -63,22 +60,19 @@ const createStore = ({
       this.retryCount = 0;
     }
   },
-  async hydrate(params: any) {
+  hydrate(params: any) {
     if (this.result) {
       return;
     }
     try {
-      const data = await storageService.getItem(getCacheKey(url, params));
-      this.setResult(JSON.parse(data));
+      const data = storages.user?.getMap(getCacheKey(url, params));
+      if (data) this.setResult(data);
     } catch (e) {
       console.error(e);
     }
   },
   persist(params: any) {
-    return storageService.setItem(
-      getCacheKey(url, params),
-      JSON.stringify(this.result),
-    );
+    return storages.user?.setMap(getCacheKey(url, params), this.result);
   },
   setResult(v: any) {
     this.result = v;
@@ -89,12 +83,13 @@ const createStore = ({
   setError(e) {
     this.error = e;
   },
-  async fetch(data?: object, retry = false) {
+  async fetch(data?: object, retry = false, opts: any = {}) {
     if (!data) {
       data = options?.params || {};
     }
     this.clearRetryTimer(!retry);
-    const updateStateMethod = options?.updateState || updateState;
+    const updateStateMethod =
+      opts?.updateState || options?.updateState || updateState;
     this.setLoading(true);
     this.setError(null);
     try {

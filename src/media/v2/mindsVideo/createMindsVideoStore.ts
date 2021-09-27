@@ -2,6 +2,7 @@ import { Platform } from 'react-native';
 import type { AVPlaybackStatus, Video } from 'expo-av';
 import _ from 'lodash';
 import { runInAction } from 'mobx';
+import { activateKeepAwake, deactivateKeepAwake } from 'expo-keep-awake';
 
 import attachmentService from '../../../common/services/attachment.service';
 import logService from '../../../common/services/log.service';
@@ -256,8 +257,10 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
         );
       }
 
+      // do not sleep while video is playing
+      activateKeepAwake();
+
       this.setShowOverlay(false);
-      this.setShowThumbnail(false);
 
       if (Array.isArray(this.sources)) {
         this.video = {
@@ -284,6 +287,10 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
       if (videoPlayerService.current === this) {
         videoPlayerService.clear();
       }
+
+      // can sleep when video is paused
+      deactivateKeepAwake();
+
       this.setPaused(true);
     },
     setPlayer(player: Video) {

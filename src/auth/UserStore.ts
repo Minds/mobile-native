@@ -81,9 +81,6 @@ class UserStore {
 
     this.setUser(response.channel);
 
-    // Load search history
-    searchBarService.init(this.me.guid);
-
     return this.me;
   }
 
@@ -122,8 +119,8 @@ class UserStore {
   /**
    * Get user search history
    */
-  async getSearchHistory() {
-    return await searchBarService.getSearchHistory();
+  getSearchHistory() {
+    return searchBarService.getSearchHistory();
   }
 
   /**

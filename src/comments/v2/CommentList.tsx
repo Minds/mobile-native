@@ -10,8 +10,6 @@ import CommentListHeader from './CommentListHeader';
 import LoadMore from './LoadMore';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { CommentInputContext } from './CommentInput';
-import { GOOGLE_PLAY_STORE } from '../../config/Config';
-import DisabledStoreFeature from '../../common/components/DisabledStoreFeature';
 import sessionService from '../../common/services/session.service';
 import GroupModel from '../../groups/GroupModel';
 import FastImage from 'react-native-fast-image';
@@ -60,12 +58,10 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
         // open focused if necessary
         const focused = props.store.comments.find(c => c.expanded);
         if (focused) {
-          if (!GOOGLE_PLAY_STORE) {
-            navigation.push('ReplyComment', {
-              comment: focused,
-              entity: props.store.entity,
-            });
-          }
+          navigation.push('ReplyComment', {
+            comment: focused,
+            entity: props.store.entity,
+          });
         } else {
           const index = props.store.comments.findIndex(c => c.focused);
           if (index && index > 0) {
@@ -107,16 +103,16 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
             />
           </View>
         )}
-        {!GOOGLE_PLAY_STORE && (
-          <TouchableOpacity
-            onPress={() => props.store.setShowInput(true)}
-            style={styles.touchableStyles}>
-            <FastImage source={user.getAvatarSource()} style={styles.avatar} />
-            <Text style={styles.reply}>
-              {i18n.t(props.store.parent ? 'activity.typeReply' : placeHolder)}
-            </Text>
-          </TouchableOpacity>
-        )}
+
+        <TouchableOpacity
+          onPress={() => props.store.setShowInput(true)}
+          style={styles.touchableStyles}>
+          <FastImage source={user.getAvatarSource()} style={styles.avatar} />
+          <Text style={styles.reply}>
+            {i18n.t(props.store.parent ? 'activity.typeReply' : placeHolder)}
+          </Text>
+        </TouchableOpacity>
+
         <LoadMore store={props.store} next={true} />
       </>
     );
@@ -132,28 +128,18 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
   return (
     <View style={styles.container}>
       <CommentListHeader store={props.store} />
-      {GOOGLE_PLAY_STORE ? (
-        <DisabledStoreFeature
-          style={[
-            theme.bgPrimaryBackground,
-            theme.flexContainer,
-            theme.padding4x,
-          ]}
-        />
-      ) : (
-        <BottomSheetFlatList
-          focusHook={useFocusEffect}
-          ref={ref}
-          data={props.store.comments.slice()}
-          ListHeaderComponent={Header}
-          ListFooterComponent={Footer}
-          keyExtractor={keyExtractor}
-          onEndReached={loadMore}
-          renderItem={renderItem}
-          style={styles.list}
-          contentContainerStyle={styles.listContainer}
-        />
-      )}
+      <BottomSheetFlatList
+        focusHook={useFocusEffect}
+        ref={ref}
+        data={props.store.comments.slice()}
+        ListHeaderComponent={Header}
+        ListFooterComponent={Footer}
+        keyExtractor={keyExtractor}
+        onEndReached={loadMore}
+        renderItem={renderItem}
+        style={styles.list}
+        contentContainerStyle={styles.listContainer}
+      />
     </View>
   );
 };

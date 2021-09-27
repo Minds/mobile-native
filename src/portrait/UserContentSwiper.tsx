@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
 import { View } from 'react-native';
-import { ActivityFullScreenParamList } from '../navigation/NavigationTypes';
-import { RouteProp, useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 import { useLocalStore, observer } from 'mobx-react';
 import { useOnFocus } from '@msantang78/react-native-pager';
 import ThemedStyles from '../styles/ThemedStyles';
@@ -11,11 +10,6 @@ import MetadataService from '../common/services/metadata.service';
 import PortraitPaginator from './PortraitPaginator';
 import { PortraitBarItem } from './createPortraitStore';
 import PortraitActivity from './PortraitActivity';
-
-type ActivityFullScreenRouteProp = RouteProp<
-  ActivityFullScreenParamList,
-  'PortraitViewerScreen'
->;
 
 type PropsType = {
   item: PortraitBarItem;

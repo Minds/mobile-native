@@ -1,6 +1,6 @@
 import { Platform } from 'react-native';
 
-import Router from './push/v2/router';
+import { router } from './push/v2/router';
 import logService from './log.service';
 import type IosPlatfom from './push/ios-platform';
 import type AndroidPlatfom from './push/android-platform';
@@ -10,7 +10,6 @@ import type AndroidPlatfom from './push/android-platform';
  */
 export class PushService {
   push: IosPlatfom | AndroidPlatfom;
-  router;
 
   /**
    * Constructor
@@ -28,7 +27,7 @@ export class PushService {
       const data = notification.getData();
       if (data.json) data.json = JSON.parse(data.json);
       // navigate
-      this.router.navigate(data);
+      router.navigate(data);
     });
 
     this.push.setOnInitialNotification(notification => {
@@ -37,7 +36,7 @@ export class PushService {
       if (data.json) data.json = JSON.parse(data.json);
       // delay navigation on app start
       setTimeout(() => {
-        this.router.navigate(data);
+        router.navigate(data);
       }, 500);
     });
   }
@@ -46,7 +45,6 @@ export class PushService {
    * Init
    */
   init() {
-    this.router = new Router();
     try {
       this.push.init();
     } catch (err) {
@@ -92,6 +90,13 @@ export class PushService {
    */
   handleInitialNotification() {
     this.push.handleInitialNotification();
+  }
+
+  /**
+   * Request notification permission
+   */
+  requestNotificationPermission() {
+    return this.push.requestPermission();
   }
 }
 

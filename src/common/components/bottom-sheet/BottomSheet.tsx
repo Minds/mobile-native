@@ -1,11 +1,10 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useCallback, useMemo } from 'react';
 import { BottomSheetModal, BottomSheetModalProps } from '@gorhom/bottom-sheet';
 import { StatusBar, Text, View } from 'react-native';
 import ThemedStyles, { useStyle } from '../../../styles/ThemedStyles';
-import Handle from './Handle';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
 import Backdrop from './Backdrop';
+import Handle from './Handle';
 
 interface PropsType extends Omit<BottomSheetModalProps, 'snapPoints'> {
   title?: string;
@@ -13,6 +12,7 @@ interface PropsType extends Omit<BottomSheetModalProps, 'snapPoints'> {
   detail?: string;
   autoShow?: boolean;
   snapPoints?: Array<number | string>;
+  forceHeight?: number;
 }
 
 export default forwardRef<BottomSheetModal, PropsType>((props, ref) => {
@@ -23,7 +23,7 @@ export default forwardRef<BottomSheetModal, PropsType>((props, ref) => {
   const insets = useSafeAreaInsets();
 
   const contStyle = useStyle(styles.contentContainer, {
-    paddingBottom: insets.bottom || 10,
+    paddingBottom: insets.bottom || 24,
   });
 
   React.useEffect(() => {
@@ -45,9 +45,9 @@ export default forwardRef<BottomSheetModal, PropsType>((props, ref) => {
         layout: { height },
       },
     }) => {
-      height && setContentHeight(height);
+      height && setContentHeight(props.forceHeight || height);
     },
-    [],
+    [props.forceHeight],
   );
 
   // renders
@@ -56,12 +56,15 @@ export default forwardRef<BottomSheetModal, PropsType>((props, ref) => {
     [],
   );
 
+  const renderHandle = useCallback(() => <Handle />, []);
+
   return (
     <BottomSheetModal
       ref={ref}
       topInset={StatusBar.currentHeight || 0}
-      handleComponent={Handle}
+      handleComponent={renderHandle}
       snapPoints={snapPointsMemo}
+      backgroundComponent={null}
       backdropComponent={renderBackdrop}
       style={styles.sheetContainer as any}
       {...other}>
@@ -75,7 +78,7 @@ export default forwardRef<BottomSheetModal, PropsType>((props, ref) => {
 });
 
 const styles = ThemedStyles.create({
-  contentContainer: ['bgPrimaryBackgroundHighlight', 'paddingHorizontal5x'],
+  contentContainer: ['bgPrimaryBackgroundHighlight'],
   title: ['fontXXL', 'bold', 'textCenter', 'marginVertical3x'],
   detail: [
     'fontL',

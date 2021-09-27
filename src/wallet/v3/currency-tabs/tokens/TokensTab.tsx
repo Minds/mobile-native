@@ -22,14 +22,7 @@ import sessionService from '../../../../common/services/session.service';
 import apiService from '../../../../common/services/api.service';
 import { showNotification } from '../../../../../AppMessages';
 import { TokensTabStore } from './createTokensTabStore';
-
-export const options: Array<ButtonTabType<TokensOptions>> = [
-  { id: 'rewards', title: 'Rewards' },
-  { id: 'earnings', title: 'Earnings' },
-  { id: 'balance', title: 'Balance' },
-  { id: 'transactions', title: 'Transactions' },
-  { id: 'settings', title: 'Settings' },
-];
+import i18n from '../../../../common/services/i18n.service';
 
 type PropsType = {
   walletStore: WalletStoreType;
@@ -46,6 +39,15 @@ const TokensTab = observer(
     const theme = ThemedStyles.style;
     const onchainStore = useUniqueOnchain();
     const wc = useWalletConnect();
+
+    const options: Array<ButtonTabType<TokensOptions>> = [
+      { id: 'rewards', title: i18n.t('wallet.rewards', { count: 2 }) },
+      { id: 'earnings', title: i18n.t('wallet.usd.earnings') },
+      { id: 'balance', title: i18n.t('blockchain.balance') },
+      { id: 'transactions', title: i18n.t('wallet.transactions.transactions') },
+      { id: 'settings', title: i18n.t('moreScreen.settings') },
+    ];
+
     const connectWallet = React.useCallback(async () => {
       const user = sessionService.getUser();
 
@@ -57,17 +59,13 @@ const TokensTab = observer(
       await wc.connect();
 
       if (!wc.connected || !wc.web3 || !wc.provider) {
-        throw new Error('Connect the wallet first');
+        throw new Error(i18n.t('wallet.connectFirst'));
       }
 
       try {
         onchainStore.setLoading(true);
 
-        showNotification(
-          'Please complete the step in your wallet app',
-          'info',
-          0,
-        );
+        showNotification(i18n.t('wallet.completeStep'), 'info', 0);
         wc.openWalletApp();
 
         const signature = await wc.provider.connector.signPersonalMessage([
@@ -92,7 +90,7 @@ const TokensTab = observer(
             onchainStore?.fetch();
           }, 1000);
 
-          showNotification('Your On-chain address is now setup and verified');
+          showNotification(i18n.t('wallet.verified'));
         } catch (error) {
           throw 'Request Failed ' + error;
         }

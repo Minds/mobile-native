@@ -85,7 +85,7 @@ export default class ExplicitText extends Component<PropsType, StateType> {
         : '';
     let message = entity.text ? entities.decodeHTML(entity.text).trim() : '';
 
-    if (title === message) {
+    if (title === message || entity.subtype === 'blog') {
       message = '';
     }
 

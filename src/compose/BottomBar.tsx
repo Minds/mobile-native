@@ -28,6 +28,7 @@ export default function BottomBar(props) {
           name="image"
           style={iconStyle}
           onPress={() => props.store.selectFromGallery(props.store.mode)}
+          testID="attachImage"
         />
       )}
       {!props.store.isEdit && (
@@ -62,6 +63,7 @@ export default function BottomBar(props) {
         size={27}
         style={iconStyle}
         onPress={props.onOptions}
+        testID="postOptions"
       />
     </View>
   );

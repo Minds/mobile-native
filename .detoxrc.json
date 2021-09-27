@@ -5,12 +5,12 @@
     "ios": {
       "type": "ios.app",
       "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/Minds.app",
-      "build": "xcodebuild -workspace ios/Minds.xcworkspace -configuration Debug -scheme Minds -destination 'platform=iOS Simulator,name=iPhone 12' -derivedDataPath ios/build"
+      "build": "RN_SRC_EXT=e2e.ts,e2e.tsx xcodebuild -workspace ios/Minds.xcworkspace -configuration Debug -scheme Minds -destination 'platform=iOS Simulator,name=iPhone 12' -derivedDataPath ios/build"
     },
     "ios.release": {
       "type": "ios.app",
       "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/Minds.app",
-      "build": "SENTRY=No xcodebuild -workspace ios/Minds.xcworkspace -configuration Release -scheme Minds -destination 'platform=iOS Simulator,name=iPhone 12' -derivedDataPath ios/build ONLY_ACTIVE_ARCH=YES"
+      "build": "RN_SRC_EXT=e2e.ts,e2e.tsx SENTRY=No xcodebuild -workspace ios/Minds.xcworkspace -configuration Release -scheme Minds -destination 'platform=iOS Simulator,name=iPhone 12' -derivedDataPath ios/build ONLY_ACTIVE_ARCH=YES"
     },
     "android": {
       "type": "android.apk",

@@ -27,6 +27,15 @@ export default observer(function MediaPreview(props: PropsType) {
   const { width } = useDimensions().window;
   const [videoSize, setVideoSize] = useState<VideoSizeType>(null);
 
+  const onVideoLoaded = React.useCallback(e => {
+    if (e.naturalSize.orientation === 'portrait' && Platform.OS === 'ios') {
+      const w = e.naturalSize.width;
+      e.naturalSize.width = e.naturalSize.height;
+      e.naturalSize.height = w;
+    }
+    setVideoSize(e.naturalSize);
+  }, []);
+
   if (!props.store.attachment.hasAttachment) {
     return null;
   }
@@ -67,6 +76,7 @@ export default observer(function MediaPreview(props: PropsType) {
         <View>
           {!props.store.isEdit && !props.store.portraitMode && (
             <TouchableOpacity
+              testID="AttachmentDeleteButton"
               onPress={() =>
                 props.store.attachment.cancelOrDelete(!props.store.isEdit)
               }
@@ -99,17 +109,7 @@ export default observer(function MediaPreview(props: PropsType) {
             containerStyle={previewStyle}
             resizeMode={ResizeMode.CONTAIN}
             autoplay
-            onReadyForDisplay={e => {
-              if (
-                e.naturalSize.orientation === 'portrait' &&
-                Platform.OS === 'ios'
-              ) {
-                const w = e.naturalSize.width;
-                e.naturalSize.width = e.naturalSize.height;
-                e.naturalSize.height = w;
-              }
-              setVideoSize(e.naturalSize);
-            }}
+            onReadyForDisplay={onVideoLoaded}
           />
         </View>
       )}

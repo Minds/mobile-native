@@ -13,7 +13,6 @@ import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
 import featuresService from '../common/services/features.service';
 import sessionService from '../common/services/session.service';
-import { GOOGLE_PLAY_STORE } from '../config/Config';
 import FitScrollView from '../common/components/FitScrollView';
 
 const ICON_SIZE = 25;
@@ -29,16 +28,14 @@ const getOptionsList = navigation => {
         navigation.navigate('Newsfeed');
       },
     },
-    !GOOGLE_PLAY_STORE
-      ? {
-          name: i18n.t('discovery.title'),
-          icon: <IconFo name="hash" size={ICON_SIZE - 4} style={iconStyle} />,
-          onPress: () => {
-            navigation.navigate('Discovery');
-          },
-        }
-      : null,
-    featuresService.has('plus-2020') && !GOOGLE_PLAY_STORE
+    {
+      name: i18n.t('discovery.title'),
+      icon: <IconFo name="hash" size={ICON_SIZE - 4} style={iconStyle} />,
+      onPress: () => {
+        navigation.navigate('Discovery');
+      },
+    },
+    featuresService.has('plus-2020')
       ? {
           name: i18n.t('wire.lock.plus'),
           icon: (
@@ -158,15 +155,28 @@ export default function Drawer(props) {
           <TouchableOpacity onPress={navToChannel}>
             <Image source={avatar} style={styles.wrappedAvatar} />
           </TouchableOpacity>
-          <View style={titleContainerStyle}>
-            <Text style={titleStyle} onPress={navToChannel}>
-              {channel.name || `@${channel.username}`}
-            </Text>
-            {channel.name && (
-              <Text onPress={navToChannel} style={subtitleStyle}>
-                @{channel.username}
+          <View style={styles.row}>
+            <View style={titleContainerStyle}>
+              <Text style={titleStyle} onPress={navToChannel}>
+                {channel.name || `@${channel.username}`}
               </Text>
-            )}
+              {channel.name && (
+                <Text
+                  onPress={navToChannel}
+                  style={subtitleStyle}
+                  testID="channelUsername">
+                  @{channel.username}
+                </Text>
+              )}
+            </View>
+            <IconMC
+              name="account-box-multiple"
+              size={ICON_SIZE}
+              style={ThemedStyles.style.centered}
+              color={ThemedStyles.getColor('SecondaryText')}
+              onPress={() => props.navigation.navigate('MultiUserScreen')}
+              testID="multiUserIcon"
+            />
           </View>
         </View>
         <View style={styles.body}>
@@ -174,15 +184,17 @@ export default function Drawer(props) {
             !l ? null : (
               <ListItem
                 Component={TouchableOpacity}
-                key={i}
-                title={l.name}
-                titleStyle={menuTitleStyle}
-                containerStyle={styles.listItem}
                 pad={5}
-                leftIcon={l.icon}
+                key={i}
                 onPress={l.onPress}
-                // testID={l.name}
-              />
+                containerStyle={styles.listItem}>
+                {l.icon}
+                <ListItem.Content>
+                  <ListItem.Title style={menuTitleStyle}>
+                    {l.name}
+                  </ListItem.Title>
+                </ListItem.Content>
+              </ListItem>
             ),
           )}
         </View>
@@ -236,8 +248,12 @@ const styles = StyleSheet.create({
   listItem: {
     borderBottomWidth: 0,
     backgroundColor: 'transparent',
-    paddingTop: 0,
-    paddingBottom: Platform.select({ ios: 30, android: 25 }),
+    paddingVertical: Platform.select({ ios: 15, android: 12.5 }),
+  },
+  row: {
+    flexDirection: 'row',
+    flex: 1,
+    paddingRight: 30,
   },
 });
 const menuTitleStyle = ThemedStyles.combine(

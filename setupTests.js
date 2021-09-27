@@ -15,6 +15,10 @@ global.XMLHttpRequest = XMLHttpRequest;
 
 configure({ adapter: new Adapter() });
 
+jest.mock('react-native-reanimated', () =>
+  require('react-native-reanimated/mock'),
+);
+
 jest.mock('./src/common/services/analytics.service');
 jest.mock('./src/newsfeed/NewsfeedService');
 

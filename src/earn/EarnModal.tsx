@@ -9,11 +9,12 @@ import {
 import UniswapWidget from '../common/components/uniswap-widget/UniswapWidget';
 import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
-import mindsService from '../common/services/minds.service';
+import mindsConfigService from '../common/services/minds-config.service';
 import { observer, useLocalStore } from 'mobx-react';
 import createLocalStore from './createLocalStore';
 import ModalScreen from '../common/components/ModalScreen';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { ONCHAIN_ENABLED } from '../config/Config';
 
 const linkTo = (dest: string) =>
   Linking.openURL(`https://www.minds.com/${dest}`);
@@ -69,11 +70,8 @@ export default observer(function ({ navigation }) {
   const localStore = useLocalStore(createLocalStore);
 
   useEffect(() => {
-    const getSettings = async () => {
-      const settings = await mindsService.getSettings();
-      localStore.setTokenAddress(settings.blockchain.token.address);
-    };
-    getSettings();
+    const settings = mindsConfigService.getSettings();
+    localStore.setTokenAddress(settings.blockchain.token.address);
   }, [localStore]);
 
   const navTo = (screen: string, options = {}) =>
@@ -87,11 +85,7 @@ export default observer(function ({ navigation }) {
       icon: 'plus-circle-outline',
       onPress: localStore.toggleUniswapWidget,
     },
-    {
-      name: 'transfer',
-      icon: 'swap-horizontal',
-      onPress: openWithdrawal,
-    },
+
     {
       name: 'create',
       icon: 'plus-box',
@@ -103,6 +97,14 @@ export default observer(function ({ navigation }) {
       onPress: () => navTo('Referrals'),
     },
   ];
+
+  if (ONCHAIN_ENABLED) {
+    earnItems.push({
+      name: 'transfer',
+      icon: 'swap-horizontal',
+      onPress: openWithdrawal,
+    });
+  }
 
   const resourcesItems = [
     {

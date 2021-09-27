@@ -54,9 +54,10 @@ const VerifyPhoneNumberScreen = observer(({ route }: PropsType) => {
     },
     async send() {
       try {
-        await phoneValidationStore.joinAction();
-        this.buttonText = 'confirm';
-        this.labelText = 'onboarding.confirmationCode';
+        if (await phoneValidationStore.joinAction()) {
+          this.buttonText = 'confirm';
+          this.labelText = 'onboarding.confirmationCode';
+        }
       } catch (err) {}
     },
     get onContinue() {

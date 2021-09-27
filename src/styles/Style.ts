@@ -23,7 +23,10 @@ const dynamicStyleHandler = {
       target[name] = m;
       return target[name];
     }
-    throw new Error(`Style not defined: ${name}`);
+    if (__DEV__) {
+      throw new Error(`Style not defined: ${name}`);
+    }
+    return null;
   },
 };
 
@@ -138,6 +141,12 @@ const _buildStyle = (theme: ColorsType) =>
       bottom: 0,
       right: 0,
     },
+    positionAbsoluteTop: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+    },
     positionAbsoluteTopLeft: {
       position: 'absolute',
       top: 0,
@@ -146,6 +155,12 @@ const _buildStyle = (theme: ColorsType) =>
     positionAbsoluteTopRight: {
       position: 'absolute',
       top: 0,
+      right: 0,
+    },
+    positionAbsoluteBottom: {
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
       right: 0,
     },
     positionAbsoluteBottomLeft: {

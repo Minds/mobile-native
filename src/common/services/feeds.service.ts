@@ -2,7 +2,7 @@
 import logService from './log.service';
 import apiService, { isNetworkError } from './api.service';
 import entitiesService from './entities.service';
-import feedsStorage from './sql/feeds.storage';
+import feedsStorage from './storage/feeds.storage';
 import { showMessage } from 'react-native-flash-message';
 import i18n from './i18n.service';
 import connectivityService from './connectivity.service';
@@ -137,7 +137,7 @@ export default class FeedsService {
 
     const plainEntity = entity.toPlainObject();
 
-    entitiesService.addEntity(plainEntity, true);
+    entitiesService.save(plainEntity);
     // save without wait
     feedsStorage.save(this);
   }
@@ -420,12 +420,12 @@ export default class FeedsService {
    * Remove all from owner
    * @param {string} guid
    */
-  async removeFromOwner(guid: string): Promise<void> {
+  removeFromOwner(guid: string): Promise<void> {
     let count = this.feed.length;
     this.feed = this.feed.filter(e => !e.owner_guid || e.owner_guid !== guid);
     count -= this.feed.length;
     this.offset -= count;
-    await feedsStorage.save(this);
+    feedsStorage.save(this);
   }
 
   /**

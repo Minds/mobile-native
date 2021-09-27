@@ -10,6 +10,8 @@ import KeychainService from './keychain.service';
 
 /**
  * Storage service
+ * THIS SERVICE WILL BE DEPRECATED
+ * use storages service instead
  */
 class StorageService {
   /**

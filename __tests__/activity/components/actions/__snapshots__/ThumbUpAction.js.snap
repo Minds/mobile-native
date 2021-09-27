@@ -22,20 +22,12 @@ exports[`Thumb action component renders correctly 1`] = `
   }
   testID="Thumb up activity button"
 >
-  <Icon
-    allowFontScaling={false}
+  <AnimatedThumb
+    canVote={true}
+    down={false}
     name="thumb-up"
     size={21}
-    style={
-      Array [
-        Object {
-          "color": "#7D7D82",
-        },
-        Object {
-          "marginRight": 5,
-        },
-      ]
-    }
+    voted={false}
   />
 </preventDoubleTap(TouchableOpacity)>
 `;

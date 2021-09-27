@@ -22,6 +22,7 @@ const animSpec = {
  */
 const AuthTransition = {
   gestureDirection: 'horizontal',
+  cardStyle: { backgroundColor: 'transparent' },
   transitionSpec: {
     open: animSpec,
     close: animSpec,

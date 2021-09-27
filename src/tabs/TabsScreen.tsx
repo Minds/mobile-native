@@ -1,6 +1,9 @@
 import React, { useCallback } from 'react';
 
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {
+  createBottomTabNavigator,
+  BottomTabNavigationOptions,
+} from '@react-navigation/bottom-tabs';
 import {
   View,
   Platform,
@@ -8,12 +11,11 @@ import {
   StyleSheet,
   Dimensions,
   PlatformIOSStatic,
-  Text,
 } from 'react-native';
 
 import NewsfeedScreen from '../newsfeed/NewsfeedScreen';
 import NotificationsScreen from '../notifications/v3/NotificationsScreen';
-import ThemedStyles, { useStyle } from '../styles/ThemedStyles';
+import ThemedStyles, { useMemoStyle } from '../styles/ThemedStyles';
 import TabIcon from './TabIcon';
 import NotificationIcon from '../notifications/v3/notifications-tab-icon/NotificationsTabIcon';
 import gatheringService from '../common/services/gathering.service';
@@ -24,8 +26,6 @@ import Topbar from '../topbar/Topbar';
 import { InternalStack } from '../navigation/NavigationStack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import TopShadow from '../common/components/TopShadow';
-import { GOOGLE_PLAY_STORE } from '../config/Config';
-import i18n from '../common/services/i18n.service';
 import sessionService from '../common/services/session.service';
 import { useStores } from '../common/hooks/use-stores';
 import ChatTabIcon from '../chat/ChatTabIcon';
@@ -57,19 +57,6 @@ const isPad = (Platform as PlatformIOSStatic).isPad;
 
 const Tab = createBottomTabNavigator<TabParamList>();
 
-const Discovery = GOOGLE_PLAY_STORE
-  ? () => {
-      const theme = ThemedStyles.style;
-      return (
-        <View style={[theme.flexContainer, theme.centered, theme.padding4x]}>
-          <Text style={[theme.fontXL, theme.textCenter]}>
-            {i18n.t('postCantBeShown')}
-          </Text>
-        </View>
-      );
-    }
-  : DiscoveryV2Screen;
-
 const TabBar = ({ state, descriptors, navigation }) => {
   const focusedOptions = descriptors[state.routes[state.index].key].options;
   const insets = useSafeAreaInsets();
@@ -83,11 +70,14 @@ const TabBar = ({ state, descriptors, navigation }) => {
       : 10,
   };
 
-  const containerStyle = useStyle(
-    'rowJustifySpaceEvenly',
-    'bgSecondaryBackground',
-    styles.tabBar,
-    bottomInset,
+  const containerStyle = useMemoStyle(
+    [
+      'rowJustifySpaceEvenly',
+      'bgSecondaryBackground',
+      styles.tabBar,
+      bottomInset,
+    ],
+    [insets.bottom],
   );
 
   if (focusedOptions.tabBarVisible === false) {
@@ -130,6 +120,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
 
         return (
           <Component
+            key={`tab${index}`}
             accessibilityRole="button"
             accessibilityState={focused ? focusedState : null}
             accessibilityLabel={options.tabBarAccessibilityLabel}
@@ -165,30 +156,6 @@ const Tabs = observer(function ({ navigation }) {
     return null;
   }
 
-  const messenger = (
-    <Tab.Screen
-      name="MessengerTab"
-      component={empty}
-      options={messengerOptions}
-    />
-  );
-
-  const discovery = (
-    <Tab.Screen
-      name="Discovery"
-      component={Discovery}
-      options={discoveryOptions}
-    />
-  );
-
-  const lastTab = GOOGLE_PLAY_STORE ? (
-    <Tab.Screen name="User" component={empty} options={userOptions} />
-  ) : (
-    messenger
-  );
-
-  const secondTab = GOOGLE_PLAY_STORE ? messenger : discovery;
-
   return (
     <View style={theme.flexContainer}>
       <Topbar navigation={navigation} />
@@ -201,7 +168,11 @@ const Tabs = observer(function ({ navigation }) {
           component={NewsfeedScreen}
           options={{ tabBarTestID: 'Menu tab button' }}
         />
-        {secondTab}
+        <Tab.Screen
+          name="Discovery"
+          component={DiscoveryV2Screen}
+          options={discoveryOptions}
+        />
         <Tab.Screen
           name="CaptureTab"
           component={InternalStack}
@@ -212,6 +183,7 @@ const Tabs = observer(function ({ navigation }) {
                 {...props}
                 onPress={navToCapture}
                 onLongPress={navToVideoCapture}
+                testID="CaptureTouchableButton"
               />
             ),
           }}
@@ -221,7 +193,11 @@ const Tabs = observer(function ({ navigation }) {
           component={NotificationsScreen}
           options={notificationOptions}
         />
-        {lastTab}
+        <Tab.Screen
+          name="MessengerTab"
+          component={empty}
+          options={messengerOptions}
+        />
       </Tab.Navigator>
     </View>
   );
@@ -265,7 +241,8 @@ const userOptions = {
   tabBarButton: props => <TouchableOpacity {...props} onPress={navToChannel} />,
 };
 const empty = () => null;
-const tabOptions = ({ route }) => ({
+const tabOptions = ({ route }): BottomTabNavigationOptions => ({
+  headerShown: false,
   tabBarIcon: ({ focused }) => {
     const color = focused
       ? ThemedStyles.getColor('Link')
@@ -285,7 +262,7 @@ const tabOptions = ({ route }) => ({
         iconsize = 42;
         break;
       case 'Discovery':
-        iconName = 'hashtag';
+        iconName = 'search';
         iconsize = 24;
         break;
       case 'Notifications':

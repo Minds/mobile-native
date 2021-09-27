@@ -1,4 +1,4 @@
-const registry = require('@walletconnect/registry-server/public/data/wallets.json');
+const registry = require('./wallets.json');
 import {
   IMobileRegistryEntry,
   IAppRegistry,

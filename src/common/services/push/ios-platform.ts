@@ -23,7 +23,6 @@ export default class IosPlatfom extends AbstractPlatform {
       'notificationOpened',
       this._onNotificationOpened.bind(this),
     );
-    NotificationsIOS.requestPermissions();
   }
 
   /**
@@ -72,6 +71,10 @@ export default class IosPlatfom extends AbstractPlatform {
     } catch (err) {
       logService.exception('[PushService]', err);
     }
+  }
+
+  requestPermission() {
+    return NotificationsIOS.requestPermissions();
   }
 
   /**

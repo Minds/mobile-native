@@ -90,25 +90,10 @@ export default class Activity extends Component<PropsType> {
     const navOpts = {
       entity: this.props.entity,
       hydrate: false,
-      feed: undefined as FeedStore | undefined,
-      current: 0,
     };
 
     if (this.props.entity.remind_object || this.props.hydrateOnNav) {
       navOpts.hydrate = true;
-    }
-
-    if (this.props.entity.__list && !this.props.isReminded) {
-      const index = this.props.entity.__list.entities.findIndex(
-        e => e === this.props.entity,
-      );
-      navOpts.feed = this.props.entity.__list;
-      navOpts.current = index;
-      this.props.navigation.push('ActivityFullScreenNav', {
-        screen: 'ActivityFullScreen',
-        params: navOpts,
-      });
-      return;
     }
 
     this.props.navigation.push('Activity', navOpts);
@@ -160,7 +145,15 @@ export default class Activity extends Component<PropsType> {
             const user = sessionService.getUser();
             if (
               !user.disable_autoplay_videos &&
-              !settingsStore.dataSaverEnabled
+              !settingsStore.dataSaverEnabled &&
+              !(
+                // do not autoplay minds+ videos for non plus users
+                (
+                  !user.plus &&
+                  this.props.entity.getLockType &&
+                  this.props.entity.getLockType() === 'plus'
+                )
+              )
             ) {
               const state = NavigationService.getCurrentState();
 

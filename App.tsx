@@ -13,7 +13,6 @@ import {
   AppState,
   Linking,
   Text,
-  StatusBar,
   UIManager,
   RefreshControl,
   YellowBox,
@@ -24,6 +23,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import ShareMenu from 'react-native-share-menu';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import Orientation from 'react-native-orientation-locker';
 
 import NavigationService, {
   setTopLevelNavigator,
@@ -50,8 +50,6 @@ import { WCContextProvider } from './src/blockchain/v2/walletconnect/WalletConne
 import analyticsService from './src/common/services/analytics.service';
 
 YellowBox.ignoreWarnings(['']);
-
-const stores = getStores();
 
 const appInitManager = new AppInitManager();
 appInitManager.initializeServices();
@@ -99,6 +97,7 @@ class App extends Component<Props, State> {
 
   constructor(props) {
     super(props);
+    Orientation.lockToPortrait();
 
     // workaround to set default font;
 
@@ -190,50 +189,44 @@ class App extends Component<Props, State> {
       return null;
     }
 
+    const stores = getStores();
+
     const isLoggedIn = sessionService.userLoggedIn;
 
-    const statusBarStyle =
-      ThemedStyles.theme === 0 ? 'dark-content' : 'light-content';
-
-    const app = (
-      <SafeAreaProvider key={'App'}>
-        <ScreenHeightProvider>
-          <NavigationContainer
-            ref={setTopLevelNavigator}
-            theme={ThemedStyles.navTheme}
-            onReady={appInitManager.onNavigatorReady}
-            onStateChange={analyticsService.onNavigatorStateChange}>
-            <StoresProvider>
-              <Provider key="app" {...stores}>
-                <BottomSheetModalProvider>
-                  <ErrorBoundary
-                    message="An error occurred"
-                    containerStyle={ThemedStyles.style.centered}>
-                    <StatusBar
-                      barStyle={statusBarStyle}
-                      backgroundColor={ThemedStyles.getColor(
-                        'SecondaryBackground',
-                      )}
-                    />
-                    <WCContextProvider>
-                      <NavigationStack
-                        key={ThemedStyles.theme + i18n.locale}
-                        isLoggedIn={isLoggedIn}
-                      />
-                    </WCContextProvider>
-                    <AppMessages />
-                  </ErrorBoundary>
-                </BottomSheetModalProvider>
-              </Provider>
-            </StoresProvider>
-          </NavigationContainer>
-        </ScreenHeightProvider>
-      </SafeAreaProvider>
+    return (
+      <>
+        <SafeAreaProvider>
+          <ScreenHeightProvider>
+            {sessionService.ready && (
+              <NavigationContainer
+                ref={setTopLevelNavigator}
+                theme={ThemedStyles.navTheme}
+                onReady={appInitManager.onNavigatorReady}
+                onStateChange={analyticsService.onNavigatorStateChange}>
+                <StoresProvider>
+                  <Provider key="app" {...stores}>
+                    <BottomSheetModalProvider>
+                      <ErrorBoundary
+                        message="An error occurred"
+                        containerStyle={ThemedStyles.style.centered}>
+                        <WCContextProvider>
+                          <NavigationStack
+                            key={ThemedStyles.theme + i18n.locale}
+                            isLoggedIn={isLoggedIn}
+                          />
+                        </WCContextProvider>
+                        <AppMessages />
+                      </ErrorBoundary>
+                    </BottomSheetModalProvider>
+                  </Provider>
+                </StoresProvider>
+              </NavigationContainer>
+            )}
+          </ScreenHeightProvider>
+        </SafeAreaProvider>
+        <TosModal user={stores.user} />
+      </>
     );
-
-    const tosModal = <TosModal user={stores.user} key="tosModal" />;
-
-    return [app, tosModal];
   }
 }
 

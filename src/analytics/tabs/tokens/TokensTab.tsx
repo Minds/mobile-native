@@ -1,6 +1,6 @@
 import { observer, useLocalStore } from 'mobx-react';
 import React, { useEffect } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import ActivityIndicator from '../../../common/components/ActivityIndicator';
 import TopBarButtonTabBar, {
   ButtonTabType,
@@ -15,6 +15,7 @@ import RewardsDashboard from './RewardsDashboard';
 import SupplyDashboard from './SupplyDashboard';
 import TransactionsDashboard from './TransactionsDashboard';
 import capitalize from '../../../common/helpers/capitalize';
+import { activityIndicatorStyle, errorStyle } from '../dashboard/DashboardTab';
 
 export type DashBoardPropsType = {
   metrics: MetricsSubType;
@@ -63,12 +64,7 @@ const TokensTab = observer(({ route }: { route: any }) => {
   }>('api/v3/blockchain/metrics');
 
   if (!result && loading) {
-    return (
-      <ActivityIndicator
-        style={[theme.positionAbsolute, { top: 200 }]}
-        size={'large'}
-      />
-    );
+    return <ActivityIndicator style={activityIndicatorStyle} size={'large'} />;
   }
 
   if (!result) {
@@ -96,14 +92,7 @@ const TokensTab = observer(({ route }: { route: any }) => {
 
   if (error || dataError) {
     return (
-      <Text
-        style={[
-          theme.colorSecondaryText,
-          theme.textCenter,
-          theme.fontL,
-          theme.marginVertical4x,
-        ]}
-        onPress={fetch}>
+      <Text style={errorStyle} onPress={fetch}>
         {i18n.t('error') + '\n'}
         <Text style={theme.colorLink}>{i18n.t('tryAgain')}</Text>
       </Text>
@@ -127,7 +116,7 @@ const TokensTab = observer(({ route }: { route: any }) => {
   }
 
   return (
-    <View style={[theme.paddingTop2x]}>
+    <View style={theme.paddingTop2x}>
       <TopBarButtonTabBar
         tabs={options}
         current={store.option}
@@ -138,7 +127,7 @@ const TokensTab = observer(({ route }: { route: any }) => {
   );
 });
 
-const styles = StyleSheet.create({
+const styles = ThemedStyles.create({
   padding: {
     paddingBottom: 120,
   },

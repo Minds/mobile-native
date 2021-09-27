@@ -1,7 +1,7 @@
 import web3Util from 'web3-utils';
 
 import BlockchainTokenService from './BlockchainTokenService';
-import MindsService from '../../../common/services/minds.service';
+import MindsConfigService from '../../../common/services/minds-config.service';
 
 import ContractServiceAbstract, {
   ContractName,
@@ -25,7 +25,7 @@ class BlockchainBoostService extends ContractServiceAbstract {
    * @param from
    */
   async create(guid: string, amount: string, checksum: string, from: string) {
-    const settings = (await MindsService.getSettings()).blockchain;
+    const settings = MindsConfigService.getSettings().blockchain;
 
     const token = await this.getContract('token'),
       boostAddress = settings.boost.address,
@@ -70,7 +70,7 @@ class BlockchainBoostService extends ContractServiceAbstract {
     checksum: string,
     from: string,
   ) {
-    const settings = (await MindsService.getSettings()).blockchain;
+    const settings = (await MindsConfigService.getSettings()).blockchain;
     const token = await this.getContract('token'),
       boostAddress = settings.boost.address;
 

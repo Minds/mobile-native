@@ -1,12 +1,10 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useCallback } from 'react';
 import BottomSheet, {
   BottomSheetBackdrop,
   BottomSheetBackgroundProps,
 } from '@gorhom/bottom-sheet';
 import { Dimensions, View } from 'react-native';
-
 import ThemedStyles from '../../styles/ThemedStyles';
-import Handle from './Handle';
 import CommentList from './CommentList';
 import CommentsStore from './CommentsStore';
 import {
@@ -17,7 +15,7 @@ import {
 import { useRoute } from '@react-navigation/native';
 import CommentInput from './CommentInput';
 import { useLocalStore } from 'mobx-react';
-import { GOOGLE_PLAY_STORE } from '../../config/Config';
+import Handle from '../../common/components/bottom-sheet/Handle';
 
 const BottomSheetLocalStore = ({ onChange }) => ({
   isOpen: 0,
@@ -77,11 +75,9 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
 
   React.useEffect(() => {
     if (
-      !GOOGLE_PLAY_STORE &&
-      ((props.commentsStore.parent &&
+      (props.commentsStore.parent &&
         props.commentsStore.parent['comments:count'] === 0) ||
-        (route.params.open &&
-          props.commentsStore.entity['comments:count'] === 0))
+      (route.params.open && props.commentsStore.entity['comments:count'] === 0)
     ) {
       setTimeout(() => {
         if (props?.commentsStore) {
@@ -113,18 +109,28 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
     [],
   );
 
+  const renderHandle = useCallback(
+    () => (
+      <Handle
+        style={{ backgroundColor: ThemedStyles.getColor('PrimaryBackground') }}
+      />
+    ),
+    [],
+  );
+
   return [
     <BottomSheet
+      key="commentSheet"
       ref={ref}
       index={0}
       onChange={localStore.setOpen}
       containerHeight={windowHeight}
       snapPoints={snapPoints}
-      handleComponent={Handle}
+      handleComponent={renderHandle}
       backgroundComponent={CustomBackground}
       backdropComponent={renderBackdrop}>
       {!props.hideContent && ( // we disable the navigator until the screen is focused (for the post swiper)
-        <Stack.Navigator screenOptions={screenOptions} headerMode="none">
+        <Stack.Navigator screenOptions={screenOptions}>
           <Stack.Screen
             name="Comments"
             component={ScreenComment}
@@ -140,7 +146,7 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
         </Stack.Navigator>
       )}
     </BottomSheet>,
-    <CommentInput />,
+    <CommentInput key="commentInput" />,
   ];
 };
 
