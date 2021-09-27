@@ -35,13 +35,6 @@ const Item = ({ entity, navigation, currency }: ItemPropsType) => {
           <DeltaIcon delta={entity.delta} />
           <Text style={theme.colorPrimaryText}>{entity.amount}</Text>
         </View>
-        <View style={theme.rowJustifyEnd}>
-          {!!entity.runningTotal && (
-            <Text style={secondaryText}>{`${entity.runningTotal.int}${
-              entity.runningTotal.frac ? '.' + entity.runningTotal.frac : ''
-            }`}</Text>
-          )}
-        </View>
       </View>
     </View>
   );

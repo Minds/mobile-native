@@ -33,7 +33,6 @@ export default class DiscoveryV2Store {
   @observable direction = -1;
   @observable loadingTags = false;
   @observable refreshing = false;
-  @observable showManageTags = false;
   boostFeed: FeedStore;
   allFeed: FeedStore;
 
@@ -59,11 +58,6 @@ export default class DiscoveryV2Store {
       .setEndpoint('api/v2/feeds/global/topV2/all')
       .setInjectBoost(false)
       .setLimit(15);
-  }
-
-  @action
-  setShowManageTags(value: boolean) {
-    this.showManageTags = value;
   }
 
   @action

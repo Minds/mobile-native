@@ -12,7 +12,7 @@ import TextInput from '../../src/common/components/TextInput';
 jest.mock('../../src/messenger/MessengerListStore');
 jest.mock('../../src/auth/UserStore');
 jest.mock('../../src/common/components/NavNextButton');
-
+jest.mock('@gorhom/bottom-sheet');
 Alert.alert = jest.fn();
 
 /**

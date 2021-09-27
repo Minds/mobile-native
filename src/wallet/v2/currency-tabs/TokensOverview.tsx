@@ -6,20 +6,18 @@ import { WalletStoreType } from '../createWalletStore';
 import MenuSubtitle from '../../../common/components/menus/MenuSubtitle';
 import MenuItem from '../../../common/components/menus/MenuItem';
 import { WalletScreenNavigationProp } from '../../v3/WalletScreen';
-import Withdraw from './tokens/Withdraw';
-import { BottomOptionsStoreType } from '../../../common/components/BottomOptionPopup';
 import i18n from '../../../common/services/i18n.service';
 import TokensChart from './TokensChart';
 import useWalletConnect from '../../../blockchain/v2/walletconnect/useWalletConnect';
 import { navToTokens } from '../../../buy-tokens/BuyTokensScreen';
+import { useNavigation } from '@react-navigation/core';
 
 type PropsType = {
   walletStore: WalletStoreType;
-  bottomStore: BottomOptionsStoreType;
   navigation: WalletScreenNavigationProp;
 };
 
-const TokensOverview = observer(({ walletStore, bottomStore }: PropsType) => {
+const TokensOverview = observer(({ walletStore }: PropsType) => {
   const wc = useWalletConnect();
   const theme = ThemedStyles.style;
   const balanceStyle = [
@@ -28,19 +26,13 @@ const TokensOverview = observer(({ walletStore, bottomStore }: PropsType) => {
     theme.paddingBottom,
   ];
 
+  const navigation = useNavigation();
+
   const walletActions = [
     {
       title: i18n.t('wallet.transferToOnchain'),
       onPress: () => {
-        bottomStore.show(
-          i18n.t('wallet.withdraw.title'),
-          i18n.t('wallet.withdraw.transfer'),
-          <Withdraw
-            walletStore={walletStore}
-            bottomStore={bottomStore}
-            wc={wc}
-          />,
-        );
+        navigation.navigate('WalletWithdrawal');
       },
       noIcon: true,
     },

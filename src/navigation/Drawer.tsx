@@ -14,6 +14,7 @@ import ThemedStyles from '../styles/ThemedStyles';
 import featuresService from '../common/services/features.service';
 import sessionService from '../common/services/session.service';
 import FitScrollView from '../common/components/FitScrollView';
+import requirePhoneValidation from '../common/hooks/requirePhoneValidation';
 
 const ICON_SIZE = 25;
 
@@ -71,7 +72,7 @@ const getOptionsList = navigation => {
     {
       name: 'Buy Tokens',
       icon: <IconFa name="coins" size={ICON_SIZE} style={iconStyle} />,
-      onPress: () => {
+      onPress: async () => {
         const navToBuyTokens = () => {
           navigation.navigate('Tabs', {
             screen: 'CaptureTab',
@@ -79,9 +80,8 @@ const getOptionsList = navigation => {
           });
         };
         if (!hasRewards) {
-          navigation.navigate('PhoneValidation', {
-            onComplete: navToBuyTokens,
-          });
+          await requirePhoneValidation();
+          navToBuyTokens();
         } else {
           navToBuyTokens();
         }

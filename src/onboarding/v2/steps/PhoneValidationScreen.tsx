@@ -1,153 +1,70 @@
-import { useNavigation, useRoute } from '@react-navigation/native';
-import { observer, useLocalStore } from 'mobx-react';
+import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
+import { observer } from 'mobx-react';
 import React from 'react';
-import {
-  Linking,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { BackHandler, Text, View } from 'react-native';
 import DismissKeyboard from '../../../common/components/DismissKeyboard';
 import i18n from '../../../common/services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import ModalContainer from './ModalContainer';
-import PhoneValidationComponent from '../../../common/components/phoneValidation/PhoneValidationComponent';
-import createPhoneValidationStore from '../../../common/components/phoneValidation/createLocalStore';
-import LabeledComponent from '../../../common/components/LabeledComponent';
-import Button from '../../../common/components/Button';
 import { useLegacyStores } from '../../../common/hooks/use-stores';
+import PhoneValidationComponent from '../../../common/components/phoneValidation/v2/PhoneValidationComponent';
+import { PhoneValidationProvider } from '../../../common/components/phoneValidation/v2/PhoneValidationProvider';
+import { RootStackParamList } from '../../../navigation/NavigationTypes';
 
-type ButtonTextType = 'onboarding.send' | 'confirm';
-type LabelText = 'onboarding.phoneNumber' | 'onboarding.confirmationCode';
+type PhoneValidationScreenRouteProp = RouteProp<
+  RootStackParamList,
+  'PhoneValidation'
+>;
 
 export default observer(function PhoneValidationScreen() {
   const theme = ThemedStyles.style;
   const navigation = useNavigation();
-  const route = useRoute<any>();
+  const route = useRoute<PhoneValidationScreenRouteProp>();
   // if onComplete means that it come from buy tokens or somthing like that
-  const onComplete = route.params?.onComplete;
-  const phoneValidationStore = useLocalStore(createPhoneValidationStore);
+  const { onConfirm, onCancel, description } = route.params;
   const user = useLegacyStores().user;
 
-  const store = useLocalStore(() => ({
-    buttonText: 'onboarding.send' as ButtonTextType,
-    labelText: 'onboarding.phoneNumber' as LabelText,
-    async verify() {
-      try {
-        await phoneValidationStore.confirmAction(user);
-        if (onComplete) {
-          navigation.goBack();
-          onComplete();
-        } else {
-          navigation.goBack();
-          navigation.goBack();
-        }
-      } catch (err) {}
-    },
-    async send() {
-      try {
-        if (await phoneValidationStore.joinAction()) {
-          store.buttonText = 'confirm';
-          store.labelText = 'onboarding.confirmationCode';
-        }
-      } catch (err) {}
-    },
-  }));
+  const confirmAction = React.useCallback(() => {
+    user.setRewards(true);
+    onConfirm();
+    navigation.goBack();
+  }, [navigation, onConfirm, user]);
 
-  const textStyle = [theme.colorPrimaryText, theme.marginBottom4x];
+  const cancelAction = React.useCallback(() => {
+    onCancel();
+    navigation.goBack();
+  }, [navigation, onCancel]);
+
+  // Disable back button on Android
+  React.useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', () => true);
+    return () =>
+      BackHandler.removeEventListener('hardwareBackPress', () => true);
+  }, []);
+
+  const params = {
+    onConfirm: confirmAction,
+    onCancel: cancelAction,
+  };
 
   return (
     <ModalContainer
-      title={i18n.t('onboarding.phoneNumber')}
+      title={i18n.t('wallet.phoneVerification')}
       onPressBack={navigation.goBack}>
-      {store.labelText === 'onboarding.confirmationCode' && (
-        <View style={theme.centered}>
-          <Text style={textStyle}>{`${i18n.t('onboarding.sent')} ${
-            phoneValidationStore.phone
-          }`}</Text>
-          <TouchableOpacity onPress={store.send}>
-            <Text style={textStyle}>{i18n.t('onboarding.resend')}</Text>
-          </TouchableOpacity>
-        </View>
-      )}
-      <DismissKeyboard>
-        <View style={theme.flexContainer}>
-          {onComplete && (
-            <Text style={theme.padding4x}>
-              {i18n.t('onboarding.mustVerify')}{' '}
-              <Text
-                style={theme.colorLink}
-                onPress={() =>
-                  Linking.openURL('https://www.minds.com/p/privacy')
-                }>
-                {i18n.t('clickHere')}
-              </Text>
-            </Text>
-          )}
-          <LabeledComponent
-            label={i18n.t(store.labelText)}
-            wrapperStyle={[
-              theme.padding4x,
-              theme.borderTopHair,
-              theme.borderBottomHair,
-              theme.bcolorIcon,
-              theme.bgSecondaryBackground,
-            ]}>
-            <PhoneValidationComponent
-              textStyle={theme.colorPrimaryText}
-              inputStyles={[
-                theme.colorPrimaryText,
-                theme.border0x,
-                styles.input,
-              ]}
-              inputWrapperStyle={styles.inputWrapperStyle}
-              localStore={phoneValidationStore}
-              bottomStore={true}
-              autoFocus
-            />
-          </LabeledComponent>
-          <View
-            style={[
-              theme.paddingHorizontal4x,
-              theme.marginBottom2x,
-              styles.buttonContainer,
-            ]}>
-            <Button
-              onPress={
-                store.buttonText === 'onboarding.send'
-                  ? store.send
-                  : store.verify
-              }
-              text={i18n.t(store.buttonText)}
-              containerStyle={[
-                theme.transparentButton,
-                theme.paddingVertical3x,
-                theme.fullWidth,
-                theme.marginTop,
-                theme.bcolorPrimaryBorder,
-              ]}
-              textStyle={theme.buttonText}
-            />
+      <PhoneValidationProvider {...params}>
+        <DismissKeyboard>
+          <View style={theme.flexContainer}>
+            {Boolean(description) && (
+              <Text style={styles.description}>{description}</Text>
+            )}
+            <PhoneValidationComponent />
           </View>
-        </View>
-      </DismissKeyboard>
+        </DismissKeyboard>
+      </PhoneValidationProvider>
     </ModalContainer>
   );
 });
 
-const styles = StyleSheet.create({
-  input: {
-    height: 30,
-    flexBasis: 0,
-    flexGrow: 1,
-    padding: 0,
-  },
-  buttonContainer: {
-    marginTop: 40,
-  },
-  inputWrapperStyle: {
-    flexDirection: 'row',
-    alignItems: 'stretch',
-  },
+const styles = ThemedStyles.create({
+  description: ['colorSecondaryText', 'fontLM', 'centered', 'marginBottom5x'],
 });

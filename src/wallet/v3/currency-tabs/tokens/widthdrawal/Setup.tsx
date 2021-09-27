@@ -1,26 +1,16 @@
 import React, { useCallback } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import {
-  BottomOptionsStoreType,
-  useBottomOption,
-} from '../../../../../common/components/BottomOptionPopup';
 import MenuItem from '../../../../../common/components/menus/MenuItem';
+import requirePhoneValidation from '../../../../../common/hooks/requirePhoneValidation';
 import i18n from '../../../../../common/services/i18n.service';
 import ThemedStyles from '../../../../../styles/ThemedStyles';
-import PhoneValidator from './PhoneValidator';
 
-const showPhoneValidator = (bottomStore: BottomOptionsStoreType) => {
-  bottomStore.show(
-    i18n.t('wallet.phoneVerification'),
-    i18n.t('send'),
-    <PhoneValidator bottomStore={bottomStore} />,
-  );
+const showPhoneValidator = async () => {
+  await requirePhoneValidation();
 };
-
+//TODO: Remove BottomOptions logic and replace it with new Bottomsheets
 const Setup = ({ user, walletStore, navigation }) => {
   const theme = ThemedStyles.style;
-
-  const bottomStore: BottomOptionsStoreType = useBottomOption();
 
   const onComplete = useCallback(
     (success: any) => {
@@ -40,7 +30,7 @@ const Setup = ({ user, walletStore, navigation }) => {
           {i18n.t('wallet.phoneVerification')}
         </Text>
       ),
-      onPress: () => showPhoneValidator(bottomStore),
+      onPress: () => showPhoneValidator(),
       icon: user.rewards
         ? { name: 'md-checkmark', type: 'ionicon' }
         : undefined,

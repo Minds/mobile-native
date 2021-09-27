@@ -6,8 +6,7 @@ import ThumbUpAction from './ThumbUpAction';
  */
 export default class ThumbDownAction extends ThumbUpAction {
   direction: 'up' | 'down' = 'down';
-  filledIcon: string = 'dislike1';
-  outlineIcon: string = 'dislike2';
+  iconName = 'thumb-down';
 
   get voted() {
     return this.props.entity.votedDown;

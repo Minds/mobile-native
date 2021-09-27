@@ -6,7 +6,7 @@ import { useRoute } from '../../__mocks__/@react-navigation/native';
 
 import LoginScreen from '../../src/auth/login/LoginScreen';
 import { getStores } from '../../AppStores';
-
+jest.mock('@gorhom/bottom-sheet');
 jest.mock('react-native-reanimated', () =>
   require('react-native-reanimated/mock'),
 );

@@ -2,6 +2,16 @@
 
 Minds Mobile
 
+## 4.18.0 - 2021-09-20
+
+### Changed
+
+- Multi-user support
+- New camera with zoom, HDR, and low light modes.
+- Improved channel screen design
+- 2FA modals
+- Bug fixing
+
 ## 4.17.0 - 2021-08-27
 
 ### Changed

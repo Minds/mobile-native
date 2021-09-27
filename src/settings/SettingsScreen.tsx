@@ -1,10 +1,36 @@
 //@ts-nocheck
 import React, { useCallback } from 'react';
-import { Linking, ScrollView, Text, View } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
+import { showMessage } from 'react-native-flash-message';
+import AuthService from '../auth/AuthService';
 import MenuItem from '../common/components/menus/MenuItem';
+import { isNetworkError } from '../common/services/api.service';
 import i18n from '../common/services/i18n.service';
+import openUrlService from '../common/services/open-url.service';
 import sessionService from '../common/services/session.service';
+import apiService from '../common/services/api.service';
 import ThemedStyles from '../styles/ThemedStyles';
+
+/**
+ * Retrieves the link & jwt for zendesk and navigate to it.
+ */
+const navigateToHelp = async () => {
+  try {
+    const response = await apiService.get('api/v3/helpdesk/zendesk', {
+      returnUrl: 'true',
+    });
+    if (response && response.url) {
+      openUrlService.openLinkInInAppBrowser(unescape(response.url));
+    }
+  } catch (err) {
+    console.log(err);
+    if (isNetworkError(err)) {
+      showMessage(i18n.t('errorMessage'));
+    } else {
+      showMessage(i18n.t('cantReachServer'));
+    }
+  }
+};
 
 export default function ({ navigation }) {
   const theme = ThemedStyles.style;
@@ -109,6 +135,15 @@ export default function ({ navigation }) {
     theme.bcolorPrimaryBorder,
   ];
 
+  const logOut = {
+    title: i18n.t('settings.logout'),
+    onPress: AuthService.logout,
+    icon: {
+      name: 'login-variant',
+      type: 'material-community',
+    },
+  };
+
   const themeChange = {
     title: i18n.t(
       ThemedStyles.theme ? 'settings.enterLight' : 'settings.enterDark',
@@ -118,7 +153,7 @@ export default function ({ navigation }) {
 
   const help = {
     title: i18n.t('help'),
-    onPress: () => Linking.openURL('https://www.minds.com/help'),
+    onPress: navigateToHelp,
     icon: {
       name: 'help-circle-outline',
       type: 'material-community',
@@ -141,6 +176,7 @@ export default function ({ navigation }) {
       <View style={[innerWrapper, theme.marginTop7x]}>
         <MenuItem item={themeChange} i={4} />
         <MenuItem item={help} i={5} />
+        <MenuItem item={logOut} i={6} />
       </View>
     </ScrollView>
   );
