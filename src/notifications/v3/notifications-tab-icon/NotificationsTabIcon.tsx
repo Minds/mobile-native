@@ -8,12 +8,11 @@ import ThemedStyles from '../../../styles/ThemedStyles';
 
 type PropsType = {
   size?: number;
-  color: string;
+  active: boolean;
 };
 
 const NotificationsTabIcon = observer((props: PropsType) => {
-  const color = props.color;
-  const size = props.size || 24;
+  const active = props.active;
   const { notifications } = useStores();
 
   React.useEffect(() => {
@@ -47,7 +46,7 @@ const NotificationsTabIcon = observer((props: PropsType) => {
 
   return (
     <View style={styles.container}>
-      <Icon name="notification" color={color} />
+      <Icon name="notification" active={active} />
       {showIndicator && Indicator}
     </View>
   );

@@ -1,5 +1,4 @@
 import React, { useCallback } from 'react';
-
 import {
   createBottomTabNavigator,
   BottomTabNavigationOptions,
@@ -12,11 +11,10 @@ import {
   Dimensions,
   PlatformIOSStatic,
 } from 'react-native';
-
 import NewsfeedScreen from '../newsfeed/NewsfeedScreen';
 import NotificationsScreen from '../notifications/v3/NotificationsScreen';
 import ThemedStyles, { useMemoStyle } from '../styles/ThemedStyles';
-import TabIcon from './TabIcon';
+import { Icon } from '~base/icons';
 import NotificationIcon from '../notifications/v3/notifications-tab-icon/NotificationsTabIcon';
 import gatheringService from '../common/services/gathering.service';
 import { observer } from 'mobx-react';
@@ -65,8 +63,8 @@ const TabBar = ({ state, descriptors, navigation }) => {
   const bottomInset = {
     paddingBottom: insets.bottom
       ? isPad
-        ? insets.bottom
-        : insets.bottom - 10
+        ? insets.bottom + 4
+        : insets.bottom - 6
       : 10,
   };
 
@@ -222,7 +220,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: -1 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
-    paddingTop: 15,
+    paddingTop: 12,
     paddingLeft: 20,
     paddingRight: 20,
   },
@@ -244,35 +242,27 @@ const empty = () => null;
 const tabOptions = ({ route }): BottomTabNavigationOptions => ({
   headerShown: false,
   tabBarIcon: ({ focused }) => {
-    const color = focused
-      ? ThemedStyles.getColor('Link')
-      : ThemedStyles.getColor('SecondaryText');
-    let iconName,
-      iconsize = 28;
+    let iconName;
 
     switch (route.name) {
       case 'MessengerTab':
-        return <ChatTabIcon color={color} />;
+        return <ChatTabIcon active={focused} />;
       case 'Newsfeed':
         iconName = 'home';
-        iconsize = 28;
         break;
       case 'User':
         iconName = 'user';
-        iconsize = 42;
         break;
       case 'Discovery':
         iconName = 'search';
-        iconsize = 24;
         break;
       case 'Notifications':
-        return <NotificationIcon color={color} size={iconsize} />;
+        return <NotificationIcon active={focused} />;
       case 'CaptureTab':
         return <ComposeIcon style={styles.compose} />;
     }
 
-    // You can return any component that you like here!
-    return <TabIcon name={iconName} size={iconsize} color={color} />;
+    return <Icon active={focused} name={iconName} />;
   },
 });
 

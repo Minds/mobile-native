@@ -1,8 +1,5 @@
-import { Platform, PlatformIOSStatic, Dimensions } from 'react-native';
+import { Platform, PlatformIOSStatic } from 'react-native';
 import { initialWindowMetrics } from 'react-native-safe-area-context';
-// import { isTablet } from 'react-native-device-info';
-
-const { height } = Dimensions.get('window');
 
 export const IS_IOS = Platform.OS === 'ios';
 export const IS_IPAD = (Platform as PlatformIOSStatic).isPad;
@@ -12,19 +9,7 @@ export const IS_IPAD = (Platform as PlatformIOSStatic).isPad;
 
 export const HAS_BOTTOM_EXTRA_SPACE = !!initialWindowMetrics?.insets.bottom;
 
-let multiplier = 1;
-
-if (height < 680) {
-  multiplier = 0.9;
-}
-
-if (height < 600) {
-  multiplier = 0.8;
-}
-
-if (IS_IPAD) {
-  multiplier = multiplier * 1.4;
-}
+export const MULTIPLIER: number = 1;
 
 export const COLORS = {
   black: '#000000',
@@ -53,20 +38,66 @@ export interface UISpacing {
   [ESpacing.XXL]: number;
 }
 
+export interface IUIBase {
+  marginTop?: string;
+  marginLeft?: string;
+  marginRight?: string;
+  marginBottom?: string;
+  marginHorizontal?: string;
+  marginVertical?: string;
+}
+
 export const SPACING: UISpacing = {
-  XXS: 2 * multiplier,
-  XS: 4 * multiplier,
-  S: 8 * multiplier,
-  M: 12 * multiplier,
-  L: 16 * multiplier,
-  XL: 20 * multiplier,
-  XXL: 24 * multiplier,
+  XXS: 2 * MULTIPLIER,
+  XS: 4 * MULTIPLIER,
+  S: 8 * MULTIPLIER,
+  M: 12 * MULTIPLIER,
+  L: 16 * MULTIPLIER,
+  XL: 20 * MULTIPLIER,
+  XXL: 24 * MULTIPLIER,
 };
 
-export const ICON_SIZES = {
-  small: SPACING.XL,
-  medium: SPACING.XXL + SPACING.XS,
-  large: SPACING.XXL + SPACING.S,
-};
+export const STEP = SPACING.XS;
 
 export const BOTTOM_TABS_HEIGHT = SPACING.XXL * 2;
+
+export type IUISizing =
+  | 'micro'
+  | 'tiny'
+  | 'small'
+  | 'medium'
+  | 'large'
+  | 'huge';
+
+export enum EUISizing {
+  micro = 'micro',
+  tiny = 'tiny',
+  small = 'small',
+  medium = 'medium',
+  large = 'large',
+  huge = 'huge',
+}
+
+export interface IOUISizing {
+  [EUISizing.micro]: number;
+  [EUISizing.tiny]: number;
+  [EUISizing.small]: number;
+  [EUISizing.medium]: number;
+  [EUISizing.large]: number;
+  [EUISizing.huge]: number;
+}
+
+export const ICON_SIZES: IOUISizing = {
+  micro: SPACING.M,
+  tiny: SPACING.L,
+  small: SPACING.XL,
+  medium: SPACING.XXL,
+  large: SPACING.L * 2,
+  huge: SPACING.XL * 2,
+};
+
+export const ICON_COLOR_DEFAULT = 'Icon';
+export const ICON_COLOR_ACTIVE = 'IconActive';
+export const ICON_COLOR_DISABLED = 'IconDisabled';
+export const ICON_SIZE_DEFAULT = 'medium';
+export const ICON_DEFAULT = 'remind';

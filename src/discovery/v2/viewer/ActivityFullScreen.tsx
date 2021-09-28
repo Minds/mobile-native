@@ -417,7 +417,7 @@ const styles = StyleSheet.create({
       ios: 5,
       android: 0,
     }),
-    marginLeft: -17,
+    marginLeft: -20,
     marginRight: -5,
   },
   content: {

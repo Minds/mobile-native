@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
 import type { TextInput as TextInputType } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { IconButton, Icon } from '~base/icons';
 import i18n from '../../common/services/i18n.service';
 import { useLegacyStores, useStores } from '../../common/hooks/use-stores';
 import { useNavigation } from '@react-navigation/core';
@@ -50,11 +50,8 @@ const SearchScreen = observer(() => {
           <Icon
             name="search"
             size={25}
-            style={[
-              theme.colorIcon,
-              theme.marginRight2x,
-              Platform.OS === 'android' ? theme.centered : null,
-            ]}
+            marginRight="2x"
+            style={[Platform.OS === 'android' ? theme.centered : null]}
           />
           <TextInput
             ref={inputRef}
@@ -69,12 +66,11 @@ const SearchScreen = observer(() => {
             autoFocus
           />
         </View>
-        <Icon
+        <IconButton
           onPress={navigation.goBack}
           name="close"
-          size={18}
+          size="small"
           style={[
-            styles.button,
             theme.colorIcon,
             Platform.OS === 'android' ? theme.centered : null,
           ]}
@@ -89,9 +85,6 @@ const SearchScreen = observer(() => {
 const styles = StyleSheet.create({
   height: {
     height: 200,
-  },
-  button: {
-    paddingHorizontal: 10,
   },
   body: {
     minHeight: 0,

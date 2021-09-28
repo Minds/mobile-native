@@ -166,12 +166,12 @@ export default observer(function Comment(props: PropsType) {
           <View style={styles.actionsContainer}>
             <ThumbUpAction
               entity={props.comment}
-              size={16}
+              size="tiny"
               touchableComponent={TouchableOpacity}
             />
             <ThumbDownAction
               entity={props.comment}
-              size={16}
+              size="tiny"
               touchableComponent={TouchableOpacity}
             />
             {canReply && <ReplyAction size={16} onPressReply={reply} />}

@@ -1,4 +1,25 @@
 export default {
+  more: {
+    font: 'MaterialIcons',
+    name: 'more-vert',
+    ratio: 0.92,
+  },
+  close: {
+    font: 'MaterialIcons',
+    name: 'close',
+  },
+  'thumb-up': {
+    font: 'MaterialIcons',
+    name: 'thumb-up',
+  },
+  'thumb-down': {
+    font: 'MaterialIcons',
+    name: 'thumb-down',
+  },
+  plusCircle: {
+    font: 'MaterialCommunityIcons',
+    name: 'plus-circle',
+  },
   accountMulti: {
     font: 'MaterialCommunityIcons',
     name: 'account-box-multiple',
@@ -33,6 +54,16 @@ export default {
     font: 'MaterialCommunityIcons',
     name: 'message',
     ratio: 0.94,
+  },
+  chevronLeft: {
+    font: 'MaterialCommunityIcons',
+    name: 'chevron-left',
+    ratio: 1,
+  },
+  chevronRight: {
+    font: 'MaterialCommunityIcons',
+    name: 'chevron-right',
+    ratio: 1,
   },
   home: {
     font: 'Entypo',

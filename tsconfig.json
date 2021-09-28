@@ -20,7 +20,9 @@
     "paths": {
       "~/*": ["./src/*"],
       "~base": ["./src/common/base"],
-      "~icons": ["./src/common/base/icons"]
+      "~base/*": ["./src/common/base/*"],
+      "~styles": ["./src/styles"],
+      "~styles/*": ["./src/styles/*"]
     }
   },
   "exclude": [

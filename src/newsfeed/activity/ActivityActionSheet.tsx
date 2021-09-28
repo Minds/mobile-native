@@ -2,7 +2,8 @@ import React, { PureComponent } from 'react';
 
 import { View, Alert, Linking } from 'react-native';
 
-import Icon from 'react-native-vector-icons/MaterialIcons';
+// import Icon from 'react-native-vector-icons/MaterialIcons';
+import { IconButton } from '~base/icons';
 
 import { MINDS_URI } from '../../config/Config';
 import { isFollowing } from '../NewsfeedService';
@@ -382,12 +383,11 @@ export default withSafeAreaInsets(
       const theme = ThemedStyles.style;
 
       return (
-        <View style={theme.paddingLeft2x}>
-          <Icon
-            name="more-vert"
+        <>
+          <IconButton
+            name="more"
+            size="large"
             onPress={this.showActionSheet}
-            size={28}
-            style={theme.colorTertiaryText}
             testID={this.props.testID}
           />
           {this.state.shown && (
@@ -401,7 +401,7 @@ export default withSafeAreaInsets(
               />
             </BottomSheet>
           )}
-        </View>
+        </>
       );
     }
   },

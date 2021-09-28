@@ -2,31 +2,28 @@ import React, { Component } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { observer } from 'mobx-react';
 import { motify, useAnimationState } from 'moti';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Icon } from '~base/icons';
+import withClass from '~base/withClass';
+import { IUISizing } from '~styles/Tokens';
 import Counter from './Counter';
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import { FLAG_VOTE } from '../../../common/Permissions';
 import remoteAction from '../../../common/RemoteAction';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
-import {
-  actionsContainerStyle,
-  iconActiveStyle,
-  iconDisabledStyle,
-  iconNormalStyle,
-} from './styles';
+import { actionsContainerStyle } from './styles';
 
 // prevent double tap in touchable
 const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
 
 type PropsType = {
   entity: ActivityModel;
-  size: number;
+  size: string;
   hideCount?: boolean;
   orientation: 'column' | 'row';
   touchableComponent?: React.ComponentClass;
 };
 
-const AnimatedIcon = motify(Icon)();
+const AnimatedIcon = motify(withClass(Icon))();
 
 const AnimatedThumb = ({
   voted,
@@ -36,7 +33,7 @@ const AnimatedThumb = ({
   name,
 }: {
   voted: boolean;
-  size: number;
+  size: IUISizing;
   canVote: boolean;
   down: boolean;
   name: string;
@@ -91,14 +88,18 @@ const AnimatedThumb = ({
     }
   }, [voted]);
 
-  const iconStyle = canVote
-    ? voted
-      ? iconActiveStyle
-      : iconNormalStyle
-    : iconDisabledStyle;
+  const disabled = !canVote;
+  const active: boolean = !!(canVote && voted);
 
   return (
-    <AnimatedIcon style={iconStyle} name={name} size={size} state={animation} />
+    <AnimatedIcon
+      active={active}
+      disabled={disabled}
+      name={name}
+      size={size}
+      state={animation}
+      marginRight="1x"
+    />
   );
 };
 

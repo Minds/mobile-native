@@ -1,10 +1,18 @@
 import React from 'react';
 import { Pressable, StyleSheet } from 'react-native';
-import Icon from './Icon';
+import Icon, { IIcon } from './Icon';
+import { ICON_SIZES, ICON_SIZE_DEFAULT, IUISizing } from '~styles/Tokens';
+import { getNumericSize } from '~base/helpers';
 
-export default function IconButton({ onPress = null, style, ...extra }: any) {
+const SLOP_PROP = 1 / 3;
+
+export interface IIconButton extends IIcon {
+  onPress: () => void;
+}
+
+export default function IconButton({ onPress, style, ...extra }: IIconButton) {
   const containerStyles: any = [styles.container];
-  let size = 'medium';
+  let size: IUISizing | number = 'medium';
 
   if (style) {
     containerStyles.push(style);
@@ -16,6 +24,9 @@ export default function IconButton({ onPress = null, style, ...extra }: any) {
 
   containerStyles.push(styles[size]);
 
+  const sizeNumeric =
+    getNumericSize(size, ICON_SIZES, ICON_SIZE_DEFAULT) * SLOP_PROP;
+
   const onStyle = ({ pressed }: any) => {
     const _styles = [...containerStyles];
     if (pressed === true) {
@@ -25,7 +36,7 @@ export default function IconButton({ onPress = null, style, ...extra }: any) {
   };
 
   return (
-    <Pressable style={onStyle} onPress={onPress}>
+    <Pressable hitSlop={sizeNumeric} style={onStyle} onPress={onPress}>
       <Icon {...extra} />
     </Pressable>
   );
@@ -40,14 +51,5 @@ const styles = StyleSheet.create({
   },
   pressed: {
     opacity: 0.75,
-  },
-  small: {
-    padding: 4,
-  },
-  medium: {
-    padding: 4,
-  },
-  large: {
-    padding: 8,
   },
 });
