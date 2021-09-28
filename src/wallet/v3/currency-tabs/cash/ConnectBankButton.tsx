@@ -5,6 +5,7 @@ import i18n from '../../../../common/services/i18n.service';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { WalletStoreType } from '../../../v2/createWalletStore';
+import MText from '../../../../common/components/MText';
 
 type PropsType = {
   walletStore: WalletStoreType;
@@ -17,12 +18,12 @@ const ConnectBankButton = ({ walletStore, navigation }: PropsType) => {
   const navToBankScreen = () =>
     navigation.push('BankInfoScreen', { walletStore });
   const buttonChildren = isConnected ? (
-    <Text style={[theme.colorSecondaryText, theme.fontL]}>
+    <MText style={[theme.colorSecondaryText, theme.fontL]}>
       {walletStore.wallet.cash.label}
-    </Text>
+    </MText>
   ) : (
     <>
-      <Text style={theme.fontL}>{i18n.t('onboarding.connectBank')}</Text>
+      <MText style={theme.fontL}>{i18n.t('onboarding.connectBank')}</MText>
       <Icon
         name="plus-circle"
         size={16}

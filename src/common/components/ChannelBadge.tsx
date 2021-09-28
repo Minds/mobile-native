@@ -1,9 +1,10 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import ThemedStyles from '../../styles/ThemedStyles';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet } from 'react-native';
 import type UserModel from '../../channel/UserModel';
 import { ColorsNameType } from '../../styles/Colors';
+import MText from './MText';
 
 type badge = {
   badge: string;
@@ -94,7 +95,7 @@ const ChannelBadge = ({
 
       // add space for the case where the badge is inside a text component
       if (addSpace) {
-        badgesIcons.push(<Text> </Text>);
+        badgesIcons.push(<MText> </MText>);
       }
     }
   });

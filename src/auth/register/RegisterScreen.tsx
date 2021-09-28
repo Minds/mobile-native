@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, KeyboardAvoidingView } from 'react-native';
+import { View, KeyboardAvoidingView } from 'react-native';
 
 import { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react';
@@ -12,6 +12,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import DismissKeyboard from '../../common/components/DismissKeyboard';
 import FitScrollView from '../../common/components/FitScrollView';
 import RegisterForm from './RegisterForm';
+import MText from '../../common/components/MText';
 
 export type RegisterScreenNavigationProp = StackNavigationProp<
   AuthStackParamList,
@@ -31,7 +32,7 @@ export default observer(function RegisterScreen(props: PropsType) {
         <KeyboardAvoidingView behavior="height">
           <FitScrollView>
             <View style={[theme.rowJustifyStart, theme.paddingVertical3x]}>
-              <Text
+              <MText
                 style={[
                   theme.titleText,
                   theme.textCenter,
@@ -40,7 +41,7 @@ export default observer(function RegisterScreen(props: PropsType) {
                   theme.positionAbsolute,
                 ]}>
                 {i18n.t('auth.createChannel')}
-              </Text>
+              </MText>
               <Icon
                 size={34}
                 name="ios-chevron-back"

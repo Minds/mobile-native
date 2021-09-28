@@ -1,7 +1,6 @@
 import React, { useCallback, useRef } from 'react';
 import {
   StyleSheet,
-  Text,
   TextInput as TextInputType,
   TouchableOpacity,
   View,
@@ -11,6 +10,7 @@ import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import Clipboard from '@react-native-clipboard/clipboard';
 import TextInput from '../../common/components/TextInput';
+import MText from '../../common/components/MText';
 
 interface InputProps {
   textToCopy: string;
@@ -30,7 +30,7 @@ const Input = ({ textToCopy, label, style }: InputProps) => {
 
   return (
     <View style={style}>
-      <Text>{label}</Text>
+      <MText>{label}</MText>
       <View style={[theme.marginTop2x, styles.inputContainer]}>
         <TextInput
           ref={ref => (_textInput.current = ref!)}
@@ -49,7 +49,7 @@ const Input = ({ textToCopy, label, style }: InputProps) => {
           ]}
           value={textToCopy}
         />
-        <Text
+        <MText
           style={[
             theme.colorLink,
             theme.bgSecondaryBackground,
@@ -57,7 +57,7 @@ const Input = ({ textToCopy, label, style }: InputProps) => {
             styles.copyText,
           ]}>
           {i18n.t('copy')}
-        </Text>
+        </MText>
         <TouchableOpacity
           onPress={_onFocus}
           activeOpacity={1}

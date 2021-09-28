@@ -1,14 +1,15 @@
 import React, { useRef } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Tooltip } from 'react-native-elements';
+import MText from '../../../../../common/components/MText';
 import ThemedStyles from '../../../../../styles/ThemedStyles';
 import { format } from '../../MindsTokens';
 
 const ToolTipText = () => (
-  <Text style={styles.tooltipTitle}>
+  <MText style={styles.tooltipTitle}>
     The longer you stake tokens, the more the time multiplier will increase. The
     maximum time multiplier is 3.0 (52 weeks)
-  </Text>
+  </MText>
 );
 
 /**
@@ -45,7 +46,7 @@ const TimeMultiplier = ({ multiplier }: PropsType) => {
       onPress={() => tooltipRef.current.toggleTooltip()}>
       <View style={[styles.multiplierContainer, theme.bgPrimaryBackground]}>
         <View style={[styles.multiplierRow]}>
-          <Text style={theme.fontS}>{format(multiplier)}</Text>
+          <MText style={theme.fontS}>{format(multiplier)}</MText>
           <View
             style={[
               theme.flexContainer,
@@ -54,7 +55,7 @@ const TimeMultiplier = ({ multiplier }: PropsType) => {
             ]}>
             <View style={progressBar} />
           </View>
-          <Text style={theme.fontS}>3.0</Text>
+          <MText style={theme.fontS}>3.0</MText>
         </View>
       </View>
       <Tooltip
@@ -69,9 +70,9 @@ const TimeMultiplier = ({ multiplier }: PropsType) => {
         <View />
       </Tooltip>
       <View style={[styles.infoContainer, theme.bgTertiaryBackground]}>
-        <Text style={styles.infoText}>
+        <MText style={styles.infoText}>
           {format(calculateDaysFromMultiplier(multiplier))} / 365 days
-        </Text>
+        </MText>
       </View>
     </TouchableOpacity>
   );

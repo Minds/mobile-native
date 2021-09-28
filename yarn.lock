@@ -3468,10 +3468,10 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-native@^0.63.25":
-  version "0.63.52"
-  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.63.52.tgz#449beb4a413ec0f2c172cbf676a95f5b0952adf4"
-  integrity sha512-sBXvvtJaIUSXQLDh9NZitx1KHkKUdBLZy34lFKJaIXtpHIh5OEbBXeyUTFBtFwjk/RD0tneAtUqsdhheZRzAzw==
+"@types/react-native@^0.65.1":
+  version "0.65.1"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.65.1.tgz#7342158e10ea5088c225bb669dd4ef15aad0a2f7"
+  integrity sha512-pyRmTnvjYORIXuL8+ZhoI8gqamTE/8Lo9bU/1Ife3VOTgeFzY9rHnx3Tna7OOixBW5Exh2PcHSkJXma4FENC0g==
   dependencies:
     "@types/react" "*"
 
@@ -4996,15 +4996,10 @@ can-promise@^0.0.1:
   dependencies:
     window-or-global "^1.0.1"
 
-caniuse-lite@^1.0.30001181:
-  version "1.0.30001204"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001204.tgz#256c85709a348ec4d175e847a3b515c66e79f2aa"
-  integrity sha512-JUdjWpcxfJ9IPamy2f5JaRDCaqJOxDzOSKtbdx4rH9VivMd1vIzoPumsJa9LoMIi4Fx2BV2KZOxWhNkBjaYivQ==
-
-caniuse-lite@^1.0.30001219:
-  version "1.0.30001243"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001243.tgz#d9250155c91e872186671c523f3ae50cfc94a3aa"
-  integrity sha512-vNxw9mkTBtkmLFnJRv/2rhs1yufpDfCkBZexG3Y0xdOH2Z/eE/85E4Dl5j1YUN34nZVsSp6vVRFQRrez9wJMRA==
+caniuse-lite@^1.0.30001181, caniuse-lite@^1.0.30001219:
+  version "1.0.30001261"
+  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001261.tgz"
+  integrity sha512-vM8D9Uvp7bHIN0fZ2KQ4wnmYFpJo/Etb4Vwsuc+ka0tfGDHvOPrFm6S/7CCNLSOkAUjenT2HnUPESdOIL91FaA==
 
 capture-exit@^2.0.0:
   version "2.0.0"

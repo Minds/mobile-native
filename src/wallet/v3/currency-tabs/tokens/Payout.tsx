@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MText from '../../../../common/components/MText';
 import i18n from '../../../../common/services/i18n.service';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 import MindsTokens from '../MindsTokens';
@@ -31,7 +32,7 @@ const Payout = ({ minds, mindsPrice, isToday, store }: PropsType) => {
   const payout = isToday ? (
     <View style={[styles.container, theme.bcolorPrimaryBorder]}>
       <View style={styles.innerContainer}>
-        <Text style={styles.text}>{i18n.t('wallet.todayEstimate')}</Text>
+        <MText style={styles.text}>{i18n.t('wallet.todayEstimate')}</MText>
       </View>
       <MindsTokens
         value={minds}
@@ -42,9 +43,9 @@ const Payout = ({ minds, mindsPrice, isToday, store }: PropsType) => {
     </View>
   ) : (
     <View style={[styles.container, theme.bcolorPrimaryBorder]}>
-      <Text style={[styles.text, styles.innerContainer]}>
+      <MText style={[styles.text, styles.innerContainer]}>
         {i18n.t('wallet.usd.earnings')}
-      </Text>
+      </MText>
       <MindsTokens
         value={minds}
         mindsPrice={mindsPrice}

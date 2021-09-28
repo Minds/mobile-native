@@ -1,11 +1,12 @@
 import React, { useCallback } from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { CheckBox } from 'react-native-elements';
 import { observer } from 'mobx-react';
 import sessionService from '../../common/services/session.service';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import MText from '../../common/components/MText';
 
 const AutoplaySettingsScreen = observer(() => {
   const theme = ThemedStyles.style;
@@ -20,9 +21,9 @@ const AutoplaySettingsScreen = observer(() => {
 
   return (
     <View style={[theme.padding4x, cleanTop]}>
-      <Text style={[theme.colorSecondaryText, theme.marginBottom3x]}>
+      <MText style={[theme.colorSecondaryText, theme.marginBottom3x]}>
         {i18n.t('settings.autoplay.description')}
-      </Text>
+      </MText>
       <CheckBox
         title={i18n.t('settings.autoplay.enable')}
         containerStyle={[theme.checkbox]}

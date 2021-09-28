@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { observer } from 'mobx-react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import type { FabScreenStore } from './FabScreen';
 import LabeledComponent from '../../common/components/LabeledComponent';
@@ -8,6 +8,7 @@ import { CheckBox } from 'react-native-elements';
 import StripeCardSelector from '../methods/StripeCardSelector';
 import { styles } from './TokensForm';
 import InputContainer from '../../common/components/InputContainer';
+import MText from '../../common/components/MText';
 
 type propsType = {
   store: FabScreenStore;
@@ -44,7 +45,7 @@ const UsdForm = observer(({ store }: propsType) => {
         <LabeledComponent label="Repeat Payment Monthly">
           <CheckBox
             containerStyle={[theme.checkbox, styles.checkbox]}
-            title={<Text style={textStyle}>Repeat ?</Text>}
+            title={<MText style={textStyle}>Repeat ?</MText>}
             checked={store.wire.recurring}
             onPress={store.setRepeat}
           />

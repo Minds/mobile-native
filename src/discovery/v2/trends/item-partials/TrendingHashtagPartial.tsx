@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 import { styles } from '../DiscoveryTrendsListItem';
 import { Icon } from 'react-native-elements';
+import MText from '../../../../common/components/MText';
 
 type PropsType = {
   data: any;
@@ -12,10 +13,10 @@ const TrendingHashtagPartial = ({ data }: PropsType) => {
   return (
     <View style={styles.container}>
       <View style={styles.body}>
-        <Text style={styles.secondaryInformationTop}>
+        <MText style={styles.secondaryInformationTop}>
           Trending {data.period}h - {data.volume} posts
-        </Text>
-        <Text style={styles.title}>#{data.hashtag}</Text>
+        </MText>
+        <MText style={styles.title}>#{data.hashtag}</MText>
       </View>
       <Icon
         type="material-community"

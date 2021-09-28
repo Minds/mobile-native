@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import MenuItem from '../../../../../common/components/menus/MenuItem';
+import MText from '../../../../../common/components/MText';
 import requirePhoneValidation from '../../../../../common/hooks/requirePhoneValidation';
 import i18n from '../../../../../common/services/i18n.service';
 import ThemedStyles from '../../../../../styles/ThemedStyles';
@@ -26,9 +27,9 @@ const Setup = ({ user, walletStore, navigation }) => {
   walletSetup = [
     {
       title: (
-        <Text style={[titleStyle, user.rewards ? theme.strikeThrough : null]}>
+        <MText style={[titleStyle, user.rewards ? theme.strikeThrough : null]}>
           {i18n.t('wallet.phoneVerification')}
-        </Text>
+        </MText>
       ),
       onPress: () => showPhoneValidator(),
       icon: user.rewards
@@ -38,9 +39,9 @@ const Setup = ({ user, walletStore, navigation }) => {
     },
     {
       title: (
-        <Text style={[titleStyle, user.plus ? theme.strikeThrough : null]}>
+        <MText style={[titleStyle, user.plus ? theme.strikeThrough : null]}>
           {i18n.t('monetize.plusHeader')}
-        </Text>
+        </MText>
       ),
       onPress: () => {
         if (!user.plus) {
@@ -55,9 +56,9 @@ const Setup = ({ user, walletStore, navigation }) => {
   ];
   return (
     <View style={theme.paddingTop7x}>
-      <Text style={[styles.text, theme.colorSecondaryText]}>
+      <MText style={[styles.text, theme.colorSecondaryText]}>
         {i18n.t('wallet.tokens.completeToTransfer')}
-      </Text>
+      </MText>
       {walletSetup.map((item, i) => (
         <MenuItem
           item={item}

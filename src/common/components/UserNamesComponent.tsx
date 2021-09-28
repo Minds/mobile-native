@@ -1,13 +1,14 @@
 import React, { FunctionComponent } from 'react';
+import { View } from 'react-native';
+import { observer } from 'mobx-react';
+import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import ThemedStyles from '../../styles/ThemedStyles';
 import { ChannelStoreType } from '../../channel/v2/createChannelStore';
-import { observer } from 'mobx-react';
-import { View, Text } from 'react-native';
 import ChannelBadges from '../../channel/badges/ChannelBadges';
 import UserStore from '../../auth/UserStore';
 import type UserModel from '../../channel/UserModel';
-import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MText from './MText';
 
 type propsType = {
   store?: ChannelStoreType | UserStore;
@@ -31,22 +32,22 @@ const UserNamesComponent: FunctionComponent<propsType> = observer(
         <View style={styles.container}>
           {pay && (
             <View style={styles.payContainer}>
-              <Text style={[theme.bold, theme.fontXL]}>Tip</Text>
+              <MText style={[theme.bold, theme.fontXL]}>Tip</MText>
               <MIcon size={30} name="menu-right" color="#95C064" />
             </View>
           )}
-          <Text style={styles.name} numberOfLines={1}>
+          <MText style={styles.name} numberOfLines={1}>
             {channel.name}
-          </Text>
+          </MText>
           <ChannelBadges
             channel={channel}
             size={22}
             iconStyle={theme.colorLink}
           />
         </View>
-        <Text style={styles.username} numberOfLines={1}>
+        <MText style={styles.username} numberOfLines={1}>
           @{channel.username}
-        </Text>
+        </MText>
       </View>
     );
   },

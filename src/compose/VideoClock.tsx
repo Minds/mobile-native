@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment';
-import { Text, TextStyle } from 'react-native';
+import { TextStyle } from 'react-native';
+import MText from '../common/components/MText';
 
 type PropsType = {
   style?: TextStyle | Array<TextStyle>;
@@ -33,7 +34,7 @@ const VideoClock = ({ style, timer, onTimer }: PropsType) => {
     };
   }, []);
 
-  return <Text style={style}>{time}</Text>;
+  return <MText style={style}>{time}</MText>;
 };
 
 export default VideoClock;

@@ -43,12 +43,12 @@ export default class VideoCard extends Component {
             <View style={styles.namecol}>
               <View style={styles.ownerContainer}>
                 <Image source={this.getAvatar()} style={styles.avatar} />
-                <Text style={styles.username}>
+                <MText style={styles.username}>
                   {entity.ownerObj.username.toUpperCase()}
-                </Text>
-                <Text style={styles.createdDate}>
+                </MText>
+                <MText style={styles.createdDate}>
                   {i18n.date(entity.time_created * 1000)}
-                </Text>
+                </MText>
               </View>
             </View>
           </View>

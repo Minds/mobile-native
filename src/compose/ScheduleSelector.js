@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import moment from 'moment-timezone';
@@ -9,6 +9,7 @@ import TopBar from './TopBar';
 import i18n from '../common/services/i18n.service';
 import NavigationService from '../navigation/NavigationService';
 import DateTimePicker from 'react-native-modal-datetime-picker';
+import MText from '../common/components/MText';
 
 /**
  * NSFW selector
@@ -49,7 +50,7 @@ export default observer(function (props) {
         onPressBack={NavigationService.goBack}
         store={store}
       />
-      <Text
+      <MText
         style={[
           theme.paddingVertical6x,
           theme.colorSecondaryText,
@@ -57,11 +58,13 @@ export default observer(function (props) {
           theme.paddingHorizontal3x,
         ]}>
         {i18n.t('activity.scheduled')}
-      </Text>
+      </MText>
       <TouchableOpacity
         style={[styles.optsRow, theme.bcolorPrimaryBorder]}
         onPress={onNow}>
-        <Text style={[theme.flexContainer, theme.fontL]}>{i18n.t('now')}</Text>
+        <MText style={[theme.flexContainer, theme.fontL]}>
+          {i18n.t('now')}
+        </MText>
         {!store.time_created && (
           <MIcon name="check" size={23} style={theme.colorPrimaryText} />
         )}
@@ -69,11 +72,11 @@ export default observer(function (props) {
       <TouchableOpacity
         style={[styles.optsRow, theme.bcolorPrimaryBorder]}
         onPress={localStore.showPicker}>
-        <Text style={[theme.flexContainer, theme.fontL]}>
+        <MText style={[theme.flexContainer, theme.fontL]}>
           {i18n.t('capture.customTime')}
-        </Text>
+        </MText>
         {store.time_created && (
-          <Text>{current.format('ddd MMM Do YYYY h.mma')}</Text>
+          <MText>{current.format('ddd MMM Do YYYY h.mma')}</MText>
         )}
       </TouchableOpacity>
       <DateTimePicker

@@ -1,8 +1,9 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import CenteredLoading from '../common/components/CenteredLoading';
+import MText from '../common/components/MText';
 import i18n from '../common/services/i18n.service';
 import sessionService from '../common/services/session.service';
 import ThemedStyles from '../styles/ThemedStyles';
@@ -53,7 +54,7 @@ export default class EmailConfirmationScreen extends Component {
   renderBody() {
     if (this.state.error) {
       return (
-        <Text
+        <MText
           style={[
             ThemedStyles.style.fontL,
             ThemedStyles.style.textCenter,
@@ -61,16 +62,16 @@ export default class EmailConfirmationScreen extends Component {
           ]}
           onPress={this.confirm}>
           {i18n.t('errorMessage') + '\n'}
-          <Text style={[ThemedStyles.style.colorPrimary]}>
+          <MText style={[ThemedStyles.style.colorPrimary]}>
             {i18n.t('tryAgain')}
-          </Text>
-        </Text>
+          </MText>
+        </MText>
       );
     }
 
     if (this.state.confirmed) {
       return (
-        <Text
+        <MText
           style={[
             ThemedStyles.style.fontXL,
             ThemedStyles.style.textCenter,
@@ -78,10 +79,10 @@ export default class EmailConfirmationScreen extends Component {
           ]}
           onPress={() => this.props.navigation.goBack()}>
           {i18n.t('emailConfirm.confirmed') + '\n'}
-          <Text style={[ThemedStyles.style.colorPrimary]}>
+          <MText style={[ThemedStyles.style.colorPrimary]}>
             {i18n.t('goback')}
-          </Text>
-        </Text>
+          </MText>
+        </MText>
       );
     }
     return <CenteredLoading />;

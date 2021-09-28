@@ -1,12 +1,13 @@
 import React from 'react';
-import { Text, TextStyle, TouchableOpacity, ViewStyle } from 'react-native';
+import { TextStyle, TouchableOpacity, ViewStyle } from 'react-native';
 import i18n from '../services/i18n.service';
-import ThemedStyles, { useStyle } from '../../styles/ThemedStyles';
+import { useStyle } from '../../styles/ThemedStyles';
 import MdIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { observer } from 'mobx-react';
 import BottomSheet from './bottom-sheet/BottomSheet';
 import BottomSheetButton from './bottom-sheet/BottomSheetButton';
 import RadioButton from './bottom-sheet/RadioButton';
+import MText from './MText';
 
 type PropsType = {
   hideLabel?: boolean;
@@ -66,7 +67,9 @@ const FeedFilter = (props: PropsType) => {
         onPress={show}
         testID="FilterToggle">
         <MdIcon name="filter-variant" size={18} style={iconStyle} />
-        {!props.hideLabel && <Text style={textStyle}>{i18n.t('filter')}</Text>}
+        {!props.hideLabel && (
+          <MText style={textStyle}>{i18n.t('filter')}</MText>
+        )}
       </TouchableOpacity>
       <BottomSheet ref={ref} title={i18n.t('filter') + ' ' + i18n.t('feed')}>
         {options.map((b, i) => (

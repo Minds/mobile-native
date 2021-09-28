@@ -22,9 +22,9 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@growthbook/growthbook": "^0.13.0",
     "@gorhom/bottom-sheet": "^4.0.3",
     "@gorhom/portal": "^1.0.8",
+    "@growthbook/growthbook": "^0.13.0",
     "@msantang78/react-native-pager": "^0.2.4",
     "@react-native-clipboard/clipboard": "^1.7.0",
     "@react-native-community/art": "^1.1.2",
@@ -154,7 +154,7 @@
     "@testing-library/jest-native": "^3.3.0",
     "@testing-library/react-native": "^7.1.0",
     "@types/jest": "^24.0.24",
-    "@types/react-native": "^0.63.25",
+    "@types/react-native": "^0.65.1",
     "@types/react-native-snap-carousel": "^3.8.1",
     "@types/react-test-renderer": "16.9.1",
     "@typescript-eslint/eslint-plugin": "^4.22.1",

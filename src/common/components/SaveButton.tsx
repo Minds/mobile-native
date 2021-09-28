@@ -1,7 +1,8 @@
 import React from 'react';
 import i18n from '../services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
-import { Text, TextStyle } from 'react-native';
+import { TextStyle } from 'react-native';
+import MText from './MText';
 
 type propsType = {
   onPress: () => void;
@@ -12,11 +13,11 @@ type propsType = {
 const SaveButton = ({ onPress, text, style }: propsType) => {
   const theme = ThemedStyles.style;
   return (
-    <Text
+    <MText
       onPress={onPress}
       style={[theme.colorLink, theme.fontL, theme.bold, style]}>
       {text || i18n.t('save')}
-    </Text>
+    </MText>
   );
 };
 

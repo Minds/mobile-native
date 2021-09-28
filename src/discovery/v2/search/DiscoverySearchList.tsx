@@ -16,6 +16,7 @@ import DiscoveryUser from '../../DiscoveryUserNew';
 import i18n from '../../../common/services/i18n.service';
 import type UserModel from '../../../channel/UserModel';
 import { useStores } from '../../../common/hooks/use-stores';
+import MText from '../../../common/components/MText';
 
 interface Props {
   navigation: any;
@@ -91,9 +92,9 @@ export const DiscoverySearchList = observer((props: Props) => {
       <View>
         <View style={ComponentsStyle.emptyComponentContainer}>
           <View style={ComponentsStyle.emptyComponent}>
-            <Text style={ComponentsStyle.emptyComponentMessage}>
+            <MText style={ComponentsStyle.emptyComponentMessage}>
               {i18n.t('discovery.nothingToSee')}
-            </Text>
+            </MText>
           </View>
         </View>
       </View>

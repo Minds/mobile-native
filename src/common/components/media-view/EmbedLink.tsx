@@ -1,12 +1,13 @@
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import FastImage from 'react-native-fast-image';
 
 import type ActivityModel from '../../../newsfeed/ActivityModel';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import domain from '../../helpers/domain';
 import DoubleTap from '../DoubleTap';
+import MText from '../MText';
 import SmartImage from '../SmartImage';
 import MediaViewImage from './MediaViewImage';
 
@@ -51,8 +52,8 @@ export default function EmbedLink({
         <TouchableOpacity
           style={ThemedStyles.style.padding4x}
           onPress={openLink}>
-          <Text style={titleStyle}>{title}</Text>
-          <Text style={domainStyle}>{domain(entity.perma_url)}</Text>
+          <MText style={titleStyle}>{title}</MText>
+          <MText style={domainStyle}>{domain(entity.perma_url)}</MText>
         </TouchableOpacity>
       </View>
     );
@@ -73,10 +74,10 @@ export default function EmbedLink({
         />
       </DoubleTapTouchable>
       <TouchableOpacity style={titleContainerStyle} onPress={openLink}>
-        <Text numberOfLines={2} style={titleStyle}>
+        <MText numberOfLines={2} style={titleStyle}>
           {title}
-        </Text>
-        <Text style={domainStyle}>{domain(entity.perma_url)}</Text>
+        </MText>
+        <MText style={domainStyle}>{domain(entity.perma_url)}</MText>
       </TouchableOpacity>
     </View>
   );

@@ -1,13 +1,14 @@
 import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import React, { useCallback } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import Tags from '../Tags';
 import { TranslateStoreType } from './createTranslateStore';
 import { TranslatePropsType } from './Translate';
 import { Icon } from 'react-native-elements';
 import i18n from '../../services/i18n.service';
+import MText from '../MText';
 
 interface PropsType extends TranslatePropsType {
   translateStore: TranslateStoreType;
@@ -52,23 +53,23 @@ const Translated = observer(
             size={14}
             iconStyle={styles.icon}
           />
-          <Text style={[theme.paddingLeft, theme.colorSecondaryText]}>
+          <MText style={[theme.paddingLeft, theme.colorSecondaryText]}>
             {i18n.t('translate.from')}{' '}
-            <Text style={theme.bold}>{translateStore.translatedFrom}</Text>
-          </Text>
+            <MText style={theme.bold}>{translateStore.translatedFrom}</MText>
+          </MText>
         </View>
         <View
           style={[theme.rowJustifyStart, theme.alignCenter, theme.marginTop]}>
-          <Text
+          <MText
             style={[theme.bold, theme.colorPrimaryText]}
             onPress={translateStore.hide}>
             {i18n.t('hide')}
-          </Text>
-          <Text
+          </MText>
+          <MText
             style={[theme.bold, theme.colorPrimaryText, theme.paddingLeft2x]}
             onPress={showPicker}>
             {i18n.t('translate.changeLanguage')}
-          </Text>
+          </MText>
         </View>
       </View>
     );

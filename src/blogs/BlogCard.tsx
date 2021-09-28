@@ -1,7 +1,7 @@
 //@ts-nocheck
 import React, { PureComponent } from 'react';
 
-import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
 
 import { Avatar } from 'react-native-elements';
 
@@ -12,6 +12,7 @@ import ThemedStyles from '../styles/ThemedStyles';
 import type BlogModel from './BlogModel';
 import BlogActionSheet from './BlogActionSheet';
 import i18n from '../common/services/i18n.service';
+import MText from '../common/components/MText';
 
 type PropsType = {
   entity: BlogModel;
@@ -58,12 +59,12 @@ export default class BlogCard extends PureComponent<PropsType> {
           />
           <View style={theme.padding2x}>
             <View style={theme.fullWidth}>
-              <Text
+              <MText
                 style={[theme.fontL, theme.fontMedium, theme.flexContainer]}
                 numberOfLines={2}
                 ellipsizeMode="tail">
                 {title}
-              </Text>
+              </MText>
             </View>
           </View>
         </TouchableOpacity>
@@ -96,12 +97,12 @@ export default class BlogCard extends PureComponent<PropsType> {
           />
           <View style={theme.padding2x}>
             <View style={theme.fullWidth}>
-              <Text
+              <MText
                 style={[theme.fontXL, theme.fontMedium, theme.flexContainer]}
                 numberOfLines={2}
                 ellipsizeMode="tail">
                 {title}
-              </Text>
+              </MText>
               <View
                 style={[
                   theme.marginBottom2x,
@@ -117,7 +118,7 @@ export default class BlogCard extends PureComponent<PropsType> {
                     source={channel.getAvatarSource()}
                   />
                 )}
-                <Text
+                <MText
                   style={[
                     theme.fontL,
                     theme.paddingLeft2x,
@@ -125,10 +126,10 @@ export default class BlogCard extends PureComponent<PropsType> {
                   ]}
                   numberOfLines={1}>
                   {blog.ownerObj && blog.ownerObj.username}
-                </Text>
-                <Text style={[theme.fontXS, theme.paddingLeft]}>
+                </MText>
+                <MText style={[theme.fontXS, theme.paddingLeft]}>
                   {i18n.date(blog.time_created * 1000)}
-                </Text>
+                </MText>
                 <View style={theme.paddingLeft}>
                   <BlogActionSheet
                     entity={blog}

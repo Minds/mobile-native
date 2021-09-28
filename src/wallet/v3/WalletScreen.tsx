@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import {
   RouteProp,
   useFocusEffect,
@@ -26,6 +26,7 @@ import { createTokensTabStore } from './currency-tabs/tokens/createTokensTabStor
 import TokenPrice from './TokenPrice';
 import createUsdTabStore from './currency-tabs/cash/createUsdTabStore';
 import type { UsdOptions, TokensOptions } from '../v2/WalletTypes';
+import MText from '../../common/components/MText';
 
 export type WalletScreenRouteProp = RouteProp<InternalStackParamList, 'Wallet'>;
 export type WalletScreenNavigationProp = CompositeNavigationProp<
@@ -141,9 +142,9 @@ const WalletScreen = observer((props: PropsType) => {
           theme.paddingHorizontal4x,
           theme.alignCenter,
         ]}>
-        <Text style={[theme.fontXXXL, theme.bold]}>
+        <MText style={[theme.fontXXXL, theme.bold]}>
           {i18n.t('wallet.wallet')}
-        </Text>
+        </MText>
         <TokenPrice />
       </View>
       <View style={theme.paddingTop3x}>

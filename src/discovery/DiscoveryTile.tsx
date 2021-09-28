@@ -84,7 +84,7 @@ class DiscoveryTile extends Component {
           theme.centered,
           styles.boundary,
         ]}>
-        <Text>{this.props.boundaryText}</Text>
+        <MText>{this.props.boundaryText}</MText>
       </View>
     ) : null;
 

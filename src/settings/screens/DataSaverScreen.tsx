@@ -1,9 +1,10 @@
 import { observer } from 'mobx-react';
 import React, { useCallback } from 'react';
 
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import Switch from 'react-native-switch-pro';
+import MText from '../../common/components/MText';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import settingsStore from '../SettingsStore';
@@ -27,24 +28,25 @@ export default observer(function DataSaverScreen() {
     <View style={[theme.flexContainer, theme.margin]}>
       <View style={[theme.padding]}>
         <View style={styles.row}>
-          <Text style={[theme.marginLeft, theme.fontL]}>
+          <MText style={[theme.marginLeft, theme.fontL]}>
             {i18n.t('settings.networkOptions.1')}
-          </Text>
+          </MText>
           <Switch
             value={settingsStore.dataSaverMode}
             onSyncPress={setDataSaverMode}
           />
         </View>
-        <Text style={[theme.marginLeft, theme.colorSecondaryText, theme.fontM]}>
+        <MText
+          style={[theme.marginLeft, theme.colorSecondaryText, theme.fontM]}>
           {i18n.t('settings.dataSaverDescription')}
-        </Text>
+        </MText>
       </View>
 
       <View style={[theme.padding]}>
         <View style={styles.row}>
-          <Text style={[theme.marginLeft, theme.fontL]}>
+          <MText style={[theme.marginLeft, theme.fontL]}>
             {i18n.t('settings.dataSaverDisableOnWifi')}
-          </Text>
+          </MText>
           <Switch
             value={
               settingsStore.dataSaverMode
@@ -55,9 +57,10 @@ export default observer(function DataSaverScreen() {
             disabled={!settingsStore.dataSaverMode}
           />
         </View>
-        <Text style={[theme.marginLeft, theme.colorSecondaryText, theme.fontM]}>
+        <MText
+          style={[theme.marginLeft, theme.colorSecondaryText, theme.fontM]}>
           {i18n.t('settings.dataSaverDisableOnWiFiDescription')}
-        </Text>
+        </MText>
       </View>
     </View>
   );

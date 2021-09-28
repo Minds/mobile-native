@@ -1,11 +1,12 @@
 import React from 'react';
 
-import { Text, View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 
 import featuresService from '../../common/services/features.service';
 import testID from '../../common/helpers/testID';
 import PaymentMethodIcon from './PaymentMethodIcon';
 import ThemedStyles from '../../styles/ThemedStyles';
+import MText from '../../common/components/MText';
 
 type PropsType = {
   value: string;
@@ -71,7 +72,7 @@ export default class PaymentMethodSelector extends React.PureComponent<PropsType
                     : theme.colorIcon
                 }
               />
-              <Text
+              <MText
                 style={[
                   theme.fontL,
                   method.label.toLowerCase() === this.props.value
@@ -79,7 +80,7 @@ export default class PaymentMethodSelector extends React.PureComponent<PropsType
                     : theme.colorIcon,
                 ]}>
                 {method.label.toUpperCase()}
-              </Text>
+              </MText>
             </TouchableOpacity>
           ),
         )}

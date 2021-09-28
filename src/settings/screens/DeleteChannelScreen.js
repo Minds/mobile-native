@@ -6,13 +6,13 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
-  Text,
   Alert,
 } from 'react-native';
 import Button from '../../common/components/Button';
 import SettingsService from '../SettingsService';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
+import MText from '../../common/components/MText';
 
 /**
  * Delete Channel Screen
@@ -55,7 +55,7 @@ export default class DeleteChannelScreen extends Component {
         <KeyboardAvoidingView
           style={[theme.flexContainer]}
           behavior={Platform.OS === 'ios' ? 'padding' : null}>
-          <Text
+          <MText
             style={[
               theme.fontL,
               theme.marginTop,
@@ -63,7 +63,7 @@ export default class DeleteChannelScreen extends Component {
               theme.colorSecondaryText,
             ]}>
             {i18n.t('settings.deleteDescription')}
-          </Text>
+          </MText>
           <View style={theme.marginTop4x}>
             <Button
               text={i18n.t('settings.deleteChannelButton')}

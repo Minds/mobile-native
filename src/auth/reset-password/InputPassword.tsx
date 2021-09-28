@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import i18n from '../../common/services/i18n.service';
 import { ResetPasswordStore } from './createLocalStore';
 import { containerStyle, textStyle } from './EmailSended';
@@ -10,6 +10,7 @@ import { icon } from '../styles';
 import Button from '../../common/components/Button';
 import PasswordInput from '../../common/components/password-input/PasswordInput';
 import { DARK_THEME } from '../../styles/Colors';
+import MText from '../../common/components/MText';
 
 type PropsType = {
   store: ResetPasswordStore;
@@ -27,7 +28,7 @@ const InputPassword = observer(({ store, onFinish }: PropsType) => {
   return (
     <View>
       <View style={containerStyle}>
-        <Text style={textStyle}>{i18n.t('auth.newPassword')}</Text>
+        <MText style={textStyle}>{i18n.t('auth.newPassword')}</MText>
       </View>
       <View style={wrapperStyle}>
         <PasswordInput

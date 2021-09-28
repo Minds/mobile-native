@@ -1,10 +1,11 @@
 //@ts-nocheck
 import React, { Component } from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet } from 'react-native';
 import IconMC from 'react-native-vector-icons/MaterialCommunityIcons';
 
 // workaround for android
 import Tooltip from 'rne-modal-tooltip';
+import MText from './MText';
 
 export default class InfoPopup extends Component {
   render() {
@@ -13,7 +14,7 @@ export default class InfoPopup extends Component {
         width={350}
         height={100}
         pointerColor={'#4A90E2'}
-        popover={<Text style={styles.textTooltip}>{this.props.info}</Text>}
+        popover={<MText style={styles.textTooltip}>{this.props.info}</MText>}
         containerStyle={styles.tooltip}>
         <IconMC
           name="information-variant"

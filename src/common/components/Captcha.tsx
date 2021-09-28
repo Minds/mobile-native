@@ -1,5 +1,5 @@
-import React, { forwardRef, useImperativeHandle, useRef } from 'react';
-import { View, Image, StyleSheet, TextInput, Text } from 'react-native';
+import React, { forwardRef, useImperativeHandle } from 'react';
+import { View, Image, StyleSheet } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import Modal from 'react-native-modal';
 import { toJS } from 'mobx';
@@ -12,6 +12,7 @@ import { Icon } from 'react-native-elements';
 import { DARK_THEME } from '../../styles/Colors';
 import i18nService from '../services/i18n.service';
 import InputContainer from './InputContainer';
+import MText from './MText';
 
 const backgroundPrimary = { backgroundColor: DARK_THEME.PrimaryBackground };
 const backgroundSecondary = {
@@ -101,7 +102,7 @@ const Captcha = observer(
         <View style={[styles.modal, backgroundPrimary]}>
           <View
             style={[theme.paddingHorizontal4x, theme.rowJustifySpaceBetween]}>
-            <Text
+            <MText
               onPress={store.hideModal}
               style={[
                 theme.fontXL,
@@ -110,8 +111,8 @@ const Captcha = observer(
                 theme.textCenter,
               ]}>
               {i18nService.t('close')}
-            </Text>
-            <Text
+            </MText>
+            <MText
               style={[
                 theme.fontXL,
                 theme.colorWhite,
@@ -120,8 +121,8 @@ const Captcha = observer(
                 theme.bold,
               ]}>
               {i18nService.t('verification')}
-            </Text>
-            <Text
+            </MText>
+            <MText
               onPress={store.send}
               style={[
                 theme.fontXL,
@@ -130,7 +131,7 @@ const Captcha = observer(
                 theme.colorLink,
               ]}>
               {i18nService.t('verify')}
-            </Text>
+            </MText>
           </View>
           {store.captchaImage.uri !== '' && (
             <View

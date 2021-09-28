@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, Dimensions } from 'react-native';
+import { View, Dimensions } from 'react-native';
 import Button from '../../common/components/Button';
+import MText from '../../common/components/MText';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { LoginStore } from './createLoginStore';
@@ -35,11 +36,11 @@ const LoginButtons = ({
         large
       />
       <View style={theme.marginTop4x}>
-        <Text
+        <MText
           style={alt ? styles.forgotTextAlt : styles.forgotText}
           onPress={localStore.onForgotPress}>
           {i18n.t('auth.forgot')}
-        </Text>
+        </MText>
       </View>
       <View style={theme.flexContainer} />
       {!alt && (

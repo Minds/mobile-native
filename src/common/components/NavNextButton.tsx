@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { View, TouchableHighlight, Text, StyleSheet } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import MText from './MText';
 
 type PropsType = {
   disabled?: boolean;
@@ -31,7 +32,7 @@ export default class NavNextButton extends Component<PropsType> {
     let submitContent;
     if (typeof this.props.title === 'string') {
       submitContent = (
-        <Text
+        <MText
           style={[
             style.buttonText,
             this.props.textStyle,
@@ -41,7 +42,7 @@ export default class NavNextButton extends Component<PropsType> {
             },
           ]}>
           {this.props.title}
-        </Text>
+        </MText>
       );
     } else {
       submitContent = this.props.title;

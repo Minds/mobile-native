@@ -32,7 +32,7 @@ exports[`Explicit overlay component renders correctly 1`] = `
       }
     }
   />
-  <Text
+  <MText
     style={
       Array [
         Object {
@@ -51,8 +51,8 @@ exports[`Explicit overlay component renders correctly 1`] = `
     }
   >
     NSFW
-  </Text>
-  <Text
+  </MText>
+  <MText
     style={
       Array [
         Object {
@@ -89,7 +89,7 @@ exports[`Explicit overlay component renders correctly 1`] = `
       ]
     }
   >
-    <Text
+    <MText
       style={
         Array [
           Object {
@@ -103,7 +103,7 @@ exports[`Explicit overlay component renders correctly 1`] = `
       }
     >
       Can't be shown on apps installed via the Store
-    </Text>
+    </MText>
   </TouchableOpacity>
 </View>
 `;
@@ -140,7 +140,7 @@ exports[`Explicit overlay component should renders the etag 1`] = `
       }
     }
   />
-  <Text
+  <MText
     style={
       Array [
         Object {
@@ -159,8 +159,8 @@ exports[`Explicit overlay component should renders the etag 1`] = `
     }
   >
     NSFW
-  </Text>
-  <Text
+  </MText>
+  <MText
     style={
       Array [
         Object {
@@ -197,7 +197,7 @@ exports[`Explicit overlay component should renders the etag 1`] = `
       ]
     }
   >
-    <Text
+    <MText
       style={
         Array [
           Object {
@@ -211,7 +211,7 @@ exports[`Explicit overlay component should renders the etag 1`] = `
       }
     >
       Can't be shown on apps installed via the Store
-    </Text>
+    </MText>
   </TouchableOpacity>
 </View>
 `;

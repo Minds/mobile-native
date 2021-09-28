@@ -1,9 +1,9 @@
 import React from 'react';
-import { Text } from 'react-native';
 import ThemedStyles from '../../../styles/ThemedStyles';
+import MText from '../MText';
 
 export default function SectionTitle({ children }) {
-  return <Text style={style}>{children}</Text>;
+  return <MText style={style}>{children}</MText>;
 }
 
 const style = ThemedStyles.combine(

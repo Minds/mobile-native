@@ -1,13 +1,14 @@
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import React from 'react';
-import { ScrollView, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { AppStackParamList } from '../../navigation/NavigationTypes';
 import InputContainer from '../../common/components/InputContainer';
 import CenteredLoading from '../../common/components/CenteredLoading';
 import i18n from '../../common/services/i18n.service';
 import { showNotification } from '../../../AppMessages';
+import MText from '../../common/components/MText';
 
 type DisableTFARouteProp = RouteProp<AppStackParamList, 'DisableTFA'>;
 
@@ -43,9 +44,9 @@ const DisableTFA = observer(({ route }: PropsType) => {
 
   return (
     <ScrollView style={[theme.flexContainer]} keyboardShouldPersistTaps>
-      <Text style={[styles.text, theme.colorSecondaryText]}>
+      <MText style={[styles.text, theme.colorSecondaryText]}>
         {i18n.t('settings.TFADisableDesc')}
-      </Text>
+      </MText>
       {store.appAuthEnabled && (
         <InputContainer
           containerStyle={theme.bgPrimaryBackgroundHighlight}
@@ -66,7 +67,7 @@ const DisableTFA = observer(({ route }: PropsType) => {
             theme.bcolorPrimaryBorder,
             theme.bgPrimaryBackgroundHighlight,
           ]}>
-          <Text style={theme.fontL}>{i18n.t('settings.TFADisableYes')}</Text>
+          <MText style={theme.fontL}>{i18n.t('settings.TFADisableYes')}</MText>
         </TouchableOpacity>
       )}
     </ScrollView>

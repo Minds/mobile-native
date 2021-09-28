@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import i18n from '../services/i18n.service';
@@ -7,6 +7,7 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import Button from './Button';
 import { observer } from 'mobx-react';
 import settingsStore from '../../settings/SettingsStore';
+import MText from './MText';
 
 /**
  * Check language component
@@ -42,9 +43,9 @@ export default observer(function CheckLanguage() {
               style={theme.colorIcon}
             />
           </View>
-          <Text style={[theme.fontXL, theme.textCenter, theme.marginBottom3x]}>
+          <MText style={[theme.fontXL, theme.textCenter, theme.marginBottom3x]}>
             Did you know Minds is now available in {lang.name}?
-          </Text>
+          </MText>
           <Button
             text={`Switch to ${lang.name}`}
             containerStyle={theme.marginBottom2x}

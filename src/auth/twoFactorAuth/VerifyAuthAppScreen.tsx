@@ -1,13 +1,7 @@
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { AppStackParamList } from '../../navigation/NavigationTypes';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -16,6 +10,7 @@ import CenteredLoading from '../../common/components/CenteredLoading';
 import SaveButton from '../../common/components/SaveButton';
 import i18n from '../../common/services/i18n.service';
 import { showNotification } from '../../../AppMessages';
+import MText from '../../common/components/MText';
 
 type VerifyAuthAppRouteProp = RouteProp<
   AppStackParamList,
@@ -78,17 +73,17 @@ const VerifyAuthAppScreen = observer(({ route }: PropsType) => {
 
   return (
     <ScrollView style={[theme.flexContainer, theme.paddingTop7x]}>
-      <Text style={styles.title}>{i18n.t('settings.TFAVerifyTitle')}</Text>
-      <Text style={[styles.text, theme.colorSecondaryText]}>
+      <MText style={styles.title}>{i18n.t('settings.TFAVerifyTitle')}</MText>
+      <MText style={[styles.text, theme.colorSecondaryText]}>
         {i18n.t('settings.TFAVerifyDesc')}
-      </Text>
+      </MText>
       <View
         style={[
           theme.rowJustifySpaceBetween,
           theme.paddingHorizontal4x,
           theme.marginBottom7x,
         ]}>
-        <Text style={styles.smallTitle}>{store.secret}</Text>
+        <MText style={styles.smallTitle}>{store.secret}</MText>
         <TouchableOpacity
           style={[theme.rowJustifyStart, theme.centered]}
           onPress={store.copySecret}>
@@ -97,9 +92,9 @@ const VerifyAuthAppScreen = observer(({ route }: PropsType) => {
             color={ThemedStyles.getColor('PrimaryText')}
             size={14}
           />
-          <Text style={[styles.smallTitle, theme.marginLeft]}>
+          <MText style={[styles.smallTitle, theme.marginLeft]}>
             {i18n.t('copy')}
-          </Text>
+          </MText>
         </TouchableOpacity>
       </View>
       <InputContainer

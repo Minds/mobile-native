@@ -1,11 +1,5 @@
 import React, { useEffect, useCallback, useRef } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
+import { View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -16,6 +10,7 @@ import NavigationService from '../navigation/NavigationService';
 import hashtagService from '../common/services/hashtag.service';
 import HistoryStore from '../common/stores/HistoryStore';
 import TextInput from '../common/components/TextInput';
+import MText from '../common/components/MText';
 
 /**
  * Tag row
@@ -28,10 +23,10 @@ const TagRow = props => {
 
   return (
     <View style={[styles.tagRow, ThemedStyles.style.bcolorPrimaryBorder]}>
-      <Text
+      <MText
         style={[ThemedStyles.style.flexContainer, ThemedStyles.style.fontXL]}>
         #{props.tag}
-      </Text>
+      </MText>
       <TouchableOpacity onPress={onDelete}>
         <MIcon
           name="close"
@@ -109,7 +104,7 @@ export default observer(function (props) {
         onPressBack={NavigationService.goBack}
         store={store}
       />
-      <Text
+      <MText
         style={[
           theme.paddingVertical4x,
           theme.colorSecondaryText,
@@ -117,22 +112,22 @@ export default observer(function (props) {
           theme.paddingHorizontal3x,
         ]}>
         {i18n.t('capture.tagsDescription')}
-      </Text>
+      </MText>
       <View style={styles.suggestedContainer}>
         <ScrollView
           contentContainerStyle={styles.suggestedScroll}
           horizontal={true}>
           <MIcon name="fire" size={23} style={theme.colorAlert} />
           {localStore.suggested.map(t => (
-            <Text
+            <MText
               style={[styles.tag, theme.colorIconActive]}
               onPress={() => store.addTag(t.value)}>
               #{t.value}
-            </Text>
+            </MText>
           ))}
         </ScrollView>
       </View>
-      <Text
+      <MText
         style={[
           theme.paddingVertical4x,
           theme.colorSecondaryText,
@@ -140,7 +135,7 @@ export default observer(function (props) {
           theme.paddingHorizontal3x,
         ]}>
         Tag
-      </Text>
+      </MText>
       <TextInput
         ref={inputRef}
         style={[
@@ -167,20 +162,20 @@ export default observer(function (props) {
       {showHistory && (
         <View style={[styles.tagHistory, theme.bgSecondaryBackground]}>
           <View style={styles.tagHistoryOpt}>
-            <Text style={theme.colorSecondaryText}>Recent tags</Text>
-            <Text
+            <MText style={theme.colorSecondaryText}>Recent tags</MText>
+            <MText
               style={theme.colorSecondaryText}
               onPress={localStore.history.clear}>
               Clear history
-            </Text>
+            </MText>
           </View>
           <ScrollView keyboardShouldPersistTaps={'handled'}>
             {localStore.history.history.map(t => (
-              <Text
+              <MText
                 style={styles.historyTag}
                 onPress={() => localStore.addString(t)}>
                 #{t}
-              </Text>
+              </MText>
             ))}
           </ScrollView>
         </View>

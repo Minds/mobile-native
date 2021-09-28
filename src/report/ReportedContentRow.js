@@ -1,11 +1,13 @@
 //@ts-nocheck
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
-import { Text } from 'react-native';
-import Button from '../common/components/Button';
+import { View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+
+import Button from '../common/components/Button';
 import reportService from './ReportService';
+import MText from '../common/components/MText';
 
 export default function ({ appeal }) {
   const CS = ThemedStyles.style;
@@ -66,18 +68,18 @@ export default function ({ appeal }) {
       : i18n.t('settings.reportedContent.entityPost');
 
   const action = (
-    <Text style={CS.bold}>
+    <MText style={CS.bold}>
       {i18n.t(reportService.getAction(appeal.report))}
-    </Text>
+    </MText>
   );
 
   const reason = (
-    <Text style={CS.bold}>
+    <MText style={CS.bold}>
       {i18n.t(reportService.getReasonString(appeal.report))}
-    </Text>
+    </MText>
   );
 
-  const actionTaken = <Text style={CS.bold}>{i18n.t('actionTaken')}</Text>;
+  const actionTaken = <MText style={CS.bold}>{i18n.t('actionTaken')}</MText>;
 
   const actionMessage = i18n.to(
     'notification.boostAccepted',
@@ -103,7 +105,7 @@ export default function ({ appeal }) {
 
   // Button to nav to reported content
   const seeReportedContent = !appeal.report.entity ? (
-    <Text>{i18n.t('settings.reportedContent.postNotFound')}</Text>
+    <MText>{i18n.t('settings.reportedContent.postNotFound')}</MText>
   ) : (
     <Button
       onPress={navToActivity}
@@ -114,8 +116,8 @@ export default function ({ appeal }) {
   return (
     <View style={CS.flexContainer}>
       <View>
-        <Text style={CS.bold}>{date.toLocaleString()}</Text>
-        <Text>{actionMessage}</Text>
+        <MText style={CS.bold}>{date.toLocaleString()}</MText>
+        <MText>{actionMessage}</MText>
       </View>
       <View>{appealNote}</View>
       <View>{seeReportedContent}</View>

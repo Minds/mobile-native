@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { observer } from 'mobx-react';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { WalletStoreType } from '../createWalletStore';
@@ -11,6 +11,7 @@ import TokensChart from './TokensChart';
 import useWalletConnect from '../../../blockchain/v2/walletconnect/useWalletConnect';
 import { navToTokens } from '../../../buy-tokens/BuyTokensScreen';
 import { useNavigation } from '@react-navigation/core';
+import MText from '../../../common/components/MText';
 
 type PropsType = {
   walletStore: WalletStoreType;
@@ -53,18 +54,20 @@ const TokensOverview = observer(({ walletStore }: PropsType) => {
           theme.rowJustifySpaceBetween,
         ]}>
         <View>
-          <Text style={balanceStyle}>{i18n.t('wallet.walletBalance')}</Text>
-          <Text style={theme.fontXL}>{walletStore.balance}</Text>
+          <MText style={balanceStyle}>{i18n.t('wallet.walletBalance')}</MText>
+          <MText style={theme.fontXL}>{walletStore.balance}</MText>
         </View>
         <View>
-          <Text style={balanceStyle}>{i18n.t('blockchain.offchain')}</Text>
-          <Text style={theme.fontXL}>
+          <MText style={balanceStyle}>{i18n.t('blockchain.offchain')}</MText>
+          <MText style={theme.fontXL}>
             {walletStore.wallet.offchain.balance}
-          </Text>
+          </MText>
         </View>
         <View>
-          <Text style={balanceStyle}>{i18n.t('blockchain.onchain')}</Text>
-          <Text style={theme.fontXL}>{walletStore.wallet.onchain.balance}</Text>
+          <MText style={balanceStyle}>{i18n.t('blockchain.onchain')}</MText>
+          <MText style={theme.fontXL}>
+            {walletStore.wallet.onchain.balance}
+          </MText>
         </View>
       </View>
 

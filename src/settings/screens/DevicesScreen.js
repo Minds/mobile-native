@@ -1,8 +1,7 @@
 import React from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { observer } from 'mobx-react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import moment from 'moment-timezone';
 
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
@@ -10,6 +9,7 @@ import CenteredLoading from '../../common/components/CenteredLoading';
 import Button from '../../common/components/Button';
 import useApiFetch from '../../common/hooks/useApiFetch';
 import apiService from '../../common/services/api.service';
+import MText from '../../common/components/MText';
 
 const options = {
   retry: 0,
@@ -47,15 +47,15 @@ export default observer(function DeviceScreen() {
         padding,
       ]}>
       {error && (
-        <Text style={[theme.fontL, theme.centered, theme.colorSecondaryText]}>
+        <MText style={[theme.fontL, theme.centered, theme.colorSecondaryText]}>
           {i18n.t('sorry')} {i18n.t('cantLoad')}
-        </Text>
+        </MText>
       )}
       {loading ? (
         <CenteredLoading />
       ) : (
         <>
-          <Text
+          <MText
             style={[
               theme.colorSecondaryText,
               theme.fontL,
@@ -63,7 +63,7 @@ export default observer(function DeviceScreen() {
               theme.marginBottom4x,
             ]}>
             {i18n.t('settings.sessionsOpened')}
-          </Text>
+          </MText>
           {result?.sessions.map((s, i) => (
             <View
               style={[
@@ -82,16 +82,16 @@ export default observer(function DeviceScreen() {
                 color={ThemedStyles.getColor('Alert')}
                 inverted
               />
-              <Text style={[theme.fontL, theme.fontSemibold, styles.text]}>
+              <MText style={[theme.fontL, theme.fontSemibold, styles.text]}>
                 {s.platform}
-              </Text>
-              <Text style={styles.text}>{s.ip}</Text>
-              <Text style={styles.text}>
+              </MText>
+              <MText style={styles.text}>{s.ip}</MText>
+              <MText style={styles.text}>
                 Last accessed on{' '}
-                <Text style={[theme.fontSemibold, styles.text]}>
+                <MText style={[theme.fontSemibold, styles.text]}>
                   {i18n.date('friendly')}
-                </Text>
-              </Text>
+                </MText>
+              </MText>
             </View>
           ))}
         </>

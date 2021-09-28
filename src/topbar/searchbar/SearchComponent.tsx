@@ -1,9 +1,10 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 
-import { View, TouchableHighlight, Text } from 'react-native';
+import { View, TouchableHighlight } from 'react-native';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
+import MText from '../../common/components/MText';
 interface Props {
   navigation: any;
 }
@@ -17,7 +18,7 @@ const SearchComponent = observer((props: Props) => {
       onPress={() => props.navigation.navigate('SearchScreen')}
       underlayColor="transparent">
       <View>
-        <Text
+        <MText
           style={[
             theme.fontL,
             theme.colorSecondaryText,
@@ -26,7 +27,7 @@ const SearchComponent = observer((props: Props) => {
             theme.paddingVertical2x,
           ]}>
           {i18n.t('searchBar.title')}
-        </Text>
+        </MText>
       </View>
     </TouchableHighlight>
   );

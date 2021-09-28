@@ -4,7 +4,6 @@ import {
   StyleSheet,
   Dimensions,
   TouchableOpacity,
-  Text,
   Platform,
 } from 'react-native';
 import type { TextInput as TextInputType } from 'react-native';
@@ -25,6 +24,7 @@ import preventDoubleTap from '../../common/components/PreventDoubleTap';
 import { DotIndicator } from 'react-native-reanimated-indicators';
 import { CHAR_LIMIT } from '../../config/Config';
 import TextInput from '../../common/components/TextInput';
+import MText from '../../common/components/MText';
 
 const { height } = Dimensions.get('window');
 
@@ -103,13 +103,13 @@ const CommentInput = observer(() => {
                 theme.paddingHorizontal4x,
                 theme.marginBottom2x,
               ]}>
-              <Text style={theme.colorSecondaryText}>
+              <MText style={theme.colorSecondaryText}>
                 {provider.store.edit
                   ? i18n.t('edit')
                   : i18n.t('activity.replyTo', {
                       user: provider.store.parent?.ownerObj.username,
                     })}
-              </Text>
+              </MText>
             </View>
           )}
 
@@ -165,9 +165,9 @@ const CommentInput = observer(() => {
                     beforeSelect={beforeSelect}
                   />
                 </View>
-                <Text style={[theme.fontXS, theme.colorSecondaryText]}>
+                <MText style={[theme.fontXS, theme.colorSecondaryText]}>
                   {provider.store.text.length} / {CHAR_LIMIT}
-                </Text>
+                </MText>
               </View>
             ) : (
               <View>

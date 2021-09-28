@@ -5,7 +5,6 @@ import {
   Platform,
   TouchableOpacity,
   useWindowDimensions,
-  Text,
 } from 'react-native';
 import { useDimensions } from '@react-native-community/hooks';
 import { RouteProp, useNavigation } from '@react-navigation/native';
@@ -35,6 +34,7 @@ import CommentBottomSheet from '../comments/v2/CommentBottomSheet';
 import BoxShadow from '../common/components/BoxShadow';
 import i18n from '../common/services/i18n.service';
 import { withErrorBoundary } from '../common/components/ErrorBoundary';
+import MText from '../common/components/MText';
 
 type ActivityRoute = RouteProp<AppStackParamList, 'Activity'>;
 
@@ -149,17 +149,17 @@ const PortraitActivity = observer((props: PropsType) => {
         </View>
       }>
       <View style={theme.rowJustifyStart}>
-        <Text
+        <MText
           numberOfLines={1}
           style={[theme.fontM, theme.colorSecondaryText, theme.paddingRight]}>
           {i18n.date(parseInt(entity.time_created, 10) * 1000, 'friendly')}
           {!!entity.edited && (
-            <Text style={[theme.fontS, theme.colorSecondaryText]}>
+            <MText style={[theme.fontS, theme.colorSecondaryText]}>
               {' '}
               · {i18n.t('edited').toUpperCase()}
-            </Text>
+            </MText>
           )}
-        </Text>
+        </MText>
       </View>
     </OwnerBlock>
   );

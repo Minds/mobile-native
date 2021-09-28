@@ -201,18 +201,26 @@ exports[`Activity screen component renders correctly  1`] = `
                       "color": "#43434D",
                     },
                     Object {
-                      "fontFamily": "Roboto-Light",
-                      "fontWeight": "300",
+                      "fontFamily": "Roboto",
                     },
-                    Object {
-                      "fontWeight": "700",
-                    },
-                    Object {
-                      "fontSize": 17,
-                    },
-                    Object {
-                      "flex": 1,
-                    },
+                    Array [
+                      Object {
+                        "color": "#43434D",
+                      },
+                      Object {
+                        "fontFamily": "Roboto-Light",
+                        "fontWeight": "300",
+                      },
+                      Object {
+                        "fontWeight": "700",
+                      },
+                      Object {
+                        "fontSize": 17,
+                      },
+                      Object {
+                        "flex": 1,
+                      },
+                    ],
                   ]
                 }
               >
@@ -309,21 +317,29 @@ exports[`Activity screen component renders correctly  1`] = `
               selectable={true}
               style={
                 Array [
+                  Object {
+                    "color": "#43434D",
+                  },
+                  Object {
+                    "fontFamily": "Roboto",
+                  },
                   Array [
+                    Array [
+                      Object {
+                        "fontSize": 28,
+                      },
+                      Object {
+                        "fontFamily": "Roboto-Medium",
+                        "fontWeight": "500",
+                      },
+                    ],
                     Object {
-                      "fontSize": 28,
+                      "marginBottom": 5,
                     },
                     Object {
-                      "fontFamily": "Roboto-Medium",
-                      "fontWeight": "500",
+                      "fontWeight": "700",
                     },
                   ],
-                  Object {
-                    "marginBottom": 5,
-                  },
-                  Object {
-                    "fontWeight": "700",
-                  },
                 ]
               }
             >
@@ -334,12 +350,20 @@ exports[`Activity screen component renders correctly  1`] = `
               style={
                 Array [
                   Object {
-                    "fontSize": 28,
+                    "color": "#43434D",
                   },
                   Object {
-                    "fontFamily": "Roboto-Medium",
-                    "fontWeight": "500",
+                    "fontFamily": "Roboto",
                   },
+                  Array [
+                    Object {
+                      "fontSize": 28,
+                    },
+                    Object {
+                      "fontFamily": "Roboto-Medium",
+                      "fontWeight": "500",
+                    },
+                  ],
                 ]
               }
             >
@@ -375,8 +399,10 @@ exports[`Activity screen component renders correctly  1`] = `
             >
               <View
                 accessible={true}
+                collapsable={false}
                 focusable={true}
                 forwardedRef={[Function]}
+                nativeID="animatedComponent"
                 onClick={[Function]}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
@@ -399,10 +425,12 @@ exports[`Activity screen component renders correctly  1`] = `
                 }
               />
               <View
+                collapsable={false}
                 deviceHeight={null}
                 deviceWidth={null}
                 forwardedRef={[Function]}
                 hideModalContentWhileAnimating={false}
+                nativeID="animatedComponent"
                 onBackdropPress={[Function]}
                 onModalHide={[Function]}
                 onModalWillHide={[Function]}
@@ -455,17 +483,13 @@ exports[`Activity screen component renders correctly  1`] = `
                   >
                     <RCTScrollView
                       data={null}
-                      disableVirtualization={false}
                       extraData=""
                       getItem={[Function]}
                       getItemCount={[Function]}
-                      horizontal={false}
-                      initialNumToRender={10}
                       keyExtractor={[Function]}
-                      maxToRenderPerBatch={10}
                       onContentSizeChange={[Function]}
-                      onEndReachedThreshold={2}
                       onLayout={[Function]}
+                      onMomentumScrollBegin={[Function]}
                       onMomentumScrollEnd={[Function]}
                       onScroll={[Function]}
                       onScrollBeginDrag={[Function]}
@@ -480,9 +504,7 @@ exports[`Activity screen component renders correctly  1`] = `
                           "flex": 1,
                         }
                       }
-                      updateCellsBatchingPeriod={50}
                       viewabilityConfigCallbackPairs={Array []}
-                      windowSize={21}
                     >
                       <View />
                     </RCTScrollView>
@@ -577,14 +599,22 @@ exports[`Activity screen component renders correctly  1`] = `
             style={
               Array [
                 Object {
-                  "color": "#72727C",
+                  "color": "#43434D",
                 },
                 Object {
-                  "fontSize": 14,
+                  "fontFamily": "Roboto",
                 },
-                Object {
-                  "paddingVertical": 5,
-                },
+                Array [
+                  Object {
+                    "color": "#72727C",
+                  },
+                  Object {
+                    "fontSize": 14,
+                  },
+                  Object {
+                    "paddingVertical": 5,
+                  },
+                ],
               ]
             }
           >
@@ -819,6 +849,17 @@ exports[`Activity screen component renders correctly  1`] = `
           >
             <Text
               size={15}
+              style={
+                Array [
+                  Object {
+                    "color": "#43434D",
+                  },
+                  Object {
+                    "fontFamily": "Roboto",
+                  },
+                  undefined,
+                ]
+              }
             >
               
             </Text>
@@ -945,8 +986,10 @@ exports[`Activity screen component renders correctly  1`] = `
           >
             <View
               accessible={true}
+              collapsable={false}
               focusable={true}
               forwardedRef={[Function]}
+              nativeID="animatedComponent"
               onClick={[Function]}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
@@ -1008,10 +1051,12 @@ exports[`Activity screen component renders correctly  1`] = `
               }
             >
               <View
+                collapsable={false}
                 deviceHeight={null}
                 deviceWidth={null}
                 forwardedRef={[Function]}
                 hideModalContentWhileAnimating={false}
+                nativeID="animatedComponent"
                 onBackdropPress={[Function]}
                 onModalHide={[Function]}
                 onModalWillHide={[Function]}
@@ -1058,7 +1103,9 @@ exports[`Activity screen component renders correctly  1`] = `
                 swipeThreshold={100}
               >
                 <View
+                  collapsable={false}
                   forwardedRef={[Function]}
+                  nativeID="animatedComponent"
                   style={
                     Object {
                       "paddingBottom": 5,
@@ -1066,7 +1113,9 @@ exports[`Activity screen component renders correctly  1`] = `
                   }
                 >
                   <View
+                    collapsable={false}
                     forwardedRef={[Function]}
+                    nativeID="animatedComponent"
                     style={
                       Object {
                         "paddingBottom": 10,
@@ -1257,7 +1306,9 @@ exports[`Activity screen component renders correctly  1`] = `
                     </View>
                   </View>
                   <View
+                    collapsable={false}
                     forwardedRef={[Function]}
+                    nativeID="animatedComponent"
                     style={
                       Object {
                         "paddingBottom": 10,

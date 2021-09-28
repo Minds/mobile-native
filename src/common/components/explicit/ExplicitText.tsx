@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import * as entities from 'entities';
 import {
-  Text,
   StyleSheet,
   View,
   Dimensions,
@@ -16,6 +15,7 @@ import i18n from '../../services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
 import { LinearGradient } from 'expo-linear-gradient';
+import MText from '../MText';
 
 type PropsType = {
   entity: ActivityModel;
@@ -115,7 +115,7 @@ export default class ExplicitText extends Component<PropsType, StateType> {
 
       body =
         entity.shouldBeBlured() && !entity.mature_visibility ? (
-          <Text style={styles.mature}>{message}</Text>
+          <MText style={styles.mature}>{message}</MText>
         ) : (
           <Tags
             navigation={this.props.navigation}
@@ -190,9 +190,9 @@ export default class ExplicitText extends Component<PropsType, StateType> {
   getMoreLess() {
     const msg = this.state.more ? i18n.t('showLess') : i18n.t('readMore');
     return (
-      <Text style={readmoreStyle} onPress={this.toggleReadMore}>
+      <MText style={readmoreStyle} onPress={this.toggleReadMore}>
         {msg}
-      </Text>
+      </MText>
     );
   }
 

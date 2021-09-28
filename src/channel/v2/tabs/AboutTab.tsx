@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
 import { ChannelStoreType } from '../createChannelStore';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import moment from 'moment-timezone';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import LabeledComponent from '../../../common/components/LabeledComponent';
@@ -13,6 +13,7 @@ import SocialLinks from '../../../common/components/SocialLinks';
 import Tags from '../../../common/components/Tags';
 import { useIsFocused } from '@react-navigation/core';
 import { withErrorBoundary } from '../../../common/components/ErrorBoundary';
+import MText from '../../../common/components/MText';
 
 type PropsType = {
   store: ChannelStoreType;
@@ -70,23 +71,23 @@ const AboutTab = observer(({ store, navigation }: PropsType) => {
         <LabeledComponent
           label={i18n.t('channel.edit.hashtags')}
           wrapperStyle={margin}>
-          <Text>{`#${tags}`}</Text>
+          <MText>{`#${tags}`}</MText>
         </LabeledComponent>
       )}
 
       <LabeledComponent label={i18n.t('joined')} wrapperStyle={margin}>
-        <Text>
+        <MText>
           {channel?.time_created
             ? moment(parseInt(channel.time_created, 10) * 1000).format('MMM Y')
             : ''}
-        </Text>
+        </MText>
       </LabeledComponent>
 
       {channel?.dob && (
         <LabeledComponent
           label={i18n.t('channel.edit.dob')}
           wrapperStyle={margin}>
-          <Text>{channel?.dob}</Text>
+          <MText>{channel?.dob}</MText>
         </LabeledComponent>
       )}
 
@@ -105,21 +106,21 @@ const AboutTab = observer(({ store, navigation }: PropsType) => {
       <LabeledComponent
         label={i18n.t('discovery.groups')}
         wrapperStyle={margin}>
-        <Text>{localStore.groupCount}</Text>
+        <MText>{localStore.groupCount}</MText>
       </LabeledComponent>
 
       <LabeledComponent label={i18n.t('subscribers')}>
-        <Text>{channel.subscribers_count}</Text>
+        <MText>{channel.subscribers_count}</MText>
       </LabeledComponent>
 
       <LabeledComponent label={i18n.t('views')} wrapperStyle={margin}>
-        <Text>{abbrev(channel.impressions, 1)}</Text>
+        <MText>{abbrev(channel.impressions, 1)}</MText>
       </LabeledComponent>
 
       <LabeledComponent
         label={i18n.t('subscriptions')}
         wrapperStyle={theme.marginBottom2x}>
-        <Text>{channel.subscriptions_count}</Text>
+        <MText>{channel.subscriptions_count}</MText>
       </LabeledComponent>
 
       {channel.social_profiles!.length > 0 && (

@@ -13,6 +13,7 @@ import Button from '../../common/components/Button';
 import SettingsService from '../SettingsService';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
+import MText from '../../common/components/MText';
 
 /**
  * Delete Channel Screen
@@ -52,7 +53,7 @@ export default class DeactivateChannelScreen extends Component {
         <KeyboardAvoidingView
           style={[theme.flexContainer]}
           behavior={Platform.OS === 'ios' ? 'padding' : null}>
-          <Text
+          <MText
             style={[
               theme.fontL,
               theme.marginTop,
@@ -60,7 +61,7 @@ export default class DeactivateChannelScreen extends Component {
               theme.colorSecondaryText,
             ]}>
             {i18n.t('settings.disableDescription')}
-          </Text>
+          </MText>
           <View style={theme.marginTop4x}>
             <Button
               text={i18n.t('settings.disableChannelButton')}

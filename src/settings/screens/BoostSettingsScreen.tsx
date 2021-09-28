@@ -1,9 +1,8 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import {
   Linking,
   ScrollView,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -19,6 +18,7 @@ import { showNotification } from '../../../AppMessages';
 import settingsService from '../SettingsService';
 import apiService from '../../common/services/api.service';
 import CenteredLoading from '../../common/components/CenteredLoading';
+import MText from '../../common/components/MText';
 
 /****** Boost Settings *****
  *  disabled_boost === true => viewBoostedContent = false
@@ -176,14 +176,14 @@ const BoostSettingsScreen = observer(() => {
   ];
 
   const browserOnly = (
-    <Text style={[theme.colorSecondaryText, styles.smallText]}>
+    <MText style={[theme.colorSecondaryText, styles.smallText]}>
       ({i18n.t('browserOnly')})
-    </Text>
+    </MText>
   );
   const mindsPlusOnly = (
-    <Text style={[theme.colorSecondaryText, styles.smallText]}>
+    <MText style={[theme.colorSecondaryText, styles.smallText]}>
       ({i18n.t('mindsPlusFeature')})
-    </Text>
+    </MText>
   );
 
   return (
@@ -193,7 +193,7 @@ const BoostSettingsScreen = observer(() => {
         theme.fullHeight,
         theme.paddingTop4x,
       ]}>
-      <Text
+      <MText
         style={[
           theme.colorSecondaryText,
           theme.marginBottom6x,
@@ -203,12 +203,12 @@ const BoostSettingsScreen = observer(() => {
         {`${i18n.t('settings.boost.description')}\n${i18n.t(
           'settings.boost.learn',
         )} `}
-        <Text
+        <MText
           style={theme.colorLink}
           onPress={() => Linking.openURL('https://www.minds.com/boost')}>
           Boost
-        </Text>
-      </Text>
+        </MText>
+      </MText>
       {items.map(item => {
         return (
           <View style={theme.marginBottom7x}>
@@ -218,9 +218,9 @@ const BoostSettingsScreen = observer(() => {
                 theme.marginBottom2x,
                 theme.paddingLeft4x,
               ]}>
-              <Text style={[styles.text, theme.colorTertiaryText]}>
+              <MText style={[styles.text, theme.colorTertiaryText]}>
                 {i18n.t(`settings.boost.${item.id}`).toUpperCase()}
-              </Text>
+              </MText>
               <Tooltip
                 skipAndroidStatusBar={true}
                 withOverlay={false}
@@ -229,9 +229,9 @@ const BoostSettingsScreen = observer(() => {
                 height={item.tooltip.height}
                 backgroundColor={ThemedStyles.getColor('Link')}
                 popover={
-                  <Text style={theme.colorWhite}>
+                  <MText style={theme.colorWhite}>
                     {i18n.t(`settings.boost.${item.id}Tooltip`)}
-                  </Text>
+                  </MText>
                 }>
                 <Icon
                   name="information-variant"
@@ -249,7 +249,7 @@ const BoostSettingsScreen = observer(() => {
                 item.disabled ? theme.bgSecondaryBackground : {},
               ]}
               onPress={item.disabled ? () => false : () => item.onPress(true)}>
-              <Text
+              <MText
                 style={[
                   theme.fontL,
                   item.disabled
@@ -257,7 +257,7 @@ const BoostSettingsScreen = observer(() => {
                     : theme.colorPrimaryText,
                 ]}>
                 {i18n.t(`settings.boost.${item.enable || 'enable'}`)}
-              </Text>
+              </MText>
               {item.isSelected() && checked}
             </TouchableOpacity>
             <TouchableOpacity
@@ -266,7 +266,7 @@ const BoostSettingsScreen = observer(() => {
                 item.disabled ? theme.bgSecondaryBackground : {},
               ]}
               onPress={item.disabled ? () => false : () => item.onPress(false)}>
-              <Text
+              <MText
                 style={[
                   theme.fontL,
                   item.disabled
@@ -274,7 +274,7 @@ const BoostSettingsScreen = observer(() => {
                     : theme.colorPrimaryText,
                 ]}>
                 {i18n.t(`settings.boost.${item.disable || 'disable'}`)}
-              </Text>
+              </MText>
               {!item.isSelected() && checked}
             </TouchableOpacity>
           </View>

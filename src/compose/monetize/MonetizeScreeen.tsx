@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { observer } from 'mobx-react';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -14,6 +14,7 @@ import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '../../navigation/NavigationTypes';
 import mindsService from '../../common/services/minds-config.service';
+import MText from '../../common/components/MText';
 
 type MonetizeScreenRouteProp = RouteProp<AppStackParamList, 'MonetizeSelector'>;
 type MonetizeScreenNavigationProp = StackNavigationProp<
@@ -73,7 +74,7 @@ const MonetizeScreen = observer(({ route }: PropsType) => {
 
   return (
     <Wrapper store={store}>
-      <Text
+      <MText
         style={[
           theme.paddingVertical6x,
           theme.colorSecondaryText,
@@ -81,7 +82,7 @@ const MonetizeScreen = observer(({ route }: PropsType) => {
           theme.paddingHorizontal3x,
         ]}>
         {i18n.t('capture.paywallDescription')}
-      </Text>
+      </MText>
       <MenuItem
         item={{
           onPress: () => store.clearWireThreshold(),

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Text, View, StyleSheet, Alert } from 'react-native';
+import { View, StyleSheet, Alert } from 'react-native';
 
 import Carousel from 'react-native-snap-carousel';
 
@@ -10,6 +10,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import i18n from '../../common/services/i18n.service';
 import type { StripeCard } from '../WireTypes';
 import ThemedStyles from '../../styles/ThemedStyles';
+import MText from '../../common/components/MText';
 
 const { value: slideWidth, viewportHeight } = viewportPercentage(50);
 const { value: itemHorizontalMargin } = viewportPercentage(1);
@@ -108,7 +109,7 @@ export default class StripeCardCarousel extends React.PureComponent<PropsType> {
           size={25}
           onPress={(): any => this.delete(row.item)}
         />
-        <Text
+        <MText
           style={[
             theme.fontM,
             theme.fontMedium,
@@ -116,8 +117,8 @@ export default class StripeCardCarousel extends React.PureComponent<PropsType> {
             theme.paddingBottom2x,
           ]}>
           {row.item.card_country}
-        </Text>
-        <Text
+        </MText>
+        <MText
           style={[
             theme.fontXL,
             theme.fontMedium,
@@ -126,8 +127,8 @@ export default class StripeCardCarousel extends React.PureComponent<PropsType> {
             theme.paddingTop3x,
           ]}>
           ********** {row.item.card_last4}
-        </Text>
-        <Text
+        </MText>
+        <MText
           numberOfLines={5}
           style={[
             theme.fontL,
@@ -137,7 +138,7 @@ export default class StripeCardCarousel extends React.PureComponent<PropsType> {
             theme.paddingTop3x,
           ]}>
           {row.item.card_expires}
-        </Text>
+        </MText>
       </View>
     );
   };

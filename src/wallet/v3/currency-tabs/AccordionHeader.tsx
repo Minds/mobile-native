@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { Tooltip } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MText from '../../../common/components/MText';
 import ThemedStyles from '../../../styles/ThemedStyles';
 
 type PropsType = {
@@ -16,7 +17,7 @@ const AccordionHeader = ({ title, subtitle, tooltip, isActive }: PropsType) => {
 
   const SubTitle = subtitle ? (
     typeof subtitle === 'string' ? (
-      <Text style={[theme.fontLM, theme.flexContainer]}>{subtitle}</Text>
+      <MText style={[theme.fontLM, theme.flexContainer]}>{subtitle}</MText>
     ) : (
       subtitle
     )
@@ -31,7 +32,7 @@ const AccordionHeader = ({ title, subtitle, tooltip, isActive }: PropsType) => {
       ]}>
       <View style={[theme.flexContainer, theme.rowJustifyStart]}>
         {typeof title === 'string' && (
-          <Text style={[theme.fontLM, theme.fontMedium]}>{title}</Text>
+          <MText style={[theme.fontLM, theme.fontMedium]}>{title}</MText>
         )}
         {typeof title !== 'string' && title}
         {tooltip && (
@@ -43,7 +44,7 @@ const AccordionHeader = ({ title, subtitle, tooltip, isActive }: PropsType) => {
               width={tooltip.width}
               height={tooltip.height}
               backgroundColor={ThemedStyles.getColor('Link')}
-              popover={<Text style={theme.colorWhite}>{tooltip.title}</Text>}>
+              popover={<MText style={theme.colorWhite}>{tooltip.title}</MText>}>
               <Icon name="information-variant" size={15} color="#AEB0B8" />
             </Tooltip>
           </View>
