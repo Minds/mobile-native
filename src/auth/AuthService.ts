@@ -4,7 +4,6 @@ import delay from '../common/helpers/delay';
 import logService from '../common/services/log.service';
 import type UserModel from '../channel/UserModel';
 import RNBootSplash from 'react-native-bootsplash';
-import pushService from '../common/services/push.service';
 import sessionService from './../common/services/session.service';
 
 export type TFA = 'sms' | 'totp';
@@ -164,7 +163,7 @@ class AuthService {
     this.justRegistered = false;
     try {
       // delete device token first
-      await pushService.push.unregisterTokenFrom(sessionService.activeIndex);
+      await this.unregisterTokenFrom(sessionService.activeIndex);
 
       api.post('api/v3/oauth/revoke');
       this.showSplash();
@@ -181,6 +180,15 @@ class AuthService {
     }
   }
 
+  unregisterTokenFrom(index: number) {
+    const deviceToken = sessionService.deviceToken;
+    if (deviceToken) {
+      return sessionService.apiServiceInstances[index].delete(
+        `api/v3/notifications/push/token/${deviceToken}`,
+      );
+    }
+  }
+
   /**
    * Logout user specified by index on session
    */
@@ -188,7 +196,7 @@ class AuthService {
     this.justRegistered = false;
     try {
       // delete device token first
-      await pushService.push.unregisterTokenFrom(index);
+      await this.unregisterTokenFrom(index);
 
       // revoke access token from backend
       sessionService.apiServiceInstances[index].post('api/v3/oauth/revoke');
