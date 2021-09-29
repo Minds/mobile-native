@@ -19,8 +19,8 @@
     "baseUrl": ".",
     "paths": {
       "~/*": ["./src/*"],
-      "~base": ["./src/common/base"],
-      "~base/*": ["./src/common/base/*"],
+      "~ui": ["./src/common/ui"],
+      "~ui/*": ["./src/common/ui/*"],
       "~styles": ["./src/styles"],
       "~styles/*": ["./src/styles/*"]
     }

@@ -14,7 +14,7 @@ import {
 import NewsfeedScreen from '../newsfeed/NewsfeedScreen';
 import NotificationsScreen from '../notifications/v3/NotificationsScreen';
 import ThemedStyles, { useMemoStyle } from '../styles/ThemedStyles';
-import { Icon } from '~base/icons';
+import { Icon } from '~ui/icons';
 import NotificationIcon from '../notifications/v3/notifications-tab-icon/NotificationsTabIcon';
 import gatheringService from '../common/services/gathering.service';
 import { observer } from 'mobx-react';

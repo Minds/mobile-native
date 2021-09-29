@@ -9,7 +9,7 @@ import {
   IUISizing,
   UNIT,
 } from '~styles/Tokens';
-import { getPropStyles } from '~base/helpers';
+import { getPropStyles } from '~ui/helpers';
 import ThemedStyles from '~styles/ThemedStyles';
 
 export default function IconCircled({ style, active, ...extra }: IIcon) {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { IconButton } from '~base/icons';
+import { IconButton } from '~ui/icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type PropsType = {

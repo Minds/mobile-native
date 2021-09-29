@@ -2,7 +2,7 @@ import React from 'react';
 import { Pressable, StyleSheet } from 'react-native';
 import Icon, { IIcon } from './Icon';
 import { ICON_SIZES, ICON_SIZE_DEFAULT, IUISizing } from '~styles/Tokens';
-import { getNumericSize, getPropStyles } from '~base/helpers';
+import { getNumericSize, getPropStyles } from '~ui/helpers';
 
 const SLOP_PROP = 1 / 3;
 

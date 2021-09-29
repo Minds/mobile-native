@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
 import type { TextInput as TextInputType } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
-import { IconButton, Icon } from '~base/icons';
+import { IconButton, Icon } from '~ui/icons';
 import i18n from '../../common/services/i18n.service';
 import { useLegacyStores, useStores } from '../../common/hooks/use-stores';
 import { useNavigation } from '@react-navigation/core';

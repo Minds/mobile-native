@@ -1,7 +1,6 @@
 import React, { FC, PureComponent } from 'react';
 import { TextStyle, ViewStyle } from 'react-native';
-// import Icon from 'react-native-vector-icons/MaterialIcons';
-import { Icon } from '~base/icons';
+import { Icon } from '~ui/icons';
 import type UserModel from '../UserModel';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';

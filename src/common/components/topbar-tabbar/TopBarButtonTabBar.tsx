@@ -10,7 +10,7 @@ import {
   ViewStyle,
 } from 'react-native';
 // import { Icon } from 'react-native-elements';
-import { Icon } from '~base/icons';
+import { Icon } from '~ui/icons';
 import { ScrollView } from 'react-native-gesture-handler';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import Button from '../Button';

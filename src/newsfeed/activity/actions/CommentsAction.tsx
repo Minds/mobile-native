@@ -4,7 +4,7 @@ import { observer } from 'mobx-react';
 
 import { TouchableOpacity } from 'react-native';
 
-import Icon from '~base/icons/Icon';
+import { Icon } from '~ui/icons';
 
 import Counter from './Counter';
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';

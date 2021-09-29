@@ -1,8 +1,7 @@
 import React, { useCallback, useRef } from 'react';
 
 import { TouchableOpacity } from 'react-native';
-// import Icon from 'react-native-vector-icons/MaterialIcons';
-import Icon from '~base/icons/Icon';
+import { Icon } from '~ui/icons';
 import Counter from './Counter';
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import { FLAG_REMIND } from '../../../common/Permissions';

@@ -15,7 +15,7 @@ module.exports = {
         root: ['.'],
         alias: {
           '~': ['./src/'],
-          '~base': ['./src/common/base'],
+          '~ui': ['./src/common/ui'],
           '~styles': ['./src/styles'],
         },
       },

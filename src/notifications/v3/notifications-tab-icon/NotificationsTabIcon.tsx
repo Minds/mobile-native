@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react';
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import Icon from '~base/icons/Icon';
+import { Icon } from '~ui/icons';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
 import { useStores } from '../../../common/hooks/use-stores';
 import ThemedStyles from '../../../styles/ThemedStyles';

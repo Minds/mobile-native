@@ -1,9 +1,6 @@
 import React, { PureComponent } from 'react';
-
-import { View, Alert, Linking } from 'react-native';
-
-// import Icon from 'react-native-vector-icons/MaterialIcons';
-import { IconButton } from '~base/icons';
+import { Alert, Linking } from 'react-native';
+import { IconButton } from '~ui/icons';
 
 import { MINDS_URI } from '../../config/Config';
 import { isFollowing } from '../NewsfeedService';
@@ -14,7 +11,6 @@ import translationService from '../../common/services/translation.service';
 import { FLAG_EDIT_POST } from '../../common/Permissions';
 import sessionService from '../../common/services/session.service';
 import NavigationService from '../../navigation/NavigationService';
-import ThemedStyles from '../../styles/ThemedStyles';
 import type ActivityModel from '../ActivityModel';
 import { showNotification } from '../../../AppMessages';
 import { withSafeAreaInsets } from 'react-native-safe-area-context';

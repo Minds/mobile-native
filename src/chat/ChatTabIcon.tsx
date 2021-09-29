@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Icon } from '~base/icons';
+import { Icon } from '~ui/icons';
 import { useStores } from '../common/hooks/use-stores';
 import ChatBubbleIcon from './ChatBubbleIcon';
 

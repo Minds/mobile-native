@@ -27,7 +27,7 @@ import {
   IUIBase,
 } from '~styles/Tokens';
 import { ColorsNameType } from '~styles/Colors';
-import { getPropStyles, getNumericSize, getNamedSize } from '~base/helpers';
+import { getPropStyles, getNumericSize, getNamedSize } from '~ui/helpers';
 import { getIconColor } from './helpers';
 
 const Fonts = {

@@ -13,7 +13,7 @@ import withPreventDoubleTap from '../../common/components/PreventDoubleTap';
 import ThemedStyles from '../../styles/ThemedStyles';
 import type ActivityModel from '../ActivityModel';
 import i18nService from '../../common/services/i18n.service';
-import { Icon } from '~base/icons';
+import { Icon } from '~ui/icons';
 import { SearchResultStoreType } from '../../topbar/searchbar/createSearchResultStore';
 import { withSearchResultStore } from '../../common/hooks/withStores';
 import ChannelBadges from '../../channel/badges/ChannelBadges';

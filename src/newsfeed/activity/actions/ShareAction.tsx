@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Linking, Platform, TouchableOpacity } from 'react-native';
 
-import { Icon } from '~base/icons';
+import { Icon } from '~ui/icons';
 
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import ThemedStyles from '../../../styles/ThemedStyles';

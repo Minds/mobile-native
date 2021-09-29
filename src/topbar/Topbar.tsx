@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   Text,
 } from 'react-native';
-import IconButton from '~base/icons/IconButton';
+import { IconButton, IconCircled } from '~ui/icons';
 import { observer } from 'mobx-react';
 import SearchComponent from './searchbar/SearchComponent';
 import ThemedStyles from '../styles/ThemedStyles';
@@ -17,7 +17,6 @@ import useCurrentUser from '../common/hooks/useCurrentUser';
 import intword from '../common/helpers/intword';
 import featuresService from '../common/services/features.service';
 import EmailConfirmation from './EmailConfirmation';
-import { IconCircled } from '~base/icons';
 
 type PropsType = {
   navigation: any;

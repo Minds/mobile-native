@@ -3,8 +3,7 @@ import { View, Text, Image, StyleSheet, Platform } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import Icon from '~base/icons/Icon';
-import IconButton from '~base/icons/IconButton';
+import { IconButton, Icon } from '~ui/icons';
 
 import { ListItem } from 'react-native-elements';
 
