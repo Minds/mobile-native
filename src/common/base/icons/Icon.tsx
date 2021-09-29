@@ -27,7 +27,7 @@ import {
   IUIBase,
 } from '~styles/Tokens';
 import { ColorsNameType } from '~styles/Colors';
-import { getPropStyles, getNumericSize } from '~base/helpers';
+import { getPropStyles, getNumericSize, getNamedSize } from '~base/helpers';
 import { getIconColor } from './helpers';
 
 const Fonts = {
@@ -42,9 +42,8 @@ const Fonts = {
 };
 
 export interface IIcon extends IUIBase {
-  color?: ColorsNameType;
+  color?: ColorsNameType | null;
   activeColor?: ColorsNameType;
-  background?: ColorsNameType;
   name: string;
   size?: IUISizing | number;
   style?: StyleProp<ViewStyle | FlexStyle | TextStyle>;
@@ -54,7 +53,7 @@ export interface IIcon extends IUIBase {
 }
 
 function Icon({
-  color = ICON_COLOR_DEFAULT,
+  color = null,
   name = ICON_DEFAULT,
   size = ICON_SIZE_DEFAULT,
   style = null,
@@ -62,12 +61,14 @@ function Icon({
   activeColor = ICON_COLOR_ACTIVE,
   disabled = false,
   disabledColor = ICON_COLOR_DISABLED,
+  nested = false,
   ...common
 }: IIcon) {
   const { font: iconFont, name: iconName, ratio = 1 } =
     ICON_MAP[name] || ICON_MAP[ICON_DEFAULT];
 
   const sizeNumeric = getNumericSize(size, ICON_SIZES, ICON_SIZE_DEFAULT);
+  const sizeNamed = getNamedSize(size, ICON_SIZES, ICON_SIZE_DEFAULT);
 
   const iconColor = getIconColor({
     color,
@@ -75,11 +76,12 @@ function Icon({
     activeColor,
     disabled,
     disabledColor,
+    defaultColor: ICON_COLOR_DEFAULT,
   });
+
   const realSize = sizeNumeric * ratio;
-  const iconStyles: any = [];
-  const containerStyles: any = [styles.container];
-  const extraStyles = getPropStyles(common);
+  const containerStyles: any = [styles.container, styles[sizeNamed]];
+  const extraStyles = !nested ? getPropStyles(common) : null;
   const Component = Fonts[iconFont];
 
   if (extraStyles?.length) {
@@ -92,12 +94,7 @@ function Icon({
 
   return (
     <View style={containerStyles}>
-      <Component
-        name={iconName}
-        size={realSize}
-        color={iconColor}
-        style={iconStyles}
-      />
+      <Component name={iconName} size={realSize} color={iconColor} />
     </View>
   );
 }
@@ -108,6 +105,30 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',
+  },
+  micro: {
+    width: ICON_SIZES.micro,
+    height: ICON_SIZES.micro,
+  },
+  tiny: {
+    width: ICON_SIZES.tiny,
+    height: ICON_SIZES.tiny,
+  },
+  small: {
+    width: ICON_SIZES.small,
+    height: ICON_SIZES.small,
+  },
+  medium: {
+    width: ICON_SIZES.medium,
+    height: ICON_SIZES.medium,
+  },
+  large: {
+    width: ICON_SIZES.large,
+    height: ICON_SIZES.large,
+  },
+  huge: {
+    width: ICON_SIZES.huge,
+    height: ICON_SIZES.huge,
   },
 });
 

@@ -7,18 +7,23 @@ export const getIconColor = ({
   activeColor,
   disabled,
   disabledColor,
+  defaultColor,
 }: {
-  color: ColorsNameType;
+  color: ColorsNameType | null;
   active: boolean;
   activeColor: ColorsNameType;
   disabled: boolean;
   disabledColor: ColorsNameType;
+  defaultColor: ColorsNameType;
 }) => {
   if (disabled === true && disabledColor) {
     return ThemedStyles.getColor(disabledColor);
   }
-  if (active === true && activeColor) {
+  if (!color && active === true && activeColor) {
     return ThemedStyles.getColor(activeColor);
+  }
+  if (!color) {
+    return ThemedStyles.getColor(defaultColor);
   }
 
   return ThemedStyles.getColor(color);

@@ -9,7 +9,8 @@ import {
   Text,
   ViewStyle,
 } from 'react-native';
-import { Icon } from 'react-native-elements';
+// import { Icon } from 'react-native-elements';
+import { Icon } from '~base/icons';
 import { ScrollView } from 'react-native-gesture-handler';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import Button from '../Button';
@@ -99,12 +100,7 @@ function TopBarButtonTabBar<T>(props: PropsType<T>) {
 }
 
 const TabIcon = ({ name, type, isCurrent }) => (
-  <Icon
-    name={name}
-    color={ThemedStyles.getColor(isCurrent ? 'PrimaryText' : 'Icon')}
-    size={21}
-    type={type}
-  />
+  <Icon name={name} active={isCurrent} size={21} type={type} />
 );
 
 type TabTiltePropsType = {

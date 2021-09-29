@@ -18,7 +18,7 @@ export const COLORS = {
 };
 
 // eslint-disable-next-line no-shadow
-export enum ESpacing {
+export enum EUnit {
   XXS = 'XXS',
   XS = 'XS',
   S = 'S',
@@ -29,16 +29,18 @@ export enum ESpacing {
 }
 
 export interface UISpacing {
-  [ESpacing.XXS]: number;
-  [ESpacing.XS]: number;
-  [ESpacing.S]: number;
-  [ESpacing.M]: number;
-  [ESpacing.L]: number;
-  [ESpacing.XL]: number;
-  [ESpacing.XXL]: number;
+  [EUnit.XXS]: number;
+  [EUnit.XS]: number;
+  [EUnit.S]: number;
+  [EUnit.M]: number;
+  [EUnit.L]: number;
+  [EUnit.XL]: number;
+  [EUnit.XXL]: number;
 }
 
 export interface IUIBase {
+  testID?: string;
+  nested?: boolean;
   marginTop?: string;
   marginLeft?: string;
   marginRight?: string;
@@ -47,7 +49,7 @@ export interface IUIBase {
   marginVertical?: string;
 }
 
-export const SPACING: UISpacing = {
+export const UNIT: UISpacing = {
   XXS: 2 * MULTIPLIER,
   XS: 4 * MULTIPLIER,
   S: 8 * MULTIPLIER,
@@ -57,9 +59,9 @@ export const SPACING: UISpacing = {
   XXL: 24 * MULTIPLIER,
 };
 
-export const STEP = SPACING.XS;
+export const STEP = UNIT.XS;
 
-export const BOTTOM_TABS_HEIGHT = SPACING.XXL * 2;
+export const BOTTOM_TABS_HEIGHT = UNIT.XXL * 2;
 
 export type IUISizing =
   | 'micro'
@@ -88,14 +90,15 @@ export interface IOUISizing {
 }
 
 export const ICON_SIZES: IOUISizing = {
-  micro: SPACING.M,
-  tiny: SPACING.L,
-  small: SPACING.XL,
-  medium: SPACING.XXL,
-  large: SPACING.L * 2,
-  huge: SPACING.XL * 2,
+  micro: UNIT.M,
+  tiny: UNIT.L,
+  small: UNIT.XL,
+  medium: UNIT.XXL,
+  large: UNIT.L * 2,
+  huge: UNIT.XL * 2,
 };
 
+export const ICON_BACKGROUND = 'IconBackground';
 export const ICON_COLOR_DEFAULT = 'Icon';
 export const ICON_COLOR_ACTIVE = 'IconActive';
 export const ICON_COLOR_DISABLED = 'IconDisabled';

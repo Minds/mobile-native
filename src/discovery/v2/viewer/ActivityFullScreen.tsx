@@ -413,10 +413,7 @@ const styles = StyleSheet.create({
     position: undefined,
     top: undefined,
     width: 50,
-    paddingTop: Platform.select({
-      ios: 5,
-      android: 0,
-    }),
+    paddingTop: 0,
     marginLeft: -20,
     marginRight: -5,
   },

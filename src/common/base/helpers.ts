@@ -8,6 +8,17 @@ export const getNumericSize = (size, options, default_size) => {
   return getClosestSize(size, Object.values(options));
 };
 
+export const getNamedSize = (size, options, default_size) => {
+  if (typeof size === 'string') {
+    return size;
+  }
+  if (!size) {
+    return default_size;
+  }
+
+  return getClosestSize(size, Object.values(options));
+};
+
 export const getClosestSize = (size: number, options: any[]) => {
   return options
     .sort((a, b) => a - b)

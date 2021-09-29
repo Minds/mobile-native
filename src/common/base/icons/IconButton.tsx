@@ -2,7 +2,7 @@ import React from 'react';
 import { Pressable, StyleSheet } from 'react-native';
 import Icon, { IIcon } from './Icon';
 import { ICON_SIZES, ICON_SIZE_DEFAULT, IUISizing } from '~styles/Tokens';
-import { getNumericSize } from '~base/helpers';
+import { getNumericSize, getPropStyles } from '~base/helpers';
 
 const SLOP_PROP = 1 / 3;
 
@@ -13,6 +13,12 @@ export interface IIconButton extends IIcon {
 export default function IconButton({ onPress, style, ...extra }: IIconButton) {
   const containerStyles: any = [styles.container];
   let size: IUISizing | number = 'medium';
+
+  const extraStyles = getPropStyles(extra);
+
+  if (extraStyles?.length) {
+    containerStyles.push(...extraStyles);
+  }
 
   if (style) {
     containerStyles.push(style);
@@ -37,7 +43,7 @@ export default function IconButton({ onPress, style, ...extra }: IIconButton) {
 
   return (
     <Pressable hitSlop={sizeNumeric} style={onStyle} onPress={onPress}>
-      <Icon {...extra} />
+      <Icon nested {...extra} />
     </Pressable>
   );
 }

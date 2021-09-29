@@ -1,12 +1,39 @@
 export default {
+  subscriptions: {
+    font: 'FontAwesome',
+    name: 'group',
+    ratio: 0.9,
+  },
+  list: {
+    font: 'MaterialIcons',
+    name: 'format-list-bulleted',
+  },
   more: {
     font: 'MaterialIcons',
     name: 'more-vert',
     ratio: 0.92,
   },
+  tags: {
+    font: 'MaterialIcons',
+    name: 'local-offer',
+    ratio: 0.92,
+  },
   close: {
     font: 'MaterialIcons',
     name: 'close',
+  },
+  plusCirleOutline: {
+    font: 'MaterialIcons',
+    name: 'add-circle-outline',
+  },
+  founder: {
+    font: 'MaterialIcons',
+    name: 'flight-takeoff',
+  },
+  verified: {
+    font: 'MaterialIcons',
+    name: 'verified-user',
+    ratio: 0.98,
   },
   'thumb-up': {
     font: 'MaterialIcons',
@@ -85,6 +112,7 @@ export default {
   coins: {
     font: 'FontAwesome5',
     name: 'coins',
+    ratio: 0.92,
   },
   money: {
     font: 'MaterialIcons',
@@ -110,7 +138,7 @@ export default {
   },
   menu: {
     font: 'IonIcon',
-    name: 'md-menu',
+    name: 'ios-menu',
   },
   hashtag: {
     font: 'Fontisto',

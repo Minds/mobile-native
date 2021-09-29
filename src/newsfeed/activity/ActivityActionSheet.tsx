@@ -380,8 +380,6 @@ export default withSafeAreaInsets(
      * Render Header
      */
     render() {
-      const theme = ThemedStyles.style;
-
       return (
         <>
           <IconButton
@@ -389,6 +387,7 @@ export default withSafeAreaInsets(
             size="large"
             onPress={this.showActionSheet}
             testID={this.props.testID}
+            marginLeft="1x"
           />
           {this.state.shown && (
             <BottomSheet ref={this.ref} autoShow>
