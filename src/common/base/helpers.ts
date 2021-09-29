@@ -1,5 +1,9 @@
 import ThemedStyles from '~styles/ThemedStyles';
 
+function getKeyByValue(object, value) {
+  return Object.keys(object).find(key => object[key] === value);
+}
+
 export const getNumericSize = (size, options, default_size) => {
   if (typeof size === 'string') {
     return options[size] || options[default_size];
@@ -16,7 +20,9 @@ export const getNamedSize = (size, options, default_size) => {
     return default_size;
   }
 
-  return getClosestSize(size, Object.values(options));
+  const closest = getClosestSize(size, Object.values(options));
+
+  return getKeyByValue(options, closest);
 };
 
 export const getClosestSize = (size: number, options: any[]) => {

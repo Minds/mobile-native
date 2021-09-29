@@ -138,10 +138,9 @@ export default function ({ entity, size = 21, hideCount }: PropsTypes) {
         testID="Remind activity button">
         <Icon
           style={buttonIconStyle}
-          color="SecondaryText"
           name="remind"
           size="small"
-          active={!!reminded}
+          active={reminded}
         />
         {!hideCount && <Counter count={entity.reminds} />}
       </TouchableOpacityCustom>

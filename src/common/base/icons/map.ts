@@ -2,7 +2,7 @@ export default {
   subscriptions: {
     font: 'FontAwesome',
     name: 'group',
-    ratio: 0.9,
+    ratio: 0.84,
   },
   list: {
     font: 'MaterialIcons',

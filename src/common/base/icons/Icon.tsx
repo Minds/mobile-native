@@ -67,9 +67,13 @@ function Icon({
   const { font: iconFont, name: iconName, ratio = 1 } =
     ICON_MAP[name] || ICON_MAP[ICON_DEFAULT];
 
+  // gets the numeric size value from the legacy number and current string alternative
   const sizeNumeric = getNumericSize(size, ICON_SIZES, ICON_SIZE_DEFAULT);
+  // get the string name from the legacy numbered size
   const sizeNamed = getNamedSize(size, ICON_SIZES, ICON_SIZE_DEFAULT);
 
+  // if the color is set, it returns it on top of it all -- rejecting the disabled and active states
+  // otherwise keeps the default colors
   const iconColor = getIconColor({
     color,
     active,
@@ -79,8 +83,10 @@ function Icon({
     defaultColor: ICON_COLOR_DEFAULT,
   });
 
+  // realSize is an icon reducer alternative to keep icon proportion between font-families
   const realSize = sizeNumeric * ratio;
   const containerStyles: any = [styles.container, styles[sizeNamed]];
+  // nested is used to discard the container styles when it is nested inside another base component
   const extraStyles = !nested ? getPropStyles(common) : null;
   const Component = Fonts[iconFont];
 
