@@ -99,9 +99,9 @@ class MessengerScreen extends Component {
         <View style={ComponentsStyle.emptyComponentContainer}>
           <View style={ComponentsStyle.emptyComponent}>
             <Icon name="person-add" size={72} color="#444" />
-            <Text style={ComponentsStyle.emptyComponentMessage}>
+            <MText style={ComponentsStyle.emptyComponentMessage}>
               {i18n.t('messenger.noMessages')}
-            </Text>
+            </MText>
           </View>
         </View>
       );

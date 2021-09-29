@@ -337,7 +337,7 @@ export default class GroupHeader extends Component<PropsTypes> {
             </View>
             <View style={theme.rowJustifyCenter}>
               <View style={styles.namecol}>
-                <Text style={styles.name}>{group.name}</Text>
+                <MText style={styles.name}>{group.name}</MText>
               </View>
               <View style={styles.buttonscol}>
                 <Icon

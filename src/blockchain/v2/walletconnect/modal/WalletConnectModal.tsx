@@ -1,16 +1,11 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableHighlight,
-} from 'react-native';
+import { View, StyleSheet, Image, TouchableHighlight } from 'react-native';
 import Modal from 'react-native-modal';
 import { Wallets } from './registry';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 import useWalletConnect from '../useWalletConnect';
 import { observer } from 'mobx-react';
+import MText from '../../../../common/components/MText';
 
 const styles = StyleSheet.create({
   modalBody: {
@@ -46,7 +41,7 @@ export default observer(function () {
             theme.padding4x,
           ]}>
           <View style={[theme.rowJustifyCenter]}>
-            <Text>Choose your preferred wallet</Text>
+            <MText>Choose your preferred wallet</MText>
           </View>
 
           {Wallets.map((wallet, index) => (
@@ -62,7 +57,7 @@ export default observer(function () {
                   theme.marginTop3x,
                   theme.paddingHorizontal3x,
                 ]}>
-                <Text style={[theme.bold]}>{wallet.name}</Text>
+                <MText style={[theme.bold]}>{wallet.name}</MText>
                 {wallet.logo && (
                   <Image style={[styles.icon]} source={{ uri: wallet.logo }} />
                 )}

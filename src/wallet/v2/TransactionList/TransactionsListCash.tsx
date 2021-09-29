@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
-import { SectionList, Text } from 'react-native';
+import { SectionList } from 'react-native';
 import CenteredLoading from '../../../common/components/CenteredLoading';
 import { useLegacyStores } from '../../../common/hooks/use-stores';
 import ThemedStyles from '../../../styles/ThemedStyles';
@@ -9,6 +9,7 @@ import Item from './components/Item';
 import createCashTransactionsStore from './createCashTransactionsStore';
 import Empty from './components/Empty';
 import Header from '../../v3/transaction-list/components/Header';
+import MText from '../../../common/components/MText';
 
 const TransactionsListCash = observer(
   ({ navigation, currency, wallet }: PropsType) => {
@@ -30,9 +31,9 @@ const TransactionsListCash = observer(
 
     const renderSectionHeader = useCallback(
       ({ section: { title } }) => (
-        <Text style={[theme.colorSecondaryText, theme.marginBottom2x]}>
+        <MText style={[theme.colorSecondaryText, theme.marginBottom2x]}>
           {title.toUpperCase()}
-        </Text>
+        </MText>
       ),
       [theme],
     );

@@ -1,12 +1,6 @@
 import React, { useCallback } from 'react';
 import _ from 'lodash';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
+import { View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { observer } from 'mobx-react';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -15,6 +9,7 @@ import TopBar from './TopBar';
 import i18n from '../common/services/i18n.service';
 import NavigationService from '../navigation/NavigationService';
 import { LICENSES } from '../common/services/list-options.service';
+import MText from '../common/components/MText';
 
 const licenses = LICENSES.filter(l => l.selectable);
 
@@ -31,10 +26,10 @@ const Option = props => {
     <TouchableOpacity
       style={[styles.optsRow, ThemedStyles.style.bcolorPrimaryBorder]}
       onPress={onSelect}>
-      <Text
+      <MText
         style={[ThemedStyles.style.flexContainer, ThemedStyles.style.fontL]}>
         {props.option.text}
-      </Text>
+      </MText>
       {props.selected && (
         <MIcon
           name="check"
@@ -62,7 +57,7 @@ export default observer(function (props) {
         onPressBack={NavigationService.goBack}
         store={store}
       />
-      <Text
+      <MText
         style={[
           theme.paddingVertical3x,
           theme.colorSecondaryText,
@@ -70,10 +65,10 @@ export default observer(function (props) {
           theme.paddingHorizontal3x,
         ]}>
         {i18n.t('capture.licenseDescription')}
-      </Text>
+      </MText>
 
       <ScrollView style={styles.body}>
-        <Text
+        <MText
           style={[
             theme.paddingVertical4x,
             theme.colorTertiaryText,
@@ -81,7 +76,7 @@ export default observer(function (props) {
             theme.paddingHorizontal3x,
           ]}>
           {i18n.t('capture.pupularLicenses').toUpperCase()}
-        </Text>
+        </MText>
 
         {licenses.slice(0, 2).map(o => (
           <Option
@@ -91,7 +86,7 @@ export default observer(function (props) {
           />
         ))}
 
-        <Text
+        <MText
           style={[
             theme.paddingVertical4x,
             theme.colorTertiaryText,
@@ -99,7 +94,7 @@ export default observer(function (props) {
             theme.paddingHorizontal3x,
           ]}>
           {i18n.t('capture.otherLicenses').toUpperCase()}
-        </Text>
+        </MText>
         {licenses.slice(2).map(o => (
           <Option
             option={o}

@@ -1,14 +1,8 @@
 import React, { useRef } from 'react';
-import {
-  View,
-  Text,
-  Platform,
-  ViewStyle,
-  TextStyle,
-  StyleProp,
-} from 'react-native';
+import { View, Platform, ViewStyle, TextStyle } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MText from '../../../common/components/MText';
 import ThemedStyles, { useStyle } from '../../../styles/ThemedStyles';
 
 type PropsType = {
@@ -41,7 +35,7 @@ export default function ModalContainer(props: PropsType) {
   const backIconStyle = useStyle(styles.backIcon, props.backIconStyle || {});
   return (
     <View style={contentContainer}>
-      <Text style={titleStyle}>{props.title}</Text>
+      <MText style={titleStyle}>{props.title}</MText>
       <MIcon
         size={45}
         name="chevron-left"

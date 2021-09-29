@@ -4,7 +4,6 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '../../../navigation/NavigationTypes';
 import {
   View,
-  Text,
   Dimensions,
   ScrollView,
   StyleSheet,
@@ -14,6 +13,7 @@ import SettingInput from '../../../common/components/SettingInput';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import QRCode from 'react-native-qrcode-svg';
 import LabeledComponent from '../../../common/components/LabeledComponent';
+import MText from '../../../common/components/MText';
 
 export type ReceiverAddressScreenRouteProp = RouteProp<
   AppStackParamList,
@@ -71,7 +71,7 @@ const ReceiverAddressScreen = ({ route }: PropsType) => {
             size={getQRSize(1 / 2)}
           />
         </View>
-        <Text style={theme.textCenter}>{receiver.address.toLowerCase()}</Text>
+        <MText style={theme.textCenter}>{receiver.address.toLowerCase()}</MText>
       </View>
 
       <View
@@ -81,7 +81,7 @@ const ReceiverAddressScreen = ({ route }: PropsType) => {
           theme.marginBottom4x,
         ]}>
         <LabeledComponent label={'Balance'} labelStyle={styles.labelStyle}>
-          <Text style={theme.fontXL}>{receiver.balance}</Text>
+          <MText style={theme.fontXL}>{receiver.balance}</MText>
         </LabeledComponent>
       </View>
     </ScrollView>

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { useLocalStore, observer } from 'mobx-react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ThemedStyles from '../../../../styles/ThemedStyles';
@@ -9,6 +9,7 @@ import type { WalletStoreType } from '../../createWalletStore';
 import CenteredLoading from '../../../../common/components/CenteredLoading';
 import createWithdrawStore from '../../../v3/currency-tabs/tokens/widthdrawal/createWithdrawStore';
 import type { WCStore } from '../../../../blockchain/v2/walletconnect/WalletConnectContext';
+import MText from '../../../../common/components/MText';
 
 type PropsType = {
   walletStore: WalletStoreType;
@@ -53,9 +54,9 @@ const Withdraw = observer((props: PropsType) => {
               theme.paddingVertical2x,
               theme.alignCenter,
             ]}>
-            <Text style={[theme.colorSecondaryText, theme.fontL]}>
+            <MText style={[theme.colorSecondaryText, theme.fontL]}>
               {i18n.t('wallet.withdraw.acceptTerms')}
-            </Text>
+            </MText>
             <Icon
               onPress={store.toggleAccept}
               name={
@@ -69,7 +70,7 @@ const Withdraw = observer((props: PropsType) => {
               size={34}
             />
           </View>
-          <Text
+          <MText
             style={[
               theme.marginTop4x,
               theme.marginHorizontal4x,
@@ -80,13 +81,13 @@ const Withdraw = observer((props: PropsType) => {
               '\n\n'}
             {i18n.t('wallet.withdraw.notes2') + '\n\n'}
             {i18n.t('wallet.withdraw.notes3')}
-          </Text>
+          </MText>
         </>
       ) : (
-        <Text
+        <MText
           style={[theme.fontXL, theme.colorSecondaryText, theme.textCenter]}>
           {i18n.t('wallet.withdraw.errorOnlyOnceDay')}
-        </Text>
+        </MText>
       )}
     </View>
   );

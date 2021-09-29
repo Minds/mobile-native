@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, Platform } from 'react-native';
+import { View, Image, StyleSheet, Platform } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -15,6 +15,7 @@ import featuresService from '../common/services/features.service';
 import sessionService from '../common/services/session.service';
 import FitScrollView from '../common/components/FitScrollView';
 import requirePhoneValidation from '../common/hooks/requirePhoneValidation';
+import MText from '../common/components/MText';
 
 const ICON_SIZE = 25;
 
@@ -157,16 +158,16 @@ export default function Drawer(props) {
           </TouchableOpacity>
           <View style={styles.row}>
             <View style={titleContainerStyle}>
-              <Text style={titleStyle} onPress={navToChannel}>
+              <MText style={titleStyle} onPress={navToChannel}>
                 {channel.name || `@${channel.username}`}
-              </Text>
+              </MText>
               {channel.name && (
-                <Text
+                <MText
                   onPress={navToChannel}
                   style={subtitleStyle}
                   testID="channelUsername">
                   @{channel.username}
-                </Text>
+                </MText>
               )}
             </View>
             <IconMC

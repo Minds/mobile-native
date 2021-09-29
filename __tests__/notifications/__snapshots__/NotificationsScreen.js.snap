@@ -51,17 +51,13 @@ exports[`Notifications Screen Component renders correctly 1`] = `
       />
     }
     data={Array []}
-    disableVirtualization={false}
     getItem={[Function]}
     getItemCount={[Function]}
-    horizontal={false}
-    initialNumToRender={10}
     keyExtractor={[Function]}
-    maxToRenderPerBatch={10}
     onContentSizeChange={[Function]}
     onEndReached={[Function]}
-    onEndReachedThreshold={2}
     onLayout={[Function]}
+    onMomentumScrollBegin={[Function]}
     onMomentumScrollEnd={[Function]}
     onRefresh={[Function]}
     onScroll={[Function]}
@@ -79,7 +75,6 @@ exports[`Notifications Screen Component renders correctly 1`] = `
     renderItem={[Function]}
     scrollEventThrottle={50}
     stickyHeaderIndices={Array []}
-    updateCellsBatchingPeriod={50}
     viewabilityConfig={
       Object {
         "itemVisiblePercentThreshold": 50,
@@ -99,7 +94,6 @@ exports[`Notifications Screen Component renders correctly 1`] = `
         },
       ]
     }
-    windowSize={21}
   >
     <RCTRefreshControl />
     <View>
@@ -567,6 +561,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               }
             >
               <View
+                collapsable={false}
+                nativeID="animatedComponent"
                 style={
                   Object {
                     "backgroundColor": "#FFFFFF",
@@ -613,6 +609,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   }
                 >
                   <View
+                    collapsable={false}
+                    nativeID="animatedComponent"
                     style={
                       Object {
                         "backgroundColor": "#FFFFFF",
@@ -676,6 +674,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               }
             >
               <View
+                collapsable={false}
+                nativeID="animatedComponent"
                 style={
                   Object {
                     "backgroundColor": "#FFFFFF",
@@ -722,6 +722,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   }
                 >
                   <View
+                    collapsable={false}
+                    nativeID="animatedComponent"
                     style={
                       Object {
                         "backgroundColor": "#FFFFFF",
@@ -785,6 +787,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               }
             >
               <View
+                collapsable={false}
+                nativeID="animatedComponent"
                 style={
                   Object {
                     "backgroundColor": "#FFFFFF",
@@ -831,6 +835,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   }
                 >
                   <View
+                    collapsable={false}
+                    nativeID="animatedComponent"
                     style={
                       Object {
                         "backgroundColor": "#FFFFFF",
@@ -894,6 +900,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               }
             >
               <View
+                collapsable={false}
+                nativeID="animatedComponent"
                 style={
                   Object {
                     "backgroundColor": "#FFFFFF",
@@ -940,6 +948,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   }
                 >
                   <View
+                    collapsable={false}
+                    nativeID="animatedComponent"
                     style={
                       Object {
                         "backgroundColor": "#FFFFFF",
@@ -1003,6 +1013,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               }
             >
               <View
+                collapsable={false}
+                nativeID="animatedComponent"
                 style={
                   Object {
                     "backgroundColor": "#FFFFFF",
@@ -1049,6 +1061,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   }
                 >
                   <View
+                    collapsable={false}
+                    nativeID="animatedComponent"
                     style={
                       Object {
                         "backgroundColor": "#FFFFFF",
@@ -1112,6 +1126,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               }
             >
               <View
+                collapsable={false}
+                nativeID="animatedComponent"
                 style={
                   Object {
                     "backgroundColor": "#FFFFFF",
@@ -1158,6 +1174,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   }
                 >
                   <View
+                    collapsable={false}
+                    nativeID="animatedComponent"
                     style={
                       Object {
                         "backgroundColor": "#FFFFFF",

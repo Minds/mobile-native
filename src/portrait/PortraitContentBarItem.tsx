@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import FastImage from 'react-native-fast-image';
 
 import ThemedStyles from '../styles/ThemedStyles';
@@ -8,6 +8,7 @@ import excerpt from '../common/helpers/excerpt';
 import type { PortraitBarItem } from './createPortraitStore';
 import PressableScale from '../common/components/PressableScale';
 import navigationService from '../navigation/NavigationService';
+import MText from '../common/components/MText';
 
 type PropsType = {
   item: PortraitBarItem;
@@ -34,7 +35,7 @@ export default observer(function PortraitContentBarItem(props: PropsType) {
         />
         {props.item.unseen ? <View style={styles.unseen} /> : null}
       </PressableScale>
-      <Text style={textStyle}>{excerpt(props.item.user.username, 10)}</Text>
+      <MText style={textStyle}>{excerpt(props.item.user.username, 10)}</MText>
     </View>
   );
 });

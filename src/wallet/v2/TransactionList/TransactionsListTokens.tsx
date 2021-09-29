@@ -9,6 +9,7 @@ import Item from './components/Item';
 import createTokensTransactionsStore from './createTokensTransactionsStore';
 import Empty from './components/Empty';
 import Header from '../../v3/transaction-list/components/Header';
+import MText from '../../../common/components/MText';
 
 const TransactionsListTokens = observer(
   ({ navigation, currency, wallet }: PropsType) => {
@@ -30,9 +31,9 @@ const TransactionsListTokens = observer(
 
     const renderSectionHeader = useCallback(
       ({ section: { title } }) => (
-        <Text style={[theme.colorSecondaryText, theme.marginBottom2x]}>
+        <MText style={[theme.colorSecondaryText, theme.marginBottom2x]}>
           {title.toUpperCase()}
-        </Text>
+        </MText>
       ),
       [theme],
     );

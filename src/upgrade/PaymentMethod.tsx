@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
 import Switch from 'react-native-switch-pro';
 import { UpgradeStoreType } from './createUpgradeStore';
+import MText from '../common/components/MText';
 
 type PropsType = {
   store: UpgradeStoreType;
@@ -20,7 +21,7 @@ const PaymentMethod = ({ store }: PropsType) => {
         theme.bcolorPrimaryBorder,
         theme.borderTopHair,
       ]}>
-      <Text style={switchTextStyle}>{i18n.t('usd')}</Text>
+      <MText style={switchTextStyle}>{i18n.t('usd')}</MText>
       <Switch
         value={store.method === 'tokens'}
         onSyncPress={store.setMethod}
@@ -30,7 +31,7 @@ const PaymentMethod = ({ store }: PropsType) => {
         backgroundInactive={ThemedStyles.getColor('TertiaryBackground')}
         style={theme.marginHorizontal2x}
       />
-      <Text style={switchTextStyle}>tokens</Text>
+      <MText style={switchTextStyle}>tokens</MText>
     </View>
   );
 };

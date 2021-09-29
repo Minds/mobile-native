@@ -2,13 +2,14 @@ import { TouchableOpacity } from '@gorhom/bottom-sheet';
 import Icon from 'react-native-vector-icons/Feather';
 import { observer } from 'mobx-react';
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import NavigationService from '../../navigation/NavigationService';
 import ThemedStyles from '../../styles/ThemedStyles';
 import type CommentsStore from './CommentsStore';
 import i18n from '../../common/services/i18n.service';
 import { useRoute } from '@react-navigation/native';
 import { useBottomSheet } from '@gorhom/bottom-sheet';
+import MText from '../../common/components/MText';
 
 export default observer(function CommentListHeader(props: {
   store: CommentsStore;
@@ -69,11 +70,11 @@ export default observer(function CommentListHeader(props: {
             theme.alignCenter,
           ]}>
           <View style={[theme.rowJustifyStart, theme.alignCenter]}>
-            <Text style={[theme.fontXL, ...titleStyles]}>{title}</Text>
-            <Text
+            <MText style={[theme.fontXL, ...titleStyles]}>{title}</MText>
+            <MText
               style={[theme.fontLM, theme.colorSecondaryText, ...titleStyles]}>
               {props.store.entity['comments:count']}
-            </Text>
+            </MText>
           </View>
           {closeButton}
         </View>

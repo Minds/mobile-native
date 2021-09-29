@@ -1,8 +1,9 @@
 import React from 'react';
 import ThemedStyles from '../../../styles/ThemedStyles';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Tooltip } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MText from '../../../common/components/MText';
 
 export type AccordionContentData = {
   title: string;
@@ -44,13 +45,13 @@ export const Title = ({ style = {}, children }) => {
     theme.fontL,
     style,
   ];
-  return <Text style={titleStyle}>{children}</Text>;
+  return <MText style={titleStyle}>{children}</MText>;
 };
 
 export const Info = ({ style = {}, children }) => {
   const theme = ThemedStyles.style;
   const infoStyle = [theme.fontMedium, theme.alignSelfEnd, theme.fontL, style];
-  return <Text style={infoStyle}>{children}</Text>;
+  return <MText style={infoStyle}>{children}</MText>;
 };
 
 const AccordionContent = ({ data, summary }: PropsType) => {
@@ -79,7 +80,9 @@ const AccordionContent = ({ data, summary }: PropsType) => {
                     height={row.tooltip.height}
                     backgroundColor={ThemedStyles.getColor('Link')}
                     popover={
-                      <Text style={theme.colorWhite}>{row.tooltip.title}</Text>
+                      <MText style={theme.colorWhite}>
+                        {row.tooltip.title}
+                      </MText>
                     }>
                     <Icon
                       name="information-variant"
@@ -97,7 +100,7 @@ const AccordionContent = ({ data, summary }: PropsType) => {
         );
       })}
       {summary && (
-        <Text
+        <MText
           style={[
             theme.fontLM,
             theme.fontMedium,
@@ -109,7 +112,7 @@ const AccordionContent = ({ data, summary }: PropsType) => {
             theme.width80,
           ]}>
           Summary
-        </Text>
+        </MText>
       )}
       {summary && summary}
     </View>

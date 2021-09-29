@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { reaction } from 'mobx';
 import { observer } from 'mobx-react';
 
-import { Text, TouchableOpacity, View, LayoutChangeEvent } from 'react-native';
+import { TouchableOpacity, View, LayoutChangeEvent } from 'react-native';
 import Clipboard from '@react-native-clipboard/clipboard';
 import * as entities from 'entities';
 
@@ -35,6 +35,7 @@ import {
   styles,
   textStyle,
 } from './styles';
+import MText from '../../common/components/MText';
 
 const FONT_THRESHOLD = 300;
 
@@ -364,15 +365,15 @@ export default class Activity extends Component<PropsType> {
       if (blockListService.has(remind_object.owner_guid)) {
         return (
           <View style={remindBlockContainerStyle}>
-            <Text style={styles.blockedNoticeDesc}>
+            <MText style={styles.blockedNoticeDesc}>
               {i18n.t('activity.remindBlocked')}
-              <Text
+              <MText
                 onPress={this.navToRemindChannel}
                 style={ThemedStyles.style.bold}>
                 {' '}
                 @{remind_object.ownerObj.username}
-              </Text>
-            </Text>
+              </MText>
+            </MText>
           </View>
         );
       }

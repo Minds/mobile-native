@@ -68,7 +68,7 @@ exports[`Owner component renders correctly 1`] = `
           ]
         }
       >
-        <Text
+        <MText
           numberOfLines={1}
           style={
             Array [
@@ -92,7 +92,7 @@ exports[`Owner component renders correctly 1`] = `
           }
         }
       >
-        <Text
+        <MText
           lineBreakMode="tail"
           numberOfLines={1}
           style={
@@ -108,7 +108,7 @@ exports[`Owner component renders correctly 1`] = `
           &gt;
            
           group
-        </Text>
+        </MText>
       </preventDoubleTap(TouchableOpacity)>
     </View>
   </View>

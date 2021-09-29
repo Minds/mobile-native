@@ -71,7 +71,7 @@ export default class TagInput extends Component {
         <View style={styles.tagContainer}>
           {this.props.tags.map((t, i) => (
             <View style={[styles.tag, theme.bgPrimaryBackground]} key={i}>
-              <Text style={styles.tagText}>#{t}</Text>
+              <MText style={styles.tagText}>#{t}</MText>
               <Icon
                 name="ios-close"
                 type="ionicon"
@@ -88,7 +88,7 @@ export default class TagInput extends Component {
       <ViewCmp keyboardShouldPersistTaps={'always'}>
         {tags}
         {this.state.error ? (
-          <Text style={styles.error}>{this.state.error}</Text>
+          <MText style={styles.error}>{this.state.error}</MText>
         ) : null}
         <TextInput
           autoCapitalize="none"

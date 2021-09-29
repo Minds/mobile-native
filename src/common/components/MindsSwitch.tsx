@@ -1,7 +1,8 @@
 import React from 'react';
 import { observer, useLocalStore } from 'mobx-react';
 import ThemedStyles from '../../styles/ThemedStyles';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import MText from './MText';
 
 type PropsType = {
   leftText: string;
@@ -61,20 +62,20 @@ const MindsSwitch = observer(
           ]}
           activeOpacity={0.65}
           onPress={localStore.selectedValueChange}>
-          <Text
+          <MText
             style={[
               ...textStyle,
               localStore.isSelected(leftValue) ? theme.bgPrimaryBorder : null,
             ]}>
             {leftText}
-          </Text>
-          <Text
+          </MText>
+          <MText
             style={[
               ...textStyle,
               localStore.isSelected(rightValue) ? theme.bgPrimaryBorder : null,
             ]}>
             {rightText}
-          </Text>
+          </MText>
         </TouchableOpacity>
       </View>
     );

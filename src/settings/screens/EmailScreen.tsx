@@ -1,7 +1,7 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import { View, Text, Alert } from 'react-native';
+import { View, Alert } from 'react-native';
 
 import settingsService from '../SettingsService';
 import i18n from '../../common/services/i18n.service';
@@ -11,6 +11,7 @@ import ModalConfirmPassword from '../../auth/ModalConfirmPassword';
 import { inject } from 'mobx-react';
 import Input from '../../common/components/Input';
 import ThemedStyles from '../../styles/ThemedStyles';
+import MText from '../../common/components/MText';
 
 /**
  * Email settings screen
@@ -42,11 +43,11 @@ class EmailScreen extends Component {
 
     setOptions({
       headerRight: () => (
-        <Text
+        <MText
           onPress={this.confirmPassword}
           style={[CS.colorLink, CS.fontL, CS.bold]}>
           {i18n.t('save')}
-        </Text>
+        </MText>
       ),
     });
   }
@@ -105,7 +106,7 @@ class EmailScreen extends Component {
     // validate
     const error = validator.emailMessage(email);
     const confirmNote = showConfirmNote ? (
-      <Text
+      <MText
         style={[
           CS.colorSecondaryText,
           CS.fontM,
@@ -114,7 +115,7 @@ class EmailScreen extends Component {
           CS.marginTop3x,
         ]}>
         {i18n.t('emailConfirm.confirmNote')}
-      </Text>
+      </MText>
     ) : null;
 
     return (

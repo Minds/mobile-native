@@ -6,13 +6,13 @@ import {
   StyleSheet,
   Platform,
   TouchableOpacity,
-  Text,
   ViewStyle,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import Button from '../Button';
+import MText from '../MText';
 
 export type ButtonTabType<T> = {
   id: T;
@@ -117,9 +117,9 @@ function TabTitle({ isCurrent, title }: TabTiltePropsType) {
   }
 
   return (
-    <Text style={isCurrent ? touchableTextStyleSelected : touchableTextStyle}>
+    <MText style={isCurrent ? touchableTextStyleSelected : touchableTextStyle}>
       {title}
-    </Text>
+    </MText>
   );
 }
 

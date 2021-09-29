@@ -1,7 +1,8 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import { StyleProp, Text, View, ViewStyle } from 'react-native';
+import { StyleProp, View, ViewStyle } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MText from '../../../../common/components/MText';
 
 import SegmentedButton from '../../../../common/components/SegmentedButton';
 import i18n from '../../../../common/services/i18n.service';
@@ -32,30 +33,32 @@ const OnchainButton = observer((props: PropsType) => {
   const children: any = {};
 
   children.childrenButton1 = (
-    <Text style={[textStyles]}>{props.walletStore.wallet.eth.balance} ETH</Text>
+    <MText style={[textStyles]}>
+      {props.walletStore.wallet.eth.balance} ETH
+    </MText>
   );
 
   children.childrenButton2 = !isConnected ? (
-    <Text style={textStyles}>
-      <Text style={[theme.colorSecondaryText, theme.fontMedium]}>
+    <MText style={textStyles}>
+      <MText style={[theme.colorSecondaryText, theme.fontMedium]}>
         {i18n.t(hasReceiver ? 'wallet.reconnect' : 'wallet.connect') + ' '}
         <Icon name="plus-circle" size={15} style={theme.colorPrimaryText} />
-      </Text>{' '}
-    </Text>
+      </MText>{' '}
+    </MText>
   ) : (
-    <Text style={textStyles}>
-      <Text style={[theme.colorSecondaryText, theme.fontMedium]}>
+    <MText style={textStyles}>
+      <MText style={[theme.colorSecondaryText, theme.fontMedium]}>
         {props.walletStore.wallet.receiver.address?.substr(0, 4)}...
         {props.walletStore.wallet.receiver.address?.substr(-4)}
-      </Text>
-    </Text>
+      </MText>
+    </MText>
   );
 
   return props.onchainStore.loading ? (
     <View>
-      <Text style={[props.style, theme.bgPrimaryBorder, theme.marginLeft2x]}>
+      <MText style={[props.style, theme.bgPrimaryBorder, theme.marginLeft2x]}>
         ...
-      </Text>
+      </MText>
     </View>
   ) : (
     <SegmentedButton

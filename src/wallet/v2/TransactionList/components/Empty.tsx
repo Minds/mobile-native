@@ -1,12 +1,12 @@
 import React from 'react';
-import { Text } from 'react-native';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 import i18n from '../../../../common/services/i18n.service';
+import MText from '../../../../common/components/MText';
 
 const Empty = () => {
   const theme = ThemedStyles.style;
   return (
-    <Text
+    <MText
       style={[
         theme.fullWidth,
         theme.fontXL,
@@ -15,7 +15,7 @@ const Empty = () => {
         theme.colorSecondaryText,
       ]}>
       {i18n.t('wallet.transactionsEmpty')}
-    </Text>
+    </MText>
   );
 };
 

@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import { Text, View, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image } from 'react-native';
 import { TierStoreType } from '../../../compose/monetize/MembershipMonetizeScreeen';
 import { SupportTiersType } from '../../../wire/WireTypes';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -9,6 +9,7 @@ import i18n from '../../services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { navToTierScreen } from './TierManagementScreen';
 import Button from '../../../common/components/Button';
+import MText from '../MText';
 
 type PropsType = {
   tiers: SupportTiersType[];
@@ -42,10 +43,10 @@ const TiersList = observer(
             source={require('../../../assets/images/emptyTiers.png')}
           />
 
-          <Text style={style.header}>{i18n.t('settings.noTiersTitle')}</Text>
-          <Text style={[theme.colorSecondaryText, style.subTitle]}>
+          <MText style={style.header}>{i18n.t('settings.noTiersTitle')}</MText>
+          <MText style={[theme.colorSecondaryText, style.subTitle]}>
             {i18n.t('settings.noTiersSubTitle')}
-          </Text>
+          </MText>
 
           <Button
             onPress={onLinkPress}
@@ -76,11 +77,11 @@ const TiersList = observer(
                   : () => navToTierScreen(navigation, tier),
               title: (
                 <View style={titleStyle}>
-                  <Text style={theme.colorPrimaryText}>{tier.name}</Text>
-                  <Text
+                  <MText style={theme.colorPrimaryText}>{tier.name}</MText>
+                  <MText
                     style={
                       theme.colorSecondaryText
-                    }>{`$${tier.usd}+ / mth`}</Text>
+                    }>{`$${tier.usd}+ / mth`}</MText>
                 </View>
               ),
               icon: !useForSelection

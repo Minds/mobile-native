@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { View, Platform, Text, Linking } from 'react-native';
+import { View, Platform, Linking } from 'react-native';
 
 import { observer, useLocalStore } from 'mobx-react';
 import { CheckBox } from 'react-native-elements';
@@ -22,6 +22,7 @@ import logService from '../../common/services/log.service';
 import sessionService from '../../common/services/session.service';
 import featuresService from '../../common/services/features.service';
 import PasswordInput from '../../common/components/password-input/PasswordInput';
+import MText from '../../common/components/MText';
 
 type PropsType = {};
 
@@ -228,16 +229,16 @@ const RegisterForm = observer(({}: PropsType) => {
             theme.paddingBottom0x,
           ]}
           title={
-            <Text style={[theme.colorWhite, theme.fontL, theme.paddingLeft2x]}>
+            <MText style={[theme.colorWhite, theme.fontL, theme.paddingLeft2x]}>
               {i18n.t('auth.accept')}{' '}
-              <Text
+              <MText
                 style={theme.link}
                 onPress={() =>
                   Linking.openURL('https://www.minds.com/p/terms')
                 }>
                 {i18n.t('auth.termsAndConditions')}
-              </Text>
-            </Text>
+              </MText>
+            </MText>
           }
           checked={store.termsAccepted}
           onPress={store.toggleTerms}
@@ -250,9 +251,9 @@ const RegisterForm = observer(({}: PropsType) => {
             // theme.padding0x,
           ]}
           title={
-            <Text style={[theme.colorWhite, theme.fontL, theme.paddingLeft2x]}>
+            <MText style={[theme.colorWhite, theme.fontL, theme.paddingLeft2x]}>
               {i18n.t('auth.promotions')}
-            </Text>
+            </MText>
           }
           checked={store.exclusivePromotions}
           onPress={store.togglePromotions}

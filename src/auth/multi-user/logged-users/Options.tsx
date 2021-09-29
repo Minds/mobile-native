@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import {
   BottomSheet,
@@ -7,6 +7,7 @@ import {
   MenuItem,
 } from '../../../common/components/bottom-sheet';
 import { MenuItemProps } from '../../../common/components/bottom-sheet/MenuItem';
+import MText from '../../../common/components/MText';
 import i18n from '../../../common/services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import AuthService from '../../AuthService';
@@ -60,7 +61,7 @@ const Options = ({ index, isActive, username, onSwitchPress }: PropsType) => {
     <TouchableOpacity onPress={show} hitSlop={hitSlop}>
       <MIcon name="more-vert" size={24} style={theme.colorSecondaryText} />
       <BottomSheet ref={ref}>
-        <Text style={styles.username}>@{username}</Text>
+        <MText style={styles.username}>@{username}</MText>
         {userOptions.map((a, i) => (
           <MenuItem {...a} key={i} />
         ))}

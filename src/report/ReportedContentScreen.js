@@ -1,13 +1,7 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import {
-  StyleSheet,
-  Text,
-  FlatList,
-  View,
-  TouchableHighlight,
-} from 'react-native';
+import { StyleSheet, FlatList, View, TouchableHighlight } from 'react-native';
 
 import { observer, inject } from 'mobx-react';
 
@@ -17,6 +11,7 @@ import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
 import ReportedContentRow from './ReportedContentRow';
 import { ComponentsStyle } from '../styles/Components';
+import MText from '../common/components/MText';
 
 /**
  * Discovery screen
@@ -75,13 +70,13 @@ class ReportedContentScreen extends Component {
       const empty = (
         <View style={ComponentsStyle.emptyComponentContainer}>
           <View style={ComponentsStyle.emptyComponent}>
-            <Text
+            <MText
               style={[
                 ComponentsStyle.emptyComponentMessage,
                 CS.colorSecondaryText,
               ]}>
               {i18n.t('blogs.blogListEmpty')}
-            </Text>
+            </MText>
           </View>
         </View>
       );
@@ -124,9 +119,9 @@ class ReportedContentScreen extends Component {
                   ? [selectedButton, CS.flexContainerCenter]
                   : [styles.buttons, CS.flexContainerCenter]
               }>
-              <Text style={headerStyle}>
+              <MText style={headerStyle}>
                 {i18n.t('settings.reportedContent.reviewPending')}
-              </Text>
+              </MText>
             </TouchableHighlight>
             <TouchableHighlight
               underlayColor="transparent"
@@ -136,9 +131,9 @@ class ReportedContentScreen extends Component {
                   ? [selectedButton, CS.flexContainerCenter]
                   : [styles.buttons, CS.flexContainerCenter]
               }>
-              <Text style={headerStyle}>
+              <MText style={headerStyle}>
                 {i18n.t('settings.reportedContent.reviewAppealed')}
-              </Text>
+              </MText>
             </TouchableHighlight>
             <TouchableHighlight
               underlayColor="transparent"
@@ -148,9 +143,9 @@ class ReportedContentScreen extends Component {
                   ? [selectedButton, CS.flexContainerCenter]
                   : [styles.buttons, CS.flexContainerCenter]
               }>
-              <Text style={headerStyle}>
+              <MText style={headerStyle}>
                 {i18n.t('settings.reportedContent.reviewApproved')}
-              </Text>
+              </MText>
             </TouchableHighlight>
             <TouchableHighlight
               underlayColor="transparent"
@@ -160,9 +155,9 @@ class ReportedContentScreen extends Component {
                   ? [selectedButton, CS.flexContainerCenter]
                   : [styles.buttons, CS.flexContainerCenter]
               }>
-              <Text style={headerStyle}>
+              <MText style={headerStyle}>
                 {i18n.t('settings.reportedContent.reviewRejected')}
-              </Text>
+              </MText>
             </TouchableHighlight>
           </View>
         </View>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, ViewStyle } from 'react-native';
+import MText from '../../../../common/components/MText';
 import SegmentedButton from '../../../../common/components/SegmentedButton';
 import i18n from '../../../../common/services/i18n.service';
 import ThemedStyles from '../../../../styles/ThemedStyles';
@@ -16,16 +17,18 @@ const PaidButton = (props: PropsType) => {
   const textStyles = [theme.colorPrimaryText, theme.fontM, theme.fontMedium];
   const children = {
     childrenButton1: (
-      <Text style={[textStyles]}>
-        <Text style={theme.colorSecondaryText}>{i18n.t('wallet.unpaid')}</Text>{' '}
+      <MText style={[textStyles]}>
+        <MText style={theme.colorSecondaryText}>
+          {i18n.t('wallet.unpaid')}
+        </MText>{' '}
         {props.walletStore.stripeDetails.pendingBalanceSplit}
-      </Text>
+      </MText>
     ),
     childrenButton2: (
-      <Text style={textStyles}>
-        <Text style={theme.colorSecondaryText}>{i18n.t('wallet.total')}</Text>{' '}
+      <MText style={textStyles}>
+        <MText style={theme.colorSecondaryText}>{i18n.t('wallet.total')}</MText>{' '}
         {props.walletStore.stripeDetails.totalPaidOutSplit}
-      </Text>
+      </MText>
     ),
   };
   return (

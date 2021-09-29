@@ -1,7 +1,7 @@
 import React, { forwardRef, useCallback, useMemo, useRef } from 'react';
 import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { observer, useLocalStore } from 'mobx-react';
-import { Dimensions, Platform, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, Platform, StyleSheet, View } from 'react-native';
 import BaseModel from '../../BaseModel';
 import navigationService from '../../../navigation/NavigationService';
 import Activity from '../../../newsfeed/activity/Activity';
@@ -18,6 +18,7 @@ import ChannelListItem from '../ChannelListItem';
 import Handle from '../bottom-sheet/Handle';
 import ChannelListItemPlaceholder from '../ChannelListItemPlaceholder';
 import ActivityPlaceHolder from '../../../newsfeed/ActivityPlaceHolder';
+import MText from '../MText';
 
 type Interactions =
   | 'upVotes'
@@ -259,7 +260,7 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
     () => (
       <Handle>
         <View style={styles.navbarContainer}>
-          <Text style={styles.titleStyle}>{capitalize(title)}</Text>
+          <MText style={styles.titleStyle}>{capitalize(title)}</MText>
         </View>
       </Handle>
     ),

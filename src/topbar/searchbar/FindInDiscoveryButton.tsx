@@ -1,7 +1,8 @@
 import React from 'react';
 import ThemedStyles from '../../styles/ThemedStyles';
-import { TouchableOpacity, Text } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { SearchResultStoreType } from './createSearchResultStore';
+import MText from '../../common/components/MText';
 
 type PropsType = {
   showBorder?: boolean;
@@ -17,10 +18,10 @@ const FindInDiscoveryButton = ({ showBorder, localStore }: PropsType) => {
     <TouchableOpacity
       onPress={() => localStore.searchDiscovery()}
       style={[theme.flexColumnStretch, theme.padding3x, ...borders]}>
-      <Text
+      <MText
         style={
           theme.colorSecondaryText
-        }>{`SEARCH MINDS: ${localStore.search}`}</Text>
+        }>{`SEARCH MINDS: ${localStore.search}`}</MText>
     </TouchableOpacity>
   );
 };

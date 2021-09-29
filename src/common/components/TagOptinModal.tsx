@@ -46,7 +46,7 @@ export default class TagOptinModal extends Component {
         onBackdropPress={this.dismissModal}>
         <View style={styles.modalView}>
           <View style={styles.modalHeader}>
-            <Text style={styles.modalTitle}>{i18n.t('hashtags.title')}</Text>
+            <MText style={styles.modalTitle}>{i18n.t('hashtags.title')}</MText>
             <IonIcon
               style={styles.modalCloseIcon}
               size={28}

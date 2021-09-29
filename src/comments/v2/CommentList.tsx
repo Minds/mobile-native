@@ -2,7 +2,7 @@ import React from 'react';
 import { BottomSheetFlatList, TouchableOpacity } from '@gorhom/bottom-sheet';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import Comment from './Comment';
 import type CommentsStore from './CommentsStore';
@@ -14,6 +14,7 @@ import sessionService from '../../common/services/session.service';
 import GroupModel from '../../groups/GroupModel';
 import FastImage from 'react-native-fast-image';
 import i18n from '../../common/services/i18n.service';
+import MText from '../../common/components/MText';
 
 // types
 type PropsType = {
@@ -108,9 +109,9 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
           onPress={() => props.store.setShowInput(true)}
           style={styles.touchableStyles}>
           <FastImage source={user.getAvatarSource()} style={styles.avatar} />
-          <Text style={styles.reply}>
+          <MText style={styles.reply}>
             {i18n.t(props.store.parent ? 'activity.typeReply' : placeHolder)}
-          </Text>
+          </MText>
         </TouchableOpacity>
 
         <LoadMore store={props.store} next={true} />

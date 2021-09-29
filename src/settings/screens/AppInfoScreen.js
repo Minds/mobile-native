@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, Text } from 'react-native-animatable';
+import { View } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { Version } from '../../config/Version';
+import MText from '../../common/components/MText';
 
 export default function AppInfoScreen() {
   const theme = ThemedStyles.style;
@@ -36,22 +37,22 @@ export default function AppInfoScreen() {
         source={logo}
       />
       <View style={styles.footer}>
-        <Text
+        <MText
           style={[styles.version, theme.colorSecondaryText]}
           textAlign={'center'}>
           v{Version.VERSION} ({Version.BUILD})
-        </Text>
+        </MText>
         <View style={rowStyle}>
-          <Text style={titleStyle}>Brand</Text>
-          <Text style={valueStyle}>{DeviceInfo.getBrand()}</Text>
+          <MText style={titleStyle}>Brand</MText>
+          <MText style={valueStyle}>{DeviceInfo.getBrand()}</MText>
         </View>
         <View style={rowStyle}>
-          <Text style={titleStyle}>Type</Text>
-          <Text style={valueStyle}>{DeviceInfo.getDeviceType()}</Text>
+          <MText style={titleStyle}>Type</MText>
+          <MText style={valueStyle}>{DeviceInfo.getDeviceType()}</MText>
         </View>
         <View style={rowStyle}>
-          <Text style={titleStyle}>Device</Text>
-          <Text style={valueStyle}>{DeviceInfo.getModel()}</Text>
+          <MText style={titleStyle}>Device</MText>
+          <MText style={valueStyle}>{DeviceInfo.getModel()}</MText>
         </View>
       </View>
     </View>

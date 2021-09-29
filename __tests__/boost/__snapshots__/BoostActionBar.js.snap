@@ -36,7 +36,7 @@ exports[`Boost action bar component renders correctly 1`] = `
       }
       type="material-community"
     />
-    <Text
+    <MText
       style={
         Object {
           "fontSize": 11,
@@ -45,7 +45,7 @@ exports[`Boost action bar component renders correctly 1`] = `
       }
     >
       $1.00
-    </Text>
+    </MText>
   </View>
   <View />
 </View>

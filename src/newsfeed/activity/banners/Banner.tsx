@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
+import MText from '../../../common/components/MText';
 import { styles } from '../styles';
 
 type PropsType = {
@@ -9,7 +10,7 @@ type PropsType = {
 const Banner = ({ message }: PropsType) => {
   return (
     <View style={styles.yellowBanner}>
-      <Text style={styles.yellowBannerText}>{message}</Text>
+      <MText style={styles.yellowBannerText}>{message}</MText>
     </View>
   );
 };

@@ -1,11 +1,4 @@
-import {
-  Image,
-  Platform,
-  StatusBar,
-  StatusBarStyle,
-  Text,
-  View,
-} from 'react-native';
+import { Image, Platform, StatusBar, StatusBarStyle, View } from 'react-native';
 import React, {
   useCallback,
   useEffect,
@@ -33,7 +26,6 @@ import Button from '../../common/components/Button';
 import { withErrorBoundary } from '../../common/components/ErrorBoundary';
 import { ChannelContext } from './ChannelContext';
 import Animated, {
-  cancelAnimation,
   Easing,
   useAnimatedStyle,
   useSharedValue,
@@ -46,6 +38,7 @@ import {
 } from 'react-native-image-colors/lib/typescript/types';
 import AnimatedBanner from './AnimatedBanner';
 import InteractionsBottomSheet from '../../common/components/interactions/InteractionsBottomSheet';
+import MText from '../../common/components/MText';
 
 const tinycolor = require('tinycolor2');
 
@@ -396,10 +389,12 @@ const ChannelScreen = observer((props: PropsType) => {
         source={require('../../assets/images/emptyFeed.png')}
       />
 
-      <Text style={style.header}>{i18n.t('channel.createFirstPostTitle')}</Text>
-      <Text style={[theme.colorSecondaryText, style.subTitle]}>
+      <MText style={style.header}>
+        {i18n.t('channel.createFirstPostTitle')}
+      </MText>
+      <MText style={[theme.colorSecondaryText, style.subTitle]}>
         {i18n.t('channel.createFirstPostSubTitle')}
-      </Text>
+      </MText>
 
       <Button
         onPress={() => props.navigation.navigate('Capture')}

@@ -1,8 +1,9 @@
 import { observer } from 'mobx-react';
 import React, { useCallback } from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import { showNotification } from '../../../../AppMessages';
 import Button from '../../../common/components/Button';
+import MText from '../../../common/components/MText';
 import useApiFetch from '../../../common/hooks/useApiFetch';
 import emailConfirmationService from '../../../common/services/email-confirmation.service';
 import i18n from '../../../common/services/i18n.service';
@@ -33,10 +34,10 @@ export default observer(function VerifyEmailScreen() {
   return (
     <ModalContainer title="Verify email" onPressBack={NavigationService.goBack}>
       <View style={[theme.flexContainer, theme.paddingHorizontal4x]}>
-        <Text style={theme.fontLM}>
+        <MText style={theme.fontLM}>
           {i18n.t('onboarding.verifyEmailDescription1', { email }) + '\n\n'}
           {i18n.t('onboarding.verifyEmailDescription2')}
-        </Text>
+        </MText>
         <Button
           onPress={onPress}
           text={i18n.t('onboarding.resendEmail')}

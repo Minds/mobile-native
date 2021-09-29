@@ -31,15 +31,23 @@ exports[`renders correctly 1`] = `
     style={
       Array [
         Object {
-          "fontSize": 17,
-        },
-        Object {
           "color": "#43434D",
         },
-        undefined,
         Object {
-          "fontWeight": "500",
+          "fontFamily": "Roboto",
         },
+        Array [
+          Object {
+            "fontSize": 17,
+          },
+          Object {
+            "color": "#43434D",
+          },
+          undefined,
+          Object {
+            "fontWeight": "500",
+          },
+        ],
       ]
     }
   >

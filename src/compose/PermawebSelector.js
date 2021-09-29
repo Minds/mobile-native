@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 import { observer } from 'mobx-react';
 
@@ -7,6 +7,7 @@ import ThemedStyles from '../styles/ThemedStyles';
 import TopBar from './TopBar';
 import i18n from '../common/services/i18n.service';
 import NavigationService from '../navigation/NavigationService';
+import MText from '../common/components/MText';
 
 /**
  * Permaweb selector
@@ -24,10 +25,10 @@ export default observer(function (props) {
         onPressBack={NavigationService.goBack}
         store={store}
       />
-      <Text style={[styles.permawebTerms]}>{i18n.t('permaweb.terms')}</Text>
-      <Text style={[styles.permawebProcessTime]}>
+      <MText style={[styles.permawebTerms]}>{i18n.t('permaweb.terms')}</MText>
+      <MText style={[styles.permawebProcessTime]}>
         {i18n.t('permaweb.processingTime')}
-      </Text>
+      </MText>
       <View style={[styles.checkboxContainer]}>
         <CheckBox
           title={`${i18n.t('auth.accept')} ${i18n.t(

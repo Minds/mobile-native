@@ -274,7 +274,7 @@ export default class MediaView extends Component<PropsType> {
   //         size={18}
   //         underlayColor="white"
   //       />
-  //       <Text style={styles.licenseText}>{license}</Text>
+  //       <MText style={styles.licenseText}>{license}</MText>
   //     </View>
   //   );
   // }
