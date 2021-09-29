@@ -12,7 +12,7 @@ exports[`AnalyticsScreen component should render correctly 1`] = `
     style={
       Array [
         Object {
-          "padding": 20,
+          "padding": 16,
         },
         Object {
           "fontFamily": "Roboto",
@@ -21,7 +21,7 @@ exports[`AnalyticsScreen component should render correctly 1`] = `
           "lineHeight": 44,
         },
         Object {
-          "paddingBottom": 10,
+          "paddingBottom": 8,
         },
       ]
     }

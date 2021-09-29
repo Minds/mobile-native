@@ -15,7 +15,7 @@ exports[`renders correctly 1`] = `
         "borderColor": "#D3DBE3",
       },
       Object {
-        "paddingHorizontal": 10,
+        "paddingHorizontal": 8,
       },
       undefined,
     ]
@@ -31,10 +31,10 @@ exports[`renders correctly 1`] = `
           Array [
             Array [
               Object {
-                "paddingVertical": 10,
+                "paddingVertical": 8,
               },
               Object {
-                "marginHorizontal": 10,
+                "marginHorizontal": 8,
               },
               Object {
                 "borderBottomWidth": 4,
@@ -87,10 +87,10 @@ exports[`renders correctly 1`] = `
           Array [
             Array [
               Object {
-                "paddingVertical": 10,
+                "paddingVertical": 8,
               },
               Object {
-                "marginHorizontal": 10,
+                "marginHorizontal": 8,
               },
               Object {
                 "borderBottomWidth": 4,
@@ -143,10 +143,10 @@ exports[`renders correctly 1`] = `
           Array [
             Array [
               Object {
-                "paddingVertical": 10,
+                "paddingVertical": 8,
               },
               Object {
-                "marginHorizontal": 10,
+                "marginHorizontal": 8,
               },
               Object {
                 "borderBottomWidth": 4,
@@ -199,10 +199,10 @@ exports[`renders correctly 1`] = `
           Array [
             Array [
               Object {
-                "paddingVertical": 10,
+                "paddingVertical": 8,
               },
               Object {
-                "marginHorizontal": 10,
+                "marginHorizontal": 8,
               },
               Object {
                 "borderBottomWidth": 4,

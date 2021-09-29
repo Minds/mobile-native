@@ -148,7 +148,7 @@ exports[`renders correctly 1`] = `
           style={
             Array [
               Object {
-                "paddingHorizontal": 20,
+                "paddingHorizontal": 16,
               },
               Object {
                 "flexDirection": "row",
@@ -168,7 +168,7 @@ exports[`renders correctly 1`] = `
                   "color": "#FFFFFF",
                 },
                 Object {
-                  "paddingVertical": 20,
+                  "paddingVertical": 16,
                 },
                 Object {
                   "textAlign": "center",
@@ -188,7 +188,7 @@ exports[`renders correctly 1`] = `
                   "color": "#FFFFFF",
                 },
                 Object {
-                  "paddingVertical": 20,
+                  "paddingVertical": 16,
                 },
                 Object {
                   "textAlign": "center",
@@ -209,7 +209,7 @@ exports[`renders correctly 1`] = `
                   "fontSize": 18,
                 },
                 Object {
-                  "paddingVertical": 20,
+                  "paddingVertical": 16,
                 },
                 Object {
                   "textAlign": "center",
@@ -227,7 +227,7 @@ exports[`renders correctly 1`] = `
           style={
             Array [
               Object {
-                "paddingLeft": 20,
+                "paddingLeft": 16,
               },
               Object {
                 "paddingTop": 10,

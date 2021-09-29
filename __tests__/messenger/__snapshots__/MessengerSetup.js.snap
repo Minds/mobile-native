@@ -15,7 +15,7 @@ exports[`Messenger setup component should render correctly for setup 1`] = `
           "flex": 1,
         },
         Object {
-          "padding": 10,
+          "padding": 8,
         },
       ]
     }
@@ -65,7 +65,7 @@ exports[`Messenger setup component should render correctly for setup 1`] = `
               "padding": 16,
             },
             Object {
-              "marginTop": 10,
+              "marginTop": 8,
             },
           ]
         }
@@ -94,7 +94,7 @@ exports[`Messenger setup component should render correctly for setup 1`] = `
   <View
     style={
       Object {
-        "padding": 20,
+        "padding": 16,
       }
     }
   >
@@ -125,7 +125,7 @@ exports[`Messenger setup component should render correctly for setup 1`] = `
               "width": "100%",
             },
             Object {
-              "marginTop": 30,
+              "marginTop": 24,
             },
           ],
         ]
@@ -172,7 +172,7 @@ exports[`Messenger setup component should render correctly for unlock 1`] = `
           "flex": 1,
         },
         Object {
-          "padding": 10,
+          "padding": 8,
         },
       ]
     }
@@ -251,7 +251,7 @@ exports[`Messenger setup component should render correctly for unlock 1`] = `
   <View
     style={
       Object {
-        "padding": 20,
+        "padding": 16,
       }
     }
   >
@@ -282,7 +282,7 @@ exports[`Messenger setup component should render correctly for unlock 1`] = `
               "width": "100%",
             },
             Object {
-              "marginTop": 30,
+              "marginTop": 24,
             },
           ],
         ]

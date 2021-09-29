@@ -88,7 +88,7 @@ exports[`Partials tests renders correctly HeroPartial 1`] = `
           "flexDirection": "row",
         },
         Object {
-          "padding": 20,
+          "padding": 16,
         },
         Object {
           "borderColor": "#D3DBE3",
@@ -152,7 +152,7 @@ exports[`Partials tests renders correctly RichPartial 1`] = `
         "flexDirection": "row",
       },
       Object {
-        "padding": 20,
+        "padding": 16,
       },
       Object {
         "borderColor": "#D3DBE3",
@@ -269,7 +269,7 @@ exports[`Partials tests renders correctly TrendingHashtagPartial 1`] = `
         "flexDirection": "row",
       },
       Object {
-        "padding": 20,
+        "padding": 16,
       },
       Object {
         "borderColor": "#D3DBE3",
