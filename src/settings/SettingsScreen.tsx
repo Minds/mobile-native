@@ -138,7 +138,7 @@ export default function ({ navigation }) {
 
   const logOut = {
     title: i18n.t('settings.logout'),
-    onPress: AuthService.logout,
+    onPress: () => AuthService.logout(),
     icon: {
       name: 'login-variant',
       type: 'material-community',
