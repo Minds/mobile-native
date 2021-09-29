@@ -60,9 +60,6 @@ if (
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 
-require('intl');
-require('intl/locale-data/jsonp/en');
-
 type State = {
   appState: string;
 };
