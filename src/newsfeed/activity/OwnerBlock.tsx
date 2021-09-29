@@ -243,14 +243,13 @@ const remindIconStyle = ThemedStyles.combine(
 const groupNameStyle = ThemedStyles.combine('fontM', 'colorSecondaryText');
 const usernameStyle = ThemedStyles.combine(
   'colorSecondaryText',
-  'fontLight',
+  'fontMedium',
   'bold',
   'fontLM',
 );
 const nameStyle = ThemedStyles.combine(
   'colorPrimaryText',
-  'fontLight',
-  'bold',
+  'fontBold',
   'fontLM',
   'flexContainer',
 );

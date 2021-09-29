@@ -697,6 +697,7 @@ exports[`LoginForm component should renders correctly 1`] = `
                     "marginBottom": 20,
                   },
                   Object {
+                    "fontFamily": "Roboto-Black",
                     "fontWeight": "700",
                   },
                   Object {

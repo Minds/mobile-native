@@ -45,6 +45,7 @@ exports[`Explicit overlay component renders correctly 1`] = `
           "fontSize": 22,
         },
         Object {
+          "fontFamily": "Roboto-Black",
           "fontWeight": "700",
         },
       ]
@@ -153,6 +154,7 @@ exports[`Explicit overlay component should renders the etag 1`] = `
           "fontSize": 22,
         },
         Object {
+          "fontFamily": "Roboto-Black",
           "fontWeight": "700",
         },
       ]
