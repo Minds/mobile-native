@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { Text, ScrollView, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import i18n from '../../../../common/services/i18n.service';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 import { useStores } from '../../../../common/hooks/use-stores';
@@ -13,6 +13,7 @@ import {
   itemTextStyleMedium,
   titleStyle,
 } from '../email/EmailNotificationsSettings';
+import MText from '../../../../common/components/MText';
 
 type PropsType = {};
 
@@ -36,9 +37,9 @@ const PushNotificationsSettings = ({}: PropsType) => {
           containerItemStyle={theme.bgPrimaryBackground}
           titleStyle={itemTextStyle}
         />
-        <Text style={titleStyle}>
+        <MText style={titleStyle}>
           {i18n.t('notificationSettings.related').toUpperCase()}
-        </Text>
+        </MText>
         {notifications.pushNotificationsSettings.map(setting => {
           if (setting.notification_group === 'all') {
             return null;

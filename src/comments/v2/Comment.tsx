@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import * as entities from 'entities';
 // import ReadMore from 'react-native-read-more-text';
 import { LinearGradient } from 'expo-linear-gradient';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
 
 import ReplyAction from '../ReplyAction';
@@ -20,6 +20,7 @@ import MediaView from '../../common/components/MediaView';
 import { LIGHT_THEME } from '../../styles/Colors';
 import ReadMore from '../../common/components/ReadMore';
 import Translate from '../../common/components/translate/Translate';
+import MText from '../../common/components/MText';
 
 type PropsType = {
   comment: CommentModel;
@@ -53,7 +54,7 @@ export default observer(function Comment(props: PropsType) {
     handlePress => {
       return (
         <TouchableOpacity onPress={handlePress}>
-          <Text
+          <MText
             style={[
               theme.fontL,
               theme.bold,
@@ -61,7 +62,7 @@ export default observer(function Comment(props: PropsType) {
               theme.textCenter,
             ]}>
             {i18n.t('showLess')}
-          </Text>
+          </MText>
         </TouchableOpacity>
       );
     },
@@ -76,7 +77,7 @@ export default observer(function Comment(props: PropsType) {
             colors={[startColor, endColor]}
             style={styles.linear}
           />
-          <Text
+          <MText
             style={[
               theme.colorPrimaryText,
               theme.fontL,
@@ -85,7 +86,7 @@ export default observer(function Comment(props: PropsType) {
               theme.marginTop2x,
             ]}>
             {i18n.t('readMore')}
-          </Text>
+          </MText>
         </TouchableOpacity>
       );
     },
@@ -157,9 +158,9 @@ export default observer(function Comment(props: PropsType) {
             )}
             {mature && (
               <View style={theme.marginTop3x}>
-                <Text style={[theme.fontL, theme.colorTertiaryText]}>
+                <MText style={[theme.fontL, theme.colorTertiaryText]}>
                   {i18n.t('activity.explicitComment')}
-                </Text>
+                </MText>
               </View>
             )}
           </View>
@@ -185,11 +186,11 @@ export default observer(function Comment(props: PropsType) {
           </View>
           {!!props.comment.replies_count && !props.hideReply && (
             <TouchableOpacity onPress={viewReply} style={theme.marginBottom3x}>
-              <Text style={[styles.viewReply, theme.colorLink]}>
+              <MText style={[styles.viewReply, theme.colorLink]}>
                 {i18n.t('viewRepliesComments', {
                   count: props.comment.replies_count,
                 })}
-              </Text>
+              </MText>
             </TouchableOpacity>
           )}
         </>
@@ -199,10 +200,10 @@ export default observer(function Comment(props: PropsType) {
           <TouchableOpacity
             onPress={props.comment.toggleMatureVisibility}
             style={[theme.centered, theme.marginTop4x]}>
-            <Text style={[theme.bold, theme.fontL, theme.colorSecondaryText]}>
+            <MText style={[theme.bold, theme.fontL, theme.colorSecondaryText]}>
               {i18n.t('activity.explicitComment')}
-            </Text>
-            <Text
+            </MText>
+            <MText
               style={[
                 theme.bold,
                 theme.fontL,
@@ -210,7 +211,7 @@ export default observer(function Comment(props: PropsType) {
                 theme.paddingVertical2x,
               ]}>
               {i18n.t('confirm18')}
-            </Text>
+            </MText>
           </TouchableOpacity>
           <View style={[theme.rowJustifyEnd, theme.padding3x]}>
             <CommentBottomMenu

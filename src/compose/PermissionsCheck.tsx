@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { openSettings } from 'react-native-permissions';
 import ThemedStyles from '../styles/ThemedStyles';
 import i18nService from '../common/services/i18n.service';
 import { useAppState } from '@react-native-community/hooks';
 import { Camera, CameraPermissionStatus } from 'react-native-vision-camera';
 import { IS_IOS } from '../config/Config';
+import MText from '../common/components/MText';
 
 type PropsType = {
   children: React.ReactNode;
@@ -59,12 +60,12 @@ export default function PermissionsCheck(props: PropsType) {
       <TouchableOpacity
         style={[theme.flexContainer, theme.centered, theme.padding2x]}
         onPress={tap}>
-        <Text style={[theme.fontXL, theme.textCenter]}>
+        <MText style={[theme.fontXL, theme.textCenter]}>
           {i18nService.t('capture.allowMinds')}
-        </Text>
-        <Text style={[theme.fontL, theme.paddingTop2x]}>
+        </MText>
+        <MText style={[theme.fontL, theme.paddingTop2x]}>
           {i18nService.t('permissions.tapAllow')}
-        </Text>
+        </MText>
       </TouchableOpacity>
     );
   }
@@ -72,16 +73,16 @@ export default function PermissionsCheck(props: PropsType) {
   if (status[1] === 'denied' || status[1] === 'restricted') {
     return (
       <View style={[theme.flexContainer, theme.centered, theme.padding2x]}>
-        <Text
+        <MText
           style={[theme.fontXL, theme.textCenter]}
           onPress={() => openSettings()}>
           {i18nService.t('capture.blockedMinds')}
-        </Text>
-        <Text
+        </MText>
+        <MText
           style={[theme.fontL, theme.paddingTop2x]}
           onPress={() => openSettings()}>
           {i18nService.t('permissions.tapAllow')}
-        </Text>
+        </MText>
       </View>
     );
   }

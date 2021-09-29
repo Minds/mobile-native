@@ -1,7 +1,7 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import { FlatList, Text, View } from 'react-native';
+import { FlatList, View } from 'react-native';
 
 import type { Node, Element } from 'react';
 import type SubscriptionRequestStore from './SubscriptionRequestStore';
@@ -12,6 +12,7 @@ import i18n from '../../common/services/i18n.service';
 import ErrorLoading from '../../common/components/ErrorLoading';
 import ActivityIndicator from '../../common/components/ActivityIndicator';
 import ThemedStyles from '../../styles/ThemedStyles';
+import MText from '../../common/components/MText';
 
 type PropsType = {
   subscriptionRequest: SubscriptionRequestStore;
@@ -63,9 +64,9 @@ class SubscriptionRequestList extends Component<PropsType> {
       const message = subscriptionRequest.loading ? (
         <ActivityIndicator size="large" />
       ) : (
-        <Text style={[theme.fontM, theme.fontHairline]}>
+        <MText style={[theme.fontM, theme.fontHairline]}>
           {i18n.t('discovery.nothingToShow')}
-        </Text>
+        </MText>
       );
 
       emptyCmp = (

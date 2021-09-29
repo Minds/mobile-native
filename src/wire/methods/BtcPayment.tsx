@@ -6,6 +6,7 @@ import viewportPercentage from '../../common/helpers/viewportPercentage';
 import Button from '../../common/components/Button';
 import i18nService from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
+import MText from '../../common/components/MText';
 
 type PropsType = {
   address: string;
@@ -40,13 +41,13 @@ export default class BtcPayment extends React.PureComponent<PropsType> {
     const theme = ThemedStyles.style;
     return (
       <View style={[theme.flexContainer, theme.marginTop3x]}>
-        <Text style={[theme.fontXL, theme.textCenter]}>
+        <MText style={[theme.fontXL, theme.textCenter]}>
           Tap to send{' '}
-          <Text style={theme.colorLink}>{this.props.amount} BTC</Text> to
-        </Text>
-        <Text style={[theme.colorLink, theme.fontL]} numberOfLines={1}>
+          <MText style={theme.colorLink}>{this.props.amount} BTC</MText> to
+        </MText>
+        <MText style={[theme.colorLink, theme.fontL]} numberOfLines={1}>
           {this.props.address}
-        </Text>
+        </MText>
         <View style={theme.rowJustifyCenter}>
           <Button
             text={i18nService.t('goback')}
@@ -63,9 +64,9 @@ export default class BtcPayment extends React.PureComponent<PropsType> {
           />
         </View>
 
-        <Text style={[theme.fontXL, theme.textCenter, theme.marginTop4x]}>
+        <MText style={[theme.fontXL, theme.textCenter, theme.marginTop4x]}>
           Or scan the following QR code
-        </Text>
+        </MText>
         <View style={[theme.centered, theme.marginTop3x]}>
           <QRCode value={this.url} size={viewportPercentage(70).value} />
         </View>

@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import {
-  Text,
   StyleSheet,
   TouchableOpacity,
   View,
@@ -21,6 +20,7 @@ import { NavigationProp } from '@react-navigation/native';
 import UserModel from '../../channel/UserModel';
 import { NavigationRouteV5 } from '@sentry/react-native/dist/js/tracing/reactnavigationv5';
 import { ChannelContext } from '../../channel/v2/ChannelContext';
+import MText from '../../common/components/MText';
 
 const DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
 
@@ -117,9 +117,9 @@ class OwnerBlock extends PureComponent<PropsType> {
       <DebouncedTouchableOpacity
         onPress={this._navToGroup}
         style={styles.groupContainer}>
-        <Text style={groupNameStyle} lineBreakMode="tail" numberOfLines={1}>
+        <MText style={groupNameStyle} lineBreakMode="tail" numberOfLines={1}>
           {this.props.entity.containerObj.name}
-        </Text>
+        </MText>
       </DebouncedTouchableOpacity>
     );
   }
@@ -147,16 +147,16 @@ class OwnerBlock extends PureComponent<PropsType> {
     const remind = this.props.entity.remind_users ? (
       <View style={remindContainer}>
         <Icon name="remind" size="tiny" active marginRight="1x" />
-        <Text>
-          <Text style={theme.colorSecondaryText}>
+        <MText>
+          <MText style={theme.colorSecondaryText}>
             {i18nService.t('remindedBy')}{' '}
-          </Text>
+          </MText>
           {this.props.entity.remind_users.map(u => (
-            <Text key={u.guid} onPress={() => this._navToChannel(u)}>
+            <MText key={u.guid} onPress={() => this._navToChannel(u)}>
               {u.username}
-            </Text>
+            </MText>
           ))}
-        </Text>
+        </MText>
       </View>
     ) : null;
 
@@ -174,18 +174,18 @@ class OwnerBlock extends PureComponent<PropsType> {
           <View style={styles.body}>
             <View style={styles.nameContainer}>
               <View pointerEvents="box-none" style={nameTouchableStyle}>
-                <Text
+                <MText
                   numberOfLines={1}
                   style={nameStyle}
                   onPress={this._onNavToChannelPress}>
                   {name || channel.username}
                   {Boolean(name) && (
-                    <Text numberOfLines={1} style={usernameStyle}>
+                    <MText numberOfLines={1} style={usernameStyle}>
                       {' '}
                       @{channel.username}
-                    </Text>
+                    </MText>
                   )}
-                </Text>
+                </MText>
               </View>
               {this.group}
               {this.props.children}
@@ -235,22 +235,16 @@ const styles = StyleSheet.create({
   },
 });
 
-const remindIconStyle = ThemedStyles.combine(
-  'colorIconActive',
-  styles.remindIcon,
-);
-
 const groupNameStyle = ThemedStyles.combine('fontM', 'colorSecondaryText');
 const usernameStyle = ThemedStyles.combine(
   'colorSecondaryText',
-  'fontLight',
+  'fontMedium',
   'bold',
   'fontLM',
 );
 const nameStyle = ThemedStyles.combine(
   'colorPrimaryText',
-  'fontLight',
-  'bold',
+  'fontBold',
   'fontLM',
   'flexContainer',
 );

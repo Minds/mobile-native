@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
   FlatList,
   View,
-  Text,
   StyleProp,
   ViewStyle,
   RefreshControl,
@@ -19,6 +18,7 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import type FeedStore from '../stores/FeedStore';
 import type ActivityModel from '../../newsfeed/ActivityModel';
 import ActivityIndicator from './ActivityIndicator';
+import MText from './MText';
 
 type PropsType = {
   feedStore: FeedStore;
@@ -143,9 +143,9 @@ export default class FeedList<T> extends Component<PropsType> {
         empty = (
           <View style={ComponentsStyle.emptyComponentContainer}>
             <View style={ComponentsStyle.emptyComponent}>
-              <Text style={ComponentsStyle.emptyComponentMessage}>
+              <MText style={ComponentsStyle.emptyComponentMessage}>
                 {i18n.t('newsfeed.empty')}
-              </Text>
+              </MText>
             </View>
           </View>
         );

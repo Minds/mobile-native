@@ -6,6 +6,7 @@ import ThemedStyles from '../../../styles/ThemedStyles';
 import createBlockedChannelsStore from './createBlockedChannelsStore';
 import i18n from '../../../common/services/i18n.service';
 import BlockedChannel, { Row } from './BlockedChannel';
+import MText from '../../../common/components/MText';
 
 const BlockedChannelsScreen = observer(props => {
   const theme = ThemedStyles.style;
@@ -32,7 +33,7 @@ const BlockedChannelsScreen = observer(props => {
         navigation={props.navigation}
         emptyMessage={
           <View style={[theme.centered, theme.marginTop4x]}>
-            <Text>{i18n.t('settings.noBlockedChannels')}</Text>
+            <MText>{i18n.t('settings.noBlockedChannels')}</MText>
           </View>
         }
         style={[theme.bgPrimaryBackground, theme.flexContainer]}

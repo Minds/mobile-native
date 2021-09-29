@@ -14,7 +14,6 @@ import { TDiscoveryV2Tabs } from './DiscoveryV2Store';
 import TopbarTabbar from '../../common/components/topbar-tabbar/TopbarTabbar';
 import { DiscoveryTagsList } from './tags/DiscoveryTagsList';
 import FeedList from '../../common/components/FeedList';
-import DiscoveryTagsManager from './tags/DiscoveryTagsManager';
 import InitialOnboardingButton from '../../onboarding/v2/InitialOnboardingButton';
 import { withErrorBoundary } from '../../common/components/ErrorBoundary';
 import { AnimatePresence } from 'moti';
@@ -30,9 +29,8 @@ interface Props {
 export const DiscoveryV2Screen = withErrorBoundary(
   observer((props: Props) => {
     const theme = ThemedStyles.style;
-    const [shouldRefreshOnTabPress, setShouldRefreshOnTabPress] = useState(
-      false,
-    );
+    const [shouldRefreshOnTabPress, setShouldRefreshOnTabPress] =
+      useState(false);
     const store = useDiscoveryV2Store();
     const navigation = props.navigation;
 
@@ -68,11 +66,6 @@ export const DiscoveryV2Screen = withErrorBoundary(
       });
       return unsubscribe;
     }, [store, navigation]);
-
-    const closeManageTags = () => {
-      store.setShowManageTags(false);
-      store.refreshTrends();
-    };
 
     const screen = () => {
       switch (store.activeTabId) {
@@ -121,11 +114,6 @@ export const DiscoveryV2Screen = withErrorBoundary(
         <View style={theme.flexContainer}>
           <AnimatePresence>{screen()}</AnimatePresence>
         </View>
-        <DiscoveryTagsManager
-          show={store.showManageTags}
-          onCancel={closeManageTags}
-          onDone={closeManageTags}
-        />
       </View>
     );
   }),

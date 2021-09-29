@@ -1,25 +1,24 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { observer } from 'mobx-react';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { WalletStoreType } from '../createWalletStore';
 import MenuSubtitle from '../../../common/components/menus/MenuSubtitle';
 import MenuItem from '../../../common/components/menus/MenuItem';
 import { WalletScreenNavigationProp } from '../../v3/WalletScreen';
-import Withdraw from './tokens/Withdraw';
-import { BottomOptionsStoreType } from '../../../common/components/BottomOptionPopup';
 import i18n from '../../../common/services/i18n.service';
 import TokensChart from './TokensChart';
 import useWalletConnect from '../../../blockchain/v2/walletconnect/useWalletConnect';
 import { navToTokens } from '../../../buy-tokens/BuyTokensScreen';
+import { useNavigation } from '@react-navigation/core';
+import MText from '../../../common/components/MText';
 
 type PropsType = {
   walletStore: WalletStoreType;
-  bottomStore: BottomOptionsStoreType;
   navigation: WalletScreenNavigationProp;
 };
 
-const TokensOverview = observer(({ walletStore, bottomStore }: PropsType) => {
+const TokensOverview = observer(({ walletStore }: PropsType) => {
   const wc = useWalletConnect();
   const theme = ThemedStyles.style;
   const balanceStyle = [
@@ -28,19 +27,13 @@ const TokensOverview = observer(({ walletStore, bottomStore }: PropsType) => {
     theme.paddingBottom,
   ];
 
+  const navigation = useNavigation();
+
   const walletActions = [
     {
       title: i18n.t('wallet.transferToOnchain'),
       onPress: () => {
-        bottomStore.show(
-          i18n.t('wallet.withdraw.title'),
-          i18n.t('wallet.withdraw.transfer'),
-          <Withdraw
-            walletStore={walletStore}
-            bottomStore={bottomStore}
-            wc={wc}
-          />,
-        );
+        navigation.navigate('WalletWithdrawal');
       },
       noIcon: true,
     },
@@ -61,18 +54,20 @@ const TokensOverview = observer(({ walletStore, bottomStore }: PropsType) => {
           theme.rowJustifySpaceBetween,
         ]}>
         <View>
-          <Text style={balanceStyle}>{i18n.t('wallet.walletBalance')}</Text>
-          <Text style={theme.fontXL}>{walletStore.balance}</Text>
+          <MText style={balanceStyle}>{i18n.t('wallet.walletBalance')}</MText>
+          <MText style={theme.fontXL}>{walletStore.balance}</MText>
         </View>
         <View>
-          <Text style={balanceStyle}>{i18n.t('blockchain.offchain')}</Text>
-          <Text style={theme.fontXL}>
+          <MText style={balanceStyle}>{i18n.t('blockchain.offchain')}</MText>
+          <MText style={theme.fontXL}>
             {walletStore.wallet.offchain.balance}
-          </Text>
+          </MText>
         </View>
         <View>
-          <Text style={balanceStyle}>{i18n.t('blockchain.onchain')}</Text>
-          <Text style={theme.fontXL}>{walletStore.wallet.onchain.balance}</Text>
+          <MText style={balanceStyle}>{i18n.t('blockchain.onchain')}</MText>
+          <MText style={theme.fontXL}>
+            {walletStore.wallet.onchain.balance}
+          </MText>
         </View>
       </View>
 

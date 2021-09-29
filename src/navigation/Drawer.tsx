@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, Platform } from 'react-native';
+import { View, Image, StyleSheet, Platform } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -12,6 +12,8 @@ import ThemedStyles from '../styles/ThemedStyles';
 import featuresService from '../common/services/features.service';
 import sessionService from '../common/services/session.service';
 import FitScrollView from '../common/components/FitScrollView';
+import requirePhoneValidation from '../common/hooks/requirePhoneValidation';
+import MText from '../common/components/MText';
 
 const getOptionsList = navigation => {
   const hasRewards = sessionService.getUser().rewards;
@@ -65,7 +67,7 @@ const getOptionsList = navigation => {
     {
       name: 'Buy Tokens',
       icon: <Icon name="coins" />,
-      onPress: () => {
+      onPress: async () => {
         const navToBuyTokens = () => {
           navigation.navigate('Tabs', {
             screen: 'CaptureTab',
@@ -73,9 +75,8 @@ const getOptionsList = navigation => {
           });
         };
         if (!hasRewards) {
-          navigation.navigate('PhoneValidation', {
-            onComplete: navToBuyTokens,
-          });
+          await requirePhoneValidation();
+          navToBuyTokens();
         } else {
           navToBuyTokens();
         }
@@ -145,16 +146,16 @@ export default function Drawer(props) {
           </TouchableOpacity>
           <View style={styles.row}>
             <View style={titleContainerStyle}>
-              <Text style={titleStyle} onPress={navToChannel}>
+              <MText style={titleStyle} onPress={navToChannel}>
                 {channel.name || `@${channel.username}`}
-              </Text>
+              </MText>
               {channel.name && (
-                <Text
+                <MText
                   onPress={navToChannel}
                   style={subtitleStyle}
                   testID="channelUsername">
                   @{channel.username}
-                </Text>
+                </MText>
               )}
             </View>
             <IconButton

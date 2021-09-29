@@ -77,14 +77,22 @@ exports[`blog view screen component should renders correctly 1`] = `
         </View>
         <Text
           style={
-            Object {
-              "fontFamily": "Roboto-Black",
-              "fontSize": 22,
-              "paddingBottom": 8,
-              "paddingLeft": 15,
-              "paddingRight": 15,
-              "paddingTop": 12,
-            }
+            Array [
+              Object {
+                "color": "#43434D",
+              },
+              Object {
+                "fontFamily": "Roboto",
+              },
+              Object {
+                "fontFamily": "Roboto-Black",
+                "fontSize": 22,
+                "paddingBottom": 8,
+                "paddingLeft": 15,
+                "paddingRight": 15,
+                "paddingTop": 12,
+              },
+            ]
           }
         >
           Some Title
@@ -191,18 +199,23 @@ exports[`blog view screen component should renders correctly 1`] = `
                             "color": "#43434D",
                           },
                           Object {
-                            "fontFamily": "Roboto-Light",
-                            "fontWeight": "300",
+                            "fontFamily": "Roboto",
                           },
-                          Object {
-                            "fontWeight": "700",
-                          },
-                          Object {
-                            "fontSize": 17,
-                          },
-                          Object {
-                            "flex": 1,
-                          },
+                          Array [
+                            Object {
+                              "color": "#43434D",
+                            },
+                            Object {
+                              "fontFamily": "Roboto-Black",
+                              "fontWeight": "700",
+                            },
+                            Object {
+                              "fontSize": 17,
+                            },
+                            Object {
+                              "flex": 1,
+                            },
+                          ],
                         ]
                       }
                     >
@@ -212,18 +225,27 @@ exports[`blog view screen component should renders correctly 1`] = `
                         style={
                           Array [
                             Object {
-                              "color": "#72727C",
+                              "color": "#43434D",
                             },
                             Object {
-                              "fontFamily": "Roboto-Light",
-                              "fontWeight": "300",
+                              "fontFamily": "Roboto",
                             },
-                            Object {
-                              "fontWeight": "700",
-                            },
-                            Object {
-                              "fontSize": 17,
-                            },
+                            Array [
+                              Object {
+                                "color": "#72727C",
+                              },
+                              Object {
+                                "fontFamily": "Roboto-Medium",
+                                "fontWeight": "500",
+                              },
+                              Object {
+                                "fontFamily": "Roboto-Black",
+                                "fontWeight": "700",
+                              },
+                              Object {
+                                "fontSize": 17,
+                              },
+                            ],
                           ]
                         }
                       >
@@ -237,12 +259,20 @@ exports[`blog view screen component should renders correctly 1`] = `
                     style={
                       Array [
                         Object {
-                          "color": "#888",
-                          "fontSize": 11,
+                          "color": "#43434D",
                         },
                         Object {
-                          "color": "#72727C",
+                          "fontFamily": "Roboto",
                         },
+                        Array [
+                          Object {
+                            "color": "#888",
+                            "fontSize": 11,
+                          },
+                          Object {
+                            "color": "#72727C",
+                          },
+                        ],
                       ]
                     }
                   >
@@ -264,6 +294,15 @@ exports[`blog view screen component should renders correctly 1`] = `
                 <Modal
                   hardwareAccelerated={true}
                   onRequestClose={[Function]}
+                  supportedOrientations={
+                    Array [
+                      "portrait",
+                      "portrait-upside-down",
+                      "landscape",
+                      "landscape-left",
+                      "landscape-right",
+                    ]
+                  }
                   transparent={true}
                   visible={false}
                 >
@@ -312,6 +351,8 @@ exports[`blog view screen component should renders correctly 1`] = `
                       }
                     >
                       <View
+                        collapsable={false}
+                        nativeID="animatedComponent"
                         style={
                           Object {
                             "opacity": 1,
@@ -426,6 +467,8 @@ exports[`blog view screen component should renders correctly 1`] = `
                   }
                 >
                   <View
+                    collapsable={false}
+                    nativeID="animatedComponent"
                     style={
                       Object {
                         "opacity": 0,
@@ -581,6 +624,15 @@ exports[`blog view screen component should renders correctly 1`] = `
                 <Modal
                   hardwareAccelerated={true}
                   onRequestClose={[Function]}
+                  supportedOrientations={
+                    Array [
+                      "portrait",
+                      "portrait-upside-down",
+                      "landscape",
+                      "landscape-left",
+                      "landscape-right",
+                    ]
+                  }
                   transparent={true}
                   visible={false}
                 >
@@ -629,6 +681,8 @@ exports[`blog view screen component should renders correctly 1`] = `
                       }
                     >
                       <View
+                        collapsable={false}
+                        nativeID="animatedComponent"
                         style={
                           Object {
                             "opacity": 1,
@@ -743,6 +797,8 @@ exports[`blog view screen component should renders correctly 1`] = `
                   }
                 >
                   <View
+                    collapsable={false}
+                    nativeID="animatedComponent"
                     style={
                       Object {
                         "opacity": 0,
@@ -1735,17 +1791,25 @@ exports[`blog view screen component should renders correctly 1`] = `
             style={
               Array [
                 Object {
-                  "fontSize": 10,
+                  "color": "#43434D",
                 },
                 Object {
-                  "paddingLeft": 4,
+                  "fontFamily": "Roboto",
                 },
-                Object {
-                  "color": "#72727C",
-                },
-                Object {
-                  "paddingRight": 8,
-                },
+                Array [
+                  Object {
+                    "fontSize": 10,
+                  },
+                  Object {
+                    "paddingLeft": 4,
+                  },
+                  Object {
+                    "color": "#72727C",
+                  },
+                  Object {
+                    "paddingRight": 8,
+                  },
+                ],
               ]
             }
           >

@@ -1,10 +1,7 @@
 import React, { forwardRef, useCallback, useMemo, useRef } from 'react';
-import BottomSheet, {
-  BottomSheetBackdrop,
-  BottomSheetBackgroundProps,
-} from '@gorhom/bottom-sheet';
+import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { observer, useLocalStore } from 'mobx-react';
-import { Dimensions, Platform, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, Platform, StyleSheet, View } from 'react-native';
 import BaseModel from '../../BaseModel';
 import navigationService from '../../../navigation/NavigationService';
 import Activity from '../../../newsfeed/activity/Activity';
@@ -21,6 +18,7 @@ import ChannelListItem from '../ChannelListItem';
 import Handle from '../bottom-sheet/Handle';
 import ChannelListItemPlaceholder from '../ChannelListItemPlaceholder';
 import ActivityPlaceHolder from '../../../newsfeed/ActivityPlaceHolder';
+import MText from '../MText';
 
 type Interactions =
   | 'upVotes'
@@ -37,7 +35,7 @@ type PropsType = {
 
 const { height: windowHeight } = Dimensions.get('window');
 
-const snapPoints = [-150, Math.floor(windowHeight * 0.8)];
+const snapPoints = [Math.floor(windowHeight * 0.8)];
 const renderItemUser = (row: { item: any; index: number }) => (
   <ChannelListItem channel={row.item} navigation={navigationService} />
 );
@@ -49,6 +47,7 @@ const renderItemActivity = (row: { item: any; index: number }) => (
     navigation={navigationService}
   />
 );
+
 const mapUser = data => data.map(d => UserModel.create(d.actor));
 const mapSubscriber = data => data.map(d => UserModel.create(d));
 const mapActivity = data =>
@@ -166,6 +165,18 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
       this.offset = offset;
     },
   }));
+  const renderBackdrop = useCallback(
+    props => (
+      <BottomSheetBackdrop
+        {...props}
+        pressBehavior="close"
+        opacity={0.5}
+        appearsOnIndex={0}
+        disappearsOnIndex={-1}
+      />
+    ),
+    [],
+  );
   const isVote =
     store.interaction === 'upVotes' || store.interaction === 'downVotes';
   const isChannels =
@@ -217,9 +228,10 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
     },
   }));
 
-  const close = React.useCallback(() => bottomSheetRef.current?.close(), [
-    bottomSheetRef,
-  ]);
+  const close = React.useCallback(
+    () => bottomSheetRef.current?.close(),
+    [bottomSheetRef],
+  );
 
   /**
    * only turn visibility on, never off.
@@ -249,7 +261,7 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
     () => (
       <Handle>
         <View style={styles.navbarContainer}>
-          <Text style={styles.titleStyle}>{capitalize(title)}</Text>
+          <MText style={styles.titleStyle}>{capitalize(title)}</MText>
         </View>
       </Handle>
     ),
@@ -267,19 +279,6 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
     </View>
   );
 
-  /**
-   * Custom background
-   * (fixes visual issues on Android dark mode)
-   */
-  const CustomBackground = ({ style }: BottomSheetBackgroundProps) => (
-    <View style={style} />
-  );
-
-  const renderBackdrop = React.useCallback(
-    props => <BottomSheetBackdrop {...props} pressBehavior="collapse" />,
-    [],
-  );
-
   const renderPlaceholder = useCallback(() => {
     if (isVote || isChannels) {
       return <ChannelListItemPlaceholder />;
@@ -291,14 +290,15 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
   return (
     <BottomSheet
       ref={bottomSheetRef}
-      index={0}
+      index={-1}
       containerHeight={windowHeight}
       snapPoints={snapPoints}
+      enablePanDownToClose={true}
       handleComponent={Header}
-      enableContentPanningGesture={false}
-      enableHandlePanningGesture={true}
+      // enableContentPanningGesture={false}
+      // enableHandlePanningGesture={true}
       onChange={onBottomSheetVisibilityChange}
-      backgroundComponent={CustomBackground}
+      backgroundComponent={null}
       backdropComponent={renderBackdrop}>
       <View style={styles.container}>
         {store.visible && (

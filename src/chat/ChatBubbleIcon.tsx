@@ -1,7 +1,8 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { ChatStoreType } from './createChatStore';
+import MText from '../common/components/MText';
 
 type PropsType = {
   chatStore: ChatStoreType;
@@ -12,7 +13,7 @@ const ChatBubbleIcon = observer(({ chatStore }: PropsType) => {
     chatStore.unreadCount > 0 ? (
       <>
         <View style={styles.unreadBackground}>
-          <Text style={styles.unreadText}>{chatStore.unreadCount}</Text>
+          <MText style={styles.unreadText}>{chatStore.unreadCount}</MText>
         </View>
       </>
     ) : null;

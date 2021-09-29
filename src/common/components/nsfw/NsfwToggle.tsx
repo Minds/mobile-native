@@ -75,7 +75,7 @@ export default class NsfwToggle extends Component {
         />
 
         {isActive && !this.props.hideLabel && (
-          <Text style={this.props.labelStyle}>{i18n.t('nsfw.button')}</Text>
+          <MText style={this.props.labelStyle}>{i18n.t('nsfw.button')}</MText>
         )}
       </Touchable>
     );

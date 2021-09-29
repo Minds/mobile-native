@@ -1,5 +1,5 @@
 import React, { useMemo, useRef } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { observer } from 'mobx-react';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -9,6 +9,7 @@ import ImagePreview from './ImagePreview';
 import { useSafeArea } from 'react-native-safe-area-context';
 import MindsVideoV2 from '../media/v2/mindsVideo/MindsVideo';
 import { ResizeMode } from 'expo-av';
+import MText from '../common/components/MText';
 
 /**
  * Media confirm screen
@@ -18,12 +19,14 @@ export default observer(function (props) {
   const theme = ThemedStyles.style;
 
   const insets = useSafeArea();
-  const cleanTop = useMemo(() => ({ paddingTop: insets.top || 0 }), [
-    insets.top,
-  ]);
-  const cleanBottom = useMemo(() => ({ height: insets.bottom + 50 }), [
-    insets.bottom,
-  ]);
+  const cleanTop = useMemo(
+    () => ({ paddingTop: insets.top || 0 }),
+    [insets.top],
+  );
+  const cleanBottom = useMemo(
+    () => ({ height: insets.bottom + 50 }),
+    [insets.bottom],
+  );
   const [videoPortrait, setVideoPortrait] = React.useState(true);
   const onVideoLoaded = React.useCallback(e => {
     setVideoPortrait(e.naturalSize.height > e.naturalSize.width);
@@ -67,15 +70,15 @@ export default observer(function (props) {
       <View style={styles.mediaContainer}>{previewComponent}</View>
       <View style={bottomBarStyle}>
         {isImage ? (
-          <Text onPress={props.store.editImage} style={styles.leftText}>
+          <MText onPress={props.store.editImage} style={styles.leftText}>
             {i18n.t('edit')}
-          </Text>
+          </MText>
         ) : (
           <View />
         )}
-        <Text onPress={props.store.acceptMedia} style={styles.rightText}>
+        <MText onPress={props.store.acceptMedia} style={styles.rightText}>
           {i18n.t('confirm')}
-        </Text>
+        </MText>
       </View>
       <MIcon
         size={45}

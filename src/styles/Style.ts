@@ -230,8 +230,14 @@ const _buildStyle = (theme: ColorsType) =>
     halfHeight: {
       height: '50%',
     },
+    // todo: replace by fontBold
     bold: {
       fontWeight: '700',
+      fontFamily: 'Roboto-Black',
+    },
+    fontBold: {
+      fontWeight: '700',
+      fontFamily: 'Roboto-Black',
     },
     extraBold: {
       // fontWeight: '800'

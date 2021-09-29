@@ -1,15 +1,16 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../services/i18n.service';
+import MText from './MText';
 
 export default function DisabledStoreFeature({ style }) {
   const theme = ThemedStyles.style;
   return (
     <View style={[theme.centered, style]}>
-      <Text style={[theme.fontL, theme.textCenter]}>
+      <MText style={[theme.fontL, theme.textCenter]}>
         {i18n.t('postCantBeShown')}
-      </Text>
+      </MText>
     </View>
   );
 }

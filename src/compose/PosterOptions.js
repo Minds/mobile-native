@@ -7,16 +7,17 @@ import React, {
 } from 'react';
 import {
   StyleSheet,
-  Text,
+  Dimensions,
   View,
   TouchableOpacity as RNTouchableOpacity,
   Platform,
+  StatusBar,
 } from 'react-native';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useKeyboard } from '@react-native-community/hooks';
-import BottomSheet from 'reanimated-bottom-sheet';
-import { observer, useLocalStore } from 'mobx-react';
+import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
+import { observer } from 'mobx-react';
 import moment from 'moment';
 
 import ThemedStyles from '../styles/ThemedStyles';
@@ -27,7 +28,7 @@ import {
   getAccessText,
 } from '../common/services/list-options.service';
 import featuresService from '../common/services/features.service';
-import sessionService from '../common/services/session.service';
+import MText from '../common/components/MText';
 
 const Touchable = Platform.select({
   ios: RNTouchableOpacity,
@@ -48,7 +49,7 @@ const Header = props => (
         ThemedStyles.style.bgSecondaryBackground,
         ThemedStyles.style.bcolorPrimaryBorder,
       ]}>
-      <Text
+      <MText
         style={[
           ThemedStyles.style.fontXL,
           ThemedStyles.style.colorPrimaryText,
@@ -57,8 +58,8 @@ const Header = props => (
           ThemedStyles.style.bold,
         ]}>
         {i18n.t('capture.postOptions')}
-      </Text>
-      <Text
+      </MText>
+      <MText
         onPress={props.onPress}
         style={[
           ThemedStyles.style.fontL,
@@ -66,7 +67,7 @@ const Header = props => (
           styles.close,
         ]}>
         {i18n.t('close')}
-      </Text>
+      </MText>
     </View>
   </View>
 );
@@ -80,12 +81,13 @@ const Item = props => {
       style={[styles.row, ThemedStyles.style.bcolorPrimaryBorder]}
       onPress={props.onPress}
       testID={props.testID}>
-      <Text style={[styles.optionTitle, ThemedStyles.style.colorSecondaryText]}>
+      <MText
+        style={[styles.optionTitle, ThemedStyles.style.colorSecondaryText]}>
         {props.title}
-      </Text>
-      <Text style={styles.optionDescription} numberOfLines={1}>
+      </MText>
+      <MText style={styles.optionDescription} numberOfLines={1}>
         {props.description}
-      </Text>
+      </MText>
       <MIcon
         size={20}
         name="chevron-right"
@@ -100,6 +102,9 @@ export function useNavCallback(screen, store) {
     NavigationService.navigate(screen, { store });
   }, [store, screen]);
 }
+
+const windowHeight = Dimensions.get('window').height;
+const snapPoints = [550];
 
 /**
  * Options
@@ -129,46 +134,20 @@ export default observer(
     const onLicensePress = useNavCallback('LicenseSelector', store);
     const onPressVisibility = useNavCallback('AccessSelector', store);
 
-    const localStore = useLocalStore(() => ({
-      opened: false,
-      setOpened(value) {
-        localStore.opened = value;
-      },
-    }));
-
     const onHeaderPress = useCallback(() => {
       if (!sheetRef.current) return;
-      if (localStore.opened) {
-        // called twice as a workaround
-        sheetRef.current.snapTo(0);
-        sheetRef.current.snapTo(0);
-      } else {
-        sheetRef.current.snapTo(1);
-        sheetRef.current.snapTo(1);
-      }
-    }, [localStore.opened]);
-
-    const onOpenEnd = useCallback(() => {
-      localStore.setOpened(true);
-    }, [localStore]);
-
-    const onCloseEnd = useCallback(() => {
-      localStore.setOpened(false);
-    }, [localStore]);
+      sheetRef.current.close();
+    }, []);
 
     useEffect(() => {
       if (keyboard.keyboardShown && sheetRef.current) {
-        sheetRef.current.snapTo(0);
+        sheetRef.current.close();
       }
     }, [keyboard.keyboardShown]);
 
     useImperativeHandle(ref, () => ({
       show: () => {
-        sheetRef.current.snapTo(1);
-        sheetRef.current.snapTo(1);
-      },
-      get opened() {
-        return localStore.opened;
+        sheetRef.current.expand();
       },
     }));
 
@@ -192,80 +171,87 @@ export default observer(
       ? i18n.t('permaweb.description')
       : null;
 
-    const renderInner = () => (
-      <View
-        style={[
-          theme.bgSecondaryBackground,
-          theme.fullHeight,
-          { elevation: 13 },
-        ]}>
-        <Item
-          title="Tag"
-          description={tags.slice(0, 4).map(t => `#${t} `)}
-          onPress={onTagPress}
+    const renderBackdrop = useCallback(
+      props => (
+        <BottomSheetBackdrop
+          {...props}
+          pressBehavior="close"
+          opacity={0.5}
+          appearsOnIndex={0}
+          disappearsOnIndex={-1}
         />
-        <Item
-          title={i18n.t('nsfw.button')}
-          description={
-            nsfw.length !== 0 ? i18n.t('nsfw.notSafe') : i18n.t('nsfw.safe')
-          }
-          onPress={onNsfwPress}
-          testID="nsfwButton"
-        />
-        {showSchedule && (
-          <Item
-            title={i18n.t('capture.schedule')}
-            description={
-              time_created ? moment(time_created).calendar() : i18n.t('now')
-            }
-            onPress={onSchedulePress}
-          />
-        )}
-        {showMonetize && (
-          <Item
-            title={i18n.t('monetize.title')}
-            description={monetizeDesc}
-            onPress={onMonetizePress}
-            testID="monetizeButton"
-          />
-        )}
-        {showPermaweb && (
-          <Item
-            title={i18n.t('permaweb.title')}
-            description={permawebDesc}
-            onPress={onPermawebPress}
-            testID="permawebButton"
-          />
-        )}
-        <Item
-          title="License"
-          description={getLicenseText(license)}
-          onPress={onLicensePress}
-        />
-        {!store.group && (
-          <Item
-            title="Visibility"
-            description={getAccessText(accessId)}
-            onPress={onPressVisibility}
-          />
-        )}
-      </View>
+      ),
+      [],
     );
 
     return (
       <BottomSheet
         ref={sheetRef}
-        snapPoints={[0, 550]}
-        renderContent={renderInner}
-        enabledInnerScrolling={true}
-        enabledContentTapInteraction={true}
-        renderHeader={() => (
-          <Header onPress={onHeaderPress} opened={localStore.opened} />
-        )}
-        style={ThemedStyles.style.bgAlert}
-        onOpenEnd={onOpenEnd}
-        onCloseEnd={onCloseEnd}
-      />
+        index={-1}
+        backdropComponent={renderBackdrop}
+        topInset={StatusBar.currentHeight || 0}
+        enablePanDownToClose={true}
+        snapPoints={snapPoints}
+        backgroundComponent={null}
+        handleComponent={() => <Header onPress={onHeaderPress} />}>
+        <View
+          style={[
+            theme.bgSecondaryBackground,
+            theme.fullHeight,
+            { elevation: 13 },
+          ]}>
+          <Item
+            title="Tag"
+            description={tags.slice(0, 4).map(t => `#${t} `)}
+            onPress={onTagPress}
+          />
+          <Item
+            title={i18n.t('nsfw.button')}
+            description={
+              nsfw.length !== 0 ? i18n.t('nsfw.notSafe') : i18n.t('nsfw.safe')
+            }
+            onPress={onNsfwPress}
+            testID="nsfwButton"
+          />
+          {showSchedule && (
+            <Item
+              title={i18n.t('capture.schedule')}
+              description={
+                time_created ? moment(time_created).calendar() : i18n.t('now')
+              }
+              onPress={onSchedulePress}
+            />
+          )}
+          {showMonetize && (
+            <Item
+              title={i18n.t('monetize.title')}
+              description={monetizeDesc}
+              onPress={onMonetizePress}
+              testID="monetizeButton"
+            />
+          )}
+          {showPermaweb && (
+            <Item
+              title={i18n.t('permaweb.title')}
+              description={permawebDesc}
+              onPress={onPermawebPress}
+              testID="permawebButton"
+            />
+          )}
+          <Item
+            title="License"
+            description={getLicenseText(license)}
+            onPress={onLicensePress}
+          />
+          {!store.group && (
+            <Item
+              title="Visibility"
+              description={getAccessText(accessId)}
+              onPress={onPressVisibility}
+            />
+          )}
+        </View>
+      </BottomSheet>
     );
   }),
 );
@@ -281,10 +267,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
-    shadowColor: '#000',
+    shadowColor: '#121414',
     shadowOffset: {
       width: 0,
-      height: -10,
+      height: -5,
     },
     shadowOpacity: 0.1,
     shadowRadius: 5.0,

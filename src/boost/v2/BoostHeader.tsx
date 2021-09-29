@@ -1,6 +1,6 @@
 import React from 'react';
 import { ImageBackground, StyleSheet, View } from 'react-native';
-import { Text } from 'react-native-animatable';
+import MText from '../../common/components/MText';
 
 const bannerAspectRatio = 3.5;
 
@@ -15,7 +15,7 @@ const BoostHeader = ({ title }: PropsType) => {
       source={require('../../assets/boostBG.png')}
       resizeMode="cover">
       <View style={styles.textContainer}>
-        <Text style={styles.title}>{title}</Text>
+        <MText style={styles.title}>{title}</MText>
       </View>
     </ImageBackground>
   );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text } from 'react-native';
+import MText from '../../../../common/components/MText';
 import i18n from '../../../../common/services/i18n.service';
 import type NotificationModel from '../NotificationModel';
 import { bodyTextImportantStyle, bodyTextStyle } from '../styles';
@@ -16,21 +16,21 @@ const Merged = ({ notification, router }: PropsType) => {
   }
 
   return (
-    <Text style={bodyTextStyle}>
+    <MText style={bodyTextStyle}>
       {`${i18n.t('and')} `}
       {notification.merged_count === 1 && (
-        <Text
+        <MText
           style={bodyTextImportantStyle}
           onPress={() => router.navToChannel(notification.merged_from[0])}>
           {notification.merged_from[0].name + ' '}
-        </Text>
+        </MText>
       )}
       {notification.merged_count > 1 && (
-        <Text onPress={router.navToEntity}>
+        <MText onPress={router.navToEntity}>
           {notification.merged_count} {`${i18n.t('others')} `}
-        </Text>
+        </MText>
       )}
-    </Text>
+    </MText>
   );
 };
 

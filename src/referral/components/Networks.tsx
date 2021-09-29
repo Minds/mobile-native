@@ -1,6 +1,7 @@
 import React from 'react';
-import { Linking, Text, View } from 'react-native';
+import { Linking, View } from 'react-native';
 import IonIcon from 'react-native-vector-icons/Ionicons';
+import MText from '../../common/components/MText';
 import Touchable from '../../common/components/Touchable';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -64,7 +65,7 @@ const Networks = ({ referralLink }: NetworksProps) => {
 
   return (
     <>
-      <Text>{i18n.t('referrals.moreWaysToShare')}</Text>
+      <MText>{i18n.t('referrals.moreWaysToShare')}</MText>
       <View style={[theme.rowJustifyStart, theme.marginTop2x]}>{networks}</View>
     </>
   );

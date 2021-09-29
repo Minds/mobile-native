@@ -4,7 +4,7 @@ import { autorun } from 'mobx';
 import { observer, useLocalStore } from 'mobx-react';
 import ThemedStyles from '../styles/ThemedStyles';
 import Button from '../common/components/Button';
-import { Text, CheckBox } from 'react-native-elements';
+import { CheckBox } from 'react-native-elements';
 import UniswapWidget from '../common/components/uniswap-widget/UniswapWidget';
 import TransakWidget, {
   TransakOrderProcessed,
@@ -15,6 +15,7 @@ import OrderReportModal, {
 import { startCase as _startCase } from 'lodash';
 import i18n from '../common/services/i18n.service';
 import mindsConfigService from '../common/services/minds-config.service';
+import MText from '../common/components/MText';
 
 type PaymentMethod = 'card' | 'bank' | 'crypto';
 type PaymentOption = { type: PaymentMethod; name: string };
@@ -74,7 +75,7 @@ export default observer(() => {
         style={[theme.flexContainer, theme.bgPrimaryBackground]}
         contentContainerStyle={theme.padding4x}>
         <View style={theme.alignCenter}>
-          <Text
+          <MText
             style={[
               theme.colorPrimaryText,
               theme.marginBottom5x,
@@ -82,7 +83,7 @@ export default observer(() => {
               theme.bold,
             ]}>
             {i18n.t('buyTokensScreen.paymentMethod')}
-          </Text>
+          </MText>
         </View>
         <View
           style={[
@@ -103,23 +104,23 @@ export default observer(() => {
                 store.paymentMethod === type ? theme.bgLink : '',
               ]}
               onPress={() => store.handleOptionSelection(type)}>
-              <Text
+              <MText
                 style={
                   store.paymentMethod === type
                     ? theme.colorWhite
                     : theme.colorPrimaryText
                 }>
                 {name}
-              </Text>
+              </MText>
             </Pressable>
           ))}
         </View>
         <View style={[theme.flexContainer, theme.rowStretch]}>
-          <Text style={theme.colorPrimaryText}>
+          <MText style={theme.colorPrimaryText}>
             {i18n.t('buyTokensScreen.deliverEstimate', {
               estimate: store.paymentMethod === 'bank' ? 'days' : 'minutes',
             })}
-          </Text>
+          </MText>
         </View>
         <View>
           <CheckBox
@@ -127,13 +128,13 @@ export default observer(() => {
             onPress={() => store.setAggressTerms(!store.aggressTerms)}
             containerStyle={[theme.checkbox]}
             title={
-              <Text style={[theme.colorPrimaryText, theme.marginLeft3x]}>
+              <MText style={[theme.colorPrimaryText, theme.marginLeft3x]}>
                 {i18n.to(
                   'buyTokensScreen.terms',
                   {},
                   {
                     link: (
-                      <Text
+                      <MText
                         style={theme.link}
                         onPress={() => {
                           Linking.openURL(
@@ -141,20 +142,20 @@ export default observer(() => {
                           );
                         }}>
                         {i18n.t('buyTokensScreen.linkText')}
-                      </Text>
+                      </MText>
                     ),
                   },
                 )}
-              </Text>
+              </MText>
             }
           />
         </View>
         <View style={[theme.flexContainer, theme.rowJustifySpaceBetween]}>
-          <Text
+          <MText
             style={[theme.colorPrimaryText, styles.learMoreLink]}
             onPress={navToTokens}>
             {i18n.t('buyTokensScreen.learnMore')}
-          </Text>
+          </MText>
           <Button
             text={i18n.t('buyTokensScreen.buy')}
             containerStyle={

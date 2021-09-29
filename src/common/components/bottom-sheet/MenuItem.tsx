@@ -1,8 +1,9 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import { Icon, IconType } from 'react-native-elements';
 import ThemedStyles, { useStyle } from '../../../styles/ThemedStyles';
 import MPressable from '../MPressable';
+import MText from '../MText';
 
 export type MenuItemProps = {
   title: string | JSX.Element;
@@ -42,7 +43,7 @@ const MenuItem = ({
           />
         </View>
       )}
-      <Text style={txtStyle}>{title}</Text>
+      <MText style={txtStyle}>{title}</MText>
     </MPressable>
   );
 };

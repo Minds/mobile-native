@@ -1,6 +1,7 @@
 import React from 'react';
-import { Linking, ScrollView, StyleSheet, Text } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 import { navToTokens } from '../buy-tokens/BuyTokensScreen';
+import MText from '../common/components/MText';
 import i18n from '../common/services/i18n.service';
 import sessionService from '../common/services/session.service';
 import { MINDS_URI } from '../config/Config';
@@ -23,24 +24,24 @@ const ReferralsScreen = ({ navigation }: ReferralsScreenProps) => {
     <ScrollView
       style={theme.flexContainer}
       contentContainerStyle={[theme.padding4x]}>
-      <Text
+      <MText
         style={[theme.fontXL, theme.bold, theme.marginBottom4x, styles.title]}>
         {i18n.t('referrals.title')}
-      </Text>
+      </MText>
 
-      <Text
+      <MText
         style={[
           theme.colorSecondaryText,
           theme.textJustify,
           theme.marginBottom,
         ]}>
         {i18n.t('referrals.description')}
-      </Text>
-      <Text
+      </MText>
+      <MText
         style={[theme.colorLink, theme.marginBottom4x]}
         onPress={navToTokens}>
         {i18n.t('wallet.learnMore.title')}
-      </Text>
+      </MText>
 
       <Input
         textToCopy={referralLink}

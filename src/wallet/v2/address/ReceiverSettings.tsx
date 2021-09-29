@@ -1,12 +1,13 @@
 import React from 'react';
 import { WalletScreenNavigationProp } from '../../v3/WalletScreen';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { WalletStoreType } from '../createWalletStore';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import i18n from '../../../common/services/i18n.service';
 import { UniqueOnChainStoreType, isConnected } from '../../v3/useUniqueOnchain';
 import MenuItem from '../../../common/components/menus/MenuItem';
 import { observer } from 'mobx-react';
+import MText from '../../../common/components/MText';
 
 type PropsType = {
   navigation: WalletScreenNavigationProp;
@@ -36,9 +37,9 @@ const ReceiverSettings = observer(
     ];
     return (
       <View style={theme.paddingTop4x}>
-        <Text style={[theme.colorSecondaryText, styles.subTitle]}>
+        <MText style={[theme.colorSecondaryText, styles.subTitle]}>
           {i18n.t('wallet.receiverAddresses').toUpperCase()}
-        </Text>
+        </MText>
         <View style={innerWrapper}>
           {receiverSettingsOptions.map(item => (
             <MenuItem item={item} />

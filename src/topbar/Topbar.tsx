@@ -17,6 +17,7 @@ import useCurrentUser from '../common/hooks/useCurrentUser';
 import intword from '../common/helpers/intword';
 import featuresService from '../common/services/features.service';
 import EmailConfirmation from './EmailConfirmation';
+import MText from '../common/components/MText';
 
 type PropsType = {
   navigation: any;
@@ -85,7 +86,7 @@ export const Topbar = observer((props: PropsType) => {
             <SearchComponent navigation={props.navigation} />
           </View>
           <View style={styles.topbarRight}>
-            <Text
+            <MText
               onPress={openWallet}
               style={[
                 theme.fontL,
@@ -94,7 +95,7 @@ export const Topbar = observer((props: PropsType) => {
                 theme.paddingVertical2x,
               ]}>
               {usdBalance > 0 && '$' + intword(usdBalance)}
-            </Text>
+            </MText>
 
             <IconButton
               onPress={openWallet}

@@ -1,5 +1,6 @@
 import {
   createTracker,
+  EventContext,
   ReactNativeTracker,
 } from '@snowplow/react-native-tracker';
 import DeviceInfo from 'react-native-device-info';
@@ -20,6 +21,7 @@ const IGNORE_SCREENS = ['Comments'];
 export class AnalyticsService {
   tracker?: ReactNativeTracker;
   previousRouteName = '';
+  contexts: EventContext[] = [];
 
   constructor() {
     this.tracker = createTracker('ma', {
@@ -60,6 +62,26 @@ export class AnalyticsService {
   }
 
   /**
+   * clear contexts array
+   */
+  clearContexts() {
+    this.contexts = [];
+  }
+
+  /**
+   * Add an experiment context
+   */
+  addExperimentContext(experimentId: string, variationId: number): void {
+    this.contexts.push({
+      schema: 'iglu:com.minds/growthbook_context/jsonschema/1-0-1',
+      data: {
+        experiment_id: experimentId,
+        variation_id: variationId,
+      },
+    });
+  }
+
+  /**
    * Navigation state change handler
    */
   onNavigatorStateChange = () => {
@@ -86,7 +108,7 @@ export class AnalyticsService {
    * @param screenName
    */
   trackScreenViewEvent(screenName: string) {
-    return this.tracker?.trackScreenViewEvent({ screenName });
+    return this.tracker?.trackScreenViewEvent({ screenName }, this.contexts);
   }
 
   /**
@@ -126,6 +148,7 @@ export class AnalyticsService {
                 : '',
           },
         },
+        ...this.contexts,
       ],
     );
   }
@@ -135,7 +158,7 @@ export class AnalyticsService {
    * @param pageUrl
    */
   trackPageViewEvent(pageUrl: string) {
-    this.tracker?.trackPageViewEvent({ pageUrl }, []);
+    this.tracker?.trackPageViewEvent({ pageUrl }, this.contexts);
   }
 }
 

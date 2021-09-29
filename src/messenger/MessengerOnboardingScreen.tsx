@@ -88,9 +88,9 @@ export default class MessengerOnboardingScreen extends Component {
     const theme = ThemedStyles.style;
     return (
       <View>
-        <Text style={style.h1}>{i18n.t('messenger.messenger')}</Text>
+        <MText style={style.h1}>{i18n.t('messenger.messenger')}</MText>
 
-        <Text style={style.p}>{i18n.t('messenger.onboardingText')}</Text>
+        <MText style={style.p}>{i18n.t('messenger.onboardingText')}</MText>
 
         <View style={[theme.flexContainer, theme.padding2x]}>
           <View style={{ flexDirection: 'row', alignItems: 'stretch' }}>

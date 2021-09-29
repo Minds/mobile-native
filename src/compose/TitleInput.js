@@ -1,11 +1,12 @@
 import React, { useState, useCallback } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 
 import ThemedStyles from '../styles/ThemedStyles';
 import i18nService from '../common/services/i18n.service';
 import { observer } from 'mobx-react';
 import TextInput from '../common/components/TextInput';
+import MText from '../common/components/MText';
 
 /**
  * Title input
@@ -39,11 +40,11 @@ export default observer(function (props) {
           style={theme.colorTertiaryText}
           onPress={onPress}
         />
-        <Text
+        <MText
           style={[theme.fontXL, theme.colorIcon, theme.paddingHorizontal2x]}
           onPress={onPress}>
           Title
-        </Text>
+        </MText>
       </View>
       {open && (
         <TextInput

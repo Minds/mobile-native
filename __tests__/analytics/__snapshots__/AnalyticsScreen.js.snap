@@ -8,7 +8,7 @@ exports[`AnalyticsScreen component should render correctly 1`] = `
     }
   }
 >
-  <Text
+  <MText
     style={
       Array [
         Object {
@@ -27,7 +27,7 @@ exports[`AnalyticsScreen component should render correctly 1`] = `
     }
   >
     Analytics
-  </Text>
+  </MText>
   <TopbarTabbar
     current="token"
     onChange={[Function]}

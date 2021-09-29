@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, TextStyle } from 'react-native';
+import { StyleSheet, TextStyle } from 'react-native';
+import MText from '../../../common/components/MText';
 import abbrev from '../../../common/helpers/abbrev';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { EarningsCurrencyType } from '../../v2/createWalletStore';
@@ -56,29 +57,29 @@ const MindsTokens = ({
   const mindsF = parseFloat(value);
   const cash = isTokens ? mindsPriceF * mindsF : mindsF;
   return (
-    <Text style={[styles.minds, textStyles]}>
+    <MText style={[styles.minds, textStyles]}>
       {isTokens ? '' : '$'}
       {format(mindsF)}
       {isTokens ? (
-        <Text
+        <MText
           style={[styles.cash, theme.colorSecondaryText, secondaryTextStyle]}>
           {' '}
           tokens{' '}
-        </Text>
+        </MText>
       ) : (
         ''
       )}
       {isTokens && (
-        <Text
+        <MText
           style={[
             styles.cash,
             theme.colorSecondaryText,
             cashAsPrimary ? textStyles : secondaryTextStyle,
           ]}>
           · ${format(cash)}
-        </Text>
+        </MText>
       )}
-    </Text>
+    </MText>
   );
 };
 

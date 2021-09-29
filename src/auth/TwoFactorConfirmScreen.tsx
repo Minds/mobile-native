@@ -5,7 +5,6 @@ import {
   BackHandler,
   KeyboardAvoidingView,
   Platform,
-  Text,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -16,6 +15,7 @@ import i18n from '../common/services/i18n.service';
 import { RootStackParamList } from '../navigation/NavigationTypes';
 import InputContainer from '../common/components/InputContainer';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import MText from '../common/components/MText';
 
 type ForgotScreenRouteProp = RouteProp<
   RootStackParamList,
@@ -32,14 +32,8 @@ type PropsType = {
  */
 const TwoFactorConfirmScreen = observer(({ route, navigation }: PropsType) => {
   const theme = ThemedStyles.style;
-  const {
-    onConfirm,
-    title,
-    onCancel,
-    mfaType,
-    oldCode,
-    showRecovery,
-  } = route.params;
+  const { onConfirm, title, onCancel, mfaType, oldCode, showRecovery } =
+    route.params;
 
   // Disable back button on Android
   React.useEffect(() => {
@@ -104,14 +98,14 @@ const TwoFactorConfirmScreen = observer(({ route, navigation }: PropsType) => {
             color={ThemedStyles.getColor('SecondaryText')}
             onPress={localStore.cancel}
           />
-          <Text style={styles.titleText}>
+          <MText style={styles.titleText}>
             {title || i18n.t('auth.2faRequired')}
-          </Text>
+          </MText>
           <TouchableOpacity onPress={localStore.submit}>
-            <Text style={styles.continue}>{i18n.t('verify')}</Text>
+            <MText style={styles.continue}>{i18n.t('verify')}</MText>
           </TouchableOpacity>
         </View>
-        <Text style={styles.description}>{description}</Text>
+        <MText style={styles.description}>{description}</MText>
         <View style={theme.fullWidth}>
           <InputContainer
             maxLength={localStore.recovery ? undefined : 6}
@@ -129,16 +123,16 @@ const TwoFactorConfirmScreen = observer(({ route, navigation }: PropsType) => {
           />
         </View>
         {mfaType === 'email' && (
-          <Text style={styles.description} onPress={localStore.resend}>
+          <MText style={styles.description} onPress={localStore.resend}>
             {i18n.t('onboarding.verifyEmailDescription2')}
-            <Text style={styles.resend}> {i18n.t('onboarding.resend')}</Text>
-          </Text>
+            <MText style={styles.resend}> {i18n.t('onboarding.resend')}</MText>
+          </MText>
         )}
         {mfaType === 'totp' && showRecovery && (
-          <Text style={styles.description} onPress={localStore.toggleRecovery}>
+          <MText style={styles.description} onPress={localStore.toggleRecovery}>
             {i18n.t('auth.recoveryDesc')}
-            <Text style={styles.resend}> {i18n.t('auth.recoveryCode')}</Text>
-          </Text>
+            <MText style={styles.resend}> {i18n.t('auth.recoveryCode')}</MText>
+          </MText>
         )}
       </KeyboardAvoidingView>
     </SafeAreaView>

@@ -1,7 +1,8 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
+import MText from '../../common/components/MText';
 import number from '../../common/helpers/number';
 import useApiFetch from '../../common/hooks/useApiFetch';
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -38,15 +39,14 @@ export default observer(function TokenPrice() {
           style={styles.avatar}
           resizeMode="contain"
           source={{
-            uri:
-              'https://cdn-assets.minds.com/front/dist/browser/en/assets/logos/bulb.jpg',
+            uri: 'https://cdn-assets.minds.com/front/dist/browser/en/assets/logos/bulb.jpg',
           }}
         />
       </View>
-      <Text style={textStyles}>
-        <Text style={textStylesBold}>1</Text> MINDS{' '}
-        <Text style={textStylesBold}>= {number(result.minds, 4, 4)}</Text> USD
-      </Text>
+      <MText style={textStyles}>
+        <MText style={textStylesBold}>1</MText> MINDS{' '}
+        <MText style={textStylesBold}>= {number(result.minds, 4, 4)}</MText> USD
+      </MText>
     </Pressable>
   );
 });

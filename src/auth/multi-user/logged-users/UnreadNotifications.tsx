@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
+import MText from '../../../common/components/MText';
 import i18n from '../../../common/services/i18n.service';
 import logService from '../../../common/services/log.service';
 import sessionService from '../../../common/services/session.service';
@@ -32,11 +33,13 @@ const UnreadNotifications = observer(({ index }: PropsType) => {
     <>
       {count > 0 && (
         <View style={styles.container}>
-          <Text style={styles.notifications}>{count}</Text>
+          <MText style={styles.notifications}>{count}</MText>
         </View>
       )}
       {sessionService.tokensData[index].sessionExpired && (
-        <Text style={styles.expired}>{i18n.t('multiUser.sessionExpired')}</Text>
+        <MText style={styles.expired}>
+          {i18n.t('multiUser.sessionExpired')}
+        </MText>
       )}
     </>
   );

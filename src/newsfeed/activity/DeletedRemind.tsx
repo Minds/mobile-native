@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import MText from '../../common/components/MText';
 import i18nService from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 
@@ -13,7 +14,7 @@ export default function DeletedRemind() {
         size={35}
         style={[theme.colorSecondaryText, theme.paddingRight]}
       />
-      <Text style={theme.fontM}>{i18nService.t('deletedRemind')}</Text>
+      <MText style={theme.fontM}>{i18nService.t('deletedRemind')}</MText>
     </View>
   );
 }

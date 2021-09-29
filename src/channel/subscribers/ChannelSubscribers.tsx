@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Text, FlatList, View, TouchableHighlight } from 'react-native';
+import { FlatList, View, TouchableHighlight } from 'react-native';
 
 import { observer, inject } from 'mobx-react';
 
@@ -10,6 +10,7 @@ import CenteredLoading from '../../common/components/CenteredLoading';
 import ErrorLoading from '../../common/components/ErrorLoading';
 import ThemedStyles from '../../styles/ThemedStyles';
 import type ChannelSubscribersStore from './ChannelSubscribersStore';
+import MText from '../../common/components/MText';
 
 type PropsType = {
   channelSubscribersStore: ChannelSubscribersStore;
@@ -97,7 +98,7 @@ class ChannelSubscribers extends Component<PropsType> {
                   ? styles.selectedButton
                   : styles.buttons
               }>
-              <Text style={theme.fontL}>{i18n.t('subscribers')}</Text>
+              <MText style={theme.fontL}>{i18n.t('subscribers')}</MText>
             </TouchableHighlight>
             <TouchableHighlight
               underlayColor="transparent"
@@ -107,7 +108,7 @@ class ChannelSubscribers extends Component<PropsType> {
                   ? styles.selectedButton
                   : styles.buttons
               }>
-              <Text style={theme.fontL}>{i18n.t('subscriptions')}</Text>
+              <MText style={theme.fontL}>{i18n.t('subscriptions')}</MText>
             </TouchableHighlight>
           </View>
         </View>

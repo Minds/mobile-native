@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { View, Text, FlatList, ViewToken } from 'react-native';
+import { View, FlatList, ViewToken } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import NotificationsTopBar from './NotificationsTopBar';
 import useApiFetch from '../../common/hooks/useApiFetch';
@@ -12,6 +12,7 @@ import NotificationModel from './notification/NotificationModel';
 import UserModel from '../../channel/UserModel';
 import EmptyList from '../../common/components/EmptyList';
 import NotificationPlaceHolder from './notification/NotificationPlaceHolder';
+import MText from '../../common/components/MText';
 
 type PropsType = {
   navigation?: any;
@@ -66,16 +67,11 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
     limit: 15,
     offset: notifications.offset,
   };
-  const {
-    result,
-    error,
-    loading,
-    fetch,
-    setResult,
-  } = useApiFetch<NotificationList>('api/v3/notifications/list', {
-    params,
-    updateState,
-  });
+  const { result, error, loading, fetch, setResult } =
+    useApiFetch<NotificationList>('api/v3/notifications/list', {
+      params,
+      updateState,
+    });
 
   const onFetchMore = () => {
     !loading &&
@@ -137,12 +133,12 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
     if (error && !loading) {
       console.log(error);
       return (
-        <Text style={errorStyle} onPress={() => fetch()}>
+        <MText style={errorStyle} onPress={() => fetch()}>
           {i18n.t('cantReachServer') + '\n'}
-          <Text style={[theme.colorLink, theme.marginTop2x]}>
+          <MText style={[theme.colorLink, theme.marginTop2x]}>
             {i18n.t('tryAgain')}
-          </Text>
-        </Text>
+          </MText>
+        </MText>
       );
     }
 

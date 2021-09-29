@@ -1,7 +1,7 @@
 import { inject, observer } from 'mobx-react';
 import React, { Component } from 'react';
 
-import { Alert, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { Alert, SafeAreaView, StyleSheet, View } from 'react-native';
 
 import { Icon } from 'react-native-elements';
 import FastImage, { Source } from 'react-native-fast-image';
@@ -28,6 +28,7 @@ import { AppStackParamList } from '../navigation/NavigationTypes';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { ComponentsStyle } from '../styles/Components';
+import MText from '../common/components/MText';
 
 type BlogScreenRouteProp = RouteProp<AppStackParamList, 'BlogView'>;
 type BlogScreenNavigationProp = StackNavigationProp<
@@ -172,7 +173,7 @@ export default class BlogsViewScreen extends Component<PropsType> {
           resizeMode={FastImage.resizeMode.cover}
           style={styles.image}
         />
-        <Text style={styles.title}>{blog.title}</Text>
+        <MText style={styles.title}>{blog.title}</MText>
         <View style={styles.ownerBlockContainer}>
           <OwnerBlock
             entity={blog}
@@ -185,9 +186,9 @@ export default class BlogsViewScreen extends Component<PropsType> {
                 />
               </View>
             }>
-            <Text style={[styles.timestamp, theme.colorSecondaryText]}>
+            <MText style={[styles.timestamp, theme.colorSecondaryText]}>
               {i18n.date(parseInt(blog.time_created, 10) * 1000)}
-            </Text>
+            </MText>
           </OwnerBlock>
         </View>
         {actions}
@@ -208,7 +209,7 @@ export default class BlogsViewScreen extends Component<PropsType> {
             {Boolean(blog.getLicenseText()) && (
               <Icon style={theme.colorIcon} size={18} name="public" />
             )}
-            <Text
+            <MText
               style={[
                 theme.fontXS,
                 theme.paddingLeft,
@@ -216,7 +217,7 @@ export default class BlogsViewScreen extends Component<PropsType> {
                 theme.paddingRight2x,
               ]}>
               {blog.getLicenseText()}
-            </Text>
+            </MText>
             <Icon
               style={theme.colorLink}
               size={20}
@@ -308,10 +309,10 @@ export default class BlogsViewScreen extends Component<PropsType> {
               style={ComponentsStyle.logo}
               source={require('../assets/logos/logo.png')}
             />
-            <Text style={[theme.fontL, theme.colorAlert]}>
+            <MText style={[theme.fontL, theme.colorAlert]}>
               {i18n.t('blogs.error')}
-            </Text>
-            <Text style={[theme.fontM]}>{i18n.t('activity.tryAgain')}</Text>
+            </MText>
+            <MText style={[theme.fontM]}>{i18n.t('activity.tryAgain')}</MText>
           </View>
         )}
       </View>

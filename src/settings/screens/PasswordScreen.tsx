@@ -1,9 +1,8 @@
 import React, { useCallback } from 'react';
-import { KeyboardAvoidingView } from 'react-native';
+import { KeyboardAvoidingView, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import { observer, useLocalStore } from 'mobx-react';
-import { View, Text } from 'react-native-animatable';
 
 import Input from '../../common/components/Input';
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -16,6 +15,7 @@ import isIphoneX from '../../common/helpers/isIphoneX';
 import PasswordValidator from '../../common/components/password-input/PasswordValidator';
 import { isUserError } from '../../common/UserError';
 import { showNotification } from '../../../AppMessages';
+import MText from '../../common/components/MText';
 
 export default observer(function () {
   const theme = ThemedStyles.style;
@@ -121,11 +121,11 @@ export default observer(function () {
    */
   navigation.setOptions({
     headerRight: () => (
-      <Text
+      <MText
         onPress={confirmPassword}
         style={[theme.colorLink, theme.fontL, theme.bold]}>
         {i18n.t('save')}
-      </Text>
+      </MText>
     ),
   });
 

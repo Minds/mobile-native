@@ -1,12 +1,6 @@
 import React, { useCallback } from 'react';
 import _ from 'lodash';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
+import { View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { observer } from 'mobx-react';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -14,6 +8,7 @@ import ThemedStyles from '../styles/ThemedStyles';
 import TopBar from './TopBar';
 import i18n from '../common/services/i18n.service';
 import NavigationService from '../navigation/NavigationService';
+import MText from '../common/components/MText';
 
 /**
  * Nsfw Option
@@ -28,10 +23,10 @@ const NsfwOption = props => {
     <TouchableOpacity
       style={[styles.optsRow, ThemedStyles.style.bcolorPrimaryBorder]}
       onPress={onSelect}>
-      <Text
+      <MText
         style={[ThemedStyles.style.flexContainer, ThemedStyles.style.fontL]}>
         {props.option.label}
-      </Text>
+      </MText>
       {props.option.selected && (
         <MIcon
           name="check"
@@ -65,7 +60,7 @@ export default observer(function (props) {
         onPressBack={NavigationService.goBack}
         store={store}
       />
-      <Text
+      <MText
         style={[
           theme.paddingVertical3x,
           theme.colorSecondaryText,
@@ -73,10 +68,10 @@ export default observer(function (props) {
           theme.paddingHorizontal3x,
         ]}>
         {i18n.t('nsfw.description1') + '\n\n' + i18n.t('nsfw.description2')}
-      </Text>
+      </MText>
 
       <ScrollView style={styles.body}>
-        <Text
+        <MText
           style={[
             theme.paddingVertical4x,
             theme.colorTertiaryText,
@@ -84,11 +79,11 @@ export default observer(function (props) {
             theme.paddingHorizontal3x,
           ]}>
           {i18n.t('nsfw.safe').toUpperCase()}
-        </Text>
+        </MText>
         <View style={styles.optsContainer}>
           <NsfwOption option={options[0]} store={store} />
         </View>
-        <Text
+        <MText
           style={[
             theme.paddingVertical4x,
             theme.colorTertiaryText,
@@ -96,7 +91,7 @@ export default observer(function (props) {
             theme.paddingHorizontal3x,
           ]}>
           {i18n.t('nsfw.categories').toUpperCase()}
-        </Text>
+        </MText>
         <View style={styles.optsContainer}>
           {options.slice(1).map(o => (
             <NsfwOption option={o} store={store} />

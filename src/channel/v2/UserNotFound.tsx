@@ -1,7 +1,8 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { withErrorBoundary } from '../../common/components/ErrorBoundary';
+import MText from '../../common/components/MText';
 import i18nService from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import ChannelTopBar from './ChannelTopBar';
@@ -19,10 +20,10 @@ const UserNotFound = props => {
           size={50}
           color={ThemedStyles.getColor('PrimaryText')}
         />
-        <Text style={[theme.fontLM, theme.bold, theme.textCenter]}>
+        <MText style={[theme.fontLM, theme.bold, theme.textCenter]}>
           {i18nService.t('channel.notExist') + '\n'}@
           {params.guid || params.username}
-        </Text>
+        </MText>
       </View>
     </View>
   );

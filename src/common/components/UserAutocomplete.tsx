@@ -101,7 +101,9 @@ export default class UserAutocomplete extends PureComponent<PropsType> {
       ? this.state.users.map((user, i) => {
           return (
             <View style={[style.tags, theme.bgTertiaryBackground]} key={i}>
-              <Text onPress={() => this.selectTag(user)}>@{user.username}</Text>
+              <MText onPress={() => this.selectTag(user)}>
+                @{user.username}
+              </MText>
             </View>
           );
         })

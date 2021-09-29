@@ -1,12 +1,6 @@
 import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  SectionList,
-  SectionListData,
-} from 'react-native';
+import { View, StyleSheet, SectionList, SectionListData } from 'react-native';
 import { ComponentsStyle } from '../../../styles/Components';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { useNavigation } from '@react-navigation/native';
@@ -15,6 +9,9 @@ import DiscoveryV2Store, { TDiscoveryTagsTag } from '../DiscoveryV2Store';
 import i18n from '../../../common/services/i18n.service';
 import MenuItem from '../../../common/components/menus/MenuItem';
 import { withErrorBoundary } from '../../../common/components/ErrorBoundary';
+import DiscoveryTagsManager from './DiscoveryTagsManager';
+import type { BottomSheetModal } from '@gorhom/bottom-sheet';
+import MText from '../../../common/components/MText';
 
 interface Props {
   type: 'your' | 'trending';
@@ -33,6 +30,7 @@ const keyExtractor = item => String(item.value);
 export const DiscoveryTagsList = withErrorBoundary(
   observer(({ plus, store, type }: Props) => {
     const navigation = useNavigation<StackNavigationProp<any>>();
+    const ref = React.useRef<BottomSheetModal>();
 
     useEffect(() => {
       store.loadTags(plus);
@@ -45,9 +43,9 @@ export const DiscoveryTagsList = withErrorBoundary(
         <View>
           <View style={ComponentsStyle.emptyComponentContainer}>
             <View style={ComponentsStyle.emptyComponent}>
-              <Text style={ComponentsStyle.emptyComponentMessage}>
+              <MText style={ComponentsStyle.emptyComponentMessage}>
                 {i18n.t('discovery.nothingToSee')}
-              </Text>
+              </MText>
             </View>
           </View>
         </View>
@@ -72,9 +70,9 @@ export const DiscoveryTagsList = withErrorBoundary(
               }),
             title: (
               <>
-                <Text style={styles.title}>#{item.value}</Text>
+                <MText style={styles.title}>#{item.value}</MText>
                 {(postsCount !== '' || votesCount !== '') && (
-                  <Text
+                  <MText
                     style={[
                       theme.colorSecondaryText,
                       theme.fontM,
@@ -83,7 +81,7 @@ export const DiscoveryTagsList = withErrorBoundary(
                     {`\n${postsCount || ''} ${
                       postsCount && votesCount ? '·' : ''
                     } ${votesCount || ''}`}
-                  </Text>
+                  </MText>
                 )}
               </>
             ),
@@ -108,11 +106,12 @@ export const DiscoveryTagsList = withErrorBoundary(
             ThemedStyles.style.padding4x,
           ]}>
           <View style={ThemedStyles.style.flexContainer} />
-          <Text
-            onPress={() => store.setShowManageTags(true)}
+          <MText
+            onPress={() => ref.current?.present()}
             style={[ThemedStyles.style.colorTertiaryText]}>
             Manage Tags
-          </Text>
+          </MText>
+          <DiscoveryTagsManager ref={ref} />
         </View>
       );
     };

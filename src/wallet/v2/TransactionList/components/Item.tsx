@@ -5,11 +5,12 @@ import {
   currencyType,
 } from '../TransactionsListTypes';
 import ThemedStyles from '../../../../styles/ThemedStyles';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { AvatarIcon, DeltaIcon } from './Icons';
 import { Avatar } from 'react-native-elements';
 import i18n from '../../../../common/services/i18n.service';
 import capitalize from '../../../../common/helpers/capitalize';
+import MText from '../../../../common/components/MText';
 
 const Item = ({ entity, navigation, currency }: ItemPropsType) => {
   const theme = ThemedStyles.style;
@@ -26,14 +27,14 @@ const Item = ({ entity, navigation, currency }: ItemPropsType) => {
       {avatar}
       <View style={theme.flexColumn}>
         {typeString}
-        <Text style={[...secondaryText, theme.marginTop]}>
+        <MText style={[...secondaryText, theme.marginTop]}>
           {i18n.date(entity.timestamp, 'time')}
-        </Text>
+        </MText>
       </View>
       <View style={theme.flexColumn}>
         <View style={[theme.rowJustifyEnd, theme.alignCenter]}>
           <DeltaIcon delta={entity.delta} />
-          <Text style={theme.colorPrimaryText}>{entity.amount}</Text>
+          <MText style={theme.colorPrimaryText}>{entity.amount}</MText>
         </View>
       </View>
     </View>
@@ -70,46 +71,48 @@ const getTypeStringAndIcon = (
     case 'reward':
       avatar = <AvatarIcon name="star-outline" />;
       typeString = (
-        <Text style={textColor}>
+        <MText style={textColor}>
           {entity.reward_type
             ? `${capitalize(entity.reward_type)} Reward`
             : i18n.t('wallet.transactions.mindsReward')}
-        </Text>
+        </MText>
       );
       break;
     case 'boost':
       avatar = <AvatarIcon name="trending-up" />;
       typeString = (
-        <Text style={textColor}>{`${getTypeLabel(
+        <MText style={textColor}>{`${getTypeLabel(
           entity.contract,
           currency,
-        )}ed Content`}</Text>
+        )}ed Content`}</MText>
       );
       break;
     case 'purchase':
       avatar = <AvatarIcon name="cart" />;
-      typeString = <Text style={textColor}>{i18n.t('purchase')}</Text>;
+      typeString = <MText style={textColor}>{i18n.t('purchase')}</MText>;
       break;
     case 'withdraw':
       avatar = <AvatarIcon name="arrow-right" />;
       typeString = (
-        <Text style={textColor}>{getTypeLabel(entity.contract, currency)}</Text>
+        <MText style={textColor}>
+          {getTypeLabel(entity.contract, currency)}
+        </MText>
       );
       break;
     case 'payout':
       avatar = <AvatarIcon name="arrow-right" />;
       typeString = (
-        <Text style={textColor}>
+        <MText style={textColor}>
           {i18n.t('wallet.transactions.payoutsFilter')}
-        </Text>
+        </MText>
       );
       break;
     case 'pro_earning':
       avatar = <AvatarIcon name="arrow-right" />;
       typeString = (
-        <Text style={textColor}>
+        <MText style={textColor}>
           {i18n.t('wallet.transactions.payoutsFilter')}
-        </Text>
+        </MText>
       );
       break;
     case 'wire':
@@ -127,27 +130,27 @@ const getTypeStringAndIcon = (
         />
       );
       typeString = (
-        <Text>
-          <Text style={textColor}>{`${getTypeLabel(
+        <MText>
+          <MText style={textColor}>{`${getTypeLabel(
             entity.contract,
             currency,
-          )} ${otherUser.isSender ? 'from ' : 'to '}`}</Text>
-          <Text
+          )} ${otherUser.isSender ? 'from ' : 'to '}`}</MText>
+          <MText
             style={theme.colorLink}
             onPress={() =>
               navigation.push('Channel', { username: otherUser.username })
             }>
             {'@' + otherUser.username}
-          </Text>
-        </Text>
+          </MText>
+        </MText>
       );
       break;
     default:
       avatar = <AvatarIcon name="arrow-right" />;
       typeString = (
-        <Text style={textColor}>
+        <MText style={textColor}>
           {i18n.t('wallet.transactions.transaction')}
-        </Text>
+        </MText>
       );
       break;
   }

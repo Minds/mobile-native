@@ -48,7 +48,6 @@ import AppInitManager from './AppInitManager';
 import { ScreenHeightProvider } from './src/common/components/KeyboardSpacingView';
 import { WCContextProvider } from './src/blockchain/v2/walletconnect/WalletConnectContext';
 import analyticsService from './src/common/services/analytics.service';
-
 YellowBox.ignoreWarnings(['']);
 
 const appInitManager = new AppInitManager();
@@ -60,9 +59,6 @@ if (
 ) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
-
-require('intl');
-require('intl/locale-data/jsonp/en');
 
 type State = {
   appState: string;
@@ -98,20 +94,6 @@ class App extends Component<Props, State> {
   constructor(props) {
     super(props);
     Orientation.lockToPortrait();
-
-    // workaround to set default font;
-
-    let oldRender = Text.render;
-    Text.render = function (...args) {
-      let origin = oldRender.call(this, ...args);
-      return React.cloneElement(origin, {
-        style: [
-          ThemedStyles.style.colorPrimaryText,
-          { fontFamily: 'Roboto' },
-          origin.props.style,
-        ],
-      });
-    };
 
     if (!RefreshControl.defaultProps) {
       RefreshControl.defaultProps = {};

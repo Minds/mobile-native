@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Platform, Text } from 'react-native';
+import { View, Platform } from 'react-native';
 import BoxShadow from '../../common/components/BoxShadow';
 import InputContainer from '../../common/components/InputContainer';
 import i18n from '../../common/services/i18n.service';
@@ -11,6 +11,7 @@ import { observer } from 'mobx-react-lite';
 import sessionService from '../../common/services/session.service';
 import FastImage from 'react-native-fast-image';
 import UserModel from '../../channel/UserModel';
+import MText from '../../common/components/MText';
 
 type PropsType = {
   localStore: LoginStore;
@@ -45,12 +46,12 @@ const LoginInputs = observer(
           style={stylesLocal.avatar}
         />
         <View style={stylesLocal.nameContainer}>
-          <Text style={stylesLocal.name}>{user.name}</Text>
-          <Text
+          <MText style={stylesLocal.name}>{user.name}</MText>
+          <MText
             style={stylesLocal.username}
             testID={`username${user.username}`}>
             @{user.username}
-          </Text>
+          </MText>
         </View>
       </View>
     ) : (

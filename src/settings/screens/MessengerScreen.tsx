@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
 import Switch from 'react-native-switch-pro';
@@ -7,6 +7,7 @@ import settingsService from '../SettingsService';
 import CenteredLoading from '../../common/components/CenteredLoading';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
+import MText from '../../common/components/MText';
 
 export default function () {
   const theme = ThemedStyles.style;
@@ -66,11 +67,11 @@ export default function () {
         theme.paddingTop4x,
       ]}>
       <View style={rowStyle}>
-        <Text style={textStyle}>{i18n.t('messenger.allowContact')}</Text>
+        <MText style={textStyle}>{i18n.t('messenger.allowContact')}</MText>
         <Switch value={allowUnsubscribedContact} onSyncPress={save} />
       </View>
       <TouchableOpacity style={rowStyle} onPress={navToMessengerSetup}>
-        <Text style={textStyle}>{i18n.t('messenger.messengerRekey')}</Text>
+        <MText style={textStyle}>{i18n.t('messenger.messengerRekey')}</MText>
         <Icon
           name="chevron-right"
           size={24}

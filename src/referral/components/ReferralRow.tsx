@@ -1,8 +1,9 @@
 import moment from 'moment';
 import React, { useCallback } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import UserModel from '../../channel/UserModel';
+import MText from '../../common/components/MText';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { Prospect, ReferralsEntity } from '../ReferralTypes';
@@ -21,10 +22,10 @@ const ReferralRow = ({ referral, onPress }: ReferralRowProps) => {
     return user.getAvatarSource('small');
   }, []);
 
-  const _onPress = useCallback(() => onPress(referral.prospect), [
-    onPress,
-    referral,
-  ]);
+  const _onPress = useCallback(
+    () => onPress(referral.prospect),
+    [onPress, referral],
+  );
 
   return (
     <View
@@ -39,17 +40,17 @@ const ReferralRow = ({ referral, onPress }: ReferralRowProps) => {
           style={[styles.avatar, theme.marginRight2x]}
         />
         <View>
-          <Text style={[theme.colorLink, theme.fontL]}>
+          <MText style={[theme.colorLink, theme.fontL]}>
             {`@${referral.prospect.username}`}
-          </Text>
-          <Text style={[theme.colorTertiaryText, theme.fontS]}>
+          </MText>
+          <MText style={[theme.colorTertiaryText, theme.fontS]}>
             {i18n.t('referrals.signedUpOn')}{' '}
             {moment(referral.register_timestamp).format('YYYY/MM/DD')}
-          </Text>
+          </MText>
         </View>
       </TouchableOpacity>
       <View style={[theme.flexColumnCentered]}>
-        <Text style={[theme.colorTertiaryText]}>{referral.state}</Text>
+        <MText style={[theme.colorTertiaryText]}>{referral.state}</MText>
       </View>
       <View style={[theme.flexColumnCentered]}>
         <PingButton

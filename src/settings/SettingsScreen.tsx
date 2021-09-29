@@ -1,11 +1,37 @@
 //@ts-nocheck
 import React, { useCallback } from 'react';
-import { Linking, ScrollView, Text, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
+import { showMessage } from 'react-native-flash-message';
 import AuthService from '../auth/AuthService';
 import MenuItem from '../common/components/menus/MenuItem';
+import { isNetworkError } from '../common/services/api.service';
 import i18n from '../common/services/i18n.service';
+import openUrlService from '../common/services/open-url.service';
 import sessionService from '../common/services/session.service';
+import apiService from '../common/services/api.service';
 import ThemedStyles from '../styles/ThemedStyles';
+import MText from '../common/components/MText';
+
+/**
+ * Retrieves the link & jwt for zendesk and navigate to it.
+ */
+const navigateToHelp = async () => {
+  try {
+    const response = await apiService.get('api/v3/helpdesk/zendesk', {
+      returnUrl: 'true',
+    });
+    if (response && response.url) {
+      openUrlService.openLinkInInAppBrowser(unescape(response.url));
+    }
+  } catch (err) {
+    console.log(err);
+    if (isNetworkError(err)) {
+      showMessage(i18n.t('errorMessage'));
+    } else {
+      showMessage(i18n.t('cantReachServer'));
+    }
+  }
+};
 
 export default function ({ navigation }) {
   const theme = ThemedStyles.style;
@@ -112,7 +138,7 @@ export default function ({ navigation }) {
 
   const logOut = {
     title: i18n.t('settings.logout'),
-    onPress: AuthService.logout,
+    onPress: () => AuthService.logout(),
     icon: {
       name: 'login-variant',
       type: 'material-community',
@@ -128,7 +154,7 @@ export default function ({ navigation }) {
 
   const help = {
     title: i18n.t('help'),
-    onPress: () => Linking.openURL('https://www.minds.com/help'),
+    onPress: navigateToHelp,
     icon: {
       name: 'help-circle-outline',
       type: 'material-community',
@@ -139,10 +165,10 @@ export default function ({ navigation }) {
     <ScrollView
       style={[theme.flexContainer, theme.bgPrimaryBackground]}
       contentContainerStyle={theme.paddingBottom4x}>
-      <Text
+      <MText
         style={[theme.titleText, theme.paddingLeft4x, theme.paddingVertical2x]}>
         {i18n.t('moreScreen.settings')}
-      </Text>
+      </MText>
       <View style={[innerWrapper, theme.bgPrimaryBackground]}>
         {items.map(item => (
           <MenuItem item={item} />

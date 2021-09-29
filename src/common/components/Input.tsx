@@ -1,7 +1,6 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 import {
-  Text,
   View,
   StyleSheet,
   TouchableOpacity,
@@ -12,8 +11,8 @@ import DateTimePicker from 'react-native-modal-datetime-picker';
 import InfoPopup from './InfoPopup';
 
 import ThemedStyles from '../../styles/ThemedStyles';
-import PhoneValidationComponent from './phoneValidation/PhoneValidationComponent';
 import TextInput from './TextInput';
+import MText from './MText';
 
 export interface PropsType extends TextInputProps {
   TFA?: any;
@@ -132,23 +131,6 @@ export default class Input extends Component<PropsType> {
   };
 
   /**
-   * Phone input
-   */
-  phoneInput = () => {
-    const theme = ThemedStyles.style;
-    return (
-      <PhoneValidationComponent
-        style={[theme.input, this.props.style]}
-        textStyle={theme.colorPrimaryText}
-        onFocus={this.props.onFocus}
-        onBlur={this.props.onBlur}
-        TFA={this.props.TFA}
-        TFAConfirmed={this.props.TFAConfirmed}
-      />
-    );
-  };
-
-  /**
    * Date input
    */
   dateInput = () => {
@@ -166,7 +148,7 @@ export default class Input extends Component<PropsType> {
           underlineColorAndroid="transparent"
           placeholder=""
           onPress={this.showDatePicker}>
-          <Text style={theme.colorPrimaryText}>{this.props.value}</Text>
+          <MText style={theme.colorPrimaryText}>{this.props.value}</MText>
         </TouchableOpacity>
         <DateTimePicker
           isVisible={this.state.datePickerVisible}
@@ -190,8 +172,6 @@ export default class Input extends Component<PropsType> {
       switch (inputType) {
         case 'textInput':
           return this.textInput();
-        case 'phoneInput':
-          return this.phoneInput();
         case 'dateInput':
           return this.dateInput();
       }
@@ -205,29 +185,29 @@ export default class Input extends Component<PropsType> {
   render() {
     const theme = ThemedStyles.style;
     const optional = this.props.optional ? (
-      <Text style={[styles.optional, theme.colorSecondaryText]}>
+      <MText style={[styles.optional, theme.colorSecondaryText]}>
         {'Optional'}
-      </Text>
+      </MText>
     ) : null;
 
     return (
       <View style={styles.container}>
         <View>
           <View style={theme.rowStretch}>
-            <Text
+            <MText
               style={[
                 styles.label,
                 theme.colorSecondaryText,
                 this.props.labelStyle,
               ]}>
               {this.props.placeholder}
-            </Text>
+            </MText>
             {this.props.info && <InfoPopup info={this.props.info} />}
             {!!this.props.error && (
               <View style={styles.errorContainer}>
-                <Text style={[theme.colorAlert, theme.fontL, theme.textRight]}>
+                <MText style={[theme.colorAlert, theme.fontL, theme.textRight]}>
                   {this.props.error}
-                </Text>
+                </MText>
               </View>
             )}
           </View>

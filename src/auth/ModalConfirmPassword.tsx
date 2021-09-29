@@ -1,7 +1,6 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 import {
-  Text,
   View,
   TextInput,
   Button,
@@ -17,6 +16,7 @@ import authService from '../auth/AuthService';
 import { ComponentsStyle } from '../styles/Components';
 import ThemedStyles from '../styles/ThemedStyles';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import MText from '../common/components/MText';
 
 type PropsType = {
   onSuccess: Function;
@@ -50,7 +50,7 @@ export default class ModalConfirmPassword extends Component<PropsType> {
   render() {
     const CS = ThemedStyles.style;
     const msg = this.state.error ? (
-      <Text style={styles.error}>{i18n.t('auth.invalidPassword')}</Text>
+      <MText style={styles.error}>{i18n.t('auth.invalidPassword')}</MText>
     ) : null;
     return (
       <Modal
@@ -63,12 +63,12 @@ export default class ModalConfirmPassword extends Component<PropsType> {
             behavior={Platform.OS === 'ios' ? 'padding' : null}>
             {msg}
             <View style={styles.textCotainer}>
-              <Text>{i18n.t('auth.confirmpassword')}</Text>
-              <Text
+              <MText>{i18n.t('auth.confirmpassword')}</MText>
+              <MText
                 style={[CS.colorSecondaryText, CS.textRight]}
                 onPress={this.props.close}>
                 {i18n.t('close')}
-              </Text>
+              </MText>
             </View>
             <TextInput
               style={[ComponentsStyle.loginInput, CS.marginTop2x]}

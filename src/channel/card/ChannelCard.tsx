@@ -1,9 +1,10 @@
 //@ts-nocheck
 import { observer } from 'mobx-react';
 import React, { Component } from 'react';
-
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
+
+import MText from '../../common/components/MText';
 import SmartImage from '../../common/components/SmartImage';
 
 /**
@@ -33,8 +34,8 @@ export default class ChannelCard extends Component {
         <View style={styles.headertextcontainer}>
           <View style={styles.namecontainer}>
             <View style={styles.namecol}>
-              <Text style={styles.name}>{channel.name.toUpperCase()}</Text>
-              <Text style={styles.username}>@{channel.username}</Text>
+              <MText style={styles.name}>{channel.name.toUpperCase()}</MText>
+              <MText style={styles.username}>@{channel.username}</MText>
             </View>
           </View>
         </View>

@@ -30,7 +30,7 @@ export default class TransparentButton extends Component {
     let submitContent;
     if (typeof title === 'string') {
       submitContent = (
-        <Text
+        <MText
           style={[
             ThemedStyles.style.paddingHorizontal,
             styles.buttonText,
@@ -39,7 +39,7 @@ export default class TransparentButton extends Component {
             !!disabled && { color: disabledColor || '#aaa' },
           ]}>
           {title}
-        </Text>
+        </MText>
       );
     } else {
       submitContent = title;

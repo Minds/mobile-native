@@ -1,12 +1,5 @@
 import React, { useCallback } from 'react';
-import _ from 'lodash';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
+import { View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { observer } from 'mobx-react';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -15,6 +8,7 @@ import TopBar from './TopBar';
 import i18n from '../common/services/i18n.service';
 import NavigationService from '../navigation/NavigationService';
 import { ACCESS } from '../common/services/list-options.service';
+import MText from '../common/components/MText';
 
 /**
  * Option
@@ -29,10 +23,10 @@ const Option = props => {
     <TouchableOpacity
       style={[styles.optsRow, ThemedStyles.style.bcolorPrimaryBorder]}
       onPress={onSelect}>
-      <Text
+      <MText
         style={[ThemedStyles.style.flexContainer, ThemedStyles.style.fontL]}>
         {props.option.text}
-      </Text>
+      </MText>
       {props.selected && (
         <MIcon
           name="check"

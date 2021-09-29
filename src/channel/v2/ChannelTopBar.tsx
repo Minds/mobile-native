@@ -3,7 +3,6 @@ import {
   Image,
   Platform,
   SafeAreaView,
-  Text,
   TextInput,
   TouchableOpacity,
 } from 'react-native';
@@ -24,6 +23,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import MText from '../../common/components/MText';
 
 const BLURRED_BANNER_BACKGROUND = true;
 
@@ -70,8 +70,12 @@ const ChannelTopBar = observer(
     const theme = ThemedStyles.style;
     const insets = useSafeAreaInsets();
     const cleanTop = insets.top ? { paddingTop: insets.top } : null;
-    const hiddenChannelButtons = useRef(['edit', 'join', 'subscribe', 'boost'])
-      .current;
+    const hiddenChannelButtons = useRef([
+      'edit',
+      'join',
+      'subscribe',
+      'boost',
+    ]).current;
     /**
      * shows and hides the background with animation based
      * on the {withBg} prop
@@ -204,9 +208,9 @@ const ChannelTopBar = observer(
             />
           )}
           <SafeAreaView style={styles.nameWrapper}>
-            <Text style={nameStyles} numberOfLines={1}>
+            <MText style={nameStyles} numberOfLines={1}>
               {store?.channel?.name}
-            </Text>
+            </MText>
           </SafeAreaView>
         </Animated.View>
         <SmallCircleButton

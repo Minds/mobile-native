@@ -1,13 +1,6 @@
 import React, { Fragment, useEffect } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
-import {
-  View,
-  StyleSheet,
-  Text,
-  ScrollView,
-  Alert,
-  Platform,
-} from 'react-native';
+import { View, StyleSheet, ScrollView, Alert, Platform } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import HeaderComponent from '../../common/components/HeaderComponent';
@@ -24,6 +17,7 @@ import toFriendlyCrypto from '../../common/helpers/toFriendlyCrypto';
 import useWalletConnect from '../../blockchain/v2/walletconnect/useWalletConnect';
 import { WCStore } from '../../blockchain/v2/walletconnect/WalletConnectContext';
 import { storages } from '../../common/services/storage/storages.service';
+import MText from '../../common/components/MText';
 
 const isIos = Platform.OS === 'ios';
 
@@ -195,15 +189,15 @@ const FabScreen = observer(({ route, navigation }) => {
               style={[styles.backIcon, theme.colorIcon]}
               onPress={navigation.goBack}
             />
-            <Text style={[theme.centered, theme.fontXXL, theme.bold]}>
+            <MText style={[theme.centered, theme.fontXXL, theme.bold]}>
               {i18n.t('channel.fabPay')}
-            </Text>
+            </MText>
           </View>
-          <Text
+          <MText
             style={[theme.centered, theme.bold, theme.paddingRight4x]}
             onPress={store.confirmSend}>
             {i18n.t('channel.fabSend')}
-          </Text>
+          </MText>
         </View>
         <View style={styles.container}>
           <HeaderComponent user={owner} />

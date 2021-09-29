@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { observer, useLocalStore } from 'mobx-react';
 import logService from '../services/log.service';
@@ -10,6 +10,7 @@ import SettingInput from './SettingInput';
 import i18n from '../services/i18n.service';
 import debounce from '../helpers/debounce';
 import Input from './Input';
+import MText from './MText';
 
 type addressType = {
   state?: string;
@@ -159,7 +160,7 @@ const LocationAutoSuggest = observer((props: propsType) => {
                 return null;
               }
               return (
-                <Text
+                <MText
                   onPress={() =>
                     setLocation(value.address.city ?? value.address.state)
                   }
@@ -172,7 +173,7 @@ const LocationAutoSuggest = observer((props: propsType) => {
                   {`${value.address.town ?? ''}${value.address.city ?? ''}, ${
                     value.address.state ?? ''
                   }`}
-                </Text>
+                </MText>
               );
             })
           )}

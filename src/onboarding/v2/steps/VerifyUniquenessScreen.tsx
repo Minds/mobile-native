@@ -30,7 +30,10 @@ export default observer(function VerifyUniquenessScreen() {
     {
       title: i18n.t('onboarding.phoneNumber'),
       screen: 'PhoneValidation',
-      params: {},
+      params: {
+        onConfirm: () => navigation.goBack(),
+        onCancel: () => false,
+      },
     },
     /*{
       title: i18n.t('onboarding.connectWallet'),
@@ -61,8 +64,6 @@ export default observer(function VerifyUniquenessScreen() {
       params: {},
     },*/
   ];
-
-  console.log(otherMapping);
 
   const steps = stepsMapping.map(mappingCallback);
 

@@ -1,8 +1,9 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import UserModel from '../../../channel/UserModel';
 import CenteredLoading from '../../../common/components/CenteredLoading';
+import MText from '../../../common/components/MText';
 import useApiFetch from '../../../common/hooks/useApiFetch';
 import i18n from '../../../common/services/i18n.service';
 import DiscoveryUser from '../../../discovery/DiscoveryUserNew';
@@ -29,14 +30,14 @@ export default observer(function SuggestedChannelsScreen() {
       title={i18n.t('onboarding.subscribeToChannel')}
       onPressBack={NavigationService.goBack}>
       <View style={[theme.flexContainer, theme.paddingHorizontal2x]}>
-        <Text
+        <MText
           style={[
             theme.subTitleText,
             theme.colorPrimaryText,
             theme.paddingHorizontal2x,
           ]}>
           {i18n.t('onboarding.suggestedChannelsDescription')}
-        </Text>
+        </MText>
         <ScrollView style={theme.flexContainer}>
           {suggestions.loading && <CenteredLoading />}
           {suggestions.result?.slice().map((user, index) => (

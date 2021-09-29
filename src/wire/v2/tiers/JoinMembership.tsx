@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
-import { Platform, Text, View } from 'react-native';
+import { Platform, View } from 'react-native';
 import ThemedStyles, {
   useMemoStyle,
   useStyle,
@@ -24,6 +24,7 @@ import MenuItem, {
 } from '../../../common/components/menus/MenuItem';
 import { showNotification } from '../../../../AppMessages';
 import WireStore from '../../WireStore';
+import MText from '../../../common/components/MText';
 
 const isIos = Platform.OS === 'ios';
 
@@ -229,31 +230,33 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
   if (store.payMethod === 'usd') {
     if (store.currentTier?.has_usd) {
       costText = (
-        <Text style={styles.costTextStyle}>
-          <Text
-            style={theme.colorPrimaryText}>{`$${store.currentTier.usd} `}</Text>
+        <MText style={styles.costTextStyle}>
+          <MText
+            style={
+              theme.colorPrimaryText
+            }>{`$${store.currentTier.usd} `}</MText>
           per month
-        </Text>
+        </MText>
       );
     } else {
-      costText = <Text style={styles.costTextStyle}>Doesn't accept USD</Text>;
+      costText = <MText style={styles.costTextStyle}>Doesn't accept USD</MText>;
     }
   }
 
   if (store.payMethod === 'tokens') {
     if (store.currentTier?.has_tokens) {
       costText = (
-        <Text style={styles.costTextStyle}>
-          <Text
+        <MText style={styles.costTextStyle}>
+          <MText
             style={
               theme.colorPrimaryText
-            }>{`${store.currentTier.tokens} Tokens `}</Text>
+            }>{`${store.currentTier.tokens} Tokens `}</MText>
           per month
-        </Text>
+        </MText>
       );
     } else {
       costText = (
-        <Text style={styles.costTextStyle}>Doesn't accept Tokens</Text>
+        <MText style={styles.costTextStyle}>Doesn't accept Tokens</MText>
       );
     }
   }
@@ -272,10 +275,10 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
           {!isIos && (
             <View style={styles.headerContainer}>
               {store.currentTier?.public && (
-                <Text style={styles.joinTitle}>Join a membership</Text>
+                <MText style={styles.joinTitle}>Join a membership</MText>
               )}
               <View style={theme.flexContainer} />
-              <Text style={switchTextStyle}>USD</Text>
+              <MText style={switchTextStyle}>USD</MText>
               <Switch
                 value={store.payMethod === 'tokens'}
                 onSyncPress={store.setPayMethod}
@@ -285,7 +288,7 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
                 backgroundInactive={ThemedStyles.getColor('TertiaryBackground')}
                 style={theme.marginHorizontal2x}
               />
-              <Text style={switchTextStyle}>{'Tokens'}</Text>
+              <MText style={switchTextStyle}>{'Tokens'}</MText>
             </View>
           )}
           <View style={theme.paddingTop4x}>
@@ -294,9 +297,9 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
           <View style={theme.paddingHorizontal4x}>
             {!!store.currentTier?.description && (
               <View style={styles.descriptionWrapper}>
-                <Text style={styles.descriptionText}>
+                <MText style={styles.descriptionText}>
                   {store.currentTier?.description}
-                </Text>
+                </MText>
               </View>
             )}
             {costText}
@@ -323,9 +326,9 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
                 [store.currentTier?.subscription_urn],
               )}>
               {!!store.currentTier?.subscription_urn && (
-                <Text style={styles.alreadyAMemberText}>
+                <MText style={styles.alreadyAMemberText}>
                   {i18n.t('membership.alreadyMember')}
-                </Text>
+                </MText>
               )}
               <Button
                 action

@@ -7,6 +7,7 @@ import ThemedStyles from '../styles/ThemedStyles';
 import { useNavigation } from '@react-navigation/native';
 import { AppStackParamList } from '../navigation/NavigationTypes';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import MText from '../common/components/MText';
 
 type Props = {
   entity: ActivityModel;
@@ -14,9 +15,8 @@ type Props = {
 
 export const CommentsEntityOutlet = observer((props: Props) => {
   const count = props.entity['comments:count'];
-  const navigation = useNavigation<
-    NativeStackNavigationProp<AppStackParamList>
-  >();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<AppStackParamList>>();
 
   const GoToComments = () => {
     navigation.push('Activity', {
@@ -27,7 +27,7 @@ export const CommentsEntityOutlet = observer((props: Props) => {
 
   const ViewCommentsButton = () => {
     return (
-      <Text
+      <MText
         style={[
           ThemedStyles.style.colorIconActive,
           ThemedStyles.style.paddingHorizontal2x,
@@ -35,7 +35,7 @@ export const CommentsEntityOutlet = observer((props: Props) => {
         ]}
         onPress={() => GoToComments()}>
         View {count} comments
-      </Text>
+      </MText>
     );
   };
 

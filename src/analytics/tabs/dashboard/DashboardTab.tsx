@@ -2,11 +2,12 @@ import { useDimensions } from '@react-native-community/hooks';
 import { observer } from 'mobx-react';
 import moment from 'moment';
 import React, { useCallback, useState } from 'react';
-import { Dimensions, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, TouchableOpacity, View } from 'react-native';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import ActivityIndicator from '../../../common/components/ActivityIndicator';
 import LineChart from '../../../common/components/charts/LineChart';
 import Select from '../../../common/components/controls/Select';
+import MText from '../../../common/components/MText';
 import Selector from '../../../common/components/SelectorV2';
 import useApiFetch from '../../../common/hooks/useApiFetch';
 import i18n from '../../../common/services/i18n.service';
@@ -105,10 +106,10 @@ const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
 
   if (error || dataError) {
     return (
-      <Text style={errorStyle} onPress={fetch}>
+      <MText style={errorStyle} onPress={fetch}>
         {i18n.t('error') + '\n'}
-        <Text style={theme.colorLink}>{i18n.t('tryAgain')}</Text>
-      </Text>
+        <MText style={theme.colorLink}>{i18n.t('tryAgain')}</MText>
+      </MText>
     );
   }
 
@@ -167,7 +168,7 @@ const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
                   color={ThemedStyles.getColor('Icon')}
                   size={18}
                 />
-                <Text style={styles.timeSpanLabel}>{timeSpanLabel}</Text>
+                <MText style={styles.timeSpanLabel}>{timeSpanLabel}</MText>
               </TouchableOpacity>
             </View>
           )}
@@ -186,9 +187,9 @@ const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
                   <TouchableOpacity
                     style={styles.filterTouch}
                     onPress={() => show(_getFilterKey(filter))}>
-                    <Text style={styles.filterText}>
+                    <MText style={styles.filterText}>
                       {_getFilterLabel(filter)}
-                    </Text>
+                    </MText>
                     <MIcon
                       name={'filter-alt'}
                       color={ThemedStyles.getColor('Icon')}

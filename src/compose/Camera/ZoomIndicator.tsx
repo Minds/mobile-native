@@ -8,6 +8,7 @@ import Animated, {
   withDelay,
   withTiming,
 } from 'react-native-reanimated';
+import MText from '../../common/components/MText';
 import ThemedStyles from '../../styles/ThemedStyles';
 
 type PropsType = {
@@ -67,7 +68,7 @@ export default function ZoomIndicator({
       <View style={styles.barStyle}>
         <Animated.View style={animStyle} />
       </View>
-      <Text style={styles.text}>{text}</Text>
+      <MText style={styles.text}>{text}</MText>
     </Animated.View>
   );
 }

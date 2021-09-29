@@ -10,7 +10,6 @@ import {
   FlatList,
   ListRenderItem,
   StyleProp,
-  Text,
   View,
   ViewStyle,
 } from 'react-native';
@@ -19,6 +18,7 @@ import useApiFetch from '../hooks/useApiFetch';
 import i18n from '../services/i18n.service';
 import CenteredLoading from './CenteredLoading';
 import ActivityIndicator from './ActivityIndicator';
+import MText from './MText';
 
 type PropsType = {
   header?: React.ComponentType<any> | React.ReactElement;
@@ -62,27 +62,22 @@ export default observer(
     }
     const map = props.map || mapping;
     const keyExtractor = (item, index: any) => `${item.urn}${index}`;
-    const {
-      result,
-      loading,
-      error,
-      fetch,
-      setResult,
-    } = useApiFetch<ApiFetchType>(props.fetchEndpoint, {
-      params: opts,
-      updateState: (newData: ApiFetchType, oldData: ApiFetchType) =>
-        ({
-          ...newData,
-          [props.endpointData]: [
-            ...(oldData ? oldData[props.endpointData] : []),
-            ...map(
-              newData && newData[props.endpointData]
-                ? newData[props.endpointData]
-                : [],
-            ),
-          ],
-        } as ApiFetchType),
-    });
+    const { result, loading, error, fetch, setResult } =
+      useApiFetch<ApiFetchType>(props.fetchEndpoint, {
+        params: opts,
+        updateState: (newData: ApiFetchType, oldData: ApiFetchType) =>
+          ({
+            ...newData,
+            [props.endpointData]: [
+              ...(oldData ? oldData[props.endpointData] : []),
+              ...map(
+                newData && newData[props.endpointData]
+                  ? newData[props.endpointData]
+                  : [],
+              ),
+            ],
+          } as ApiFetchType),
+      });
     const data = useMemo(() => {
       if (result) {
         return result[props.endpointData].slice();
@@ -153,7 +148,7 @@ export default observer(
 
     if (error && !loading) {
       return (
-        <Text
+        <MText
           style={[
             theme.colorSecondaryText,
             theme.textCenter,
@@ -162,8 +157,8 @@ export default observer(
           ]}
           onPress={() => fetch()}>
           {i18n.t('error') + '\n'}
-          <Text style={theme.colorLink}>{i18n.t('tryAgain')}</Text>
-        </Text>
+          <MText style={theme.colorLink}>{i18n.t('tryAgain')}</MText>
+        </MText>
       );
     }
 

@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import MText from '../../../common/components/MText';
 import i18n from '../../../common/services/i18n.service';
 
 type PropsType = {
@@ -17,9 +18,10 @@ const LockTag = ({ type }: PropsType) => {
     <View style={styles.wrapper}>
       {type !== 'plus' && lockIcon}
       {text && (
-        <Text style={[styles.text, type === 'members' ? styles.spacing : null]}>
+        <MText
+          style={[styles.text, type === 'members' ? styles.spacing : null]}>
           {text}
-        </Text>
+        </MText>
       )}
     </View>
   );

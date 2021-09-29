@@ -3,8 +3,9 @@ import { observer } from 'mobx-react';
 import type ActivityModel from '../../newsfeed/ActivityModel';
 import ThemedStyles from '../../styles/ThemedStyles';
 import IconMa from 'react-native-vector-icons/MaterialIcons';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 import i18nService from '../services/i18n.service';
+import MText from './MText';
 
 // types
 type PropsType = {
@@ -26,11 +27,10 @@ export default class Pinned extends Component<PropsType> {
     return (
       <View style={pinnedContainer}>
         <IconMa name="push-pin" size={15} style={pinnedIconStyle} />
-        <Text>
-          <Text style={theme.colorSecondaryText}>
-            {i18nService.t('pinnedPost')}{' '}
-          </Text>
-        </Text>
+
+        <MText style={theme.colorSecondaryText}>
+          {i18nService.t('pinnedPost')}{' '}
+        </MText>
       </View>
     );
   }

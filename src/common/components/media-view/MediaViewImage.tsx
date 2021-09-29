@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleProp } from 'react-native';
+import { View, TouchableOpacity, StyleProp } from 'react-native';
 import { ImageStyle, ResizeMode, Source } from 'react-native-fast-image';
 import { SharedElement } from 'react-navigation-shared-element';
 import { DATA_SAVER_THUMB_RES } from '../../../config/Config';
@@ -10,6 +10,7 @@ import mediaProxyUrl from '../../helpers/media-proxy-url';
 import i18n from '../../services/i18n.service';
 import DoubleTap from '../DoubleTap';
 import ExplicitImage from '../explicit/ExplicitImage';
+import MText from '../MText';
 
 const DoubleTapTouchable = DoubleTap(TouchableOpacity);
 
@@ -37,11 +38,14 @@ export default function MediaViewImage({
   const [imageLoadFailed, setImageLoadFailed] = React.useState(false);
   const [size, setSize] = React.useState({ height: 0, width: 0 });
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const source = React.useMemo(() => entity.getThumbSource('xlarge'), [
-    entity,
-    //@ts-ignore
-    entity.attachment_guid,
-  ]);
+  const source = React.useMemo(
+    () => entity.getThumbSource('xlarge'),
+    [
+      entity,
+      //@ts-ignore
+      entity.attachment_guid,
+    ],
+  );
   const thumbnail = React.useMemo(
     () =>
       entity.isGif()
@@ -96,17 +100,17 @@ export default function MediaViewImage({
   const imageStyle = useStyle('positionAbsolute', style as Object);
 
   if (imageLoadFailed) {
-    let text = <Text style={errorTextStyle}>{i18n.t('errorMedia')}</Text>;
+    let text = <MText style={errorTextStyle}>{i18n.t('errorMedia')}</MText>;
 
     if (entity.perma_url) {
       text = (
-        <Text style={errorTextStyle}>
+        <MText style={errorTextStyle}>
           The media from{' '}
-          <Text style={ThemedStyles.style.fontMedium}>
+          <MText style={ThemedStyles.style.fontMedium}>
             {domain(entity.perma_url)}
-          </Text>{' '}
+          </MText>{' '}
           could not be loaded.
-        </Text>
+        </MText>
       );
     }
 

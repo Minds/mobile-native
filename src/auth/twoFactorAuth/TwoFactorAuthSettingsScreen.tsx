@@ -1,12 +1,15 @@
 import { useNavigation } from '@react-navigation/native';
 import { observer, useLocalStore } from 'mobx-react';
 import React, { useEffect } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 import MenuItem from '../../common/components/menus/MenuItem';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import createTwoFactorStore, { Options } from './createTwoFactorStore';
 import settingsService from '../../settings/SettingsService';
+import requirePhoneValidation from '../../common/hooks/requirePhoneValidation';
+import { showNotification } from '../../../AppMessages';
+import MText from '../../common/components/MText';
 
 const TwoFactorAuthSettingsScreen = observer(() => {
   const theme = ThemedStyles.style;
@@ -34,17 +37,27 @@ const TwoFactorAuthSettingsScreen = observer(() => {
     },
   ];
 
-  const onConfirmPasswordSuccess = (password: string) => {
+  const onConfirmPasswordSuccess = async (password: string) => {
     const screen =
       localStore.selectedOption === 'app'
         ? 'VerifyAuthAppScreen'
         : localStore.selectedOption === 'sms'
         ? 'VerifyPhoneNumberScreen'
         : 'DisableTFA';
-    navigation.navigate(screen, {
-      store: localStore,
-      password,
-    });
+    if (screen === 'VerifyPhoneNumberScreen') {
+      const response = await requirePhoneValidation(
+        i18n.t('settings.TFAVerifyPhoneDesc1'),
+      );
+      if (response) {
+        navigation.goBack();
+        showNotification(i18n.t('settings.TFAEnabled'));
+      }
+    } else {
+      navigation.navigate(screen, {
+        store: localStore,
+        password,
+      });
+    }
   };
 
   const confirmPassword = () => {
@@ -56,9 +69,9 @@ const TwoFactorAuthSettingsScreen = observer(() => {
 
   return (
     <View>
-      <Text style={[styles.description, theme.colorSecondaryText]}>
+      <MText style={[styles.description, theme.colorSecondaryText]}>
         {i18n.t('settings.TFAdescription')}
-      </Text>
+      </MText>
       {items.map(item => (
         <MenuItem
           item={{
@@ -99,18 +112,18 @@ const ItemTitle = ({ id, enabled }) => {
   return (
     <View style={styles.container}>
       <View style={[theme.rowJustifyStart, theme.marginBottom2x]}>
-        <Text style={styles.title}>
+        <MText style={styles.title}>
           {i18n.t(`settings.TFAOptions.${id}Title`)}
-        </Text>
+        </MText>
         {enabled && (
-          <Text style={[styles.enabled, enabledColors]}>
+          <MText style={[styles.enabled, enabledColors]}>
             {i18n.t('enabled')}
-          </Text>
+          </MText>
         )}
       </View>
-      <Text style={[theme.colorSecondaryText, theme.fontL]}>
+      <MText style={[theme.colorSecondaryText, theme.fontL]}>
         {i18n.t(`settings.TFAOptions.${id}Description`)}
-      </Text>
+      </MText>
     </View>
   );
 };

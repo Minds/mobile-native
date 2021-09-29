@@ -20,6 +20,8 @@ import badgeService from './src/common/services/badge.service';
 import { getStores } from './AppStores';
 import Clipboard from '@react-native-clipboard/clipboard';
 import { migrateLegacyStorage } from './src/common/services/storage/legacyStorageMigrator';
+import experimentsService from './src/common/services/experiments.service';
+import mindsConfigService from './src/common/services/minds-config.service';
 
 /**
  * App initialization manager
@@ -106,6 +108,31 @@ export default class AppInitManager {
    */
   onLogin = async () => {
     const user = sessionService.getUser();
+
+    //we initialize growth book with cached data
+    const settings = mindsConfigService.getSettings();
+    if (settings.experiments && settings.experiments.length > 0) {
+      experimentsService.initGrowthbook(
+        sessionService.getUser(),
+        settings.experiments || [],
+      );
+    }
+    // Update the config for this user
+    mindsConfigService.update().then(() => {
+      // if it changed we initialize growth book again
+      const settingsNew = mindsConfigService.getSettings();
+      if (
+        settingsNew.experiments &&
+        settings.experiments &&
+        JSON.stringify(settingsNew.experiments) !==
+          JSON.stringify(settings.experiments)
+      ) {
+        experimentsService.initGrowthbook(
+          sessionService.getUser(),
+          settingsNew.experiments,
+        );
+      }
+    });
 
     Sentry.configureScope(scope => {
       scope.setUser({ id: user.guid });

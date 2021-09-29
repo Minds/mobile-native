@@ -7,10 +7,11 @@ import {
 } from '../WalletScreen';
 import { WalletStoreType } from '../createWalletStore';
 import { observer } from 'mobx-react';
-import { ScrollView, Text, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import MenuItem from '../../../common/components/menus/MenuItem';
 import MenuSubtitle from '../../../common/components/menus/MenuSubtitle';
+import MText from '../../../common/components/MText';
 
 type PropsType = {
   walletStore: WalletStoreType;
@@ -25,20 +26,20 @@ const BitcoinsTab = observer(({ walletStore, navigation }: PropsType) => {
     <ScrollView>
       {!address && (
         <View style={styles.textContainer}>
-          <Text style={[styles.title, theme.colorPrimaryText]}>
+          <MText style={[styles.title, theme.colorPrimaryText]}>
             {i18n.t('wallet.bitcoins.setup')}
-          </Text>
-          <Text style={[styles.description, theme.colorSecondaryText]}>
+          </MText>
+          <MText style={[styles.description, theme.colorSecondaryText]}>
             {i18n.t('wallet.bitcoins.description')}
-          </Text>
+          </MText>
         </View>
       )}
 
       {address && (
         <MenuSubtitle>
-          <Text style={[styles.menuTitle, theme.colorSecondaryText]}>
+          <MText style={[styles.menuTitle, theme.colorSecondaryText]}>
             {i18n.t('wallet.bitcoins.current')}
-          </Text>
+          </MText>
         </MenuSubtitle>
       )}
 

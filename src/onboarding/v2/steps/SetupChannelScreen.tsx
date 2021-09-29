@@ -4,7 +4,6 @@ import {
   Image,
   ImageSourcePropType,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -26,6 +25,7 @@ import BottomButtonOptions, {
 import { showNotification } from '../../../../AppMessages';
 import sessionService from '../../../common/services/session.service';
 import { DotIndicator } from 'react-native-reanimated-indicators';
+import MText from '../../../common/components/MText';
 const TouchableCustom = withPreventDoubleTap(TouchableOpacity);
 
 /**
@@ -37,9 +37,11 @@ export default observer(function SetupChannelScreen() {
 
   const hasAvatar = user?.hasAvatar();
   const channelStore = useLocalStore(createChannelStore);
-  const avatar = (channelStore.uploading
-    ? { uri: channelStore.avatarPath }
-    : user?.getAvatarSource()) as ImageSourcePropType;
+  const avatar = (
+    channelStore.uploading
+      ? { uri: channelStore.avatarPath }
+      : user?.getAvatarSource()
+  ) as ImageSourcePropType;
 
   const store = useLocalStore(() => ({
     name: user?.name || '',
@@ -128,14 +130,14 @@ export default observer(function SetupChannelScreen() {
               theme.borderBottom,
               theme.bcolorPrimaryBorder,
             ]}>
-            <Text
+            <MText
               style={[
                 theme.fontL,
                 theme.colorSecondaryText,
                 theme.paddingVertical2x,
               ]}>
               Avatar
-            </Text>
+            </MText>
             <TouchableCustom
               onPress={store.showPicker}
               style={[styles.avatar, theme.marginBottom2x]}

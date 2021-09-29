@@ -1,5 +1,5 @@
 import React, { useCallback, useRef } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -8,6 +8,7 @@ import TopBar from './TopBar';
 import i18n from '../common/services/i18n.service';
 import NavigationService from '../navigation/NavigationService';
 import TextInput from '../common/components/TextInput';
+import MText from '../common/components/MText';
 
 /**
  * NSFW selector
@@ -45,7 +46,7 @@ export default observer(function (props) {
         onPressBack={NavigationService.goBack}
         store={store}
       />
-      <Text
+      <MText
         style={[
           theme.paddingVertical6x,
           theme.colorSecondaryText,
@@ -53,13 +54,13 @@ export default observer(function (props) {
           theme.paddingHorizontal3x,
         ]}>
         {i18n.t('capture.paywallDescription')}
-      </Text>
+      </MText>
       <TouchableOpacity
         style={[styles.optsRow, theme.bcolorPrimaryBorder]}
         onPress={onNopaywall}>
-        <Text style={[theme.flexContainer, theme.fontL]}>
+        <MText style={[theme.flexContainer, theme.fontL]}>
           {i18n.t('capture.noPaywall')}
-        </Text>
+        </MText>
         {!isActive && (
           <MIcon name="check" size={23} style={theme.colorPrimaryText} />
         )}
@@ -67,16 +68,16 @@ export default observer(function (props) {
       <TouchableOpacity
         style={[styles.optsRow, theme.bcolorPrimaryBorder]}
         onPress={localStore.showInput}>
-        <Text style={[theme.flexContainer, theme.fontL]}>
+        <MText style={[theme.flexContainer, theme.fontL]}>
           {i18n.t('capture.paywall')}
-        </Text>
+        </MText>
         {isActive && (
           <MIcon name="check" size={23} style={theme.colorPrimaryText} />
         )}
       </TouchableOpacity>
       {(localStore.show || isActive) && (
         <>
-          <Text
+          <MText
             style={[
               theme.fontM,
               theme.colorSecondaryText,
@@ -85,7 +86,7 @@ export default observer(function (props) {
               theme.marginBottom2x,
             ]}>
             {i18n.t('capture.paywallLabel', { currency: 'Tokens' })}
-          </Text>
+          </MText>
           <TextInput
             ref={inputRef}
             style={[
@@ -104,7 +105,7 @@ export default observer(function (props) {
             underlineColorAndroid="transparent"
             testID="TokenInput"
           />
-          {/* <Text
+          {/* <MText
             style={[
               theme.fontM,
               theme.colorSecondaryText,
@@ -113,7 +114,7 @@ export default observer(function (props) {
               theme.marginBottom2x,
             ]}>
             {i18n.t('capture.paywallLabel', { currency: 'USD' })}
-          </Text>
+          </MText>
           <TextInput
             style={[theme.colorPrimaryText, theme.bcolorPrimaryBorder, styles.input]}
             keyboardType="numeric"

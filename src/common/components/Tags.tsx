@@ -3,10 +3,11 @@ import _ from 'lodash';
 
 import React, { PureComponent } from 'react';
 
-import { Text, TextStyle } from 'react-native';
+import { TextStyle } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 
 import openUrlService from '../services/open-url.service';
+import MText from './MText';
 
 export const hashRegex = new RegExp(
   [
@@ -62,16 +63,16 @@ export default class Tags extends PureComponent<PropsType> {
 
       return chunks.map((data, i) => {
         return (
-          <Text selectable={selectable} style={this.props.style} key={i}>
+          <MText selectable={selectable} style={this.props.style} key={i}>
             {data}
-          </Text>
+          </MText>
         );
       });
     } else {
       return (
-        <Text selectable={selectable} style={this.props.style}>
+        <MText selectable={selectable} style={this.props.style}>
           {tags}
-        </Text>
+        </MText>
       );
     }
   }
@@ -99,18 +100,19 @@ export default class Tags extends PureComponent<PropsType> {
    * full url
    */
   parseUrl = str => {
-    const url = /(^|\b)(\b(?:https?|http|ftp):\/\/[-A-Z0-9à-œ+&@#\/%?=~_|!:,.;\(\)]*[-A-Z0-9à-œ+&@#\/%=~_|])/gim;
+    const url =
+      /(^|\b)(\b(?:https?|http|ftp):\/\/[-A-Z0-9à-œ+&@#\/%?=~_|!:,.;\(\)]*[-A-Z0-9à-œ+&@#\/%=~_|])/gim;
 
     return this.replaceRegular(str, url, (i, content) => {
       return (
-        <Text
+        <MText
           key={i}
           style={[this.props.style, ThemedStyles.style.colorLink]}
           onPress={() => {
             this.navToURL(content);
           }}>
           {content}
-        </Text>
+        </MText>
       );
     });
   };
@@ -119,18 +121,19 @@ export default class Tags extends PureComponent<PropsType> {
    * url .com .org .net
    */
   parseShortUrl = str => {
-    const url = /(^|\b)([-A-Z0-9à-œ+&@#\/%?=~_|!:,.;]+\.(?:com|org|net)\/[-A-Z0-9à-œ+&@#\/%=~_|\(\)]*)/gim;
+    const url =
+      /(^|\b)([-A-Z0-9à-œ+&@#\/%?=~_|!:,.;]+\.(?:com|org|net)\/[-A-Z0-9à-œ+&@#\/%=~_|\(\)]*)/gim;
 
     return this.replaceRegular(str, url, (i, content) => {
       return (
-        <Text
+        <MText
           key={i}
           style={[this.props.style, ThemedStyles.style.colorLink]}
           onPress={() => {
             this.navToURL(content);
           }}>
           {content}
-        </Text>
+        </MText>
       );
     });
   };
@@ -139,18 +142,19 @@ export default class Tags extends PureComponent<PropsType> {
    * url starting with www
    */
   parseWwwUrl = str => {
-    const url = /(^|\b)(www\.[-A-Z0-9à-œ+&@#\/%?=~_|!:,.;]*[-A-Z0-9à-œ+&@#\/%=~_|\(\)]*)/gim;
+    const url =
+      /(^|\b)(www\.[-A-Z0-9à-œ+&@#\/%?=~_|!:,.;]*[-A-Z0-9à-œ+&@#\/%=~_|\(\)]*)/gim;
 
     return this.replaceRegular(str, url, (i, content) => {
       return (
-        <Text
+        <MText
           key={i}
           style={[this.props.style, ThemedStyles.style.colorLink]}
           onPress={() => {
             this.navToURL('http://' + content);
           }}>
           {content}
-        </Text>
+        </MText>
       );
     });
   };
@@ -161,14 +165,14 @@ export default class Tags extends PureComponent<PropsType> {
   parseHash = str => {
     return this.replaceRegular(str, hashRegex, (i, content) => {
       return (
-        <Text
+        <MText
           key={i}
           style={[this.props.style, ThemedStyles.style.colorLink]}
           onPress={() => {
             this.navToDiscovery(`#${content}`);
           }}>
           #{content}
-        </Text>
+        </MText>
       );
     });
   };
@@ -176,14 +180,14 @@ export default class Tags extends PureComponent<PropsType> {
   parseCash = str => {
     return this.replaceRegular(str, cashRegex, (i, content) => {
       return (
-        <Text
+        <MText
           key={i}
           style={[this.props.style, ThemedStyles.style.colorLink]}
           onPress={() => {
             this.navToDiscovery(`\$${content}`);
           }}>
           ${content}
-        </Text>
+        </MText>
       );
     });
   };
@@ -196,14 +200,14 @@ export default class Tags extends PureComponent<PropsType> {
 
     return this.replaceRegular(str, hash, (i, content) => {
       return (
-        <Text
+        <MText
           key={i}
           style={[this.props.style, ThemedStyles.style.colorLink]}
           onPress={() => {
             this.navToChannel(content);
           }}>
           @{content}
-        </Text>
+        </MText>
       );
     });
   };
