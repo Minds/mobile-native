@@ -3,7 +3,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { observer, useLocalStore } from 'mobx-react';
 import moment from 'moment-timezone';
 import React, { useRef } from 'react';
-import { View, Text, TextStyle } from 'react-native';
+import { View, TextStyle } from 'react-native';
 import * as Progress from 'react-native-progress';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { showNotification } from '../../../AppMessages';
@@ -13,6 +13,7 @@ import BottomButtonOptions, {
 import CenteredLoading from '../../common/components/CenteredLoading';
 
 import MenuItem from '../../common/components/menus/MenuItem';
+import MText from '../../common/components/MText';
 import { useLegacyStores } from '../../common/hooks/use-stores';
 import i18n from '../../common/services/i18n.service';
 import sessionService from '../../common/services/session.service';
@@ -190,7 +191,7 @@ export default observer(function OnboardingScreen() {
     !progressStore.result && progressStore.loading ? (
       <CenteredLoading />
     ) : progressStore.error ? (
-      <Text
+      <MText
         onPress={progressStore.fetch}
         style={[
           theme.fontXL,
@@ -199,10 +200,10 @@ export default observer(function OnboardingScreen() {
           theme.textCenter,
         ]}>
         {i18n.t('onboarding.couldntLoadStatus') + '\n\n'}
-        <Text style={[theme.fontL, theme.textCenter]}>
+        <MText style={[theme.fontL, theme.textCenter]}>
           {i18n.t('tryAgain')}
-        </Text>
-      </Text>
+        </MText>
+      </MText>
     ) : (
       <>
         <View style={[theme.padding4x, theme.marginVertical2x]}>
@@ -212,11 +213,11 @@ export default observer(function OnboardingScreen() {
               theme.alignCenter,
               theme.marginBottom3x,
             ]}>
-            <Text style={[theme.fontXXL, theme.colorPrimaryText, theme.bold]}>
+            <MText style={[theme.fontXXL, theme.colorPrimaryText, theme.bold]}>
               {progressStore.result?.id === 'OngoingOnboardingGroup'
                 ? i18n.t('onboarding.improveExperience')
                 : i18n.t('onboarding.completeToEarn')}
-            </Text>
+            </MText>
             <Icon
               name="more-vert"
               size={26}

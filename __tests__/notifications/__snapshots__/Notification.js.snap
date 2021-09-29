@@ -74,7 +74,7 @@ exports[`Notifications component renders correctly 1`] = `
         }
       }
     >
-      <Text
+      <MText
         style={
           Array [
             Object {
@@ -324,7 +324,7 @@ exports[`Notifications component renders correctly 1`] = `
           }
         />
          
-      </Text>
+      </MText>
     </View>
     <View
       style={
@@ -336,7 +336,7 @@ exports[`Notifications component renders correctly 1`] = `
         }
       }
     >
-      <Text
+      <MText
         style={
           Array [
             Object {
@@ -353,7 +353,7 @@ exports[`Notifications component renders correctly 1`] = `
         }
       >
         1w
-      </Text>
+      </MText>
     </View>
   </View>
   <Memo()

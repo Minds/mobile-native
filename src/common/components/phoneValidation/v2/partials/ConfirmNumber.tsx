@@ -1,11 +1,12 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { View, Text, TextInput } from 'react-native';
+import { View, TextInput } from 'react-native';
 import { styles } from './InputNumber';
 import usePhoneValidationStore from '../usePhoneValidationStore';
 import i18n from '../../../../services/i18n.service';
 import Button from '../../../Button';
 import ThemedStyles from '../../../../../styles/ThemedStyles';
+import MText from '../../../MText';
 
 type PropsType = {};
 
@@ -13,15 +14,15 @@ const ConfirmNumber = observer(({}: PropsType) => {
   const store = usePhoneValidationStore();
   return (
     <View>
-      <Text style={localStyles.codeSent}>{`${i18n.t('onboarding.codeSent')} ${
+      <MText style={localStyles.codeSent}>{`${i18n.t('onboarding.codeSent')} ${
         store?.phone
-      }`}</Text>
+      }`}</MText>
       <View style={styles.mainContainer}>
-        <Text style={styles.label}>
+        <MText style={styles.label}>
           {i18n.t('onboarding.confirmationCode')}
-        </Text>
+        </MText>
         {Boolean(store?.error) && (
-          <Text style={styles.error}>{store?.error}</Text>
+          <MText style={styles.error}>{store?.error}</MText>
         )}
         <TextInput
           value={store?.code}

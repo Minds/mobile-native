@@ -12,6 +12,7 @@ import {
   RadioButton,
   SectionTitle,
 } from '../../../../common/components/bottom-sheet';
+import MText from '../../../../common/components/MText';
 
 const filters: Array<{ id: transactionTypes; title: string }> = [
   { id: 'all', title: 'allFilter' },
@@ -58,7 +59,7 @@ const Filter = observer((props: PropsType) => {
         onPress={show}
         testID="FilterToggle">
         <MdIcon name="filter" size={18} style={ThemedStyles.style.colorIcon} />
-        <Text style={itemStyle}>{i18n.t('filter')}</Text>
+        <MText style={itemStyle}>{i18n.t('filter')}</MText>
       </TouchableOpacity>
       <BottomSheet
         ref={ref}

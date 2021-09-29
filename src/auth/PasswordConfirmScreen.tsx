@@ -9,7 +9,6 @@ import {
   Platform,
   SafeAreaView,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -19,6 +18,7 @@ import InputContainer from '../common/components/InputContainer';
 import { icon } from './styles';
 import authService from './AuthService';
 import NavigationService from '../navigation/NavigationService';
+import MText from '../common/components/MText';
 
 type PasswordConfirmation = RouteProp<
   RootStackParamList,
@@ -69,7 +69,7 @@ const PasswordConfirmScreen = observer((props: PropsType) => {
     },
   }));
   const msg = localStore.error ? (
-    <Text style={styles.error}>{i18n.t('auth.invalidPassword')}</Text>
+    <MText style={styles.error}>{i18n.t('auth.invalidPassword')}</MText>
   ) : null;
   const iconStyle = { flex: 2 };
   const touchStyle = { flex: 3, alignItems: 'flex-end' };
@@ -87,14 +87,14 @@ const PasswordConfirmScreen = observer((props: PropsType) => {
             style={iconStyle}
             onPress={onGoBackPress}
           />
-          <Text style={styles.titleText}>
+          <MText style={styles.titleText}>
             {title || i18n.t('auth.confirmpassword')}
-          </Text>
+          </MText>
           <TouchableOpacity
             onPress={localStore.submit}
             //@ts-ignore
             style={touchStyle}>
-            <Text
+            <MText
               style={[
                 theme.fontL,
                 theme.fontMedium,
@@ -102,18 +102,18 @@ const PasswordConfirmScreen = observer((props: PropsType) => {
                 theme.paddingTop,
               ]}>
               {i18n.t('continue')}
-            </Text>
+            </MText>
           </TouchableOpacity>
         </View>
         {msg}
-        <Text
+        <MText
           style={[
             theme.colorSecondaryText,
             theme.marginBottom6x,
             theme.paddingLeft4x,
           ]}>
           {i18n.t('auth.confirmPasswordModal')}
-        </Text>
+        </MText>
         <View style={theme.fullWidth}>
           <InputContainer
             labelStyle={theme.colorPrimaryText}

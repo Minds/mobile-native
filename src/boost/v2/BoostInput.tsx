@@ -1,7 +1,8 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import { Platform, Text, View } from 'react-native';
+import { Platform, View } from 'react-native';
 import InputContainer from '../../common/components/InputContainer';
+import MText from '../../common/components/MText';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { BoostStoreType } from './createBoostStore';
@@ -38,7 +39,7 @@ const BoostInput = observer(({ localStore }: PropsType) => {
         value={localStore.amountTokens.toString()}
         {...commonProps}
       />
-      <Text
+      <MText
         style={[
           theme.textRight,
           theme.paddingRight4x,
@@ -48,7 +49,7 @@ const BoostInput = observer(({ localStore }: PropsType) => {
           theme.fontLM,
         ]}>
         1 token = 1000 views
-      </Text>
+      </MText>
     </View>
   );
 });

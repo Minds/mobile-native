@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
@@ -11,6 +11,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import supportTiersService from '../../common/services/support-tiers.service';
 import CenteredLoading from '../../common/components/CenteredLoading';
+import MText from '../../common/components/MText';
 
 type MembershipMonetizeScreenRouteProp = RouteProp<
   AppStackParamList,
@@ -95,18 +96,18 @@ const MembershipMonetizeScreeen = observer(
         onPressRight={save}
         hideDone={!localStore.selectedTier.urn}>
         <View style={[theme.paddingTop3x, theme.paddingHorizontal3x]}>
-          <Text style={title}>{i18n.t('monetize.subScreensTitle')}</Text>
-          <Text style={descriptionTextStyle}>
+          <MText style={title}>{i18n.t('monetize.subScreensTitle')}</MText>
+          <MText style={descriptionTextStyle}>
             {i18n.t('monetize.membershipMonetize.description')}
-          </Text>
+          </MText>
           {localStore.supportTiers.length === 0 && (
             <>
-              <Text style={title}>
+              <MText style={title}>
                 {i18n.t('monetize.membershipMonetize.noTiers')}
-              </Text>
-              <Text style={descriptionTextStyle}>
+              </MText>
+              <MText style={descriptionTextStyle}>
                 {i18n.t('monetize.membershipMonetize.tiersDescription')}
-              </Text>
+              </MText>
             </>
           )}
         </View>

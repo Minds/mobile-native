@@ -14,6 +14,7 @@ import PortraitContentBarItem from './PortraitContentBarItem';
 import { PortraitBarItem } from './createPortraitStore';
 import { useNavigation } from '@react-navigation/native';
 import { useStores } from '../common/hooks/use-stores';
+import MText from '../common/components/MText';
 
 /**
  * Header component
@@ -30,7 +31,7 @@ const Header = () => {
     <TouchableOpacity
       onPress={nav}
       style={[styles.add, theme.bgTertiaryBackground, theme.centered]}>
-      <Text style={[theme.fontXXL, theme.colorSecondaryText]}>+</Text>
+      <MText style={[theme.fontXXL, theme.colorSecondaryText]}>+</MText>
     </TouchableOpacity>
   );
 };

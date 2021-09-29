@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { FlatList, StyleSheet, TextStyle, View } from 'react-native';
 import Modal from 'react-native-modal';
-import { Icon, Text } from 'react-native-elements';
+import { Icon } from 'react-native-elements';
 import ThemedStyles from '../../styles/ThemedStyles';
 import Touchable from './Touchable';
+import MText from './MText';
 
 type PropsType = {
   data: Array<Object>;
@@ -54,7 +55,7 @@ export default class Selector extends Component<PropsType> {
       <Touchable
         onPress={() => this.itemSelect(item)}
         style={[theme.margin, theme.padding]}>
-        <Text
+        <MText
           style={[
             fontColor,
             theme.fontXL,
@@ -62,7 +63,7 @@ export default class Selector extends Component<PropsType> {
             this.props.textStyle,
           ]}>
           {this.valueExtractor(item)}
-        </Text>
+        </MText>
       </Touchable>
     );
   };
@@ -99,10 +100,10 @@ export default class Selector extends Component<PropsType> {
         backdropOpacity={this.props.backdropOpacity}>
         <View style={styles.container}>
           {Boolean(this.props.title) && (
-            <Text
+            <MText
               style={[theme.colorPrimaryText, theme.fontXXL, theme.centered]}>
               {this.props.title}
-            </Text>
+            </MText>
           )}
           <View style={[theme.flexContainer, theme.marginTop3x]}>
             <FlatList

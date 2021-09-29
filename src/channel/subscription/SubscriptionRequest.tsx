@@ -1,6 +1,6 @@
 //@ts-nocheck
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import type { Node } from 'react';
 
 import type UserModel from '../UserModel';
@@ -11,6 +11,7 @@ import Button from '../../common/components/Button';
 import i18nService from '../../common/services/i18n.service';
 import { observer } from 'mobx-react';
 import ThemedStyles from '../../styles/ThemedStyles';
+import MText from '../../common/components/MText';
 
 type PropsType = {
   row: any;
@@ -50,14 +51,14 @@ class SubscriptionRequest extends DiscoveryUser<PropsType> {
     if (this.props.row.item.status) {
       return (
         <View style={ThemedStyles.style.rowJustifyEnd}>
-          <Text
+          <MText
             style={[
               this.props.row.item.status != 'requestAccepted'
                 ? ThemedStyles.style.colorDanger
                 : ThemedStyles.style.colorPrimary,
             ]}>
             {i18nService.t(`channel.${this.props.row.item.status}`)}
-          </Text>
+          </MText>
         </View>
       );
     }

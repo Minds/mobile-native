@@ -229,9 +229,9 @@ export default class ConversationScreen extends Component {
           onEndReached={this.loadMore}
           // onEndReachedThreshold={0}
         />
-        <Text style={styles.characterCounter}>
+        <MText style={styles.characterCounter}>
           {this.state.text.length} / 180
-        </Text>
+        </MText>
         <View style={styles.messagePoster}>
           <Image source={avatarImg} style={styles.avatar} />
           <TextInput

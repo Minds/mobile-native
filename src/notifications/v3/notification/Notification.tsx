@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import FastImage from 'react-native-fast-image';
 import {
@@ -17,6 +17,7 @@ import type Notification from './NotificationModel';
 import InteractionsModal from '../../../common/components/interactions/InteractionsModal';
 import sessionService from '../../../common/services/session.service';
 import i18n from '../../../common/services/i18n.service';
+import MText from '../../../common/components/MText';
 
 type PropsType = {
   notification: Notification;
@@ -57,9 +58,9 @@ const NotificationItem = React.memo(({ notification }: PropsType) => {
 
   const Noun =
     notification.Noun !== '' ? (
-      <Text style={bodyTextImportantStyle} onPress={navToChannel}>
+      <MText style={bodyTextImportantStyle} onPress={navToChannel}>
         {notification.Noun}
-      </Text>
+      </MText>
     ) : null;
 
   return (
@@ -81,21 +82,21 @@ const NotificationItem = React.memo(({ notification }: PropsType) => {
           }
         </View>
         <View style={styles.bodyContainer}>
-          <Text style={bodyTextStyle}>
+          <MText style={bodyTextStyle}>
             {notification.type !== 'token_rewards_summary' && (
-              <Text style={bodyTextImportantStyle} onPress={navToFromChannel}>
+              <MText style={bodyTextImportantStyle} onPress={navToFromChannel}>
                 {fromUser.name + ' '}
-              </Text>
+              </MText>
             )}
             <Merged notification={notification} router={router} />
             {notification.Verb}
             {notification.Pronoun ? ` ${notification.Pronoun}` : ''} {Noun}
-          </Text>
+          </MText>
         </View>
         <View style={styles.timeContainer}>
-          <Text style={bodyTextStyle}>
+          <MText style={bodyTextStyle}>
             {i18n.date(notification.created_timestamp * 1000, 'friendly')}
-          </Text>
+          </MText>
           {notification.read === false && <View style={readIndicatorStyle} />}
         </View>
       </View>

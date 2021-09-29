@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react';
 import React, { useCallback, useState } from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
+import MText from '../common/components/MText';
 import TopbarTabbar from '../common/components/topbar-tabbar/TopbarTabbar';
 import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
@@ -93,7 +94,7 @@ const AnalyticsScreen = observer(
 
     return (
       <View style={theme.flexContainer}>
-        <Text style={title}>{i18n.t('analytics.title')}</Text>
+        <MText style={title}>{i18n.t('analytics.title')}</MText>
         <TopbarTabbar
           current={activeTabId}
           onChange={_onTabBarChange}

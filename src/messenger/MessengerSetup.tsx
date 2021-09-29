@@ -1,7 +1,7 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import { Text, View, Alert, StyleSheet } from 'react-native';
+import { View, Alert, StyleSheet } from 'react-native';
 
 import { inject, observer, Observer } from 'mobx-react';
 
@@ -14,6 +14,7 @@ import ActivityIndicator from '../common/components/ActivityIndicator';
 import ThemedStyles from '../styles/ThemedStyles';
 import { showNotification } from '../../AppMessages';
 import TextInput from '../common/components/TextInput';
+import MText from '../common/components/MText';
 
 type PropsType = {
   rekey?: boolean;
@@ -123,15 +124,15 @@ export default class MessengerSetup extends Component<PropsType> {
         </View>
 
         <View style={{ paddingTop: 32 }}>
-          <Text style={styles.infoText}>
+          <MText style={styles.infoText}>
             · {i18n.t('messenger.setupMessage1')}
-          </Text>
-          <Text style={styles.infoText}>
+          </MText>
+          <MText style={styles.infoText}>
             · {i18n.t('messenger.setupMessage2')}
-          </Text>
-          <Text style={styles.infoText}>
+          </MText>
+          <MText style={styles.infoText}>
             · {i18n.t('messenger.setupMessage3')}
-          </Text>
+          </MText>
         </View>
       </View>
     );
@@ -173,7 +174,7 @@ export default class MessengerSetup extends Component<PropsType> {
         </View>
 
         <View style={{ paddingTop: 16 }}>
-          <Text style={styles.infoText}>{text}</Text>
+          <MText style={styles.infoText}>{text}</MText>
         </View>
       </View>
     );

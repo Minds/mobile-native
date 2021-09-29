@@ -1,13 +1,10 @@
-import React, { useCallback, useMemo, useState } from 'react';
-import { Dimensions, ScrollView, Text, View } from 'react-native';
+import React, { useCallback, useState } from 'react';
+import { Dimensions, ScrollView, View } from 'react-native';
 import IconM from 'react-native-vector-icons/MaterialIcons';
 import { observer } from 'mobx-react';
 import type { ChannelStoreType, ChannelTabType } from './createChannelStore';
 import { Image } from 'react-native-animatable';
-import ThemedStyles, {
-  useMemoStyle,
-  useStyle,
-} from '../../styles/ThemedStyles';
+import ThemedStyles, { useMemoStyle } from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
 import abbrev from '../../common/helpers/abbrev';
 import ChannelDescription from './ChannelDescription';
@@ -23,6 +20,7 @@ import { withErrorBoundary } from '../../common/components/ErrorBoundary';
 import FadeView from '../../common/components/FadeView';
 import JoinMembershipScreen from '../../wire/v2/tiers/JoinMembership';
 import FastImage from 'react-native-fast-image';
+import MText from '../../common/components/MText';
 
 const CENTERED = false;
 
@@ -124,14 +122,14 @@ const ChannelHeader = withErrorBoundary(
               <View style={styles.bottomBar}>
                 {props.store.feedStore.scheduledCount > 0 ? (
                   <View style={bottomBarInnerWrapper}>
-                    <Text
+                    <MText
                       style={styles.viewScheduled}
                       onPress={props.store.toggleScheduled}>
                       {i18n.t('channel.viewScheduled')}:{' '}
-                      <Text style={theme.colorPrimaryText}>
+                      <MText style={theme.colorPrimaryText}>
                         {props.store.feedStore.scheduledCount}
-                      </Text>
-                    </Text>
+                      </MText>
+                    </MText>
                   </View>
                 ) : (
                   <View />
@@ -205,9 +203,9 @@ const ChannelHeader = withErrorBoundary(
 
           <View style={CENTERED ? theme.centered : undefined}>
             <View style={styles.nameWrapper}>
-              <Text style={styles.name} numberOfLines={1}>
+              <MText style={styles.name} numberOfLines={1}>
                 {channel ? channel.name : props.channelName}
-              </Text>
+              </MText>
               {channel && (
                 <ChannelBadges
                   channel={channel}
@@ -217,14 +215,14 @@ const ChannelHeader = withErrorBoundary(
               )}
             </View>
             <View style={styles.usernameWrapper}>
-              <Text style={styles.username} numberOfLines={1}>
+              <MText style={styles.username} numberOfLines={1}>
                 @{channel ? channel.username : props.channelName}
-              </Text>
+              </MText>
               {Boolean(channel!.subscriber) && (
-                <Text style={theme.colorSecondaryText}>
+                <MText style={theme.colorSecondaryText}>
                   {` · `}
                   {i18n.t('channel.subscriber')}
-                </Text>
+                </MText>
               )}
             </View>
           </View>
@@ -253,23 +251,23 @@ const ChannelHeader = withErrorBoundary(
                     style={theme.colorPrimaryText}
                     size={15}
                   />
-                  <Text style={styles.city}>{channel.city}</Text>
+                  <MText style={styles.city}>{channel.city}</MText>
                 </View>
               )}
-              <Text style={styles.subscribersWrapper}>
-                <Text
+              <MText style={styles.subscribersWrapper}>
+                <MText
                   onPress={props.onOpenSubscribers}
                   style={theme.colorSecondaryText}>
-                  <Text> {abbrev(channel.subscribers_count, 0)}</Text>
+                  <MText> {abbrev(channel.subscribers_count, 0)}</MText>
                   {' ' + i18n.t('subscribers') + '    '}
-                </Text>
-                <Text
+                </MText>
+                <MText
                   onPress={props.onOpenSubscriptions}
                   style={theme.colorSecondaryText}>
-                  <Text> {abbrev(channel.subscriptions_count, 0)}</Text>
+                  <MText> {abbrev(channel.subscriptions_count, 0)}</MText>
                   {' ' + i18n.t('subscriptions')}
-                </Text>
-              </Text>
+                </MText>
+              </MText>
             </>
           )}
         </View>

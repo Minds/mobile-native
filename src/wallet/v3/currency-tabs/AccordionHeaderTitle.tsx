@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/core';
 import { observer } from 'mobx-react';
 import React from 'react';
-import { Text } from 'react-native';
+import MText from '../../../common/components/MText';
 import sessionService from '../../../common/services/session.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { getFriendlyLabel } from './EarningsOverview';
@@ -45,24 +45,24 @@ const AccordionHeaderTitle = observer(({ earningId }: PropsType) => {
   ];
 
   return (
-    <Text style={[theme.fontLM, theme.fontMedium]}>
+    <MText style={[theme.fontLM, theme.fontMedium]}>
       {getFriendlyLabel(earningId)}
       {earningId === 'partner' && !user.pro && (
-        <Text style={upgradeStyle}>
+        <MText style={upgradeStyle}>
           {'\n'}
           Upgrade to{' '}
           {!user.plus && (
-            <Text style={[upgradeStyle, theme.colorLink]} onPress={navToPlus}>
+            <MText style={[upgradeStyle, theme.colorLink]} onPress={navToPlus}>
               plus
-            </Text>
+            </MText>
           )}
           {!user.plus ? ' or ' : ' '}{' '}
-          <Text style={[upgradeStyle, theme.colorLink]} onPress={navToPro}>
+          <MText style={[upgradeStyle, theme.colorLink]} onPress={navToPro}>
             pro
-          </Text>
-        </Text>
+          </MText>
+        </MText>
       )}
-    </Text>
+    </MText>
   );
 });
 

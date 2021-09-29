@@ -1,11 +1,12 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 
 import i18n from '../../common/services/i18n.service';
 import StripeCardSelector from '../../wire/methods/StripeCardSelector';
 import ThemedStyles from '../../styles/ThemedStyles';
+import MText from '../../common/components/MText';
 
 export default class BillingScreen extends Component {
   onSelectCard = card => {
@@ -24,7 +25,7 @@ export default class BillingScreen extends Component {
           theme.bcolorPrimaryBorder,
           theme.paddingBottom3x,
         ]}>
-        <Text
+        <MText
           style={[
             theme.marginTop2x,
             theme.fontHairline,
@@ -32,7 +33,7 @@ export default class BillingScreen extends Component {
             theme.marginBottom2x,
           ]}>
           {i18n.t('wire.selectCredit')}
-        </Text>
+        </MText>
         <StripeCardSelector onCardSelected={this.onSelectCard} />
       </View>
     );

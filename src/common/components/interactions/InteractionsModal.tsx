@@ -1,6 +1,6 @@
 import { observer, useLocalStore } from 'mobx-react';
 import React, { forwardRef } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import Modal from 'react-native-modal';
 
 import DiscoveryUser from '../../../discovery/DiscoveryUserNew';
@@ -13,6 +13,7 @@ import OffsetList from '../OffsetList';
 import Activity from '../../../newsfeed/activity/Activity';
 import navigationService from '../../../navigation/NavigationService';
 import type BaseModel from '../../BaseModel';
+import MText from '../MText';
 
 type PropsType = {
   entity: BaseModel;
@@ -123,11 +124,11 @@ export default observer(
         useNativeDriver={true}
         onBackdropPress={store.hide}>
         <View style={containerStyle}>
-          <Text style={titleStyle}>
+          <MText style={titleStyle}>
             {capitalize(
               i18n.t(`interactions.${store.interaction}`, { count: 2 }),
             )}
-          </Text>
+          </MText>
           <OffsetList
             fetchEndpoint={store.endpoint}
             endpointData={dataField}

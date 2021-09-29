@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   View,
-  Text,
   TouchableOpacity,
   StyleProp,
   TextStyle,
@@ -10,6 +9,7 @@ import {
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import ThemedStyles from '../../../styles/ThemedStyles';
+import MText from '../MText';
 
 export type TabType<T> = {
   id: T;
@@ -64,7 +64,7 @@ function TopbarTabbar<T>(props: PropsType<T>) {
                 ? theme.bcolorTabBorder
                 : theme.bcolorTransparent,
             ]}>
-            <Text
+            <MText
               style={[
                 theme.fontL,
                 tab.id === props.current
@@ -73,9 +73,9 @@ function TopbarTabbar<T>(props: PropsType<T>) {
                 props.titleStyle,
               ]}>
               {tab.title}
-            </Text>
+            </MText>
             {!!tab.subtitle && (
-              <Text
+              <MText
                 style={[
                   theme.fontL,
                   theme.colorSecondaryText,
@@ -83,7 +83,7 @@ function TopbarTabbar<T>(props: PropsType<T>) {
                   props.subtitleStyle,
                 ]}>
                 {tab.subtitle}
-              </Text>
+              </MText>
             )}
           </TouchableOpacity>
         ))}

@@ -12,7 +12,7 @@ import {
   useRoute,
 } from '../../../__mocks__/@react-navigation/native';
 import { getStores } from '../../../AppStores';
-
+jest.mock('react-native/Libraries/LogBox/LogBox');
 jest.mock('react-native-reanimated', () =>
   require('react-native-reanimated/mock'),
 );

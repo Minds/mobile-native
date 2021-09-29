@@ -4,7 +4,6 @@ import {
   Image,
   ImageSourcePropType,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -26,6 +25,7 @@ import BottomButtonOptions, {
 import { showNotification } from '../../../../AppMessages';
 import sessionService from '../../../common/services/session.service';
 import { DotIndicator } from 'react-native-reanimated-indicators';
+import MText from '../../../common/components/MText';
 const TouchableCustom = withPreventDoubleTap(TouchableOpacity);
 
 /**
@@ -128,14 +128,14 @@ export default observer(function SetupChannelScreen() {
               theme.borderBottom,
               theme.bcolorPrimaryBorder,
             ]}>
-            <Text
+            <MText
               style={[
                 theme.fontL,
                 theme.colorSecondaryText,
                 theme.paddingVertical2x,
               ]}>
               Avatar
-            </Text>
+            </MText>
             <TouchableCustom
               onPress={store.showPicker}
               style={[styles.avatar, theme.marginBottom2x]}

@@ -1,6 +1,5 @@
 import React from 'react';
 import ThemedStyles from '../../../../styles/ThemedStyles';
-import { Text } from 'react-native';
 import { ContributionMetric } from '../../../v2/createWalletStore';
 import { format } from '../MindsTokens';
 import { Container, Info, Row, Title } from '../AccordionContent';
@@ -8,6 +7,7 @@ import ActivityMultiplier from './multipliers/ActivityMultiplier';
 import { SummaryLabel } from './LiquiditySummary';
 import { Reward } from './createTokensTabStore';
 import capitalize from '../../../../common/helpers/capitalize';
+import MText from '../../../../common/components/MText';
 
 type PropsType = {
   contributionScores: ContributionMetric[];
@@ -25,7 +25,7 @@ const ContributionScores = ({ metric }: { metric: ContributionMetric }) => {
         <Title style={theme.width25}>{format(metric.amount, false)}</Title>
         <Info style={[theme.bold, theme.width75]}>
           {format(metric.score, false)}{' '}
-          <Text style={[theme.colorSecondaryText]}>points</Text>
+          <MText style={[theme.colorSecondaryText]}>points</MText>
         </Info>
       </Row>
     </Container>

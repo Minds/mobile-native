@@ -1,6 +1,6 @@
 import React from 'react';
-import { Text } from 'react-native';
 import ThemedStyles from '../../../styles/ThemedStyles';
+import MText from '../MText';
 
 type PropsType = {
   children: React.ReactNode;
@@ -17,7 +17,7 @@ const MenuSubtitle = ({ children }: PropsType) => {
     theme.paddingHorizontal4x,
   ];
 
-  return <Text style={subTitleStyle}>{children}</Text>;
+  return <MText style={subTitleStyle}>{children}</MText>;
 };
 
 export default MenuSubtitle;

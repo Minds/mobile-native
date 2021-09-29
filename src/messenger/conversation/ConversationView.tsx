@@ -79,7 +79,7 @@ export default class ConversationView extends Component {
         onPress={this._navToConversation}
         testID={this.props.testID}>
         <Image source={avatarImg} style={styles.avatar} />
-        <Text style={styles.body}>{item.username.toUpperCase()}</Text>
+        <MText style={styles.body}>{item.username.toUpperCase()}</MText>
         {unread}
         {online}
       </TouchableOpacity>

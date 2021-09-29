@@ -8,6 +8,7 @@ import token from '../../common/helpers/token';
 import number from '../../common/helpers/number';
 import i18n from '../../common/services/i18n.service';
 import colors from '../../styles/Colors';
+import MText from '../../common/components/MText';
 
 @inject('wallet')
 @observer
@@ -47,30 +48,30 @@ export default class WalletBalanceTokens extends Component {
             return (
               <View style={styles.addressesRow} key={i}>
                 <View style={styles.addressColumn}>
-                  <Text style={styles.addressesLabel}>
+                  <MText style={styles.addressesLabel}>
                     {address.label} {i18n.t('wallet.address')}
-                  </Text>
-                  <Text
+                  </MText>
+                  <MText
                     style={styles.addressesAddress}
                     ellipsizeMode="tail"
                     numberOfLines={1}
                     selectable>
                     {address.address}
-                  </Text>
+                  </MText>
                 </View>
                 <View style={styles.addressColumn}>
-                  <Text style={styles.addressesBalance}>
+                  <MText style={styles.addressesBalance}>
                     {number(token(address.balance, 18), 3)}
-                  </Text>
+                  </MText>
                   {address.address != 'offchain' && (
-                    <Text
+                    <MText
                       style={[
                         styles.addressesBalance,
                         styles.addressesEthBalance,
                       ]}>
                       {address.ethBalance ? number(address.ethBalance, 3) : 0}{' '}
                       ETH
-                    </Text>
+                    </MText>
                   )}
                 </View>
               </View>
@@ -88,10 +89,10 @@ export default class WalletBalanceTokens extends Component {
             style={styles.logo}
             source={require('../../assets/logos/bulb.png')}
           />
-          <Text style={styles.amount}>
+          <MText style={styles.amount}>
             {this.props.wallet.formattedBalance}
-          </Text>
-          <Text style={styles.currency}>{i18n.t('tokens')}</Text>
+          </MText>
+          <MText style={styles.currency}>{i18n.t('tokens')}</MText>
           <View style={{ flex: 1 }}></View>
         </View>
 

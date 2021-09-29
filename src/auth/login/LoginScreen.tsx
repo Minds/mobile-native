@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Dimensions, Text } from 'react-native';
+import { StyleSheet, View, Dimensions } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { useTransition, mix } from 'react-native-redash';
 import { useKeyboard } from '@react-native-community/hooks';
@@ -13,6 +13,7 @@ import i18n from '../../common/services/i18n.service';
 import { RouteProp } from '@react-navigation/native';
 import { AuthStackParamList } from '../../navigation/NavigationTypes';
 import LoginFormHandler from './LoginFormHandler';
+import MText from '../../common/components/MText';
 
 const { height, width } = Dimensions.get('window');
 const LOGO_HEIGHT = height / 7;
@@ -48,7 +49,7 @@ export default function LoginScreen(props: PropsType) {
                 style={[styles.image, { transform: [{ translateY }], opacity }]}
               />
             </Animated.View>
-            <Text
+            <MText
               style={[
                 theme.titleText,
                 theme.textCenter,
@@ -57,7 +58,7 @@ export default function LoginScreen(props: PropsType) {
               ]}
               testID="loginscreentext">
               {i18n.t('auth.login')}
-            </Text>
+            </MText>
             <LoginFormHandler
               navigation={props.navigation}
               route={props.route}

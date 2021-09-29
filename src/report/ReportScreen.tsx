@@ -6,7 +6,6 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {
   Alert,
   Button,
-  Text,
   StyleSheet,
   ScrollView,
   View,
@@ -22,6 +21,7 @@ import mindsService from '../common/services/minds-config.service';
 import CenteredLoading from '../common/components/CenteredLoading';
 import ThemedStyles from '../styles/ThemedStyles';
 import TextInput from '../common/components/TextInput';
+import MText from '../common/components/MText';
 
 export default class ReportScreen extends Component {
   state = {
@@ -222,11 +222,11 @@ export default class ReportScreen extends Component {
 
     if (this.state.reason && this.state.reason.value == 10) {
       return (
-        <Text
+        <MText
           style={[theme.fontL, theme.padding2x, theme.textCenter]}
           onPress={this.mailToCopyright}>
           {i18n.t('reports.DMCA')}
-        </Text>
+        </MText>
       );
     }
 
@@ -247,7 +247,7 @@ export default class ReportScreen extends Component {
           }>
           <View style={styles.reasonItemLabelContainer}>
             <View style={theme.rowStretch}>
-              <Text style={styles.reasonItemLabel}>{reason.label}</Text>
+              <MText style={styles.reasonItemLabel}>{reason.label}</MText>
             </View>
           </View>
           <View style={styles.chevronContainer}>
@@ -303,7 +303,7 @@ export default class ReportScreen extends Component {
       <ScrollView
         style={[theme.flexContainer, ThemedStyles.style.bgSecondaryBackground]}>
         {this.state.reason && (
-          <Text
+          <MText
             style={[
               theme.fontM,
               theme.bgPrimaryBackground,
@@ -311,7 +311,7 @@ export default class ReportScreen extends Component {
               theme.padding,
             ]}>
             {this.state.reason.label}
-          </Text>
+          </MText>
         )}
         <View style={theme.flexContainer}>
           {!this.state.requireNote && this.renderReasons()}

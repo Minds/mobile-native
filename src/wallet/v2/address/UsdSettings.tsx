@@ -3,12 +3,13 @@ import {
   WalletScreenNavigationProp,
   WalletScreenRouteProp,
 } from '../../v3/WalletScreen';
-import { View, Text, StyleSheet, Alert } from 'react-native';
+import { View, StyleSheet, Alert } from 'react-native';
 import { WalletStoreType } from '../createWalletStore';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import MenuItem from '../../../common/components/menus/MenuItem';
 import i18n from '../../../common/services/i18n.service';
 import Button from '../../../common/components/Button';
+import MText from '../../../common/components/MText';
 
 type PropsType = {
   navigation: WalletScreenNavigationProp;
@@ -44,14 +45,14 @@ const UsdSettings = ({ walletStore, navigation }: PropsType) => {
   return (
     <View style={theme.paddingTop4x}>
       <View style={theme.paddingHorizontal3x}>
-        <Text style={[theme.colorPrimaryText, styles.title]}>
+        <MText style={[theme.colorPrimaryText, styles.title]}>
           {i18n.t('wallet.usd.bankInfo')}
-        </Text>
+        </MText>
         {!hasBankInfo && (
           <View style={theme.marginBottom7x}>
-            <Text style={[theme.paddingBottom3x, theme.colorSecondaryText]}>
+            <MText style={[theme.paddingBottom3x, theme.colorSecondaryText]}>
               {i18n.t('wallet.usd.bankInfoDescription')}
-            </Text>
+            </MText>
             <Button onPress={navToBankScreen} text={i18n.t('wallet.usd.add')} />
           </View>
         )}
@@ -71,12 +72,12 @@ const UsdSettings = ({ walletStore, navigation }: PropsType) => {
       {hasBankInfo && (
         <>
           <View style={[theme.paddingHorizontal3x, theme.marginBottom3x]}>
-            <Text style={[theme.colorPrimaryText, styles.title]}>
+            <MText style={[theme.colorPrimaryText, styles.title]}>
               {i18n.t('wallet.usd.leave')}
-            </Text>
-            <Text style={theme.colorSecondaryText}>
+            </MText>
+            <MText style={theme.colorSecondaryText}>
               {i18n.t('wallet.usd.leaveDescription')}
-            </Text>
+            </MText>
           </View>
           <MenuItem
             item={{

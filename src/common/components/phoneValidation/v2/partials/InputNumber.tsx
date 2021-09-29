@@ -1,11 +1,12 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import PhoneInput from 'react-native-phone-number-input';
 import usePhoneValidationStore from '../usePhoneValidationStore';
 import ThemedStyles from '../../../../../styles/ThemedStyles';
 import i18n from '../../../../services/i18n.service';
 import Button from '../../../Button';
+import MText from '../../../MText';
 
 type PropsType = {};
 
@@ -23,9 +24,9 @@ const InputNumber = observer(({}: PropsType) => {
   return (
     <View>
       <View style={styles.mainContainer}>
-        <Text style={styles.label}>{i18n.t('onboarding.phoneNumber')}</Text>
+        <MText style={styles.label}>{i18n.t('onboarding.phoneNumber')}</MText>
         {Boolean(store?.error) && (
-          <Text style={styles.error}>{store?.error}</Text>
+          <MText style={styles.error}>{store?.error}</MText>
         )}
         <PhoneInput
           ref={phoneInput}

@@ -5,6 +5,7 @@ import ThemedStyles from '../../../../styles/ThemedStyles';
 import i18n from '../../../../common/services/i18n.service';
 import { TokensTransactionsListStoreType } from '../../../v2/TransactionList/createTokensTransactionsStore';
 import { AvatarIcon } from '../../../v2/TransactionList/components/Icons';
+import MText from '../../../../common/components/MText';
 
 type PropsType = {
   store?: TokensTransactionsListStoreType;
@@ -17,9 +18,9 @@ const Header = ({ store }: PropsType) => {
   return (
     <View style={theme.marginBottom3x}>
       <View style={[theme.rowJustifySpaceBetween, theme.alignCenter]}>
-        <Text style={theme.colorSecondaryText}>
+        <MText style={theme.colorSecondaryText}>
           {i18n.t('wallet.transactions.pending')}
-        </Text>
+        </MText>
         {!!store && (
           <View style={alignedCenterRow}>
             <Filter store={store} />
@@ -28,9 +29,9 @@ const Header = ({ store }: PropsType) => {
       </View>
       <View style={alignedCenterRow}>
         <AvatarIcon name="trending-up" />
-        <Text style={theme.colorPrimaryText}>
+        <MText style={theme.colorPrimaryText}>
           {i18n.t('wallet.transactions.reward')}
-        </Text>
+        </MText>
       </View>
     </View>
   );

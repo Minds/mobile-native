@@ -1,8 +1,9 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import CenteredLoading from '../../../../common/components/CenteredLoading';
 import DatePicker from '../../../../common/components/DatePicker';
+import MText from '../../../../common/components/MText';
 import i18n from '../../../../common/services/i18n.service';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 import { WalletStoreType } from '../../../v2/createWalletStore';
@@ -24,9 +25,9 @@ const TokensRewards = observer(({ walletStore, store }: PropsType) => {
 
   if (!store.rewards || !store.rewards.total) {
     return (
-      <Text style={[theme.fontXL, theme.centered, theme.padding5x]}>
+      <MText style={[theme.fontXL, theme.centered, theme.padding5x]}>
         {i18n.t('discovery.nothingToShow')}
-      </Text>
+      </MText>
     );
   }
 

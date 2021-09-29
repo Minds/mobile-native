@@ -1,11 +1,12 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { observer } from 'mobx-react';
 import { useSafeArea } from 'react-native-safe-area-context';
 import { DotIndicator } from 'react-native-reanimated-indicators';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import ThemedStyles from '../styles/ThemedStyles';
+import MText from '../common/components/MText';
 
 /**
  * Compose Top bar
@@ -27,7 +28,9 @@ export default observer(function (props) {
         onPress={props.onPressBack}
         testID="topbarBack"
       />
-      {props.leftText && <Text style={styles.leftText}>{props.leftText}</Text>}
+      {props.leftText && (
+        <MText style={styles.leftText}>{props.leftText}</MText>
+      )}
       <View style={theme.flexContainer} />
       {props.store.posting ? (
         <DotIndicator
@@ -37,12 +40,12 @@ export default observer(function (props) {
         />
       ) : (
         props.rightText && (
-          <Text
+          <MText
             style={styles.postButton}
             onPress={props.onPressRight}
             testID="topBarDone">
             {props.rightText}
-          </Text>
+          </MText>
         )
       )}
     </View>

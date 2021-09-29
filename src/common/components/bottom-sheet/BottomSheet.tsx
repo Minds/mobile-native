@@ -5,10 +5,11 @@ import {
   useBottomSheetDynamicSnapPoints,
   BottomSheetBackdrop,
 } from '@gorhom/bottom-sheet';
-import { StatusBar, Text, View } from 'react-native';
+import { StatusBar, View } from 'react-native';
 import ThemedStyles, { useStyle } from '../../../styles/ThemedStyles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Handle from './Handle';
+import MText from '../MText';
 
 interface PropsType extends Omit<BottomSheetModalProps, 'snapPoints'> {
   title?: string;
@@ -76,8 +77,8 @@ export default forwardRef<BottomSheetModal, PropsType>((props, ref) => {
       style={styles.sheetContainer as any}
       {...other}>
       <View style={contStyle} onLayout={handleContentLayout}>
-        {Boolean(title) && <Text style={styles.title}>{title}</Text>}
-        {Boolean(detail) && <Text style={styles.detail}>{detail}</Text>}
+        {Boolean(title) && <MText style={styles.title}>{title}</MText>}
+        {Boolean(detail) && <MText style={styles.detail}>{detail}</MText>}
         {children}
       </View>
     </BottomSheetModal>

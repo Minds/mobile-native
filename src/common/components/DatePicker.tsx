@@ -1,16 +1,11 @@
 import { observer, useLocalStore } from 'mobx-react';
 import React from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  ViewStyle,
-} from 'react-native';
+import { StyleSheet, View, TouchableOpacity, ViewStyle } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../services/i18n.service';
+import MText from './MText';
 
 type PropsType = {
   date?: Date;
@@ -51,10 +46,10 @@ const DatePicker = observer((props: PropsType) => {
       ]}
       onPress={localStore.openPicker}>
       <View>
-        <Text style={[theme.fontL, theme.colorSecondaryText]}>
+        <MText style={[theme.fontL, theme.colorSecondaryText]}>
           {i18n.t('wallet.date')}
-        </Text>
-        <Text style={styles.date}>{shownDate}</Text>
+        </MText>
+        <MText style={styles.date}>{shownDate}</MText>
       </View>
       <Icon
         name="calendar"

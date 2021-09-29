@@ -17,8 +17,8 @@ import ThemedStyles from '../../styles/ThemedStyles';
 interface PropsType {
   tagStyle?: StyleProp<ViewStyle>;
   tagSelectedStyle?: StyleProp<ViewStyle>;
-  textSelectedStyle?: StyleProp<TextStyle>;
-  textStyle?: StyleProp<TextStyle>;
+  textSelectedStyle?: StyleProp<MTextStyle>;
+  textStyle?: StyleProp<MTextStyle>;
   onTagDeleted: (string) => void;
   onTagAdded: (string) => void;
   tags: Array<{ value: string; selected: boolean }>;
@@ -93,7 +93,7 @@ export default class TagSelect extends Component<PropsType> {
               onPress={() => this.toogle(tag)}
               onLongPress={() => this.toogleOne(tag)}
               testID={tag.value + 'TestID'}>
-              <Text
+              <MText
                 style={[
                   styles.tagText,
                   textStyle,
@@ -102,7 +102,7 @@ export default class TagSelect extends Component<PropsType> {
                     : null,
                 ]}>
                 #{tag.value}
-              </Text>
+              </MText>
             </TouchableOpacity>
           ))}
         </View>

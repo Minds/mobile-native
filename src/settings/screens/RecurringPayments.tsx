@@ -3,11 +3,12 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import paymentService from '../../common/services/payment.service';
 import type { SubscriptionType } from '../../common/services/payment.service';
 import CenteredLoading from '../../common/components/CenteredLoading';
-import { Text, ScrollView, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import i18n from '../../common/services/i18n.service';
 import MenuItem from '../../common/components/menus/MenuItem';
 import Button from '../../common/components/Button';
 import capitalize from '../../common/helpers/capitalize';
+import MText from '../../common/components/MText';
 
 const RecurringPayments = () => {
   const theme = ThemedStyles.style;
@@ -71,18 +72,18 @@ const RecurringPayments = () => {
     return (
       <View
         style={[theme.flexContainer, theme.centered, theme.paddingBottom7x]}>
-        <Text style={[theme.fontXL, theme.colorSecondaryText]}>
+        <MText style={[theme.fontXL, theme.colorSecondaryText]}>
           {i18n.t('settings.subscriptionListEmpty')}
-        </Text>
+        </MText>
       </View>
     );
   }
 
   return (
     <ScrollView style={[theme.flexContainer]}>
-      <Text style={[theme.fontM, theme.padding2x, theme.colorSecondaryText]}>
+      <MText style={[theme.fontM, theme.padding2x, theme.colorSecondaryText]}>
         {i18n.t('settings.recurringPaymentsDescription')}
-      </Text>
+      </MText>
       {subscriptions.slice().map((subscription: SubscriptionType) => {
         return (
           <MenuItem

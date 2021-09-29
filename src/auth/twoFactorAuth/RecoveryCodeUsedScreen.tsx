@@ -2,13 +2,13 @@ import { useNavigation } from '@react-navigation/core';
 import React from 'react';
 import {
   View,
-  Text,
   StyleSheet,
   TouchableOpacity,
   Linking,
   Dimensions,
 } from 'react-native';
 import Button from '../../common/components/Button';
+import MText from '../../common/components/MText';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 
@@ -24,28 +24,28 @@ const RecoveryCodeUsedScreen = () => {
   return (
     <View style={[styles.mainContainer, theme.bgPrimaryBackground]}>
       <View style={theme.rowJustifyStart}>
-        <Text style={styles.header}>{i18n.t('settings.TFADisabled')}</Text>
+        <MText style={styles.header}>{i18n.t('settings.TFADisabled')}</MText>
         <TouchableOpacity
           style={styles.closeContainer}
           onPress={navigation.goBack}>
-          <Text style={styles.closeText}>{i18n.t('close')}</Text>
+          <MText style={styles.closeText}>{i18n.t('close')}</MText>
         </TouchableOpacity>
       </View>
-      <Text style={[theme.marginTop6x, textStyle]}>
+      <MText style={[theme.marginTop6x, textStyle]}>
         {i18n.t('settings.TFARecoveryCodeUsedDesc')}
-      </Text>
+      </MText>
       <Button
         text={i18n.t('settings.TFARecoveryCodeUsedEnable')}
         action
         containerStyle={theme.marginVertical7x}
         onPress={navTo2fa}
       />
-      <Text style={textStyle}>
+      <MText style={textStyle}>
         {i18n.t('settings.TFARecoveryCodeUsedContact')}{' '}
-        <Text style={[textStyle, theme.colorLink]} onPress={mailToMinds}>
+        <MText style={[textStyle, theme.colorLink]} onPress={mailToMinds}>
           {i18n.t('settings.TFARecoveryCodeUsedMailto')}
-        </Text>
-      </Text>
+        </MText>
+      </MText>
     </View>
   );
 };

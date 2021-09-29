@@ -8,12 +8,13 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { Text, TextStyle, View, ViewProps } from 'react-native';
+import { TextStyle, View, ViewProps } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { BottomSheet, BottomSheetButton, MenuItem } from './bottom-sheet';
 import i18n from '../../common/services/i18n.service';
 import { LinearGradient } from 'expo-linear-gradient';
+import MText from './MText';
 
 /**
  * a View that has two linear gradients on top and bottom
@@ -200,7 +201,7 @@ const SelectorV2: ForwardRefRenderFunction<any, PropsType> = (
 
   const modal = shown ? (
     <BottomSheet ref={bottomSheetRef} autoShow onDismiss={close}>
-      {Boolean(title) && <Text style={styles.title}>{title}</Text>}
+      {Boolean(title) && <MText style={styles.title}>{title}</MText>}
       {showGradientView ? <GradientView>{flatList}</GradientView> : flatList}
       <BottomSheetButton text={i18n.t('cancel')} onPress={close} />
     </BottomSheet>

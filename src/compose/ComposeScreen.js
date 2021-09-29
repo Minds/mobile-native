@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { observer } from 'mobx-react';
 import { useSafeArea } from 'react-native-safe-area-context';
 import { useIsFocused, useFocusEffect } from '@react-navigation/native';
@@ -14,6 +14,7 @@ import MediaConfirm from './MediaConfirm';
 import i18nService from '../common/services/i18n.service';
 import FadeFromBottom from '../common/components/animations/FadeFrom';
 import useIsPortrait from '../common/hooks/useIsPortrait';
+import MText from '../common/components/MText';
 
 /**
  * Compose Screen
@@ -56,7 +57,7 @@ export default observer(function (props) {
                   theme.bgSecondaryBackground,
                 ]}>
                 <View style={styles.tabs}>
-                  <Text
+                  <MText
                     style={[
                       theme.fontXL,
                       theme.flexContainer,
@@ -66,8 +67,8 @@ export default observer(function (props) {
                     ]}
                     onPress={() => store.setModePhoto()}>
                     {i18nService.t('capture.photo').toUpperCase()}
-                  </Text>
-                  <Text
+                  </MText>
+                  <MText
                     style={[
                       theme.fontXL,
                       theme.flexContainer,
@@ -77,9 +78,9 @@ export default observer(function (props) {
                     ]}
                     onPress={store.setModeVideo}>
                     {i18nService.t('capture.video').toUpperCase()}
-                  </Text>
+                  </MText>
                   {!store.portraitMode && (
-                    <Text
+                    <MText
                       style={[
                         theme.fontXL,
                         theme.flexContainer,
@@ -90,7 +91,7 @@ export default observer(function (props) {
                       onPress={store.setModeText}
                       testID="CaptureTextButton">
                       {i18nService.t('capture.text').toUpperCase()}
-                    </Text>
+                    </MText>
                   )}
                 </View>
               </View>

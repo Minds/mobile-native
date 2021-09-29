@@ -13,6 +13,7 @@ import type DiscoveryV2Store from '../DiscoveryV2Store';
 import CenteredLoading from '../../../common/components/CenteredLoading';
 import DiscoveryTrendPlaceHolder from './DiscoveryTrendPlaceHolder';
 import DiscoveryTagsManager from '../tags/DiscoveryTagsManager';
+import MText from '../../../common/components/MText';
 
 type PropsType = {
   plus?: boolean;
@@ -57,7 +58,7 @@ export const DiscoveryTrendsList = observer(({ plus, store }: PropsType) => {
       <CenteredLoading />
     ) : (
       <View style={styles.emptyContainer}>
-        <Text style={styles.emptyMessage}>{i18n.t('discovery.addTags')}</Text>
+        <MText style={styles.emptyMessage}>{i18n.t('discovery.addTags')}</MText>
         <DiscoveryTagsManager ref={tagRef} />
         <Button
           text={i18n.t('discovery.selectTags')}

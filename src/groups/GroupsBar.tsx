@@ -85,15 +85,15 @@ export default class GroupsBar extends Component {
       <TouchableOpacity onPress={this.load} style={[theme.flexContainer]}>
         <View
           style={[theme.columnAlignCenter, theme.centered, theme.padding2x]}>
-          <Text
+          <MText
             style={[
               theme.fontXS,
               theme.colorSecondaryText,
               theme.marginBottom,
             ]}>
             {i18n.t('groups.errorLoading')}
-          </Text>
-          <Text
+          </MText>
+          <MText
             style={[
               theme.fontS,
               theme.colorLink,
@@ -103,7 +103,7 @@ export default class GroupsBar extends Component {
               theme.padding,
             ]}>
             {i18n.t('tryAgain')}
-          </Text>
+          </MText>
         </View>
       </TouchableOpacity>
     );

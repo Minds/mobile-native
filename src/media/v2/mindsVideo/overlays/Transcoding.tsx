@@ -1,13 +1,14 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { styles } from './styles';
 import i18n from '../../../../common/services/i18n.service';
 import ThemedStyles from '../../../../styles/ThemedStyles';
+import MText from '../../../../common/components/MText';
 
 const Transcoding = () => {
   return (
     <View style={[styles.overlayContainer, styles.overlayContainerTransparent]}>
-      <Text style={errorTextStyle}>{i18n.t('transcodingMediaDisplay')}</Text>
+      <MText style={errorTextStyle}>{i18n.t('transcodingMediaDisplay')}</MText>
     </View>
   );
 };

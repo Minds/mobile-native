@@ -1,6 +1,7 @@
 import React from 'react';
-import { Text, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import ThemedStyles from '../../../styles/ThemedStyles';
+import MText from '../MText';
 
 type PropsType = {
   labelText: string;
@@ -24,14 +25,14 @@ const MenuSubtitleWithButton = ({
   return (
     <View
       style={[theme.rowJustifySpaceBetween, theme.marginTop3x, containerStyle]}>
-      <Text style={[styles.subTitle, theme.colorSecondaryText, labelStyle]}>
+      <MText style={[styles.subTitle, theme.colorSecondaryText, labelStyle]}>
         {labelText}
-      </Text>
-      <Text
+      </MText>
+      <MText
         style={[styles.manage, theme.link, linkStyle]}
         onPress={onLinkPress}>
         {linkText}
-      </Text>
+      </MText>
     </View>
   );
 };

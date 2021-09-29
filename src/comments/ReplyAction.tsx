@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Text, TouchableOpacity, Platform } from 'react-native';
+import { TouchableOpacity, Platform } from 'react-native';
 
 import { observer } from 'mobx-react';
 
@@ -8,6 +8,7 @@ import withPreventDoubleTap from '../common/components/PreventDoubleTap';
 import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
 import { TouchableOpacity as TouchableGesture } from 'react-native-gesture-handler';
+import MText from '../common/components/MText';
 
 // prevent double tap in touchable
 const TouchableOpacityCustom = withPreventDoubleTap(
@@ -43,7 +44,7 @@ export default class ReplyAction extends Component<{
         style={containerStyle}
         onPress={this.toggleExpand}
         testID="ReplyCommentButton">
-        <Text style={fontStyle}>{i18n.t('reply')}</Text>
+        <MText style={fontStyle}>{i18n.t('reply')}</MText>
       </TouchableOpacityCustom>
     );
   }

@@ -1,11 +1,12 @@
 //@ts-nocheck
 import React, { PureComponent } from 'react';
 
-import { Text, Dimensions, Linking, View } from 'react-native';
+import { Dimensions, Linking, View } from 'react-native';
 
 import { WebView } from 'react-native-webview';
 import ThemedStyles from '../styles/ThemedStyles';
 import CenteredLoading from '../common/components/CenteredLoading';
+import MText from '../common/components/MText';
 
 const style = () => `
   <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700,800'>
@@ -215,7 +216,7 @@ export default class BlogViewHTML extends PureComponent<PropsType> {
   /**
    * On error
    */
-  onError = () => <Text>Sorry, failed to load. please try again</Text>;
+  onError = () => <MText>Sorry, failed to load. please try again</MText>;
 
   /**
    * On nav state change

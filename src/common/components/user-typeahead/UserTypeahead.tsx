@@ -1,7 +1,7 @@
 //@ts-nocheck
 import React, { PureComponent } from 'react';
 
-import { StyleSheet, Text, View, FlatList, Image } from 'react-native';
+import { StyleSheet, View, FlatList, Image } from 'react-native';
 
 import Modal from 'react-native-modal';
 
@@ -19,6 +19,7 @@ import logService from '../../services/log.service';
 import i18nService from '../../services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import TextInput from '../TextInput';
+import MText from '../MText';
 
 export default class UserTypeahead extends PureComponent {
   textInput = void 0;
@@ -185,7 +186,7 @@ export default class UserTypeahead extends PureComponent {
             source={{ uri: channelAvatarUrl(item) }}
             style={this.styles.itemAvatar}
           />
-          <Text style={this.styles.itemUsername}>@{item.username}</Text>
+          <MText style={this.styles.itemUsername}>@{item.username}</MText>
 
           {!!item.eth_wallet && (
             <MdIcon
@@ -203,9 +204,9 @@ export default class UserTypeahead extends PureComponent {
           )}
 
           {!!item.subscribers_count && [
-            <Text style={this.styles.itemIconText}>
+            <MText style={this.styles.itemIconText}>
               {abbrev(item.subscribers_count || 0)}
-            </Text>,
+            </MText>,
             <Icon
               name="md-people"
               size={16}
@@ -214,9 +215,9 @@ export default class UserTypeahead extends PureComponent {
           ]}
 
           {!!item.impressions && [
-            <Text style={this.styles.itemIconText}>
+            <MText style={this.styles.itemIconText}>
               {abbrev(item.impressions || 0)}
-            </Text>,
+            </MText>,
             <Icon
               name="md-eye"
               size={16}
@@ -233,13 +234,13 @@ export default class UserTypeahead extends PureComponent {
   EmptyPartial = () => {
     return (
       <View style={this.styles.emptyView}>
-        <Text style={this.styles.emptyText}>
+        <MText style={this.styles.emptyText}>
           {!this.state.query
             ? i18nService.t('userTypeAhead.placeholder')
             : i18nService.t('userTypeAhead.noResults', {
                 query: this.state.query,
               })}
-        </Text>
+        </MText>
       </View>
     );
   };

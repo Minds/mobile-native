@@ -1,8 +1,9 @@
 import { observer } from 'mobx-react';
 import React, { useCallback, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Button } from 'react-native-elements';
 import CenteredLoading from '../../common/components/CenteredLoading';
+import MText from '../../common/components/MText';
 import useApiFetch from '../../common/hooks/useApiFetch';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -58,10 +59,10 @@ const ReferralsList = observer(({ navigation }: ReferralsListProps) => {
 
   return (
     <View style={theme.marginTop4x}>
-      <Text style={theme.titleText}>{i18n.t('referrals.myReferrals')}</Text>
+      <MText style={theme.titleText}>{i18n.t('referrals.myReferrals')}</MText>
 
       {!loading && error && (
-        <Text
+        <MText
           style={[
             theme.colorSecondaryText,
             theme.textCenter,
@@ -70,31 +71,31 @@ const ReferralsList = observer(({ navigation }: ReferralsListProps) => {
           ]}
           onPress={() => fetch()}>
           {i18n.t('error') + '\n'}
-          <Text style={theme.colorLink}>{i18n.t('tryAgain')}</Text>
-        </Text>
+          <MText style={theme.colorLink}>{i18n.t('tryAgain')}</MText>
+        </MText>
       )}
       {result && (
         <View>
           <View style={[theme.rowJustifySpaceBetween]}>
             <View style={[styles.firstColumn, theme.paddingVertical2x]}>
-              <Text style={theme.bold}>{i18n.t('referrals.user')}</Text>
+              <MText style={theme.bold}>{i18n.t('referrals.user')}</MText>
             </View>
             <View style={[theme.flexColumnCentered, theme.padding]}>
-              <Text style={[theme.bold, theme.textCenter]}>
+              <MText style={[theme.bold, theme.textCenter]}>
                 {i18n.t('referrals.status')}
-              </Text>
+              </MText>
             </View>
             <View style={[theme.flexColumnCentered, theme.padding]}>
-              <Text style={[theme.bold, theme.textCenter]}>
+              <MText style={[theme.bold, theme.textCenter]}>
                 {i18n.t('referrals.rewardsSignup')}
-              </Text>
+              </MText>
             </View>
           </View>
 
           {result?.referrals.length === 0 && (
-            <Text style={theme.colorTertiaryText}>
+            <MText style={theme.colorTertiaryText}>
               {i18n.t('referrals.noReferrals')}
-            </Text>
+            </MText>
           )}
 
           {result?.referrals.filter(r => r.prospect).map(_renderRow)}

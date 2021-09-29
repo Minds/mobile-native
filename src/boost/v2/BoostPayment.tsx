@@ -4,9 +4,10 @@ import i18n from '../../common/services/i18n.service';
 import Selector from '../../common/components/SelectorV2';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { BoostStoreType } from './createBoostStore';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { WalletCurrency } from '../../wallet/v2/WalletTypes';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MText from '../../common/components/MText';
 
 type PropsType = {
   localStore: BoostStoreType;
@@ -17,22 +18,22 @@ const BoostPayment = observer(({ localStore }: PropsType) => {
   const selectorRef = useRef<any>(null);
 
   const getMethodLabel = (method: WalletCurrency) => (
-    <Text style={[theme.fontL, theme.centered]}>
+    <MText style={[theme.fontL, theme.centered]}>
       {method.label === 'Off-chain' ? 'Off-chain' : 'On-Chain'}{' '}
-      <Text style={theme.colorSecondaryText}>({method.balance} tokens)</Text>
-    </Text>
+      <MText style={theme.colorSecondaryText}>({method.balance} tokens)</MText>
+    </MText>
   );
 
   return (
     <View>
-      <Text
+      <MText
         style={[
           theme.colorSecondaryText,
           theme.marginBottom3x,
           theme.paddingLeft4x,
         ]}>
         {i18n.t('boosts.paymentMethod')}
-      </Text>
+      </MText>
       <TouchableOpacity
         style={[
           styles.touchable,

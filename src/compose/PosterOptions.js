@@ -7,7 +7,6 @@ import React, {
 } from 'react';
 import {
   StyleSheet,
-  Text,
   Dimensions,
   View,
   TouchableOpacity as RNTouchableOpacity,
@@ -29,6 +28,7 @@ import {
   getAccessText,
 } from '../common/services/list-options.service';
 import featuresService from '../common/services/features.service';
+import MText from '../common/components/MText';
 
 const Touchable = Platform.select({
   ios: RNTouchableOpacity,
@@ -49,7 +49,7 @@ const Header = props => (
         ThemedStyles.style.bgSecondaryBackground,
         ThemedStyles.style.bcolorPrimaryBorder,
       ]}>
-      <Text
+      <MText
         style={[
           ThemedStyles.style.fontXL,
           ThemedStyles.style.colorPrimaryText,
@@ -58,8 +58,8 @@ const Header = props => (
           ThemedStyles.style.bold,
         ]}>
         {i18n.t('capture.postOptions')}
-      </Text>
-      <Text
+      </MText>
+      <MText
         onPress={props.onPress}
         style={[
           ThemedStyles.style.fontL,
@@ -67,7 +67,7 @@ const Header = props => (
           styles.close,
         ]}>
         {i18n.t('close')}
-      </Text>
+      </MText>
     </View>
   </View>
 );
@@ -81,12 +81,13 @@ const Item = props => {
       style={[styles.row, ThemedStyles.style.bcolorPrimaryBorder]}
       onPress={props.onPress}
       testID={props.testID}>
-      <Text style={[styles.optionTitle, ThemedStyles.style.colorSecondaryText]}>
+      <MText
+        style={[styles.optionTitle, ThemedStyles.style.colorSecondaryText]}>
         {props.title}
-      </Text>
-      <Text style={styles.optionDescription} numberOfLines={1}>
+      </MText>
+      <MText style={styles.optionDescription} numberOfLines={1}>
         {props.description}
-      </Text>
+      </MText>
       <MIcon
         size={20}
         name="chevron-right"

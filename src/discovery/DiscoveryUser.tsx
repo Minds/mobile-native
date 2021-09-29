@@ -107,17 +107,17 @@ class DiscoveryUser<T extends PropsType> extends Component<T, StateType> {
         {...otherProps}>
         <Image source={this.state.source} style={styles.avatar} />
         <View style={[ThemedStyles.style.flexContainerCenter]}>
-          <Text style={[styles.body, ThemedStyles.style.fontXL]}>
+          <MText style={[styles.body, ThemedStyles.style.fontXL]}>
             {row.item.name}
-          </Text>
-          <Text
+          </MText>
+          <MText
             style={[
               styles.body,
               ThemedStyles.style.fontS,
               ThemedStyles.style.colorSecondaryText,
             ]}>
             @{row.item.username}
-          </Text>
+          </MText>
         </View>
         {this.renderRightButton()}
       </TouchableOpacity>

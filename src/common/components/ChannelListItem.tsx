@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Keyboard,
-  Text,
   TextStyle,
   TouchableHighlight,
   View,
@@ -12,6 +11,7 @@ import ThemedStyles, { useStyle } from '../../styles/ThemedStyles';
 import type UserModel from '../../channel/UserModel';
 import FastImage from 'react-native-fast-image';
 import Subscribe from '../../channel/v2/buttons/Subscribe';
+import MText from './MText';
 
 type PropsType = {
   channel: UserModel;
@@ -74,12 +74,12 @@ const ChannelListItem = (props: PropsType) => {
           style={styles.avatar}
         />
         <View style={styles.nameContainer}>
-          <Text style={nameStyles}>{props.channel.name}</Text>
-          <Text
+          <MText style={nameStyles}>{props.channel.name}</MText>
+          <MText
             style={usernameStyles}
             testID={`username${props.channel.username}`}>
             @{props.channel.username}
-          </Text>
+          </MText>
         </View>
         {renderRightButton()}
       </View>

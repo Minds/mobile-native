@@ -1,7 +1,7 @@
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import React from 'react';
-import { BackHandler, Text, View } from 'react-native';
+import { BackHandler, View } from 'react-native';
 import DismissKeyboard from '../../../common/components/DismissKeyboard';
 import i18n from '../../../common/services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
@@ -10,6 +10,7 @@ import { useLegacyStores } from '../../../common/hooks/use-stores';
 import PhoneValidationComponent from '../../../common/components/phoneValidation/v2/PhoneValidationComponent';
 import { PhoneValidationProvider } from '../../../common/components/phoneValidation/v2/PhoneValidationProvider';
 import { RootStackParamList } from '../../../navigation/NavigationTypes';
+import MText from '../../../common/components/MText';
 
 type PhoneValidationScreenRouteProp = RouteProp<
   RootStackParamList,
@@ -55,7 +56,7 @@ export default observer(function PhoneValidationScreen() {
         <DismissKeyboard>
           <View style={theme.flexContainer}>
             {Boolean(description) && (
-              <Text style={styles.description}>{description}</Text>
+              <MText style={styles.description}>{description}</MText>
             )}
             <PhoneValidationComponent />
           </View>

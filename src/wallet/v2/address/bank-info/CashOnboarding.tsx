@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import CountrySelector from '../../../../common/components/CountrySelector';
 import MenuItem from '../../../../common/components/menus/MenuItem';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -12,6 +12,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import KeyboardSpacingView from '../../../../common/components/KeyboardSpacingView';
 import DismissKeyboard from '../../../../common/components/DismissKeyboard';
 import PhoneInput from 'react-native-phone-number-input';
+import MText from '../../../../common/components/MText';
 
 type PropsType = {
   localStore: BankInfoStore;
@@ -72,14 +73,14 @@ const CashOnboarding = observer(
                 theme.borderTop,
                 theme.borderBottom,
               ]}>
-              <Text
+              <MText
                 style={[
                   theme.colorSecondaryText,
                   theme.fontL,
                   theme.marginBottom2x,
                 ]}>
                 {i18n.t('wallet.bank.phoneNumber')}
-              </Text>
+              </MText>
               <PhoneInput
                 defaultCode="US"
                 onChangeFormattedText={localStore.setPhoneNumber}

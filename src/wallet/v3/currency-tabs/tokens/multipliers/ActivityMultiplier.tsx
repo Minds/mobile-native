@@ -1,22 +1,23 @@
 import React, { useRef } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Tooltip } from 'react-native-elements';
+import MText from '../../../../../common/components/MText';
 import ThemedStyles from '../../../../../styles/ThemedStyles';
 
 const ToolTipText = () => (
   <View>
-    <Text style={styles.tooltipTitle}>Casual · 1x</Text>
-    <Text style={styles.tooltipText}>
+    <MText style={styles.tooltipTitle}>Casual · 1x</MText>
+    <MText style={styles.tooltipText}>
       Active one day over the past seven days
-    </Text>
-    <Text style={styles.tooltipTitle}>Core · 2x</Text>
-    <Text style={styles.tooltipText}>
+    </MText>
+    <MText style={styles.tooltipTitle}>Core · 2x</MText>
+    <MText style={styles.tooltipText}>
       Active three days over the past seven days
-    </Text>
-    <Text style={styles.tooltipTitle}>Hardcore · 3x</Text>
-    <Text style={styles.tooltipText}>
+    </MText>
+    <MText style={styles.tooltipTitle}>Hardcore · 3x</MText>
+    <MText style={styles.tooltipText}>
       Active six days over the past six days
-    </Text>
+    </MText>
   </View>
 );
 
@@ -70,7 +71,7 @@ const ActivityMultiplier = ({ multiplier }: PropsType) => {
       style={styles.mainContainer}
       onPress={() => tooltipRef.current.toggleTooltip()}>
       <View style={[styles.multiplierContainer, theme.bgPrimaryBackground]}>
-        <Text style={theme.fontS}>{activityLevel}.0</Text>
+        <MText style={theme.fontS}>{activityLevel}.0</MText>
         <View style={[styles.multiplierRow]}>
           <View style={[styles.multiplierLevel, getLevelStyle(1)]} />
           <View
@@ -84,7 +85,7 @@ const ActivityMultiplier = ({ multiplier }: PropsType) => {
           />
           <View style={[styles.multiplierLevel, getLevelStyle(3)]} />
         </View>
-        <Text style={theme.fontS}>3.0</Text>
+        <MText style={theme.fontS}>3.0</MText>
       </View>
       <Tooltip
         ref={tooltipRef}
@@ -98,7 +99,7 @@ const ActivityMultiplier = ({ multiplier }: PropsType) => {
         <View />
       </Tooltip>
       <View style={[styles.infoContainer, theme.bgTertiaryBackground]}>
-        <Text style={styles.infoText}>{activityLevelText}</Text>
+        <MText style={styles.infoText}>{activityLevelText}</MText>
       </View>
     </TouchableOpacity>
   );

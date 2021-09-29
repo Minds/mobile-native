@@ -1,9 +1,10 @@
 import React from 'react';
-import { StyleSheet, Text, View, Platform } from 'react-native';
+import { StyleSheet, View, Platform } from 'react-native';
 import Slider from '@react-native-community/slider';
 import { observer } from 'mobx-react';
 import { MindsVideoStoreType } from './createMindsVideoStore';
 import ThemedStyles from '../../../styles/ThemedStyles';
+import MText from '../../../common/components/MText';
 
 const radiusOfHolder = 5;
 const radiusOfActiveHolder = 7;
@@ -26,9 +27,9 @@ const ProgressBar = observer(({ store }: PropsType) => {
         onValueChange={store.changeSeek}
         onSlidingComplete={store.onProgressChanged}
       />
-      <Text style={[styles.timeText, theme.marginLeft2x, theme.marginRight]}>
+      <MText style={[styles.timeText, theme.marginLeft2x, theme.marginRight]}>
         {store.currentSeekSeconds} / {store.durationSeconds}
-      </Text>
+      </MText>
     </View>
   );
 });

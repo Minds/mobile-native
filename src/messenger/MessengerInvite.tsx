@@ -39,13 +39,13 @@ export default class MessengerInvite extends Component {
       <View
         style={[theme.flexContainer, theme.padding2x, theme.backgroundLight]}>
         <View style={[theme.paddingBottom3x, theme.padding3x]}>
-          <Text style={[theme.fontXL, theme.textCenter]}>
+          <MText style={[theme.fontXL, theme.textCenter]}>
             {i18n.t('messenger.looksLike')}{' '}
-            <Text style={theme.flexContainerCenter}>
+            <MText style={theme.flexContainerCenter}>
               @{invitable[0].username}
-            </Text>{' '}
+            </MText>{' '}
             {i18n.t('messenger.isntUsingMessenger')}.
-          </Text>
+          </MText>
         </View>
         <View style={[theme.centered]}>{button}</View>
       </View>
