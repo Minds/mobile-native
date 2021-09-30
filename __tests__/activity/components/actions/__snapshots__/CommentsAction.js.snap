@@ -23,7 +23,7 @@ exports[`Comment action component renders correctly 1`] = `
 >
   <Icon
     color="SecondaryText"
-    name="chatOff"
+    name="chat-off"
     size="small"
     style={
       Array [
