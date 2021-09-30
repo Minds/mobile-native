@@ -129,6 +129,7 @@ import EmailNotificationsSettings from '../notifications/v3/settings/email/Email
 import ChannelEditScreen from '../channel/v2/edit/ChannelEditScreen';
 import MultiUserScreen from '../auth/multi-user/MultiUserScreen';
 import RelogScreen from '../auth/RelogScreen';
+import WelcomeScreen from '../auth/WelcomeScreen';
 
 const isIos = Platform.OS === 'ios';
 
@@ -691,6 +692,7 @@ const AuthStack = function () {
         headerMode="none"
         // @ts-ignore
         screenOptions={AuthTransition}>
+        <AuthStackNav.Screen name="Welcome" component={WelcomeScreen} />
         <AuthStackNav.Screen name="Login" component={LoginScreen} />
         <AuthStackNav.Screen name="Register" component={RegisterScreen} />
         <AuthStackNav.Screen
@@ -821,16 +823,6 @@ const RootStack = function (props) {
             component={RecoveryCodeUsedScreen}
             options={modalOptions}
           />
-          <RootStackNav.Screen
-            name="MultiUserLogin"
-            component={MultiUserLoginScreen}
-            options={modalOptions}
-          />
-          <RootStackNav.Screen
-            name="MultiUserRegister"
-            component={MultiUserRegisterScreen}
-            options={modalOptions}
-          />
           <RootStackNav.Screen name="RelogScreen" component={RelogScreen} />
         </>
       ) : (
@@ -838,6 +830,16 @@ const RootStack = function (props) {
           <RootStackNav.Screen name="Auth" component={AuthStack} />
         </>
       )}
+      <RootStackNav.Screen
+        name="MultiUserLogin"
+        component={MultiUserLoginScreen}
+        options={modalOptions}
+      />
+      <RootStackNav.Screen
+        name="MultiUserRegister"
+        component={MultiUserRegisterScreen}
+        options={modalOptions}
+      />
     </RootStackNav.Navigator>
   );
 };

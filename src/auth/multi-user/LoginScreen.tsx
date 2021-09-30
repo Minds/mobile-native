@@ -1,3 +1,4 @@
+import { NavigationProp } from '@react-navigation/core';
 import React from 'react';
 import i18n from '../../common/services/i18n.service';
 import ModalContainer from '../../onboarding/v2/steps/ModalContainer';
@@ -5,12 +6,16 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import LoginFormHandler from '../login/LoginFormHandler';
 
 type PropsType = {
-  navigation: any;
+  navigation: NavigationProp<any>;
   route: any;
 };
 
 const LoginScreen = ({ navigation, route }: PropsType) => {
-  const onLogin = React.useCallback(() => navigation.goBack(), [navigation]);
+  const onLogin = React.useCallback(() => {
+    route.params?.onLogin
+      ? route.params.onLogin(navigation)
+      : navigation.goBack();
+  }, [navigation, route.params]);
   const theme = ThemedStyles.style;
   return (
     <ModalContainer

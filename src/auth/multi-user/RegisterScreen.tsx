@@ -5,9 +5,11 @@ import ModalContainer from '../../onboarding/v2/steps/ModalContainer';
 import { useNavigation } from '@react-navigation/native';
 import RegisterForm from '../register/RegisterForm';
 
-type PropsType = {};
+type PropsType = {
+  route: any;
+};
 
-const RegisterScreen = ({}: PropsType) => {
+const RegisterScreen = ({ route }: PropsType) => {
   const theme = ThemedStyles.style;
   const navigation = useNavigation();
   return (
@@ -18,7 +20,7 @@ const RegisterScreen = ({}: PropsType) => {
       contentContainer={theme.bgPrimaryBackground_Dark}
       titleStyle={theme.colorPrimaryText_Dark}
       backIconStyle={theme.colorPrimaryText_Dark}>
-      <RegisterForm />
+      <RegisterForm onRegister={route.params?.onRegister} />
     </ModalContainer>
   );
 };

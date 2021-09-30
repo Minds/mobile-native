@@ -23,15 +23,20 @@ import sessionService from '../../common/services/session.service';
 import featuresService from '../../common/services/features.service';
 import PasswordInput from '../../common/components/password-input/PasswordInput';
 import MText from '../../common/components/MText';
+import { useNavigation } from '@react-navigation/core';
 
-type PropsType = {};
+type PropsType = {
+  // called after registeration is finished
+  onRegister?: (navigation: any) => void; // TODO type
+};
 
 const shadowOptLocal = Object.assign({}, shadowOpt);
 shadowOptLocal.height = 300;
 
 const alphanumericPattern = '^[a-zA-Z0-9_]+$';
 
-const RegisterForm = observer(({}: PropsType) => {
+const RegisterForm = observer(({ onRegister }: PropsType) => {
+  const navigation = useNavigation();
   const captchaRef = useRef<any>(null);
 
   const store = useLocalStore(() => ({
@@ -68,6 +73,7 @@ const RegisterForm = observer(({}: PropsType) => {
         try {
           await authService.login(store.username, store.password);
           i18n.setLocaleBackend();
+          onRegister?.(navigation);
         } catch (err) {
           try {
             await authService.login(store.username, store.password);

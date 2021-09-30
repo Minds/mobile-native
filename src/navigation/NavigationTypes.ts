@@ -95,6 +95,7 @@ export type RootStackParamList = {
 };
 
 export type AuthStackParamList = {
+  Welcome: {};
   Login: {
     username?: string;
     code?: string;
