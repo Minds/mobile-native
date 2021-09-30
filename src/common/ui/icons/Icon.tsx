@@ -12,6 +12,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import IonIcon from 'react-native-vector-icons/Ionicons';
+import Feather from 'react-native-vector-icons/Feather';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -39,6 +40,7 @@ const Fonts = {
   EvilIcons,
   Fontisto,
   Entypo,
+  Feather,
 };
 
 export interface IIcon extends IUIBase {
@@ -64,8 +66,11 @@ function Icon({
   nested = false,
   ...common
 }: IIcon) {
-  const { font: iconFont, name: iconName, ratio = 1 } =
-    ICON_MAP[name] || ICON_MAP[ICON_DEFAULT];
+  const {
+    font: iconFont,
+    name: iconName,
+    ratio = 1,
+  } = ICON_MAP[name] || ICON_MAP[ICON_DEFAULT];
 
   // gets the numeric size value from the legacy number and current string alternative
   const sizeNumeric = getNumericSize(size, ICON_SIZES, ICON_SIZE_DEFAULT);
@@ -111,6 +116,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',
+    // backgroundColor: 'red',
   },
   micro: {
     width: ICON_SIZES.micro,

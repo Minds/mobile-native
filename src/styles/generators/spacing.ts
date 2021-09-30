@@ -1,22 +1,23 @@
-import { STEP, MULTIPLIER } from '../Tokens';
+import { STEP } from '../Tokens';
 
 function getSpacing(name) {
   if (!name) {
-    return STEP * MULTIPLIER;
+    return STEP;
   }
   const regex = /(\d?\d)x/g;
   const result = regex.exec(name);
   if (result) {
     const n = parseInt(result[1], 10);
     if (n === 0 || n > 0) {
-      return n * STEP * MULTIPLIER;
+      return n * STEP;
     }
   }
   return null;
 }
 
 export default function spacing(name: string) {
-  const regex = /^(margin|padding)(Top|Bottom|Left|Right|Vertical|Horizontal)?(.*)?/g;
+  const regex =
+    /^(margin|padding)(Top|Bottom|Left|Right|Vertical|Horizontal)?(.*)?/g;
   const result = regex.exec(name);
 
   if (result) {

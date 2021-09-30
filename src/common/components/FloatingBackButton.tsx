@@ -15,7 +15,7 @@ const FloatingBackButton = (props: PropsType) => {
   return (
     <IconButton
       size={props.size || 'huge'}
-      name="chevronLeft"
+      name="chevron-left"
       style={[iconStyle, styles.backIcon, props.style]}
       onPress={props.onPress}
       testID="floatingBackButton"

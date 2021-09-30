@@ -1,8 +1,8 @@
 import { observer, useLocalStore } from 'mobx-react';
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import ThemedStyles from '../../styles/ThemedStyles';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import ThemedStyles from '~styles/ThemedStyles';
+import { Icon } from '~ui/icons';
 import MonthPicker from 'react-native-month-year-picker';
 import moment from 'moment-timezone';
 import MText from './MText';
@@ -47,12 +47,7 @@ const MonthPickerInput = observer((props: PropsType) => {
             {moment(localStore.date).format('MM-YYYY')}
           </MText>
         </View>
-        <Icon
-          name="calendar"
-          size={21}
-          color={ThemedStyles.getColor('SecondaryText')}
-          style={theme.centered}
-        />
+        <Icon name="calendar" size="small" style={theme.centered} />
       </TouchableOpacity>
       {localStore.showPicker && (
         <MonthPicker

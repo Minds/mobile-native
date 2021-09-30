@@ -31,7 +31,7 @@ type PropsType = {
  */
 const CommentsAction = observer((props: PropsType) => {
   const theme = ThemedStyles.style;
-  const icon = props.entity.allow_comments ? 'chatSolid' : 'chatOff';
+  const icon = props.entity.allow_comments ? 'chat-solid' : 'chat-off';
 
   const route: ActivityRouteProp = useRoute();
 

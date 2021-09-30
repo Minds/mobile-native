@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 
-import IonIcon from 'react-native-vector-icons/Ionicons';
+import { Icon } from '~ui/icons';
 
 import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
@@ -105,7 +105,7 @@ export default observer(function (props) {
   const rightButton = props.store.isEdit ? (
     i18n.t('save')
   ) : (
-    <IonIcon
+    <Icon
       name="send"
       size={27}
       style={[

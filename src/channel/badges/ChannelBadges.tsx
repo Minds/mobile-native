@@ -53,7 +53,7 @@ export default class ChannelBadges extends PureComponent<PropsType> {
           color={ThemedStyles.getColor('Link')}>
           <Icon
             active
-            name="plusCirleOutline"
+            name="plus-circle-outline"
             size={size}
             style={style}
             key={1}

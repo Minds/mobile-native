@@ -1,8 +1,9 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
+import { IconButton } from '~ui/icons';
 import FIcon from 'react-native-vector-icons/Feather';
-import Icon from 'react-native-vector-icons/Ionicons';
+// import Icon from 'react-native-vector-icons/Ionicons';
 import IconMC from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconM from 'react-native-vector-icons/MaterialIcons';
 import ThemedStyles from '../styles/ThemedStyles';
@@ -23,7 +24,7 @@ export default function BottomBar(props) {
         theme.padding,
       ]}>
       {!props.store.isEdit && (
-        <FIcon
+        <IconButton
           size={27}
           name="image"
           style={iconStyle}
@@ -32,16 +33,16 @@ export default function BottomBar(props) {
         />
       )}
       {!props.store.isEdit && (
-        <Icon
-          name="ios-camera-sharp"
+        <IconButton
+          name="camera"
           size={27}
           style={iconStyle}
           onPress={() => props.store.setModePhoto(false)}
         />
       )}
       {!props.store.isGroup() && (
-        <IconM
-          name="attach-money"
+        <IconButton
+          name="money"
           size={27}
           style={iconStyle}
           onPress={() =>
@@ -49,8 +50,8 @@ export default function BottomBar(props) {
           }
         />
       )}
-      <FIcon
-        name="hash"
+      <IconButton
+        name="hashtag"
         size={27}
         style={iconStyle}
         onPress={() =>
@@ -58,7 +59,7 @@ export default function BottomBar(props) {
         }
       />
       <View style={theme.flexContainer} />
-      <IconMC
+      <IconButton
         name="cog"
         size={27}
         style={iconStyle}

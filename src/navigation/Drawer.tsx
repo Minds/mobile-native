@@ -160,7 +160,7 @@ export default function Drawer(props) {
             </View>
             <IconButton
               color="SecondaryText"
-              name="accountMulti"
+              name="account-multi"
               testID="multiUserIcon"
               onPress={() => props.navigation.navigate('MultiUserScreen')}
             />

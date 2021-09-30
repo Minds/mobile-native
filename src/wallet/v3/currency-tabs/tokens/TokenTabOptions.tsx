@@ -3,6 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
+import { IconButton } from '~ui/icons';
 import { IconType } from 'react-native-elements';
 import { showNotification } from '../../../../../AppMessages';
 import i18n from '../../../../common/services/i18n.service';
@@ -82,9 +83,7 @@ const TokenTabOptions = observer((props: PropsType) => {
 
   return (
     <>
-      <TouchableOpacity style={theme.alignSelfCenter} onPress={show}>
-        <Icon size={24} name="dots-vertical" style={theme.colorSecondaryText} />
-      </TouchableOpacity>
+      <IconButton marginLeft="2x" name="more" onPress={show} />
       <BottomSheet ref={ref}>
         {dismissOptions.map((b, i) => (
           <MenuItem {...b} key={i} />

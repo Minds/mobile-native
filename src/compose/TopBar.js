@@ -3,8 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { observer } from 'mobx-react';
 import { useSafeArea } from 'react-native-safe-area-context';
 import { DotIndicator } from 'react-native-reanimated-indicators';
-import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-
+import { IconButton } from '~ui/icons';
 import ThemedStyles from '../styles/ThemedStyles';
 import MText from '../common/components/MText';
 
@@ -21,12 +20,13 @@ export default observer(function (props) {
 
   return (
     <View style={[styles.topBar, menuStyle]}>
-      <MIcon
+      <IconButton
         size={backIconSize}
         name={backIconName}
         style={theme.colorPrimaryText}
         onPress={props.onPressBack}
         testID="topbarBack"
+        marginLeft="2x"
       />
       {props.leftText && (
         <MText style={styles.leftText}>{props.leftText}</MText>

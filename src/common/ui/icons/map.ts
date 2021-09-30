@@ -1,4 +1,32 @@
-export default {
+const ICON_MAP = {
+  info: {
+    font: 'MaterialCommunityIcons',
+    name: 'information-variant',
+  },
+  refresh: {
+    font: 'MaterialCommunityIcons',
+    name: 'refresh',
+  },
+  calendar: {
+    font: 'MaterialCommunityIcons',
+    name: 'calendar',
+  },
+  send: {
+    font: 'IonIcon',
+    name: 'send',
+  },
+  cog: {
+    font: 'MaterialCommunityIcons',
+    name: 'cog',
+  },
+  camera: {
+    font: 'IonIcon',
+    name: 'ios-camera-sharp',
+  },
+  image: {
+    font: 'Feather',
+    name: 'image',
+  },
   subscriptions: {
     font: 'FontAwesome',
     name: 'group',
@@ -22,7 +50,7 @@ export default {
     font: 'MaterialIcons',
     name: 'close',
   },
-  plusCirleOutline: {
+  'plus-circle-outline': {
     font: 'MaterialIcons',
     name: 'add-circle-outline',
   },
@@ -43,11 +71,11 @@ export default {
     font: 'MaterialIcons',
     name: 'thumb-down',
   },
-  plusCircle: {
+  'plus-circle': {
     font: 'MaterialCommunityIcons',
     name: 'plus-circle',
   },
-  accountMulti: {
+  'account-multi': {
     font: 'MaterialCommunityIcons',
     name: 'account-box-multiple',
   },
@@ -77,19 +105,29 @@ export default {
     name: 'message-outline',
     ratio: 0.94,
   },
-  chatSolid: {
+  'chat-solid': {
     font: 'MaterialCommunityIcons',
     name: 'message',
     ratio: 0.94,
   },
-  chevronLeft: {
+  'chevron-left': {
     font: 'MaterialCommunityIcons',
     name: 'chevron-left',
     ratio: 1,
   },
-  chevronRight: {
+  'chevron-right': {
     font: 'MaterialCommunityIcons',
     name: 'chevron-right',
+    ratio: 1,
+  },
+  'chevron-down': {
+    font: 'MaterialCommunityIcons',
+    name: 'chevron-down',
+    ratio: 1,
+  },
+  'chevron-up': {
+    font: 'MaterialCommunityIcons',
+    name: 'chevron-up',
     ratio: 1,
   },
   home: {
@@ -146,3 +184,5 @@ export default {
     ratio: 0.86,
   },
 };
+
+export default ICON_MAP;

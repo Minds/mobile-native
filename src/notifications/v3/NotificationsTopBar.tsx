@@ -22,7 +22,7 @@ export type NotificationsTabOptions =
 const options: Array<ButtonTabType<NotificationsTabOptions>> = [
   { id: 'all', icon: { name: 'list', type: 'material' } },
   { id: 'tags', icon: { name: 'tags', type: 'material' } },
-  { id: 'comments', icon: { name: 'chatSolid', type: 'material' } },
+  { id: 'comments', icon: { name: 'chat-solid', type: 'material' } },
   { id: 'subscriptions', icon: { name: 'subscriptions', type: 'material' } },
   { id: 'votes', icon: { name: 'thumb-up', type: 'material' } },
   { id: 'reminds', icon: { name: 'remind', type: 'material' } },
