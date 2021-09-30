@@ -141,9 +141,10 @@ const TabBar = ({ state, descriptors, navigation }) => {
 const Tabs = observer(function ({ navigation }) {
   const theme = ThemedStyles.style;
 
-  const navToCapture = useCallback(() => navigation.push('Capture'), [
-    navigation,
-  ]);
+  const navToCapture = useCallback(
+    () => navigation.push('Capture'),
+    [navigation],
+  );
 
   const navToVideoCapture = useCallback(
     () => navigation.push('Capture', { mode: 'video', start: true }),

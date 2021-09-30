@@ -16,7 +16,7 @@ type Style = keyof Styles;
 
 type CustomStyle = ViewStyle | TextStyle | ImageStyle;
 
-type StyleOrCustom = Style | CustomStyle;
+export type StyleOrCustom = Style | CustomStyle;
 
 type CustomStyles = { [key: string]: Array<StyleOrCustom> | CustomStyle };
 

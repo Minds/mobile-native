@@ -68,26 +68,6 @@ exports[`Activity screen component renders correctly  1`] = `
         }
       >
         <View
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          hitSlop={
-            Object {
-              "bottom": 13.333333333333332,
-              "left": 13.333333333333332,
-              "right": 13.333333333333332,
-              "top": 13.333333333333332,
-            }
-          }
-          onBlur={[Function]}
-          onClick={[Function]}
-          onFocus={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
           style={
             Array [
               Object {
@@ -130,41 +110,65 @@ exports[`Activity screen component renders correctly  1`] = `
           }
         >
           <View
-            style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                  "overflow": "hidden",
-                },
-                Object {
-                  "height": 40,
-                  "width": 40,
-                },
-              ]
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            hitSlop={
+              Object {
+                "bottom": 13.333333333333332,
+                "left": 13.333333333333332,
+                "right": 13.333333333333332,
+                "top": 13.333333333333332,
+              }
             }
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={null}
           >
-            <Text
-              allowFontScaling={false}
+            <View
               style={
                 Array [
                   Object {
-                    "color": "#7D7D82",
-                    "fontSize": 40,
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                    "overflow": "hidden",
                   },
-                  undefined,
                   Object {
-                    "fontFamily": "Material Design Icons",
-                    "fontStyle": "normal",
-                    "fontWeight": "normal",
+                    "height": 40,
+                    "width": 40,
                   },
-                  Object {},
                 ]
               }
             >
-              󰅁
-            </Text>
+              <Text
+                allowFontScaling={false}
+                style={
+                  Array [
+                    Object {
+                      "color": "#7D7D82",
+                      "fontSize": 40,
+                    },
+                    undefined,
+                    Object {
+                      "fontFamily": "Material Design Icons",
+                      "fontStyle": "normal",
+                      "fontWeight": "normal",
+                    },
+                    Object {},
+                  ]
+                }
+              >
+                󰅁
+              </Text>
+            </View>
           </View>
         </View>
         <View
@@ -282,26 +286,6 @@ exports[`Activity screen component renders correctly  1`] = `
           }
         >
           <View
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            hitSlop={
-              Object {
-                "bottom": 10.666666666666666,
-                "left": 10.666666666666666,
-                "right": 10.666666666666666,
-                "top": 10.666666666666666,
-              }
-            }
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
               Array [
                 Object {
@@ -318,41 +302,65 @@ exports[`Activity screen component renders correctly  1`] = `
             }
           >
             <View
-              style={
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                    "justifyContent": "center",
-                    "overflow": "hidden",
-                  },
-                  Object {
-                    "height": 32,
-                    "width": 32,
-                  },
-                ]
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              hitSlop={
+                Object {
+                  "bottom": 10.666666666666666,
+                  "left": 10.666666666666666,
+                  "right": 10.666666666666666,
+                  "top": 10.666666666666666,
+                }
               }
+              onBlur={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={null}
             >
-              <Text
-                allowFontScaling={false}
+              <View
                 style={
                   Array [
                     Object {
-                      "color": "#7D7D82",
-                      "fontSize": 29.44,
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                      "justifyContent": "center",
+                      "overflow": "hidden",
                     },
-                    undefined,
                     Object {
-                      "fontFamily": "Material Icons",
-                      "fontStyle": "normal",
-                      "fontWeight": "normal",
+                      "height": 32,
+                      "width": 32,
                     },
-                    Object {},
                   ]
                 }
               >
-                
-              </Text>
+                <Text
+                  allowFontScaling={false}
+                  style={
+                    Array [
+                      Object {
+                        "color": "#7D7D82",
+                        "fontSize": 29.44,
+                      },
+                      undefined,
+                      Object {
+                        "fontFamily": "Material Icons",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      Object {},
+                    ]
+                  }
+                >
+                  
+                </Text>
+              </View>
             </View>
           </View>
         </View>

@@ -96,9 +96,8 @@ export class SessionService {
       this.setActiveIndex(sessionData.activeIndex);
       this.setTokensData(sessionData.tokensData);
 
-      const { accessToken, refreshToken, user } = this.tokensData[
-        this.activeIndex
-      ];
+      const { accessToken, refreshToken, user } =
+        this.tokensData[this.activeIndex];
 
       const { access_token, access_token_expires } = accessToken;
       const { refresh_token, refresh_token_expires } = refreshToken;

@@ -12,7 +12,6 @@ import {
   Platform,
   AppState,
   Linking,
-  Text,
   UIManager,
   RefreshControl,
   YellowBox,

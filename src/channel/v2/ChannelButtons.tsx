@@ -78,9 +78,8 @@ const ChannelButtons = withErrorBoundary(
   observer((props: PropsWithChildren<ChannelButtonsPropsType>) => {
     const menuRef = useRef<any>();
     const theme = ThemedStyles.style;
-    const navigation = useNavigation<
-      NativeStackNavigationProp<AppStackParamList>
-    >();
+    const navigation =
+      useNavigation<NativeStackNavigationProp<AppStackParamList>>();
 
     const openWire = useCallback(() => {
       navigation.push('WireFab', {

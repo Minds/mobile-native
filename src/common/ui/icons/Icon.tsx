@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  ViewStyle,
-  FlexStyle,
-  TextStyle,
-  StyleProp,
-  View,
-  StyleSheet,
-} from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -30,6 +23,7 @@ import {
 import { ColorsNameType } from '~styles/Colors';
 import { getPropStyles, getNumericSize, getNamedSize } from '~ui/helpers';
 import { getIconColor } from './helpers';
+import { useStyle, StyleOrCustom } from '~styles/ThemedStyles';
 
 const Fonts = {
   MaterialCommunityIcons,
@@ -48,7 +42,7 @@ export interface IIcon extends IUIBase {
   activeColor?: ColorsNameType;
   name: string;
   size?: IUISizing | number;
-  style?: StyleProp<ViewStyle | FlexStyle | TextStyle>;
+  style?: StyleOrCustom;
   active?: boolean;
   disabled?: boolean;
   disabledColor?: ColorsNameType;
@@ -58,7 +52,7 @@ function Icon({
   color = null,
   name = ICON_DEFAULT,
   size = ICON_SIZE_DEFAULT,
-  style = null,
+  style,
   active = false,
   activeColor = ICON_COLOR_ACTIVE,
   disabled = false,
@@ -90,7 +84,10 @@ function Icon({
 
   // realSize is an icon reducer alternative to keep icon proportion between font-families
   const realSize = sizeNumeric * ratio;
-  const containerStyles: any = [styles.container, styles[sizeNamed]];
+  const containerStyles: StyleOrCustom[] = [
+    styles.container,
+    styles[sizeNamed],
+  ];
   // nested is used to discard the container styles when it is nested inside another base component
   const extraStyles = !nested ? getPropStyles(common) : null;
   const Component = Fonts[iconFont];
@@ -104,7 +101,7 @@ function Icon({
   }
 
   return (
-    <View style={containerStyles}>
+    <View style={useStyle(...containerStyles)}>
       <Component name={iconName} size={realSize} color={iconColor} />
     </View>
   );

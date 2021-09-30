@@ -53,8 +53,9 @@ const MindsVideo = observer((props: PropsType) => {
 
   const onStoreCreated = props.onStoreCreated;
 
-  const posterSource = useRef(props.entity ? getVideoThumb(props.entity) : null)
-    .current;
+  const posterSource = useRef(
+    props.entity ? getVideoThumb(props.entity) : null,
+  ).current;
   const thumbnailSource = useRef(
     props.entity && dataSaverEnabled
       ? getVideoThumb(props.entity, DATA_SAVER_THUMB_RES)

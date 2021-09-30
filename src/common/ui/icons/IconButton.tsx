@@ -1,8 +1,9 @@
 import React from 'react';
-import { Pressable, StyleSheet } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import Icon, { IIcon } from './Icon';
 import { ICON_SIZES, ICON_SIZE_DEFAULT, IUISizing } from '~styles/Tokens';
 import { getNumericSize, getPropStyles } from '~ui/helpers';
+import { useStyle, StyleOrCustom } from '~styles/ThemedStyles';
 
 const SLOP_PROP = 1 / 3;
 
@@ -11,7 +12,7 @@ export interface IIconButton extends IIcon {
 }
 
 export default function IconButton({ onPress, style, ...extra }: IIconButton) {
-  const containerStyles: any = [styles.container];
+  const containerStyles: StyleOrCustom[] = [styles.container];
   let size: IUISizing | number = 'medium';
 
   const extraStyles = getPropStyles(extra);
@@ -34,17 +35,18 @@ export default function IconButton({ onPress, style, ...extra }: IIconButton) {
     getNumericSize(size, ICON_SIZES, ICON_SIZE_DEFAULT) * SLOP_PROP;
 
   const onStyle = ({ pressed }: any) => {
-    const _styles = [...containerStyles];
     if (pressed === true) {
-      _styles.push(styles.pressed);
+      return styles.pressed;
     }
-    return _styles;
+    return null;
   };
 
   return (
-    <Pressable hitSlop={sizeNumeric} style={onStyle} onPress={onPress}>
-      <Icon nested {...extra} />
-    </Pressable>
+    <View style={useStyle(...containerStyles)}>
+      <Pressable hitSlop={sizeNumeric} style={onStyle} onPress={onPress}>
+        <Icon nested {...extra} />
+      </Pressable>
+    </View>
   );
 }
 

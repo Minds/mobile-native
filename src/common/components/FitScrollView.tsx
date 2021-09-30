@@ -9,9 +9,10 @@ export default function FitScrollView(
   props: ScrollViewProps & { children: React.ReactNode },
 ) {
   const [contentHeight, setContentHeight] = useState(0);
-  const onSizeChange = useCallback((w, h) => setContentHeight(h), [
-    setContentHeight,
-  ]);
+  const onSizeChange = useCallback(
+    (w, h) => setContentHeight(h),
+    [setContentHeight],
+  );
   const { onLayout, ...layout } = useLayout();
 
   const shouldScroll = layout.height < contentHeight;
