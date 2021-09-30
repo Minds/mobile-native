@@ -821,16 +821,6 @@ const RootStack = function (props) {
             component={RecoveryCodeUsedScreen}
             options={modalOptions}
           />
-          <RootStackNav.Screen
-            name="MultiUserLogin"
-            component={MultiUserLoginScreen}
-            options={modalOptions}
-          />
-          <RootStackNav.Screen
-            name="MultiUserRegister"
-            component={MultiUserRegisterScreen}
-            options={modalOptions}
-          />
           <RootStackNav.Screen name="RelogScreen" component={RelogScreen} />
         </>
       ) : (
@@ -838,6 +828,16 @@ const RootStack = function (props) {
           <RootStackNav.Screen name="Auth" component={AuthStack} />
         </>
       )}
+      <RootStackNav.Screen
+        name="MultiUserLogin"
+        component={MultiUserLoginScreen}
+        options={modalOptions}
+      />
+      <RootStackNav.Screen
+        name="MultiUserRegister"
+        component={MultiUserRegisterScreen}
+        options={modalOptions}
+      />
     </RootStackNav.Navigator>
   );
 };
