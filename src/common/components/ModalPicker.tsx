@@ -111,7 +111,8 @@ export default class ModalPicker extends PureComponent<ModalPickerProps> {
               CS.padding2x,
               CS.colorPrimaryText,
               CS.bgTertiaryBackground,
-            ]}>
+            ]}
+          >
             {title}
           </MText>
           <View style={[CS.flexContainer]}>
@@ -124,7 +125,8 @@ export default class ModalPicker extends PureComponent<ModalPickerProps> {
                 CS.fontM,
                 CS.colorPrimaryText,
                 CS.bgTertiaryBackground,
-              ]}>
+              ]}
+            >
               {items.map((item, i) => (
                 <Picker.Item
                   key={i}

@@ -72,7 +72,8 @@ export const DiscoverySearchList = observer((props: Props) => {
       return (
         <ErrorBoundary
           containerStyle={[theme.borderBottomHair, theme.bcolorPrimaryBorder]}
-          message="Could not load">
+          message="Could not load"
+        >
           {entity}
         </ErrorBoundary>
       );

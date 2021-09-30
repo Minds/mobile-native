@@ -110,7 +110,8 @@ export default class Tags extends PureComponent<PropsType> {
           style={[this.props.style, ThemedStyles.style.colorLink]}
           onPress={() => {
             this.navToURL(content);
-          }}>
+          }}
+        >
           {content}
         </MText>
       );
@@ -131,7 +132,8 @@ export default class Tags extends PureComponent<PropsType> {
           style={[this.props.style, ThemedStyles.style.colorLink]}
           onPress={() => {
             this.navToURL(content);
-          }}>
+          }}
+        >
           {content}
         </MText>
       );
@@ -152,7 +154,8 @@ export default class Tags extends PureComponent<PropsType> {
           style={[this.props.style, ThemedStyles.style.colorLink]}
           onPress={() => {
             this.navToURL('http://' + content);
-          }}>
+          }}
+        >
           {content}
         </MText>
       );
@@ -170,7 +173,8 @@ export default class Tags extends PureComponent<PropsType> {
           style={[this.props.style, ThemedStyles.style.colorLink]}
           onPress={() => {
             this.navToDiscovery(`#${content}`);
-          }}>
+          }}
+        >
           #{content}
         </MText>
       );
@@ -185,7 +189,8 @@ export default class Tags extends PureComponent<PropsType> {
           style={[this.props.style, ThemedStyles.style.colorLink]}
           onPress={() => {
             this.navToDiscovery(`\$${content}`);
-          }}>
+          }}
+        >
           ${content}
         </MText>
       );
@@ -205,7 +210,8 @@ export default class Tags extends PureComponent<PropsType> {
           style={[this.props.style, ThemedStyles.style.colorLink]}
           onPress={() => {
             this.navToChannel(content);
-          }}>
+          }}
+        >
           @{content}
         </MText>
       );

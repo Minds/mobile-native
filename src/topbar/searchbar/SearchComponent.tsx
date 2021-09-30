@@ -16,7 +16,8 @@ const SearchComponent = observer((props: Props) => {
     <TouchableHighlight
       style={theme.flexContainer}
       onPress={() => props.navigation.navigate('SearchScreen')}
-      underlayColor="transparent">
+      underlayColor="transparent"
+    >
       <View>
         <MText
           style={[
@@ -25,7 +26,8 @@ const SearchComponent = observer((props: Props) => {
             theme.paddingLeft3x,
             theme.fullWidth,
             theme.paddingVertical2x,
-          ]}>
+          ]}
+        >
           {i18n.t('searchBar.title')}
         </MText>
       </View>

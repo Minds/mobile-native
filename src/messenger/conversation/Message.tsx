@@ -42,21 +42,21 @@ export default observer(function (props: PropsType) {
             styles.messageContainer,
             styles.right,
             props.message.sending ? styles.sending : null,
-          ]}>
+          ]}
+        >
           <View
-            style={[
-              theme.rowJustifyCenter,
-              styles.textContainer,
-              theme.bgLink,
-            ]}>
+            style={[theme.rowJustifyCenter, styles.textContainer, theme.bgLink]}
+          >
             <MText
               selectable={true}
               style={[styles.message, theme.colorWhite]}
-              onLongPress={props.message.toggleShowDate}>
+              onLongPress={props.message.toggleShowDate}
+            >
               <Tags
                 color="#FFF"
                 style={theme.colorWhite}
-                navigation={props.navigation}>
+                navigation={props.navigation}
+              >
                 {props.message.decryptedMessage}
               </Tags>
             </MText>
@@ -71,7 +71,8 @@ export default observer(function (props: PropsType) {
         {props.message.showDate ? (
           <MText
             selectable={true}
-            style={[styles.messagedate, styles.rightText]}>
+            style={[styles.messagedate, styles.rightText]}
+          >
             {props.message.time_created
               ? i18n.date(props.message.time_created * 1000)
               : ''}
@@ -87,7 +88,8 @@ export default observer(function (props: PropsType) {
         style={[
           styles.messageContainer,
           props.message.sending ? styles.sending : null,
-        ]}>
+        ]}
+      >
         <TouchableOpacity onPress={navToChannel}>
           <Image
             source={props.message.avatarSource}
@@ -99,11 +101,13 @@ export default observer(function (props: PropsType) {
             theme.rowJustifyCenter,
             styles.textContainer,
             theme.bgTertiaryBackground,
-          ]}>
+          ]}
+        >
           <MText
             selectable={true}
             style={[styles.message]}
-            onLongPress={props.message.toggleShowDate}>
+            onLongPress={props.message.toggleShowDate}
+          >
             <Tags style={styles.message} navigation={props.navigation}>
               {props.message.decryptedMessage}
             </Tags>

@@ -247,7 +247,8 @@ export default class Activity extends Component<PropsType> {
             ? onlyContentContainerStyle
             : containerStyle
         }
-        onLayout={this.onLayout}>
+        onLayout={this.onLayout}
+      >
         <Pinned entity={this.props.entity} />
         {!this.props.showOnlyContent && this.showOwner()}
         {showNSFW ? (
@@ -259,13 +260,15 @@ export default class Activity extends Component<PropsType> {
             onPress={this.navToActivity}
             onLongPress={this.copyText}
             onLayout={this.onLayout}
-            testID="ActivityView">
+            testID="ActivityView"
+          >
             <View
               style={
                 this.props.showOnlyContent
                   ? styles.onlyContentbodyContainer
                   : styles.bodyContainer
-              }>
+              }
+            >
               {lock}
               {/* Shows ontop only for rich embed or reminds */}
               {this.props.entity.perma_url || this.props.entity.remind_object
@@ -369,7 +372,8 @@ export default class Activity extends Component<PropsType> {
               {i18n.t('activity.remindBlocked')}
               <MText
                 onPress={this.navToRemindChannel}
-                style={ThemedStyles.style.bold}>
+                style={ThemedStyles.style.bold}
+              >
                 {' '}
                 @{remind_object.ownerObj.username}
               </MText>

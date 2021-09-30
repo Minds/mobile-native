@@ -104,14 +104,16 @@ const Lock = observer(({ entity }: PropsType) => {
           theme.bgSeparator,
           theme.centered,
           theme.padding2x,
-        ]}>
+        ]}
+      >
         <MText
           style={[
             theme.colorWhite,
             styles.lockMessage,
             theme.marginBottom2x,
             theme.textCenter,
-          ]}>
+          ]}
+        >
           {message}
         </MText>
         {button}
@@ -130,14 +132,16 @@ const Lock = observer(({ entity }: PropsType) => {
         styles.backgroundImage,
         styles.mask,
         aspectRatio ? { aspectRatio } : theme.fullHeight,
-      ]}>
+      ]}
+    >
       <MText
         style={[
           theme.colorWhite,
           styles.lockMessage,
           theme.marginBottom2x,
           theme.textCenter,
-        ]}>
+        ]}
+      >
         {message}
       </MText>
       {button}

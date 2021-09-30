@@ -71,7 +71,8 @@ class EmailConfirmation extends Component<Props> {
         </View>
         <MText
           style={[styles.modalCloseIcon, theme.colorWhite, theme.bold]}
-          onPress={this.dismiss}>
+          onPress={this.dismiss}
+        >
           [Close]
         </MText>
       </View>

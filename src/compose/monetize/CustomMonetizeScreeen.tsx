@@ -110,12 +110,14 @@ const CustomMonetizeScreen = observer((props: PropsType) => {
             theme.colorSecondaryText,
             theme.fontL,
             theme.paddingHorizontal3x,
-          ]}>
+          ]}
+        >
           {i18n.t('capture.paywallDescription')}
         </MText>
         <TouchableOpacity
           style={[styles.optsRow, theme.bcolorPrimaryBorder]}
-          onPress={localStore.showInput}>
+          onPress={localStore.showInput}
+        >
           <MText style={[theme.flexContainer, theme.fontL]}>
             {i18n.t('capture.noPaywall')}
           </MText>
@@ -125,7 +127,8 @@ const CustomMonetizeScreen = observer((props: PropsType) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.optsRow, theme.bcolorPrimaryBorder]}
-          onPress={localStore.showInput}>
+          onPress={localStore.showInput}
+        >
           <MText style={[theme.flexContainer, theme.fontL]}>
             {i18n.t('capture.paywall')}
           </MText>

@@ -31,7 +31,8 @@ const ChannelDescription = withErrorBoundary((props: PropsType) => {
       return (
         <MText
           style={[theme.fontL, theme.bold, theme.colorLink, theme.marginTop2x]}
-          onPress={handlePress}>
+          onPress={handlePress}
+        >
           {i18n.t('showLess')}
         </MText>
       );

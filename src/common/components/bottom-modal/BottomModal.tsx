@@ -44,7 +44,8 @@ const BottomModal: React.ForwardRefRenderFunction<
       onSwipeComplete={store.hide}
       isVisible={store.visible}
       onBackdropPress={store.hide}
-      style={styles.view}>
+      style={styles.view}
+    >
       <View style={[styles.container, props.containerStyle]}>
         {props.barTop && <View style={styles.bar} />}
         {props.showBackButton && !!props.onPressBack && (
@@ -100,7 +101,8 @@ const Error = observer(({ store }: { store: BottomModalStore }) => {
   return (
     <TouchableOpacity
       style={styles.errorView}
-      onPress={() => store.setError('')}>
+      onPress={() => store.setError('')}
+    >
       <View style={styles.errorIconView}>
         <Icon name="error" size={32} color="white" />
       </View>

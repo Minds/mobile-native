@@ -198,7 +198,8 @@ export default observer(function OnboardingScreen() {
           theme.colorSecondaryText,
           theme.padding4x,
           theme.textCenter,
-        ]}>
+        ]}
+      >
         {i18n.t('onboarding.couldntLoadStatus') + '\n\n'}
         <MText style={[theme.fontL, theme.textCenter]}>
           {i18n.t('tryAgain')}
@@ -212,7 +213,8 @@ export default observer(function OnboardingScreen() {
               theme.rowJustifySpaceBetween,
               theme.alignCenter,
               theme.marginBottom3x,
-            ]}>
+            ]}
+          >
             <MText style={[theme.fontXXL, theme.colorPrimaryText, theme.bold]}>
               {progressStore.result?.id === 'OngoingOnboardingGroup'
                 ? i18n.t('onboarding.improveExperience')

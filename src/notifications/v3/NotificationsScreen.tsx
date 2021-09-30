@@ -186,7 +186,8 @@ const renderItem = (row: any): React.ReactElement => {
   return (
     <ErrorBoundary
       message="Can't show this notification"
-      containerStyle={ThemedStyles.style.borderBottomHair}>
+      containerStyle={ThemedStyles.style.borderBottomHair}
+    >
       <NotificationItem notification={notification} />
     </ErrorBoundary>
   );

@@ -33,7 +33,8 @@ export default function (props) {
           marginLeft: -pulseMaxSize / 2,
           marginTop: -pulseMaxSize / 2,
         },
-      ]}>
+      ]}
+    >
       <Animated.View style={circleStyle} />
     </View>
   );

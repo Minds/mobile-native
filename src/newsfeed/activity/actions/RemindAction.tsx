@@ -134,7 +134,8 @@ export default function ({ entity, size = 21, hideCount }: PropsTypes) {
       <TouchableOpacityCustom
         style={actionsContainerStyle}
         onPress={showDropdown}
-        testID="Remind activity button">
+        testID="Remind activity button"
+      >
         <Icon
           style={buttonIconStyle}
           name="remind"

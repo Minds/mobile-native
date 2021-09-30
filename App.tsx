@@ -183,13 +183,15 @@ class App extends Component<Props, State> {
                 ref={setTopLevelNavigator}
                 theme={ThemedStyles.navTheme}
                 onReady={appInitManager.onNavigatorReady}
-                onStateChange={analyticsService.onNavigatorStateChange}>
+                onStateChange={analyticsService.onNavigatorStateChange}
+              >
                 <StoresProvider>
                   <Provider key="app" {...stores}>
                     <BottomSheetModalProvider>
                       <ErrorBoundary
                         message="An error occurred"
-                        containerStyle={ThemedStyles.style.centered}>
+                        containerStyle={ThemedStyles.style.centered}
+                      >
                         <WCContextProvider>
                           <NavigationStack
                             key={ThemedStyles.theme + i18n.locale}

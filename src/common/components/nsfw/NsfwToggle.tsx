@@ -63,7 +63,8 @@ export default class NsfwToggle extends Component {
       <Touchable
         style={this.props.containerStyle}
         onPress={this.showDropdown}
-        testID="NsfwToggle">
+        testID="NsfwToggle"
+      >
         <MdIcon
           name="explicit"
           size={25}
@@ -88,7 +89,8 @@ export default class NsfwToggle extends Component {
               key={i}
               onPress={() => this.toggleDropdownOption(reason)}
               textStyle={[this.isReasonActive(reason) && themed.colorLink]}
-              testID={`NsfwReason${reason.label}`}>
+              testID={`NsfwReason${reason.label}`}
+            >
               {this.isReasonActive(reason) && <MdIcon name="check" />}{' '}
               {reason.label}
             </MenuItem>

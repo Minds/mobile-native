@@ -54,14 +54,16 @@ export default class Selector extends Component<PropsType> {
     return (
       <Touchable
         onPress={() => this.itemSelect(item)}
-        style={[theme.margin, theme.padding]}>
+        style={[theme.margin, theme.padding]}
+      >
         <MText
           style={[
             fontColor,
             theme.fontXL,
             theme.centered,
             this.props.textStyle,
-          ]}>
+          ]}
+        >
           {this.valueExtractor(item)}
         </MText>
       </Touchable>
@@ -97,11 +99,13 @@ export default class Selector extends Component<PropsType> {
         backdropColor={ThemedStyles.getColor('PrimaryBackgroundHighlight')}
         isVisible={this.state.show}
         style={theme.flexContainer}
-        backdropOpacity={this.props.backdropOpacity}>
+        backdropOpacity={this.props.backdropOpacity}
+      >
         <View style={styles.container}>
           {Boolean(this.props.title) && (
             <MText
-              style={[theme.colorPrimaryText, theme.fontXXL, theme.centered]}>
+              style={[theme.colorPrimaryText, theme.fontXXL, theme.centered]}
+            >
               {this.props.title}
             </MText>
           )}

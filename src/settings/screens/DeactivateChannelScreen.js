@@ -52,14 +52,16 @@ export default class DeactivateChannelScreen extends Component {
       <ScrollView style={[theme.flexContainer, theme.padding2x]}>
         <KeyboardAvoidingView
           style={[theme.flexContainer]}
-          behavior={Platform.OS === 'ios' ? 'padding' : null}>
+          behavior={Platform.OS === 'ios' ? 'padding' : null}
+        >
           <MText
             style={[
               theme.fontL,
               theme.marginTop,
               theme.marginBottom2x,
               theme.colorSecondaryText,
-            ]}>
+            ]}
+          >
             {i18n.t('settings.disableDescription')}
           </MText>
           <View style={theme.marginTop4x}>

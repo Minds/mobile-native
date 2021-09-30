@@ -172,7 +172,8 @@ const PortraitViewerScreen = observer((props: PropsType) => {
         style={pagerStyle}
         clamp={clamp}
         pageInterpolation={stackConfig}
-        initialIndex={store.index}>
+        initialIndex={store.index}
+      >
         {pages}
       </Pager>
     </PagerProvider>

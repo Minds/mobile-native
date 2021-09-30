@@ -51,7 +51,8 @@ export default observer(function PhoneValidationScreen() {
   return (
     <ModalContainer
       title={i18n.t('wallet.phoneVerification')}
-      onPressBack={navigation.goBack}>
+      onPressBack={navigation.goBack}
+    >
       <PhoneValidationProvider {...params}>
         <DismissKeyboard>
           <View style={theme.flexContainer}>

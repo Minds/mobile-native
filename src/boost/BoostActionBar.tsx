@@ -154,7 +154,8 @@ export default class BoostActionBar extends Component {
               this.props.entity.revoke(this.props.boost.filter);
             }}
             underlayColor="transparent"
-            style={ComponentsStyle.redbutton}>
+            style={ComponentsStyle.redbutton}
+          >
             <MText style={ThemedStyles.style.colorAlert}>
               {' '}
               {i18n.t('revoke').toUpperCase()}{' '}
@@ -172,11 +173,13 @@ export default class BoostActionBar extends Component {
               this.props.entity.reject();
             }}
             underlayColor="transparent"
-            style={ComponentsStyle.redbutton}>
+            style={ComponentsStyle.redbutton}
+          >
             <MText
               style={ThemedStyles.style.colorAlert}
               adjustsFontSizeToFit
-              numberOfLines={1}>
+              numberOfLines={1}
+            >
               {' '}
               {i18n.t('reject').toUpperCase()}{' '}
             </MText>
@@ -193,11 +196,13 @@ export default class BoostActionBar extends Component {
               this.props.entity.accept();
             }}
             underlayColor="transparent"
-            style={ComponentsStyle.bluebutton}>
+            style={ComponentsStyle.bluebutton}
+          >
             <MText
               style={ThemedStyles.style.colorLink}
               adjustsFontSizeToFit
-              numberOfLines={1}>
+              numberOfLines={1}
+            >
               {' '}
               {i18n.t('accept').toUpperCase()}{' '}
             </MText>

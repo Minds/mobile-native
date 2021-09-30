@@ -31,7 +31,8 @@ export default class BoostAction extends PureComponent<PropsType> {
         <TouchableHighlightCustom
           style={actionsContainerStyle}
           underlayColor="transparent"
-          onPress={this.openBoost}>
+          onPress={this.openBoost}
+        >
           <View style={iconContainer}>
             <Icon
               name="trending-up"

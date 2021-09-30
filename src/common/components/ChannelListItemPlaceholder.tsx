@@ -25,7 +25,8 @@ const ChannelListItemPlaceholder = () => {
         <PlaceholderMedia isRound color={color} style={theme.marginRight2x} />
       )}
       Animation={animation}
-      style={styles.container}>
+      style={styles.container}
+    >
       <PlaceholderLine
         width={30}
         color={color}

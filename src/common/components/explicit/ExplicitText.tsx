@@ -120,7 +120,8 @@ export default class ExplicitText extends Component<PropsType, StateType> {
           <Tags
             navigation={this.props.navigation}
             style={this.props.style}
-            selectable={this.props.selectable}>
+            selectable={this.props.selectable}
+          >
             {message}
           </Tags>
         );
@@ -133,7 +134,8 @@ export default class ExplicitText extends Component<PropsType, StateType> {
           this.props.style,
           theme.marginBottom,
           message ? theme.bold : null,
-        ]}>
+        ]}
+      >
         {title}
       </Tags>
     ) : null;

@@ -93,7 +93,8 @@ export default observer(function ShareAction({ entity }: PropsType) {
   return (
     <TouchableOpacityCustom
       style={actionsContainerStyle}
-      onPress={localStore.onPress}>
+      onPress={localStore.onPress}
+    >
       <Icon name="share" size="small" />
       <BottomButtonOptions
         list={options}

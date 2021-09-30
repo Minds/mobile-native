@@ -65,7 +65,8 @@ const FeedFilter = (props: PropsType) => {
       <TouchableOpacity
         style={containerStyle}
         onPress={show}
-        testID="FilterToggle">
+        testID="FilterToggle"
+      >
         <MdIcon name="filter-variant" size={18} style={iconStyle} />
         {!props.hideLabel && (
           <MText style={textStyle}>{i18n.t('filter')}</MText>

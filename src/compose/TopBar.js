@@ -43,7 +43,8 @@ export default observer(function (props) {
           <MText
             style={styles.postButton}
             onPress={props.onPressRight}
-            testID="topBarDone">
+            testID="topBarDone"
+          >
             {props.rightText}
           </MText>
         )

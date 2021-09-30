@@ -35,7 +35,8 @@ const PasswordInput = observer(({ store, ...props }: PropsType) => {
         <Tooltip
           bottom={12}
           backgroundColor={props.tooltipBackground}
-          containerStyle={theme.paddingLeft2x}>
+          containerStyle={theme.paddingLeft2x}
+        >
           <PasswordValidator
             password={store.password}
             textStyle={validatorText}

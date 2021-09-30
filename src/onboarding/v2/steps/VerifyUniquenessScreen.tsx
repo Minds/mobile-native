@@ -72,7 +72,8 @@ export default observer(function VerifyUniquenessScreen() {
   return (
     <ModalContainer
       title={i18n.t('onboarding.verifyUniqueness')}
-      onPressBack={navigation.goBack}>
+      onPressBack={navigation.goBack}
+    >
       <View style={theme.flexContainer}>
         {steps.map(item => (
           <MenuItem item={item} />
@@ -80,7 +81,8 @@ export default observer(function VerifyUniquenessScreen() {
 
         <LabeledComponent
           label={'OTHER'}
-          labelStyle={[theme.marginTop5x, theme.marginLeft5x]}>
+          labelStyle={[theme.marginTop5x, theme.marginLeft5x]}
+        >
           {other.map(item => (
             <MenuItem item={item} />
           ))}

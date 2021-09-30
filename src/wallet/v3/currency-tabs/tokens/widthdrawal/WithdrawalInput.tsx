@@ -51,7 +51,8 @@ const WithdrawalInput = observer((props: TypeProps) => {
         tokens
       </MText>
       <MText
-        style={[theme.colorSecondaryText, styles.text, theme.marginBottom3x]}>
+        style={[theme.colorSecondaryText, styles.text, theme.marginBottom3x]}
+      >
         {i18n.t('wallet.tokens.transferRequest')}
       </MText>
       <MText style={[theme.colorSecondaryText, styles.text]}>

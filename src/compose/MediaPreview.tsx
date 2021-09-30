@@ -80,7 +80,8 @@ export default observer(function MediaPreview(props: PropsType) {
               onPress={() =>
                 props.store.attachment.cancelOrDelete(!props.store.isEdit)
               }
-              style={[styles.removeMedia, theme.bgSecondaryBackground]}>
+              style={[styles.removeMedia, theme.bgSecondaryBackground]}
+            >
               <Icon
                 name="trash"
                 size={26}
@@ -95,7 +96,8 @@ export default observer(function MediaPreview(props: PropsType) {
           {!props.store.isEdit && (
             <TouchableOpacity
               onPress={props.store.attachment.cancelOrDelete}
-              style={[styles.removeMedia, theme.bgSecondaryBackground]}>
+              style={[styles.removeMedia, theme.bgSecondaryBackground]}
+            >
               <Icon
                 name="trash"
                 size={26}

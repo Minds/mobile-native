@@ -57,7 +57,8 @@ const Filter = observer((props: PropsType) => {
       <TouchableOpacity
         style={ThemedStyles.style.rowJustifyEnd}
         onPress={show}
-        testID="FilterToggle">
+        testID="FilterToggle"
+      >
         <MdIcon name="filter" size={18} style={ThemedStyles.style.colorIcon} />
         <MText style={itemStyle}>{i18n.t('filter')}</MText>
       </TouchableOpacity>
@@ -65,7 +66,8 @@ const Filter = observer((props: PropsType) => {
         ref={ref}
         title={
           i18n.t('filter') + ' ' + i18n.t('wallet.transactions.transactions')
-        }>
+        }
+      >
         <ScrollView>
           <SectionTitle>
             {i18n.t('wallet.transactions.filterTypes')}

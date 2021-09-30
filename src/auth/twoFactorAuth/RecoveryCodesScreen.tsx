@@ -55,14 +55,16 @@ const RecoveryCodesScreen = observer(({ route }: PropsType) => {
           theme.bcolorPrimaryBorder,
           theme.bgPrimaryBackgroundHighlight,
           theme.marginTop5x,
-        ]}>
+        ]}
+      >
         <View style={theme.rowJustifySpaceBetween}>
           <MText style={styles.smallTitle}>
             {i18n.t('settings.TFARecoveryCodes')}
           </MText>
           <TouchableOpacity
             style={[theme.rowJustifyStart, theme.centered]}
-            onPress={store.copyRecoveryCode}>
+            onPress={store.copyRecoveryCode}
+          >
             <Icon
               name="content-copy"
               color={ThemedStyles.getColor('PrimaryText')}

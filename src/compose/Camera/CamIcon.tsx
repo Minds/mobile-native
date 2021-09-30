@@ -31,7 +31,8 @@ const CamIcon: FC<PropsType> = ({ store, style }: PropsType) => {
       transition={{
         type: 'spring',
         delay: 50,
-      }}>
+      }}
+    >
       <Icon
         name="md-camera-reverse-outline"
         size={30}

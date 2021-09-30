@@ -49,7 +49,8 @@ const EarnItem = ({ content }: EarnItemPropsType) => {
         theme.paddingRight5x,
         theme.marginTop5x,
       ]}
-      onPress={content.onPress}>
+      onPress={content.onPress}
+    >
       {body}
       <Icon
         name={'chevron-right'}
@@ -147,7 +148,8 @@ export default observer(function ({ navigation }) {
     <>
       <ModalScreen
         source={require('../assets/withdrawalbg.jpg')}
-        title={i18n.t('earnScreen.title')}>
+        title={i18n.t('earnScreen.title')}
+      >
         <MText style={titleStyle}>{i18n.t('earnScreen.increase')}</MText>
         {earnItems.map(item => (
           <EarnItem content={item} />

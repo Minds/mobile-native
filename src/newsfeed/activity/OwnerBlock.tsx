@@ -116,7 +116,8 @@ class OwnerBlock extends PureComponent<PropsType> {
     return (
       <DebouncedTouchableOpacity
         onPress={this._navToGroup}
-        style={styles.groupContainer}>
+        style={styles.groupContainer}
+      >
         <MText style={groupNameStyle} lineBreakMode="tail" numberOfLines={1}>
           {this.props.entity.containerObj.name}
         </MText>
@@ -177,7 +178,8 @@ class OwnerBlock extends PureComponent<PropsType> {
                 <MText
                   numberOfLines={1}
                   style={nameStyle}
-                  onPress={this._onNavToChannelPress}>
+                  onPress={this._onNavToChannelPress}
+                >
                   {name || channel.username}
                   {Boolean(name) && (
                     <MText numberOfLines={1} style={usernameStyle}>

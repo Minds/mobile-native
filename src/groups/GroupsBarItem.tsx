@@ -78,7 +78,8 @@ export default class GroupsBarItem extends Component {
             styles.container,
             theme.bgTransparent,
             theme.centered,
-          ]}>
+          ]}
+        >
           <View>
             <PulseAnimAvatar
               avatar={this.getAvatar(group)}
@@ -112,7 +113,8 @@ export default class GroupsBarItem extends Component {
           styles.container,
           theme.bgTransparent,
           theme.centered,
-        ]}>
+        ]}
+      >
         <TouchableOpacity onPress={this.navToGroup} activeOpacity={0.5}>
           <FastImage
             source={{ uri: this.getAvatar(group) }}

@@ -45,14 +45,16 @@ export default function ({
       isVisible={isVisible}
       coverScreen={coverScreen}
       onBackButtonPress={onCloseButtonPress}
-      {...rest}>
+      {...rest}
+    >
       <View
         style={[
           theme.flexContainer,
           theme.justifyCenter,
           theme.borderRadius2x,
           paddingTop,
-        ]}>
+        ]}
+      >
         <Icon
           name="closecircleo"
           onPress={onCloseButtonPress}

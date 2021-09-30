@@ -60,7 +60,8 @@ export default class EmailConfirmationScreen extends Component {
             ThemedStyles.style.textCenter,
             ThemedStyles.style.colorDarkGreyed,
           ]}
-          onPress={this.confirm}>
+          onPress={this.confirm}
+        >
           {i18n.t('errorMessage') + '\n'}
           <MText style={[ThemedStyles.style.colorPrimary]}>
             {i18n.t('tryAgain')}
@@ -77,7 +78,8 @@ export default class EmailConfirmationScreen extends Component {
             ThemedStyles.style.textCenter,
             ThemedStyles.style.colorDarkGreyed,
           ]}
-          onPress={() => this.props.navigation.goBack()}>
+          onPress={() => this.props.navigation.goBack()}
+        >
           {i18n.t('emailConfirm.confirmed') + '\n'}
           <MText style={[ThemedStyles.style.colorPrimary]}>
             {i18n.t('goback')}
@@ -94,7 +96,8 @@ export default class EmailConfirmationScreen extends Component {
   render() {
     return (
       <View
-        style={[ThemedStyles.style.flexContainer, ThemedStyles.style.centered]}>
+        style={[ThemedStyles.style.flexContainer, ThemedStyles.style.centered]}
+      >
         {this.renderBody()}
       </View>
     );

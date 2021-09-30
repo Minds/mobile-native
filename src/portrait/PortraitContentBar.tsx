@@ -30,7 +30,8 @@ const Header = () => {
   return (
     <TouchableOpacity
       onPress={nav}
-      style={[styles.add, theme.bgTertiaryBackground, theme.centered]}>
+      style={[styles.add, theme.bgTertiaryBackground, theme.centered]}
+    >
       <MText style={[theme.fontXXL, theme.colorSecondaryText]}>+</MText>
     </TouchableOpacity>
   );

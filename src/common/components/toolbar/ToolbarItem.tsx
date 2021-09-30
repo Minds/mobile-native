@@ -31,7 +31,8 @@ export default class ToolbarItem extends PureComponent {
     return (
       <DebouncedTouchableOpacity
         style={buttonStyle}
-        onPress={() => onPress(value)}>
+        onPress={() => onPress(value)}
+      >
         {iconCmp}
         <MText style={textStyle} numberOfLines={1}>
           {text}

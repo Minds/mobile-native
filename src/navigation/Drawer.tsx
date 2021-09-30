@@ -153,7 +153,8 @@ export default function Drawer(props) {
                 <MText
                   onPress={navToChannel}
                   style={subtitleStyle}
-                  testID="channelUsername">
+                  testID="channelUsername"
+                >
                   @{channel.username}
                 </MText>
               )}
@@ -174,7 +175,8 @@ export default function Drawer(props) {
                 pad={5}
                 key={i}
                 onPress={l.onPress}
-                containerStyle={styles.listItem}>
+                containerStyle={styles.listItem}
+              >
                 {l.icon}
                 <ListItem.Content>
                   <ListItem.Title style={menuTitleStyle}>

@@ -31,7 +31,8 @@ export default function SwipeAnimation(props) {
 
   return (
     <Animated.View
-      style={[containerStyle, theme.positionAbsolute, theme.centered]}>
+      style={[containerStyle, theme.positionAbsolute, theme.centered]}
+    >
       <LottieView
         autoPlay={props.autoPlay}
         resizeMode="contain"

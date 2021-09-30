@@ -33,7 +33,8 @@ const HeaderComponent: FunctionComponent<propsType> = observer(
       <ImageBackground
         style={styles.banner}
         source={channel.getBannerSource()}
-        resizeMode="cover">
+        resizeMode="cover"
+      >
         <View style={[styles.avatarContainer, theme.bcolorPrimaryBackground]}>
           <Image
             style={[styles.avatar, theme.bcolorPrimaryBorder]}

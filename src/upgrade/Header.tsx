@@ -13,7 +13,8 @@ const Header = ({ pro }: PropsType) => {
     <ImageBackground
       style={styles.banner}
       source={require('../assets/plus-image.png')}
-      resizeMode="cover">
+      resizeMode="cover"
+    >
       <View style={styles.textContainer}>
         <MText style={styles.minds}>
           {i18n.t(`monetize.${texts}`).toUpperCase()}

@@ -19,7 +19,8 @@ export default class ImageViewer extends Component {
           cropWidth={Dimensions.get('window').width}
           cropHeight={Dimensions.get('window').height}
           imageWidth={this.props.width}
-          imageHeight={this.props.height}>
+          imageHeight={this.props.height}
+        >
           <SharedElement id={`${this.props.urn}.image`}>
             <SmartImage
               style={[

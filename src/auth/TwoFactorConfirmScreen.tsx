@@ -90,7 +90,8 @@ const TwoFactorConfirmScreen = observer(({ route, navigation }: PropsType) => {
     <SafeAreaView style={[theme.flexContainer, theme.bgPrimaryBackground]}>
       <KeyboardAvoidingView
         style={theme.flexContainer}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      >
         <View style={styles.header}>
           <Icon
             name="close"

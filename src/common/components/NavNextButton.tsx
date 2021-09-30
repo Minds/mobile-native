@@ -40,7 +40,8 @@ export default class NavNextButton extends Component<PropsType> {
             !!this.props.disabled && {
               color: this.props.disabledColor || '#aaa',
             },
-          ]}>
+          ]}
+        >
           {this.props.title}
         </MText>
       );
@@ -54,7 +55,8 @@ export default class NavNextButton extends Component<PropsType> {
         underlayColor="transparent"
         onPress={this.onPressAction}
         style={[style.button, this.props.style]}
-        testID="NavNextButton">
+        testID="NavNextButton"
+      >
         <View style={style.row}>
           {submitContent}
 

@@ -52,7 +52,8 @@ function TopBarButtonTabBar<T>(props: PropsType<T>) {
             : theme.paddingBottom2x,
           theme.paddingLeft2x,
           props.scrollViewContainerStyle,
-        ]}>
+        ]}
+      >
         {props.tabs.map((tab, i) =>
           !props.buttonCmp || props.buttonCmp === 'Button' ? (
             <Button
@@ -77,7 +78,8 @@ function TopBarButtonTabBar<T>(props: PropsType<T>) {
                 tab.id === props.current
                   ? touchableContainerSelected
                   : touchableContainer
-              }>
+              }
+            >
               {!!tab.title && (
                 <TabTitle
                   isCurrent={tab.id === props.current}

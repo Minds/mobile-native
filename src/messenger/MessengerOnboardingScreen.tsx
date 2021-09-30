@@ -113,7 +113,8 @@ export default class MessengerOnboardingScreen extends Component {
               flexDirection: 'row',
               alignItems: 'stretch',
               marginTop: 16,
-            }}>
+            }}
+          >
             <TextInput
               ref="password2"
               editable={!this.state.inProgress}

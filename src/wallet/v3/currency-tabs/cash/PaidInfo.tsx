@@ -34,7 +34,8 @@ const PaidInfo = ({ walletStore }: PropsType) => {
             theme.borderTop,
             theme.marginTop3x,
             ...viewPadding,
-          ]}>
+          ]}
+        >
           <MText style={titleStyle}>{i18n.t('wallet.totalPaidout')}</MText>
           <MText style={earningStyle}>${totalPaidOuts}</MText>
 

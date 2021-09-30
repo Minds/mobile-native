@@ -73,7 +73,8 @@ export default observer(() => {
     <>
       <ScrollView
         style={[theme.flexContainer, theme.bgPrimaryBackground]}
-        contentContainerStyle={theme.padding4x}>
+        contentContainerStyle={theme.padding4x}
+      >
         <View style={theme.alignCenter}>
           <MText
             style={[
@@ -81,7 +82,8 @@ export default observer(() => {
               theme.marginBottom5x,
               theme.fontXXL,
               theme.bold,
-            ]}>
+            ]}
+          >
             {i18n.t('buyTokensScreen.paymentMethod')}
           </MText>
         </View>
@@ -94,7 +96,8 @@ export default observer(() => {
             theme.border2x,
             styles.buttonsContainer,
             theme.bcolorPrimaryBorder,
-          ]}>
+          ]}
+        >
           {paymentMethodsList.map(({ type, name }, index) => (
             <Pressable
               style={[
@@ -103,13 +106,15 @@ export default observer(() => {
                 ...buildButtonStyles(index, store.paymentMethod === type),
                 store.paymentMethod === type ? theme.bgLink : '',
               ]}
-              onPress={() => store.handleOptionSelection(type)}>
+              onPress={() => store.handleOptionSelection(type)}
+            >
               <MText
                 style={
                   store.paymentMethod === type
                     ? theme.colorWhite
                     : theme.colorPrimaryText
-                }>
+                }
+              >
                 {name}
               </MText>
             </Pressable>
@@ -140,7 +145,8 @@ export default observer(() => {
                           Linking.openURL(
                             'https://cdn-assets.minds.com/front/dist/assets/documents/TermsOfSale-v0.1.pdf',
                           );
-                        }}>
+                        }}
+                      >
                         {i18n.t('buyTokensScreen.linkText')}
                       </MText>
                     ),
@@ -153,7 +159,8 @@ export default observer(() => {
         <View style={[theme.flexContainer, theme.rowJustifySpaceBetween]}>
           <MText
             style={[theme.colorPrimaryText, styles.learMoreLink]}
-            onPress={navToTokens}>
+            onPress={navToTokens}
+          >
             {i18n.t('buyTokensScreen.learnMore')}
           </MText>
           <Button

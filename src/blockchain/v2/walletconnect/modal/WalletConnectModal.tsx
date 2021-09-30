@@ -32,14 +32,16 @@ export default observer(function () {
         onBackButtonPress={store.hideModal}
         backdropOpacity={0.1}
         avoidKeyboard={true}
-        animationInTiming={150}>
+        animationInTiming={150}
+      >
         <View
           style={[
             theme.flexContainer,
             theme.bgPrimaryBackground,
             styles.modalBody,
             theme.padding4x,
-          ]}>
+          ]}
+        >
           <View style={[theme.rowJustifyCenter]}>
             <MText>Choose your preferred wallet</MText>
           </View>
@@ -49,14 +51,16 @@ export default observer(function () {
               key={`wallet${index}`}
               activeOpacity={0.9}
               underlayColor="#transparent"
-              onPress={() => store.setSelectedWallet(wallet)}>
+              onPress={() => store.setSelectedWallet(wallet)}
+            >
               <View
                 style={[
                   theme.rowJustifySpaceBetween,
                   theme.alignCenter,
                   theme.marginTop3x,
                   theme.paddingHorizontal3x,
-                ]}>
+                ]}
+              >
                 <MText style={[theme.bold]}>{wallet.name}</MText>
                 {wallet.logo && (
                   <Image style={[styles.icon]} source={{ uri: wallet.logo }} />

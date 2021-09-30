@@ -26,7 +26,8 @@ const PlanOptions = observer(({ store, pro }: PropsType) => {
           theme.paddingLeft4x,
           theme.marginBottom3x,
           theme.fontL,
-        ]}>
+        ]}
+      >
         SELECT PLAN
       </MText>
       {(store.method === 'tokens' ? plans.tokens : plans.usd).map(plan => (

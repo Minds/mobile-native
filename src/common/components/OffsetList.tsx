@@ -155,7 +155,8 @@ export default observer(
             theme.fontL,
             theme.marginVertical4x,
           ]}
-          onPress={() => fetch()}>
+          onPress={() => fetch()}
+        >
           {i18n.t('error') + '\n'}
           <MText style={theme.colorLink}>{i18n.t('tryAgain')}</MText>
         </MText>

@@ -299,7 +299,8 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
       // enableHandlePanningGesture={true}
       onChange={onBottomSheetVisibilityChange}
       backgroundComponent={null}
-      backdropComponent={renderBackdrop}>
+      backdropComponent={renderBackdrop}
+    >
       <View style={styles.container}>
         {store.visible && (
           <>

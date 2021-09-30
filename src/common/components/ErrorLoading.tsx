@@ -38,12 +38,14 @@ export default class ErrorLoading extends Component<Props> {
           this.props.inverted
             ? styles.errorLoadingInverted
             : styles.errorLoading,
-        ]}>
+        ]}
+      >
         <MText style={[theme.fontSemibold, theme.marginBottom]}>
           {i18n.t('ops')}
         </MText>
         <MText
-          style={[theme.fontM, theme.colorSecondaryText, theme.marginBottom2x]}>
+          style={[theme.fontM, theme.colorSecondaryText, theme.marginBottom2x]}
+        >
           {this.props.message}
           {'. '}
           {!connectivityService.isConnected && (

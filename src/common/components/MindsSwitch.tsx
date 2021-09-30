@@ -61,19 +61,22 @@ const MindsSwitch = observer(
             theme.bcolorPrimaryBorder,
           ]}
           activeOpacity={0.65}
-          onPress={localStore.selectedValueChange}>
+          onPress={localStore.selectedValueChange}
+        >
           <MText
             style={[
               ...textStyle,
               localStore.isSelected(leftValue) ? theme.bgPrimaryBorder : null,
-            ]}>
+            ]}
+          >
             {leftText}
           </MText>
           <MText
             style={[
               ...textStyle,
               localStore.isSelected(rightValue) ? theme.bgPrimaryBorder : null,
-            ]}>
+            ]}
+          >
             {rightText}
           </MText>
         </TouchableOpacity>

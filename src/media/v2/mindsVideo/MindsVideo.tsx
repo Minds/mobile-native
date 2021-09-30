@@ -109,7 +109,8 @@ const MindsVideo = observer((props: PropsType) => {
   return (
     <TouchableWithoutFeedback
       onPress={localStore.openControlOverlay}
-      style={[theme.flexContainer, props.containerStyle]}>
+      style={[theme.flexContainer, props.containerStyle]}
+    >
       <View style={[theme.flexContainer, theme.bgBlack]}>
         <SmartImage
           imageVisible={!localStore.showThumbnail}

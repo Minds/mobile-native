@@ -31,7 +31,8 @@ const BoostPayment = observer(({ localStore }: PropsType) => {
           theme.colorSecondaryText,
           theme.marginBottom3x,
           theme.paddingLeft4x,
-        ]}>
+        ]}
+      >
         {i18n.t('boosts.paymentMethod')}
       </MText>
       <TouchableOpacity
@@ -45,7 +46,8 @@ const BoostPayment = observer(({ localStore }: PropsType) => {
         ]}
         onPress={() =>
           selectorRef.current?.show(localStore.selectedPaymentMethod.label)
-        }>
+        }
+      >
         {getMethodLabel(localStore.selectedPaymentMethod)}
         <Icon
           name="menu-down"

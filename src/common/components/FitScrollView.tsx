@@ -22,7 +22,8 @@ export default function FitScrollView(
       onLayout={onLayout}
       onContentSizeChange={onSizeChange}
       scrollEnabled={shouldScroll}
-      {...props}>
+      {...props}
+    >
       {props.children}
     </ScrollView>
   );

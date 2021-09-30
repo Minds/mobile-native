@@ -55,7 +55,8 @@ export default class WalletBalanceTokens extends Component {
                     style={styles.addressesAddress}
                     ellipsizeMode="tail"
                     numberOfLines={1}
-                    selectable>
+                    selectable
+                  >
                     {address.address}
                   </MText>
                 </View>
@@ -68,7 +69,8 @@ export default class WalletBalanceTokens extends Component {
                       style={[
                         styles.addressesBalance,
                         styles.addressesEthBalance,
-                      ]}>
+                      ]}
+                    >
                       {address.ethBalance ? number(address.ethBalance, 3) : 0}{' '}
                       ETH
                     </MText>

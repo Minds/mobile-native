@@ -56,17 +56,20 @@ export default class ModalConfirmPassword extends Component<PropsType> {
       <Modal
         isVisible={this.props.isVisible}
         backdropColor={ThemedStyles.getColor('PrimaryBackground')}
-        backdropOpacity={1}>
+        backdropOpacity={1}
+      >
         <SafeAreaView style={[CS.flexContainer]}>
           <KeyboardAvoidingView
             style={CS.flexContainer}
-            behavior={Platform.OS === 'ios' ? 'padding' : null}>
+            behavior={Platform.OS === 'ios' ? 'padding' : null}
+          >
             {msg}
             <View style={styles.textCotainer}>
               <MText>{i18n.t('auth.confirmpassword')}</MText>
               <MText
                 style={[CS.colorSecondaryText, CS.textRight]}
-                onPress={this.props.close}>
+                onPress={this.props.close}
+              >
                 {i18n.t('close')}
               </MText>
             </View>

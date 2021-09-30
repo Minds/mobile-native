@@ -96,7 +96,8 @@ const Avatar = observer(({ route }: PropsType) => {
         aspectRatio: 1,
         borderRadius: 100,
         overflow: 'hidden',
-      })}>
+      })}
+    >
       {inside}
     </ImageBackground>
   );
@@ -128,7 +129,8 @@ const Banner = observer(({ route }: PropsType) => {
   return (
     <ImageBackground
       source={bannerSource}
-      style={useStyle({ width: '100%', aspectRatio: 2.2 })}>
+      style={useStyle({ width: '100%', aspectRatio: 2.2 })}
+    >
       {inside}
     </ImageBackground>
   );
@@ -241,20 +243,23 @@ const ChannelEditScreen = (props: PropsType) => {
       contentContainerStyle={useStyle({
         paddingBottom: insets.bottom + 100,
       })}
-      keyboardShouldPersistTaps="handled">
+      keyboardShouldPersistTaps="handled"
+    >
       <KeyboardAvoidingView
         style={useStyle('flexContainer', 'paddingTop3x')}
         behavior="position"
         keyboardVerticalOffset={Platform.select({
           ios: 64,
-        })}>
+        })}
+      >
         <LabeledComponent label={'Banner'} labelStyle={styles.labelStyle}>
           <Banner {...props} store={store} />
         </LabeledComponent>
         <LabeledComponent
           label={'Avatar'}
           labelStyle={styles.labelStyle}
-          wrapperStyle={theme.paddingBottom2x}>
+          wrapperStyle={theme.paddingBottom2x}
+        >
           <View style={theme.paddingLeft4x}>
             <Avatar {...props} store={store} />
           </View>

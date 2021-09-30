@@ -73,7 +73,8 @@ export default class Lock extends PureComponent<PropsType> {
             theme.paddingRight,
             theme.rowJustifyCenter,
             theme.centered,
-          ]}>
+          ]}
+        >
           <View style={styles.textContainer}>
             <MText>{intro}</MText>
           </View>
@@ -82,7 +83,8 @@ export default class Lock extends PureComponent<PropsType> {
             text={i18n.t('unlock').toUpperCase()}
             color="white"
             containerStyle={theme.rowJustifyCenter}
-            onPress={this.unlock}>
+            onPress={this.unlock}
+          >
             <Icon name="ios-flash" type="ionicon" size={22} color="white" />
           </Button>
         </View>
@@ -90,7 +92,8 @@ export default class Lock extends PureComponent<PropsType> {
         <View style={[theme.centered, theme.padding2x, styles.mask]}>
           <Icon name="ios-flash" type="ionicon" size={55} color="white" />
           <MText
-            style={[theme.colorWhite, theme.fontXXXL, theme.paddingBottom2x]}>
+            style={[theme.colorWhite, theme.fontXXXL, theme.paddingBottom2x]}
+          >
             {i18n.t('wire.amountMonth', { amount: this.getFormatedAmount() })}
           </MText>
           <MText style={[theme.colorWhite, theme.fontS, theme.textCenter]}>

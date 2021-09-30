@@ -36,7 +36,8 @@ const UsdForm = observer(({ store }: propsType) => {
       <View style={theme.paddingHorizontal4x}>
         <LabeledComponent
           label="Select Card"
-          wrapperStyle={theme.marginBottom4x}>
+          wrapperStyle={theme.marginBottom4x}
+        >
           <ScrollView contentContainerStyle={scrollviewStyle}>
             <StripeCardSelector onCardSelected={store.setCard} />
           </ScrollView>

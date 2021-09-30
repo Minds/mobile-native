@@ -112,7 +112,8 @@ export default class ConversationScreen extends Component {
             ]}
             onPress={() =>
               this.props.navigation.push('Channel', { guid: participant.guid })
-            }>
+            }
+          >
             <Image source={avatarImg} style={styles.avatar} />
           </TouchableOpacity>
         ),
@@ -215,7 +216,8 @@ export default class ConversationScreen extends Component {
     return (
       <KeyboardSpacingView
         enabled={Platform.OS === 'ios'}
-        style={[styles.container, ThemedStyles.style.bgSecondaryBackground]}>
+        style={[styles.container, ThemedStyles.style.bgSecondaryBackground]}
+      >
         <FlatList
           inverted={true}
           data={messages}
@@ -250,7 +252,8 @@ export default class ConversationScreen extends Component {
           <TouchableOpacity
             onPress={this.send}
             style={styles.sendicon}
-            testID="ConversationSendButton">
+            testID="ConversationSendButton"
+          >
             <Icon
               name="md-send"
               size={24}

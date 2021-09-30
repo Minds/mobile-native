@@ -51,7 +51,8 @@ export default function EmbedLink({
         ) : null}
         <TouchableOpacity
           style={ThemedStyles.style.padding4x}
-          onPress={openLink}>
+          onPress={openLink}
+        >
           <MText style={titleStyle}>{title}</MText>
           <MText style={domainStyle}>{domain(entity.perma_url)}</MText>
         </TouchableOpacity>
@@ -66,7 +67,8 @@ export default function EmbedLink({
         onPress={onImagePress}
         onLongPress={onImageLongPress}
         activeOpacity={1}
-        testID="Posted Image">
+        testID="Posted Image"
+      >
         <SmartImage
           style={imageStyle}
           source={source}

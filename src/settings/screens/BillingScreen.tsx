@@ -24,14 +24,16 @@ export default class BillingScreen extends Component {
           theme.borderBottom,
           theme.bcolorPrimaryBorder,
           theme.paddingBottom3x,
-        ]}>
+        ]}
+      >
         <MText
           style={[
             theme.marginTop2x,
             theme.fontHairline,
             theme.fontXL,
             theme.marginBottom2x,
-          ]}>
+          ]}
+        >
           {i18n.t('wire.selectCredit')}
         </MText>
         <StripeCardSelector onCardSelected={this.onSelectCard} />

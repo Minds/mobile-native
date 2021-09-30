@@ -55,7 +55,8 @@ const Input = ({ textToCopy, label, style }: InputProps) => {
             theme.bgSecondaryBackground,
             theme.paddingHorizontal4x,
             styles.copyText,
-          ]}>
+          ]}
+        >
           {i18n.t('copy')}
         </MText>
         <TouchableOpacity

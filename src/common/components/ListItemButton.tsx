@@ -25,7 +25,8 @@ export default function ListItemButton(
         theme.bcolorPrimaryBorder,
         theme.centered,
         props.style,
-      ]}>
+      ]}
+    >
       {props.children}
     </TouchableOpacity>
   );

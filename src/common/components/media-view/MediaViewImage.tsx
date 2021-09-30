@@ -125,7 +125,8 @@ export default function MediaViewImage({
         onLongPress={onImageLongPress}
         style={containerStyle}
         activeOpacity={1}
-        testID="Posted Image">
+        testID="Posted Image"
+      >
         <ExplicitImage
           resizeMode={mode}
           style={imageStyle}

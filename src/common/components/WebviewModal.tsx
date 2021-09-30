@@ -17,7 +17,8 @@ export default function ({
       isVisible={isVisible}
       coverScreen={false}
       onCloseButtonPress={onCloseButtonPress}
-      closeButtonPosition={closeButtonPosition}>
+      closeButtonPosition={closeButtonPosition}
+    >
       <WebView
         source={{
           uri,

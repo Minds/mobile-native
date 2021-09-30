@@ -232,9 +232,8 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
       costText = (
         <MText style={styles.costTextStyle}>
           <MText
-            style={
-              theme.colorPrimaryText
-            }>{`$${store.currentTier.usd} `}</MText>
+            style={theme.colorPrimaryText}
+          >{`$${store.currentTier.usd} `}</MText>
           per month
         </MText>
       );
@@ -248,9 +247,8 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
       costText = (
         <MText style={styles.costTextStyle}>
           <MText
-            style={
-              theme.colorPrimaryText
-            }>{`${store.currentTier.tokens} Tokens `}</MText>
+            style={theme.colorPrimaryText}
+          >{`${store.currentTier.tokens} Tokens `}</MText>
           per month
         </MText>
       );
@@ -324,7 +322,8 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
                   },
                 ],
                 [store.currentTier?.subscription_urn],
-              )}>
+              )}
+            >
               {!!store.currentTier?.subscription_urn && (
                 <MText style={styles.alreadyAMemberText}>
                   {i18n.t('membership.alreadyMember')}

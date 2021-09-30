@@ -33,7 +33,8 @@ export const CommentsEntityOutlet = observer((props: Props) => {
           ThemedStyles.style.paddingHorizontal2x,
           ThemedStyles.style.marginBottom3x,
         ]}
-        onPress={() => GoToComments()}>
+        onPress={() => GoToComments()}
+      >
         View {count} comments
       </MText>
     );
@@ -46,7 +47,8 @@ export const CommentsEntityOutlet = observer((props: Props) => {
   return (
     <KeyboardAvoidingView
       style={ThemedStyles.style.paddingBottom3x}
-      behavior={Platform.OS == 'ios' ? 'padding' : undefined}>
+      behavior={Platform.OS == 'ios' ? 'padding' : undefined}
+    >
       <View>
         {count > 0 ? ViewCommentsButton() : undefined}
 

@@ -21,7 +21,8 @@ const Merged = ({ notification, router }: PropsType) => {
       {notification.merged_count === 1 && (
         <MText
           style={bodyTextImportantStyle}
-          onPress={() => router.navToChannel(notification.merged_from[0])}>
+          onPress={() => router.navToChannel(notification.merged_from[0])}
+        >
           {notification.merged_from[0].name + ' '}
         </MText>
       )}

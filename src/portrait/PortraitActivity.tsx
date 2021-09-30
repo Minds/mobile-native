@@ -147,11 +147,13 @@ const PortraitActivity = observer((props: PropsType) => {
         <View style={theme.rowJustifyCenter}>
           <ActivityActionSheet entity={entity} navigation={navigation} />
         </View>
-      }>
+      }
+    >
       <View style={theme.rowJustifyStart}>
         <MText
           numberOfLines={1}
-          style={[theme.fontM, theme.colorSecondaryText, theme.paddingRight]}>
+          style={[theme.fontM, theme.colorSecondaryText, theme.paddingRight]}
+        >
           {i18n.date(parseInt(entity.time_created, 10) * 1000, 'friendly')}
           {!!entity.edited && (
             <MText style={[theme.fontS, theme.colorSecondaryText]}>
@@ -206,7 +208,8 @@ const PortraitActivity = observer((props: PropsType) => {
         {showNSFW && tappingArea}
         <View
           pointerEvents="box-none"
-          style={[theme.justifyCenter, theme.flexContainer, styles.content]}>
+          style={[theme.justifyCenter, theme.flexContainer, styles.content]}
+        >
           {showNSFW ? (
             <ExplicitOverlay entity={entity} />
           ) : (
@@ -233,7 +236,8 @@ const PortraitActivity = observer((props: PropsType) => {
                     theme.margin2x,
                     theme.borderHair,
                     theme.bcolorPrimaryBackground,
-                  ]}>
+                  ]}
+                >
                   <Activity
                     ref={remindRef}
                     hideTabs={true}
@@ -253,7 +257,8 @@ const PortraitActivity = observer((props: PropsType) => {
               theme.positionAbsoluteBottomRight,
               theme.padding2x,
               styles.volume,
-            ]}>
+            ]}
+          >
             <Icon
               onPress={store.toggleVolume}
               name={

@@ -22,9 +22,11 @@ const NsfwOption = props => {
   return (
     <TouchableOpacity
       style={[styles.optsRow, ThemedStyles.style.bcolorPrimaryBorder]}
-      onPress={onSelect}>
+      onPress={onSelect}
+    >
       <MText
-        style={[ThemedStyles.style.flexContainer, ThemedStyles.style.fontL]}>
+        style={[ThemedStyles.style.flexContainer, ThemedStyles.style.fontL]}
+      >
         {props.option.label}
       </MText>
       {props.option.selected && (
@@ -66,7 +68,8 @@ export default observer(function (props) {
           theme.colorSecondaryText,
           theme.fontL,
           theme.paddingHorizontal3x,
-        ]}>
+        ]}
+      >
         {i18n.t('nsfw.description1') + '\n\n' + i18n.t('nsfw.description2')}
       </MText>
 
@@ -77,7 +80,8 @@ export default observer(function (props) {
             theme.colorTertiaryText,
             theme.fontM,
             theme.paddingHorizontal3x,
-          ]}>
+          ]}
+        >
           {i18n.t('nsfw.safe').toUpperCase()}
         </MText>
         <View style={styles.optsContainer}>
@@ -89,7 +93,8 @@ export default observer(function (props) {
             theme.colorTertiaryText,
             theme.fontM,
             theme.paddingHorizontal3x,
-          ]}>
+          ]}
+        >
           {i18n.t('nsfw.categories').toUpperCase()}
         </MText>
         <View style={styles.optsContainer}>

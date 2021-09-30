@@ -80,7 +80,8 @@ const MonetizeScreen = observer(({ route }: PropsType) => {
           theme.colorSecondaryText,
           theme.fontL,
           theme.paddingHorizontal3x,
-        ]}>
+        ]}
+      >
         {i18n.t('capture.paywallDescription')}
       </MText>
       <MenuItem

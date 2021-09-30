@@ -59,7 +59,8 @@ export default function PermissionsCheck(props: PropsType) {
     return (
       <TouchableOpacity
         style={[theme.flexContainer, theme.centered, theme.padding2x]}
-        onPress={tap}>
+        onPress={tap}
+      >
         <MText style={[theme.fontXL, theme.textCenter]}>
           {i18nService.t('capture.allowMinds')}
         </MText>
@@ -75,12 +76,14 @@ export default function PermissionsCheck(props: PropsType) {
       <View style={[theme.flexContainer, theme.centered, theme.padding2x]}>
         <MText
           style={[theme.fontXL, theme.textCenter]}
-          onPress={() => openSettings()}>
+          onPress={() => openSettings()}
+        >
           {i18nService.t('capture.blockedMinds')}
         </MText>
         <MText
           style={[theme.fontL, theme.paddingTop2x]}
-          onPress={() => openSettings()}>
+          onPress={() => openSettings()}
+        >
           {i18nService.t('permissions.tapAllow')}
         </MText>
       </View>

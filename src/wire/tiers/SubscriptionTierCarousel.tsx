@@ -111,7 +111,8 @@ export default class SubscriptionTierCarousel extends PureComponent<PropsType> {
           theme.padding2x,
           theme.border,
           theme.borderBottom,
-        ]}>
+        ]}
+      >
         <View style={theme.columnAlignCenter}>
           <MText style={[theme.fontXXL, theme.fontMedium]}>{text}</MText>
           <MText numberOfLines={5} style={[theme.fontL, theme.fontMedium]}>

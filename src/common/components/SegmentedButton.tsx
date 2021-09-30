@@ -24,12 +24,14 @@ const SegmentedButton = (props: PropsType) => {
   return (
     <TouchableOpacity
       style={[theme.rowJustifyStart, props.containerStyle]}
-      onPress={props.onPress}>
+      onPress={props.onPress}
+    >
       <Button
         containerStyle={[
           buttonStyle,
           !props.childrenButton2 ? styles.button : styles.leftButton,
-        ]}>
+        ]}
+      >
         {props.childrenButton1}
       </Button>
       {props.childrenButton2 && (

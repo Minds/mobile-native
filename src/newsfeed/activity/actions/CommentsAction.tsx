@@ -65,7 +65,8 @@ const CommentsAction = observer((props: PropsType) => {
     <TouchableOpacityCustom
       style={actionsContainerStyle}
       onPress={openComments}
-      testID={props.testID}>
+      testID={props.testID}
+    >
       <Icon
         style={[theme.colorIcon, theme.marginRight]}
         size="small"

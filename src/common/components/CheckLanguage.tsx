@@ -32,7 +32,8 @@ export default observer(function CheckLanguage() {
             theme.bcolorPrimaryBorder,
             theme.border,
             theme.borderRadius2x,
-          ]}>
+          ]}
+        >
           <View style={theme.rowJustifyEnd}>
             <Icon
               onPress={() =>

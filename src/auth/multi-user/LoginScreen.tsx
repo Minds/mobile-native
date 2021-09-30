@@ -19,7 +19,8 @@ const LoginScreen = ({ navigation, route }: PropsType) => {
       marginTop={20}
       contentContainer={theme.bgPrimaryBackgroundHighlight}
       titleStyle={theme.colorPrimaryText}
-      backIconStyle={theme.colorPrimaryText}>
+      backIconStyle={theme.colorPrimaryText}
+    >
       <LoginFormHandler
         navigation={navigation}
         route={route}

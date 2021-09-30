@@ -15,7 +15,8 @@ export default class LogsScreen extends Component {
       <LogView
         inverted={false}
         multiExpanded={true}
-        timeStampFormat="HH:mm:ss"></LogView>
+        timeStampFormat="HH:mm:ss"
+      ></LogView>
     );
   }
 }

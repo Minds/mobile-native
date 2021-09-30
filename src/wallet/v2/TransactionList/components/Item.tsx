@@ -139,7 +139,8 @@ const getTypeStringAndIcon = (
             style={theme.colorLink}
             onPress={() =>
               navigation.push('Channel', { username: otherUser.username })
-            }>
+            }
+          >
             {'@' + otherUser.username}
           </MText>
         </MText>

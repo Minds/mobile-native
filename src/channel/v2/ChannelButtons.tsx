@@ -103,11 +103,8 @@ const ChannelButtons = withErrorBoundary(
     const showSubscribe = shouldShow('subscribe');
     return (
       <View
-        style={[
-          theme.rowJustifyEnd,
-          theme.marginRight2x,
-          props.containerStyle,
-        ]}>
+        style={[theme.rowJustifyEnd, theme.marginRight2x, props.containerStyle]}
+      >
         {props.children}
         {shouldShow('edit') && <Edit {...props} />}
         {shouldShow('wire') && (

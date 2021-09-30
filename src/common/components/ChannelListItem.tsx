@@ -77,7 +77,8 @@ const ChannelListItem = (props: PropsType) => {
           <MText style={nameStyles}>{props.channel.name}</MText>
           <MText
             style={usernameStyles}
-            testID={`username${props.channel.username}`}>
+            testID={`username${props.channel.username}`}
+          >
             @{props.channel.username}
           </MText>
         </View>

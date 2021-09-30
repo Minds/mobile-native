@@ -98,10 +98,12 @@ const Captcha = observer(
         animationInTiming={100}
         animationOutTiming={100}
         animationOut="fadeOut"
-        animationIn="fadeIn">
+        animationIn="fadeIn"
+      >
         <View style={[styles.modal, backgroundPrimary]}>
           <View
-            style={[theme.paddingHorizontal4x, theme.rowJustifySpaceBetween]}>
+            style={[theme.paddingHorizontal4x, theme.rowJustifySpaceBetween]}
+          >
             <MText
               onPress={store.hideModal}
               style={[
@@ -109,7 +111,8 @@ const Captcha = observer(
                 theme.colorWhite,
                 theme.paddingVertical4x,
                 theme.textCenter,
-              ]}>
+              ]}
+            >
               {i18nService.t('close')}
             </MText>
             <MText
@@ -119,7 +122,8 @@ const Captcha = observer(
                 theme.paddingVertical4x,
                 theme.textCenter,
                 theme.bold,
-              ]}>
+              ]}
+            >
               {i18nService.t('verification')}
             </MText>
             <MText
@@ -129,7 +133,8 @@ const Captcha = observer(
                 theme.paddingVertical4x,
                 theme.textCenter,
                 theme.colorLink,
-              ]}>
+              ]}
+            >
               {i18nService.t('verify')}
             </MText>
           </View>
@@ -140,7 +145,8 @@ const Captcha = observer(
                 theme.alignCenter,
                 theme.rowJustifyCenter,
                 theme.paddingVertical4x,
-              ]}>
+              ]}
+            >
               <Image source={src} style={styles.image} />
               <Icon
                 name="reload"

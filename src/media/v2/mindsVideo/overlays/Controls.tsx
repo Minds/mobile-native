@@ -45,7 +45,8 @@ const SourceSelector = ({ localStore }: SourceSelectorPropsType) => {
             theme.paddingBottom,
             i === localStore.source ? theme.bold : null,
           ]}
-          onPress={() => localStore.setSource(i)}>
+          onPress={() => localStore.setSource(i)}
+        >
           {s.size}p
         </MText>
       ))}
@@ -75,10 +76,12 @@ const Controls = observer(({ localStore, entity, hideOverlay }: PropsType) => {
       <DebouncedTouchableWithoutFeedback
         hitSlop={hitSlop}
         style={styles.overlayContainer}
-        onPress={localStore.openControlOverlay}>
+        onPress={localStore.openControlOverlay}
+      >
         <View style={styles.overlayContainer}>
           <View
-            style={[theme.positionAbsolute, theme.centered, theme.marginTop2x]}>
+            style={[theme.positionAbsolute, theme.centered, theme.marginTop2x]}
+          >
             <View style={[theme.centered, styles.playContainer]}>
               <Icon
                 onPress={() =>
@@ -100,7 +103,8 @@ const Controls = observer(({ localStore, entity, hideOverlay }: PropsType) => {
                 withOverlay={false}
                 height={60}
                 onOpen={localStore.openControlOverlay}
-                backgroundColor="rgba(48,48,48,0.7)">
+                backgroundColor="rgba(48,48,48,0.7)"
+              >
                 <Icon
                   name="ios-settings-sharp"
                   size={iconResSize}
@@ -126,7 +130,8 @@ const Controls = observer(({ localStore, entity, hideOverlay }: PropsType) => {
               <View style={[theme.padding, theme.rowJustifySpaceEvenly]}>
                 <DebouncedTouchableWithoutFeedback
                   hitSlop={hitSlop}
-                  onPress={localStore.toggleVolume}>
+                  onPress={localStore.toggleVolume}
+                >
                   <Icon
                     name={
                       localStore.volume === 0
@@ -151,7 +156,8 @@ const Controls = observer(({ localStore, entity, hideOverlay }: PropsType) => {
         theme.positionAbsoluteBottomRight,
         theme.padding2x,
         styles.floatingVolume,
-      ]}>
+      ]}
+    >
       <Icon
         onPress={localStore.toggleVolume}
         name={localStore.volume === 0 ? 'ios-volume-mute' : 'ios-volume-high'}

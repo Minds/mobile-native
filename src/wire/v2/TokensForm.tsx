@@ -41,7 +41,8 @@ const TokensForm = observer(({ store }: propsType) => {
       <View style={theme.paddingHorizontal4x}>
         <LabeledComponent
           label="Wallet Type"
-          wrapperStyle={theme.marginBottom4x}>
+          wrapperStyle={theme.marginBottom4x}
+        >
           {ONCHAIN_ENABLED ? (
             <MindsSwitch
               leftText={i18nService.t('blockchain.offchain')}
@@ -60,9 +61,11 @@ const TokensForm = observer(({ store }: propsType) => {
 
         <LabeledComponent
           label="Wallet Balance"
-          wrapperStyle={theme.marginBottom4x}>
+          wrapperStyle={theme.marginBottom4x}
+        >
           <MText
-            style={[theme.colorPrimaryText, theme.fontMedium, theme.fontL]}>
+            style={[theme.colorPrimaryText, theme.fontMedium, theme.fontL]}
+          >
             {store.walletBalance}
           </MText>
         </LabeledComponent>
@@ -78,7 +81,8 @@ const TokensForm = observer(({ store }: propsType) => {
                     theme.fontMedium,
                     theme.paddingLeft,
                     theme.fontL,
-                  ]}>
+                  ]}
+                >
                   Repeat ?
                 </MText>
               }

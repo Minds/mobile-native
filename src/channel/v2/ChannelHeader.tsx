@@ -124,7 +124,8 @@ const ChannelHeader = withErrorBoundary(
                   <View style={bottomBarInnerWrapper}>
                     <MText
                       style={styles.viewScheduled}
-                      onPress={props.store.toggleScheduled}>
+                      onPress={props.store.toggleScheduled}
+                    >
                       {i18n.t('channel.viewScheduled')}:{' '}
                       <MText style={theme.colorPrimaryText}>
                         {props.store.feedStore.scheduledCount}
@@ -257,13 +258,15 @@ const ChannelHeader = withErrorBoundary(
               <MText style={styles.subscribersWrapper}>
                 <MText
                   onPress={props.onOpenSubscribers}
-                  style={theme.colorSecondaryText}>
+                  style={theme.colorSecondaryText}
+                >
                   <MText> {abbrev(channel.subscribers_count, 0)}</MText>
                   {' ' + i18n.t('subscribers') + '    '}
                 </MText>
                 <MText
                   onPress={props.onOpenSubscriptions}
-                  style={theme.colorSecondaryText}>
+                  style={theme.colorSecondaryText}
+                >
                   <MText> {abbrev(channel.subscriptions_count, 0)}</MText>
                   {' ' + i18n.t('subscriptions')}
                 </MText>
@@ -285,7 +288,8 @@ const ChannelHeader = withErrorBoundary(
                   fades={['left']}
                   fadeLength={FADE_LENGTH}
                   onLayout={onFadeViewLayout}
-                  style={styles.fadeView}>
+                  style={styles.fadeView}
+                >
                   <FeedFilter
                     store={props.store}
                     containerStyles={styles.feedFilter}

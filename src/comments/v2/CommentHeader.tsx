@@ -65,14 +65,16 @@ class CommentHeader extends PureComponent<PropsType> {
             <View style={styles.nameContainer}>
               <DebouncedTouchableOpacity
                 onPress={this._navToChannel}
-                style={[theme.rowJustifyStart, theme.alignCenter]}>
+                style={[theme.rowJustifyStart, theme.alignCenter]}
+              >
                 <MText
                   numberOfLines={1}
                   style={[
                     styles.username,
                     theme.colorPrimaryText,
                     theme.flexContainer,
-                  ]}>
+                  ]}
+                >
                   {name || channel.username}
                   {Boolean(name) && (
                     <MText
@@ -81,7 +83,8 @@ class CommentHeader extends PureComponent<PropsType> {
                         styles.username,
                         theme.colorSecondaryText,
                         theme.fontLight,
-                      ]}>
+                      ]}
+                    >
                       {' '}
                       @{channel.username}
                     </MText>
@@ -94,7 +97,8 @@ class CommentHeader extends PureComponent<PropsType> {
                   ThemedStyles.style.colorSecondaryText,
                 ]}
                 lineBreakMode="tail"
-                numberOfLines={1}>
+                numberOfLines={1}
+              >
                 {date}
               </MText>
             </View>

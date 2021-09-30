@@ -59,7 +59,8 @@ const Title = ({ type }) => {
           <MText style={theme.colorWhite}>
             {i18n.t(`analytics.tokens.tooltips.${type}`)}
           </MText>
-        }>
+        }
+      >
         <Icon
           name="information-variant"
           size={15}

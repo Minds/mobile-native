@@ -78,7 +78,8 @@ const PasswordConfirmScreen = observer((props: PropsType) => {
     <SafeAreaView style={[theme.flexContainer, theme.bgPrimaryBackground]}>
       <KeyboardAvoidingView
         style={theme.flexContainer}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      >
         <View style={styles.container}>
           <Icon
             name="chevron-left"
@@ -93,14 +94,16 @@ const PasswordConfirmScreen = observer((props: PropsType) => {
           <TouchableOpacity
             onPress={localStore.submit}
             //@ts-ignore
-            style={touchStyle}>
+            style={touchStyle}
+          >
             <MText
               style={[
                 theme.fontL,
                 theme.fontMedium,
                 theme.colorLink,
                 theme.paddingTop,
-              ]}>
+              ]}
+            >
               {i18n.t('continue')}
             </MText>
           </TouchableOpacity>
@@ -111,7 +114,8 @@ const PasswordConfirmScreen = observer((props: PropsType) => {
             theme.colorSecondaryText,
             theme.marginBottom6x,
             theme.paddingLeft4x,
-          ]}>
+          ]}
+        >
           {i18n.t('auth.confirmPasswordModal')}
         </MText>
         <View style={theme.fullWidth}>

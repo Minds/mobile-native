@@ -75,7 +75,8 @@ export default class ErrorBoundary extends Component<PropsType, StateType> {
             theme.fontHairline,
             theme.colorAlert,
           ]}
-          onPress={this.copy}>
+          onPress={this.copy}
+        >
           {this.props.message || i18n.t('errorDisplaying')}
         </MText>
         <MText
@@ -86,7 +87,8 @@ export default class ErrorBoundary extends Component<PropsType, StateType> {
             theme.marginBottom2x,
             theme.fontHairline,
           ]}
-          onPress={this.copy}>
+          onPress={this.copy}
+        >
           {i18n.t('tapCopyError')}
         </MText>
       </View>

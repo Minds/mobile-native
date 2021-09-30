@@ -55,7 +55,8 @@ const BoostPostScreen = observer(({ route }: PropsType) => {
   return (
     <ModalScreen
       title={i18n.t('boosts.boostPost')}
-      source={require('../../assets/boostBG.png')}>
+      source={require('../../assets/boostBG.png')}
+    >
       <View style={theme.marginTop4x}>
         <TopbarTabbar tabs={tabs} onChange={setTab} current={tab} />
       </View>

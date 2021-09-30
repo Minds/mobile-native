@@ -79,9 +79,8 @@ const TiersList = observer(
                 <View style={titleStyle}>
                   <MText style={theme.colorPrimaryText}>{tier.name}</MText>
                   <MText
-                    style={
-                      theme.colorSecondaryText
-                    }>{`$${tier.usd}+ / mth`}</MText>
+                    style={theme.colorSecondaryText}
+                  >{`$${tier.usd}+ / mth`}</MText>
                 </View>
               ),
               icon: !useForSelection

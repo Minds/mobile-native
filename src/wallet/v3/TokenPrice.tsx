@@ -33,7 +33,8 @@ export default observer(function TokenPrice() {
         theme.borderRadius10x,
         theme.rowJustifyStart,
         theme.paddingRight2x,
-      ]}>
+      ]}
+    >
       <View style={styles.avatarContainer}>
         <FastImage
           style={styles.avatar}

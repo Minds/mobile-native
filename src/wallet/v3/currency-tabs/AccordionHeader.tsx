@@ -30,7 +30,8 @@ const AccordionHeader = ({ title, subtitle, tooltip, isActive }: PropsType) => {
         theme.paddingVertical2x,
         theme.paddingRight5x,
         theme.paddingLeft5x,
-      ]}>
+      ]}
+    >
       <View style={[theme.flexContainer, theme.rowJustifyStart]}>
         {typeof title === 'string' && (
           <MText style={[theme.fontLM, theme.fontMedium]}>{title}</MText>
@@ -45,7 +46,8 @@ const AccordionHeader = ({ title, subtitle, tooltip, isActive }: PropsType) => {
               width={tooltip.width}
               height={tooltip.height}
               backgroundColor={ThemedStyles.getColor('Link')}
-              popover={<MText style={theme.colorWhite}>{tooltip.title}</MText>}>
+              popover={<MText style={theme.colorWhite}>{tooltip.title}</MText>}
+            >
               <Icon name="info" size="tiny" />
             </Tooltip>
           </View>

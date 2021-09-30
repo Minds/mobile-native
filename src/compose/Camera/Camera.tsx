@@ -159,14 +159,16 @@ export default observer(function (props: PropsType) {
       <MotiView
         style={theme.flexContainer}
         animate={animateCamPreview}
-        transition={camAnimTransition}>
+        transition={camAnimTransition}
+      >
         {device != null && (
           <ZoomGesture
             zoom={zoom}
             zoomVisible={zoomVisible}
             minZoom={minZoom}
             maxZoom={maxZoom}
-            store={store}>
+            store={store}
+          >
             <FocusGesture store={store} device={device} camera={camera}>
               <ReanimatedCamera
                 ref={camera}
@@ -203,7 +205,8 @@ export default observer(function (props: PropsType) {
         <FadeFrom
           direction="right"
           delay={190}
-          style={orientationStyle.lowLight}>
+          style={orientationStyle.lowLight}
+        >
           <Icon
             size={30}
             name={store.lowLightBoost ? 'moon-sharp' : 'moon-outline'}

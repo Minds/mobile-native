@@ -27,7 +27,8 @@ const BoostChannelScreen = observer(() => {
   return (
     <ModalScreen
       title={i18n.t('boosts.boostChannel')}
-      source={require('../../assets/boostBG.png')}>
+      source={require('../../assets/boostBG.png')}
+    >
       <View style={[theme.flexContainer, theme.marginTop7x]}>
         <BoostInput localStore={localStore} />
         <BoostPayment localStore={localStore} />

@@ -69,7 +69,8 @@ const ActivityMultiplier = ({ multiplier }: PropsType) => {
   return (
     <TouchableOpacity
       style={styles.mainContainer}
-      onPress={() => tooltipRef.current.toggleTooltip()}>
+      onPress={() => tooltipRef.current.toggleTooltip()}
+    >
       <View style={[styles.multiplierContainer, theme.bgPrimaryBackground]}>
         <MText style={theme.fontS}>{activityLevel}.0</MText>
         <View style={[styles.multiplierRow]}>
@@ -95,7 +96,8 @@ const ActivityMultiplier = ({ multiplier }: PropsType) => {
         width={250}
         height={200}
         backgroundColor={ThemedStyles.getColor('Link')}
-        popover={<ToolTipText />}>
+        popover={<ToolTipText />}
+      >
         <View />
       </Tooltip>
       <View style={[styles.infoContainer, theme.bgTertiaryBackground]}>

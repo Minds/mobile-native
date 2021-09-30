@@ -26,13 +26,15 @@ export default function ActivityPlaceHolder() {
         theme.bcolorPrimaryBackground,
         theme.paddingBottom4x,
         theme.paddingTop2x,
-      ]}>
+      ]}
+    >
       <Placeholder
         Left={() => (
           <PlaceholderMedia isRound color={color} style={theme.marginRight2x} />
         )}
         style={theme.paddingHorizontal3x}
-        Animation={animation}>
+        Animation={animation}
+      >
         <View>
           <PlaceholderLine width={20} color={color} />
           <PlaceholderLine width={30} color={color} />

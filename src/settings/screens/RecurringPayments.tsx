@@ -71,7 +71,8 @@ const RecurringPayments = () => {
   if (subscriptions.length === 0) {
     return (
       <View
-        style={[theme.flexContainer, theme.centered, theme.paddingBottom7x]}>
+        style={[theme.flexContainer, theme.centered, theme.paddingBottom7x]}
+      >
         <MText style={[theme.fontXL, theme.colorSecondaryText]}>
           {i18n.t('settings.subscriptionListEmpty')}
         </MText>

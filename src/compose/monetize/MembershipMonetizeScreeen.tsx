@@ -94,7 +94,8 @@ const MembershipMonetizeScreeen = observer(
         store={store}
         doneText={i18n.t('save')}
         onPressRight={save}
-        hideDone={!localStore.selectedTier.urn}>
+        hideDone={!localStore.selectedTier.urn}
+      >
         <View style={[theme.paddingTop3x, theme.paddingHorizontal3x]}>
           <MText style={title}>{i18n.t('monetize.subScreensTitle')}</MText>
           <MText style={descriptionTextStyle}>

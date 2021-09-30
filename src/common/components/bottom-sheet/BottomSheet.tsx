@@ -76,7 +76,8 @@ export default forwardRef<BottomSheetModal, PropsType>((props, ref) => {
       enablePanDownToClose={true}
       backgroundComponent={null}
       style={styles.sheetContainer as any}
-      {...other}>
+      {...other}
+    >
       <View style={contStyle} onLayout={handleContentLayout}>
         {Boolean(title) && <MText style={styles.title}>{title}</MText>}
         {Boolean(detail) && <MText style={styles.detail}>{detail}</MText>}

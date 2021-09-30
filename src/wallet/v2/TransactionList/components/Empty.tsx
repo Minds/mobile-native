@@ -13,7 +13,8 @@ const Empty = () => {
         theme.textCenter,
         theme.paddingTop4x,
         theme.colorSecondaryText,
-      ]}>
+      ]}
+    >
       {i18n.t('wallet.transactionsEmpty')}
     </MText>
   );

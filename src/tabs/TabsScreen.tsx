@@ -125,7 +125,8 @@ const TabBar = ({ state, descriptors, navigation }) => {
             testID={options.tabBarTestID}
             onPress={onPress}
             onLongPress={onLongPress}
-            style={styles.buttonContainer}>
+            style={styles.buttonContainer}
+          >
             {icon}
           </Component>
         );
@@ -161,7 +162,8 @@ const Tabs = observer(function ({ navigation }) {
       <Tab.Navigator
         initialRouteName="Newsfeed"
         tabBar={tabBar}
-        screenOptions={tabOptions}>
+        screenOptions={tabOptions}
+      >
         <Tab.Screen
           name="Newsfeed"
           component={NewsfeedScreen}

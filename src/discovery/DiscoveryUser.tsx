@@ -104,7 +104,8 @@ class DiscoveryUser<T extends PropsType> extends Component<T, StateType> {
           ThemedStyles.style.borderBottomHair,
         ]}
         onPress={this._navToChannel}
-        {...otherProps}>
+        {...otherProps}
+      >
         <Image source={this.state.source} style={styles.avatar} />
         <View style={[ThemedStyles.style.flexContainerCenter]}>
           <MText style={[styles.body, ThemedStyles.style.fontXL]}>
@@ -115,7 +116,8 @@ class DiscoveryUser<T extends PropsType> extends Component<T, StateType> {
               styles.body,
               ThemedStyles.style.fontS,
               ThemedStyles.style.colorSecondaryText,
-            ]}>
+            ]}
+          >
             @{row.item.username}
           </MText>
         </View>

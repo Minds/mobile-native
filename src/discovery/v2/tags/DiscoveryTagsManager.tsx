@@ -197,7 +197,8 @@ const DiscoveryTagsManager = (props: Props, ref) => {
         autoCapitalize="none"
         onSubmitEditing={onCreate}
         value={store.inputValue}
-        onChangeText={v => store.setValue(v)}>
+        onChangeText={v => store.setValue(v)}
+      >
         <Icon
           name="add-circle-outline"
           size={22}

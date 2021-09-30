@@ -283,7 +283,8 @@ const MainScreen = () => {
         gestureHandlerProps,
         drawerType: 'slide',
         drawerStyle: isLargeScreen ? null : ThemedStyles.style.width90,
-      }}>
+      }}
+    >
       <DrawerNav.Screen
         name="Tabs"
         component={TabsScreen}
@@ -690,7 +691,8 @@ const AuthStack = function () {
       <AuthStackNav.Navigator
         headerMode="none"
         // @ts-ignore
-        screenOptions={AuthTransition}>
+        screenOptions={AuthTransition}
+      >
         <AuthStackNav.Screen name="Login" component={LoginScreen} />
         <AuthStackNav.Screen name="Register" component={RegisterScreen} />
         <AuthStackNav.Screen
@@ -723,7 +725,8 @@ const RootStack = function (props) {
   return (
     <RootStackNav.Navigator
       initialRouteName={initial}
-      screenOptions={defaultScreenOptions}>
+      screenOptions={defaultScreenOptions}
+    >
       {props.isLoggedIn ? (
         <>
           <RootStackNav.Screen

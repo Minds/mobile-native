@@ -41,7 +41,8 @@ const PlusDiscoveryScreen = observer(() => {
             theme.titleText,
             theme.paddingLeft4x,
             theme.paddingVertical2x,
-          ]}>
+          ]}
+        >
           {i18n.t('plusTabTitleDiscovery')}
         </MText>
         <TopbarTabbar

@@ -52,7 +52,8 @@ export default class PulseAnimAvatar extends React.Component {
         <TouchableOpacity
           activeOpacity={0.5}
           onPress={onPress}
-          style={this.state.sizeStyle}>
+          style={this.state.sizeStyle}
+        >
           <FastImage
             source={this.state.avatarUri}
             style={[this.state.imageStyle, this.props.style]}

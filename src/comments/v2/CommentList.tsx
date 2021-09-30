@@ -107,7 +107,8 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
 
         <TouchableOpacity
           onPress={() => props.store.setShowInput(true)}
-          style={styles.touchableStyles}>
+          style={styles.touchableStyles}
+        >
           <FastImage source={user.getAvatarSource()} style={styles.avatar} />
           <MText style={styles.reply}>
             {i18n.t(props.store.parent ? 'activity.typeReply' : placeHolder)}

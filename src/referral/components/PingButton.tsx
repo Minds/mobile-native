@@ -50,7 +50,8 @@ const PingButton = observer(
                 styles.iconContainer,
                 theme.padding,
               ]
-        }>
+        }
+      >
         {loading ? (
           <ActivityIndicator
             size={'small'}

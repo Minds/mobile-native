@@ -180,7 +180,8 @@ const FabScreen = observer(({ route, navigation }) => {
     <Fragment>
       <ScrollView
         keyboardShouldPersistTaps="always"
-        contentContainerStyle={cleanTop}>
+        contentContainerStyle={cleanTop}
+      >
         <View style={theme.rowJustifySpaceBetween}>
           <View style={theme.rowJustifyStart}>
             <MIcon
@@ -195,7 +196,8 @@ const FabScreen = observer(({ route, navigation }) => {
           </View>
           <MText
             style={[theme.centered, theme.bold, theme.paddingRight4x]}
-            onPress={store.confirmSend}>
+            onPress={store.confirmSend}
+          >
             {i18n.t('channel.fabSend')}
           </MText>
         </View>

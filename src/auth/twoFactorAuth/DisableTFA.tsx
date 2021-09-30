@@ -66,7 +66,8 @@ const DisableTFA = observer(({ route }: PropsType) => {
             styles.disableButton,
             theme.bcolorPrimaryBorder,
             theme.bgPrimaryBackgroundHighlight,
-          ]}>
+          ]}
+        >
           <MText style={theme.fontL}>{i18n.t('settings.TFADisableYes')}</MText>
         </TouchableOpacity>
       )}

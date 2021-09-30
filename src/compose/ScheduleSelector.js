@@ -56,12 +56,14 @@ export default observer(function (props) {
           theme.colorSecondaryText,
           theme.fontL,
           theme.paddingHorizontal3x,
-        ]}>
+        ]}
+      >
         {i18n.t('activity.scheduled')}
       </MText>
       <TouchableOpacity
         style={[styles.optsRow, theme.bcolorPrimaryBorder]}
-        onPress={onNow}>
+        onPress={onNow}
+      >
         <MText style={[theme.flexContainer, theme.fontL]}>
           {i18n.t('now')}
         </MText>
@@ -71,7 +73,8 @@ export default observer(function (props) {
       </TouchableOpacity>
       <TouchableOpacity
         style={[styles.optsRow, theme.bcolorPrimaryBorder]}
-        onPress={localStore.showPicker}>
+        onPress={localStore.showPicker}
+      >
         <MText style={[theme.flexContainer, theme.fontL]}>
           {i18n.t('capture.customTime')}
         </MText>

@@ -65,7 +65,8 @@ export default function () {
         theme.flexContainer,
         theme.bgPrimaryBackground,
         theme.paddingTop4x,
-      ]}>
+      ]}
+    >
       <View style={rowStyle}>
         <MText style={textStyle}>{i18n.t('messenger.allowContact')}</MText>
         <Switch value={allowUnsubscribedContact} onSyncPress={save} />

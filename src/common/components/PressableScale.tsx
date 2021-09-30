@@ -37,13 +37,15 @@ export default function PressableScale(props) {
     <Pressable
       onPressIn={onPressInCb}
       onPressOut={onPressOutCb}
-      {...otherProps}>
+      {...otherProps}
+    >
       <MotiView
         state={scaleIn}
         style={style}
         transition={{
           type: 'timing',
-        }}>
+        }}
+      >
         {children}
       </MotiView>
     </Pressable>

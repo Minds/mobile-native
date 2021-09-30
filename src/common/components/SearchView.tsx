@@ -83,7 +83,8 @@ export default class SearchView extends PureComponent<Props> {
           return (
             <TouchableOpacity
               style={styles.iconRight}
-              onPress={iconRightOnPress}>
+              onPress={iconRightOnPress}
+            >
               <Icon size={18} name={iconRight} color={'#444'} />
             </TouchableOpacity>
           );

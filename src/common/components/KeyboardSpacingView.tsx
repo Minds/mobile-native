@@ -101,7 +101,8 @@ export const ScreenHeightProvider = ({ children }) => {
       style={ThemedStyles.style.flexContainer}
       onLayout={({ nativeEvent }) =>
         setHeight(nativeEvent.layout.height + (StatusBar.currentHeight || 0))
-      }>
+      }
+    >
       <screenRealHeightContext.Provider value={height}>
         {children}
       </screenRealHeightContext.Provider>

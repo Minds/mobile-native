@@ -43,7 +43,8 @@ const TimeMultiplier = ({ multiplier }: PropsType) => {
   return (
     <TouchableOpacity
       style={styles.mainContainer}
-      onPress={() => tooltipRef.current.toggleTooltip()}>
+      onPress={() => tooltipRef.current.toggleTooltip()}
+    >
       <View style={[styles.multiplierContainer, theme.bgPrimaryBackground]}>
         <View style={[styles.multiplierRow]}>
           <MText style={theme.fontS}>{format(multiplier)}</MText>
@@ -52,7 +53,8 @@ const TimeMultiplier = ({ multiplier }: PropsType) => {
               theme.flexContainer,
               theme.bgSecondaryBackground,
               theme.marginHorizontal,
-            ]}>
+            ]}
+          >
             <View style={progressBar} />
           </View>
           <MText style={theme.fontS}>3.0</MText>
@@ -66,7 +68,8 @@ const TimeMultiplier = ({ multiplier }: PropsType) => {
         width={225}
         height={100}
         backgroundColor={ThemedStyles.getColor('Link')}
-        popover={<ToolTipText />}>
+        popover={<ToolTipText />}
+      >
         <View />
       </Tooltip>
       <View style={[styles.infoContainer, theme.bgTertiaryBackground]}>

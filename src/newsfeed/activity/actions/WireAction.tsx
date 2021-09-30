@@ -26,7 +26,8 @@ export default class WireAction extends PureComponent<PropsType> {
     return (
       <TouchableOpacityCustom
         style={actionsContainerStyle}
-        onPress={this.openWire}>
+        onPress={this.openWire}
+      >
         <Icon
           style={ThemedStyles.style.colorIconActive}
           name="attach-money"

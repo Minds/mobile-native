@@ -98,7 +98,8 @@ export default function ReadMore({
         numberOfLines={numberOfLines + additional}
         ellipsizeMode={'tail'}
         style={style}
-        onTextLayout={onTextLayout}>
+        onTextLayout={onTextLayout}
+      >
         <Tags navigation={navigation} style={style} selectable={true}>
           {text}
         </Tags>

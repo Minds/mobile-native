@@ -141,7 +141,8 @@ const WalletScreen = observer((props: PropsType) => {
           theme.rowJustifySpaceBetween,
           theme.paddingHorizontal4x,
           theme.alignCenter,
-        ]}>
+        ]}
+      >
         <MText style={[theme.fontXXXL, theme.bold]}>
           {i18n.t('wallet.wallet')}
         </MText>

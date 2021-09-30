@@ -224,7 +224,8 @@ export default class ReportScreen extends Component {
       return (
         <MText
           style={[theme.fontL, theme.padding2x, theme.textCenter]}
-          onPress={this.mailToCopyright}>
+          onPress={this.mailToCopyright}
+        >
           {i18n.t('reports.DMCA')}
         </MText>
       );
@@ -244,7 +245,8 @@ export default class ReportScreen extends Component {
             this.state.reason
               ? this.selectSubreason(reason)
               : this.selectReason(reason)
-          }>
+          }
+        >
           <View style={styles.reasonItemLabelContainer}>
             <View style={theme.rowStretch}>
               <MText style={styles.reasonItemLabel}>{reason.label}</MText>
@@ -301,7 +303,8 @@ export default class ReportScreen extends Component {
 
     return (
       <ScrollView
-        style={[theme.flexContainer, ThemedStyles.style.bgSecondaryBackground]}>
+        style={[theme.flexContainer, ThemedStyles.style.bgSecondaryBackground]}
+      >
         {this.state.reason && (
           <MText
             style={[
@@ -309,7 +312,8 @@ export default class ReportScreen extends Component {
               theme.bgPrimaryBackground,
               theme.colorWhite,
               theme.padding,
-            ]}>
+            ]}
+          >
             {this.state.reason.label}
           </MText>
         )}
