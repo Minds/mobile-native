@@ -113,7 +113,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',
-    // backgroundColor: 'red',
   },
   micro: {
     width: ICON_SIZES.micro,
