@@ -14,7 +14,7 @@ export const resetStackAndGoBack = navigation => {
   navigation.dispatch(state => {
     setTimeout(() => {
       navigation.goBack();
-    }, 400);
+    }, 50);
 
     return CommonActions.reset({
       ...state,
