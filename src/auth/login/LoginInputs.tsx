@@ -30,14 +30,14 @@ const LoginInputs = observer(
     const altStyles = !!(relogin || multiUser);
 
     const inputContainer = altStyles
-      ? theme.bgPrimaryBackground
-      : styles.inputBackground;
+      ? styles.inputBackground
+      : theme.bgPrimaryBackground;
 
     if (relogin) {
       localStore.setUsername(user.username);
     }
 
-    const inputText = altStyles ? theme.colorPrimaryText : theme.colorWhite;
+    const inputText = altStyles ? theme.colorWhite : theme.colorPrimaryText;
 
     const usernameInput = relogin ? (
       <View style={stylesLocal.container}>

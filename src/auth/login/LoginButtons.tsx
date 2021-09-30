@@ -37,7 +37,7 @@ const LoginButtons = ({
       />
       <View style={theme.marginTop4x}>
         <MText
-          style={alt ? styles.forgotTextAlt : styles.forgotText}
+          style={alt ? styles.forgotText : styles.forgotTextAlt}
           onPress={localStore.onForgotPress}>
           {i18n.t('auth.forgot')}
         </MText>

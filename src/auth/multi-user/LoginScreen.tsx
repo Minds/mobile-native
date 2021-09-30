@@ -4,6 +4,7 @@ import i18n from '../../common/services/i18n.service';
 import ModalContainer from '../../onboarding/v2/steps/ModalContainer';
 import ThemedStyles from '../../styles/ThemedStyles';
 import LoginFormHandler from '../login/LoginFormHandler';
+import { resetStackAndGoBack } from '../resetStackAndGoBack';
 
 type PropsType = {
   navigation: NavigationProp<any>;
@@ -11,20 +12,18 @@ type PropsType = {
 };
 
 const LoginScreen = ({ navigation, route }: PropsType) => {
-  const onLogin = React.useCallback(() => {
-    route.params?.onLogin
-      ? route.params.onLogin(navigation)
-      : navigation.goBack();
-  }, [navigation, route.params]);
+  const onLogin = React.useCallback(() => resetStackAndGoBack(navigation), [
+    navigation,
+  ]);
   const theme = ThemedStyles.style;
   return (
     <ModalContainer
       title={i18n.t('auth.login')}
       onPressBack={navigation.goBack}
       marginTop={20}
-      contentContainer={theme.bgPrimaryBackgroundHighlight}
-      titleStyle={theme.colorPrimaryText}
-      backIconStyle={theme.colorPrimaryText}>
+      contentContainer={theme.bgPrimaryBackground_Dark}
+      titleStyle={theme.colorPrimaryText_Dark}
+      backIconStyle={theme.colorPrimaryText_Dark}>
       <LoginFormHandler
         navigation={navigation}
         route={route}
