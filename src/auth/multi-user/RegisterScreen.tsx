@@ -15,9 +15,9 @@ const RegisterScreen = ({}: PropsType) => {
       title={i18n.t('auth.createChannel')}
       onPressBack={navigation.goBack}
       marginTop={20}
-      contentContainer={theme.bgPrimaryBackground_Dark}
-      titleStyle={theme.colorPrimaryText_Dark}
-      backIconStyle={theme.colorPrimaryText_Dark}>
+      contentContainer={theme.bgPrimaryBackground}
+      titleStyle={theme.colorPrimaryText}
+      backIconStyle={theme.colorPrimaryText}>
       <RegisterForm />
     </ModalContainer>
   );

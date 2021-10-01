@@ -2,7 +2,7 @@ import React from 'react';
 import i18n from '../../common/services/i18n.service';
 import ModalContainer from '../../onboarding/v2/steps/ModalContainer';
 import ThemedStyles from '../../styles/ThemedStyles';
-import LoginFormHandler from '../login/LoginFormHandler';
+import LoginForm from '../login/LoginForm';
 
 type PropsType = {
   navigation: any;
@@ -20,12 +20,7 @@ const LoginScreen = ({ navigation, route }: PropsType) => {
       contentContainer={theme.bgPrimaryBackgroundHighlight}
       titleStyle={theme.colorPrimaryText}
       backIconStyle={theme.colorPrimaryText}>
-      <LoginFormHandler
-        navigation={navigation}
-        route={route}
-        multiUser
-        onLogin={onLogin}
-      />
+      <LoginForm route={route} onLogin={onLogin} />
     </ModalContainer>
   );
 };

@@ -11,6 +11,7 @@ import { FLAG_SUBSCRIBE, FLAG_VIEW } from '../common/Permissions';
 import SubscriptionButtonNew from '../channel/subscription/SubscriptionButtonNew';
 import ThemedStyles from '../styles/ThemedStyles';
 import type UserModel from '../channel/UserModel';
+import MText from '../common/components/MText';
 
 type PropsType = {
   row: {

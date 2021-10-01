@@ -1,16 +1,12 @@
 import React, { useRef } from 'react';
-import { View, Platform, Linking } from 'react-native';
+import { View, Linking } from 'react-native';
 
 import { observer, useLocalStore } from 'mobx-react';
 import { CheckBox } from 'react-native-elements';
 
 import InputContainer from '../../common/components/InputContainer';
-import { styles, shadowOpt, icon } from '../styles';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
-import BoxShadow from '../../common/components/BoxShadow';
-import Button from '../../common/components/Button';
-import { DARK_THEME } from '../../styles/Colors';
 import validatePassword from '../../common/helpers/validatePassword';
 import { showNotification } from '../../../AppMessages';
 import validatorService from '../../common/services/validator.service';
@@ -23,11 +19,9 @@ import sessionService from '../../common/services/session.service';
 import featuresService from '../../common/services/features.service';
 import PasswordInput from '../../common/components/password-input/PasswordInput';
 import MText from '../../common/components/MText';
+import { BottomSheetButton } from '../../common/components/bottom-sheet';
 
 type PropsType = {};
-
-const shadowOptLocal = Object.assign({}, shadowOpt);
-shadowOptLocal.height = 300;
 
 const alphanumericPattern = '^[a-zA-Z0-9_]+$';
 
@@ -161,11 +155,8 @@ const RegisterForm = observer(({}: PropsType) => {
   const theme = ThemedStyles.style;
 
   const inputs = (
-    <View style={styles.shadow}>
+    <View>
       <InputContainer
-        containerStyle={styles.inputBackground}
-        style={theme.colorWhite}
-        labelStyle={theme.colorWhite}
         placeholder={i18n.t('auth.username')}
         onChangeText={store.setUsername}
         value={store.username}
@@ -175,9 +166,6 @@ const RegisterForm = observer(({}: PropsType) => {
         autofocus
       />
       <InputContainer
-        containerStyle={styles.inputBackground}
-        style={theme.colorWhite}
-        labelStyle={theme.colorWhite}
         placeholder={i18n.t('auth.email')}
         onChangeText={store.setEmail}
         value={store.email}
@@ -197,39 +185,20 @@ const RegisterForm = observer(({}: PropsType) => {
       <View>
         <PasswordInput
           store={store}
-          tooltipBackground={DARK_THEME.TertiaryBackground}
-          inputContainerStyle={styles.inputBackground}
-          inputStyle={theme.colorWhite}
-          inputLabelStyle={theme.colorWhite}
-          iconStyle={[theme.inputIcon, icon, theme.colorWhite]}
+          tooltipBackground={ThemedStyles.getColor('TertiaryBackground')}
         />
       </View>
     </View>
   );
 
-  const setting = {
-    ...shadowOptLocal,
-    style: {},
-  };
-
-  const inputsWithShadow = Platform.select({
-    ios: inputs,
-    android: <BoxShadow setting={setting}>{inputs}</BoxShadow>, // Android fallback for shadows
-  });
-
   return (
     <>
-      {inputsWithShadow}
+      {inputs}
       <View style={[theme.paddingHorizontal4x, theme.paddingVertical2x]}>
         <CheckBox
-          containerStyle={[
-            theme.checkbox,
-            theme.paddingLeft,
-            theme.margin0x,
-            theme.paddingBottom0x,
-          ]}
+          containerStyle={styles.checkboxTerm}
           title={
-            <MText style={[theme.colorWhite, theme.fontL, theme.paddingLeft2x]}>
+            <MText style={styles.checkboxText}>
               {i18n.t('auth.accept')}{' '}
               <MText
                 style={theme.link}
@@ -244,31 +213,23 @@ const RegisterForm = observer(({}: PropsType) => {
           onPress={store.toggleTerms}
         />
         <CheckBox
-          containerStyle={[
-            theme.checkbox,
-            theme.paddingLeft,
-            theme.margin0x,
-            // theme.padding0x,
-          ]}
+          containerStyle={styles.checkboxPromotions}
           title={
-            <MText style={[theme.colorWhite, theme.fontL, theme.paddingLeft2x]}>
+            <MText style={styles.checkboxText}>
               {i18n.t('auth.promotions')}
             </MText>
           }
           checked={store.exclusivePromotions}
           onPress={store.togglePromotions}
         />
-        <Button
-          onPress={store.onRegisterPress}
-          text={i18n.t('auth.createChannel')}
-          containerStyle={[theme.fullWidth, theme.marginTop]}
-          loading={store.inProgress}
-          disabled={store.inProgress}
-          testID="registerButton"
-          large
-          transparent
-        />
       </View>
+      <BottomSheetButton
+        onPress={store.onRegisterPress}
+        text={i18n.t('auth.createChannel')}
+        disabled={store.inProgress}
+        testID="registerButton"
+        action
+      />
       <Captcha
         ref={captchaRef}
         onResult={store.onCaptchResult}
@@ -279,3 +240,9 @@ const RegisterForm = observer(({}: PropsType) => {
 });
 
 export default RegisterForm;
+
+const styles = ThemedStyles.create({
+  checkboxPromotions: ['checkbox', 'paddingLeft', 'margin0x'],
+  checkboxTerm: ['checkbox', 'paddingLeft', 'margin0x', 'paddingBottom0x'],
+  checkboxText: ['colorPrimaryText', 'fontL', 'paddingLeft2x'],
+});

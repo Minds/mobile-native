@@ -40,6 +40,7 @@ export type InternalStackParamList = {
 };
 
 export type RootStackParamList = {
+  MultiUserScreen: {};
   TwoFactorConfirmation: {
     onConfirm: (string) => void;
     title?: string;

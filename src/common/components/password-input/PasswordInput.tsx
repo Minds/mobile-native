@@ -7,6 +7,7 @@ import ThemedStyles from '../../../styles/ThemedStyles';
 import InputContainer from '../InputContainer';
 import i18n from '../../services/i18n.service';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { IS_IOS } from '../../../config/Config';
 
 type StoreType = {
   password: string;
@@ -20,10 +21,9 @@ type StoreType = {
 type PropsType = {
   store: StoreType;
   tooltipBackground: ColorValue;
-  inputContainerStyle: ViewStyle | ViewStyle[];
-  inputStyle: any;
-  inputLabelStyle: TextStyle | TextStyle[];
-  iconStyle: any;
+  inputContainerStyle?: ViewStyle | ViewStyle[];
+  inputStyle?: any;
+  inputLabelStyle?: TextStyle | TextStyle[];
 };
 
 const PasswordInput = observer(({ store, ...props }: PropsType) => {
@@ -58,7 +58,7 @@ const PasswordInput = observer(({ store, ...props }: PropsType) => {
         name={store.hidePassword ? 'md-eye' : 'md-eye-off'}
         size={25}
         onPress={store.toggleHidePassword}
-        style={props.iconStyle}
+        style={iconStyle}
       />
     </>
   );
@@ -66,4 +66,13 @@ const PasswordInput = observer(({ store, ...props }: PropsType) => {
 
 export default PasswordInput;
 
-const validatorText = ThemedStyles.combine('colorPrimaryText_Dark');
+const validatorText = ThemedStyles.combine('colorPrimaryText');
+
+const iconStyle = ThemedStyles.combine(
+  {
+    position: 'absolute',
+    right: 8,
+    top: IS_IOS ? 30 : 33,
+  },
+  'colorSecondaryText',
+);

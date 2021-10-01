@@ -5,6 +5,7 @@ import { View, Text } from 'react-native';
 import ThemedStyle from '../../../styles/ThemedStyles';
 import validatePassword from '../../helpers/validatePassword';
 import i18n from '../../services/i18n.service';
+import MText from '../MText';
 
 const checked = value => {
   return (

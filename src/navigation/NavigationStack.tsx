@@ -15,7 +15,7 @@ import {
 } from '@react-navigation/stack';
 import AnalyticsScreen from '../analytics/AnalyticsScreen';
 
-import LoginScreen from '../auth/login/LoginScreen';
+import WelcomeScreen from '../auth/WelcomeScreen';
 import MultiUserLoginScreen from '../auth/multi-user/LoginScreen';
 import MultiUserRegisterScreen from '../auth/multi-user/RegisterScreen';
 import ReferralsScreen from '../referral/ReferralsScreen';
@@ -24,7 +24,6 @@ import TabsScreen from '../tabs/TabsScreen';
 import NotificationsScreen from '../notifications/v3/NotificationsScreen';
 import ActivityScreen from '../newsfeed/ActivityScreen';
 import ChannelSubscribers from '../channel/subscribers/ChannelSubscribers';
-import RegisterScreen from '../auth/register/RegisterScreen';
 import ConversationScreen from '../messenger/ConversationScreen';
 import GroupsListScreen from '../groups/GroupsListScreen';
 import GroupViewScreen from '../groups/GroupViewScreen';
@@ -671,11 +670,6 @@ const AppStack = function () {
           options={{ title: i18n.t('settings.otherOptions.a1') }}
         />
         <AppStackNav.Screen name="AppInfo" component={AppInfoScreen} />
-        <AppStackNav.Screen
-          name="MultiUserScreen"
-          component={MultiUserScreen}
-          options={{ title: i18n.t('multiUser.switchChannel') }}
-        />
       </AppStackNav.Navigator>
     </>
   );
@@ -691,8 +685,7 @@ const AuthStack = function () {
         headerMode="none"
         // @ts-ignore
         screenOptions={AuthTransition}>
-        <AuthStackNav.Screen name="Login" component={LoginScreen} />
-        <AuthStackNav.Screen name="Register" component={RegisterScreen} />
+        <AuthStackNav.Screen name="Welcome" component={WelcomeScreen} />
         <AuthStackNav.Screen
           name="TwoFactorConfirmation"
           component={TwoFactorConfirmScreen}
@@ -735,6 +728,13 @@ const RootStack = function (props) {
             }}
           />
           {/* Modal screens here */}
+          <RootStackNav.Screen
+            name="MultiUserScreen"
+            component={MultiUserScreen}
+            options={{
+              title: i18n.t('multiUser.switchChannel'),
+            }}
+          />
           <RootStackNav.Screen
             name="JoinMembershipScreen"
             component={JoinMembershipScreen}
