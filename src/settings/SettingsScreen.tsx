@@ -170,14 +170,17 @@ export default function ({ navigation }) {
         {i18n.t('moreScreen.settings')}
       </MText>
       <View style={[innerWrapper, theme.bgPrimaryBackground]}>
-        {items.map(item => (
-          <MenuItem item={item} />
+        {items.map((item, index) => (
+          <MenuItem
+            item={item}
+            containerItemStyle={index > 0 ? theme.borderTop0x : undefined}
+          />
         ))}
       </View>
       <View style={[innerWrapper, theme.marginTop7x]}>
         <MenuItem item={themeChange} i={4} />
-        <MenuItem item={help} i={5} />
-        <MenuItem item={logOut} i={6} />
+        <MenuItem item={help} i={5} containerItemStyle={theme.borderTop0x} />
+        <MenuItem item={logOut} i={6} containerItemStyle={theme.borderTop0x} />
       </View>
     </ScrollView>
   );

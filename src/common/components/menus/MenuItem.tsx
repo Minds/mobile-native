@@ -1,26 +1,26 @@
 import React from 'react';
-import { TextStyle } from 'react-native';
+import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 
 import { ListItem } from 'react-native-elements';
-import ThemedStyles from '../../../styles/ThemedStyles';
+import ThemedStyles, { useMemoStyle } from '../../../styles/ThemedStyles';
 
 export type MenuItemItem = {
   onPress?: () => void;
-  title: string | JSX.Element;
+  title: string | React.ReactNode;
   icon?:
     | {
         name: string;
         type?: string;
         color?: string;
       }
-    | JSX.Element;
+    | React.ReactNode;
   noIcon?: boolean;
 };
 
 export type MenuItemPropsType = {
   item: MenuItemItem;
   component?: any;
-  containerItemStyle?: {} | [];
+  containerItemStyle?: StyleProp<ViewStyle>;
   titleStyle?: TextStyle | Array<TextStyle>;
   testID?: string;
 };
@@ -35,15 +35,18 @@ export default function ({
   const theme = ThemedStyles.style;
 
   // ListItem Container Style
-  const containerStyle = [
-    theme.bgSecondaryBackground,
-    theme.borderTopHair,
-    theme.borderBottomHair,
-    theme.bcolorPrimaryBorder,
-    theme.padding0x,
-    theme.paddingHorizontal4x,
-    containerItemStyle,
-  ];
+  const containerStyle = useMemoStyle(() => {
+    const stylesList: any = [
+      'bgSecondaryBackground',
+      'borderTop1x',
+      'borderBottom1x',
+      'bcolorPrimaryBorder',
+      'padding0x',
+      'paddingHorizontal4x',
+    ];
+    if (containerItemStyle) stylesList.push(containerItemStyle);
+    return stylesList;
+  }, [containerItemStyle]);
 
   // icon is element?
   const isIconElement = item.icon && !('name' in item.icon);
