@@ -46,7 +46,6 @@ const InputPassword = observer(({ store, onFinish }: PropsType) => {
         centered={false}
         containerStyle={styles.button}
         loading={store.sending}
-        textColor={DARK_THEME.PrimaryText}
         action
       />
     </View>

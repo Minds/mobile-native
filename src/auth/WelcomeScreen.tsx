@@ -7,6 +7,9 @@ import Button from '../common/components/Button';
 import i18n from '../common/services/i18n.service';
 import { AuthStackParamList } from '../navigation/NavigationTypes';
 import ThemedStyles, { useStyle } from '../styles/ThemedStyles';
+import ResetPasswordModal, {
+  ResetPasswordModalHandles,
+} from './reset-password/ResetPasswordModal';
 
 const { height, width } = Dimensions.get('window');
 const LOGO_HEIGHT = height / 7;
@@ -44,7 +47,7 @@ export type WelcomeScreenRouteProp = RouteProp<AuthStackParamList, 'Welcome'>;
 
 export default function WelcomeScreen(props: PropsType) {
   const theme = ThemedStyles.style;
-
+  const resetRef = React.useRef<ResetPasswordModalHandles>(null);
   const onLoginPress = useCallback(() => {
     props.navigation.navigate('MultiUserLogin', {
       onLogin: resetStackAndGoBack,
@@ -56,6 +59,15 @@ export default function WelcomeScreen(props: PropsType) {
       onRegister: resetStackAndGoBack,
     });
   }, [props.navigation]);
+  const username = props.route?.params?.username;
+  const code = props.route?.params?.code;
+
+  React.useEffect(() => {
+    const navToInputPassword = username && code && !!resetRef.current;
+    if (navToInputPassword) {
+      resetRef.current!.show(navToInputPassword, username, code);
+    }
+  }, [code, username]);
 
   return (
     <SafeAreaView style={theme.flexContainer}>
@@ -91,6 +103,7 @@ export default function WelcomeScreen(props: PropsType) {
           />
         </View>
       </View>
+      <ResetPasswordModal ref={resetRef} />
     </SafeAreaView>
   );
 }

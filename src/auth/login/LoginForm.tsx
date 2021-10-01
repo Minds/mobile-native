@@ -7,7 +7,6 @@ import ResetPasswordModal, {
   ResetPasswordModalHandles,
 } from '../reset-password/ResetPasswordModal';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { LoginScreenRouteProp } from './LoginScreen';
 import createLoginStore from './createLoginStore';
 import AnimatableText from './AnimatableText';
 import FastImage from 'react-native-fast-image';
@@ -22,7 +21,6 @@ import { BottomSheetButton } from '../../common/components/bottom-sheet';
 type PropsType = {
   onLogin?: Function;
   onRegisterPress?: () => void;
-  route?: LoginScreenRouteProp;
   multiUser?: boolean;
   relogin?: boolean;
   sessionIndex?: number;
@@ -33,16 +31,6 @@ type PropsType = {
 export default observer(function LoginForm(props: PropsType) {
   const resetRef = React.useRef<ResetPasswordModalHandles>(null);
   const localStore = useLocalStore(createLoginStore, { props, resetRef });
-
-  const username = props.route?.params?.username;
-  const code = props.route?.params?.code;
-
-  React.useEffect(() => {
-    const navToInputPassword = username && code && !!resetRef.current;
-    if (navToInputPassword) {
-      resetRef.current!.show(navToInputPassword, username, code);
-    }
-  }, [code, username]);
 
   const theme = ThemedStyles.style;
 
