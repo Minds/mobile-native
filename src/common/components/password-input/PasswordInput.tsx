@@ -71,7 +71,7 @@ const validatorText = ThemedStyles.combine('colorPrimaryText');
 const iconStyle = ThemedStyles.combine(
   {
     position: 'absolute',
-    right: 8,
+    right: 12,
     top: IS_IOS ? 30 : 33,
   },
   'colorSecondaryText',

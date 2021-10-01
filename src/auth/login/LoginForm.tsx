@@ -8,7 +8,6 @@ import ResetPasswordModal, {
 } from '../reset-password/ResetPasswordModal';
 import Icon from 'react-native-vector-icons/Ionicons';
 import createLoginStore from './createLoginStore';
-import AnimatableText from './AnimatableText';
 import FastImage from 'react-native-fast-image';
 import UserModel from '../../channel/UserModel';
 import sessionService from '../../common/services/session.service';
@@ -69,7 +68,6 @@ export default observer(function LoginForm(props: PropsType) {
 
   return (
     <View style={theme.flexContainer}>
-      <AnimatableText msg={localStore.msg} />
       {usernameInput}
       <View style={theme.marginBottom4x}>
         <InputContainer
@@ -91,6 +89,7 @@ export default observer(function LoginForm(props: PropsType) {
       </View>
       <BottomSheetButton
         action
+        loading={localStore.inProgress}
         text={i18n.t('auth.login')}
         onPress={localStore.onLoginPress}
       />
@@ -127,7 +126,7 @@ const styles = ThemedStyles.create({
   icon: [
     {
       position: 'absolute',
-      right: 8,
+      right: 12,
       top: IS_IOS ? 30 : 33,
     },
     'colorSecondaryText',

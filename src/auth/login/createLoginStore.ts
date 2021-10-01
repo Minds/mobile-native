@@ -2,6 +2,7 @@ import i18n from '../../common/services/i18n.service';
 import AuthService from '../AuthService';
 import { LayoutAnimation } from 'react-native';
 import logService from '../../common/services/log.service';
+import { showNotification } from '../../../AppMessages';
 
 const createLoginStore = ({ props, resetRef }) => ({
   username: '',
@@ -34,6 +35,7 @@ const createLoginStore = ({ props, resetRef }) => ({
   },
   setError(msg: string) {
     this.msg = msg;
+    showNotification(msg, 'warning', 3000, 'top');
     this.inProgress = false;
   },
   onLoginPress() {
