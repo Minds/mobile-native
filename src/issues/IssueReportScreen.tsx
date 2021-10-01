@@ -104,8 +104,7 @@ export default class IssueReportScreen extends Component {
     return (
       <ScrollView
         style={[theme.flexContainer, theme.padding2x, theme.backgroundLight]}
-        keyboardShouldPersistTaps="always"
-      >
+        keyboardShouldPersistTaps="always">
         <View style={{ flexDirection: 'column', alignItems: 'stretch' }}>
           <MText style={theme.fontThin}>Title</MText>
           <TextInput

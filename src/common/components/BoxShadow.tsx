@@ -108,8 +108,7 @@ export default class BoxShadow extends Component<PropsType> {
     //return a view ,whose background is a svg picture
     return (
       <View
-        style={[{ position: 'relative', width: width, height: height }, style]}
-      >
+        style={[{ position: 'relative', width: width, height: height }, style]}>
         <Svg
           height={height + lineWidth * 2 + radius * 2}
           width={width + lineWidth * 2 + radius * 2}
@@ -117,8 +116,7 @@ export default class BoxShadow extends Component<PropsType> {
             position: 'absolute',
             top: y - lineWidth,
             left: x - lineWidth,
-          }}
-        >
+          }}>
           <Defs>
             <LinearGradient id="top" x1="0%" x2="0%" y1="100%" y2="0%">
               {linear('BoxTop')}
@@ -139,8 +137,7 @@ export default class BoxShadow extends Component<PropsType> {
               cx="100%"
               cy="100%"
               fx="100%"
-              fy="100%"
-            >
+              fy="100%">
               {radial('BoxLeftTop')}
             </RadialGradient>
             <RadialGradient
@@ -149,8 +146,7 @@ export default class BoxShadow extends Component<PropsType> {
               cx="100%"
               cy="0%"
               fx="100%"
-              fy="0%"
-            >
+              fy="0%">
               {radial('BoxLeftBottom')}
             </RadialGradient>
             <RadialGradient
@@ -159,8 +155,7 @@ export default class BoxShadow extends Component<PropsType> {
               cx="0%"
               cy="100%"
               fx="0%"
-              fy="100%"
-            >
+              fy="100%">
               {radial('BoxRightTop')}
             </RadialGradient>
             <RadialGradient
@@ -169,8 +164,7 @@ export default class BoxShadow extends Component<PropsType> {
               cx="0%"
               cy="0%"
               fx="0%"
-              fy="0%"
-            >
+              fy="0%">
               {radial('BoxRightBottom')}
             </RadialGradient>
           </Defs>

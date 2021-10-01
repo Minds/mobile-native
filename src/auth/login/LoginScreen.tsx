@@ -40,8 +40,7 @@ export default function LoginScreen(props: PropsType) {
       <DismissKeyboard>
         <FitScrollView
           style={theme.flexContainer}
-          keyboardShouldPersistTaps="always"
-        >
+          keyboardShouldPersistTaps="always">
           <View style={theme.flexColumnStretch}>
             <Animated.View style={[styles.bulb, { height: containerHeight }]}>
               <Animated.Image
@@ -57,8 +56,7 @@ export default function LoginScreen(props: PropsType) {
                 theme.colorWhite,
                 titleMargin,
               ]}
-              testID="loginscreentext"
-            >
+              testID="loginscreentext">
               {i18n.t('auth.login')}
             </MText>
             <LoginFormHandler

@@ -31,15 +31,13 @@ export default function () {
           CS.paddingHorizontal3x,
           CS.bcolorPrimaryBorder,
           CS.borderHair,
-        ]}
-      >
+        ]}>
         <MText style={[CS.marginLeft, CS.colorSecondaryText, CS.fontM]}>
           {i18n.t('settings.accountOptions.2')}
         </MText>
         <MText
           style={[CS.colorPrimaryText, CS.fontM]}
-          onPress={() => selectorRef.current.show(language)}
-        >
+          onPress={() => selectorRef.current.show(language)}>
           {i18n.getCurrentLanguageName()}
         </MText>
       </View>

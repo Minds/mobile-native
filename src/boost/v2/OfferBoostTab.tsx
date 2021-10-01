@@ -57,8 +57,7 @@ const OfferBoostTab = observer(({ localStore }: PropsType) => {
             theme.fontL,
             theme.paddingHorizontal6x,
             theme.marginBottom4x,
-          ]}
-        >
+          ]}>
           {i18n.t('boosts.offersDescription')}
         </MText>
         <InputContainer
@@ -77,8 +76,7 @@ const OfferBoostTab = observer(({ localStore }: PropsType) => {
             theme.borderTop,
             theme.borderBottom,
           ]}
-          onPress={() => setSearching(true)}
-        >
+          onPress={() => setSearching(true)}>
           <MText style={[theme.fontM, theme.colorSecondaryText, marginB]}>
             {i18n.t('boosts.targetChannel')}
           </MText>

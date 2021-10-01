@@ -32,8 +32,14 @@ type PropsType = {
  */
 const TwoFactorConfirmScreen = observer(({ route, navigation }: PropsType) => {
   const theme = ThemedStyles.style;
-  const { onConfirm, title, onCancel, mfaType, oldCode, showRecovery } =
-    route.params;
+  const {
+    onConfirm,
+    title,
+    onCancel,
+    mfaType,
+    oldCode,
+    showRecovery,
+  } = route.params;
 
   // Disable back button on Android
   React.useEffect(() => {
@@ -90,8 +96,7 @@ const TwoFactorConfirmScreen = observer(({ route, navigation }: PropsType) => {
     <SafeAreaView style={[theme.flexContainer, theme.bgPrimaryBackground]}>
       <KeyboardAvoidingView
         style={theme.flexContainer}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      >
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
         <View style={styles.header}>
           <Icon
             name="close"

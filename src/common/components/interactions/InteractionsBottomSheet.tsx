@@ -228,10 +228,9 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
     },
   }));
 
-  const close = React.useCallback(
-    () => bottomSheetRef.current?.close(),
-    [bottomSheetRef],
-  );
+  const close = React.useCallback(() => bottomSheetRef.current?.close(), [
+    bottomSheetRef,
+  ]);
 
   /**
    * only turn visibility on, never off.
@@ -299,8 +298,7 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
       // enableHandlePanningGesture={true}
       onChange={onBottomSheetVisibilityChange}
       backgroundComponent={null}
-      backdropComponent={renderBackdrop}
-    >
+      backdropComponent={renderBackdrop}>
       <View style={styles.container}>
         {store.visible && (
           <>

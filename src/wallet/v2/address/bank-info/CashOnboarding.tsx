@@ -72,15 +72,13 @@ const CashOnboarding = observer(
                 theme.bcolorPrimaryBorder,
                 theme.borderTop,
                 theme.borderBottom,
-              ]}
-            >
+              ]}>
               <MText
                 style={[
                   theme.colorSecondaryText,
                   theme.fontL,
                   theme.marginBottom2x,
-                ]}
-              >
+                ]}>
                 {i18n.t('wallet.bank.phoneNumber')}
               </MText>
               <PhoneInput

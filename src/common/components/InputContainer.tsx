@@ -22,8 +22,7 @@ const InputContainer = (props: PropsType) => {
         noBottomBorder ? null : theme.borderBottom,
         theme.bcolorPrimaryBorder,
         props.containerStyle,
-      ]}
-    >
+      ]}>
       <Input
         style={[
           styles.input,

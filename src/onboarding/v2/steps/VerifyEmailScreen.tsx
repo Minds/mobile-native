@@ -24,8 +24,9 @@ const sendEmail = async () => {
  */
 export default observer(function VerifyEmailScreen() {
   const theme = ThemedStyles.style;
-  const settings =
-    useApiFetch<{ channel: { email: string } }>('api/v1/settings');
+  const settings = useApiFetch<{ channel: { email: string } }>(
+    'api/v1/settings',
+  );
   const email = settings.result?.channel.email || '';
 
   const onPress = useCallback(() => sendEmail(), []);

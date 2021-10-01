@@ -37,8 +37,7 @@ export default class MessengerInvite extends Component {
 
     return (
       <View
-        style={[theme.flexContainer, theme.padding2x, theme.backgroundLight]}
-      >
+        style={[theme.flexContainer, theme.padding2x, theme.backgroundLight]}>
         <View style={[theme.paddingBottom3x, theme.padding3x]}>
           <MText style={[theme.fontXL, theme.textCenter]}>
             {i18n.t('messenger.looksLike')}{' '}

@@ -55,8 +55,7 @@ export default observer(function (props) {
                   theme.paddingVertical6x,
                   tabStyle,
                   theme.bgSecondaryBackground,
-                ]}
-              >
+                ]}>
                 <View style={styles.tabs}>
                   <MText
                     style={[
@@ -66,8 +65,7 @@ export default observer(function (props) {
                       styles.tabText,
                       store.mode === 'photo' ? theme.colorLink : null,
                     ]}
-                    onPress={() => store.setModePhoto()}
-                  >
+                    onPress={() => store.setModePhoto()}>
                     {i18nService.t('capture.photo').toUpperCase()}
                   </MText>
                   <MText
@@ -78,8 +76,7 @@ export default observer(function (props) {
                       styles.tabText,
                       store.mode === 'video' ? theme.colorLink : null,
                     ]}
-                    onPress={store.setModeVideo}
-                  >
+                    onPress={store.setModeVideo}>
                     {i18nService.t('capture.video').toUpperCase()}
                   </MText>
                   {!store.portraitMode && (
@@ -92,8 +89,7 @@ export default observer(function (props) {
                         store.mode === 'text' ? theme.colorLink : null,
                       ]}
                       onPress={store.setModeText}
-                      testID="CaptureTextButton"
-                    >
+                      testID="CaptureTextButton">
                       {i18nService.t('capture.text').toUpperCase()}
                     </MText>
                   )}

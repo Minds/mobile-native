@@ -15,8 +15,9 @@ type Props = {
 
 export const CommentsEntityOutlet = observer((props: Props) => {
   const count = props.entity['comments:count'];
-  const navigation =
-    useNavigation<NativeStackNavigationProp<AppStackParamList>>();
+  const navigation = useNavigation<
+    NativeStackNavigationProp<AppStackParamList>
+  >();
 
   const GoToComments = () => {
     navigation.push('Activity', {
@@ -33,8 +34,7 @@ export const CommentsEntityOutlet = observer((props: Props) => {
           ThemedStyles.style.paddingHorizontal2x,
           ThemedStyles.style.marginBottom3x,
         ]}
-        onPress={() => GoToComments()}
-      >
+        onPress={() => GoToComments()}>
         View {count} comments
       </MText>
     );
@@ -47,8 +47,7 @@ export const CommentsEntityOutlet = observer((props: Props) => {
   return (
     <KeyboardAvoidingView
       style={ThemedStyles.style.paddingBottom3x}
-      behavior={Platform.OS == 'ios' ? 'padding' : undefined}
-    >
+      behavior={Platform.OS == 'ios' ? 'padding' : undefined}>
       <View>
         {count > 0 ? ViewCommentsButton() : undefined}
 

@@ -34,13 +34,11 @@ export default observer(function (props) {
         styles.container,
         theme.paddingHorizontal4x,
         props.containerStyle,
-      ]}
-    >
+      ]}>
       {!props.isEdit && (
         <TouchableOpacity
           onPress={props.onRemove}
-          style={[styles.removeRichEmbed, theme.bgSecondaryBackground]}
-        >
+          style={[styles.removeRichEmbed, theme.bgSecondaryBackground]}>
           <IonIcon name="ios-close" size={22} style={theme.colorPrimaryText} />
         </TouchableOpacity>
       )}
@@ -51,8 +49,7 @@ export default observer(function (props) {
           theme.bcolorPrimaryBorder,
           theme.borderRadius2x,
           theme.bgPrimaryBackground,
-        ]}
-      >
+        ]}>
         <SmartImage
           style={[styles.thumbnail, theme.bgTertiaryBackground]}
           threshold={150}
@@ -66,8 +63,7 @@ export default observer(function (props) {
           </MText>
           <MText
             numberOfLines={2}
-            style={[theme.fontM, theme.padding, theme.colorSecondaryText]}
-          >
+            style={[theme.fontM, theme.padding, theme.colorSecondaryText]}>
             {props.meta.description || domain(props.meta.url)}
           </MText>
         </View>

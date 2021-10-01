@@ -27,8 +27,7 @@ const RecoveryCodeUsedScreen = () => {
         <MText style={styles.header}>{i18n.t('settings.TFADisabled')}</MText>
         <TouchableOpacity
           style={styles.closeContainer}
-          onPress={navigation.goBack}
-        >
+          onPress={navigation.goBack}>
           <MText style={styles.closeText}>{i18n.t('close')}</MText>
         </TouchableOpacity>
       </View>

@@ -97,8 +97,7 @@ export default class StripeCardCarousel extends React.PureComponent<PropsType> {
           theme.borderRadius4x,
           theme.padding2x,
           styles.shadow,
-        ]}
-      >
+        ]}>
         {this.getCardIcon(row.item.card_brand)}
         <Icon
           name="close"
@@ -116,8 +115,7 @@ export default class StripeCardCarousel extends React.PureComponent<PropsType> {
             theme.fontMedium,
             theme.colorWhite,
             theme.paddingBottom2x,
-          ]}
-        >
+          ]}>
           {row.item.card_country}
         </MText>
         <MText
@@ -127,8 +125,7 @@ export default class StripeCardCarousel extends React.PureComponent<PropsType> {
             theme.colorWhite,
             theme.textCenter,
             theme.paddingTop3x,
-          ]}
-        >
+          ]}>
           ********** {row.item.card_last4}
         </MText>
         <MText
@@ -139,8 +136,7 @@ export default class StripeCardCarousel extends React.PureComponent<PropsType> {
             theme.colorWhite,
             theme.textRight,
             theme.paddingTop3x,
-          ]}
-        >
+          ]}>
           {row.item.card_expires}
         </MText>
       </View>

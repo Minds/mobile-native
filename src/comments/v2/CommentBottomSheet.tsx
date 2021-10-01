@@ -134,8 +134,7 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
       snapPoints={snapPoints}
       handleComponent={renderHandle}
       backgroundComponent={CustomBackground}
-      backdropComponent={renderBackdrop}
-    >
+      backdropComponent={renderBackdrop}>
       {!props.hideContent && ( // we disable the navigator until the screen is focused (for the post swiper)
         <Stack.Navigator screenOptions={screenOptions}>
           <Stack.Screen

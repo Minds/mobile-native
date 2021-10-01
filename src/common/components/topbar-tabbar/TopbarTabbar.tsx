@@ -51,8 +51,7 @@ function TopbarTabbar<T>(props: PropsType<T>) {
         theme.bcolorPrimaryBorder,
         theme.paddingHorizontal2x,
         props.containerStyle,
-      ]}
-    >
+      ]}>
       <ScrollView horizontal ref={topbarTabbarRef}>
         {props.tabs.map((tab, i) => (
           <TouchableOpacity
@@ -64,8 +63,7 @@ function TopbarTabbar<T>(props: PropsType<T>) {
               tab.id === props.current
                 ? theme.bcolorTabBorder
                 : theme.bcolorTransparent,
-            ]}
-          >
+            ]}>
             <MText
               style={[
                 theme.fontL,
@@ -73,8 +71,7 @@ function TopbarTabbar<T>(props: PropsType<T>) {
                   ? theme.colorPrimaryText
                   : theme.colorSecondaryText,
                 props.titleStyle,
-              ]}
-            >
+              ]}>
               {tab.title}
             </MText>
             {!!tab.subtitle && (
@@ -84,8 +81,7 @@ function TopbarTabbar<T>(props: PropsType<T>) {
                   theme.colorSecondaryText,
                   styles.subtitle,
                   props.subtitleStyle,
-                ]}
-              >
+                ]}>
                 {tab.subtitle}
               </MText>
             )}

@@ -94,8 +94,7 @@ export default class ExplicitOverlay extends PureComponent<PropsType> {
           theme.bgSecondaryBackground,
           styles.onTop,
           containerStyle,
-        ]}
-      >
+        ]}>
         <Icon
           name="lock"
           size={iconSize}
@@ -112,8 +111,7 @@ export default class ExplicitOverlay extends PureComponent<PropsType> {
                   theme.fontXL,
                   theme.bold,
                   fontStyle,
-                ]}
-              >
+                ]}>
                 {this.props.text}
               </MText>
             )}
@@ -123,8 +121,7 @@ export default class ExplicitOverlay extends PureComponent<PropsType> {
                 theme.paddingTop6x,
                 theme.fontXXL,
                 theme.bold,
-              ]}
-            >
+              ]}>
               NSFW
             </MText>
             <MText
@@ -133,8 +130,7 @@ export default class ExplicitOverlay extends PureComponent<PropsType> {
                 theme.paddingVertical2x,
                 theme.marginBottom6x,
                 theme.fontXL,
-              ]}
-            >
+              ]}>
               {this.getLocalizedReasons()}
             </MText>
             <TouchableOpacity
@@ -144,8 +140,7 @@ export default class ExplicitOverlay extends PureComponent<PropsType> {
                 theme.bgPrimaryBackground,
                 theme.margin4x,
               ]}
-              onPress={this.toggle}
-            >
+              onPress={this.toggle}>
               <MText style={[theme.padding2x, theme.fontL, fontStyle]}>
                 {text}
               </MText>

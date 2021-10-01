@@ -54,8 +54,10 @@ class WalletStore {
 
     this.refreshing = true;
 
-    const { balance, addresses } =
-      (await walletService.getBalances()) as WalletResponse;
+    const {
+      balance,
+      addresses,
+    } = (await walletService.getBalances()) as WalletResponse;
 
     if (addresses && addresses.length > 0) {
       addresses.forEach(async address => {

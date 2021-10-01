@@ -33,14 +33,14 @@ export default observer(function TokenPrice() {
         theme.borderRadius10x,
         theme.rowJustifyStart,
         theme.paddingRight2x,
-      ]}
-    >
+      ]}>
       <View style={styles.avatarContainer}>
         <FastImage
           style={styles.avatar}
           resizeMode="contain"
           source={{
-            uri: 'https://cdn-assets.minds.com/front/dist/browser/en/assets/logos/bulb.jpg',
+            uri:
+              'https://cdn-assets.minds.com/front/dist/browser/en/assets/logos/bulb.jpg',
           }}
         />
       </View>

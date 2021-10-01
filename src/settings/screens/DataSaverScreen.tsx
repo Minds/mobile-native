@@ -37,8 +37,7 @@ export default observer(function DataSaverScreen() {
           />
         </View>
         <MText
-          style={[theme.marginLeft, theme.colorSecondaryText, theme.fontM]}
-        >
+          style={[theme.marginLeft, theme.colorSecondaryText, theme.fontM]}>
           {i18n.t('settings.dataSaverDescription')}
         </MText>
       </View>
@@ -59,8 +58,7 @@ export default observer(function DataSaverScreen() {
           />
         </View>
         <MText
-          style={[theme.marginLeft, theme.colorSecondaryText, theme.fontM]}
-        >
+          style={[theme.marginLeft, theme.colorSecondaryText, theme.fontM]}>
           {i18n.t('settings.dataSaverDisableOnWiFiDescription')}
         </MText>
       </View>

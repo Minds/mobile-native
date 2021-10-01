@@ -44,8 +44,7 @@ const DatePicker = observer((props: PropsType) => {
         theme.bcolorPrimaryBorder,
         props.containerStyle,
       ]}
-      onPress={localStore.openPicker}
-    >
+      onPress={localStore.openPicker}>
       <View>
         <MText style={[theme.fontL, theme.colorSecondaryText]}>
           {i18n.t('wallet.date')}

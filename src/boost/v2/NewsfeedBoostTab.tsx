@@ -27,8 +27,7 @@ const NewsfeedBoostTab = observer(({ localStore }: PropsType) => {
             theme.fontL,
             theme.paddingHorizontal6x,
             theme.marginBottom4x,
-          ]}
-        >
+          ]}>
           {i18n.t('boosts.feedsDescription')}
         </MText>
         <BoostInput localStore={localStore} />

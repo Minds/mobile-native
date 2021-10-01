@@ -164,11 +164,9 @@ export default function ({ navigation }) {
   return (
     <ScrollView
       style={[theme.flexContainer, theme.bgPrimaryBackground]}
-      contentContainerStyle={theme.paddingBottom4x}
-    >
+      contentContainerStyle={theme.paddingBottom4x}>
       <MText
-        style={[theme.titleText, theme.paddingLeft4x, theme.paddingVertical2x]}
-      >
+        style={[theme.titleText, theme.paddingLeft4x, theme.paddingVertical2x]}>
         {i18n.t('moreScreen.settings')}
       </MText>
       <View style={[innerWrapper, theme.bgPrimaryBackground]}>

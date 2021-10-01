@@ -37,8 +37,7 @@ export default class TransparentButton extends Component {
             textStyle,
             { color: color || '#000' },
             !!disabled && { color: disabledColor || '#aaa' },
-          ]}
-        >
+          ]}>
           {title}
         </MText>
       );
@@ -60,8 +59,7 @@ export default class TransparentButton extends Component {
             borderColor: disabledBorderColor || disabledColor || '#aaa',
           },
         ]}
-        {...otherProps}
-      >
+        {...otherProps}>
         {submitContent}
       </TouchableHighlight>
     );

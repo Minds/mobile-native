@@ -82,8 +82,7 @@ export default class TosModal extends PureComponent {
               theme.bgPrimaryBackground,
               theme.padding2x,
               theme.colorWhite,
-            ]}
-          >
+            ]}>
             UPDATE
           </MText>
           <View style={[theme.flexContainer, theme.padding]}>
@@ -122,8 +121,7 @@ export default class TosModal extends PureComponent {
                   theme.paddingTop2x,
                   theme.textCenter,
                   theme.colorDanger,
-                ]}
-              >
+                ]}>
                 There was an error please try again.
               </MText>
             )}

@@ -75,8 +75,7 @@ class SubscriptionRequestList extends Component<PropsType> {
             theme.flexColumnCentered,
             theme.marginTop4x,
             theme.paddingTop2x,
-          ]}
-        >
+          ]}>
           {message}
         </View>
       );

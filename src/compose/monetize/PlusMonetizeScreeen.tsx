@@ -63,8 +63,7 @@ const PlusMonetizeScreen = observer(({ route, navigation }: PropsType) => {
               theme.colorSecondaryText,
               theme.fontL,
               theme.paddingVertical2x,
-            ]}
-          >
+            ]}>
             {i18n.t('monetize.plusMonetize.notPlus')}
           </MText>
           <Button
@@ -84,16 +83,14 @@ const PlusMonetizeScreen = observer(({ route, navigation }: PropsType) => {
       store={store}
       doneText={i18n.t('save')}
       onPressRight={save}
-      hideDone={!localStore.agreedTerms}
-    >
+      hideDone={!localStore.agreedTerms}>
       <View style={[theme.paddingVertical6x, theme.paddingHorizontal3x]}>
         <MText
           style={[
             theme.colorSecondaryText,
             theme.fontL,
             theme.paddingVertical2x,
-          ]}
-        >
+          ]}>
           {i18n.t('monetize.plusMonetize.submit')}
         </MText>
         <CheckBox
@@ -103,8 +100,9 @@ const PlusMonetizeScreen = observer(({ route, navigation }: PropsType) => {
               {i18n.t('auth.accept')}{' '}
               <MText
                 style={theme.link}
-                onPress={() => Linking.openURL('https://www.minds.com/p/terms')}
-              >
+                onPress={() =>
+                  Linking.openURL('https://www.minds.com/p/terms')
+                }>
                 {i18n.t('auth.termsAndConditions')}
               </MText>
             </MText>

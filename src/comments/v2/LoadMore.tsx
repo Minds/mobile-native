@@ -36,8 +36,7 @@ export default observer(function LoadMore({
           onPress={() => {
             store.loadComments(!next);
           }}
-          style={[theme.rowJustifyCenter, theme.padding2x, theme.paddingTop4x]}
-        >
+          style={[theme.rowJustifyCenter, theme.padding2x, theme.paddingTop4x]}>
           <MText style={[theme.fontM, theme.colorSecondaryText]}>
             <IconMC name="update" size={16} />{' '}
             {i18n.t(next ? 'activity.loadLater' : 'activity.loadEarlier')}{' '}

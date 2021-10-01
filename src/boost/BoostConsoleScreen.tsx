@@ -63,8 +63,7 @@ export default class BoostConsoleScreen extends Component {
             </MText>
             <MText
               style={ComponentsStyle.emptyComponentLink}
-              onPress={() => this.props.navigation.navigate('Capture')}
-            >
+              onPress={() => this.props.navigation.navigate('Capture')}>
               {i18n.t('createAPost')}
             </MText>
           </View>

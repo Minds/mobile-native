@@ -82,13 +82,11 @@ const VerifyAuthAppScreen = observer(({ route }: PropsType) => {
           theme.rowJustifySpaceBetween,
           theme.paddingHorizontal4x,
           theme.marginBottom7x,
-        ]}
-      >
+        ]}>
         <MText style={styles.smallTitle}>{store.secret}</MText>
         <TouchableOpacity
           style={[theme.rowJustifyStart, theme.centered]}
-          onPress={store.copySecret}
-        >
+          onPress={store.copySecret}>
           <Icon
             name="content-copy"
             color={ThemedStyles.getColor('PrimaryText')}

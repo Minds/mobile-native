@@ -281,8 +281,7 @@ export default class FeedList<T> extends Component<PropsType> {
     return (
       <ErrorBoundary
         message={this.cantShowActivity}
-        containerStyle={ThemedStyles.style.borderBottomHair}
-      >
+        containerStyle={ThemedStyles.style.borderBottomHair}>
         <Activity
           entity={entity}
           navigation={this.props.navigation}

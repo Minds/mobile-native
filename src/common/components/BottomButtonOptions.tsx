@@ -43,8 +43,7 @@ export default function BottomButtonOptions({
       animationInTiming={100}
       animationOutTiming={100}
       animationOut="bounceOutDown"
-      animationIn="bounceInUp"
-    >
+      animationIn="bounceInUp">
       <View style={theme.paddingBottom}>
         {list.map((plist, indx) => (
           <View style={theme.paddingBottom2x} key={`${indx}c`}>
@@ -60,8 +59,7 @@ export default function BottomButtonOptions({
                   i === 0 ? styles.borderRadiusTop : null,
                   i === plist.length - 1 ? styles.borderRadiusBottom : null,
                 ]}
-                onPress={l.onPress}
-              >
+                onPress={l.onPress}>
                 <ListItem.Content>
                   <ListItem.Title
                     style={[
@@ -70,8 +68,7 @@ export default function BottomButtonOptions({
                       theme.fontXL,
                       theme.centered,
                       l.titleStyle,
-                    ]}
-                  >
+                    ]}>
                     {l.title}
                   </ListItem.Title>
                 </ListItem.Content>

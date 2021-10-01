@@ -53,8 +53,7 @@ const Withdraw = observer((props: PropsType) => {
               theme.paddingHorizontal4x,
               theme.paddingVertical2x,
               theme.alignCenter,
-            ]}
-          >
+            ]}>
             <MText style={[theme.colorSecondaryText, theme.fontL]}>
               {i18n.t('wallet.withdraw.acceptTerms')}
             </MText>
@@ -77,8 +76,7 @@ const Withdraw = observer((props: PropsType) => {
               theme.marginHorizontal4x,
               theme.colorSecondaryText,
               theme.fontL,
-            ]}
-          >
+            ]}>
             {i18n.t('wallet.withdraw.notes1', { amount: store.amount }) +
               '\n\n'}
             {i18n.t('wallet.withdraw.notes2') + '\n\n'}
@@ -87,8 +85,7 @@ const Withdraw = observer((props: PropsType) => {
         </>
       ) : (
         <MText
-          style={[theme.fontXL, theme.colorSecondaryText, theme.textCenter]}
-        >
+          style={[theme.fontXL, theme.colorSecondaryText, theme.textCenter]}>
           {i18n.t('wallet.withdraw.errorOnlyOnceDay')}
         </MText>
       )}

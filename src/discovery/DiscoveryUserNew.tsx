@@ -99,16 +99,14 @@ class DiscoveryUser extends Component<PropsType> {
       <TouchableOpacity
         style={styles.row}
         onPress={this._navToChannel}
-        {...otherProps}
-      >
+        {...otherProps}>
         <Image source={this.state.source} style={styles.avatar} />
         <View style={theme.flexContainer}>
           <MText style={[styles.body, styles.title, theme.colorPrimaryText]}>
             {row.item.name}
           </MText>
           <MText
-            style={[styles.body, styles.subtitle, theme.colorSecondaryText]}
-          >
+            style={[styles.body, styles.subtitle, theme.colorSecondaryText]}>
             @{row.item.username}
           </MText>
         </View>

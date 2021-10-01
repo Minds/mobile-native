@@ -116,8 +116,7 @@ const TrendingTab = observer(({ navigation }: TrendingTabProps) => {
   return (
     <ScrollView
       style={styles.scrollView}
-      contentContainerStyle={theme.padding4x}
-    >
+      contentContainerStyle={theme.padding4x}>
       <View style={theme.rowJustifySpaceBetween}>
         <View style={styles.firstColumn}>
           <MText style={theme.bold}>
@@ -146,8 +145,7 @@ const TrendingTab = observer(({ navigation }: TrendingTabProps) => {
           key={row.key}
           activeOpacity={0.7}
           onPress={row.values.entity.onPress}
-          style={theme.rowJustifySpaceBetween}
-        >
+          style={theme.rowJustifySpaceBetween}>
           <View style={styles.firstColumn}>
             <MText>{row.values.entity.title}</MText>
             <MText style={styles.tertiaryText}>

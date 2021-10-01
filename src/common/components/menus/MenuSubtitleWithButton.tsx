@@ -24,15 +24,13 @@ const MenuSubtitleWithButton = ({
 
   return (
     <View
-      style={[theme.rowJustifySpaceBetween, theme.marginTop3x, containerStyle]}
-    >
+      style={[theme.rowJustifySpaceBetween, theme.marginTop3x, containerStyle]}>
       <MText style={[styles.subTitle, theme.colorSecondaryText, labelStyle]}>
         {labelText}
       </MText>
       <MText
         style={[styles.manage, theme.link, linkStyle]}
-        onPress={onLinkPress}
-      >
+        onPress={onLinkPress}>
         {linkText}
       </MText>
     </View>

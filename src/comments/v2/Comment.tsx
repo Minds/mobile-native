@@ -60,8 +60,7 @@ export default observer(function Comment(props: PropsType) {
               theme.bold,
               theme.marginTop3x,
               theme.textCenter,
-            ]}
-          >
+            ]}>
             {i18n.t('showLess')}
           </MText>
         </TouchableOpacity>
@@ -85,8 +84,7 @@ export default observer(function Comment(props: PropsType) {
               theme.bold,
               theme.textCenter,
               theme.marginTop2x,
-            ]}
-          >
+            ]}>
             {i18n.t('readMore')}
           </MText>
         </TouchableOpacity>
@@ -129,8 +127,7 @@ export default observer(function Comment(props: PropsType) {
       style={[
         styles.container,
         props.comment.focused ? styles.focused : theme.bcolorPrimaryBorder,
-      ]}
-    >
+      ]}>
       <CommentHeader entity={props.comment} navigation={navigation} />
 
       {!mature || props.comment.isOwner() ? (
@@ -202,8 +199,7 @@ export default observer(function Comment(props: PropsType) {
         <View>
           <TouchableOpacity
             onPress={props.comment.toggleMatureVisibility}
-            style={[theme.centered, theme.marginTop4x]}
-          >
+            style={[theme.centered, theme.marginTop4x]}>
             <MText style={[theme.bold, theme.fontL, theme.colorSecondaryText]}>
               {i18n.t('activity.explicitComment')}
             </MText>
@@ -213,8 +209,7 @@ export default observer(function Comment(props: PropsType) {
                 theme.fontL,
                 theme.colorLink,
                 theme.paddingVertical2x,
-              ]}
-            >
+              ]}>
               {i18n.t('confirm18')}
             </MText>
           </TouchableOpacity>

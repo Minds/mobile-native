@@ -60,8 +60,7 @@ const ResetPasswordModal: React.ForwardRefRenderFunction<
       ref={modalRef}
       title={store.title}
       showBackButton={store.currentStep === 'emailSended'}
-      onPressBack={store.navToInputUser}
-    >
+      onPressBack={store.navToInputUser}>
       {step}
     </BottomModal>
   );

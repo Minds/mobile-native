@@ -42,13 +42,11 @@ const Translated = observer(
             theme.marginTop2x,
             theme.borderLeft2x,
             theme.bcolorPrimaryBorder,
-          ]}
-        >
+          ]}>
           {data.map(mappingCallback)}
         </View>
         <View
-          style={[theme.rowJustifyStart, theme.alignCenter, theme.marginTop]}
-        >
+          style={[theme.rowJustifyStart, theme.alignCenter, theme.marginTop]}>
           <Icon
             name="md-globe"
             type="ionicon"
@@ -61,18 +59,15 @@ const Translated = observer(
           </MText>
         </View>
         <View
-          style={[theme.rowJustifyStart, theme.alignCenter, theme.marginTop]}
-        >
+          style={[theme.rowJustifyStart, theme.alignCenter, theme.marginTop]}>
           <MText
             style={[theme.bold, theme.colorPrimaryText]}
-            onPress={translateStore.hide}
-          >
+            onPress={translateStore.hide}>
             {i18n.t('hide')}
           </MText>
           <MText
             style={[theme.bold, theme.colorPrimaryText, theme.paddingLeft2x]}
-            onPress={showPicker}
-          >
+            onPress={showPicker}>
             {i18n.t('translate.changeLanguage')}
           </MText>
         </View>

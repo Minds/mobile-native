@@ -253,8 +253,7 @@ export default class UserTypeahead extends PureComponent {
         backdropColor={ThemedStyles.getColor('PrimaryBackground')}
         backdropOpacity={1}
         onModalShow={this.onModalShow}
-        onModalHide={this.onModalHide}
-      >
+        onModalHide={this.onModalHide}>
         <FlatList
           keyboardShouldPersistTaps="always"
           data={this.state.users}

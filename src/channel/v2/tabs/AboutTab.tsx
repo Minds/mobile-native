@@ -70,8 +70,7 @@ const AboutTab = observer(({ store, navigation }: PropsType) => {
       {channel?.tags.length > 0 && (
         <LabeledComponent
           label={i18n.t('channel.edit.hashtags')}
-          wrapperStyle={margin}
-        >
+          wrapperStyle={margin}>
           <MText>{`#${tags}`}</MText>
         </LabeledComponent>
       )}
@@ -87,8 +86,7 @@ const AboutTab = observer(({ store, navigation }: PropsType) => {
       {channel?.dob && (
         <LabeledComponent
           label={i18n.t('channel.edit.dob')}
-          wrapperStyle={margin}
-        >
+          wrapperStyle={margin}>
           <MText>{channel?.dob}</MText>
         </LabeledComponent>
       )}
@@ -107,8 +105,7 @@ const AboutTab = observer(({ store, navigation }: PropsType) => {
 
       <LabeledComponent
         label={i18n.t('discovery.groups')}
-        wrapperStyle={margin}
-      >
+        wrapperStyle={margin}>
         <MText>{localStore.groupCount}</MText>
       </LabeledComponent>
 
@@ -122,16 +119,14 @@ const AboutTab = observer(({ store, navigation }: PropsType) => {
 
       <LabeledComponent
         label={i18n.t('subscriptions')}
-        wrapperStyle={theme.marginBottom2x}
-      >
+        wrapperStyle={theme.marginBottom2x}>
         <MText>{channel.subscriptions_count}</MText>
       </LabeledComponent>
 
       {channel.social_profiles!.length > 0 && (
         <LabeledComponent
           label={i18n.t('channel.edit.links')}
-          wrapperStyle={theme.marginBottom2x}
-        >
+          wrapperStyle={theme.marginBottom2x}>
           <SocialLinks socialLinks={channel.social_profiles} />
         </LabeledComponent>
       )}

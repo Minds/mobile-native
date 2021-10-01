@@ -10,8 +10,7 @@ const AnimatableText = ({ msg }) => {
       animation="bounceInLeft"
       useNativeDriver
       style={styles.text}
-      testID="loginMsg"
-    >
+      testID="loginMsg">
       {msg}
     </Animatable.Text>
   );

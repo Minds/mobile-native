@@ -125,8 +125,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
             testID={options.tabBarTestID}
             onPress={onPress}
             onLongPress={onLongPress}
-            style={styles.buttonContainer}
-          >
+            style={styles.buttonContainer}>
             {icon}
           </Component>
         );
@@ -142,10 +141,9 @@ const TabBar = ({ state, descriptors, navigation }) => {
 const Tabs = observer(function ({ navigation }) {
   const theme = ThemedStyles.style;
 
-  const navToCapture = useCallback(
-    () => navigation.push('Capture'),
-    [navigation],
-  );
+  const navToCapture = useCallback(() => navigation.push('Capture'), [
+    navigation,
+  ]);
 
   const navToVideoCapture = useCallback(
     () => navigation.push('Capture', { mode: 'video', start: true }),
@@ -162,8 +160,7 @@ const Tabs = observer(function ({ navigation }) {
       <Tab.Navigator
         initialRouteName="Newsfeed"
         tabBar={tabBar}
-        screenOptions={tabOptions}
-      >
+        screenOptions={tabOptions}>
         <Tab.Screen
           name="Newsfeed"
           component={NewsfeedScreen}

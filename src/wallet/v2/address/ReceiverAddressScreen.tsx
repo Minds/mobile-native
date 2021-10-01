@@ -79,8 +79,7 @@ const ReceiverAddressScreen = ({ route }: PropsType) => {
           theme.rowJustifyStart,
           theme.paddingLeft4x,
           theme.marginBottom4x,
-        ]}
-      >
+        ]}>
         <LabeledComponent label={'Balance'} labelStyle={styles.labelStyle}>
           <MText style={theme.fontXL}>{receiver.balance}</MText>
         </LabeledComponent>

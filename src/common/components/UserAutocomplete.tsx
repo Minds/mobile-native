@@ -117,8 +117,7 @@ export default class UserAutocomplete extends PureComponent<PropsType> {
       <ScrollView
         horizontal={true}
         keyboardShouldPersistTaps="always"
-        style={theme.marginRight8x}
-      >
+        style={theme.marginRight8x}>
         {users}
       </ScrollView>
     );
@@ -218,8 +217,7 @@ export default class UserAutocomplete extends PureComponent<PropsType> {
       <KeyboardAccessory
         backgroundColor={ThemedStyles.getColor('PrimaryBackground')}
         show={this.state.tag}
-        noFloat={this.props.noFloat}
-      >
+        noFloat={this.props.noFloat}>
         <UserTypeahead
           isModalVisible={this.state.isSearchingTag}
           onSelect={this.searchSelect}

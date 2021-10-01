@@ -185,8 +185,7 @@ export default class BlogsViewScreen extends Component<PropsType> {
                   navigation={this.props.navigation}
                 />
               </View>
-            }
-          >
+            }>
             <MText style={[styles.timestamp, theme.colorSecondaryText]}>
               {i18n.date(parseInt(blog.time_created, 10) * 1000)}
             </MText>
@@ -216,8 +215,7 @@ export default class BlogsViewScreen extends Component<PropsType> {
                 theme.paddingLeft,
                 theme.colorSecondaryText,
                 theme.paddingRight2x,
-              ]}
-            >
+              ]}>
               {blog.getLicenseText()}
             </MText>
             <Icon

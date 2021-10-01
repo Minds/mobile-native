@@ -29,8 +29,7 @@ export default observer(function CommentListHeader(props: {
   const closeButton = (
     <TouchableOpacity
       style={styles.iconContainer}
-      onPress={() => bottomSheet.close()}
-    >
+      onPress={() => bottomSheet.close()}>
       <Icon name={'x'} size={24} style={theme.colorSecondaryText} />
     </TouchableOpacity>
   );
@@ -42,8 +41,7 @@ export default observer(function CommentListHeader(props: {
         theme.bcolorPrimaryBorder,
         theme.bgPrimaryBackground,
         styles.shadow,
-      ]}
-    >
+      ]}>
       {props.store.parent ? (
         <View>
           <View
@@ -51,12 +49,10 @@ export default observer(function CommentListHeader(props: {
               theme.rowJustifySpaceBetween,
               theme.alignCenter,
               theme.marginBottom3x,
-            ]}
-          >
+            ]}>
             <TouchableOpacity
               onPress={NavigationService.goBack}
-              style={theme.paddingHorizontal2x}
-            >
+              style={theme.paddingHorizontal2x}>
               <Icon
                 name={'arrow-left'}
                 size={28}
@@ -72,13 +68,11 @@ export default observer(function CommentListHeader(props: {
             theme.rowJustifySpaceBetween,
             theme.marginBottom3x,
             theme.alignCenter,
-          ]}
-        >
+          ]}>
           <View style={[theme.rowJustifyStart, theme.alignCenter]}>
             <MText style={[theme.fontXL, ...titleStyles]}>{title}</MText>
             <MText
-              style={[theme.fontLM, theme.colorSecondaryText, ...titleStyles]}
-            >
+              style={[theme.fontLM, theme.colorSecondaryText, ...titleStyles]}>
               {props.store.entity['comments:count']}
             </MText>
           </View>

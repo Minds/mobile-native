@@ -45,8 +45,7 @@ export default observer(function DeviceScreen() {
         theme.bgPrimaryBackground,
         theme.paddingTop4x,
         padding,
-      ]}
-    >
+      ]}>
       {error && (
         <MText style={[theme.fontL, theme.centered, theme.colorSecondaryText]}>
           {i18n.t('sorry')} {i18n.t('cantLoad')}
@@ -62,8 +61,7 @@ export default observer(function DeviceScreen() {
               theme.fontL,
               theme.paddingHorizontal4x,
               theme.marginBottom4x,
-            ]}
-          >
+            ]}>
             {i18n.t('settings.sessionsOpened')}
           </MText>
           {result?.sessions.map((s, i) => (
@@ -75,8 +73,7 @@ export default observer(function DeviceScreen() {
                 theme.borderTop,
                 theme.bcolorPrimaryBorder,
                 i === result.sessions.length - 1 ? theme.borderBottom : null,
-              ]}
-            >
+              ]}>
               <Button
                 onPress={() => revokeSession(s)}
                 text={i18n.t('revoke')}

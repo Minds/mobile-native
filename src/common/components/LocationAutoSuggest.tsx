@@ -169,8 +169,7 @@ const LocationAutoSuggest = observer((props: propsType) => {
                     theme.paddingVertical2x,
                     theme.colorSecondaryText,
                     theme.fontL,
-                  ]}
-                >
+                  ]}>
                   {`${value.address.town ?? ''}${value.address.city ?? ''}, ${
                     value.address.state ?? ''
                   }`}

@@ -51,17 +51,14 @@ export default class BlockedChannel extends Component<PropsType> {
           theme.padding2x,
           theme.bgTertiaryBackground,
           theme.fullWidth,
-        ]}
-      >
+        ]}>
         <MText
-          style={[theme.fontXXL, theme.colorPrimaryText, theme.marginBottom5x]}
-        >
+          style={[theme.fontXXL, theme.colorPrimaryText, theme.marginBottom5x]}>
           @{user?.username}
         </MText>
         <Icon name="cancel" style={theme.colorPrimaryText} size={60} />
         <MText
-          style={[theme.fontXXXL, theme.colorPrimaryText, theme.marginTop5x]}
-        >
+          style={[theme.fontXXXL, theme.colorPrimaryText, theme.marginTop5x]}>
           {i18n.t('channel.blocked')}
         </MText>
         <TouchableOpacity onPress={() => user?.toggleBlock(false)}>
@@ -71,16 +68,14 @@ export default class BlockedChannel extends Component<PropsType> {
               theme.colorLink,
               theme.marginTop3x,
               theme.link,
-            ]}
-          >
+            ]}>
             {i18n.t('channel.unblock')}
           </MText>
         </TouchableOpacity>
         {this.props.onPressBack && (
           <MText
             onPress={this.props.onPressBack}
-            style={[theme.fontXL, theme.colorLink, theme.marginTop8x]}
-          >
+            style={[theme.fontXL, theme.colorLink, theme.marginTop8x]}>
             {i18n.t('goback')}
           </MText>
         )}

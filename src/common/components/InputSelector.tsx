@@ -51,8 +51,7 @@ const InputSelector = (props: PropsType) => {
         theme.bgPrimaryBackground,
         theme.paddingTop4x,
         props.mainContainerStyle,
-      ]}
-    >
+      ]}>
       <View
         style={[
           theme.rowJustifySpaceBetween,
@@ -62,22 +61,19 @@ const InputSelector = (props: PropsType) => {
           theme.bcolorPrimaryBorder,
           theme.borderHair,
           props.containerStyle,
-        ]}
-      >
+        ]}>
         <MText
           style={[
             theme.marginLeft,
             theme.colorSecondaryText,
             theme.fontM,
             props.labelStyle,
-          ]}
-        >
+          ]}>
           {props.label}
         </MText>
         <MText
           style={[theme.colorPrimaryText, theme.fontM]}
-          onPress={() => selectorRef.current.show(item)}
-        >
+          onPress={() => selectorRef.current.show(item)}>
           {getValueOf(item)}
         </MText>
       </View>

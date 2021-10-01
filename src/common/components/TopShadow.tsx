@@ -85,8 +85,7 @@ export default class TopShadow extends Component<PropsType> {
       <Svg
         height={height + lineWidth * 2 + radius * 2}
         width={width + lineWidth * 2 + radius * 2}
-        style={svgStyle}
-      >
+        style={svgStyle}>
         <Defs>
           <LinearGradient id="top" x1="0%" x2="0%" y1="100%" y2="0%">
             {linear('BoxTop')}
@@ -98,8 +97,7 @@ export default class TopShadow extends Component<PropsType> {
             cx="100%"
             cy="100%"
             fx="100%"
-            fy="100%"
-          >
+            fy="100%">
             {radial('BoxLeftTop')}
           </RadialGradient>
           <RadialGradient
@@ -108,8 +106,7 @@ export default class TopShadow extends Component<PropsType> {
             cx="0%"
             cy="100%"
             fx="0%"
-            fy="100%"
-          >
+            fy="100%">
             {radial('BoxRightTop')}
           </RadialGradient>
         </Defs>

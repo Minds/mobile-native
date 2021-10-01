@@ -37,11 +37,9 @@ export default observer(function SetupChannelScreen() {
 
   const hasAvatar = user?.hasAvatar();
   const channelStore = useLocalStore(createChannelStore);
-  const avatar = (
-    channelStore.uploading
-      ? { uri: channelStore.avatarPath }
-      : user?.getAvatarSource()
-  ) as ImageSourcePropType;
+  const avatar = (channelStore.uploading
+    ? { uri: channelStore.avatarPath }
+    : user?.getAvatarSource()) as ImageSourcePropType;
 
   const store = useLocalStore(() => ({
     name: user?.name || '',
@@ -107,8 +105,7 @@ export default observer(function SetupChannelScreen() {
   return (
     <ModalContainer
       title={i18n.t('onboarding.setupChannel')}
-      onPressBack={NavigationService.goBack}
-    >
+      onPressBack={NavigationService.goBack}>
       <DismissKeyboard>
         <View style={theme.flexContainer}>
           <InputContainer
@@ -130,23 +127,20 @@ export default observer(function SetupChannelScreen() {
               theme.bgSecondaryBackground,
               theme.borderBottom,
               theme.bcolorPrimaryBorder,
-            ]}
-          >
+            ]}>
             <MText
               style={[
                 theme.fontL,
                 theme.colorSecondaryText,
                 theme.paddingVertical2x,
-              ]}
-            >
+              ]}>
               Avatar
             </MText>
             <TouchableCustom
               onPress={store.showPicker}
               style={[styles.avatar, theme.marginBottom2x]}
               disabled={channelStore.uploading}
-              testID="selectAvatar"
-            >
+              testID="selectAvatar">
               {hasAvatar && avatar && (
                 <Image source={avatar} style={styles.avatar} />
               )}
@@ -159,8 +153,11 @@ export default observer(function SetupChannelScreen() {
                 ]}
               />
               <View
-                style={[StyleSheet.absoluteFill, styles.avatar, theme.centered]}
-              >
+                style={[
+                  StyleSheet.absoluteFill,
+                  styles.avatar,
+                  theme.centered,
+                ]}>
                 {!channelStore.uploading && (
                   <Icon
                     name="add"

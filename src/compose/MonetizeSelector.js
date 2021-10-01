@@ -52,14 +52,12 @@ export default observer(function (props) {
           theme.colorSecondaryText,
           theme.fontL,
           theme.paddingHorizontal3x,
-        ]}
-      >
+        ]}>
         {i18n.t('capture.paywallDescription')}
       </MText>
       <TouchableOpacity
         style={[styles.optsRow, theme.bcolorPrimaryBorder]}
-        onPress={onNopaywall}
-      >
+        onPress={onNopaywall}>
         <MText style={[theme.flexContainer, theme.fontL]}>
           {i18n.t('capture.noPaywall')}
         </MText>
@@ -69,8 +67,7 @@ export default observer(function (props) {
       </TouchableOpacity>
       <TouchableOpacity
         style={[styles.optsRow, theme.bcolorPrimaryBorder]}
-        onPress={localStore.showInput}
-      >
+        onPress={localStore.showInput}>
         <MText style={[theme.flexContainer, theme.fontL]}>
           {i18n.t('capture.paywall')}
         </MText>
@@ -87,8 +84,7 @@ export default observer(function (props) {
               theme.marginTop5x,
               theme.paddingHorizontal3x,
               theme.marginBottom2x,
-            ]}
-          >
+            ]}>
             {i18n.t('capture.paywallLabel', { currency: 'Tokens' })}
           </MText>
           <TextInput

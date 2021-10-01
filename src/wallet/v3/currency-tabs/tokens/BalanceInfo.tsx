@@ -33,8 +33,7 @@ const BalanceInfo = ({ walletStore }: PropsType) => {
             theme.borderTop,
             theme.marginTop3x,
             ...viewPadding,
-          ]}
-        >
+          ]}>
           <MText style={titleStyle}>{i18n.t('blockchain.onchain')}</MText>
           <MText style={earningStyle}>{onchain}</MText>
         </View>

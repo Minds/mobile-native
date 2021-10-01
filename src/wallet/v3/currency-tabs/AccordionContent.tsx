@@ -64,8 +64,7 @@ const AccordionContent = ({ data, summary }: PropsType) => {
         theme.marginTop,
         theme.paddingBottom5x,
         theme.bcolorPrimaryBorder,
-      ]}
-    >
+      ]}>
       {data.map(row => {
         return (
           <Container>
@@ -84,8 +83,7 @@ const AccordionContent = ({ data, summary }: PropsType) => {
                       <MText style={theme.colorWhite}>
                         {row.tooltip.title}
                       </MText>
-                    }
-                  >
+                    }>
                     <Icon
                       name="information-variant"
                       size={15}
@@ -112,8 +110,7 @@ const AccordionContent = ({ data, summary }: PropsType) => {
             theme.borderTop,
             theme.marginTop7x,
             theme.width80,
-          ]}
-        >
+          ]}>
           Summary
         </MText>
       )}

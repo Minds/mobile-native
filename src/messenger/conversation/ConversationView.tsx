@@ -77,8 +77,7 @@ export default class ConversationView extends Component {
           { borderColor: ThemedStyles.getColor('PrimaryBorder') },
         ]}
         onPress={this._navToConversation}
-        testID={this.props.testID}
-      >
+        testID={this.props.testID}>
         <Image source={avatarImg} style={styles.avatar} />
         <MText style={styles.body}>{item.username.toUpperCase()}</MText>
         {unread}

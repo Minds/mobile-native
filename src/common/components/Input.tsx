@@ -147,8 +147,7 @@ export default class Input extends Component<PropsType> {
           autoCapitalize={'none'}
           underlineColorAndroid="transparent"
           placeholder=""
-          onPress={this.showDatePicker}
-        >
+          onPress={this.showDatePicker}>
           <MText style={theme.colorPrimaryText}>{this.props.value}</MText>
         </TouchableOpacity>
         <DateTimePicker
@@ -200,8 +199,7 @@ export default class Input extends Component<PropsType> {
                 styles.label,
                 theme.colorSecondaryText,
                 this.props.labelStyle,
-              ]}
-            >
+              ]}>
               {this.props.placeholder}
             </MText>
             {this.props.info && <InfoPopup info={this.props.info} />}

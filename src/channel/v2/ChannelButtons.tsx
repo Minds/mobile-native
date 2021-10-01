@@ -78,8 +78,9 @@ const ChannelButtons = withErrorBoundary(
   observer((props: PropsWithChildren<ChannelButtonsPropsType>) => {
     const menuRef = useRef<any>();
     const theme = ThemedStyles.style;
-    const navigation =
-      useNavigation<NativeStackNavigationProp<AppStackParamList>>();
+    const navigation = useNavigation<
+      NativeStackNavigationProp<AppStackParamList>
+    >();
 
     const openWire = useCallback(() => {
       navigation.push('WireFab', {
@@ -103,8 +104,11 @@ const ChannelButtons = withErrorBoundary(
     const showSubscribe = shouldShow('subscribe');
     return (
       <View
-        style={[theme.rowJustifyEnd, theme.marginRight2x, props.containerStyle]}
-      >
+        style={[
+          theme.rowJustifyEnd,
+          theme.marginRight2x,
+          props.containerStyle,
+        ]}>
         {props.children}
         {shouldShow('edit') && <Edit {...props} />}
         {shouldShow('wire') && (

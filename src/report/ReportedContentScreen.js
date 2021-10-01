@@ -74,8 +74,7 @@ class ReportedContentScreen extends Component {
               style={[
                 ComponentsStyle.emptyComponentMessage,
                 CS.colorSecondaryText,
-              ]}
-            >
+              ]}>
               {i18n.t('blogs.blogListEmpty')}
             </MText>
           </View>
@@ -119,8 +118,7 @@ class ReportedContentScreen extends Component {
                 store.filter == 'review'
                   ? [selectedButton, CS.flexContainerCenter]
                   : [styles.buttons, CS.flexContainerCenter]
-              }
-            >
+              }>
               <MText style={headerStyle}>
                 {i18n.t('settings.reportedContent.reviewPending')}
               </MText>
@@ -132,8 +130,7 @@ class ReportedContentScreen extends Component {
                 store.filter == 'pending'
                   ? [selectedButton, CS.flexContainerCenter]
                   : [styles.buttons, CS.flexContainerCenter]
-              }
-            >
+              }>
               <MText style={headerStyle}>
                 {i18n.t('settings.reportedContent.reviewAppealed')}
               </MText>
@@ -145,8 +142,7 @@ class ReportedContentScreen extends Component {
                 store.filter == 'approved'
                   ? [selectedButton, CS.flexContainerCenter]
                   : [styles.buttons, CS.flexContainerCenter]
-              }
-            >
+              }>
               <MText style={headerStyle}>
                 {i18n.t('settings.reportedContent.reviewApproved')}
               </MText>
@@ -158,8 +154,7 @@ class ReportedContentScreen extends Component {
                 store.filter == 'rejected'
                   ? [selectedButton, CS.flexContainerCenter]
                   : [styles.buttons, CS.flexContainerCenter]
-              }
-            >
+              }>
               <MText style={headerStyle}>
                 {i18n.t('settings.reportedContent.reviewRejected')}
               </MText>

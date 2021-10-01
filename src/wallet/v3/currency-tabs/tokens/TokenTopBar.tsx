@@ -37,12 +37,10 @@ const TokenTopBar = ({
           width={screen.width - 20}
           height={200}
           backgroundColor={ThemedStyles.getColor('SecondaryBackground')}
-          popover={<BalanceInfo walletStore={walletStore} />}
-        >
+          popover={<BalanceInfo walletStore={walletStore} />}>
           <TouchableOpacity
             style={[theme.bgPrimaryBorder, styles.touchable]}
-            onPress={() => tooltipRef.current.toggleTooltip()}
-          >
+            onPress={() => tooltipRef.current.toggleTooltip()}>
             <MindsTokens
               mindsPrice={walletStore.prices.minds}
               value={walletStore.balance.toString()}

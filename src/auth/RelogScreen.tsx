@@ -43,8 +43,7 @@ const RelogScreen = ({ route, navigation }: PropsType) => {
       marginTop={20}
       contentContainer={theme.bgPrimaryBackgroundHighlight}
       titleStyle={theme.colorPrimaryText}
-      backIconStyle={theme.colorPrimaryText}
-    >
+      backIconStyle={theme.colorPrimaryText}>
       <LoginFormHandler
         relogin
         onLogin={onLoginHandler}

@@ -88,8 +88,7 @@ export default observer(function InitialOnboardingButton() {
       iterationDelay={100}
       iterationCount={2}
       useNativeDriver
-      delay={1500}
-    >
+      delay={1500}>
       <MenuItem item={item} titleStyle={theme.bold} testID="startOnboarding" />
     </Animatable.View>
   );

@@ -138,8 +138,7 @@ export default observer(function (props) {
     <View style={styles.container}>
       <ScrollView
         keyboardShouldPersistTaps={'handled'}
-        contentContainerStyle={styles.bodyContainer}
-      >
+        contentContainerStyle={styles.bodyContainer}>
         <TopBar
           containerStyle={theme.paddingLeft}
           backIconSize={45}
@@ -175,8 +174,7 @@ export default observer(function (props) {
               multiline={true}
               selectTextOnFocus={false}
               underlineColorAndroid="transparent"
-              testID="PostInput"
-            >
+              testID="PostInput">
               <Tags>{props.store.text}</Tags>
             </TextInput>
           </>
@@ -197,8 +195,7 @@ export default observer(function (props) {
       {showBottomBar && (
         <KeyboardSpacingView
           enabled={Platform.OS === 'ios'}
-          style={[theme.bgPrimaryBackground, styles.bottomBarContainer]}
-        >
+          style={[theme.bgPrimaryBackground, styles.bottomBarContainer]}>
           <BottomBar
             store={props.store}
             onOptions={() => {
@@ -212,8 +209,7 @@ export default observer(function (props) {
       <BottomSheet
         ref={confirmRef}
         title={i18n.t('capture.discardPost')}
-        detail={i18n.t('capture.discardPostDescription')}
-      >
+        detail={i18n.t('capture.discardPostDescription')}>
         <BottomSheetButton
           text={i18n.t('capture.yesDiscard')}
           onPress={discard}

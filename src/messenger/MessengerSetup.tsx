@@ -107,8 +107,10 @@ export default class MessengerSetup extends Component<PropsType> {
   renderUnlock() {
     return (
       <View
-        style={[ThemedStyles.style.flexContainer, ThemedStyles.style.padding2x]}
-      >
+        style={[
+          ThemedStyles.style.flexContainer,
+          ThemedStyles.style.padding2x,
+        ]}>
         <View style={{ flexDirection: 'column', alignItems: 'stretch' }}>
           <TextInput
             style={ComponentsStyle.passwordinput}
@@ -145,8 +147,10 @@ export default class MessengerSetup extends Component<PropsType> {
 
     return (
       <View
-        style={[ThemedStyles.style.flexContainer, ThemedStyles.style.padding2x]}
-      >
+        style={[
+          ThemedStyles.style.flexContainer,
+          ThemedStyles.style.padding2x,
+        ]}>
         <View style={{ flexDirection: 'column', alignItems: 'stretch' }}>
           <TextInput
             style={ComponentsStyle.passwordinput}

@@ -20,8 +20,7 @@ const PaymentMethod = ({ store }: PropsType) => {
         theme.padding4x,
         theme.bcolorPrimaryBorder,
         theme.borderTopHair,
-      ]}
-    >
+      ]}>
       <MText style={switchTextStyle}>{i18n.t('usd')}</MText>
       <Switch
         value={store.method === 'tokens'}

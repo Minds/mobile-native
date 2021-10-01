@@ -42,15 +42,13 @@ const height = 83;
  */
 const Header = props => (
   <View
-    style={[styles.headerContainer, ThemedStyles.style.bcolorPrimaryBorder]}
-  >
+    style={[styles.headerContainer, ThemedStyles.style.bcolorPrimaryBorder]}>
     <View
       style={[
         styles.header,
         ThemedStyles.style.bgSecondaryBackground,
         ThemedStyles.style.bcolorPrimaryBorder,
-      ]}
-    >
+      ]}>
       <MText
         style={[
           ThemedStyles.style.fontXL,
@@ -58,8 +56,7 @@ const Header = props => (
           ThemedStyles.style.textCenter,
           ThemedStyles.style.flexContainer,
           ThemedStyles.style.bold,
-        ]}
-      >
+        ]}>
         {i18n.t('capture.postOptions')}
       </MText>
       <MText
@@ -68,8 +65,7 @@ const Header = props => (
           ThemedStyles.style.fontL,
           ThemedStyles.style.colorSecondaryText,
           styles.close,
-        ]}
-      >
+        ]}>
         {i18n.t('close')}
       </MText>
     </View>
@@ -84,11 +80,9 @@ const Item = props => {
     <Touchable
       style={[styles.row, ThemedStyles.style.bcolorPrimaryBorder]}
       onPress={props.onPress}
-      testID={props.testID}
-    >
+      testID={props.testID}>
       <MText
-        style={[styles.optionTitle, ThemedStyles.style.colorSecondaryText]}
-      >
+        style={[styles.optionTitle, ThemedStyles.style.colorSecondaryText]}>
         {props.title}
       </MText>
       <MText style={styles.optionDescription} numberOfLines={1}>
@@ -199,15 +193,13 @@ export default observer(
         enablePanDownToClose={true}
         snapPoints={snapPoints}
         backgroundComponent={null}
-        handleComponent={() => <Header onPress={onHeaderPress} />}
-      >
+        handleComponent={() => <Header onPress={onHeaderPress} />}>
         <View
           style={[
             theme.bgSecondaryBackground,
             theme.fullHeight,
             { elevation: 13 },
-          ]}
-        >
+          ]}>
           <Item
             title="Tag"
             description={tags.slice(0, 4).map(t => `#${t} `)}

@@ -60,11 +60,8 @@ function Icon({
   nested = false,
   ...common
 }: IIcon) {
-  const {
-    font: iconFont,
-    name: iconName,
-    ratio = 1,
-  } = ICON_MAP[name] || ICON_MAP[ICON_DEFAULT];
+  const { font: iconFont, name: iconName, ratio = 1 } =
+    ICON_MAP[name] || ICON_MAP[ICON_DEFAULT];
 
   // gets the numeric size value from the legacy number and current string alternative
   const sizeNumeric = getNumericSize(size, ICON_SIZES, ICON_SIZE_DEFAULT);

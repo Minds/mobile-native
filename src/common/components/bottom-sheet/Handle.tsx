@@ -12,8 +12,7 @@ const Handle: FC<HandleProps> = ({ children, showHandleBar = true, style }) => (
     style={useMemoStyle(
       [children ? styles.containerWithChildren : styles.container, style],
       [style],
-    )}
-  >
+    )}>
     {showHandleBar && (
       <View style={ThemedStyles.style.alignCenter}>
         <View style={styles.handleBar} />

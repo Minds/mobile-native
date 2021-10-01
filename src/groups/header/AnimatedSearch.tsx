@@ -57,8 +57,7 @@ export default observer(function AnimatedSearch(props: PropsTypes) {
           transition={{
             height: { type: 'timing' },
             translateY: { type: 'spring' },
-          }}
-        >
+          }}>
           <SearchView
             containerStyle={searchContainerStyle}
             placeholder={i18n.t('discovery.search')}

@@ -35,8 +35,7 @@ export default function DiscoveryTrendPlaceHolder() {
       <Placeholder
         style={styles.items}
         Animation={animation}
-        Right={() => <PlaceholderMedia size={100} color={color} />}
-      >
+        Right={() => <PlaceholderMedia size={100} color={color} />}>
         <View>
           <PlaceholderLine width={80} color={color} />
           <PlaceholderLine width={60} color={color} />
@@ -45,8 +44,7 @@ export default function DiscoveryTrendPlaceHolder() {
       <Placeholder
         style={styles.items}
         Animation={animation}
-        Right={() => <PlaceholderMedia size={100} color={color} />}
-      >
+        Right={() => <PlaceholderMedia size={100} color={color} />}>
         <View>
           <PlaceholderLine width={80} color={color} />
           <PlaceholderLine width={60} color={color} />

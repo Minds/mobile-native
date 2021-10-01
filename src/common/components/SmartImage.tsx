@@ -159,14 +159,12 @@ const ImageOverlay = ({
         {
           opacity,
         },
-      ]}
-    >
+      ]}>
       {!withoutDownloadButton && (
         <TouchableOpacity
           activeOpacity={0.9}
           onPress={store.progress === undefined ? store.onDownload : undefined}
-          style={[theme.positionAbsolute, theme.centered]}
-        >
+          style={[theme.positionAbsolute, theme.centered]}>
           <View style={[styles.downloadButton, theme.centered]}>
             {typeof store.progress === 'number' ? (
               <ProgressCircle

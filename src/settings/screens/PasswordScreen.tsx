@@ -123,8 +123,7 @@ export default observer(function () {
     headerRight: () => (
       <MText
         onPress={confirmPassword}
-        style={[theme.colorLink, theme.fontL, theme.bold]}
-      >
+        style={[theme.colorLink, theme.fontL, theme.bold]}>
         {i18n.t('save')}
       </MText>
     ),
@@ -175,8 +174,7 @@ export default observer(function () {
       <KeyboardAvoidingView
         style={[theme.flexContainer, theme.paddingTop3x]}
         behavior="position"
-        keyboardVerticalOffset={isIphoneX ? 100 : 64}
-      >
+        keyboardVerticalOffset={isIphoneX ? 100 : 64}>
         {!store.passwordFocused &&
           getInput({
             placeholder: i18n.t('settings.currentPassword'),

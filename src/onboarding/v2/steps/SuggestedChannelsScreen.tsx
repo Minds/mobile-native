@@ -28,16 +28,14 @@ export default observer(function SuggestedChannelsScreen() {
   return (
     <ModalContainer
       title={i18n.t('onboarding.subscribeToChannel')}
-      onPressBack={NavigationService.goBack}
-    >
+      onPressBack={NavigationService.goBack}>
       <View style={[theme.flexContainer, theme.paddingHorizontal2x]}>
         <MText
           style={[
             theme.subTitleText,
             theme.colorPrimaryText,
             theme.paddingHorizontal2x,
-          ]}
-        >
+          ]}>
           {i18n.t('onboarding.suggestedChannelsDescription')}
         </MText>
         <ScrollView style={theme.flexContainer}>

@@ -155,10 +155,9 @@ const DiscoveryTagsManager = (props: Props, ref) => {
     inputRef.current?.show();
   }, []);
 
-  const listHeight = React.useMemo(
-    () => ({ height: (height - 60) * 0.6 }),
-    [height],
-  );
+  const listHeight = React.useMemo(() => ({ height: (height - 60) * 0.6 }), [
+    height,
+  ]);
 
   /**
    * Render
@@ -197,8 +196,7 @@ const DiscoveryTagsManager = (props: Props, ref) => {
         autoCapitalize="none"
         onSubmitEditing={onCreate}
         value={store.inputValue}
-        onChangeText={v => store.setValue(v)}
-      >
+        onChangeText={v => store.setValue(v)}>
         <Icon
           name="add-circle-outline"
           size={22}

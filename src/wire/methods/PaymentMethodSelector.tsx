@@ -62,8 +62,7 @@ export default class PaymentMethodSelector extends React.PureComponent<PropsType
               style={[theme.alignCenter, theme.padding]}
               {...testID(`PAYMENT METHOD ${method.label}`)}
               key={i}
-              onPress={method.handle}
-            >
+              onPress={method.handle}>
               <PaymentMethodIcon
                 value={method.label}
                 size={30}
@@ -79,8 +78,7 @@ export default class PaymentMethodSelector extends React.PureComponent<PropsType
                   method.label.toLowerCase() === this.props.value
                     ? theme.colorIconActive
                     : theme.colorIcon,
-                ]}
-              >
+                ]}>
                 {method.label.toUpperCase()}
               </MText>
             </TouchableOpacity>

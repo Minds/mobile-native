@@ -68,8 +68,7 @@ export const Topbar = observer((props: PropsType) => {
           theme.borderBottomHair,
           theme.bcolorPrimaryBorder,
           cleanTop,
-        ]}
-      >
+        ]}>
         <View style={styles.topbar}>
           <View style={styles.topbarLeft}>
             <TouchableOpacity onPress={openMenu} testID="topbarAvatar">
@@ -94,8 +93,7 @@ export const Topbar = observer((props: PropsType) => {
                 theme.colorSecondaryText,
                 theme.paddingRight2x,
                 theme.paddingVertical2x,
-              ]}
-            >
+              ]}>
               {usdBalance > 0 && '$' + intword(usdBalance)}
             </MText>
 

@@ -76,8 +76,7 @@ const CommentInput = observer(() => {
       noInset={true}
       style={StyleSheet.absoluteFill}
       enabled={Platform.OS === 'ios'}
-      pointerEvents="box-none"
-    >
+      pointerEvents="box-none">
       <View style={[theme.justifyEnd, theme.flexContainer]}>
         <View style={theme.flexContainer}>
           <Touchable
@@ -103,8 +102,7 @@ const CommentInput = observer(() => {
                 theme.paddingBottom2x,
                 theme.paddingHorizontal4x,
                 theme.marginBottom2x,
-              ]}
-            >
+              ]}>
               <MText style={theme.colorSecondaryText}>
                 {provider.store.edit
                   ? i18n.t('edit')
@@ -120,8 +118,7 @@ const CommentInput = observer(() => {
               theme.rowJustifyStart,
               theme.alignEnd,
               theme.paddingHorizontal4x,
-            ]}
-          >
+            ]}>
             <TextInput
               ref={ref}
               autoFocus={true}
@@ -150,13 +147,11 @@ const CommentInput = observer(() => {
                     theme.rowJustifySpaceBetween,
                     styles.sendIconCont,
                     theme.alignCenter,
-                  ]}
-                >
+                  ]}>
                   <Touchable
                     onPress={provider.store.post}
                     style={theme.paddingRight2x}
-                    testID="PostCommentButton"
-                  >
+                    testID="PostCommentButton">
                     <Icon
                       name="md-send"
                       size={18}

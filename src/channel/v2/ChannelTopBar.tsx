@@ -70,12 +70,8 @@ const ChannelTopBar = observer(
     const theme = ThemedStyles.style;
     const insets = useSafeAreaInsets();
     const cleanTop = insets.top ? { paddingTop: insets.top } : null;
-    const hiddenChannelButtons = useRef([
-      'edit',
-      'join',
-      'subscribe',
-      'boost',
-    ]).current;
+    const hiddenChannelButtons = useRef(['edit', 'join', 'subscribe', 'boost'])
+      .current;
     /**
      * shows and hides the background with animation based
      * on the {withBg} prop
@@ -197,8 +193,7 @@ const ChannelTopBar = observer(
       <TouchableOpacity
         activeOpacity={1}
         onPress={onPress}
-        style={containerStyle}
-      >
+        style={containerStyle}>
         <Animated.View style={topBarInnerWrapperStyle}>
           {BLURRED_BANNER_BACKGROUND && (
             <Image
@@ -254,8 +249,7 @@ const ChannelTopBar = observer(
             style={[
               { position: 'absolute', left: 65, right: 65, elevation: 5 },
               searchInputAnimatedStyle,
-            ]}
-          >
+            ]}>
             {searchInput}
           </Animated.View>
         )}

@@ -113,8 +113,7 @@ class MessengerScreen extends Component {
     return (
       <View style={[styles.container, theme.bgPrimaryBackground]}>
         <View
-          style={[theme.rowJustifyStart, theme.alignCenter, theme.marginTop2x]}
-        >
+          style={[theme.rowJustifyStart, theme.alignCenter, theme.marginTop2x]}>
           <SearchView
             placeholder={i18n.t('discovery.search')}
             onChangeText={this.searchChange}

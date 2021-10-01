@@ -39,8 +39,7 @@ export default observer(function RegisterScreen(props: PropsType) {
                   theme.colorWhite,
                   theme.paddingVertical3x,
                   theme.positionAbsolute,
-                ]}
-              >
+                ]}>
                 {i18n.t('auth.createChannel')}
               </MText>
               <Icon

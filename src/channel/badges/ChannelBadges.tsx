@@ -16,8 +16,7 @@ const BadgeTooltip: FC<any> = ({ label, color, children }) => {
       backgroundColor={color}
       position={'top'}
       animationType={'spring'}
-      content={label}
-    >
+      content={label}>
       {children}
     </Popable>
   );
@@ -51,8 +50,7 @@ export default class ChannelBadges extends PureComponent<PropsType> {
       badges.push(
         <BadgeTooltip
           label={i18n.t('channel.badge.plus')}
-          color={ThemedStyles.getColor('Link')}
-        >
+          color={ThemedStyles.getColor('Link')}>
           <Icon
             active
             name="plus-circle-outline"
@@ -68,8 +66,7 @@ export default class ChannelBadges extends PureComponent<PropsType> {
       badges.push(
         <BadgeTooltip
           label={i18n.t('channel.badge.verified')}
-          color={ThemedStyles.getColor('SuccessBackground')}
-        >
+          color={ThemedStyles.getColor('SuccessBackground')}>
           <Icon
             name="verified"
             size={size}
@@ -86,8 +83,7 @@ export default class ChannelBadges extends PureComponent<PropsType> {
       badges.push(
         <BadgeTooltip
           label={i18n.t('channel.badge.founder')}
-          color={ThemedStyles.getColor('Link')}
-        >
+          color={ThemedStyles.getColor('Link')}>
           <Icon name="founder" active size={size} style={style} key={3} />
         </BadgeTooltip>,
       );

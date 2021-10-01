@@ -75,8 +75,7 @@ export async function showMessageForPrivateKey() {
         </MText>
         <MText
           style={[theme.fontLM, theme.marginTop4x, theme.textCenter]}
-          onPress={hideMessage}
-        >
+          onPress={hideMessage}>
           {i18n.t('blockchain.exportLegacy2')}
         </MText>
         <View
@@ -87,20 +86,17 @@ export async function showMessageForPrivateKey() {
             theme.borderTopHair,
             theme.bcolorPrimaryBorder,
             styles.messageHorizontalLine,
-          ]}
-        >
+          ]}>
           <View
             style={[
               theme.bcolorPrimaryBorder,
               theme.borderRightHair,
               theme.justifyCenter,
               styles.messageVerticalLine,
-            ]}
-          >
+            ]}>
             <MText
               style={[theme.fontXL, theme.colorLink, theme.paddingHorizontal4x]}
-              onPress={hideMessage}
-            >
+              onPress={hideMessage}>
               {i18n.t('no')}
             </MText>
           </View>
@@ -109,11 +105,13 @@ export async function showMessageForPrivateKey() {
             onPress={() => {
               hideMessage();
               NavigationService.navigate('ExportLegacyWallet');
-            }}
-          >
+            }}>
             <MText
-              style={[theme.fontXL, theme.colorLink, theme.paddingHorizontal4x]}
-            >
+              style={[
+                theme.fontXL,
+                theme.colorLink,
+                theme.paddingHorizontal4x,
+              ]}>
               {i18n.t('yes')}
             </MText>
           </TouchableOpacity>

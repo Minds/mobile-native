@@ -67,11 +67,16 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
     limit: 15,
     offset: notifications.offset,
   };
-  const { result, error, loading, fetch, setResult } =
-    useApiFetch<NotificationList>('api/v3/notifications/list', {
-      params,
-      updateState,
-    });
+  const {
+    result,
+    error,
+    loading,
+    fetch,
+    setResult,
+  } = useApiFetch<NotificationList>('api/v3/notifications/list', {
+    params,
+    updateState,
+  });
 
   const onFetchMore = () => {
     !loading &&
@@ -186,8 +191,7 @@ const renderItem = (row: any): React.ReactElement => {
   return (
     <ErrorBoundary
       message="Can't show this notification"
-      containerStyle={ThemedStyles.style.borderBottomHair}
-    >
+      containerStyle={ThemedStyles.style.borderBottomHair}>
       <NotificationItem notification={notification} />
     </ErrorBoundary>
   );

@@ -65,8 +65,7 @@ const FloatingInput = React.forwardRef(
           noInset={true}
           style={StyleSheet.absoluteFill}
           enabled={Platform.OS === 'ios'}
-          pointerEvents="box-none"
-        >
+          pointerEvents="box-none">
           <View style={styles.mainContainer}>
             <TouchableOpacity
               onPress={() => setShow(false)}
@@ -87,8 +86,7 @@ const FloatingInput = React.forwardRef(
                     <Touchable
                       onPress={onSubmit}
                       testID="submitButton"
-                      style={theme.paddingBottom}
-                    >
+                      style={theme.paddingBottom}>
                       {children}
                     </Touchable>
                   </View>

@@ -22,21 +22,19 @@ const ReferralRow = ({ referral, onPress }: ReferralRowProps) => {
     return user.getAvatarSource('small');
   }, []);
 
-  const _onPress = useCallback(
-    () => onPress(referral.prospect),
-    [onPress, referral],
-  );
+  const _onPress = useCallback(() => onPress(referral.prospect), [
+    onPress,
+    referral,
+  ]);
 
   return (
     <View
       key={referral.guid}
-      style={[theme.rowJustifySpaceBetween, theme.paddingVertical2x]}
-    >
+      style={[theme.rowJustifySpaceBetween, theme.paddingVertical2x]}>
       <TouchableOpacity
         activeOpacity={0.7}
         onPress={_onPress}
-        style={[styles.firstColumn, theme.rowJustifyStart, theme.alignCenter]}
-      >
+        style={[styles.firstColumn, theme.rowJustifyStart, theme.alignCenter]}>
         <FastImage
           source={_getAvatarSource(referral)}
           style={[styles.avatar, theme.marginRight2x]}

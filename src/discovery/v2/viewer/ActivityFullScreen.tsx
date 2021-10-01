@@ -315,8 +315,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
           onContentSizeChange={store.onContentSizeChange}
           contentContainerStyle={
             store.contentFit ? contentFitStyle : contentNotFitStyle
-          }
-        >
+          }>
           {showNSFW ? (
             <ExplicitOverlay entity={entity} />
           ) : (
@@ -338,8 +337,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
               <TouchableOpacity
                 accessibilityLabel="touchableTextCopy"
                 onLongPress={copyText}
-                style={textCopyTouchableStyle}
-              >
+                style={textCopyTouchableStyle}>
                 {showText && (
                   <>
                     <ExplicitText

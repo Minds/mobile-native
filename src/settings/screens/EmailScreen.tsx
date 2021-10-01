@@ -45,8 +45,7 @@ class EmailScreen extends Component {
       headerRight: () => (
         <MText
           onPress={this.confirmPassword}
-          style={[CS.colorLink, CS.fontL, CS.bold]}
-        >
+          style={[CS.colorLink, CS.fontL, CS.bold]}>
           {i18n.t('save')}
         </MText>
       ),
@@ -114,8 +113,7 @@ class EmailScreen extends Component {
           CS.paddingHorizontal2x,
           CS.centered,
           CS.marginTop3x,
-        ]}
-      >
+        ]}>
         {i18n.t('emailConfirm.confirmNote')}
       </MText>
     ) : null;
@@ -129,8 +127,7 @@ class EmailScreen extends Component {
             CS.bgSecondaryBackground,
             CS.border,
             CS.bcolorPrimaryBorder,
-          ]}
-        >
+          ]}>
           <Input
             style={[CS.border0x, styles.inputHeight]}
             labelStyle={[CS.colorSecondaryText, CS.fontL, CS.paddingLeft]}

@@ -49,8 +49,7 @@ const LoginInputs = observer(
           <MText style={stylesLocal.name}>{user.name}</MText>
           <MText
             style={stylesLocal.username}
-            testID={`username${user.username}`}
-          >
+            testID={`username${user.username}`}>
             @{user.username}
           </MText>
         </View>

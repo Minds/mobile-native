@@ -43,8 +43,7 @@ export default class TagOptinModal extends Component {
         avoidKeyboard={true}
         animationInTiming={150}
         onBackButtonPress={this.dismissModal}
-        onBackdropPress={this.dismissModal}
-      >
+        onBackdropPress={this.dismissModal}>
         <View style={styles.modalView}>
           <View style={styles.modalHeader}>
             <MText style={styles.modalTitle}>{i18n.t('hashtags.title')}</MText>

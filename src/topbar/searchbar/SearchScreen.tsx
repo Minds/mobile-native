@@ -39,15 +39,13 @@ const SearchScreen = observer(() => {
         theme.bgPrimaryBackground,
         paddingTop,
         paddingBottom,
-      ]}
-    >
+      ]}>
       <View
         style={[
           styles.header,
           Platform.OS === 'android' ? theme.marginBottom : theme.marginBottom3x,
           theme.marginTop3x,
-        ]}
-      >
+        ]}>
         <View style={[theme.rowJustifyStart, theme.paddingLeft3x]}>
           <Icon
             name="search"

@@ -21,8 +21,9 @@ export const DiscoverySearchScreen = observer((props: Props) => {
   const theme = ThemedStyles.style;
   const store = useDiscoveryV2SearchStore();
 
-  const navigation =
-    useNavigation<StackNavigationProp<AppStackParamList, 'DiscoverySearch'>>();
+  const navigation = useNavigation<
+    StackNavigationProp<AppStackParamList, 'DiscoverySearch'>
+  >();
   navigation.setOptions({
     headerShown: false,
   });

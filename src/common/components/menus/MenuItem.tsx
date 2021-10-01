@@ -69,8 +69,7 @@ export default function ({
       onPress={item.onPress}
       containerStyle={containerStyle}
       underlayColor="transparent"
-      testID={testID}
-    >
+      testID={testID}>
       <ListItem.Content>
         <ListItem.Title style={[baseTitleStyle, titleStyle]}>
           {item.title}

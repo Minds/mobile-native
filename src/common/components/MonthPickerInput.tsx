@@ -40,8 +40,7 @@ const MonthPickerInput = observer((props: PropsType) => {
     <>
       <TouchableOpacity
         style={[theme.rowJustifySpaceBetween, props.containerStyle]}
-        onPress={localStore.openPicker}
-      >
+        onPress={localStore.openPicker}>
         <View>
           <MText style={[styles.label, theme.colorSecondaryText]}>Month</MText>
           <MText style={[theme.fontLM, theme.fontMedium]}>

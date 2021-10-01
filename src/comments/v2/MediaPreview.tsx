@@ -78,8 +78,7 @@ export default observer(function MediaPreview({
       <TouchableOpacity
         style={styles.close}
         hitSlop={hitSlop}
-        onPress={() => attachment.delete(true)}
-      >
+        onPress={() => attachment.delete(true)}>
         <Icon name="close-circle-sharp" size={32} style={theme.colorWhite} />
       </TouchableOpacity>
     </View>

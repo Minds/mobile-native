@@ -22,11 +22,9 @@ const Option = props => {
   return (
     <TouchableOpacity
       style={[styles.optsRow, ThemedStyles.style.bcolorPrimaryBorder]}
-      onPress={onSelect}
-    >
+      onPress={onSelect}>
       <MText
-        style={[ThemedStyles.style.flexContainer, ThemedStyles.style.fontL]}
-      >
+        style={[ThemedStyles.style.flexContainer, ThemedStyles.style.fontL]}>
         {props.option.text}
       </MText>
       {props.selected && (

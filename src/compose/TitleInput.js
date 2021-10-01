@@ -33,8 +33,7 @@ export default observer(function (props) {
           theme.alignCenter,
           theme.paddingRight,
           theme.marginTop3x,
-        ]}
-      >
+        ]}>
         <Icon
           name={open ? 'minus' : 'plus'}
           size={20}
@@ -43,8 +42,7 @@ export default observer(function (props) {
         />
         <MText
           style={[theme.fontXL, theme.colorIcon, theme.paddingHorizontal2x]}
-          onPress={onPress}
-        >
+          onPress={onPress}>
           Title
         </MText>
       </View>

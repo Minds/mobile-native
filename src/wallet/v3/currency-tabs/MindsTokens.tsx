@@ -62,8 +62,7 @@ const MindsTokens = ({
       {format(mindsF)}
       {isTokens ? (
         <MText
-          style={[styles.cash, theme.colorSecondaryText, secondaryTextStyle]}
-        >
+          style={[styles.cash, theme.colorSecondaryText, secondaryTextStyle]}>
           {' '}
           tokens{' '}
         </MText>
@@ -76,8 +75,7 @@ const MindsTokens = ({
             styles.cash,
             theme.colorSecondaryText,
             cashAsPrimary ? textStyles : secondaryTextStyle,
-          ]}
-        >
+          ]}>
           · ${format(cash)}
         </MText>
       )}

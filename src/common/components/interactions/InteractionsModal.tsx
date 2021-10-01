@@ -122,8 +122,7 @@ export default observer(
       <Modal
         isVisible={store.visible}
         useNativeDriver={true}
-        onBackdropPress={store.hide}
-      >
+        onBackdropPress={store.hide}>
         <View style={containerStyle}>
           <MText style={titleStyle}>
             {capitalize(

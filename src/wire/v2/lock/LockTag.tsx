@@ -19,8 +19,7 @@ const LockTag = ({ type }: PropsType) => {
       {type !== 'plus' && lockIcon}
       {text && (
         <MText
-          style={[styles.text, type === 'members' ? styles.spacing : null]}
-        >
+          style={[styles.text, type === 'members' ? styles.spacing : null]}>
           {text}
         </MText>
       )}

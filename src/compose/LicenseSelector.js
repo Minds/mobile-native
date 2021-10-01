@@ -25,11 +25,9 @@ const Option = props => {
   return (
     <TouchableOpacity
       style={[styles.optsRow, ThemedStyles.style.bcolorPrimaryBorder]}
-      onPress={onSelect}
-    >
+      onPress={onSelect}>
       <MText
-        style={[ThemedStyles.style.flexContainer, ThemedStyles.style.fontL]}
-      >
+        style={[ThemedStyles.style.flexContainer, ThemedStyles.style.fontL]}>
         {props.option.text}
       </MText>
       {props.selected && (
@@ -65,8 +63,7 @@ export default observer(function (props) {
           theme.colorSecondaryText,
           theme.fontL,
           theme.paddingHorizontal3x,
-        ]}
-      >
+        ]}>
         {i18n.t('capture.licenseDescription')}
       </MText>
 
@@ -77,8 +74,7 @@ export default observer(function (props) {
             theme.colorTertiaryText,
             theme.fontS,
             theme.paddingHorizontal3x,
-          ]}
-        >
+          ]}>
           {i18n.t('capture.pupularLicenses').toUpperCase()}
         </MText>
 
@@ -96,8 +92,7 @@ export default observer(function (props) {
             theme.colorTertiaryText,
             theme.fontS,
             theme.paddingHorizontal3x,
-          ]}
-        >
+          ]}>
           {i18n.t('capture.otherLicenses').toUpperCase()}
         </MText>
         {licenses.slice(2).map(o => (

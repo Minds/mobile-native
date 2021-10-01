@@ -82,15 +82,16 @@ export type DynamicStyles = {
   marginHorizontal: any;
   margin: any;
 } & {
-  [key in Numbers_99 as `width${key}` | `height${key}`];
-} & {
-  [key in keyof ColorsType as
-    | `bg${key}`
-    | `bg${key}${ThemeSuffix}`
-    | `color${key}`
-    | `color${key}${ThemeSuffix}`
-    | `bcolor${key}`
-    | `bcolor${key}${ThemeSuffix}`
-    | `shadow${key}`
-    | `shadow${key}${ThemeSuffix}`];
-};
+    [key in Numbers_99 as `width${key}` | `height${key}`];
+  } &
+  {
+    [key in keyof ColorsType as
+      | `bg${key}`
+      | `bg${key}${ThemeSuffix}`
+      | `color${key}`
+      | `color${key}${ThemeSuffix}`
+      | `bcolor${key}`
+      | `bcolor${key}${ThemeSuffix}`
+      | `shadow${key}`
+      | `shadow${key}${ThemeSuffix}`];
+  };

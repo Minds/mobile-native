@@ -233,8 +233,9 @@ const RegisterForm = observer(({}: PropsType) => {
               {i18n.t('auth.accept')}{' '}
               <MText
                 style={theme.link}
-                onPress={() => Linking.openURL('https://www.minds.com/p/terms')}
-              >
+                onPress={() =>
+                  Linking.openURL('https://www.minds.com/p/terms')
+                }>
                 {i18n.t('auth.termsAndConditions')}
               </MText>
             </MText>

@@ -58,8 +58,7 @@ export default observer(function (props) {
         cropWidth={Dimensions.get('window').width}
         cropHeight={Dimensions.get('window').height}
         imageWidth={Dimensions.get('window').width}
-        imageHeight={imageHeight}
-      >
+        imageHeight={imageHeight}>
         <SmartImage
           key={props.image.key || 'imagePreview'}
           source={{ uri: uri + `?${props.image.key}` }} // we need to change the uri in order to force the reload of the image

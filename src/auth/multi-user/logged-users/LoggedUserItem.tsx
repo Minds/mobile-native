@@ -36,15 +36,14 @@ const LoggedUserItem = ({ tokenData, index }: PropsType) => {
     doLogin(index);
   }, [index]);
   const renderRight = React.useMemo(
-    () => () =>
-      (
-        <LoggedUserDetails
-          index={index}
-          isActive={index === sessionService.activeIndex}
-          username={user.username}
-          onSwitchPress={login}
-        />
-      ),
+    () => () => (
+      <LoggedUserDetails
+        index={index}
+        isActive={index === sessionService.activeIndex}
+        username={user.username}
+        onSwitchPress={login}
+      />
+    ),
     [index, login, user.username],
   );
   return (

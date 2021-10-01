@@ -33,16 +33,14 @@ export default observer(function SuggestedGroupsScreen() {
   return (
     <ModalContainer
       title={i18n.t('onboarding.joinGroup')}
-      onPressBack={NavigationService.goBack}
-    >
+      onPressBack={NavigationService.goBack}>
       <View style={[theme.flexContainer, theme.paddingHorizontal2x]}>
         <MText
           style={[
             theme.subTitleText,
             theme.colorPrimaryText,
             theme.paddingHorizontal2x,
-          ]}
-        >
+          ]}>
           {i18n.t('onboarding.suggestedGroupsDescription')}
         </MText>
         <ScrollView style={theme.flexContainer}>

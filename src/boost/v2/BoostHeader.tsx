@@ -13,8 +13,7 @@ const BoostHeader = ({ title }: PropsType) => {
     <ImageBackground
       style={styles.banner}
       source={require('../../assets/boostBG.png')}
-      resizeMode="cover"
-    >
+      resizeMode="cover">
       <View style={styles.textContainer}>
         <MText style={styles.title}>{title}</MText>
       </View>

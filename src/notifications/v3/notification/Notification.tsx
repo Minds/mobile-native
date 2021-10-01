@@ -34,10 +34,10 @@ const NotificationItem = React.memo(({ notification }: PropsType) => {
   const router = useNotificationRouter(notification, modalRef);
   const user = sessionService.getUser();
 
-  const navToOwnChannel = React.useCallback(
-    () => router.navToChannel(user),
-    [user, router],
-  );
+  const navToOwnChannel = React.useCallback(() => router.navToChannel(user), [
+    user,
+    router,
+  ]);
 
   const navToFromChannel = React.useCallback(
     () => router.navToChannel(fromUser),

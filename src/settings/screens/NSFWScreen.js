@@ -50,8 +50,7 @@ export default function () {
         theme.flexContainer,
         theme.bgPrimaryBackground,
         theme.paddingTop4x,
-      ]}
-    >
+      ]}>
       <View
         style={[
           styles.row,
@@ -61,11 +60,9 @@ export default function () {
           theme.bcolorPrimaryBorder,
           theme.borderTopHair,
           theme.borderBottomHair,
-        ]}
-      >
+        ]}>
         <MText
-          style={[theme.marginLeft, theme.colorSecondaryText, theme.fontL]}
-        >
+          style={[theme.marginLeft, theme.colorSecondaryText, theme.fontL]}>
           {i18n.t('settings.showMatureContent')}
         </MText>
         <Switch value={matureContent} onSyncPress={save} />

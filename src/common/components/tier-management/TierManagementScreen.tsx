@@ -60,8 +60,7 @@ const TierManagementScreen = observer(
           localStore.support_tiers.length === 0
             ? ThemedStyles.style.flexContainer
             : null
-        }
-      >
+        }>
         {localStore.support_tiers.length > 0 && (
           <Header
             labelText={i18n.t('monetize.membershipMonetize.label')}

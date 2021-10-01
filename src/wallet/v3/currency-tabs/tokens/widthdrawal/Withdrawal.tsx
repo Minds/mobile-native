@@ -19,8 +19,7 @@ const Withdrawal = observer(() => {
   return (
     <ModalScreen
       source={require('../../../../../assets/withdrawalbg.jpg')}
-      title={i18n.t('wallet.transferToOnchain')}
-    >
+      title={i18n.t('wallet.transferToOnchain')}>
       {showSetup && (
         <Setup navigation={navigation} user={user} walletStore={walletStore} />
       )}

@@ -16,16 +16,14 @@ const Select = ({ label, onPress }: SelectProps) => {
     <TouchableOpacity
       onPress={onPress}
       activeOpacity={0.7}
-      style={{ padding: 5 }}
-    >
+      style={{ padding: 5 }}>
       <View
         style={[
           theme.rowJustifySpaceBetween,
           theme.padding2x,
           theme.bcolorPrimaryBorder,
           styles.container,
-        ]}
-      >
+        ]}>
         <MText style={styles.label}>{label}</MText>
         <Icon
           name={'arrow-drop-down'}

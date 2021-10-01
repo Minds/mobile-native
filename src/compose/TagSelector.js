@@ -24,8 +24,7 @@ const TagRow = props => {
   return (
     <View style={[styles.tagRow, ThemedStyles.style.bcolorPrimaryBorder]}>
       <MText
-        style={[ThemedStyles.style.flexContainer, ThemedStyles.style.fontXL]}
-      >
+        style={[ThemedStyles.style.flexContainer, ThemedStyles.style.fontXL]}>
         #{props.tag}
       </MText>
       <TouchableOpacity onPress={onDelete}>
@@ -111,21 +110,18 @@ export default observer(function (props) {
           theme.colorSecondaryText,
           theme.fontXL,
           theme.paddingHorizontal3x,
-        ]}
-      >
+        ]}>
         {i18n.t('capture.tagsDescription')}
       </MText>
       <View style={styles.suggestedContainer}>
         <ScrollView
           contentContainerStyle={styles.suggestedScroll}
-          horizontal={true}
-        >
+          horizontal={true}>
           <MIcon name="fire" size={23} style={theme.colorAlert} />
           {localStore.suggested.map(t => (
             <MText
               style={[styles.tag, theme.colorIconActive]}
-              onPress={() => store.addTag(t.value)}
-            >
+              onPress={() => store.addTag(t.value)}>
               #{t.value}
             </MText>
           ))}
@@ -137,8 +133,7 @@ export default observer(function (props) {
           theme.colorSecondaryText,
           theme.fontM,
           theme.paddingHorizontal3x,
-        ]}
-      >
+        ]}>
         Tag
       </MText>
       <TextInput
@@ -170,8 +165,7 @@ export default observer(function (props) {
             <MText style={theme.colorSecondaryText}>Recent tags</MText>
             <MText
               style={theme.colorSecondaryText}
-              onPress={localStore.history.clear}
-            >
+              onPress={localStore.history.clear}>
               Clear history
             </MText>
           </View>
@@ -179,8 +173,7 @@ export default observer(function (props) {
             {localStore.history.history.map(t => (
               <MText
                 style={styles.historyTag}
-                onPress={() => localStore.addString(t)}
-              >
+                onPress={() => localStore.addString(t)}>
                 #{t}
               </MText>
             ))}

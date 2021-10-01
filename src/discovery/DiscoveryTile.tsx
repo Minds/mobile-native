@@ -83,8 +83,7 @@ class DiscoveryTile extends Component {
           theme.bgSeparator,
           theme.centered,
           styles.boundary,
-        ]}
-      >
+        ]}>
         <MText>{this.props.boundaryText}</MText>
       </View>
     ) : null;
@@ -92,8 +91,7 @@ class DiscoveryTile extends Component {
     return (
       <TouchableOpacity
         onPress={this._onPress}
-        style={[this.state.style, styles.tile]}
-      >
+        style={[this.state.style, styles.tile]}>
         <View style={[theme.flexContainer, theme.bgSeparator]}>
           {boundary}
           <ExplicitImage

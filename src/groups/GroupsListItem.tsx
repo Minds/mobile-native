@@ -75,8 +75,7 @@ const GroupsListItem = observer((props: PropsType) => {
         count: abbrev(group['members:count']),
       })}
       subtitleStyle={[styles.subtitle, theme.colorSecondaryText]}
-      onPress={_onPress}
-    >
+      onPress={_onPress}>
       {!props.hideButton && <Button index={props.index} group={group} />}
     </ListItem>
   );

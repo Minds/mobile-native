@@ -62,22 +62,27 @@ export default observer(
     }
     const map = props.map || mapping;
     const keyExtractor = (item, index: any) => `${item.urn}${index}`;
-    const { result, loading, error, fetch, setResult } =
-      useApiFetch<ApiFetchType>(props.fetchEndpoint, {
-        params: opts,
-        updateState: (newData: ApiFetchType, oldData: ApiFetchType) =>
-          ({
-            ...newData,
-            [props.endpointData]: [
-              ...(oldData ? oldData[props.endpointData] : []),
-              ...map(
-                newData && newData[props.endpointData]
-                  ? newData[props.endpointData]
-                  : [],
-              ),
-            ],
-          } as ApiFetchType),
-      });
+    const {
+      result,
+      loading,
+      error,
+      fetch,
+      setResult,
+    } = useApiFetch<ApiFetchType>(props.fetchEndpoint, {
+      params: opts,
+      updateState: (newData: ApiFetchType, oldData: ApiFetchType) =>
+        ({
+          ...newData,
+          [props.endpointData]: [
+            ...(oldData ? oldData[props.endpointData] : []),
+            ...map(
+              newData && newData[props.endpointData]
+                ? newData[props.endpointData]
+                : [],
+            ),
+          ],
+        } as ApiFetchType),
+    });
     const data = useMemo(() => {
       if (result) {
         return result[props.endpointData].slice();
@@ -155,8 +160,7 @@ export default observer(
             theme.fontL,
             theme.marginVertical4x,
           ]}
-          onPress={() => fetch()}
-        >
+          onPress={() => fetch()}>
           {i18n.t('error') + '\n'}
           <MText style={theme.colorLink}>{i18n.t('tryAgain')}</MText>
         </MText>

@@ -43,8 +43,7 @@ export default class ReplyAction extends Component<{
       <TouchableOpacityCustom
         style={containerStyle}
         onPress={this.toggleExpand}
-        testID="ReplyCommentButton"
-      >
+        testID="ReplyCommentButton">
         <MText style={fontStyle}>{i18n.t('reply')}</MText>
       </TouchableOpacityCustom>
     );

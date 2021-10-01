@@ -241,8 +241,7 @@ export default class GroupViewScreen extends Component {
             <View style={ThemedStyles.style.padding3x}>
               <Tags
                 navigation={this.props.navigation}
-                style={ThemedStyles.style.fontL}
-              >
+                style={ThemedStyles.style.fontL}>
                 {description}
               </Tags>
             </View>
@@ -413,8 +412,7 @@ export default class GroupViewScreen extends Component {
         title={truncate(this.state.member.name, {
           length: 25,
           separator: ' ',
-        })}
-      >
+        })}>
         {this.state.memberActions.map((o, i) => (
           <MenuItem {...o} key={i} />
         ))}
@@ -437,8 +435,7 @@ export default class GroupViewScreen extends Component {
             theme.bgSecondaryBackground,
             theme.flexContainer,
             theme.justifyCenter,
-          ]}
-        >
+          ]}>
           <ExplicitOverlay entity={group} text={group.name} />
           {this.getBackIcon()}
         </View>

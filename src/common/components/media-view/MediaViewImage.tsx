@@ -38,14 +38,11 @@ export default function MediaViewImage({
   const [imageLoadFailed, setImageLoadFailed] = React.useState(false);
   const [size, setSize] = React.useState({ height: 0, width: 0 });
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const source = React.useMemo(
-    () => entity.getThumbSource('xlarge'),
-    [
-      entity,
-      //@ts-ignore
-      entity.attachment_guid,
-    ],
-  );
+  const source = React.useMemo(() => entity.getThumbSource('xlarge'), [
+    entity,
+    //@ts-ignore
+    entity.attachment_guid,
+  ]);
   const thumbnail = React.useMemo(
     () =>
       entity.isGif()
@@ -125,8 +122,7 @@ export default function MediaViewImage({
         onLongPress={onImageLongPress}
         style={containerStyle}
         activeOpacity={1}
-        testID="Posted Image"
-      >
+        testID="Posted Image">
         <ExplicitImage
           resizeMode={mode}
           style={imageStyle}

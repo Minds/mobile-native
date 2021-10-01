@@ -110,8 +110,7 @@ const UpgradeScreen = observer(({ navigation, route }: PropsType) => {
               theme.padding2x,
               theme.borderTop,
               theme.bcolorPrimaryBorder,
-            ]}
-          >
+            ]}>
             <Button
               onPress={confirmSend}
               text={i18n.t(`monetize.${pro ? 'pro' : 'plus'}Join`)}

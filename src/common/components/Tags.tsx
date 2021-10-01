@@ -100,8 +100,7 @@ export default class Tags extends PureComponent<PropsType> {
    * full url
    */
   parseUrl = str => {
-    const url =
-      /(^|\b)(\b(?:https?|http|ftp):\/\/[-A-Z0-9à-œ+&@#\/%?=~_|!:,.;\(\)]*[-A-Z0-9à-œ+&@#\/%=~_|])/gim;
+    const url = /(^|\b)(\b(?:https?|http|ftp):\/\/[-A-Z0-9à-œ+&@#\/%?=~_|!:,.;\(\)]*[-A-Z0-9à-œ+&@#\/%=~_|])/gim;
 
     return this.replaceRegular(str, url, (i, content) => {
       return (
@@ -110,8 +109,7 @@ export default class Tags extends PureComponent<PropsType> {
           style={[this.props.style, ThemedStyles.style.colorLink]}
           onPress={() => {
             this.navToURL(content);
-          }}
-        >
+          }}>
           {content}
         </MText>
       );
@@ -122,8 +120,7 @@ export default class Tags extends PureComponent<PropsType> {
    * url .com .org .net
    */
   parseShortUrl = str => {
-    const url =
-      /(^|\b)([-A-Z0-9à-œ+&@#\/%?=~_|!:,.;]+\.(?:com|org|net)\/[-A-Z0-9à-œ+&@#\/%=~_|\(\)]*)/gim;
+    const url = /(^|\b)([-A-Z0-9à-œ+&@#\/%?=~_|!:,.;]+\.(?:com|org|net)\/[-A-Z0-9à-œ+&@#\/%=~_|\(\)]*)/gim;
 
     return this.replaceRegular(str, url, (i, content) => {
       return (
@@ -132,8 +129,7 @@ export default class Tags extends PureComponent<PropsType> {
           style={[this.props.style, ThemedStyles.style.colorLink]}
           onPress={() => {
             this.navToURL(content);
-          }}
-        >
+          }}>
           {content}
         </MText>
       );
@@ -144,8 +140,7 @@ export default class Tags extends PureComponent<PropsType> {
    * url starting with www
    */
   parseWwwUrl = str => {
-    const url =
-      /(^|\b)(www\.[-A-Z0-9à-œ+&@#\/%?=~_|!:,.;]*[-A-Z0-9à-œ+&@#\/%=~_|\(\)]*)/gim;
+    const url = /(^|\b)(www\.[-A-Z0-9à-œ+&@#\/%?=~_|!:,.;]*[-A-Z0-9à-œ+&@#\/%=~_|\(\)]*)/gim;
 
     return this.replaceRegular(str, url, (i, content) => {
       return (
@@ -154,8 +149,7 @@ export default class Tags extends PureComponent<PropsType> {
           style={[this.props.style, ThemedStyles.style.colorLink]}
           onPress={() => {
             this.navToURL('http://' + content);
-          }}
-        >
+          }}>
           {content}
         </MText>
       );
@@ -173,8 +167,7 @@ export default class Tags extends PureComponent<PropsType> {
           style={[this.props.style, ThemedStyles.style.colorLink]}
           onPress={() => {
             this.navToDiscovery(`#${content}`);
-          }}
-        >
+          }}>
           #{content}
         </MText>
       );
@@ -189,8 +182,7 @@ export default class Tags extends PureComponent<PropsType> {
           style={[this.props.style, ThemedStyles.style.colorLink]}
           onPress={() => {
             this.navToDiscovery(`\$${content}`);
-          }}
-        >
+          }}>
           ${content}
         </MText>
       );
@@ -210,8 +202,7 @@ export default class Tags extends PureComponent<PropsType> {
           style={[this.props.style, ThemedStyles.style.colorLink]}
           onPress={() => {
             this.navToChannel(content);
-          }}
-        >
+          }}>
           @{content}
         </MText>
       );

@@ -47,8 +47,7 @@ const BoostInput = observer(({ localStore }: PropsType) => {
           theme.marginBottom6x,
           theme.colorSecondaryText,
           theme.fontLM,
-        ]}
-      >
+        ]}>
         1 token = 1000 views
       </MText>
     </View>

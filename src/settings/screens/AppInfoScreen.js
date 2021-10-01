@@ -30,8 +30,7 @@ export default function AppInfoScreen() {
         theme.flexContainer,
         theme.centered,
         theme.bgPrimaryBackground,
-      ]}
-    >
+      ]}>
       <FastImage
         resizeMode={FastImage.resizeMode.cover}
         style={[styles.logo, theme.marginTop2x]}
@@ -40,8 +39,7 @@ export default function AppInfoScreen() {
       <View style={styles.footer}>
         <MText
           style={[styles.version, theme.colorSecondaryText]}
-          textAlign={'center'}
-        >
+          textAlign={'center'}>
           v{Version.VERSION} ({Version.BUILD})
         </MText>
         <View style={rowStyle}>

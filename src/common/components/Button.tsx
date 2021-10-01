@@ -131,8 +131,7 @@ export default class Button extends Component<ButtonPropsType> {
             { color: textColor || mainColor },
             textStyle,
             { fontWeight: '500' },
-          ]}
-        >
+          ]}>
           {' '}
           {this.props.text}{' '}
         </MText>
@@ -152,8 +151,7 @@ export default class Button extends Component<ButtonPropsType> {
           style,
           containerStyle,
         ]}
-        {...extraProps}
-      >
+        {...extraProps}>
         {children}
         {body}
       </TouchableOpacity>

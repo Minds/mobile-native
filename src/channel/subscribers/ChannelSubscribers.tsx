@@ -97,8 +97,7 @@ class ChannelSubscribers extends Component<PropsType> {
                 store.filter === 'subscribers'
                   ? styles.selectedButton
                   : styles.buttons
-              }
-            >
+              }>
               <MText style={theme.fontL}>{i18n.t('subscribers')}</MText>
             </TouchableHighlight>
             <TouchableHighlight
@@ -108,8 +107,7 @@ class ChannelSubscribers extends Component<PropsType> {
                 store.filter === 'subscriptions'
                   ? styles.selectedButton
                   : styles.buttons
-              }
-            >
+              }>
               <MText style={theme.fontL}>{i18n.t('subscriptions')}</MText>
             </TouchableHighlight>
           </View>

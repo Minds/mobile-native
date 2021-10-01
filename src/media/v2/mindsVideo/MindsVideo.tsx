@@ -53,9 +53,8 @@ const MindsVideo = observer((props: PropsType) => {
 
   const onStoreCreated = props.onStoreCreated;
 
-  const posterSource = useRef(
-    props.entity ? getVideoThumb(props.entity) : null,
-  ).current;
+  const posterSource = useRef(props.entity ? getVideoThumb(props.entity) : null)
+    .current;
   const thumbnailSource = useRef(
     props.entity && dataSaverEnabled
       ? getVideoThumb(props.entity, DATA_SAVER_THUMB_RES)
@@ -109,8 +108,7 @@ const MindsVideo = observer((props: PropsType) => {
   return (
     <TouchableWithoutFeedback
       onPress={localStore.openControlOverlay}
-      style={[theme.flexContainer, props.containerStyle]}
-    >
+      style={[theme.flexContainer, props.containerStyle]}>
       <View style={[theme.flexContainer, theme.bgBlack]}>
         <SmartImage
           imageVisible={!localStore.showThumbnail}

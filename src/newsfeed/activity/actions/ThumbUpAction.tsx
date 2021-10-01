@@ -142,8 +142,7 @@ class ThumbUpAction extends Component<PropsType> {
       <Touchable
         style={actionsContainerStyle}
         onPress={this.toggleThumb}
-        testID={`Thumb ${this.direction} activity button`}
-      >
+        testID={`Thumb ${this.direction} activity button`}>
         <AnimatedThumb
           canVote={canVote}
           voted={this.voted}

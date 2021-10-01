@@ -77,8 +77,7 @@ export const DiscoveryTagsList = withErrorBoundary(
                       theme.colorSecondaryText,
                       theme.fontM,
                       theme.fontNormal,
-                    ]}
-                  >
+                    ]}>
                     {`\n${postsCount || ''} ${
                       postsCount && votesCount ? '·' : ''
                     } ${votesCount || ''}`}
@@ -105,13 +104,11 @@ export const DiscoveryTagsList = withErrorBoundary(
             ThemedStyles.style.rowJustifyStart,
             ThemedStyles.style.bgPrimaryBackground,
             ThemedStyles.style.padding4x,
-          ]}
-        >
+          ]}>
           <View style={ThemedStyles.style.flexContainer} />
           <MText
             onPress={() => ref.current?.present()}
-            style={[ThemedStyles.style.colorTertiaryText]}
-          >
+            style={[ThemedStyles.style.colorTertiaryText]}>
             Manage Tags
           </MText>
           <DiscoveryTagsManager ref={ref} />

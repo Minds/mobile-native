@@ -29,8 +29,9 @@ interface Props {
 export const DiscoveryV2Screen = withErrorBoundary(
   observer((props: Props) => {
     const theme = ThemedStyles.style;
-    const [shouldRefreshOnTabPress, setShouldRefreshOnTabPress] =
-      useState(false);
+    const [shouldRefreshOnTabPress, setShouldRefreshOnTabPress] = useState(
+      false,
+    );
     const store = useDiscoveryV2Store();
     const navigation = props.navigation;
 

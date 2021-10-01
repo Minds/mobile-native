@@ -88,8 +88,7 @@ export default class Carousel extends Component {
           onScroll={e => {
             this.setState({ offset: e.nativeEvent.contentOffset.x });
           }}
-          style={{ width: width, height: height }}
-        >
+          style={{ width: width, height: height }}>
           {pages}
         </ScrollView>
         {showBubbles ? this.renderBubbles(width) : null}

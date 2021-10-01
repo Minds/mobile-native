@@ -97,8 +97,7 @@ const LiquiditySummary = observer(
         <Container>
           <Row>
             <TouchableOpacity
-              onPress={() => NavigationService.navigate('BoostSettingsScreen')}
-            >
+              onPress={() => NavigationService.navigate('BoostSettingsScreen')}>
               <Title style={theme.colorLink}>
                 {user?.liquidity_spot_opt_out ? 'Opt-in to' : 'Opt-out of'}{' '}
                 showing in liquidity spot

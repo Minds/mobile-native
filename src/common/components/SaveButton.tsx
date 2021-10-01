@@ -15,8 +15,7 @@ const SaveButton = ({ onPress, text, style }: propsType) => {
   return (
     <MText
       onPress={onPress}
-      style={[theme.colorLink, theme.fontL, theme.bold, style]}
-    >
+      style={[theme.colorLink, theme.fontL, theme.bold, style]}>
       {text || i18n.t('save')}
     </MText>
   );

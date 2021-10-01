@@ -36,8 +36,7 @@ const HeaderTabsComponent = observer(({ store, tabList }: PropsType) => {
         theme.rowJustifyStart,
         theme.borderBottom,
         theme.bcolorPrimaryBorder,
-      ]}
-    >
+      ]}>
       {tabList.map(({ name, label }: tabType) => {
         return (
           <TouchableOpacity
@@ -45,8 +44,7 @@ const HeaderTabsComponent = observer(({ store, tabList }: PropsType) => {
             style={[
               tabStyle,
               tab === name ? theme.bcolorLink : theme.bcolorPrimaryBackground,
-            ]}
-          >
+            ]}>
             <MText style={theme.fontL}>{label}</MText>
           </TouchableOpacity>
         );

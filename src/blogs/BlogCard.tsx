@@ -51,8 +51,7 @@ export default class BlogCard extends PureComponent<PropsType> {
       <View>
         <TouchableOpacity
           onPress={this.navToBlog}
-          style={theme.bgSecondaryBackground}
-        >
+          style={theme.bgSecondaryBackground}>
           <FastImage
             source={image}
             style={styles.banner}
@@ -63,8 +62,7 @@ export default class BlogCard extends PureComponent<PropsType> {
               <MText
                 style={[theme.fontL, theme.fontMedium, theme.flexContainer]}
                 numberOfLines={2}
-                ellipsizeMode="tail"
-              >
+                ellipsizeMode="tail">
                 {title}
               </MText>
             </View>
@@ -91,8 +89,7 @@ export default class BlogCard extends PureComponent<PropsType> {
       <View>
         <TouchableOpacity
           onPress={this.navToBlog}
-          style={theme.bgSecondaryBackground}
-        >
+          style={theme.bgSecondaryBackground}>
           <FastImage
             source={image}
             style={styles.banner}
@@ -103,8 +100,7 @@ export default class BlogCard extends PureComponent<PropsType> {
               <MText
                 style={[theme.fontXL, theme.fontMedium, theme.flexContainer]}
                 numberOfLines={2}
-                ellipsizeMode="tail"
-              >
+                ellipsizeMode="tail">
                 {title}
               </MText>
               <View
@@ -113,8 +109,7 @@ export default class BlogCard extends PureComponent<PropsType> {
                   theme.marginTop3x,
                   theme.rowJustifyCenter,
                   theme.alignCenter,
-                ]}
-              >
+                ]}>
                 {channel && (
                   <Avatar
                     width={26}
@@ -129,8 +124,7 @@ export default class BlogCard extends PureComponent<PropsType> {
                     theme.paddingLeft2x,
                     theme.flexContainer,
                   ]}
-                  numberOfLines={1}
-                >
+                  numberOfLines={1}>
                   {blog.ownerObj && blog.ownerObj.username}
                 </MText>
                 <MText style={[theme.fontXS, theme.paddingLeft]}>

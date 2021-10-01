@@ -52,8 +52,7 @@ const TokensOverview = observer(({ walletStore }: PropsType) => {
           theme.paddingHorizontal3x,
           theme.paddingTop3x,
           theme.rowJustifySpaceBetween,
-        ]}
-      >
+        ]}>
         <View>
           <MText style={balanceStyle}>{i18n.t('wallet.walletBalance')}</MText>
           <MText style={theme.fontXL}>{walletStore.balance}</MText>

@@ -23,11 +23,9 @@ const ReferralsScreen = ({ navigation }: ReferralsScreenProps) => {
   return (
     <ScrollView
       style={theme.flexContainer}
-      contentContainerStyle={[theme.padding4x]}
-    >
+      contentContainerStyle={[theme.padding4x]}>
       <MText
-        style={[theme.fontXL, theme.bold, theme.marginBottom4x, styles.title]}
-      >
+        style={[theme.fontXL, theme.bold, theme.marginBottom4x, styles.title]}>
         {i18n.t('referrals.title')}
       </MText>
 
@@ -36,14 +34,12 @@ const ReferralsScreen = ({ navigation }: ReferralsScreenProps) => {
           theme.colorSecondaryText,
           theme.textJustify,
           theme.marginBottom,
-        ]}
-      >
+        ]}>
         {i18n.t('referrals.description')}
       </MText>
       <MText
         style={[theme.colorLink, theme.marginBottom4x]}
-        onPress={navToTokens}
-      >
+        onPress={navToTokens}>
         {i18n.t('wallet.learnMore.title')}
       </MText>
 

@@ -192,23 +192,20 @@ const BoostSettingsScreen = observer(() => {
         theme.bgSecondaryBackground,
         theme.fullHeight,
         theme.paddingTop4x,
-      ]}
-    >
+      ]}>
       <MText
         style={[
           theme.colorSecondaryText,
           theme.marginBottom6x,
           theme.paddingLeft4x,
           styles.lineHeight,
-        ]}
-      >
+        ]}>
         {`${i18n.t('settings.boost.description')}\n${i18n.t(
           'settings.boost.learn',
         )} `}
         <MText
           style={theme.colorLink}
-          onPress={() => Linking.openURL('https://www.minds.com/boost')}
-        >
+          onPress={() => Linking.openURL('https://www.minds.com/boost')}>
           Boost
         </MText>
       </MText>
@@ -220,8 +217,7 @@ const BoostSettingsScreen = observer(() => {
                 theme.rowJustifyStart,
                 theme.marginBottom2x,
                 theme.paddingLeft4x,
-              ]}
-            >
+              ]}>
               <MText style={[styles.text, theme.colorTertiaryText]}>
                 {i18n.t(`settings.boost.${item.id}`).toUpperCase()}
               </MText>
@@ -236,8 +232,7 @@ const BoostSettingsScreen = observer(() => {
                   <MText style={theme.colorWhite}>
                     {i18n.t(`settings.boost.${item.id}Tooltip`)}
                   </MText>
-                }
-              >
+                }>
                 <Icon
                   name="information-variant"
                   size={15}
@@ -253,16 +248,14 @@ const BoostSettingsScreen = observer(() => {
                 theme.borderTop,
                 item.disabled ? theme.bgSecondaryBackground : {},
               ]}
-              onPress={item.disabled ? () => false : () => item.onPress(true)}
-            >
+              onPress={item.disabled ? () => false : () => item.onPress(true)}>
               <MText
                 style={[
                   theme.fontL,
                   item.disabled
                     ? theme.colorSecondaryText
                     : theme.colorPrimaryText,
-                ]}
-              >
+                ]}>
                 {i18n.t(`settings.boost.${item.enable || 'enable'}`)}
               </MText>
               {item.isSelected() && checked}
@@ -272,16 +265,14 @@ const BoostSettingsScreen = observer(() => {
                 buttonStyles,
                 item.disabled ? theme.bgSecondaryBackground : {},
               ]}
-              onPress={item.disabled ? () => false : () => item.onPress(false)}
-            >
+              onPress={item.disabled ? () => false : () => item.onPress(false)}>
               <MText
                 style={[
                   theme.fontL,
                   item.disabled
                     ? theme.colorSecondaryText
                     : theme.colorPrimaryText,
-                ]}
-              >
+                ]}>
                 {i18n.t(`settings.boost.${item.disable || 'disable'}`)}
               </MText>
               {!item.isSelected() && checked}

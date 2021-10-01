@@ -146,8 +146,7 @@ const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
         onItemSelect={_onMetricsChange}
         data={result.dashboard.metrics!}
         valueExtractor={valueExtractor}
-        keyExtractor={keyExtractor}
-      >
+        keyExtractor={keyExtractor}>
         {show => (
           <Select onPress={() => show(metricsKey)} label={metricsLabel} />
         )}
@@ -158,14 +157,12 @@ const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
           onItemSelect={_onTimespanChange}
           data={result.dashboard.timespans!}
           valueExtractor={valueExtractor}
-          keyExtractor={keyExtractor}
-        >
+          keyExtractor={keyExtractor}>
           {show => (
             <View>
               <TouchableOpacity
                 style={styles.dateTouch}
-                onPress={() => show(timeSpanKey)}
-              >
+                onPress={() => show(timeSpanKey)}>
                 <MIcon
                   name={'date-range'}
                   color={ThemedStyles.getColor('Icon')}
@@ -184,14 +181,12 @@ const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
               data={filter.options!}
               valueExtractor={valueExtractor}
               keyExtractor={keyExtractor}
-              onItemSelect={_onFilterChange(filter.id)}
-            >
+              onItemSelect={_onFilterChange(filter.id)}>
               {show => (
                 <View>
                   <TouchableOpacity
                     style={styles.filterTouch}
-                    onPress={() => show(_getFilterKey(filter))}
-                  >
+                    onPress={() => show(_getFilterKey(filter))}>
                     <MText style={styles.filterText}>
                       {_getFilterLabel(filter)}
                     </MText>

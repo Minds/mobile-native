@@ -56,8 +56,7 @@ class SubscriptionRequest extends DiscoveryUser<PropsType> {
               this.props.row.item.status != 'requestAccepted'
                 ? ThemedStyles.style.colorDanger
                 : ThemedStyles.style.colorPrimary,
-            ]}
-          >
+            ]}>
             {i18nService.t(`channel.${this.props.row.item.status}`)}
           </MText>
         </View>

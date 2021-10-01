@@ -34,16 +34,14 @@ export default function ({ report, ...modalProps }: Props) {
           theme.flexContainer,
           theme.padding8x,
           theme.bgPrimaryBackground,
-        ]}
-      >
+        ]}>
         <MText style={[theme.marginBottom5x, theme.fontXL]}>
           {i18n.t('orderReport.thanksMessage', {
             tokenAmount: String(tokenAmount).slice(0, 6),
           })}
         </MText>
         <MText
-          style={[theme.marginBottom8x, theme.fontL, theme.colorSecondaryText]}
-        >
+          style={[theme.marginBottom8x, theme.fontL, theme.colorSecondaryText]}>
           {i18n.t('orderReport.processDuration')}
         </MText>
         <View
@@ -54,8 +52,7 @@ export default function ({ report, ...modalProps }: Props) {
             theme.bcolorTertiaryBackground,
             theme.paddingTop5x,
             styles.wrap,
-          ]}
-        >
+          ]}>
           <View>
             <MText style={theme.colorSecondaryText}>
               {i18n.t('orderReport.paymentMethod')}

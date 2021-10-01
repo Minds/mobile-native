@@ -52,8 +52,7 @@ export default observer(function (props: PropsType) {
         onPress={props.onPress}
         onLongPress={props.onLongPress}
         onPressOut={props.onPressOut}
-        style={[styles.circleWrapper, containerStyle]}
-      >
+        style={[styles.circleWrapper, containerStyle]}>
         <Animated.View style={innerStyle} />
       </TouchableOpacity>
     </View>

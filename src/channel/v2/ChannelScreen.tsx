@@ -286,10 +286,9 @@ const ChannelScreen = observer((props: PropsType) => {
   /**
    * Scroll to top when topbar is pressed
    **/
-  const onTopBarPress = useCallback(
-    () => feedRef.current?.scrollToTop(),
-    [feedRef],
-  );
+  const onTopBarPress = useCallback(() => feedRef.current?.scrollToTop(), [
+    feedRef,
+  ]);
 
   const openSubscribers = useCallback(
     () => subscribersActionSheetRef.current?.show('channelSubscribers'),

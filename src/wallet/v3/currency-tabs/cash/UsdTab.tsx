@@ -91,8 +91,7 @@ const UsdTab = observer(
             theme.rowJustifyStart,
             theme.paddingLeft2x,
             theme.marginBottom5x,
-          ]}
-        >
+          ]}>
           <Tooltip
             ref={tooltipRef}
             closeOnlyOnBackdropPress={true}
@@ -103,8 +102,7 @@ const UsdTab = observer(
             width={screen.width - 20}
             height={250}
             backgroundColor={ThemedStyles.getColor('SecondaryBackground')}
-            popover={<PaidInfo walletStore={walletStore} />}
-          >
+            popover={<PaidInfo walletStore={walletStore} />}>
             <PaidButton
               containerStyle={theme.marginRight2x}
               onPress={() => tooltipRef.current.toggleTooltip()}

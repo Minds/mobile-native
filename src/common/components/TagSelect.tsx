@@ -92,8 +92,7 @@ export default class TagSelect extends Component<PropsType> {
               key={i}
               onPress={() => this.toogle(tag)}
               onLongPress={() => this.toogleOne(tag)}
-              testID={tag.value + 'TestID'}
-            >
+              testID={tag.value + 'TestID'}>
               <MText
                 style={[
                   styles.tagText,
@@ -101,8 +100,7 @@ export default class TagSelect extends Component<PropsType> {
                   tag.selected
                     ? [theme.colorIconSelected, textSelectedStyle]
                     : null,
-                ]}
-              >
+                ]}>
                 #{tag.value}
               </MText>
             </TouchableOpacity>

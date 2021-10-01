@@ -22,8 +22,7 @@ export default function BottomBar(props) {
         styles.bottomBar,
         theme.paddingLeft2x,
         theme.padding,
-      ]}
-    >
+      ]}>
       {!props.store.isEdit && (
         <IconButton
           size={27}
