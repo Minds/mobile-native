@@ -57,7 +57,7 @@ class AttachmentService {
       case 'image/png':
       case 'image/gif':
       case 'image/webp':
-        const MAX_SIZE = 50;
+        const MAX_SIZE = 2048;
         const maxLength = Math.max(media.width, media.height);
         const processedImage = await imageManipulatorService.resize(media.uri, {
           width:
