@@ -15,7 +15,7 @@ export default function TransparentLayer() {
 
 const styles = StyleSheet.create({
   layer: {
-    backgroundColor: 'rgba(37, 46, 49, 0.8)',
+    backgroundColor: 'rgba(37, 46, 49, 0.6)',
     flex: 1,
   },
 });

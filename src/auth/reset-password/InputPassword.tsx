@@ -54,10 +54,6 @@ const InputPassword = observer(({ store, onFinish }: PropsType) => {
 });
 
 const wrapperStyle = ThemedStyles.combine('marginVertical6x');
-const iconStyle = ThemedStyles.combine(
-  'inputIcon',
-  'colorPrimaryText_Dark',
-  icon,
-);
+const iconStyle = ThemedStyles.combine('inputIcon', 'colorPrimaryText', icon);
 
 export default InputPassword;
