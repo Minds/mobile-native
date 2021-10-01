@@ -16,6 +16,7 @@ import sessionService from '../common/services/session.service';
 import FitScrollView from '../common/components/FitScrollView';
 import requirePhoneValidation from '../common/hooks/requirePhoneValidation';
 import MText from '../common/components/MText';
+import PressableScale from '../common/components/PressableScale';
 
 const ICON_SIZE = 25;
 
@@ -170,14 +171,17 @@ export default function Drawer(props) {
                 </MText>
               )}
             </View>
-            <IconMC
-              name="account-box-multiple"
-              size={ICON_SIZE}
-              style={ThemedStyles.style.centered}
-              color={ThemedStyles.getColor('SecondaryText')}
-              onPress={() => props.navigation.navigate('MultiUserScreen')}
-              testID="multiUserIcon"
-            />
+            <PressableScale
+              style={ThemedStyles.style.padding4x}
+              onPress={() => props.navigation.navigate('MultiUserScreen')}>
+              <IconMC
+                name="account-box-multiple"
+                size={ICON_SIZE}
+                style={ThemedStyles.style.centered}
+                color={ThemedStyles.getColor('SecondaryText')}
+                testID="multiUserIcon"
+              />
+            </PressableScale>
           </View>
         </View>
         <View style={styles.body}>
