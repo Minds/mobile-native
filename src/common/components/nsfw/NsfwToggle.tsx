@@ -1,6 +1,5 @@
 //@ts-nocheck
 import React, { Component } from 'react';
-import { Text } from 'react-native';
 import Menu, { MenuItem } from 'react-native-material-menu';
 import MdIcon from 'react-native-vector-icons/MaterialIcons';
 
@@ -8,6 +7,7 @@ import Touchable from '../Touchable';
 import autobind from '../../helpers/autobind';
 import i18n from '../../services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
+import MText from '../MText';
 
 export default class NsfwToggle extends Component {
   constructor(props) {
