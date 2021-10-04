@@ -1,4 +1,4 @@
-import { CommonActions, RouteProp } from '@react-navigation/native';
+import { RouteProp } from '@react-navigation/native';
 import React, { useCallback } from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import Animated from 'react-native-reanimated';
@@ -14,30 +14,6 @@ import ResetPasswordModal, {
 const { height, width } = Dimensions.get('window');
 const LOGO_HEIGHT = height / 7;
 
-/**
- * set the App route as the root of the stack and
- * goBack after 500ms (enough time for App component
- * to render and the navigation to be registered).
- *
- * We do this because
- * 1. after login, the root stack changes and our previous
- *    screen may not exist
- * 2. to keep the bottomsheet close transition
- */
-const resetStackAndGoBack = navigation => {
-  navigation.dispatch(state => {
-    setTimeout(() => {
-      navigation.goBack();
-    }, 500);
-
-    return CommonActions.reset({
-      ...state,
-      routes: [{ key: 'App_SOMETHING', name: 'App' }, ...state.routes],
-      index: 1,
-    });
-  });
-};
-
 type PropsType = {
   navigation: any;
   route: WelcomeScreenRouteProp;
@@ -49,15 +25,11 @@ export default function WelcomeScreen(props: PropsType) {
   const theme = ThemedStyles.style;
   const resetRef = React.useRef<ResetPasswordModalHandles>(null);
   const onLoginPress = useCallback(() => {
-    props.navigation.navigate('MultiUserLogin', {
-      onLogin: resetStackAndGoBack,
-    });
+    props.navigation.navigate('MultiUserLogin');
   }, [props.navigation]);
 
   const onRegisterPress = useCallback(() => {
-    props.navigation.navigate('MultiUserRegister', {
-      onRegister: resetStackAndGoBack,
-    });
+    props.navigation.navigate('MultiUserRegister');
   }, [props.navigation]);
   const username = props.route?.params?.username;
   const code = props.route?.params?.code;
