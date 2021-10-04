@@ -294,15 +294,6 @@ exports[`blog view screen component should renders correctly 1`] = `
                 <Modal
                   hardwareAccelerated={true}
                   onRequestClose={[Function]}
-                  supportedOrientations={
-                    Array [
-                      "portrait",
-                      "portrait-upside-down",
-                      "landscape",
-                      "landscape-left",
-                      "landscape-right",
-                    ]
-                  }
                   transparent={true}
                   visible={false}
                 >
@@ -624,15 +615,6 @@ exports[`blog view screen component should renders correctly 1`] = `
                 <Modal
                   hardwareAccelerated={true}
                   onRequestClose={[Function]}
-                  supportedOrientations={
-                    Array [
-                      "portrait",
-                      "portrait-upside-down",
-                      "landscape",
-                      "landscape-left",
-                      "landscape-right",
-                    ]
-                  }
                   transparent={true}
                   visible={false}
                 >

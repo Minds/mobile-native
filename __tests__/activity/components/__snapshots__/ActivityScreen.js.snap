@@ -131,6 +131,7 @@ exports[`Activity screen component renders correctly  1`] = `
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             style={null}
+            testID="floatingBackButton"
           >
             <View
               style={
