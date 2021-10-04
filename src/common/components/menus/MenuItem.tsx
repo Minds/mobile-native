@@ -6,14 +6,14 @@ import ThemedStyles, { useMemoStyle } from '../../../styles/ThemedStyles';
 
 export type MenuItemItem = {
   onPress?: () => void;
-  title: string | React.ReactNode;
+  title: string | JSX.Element;
   icon?:
     | {
         name: string;
         type?: string;
         color?: string;
       }
-    | React.ReactNode;
+    | JSX.Element;
   noIcon?: boolean;
 };
 
