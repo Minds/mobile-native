@@ -91,6 +91,7 @@ export default observer(function LoginForm(props: PropsType) {
         action
         loading={localStore.inProgress}
         text={i18n.t('auth.login')}
+        testID="loginButton"
         onPress={localStore.onLoginPress}
       />
       <View style={theme.marginTop4x}>
