@@ -83,7 +83,7 @@ const TokenTabOptions = observer((props: PropsType) => {
 
   return (
     <>
-      <IconButton marginLeft="2x" name="more" onPress={show} />
+      <IconButton spacingLeft="2x" name="more" onPress={show} />
       <BottomSheet ref={ref}>
         {dismissOptions.map((b, i) => (
           <MenuItem {...b} key={i} />

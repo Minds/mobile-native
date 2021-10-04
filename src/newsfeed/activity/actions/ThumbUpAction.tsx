@@ -23,7 +23,7 @@ type PropsType = {
   touchableComponent?: React.ComponentClass;
 };
 
-const AnimatedIcon = motify(withClass(Icon))();
+const AnimatedIcon: any = motify(withClass(Icon))();
 
 const AnimatedThumb = ({
   voted,
@@ -33,7 +33,7 @@ const AnimatedThumb = ({
   name,
 }: {
   voted: boolean;
-  size: IUISizing;
+  size: IUISizing | string;
   canVote: boolean;
   down: boolean;
   name: string;
@@ -89,7 +89,7 @@ const AnimatedThumb = ({
   }, [voted]);
 
   const disabled = !canVote;
-  const active: boolean = !!(canVote && voted);
+  const active = !!(canVote && voted);
 
   return (
     <AnimatedIcon
@@ -98,7 +98,7 @@ const AnimatedThumb = ({
       name={name}
       size={size}
       state={animation}
-      marginRight="1x"
+      spacingRight="1x"
     />
   );
 };

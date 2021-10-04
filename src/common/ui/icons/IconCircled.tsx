@@ -24,7 +24,7 @@ export default function IconCircled({ style, active, ...extra }: IIcon) {
     { backgroundColor: background },
   ];
 
-  let size: IUISizing | number = ICON_SIZE_DEFAULT;
+  let size: IUISizing | number | string = ICON_SIZE_DEFAULT;
 
   const extraStyles = getPropStyles(extra);
 

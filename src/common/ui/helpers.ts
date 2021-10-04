@@ -43,10 +43,10 @@ export const getPropStyles = (props: any) => {
 
   for (let i = 0; i < keys.length; i += 1) {
     const key = keys[i];
-    if (!key.match(/margin/)) {
+    if (!key.match(/spacing/)) {
       continue;
     }
-    const label = `${key}${props[key]}`;
+    const label = `${key.replace(/^spacing/, 'margin')}${props[key]}`;
     const style = ThemedStyles.style[label];
 
     if (style) {

@@ -87,7 +87,6 @@ function TopBarButtonTabBar<T>(props: PropsType<T>) {
               {!!tab.icon && (
                 <TabIcon
                   name={tab.icon.name}
-                  type={tab.icon.type}
                   isCurrent={tab.id === props.current}
                 />
               )}
@@ -99,8 +98,8 @@ function TopBarButtonTabBar<T>(props: PropsType<T>) {
   );
 }
 
-const TabIcon = ({ name, type, isCurrent }) => (
-  <Icon name={name} active={isCurrent} size={21} type={type} />
+const TabIcon = ({ name, isCurrent }) => (
+  <Icon name={name} active={isCurrent} size={21} />
 );
 
 type TabTiltePropsType = {

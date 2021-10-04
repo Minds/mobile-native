@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Tooltip } from 'react-native-elements';
-// import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Icon } from '~ui/icons';
 import MText from '../../../common/components/MText';
 import ThemedStyles from '~styles/ThemedStyles';

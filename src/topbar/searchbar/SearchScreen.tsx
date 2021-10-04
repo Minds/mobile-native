@@ -50,7 +50,7 @@ const SearchScreen = observer(() => {
           <Icon
             name="search"
             size={25}
-            marginRight="2x"
+            spacingRight="2x"
             style={[Platform.OS === 'android' ? theme.centered : null]}
           />
           <TextInput

@@ -41,8 +41,8 @@ export interface IIcon extends IUIBase {
   color?: ColorsNameType | null;
   activeColor?: ColorsNameType;
   name: string;
-  size?: IUISizing | number;
-  style?: StyleOrCustom;
+  size?: IUISizing | number | string;
+  style?: StyleOrCustom | any;
   active?: boolean;
   disabled?: boolean;
   disabledColor?: ColorsNameType;
@@ -58,6 +58,7 @@ function Icon({
   disabled = false,
   disabledColor = ICON_COLOR_DISABLED,
   nested = false,
+  testID,
   ...common
 }: IIcon) {
   const { font: iconFont, name: iconName, ratio = 1 } =
@@ -99,7 +100,12 @@ function Icon({
 
   return (
     <View style={useStyle(...containerStyles)}>
-      <Component name={iconName} size={realSize} color={iconColor} />
+      <Component
+        name={iconName}
+        size={realSize}
+        color={iconColor}
+        testID={testID}
+      />
     </View>
   );
 }

@@ -35,12 +35,12 @@ export interface IUISpacers {
 export interface IUIBase {
   testID?: string;
   nested?: boolean;
-  marginTop?: string;
-  marginLeft?: string;
-  marginRight?: string;
-  marginBottom?: string;
-  marginHorizontal?: string;
-  marginVertical?: string;
+  spacingTop?: string;
+  spacingLeft?: string;
+  spacingRight?: string;
+  spacingBottom?: string;
+  spacingHorizontal?: string;
+  spacingVertical?: string;
 }
 
 export const UNIT: IUISpacers = {

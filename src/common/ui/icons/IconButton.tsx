@@ -11,9 +11,14 @@ export interface IIconButton extends IIcon {
   onPress: () => void;
 }
 
-export default function IconButton({ onPress, style, ...extra }: IIconButton) {
+export default function IconButton({
+  onPress,
+  style,
+  testID,
+  ...extra
+}: IIconButton) {
   const containerStyles: StyleOrCustom[] = [styles.container];
-  let size: IUISizing | number = 'medium';
+  let size: IUISizing | number | string = 'medium';
 
   const extraStyles = getPropStyles(extra);
 
@@ -43,7 +48,11 @@ export default function IconButton({ onPress, style, ...extra }: IIconButton) {
 
   return (
     <View style={useStyle(...containerStyles)}>
-      <Pressable hitSlop={sizeNumeric} style={onStyle} onPress={onPress}>
+      <Pressable
+        hitSlop={sizeNumeric}
+        style={onStyle}
+        onPress={onPress}
+        testID={testID}>
         <Icon nested {...extra} />
       </Pressable>
     </View>
