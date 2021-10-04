@@ -6,7 +6,6 @@ import { ResetPasswordStore } from './createLocalStore';
 import { containerStyle, textStyle } from './EmailSended';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { styles } from './InputUser';
-import { icon } from '../styles';
 import Button from '../../common/components/Button';
 import PasswordInput from '../../common/components/password-input/PasswordInput';
 import { DARK_THEME } from '../../styles/Colors';
@@ -37,7 +36,6 @@ const InputPassword = observer(({ store, onFinish }: PropsType) => {
           inputContainerStyle={styles.inputContainer}
           inputStyle={styles.inputText}
           inputLabelStyle={styles.label}
-          iconStyle={iconStyle}
         />
       </View>
       <Button
@@ -53,6 +51,5 @@ const InputPassword = observer(({ store, onFinish }: PropsType) => {
 });
 
 const wrapperStyle = ThemedStyles.combine('marginVertical6x');
-const iconStyle = ThemedStyles.combine('inputIcon', 'colorPrimaryText', icon);
 
 export default InputPassword;

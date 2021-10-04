@@ -12,9 +12,7 @@ type PropsType = {
 
 const LoginScreen = ({ navigation, route }: PropsType) => {
   const onLogin = React.useCallback(() => {
-    route.params?.onLogin
-      ? route.params.onLogin(navigation)
-      : navigation.goBack();
+    route.params?.onLogin && route.params.onLogin(navigation);
   }, [navigation, route.params]);
   const theme = ThemedStyles.style;
   return (
@@ -23,7 +21,7 @@ const LoginScreen = ({ navigation, route }: PropsType) => {
       onPressBack={navigation.goBack}
       marginTop={20}
       contentContainer={theme.bgPrimaryBackgroundHighlight}>
-      <LoginForm route={route} onLogin={onLogin} />
+      <LoginForm onLogin={onLogin} />
     </ModalContainer>
   );
 };
