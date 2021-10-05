@@ -179,10 +179,15 @@ export function useStyle(...styles: Array<StyleOrCustom>) {
 }
 
 export function useMemoStyle(
-  styles: Array<StyleOrCustom>,
+  styles: Array<StyleOrCustom> | (() => Array<StyleOrCustom>),
   dependencies: React.DependencyList | undefined,
 ) {
-  return React.useMemo(() => ThemedStyles.combine(...styles), dependencies);
+  const fn =
+    typeof styles === 'function'
+      ? () => ThemedStyles.combine(...styles())
+      : () => ThemedStyles.combine(...styles);
+
+  return React.useMemo(fn, dependencies);
 }
 
 /**

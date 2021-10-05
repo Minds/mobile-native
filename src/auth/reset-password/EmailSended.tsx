@@ -24,11 +24,11 @@ const EmailSended = ({ store }: PropsType) => {
 export const containerStyle = ThemedStyles.combine(
   'paddingHorizontal10x',
   'borderTopHair',
-  'bcolorPrimaryBorder_Dark',
+  'bcolorPrimaryBorder',
 );
 
 export const textStyle = ThemedStyles.combine(
-  'colorSecondaryText_Dark',
+  'colorSecondaryText',
   'fontL',
   'fontMedium',
   'marginTop4x',

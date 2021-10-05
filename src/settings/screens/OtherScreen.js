@@ -69,11 +69,21 @@ export default function ({ navigation }) {
       )}
 
       {featuresService.has('paywall-2020') &&
-        paidContent.map((item, i) => <MenuItem item={item} i={i} />)}
+        paidContent.map((item, i) => (
+          <MenuItem
+            item={item}
+            i={i}
+            containerItemStyle={i > 0 ? theme.borderTop0x : undefined}
+          />
+        ))}
 
       <MenuSubtitle>{i18n.t('settings.otherOptions.c')}</MenuSubtitle>
       {account.map((item, i) => (
-        <MenuItem item={item} i={i} />
+        <MenuItem
+          item={item}
+          i={i}
+          containerItemStyle={i > 0 ? theme.borderTop0x : undefined}
+        />
       ))}
 
       <MenuSubtitle>{i18n.t('settings.otherOptions.d')}</MenuSubtitle>

@@ -1,13 +1,13 @@
-import 'react-native';
+import { NativeModules } from 'react-native';
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
-import { NativeModules } from 'react-native';
-import RegisterScreen from '../../src/auth/register/RegisterScreen';
+import RegisterForm from '../../src/auth/register/RegisterForm';
 import authService from '../../src/auth/AuthService';
 import { showNotification } from '../../AppMessages';
+import { useNavigation } from '@react-navigation/core';
 
 NativeModules.Networking.clearCookies = jest.fn();
-
+jest.mock('@react-navigation/core');
 jest.mock('../../src/auth/AuthService');
 jest.mock('../../src/auth/UserStore');
 jest.mock('../../src/common/components/Captcha');
@@ -19,12 +19,13 @@ describe('RegisterScreen component', () => {
   let navigation;
   beforeEach(() => {
     navigation = { goBack: jest.fn() };
+    useNavigation.mockReturnValue(navigation);
     authService.register.mockClear();
     showNotification.mockClear();
   });
 
   it('should require terms', async () => {
-    const { getByTestId } = render(<RegisterScreen navigation={navigation} />);
+    const { getByTestId } = render(<RegisterForm />);
     const user = getByTestId('usernameInput');
     const email = getByTestId('emailInput');
     const password = getByTestId('passwordInput');
@@ -45,9 +46,7 @@ describe('RegisterScreen component', () => {
   });
 
   it('should validate password', async () => {
-    const { getByTestId, getAllByA11yRole } = render(
-      <RegisterScreen navigation={navigation} />,
-    );
+    const { getByTestId, getAllByA11yRole } = render(<RegisterForm />);
     const user = getByTestId('usernameInput');
     const email = getByTestId('emailInput');
     const password = getByTestId('passwordInput');
@@ -71,9 +70,7 @@ describe('RegisterScreen component', () => {
   });
 
   it('should call show captcha and auth service', async () => {
-    const { getByTestId, getAllByA11yRole } = render(
-      <RegisterScreen navigation={navigation} />,
-    );
+    const { getByTestId, getAllByA11yRole } = render(<RegisterForm />);
     const user = getByTestId('usernameInput');
     const email = getByTestId('emailInput');
     const password = getByTestId('passwordInput');

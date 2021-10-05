@@ -1,8 +1,10 @@
 import React, { useRef } from 'react';
 import { View, Platform, ViewStyle, TextStyle } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/Ionicons';
+import Handle from '../../../common/components/bottom-sheet/Handle';
 import MText from '../../../common/components/MText';
+import PressableScale from '../../../common/components/PressableScale';
 import ThemedStyles, { useStyle } from '../../../styles/ThemedStyles';
 
 type PropsType = {
@@ -32,16 +34,19 @@ export default function ModalContainer(props: PropsType) {
     props.contentContainer || {},
   );
   const titleStyle = useStyle(styles.title, props.titleStyle || {});
-  const backIconStyle = useStyle(styles.backIcon, props.backIconStyle || {});
+  const backIconStyle = useStyle(
+    ThemedStyles.style.colorPrimaryText,
+    props.backIconStyle || {},
+  );
   return (
     <View style={contentContainer}>
+      <Handle />
+      <View style={styles.backIcon}>
+        <PressableScale onPress={props.onPressBack}>
+          <Icon size={22} name={'close'} style={backIconStyle} />
+        </PressableScale>
+      </View>
       <MText style={titleStyle}>{props.title}</MText>
-      <MIcon
-        size={45}
-        name="chevron-left"
-        style={backIconStyle}
-        onPress={props.onPressBack}
-      />
       {props.children}
     </View>
   );
@@ -49,27 +54,16 @@ export default function ModalContainer(props: PropsType) {
 
 const styles = ThemedStyles.create({
   backIcon: [
-    'colorPrimaryText',
+    'padding',
     {
+      zIndex: 1000,
       position: 'absolute',
-      top: 17,
-      left: 10,
+      top: 31,
+      right: 15,
     },
   ],
-  title: [
-    {
-      marginTop: 25,
-      marginBottom: 30,
-      fontSize: 23,
-      textAlign: 'center',
-      fontWeight: '600',
-    },
-  ],
-  description: [
-    {
-      borderLeftWidth: 5,
-    },
-  ],
+  title: [{ fontSize: 20 }, 'paddingVertical3x', 'textCenter', 'fontSemibold'],
+  description: ['borderLeft5x'],
   contentContainer: [
     'bgPrimaryBackground',
     {
