@@ -12,6 +12,7 @@ import { Icon } from 'react-native-elements';
 import i18nService from '../services/i18n.service';
 import InputContainer from './InputContainer';
 import MText from './MText';
+import logService from '../services/log.service';
 
 interface CaptchaResponse extends ApiResponse {
   base64_image: string;
@@ -32,14 +33,14 @@ const Captcha = observer(
 
     const store = useLocalStore(() => ({
       show: false,
-      error: '',
+      error: false,
       captchaImage: { uri: '' as string },
       clientText: '' as string,
       jwtToken: '' as string,
       setText(value: string) {
         store.clientText = value;
       },
-      setError(value: string) {
+      setError(value: boolean) {
         store.error = value;
       },
       hideModal() {
@@ -51,7 +52,7 @@ const Captcha = observer(
         store.load();
       },
       send() {
-        if (!store.clientText) {
+        if (!store.clientText && !store.error) {
           return;
         }
         props.onResult(
@@ -62,9 +63,15 @@ const Captcha = observer(
         );
       },
       async load() {
-        const response: CaptchaResponse = await api.get('api/v2/captcha');
-        store.captchaImage.uri = response.base64_image;
-        store.jwtToken = response.jwt_token;
+        try {
+          this.setError(false);
+          const response: CaptchaResponse = await api.get('api/v2/captcha');
+          store.captchaImage.uri = response.base64_image;
+          store.jwtToken = response.jwt_token;
+        } catch (err) {
+          logService.exception(err);
+          this.setError(true);
+        }
       },
     }));
 
@@ -100,11 +107,15 @@ const Captcha = observer(
             <MText style={styles.textVerification}>
               {i18nService.t('verification')}
             </MText>
-            <MText onPress={store.send} style={styles.textSend}>
-              {i18nService.t('verify')}
-            </MText>
+            {!store.error ? (
+              <MText onPress={store.send} style={styles.textSend}>
+                {i18nService.t('verify')}
+              </MText>
+            ) : (
+              <View />
+            )}
           </View>
-          {store.captchaImage.uri !== '' && (
+          {store.captchaImage.uri !== '' && !store.error && (
             <View style={styles.imageContainer}>
               <Image source={src} style={styles.image} />
               <Icon
@@ -117,16 +128,25 @@ const Captcha = observer(
               />
             </View>
           )}
-          <InputContainer
-            labelStyle={theme.colorPrimaryText}
-            containerStyle={styles.inputContainer}
-            style={theme.colorPrimaryText}
-            placeholder={i18n.t('captcha')}
-            onChangeText={store.setText}
-            onEndEditing={store.send}
-            testID="captchaInput"
-            autofocus
-          />
+          {store.error ? (
+            <View style={theme.centered}>
+              <MText style={theme.fontXL}>{i18n.t('errorMessage')}</MText>
+              <MText style={styles.textSend} onPress={store.load}>
+                {i18n.t('tryAgain')}
+              </MText>
+            </View>
+          ) : (
+            <InputContainer
+              labelStyle={theme.colorPrimaryText}
+              containerStyle={styles.inputContainer}
+              style={theme.colorPrimaryText}
+              placeholder={i18n.t('captcha')}
+              onChangeText={store.setText}
+              onEndEditing={store.send}
+              testID="captchaInput"
+              autofocus
+            />
+          )}
         </View>
       </Modal>
     );
