@@ -143,6 +143,7 @@ export const styles = StyleSheet.create({
     height: 42,
     borderRadius: 21,
     alignSelf: 'flex-start',
+    borderWidth: 2.5,
   },
   topbar: {
     flex: 1,
