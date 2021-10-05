@@ -11,7 +11,6 @@ import type UserModel from '../../channel/UserModel';
 import { createUserStore } from './storage/storages.service';
 import SettingsStore from '../../settings/SettingsStore';
 import { ApiService } from './api.service';
-import delay from '../helpers/delay';
 
 export class TokenExpiredError extends Error {}
 
@@ -31,6 +30,8 @@ export class SessionService {
   @observable sessionExpired: boolean = false;
 
   apiServiceInstances: Array<ApiService> = [];
+
+  deviceToken: string = '';
 
   /**
    * Session token
