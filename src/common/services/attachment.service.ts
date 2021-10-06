@@ -5,6 +5,7 @@ import Cancelable from 'promise-cancelable';
 import logService from './log.service';
 import { showNotification } from '../../../AppMessages';
 import imageManipulatorService from './image-manipulator.service';
+import { IMAGE_MAX_SIZE } from './../../config/Config';
 
 /**
  * Attachment service
@@ -45,9 +46,10 @@ class AttachmentService {
   }
 
   /**
-   * Delete uploaded media
+   * Processes the media
    * @param {object} media
    * @param {string} guid
+   * @return {object} media
    */
   async processMedia(media) {
     // scale down the image
@@ -57,16 +59,15 @@ class AttachmentService {
       case 'image/png':
       case 'image/gif':
       case 'image/webp':
-        const MAX_SIZE = 2048;
         const maxLength = Math.max(media.width, media.height);
         const processedImage = await imageManipulatorService.resize(media.uri, {
           width:
             maxLength === media.width
-              ? Math.min(maxLength, MAX_SIZE)
+              ? Math.min(maxLength, IMAGE_MAX_SIZE)
               : undefined,
           height:
             maxLength === media.height
-              ? Math.min(maxLength, MAX_SIZE)
+              ? Math.min(maxLength, IMAGE_MAX_SIZE)
               : undefined,
         });
         media = {
