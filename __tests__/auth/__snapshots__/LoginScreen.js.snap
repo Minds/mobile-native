@@ -251,6 +251,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
         <TextInput
           autoCapitalize="none"
           autoCompleteType="username"
+          autoFocus={true}
           keyboardAppearance="light"
           labelStyle={
             Array [
