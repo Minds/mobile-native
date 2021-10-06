@@ -3,7 +3,7 @@ import { View, Linking } from 'react-native';
 
 import { observer, useLocalStore } from 'mobx-react';
 import { CheckBox } from 'react-native-elements';
-
+import { debounce } from 'lodash';
 import InputContainer from '../../common/components/InputContainer';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -45,6 +45,13 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
     hidePassword: true,
     inProgress: false,
     showErrors: false,
+    usernameTaken: false,
+    validateUser: debounce(async (username: string) => {
+      const response = await apiService.get<any>('api/v3/register/validate', {
+        username,
+      });
+      store.usernameTaken = !response.valid;
+    }, 300),
     onCaptchResult: async (captcha: string) => {
       store.inProgress = true;
 
@@ -126,6 +133,8 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
       store.username = value;
       if (!store.username.match(alphanumericPattern)) {
         store.showErrors = true;
+      } else {
+        store.validateUser(value);
       }
     },
     setEmail(value: string) {
@@ -148,6 +157,10 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
       }
     },
     get usernameError() {
+      if (this.usernameTaken) {
+        return i18n.t('auth.userTaken');
+      }
+
       return !this.showErrors
         ? undefined
         : !this.username
