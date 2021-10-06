@@ -97,12 +97,7 @@ export const Topbar = observer((props: PropsType) => {
               {usdBalance > 0 && '$' + intword(usdBalance)}
             </MText>
 
-            <IconButton
-              onPress={openWallet}
-              name="coins"
-              color="SecondaryText"
-              size="small"
-            />
+            <IconButton onPress={openWallet} name="coins" size="medium" />
           </View>
         </View>
       </View>

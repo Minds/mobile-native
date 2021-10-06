@@ -74,7 +74,6 @@ exports[`Activity screen component renders correctly  1`] = `
                 "alignItems": "center",
                 "flexDirection": "row",
                 "justifyContent": "center",
-                "overflow": "hidden",
               },
               Array [
                 Object {
@@ -134,41 +133,45 @@ exports[`Activity screen component renders correctly  1`] = `
             testID="floatingBackButton"
           >
             <View
-              style={
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                    "justifyContent": "center",
-                    "overflow": "hidden",
-                  },
-                  Object {
-                    "height": 40,
-                    "width": 40,
-                  },
-                ]
-              }
+              style={[Function]}
             >
-              <Text
-                allowFontScaling={false}
+              <View
                 style={
                   Array [
                     Object {
-                      "color": "#7D7D82",
-                      "fontSize": 40,
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                      "justifyContent": "center",
+                      "overflow": "hidden",
                     },
-                    undefined,
                     Object {
-                      "fontFamily": "Material Design Icons",
-                      "fontStyle": "normal",
-                      "fontWeight": "normal",
+                      "height": 40,
+                      "width": 40,
                     },
-                    Object {},
                   ]
                 }
               >
-                󰅁
-              </Text>
+                <Text
+                  allowFontScaling={false}
+                  style={
+                    Array [
+                      Object {
+                        "color": "#7D7D82",
+                        "fontSize": 40,
+                      },
+                      undefined,
+                      Object {
+                        "fontFamily": "Material Design Icons",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      Object {},
+                    ]
+                  }
+                >
+                  󰅁
+                </Text>
+              </View>
             </View>
           </View>
         </View>
@@ -293,7 +296,6 @@ exports[`Activity screen component renders correctly  1`] = `
                   "alignItems": "center",
                   "flexDirection": "row",
                   "justifyContent": "center",
-                  "overflow": "hidden",
                 },
                 Object {
                   "marginLeft": 4,
@@ -326,41 +328,45 @@ exports[`Activity screen component renders correctly  1`] = `
               style={null}
             >
               <View
-                style={
-                  Array [
-                    Object {
-                      "alignItems": "center",
-                      "flexDirection": "row",
-                      "justifyContent": "center",
-                      "overflow": "hidden",
-                    },
-                    Object {
-                      "height": 32,
-                      "width": 32,
-                    },
-                  ]
-                }
+                style={[Function]}
               >
-                <Text
-                  allowFontScaling={false}
+                <View
                   style={
                     Array [
                       Object {
-                        "color": "#7D7D82",
-                        "fontSize": 29.44,
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                        "justifyContent": "center",
+                        "overflow": "hidden",
                       },
-                      undefined,
                       Object {
-                        "fontFamily": "Material Icons",
-                        "fontStyle": "normal",
-                        "fontWeight": "normal",
+                        "height": 32,
+                        "width": 32,
                       },
-                      Object {},
                     ]
                   }
                 >
-                  
-                </Text>
+                  <Text
+                    allowFontScaling={false}
+                    style={
+                      Array [
+                        Object {
+                          "color": "#7D7D82",
+                          "fontSize": 29.44,
+                        },
+                        undefined,
+                        Object {
+                          "fontFamily": "Material Icons",
+                          "fontStyle": "normal",
+                          "fontWeight": "normal",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    
+                  </Text>
+                </View>
               </View>
             </View>
           </View>

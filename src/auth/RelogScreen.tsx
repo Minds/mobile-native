@@ -5,7 +5,7 @@ import i18n from '../common/services/i18n.service';
 import { RootStackParamList } from '../navigation/NavigationTypes';
 import ModalContainer from '../onboarding/v2/steps/ModalContainer';
 import ThemedStyles from '../styles/ThemedStyles';
-import LoginFormHandler from './login/LoginFormHandler';
+import LoginForm from './login/LoginForm';
 
 type RelogScreenRouteProp = RouteProp<RootStackParamList, 'RelogScreen'>;
 
@@ -42,13 +42,8 @@ const RelogScreen = ({ route, navigation }: PropsType) => {
       onPressBack={onBackHandler}
       marginTop={20}
       contentContainer={theme.bgPrimaryBackgroundHighlight}
-      titleStyle={theme.colorPrimaryText}
-      backIconStyle={theme.colorPrimaryText}>
-      <LoginFormHandler
-        relogin
-        onLogin={onLoginHandler}
-        sessionIndex={sessionIndex}
-      />
+      titleStyle={theme.colorPrimaryText}>
+      <LoginForm relogin onLogin={onLoginHandler} sessionIndex={sessionIndex} />
     </ModalContainer>
   );
 };

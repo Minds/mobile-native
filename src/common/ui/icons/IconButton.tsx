@@ -1,9 +1,10 @@
 import React from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Icon, { IIcon } from './Icon';
 import { ICON_SIZES, ICON_SIZE_DEFAULT, IUISizing } from '~styles/Tokens';
 import { getNumericSize, getPropStyles } from '~ui/helpers';
-import { useStyle, StyleOrCustom } from '~styles/ThemedStyles';
+import { useMemoStyle, StyleOrCustom } from '~styles/ThemedStyles';
+import PressableScale from '~/common/components/PressableScale';
 
 const SLOP_PROP = 1 / 3;
 
@@ -47,14 +48,14 @@ export default function IconButton({
   };
 
   return (
-    <View style={useStyle(...containerStyles)}>
-      <Pressable
+    <View style={useMemoStyle(containerStyles, [style])}>
+      <PressableScale
         hitSlop={sizeNumeric}
         style={onStyle}
         onPress={onPress}
         testID={testID}>
         <Icon nested {...extra} />
-      </Pressable>
+      </PressableScale>
     </View>
   );
 }
@@ -64,7 +65,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    overflow: 'hidden',
   },
   pressed: {
     opacity: 0.75,

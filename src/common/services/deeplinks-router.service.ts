@@ -140,7 +140,7 @@ class DeeplinksRouter {
     const params = getMatches(link.replace(/%3B/g, ';'), regex);
 
     //sessionService.logout();
-    navigationService.navigate('Login', {
+    navigationService.navigate('Welcome', {
       username: params[1],
       code: params[2],
     });

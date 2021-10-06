@@ -69,7 +69,7 @@ const SearchScreen = observer(() => {
         <IconButton
           onPress={navigation.goBack}
           name="close"
-          size="small"
+          size="medium"
           style={[
             theme.colorIcon,
             Platform.OS === 'android' ? theme.centered : null,

@@ -27,6 +27,7 @@ import TopShadow from '../common/components/TopShadow';
 // import sessionService from '../common/services/session.service';
 import { useStores } from '../common/hooks/use-stores';
 import ChatTabIcon from '../chat/ChatTabIcon';
+import PressableScale from '~/common/components/PressableScale';
 // import navigationService from '../navigation/NavigationService';
 
 const isIOS = Platform.OS === 'ios';
@@ -114,7 +115,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
           });
         };
 
-        const Component = options.tabBarButton || TouchableOpacity;
+        const Component = options.tabBarButton || PressableScale;
 
         return (
           <Component

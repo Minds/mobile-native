@@ -5,7 +5,7 @@ import NotificationsScreen from '../../src/notifications/v3/NotificationsScreen'
 import NotificationsTabIcon from '../../src/notifications/v3/notifications-tab-icon/NotificationsTabIcon.tsx';
 import { StoresProvider } from '../../src/common/hooks/use-stores';
 import { useNavigation } from '../../__mocks__/@react-navigation/native';
-
+jest.mock('@react-navigation/native');
 jest.mock('react-native-system-setting');
 jest.mock('react-native-silent-switch');
 jest.mock('react-native-notifications');

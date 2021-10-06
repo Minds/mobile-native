@@ -3,7 +3,6 @@ import {
   ImageBackground,
   ImageSourcePropType,
   StyleSheet,
-  Text,
   View,
 } from 'react-native';
 import MText from './MText';

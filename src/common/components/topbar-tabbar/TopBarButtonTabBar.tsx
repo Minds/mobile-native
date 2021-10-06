@@ -8,8 +8,7 @@ import {
   TouchableOpacity,
   ViewStyle,
 } from 'react-native';
-// import { Icon } from 'react-native-elements';
-import { Icon } from '~ui/icons';
+import { IconButton } from '~ui/icons';
 import { ScrollView } from 'react-native-gesture-handler';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import Button from '../Button';
@@ -69,7 +68,7 @@ function TopBarButtonTabBar<T>(props: PropsType<T>) {
                 tab.id !== props.current ? theme.colorSecondaryText : {},
               ]}
             />
-          ) : (
+          ) : !!tab.title ? (
             <TouchableOpacity
               key={i}
               onPress={() => props.onChange(tab.id)}
@@ -78,29 +77,29 @@ function TopBarButtonTabBar<T>(props: PropsType<T>) {
                   ? touchableContainerSelected
                   : touchableContainer
               }>
-              {!!tab.title && (
-                <TabTitle
-                  isCurrent={tab.id === props.current}
-                  title={tab.title}
-                />
-              )}
-              {!!tab.icon && (
-                <TabIcon
-                  name={tab.icon.name}
-                  isCurrent={tab.id === props.current}
-                />
-              )}
+              <TabTitle
+                isCurrent={tab.id === props.current}
+                title={tab.title}
+              />
             </TouchableOpacity>
-          ),
+          ) : !!tab.icon ? (
+            <IconButton
+              key={i}
+              onPress={() => props.onChange(tab.id)}
+              name={tab.icon.name}
+              active={tab.id === props.current}
+              style={
+                tab.id === props.current
+                  ? touchableContainerSelected
+                  : touchableContainer
+              }
+            />
+          ) : null,
         )}
       </ScrollView>
     </View>
   );
 }
-
-const TabIcon = ({ name, isCurrent }) => (
-  <Icon name={name} active={isCurrent} size={21} />
-);
 
 type TabTiltePropsType = {
   isCurrent: boolean;

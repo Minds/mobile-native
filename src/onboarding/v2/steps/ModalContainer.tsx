@@ -2,6 +2,8 @@ import React, { useRef } from 'react';
 import { View, Platform, ViewStyle, TextStyle } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { IconButton } from '~ui/icons';
+import { ICON_SIZES, HORIZONTAL } from '~styles/Tokens';
+import Handle from '../../../common/components/bottom-sheet/Handle';
 import MText from '../../../common/components/MText';
 import ThemedStyles, { useStyle } from '../../../styles/ThemedStyles';
 
@@ -12,7 +14,6 @@ type PropsType = {
   marginTop?: number;
   contentContainer?: ViewStyle;
   titleStyle?: TextStyle;
-  backIconStyle?: TextStyle;
 };
 
 /**
@@ -32,44 +33,36 @@ export default function ModalContainer(props: PropsType) {
     props.contentContainer || {},
   );
   const titleStyle = useStyle(styles.title, props.titleStyle || {});
-  const backIconStyle = useStyle(styles.backIcon, props.backIconStyle || {});
+
   return (
     <View style={contentContainer}>
-      <MText style={titleStyle}>{props.title}</MText>
-      <IconButton
-        size={45}
-        name="chevron-left"
-        style={backIconStyle}
-        onPress={props.onPressBack}
-      />
+      <Handle />
+      <View style={styles.header}>
+        <MText style={titleStyle}>{props.title}</MText>
+        <View style={styles.backIcon}>
+          <IconButton size="large" name="close" onPress={props.onPressBack} />
+        </View>
+      </View>
+
       {props.children}
     </View>
   );
 }
 
 const styles = ThemedStyles.create({
-  backIcon: [
-    'colorPrimaryText',
-    {
-      position: 'absolute',
-      top: 17,
-      left: 10,
-    },
-  ],
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: HORIZONTAL,
+  },
   title: [
-    {
-      marginTop: 25,
-      marginBottom: 30,
-      fontSize: 23,
-      textAlign: 'center',
-      fontWeight: '600',
-    },
+    { fontSize: 20, marginLeft: ICON_SIZES.large },
+    'paddingVertical3x',
+    'textCenter',
+    'fontSemibold',
+    { flex: 1 },
   ],
-  description: [
-    {
-      borderLeftWidth: 5,
-    },
-  ],
+  description: ['borderLeft5x'],
   contentContainer: [
     'bgPrimaryBackground',
     {

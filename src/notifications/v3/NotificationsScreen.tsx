@@ -115,11 +115,6 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
     }
   }, [notifications, onFocus]);
 
-  const headerComponent = React.useMemo(
-    () => <NotificationsTopBar store={notifications} setResult={setResult} />,
-    [notifications, setResult],
-  );
-
   const onViewableItemsChanged = React.useCallback(
     (viewableItems: { viewableItems: ViewToken[]; changed: ViewToken[] }) => {
       viewableItems.viewableItems.forEach(
@@ -136,7 +131,6 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
 
   const ListEmptyComponent = React.useMemo(() => {
     if (error && !loading) {
-      console.log(error);
       return (
         <MText style={errorStyle} onPress={() => fetch()}>
           {i18n.t('cantReachServer') + '\n'}
@@ -166,20 +160,22 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
   const data = result?.notifications || [];
 
   return (
-    <View style={theme.flexContainer}>
-      <FlatList
-        data={data.slice()}
-        ListHeaderComponent={headerComponent}
-        keyExtractor={keyExtractor}
-        renderItem={renderItem}
-        onEndReached={onFetchMore}
-        onRefresh={refresh}
-        refreshing={loading}
-        onViewableItemsChanged={onViewableItemsChanged}
-        viewabilityConfig={viewabilityConfig}
-        ListEmptyComponent={ListEmptyComponent}
-      />
-    </View>
+    <>
+      <NotificationsTopBar store={notifications} setResult={setResult} />
+      <View style={theme.flexContainer}>
+        <FlatList
+          data={data.slice()}
+          keyExtractor={keyExtractor}
+          renderItem={renderItem}
+          onEndReached={onFetchMore}
+          onRefresh={refresh}
+          refreshing={loading}
+          onViewableItemsChanged={onViewableItemsChanged}
+          viewabilityConfig={viewabilityConfig}
+          ListEmptyComponent={ListEmptyComponent}
+        />
+      </View>
+    </>
   );
 });
 
