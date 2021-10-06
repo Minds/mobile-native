@@ -13,9 +13,6 @@ type PropsType = {
 const RegisterScreen = ({ route }: PropsType) => {
   const theme = ThemedStyles.style;
   const navigation = useNavigation();
-  const onRegister = React.useCallback(() => {
-    resetStackAndGoBack(navigation);
-  }, [navigation]);
   return (
     <ModalContainer
       title={i18n.t('auth.createChannel')}
@@ -24,7 +21,7 @@ const RegisterScreen = ({ route }: PropsType) => {
       contentContainer={theme.bgPrimaryBackground}
       titleStyle={theme.colorPrimaryText}
       backIconStyle={theme.colorPrimaryText}>
-      <RegisterForm onRegister={onRegister} />
+      <RegisterForm />
     </ModalContainer>
   );
 };
