@@ -233,6 +233,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
         onPress={store.onRegisterPress}
         text={i18n.t('auth.createChannel')}
         disabled={store.inProgress}
+        loading={store.inProgress}
         testID="registerButton"
         action
       />
