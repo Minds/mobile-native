@@ -1,7 +1,8 @@
 import { CommonActions } from '@react-navigation/native';
+import navigationService from '../../navigation/NavigationService';
 
 /**
- * set the App route as the root of the stack and
+ * set the App route as the root of the stack and the current screen as the second and active screen
  * goBack after 500ms (enough time for App component
  * to render and the navigation to be registered).
  *
@@ -10,15 +11,14 @@ import { CommonActions } from '@react-navigation/native';
  *    screen may not exist
  * 2. to keep the bottomsheet close transition
  */
-export const resetStackAndGoBack = navigation => {
-  navigation.dispatch(state => {
-    setTimeout(() => {
-      navigation.goBack();
-    }, 500);
+export const resetStackAndGoBack = () => {
+  setTimeout(() => {
+    navigationService.goBack();
+  }, 300);
 
+  navigationService.dispatch(state => {
     return CommonActions.reset({
-      ...state,
-      routes: [{ key: 'App_SOMETHING', name: 'App' }, ...state.routes],
+      routes: [{ name: 'App' }, state.routes[state.routes.length - 1]],
       index: 1,
     });
   });

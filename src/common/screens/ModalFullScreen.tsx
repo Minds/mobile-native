@@ -6,16 +6,22 @@ import { IconButton } from '~ui/icons';
 
 import ThemedStyles from '../../styles/ThemedStyles';
 import MText from '../components/MText';
+import { DotIndicator } from 'react-native-reanimated-indicators';
 
 type PropsType = {
   title: string;
   children: React.ReactNode;
+  loading?: boolean;
 };
 
 /**
  * Base full screen modal
  */
-export default function ModalFullScreen({ title, children }: PropsType) {
+export default function ModalFullScreen({
+  title,
+  children,
+  loading,
+}: PropsType) {
   const theme = ThemedStyles.style;
   const navigation = useNavigation();
   const goBack = React.useCallback(() => navigation.goBack(), [navigation]);
@@ -31,11 +37,25 @@ export default function ModalFullScreen({ title, children }: PropsType) {
         </View>
         {children}
       </SafeAreaView>
+      {loading && (
+        <View style={styles.loading}>
+          <DotIndicator
+            dotSize={12}
+            color={ThemedStyles.getColor('White')}
+            scaleEnabled={true}
+          />
+        </View>
+      )}
     </View>
   );
 }
 
 const styles = ThemedStyles.create({
+  loading: [
+    'positionAbsolute',
+    'centered',
+    { backgroundColor: 'rgba(0,0,0,0.45)' },
+  ],
   screen: ['flexContainer', 'bgPrimaryBackground'],
   title: ['colorPrimaryText', 'fontXL', 'fontBold'],
   header: [

@@ -62,7 +62,7 @@ export default observer(function LoginForm(props: PropsType) {
       value={localStore.username}
       testID="usernameInput"
       noBottomBorder
-      autoFocus={props.multiUser}
+      autoFocus={true}
     />
   );
 

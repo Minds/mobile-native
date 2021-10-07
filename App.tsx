@@ -172,7 +172,8 @@ class App extends Component<Props, State> {
 
     const stores = getStores();
 
-    const isLoggedIn = sessionService.userLoggedIn;
+    // Should show auth screens?
+    const showAuthNav = sessionService.showAuthNav;
 
     return (
       <>
@@ -193,7 +194,7 @@ class App extends Component<Props, State> {
                         <WCContextProvider>
                           <NavigationStack
                             key={ThemedStyles.theme + i18n.locale}
-                            isLoggedIn={isLoggedIn}
+                            showAuthNav={showAuthNav}
                           />
                         </WCContextProvider>
                         <AppMessages />

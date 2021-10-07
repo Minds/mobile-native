@@ -120,6 +120,7 @@ const CommentInput = observer(() => {
               theme.paddingHorizontal4x,
             ]}>
             <TextInput
+              testID="CommentTextInput"
               ref={ref}
               autoFocus={true}
               multiline={true}

@@ -7161,6 +7161,13 @@ expo-image-loader@~2.2.0:
   resolved "https://registry.yarnpkg.com/expo-image-loader/-/expo-image-loader-2.2.0.tgz#b5d49ec65e576c033823050b223ef462c5ec5711"
   integrity sha512-kTs/lW8LUXYFQ5t8wkdJs0A41zd7dIB8uRRC0a9L0EurSGUvQWiVTbHQoLo/GYWL7nM85OaPAe2qkHfcz5KeyA==
 
+expo-image-manipulator@^9.2.2:
+  version "9.2.2"
+  resolved "https://registry.yarnpkg.com/expo-image-manipulator/-/expo-image-manipulator-9.2.2.tgz#0fc7d2032972961c0a5fb49511d230fe0788fa6f"
+  integrity sha512-rnwUpLmySEhclES+632/vl4cBQyjWE16PdR003WxvN/YBynTlYIi7If2FZRFt5lktX0Rz988XVE89EavHPn2ug==
+  dependencies:
+    expo-modules-core "~0.2.0"
+
 expo-keep-awake@~9.2.0:
   version "9.2.0"
   resolved "https://registry.yarnpkg.com/expo-keep-awake/-/expo-keep-awake-9.2.0.tgz#9cbdcc8264c943ef29a58326236cd34267e98f43"
@@ -13155,10 +13162,10 @@ react-native-vector-icons@^7.1.0:
     prop-types "^15.7.2"
     yargs "^15.0.2"
 
-react-native-vision-camera@^2.8.2:
-  version "2.8.2"
-  resolved "https://registry.yarnpkg.com/react-native-vision-camera/-/react-native-vision-camera-2.8.2.tgz#5648e25827982446a902e3113ea511acb35474a4"
-  integrity sha512-04WttfiLy8+zFbiL52g0zYvXcszIeS6iljIcuJgbM3hTHdHUzAFFanN9WPBucMmacNzqvI/lpy4kWi1Y9TyTBg==
+react-native-vision-camera@^2.8.3:
+  version "2.8.3"
+  resolved "https://registry.yarnpkg.com/react-native-vision-camera/-/react-native-vision-camera-2.8.3.tgz#7d53cac5717e3344b92ee0e264569c353cfc410b"
+  integrity sha512-Zc69CIm5bn0Y8aArVh73RhNBmOkyL+FnUBhN+I+YW3EbK7hzxzUcM8zANRFvZma/5CBEwe4F27t2hvbXXYvh4Q==
 
 react-native-webview@^8.1.0:
   version "8.2.1"

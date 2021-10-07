@@ -18,6 +18,10 @@ export const CHAR_LIMIT = 1500;
 
 export const DATA_SAVER_THUMB_RES = 96;
 
+// the maximum length of the image (width or height).
+// we limit all image sizes to this number to reduce image size
+export const IMAGE_MAX_SIZE = 2048;
+
 export const ANDROID_CHAT_APP = 'com.minds.chat';
 
 export const MINDS_URI = 'https://www.minds.com/';

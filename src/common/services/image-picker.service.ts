@@ -1,6 +1,6 @@
 import { Platform } from 'react-native';
 import ImagePicker, { Options, Image } from 'react-native-image-crop-picker';
-
+import { IMAGE_MAX_SIZE } from './../../config/Config';
 import permissions from './permissions.service';
 
 export interface CustomImage extends Image {
@@ -205,6 +205,8 @@ class ImagePickerService {
       cropping: crop && type !== 'video',
       showCropGuidelines: false,
       compressVideoPreset: 'Passthrough',
+      compressImageMaxHeight: IMAGE_MAX_SIZE, // twice the size of xlarge image on the backend
+      compressImageMaxWidth: IMAGE_MAX_SIZE, // twice the size of xlarge image on the backend
       cropperCircleOverlay,
     };
   }

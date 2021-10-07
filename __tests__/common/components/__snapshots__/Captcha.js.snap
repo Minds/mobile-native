@@ -42,7 +42,7 @@ exports[`renders correctly 1`] = `
     onStartShouldSetResponder={[Function]}
     style={
       Object {
-        "backgroundColor": "#1A2025",
+        "backgroundColor": "#000000",
         "bottom": 0,
         "height": 1334,
         "left": 0,
@@ -135,15 +135,15 @@ exports[`renders correctly 1`] = `
         style={
           Array [
             Object {
+              "backgroundColor": "#FFFFFF",
+            },
+            Object {
               "borderTopLeftRadius": 20,
               "borderTopRightRadius": 20,
               "flexDirection": "column",
               "justifyContent": "center",
               "paddingBottom": 50,
               "width": "100%",
-            },
-            Object {
-              "backgroundColor": "#242A30",
             },
           ]
         }
@@ -176,7 +176,7 @@ exports[`renders correctly 1`] = `
                     "fontSize": 18,
                   },
                   Object {
-                    "color": "#FFFFFF",
+                    "color": "#43434D",
                   },
                   Object {
                     "paddingVertical": 16,
@@ -204,7 +204,7 @@ exports[`renders correctly 1`] = `
                     "fontSize": 18,
                   },
                   Object {
-                    "color": "#FFFFFF",
+                    "color": "#43434D",
                   },
                   Object {
                     "paddingVertical": 16,
@@ -273,10 +273,14 @@ exports[`renders correctly 1`] = `
               Object {
                 "borderColor": "#D3DBE3",
               },
-              Object {
-                "backgroundColor": "#1A2025",
-                "borderColor": "#414C57",
-              },
+              Array [
+                Object {
+                  "backgroundColor": "#F6F7F7",
+                },
+                Object {
+                  "borderColor": "#D3DBE3",
+                },
+              ],
             ]
           }
         >
@@ -317,7 +321,7 @@ exports[`renders correctly 1`] = `
                           "color": "#72727C",
                         },
                         Object {
-                          "color": "#FFFFFF",
+                          "color": "#43434D",
                         },
                       ],
                     ]
@@ -331,15 +335,19 @@ exports[`renders correctly 1`] = `
               autoCapitalize="none"
               autofocus={true}
               containerStyle={
-                Object {
-                  "backgroundColor": "#1A2025",
-                  "borderColor": "#414C57",
-                }
+                Array [
+                  Object {
+                    "backgroundColor": "#F6F7F7",
+                  },
+                  Object {
+                    "borderColor": "#D3DBE3",
+                  },
+                ]
               }
               keyboardAppearance="light"
               labelStyle={
                 Object {
-                  "color": "#FFFFFF",
+                  "color": "#43434D",
                 }
               }
               onChangeText={[Function]}
@@ -376,12 +384,12 @@ exports[`renders correctly 1`] = `
                       "color": "#43434D",
                     },
                     Object {
-                      "color": "#FFFFFF",
+                      "color": "#43434D",
                     },
                   ],
                 ]
               }
-              testID="captchInput"
+              testID="captchaInput"
               underlineColorAndroid="transparent"
             />
           </View>
