@@ -116,7 +116,6 @@ exports[`LoginScreen component should renders correctly 1`] = `
           Array [
             Object {
               "alignItems": "center",
-              "flexDirection": "row",
               "justifyContent": "center",
             },
             undefined,
@@ -144,44 +143,53 @@ exports[`LoginScreen component should renders correctly 1`] = `
           onResponderTerminate={[Function]}
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
-          style={null}
         >
           <View
             style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                  "overflow": "hidden",
-                },
-                Object {
-                  "height": 32,
-                  "width": 32,
-                },
-              ]
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "center",
+              }
             }
           >
-            <Text
-              allowFontScaling={false}
+            <View
               style={
                 Array [
                   Object {
-                    "color": "#7D7D82",
-                    "fontSize": 32,
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                    "overflow": "hidden",
                   },
-                  undefined,
                   Object {
-                    "fontFamily": "Material Icons",
-                    "fontStyle": "normal",
-                    "fontWeight": "normal",
+                    "height": 32,
+                    "width": 32,
                   },
-                  Object {},
                 ]
               }
             >
-              
-            </Text>
+              <Text
+                allowFontScaling={false}
+                style={
+                  Array [
+                    Object {
+                      "color": "#7D7D82",
+                      "fontSize": 32,
+                    },
+                    undefined,
+                    Object {
+                      "fontFamily": "Material Icons",
+                      "fontStyle": "normal",
+                      "fontWeight": "normal",
+                    },
+                    Object {},
+                  ]
+                }
+              >
+                
+              </Text>
+            </View>
           </View>
         </View>
       </View>

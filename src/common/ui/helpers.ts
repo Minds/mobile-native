@@ -4,6 +4,10 @@ function getKeyByValue(object, value) {
   return Object.keys(object).find(key => object[key] === value);
 }
 
+export function capitalizeFirst(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 export const getNumericSize = (size, options, default_size) => {
   if (typeof size === 'string') {
     return options[size] || options[default_size];
@@ -47,6 +51,33 @@ export const getPropStyles = (props: any) => {
       continue;
     }
     const label = `${key.replace(/^spacing/, 'margin')}${props[key]}`;
+    const style = ThemedStyles.style[label];
+
+    if (style) {
+      styles.push(style);
+    }
+  }
+
+  return styles;
+};
+
+export const getSpacingStyles = (props: any) => {
+  const styles: any = [];
+  if (!(props && typeof props === 'object')) {
+    return styles;
+  }
+
+  const keys = Object.keys(props);
+
+  for (let i = 0; i < keys.length; i += 1) {
+    const key = keys[i];
+    if (
+      !key.match(/^(top|left|right|bottom|vertical|horizontal)$/) ||
+      props[key] === undefined
+    ) {
+      continue;
+    }
+    const label = `margin${capitalizeFirst(key)}${props[key]}`;
     const style = ThemedStyles.style[label];
 
     if (style) {

@@ -1,29 +1,34 @@
-import React from 'react';
-import { StyleSheet, View, Pressable } from 'react-native';
+import React, { useCallback } from 'react';
+import { StyleSheet, View, Pressable, InteractionManager } from 'react-native';
 import Icon, { IIcon } from './Icon';
 import { ICON_SIZES, ICON_SIZE_DEFAULT, IUISizing } from '~styles/Tokens';
 import { getNumericSize, getPropStyles } from '~ui/helpers';
 import { useMemoStyle, StyleOrCustom } from '~styles/ThemedStyles';
 import PressableScale from '~/common/components/PressableScale';
+import withSpacer from '~ui/spacer/withSpacer';
 
 const SLOP_PROP = 1 / 3;
 
 export interface IIconButton extends IIcon {
   onPress: () => void;
   scale?: boolean;
+  extra?: any;
 }
+
+export const IconButtonSpaced = withSpacer(IconButton);
 
 export default function IconButton({
   onPress,
   style,
   testID,
   scale,
-  ...extra
+  extra,
+  ...more
 }: IIconButton) {
   const containerStyles: StyleOrCustom[] = [styles.container];
-  let size: IUISizing | number | string = 'medium';
+  let size: IUISizing | number | string = 'huge';
 
-  const extraStyles = getPropStyles(extra);
+  const extraStyles = getPropStyles(more);
 
   if (extraStyles?.length) {
     containerStyles.push(...extraStyles);
@@ -33,8 +38,8 @@ export default function IconButton({
     containerStyles.push(style);
   }
 
-  if (extra?.size) {
-    size = extra.size;
+  if (more?.size) {
+    size = more.size;
   }
 
   containerStyles.push(styles[size]);
@@ -46,19 +51,28 @@ export default function IconButton({
     if (pressed === true) {
       return styles.pressed;
     }
-    return null;
   };
 
   const PressableComponent = scale ? PressableScale : Pressable;
+
+  // Breather
+  const handlePress = useCallback(() => {
+    requestAnimationFrame(() => {
+      InteractionManager.runAfterInteractions(onPress);
+    });
+  }, [onPress]);
 
   return (
     <View style={useMemoStyle(containerStyles, [style])}>
       <PressableComponent
         hitSlop={sizeNumeric}
         style={onStyle}
-        onPress={onPress}
+        onPress={handlePress}
         testID={testID}>
-        <Icon nested {...extra} />
+        <View style={styles.wrapper}>
+          <Icon nested {...more} />
+          {extra}
+        </View>
       </PressableComponent>
     </View>
   );
@@ -66,11 +80,15 @@ export default function IconButton({
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
   },
   pressed: {
     opacity: 0.75,
+  },
+  wrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

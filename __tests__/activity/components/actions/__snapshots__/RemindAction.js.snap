@@ -2,8 +2,18 @@
 
 exports[`Thumb action component renders correctly 1`] = `
 <Fragment>
-  <preventDoubleTap(TouchableOpacity)
+  <IconButton
+    disabled={false}
+    extra={
+      <Unknown
+        count={0}
+        left="1x"
+      />
+    }
+    name="remind"
     onPress={[Function]}
+    scale={true}
+    size="small"
     style={
       Array [
         Object {
@@ -22,25 +32,6 @@ exports[`Thumb action component renders correctly 1`] = `
       ]
     }
     testID="Remind activity button"
-  >
-    <Icon
-      name="remind"
-      size="small"
-      style={
-        Array [
-          Object {
-            "color": "#7D7D82",
-          },
-          Object {
-            "marginRight": 4,
-          },
-        ]
-      }
-    />
-    <Counter
-      count={0}
-      size={15}
-    />
-  </preventDoubleTap(TouchableOpacity)>
+  />
 </Fragment>
 `;

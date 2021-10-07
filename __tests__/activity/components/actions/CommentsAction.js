@@ -34,16 +34,16 @@ describe('Comment action component', () => {
   it('should have a comment button', async () => {
     screen.update();
 
-    expect(screen.find('preventDoubleTap(TouchableOpacity)')).toHaveLength(1);
+    expect(screen.find('preventDoubleTap(PressableScale)')).toHaveLength(1);
   });
 
   it('should navigate a thumb on press ', async () => {
     navigation.dangerouslyGetState.mockReturnValue({ routes: null });
 
     screen.update();
-    let touchables = screen.find('preventDoubleTap(TouchableOpacity)');
+    let touchables = screen.find('preventDoubleTap(PressableScale)');
     touchables.at(0).props().onPress();
     expect(navigation.push).toHaveBeenCalled();
-    expect(screen.find('preventDoubleTap(TouchableOpacity)')).toHaveLength(1);
+    expect(screen.find('preventDoubleTap(PressableScale)')).toHaveLength(1);
   });
 });

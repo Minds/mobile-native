@@ -1,33 +1,36 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Thumb action component renders correctly 1`] = `
-<preventDoubleTap(TouchableOpacity)
+<preventDoubleTap(PressableScale)
   onPress={[Function]}
-  style={
-    Array [
-      Object {
-        "flexDirection": "row",
-        "justifyContent": "center",
-      },
-      Object {
-        "paddingHorizontal": 12,
-      },
-      Object {
-        "paddingVertical": 16,
-      },
-      Object {
-        "alignItems": "center",
-      },
-    ]
-  }
   testID="Thumb up activity button"
 >
-  <AnimatedThumb
-    canVote={true}
-    down={false}
-    name="thumb-up"
-    size={21}
-    voted={false}
-  />
-</preventDoubleTap(TouchableOpacity)>
+  <View
+    style={
+      Array [
+        Object {
+          "flexDirection": "row",
+          "justifyContent": "center",
+        },
+        Object {
+          "paddingHorizontal": 12,
+        },
+        Object {
+          "paddingVertical": 16,
+        },
+        Object {
+          "alignItems": "center",
+        },
+      ]
+    }
+  >
+    <AnimatedThumb
+      canVote={true}
+      down={false}
+      name="thumb-up"
+      size={21}
+      voted={false}
+    />
+  </View>
+</preventDoubleTap(PressableScale)>
 `;

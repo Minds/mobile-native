@@ -52,7 +52,7 @@ describe('Thumb action component', () => {
 
     screen.update();
 
-    let touchables = screen.find('preventDoubleTap(TouchableOpacity)');
+    let touchables = screen.find('preventDoubleTap(PressableScale)');
     touchables.at(0).props().onPress();
 
     expect(entity.toggleVote).toHaveBeenCalled();

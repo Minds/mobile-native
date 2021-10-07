@@ -379,6 +379,7 @@ export default withSafeAreaInsets(
       return (
         <>
           <IconButton
+            scale
             name="more"
             size="large"
             onPress={this.showActionSheet}

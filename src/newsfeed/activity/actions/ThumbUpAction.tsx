@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
 import { observer } from 'mobx-react';
 import { motify, useAnimationState } from 'moti';
 import { Icon } from '~ui/icons';
@@ -11,9 +11,10 @@ import { FLAG_VOTE } from '../../../common/Permissions';
 import remoteAction from '../../../common/RemoteAction';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
 import { actionsContainerStyle } from './styles';
+import PressableScale from '~/common/components/PressableScale';
 
 // prevent double tap in touchable
-const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
+const TouchableOpacityCustom = withPreventDoubleTap(PressableScale);
 
 type PropsType = {
   entity: ActivityModel;
@@ -140,23 +141,24 @@ class ThumbUpAction extends Component<PropsType> {
 
     return (
       <Touchable
-        style={actionsContainerStyle}
         onPress={this.toggleThumb}
         testID={`Thumb ${this.direction} activity button`}>
-        <AnimatedThumb
-          canVote={canVote}
-          voted={this.voted}
-          size={this.props.size}
-          name={this.iconName}
-          down={this.direction !== 'up'}
-        />
-        {count && !this.props.hideCount ? (
-          <Counter
-            // size={this.props.size * 0.7}
-            count={count}
-            testID={`Thumb ${this.direction} count`}
+        <View style={actionsContainerStyle}>
+          <AnimatedThumb
+            canVote={canVote}
+            voted={this.voted}
+            size={this.props.size}
+            name={this.iconName}
+            down={this.direction !== 'up'}
           />
-        ) : undefined}
+          {count && !this.props.hideCount ? (
+            <Counter
+              // size={this.props.size * 0.7}
+              count={count}
+              testID={`Thumb ${this.direction} count`}
+            />
+          ) : undefined}
+        </View>
       </Touchable>
     );
   }

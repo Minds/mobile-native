@@ -10,7 +10,7 @@ import {
 import { DotIndicator } from 'react-native-reanimated-indicators';
 
 import ThemedStyles from '../../styles/ThemedStyles';
-import MText from './MText';
+import { DText } from './MText';
 
 export interface ButtonPropsType extends TouchableOpacityProps {
   text?: string;
@@ -125,7 +125,7 @@ export default class Button extends Component<ButtonPropsType> {
       />
     ) : (
       this.props.text && (
-        <MText
+        <DText
           style={[
             fontSize,
             { color: textColor || mainColor },
@@ -134,7 +134,7 @@ export default class Button extends Component<ButtonPropsType> {
           ]}>
           {' '}
           {this.props.text}{' '}
-        </MText>
+        </DText>
       )
     );
 

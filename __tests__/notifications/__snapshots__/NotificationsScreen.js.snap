@@ -35,550 +35,762 @@ Array [
             Array [
               Object {
                 "alignItems": "center",
+                "flex": 1,
                 "flexDirection": "row",
-                "justifyContent": "center",
+                "position": "relative",
               },
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "flex": 1,
-                  "paddingBottom": 17,
-                  "paddingTop": 14,
-                },
-                Object {
-                  "borderBottomColor": "#1B85D6",
-                  "borderBottomWidth": 3,
-                },
-              ],
-              undefined,
             ]
           }
         >
           <View
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            hitSlop={
-              Object {
-                "bottom": 8,
-                "left": 8,
-                "right": 8,
-                "top": 8,
-              }
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                },
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flex": 1,
+                    "paddingBottom": 17,
+                    "paddingTop": 14,
+                  },
+                ],
+                undefined,
+              ]
             }
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={null}
           >
             <View
-              style={[Function]}
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              hitSlop={
+                Object {
+                  "bottom": 13.333333333333332,
+                  "left": 13.333333333333332,
+                  "right": 13.333333333333332,
+                  "top": 13.333333333333332,
+                }
+              }
+              onBlur={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
             >
               <View
-                style={
-                  Array [
+                style={[Function]}
+              >
+                <View
+                  style={
                     Object {
                       "alignItems": "center",
                       "flexDirection": "row",
                       "justifyContent": "center",
-                      "overflow": "hidden",
-                    },
-                    Object {
-                      "height": 24,
-                      "width": 24,
-                    },
-                  ]
-                }
-              >
-                <Text
-                  allowFontScaling={false}
-                  style={
-                    Array [
-                      Object {
-                        "color": "#0085DD",
-                        "fontSize": 24,
-                      },
-                      undefined,
-                      Object {
-                        "fontFamily": "Material Icons",
-                        "fontStyle": "normal",
-                        "fontWeight": "normal",
-                      },
-                      Object {},
-                    ]
+                    }
                   }
                 >
-                  
-                </Text>
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "alignItems": "center",
+                          "flexDirection": "row",
+                          "justifyContent": "center",
+                          "overflow": "hidden",
+                        },
+                        Object {
+                          "height": 24,
+                          "width": 24,
+                        },
+                      ]
+                    }
+                  >
+                    <Text
+                      allowFontScaling={false}
+                      style={
+                        Array [
+                          Object {
+                            "color": "#0085DD",
+                            "fontSize": 24,
+                          },
+                          undefined,
+                          Object {
+                            "fontFamily": "Material Icons",
+                            "fontStyle": "normal",
+                            "fontWeight": "normal",
+                          },
+                          Object {},
+                        ]
+                      }
+                    >
+                      
+                    </Text>
+                  </View>
+                </View>
               </View>
             </View>
           </View>
+          <View
+            style={
+              Array [
+                Array [
+                  Object {
+                    "backgroundColor": "#0085DD",
+                  },
+                  Object {
+                    "bottom": -2.5,
+                    "height": 3,
+                    "left": 0,
+                    "position": "absolute",
+                    "width": "100%",
+                    "zIndex": 100,
+                  },
+                ],
+                [Function],
+              ]
+            }
+          />
         </View>
         <View
           style={
             Array [
               Object {
                 "alignItems": "center",
+                "flex": 1,
                 "flexDirection": "row",
-                "justifyContent": "center",
+                "position": "relative",
               },
-              Array [
-                Object {
-                  "borderBottomWidth": 0.5,
-                },
-                Object {
-                  "borderColor": "#D3DBE3",
-                },
-                Object {
-                  "alignItems": "center",
-                  "flex": 1,
-                  "paddingBottom": 17,
-                  "paddingTop": 14,
-                },
-              ],
-              undefined,
             ]
           }
         >
           <View
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            hitSlop={
-              Object {
-                "bottom": 8,
-                "left": 8,
-                "right": 8,
-                "top": 8,
-              }
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                },
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flex": 1,
+                    "paddingBottom": 17,
+                    "paddingTop": 14,
+                  },
+                ],
+                undefined,
+              ]
             }
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={null}
           >
             <View
-              style={[Function]}
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              hitSlop={
+                Object {
+                  "bottom": 13.333333333333332,
+                  "left": 13.333333333333332,
+                  "right": 13.333333333333332,
+                  "top": 13.333333333333332,
+                }
+              }
+              onBlur={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
             >
               <View
-                style={
-                  Array [
+                style={[Function]}
+              >
+                <View
+                  style={
                     Object {
                       "alignItems": "center",
                       "flexDirection": "row",
                       "justifyContent": "center",
-                      "overflow": "hidden",
-                    },
-                    Object {
-                      "height": 24,
-                      "width": 24,
-                    },
-                  ]
-                }
-              >
-                <Text
-                  allowFontScaling={false}
-                  style={
-                    Array [
-                      Object {
-                        "color": "#7D7D82",
-                        "fontSize": 22.080000000000002,
-                      },
-                      undefined,
-                      Object {
-                        "fontFamily": "Material Icons",
-                        "fontStyle": "normal",
-                        "fontWeight": "normal",
-                      },
-                      Object {},
-                    ]
+                    }
                   }
                 >
-                  
-                </Text>
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "alignItems": "center",
+                          "flexDirection": "row",
+                          "justifyContent": "center",
+                          "overflow": "hidden",
+                        },
+                        Object {
+                          "height": 24,
+                          "width": 24,
+                        },
+                      ]
+                    }
+                  >
+                    <Text
+                      allowFontScaling={false}
+                      style={
+                        Array [
+                          Object {
+                            "color": "#7D7D82",
+                            "fontSize": 22.080000000000002,
+                          },
+                          undefined,
+                          Object {
+                            "fontFamily": "Material Icons",
+                            "fontStyle": "normal",
+                            "fontWeight": "normal",
+                          },
+                          Object {},
+                        ]
+                      }
+                    >
+                      
+                    </Text>
+                  </View>
+                </View>
               </View>
             </View>
           </View>
+          <View
+            style={
+              Array [
+                Array [
+                  Object {
+                    "backgroundColor": "#D3DBE3",
+                  },
+                  Object {
+                    "bottom": -2.5,
+                    "height": 3,
+                    "left": 0,
+                    "position": "absolute",
+                    "width": "100%",
+                    "zIndex": 100,
+                  },
+                ],
+                [Function],
+              ]
+            }
+          />
         </View>
         <View
           style={
             Array [
               Object {
                 "alignItems": "center",
+                "flex": 1,
                 "flexDirection": "row",
-                "justifyContent": "center",
+                "position": "relative",
               },
-              Array [
-                Object {
-                  "borderBottomWidth": 0.5,
-                },
-                Object {
-                  "borderColor": "#D3DBE3",
-                },
-                Object {
-                  "alignItems": "center",
-                  "flex": 1,
-                  "paddingBottom": 17,
-                  "paddingTop": 14,
-                },
-              ],
-              undefined,
             ]
           }
         >
           <View
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            hitSlop={
-              Object {
-                "bottom": 8,
-                "left": 8,
-                "right": 8,
-                "top": 8,
-              }
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                },
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flex": 1,
+                    "paddingBottom": 17,
+                    "paddingTop": 14,
+                  },
+                ],
+                undefined,
+              ]
             }
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={null}
           >
             <View
-              style={[Function]}
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              hitSlop={
+                Object {
+                  "bottom": 13.333333333333332,
+                  "left": 13.333333333333332,
+                  "right": 13.333333333333332,
+                  "top": 13.333333333333332,
+                }
+              }
+              onBlur={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
             >
               <View
-                style={
-                  Array [
+                style={[Function]}
+              >
+                <View
+                  style={
                     Object {
                       "alignItems": "center",
                       "flexDirection": "row",
                       "justifyContent": "center",
-                      "overflow": "hidden",
-                    },
-                    Object {
-                      "height": 24,
-                      "width": 24,
-                    },
-                  ]
-                }
-              >
-                <Text
-                  allowFontScaling={false}
-                  style={
-                    Array [
-                      Object {
-                        "color": "#7D7D82",
-                        "fontSize": 22.56,
-                      },
-                      undefined,
-                      Object {
-                        "fontFamily": "Material Design Icons",
-                        "fontStyle": "normal",
-                        "fontWeight": "normal",
-                      },
-                      Object {},
-                    ]
+                    }
                   }
                 >
-                  󰍡
-                </Text>
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "alignItems": "center",
+                          "flexDirection": "row",
+                          "justifyContent": "center",
+                          "overflow": "hidden",
+                        },
+                        Object {
+                          "height": 24,
+                          "width": 24,
+                        },
+                      ]
+                    }
+                  >
+                    <Text
+                      allowFontScaling={false}
+                      style={
+                        Array [
+                          Object {
+                            "color": "#7D7D82",
+                            "fontSize": 22.56,
+                          },
+                          undefined,
+                          Object {
+                            "fontFamily": "Material Design Icons",
+                            "fontStyle": "normal",
+                            "fontWeight": "normal",
+                          },
+                          Object {},
+                        ]
+                      }
+                    >
+                      󰍡
+                    </Text>
+                  </View>
+                </View>
               </View>
             </View>
           </View>
+          <View
+            style={
+              Array [
+                Array [
+                  Object {
+                    "backgroundColor": "#D3DBE3",
+                  },
+                  Object {
+                    "bottom": -2.5,
+                    "height": 3,
+                    "left": 0,
+                    "position": "absolute",
+                    "width": "100%",
+                    "zIndex": 100,
+                  },
+                ],
+                [Function],
+              ]
+            }
+          />
         </View>
         <View
           style={
             Array [
               Object {
                 "alignItems": "center",
+                "flex": 1,
                 "flexDirection": "row",
-                "justifyContent": "center",
+                "position": "relative",
               },
-              Array [
-                Object {
-                  "borderBottomWidth": 0.5,
-                },
-                Object {
-                  "borderColor": "#D3DBE3",
-                },
-                Object {
-                  "alignItems": "center",
-                  "flex": 1,
-                  "paddingBottom": 17,
-                  "paddingTop": 14,
-                },
-              ],
-              undefined,
             ]
           }
         >
           <View
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            hitSlop={
-              Object {
-                "bottom": 8,
-                "left": 8,
-                "right": 8,
-                "top": 8,
-              }
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                },
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flex": 1,
+                    "paddingBottom": 17,
+                    "paddingTop": 14,
+                  },
+                ],
+                undefined,
+              ]
             }
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={null}
           >
             <View
-              style={[Function]}
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              hitSlop={
+                Object {
+                  "bottom": 13.333333333333332,
+                  "left": 13.333333333333332,
+                  "right": 13.333333333333332,
+                  "top": 13.333333333333332,
+                }
+              }
+              onBlur={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
             >
               <View
-                style={
-                  Array [
+                style={[Function]}
+              >
+                <View
+                  style={
                     Object {
                       "alignItems": "center",
                       "flexDirection": "row",
                       "justifyContent": "center",
-                      "overflow": "hidden",
-                    },
-                    Object {
-                      "height": 24,
-                      "width": 24,
-                    },
-                  ]
-                }
-              >
-                <Text
-                  allowFontScaling={false}
-                  style={
-                    Array [
-                      Object {
-                        "color": "#7D7D82",
-                        "fontSize": 20.16,
-                      },
-                      undefined,
-                      Object {
-                        "fontFamily": "FontAwesome",
-                        "fontStyle": "normal",
-                        "fontWeight": "normal",
-                      },
-                      Object {},
-                    ]
+                    }
                   }
                 >
-                  
-                </Text>
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "alignItems": "center",
+                          "flexDirection": "row",
+                          "justifyContent": "center",
+                          "overflow": "hidden",
+                        },
+                        Object {
+                          "height": 24,
+                          "width": 24,
+                        },
+                      ]
+                    }
+                  >
+                    <Text
+                      allowFontScaling={false}
+                      style={
+                        Array [
+                          Object {
+                            "color": "#7D7D82",
+                            "fontSize": 20.16,
+                          },
+                          undefined,
+                          Object {
+                            "fontFamily": "FontAwesome",
+                            "fontStyle": "normal",
+                            "fontWeight": "normal",
+                          },
+                          Object {},
+                        ]
+                      }
+                    >
+                      
+                    </Text>
+                  </View>
+                </View>
               </View>
             </View>
           </View>
+          <View
+            style={
+              Array [
+                Array [
+                  Object {
+                    "backgroundColor": "#D3DBE3",
+                  },
+                  Object {
+                    "bottom": -2.5,
+                    "height": 3,
+                    "left": 0,
+                    "position": "absolute",
+                    "width": "100%",
+                    "zIndex": 100,
+                  },
+                ],
+                [Function],
+              ]
+            }
+          />
         </View>
         <View
           style={
             Array [
               Object {
                 "alignItems": "center",
+                "flex": 1,
                 "flexDirection": "row",
-                "justifyContent": "center",
+                "position": "relative",
               },
-              Array [
-                Object {
-                  "borderBottomWidth": 0.5,
-                },
-                Object {
-                  "borderColor": "#D3DBE3",
-                },
-                Object {
-                  "alignItems": "center",
-                  "flex": 1,
-                  "paddingBottom": 17,
-                  "paddingTop": 14,
-                },
-              ],
-              undefined,
             ]
           }
         >
           <View
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            hitSlop={
-              Object {
-                "bottom": 8,
-                "left": 8,
-                "right": 8,
-                "top": 8,
-              }
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                },
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flex": 1,
+                    "paddingBottom": 17,
+                    "paddingTop": 14,
+                  },
+                ],
+                undefined,
+              ]
             }
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={null}
           >
             <View
-              style={[Function]}
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              hitSlop={
+                Object {
+                  "bottom": 13.333333333333332,
+                  "left": 13.333333333333332,
+                  "right": 13.333333333333332,
+                  "top": 13.333333333333332,
+                }
+              }
+              onBlur={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
             >
               <View
-                style={
-                  Array [
+                style={[Function]}
+              >
+                <View
+                  style={
                     Object {
                       "alignItems": "center",
                       "flexDirection": "row",
                       "justifyContent": "center",
-                      "overflow": "hidden",
-                    },
-                    Object {
-                      "height": 24,
-                      "width": 24,
-                    },
-                  ]
-                }
-              >
-                <Text
-                  allowFontScaling={false}
-                  style={
-                    Array [
-                      Object {
-                        "color": "#7D7D82",
-                        "fontSize": 24,
-                      },
-                      undefined,
-                      Object {
-                        "fontFamily": "Material Icons",
-                        "fontStyle": "normal",
-                        "fontWeight": "normal",
-                      },
-                      Object {},
-                    ]
+                    }
                   }
                 >
-                  
-                </Text>
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "alignItems": "center",
+                          "flexDirection": "row",
+                          "justifyContent": "center",
+                          "overflow": "hidden",
+                        },
+                        Object {
+                          "height": 24,
+                          "width": 24,
+                        },
+                      ]
+                    }
+                  >
+                    <Text
+                      allowFontScaling={false}
+                      style={
+                        Array [
+                          Object {
+                            "color": "#7D7D82",
+                            "fontSize": 24,
+                          },
+                          undefined,
+                          Object {
+                            "fontFamily": "Material Icons",
+                            "fontStyle": "normal",
+                            "fontWeight": "normal",
+                          },
+                          Object {},
+                        ]
+                      }
+                    >
+                      
+                    </Text>
+                  </View>
+                </View>
               </View>
             </View>
           </View>
+          <View
+            style={
+              Array [
+                Array [
+                  Object {
+                    "backgroundColor": "#D3DBE3",
+                  },
+                  Object {
+                    "bottom": -2.5,
+                    "height": 3,
+                    "left": 0,
+                    "position": "absolute",
+                    "width": "100%",
+                    "zIndex": 100,
+                  },
+                ],
+                [Function],
+              ]
+            }
+          />
         </View>
         <View
           style={
             Array [
               Object {
                 "alignItems": "center",
+                "flex": 1,
                 "flexDirection": "row",
-                "justifyContent": "center",
+                "position": "relative",
               },
-              Array [
-                Object {
-                  "borderBottomWidth": 0.5,
-                },
-                Object {
-                  "borderColor": "#D3DBE3",
-                },
-                Object {
-                  "alignItems": "center",
-                  "flex": 1,
-                  "paddingBottom": 17,
-                  "paddingTop": 14,
-                },
-              ],
-              undefined,
             ]
           }
         >
           <View
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            hitSlop={
-              Object {
-                "bottom": 8,
-                "left": 8,
-                "right": 8,
-                "top": 8,
-              }
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                },
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flex": 1,
+                    "paddingBottom": 17,
+                    "paddingTop": 14,
+                  },
+                ],
+                undefined,
+              ]
             }
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={null}
           >
             <View
-              style={[Function]}
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              hitSlop={
+                Object {
+                  "bottom": 13.333333333333332,
+                  "left": 13.333333333333332,
+                  "right": 13.333333333333332,
+                  "top": 13.333333333333332,
+                }
+              }
+              onBlur={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
             >
               <View
-                style={
-                  Array [
+                style={[Function]}
+              >
+                <View
+                  style={
                     Object {
                       "alignItems": "center",
                       "flexDirection": "row",
                       "justifyContent": "center",
-                      "overflow": "hidden",
-                    },
-                    Object {
-                      "height": 24,
-                      "width": 24,
-                    },
-                  ]
-                }
-              >
-                <Text
-                  allowFontScaling={false}
-                  style={
-                    Array [
-                      Object {
-                        "color": "#7D7D82",
-                        "fontSize": 24,
-                      },
-                      undefined,
-                      Object {
-                        "fontFamily": "Material Design Icons",
-                        "fontStyle": "normal",
-                        "fontWeight": "normal",
-                      },
-                      Object {},
-                    ]
+                    }
                   }
                 >
-                  󰑖
-                </Text>
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "alignItems": "center",
+                          "flexDirection": "row",
+                          "justifyContent": "center",
+                          "overflow": "hidden",
+                        },
+                        Object {
+                          "height": 24,
+                          "width": 24,
+                        },
+                      ]
+                    }
+                  >
+                    <Text
+                      allowFontScaling={false}
+                      style={
+                        Array [
+                          Object {
+                            "color": "#7D7D82",
+                            "fontSize": 24,
+                          },
+                          undefined,
+                          Object {
+                            "fontFamily": "Material Design Icons",
+                            "fontStyle": "normal",
+                            "fontWeight": "normal",
+                          },
+                          Object {},
+                        ]
+                      }
+                    >
+                      󰑖
+                    </Text>
+                  </View>
+                </View>
               </View>
             </View>
           </View>
+          <View
+            style={
+              Array [
+                Array [
+                  Object {
+                    "backgroundColor": "#D3DBE3",
+                  },
+                  Object {
+                    "bottom": -2.5,
+                    "height": 3,
+                    "left": 0,
+                    "position": "absolute",
+                    "width": "100%",
+                    "zIndex": 100,
+                  },
+                ],
+                [Function],
+              ]
+            }
+          />
         </View>
       </View>
     </RCTScrollView>

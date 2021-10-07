@@ -1,43 +1,46 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Comment action component renders correctly 1`] = `
-<preventDoubleTap(TouchableOpacity)
+<preventDoubleTap(PressableScale)
   onPress={[Function]}
-  style={
-    Array [
-      Object {
-        "flexDirection": "row",
-        "justifyContent": "center",
-      },
-      Object {
-        "paddingHorizontal": 12,
-      },
-      Object {
-        "paddingVertical": 16,
-      },
-      Object {
-        "alignItems": "center",
-      },
-    ]
-  }
 >
-  <Icon
-    color="SecondaryText"
-    name="chat-off"
-    size="small"
+  <View
     style={
       Array [
         Object {
-          "color": "#7D7D82",
+          "flexDirection": "row",
+          "justifyContent": "center",
         },
         Object {
-          "marginRight": 4,
+          "paddingHorizontal": 12,
+        },
+        Object {
+          "paddingVertical": 16,
+        },
+        Object {
+          "alignItems": "center",
         },
       ]
     }
-  />
-  <Counter
-    size={15}
-  />
-</preventDoubleTap(TouchableOpacity)>
+  >
+    <Icon
+      color="SecondaryText"
+      name="chat-off"
+      size="small"
+      style={
+        Array [
+          Object {
+            "color": "#7D7D82",
+          },
+          Object {
+            "marginRight": 4,
+          },
+        ]
+      }
+    />
+    <Counter
+      size={15}
+    />
+  </View>
+</preventDoubleTap(PressableScale)>
 `;
