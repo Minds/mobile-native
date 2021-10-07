@@ -147,45 +147,41 @@ exports[`LoginScreen component should renders correctly 1`] = `
           style={null}
         >
           <View
-            style={[Function]}
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "overflow": "hidden",
+                },
+                Object {
+                  "height": 32,
+                  "width": 32,
+                },
+              ]
+            }
           >
-            <View
+            <Text
+              allowFontScaling={false}
               style={
                 Array [
                   Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                    "justifyContent": "center",
-                    "overflow": "hidden",
+                    "color": "#7D7D82",
+                    "fontSize": 32,
                   },
+                  undefined,
                   Object {
-                    "height": 32,
-                    "width": 32,
+                    "fontFamily": "Material Icons",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
                   },
+                  Object {},
                 ]
               }
             >
-              <Text
-                allowFontScaling={false}
-                style={
-                  Array [
-                    Object {
-                      "color": "#7D7D82",
-                      "fontSize": 32,
-                    },
-                    undefined,
-                    Object {
-                      "fontFamily": "Material Icons",
-                      "fontStyle": "normal",
-                      "fontWeight": "normal",
-                    },
-                    Object {},
-                  ]
-                }
-              >
-                
-              </Text>
-            </View>
+              
+            </Text>
           </View>
         </View>
       </View>
