@@ -6,6 +6,7 @@ import type UserModel from '../channel/UserModel';
 import { resetStackAndGoBack } from './multi-user/resetStackAndGoBack';
 import NavigationService from '../navigation/NavigationService';
 import sessionService from './../common/services/session.service';
+import i18n from '../common/services/i18n.service';
 
 export type TFA = 'sms' | 'totp';
 
@@ -77,6 +78,10 @@ class AuthService {
       username,
       password,
     } as loginParms;
+
+    // ignore if already logged in
+    this.checkUserExist(username);
+
     const data = await api.post<LoginResponse>(
       'api/v3/oauth/token',
       params,
@@ -111,6 +116,15 @@ class AuthService {
     }
 
     return data;
+  }
+
+  /**
+   * Check if the user is already logged
+   */
+  checkUserExist(username: string) {
+    if (session.tokensData.some(token => token.user.username === username)) {
+      throw new Error(i18n.t('auth.alreadyLogged'));
+    }
   }
 
   async reLogin(password: string, headers: any = {}) {
