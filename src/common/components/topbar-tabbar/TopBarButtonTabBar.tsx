@@ -40,6 +40,61 @@ export const topBarButtonTabBarRef = React.createRef<ScrollView>();
 function TopBarButtonTabBar<T>(props: PropsType<T>) {
   const theme = ThemedStyles.style;
 
+  const renderItem = (tab, i) => {
+    if (!props.buttonCmp || props.buttonCmp === 'Button') {
+      return (
+        <Button
+          borderless
+          onPress={() => props.onChange(tab.id)}
+          key={i}
+          text={tab.title}
+          containerStyle={[
+            styles.buttonContainer,
+            tab.id === props.current ? theme.bgLink : theme.bgTransparent,
+          ]}
+          textStyle={[
+            styles.text,
+            tab.id !== props.current ? theme.colorSecondaryText : {},
+          ]}
+        />
+      );
+    }
+
+    if (tab.title) {
+      return (
+        <TouchableOpacity
+          key={i}
+          onPress={() => props.onChange(tab.id)}
+          style={
+            tab.id === props.current
+              ? touchableContainerSelected
+              : touchableContainer
+          }>
+          <TabTitle isCurrent={tab.id === props.current} title={tab.title} />
+        </TouchableOpacity>
+      );
+    }
+
+    if (tab.icon) {
+      return (
+        <IconButton
+          scale
+          key={i}
+          onPress={() => props.onChange(tab.id)}
+          name={tab.icon.name}
+          active={tab.id === props.current}
+          style={
+            tab.id === props.current
+              ? touchableContainerSelected
+              : touchableContainer
+          }
+        />
+      );
+    }
+
+    return null;
+  };
+
   return (
     <View style={theme.rowJustifyStart}>
       <ScrollView
@@ -52,50 +107,7 @@ function TopBarButtonTabBar<T>(props: PropsType<T>) {
           theme.paddingLeft2x,
           props.scrollViewContainerStyle,
         ]}>
-        {props.tabs.map((tab, i) =>
-          !props.buttonCmp || props.buttonCmp === 'Button' ? (
-            <Button
-              borderless
-              onPress={() => props.onChange(tab.id)}
-              key={i}
-              text={tab.title}
-              containerStyle={[
-                styles.buttonContainer,
-                tab.id === props.current ? theme.bgLink : theme.bgTransparent,
-              ]}
-              textStyle={[
-                styles.text,
-                tab.id !== props.current ? theme.colorSecondaryText : {},
-              ]}
-            />
-          ) : !!tab.title ? (
-            <TouchableOpacity
-              key={i}
-              onPress={() => props.onChange(tab.id)}
-              style={
-                tab.id === props.current
-                  ? touchableContainerSelected
-                  : touchableContainer
-              }>
-              <TabTitle
-                isCurrent={tab.id === props.current}
-                title={tab.title}
-              />
-            </TouchableOpacity>
-          ) : !!tab.icon ? (
-            <IconButton
-              key={i}
-              onPress={() => props.onChange(tab.id)}
-              name={tab.icon.name}
-              active={tab.id === props.current}
-              style={
-                tab.id === props.current
-                  ? touchableContainerSelected
-                  : touchableContainer
-              }
-            />
-          ) : null,
-        )}
+        {props.tabs.map((tab, i) => renderItem(tab, i))}
       </ScrollView>
     </View>
   );

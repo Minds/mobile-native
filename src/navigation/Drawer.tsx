@@ -159,6 +159,7 @@ export default function Drawer(props) {
               )}
             </View>
             <IconButton
+              scale
               color="SecondaryText"
               name="account-multi"
               testID="multiUserIcon"

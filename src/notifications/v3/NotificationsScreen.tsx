@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { observer } from 'mobx-react';
 import { View, FlatList, ViewToken } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -60,6 +60,7 @@ const updateState = (newData: NotificationList, oldData: NotificationList) => {
 const Empty = <EmptyList />;
 
 const NotificationsScreen = observer(({ navigation }: PropsType) => {
+  const [isRefreshing, setRefreshing] = useState(false);
   const theme = ThemedStyles.style;
   const { notifications } = useStores();
   const params = {
@@ -91,6 +92,11 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
     fetch(params);
   }, [notifications, setResult, fetch, params]);
 
+  const handleListRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    refresh();
+  }, [refresh, setRefreshing]);
+
   const onFocus = React.useCallback(() => {
     notifications.setUnread(0);
     refresh();
@@ -114,6 +120,13 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
       onFocus();
     }
   }, [notifications, onFocus]);
+
+  React.useEffect(() => {
+    if (!loading && isRefreshing) {
+      setRefreshing(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading]);
 
   const onViewableItemsChanged = React.useCallback(
     (viewableItems: { viewableItems: ViewToken[]; changed: ViewToken[] }) => {
@@ -168,8 +181,8 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
           keyExtractor={keyExtractor}
           renderItem={renderItem}
           onEndReached={onFetchMore}
-          onRefresh={refresh}
-          refreshing={loading}
+          onRefresh={handleListRefresh}
+          refreshing={isRefreshing}
           onViewableItemsChanged={onViewableItemsChanged}
           viewabilityConfig={viewabilityConfig}
           ListEmptyComponent={ListEmptyComponent}

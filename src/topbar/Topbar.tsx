@@ -1,11 +1,5 @@
 import React, { useEffect } from 'react';
-import {
-  StyleSheet,
-  View,
-  Platform,
-  TouchableOpacity,
-  Text,
-} from 'react-native';
+import { StyleSheet, View, Platform, TouchableOpacity } from 'react-native';
 import { IconButton, IconCircled } from '~ui/icons';
 import { observer } from 'mobx-react';
 import SearchComponent from './searchbar/SearchComponent';
@@ -96,8 +90,7 @@ export const Topbar = observer((props: PropsType) => {
               ]}>
               {usdBalance > 0 && '$' + intword(usdBalance)}
             </MText>
-
-            <IconButton onPress={openWallet} name="coins" size="medium" />
+            <IconButton scale onPress={openWallet} name="coins" size="medium" />
           </View>
         </View>
       </View>

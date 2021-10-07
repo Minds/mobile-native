@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Pressable } from 'react-native';
 import Icon, { IIcon } from './Icon';
 import { ICON_SIZES, ICON_SIZE_DEFAULT, IUISizing } from '~styles/Tokens';
 import { getNumericSize, getPropStyles } from '~ui/helpers';
@@ -10,12 +10,14 @@ const SLOP_PROP = 1 / 3;
 
 export interface IIconButton extends IIcon {
   onPress: () => void;
+  scale?: boolean;
 }
 
 export default function IconButton({
   onPress,
   style,
   testID,
+  scale,
   ...extra
 }: IIconButton) {
   const containerStyles: StyleOrCustom[] = [styles.container];
@@ -47,15 +49,17 @@ export default function IconButton({
     return null;
   };
 
+  const PressableComponent = scale ? PressableScale : Pressable;
+
   return (
     <View style={useMemoStyle(containerStyles, [style])}>
-      <PressableScale
+      <PressableComponent
         hitSlop={sizeNumeric}
         style={onStyle}
         onPress={onPress}
         testID={testID}>
         <Icon nested {...extra} />
-      </PressableScale>
+      </PressableComponent>
     </View>
   );
 }
