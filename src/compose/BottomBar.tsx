@@ -47,7 +47,7 @@ export default function BottomBar(props) {
         />
       )}
       <IconButton
-        name="hashtag
+        name="hashtag"
         style={iconStyle}
         scale
         onPress={() =>
@@ -56,8 +56,7 @@ export default function BottomBar(props) {
       />
       <View style={theme.flexContainer} />
       <IconButton
-        name="
-        cog
+        name="cog"
         style={iconStyle}
         onPress={props.onOptions}
         testID="postOptions"
