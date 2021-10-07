@@ -5,6 +5,7 @@ import logService from '../common/services/log.service';
 import type UserModel from '../channel/UserModel';
 import { resetStackAndGoBack } from './multi-user/resetStackAndGoBack';
 import NavigationService from '../navigation/NavigationService';
+import sessionService from './../common/services/session.service';
 
 export type TFA = 'sms' | 'totp';
 
@@ -164,6 +165,9 @@ class AuthService {
   async logout(): Promise<boolean> {
     this.justRegistered = false;
     try {
+      // delete device token first
+      await this.unregisterTokenFrom(sessionService.activeIndex);
+
       api.post('api/v3/oauth/revoke');
       session.setSwitchingAccount(true);
       session.logout();
@@ -180,17 +184,25 @@ class AuthService {
     }
   }
 
+  unregisterTokenFrom(index: number) {
+    const deviceToken = sessionService.deviceToken;
+    if (deviceToken) {
+      return sessionService.apiServiceInstances[index].delete(
+        `api/v3/notifications/push/token/${deviceToken}`,
+      );
+    }
+  }
+
   /**
    * Logout user specified by index on session
    */
   async logoutFrom(index: number): Promise<boolean> {
     this.justRegistered = false;
     try {
-      api.post(
-        'api/v3/oauth/revoke',
-        undefined,
-        api.buildAuthorizationHeader(session.getTokenWithIndex(index)),
-      );
+      await this.unregisterTokenFrom(index);
+
+      // revoke access token from backend
+      sessionService.apiServiceInstances[index].post('api/v3/oauth/revoke');
       session.setSwitchingAccount(true);
       const logoutActive = session.logoutFrom(index);
 

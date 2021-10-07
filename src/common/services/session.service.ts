@@ -32,6 +32,8 @@ export class SessionService {
 
   apiServiceInstances: Array<ApiService> = [];
 
+  deviceToken: string = '';
+
   /**
    * Session token
    */
