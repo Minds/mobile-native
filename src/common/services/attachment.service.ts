@@ -4,6 +4,8 @@ import imagePicker from './image-picker.service';
 import Cancelable from 'promise-cancelable';
 import logService from './log.service';
 import { showNotification } from '../../../AppMessages';
+import imageManipulatorService from './image-manipulator.service';
+import { IMAGE_MAX_SIZE } from './../../config/Config';
 
 /**
  * Attachment service
@@ -14,7 +16,9 @@ class AttachmentService {
    * @param {object} media
    * @param {function} onProgress
    */
-  attachMedia(media, extra, onProgress = null) {
+  async attachMedia(rawMedia, extra, onProgress = null) {
+    const media = await this.processMedia(rawMedia);
+
     const file = {
       uri: media.uri,
       path: media.path || null,
@@ -39,6 +43,43 @@ class AttachmentService {
     }
 
     return promise;
+  }
+
+  /**
+   * Processes the media
+   * @param {object} media
+   * @param {string} guid
+   * @return {object} media
+   */
+  async processMedia(media) {
+    // scale down the image
+    switch (media.type) {
+      // TODO better way to do this
+      case 'image/jpeg':
+      case 'image/png':
+      case 'image/gif':
+      case 'image/webp':
+        const maxLength = Math.max(media.width, media.height);
+        const processedImage = await imageManipulatorService.resize(media.uri, {
+          width:
+            maxLength === media.width
+              ? Math.min(maxLength, IMAGE_MAX_SIZE)
+              : undefined,
+          height:
+            maxLength === media.height
+              ? Math.min(maxLength, IMAGE_MAX_SIZE)
+              : undefined,
+        });
+        media = {
+          ...media,
+          ...processedImage,
+        };
+        break;
+      default:
+        break;
+    }
+
+    return media;
   }
 
   /**

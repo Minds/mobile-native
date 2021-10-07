@@ -54,6 +54,7 @@
     "entities": "^2.0.0",
     "expo": "^42.0.4",
     "expo-av": "^9.2.3",
+    "expo-image-manipulator": "^9.2.2",
     "expo-linear-gradient": "^9.2.0",
     "i18n-js": "^3.8.0",
     "jest-circus": "^27.0.6",
