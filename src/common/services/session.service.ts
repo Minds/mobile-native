@@ -1,4 +1,4 @@
-import { observable, action, reaction } from 'mobx';
+import { observable, action, reaction, computed } from 'mobx';
 import {
   RefreshToken,
   SessionStorageService,
@@ -28,6 +28,7 @@ export class SessionService {
   @observable tokensData: Array<TokensData> = [];
   @observable activeIndex: number = 0;
   @observable sessionExpired: boolean = false;
+  @observable switchingAccount: boolean = false;
 
   apiServiceInstances: Array<ApiService> = [];
 
@@ -74,6 +75,11 @@ export class SessionService {
    */
   constructor(sessionStorage: SessionStorageService) {
     this.sessionStorage = sessionStorage;
+  }
+
+  @computed
+  get showAuthNav() {
+    return !this.userLoggedIn && !this.switchingAccount;
   }
 
   /**
@@ -237,8 +243,12 @@ export class SessionService {
   }
 
   @action
-  setLoggedIn(value) {
+  setLoggedIn(value: boolean) {
     this.userLoggedIn = value;
+  }
+  @action
+  setSwitchingAccount(value: boolean) {
+    this.switchingAccount = value;
   }
 
   @action
@@ -429,10 +439,12 @@ export class SessionService {
 
   /**
    * Logout user for a given index
+   * returns a boolean indicating if it logout the current user
    */
-  logoutFrom(index: number) {
+  logoutFrom(index: number): boolean {
     if (index === this.activeIndex) {
       this.logout();
+      return true;
     } else {
       const guid = this.tokensData[this.activeIndex].user.guid;
       const tokensData = this.tokensData;
@@ -441,6 +453,7 @@ export class SessionService {
       const newIndex = this.getIndexSessionFromGuid(guid);
       this.setActiveIndex(newIndex || 0);
       this.popApiServiceInstance();
+      return false;
     }
   }
 

@@ -3,7 +3,8 @@ import session from './../common/services/session.service';
 import delay from '../common/helpers/delay';
 import logService from '../common/services/log.service';
 import type UserModel from '../channel/UserModel';
-import RNBootSplash from 'react-native-bootsplash';
+import { resetStackAndGoBack } from './multi-user/resetStackAndGoBack';
+import NavigationService from '../navigation/NavigationService';
 import sessionService from './../common/services/session.service';
 
 export type TFA = 'sms' | 'totp';
@@ -61,16 +62,6 @@ class AuthService {
   justRegistered = false;
   showLoginPasswordModal: null | Function = null;
 
-  showSplash() {
-    RNBootSplash.show({ fade: true });
-  }
-
-  hideSplash() {
-    setTimeout(() => {
-      RNBootSplash.hide({ fade: true });
-    }, 500);
-  }
-
   /**
    * Login user
    * @param username
@@ -96,10 +87,14 @@ class AuthService {
       return data;
     }
 
+    const isFirstLogin = session.tokensData.length === 0;
+
     // if already have other sessions...
-    if (session.tokensData.length > 0) {
-      this.showSplash();
+    if (!isFirstLogin) {
+      session.setSwitchingAccount(true);
       this.sessionLogout();
+    } else {
+      NavigationService.goBack();
     }
 
     await api.clearCookies();
@@ -107,7 +102,13 @@ class AuthService {
 
     await session.addSession(data);
     await session.login();
-    this.hideSplash();
+    session.setSwitchingAccount(false);
+
+    // if this is not the first login we reset the stack keeping the login screen and the main only.
+    // To force rendering the app behind the modal and get rid of the splash screen
+    if (!isFirstLogin) {
+      resetStackAndGoBack();
+    }
 
     return data;
   }
@@ -130,13 +131,14 @@ class AuthService {
   }
 
   async loginWithIndex(sessionIndex: number) {
-    this.showSplash();
+    session.setSwitchingAccount(true);
     await this.sessionLogout();
     await api.clearCookies();
     await delay(100);
     await session.switchUser(sessionIndex);
     await session.login();
-    this.hideSplash();
+    session.setSwitchingAccount(false);
+    resetStackAndGoBack();
   }
 
   async loginWithGuid(guid: string, callback: Function) {
@@ -153,6 +155,7 @@ class AuthService {
       await delay(100);
       await session.switchUser(session.activeIndex);
       await session.login();
+      resetStackAndGoBack();
     }
   }
 
@@ -166,15 +169,16 @@ class AuthService {
       await this.unregisterTokenFrom(sessionService.activeIndex);
 
       api.post('api/v3/oauth/revoke');
-      this.showSplash();
+      session.setSwitchingAccount(true);
       session.logout();
 
-      // Fixes autosubscribe issue on register
+      // Fixes auto-subscribe issue on register
       await api.clearCookies();
       await this.handleActiveAccount();
-      this.hideSplash();
+      session.setSwitchingAccount(false);
       return true;
     } catch (err) {
+      session.setSwitchingAccount(false);
       logService.exception('[AuthService] logout', err);
       return false;
     }
@@ -195,19 +199,19 @@ class AuthService {
   async logoutFrom(index: number): Promise<boolean> {
     this.justRegistered = false;
     try {
-      // delete device token first
       await this.unregisterTokenFrom(index);
 
       // revoke access token from backend
       sessionService.apiServiceInstances[index].post('api/v3/oauth/revoke');
+      session.setSwitchingAccount(true);
+      const logoutActive = session.logoutFrom(index);
 
-      this.showSplash();
-      session.logoutFrom(index);
-
-      // Fixes autosubscribe issue on register
+      // Fixes auto-subscribe issue on register
       await api.clearCookies();
-      await this.handleActiveAccount();
-      this.hideSplash();
+      if (logoutActive) {
+        await this.handleActiveAccount();
+      }
+      session.setSwitchingAccount(false);
       return true;
     } catch (err) {
       logService.exception('[AuthService] logout', err);
@@ -219,7 +223,7 @@ class AuthService {
     try {
       this.justRegistered = false;
       session.logout(false);
-      // Fixes autosubscribe issue on register
+      // Fixes auto-subscribe issue on register
       await api.clearCookies();
       return true;
     } catch (err) {
@@ -237,7 +241,7 @@ class AuthService {
       await api.post('api/v3/oauth/revoke');
       session.logout();
 
-      // Fixes autosubscribe issue on register
+      // Fixes auto-subscribe issue on register
       await api.clearCookies();
 
       return true;

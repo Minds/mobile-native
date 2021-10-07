@@ -13,9 +13,7 @@ type PropsType = {
 
 const LoginScreen = ({ navigation, route }: PropsType) => {
   const onLogin = React.useCallback(() => {
-    route.params?.onLogin
-      ? route.params.onLogin(navigation)
-      : resetStackAndGoBack(navigation);
+    route.params?.onLogin && route.params.onLogin(navigation);
   }, [navigation, route.params]);
   const theme = ThemedStyles.style;
   return (

@@ -711,13 +711,13 @@ const defaultScreenOptions: StackNavigationOptions = {
 };
 
 const RootStack = function (props) {
-  const initial = props.isLoggedIn ? 'App' : 'Auth';
+  const initial = props.showAuthNav ? 'Auth' : 'App';
 
   return (
     <RootStackNav.Navigator
       initialRouteName={initial}
       screenOptions={defaultScreenOptions}>
-      {props.isLoggedIn ? (
+      {!props.showAuthNav ? (
         <>
           <RootStackNav.Screen
             name="App"

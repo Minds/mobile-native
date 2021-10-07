@@ -93,6 +93,7 @@
     "recoveryFail": "The recovery code you enter doesn't match",
     "confirmPasswordModal": "Please confirm your account password to continue",
     "loginFail": "Wrong Username or Password",
+    "userTaken": "Username already taken",
     "waitLogin": "Logging in with new credentials...",
     "resetPassword": "Reset Password",
     "createNewPassword": "Create a new password",
