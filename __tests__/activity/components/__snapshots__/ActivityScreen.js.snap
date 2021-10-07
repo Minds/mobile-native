@@ -79,7 +79,6 @@ exports[`Activity screen component renders correctly  1`] = `
                   "top": 5,
                 },
                 Object {
-                  "backgroundColor": "red",
                   "elevation": 4,
                   "left": 0,
                   "position": "absolute",

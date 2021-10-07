@@ -96,7 +96,6 @@ export default class ChannelBadges extends PureComponent<PropsType> {
 const styles = ThemedStyles.create({
   view: {
     flexDirection: 'row',
-    backgroundColor: 'red',
     alignItems: 'flex-end',
   },
   icon: {
