@@ -1,13 +1,14 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import { Text, Image, View, StyleSheet } from 'react-native';
+import { Image, View, StyleSheet } from 'react-native';
 
 import { observer } from 'mobx-react';
 
 import { MINDS_CDN_URI } from '../config/Config';
 import MindsVideo from './v2/mindsVideo/MindsVideo';
 import i18n from '../common/services/i18n.service';
+import MText from '../common/components/MText';
 
 /**
  * Video Card

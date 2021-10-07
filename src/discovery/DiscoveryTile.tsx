@@ -1,7 +1,7 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
 
 import FastImage from 'react-native-fast-image';
 
@@ -10,6 +10,7 @@ import ExplicitImage from '../common/components/explicit/ExplicitImage';
 
 import ExplicitOverlay from '../common/components/explicit/ExplicitOverlay';
 import ThemedStyles from '../styles/ThemedStyles';
+import MText from '../common/components/MText';
 
 @observer
 class DiscoveryTile extends Component {

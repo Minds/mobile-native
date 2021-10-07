@@ -3,24 +3,18 @@ import React, { Component } from 'react';
 
 import { observer, inject } from 'mobx-react';
 import { showMessage, hideMessage } from 'react-native-flash-message';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-} from 'react-native';
+import { Platform, StyleSheet, View, TouchableOpacity } from 'react-native';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
 
 import { MINDS_CDN_URI } from '../config/Config';
 
-import colors from '../styles/Colors';
 import FastImage from 'react-native-fast-image';
 import PulseAnimAvatar from '../common/components/PulseAnimAvatar';
 import excerpt from '../common/helpers/excerpt';
 import navigationService from '../navigation/NavigationService';
 import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
+import MText from '../common/components/MText';
 
 @inject('groupsBar')
 @observer
