@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { StyleSheet, View } from 'react-native';
+import { IconButton } from '~ui/icons';
 import MText from '../../../../common/components/MText';
 import i18n from '../../../../common/services/i18n.service';
 import ThemedStyles from '../../../../styles/ThemedStyles';
@@ -18,15 +18,11 @@ const Payout = ({ minds, mindsPrice, isToday, store }: PropsType) => {
   const theme = ThemedStyles.style;
 
   const refresh = (
-    <TouchableOpacity
+    <IconButton
       onPress={() => store.loadRewards(store.rewardsSelectedDate)}
-      style={theme.alignSelfCenter}>
-      <Icon
-        name="refresh"
-        color={ThemedStyles.getColor('SecondaryText')}
-        size={20}
-      />
-    </TouchableOpacity>
+      name="refresh"
+      size="small"
+    />
   );
 
   const payout = isToday ? (
@@ -61,8 +57,7 @@ const Payout = ({ minds, mindsPrice, isToday, store }: PropsType) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    paddingLeft: 20,
-    paddingRight: 30,
+    paddingHorizontal: 20,
     paddingVertical: 20,
     borderBottomWidth: 1,
     marginTop: 20,

@@ -52,7 +52,7 @@ exports[`blog card component should renders correctly 1`] = `
     <View
       style={
         Object {
-          "padding": 10,
+          "padding": 8,
         }
       }
     >
@@ -95,10 +95,10 @@ exports[`blog card component should renders correctly 1`] = `
           style={
             Array [
               Object {
-                "marginBottom": 10,
+                "marginBottom": 8,
               },
               Object {
-                "marginTop": 15,
+                "marginTop": 12,
               },
               Object {
                 "flexDirection": "row",
@@ -293,7 +293,7 @@ exports[`blog card component should renders correctly 1`] = `
                     "fontSize": 16,
                   },
                   Object {
-                    "paddingLeft": 10,
+                    "paddingLeft": 8,
                   },
                   Object {
                     "flex": 1,
@@ -318,7 +318,7 @@ exports[`blog card component should renders correctly 1`] = `
                     "fontSize": 10,
                   },
                   Object {
-                    "paddingLeft": 5,
+                    "paddingLeft": 4,
                   },
                 ],
               ]
@@ -329,7 +329,7 @@ exports[`blog card component should renders correctly 1`] = `
           <View
             style={
               Object {
-                "paddingLeft": 5,
+                "paddingLeft": 4,
               }
             }
           >

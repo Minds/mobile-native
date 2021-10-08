@@ -12,7 +12,7 @@ exports[`LoginForm component should renders correctly 1`] = `
     style={
       Array [
         Object {
-          "paddingLeft": 20,
+          "paddingLeft": 16,
         },
         Object {
           "paddingTop": 10,
@@ -152,7 +152,7 @@ exports[`LoginForm component should renders correctly 1`] = `
   <View
     style={
       Object {
-        "marginBottom": 20,
+        "marginBottom": 16,
       }
     }
   >
@@ -160,7 +160,7 @@ exports[`LoginForm component should renders correctly 1`] = `
       style={
         Array [
           Object {
-            "paddingLeft": 20,
+            "paddingLeft": 16,
           },
           Object {
             "paddingTop": 10,
@@ -357,10 +357,10 @@ exports[`LoginForm component should renders correctly 1`] = `
             "alignSelf": "stretch",
           },
           Object {
-            "marginTop": 15,
+            "marginTop": 12,
           },
           Object {
-            "marginHorizontal": 25,
+            "marginHorizontal": 20,
           },
           Object {
             "backgroundColor": "transparent",
@@ -408,7 +408,7 @@ exports[`LoginForm component should renders correctly 1`] = `
   <View
     style={
       Object {
-        "marginTop": 20,
+        "marginTop": 16,
       }
     }
   >
@@ -591,7 +591,7 @@ exports[`LoginForm component should renders correctly 1`] = `
                   "backgroundColor": "#FFFFFF",
                 },
                 Object {
-                  "paddingBottom": 10,
+                  "paddingBottom": 8,
                 },
                 Object {
                   "borderTopLeftRadius": 15,
@@ -617,10 +617,10 @@ exports[`LoginForm component should renders correctly 1`] = `
                     "color": "#43434D",
                   },
                   Object {
-                    "marginTop": 25,
+                    "marginTop": 20,
                   },
                   Object {
-                    "marginBottom": 20,
+                    "marginBottom": 16,
                   },
                   Object {
                     "fontFamily": "Roboto-Black",
@@ -693,10 +693,10 @@ exports[`LoginForm component should renders correctly 1`] = `
                       "textAlign": "center",
                     },
                     Object {
-                      "paddingVertical": 30,
+                      "paddingVertical": 24,
                     },
                     Object {
-                      "paddingHorizontal": 20,
+                      "paddingHorizontal": 16,
                     },
                     Object {
                       "borderColor": "#D3DBE3",
@@ -714,7 +714,7 @@ exports[`LoginForm component should renders correctly 1`] = `
               style={
                 Array [
                   Object {
-                    "paddingLeft": 20,
+                    "paddingLeft": 16,
                   },
                   Object {
                     "paddingTop": 10,
@@ -877,7 +877,7 @@ exports[`LoginForm component should renders correctly 1`] = `
                   },
                   Array [
                     Object {
-                      "margin": 30,
+                      "margin": 24,
                     },
                     Object {
                       "backgroundColor": "#FFFFFF",

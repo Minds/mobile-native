@@ -19,7 +19,8 @@
     "preinstall": "git config core.hooksPath .git/hooks",
     "postinstall": "jetify; patch-package;",
     "release-json": "node tasks/generate_release_json.js",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "check-prettier-version": "prettier -v"
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^4.0.3",
@@ -48,6 +49,7 @@
     "add": "^2.0.6",
     "axios": "^0.21.1",
     "axios-mock-adapter": "^1.20.0",
+    "babel-plugin-module-resolver": "^4.1.0",
     "bn.js": "^5.1.1",
     "crypto-js": "^3.1.9-1",
     "detox": "^18.18.1",
@@ -172,7 +174,7 @@
     "jest-serializer-enzyme": "^1.0.0",
     "keep-a-changelog": "^0.10.4",
     "metro-react-native-babel-preset": "^0.66.0",
-    "prettier": "^2.2.1",
+    "prettier": "2.2.1",
     "pretty-quick": "^3.1.0",
     "react-addons-test-utils": "^15.6.2",
     "react-dom": "^16.13.1",

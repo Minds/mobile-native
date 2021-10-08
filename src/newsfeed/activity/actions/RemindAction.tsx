@@ -1,9 +1,10 @@
 import React, { useCallback, useRef } from 'react';
 
-import { TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+// import { TouchableOpacity } from 'react-native';
+import { IconButton } from '~ui/icons';
+import withSpacer from '~ui/spacer/withSpacer';
 import Counter from './Counter';
-import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
+// import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import { FLAG_REMIND } from '../../../common/Permissions';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
@@ -12,12 +13,7 @@ import i18n from '../../../common/services/i18n.service';
 import createComposeStore from '../../../compose/createComposeStore';
 import { showNotification } from '../../../../AppMessages';
 import sessionService from '../../../common/services/session.service';
-import {
-  actionsContainerStyle,
-  iconActiveStyle,
-  iconDisabledStyle,
-  iconNormalStyle,
-} from './styles';
+import { actionsContainerStyle } from './styles';
 import { useLegacyStores } from '../../../common/hooks/use-stores';
 import {
   BottomSheet,
@@ -26,7 +22,9 @@ import {
 } from '../../../common/components/bottom-sheet';
 
 // prevent double tap in touchable
-const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
+// const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
+
+const CounterSpaced: any = withSpacer(Counter);
 
 type PropsTypes = {
   entity: ActivityModel | BlogModel;
@@ -48,11 +46,7 @@ export default function ({ entity, size = 21, hideCount }: PropsTypes) {
       user => user.guid === sessionService.getUser().guid,
     );
 
-  const buttonIconStyle = reminded
-    ? iconActiveStyle
-    : entity.can(FLAG_REMIND)
-    ? iconNormalStyle
-    : iconDisabledStyle;
+  const disabled = !reminded && !entity.can(FLAG_REMIND);
 
   const { newsfeed } = useLegacyStores();
 
@@ -131,13 +125,17 @@ export default function ({ entity, size = 21, hideCount }: PropsTypes) {
 
   return (
     <>
-      <TouchableOpacityCustom
+      <IconButton
+        testID="Remind activity button"
         style={actionsContainerStyle}
+        scale
+        disabled={disabled}
+        name="remind"
+        size="small"
+        active={reminded}
         onPress={showDropdown}
-        testID="Remind activity button">
-        <Icon style={buttonIconStyle} name="repeat" size={size} />
-        {!hideCount && <Counter count={entity.reminds} />}
-      </TouchableOpacityCustom>
+        extra={!hideCount && <CounterSpaced left="1x" count={entity.reminds} />}
+      />
       {shown && (
         <BottomSheet ref={ref} autoShow>
           {reminded ? (

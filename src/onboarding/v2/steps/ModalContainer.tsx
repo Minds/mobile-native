@@ -1,10 +1,10 @@
 import React, { useRef } from 'react';
 import { View, Platform, ViewStyle, TextStyle } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { IconButton } from '~ui/icons';
+import { ICON_SIZES, HORIZONTAL } from '~styles/Tokens';
 import Handle from '../../../common/components/bottom-sheet/Handle';
 import MText from '../../../common/components/MText';
-import PressableScale from '../../../common/components/PressableScale';
 import ThemedStyles, { useStyle } from '../../../styles/ThemedStyles';
 
 type PropsType = {
@@ -14,7 +14,6 @@ type PropsType = {
   marginTop?: number;
   contentContainer?: ViewStyle;
   titleStyle?: TextStyle;
-  backIconStyle?: TextStyle;
 };
 
 /**
@@ -34,35 +33,35 @@ export default function ModalContainer(props: PropsType) {
     props.contentContainer || {},
   );
   const titleStyle = useStyle(styles.title, props.titleStyle || {});
-  const backIconStyle = useStyle(
-    ThemedStyles.style.colorPrimaryText,
-    props.backIconStyle || {},
-  );
+
   return (
     <View style={contentContainer}>
       <Handle />
-      <View style={styles.backIcon}>
-        <PressableScale onPress={props.onPressBack}>
-          <Icon size={22} name={'close'} style={backIconStyle} />
-        </PressableScale>
+      <View style={styles.header}>
+        <MText style={titleStyle}>{props.title}</MText>
+        <View style={styles.backIcon}>
+          <IconButton size="large" name="close" onPress={props.onPressBack} />
+        </View>
       </View>
-      <MText style={titleStyle}>{props.title}</MText>
+
       {props.children}
     </View>
   );
 }
 
 const styles = ThemedStyles.create({
-  backIcon: [
-    'padding',
-    {
-      zIndex: 1000,
-      position: 'absolute',
-      top: 31,
-      right: 15,
-    },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: HORIZONTAL,
+  },
+  title: [
+    { fontSize: 20, marginLeft: ICON_SIZES.large },
+    'paddingVertical3x',
+    'textCenter',
+    'fontSemibold',
+    { flex: 1 },
   ],
-  title: [{ fontSize: 20 }, 'paddingVertical3x', 'textCenter', 'fontSemibold'],
   description: ['borderLeft5x'],
   contentContainer: [
     'bgPrimaryBackground',

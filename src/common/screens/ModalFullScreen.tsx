@@ -2,11 +2,10 @@ import React from 'react';
 import { useNavigation } from '@react-navigation/core';
 import { View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { IconButton } from '~ui/icons';
 
 import ThemedStyles from '../../styles/ThemedStyles';
 import MText from '../components/MText';
-import PressableScale from '../components/PressableScale';
 import { DotIndicator } from 'react-native-reanimated-indicators';
 
 type PropsType = {
@@ -30,9 +29,7 @@ export default function ModalFullScreen({
     <View style={styles.screen}>
       <SafeAreaView>
         <View style={styles.header}>
-          <PressableScale onPress={goBack} style={styles.backButton}>
-            <Icon size={23} name={'close'} style={theme.colorSecondaryText} />
-          </PressableScale>
+          <IconButton size="large" name="close" onPress={goBack} />
           <MText numberOfLines={1} style={styles.title}>
             {title}
           </MText>
@@ -65,9 +62,8 @@ const styles = ThemedStyles.create({
     'rowJustifySpaceBetween',
     'alignCenter',
     'paddingVertical',
-    'paddingHorizontal2x',
+    'paddingHorizontal4x',
     'bcolorPrimaryBorder',
     'borderBottom1x',
   ],
-  backButton: ['padding2x'],
 });

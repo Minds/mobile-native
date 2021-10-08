@@ -2,7 +2,7 @@ import { observer, useLocalStore } from 'mobx-react';
 import React from 'react';
 import { StyleSheet, View, TouchableOpacity, ViewStyle } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Icon } from '~ui/icons';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../services/i18n.service';
 import MText from './MText';
@@ -51,12 +51,7 @@ const DatePicker = observer((props: PropsType) => {
         </MText>
         <MText style={styles.date}>{shownDate}</MText>
       </View>
-      <Icon
-        name="calendar"
-        size={21}
-        color={ThemedStyles.getColor('SecondaryText')}
-        style={theme.centered}
-      />
+      <Icon style={theme.centered} name="calendar" size="small" />
       <DateTimePicker
         isVisible={localStore.isVisible}
         onConfirm={localStore.onConfirm}

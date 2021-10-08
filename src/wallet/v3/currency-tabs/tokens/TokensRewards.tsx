@@ -37,7 +37,6 @@ const TokensRewards = observer(({ walletStore, store }: PropsType) => {
         onConfirm={store.onConfirm}
         maximumDate={new Date()}
         date={store.rewardsSelectedDate}
-        containerStyle={theme.paddingRight6x}
       />
       <Payout
         minds={store.rewards.total.daily}

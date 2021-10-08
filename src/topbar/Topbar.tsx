@@ -1,14 +1,6 @@
 import React, { useEffect } from 'react';
-import {
-  StyleSheet,
-  View,
-  Platform,
-  TouchableOpacity,
-  Text,
-} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import IconFA from 'react-native-vector-icons/FontAwesome5';
-
+import { StyleSheet, View, Platform, TouchableOpacity } from 'react-native';
+import { IconButton, IconCircled } from '~ui/icons';
 import { observer } from 'mobx-react';
 import SearchComponent from './searchbar/SearchComponent';
 import ThemedStyles from '../styles/ThemedStyles';
@@ -79,17 +71,11 @@ export const Topbar = observer((props: PropsType) => {
                 style={avatarStyle}
                 resizeMode="contain"
               />
-              <View style={styles.menuIconContainer}>
-                <Icon
-                  name="md-menu"
-                  style={
-                    ThemedStyles.theme
-                      ? theme.colorPrimaryBackground
-                      : theme.colorSecondaryText
-                  }
-                  size={14}
-                />
-              </View>
+              <IconCircled
+                style={styles.menuIconContainer}
+                name="menu"
+                size="micro"
+              />
             </TouchableOpacity>
             <SearchComponent navigation={props.navigation} />
           </View>
@@ -104,13 +90,7 @@ export const Topbar = observer((props: PropsType) => {
               ]}>
               {usdBalance > 0 && '$' + intword(usdBalance)}
             </MText>
-
-            <IconFA
-              name="coins"
-              size={20}
-              style={theme.colorIcon}
-              onPress={openWallet}
-            />
+            <IconButton scale onPress={openWallet} name="coins" size="medium" />
           </View>
         </View>
       </View>
@@ -129,11 +109,6 @@ export const styles = StyleSheet.create({
     // paddingBottom: 8,
   },
   menuIconContainer: {
-    backgroundColor: '#d8d8d8',
-    paddingTop: 1,
-    height: 20,
-    width: 20,
-    borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
     position: 'absolute',
@@ -155,8 +130,8 @@ export const styles = StyleSheet.create({
     width: 42,
     height: 42,
     borderRadius: 21,
-    borderWidth: 2.5,
     alignSelf: 'flex-start',
+    borderWidth: 2.5,
   },
   topbar: {
     flex: 1,

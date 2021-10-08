@@ -209,7 +209,7 @@ const ChannelHeader = withErrorBoundary(
               {channel && (
                 <ChannelBadges
                   channel={channel}
-                  size={20}
+                  size="tiny"
                   iconStyle={theme.colorLink}
                 />
               )}

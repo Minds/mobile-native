@@ -29,7 +29,7 @@ exports[`Update Screen Component renders correctly 1`] = `
           "justifyContent": "center",
         },
         Object {
-          "padding": 25,
+          "padding": 20,
         },
         Object {
           "borderRadius": 14,
@@ -72,7 +72,7 @@ exports[`Update Screen Component renders correctly 1`] = `
                 "textAlign": "center",
               },
               Object {
-                "paddingVertical": 15,
+                "paddingVertical": 12,
               },
             ],
           ]
@@ -153,7 +153,7 @@ exports[`Update Screen Component renders correctly 1`] = `
                 "color": "#43434D",
               },
               Object {
-                "marginTop": 10,
+                "marginTop": 8,
               },
             ],
           ]

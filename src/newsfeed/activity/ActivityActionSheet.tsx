@@ -1,8 +1,6 @@
 import React, { PureComponent } from 'react';
-
-import { View, Alert, Linking } from 'react-native';
-
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Alert, Linking } from 'react-native';
+import { IconButton } from '~ui/icons';
 
 import { MINDS_URI } from '../../config/Config';
 import { isFollowing } from '../NewsfeedService';
@@ -13,7 +11,6 @@ import translationService from '../../common/services/translation.service';
 import { FLAG_EDIT_POST } from '../../common/Permissions';
 import sessionService from '../../common/services/session.service';
 import NavigationService from '../../navigation/NavigationService';
-import ThemedStyles from '../../styles/ThemedStyles';
 import type ActivityModel from '../ActivityModel';
 import { showNotification } from '../../../AppMessages';
 import { withSafeAreaInsets } from 'react-native-safe-area-context';
@@ -379,16 +376,15 @@ export default withSafeAreaInsets(
      * Render Header
      */
     render() {
-      const theme = ThemedStyles.style;
-
       return (
-        <View style={theme.paddingLeft2x}>
-          <Icon
-            name="more-vert"
+        <>
+          <IconButton
+            scale
+            name="more"
+            size="large"
             onPress={this.showActionSheet}
-            size={28}
-            style={theme.colorTertiaryText}
             testID={this.props.testID}
+            spacingLeft="1x"
           />
           {this.state.shown && (
             <BottomSheet ref={this.ref} autoShow>
@@ -401,7 +397,7 @@ export default withSafeAreaInsets(
               />
             </BottomSheet>
           )}
-        </View>
+        </>
       );
     }
   },

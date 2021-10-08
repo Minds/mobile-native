@@ -42,8 +42,7 @@ const RelogScreen = ({ route, navigation }: PropsType) => {
       onPressBack={onBackHandler}
       marginTop={20}
       contentContainer={theme.bgPrimaryBackgroundHighlight}
-      titleStyle={theme.colorPrimaryText}
-      backIconStyle={theme.colorPrimaryText}>
+      titleStyle={theme.colorPrimaryText}>
       <LoginForm relogin onLogin={onLoginHandler} sessionIndex={sessionIndex} />
     </ModalContainer>
   );

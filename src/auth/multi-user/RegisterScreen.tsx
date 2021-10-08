@@ -19,8 +19,7 @@ const RegisterScreen = ({ route }: PropsType) => {
       onPressBack={navigation.goBack}
       marginTop={20}
       contentContainer={theme.bgPrimaryBackground}
-      titleStyle={theme.colorPrimaryText}
-      backIconStyle={theme.colorPrimaryText}>
+      titleStyle={theme.colorPrimaryText}>
       <RegisterForm />
     </ModalContainer>
   );

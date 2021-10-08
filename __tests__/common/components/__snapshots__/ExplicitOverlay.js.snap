@@ -39,7 +39,7 @@ exports[`Explicit overlay component renders correctly 1`] = `
           "color": "#43434D",
         },
         Object {
-          "paddingTop": 30,
+          "paddingTop": 24,
         },
         Object {
           "fontSize": 22,
@@ -60,10 +60,10 @@ exports[`Explicit overlay component renders correctly 1`] = `
           "color": "#9B9B9B",
         },
         Object {
-          "paddingVertical": 10,
+          "paddingVertical": 8,
         },
         Object {
-          "marginBottom": 30,
+          "marginBottom": 24,
         },
         Object {
           "fontSize": 18,
@@ -85,7 +85,7 @@ exports[`Explicit overlay component renders correctly 1`] = `
           "backgroundColor": "#FFFFFF",
         },
         Object {
-          "margin": 20,
+          "margin": 16,
         },
       ]
     }
@@ -94,7 +94,7 @@ exports[`Explicit overlay component renders correctly 1`] = `
       style={
         Array [
           Object {
-            "padding": 10,
+            "padding": 8,
           },
           Object {
             "fontSize": 16,
@@ -148,7 +148,7 @@ exports[`Explicit overlay component should renders the etag 1`] = `
           "color": "#43434D",
         },
         Object {
-          "paddingTop": 30,
+          "paddingTop": 24,
         },
         Object {
           "fontSize": 22,
@@ -169,10 +169,10 @@ exports[`Explicit overlay component should renders the etag 1`] = `
           "color": "#9B9B9B",
         },
         Object {
-          "paddingVertical": 10,
+          "paddingVertical": 8,
         },
         Object {
-          "marginBottom": 30,
+          "marginBottom": 24,
         },
         Object {
           "fontSize": 18,
@@ -194,7 +194,7 @@ exports[`Explicit overlay component should renders the etag 1`] = `
           "backgroundColor": "#FFFFFF",
         },
         Object {
-          "margin": 20,
+          "margin": 16,
         },
       ]
     }
@@ -203,7 +203,7 @@ exports[`Explicit overlay component should renders the etag 1`] = `
       style={
         Array [
           Object {
-            "padding": 10,
+            "padding": 8,
           },
           Object {
             "fontSize": 16,

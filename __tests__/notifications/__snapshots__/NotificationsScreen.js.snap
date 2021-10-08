@@ -1,543 +1,882 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Notifications Screen Component renders correctly 1`] = `
-<View
-  style={
-    Object {
-      "flex": 1,
-    }
-  }
->
-  <RCTScrollView
-    ListEmptyComponent={
-      <View>
-        <NotificationPlaceHolder />
-        <NotificationPlaceHolder />
-        <NotificationPlaceHolder />
-        <NotificationPlaceHolder />
-        <NotificationPlaceHolder />
-        <NotificationPlaceHolder />
-      </View>
-    }
-    ListHeaderComponent={
-      <Memo(wrappedComponent)
-        setResult={[Function]}
-        store={
-          Object {
-            "filter": "",
-            "init": [Function],
-            "listen": [Function],
-            "loadMailNotificationsSettings": [Function],
-            "loadPushNotificationsSettings": [Function],
-            "loadUnreadCount": [Function],
-            "loaded": true,
-            "mailsNotificationsSettings": Array [],
-            "markAsRead": [Function],
-            "offset": "",
-            "onSocket": [Function],
-            "pollInterval": null,
-            "pushNotificationsSettings": Array [],
-            "reset": [Function],
-            "setFilter": [Function],
-            "setLoaded": [Function],
-            "setOffset": [Function],
-            "setUnread": [Function],
-            "startPollCount": [Function],
-            "stopPollCount": [Function],
-            "unlisten": [Function],
-            "unread": 0,
-          }
-        }
-      />
-    }
-    data={Array []}
-    getItem={[Function]}
-    getItemCount={[Function]}
-    keyExtractor={[Function]}
-    onContentSizeChange={[Function]}
-    onEndReached={[Function]}
-    onLayout={[Function]}
-    onMomentumScrollBegin={[Function]}
-    onMomentumScrollEnd={[Function]}
-    onRefresh={[Function]}
-    onScroll={[Function]}
-    onScrollBeginDrag={[Function]}
-    onScrollEndDrag={[Function]}
-    onViewableItemsChanged={[Function]}
-    refreshControl={
-      <RefreshControlMock
-        onRefresh={[Function]}
-        refreshing={true}
-      />
-    }
-    refreshing={true}
-    removeClippedSubviews={false}
-    renderItem={[Function]}
-    scrollEventThrottle={50}
-    stickyHeaderIndices={Array []}
-    viewabilityConfig={
+Array [
+  <View
+    style={
       Object {
-        "itemVisiblePercentThreshold": 50,
-        "minimumViewTime": 300,
-        "waitForInteraction": false,
+        "flexDirection": "row",
+        "justifyContent": "flex-start",
       }
     }
-    viewabilityConfigCallbackPairs={
-      Array [
-        Object {
-          "onViewableItemsChanged": [Function],
-          "viewabilityConfig": Object {
-            "itemVisiblePercentThreshold": 50,
-            "minimumViewTime": 300,
-            "waitForInteraction": false,
+  >
+    <RCTScrollView
+      contentContainerStyle={
+        Array [
+          Object {
+            "paddingBottom": 8,
           },
-        },
-      ]
+          Object {
+            "paddingLeft": 8,
+          },
+          Object {
+            "flex": 1,
+            "paddingBottom": 0,
+            "paddingLeft": 0,
+            "paddingTop": 5,
+          },
+        ]
+      }
+      horizontal={true}
+    >
+      <View>
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "flex": 1,
+                "flexDirection": "row",
+                "position": "relative",
+              },
+            ]
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                },
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flex": 1,
+                    "paddingBottom": 17,
+                    "paddingTop": 14,
+                  },
+                ],
+                undefined,
+              ]
+            }
+          >
+            <View
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              hitSlop={
+                Object {
+                  "bottom": 13.333333333333332,
+                  "left": 13.333333333333332,
+                  "right": 13.333333333333332,
+                  "top": 13.333333333333332,
+                }
+              }
+              onBlur={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+            >
+              <View
+                style={[Function]}
+              >
+                <View
+                  style={
+                    Object {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                      "justifyContent": "center",
+                    }
+                  }
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "alignItems": "center",
+                          "flexDirection": "row",
+                          "justifyContent": "center",
+                          "overflow": "hidden",
+                        },
+                        Object {
+                          "height": 24,
+                          "width": 24,
+                        },
+                      ]
+                    }
+                  >
+                    <Text
+                      allowFontScaling={false}
+                      style={
+                        Array [
+                          Object {
+                            "color": "#0085DD",
+                            "fontSize": 24,
+                          },
+                          undefined,
+                          Object {
+                            "fontFamily": "Material Icons",
+                            "fontStyle": "normal",
+                            "fontWeight": "normal",
+                          },
+                          Object {},
+                        ]
+                      }
+                    >
+                      
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            style={
+              Array [
+                Array [
+                  Object {
+                    "backgroundColor": "#0085DD",
+                  },
+                  Object {
+                    "bottom": -2.5,
+                    "height": 3,
+                    "left": 0,
+                    "position": "absolute",
+                    "width": "100%",
+                    "zIndex": 100,
+                  },
+                ],
+                [Function],
+              ]
+            }
+          />
+        </View>
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "flex": 1,
+                "flexDirection": "row",
+                "position": "relative",
+              },
+            ]
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                },
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flex": 1,
+                    "paddingBottom": 17,
+                    "paddingTop": 14,
+                  },
+                ],
+                undefined,
+              ]
+            }
+          >
+            <View
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              hitSlop={
+                Object {
+                  "bottom": 13.333333333333332,
+                  "left": 13.333333333333332,
+                  "right": 13.333333333333332,
+                  "top": 13.333333333333332,
+                }
+              }
+              onBlur={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+            >
+              <View
+                style={[Function]}
+              >
+                <View
+                  style={
+                    Object {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                      "justifyContent": "center",
+                    }
+                  }
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "alignItems": "center",
+                          "flexDirection": "row",
+                          "justifyContent": "center",
+                          "overflow": "hidden",
+                        },
+                        Object {
+                          "height": 24,
+                          "width": 24,
+                        },
+                      ]
+                    }
+                  >
+                    <Text
+                      allowFontScaling={false}
+                      style={
+                        Array [
+                          Object {
+                            "color": "#7D7D82",
+                            "fontSize": 22.080000000000002,
+                          },
+                          undefined,
+                          Object {
+                            "fontFamily": "Material Icons",
+                            "fontStyle": "normal",
+                            "fontWeight": "normal",
+                          },
+                          Object {},
+                        ]
+                      }
+                    >
+                      
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            style={
+              Array [
+                Array [
+                  Object {
+                    "backgroundColor": "#D3DBE3",
+                  },
+                  Object {
+                    "bottom": -2.5,
+                    "height": 3,
+                    "left": 0,
+                    "position": "absolute",
+                    "width": "100%",
+                    "zIndex": 100,
+                  },
+                ],
+                [Function],
+              ]
+            }
+          />
+        </View>
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "flex": 1,
+                "flexDirection": "row",
+                "position": "relative",
+              },
+            ]
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                },
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flex": 1,
+                    "paddingBottom": 17,
+                    "paddingTop": 14,
+                  },
+                ],
+                undefined,
+              ]
+            }
+          >
+            <View
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              hitSlop={
+                Object {
+                  "bottom": 13.333333333333332,
+                  "left": 13.333333333333332,
+                  "right": 13.333333333333332,
+                  "top": 13.333333333333332,
+                }
+              }
+              onBlur={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+            >
+              <View
+                style={[Function]}
+              >
+                <View
+                  style={
+                    Object {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                      "justifyContent": "center",
+                    }
+                  }
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "alignItems": "center",
+                          "flexDirection": "row",
+                          "justifyContent": "center",
+                          "overflow": "hidden",
+                        },
+                        Object {
+                          "height": 24,
+                          "width": 24,
+                        },
+                      ]
+                    }
+                  >
+                    <Text
+                      allowFontScaling={false}
+                      style={
+                        Array [
+                          Object {
+                            "color": "#7D7D82",
+                            "fontSize": 22.56,
+                          },
+                          undefined,
+                          Object {
+                            "fontFamily": "Material Design Icons",
+                            "fontStyle": "normal",
+                            "fontWeight": "normal",
+                          },
+                          Object {},
+                        ]
+                      }
+                    >
+                      󰍡
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            style={
+              Array [
+                Array [
+                  Object {
+                    "backgroundColor": "#D3DBE3",
+                  },
+                  Object {
+                    "bottom": -2.5,
+                    "height": 3,
+                    "left": 0,
+                    "position": "absolute",
+                    "width": "100%",
+                    "zIndex": 100,
+                  },
+                ],
+                [Function],
+              ]
+            }
+          />
+        </View>
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "flex": 1,
+                "flexDirection": "row",
+                "position": "relative",
+              },
+            ]
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                },
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flex": 1,
+                    "paddingBottom": 17,
+                    "paddingTop": 14,
+                  },
+                ],
+                undefined,
+              ]
+            }
+          >
+            <View
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              hitSlop={
+                Object {
+                  "bottom": 13.333333333333332,
+                  "left": 13.333333333333332,
+                  "right": 13.333333333333332,
+                  "top": 13.333333333333332,
+                }
+              }
+              onBlur={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+            >
+              <View
+                style={[Function]}
+              >
+                <View
+                  style={
+                    Object {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                      "justifyContent": "center",
+                    }
+                  }
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "alignItems": "center",
+                          "flexDirection": "row",
+                          "justifyContent": "center",
+                          "overflow": "hidden",
+                        },
+                        Object {
+                          "height": 24,
+                          "width": 24,
+                        },
+                      ]
+                    }
+                  >
+                    <Text
+                      allowFontScaling={false}
+                      style={
+                        Array [
+                          Object {
+                            "color": "#7D7D82",
+                            "fontSize": 20.16,
+                          },
+                          undefined,
+                          Object {
+                            "fontFamily": "FontAwesome",
+                            "fontStyle": "normal",
+                            "fontWeight": "normal",
+                          },
+                          Object {},
+                        ]
+                      }
+                    >
+                      
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            style={
+              Array [
+                Array [
+                  Object {
+                    "backgroundColor": "#D3DBE3",
+                  },
+                  Object {
+                    "bottom": -2.5,
+                    "height": 3,
+                    "left": 0,
+                    "position": "absolute",
+                    "width": "100%",
+                    "zIndex": 100,
+                  },
+                ],
+                [Function],
+              ]
+            }
+          />
+        </View>
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "flex": 1,
+                "flexDirection": "row",
+                "position": "relative",
+              },
+            ]
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                },
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flex": 1,
+                    "paddingBottom": 17,
+                    "paddingTop": 14,
+                  },
+                ],
+                undefined,
+              ]
+            }
+          >
+            <View
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              hitSlop={
+                Object {
+                  "bottom": 13.333333333333332,
+                  "left": 13.333333333333332,
+                  "right": 13.333333333333332,
+                  "top": 13.333333333333332,
+                }
+              }
+              onBlur={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+            >
+              <View
+                style={[Function]}
+              >
+                <View
+                  style={
+                    Object {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                      "justifyContent": "center",
+                    }
+                  }
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "alignItems": "center",
+                          "flexDirection": "row",
+                          "justifyContent": "center",
+                          "overflow": "hidden",
+                        },
+                        Object {
+                          "height": 24,
+                          "width": 24,
+                        },
+                      ]
+                    }
+                  >
+                    <Text
+                      allowFontScaling={false}
+                      style={
+                        Array [
+                          Object {
+                            "color": "#7D7D82",
+                            "fontSize": 24,
+                          },
+                          undefined,
+                          Object {
+                            "fontFamily": "Material Icons",
+                            "fontStyle": "normal",
+                            "fontWeight": "normal",
+                          },
+                          Object {},
+                        ]
+                      }
+                    >
+                      
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            style={
+              Array [
+                Array [
+                  Object {
+                    "backgroundColor": "#D3DBE3",
+                  },
+                  Object {
+                    "bottom": -2.5,
+                    "height": 3,
+                    "left": 0,
+                    "position": "absolute",
+                    "width": "100%",
+                    "zIndex": 100,
+                  },
+                ],
+                [Function],
+              ]
+            }
+          />
+        </View>
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "flex": 1,
+                "flexDirection": "row",
+                "position": "relative",
+              },
+            ]
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                },
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flex": 1,
+                    "paddingBottom": 17,
+                    "paddingTop": 14,
+                  },
+                ],
+                undefined,
+              ]
+            }
+          >
+            <View
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              hitSlop={
+                Object {
+                  "bottom": 13.333333333333332,
+                  "left": 13.333333333333332,
+                  "right": 13.333333333333332,
+                  "top": 13.333333333333332,
+                }
+              }
+              onBlur={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+            >
+              <View
+                style={[Function]}
+              >
+                <View
+                  style={
+                    Object {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                      "justifyContent": "center",
+                    }
+                  }
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "alignItems": "center",
+                          "flexDirection": "row",
+                          "justifyContent": "center",
+                          "overflow": "hidden",
+                        },
+                        Object {
+                          "height": 24,
+                          "width": 24,
+                        },
+                      ]
+                    }
+                  >
+                    <Text
+                      allowFontScaling={false}
+                      style={
+                        Array [
+                          Object {
+                            "color": "#7D7D82",
+                            "fontSize": 24,
+                          },
+                          undefined,
+                          Object {
+                            "fontFamily": "Material Design Icons",
+                            "fontStyle": "normal",
+                            "fontWeight": "normal",
+                          },
+                          Object {},
+                        ]
+                      }
+                    >
+                      󰑖
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            style={
+              Array [
+                Array [
+                  Object {
+                    "backgroundColor": "#D3DBE3",
+                  },
+                  Object {
+                    "bottom": -2.5,
+                    "height": 3,
+                    "left": 0,
+                    "position": "absolute",
+                    "width": "100%",
+                    "zIndex": 100,
+                  },
+                ],
+                [Function],
+              ]
+            }
+          />
+        </View>
+      </View>
+    </RCTScrollView>
+  </View>,
+  <View
+    style={
+      Object {
+        "flex": 1,
+      }
     }
   >
-    <RCTRefreshControl />
-    <View>
-      <View
-        onLayout={[Function]}
-      >
-        <View
-          style={
-            Object {
-              "flexDirection": "row",
-              "justifyContent": "flex-start",
-            }
-          }
-        >
-          <RCTScrollView
-            contentContainerStyle={
-              Array [
-                Object {
-                  "paddingBottom": 10,
-                },
-                Object {
-                  "paddingLeft": 10,
-                },
-                Object {
-                  "flex": 1,
-                  "paddingBottom": 0,
-                  "paddingLeft": 0,
-                  "paddingTop": 5,
-                },
-              ]
-            }
-            horizontal={true}
-          >
-            <View>
-              <View
-                onPress={[Function]}
-                style={
-                  Array [
-                    Object {
-                      "alignItems": "center",
-                      "flex": 1,
-                      "paddingBottom": 17,
-                      "paddingTop": 14,
-                    },
-                    Object {
-                      "borderBottomColor": "#1B85D6",
-                      "borderBottomWidth": 3,
-                    },
-                  ]
-                }
-              >
-                <View
-                  style={
-                    Object {
-                      "overflow": "hidden",
-                    }
-                  }
-                >
-                  <View>
-                    <View
-                      style={
-                        Object {
-                          "alignItems": "center",
-                          "backgroundColor": "transparent",
-                          "justifyContent": "center",
-                        }
-                      }
-                    >
-                      <Text
-                        allowFontScaling={false}
-                        style={
-                          Array [
-                            Object {
-                              "color": "#43434D",
-                              "fontSize": 21,
-                            },
-                            Object {
-                              "backgroundColor": "transparent",
-                            },
-                            Object {
-                              "fontFamily": "Material Icons",
-                              "fontStyle": "normal",
-                              "fontWeight": "normal",
-                            },
-                            Object {},
-                          ]
-                        }
-                        testID="iconIcon"
-                      >
-                        
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-              </View>
-              <View
-                onPress={[Function]}
-                style={
-                  Array [
-                    Object {
-                      "borderBottomWidth": 0.5,
-                    },
-                    Object {
-                      "borderColor": "#D3DBE3",
-                    },
-                    Object {
-                      "alignItems": "center",
-                      "flex": 1,
-                      "paddingBottom": 17,
-                      "paddingTop": 14,
-                    },
-                  ]
-                }
-              >
-                <View
-                  style={
-                    Object {
-                      "overflow": "hidden",
-                    }
-                  }
-                >
-                  <View>
-                    <View
-                      style={
-                        Object {
-                          "alignItems": "center",
-                          "backgroundColor": "transparent",
-                          "justifyContent": "center",
-                        }
-                      }
-                    >
-                      <Text
-                        allowFontScaling={false}
-                        style={
-                          Array [
-                            Object {
-                              "color": "#7D7D82",
-                              "fontSize": 21,
-                            },
-                            Object {
-                              "backgroundColor": "transparent",
-                            },
-                            Object {
-                              "fontFamily": "Material Icons",
-                              "fontStyle": "normal",
-                              "fontWeight": "normal",
-                            },
-                            Object {},
-                          ]
-                        }
-                        testID="iconIcon"
-                      >
-                        
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-              </View>
-              <View
-                onPress={[Function]}
-                style={
-                  Array [
-                    Object {
-                      "borderBottomWidth": 0.5,
-                    },
-                    Object {
-                      "borderColor": "#D3DBE3",
-                    },
-                    Object {
-                      "alignItems": "center",
-                      "flex": 1,
-                      "paddingBottom": 17,
-                      "paddingTop": 14,
-                    },
-                  ]
-                }
-              >
-                <View
-                  style={
-                    Object {
-                      "overflow": "hidden",
-                    }
-                  }
-                >
-                  <View>
-                    <View
-                      style={
-                        Object {
-                          "alignItems": "center",
-                          "backgroundColor": "transparent",
-                          "justifyContent": "center",
-                        }
-                      }
-                    >
-                      <Text
-                        allowFontScaling={false}
-                        style={
-                          Array [
-                            Object {
-                              "color": "#7D7D82",
-                              "fontSize": 21,
-                            },
-                            Object {
-                              "backgroundColor": "transparent",
-                            },
-                            Object {
-                              "fontFamily": "Material Icons",
-                              "fontStyle": "normal",
-                              "fontWeight": "normal",
-                            },
-                            Object {},
-                          ]
-                        }
-                        testID="iconIcon"
-                      >
-                        
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-              </View>
-              <View
-                onPress={[Function]}
-                style={
-                  Array [
-                    Object {
-                      "borderBottomWidth": 0.5,
-                    },
-                    Object {
-                      "borderColor": "#D3DBE3",
-                    },
-                    Object {
-                      "alignItems": "center",
-                      "flex": 1,
-                      "paddingBottom": 17,
-                      "paddingTop": 14,
-                    },
-                  ]
-                }
-              >
-                <View
-                  style={
-                    Object {
-                      "overflow": "hidden",
-                    }
-                  }
-                >
-                  <View>
-                    <View
-                      style={
-                        Object {
-                          "alignItems": "center",
-                          "backgroundColor": "transparent",
-                          "justifyContent": "center",
-                        }
-                      }
-                    >
-                      <Text
-                        allowFontScaling={false}
-                        style={
-                          Array [
-                            Object {
-                              "color": "#7D7D82",
-                              "fontSize": 21,
-                            },
-                            Object {
-                              "backgroundColor": "transparent",
-                            },
-                            Object {
-                              "fontFamily": "Material Icons",
-                              "fontStyle": "normal",
-                              "fontWeight": "normal",
-                            },
-                            Object {},
-                          ]
-                        }
-                        testID="iconIcon"
-                      >
-                        
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-              </View>
-              <View
-                onPress={[Function]}
-                style={
-                  Array [
-                    Object {
-                      "borderBottomWidth": 0.5,
-                    },
-                    Object {
-                      "borderColor": "#D3DBE3",
-                    },
-                    Object {
-                      "alignItems": "center",
-                      "flex": 1,
-                      "paddingBottom": 17,
-                      "paddingTop": 14,
-                    },
-                  ]
-                }
-              >
-                <View
-                  style={
-                    Object {
-                      "overflow": "hidden",
-                    }
-                  }
-                >
-                  <View>
-                    <View
-                      style={
-                        Object {
-                          "alignItems": "center",
-                          "backgroundColor": "transparent",
-                          "justifyContent": "center",
-                        }
-                      }
-                    >
-                      <Text
-                        allowFontScaling={false}
-                        style={
-                          Array [
-                            Object {
-                              "color": "#7D7D82",
-                              "fontSize": 21,
-                            },
-                            Object {
-                              "backgroundColor": "transparent",
-                            },
-                            Object {
-                              "fontFamily": "Material Icons",
-                              "fontStyle": "normal",
-                              "fontWeight": "normal",
-                            },
-                            Object {},
-                          ]
-                        }
-                        testID="iconIcon"
-                      >
-                        
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-              </View>
-              <View
-                onPress={[Function]}
-                style={
-                  Array [
-                    Object {
-                      "borderBottomWidth": 0.5,
-                    },
-                    Object {
-                      "borderColor": "#D3DBE3",
-                    },
-                    Object {
-                      "alignItems": "center",
-                      "flex": 1,
-                      "paddingBottom": 17,
-                      "paddingTop": 14,
-                    },
-                  ]
-                }
-              >
-                <View
-                  style={
-                    Object {
-                      "overflow": "hidden",
-                    }
-                  }
-                >
-                  <View>
-                    <View
-                      style={
-                        Object {
-                          "alignItems": "center",
-                          "backgroundColor": "transparent",
-                          "justifyContent": "center",
-                        }
-                      }
-                    >
-                      <Text
-                        allowFontScaling={false}
-                        style={
-                          Array [
-                            Object {
-                              "color": "#7D7D82",
-                              "fontSize": 21,
-                            },
-                            Object {
-                              "backgroundColor": "transparent",
-                            },
-                            Object {
-                              "fontFamily": "Material Icons",
-                              "fontStyle": "normal",
-                              "fontWeight": "normal",
-                            },
-                            Object {},
-                          ]
-                        }
-                        testID="iconIcon"
-                      >
-                        
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-              </View>
-            </View>
-          </RCTScrollView>
+    <RCTScrollView
+      ListEmptyComponent={
+        <View>
+          <NotificationPlaceHolder />
+          <NotificationPlaceHolder />
+          <NotificationPlaceHolder />
+          <NotificationPlaceHolder />
+          <NotificationPlaceHolder />
+          <NotificationPlaceHolder />
         </View>
-      </View>
-      <View
-        onLayout={[Function]}
-      >
+      }
+      data={Array []}
+      getItem={[Function]}
+      getItemCount={[Function]}
+      keyExtractor={[Function]}
+      onContentSizeChange={[Function]}
+      onEndReached={[Function]}
+      onLayout={[Function]}
+      onMomentumScrollBegin={[Function]}
+      onMomentumScrollEnd={[Function]}
+      onRefresh={[Function]}
+      onScroll={[Function]}
+      onScrollBeginDrag={[Function]}
+      onScrollEndDrag={[Function]}
+      onViewableItemsChanged={[Function]}
+      refreshControl={
+        <RefreshControlMock
+          onRefresh={[Function]}
+          refreshing={false}
+        />
+      }
+      refreshing={false}
+      removeClippedSubviews={false}
+      renderItem={[Function]}
+      scrollEventThrottle={50}
+      stickyHeaderIndices={Array []}
+      viewabilityConfig={
+        Object {
+          "itemVisiblePercentThreshold": 50,
+          "minimumViewTime": 300,
+          "waitForInteraction": false,
+        }
+      }
+      viewabilityConfigCallbackPairs={
+        Array [
+          Object {
+            "onViewableItemsChanged": [Function],
+            "viewabilityConfig": Object {
+              "itemVisiblePercentThreshold": 50,
+              "minimumViewTime": 300,
+              "waitForInteraction": false,
+            },
+          },
+        ]
+      }
+    >
+      <RCTRefreshControl />
+      <View>
         <View
-          style={
-            Array [
-              Object {
-                "borderBottomWidth": 8,
-              },
-              Object {
-                "borderColor": "#FFFFFF",
-              },
-              Object {
-                "paddingBottom": 20,
-              },
-              Object {
-                "paddingTop": 10,
-              },
-            ]
-          }
+          onLayout={[Function]}
         >
           <View
             style={
               Array [
                 Object {
-                  "flexDirection": "row",
-                  "width": "100%",
+                  "borderBottomWidth": 8,
                 },
                 Object {
-                  "paddingHorizontal": 15,
+                  "borderColor": "#FFFFFF",
+                },
+                Object {
+                  "paddingBottom": 16,
+                },
+                Object {
+                  "paddingTop": 8,
                 },
               ]
             }
@@ -546,111 +885,111 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               style={
                 Array [
                   Object {
-                    "backgroundColor": "#E3E4E9",
-                    "borderRadius": 20,
-                    "height": 40,
-                    "width": 40,
+                    "flexDirection": "row",
+                    "width": "100%",
                   },
                   Object {
-                    "marginRight": 10,
-                  },
-                  Object {
-                    "overflow": "hidden",
+                    "paddingHorizontal": 12,
                   },
                 ]
-              }
-            >
-              <View
-                collapsable={false}
-                nativeID="animatedComponent"
-                style={
-                  Object {
-                    "backgroundColor": "#FFFFFF",
-                    "height": "100%",
-                    "opacity": 0.5,
-                  }
-                }
-              />
-            </View>
-            <View
-              style={
-                Object {
-                  "flex": 1,
-                }
               }
             >
               <View
                 style={
                   Array [
                     Object {
-                      "paddingTop": 10,
+                      "backgroundColor": "#E3E4E9",
+                      "borderRadius": 20,
+                      "height": 40,
+                      "width": 40,
                     },
                     Object {
-                      "paddingLeft": 20,
+                      "marginRight": 8,
+                    },
+                    Object {
+                      "overflow": "hidden",
                     },
                   ]
+                }
+              >
+                <View
+                  collapsable={false}
+                  nativeID="animatedComponent"
+                  style={
+                    Object {
+                      "backgroundColor": "#FFFFFF",
+                      "height": "100%",
+                      "opacity": 0.5,
+                    }
+                  }
+                />
+              </View>
+              <View
+                style={
+                  Object {
+                    "flex": 1,
+                  }
                 }
               >
                 <View
                   style={
                     Array [
                       Object {
-                        "backgroundColor": "#E3E4E9",
-                        "borderRadius": 3,
-                        "height": 12,
-                        "marginBottom": 12,
-                        "width": "70%",
+                        "paddingTop": 8,
                       },
-                      undefined,
                       Object {
-                        "overflow": "hidden",
+                        "paddingLeft": 16,
                       },
                     ]
                   }
                 >
                   <View
-                    collapsable={false}
-                    nativeID="animatedComponent"
                     style={
-                      Object {
-                        "backgroundColor": "#FFFFFF",
-                        "height": "100%",
-                        "opacity": 0.5,
-                      }
+                      Array [
+                        Object {
+                          "backgroundColor": "#E3E4E9",
+                          "borderRadius": 3,
+                          "height": 12,
+                          "marginBottom": 12,
+                          "width": "70%",
+                        },
+                        undefined,
+                        Object {
+                          "overflow": "hidden",
+                        },
+                      ]
                     }
-                  />
+                  >
+                    <View
+                      collapsable={false}
+                      nativeID="animatedComponent"
+                      style={
+                        Object {
+                          "backgroundColor": "#FFFFFF",
+                          "height": "100%",
+                          "opacity": 0.5,
+                        }
+                      }
+                    />
+                  </View>
                 </View>
               </View>
             </View>
           </View>
-        </View>
-        <View
-          style={
-            Array [
-              Object {
-                "borderBottomWidth": 8,
-              },
-              Object {
-                "borderColor": "#FFFFFF",
-              },
-              Object {
-                "paddingBottom": 20,
-              },
-              Object {
-                "paddingTop": 10,
-              },
-            ]
-          }
-        >
           <View
             style={
               Array [
                 Object {
-                  "flexDirection": "row",
-                  "width": "100%",
+                  "borderBottomWidth": 8,
                 },
                 Object {
-                  "paddingHorizontal": 15,
+                  "borderColor": "#FFFFFF",
+                },
+                Object {
+                  "paddingBottom": 16,
+                },
+                Object {
+                  "paddingTop": 8,
                 },
               ]
             }
@@ -659,111 +998,111 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               style={
                 Array [
                   Object {
-                    "backgroundColor": "#E3E4E9",
-                    "borderRadius": 20,
-                    "height": 40,
-                    "width": 40,
+                    "flexDirection": "row",
+                    "width": "100%",
                   },
                   Object {
-                    "marginRight": 10,
-                  },
-                  Object {
-                    "overflow": "hidden",
+                    "paddingHorizontal": 12,
                   },
                 ]
-              }
-            >
-              <View
-                collapsable={false}
-                nativeID="animatedComponent"
-                style={
-                  Object {
-                    "backgroundColor": "#FFFFFF",
-                    "height": "100%",
-                    "opacity": 0.5,
-                  }
-                }
-              />
-            </View>
-            <View
-              style={
-                Object {
-                  "flex": 1,
-                }
               }
             >
               <View
                 style={
                   Array [
                     Object {
-                      "paddingTop": 10,
+                      "backgroundColor": "#E3E4E9",
+                      "borderRadius": 20,
+                      "height": 40,
+                      "width": 40,
                     },
                     Object {
-                      "paddingLeft": 20,
+                      "marginRight": 8,
+                    },
+                    Object {
+                      "overflow": "hidden",
                     },
                   ]
+                }
+              >
+                <View
+                  collapsable={false}
+                  nativeID="animatedComponent"
+                  style={
+                    Object {
+                      "backgroundColor": "#FFFFFF",
+                      "height": "100%",
+                      "opacity": 0.5,
+                    }
+                  }
+                />
+              </View>
+              <View
+                style={
+                  Object {
+                    "flex": 1,
+                  }
                 }
               >
                 <View
                   style={
                     Array [
                       Object {
-                        "backgroundColor": "#E3E4E9",
-                        "borderRadius": 3,
-                        "height": 12,
-                        "marginBottom": 12,
-                        "width": "70%",
+                        "paddingTop": 8,
                       },
-                      undefined,
                       Object {
-                        "overflow": "hidden",
+                        "paddingLeft": 16,
                       },
                     ]
                   }
                 >
                   <View
-                    collapsable={false}
-                    nativeID="animatedComponent"
                     style={
-                      Object {
-                        "backgroundColor": "#FFFFFF",
-                        "height": "100%",
-                        "opacity": 0.5,
-                      }
+                      Array [
+                        Object {
+                          "backgroundColor": "#E3E4E9",
+                          "borderRadius": 3,
+                          "height": 12,
+                          "marginBottom": 12,
+                          "width": "70%",
+                        },
+                        undefined,
+                        Object {
+                          "overflow": "hidden",
+                        },
+                      ]
                     }
-                  />
+                  >
+                    <View
+                      collapsable={false}
+                      nativeID="animatedComponent"
+                      style={
+                        Object {
+                          "backgroundColor": "#FFFFFF",
+                          "height": "100%",
+                          "opacity": 0.5,
+                        }
+                      }
+                    />
+                  </View>
                 </View>
               </View>
             </View>
           </View>
-        </View>
-        <View
-          style={
-            Array [
-              Object {
-                "borderBottomWidth": 8,
-              },
-              Object {
-                "borderColor": "#FFFFFF",
-              },
-              Object {
-                "paddingBottom": 20,
-              },
-              Object {
-                "paddingTop": 10,
-              },
-            ]
-          }
-        >
           <View
             style={
               Array [
                 Object {
-                  "flexDirection": "row",
-                  "width": "100%",
+                  "borderBottomWidth": 8,
                 },
                 Object {
-                  "paddingHorizontal": 15,
+                  "borderColor": "#FFFFFF",
+                },
+                Object {
+                  "paddingBottom": 16,
+                },
+                Object {
+                  "paddingTop": 8,
                 },
               ]
             }
@@ -772,111 +1111,111 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               style={
                 Array [
                   Object {
-                    "backgroundColor": "#E3E4E9",
-                    "borderRadius": 20,
-                    "height": 40,
-                    "width": 40,
+                    "flexDirection": "row",
+                    "width": "100%",
                   },
                   Object {
-                    "marginRight": 10,
-                  },
-                  Object {
-                    "overflow": "hidden",
+                    "paddingHorizontal": 12,
                   },
                 ]
-              }
-            >
-              <View
-                collapsable={false}
-                nativeID="animatedComponent"
-                style={
-                  Object {
-                    "backgroundColor": "#FFFFFF",
-                    "height": "100%",
-                    "opacity": 0.5,
-                  }
-                }
-              />
-            </View>
-            <View
-              style={
-                Object {
-                  "flex": 1,
-                }
               }
             >
               <View
                 style={
                   Array [
                     Object {
-                      "paddingTop": 10,
+                      "backgroundColor": "#E3E4E9",
+                      "borderRadius": 20,
+                      "height": 40,
+                      "width": 40,
                     },
                     Object {
-                      "paddingLeft": 20,
+                      "marginRight": 8,
+                    },
+                    Object {
+                      "overflow": "hidden",
                     },
                   ]
+                }
+              >
+                <View
+                  collapsable={false}
+                  nativeID="animatedComponent"
+                  style={
+                    Object {
+                      "backgroundColor": "#FFFFFF",
+                      "height": "100%",
+                      "opacity": 0.5,
+                    }
+                  }
+                />
+              </View>
+              <View
+                style={
+                  Object {
+                    "flex": 1,
+                  }
                 }
               >
                 <View
                   style={
                     Array [
                       Object {
-                        "backgroundColor": "#E3E4E9",
-                        "borderRadius": 3,
-                        "height": 12,
-                        "marginBottom": 12,
-                        "width": "70%",
+                        "paddingTop": 8,
                       },
-                      undefined,
                       Object {
-                        "overflow": "hidden",
+                        "paddingLeft": 16,
                       },
                     ]
                   }
                 >
                   <View
-                    collapsable={false}
-                    nativeID="animatedComponent"
                     style={
-                      Object {
-                        "backgroundColor": "#FFFFFF",
-                        "height": "100%",
-                        "opacity": 0.5,
-                      }
+                      Array [
+                        Object {
+                          "backgroundColor": "#E3E4E9",
+                          "borderRadius": 3,
+                          "height": 12,
+                          "marginBottom": 12,
+                          "width": "70%",
+                        },
+                        undefined,
+                        Object {
+                          "overflow": "hidden",
+                        },
+                      ]
                     }
-                  />
+                  >
+                    <View
+                      collapsable={false}
+                      nativeID="animatedComponent"
+                      style={
+                        Object {
+                          "backgroundColor": "#FFFFFF",
+                          "height": "100%",
+                          "opacity": 0.5,
+                        }
+                      }
+                    />
+                  </View>
                 </View>
               </View>
             </View>
           </View>
-        </View>
-        <View
-          style={
-            Array [
-              Object {
-                "borderBottomWidth": 8,
-              },
-              Object {
-                "borderColor": "#FFFFFF",
-              },
-              Object {
-                "paddingBottom": 20,
-              },
-              Object {
-                "paddingTop": 10,
-              },
-            ]
-          }
-        >
           <View
             style={
               Array [
                 Object {
-                  "flexDirection": "row",
-                  "width": "100%",
+                  "borderBottomWidth": 8,
                 },
                 Object {
-                  "paddingHorizontal": 15,
+                  "borderColor": "#FFFFFF",
+                },
+                Object {
+                  "paddingBottom": 16,
+                },
+                Object {
+                  "paddingTop": 8,
                 },
               ]
             }
@@ -885,111 +1224,111 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               style={
                 Array [
                   Object {
-                    "backgroundColor": "#E3E4E9",
-                    "borderRadius": 20,
-                    "height": 40,
-                    "width": 40,
+                    "flexDirection": "row",
+                    "width": "100%",
                   },
                   Object {
-                    "marginRight": 10,
-                  },
-                  Object {
-                    "overflow": "hidden",
+                    "paddingHorizontal": 12,
                   },
                 ]
-              }
-            >
-              <View
-                collapsable={false}
-                nativeID="animatedComponent"
-                style={
-                  Object {
-                    "backgroundColor": "#FFFFFF",
-                    "height": "100%",
-                    "opacity": 0.5,
-                  }
-                }
-              />
-            </View>
-            <View
-              style={
-                Object {
-                  "flex": 1,
-                }
               }
             >
               <View
                 style={
                   Array [
                     Object {
-                      "paddingTop": 10,
+                      "backgroundColor": "#E3E4E9",
+                      "borderRadius": 20,
+                      "height": 40,
+                      "width": 40,
                     },
                     Object {
-                      "paddingLeft": 20,
+                      "marginRight": 8,
+                    },
+                    Object {
+                      "overflow": "hidden",
                     },
                   ]
+                }
+              >
+                <View
+                  collapsable={false}
+                  nativeID="animatedComponent"
+                  style={
+                    Object {
+                      "backgroundColor": "#FFFFFF",
+                      "height": "100%",
+                      "opacity": 0.5,
+                    }
+                  }
+                />
+              </View>
+              <View
+                style={
+                  Object {
+                    "flex": 1,
+                  }
                 }
               >
                 <View
                   style={
                     Array [
                       Object {
-                        "backgroundColor": "#E3E4E9",
-                        "borderRadius": 3,
-                        "height": 12,
-                        "marginBottom": 12,
-                        "width": "70%",
+                        "paddingTop": 8,
                       },
-                      undefined,
                       Object {
-                        "overflow": "hidden",
+                        "paddingLeft": 16,
                       },
                     ]
                   }
                 >
                   <View
-                    collapsable={false}
-                    nativeID="animatedComponent"
                     style={
-                      Object {
-                        "backgroundColor": "#FFFFFF",
-                        "height": "100%",
-                        "opacity": 0.5,
-                      }
+                      Array [
+                        Object {
+                          "backgroundColor": "#E3E4E9",
+                          "borderRadius": 3,
+                          "height": 12,
+                          "marginBottom": 12,
+                          "width": "70%",
+                        },
+                        undefined,
+                        Object {
+                          "overflow": "hidden",
+                        },
+                      ]
                     }
-                  />
+                  >
+                    <View
+                      collapsable={false}
+                      nativeID="animatedComponent"
+                      style={
+                        Object {
+                          "backgroundColor": "#FFFFFF",
+                          "height": "100%",
+                          "opacity": 0.5,
+                        }
+                      }
+                    />
+                  </View>
                 </View>
               </View>
             </View>
           </View>
-        </View>
-        <View
-          style={
-            Array [
-              Object {
-                "borderBottomWidth": 8,
-              },
-              Object {
-                "borderColor": "#FFFFFF",
-              },
-              Object {
-                "paddingBottom": 20,
-              },
-              Object {
-                "paddingTop": 10,
-              },
-            ]
-          }
-        >
           <View
             style={
               Array [
                 Object {
-                  "flexDirection": "row",
-                  "width": "100%",
+                  "borderBottomWidth": 8,
                 },
                 Object {
-                  "paddingHorizontal": 15,
+                  "borderColor": "#FFFFFF",
+                },
+                Object {
+                  "paddingBottom": 16,
+                },
+                Object {
+                  "paddingTop": 8,
                 },
               ]
             }
@@ -998,111 +1337,111 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               style={
                 Array [
                   Object {
-                    "backgroundColor": "#E3E4E9",
-                    "borderRadius": 20,
-                    "height": 40,
-                    "width": 40,
+                    "flexDirection": "row",
+                    "width": "100%",
                   },
                   Object {
-                    "marginRight": 10,
-                  },
-                  Object {
-                    "overflow": "hidden",
+                    "paddingHorizontal": 12,
                   },
                 ]
-              }
-            >
-              <View
-                collapsable={false}
-                nativeID="animatedComponent"
-                style={
-                  Object {
-                    "backgroundColor": "#FFFFFF",
-                    "height": "100%",
-                    "opacity": 0.5,
-                  }
-                }
-              />
-            </View>
-            <View
-              style={
-                Object {
-                  "flex": 1,
-                }
               }
             >
               <View
                 style={
                   Array [
                     Object {
-                      "paddingTop": 10,
+                      "backgroundColor": "#E3E4E9",
+                      "borderRadius": 20,
+                      "height": 40,
+                      "width": 40,
                     },
                     Object {
-                      "paddingLeft": 20,
+                      "marginRight": 8,
+                    },
+                    Object {
+                      "overflow": "hidden",
                     },
                   ]
+                }
+              >
+                <View
+                  collapsable={false}
+                  nativeID="animatedComponent"
+                  style={
+                    Object {
+                      "backgroundColor": "#FFFFFF",
+                      "height": "100%",
+                      "opacity": 0.5,
+                    }
+                  }
+                />
+              </View>
+              <View
+                style={
+                  Object {
+                    "flex": 1,
+                  }
                 }
               >
                 <View
                   style={
                     Array [
                       Object {
-                        "backgroundColor": "#E3E4E9",
-                        "borderRadius": 3,
-                        "height": 12,
-                        "marginBottom": 12,
-                        "width": "70%",
+                        "paddingTop": 8,
                       },
-                      undefined,
                       Object {
-                        "overflow": "hidden",
+                        "paddingLeft": 16,
                       },
                     ]
                   }
                 >
                   <View
-                    collapsable={false}
-                    nativeID="animatedComponent"
                     style={
-                      Object {
-                        "backgroundColor": "#FFFFFF",
-                        "height": "100%",
-                        "opacity": 0.5,
-                      }
+                      Array [
+                        Object {
+                          "backgroundColor": "#E3E4E9",
+                          "borderRadius": 3,
+                          "height": 12,
+                          "marginBottom": 12,
+                          "width": "70%",
+                        },
+                        undefined,
+                        Object {
+                          "overflow": "hidden",
+                        },
+                      ]
                     }
-                  />
+                  >
+                    <View
+                      collapsable={false}
+                      nativeID="animatedComponent"
+                      style={
+                        Object {
+                          "backgroundColor": "#FFFFFF",
+                          "height": "100%",
+                          "opacity": 0.5,
+                        }
+                      }
+                    />
+                  </View>
                 </View>
               </View>
             </View>
           </View>
-        </View>
-        <View
-          style={
-            Array [
-              Object {
-                "borderBottomWidth": 8,
-              },
-              Object {
-                "borderColor": "#FFFFFF",
-              },
-              Object {
-                "paddingBottom": 20,
-              },
-              Object {
-                "paddingTop": 10,
-              },
-            ]
-          }
-        >
           <View
             style={
               Array [
                 Object {
-                  "flexDirection": "row",
-                  "width": "100%",
+                  "borderBottomWidth": 8,
                 },
                 Object {
-                  "paddingHorizontal": 15,
+                  "borderColor": "#FFFFFF",
+                },
+                Object {
+                  "paddingBottom": 16,
+                },
+                Object {
+                  "paddingTop": 8,
                 },
               ]
             }
@@ -1111,86 +1450,100 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               style={
                 Array [
                   Object {
-                    "backgroundColor": "#E3E4E9",
-                    "borderRadius": 20,
-                    "height": 40,
-                    "width": 40,
+                    "flexDirection": "row",
+                    "width": "100%",
                   },
                   Object {
-                    "marginRight": 10,
-                  },
-                  Object {
-                    "overflow": "hidden",
+                    "paddingHorizontal": 12,
                   },
                 ]
-              }
-            >
-              <View
-                collapsable={false}
-                nativeID="animatedComponent"
-                style={
-                  Object {
-                    "backgroundColor": "#FFFFFF",
-                    "height": "100%",
-                    "opacity": 0.5,
-                  }
-                }
-              />
-            </View>
-            <View
-              style={
-                Object {
-                  "flex": 1,
-                }
               }
             >
               <View
                 style={
                   Array [
                     Object {
-                      "paddingTop": 10,
+                      "backgroundColor": "#E3E4E9",
+                      "borderRadius": 20,
+                      "height": 40,
+                      "width": 40,
                     },
                     Object {
-                      "paddingLeft": 20,
+                      "marginRight": 8,
+                    },
+                    Object {
+                      "overflow": "hidden",
                     },
                   ]
+                }
+              >
+                <View
+                  collapsable={false}
+                  nativeID="animatedComponent"
+                  style={
+                    Object {
+                      "backgroundColor": "#FFFFFF",
+                      "height": "100%",
+                      "opacity": 0.5,
+                    }
+                  }
+                />
+              </View>
+              <View
+                style={
+                  Object {
+                    "flex": 1,
+                  }
                 }
               >
                 <View
                   style={
                     Array [
                       Object {
-                        "backgroundColor": "#E3E4E9",
-                        "borderRadius": 3,
-                        "height": 12,
-                        "marginBottom": 12,
-                        "width": "70%",
+                        "paddingTop": 8,
                       },
-                      undefined,
                       Object {
-                        "overflow": "hidden",
+                        "paddingLeft": 16,
                       },
                     ]
                   }
                 >
                   <View
-                    collapsable={false}
-                    nativeID="animatedComponent"
                     style={
-                      Object {
-                        "backgroundColor": "#FFFFFF",
-                        "height": "100%",
-                        "opacity": 0.5,
-                      }
+                      Array [
+                        Object {
+                          "backgroundColor": "#E3E4E9",
+                          "borderRadius": 3,
+                          "height": 12,
+                          "marginBottom": 12,
+                          "width": "70%",
+                        },
+                        undefined,
+                        Object {
+                          "overflow": "hidden",
+                        },
+                      ]
                     }
-                  />
+                  >
+                    <View
+                      collapsable={false}
+                      nativeID="animatedComponent"
+                      style={
+                        Object {
+                          "backgroundColor": "#FFFFFF",
+                          "height": "100%",
+                          "opacity": 0.5,
+                        }
+                      }
+                    />
+                  </View>
                 </View>
               </View>
             </View>
           </View>
         </View>
       </View>
-    </View>
-  </RCTScrollView>
-</View>
+    </RCTScrollView>
+  </View>,
+]
 `;

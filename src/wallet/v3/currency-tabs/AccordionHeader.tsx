@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Tooltip } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Icon } from '~ui/icons';
 import MText from '../../../common/components/MText';
-import ThemedStyles from '../../../styles/ThemedStyles';
+import ThemedStyles from '~styles/ThemedStyles';
 
 type PropsType = {
   title: string | React.ReactNode;
@@ -27,7 +27,7 @@ const AccordionHeader = ({ title, subtitle, tooltip, isActive }: PropsType) => {
       style={[
         theme.rowJustifyStart,
         theme.paddingVertical2x,
-        theme.paddingRight6x,
+        theme.paddingRight5x,
         theme.paddingLeft5x,
       ]}>
       <View style={[theme.flexContainer, theme.rowJustifyStart]}>
@@ -45,17 +45,13 @@ const AccordionHeader = ({ title, subtitle, tooltip, isActive }: PropsType) => {
               height={tooltip.height}
               backgroundColor={ThemedStyles.getColor('Link')}
               popover={<MText style={theme.colorWhite}>{tooltip.title}</MText>}>
-              <Icon name="information-variant" size={15} color="#AEB0B8" />
+              <Icon name="info" size="tiny" />
             </Tooltip>
           </View>
         )}
       </View>
       <View style={theme.paddingRight2x}>{SubTitle}</View>
-      <Icon
-        name={`chevron-${isActive ? 'up' : 'down'}`}
-        size={21}
-        color={ThemedStyles.getColor('SecondaryText')}
-      />
+      <Icon name={`chevron-${isActive ? 'up' : 'down'}`} size="small" />
     </View>
   );
 };

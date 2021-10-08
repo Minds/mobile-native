@@ -1,10 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import FIcon from 'react-native-vector-icons/Feather';
-import Icon from 'react-native-vector-icons/Ionicons';
-import IconMC from 'react-native-vector-icons/MaterialCommunityIcons';
-import IconM from 'react-native-vector-icons/MaterialIcons';
+import { IconButton } from '~ui/icons';
 import ThemedStyles from '../styles/ThemedStyles';
 
 export default function BottomBar(props) {
@@ -23,47 +20,47 @@ export default function BottomBar(props) {
         theme.padding,
       ]}>
       {!props.store.isEdit && (
-        <FIcon
-          size={27}
+        <IconButton
           name="image"
           style={iconStyle}
           onPress={() => props.store.selectFromGallery(props.store.mode)}
           testID="attachImage"
+          scale
         />
       )}
       {!props.store.isEdit && (
-        <Icon
-          name="ios-camera-sharp"
-          size={27}
+        <IconButton
+          name="camera"
           style={iconStyle}
+          scale
           onPress={() => props.store.setModePhoto(false)}
         />
       )}
       {!props.store.isGroup() && (
-        <IconM
-          name="attach-money"
-          size={27}
+        <IconButton
+          name="money"
           style={iconStyle}
+          scale
           onPress={() =>
             navigation.navigate('MonetizeSelector', { store: props.store })
           }
         />
       )}
-      <FIcon
-        name="hash"
-        size={27}
+      <IconButton
+        name="hashtag"
         style={iconStyle}
+        scale
         onPress={() =>
           navigation.navigate('TagSelector', { store: props.store })
         }
       />
       <View style={theme.flexContainer} />
-      <IconMC
+      <IconButton
         name="cog"
-        size={27}
         style={iconStyle}
         onPress={props.onOptions}
         testID="postOptions"
+        scale
       />
     </View>
   );

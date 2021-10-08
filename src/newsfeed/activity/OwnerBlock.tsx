@@ -12,7 +12,7 @@ import withPreventDoubleTap from '../../common/components/PreventDoubleTap';
 import ThemedStyles from '../../styles/ThemedStyles';
 import type ActivityModel from '../ActivityModel';
 import i18nService from '../../common/services/i18n.service';
-import IconMa from 'react-native-vector-icons/MaterialIcons';
+import { Icon } from '~ui/icons';
 import { SearchResultStoreType } from '../../topbar/searchbar/createSearchResultStore';
 import { withSearchResultStore } from '../../common/hooks/withStores';
 import ChannelBadges from '../../channel/badges/ChannelBadges';
@@ -146,7 +146,7 @@ class OwnerBlock extends PureComponent<PropsType> {
     // Remind header
     const remind = this.props.entity.remind_users ? (
       <View style={remindContainer}>
-        <IconMa name="repeat" size={15} style={remindIconStyle} />
+        <Icon name="remind" size="tiny" active spacingRight="1x" />
         <MText>
           <MText style={theme.colorSecondaryText}>
             {i18nService.t('remindedBy')}{' '}
@@ -192,7 +192,7 @@ class OwnerBlock extends PureComponent<PropsType> {
             </View>
           </View>
           <ChannelBadges
-            size={20}
+            size={18}
             channel={this.props.entity.ownerObj}
             iconStyle={theme.colorLink}
           />
@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
   },
   container: {
     display: 'flex',
-    paddingHorizontal: 20,
+    paddingHorizontal: 16,
     paddingVertical: 13,
     alignItems: 'center',
     flexDirection: 'row',
@@ -234,11 +234,6 @@ const styles = StyleSheet.create({
     paddingTop: 3,
   },
 });
-
-const remindIconStyle = ThemedStyles.combine(
-  'colorIconActive',
-  styles.remindIcon,
-);
 
 const groupNameStyle = ThemedStyles.combine('fontM', 'colorSecondaryText');
 const usernameStyle = ThemedStyles.combine(

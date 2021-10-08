@@ -13,7 +13,7 @@ exports[`Explicit text component renders correctly 1`] = `
       Array [
         undefined,
         Object {
-          "marginBottom": 5,
+          "marginBottom": 4,
         },
         null,
       ]

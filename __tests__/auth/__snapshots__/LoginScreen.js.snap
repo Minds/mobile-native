@@ -68,100 +68,133 @@ exports[`LoginScreen component should renders correctly 1`] = `
   </View>
   <View
     style={
-      Array [
-        Object {
-          "padding": 5,
-        },
-        Object {
-          "position": "absolute",
-          "right": 15,
-          "top": 31,
-          "zIndex": 1000,
-        },
-      ]
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "paddingHorizontal": 16,
+      }
     }
   >
-    <View
-      accessible={true}
-      collapsable={false}
-      focusable={true}
-      onBlur={[Function]}
-      onClick={[Function]}
-      onFocus={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#43434D",
+          },
+          Object {
+            "fontFamily": "Roboto",
+          },
+          Array [
+            Array [
+              Object {
+                "fontSize": 20,
+                "marginLeft": 32,
+              },
+              Object {
+                "paddingVertical": 12,
+              },
+              Object {
+                "textAlign": "center",
+              },
+              Object {
+                "fontWeight": "600",
+              },
+              Object {
+                "flex": 1,
+              },
+            ],
+            Object {},
+          ],
+        ]
+      }
     >
+      Login
+    </Text>
+    <View>
       <View
         style={
           Array [
+            Object {
+              "alignItems": "center",
+              "justifyContent": "center",
+            },
             undefined,
-            [Function],
           ]
         }
       >
-        <Text
-          allowFontScaling={false}
-          style={
-            Array [
-              Object {
-                "color": undefined,
-                "fontSize": 22,
-              },
-              Array [
-                Object {
-                  "color": "#43434D",
-                },
-                Object {},
-              ],
-              Object {
-                "fontFamily": "Ionicons",
-                "fontStyle": "normal",
-                "fontWeight": "normal",
-              },
-              Object {},
-            ]
+        <View
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          hitSlop={
+            Object {
+              "bottom": 10.666666666666666,
+              "left": 10.666666666666666,
+              "right": 10.666666666666666,
+              "top": 10.666666666666666,
+            }
           }
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
         >
-          
-        </Text>
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "center",
+              }
+            }
+          >
+            <View
+              style={
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                    "overflow": "hidden",
+                  },
+                  Object {
+                    "height": 32,
+                    "width": 32,
+                  },
+                ]
+              }
+            >
+              <Text
+                allowFontScaling={false}
+                style={
+                  Array [
+                    Object {
+                      "color": "#7D7D82",
+                      "fontSize": 32,
+                    },
+                    undefined,
+                    Object {
+                      "fontFamily": "Material Icons",
+                      "fontStyle": "normal",
+                      "fontWeight": "normal",
+                    },
+                    Object {},
+                  ]
+                }
+              >
+                
+              </Text>
+            </View>
+          </View>
+        </View>
       </View>
     </View>
   </View>
-  <Text
-    style={
-      Array [
-        Object {
-          "color": "#43434D",
-        },
-        Object {
-          "fontFamily": "Roboto",
-        },
-        Array [
-          Array [
-            Object {
-              "fontSize": 20,
-            },
-            Object {
-              "paddingVertical": 15,
-            },
-            Object {
-              "textAlign": "center",
-            },
-            Object {
-              "fontWeight": "600",
-            },
-          ],
-          Object {},
-        ],
-      ]
-    }
-  >
-    Login
-  </Text>
   <View
     style={
       Object {
@@ -173,7 +206,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
       style={
         Array [
           Object {
-            "paddingLeft": 20,
+            "paddingLeft": 16,
           },
           Object {
             "paddingTop": 10,
@@ -313,7 +346,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
     <View
       style={
         Object {
-          "marginBottom": 20,
+          "marginBottom": 16,
         }
       }
     >
@@ -321,7 +354,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
         style={
           Array [
             Object {
-              "paddingLeft": 20,
+              "paddingLeft": 16,
             },
             Object {
               "paddingTop": 10,
@@ -518,10 +551,10 @@ exports[`LoginScreen component should renders correctly 1`] = `
               "alignSelf": "stretch",
             },
             Object {
-              "marginTop": 15,
+              "marginTop": 12,
             },
             Object {
-              "marginHorizontal": 25,
+              "marginHorizontal": 20,
             },
             Object {
               "backgroundColor": "transparent",
@@ -569,7 +602,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
     <View
       style={
         Object {
-          "marginTop": 20,
+          "marginTop": 16,
         }
       }
     >
@@ -752,7 +785,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                     "backgroundColor": "#FFFFFF",
                   },
                   Object {
-                    "paddingBottom": 10,
+                    "paddingBottom": 8,
                   },
                   Object {
                     "borderTopLeftRadius": 15,
@@ -778,10 +811,10 @@ exports[`LoginScreen component should renders correctly 1`] = `
                       "color": "#43434D",
                     },
                     Object {
-                      "marginTop": 25,
+                      "marginTop": 20,
                     },
                     Object {
-                      "marginBottom": 20,
+                      "marginBottom": 16,
                     },
                     Object {
                       "fontFamily": "Roboto-Black",
@@ -854,10 +887,10 @@ exports[`LoginScreen component should renders correctly 1`] = `
                         "textAlign": "center",
                       },
                       Object {
-                        "paddingVertical": 30,
+                        "paddingVertical": 24,
                       },
                       Object {
-                        "paddingHorizontal": 20,
+                        "paddingHorizontal": 16,
                       },
                       Object {
                         "borderColor": "#D3DBE3",
@@ -875,7 +908,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                 style={
                   Array [
                     Object {
-                      "paddingLeft": 20,
+                      "paddingLeft": 16,
                     },
                     Object {
                       "paddingTop": 10,
@@ -1038,7 +1071,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                     },
                     Array [
                       Object {
-                        "margin": 30,
+                        "margin": 24,
                       },
                       Object {
                         "backgroundColor": "#FFFFFF",

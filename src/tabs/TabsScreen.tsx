@@ -1,5 +1,4 @@
 import React, { useCallback } from 'react';
-
 import {
   createBottomTabNavigator,
   BottomTabNavigationOptions,
@@ -12,11 +11,10 @@ import {
   Dimensions,
   PlatformIOSStatic,
 } from 'react-native';
-
 import NewsfeedScreen from '../newsfeed/NewsfeedScreen';
 import NotificationsScreen from '../notifications/v3/NotificationsScreen';
 import ThemedStyles, { useMemoStyle } from '../styles/ThemedStyles';
-import TabIcon from './TabIcon';
+import { Icon } from '~ui/icons';
 import NotificationIcon from '../notifications/v3/notifications-tab-icon/NotificationsTabIcon';
 import gatheringService from '../common/services/gathering.service';
 import { observer } from 'mobx-react';
@@ -26,10 +24,11 @@ import Topbar from '../topbar/Topbar';
 import { InternalStack } from '../navigation/NavigationStack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import TopShadow from '../common/components/TopShadow';
-import sessionService from '../common/services/session.service';
+// import sessionService from '../common/services/session.service';
 import { useStores } from '../common/hooks/use-stores';
 import ChatTabIcon from '../chat/ChatTabIcon';
-import navigationService from '../navigation/NavigationService';
+import PressableScale from '~/common/components/PressableScale';
+// import navigationService from '../navigation/NavigationService';
 
 const isIOS = Platform.OS === 'ios';
 
@@ -65,8 +64,8 @@ const TabBar = ({ state, descriptors, navigation }) => {
   const bottomInset = {
     paddingBottom: insets.bottom
       ? isPad
-        ? insets.bottom
-        : insets.bottom - 10
+        ? insets.bottom + 4
+        : insets.bottom - 6
       : 10,
   };
 
@@ -116,7 +115,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
           });
         };
 
-        const Component = options.tabBarButton || TouchableOpacity;
+        const Component = options.tabBarButton || PressableScale;
 
         return (
           <Component
@@ -222,61 +221,49 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: -1 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
-    paddingTop: 15,
+    paddingTop: 12,
     paddingLeft: 20,
     paddingRight: 20,
   },
 });
 
-const navToChannel = () =>
-  navigationService.push('Channel', { entity: sessionService.getUser() });
+// const navToChannel = () =>
+//   navigationService.push('Channel', { entity: sessionService.getUser() });
 
 const notificationOptions = { tabBarTestID: 'Notifications tab button' };
 const messengerOptions = { tabBarTestID: 'Messenger tab button' };
 const discoveryOptions = { tabBarTestID: 'Discovery tab button' };
 const focusedState = { selected: true };
 const tabBar = props => <TabBar {...props} />;
-const userOptions = {
-  tabBarTestID: 'CaptureTabButton',
-  tabBarButton: props => <TouchableOpacity {...props} onPress={navToChannel} />,
-};
+// const userOptions = {
+//   tabBarTestID: 'CaptureTabButton',
+//   tabBarButton: props => <TouchableOpacity {...props} onPress={navToChannel} />,
+// };
 const empty = () => null;
 const tabOptions = ({ route }): BottomTabNavigationOptions => ({
   headerShown: false,
   tabBarIcon: ({ focused }) => {
-    const color = focused
-      ? ThemedStyles.getColor('Link')
-      : ThemedStyles.getColor('SecondaryText');
-    let iconName,
-      iconsize = 28;
+    let iconName;
 
     switch (route.name) {
       case 'MessengerTab':
-        return <ChatTabIcon color={color} />;
+        return <ChatTabIcon active={focused} />;
       case 'Newsfeed':
         iconName = 'home';
-        iconsize = 28;
         break;
       case 'User':
         iconName = 'user';
-        iconsize = 42;
         break;
       case 'Discovery':
         iconName = 'search';
-        iconsize = 24;
         break;
       case 'Notifications':
-        return <NotificationIcon color={color} size={iconsize} />;
+        return <NotificationIcon active={focused} />;
       case 'CaptureTab':
         return <ComposeIcon style={styles.compose} />;
     }
 
-    if (isPad) {
-      iconsize = Math.round(iconsize * 1.2);
-    }
-
-    // You can return any component that you like here!
-    return <TabIcon name={iconName} size={iconsize} color={color} />;
+    return <Icon active={focused} name={iconName} />;
   },
 });
 

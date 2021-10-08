@@ -123,7 +123,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "alignItems": "center",
                   "display": "flex",
                   "flexDirection": "row",
-                  "paddingHorizontal": 20,
+                  "paddingHorizontal": 16,
                   "paddingVertical": 13,
                 }
               }
@@ -554,33 +554,51 @@ exports[`blog view screen component should renders correctly 1`] = `
                   onResponderTerminationRequest={[Function]}
                   onStartShouldSetResponder={[Function]}
                 >
-                  <Text
-                    allowFontScaling={false}
+                  <View
                     style={
                       Array [
                         Object {
-                          "color": undefined,
-                          "fontSize": 20,
+                          "alignItems": "center",
+                          "flexDirection": "row",
+                          "justifyContent": "center",
+                          "overflow": "hidden",
+                        },
+                        Object {
+                          "height": 16,
+                          "width": 16,
                         },
                         Array [
                           Object {
-                            "alignSelf": "center",
+                            "marginHorizontal": 1,
                           },
                           Object {
                             "color": "#1B85D6",
                           },
                         ],
-                        Object {
-                          "fontFamily": "Material Icons",
-                          "fontStyle": "normal",
-                          "fontWeight": "normal",
-                        },
-                        Object {},
                       ]
                     }
                   >
-                    
-                  </Text>
+                    <Text
+                      allowFontScaling={false}
+                      style={
+                        Array [
+                          Object {
+                            "color": "#0085DD",
+                            "fontSize": 16,
+                          },
+                          undefined,
+                          Object {
+                            "fontFamily": "Material Icons",
+                            "fontStyle": "normal",
+                            "fontWeight": "normal",
+                          },
+                          Object {},
+                        ]
+                      }
+                    >
+                      
+                    </Text>
+                  </View>
                 </View>
               </View>
               <View
@@ -857,34 +875,51 @@ exports[`blog view screen component should renders correctly 1`] = `
                   onResponderTerminationRequest={[Function]}
                   onStartShouldSetResponder={[Function]}
                 >
-                  <Text
-                    allowFontScaling={false}
+                  <View
                     style={
                       Array [
                         Object {
-                          "color": undefined,
-                          "fontSize": 20,
+                          "alignItems": "center",
+                          "flexDirection": "row",
+                          "justifyContent": "center",
+                          "overflow": "hidden",
+                        },
+                        Object {
+                          "height": 16,
+                          "width": 16,
                         },
                         Array [
                           Object {
-                            "alignSelf": "center",
+                            "marginHorizontal": 1,
                           },
                           Object {
                             "color": "#1B85D6",
                           },
-                          null,
                         ],
-                        Object {
-                          "fontFamily": "Material Icons",
-                          "fontStyle": "normal",
-                          "fontWeight": "normal",
-                        },
-                        Object {},
                       ]
                     }
                   >
-                    
-                  </Text>
+                    <Text
+                      allowFontScaling={false}
+                      style={
+                        Array [
+                          Object {
+                            "color": "#0085DD",
+                            "fontSize": 15.68,
+                          },
+                          undefined,
+                          Object {
+                            "fontFamily": "Material Icons",
+                            "fontStyle": "normal",
+                            "fontWeight": "normal",
+                          },
+                          Object {},
+                        ]
+                      }
+                    >
+                      
+                    </Text>
+                  </View>
                 </View>
               </View>
               <View
@@ -927,7 +962,7 @@ exports[`blog view screen component should renders correctly 1`] = `
           style={
             Array [
               Object {
-                "paddingHorizontal": 10,
+                "paddingHorizontal": 8,
               },
               Object {
                 "flexDirection": "row",
@@ -1748,13 +1783,13 @@ exports[`blog view screen component should renders correctly 1`] = `
                     "fontSize": 10,
                   },
                   Object {
-                    "paddingLeft": 5,
+                    "paddingLeft": 4,
                   },
                   Object {
                     "color": "#72727C",
                   },
                   Object {
-                    "paddingRight": 10,
+                    "paddingRight": 8,
                   },
                 ],
               ]
