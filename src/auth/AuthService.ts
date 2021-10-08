@@ -179,6 +179,13 @@ class AuthService {
   async logout(): Promise<boolean> {
     this.justRegistered = false;
     try {
+      if (session.tokensData.length > 0) {
+        const state = NavigationService.getCurrentState();
+        if (state && state.name === 'Settings') {
+          NavigationService.navigate('MultiUserScreen');
+        }
+      }
+
       // delete device token first
       await this.unregisterTokenFrom(sessionService.activeIndex);
 
