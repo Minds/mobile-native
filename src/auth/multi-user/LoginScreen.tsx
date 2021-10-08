@@ -4,7 +4,6 @@ import i18n from '../../common/services/i18n.service';
 import ModalContainer from '../../onboarding/v2/steps/ModalContainer';
 import ThemedStyles from '../../styles/ThemedStyles';
 import LoginForm from '../login/LoginForm';
-import { resetStackAndGoBack } from './resetStackAndGoBack';
 
 type PropsType = {
   navigation: NavigationProp<any>;
