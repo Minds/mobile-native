@@ -151,8 +151,10 @@ const TokensTab = observer(({ walletStore, navigation, store }: PropsType) => {
       break;
   }
 
+  const Parent = store.option === 'transactions' ? View : ScrollView;
+
   return (
-    <ScrollView>
+    <Parent>
       <View style={theme.paddingTop5x}>
         <TokenTopBar
           walletStore={walletStore}
@@ -167,7 +169,7 @@ const TokensTab = observer(({ walletStore, navigation, store }: PropsType) => {
         />
         {body}
       </View>
-    </ScrollView>
+    </Parent>
   );
 });
 
