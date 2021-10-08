@@ -1,4 +1,5 @@
 import React from 'react';
+import { Platform } from 'react-native';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import Button from '../Button';
 
@@ -33,16 +34,18 @@ export default function BottomSheetButton({
   );
 }
 
+const height = Platform.select({ ios: 42, android: 44 });
+
 const buttonStyle = ThemedStyles.combine(
   'alignSelfStretch',
   'marginTop3x',
   'marginHorizontal5x',
-  { height: 42 },
+  { height },
 );
 const buttonActionStyle = ThemedStyles.combine(
   'alignSelfStretch',
   'marginTop3x',
   'marginHorizontal5x',
   'bgTransparent',
-  { height: 42 },
+  { height },
 );

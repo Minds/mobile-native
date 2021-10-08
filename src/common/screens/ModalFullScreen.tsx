@@ -61,7 +61,7 @@ const styles = ThemedStyles.create({
   header: [
     'rowJustifySpaceBetween',
     'alignCenter',
-    'paddingVertical',
+    'paddingVertical3x',
     'paddingHorizontal4x',
     'bcolorPrimaryBorder',
     'borderBottom1x',
