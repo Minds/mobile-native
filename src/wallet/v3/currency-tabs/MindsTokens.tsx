@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, TextStyle } from 'react-native';
+import number from '~/common/helpers/number';
 import MText from '../../../common/components/MText';
 import abbrev from '../../../common/helpers/abbrev';
 import ThemedStyles from '../../../styles/ThemedStyles';
@@ -59,7 +60,7 @@ const MindsTokens = ({
   return (
     <MText style={[styles.minds, textStyles]}>
       {isTokens ? '' : '$'}
-      {format(mindsF)}
+      {number(mindsF, 0, 2)}
       {isTokens ? (
         <MText
           style={[styles.cash, theme.colorSecondaryText, secondaryTextStyle]}>
@@ -76,7 +77,7 @@ const MindsTokens = ({
             theme.colorSecondaryText,
             cashAsPrimary ? textStyles : secondaryTextStyle,
           ]}>
-          · ${format(cash)}
+          · ${number(cash, 0, 2)}
         </MText>
       )}
     </MText>
