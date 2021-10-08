@@ -30,7 +30,7 @@ export default observer(function TokenPrice() {
         theme.bcolorPrimaryBorder,
         theme.border,
         theme.alignCenter,
-        theme.borderRadius10x,
+        theme.borderRadius20x,
         theme.rowJustifyStart,
         theme.paddingRight2x,
       ]}>

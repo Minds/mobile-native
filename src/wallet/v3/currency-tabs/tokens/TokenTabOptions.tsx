@@ -2,15 +2,12 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
 import { IconButton } from '~ui/icons';
 import { IconType } from 'react-native-elements';
 import { showNotification } from '../../../../../AppMessages';
 import i18n from '../../../../common/services/i18n.service';
-import ThemedStyles from '../../../../styles/ThemedStyles';
 import { WalletStoreType } from '../../../v2/createWalletStore';
 import { isConnected as isWalletConnected } from '../../useUniqueOnchain';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {
   BottomSheet,
   BottomSheetButton,
@@ -32,7 +29,6 @@ type ItemType = {
 
 const TokenTabOptions = observer((props: PropsType) => {
   const ref = React.useRef<any>();
-  const theme = ThemedStyles.style;
   const navigation = useNavigation();
   const isConnected = isWalletConnected(props.onchainStore);
   const address = props.walletStore.wallet.receiver.address || '';
