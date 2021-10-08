@@ -1,7 +1,7 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import { Text, Image, View, StyleSheet, Alert } from 'react-native';
+import { Image, View, StyleSheet, Alert } from 'react-native';
 
 import { observer, inject } from 'mobx-react';
 
@@ -25,6 +25,7 @@ import AnimatedSearch from './AnimatedSearch';
 import BottomSheet from '../../common/components/bottom-sheet/BottomSheet';
 import MenuItem from '../../common/components/bottom-sheet/MenuItem';
 import BottomSheetButton from '../../common/components/bottom-sheet/BottomSheetButton';
+import MText from '../../common/components/MText';
 
 type PropsTypes = {
   groupsBar: GroupsBarStore;

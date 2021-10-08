@@ -1,7 +1,7 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import { View, Text, Alert, Platform, ScrollView } from 'react-native';
+import { View, Alert, Platform, ScrollView } from 'react-native';
 
 import { ComponentsStyle as CmpS } from '../styles/Components';
 import { Version } from '../config/Version';
@@ -9,6 +9,7 @@ import Button from '../common/components/Button';
 import gitlab from '../common/services/gitlab.service';
 import ThemedStyles from '../styles/ThemedStyles';
 import TextInput from '../common/components/TextInput';
+import MText from '../common/components/MText';
 
 /**
  * Issue report screen

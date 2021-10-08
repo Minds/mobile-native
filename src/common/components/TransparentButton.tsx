@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { TouchableHighlight, Text, StyleSheet } from 'react-native';
 import { ComponentsStyle } from '../../styles/Components';
 import ThemedStyles from '../../styles/ThemedStyles';
+import MText from './MText';
 
 export default class TransparentButton extends Component {
   onPressAction = () => {

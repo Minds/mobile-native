@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 
 import {
-  Text,
   View,
   Image,
   FlatList,
@@ -31,6 +30,7 @@ import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
 import ActivityIndicator from '../common/components/ActivityIndicator';
 import KeyboardSpacingView from '../common/components/KeyboardSpacingView';
+import MText from '../common/components/MText';
 
 const keyExtractor = item => item.rowKey;
 

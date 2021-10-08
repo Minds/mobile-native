@@ -16,6 +16,7 @@ import i18n from '../common/services/i18n.service';
 import GroupModel from './GroupModel';
 import ThemedStyles from '../styles/ThemedStyles';
 import ActivityIndicator from '../common/components/ActivityIndicator';
+import MText from '../common/components/MText';
 
 @inject('groupsBar')
 @observer

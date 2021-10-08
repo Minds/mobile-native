@@ -3,22 +3,22 @@ import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import {
   TouchableOpacity,
-  Text,
   StyleSheet,
   ScrollView,
+  TextStyle,
   View,
   StyleProp,
   ViewStyle,
-  TextStyle,
 } from 'react-native';
 
 import ThemedStyles from '../../styles/ThemedStyles';
+import MText from './MText';
 
 interface PropsType {
   tagStyle?: StyleProp<ViewStyle>;
   tagSelectedStyle?: StyleProp<ViewStyle>;
-  textSelectedStyle?: StyleProp<MTextStyle>;
-  textStyle?: StyleProp<MTextStyle>;
+  textSelectedStyle?: StyleProp<TextStyle>;
+  textStyle?: StyleProp<TextStyle>;
   onTagDeleted: (string) => void;
   onTagAdded: (string) => void;
   tags: Array<{ value: string; selected: boolean }>;

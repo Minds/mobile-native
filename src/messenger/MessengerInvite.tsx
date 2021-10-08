@@ -1,11 +1,12 @@
 //@ts-nocheck
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import { observer } from 'mobx-react';
 
 import Button from '../common/components/Button';
 import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
+import MText from '../common/components/MText';
 
 /**
  * Messenger Invite

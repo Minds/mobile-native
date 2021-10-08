@@ -3,12 +3,13 @@ import React, { Component } from 'react';
 
 import { observer } from 'mobx-react';
 
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 
 import { Icon } from 'react-native-elements';
 import i18nService from '../services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import TextInput from './TextInput';
+import MText from './MText';
 
 /**
  * Tag Input Component

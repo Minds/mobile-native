@@ -10,6 +10,7 @@ import UserTypeahead from './user-typeahead/UserTypeahead';
 import userTypeaheadService from './user-typeahead/UserTypeaheadService';
 import logService from '../services/log.service';
 import ThemedStyles from '../../styles/ThemedStyles';
+import MText from './MText';
 
 type PropsType = {
   text: string;

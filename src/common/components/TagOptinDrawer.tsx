@@ -1,6 +1,6 @@
 //@ts-nocheck
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import { inject, observer } from 'mobx-react';
 import Switch from 'react-native-switch-pro';
 import Modal from 'react-native-modal';
@@ -10,6 +10,7 @@ import TagSelect from './TagSelect';
 import TagInput from './TagInput';
 import i18n from '../services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
+import MText from './MText';
 
 type Props = any;
 

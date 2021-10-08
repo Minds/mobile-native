@@ -6,7 +6,6 @@ import {
   Image,
   StyleSheet,
   Keyboard,
-  Text,
   View,
 } from 'react-native';
 
@@ -17,6 +16,7 @@ import { MINDS_CDN_URI } from '../config/Config';
 import { FLAG_SUBSCRIBE, FLAG_VIEW } from '../common/Permissions';
 import SubscriptionButton from '../channel/subscription/SubscriptionButton';
 import ThemedStyles from '../styles/ThemedStyles';
+import MText from '../common/components/MText';
 
 type PropsType = {
   row: any;
