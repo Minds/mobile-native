@@ -46,8 +46,8 @@ const NotificationsTabIcon = observer((props: PropsType) => {
 
   return (
     <View style={styles.container}>
-      <Icon name="notification" active={active} />
-      {showIndicator && Indicator}
+      <Icon size="large" name="notification" active={active} />
+      {Indicator}
     </View>
   );
 });
@@ -63,14 +63,14 @@ const styles = StyleSheet.create({
     opacity: 1,
     position: 'absolute',
     top: 1,
-    left: 16,
+    left: 15,
   },
   unread: {
     zIndex: 9999,
     opacity: 1,
     position: 'absolute',
     top: 3.5,
-    left: 18,
+    left: 17,
   },
 });
 

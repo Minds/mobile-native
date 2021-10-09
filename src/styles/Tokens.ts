@@ -60,7 +60,7 @@ export const ICON_SIZES: IOUISizing = {
   tiny: UNIT.L,
   small: UNIT.XL,
   medium: UNIT.XXL,
-  large: UNIT.L * 2,
+  large: UNIT.XXL + UNIT.XS,
   huge: UNIT.XL * 2,
 };
 

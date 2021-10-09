@@ -20,7 +20,7 @@ const ChatTabIcon = ({ active }: PropsType) => {
 
   return (
     <View style={styles.container}>
-      <Icon name="chat" active={active} />
+      <Icon size="large" name="chat" active={active} />
       <ChatBubbleIcon chatStore={chat} />
     </View>
   );

@@ -9,8 +9,8 @@ import Animated, {
 } from 'react-native-reanimated';
 
 const SPRING = {
-  mass: 1,
-  damping: 8,
+  mass: 1.35,
+  damping: 12,
   stiffness: 800,
 };
 
