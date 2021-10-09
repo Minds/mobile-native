@@ -88,7 +88,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
             Array [
               Object {
                 "fontSize": 20,
-                "marginLeft": 32,
+                "marginLeft": 28,
               },
               Object {
                 "paddingVertical": 12,
@@ -128,10 +128,10 @@ exports[`LoginScreen component should renders correctly 1`] = `
           focusable={true}
           hitSlop={
             Object {
-              "bottom": 10.666666666666666,
-              "left": 10.666666666666666,
-              "right": 10.666666666666666,
-              "top": 10.666666666666666,
+              "bottom": 9.333333333333332,
+              "left": 9.333333333333332,
+              "right": 9.333333333333332,
+              "top": 9.333333333333332,
             }
           }
           onBlur={[Function]}
@@ -163,8 +163,8 @@ exports[`LoginScreen component should renders correctly 1`] = `
                     "overflow": "hidden",
                   },
                   Object {
-                    "height": 32,
-                    "width": 32,
+                    "height": 28,
+                    "width": 28,
                   },
                 ]
               }
@@ -175,7 +175,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                   Array [
                     Object {
                       "color": "#7D7D82",
-                      "fontSize": 32,
+                      "fontSize": 28,
                     },
                     undefined,
                     Object {

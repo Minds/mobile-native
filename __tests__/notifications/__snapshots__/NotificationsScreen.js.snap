@@ -53,8 +53,8 @@ Array [
                   Object {
                     "alignItems": "center",
                     "flex": 1,
-                    "paddingBottom": 17,
-                    "paddingTop": 14,
+                    "height": 52,
+                    "paddingBottom": 3,
                   },
                 ],
                 undefined,
@@ -180,8 +180,8 @@ Array [
                   Object {
                     "alignItems": "center",
                     "flex": 1,
-                    "paddingBottom": 17,
-                    "paddingTop": 14,
+                    "height": 52,
+                    "paddingBottom": 3,
                   },
                 ],
                 undefined,
@@ -307,8 +307,8 @@ Array [
                   Object {
                     "alignItems": "center",
                     "flex": 1,
-                    "paddingBottom": 17,
-                    "paddingTop": 14,
+                    "height": 52,
+                    "paddingBottom": 3,
                   },
                 ],
                 undefined,
@@ -371,7 +371,7 @@ Array [
                         Array [
                           Object {
                             "color": "#7D7D82",
-                            "fontSize": 22.56,
+                            "fontSize": 22.080000000000002,
                           },
                           undefined,
                           Object {
@@ -434,8 +434,8 @@ Array [
                   Object {
                     "alignItems": "center",
                     "flex": 1,
-                    "paddingBottom": 17,
-                    "paddingTop": 14,
+                    "height": 52,
+                    "paddingBottom": 3,
                   },
                 ],
                 undefined,
@@ -498,7 +498,7 @@ Array [
                         Array [
                           Object {
                             "color": "#7D7D82",
-                            "fontSize": 20.16,
+                            "fontSize": 19.200000000000003,
                           },
                           undefined,
                           Object {
@@ -561,8 +561,8 @@ Array [
                   Object {
                     "alignItems": "center",
                     "flex": 1,
-                    "paddingBottom": 17,
-                    "paddingTop": 14,
+                    "height": 52,
+                    "paddingBottom": 3,
                   },
                 ],
                 undefined,
@@ -625,7 +625,7 @@ Array [
                         Array [
                           Object {
                             "color": "#7D7D82",
-                            "fontSize": 24,
+                            "fontSize": 23.04,
                           },
                           undefined,
                           Object {
@@ -688,8 +688,8 @@ Array [
                   Object {
                     "alignItems": "center",
                     "flex": 1,
-                    "paddingBottom": 17,
-                    "paddingTop": 14,
+                    "height": 52,
+                    "paddingBottom": 3,
                   },
                 ],
                 undefined,
