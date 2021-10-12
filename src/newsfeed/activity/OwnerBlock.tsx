@@ -36,8 +36,15 @@ type PropsType = {
   searchResultStore: SearchResultStoreType;
 };
 
-const getLastRoute = (navigation: NavigationProp<any>): NavigationRouteV5 => {
-  const routes = navigation.getState().routes;
+const getLastRoute = (
+  navigation: NavigationProp<any>,
+): NavigationRouteV5 | null => {
+  const routes = navigation.getState?.().routes;
+
+  if (!routes) {
+    return null;
+  }
+
   return routes[routes.length - 1];
 };
 
@@ -59,11 +66,15 @@ class OwnerBlock extends PureComponent<PropsType> {
       this.props.searchResultStore.user.searchBarItemTap(channel);
     }
 
+    if (!this.props.navigation) {
+      return null;
+    }
+
     const lastRoute = getLastRoute(this.props.navigation);
     /**
      * do not navigate to channel if we were already in its page
      **/
-    if (lastRoute.name === 'Channel') {
+    if (lastRoute && lastRoute.name === 'Channel') {
       const currentScreenChannelGuid =
         lastRoute.params?.guid || lastRoute.params?.entity?.guid;
       if (currentScreenChannelGuid === channel.guid) {
@@ -72,12 +83,10 @@ class OwnerBlock extends PureComponent<PropsType> {
       }
     }
 
-    if (this.props.navigation) {
-      this.props.navigation.push('Channel', {
-        guid: channel.guid,
-        entity: channel.ownerObj,
-      });
-    }
+    this.props.navigation.push('Channel', {
+      guid: channel.guid,
+      entity: channel.ownerObj,
+    });
   };
 
   _onNavToChannelPress = () => {
