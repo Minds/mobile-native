@@ -330,7 +330,17 @@ exports[`Activity screen component renders correctly  1`] = `
               onStartShouldSetResponder={[Function]}
             >
               <View
-                style={[Function]}
+                collapsable={false}
+                nativeID="animatedComponent"
+                style={
+                  Object {
+                    "transform": Array [
+                      Object {
+                        "scale": 1,
+                      },
+                    ],
+                  }
+                }
               >
                 <View
                   style={
@@ -818,7 +828,17 @@ exports[`Activity screen component renders correctly  1`] = `
           testID="Thumb up activity button"
         >
           <View
-            style={[Function]}
+            collapsable={false}
+            nativeID="animatedComponent"
+            style={
+              Object {
+                "transform": Array [
+                  Object {
+                    "scale": 1,
+                  },
+                ],
+              }
+            }
           >
             <View
               style={
@@ -902,7 +922,17 @@ exports[`Activity screen component renders correctly  1`] = `
           testID="Thumb down activity button"
         >
           <View
-            style={[Function]}
+            collapsable={false}
+            nativeID="animatedComponent"
+            style={
+              Object {
+                "transform": Array [
+                  Object {
+                    "scale": 1,
+                  },
+                ],
+              }
+            }
           >
             <View
               style={
@@ -986,7 +1016,17 @@ exports[`Activity screen component renders correctly  1`] = `
           testID=""
         >
           <View
-            style={[Function]}
+            collapsable={false}
+            nativeID="animatedComponent"
+            style={
+              Object {
+                "transform": Array [
+                  Object {
+                    "scale": 1,
+                  },
+                ],
+              }
+            }
           >
             <View
               style={
@@ -1130,7 +1170,17 @@ exports[`Activity screen component renders correctly  1`] = `
             testID="Remind activity button"
           >
             <View
-              style={[Function]}
+              collapsable={false}
+              nativeID="animatedComponent"
+              style={
+                Object {
+                  "transform": Array [
+                    Object {
+                      "scale": 1,
+                    },
+                  ],
+                }
+              }
             >
               <View
                 style={
@@ -1231,7 +1281,17 @@ exports[`Activity screen component renders correctly  1`] = `
             onStartShouldSetResponder={[Function]}
           >
             <View
-              style={[Function]}
+              collapsable={false}
+              nativeID="animatedComponent"
+              style={
+                Object {
+                  "transform": Array [
+                    Object {
+                      "scale": 1,
+                    },
+                  ],
+                }
+              }
             >
               <View
                 style={

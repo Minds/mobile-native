@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, { useMemo } from 'react';
+import { View, StyleSheet, ViewStyle } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -23,7 +23,6 @@ import {
 import { ColorsNameType } from '~styles/Colors';
 import { getPropStyles, getNumericSize, getNamedSize } from '~ui/helpers';
 import { getIconColor } from './helpers';
-import { useStyle, StyleOrCustom } from '~styles/ThemedStyles';
 
 const Fonts = {
   MaterialCommunityIcons,
@@ -42,7 +41,7 @@ export interface IIcon extends IUIBase {
   activeColor?: ColorsNameType;
   name: string;
   size?: IUISizing | number | string;
-  style?: StyleOrCustom | any;
+  style?: ViewStyle | any;
   active?: boolean;
   disabled?: boolean;
   disabledColor?: ColorsNameType;
@@ -65,29 +64,36 @@ function Icon({
     ICON_MAP[name] || ICON_MAP[ICON_DEFAULT];
 
   // gets the numeric size value from the legacy number and current string alternative
-  const sizeNumeric = getNumericSize(size, ICON_SIZES, ICON_SIZE_DEFAULT);
+  const sizeNumeric = useMemo(() => {
+    return getNumericSize(size, ICON_SIZES, ICON_SIZE_DEFAULT);
+  }, [size]);
+
   // get the string name from the legacy numbered size
-  const sizeNamed = getNamedSize(size, ICON_SIZES, ICON_SIZE_DEFAULT);
+  const sizeNamed = useMemo(() => {
+    return getNamedSize(size, ICON_SIZES, ICON_SIZE_DEFAULT);
+  }, [size]);
 
   // if the color is set, it returns it on top of it all -- rejecting the disabled and active states
   // otherwise keeps the default colors
-  const iconColor = getIconColor({
-    color,
-    active,
-    activeColor,
-    disabled,
-    disabledColor,
-    defaultColor: ICON_COLOR_DEFAULT,
-  });
+  const iconColor = useMemo(() => {
+    return getIconColor({
+      color,
+      active,
+      activeColor,
+      disabled,
+      disabledColor,
+      defaultColor: ICON_COLOR_DEFAULT,
+    });
+  }, [color, active, activeColor, disabled, disabledColor]);
 
   // realSize is an icon reducer alternative to keep icon proportion between font-families
   const realSize = sizeNumeric * ratio;
-  const containerStyles: StyleOrCustom[] = [
-    styles.container,
-    styles[sizeNamed],
-  ];
+  const containerStyles: ViewStyle[] = [styles.container, styles[sizeNamed]];
   // nested is used to discard the container styles when it is nested inside another base component
-  const extraStyles = !nested ? getPropStyles(common) : null;
+  const extraStyles = useMemo(() => {
+    return !nested ? getPropStyles(common) : null;
+  }, [nested, common]);
+
   const Component = Fonts[iconFont];
 
   if (extraStyles?.length) {
@@ -99,7 +105,7 @@ function Icon({
   }
 
   return (
-    <View style={useStyle(...containerStyles)}>
+    <View style={containerStyles}>
       <Component
         name={iconName}
         size={realSize}

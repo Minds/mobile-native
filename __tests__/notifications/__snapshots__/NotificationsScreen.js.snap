@@ -84,7 +84,17 @@ Array [
               onStartShouldSetResponder={[Function]}
             >
               <View
-                style={[Function]}
+                collapsable={false}
+                nativeID="animatedComponent"
+                style={
+                  Object {
+                    "transform": Array [
+                      Object {
+                        "scale": 1,
+                      },
+                    ],
+                  }
+                }
               >
                 <View
                   style={
@@ -211,7 +221,17 @@ Array [
               onStartShouldSetResponder={[Function]}
             >
               <View
-                style={[Function]}
+                collapsable={false}
+                nativeID="animatedComponent"
+                style={
+                  Object {
+                    "transform": Array [
+                      Object {
+                        "scale": 1,
+                      },
+                    ],
+                  }
+                }
               >
                 <View
                   style={
@@ -338,7 +358,17 @@ Array [
               onStartShouldSetResponder={[Function]}
             >
               <View
-                style={[Function]}
+                collapsable={false}
+                nativeID="animatedComponent"
+                style={
+                  Object {
+                    "transform": Array [
+                      Object {
+                        "scale": 1,
+                      },
+                    ],
+                  }
+                }
               >
                 <View
                   style={
@@ -465,7 +495,17 @@ Array [
               onStartShouldSetResponder={[Function]}
             >
               <View
-                style={[Function]}
+                collapsable={false}
+                nativeID="animatedComponent"
+                style={
+                  Object {
+                    "transform": Array [
+                      Object {
+                        "scale": 1,
+                      },
+                    ],
+                  }
+                }
               >
                 <View
                   style={
@@ -592,7 +632,17 @@ Array [
               onStartShouldSetResponder={[Function]}
             >
               <View
-                style={[Function]}
+                collapsable={false}
+                nativeID="animatedComponent"
+                style={
+                  Object {
+                    "transform": Array [
+                      Object {
+                        "scale": 1,
+                      },
+                    ],
+                  }
+                }
               >
                 <View
                   style={
@@ -719,7 +769,17 @@ Array [
               onStartShouldSetResponder={[Function]}
             >
               <View
-                style={[Function]}
+                collapsable={false}
+                nativeID="animatedComponent"
+                style={
+                  Object {
+                    "transform": Array [
+                      Object {
+                        "scale": 1,
+                      },
+                    ],
+                  }
+                }
               >
                 <View
                   style={
