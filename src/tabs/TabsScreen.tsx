@@ -159,6 +159,7 @@ const Tabs = observer(function ({ navigation }) {
     <View style={theme.flexContainer}>
       <Topbar navigation={navigation} />
       <Tab.Navigator
+        detachInactiveScreens={false}
         initialRouteName="Newsfeed"
         tabBar={tabBar}
         screenOptions={tabOptions}>
