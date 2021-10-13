@@ -11,6 +11,7 @@ import {
   Dimensions,
   PlatformIOSStatic,
 } from 'react-native';
+import PerformanceScreen from '../performance/PerformanceScreen';
 import NewsfeedScreen from '../newsfeed/NewsfeedScreen';
 import NotificationsScreen from '../notifications/v3/NotificationsScreen';
 import ThemedStyles, { useMemoStyle } from '../styles/ThemedStyles';
@@ -167,6 +168,7 @@ const Tabs = observer(function ({ navigation }) {
           component={NewsfeedScreen}
           options={{ tabBarTestID: 'Menu tab button' }}
         />
+        <Tab.Screen name="Performance" component={PerformanceScreen} />
         <Tab.Screen
           name="Discovery"
           component={DiscoveryV2Screen}
@@ -257,6 +259,11 @@ const tabOptions = ({ route }): BottomTabNavigationOptions => ({
       case 'Discovery':
         iconName = 'search';
         break;
+
+      case 'Performance':
+        iconName = 'dev';
+        break;
+
       case 'Notifications':
         return <NotificationIcon active={focused} />;
       case 'CaptureTab':

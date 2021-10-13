@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, StyleSheet } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -23,7 +23,7 @@ import {
 import { ColorsNameType } from '~styles/Colors';
 import { getPropStyles, getNumericSize, getNamedSize } from '~ui/helpers';
 import { getIconColor } from './helpers';
-import { useStyle, StyleOrCustom } from '~styles/ThemedStyles';
+import { useStyle, useMemoStyle, StyleOrCustom } from '~styles/ThemedStyles';
 
 const Fonts = {
   MaterialCommunityIcons,
@@ -106,6 +106,230 @@ function Icon({
         color={iconColor}
         testID={testID}
       />
+    </View>
+  );
+}
+
+export function IconM({
+  color = null,
+  name = ICON_DEFAULT,
+  size = ICON_SIZE_DEFAULT,
+  style,
+  active = false,
+  activeColor = ICON_COLOR_ACTIVE,
+  disabled = false,
+  disabledColor = ICON_COLOR_DISABLED,
+  nested = false,
+  testID,
+  ...common
+}: IIcon) {
+  const { font: iconFont, name: iconName, ratio = 1 } =
+    ICON_MAP[name] || ICON_MAP[ICON_DEFAULT];
+
+  // gets the numeric size value from the legacy number and current string alternative
+  const sizeNumeric = getNumericSize(size, ICON_SIZES, ICON_SIZE_DEFAULT);
+  // get the string name from the legacy numbered size
+  const sizeNamed = getNamedSize(size, ICON_SIZES, ICON_SIZE_DEFAULT);
+
+  // if the color is set, it returns it on top of it all -- rejecting the disabled and active states
+  // otherwise keeps the default colors
+  const iconColor = getIconColor({
+    color,
+    active,
+    activeColor,
+    disabled,
+    disabledColor,
+    defaultColor: ICON_COLOR_DEFAULT,
+  });
+
+  // realSize is an icon reducer alternative to keep icon proportion between font-families
+  const realSize = sizeNumeric * ratio;
+  const containerStyles: StyleOrCustom[] = [
+    styles.container,
+    styles[sizeNamed],
+  ];
+  // nested is used to discard the container styles when it is nested inside another base component
+  const extraStyles = !nested ? getPropStyles(common) : null;
+  const Component = Fonts[iconFont];
+
+  if (extraStyles?.length) {
+    containerStyles.push(...extraStyles);
+  }
+
+  if (style) {
+    containerStyles.push(style);
+  }
+
+  return (
+    <View style={useMemoStyle(containerStyles, [style])}>
+      <Component
+        name={iconName}
+        size={realSize}
+        color={iconColor}
+        testID={testID}
+      />
+    </View>
+  );
+}
+
+export function IconB({
+  color = null,
+  name = ICON_DEFAULT,
+  size = ICON_SIZE_DEFAULT,
+  style,
+  active = false,
+  activeColor = ICON_COLOR_ACTIVE,
+  disabled = false,
+  disabledColor = ICON_COLOR_DISABLED,
+  nested = false,
+  testID,
+  ...common
+}: IIcon) {
+  const { font: iconFont, name: iconName, ratio = 1 } =
+    ICON_MAP[name] || ICON_MAP[ICON_DEFAULT];
+
+  // gets the numeric size value from the legacy number and current string alternative
+  const sizeNumeric = getNumericSize(size, ICON_SIZES, ICON_SIZE_DEFAULT);
+  // get the string name from the legacy numbered size
+  const sizeNamed = getNamedSize(size, ICON_SIZES, ICON_SIZE_DEFAULT);
+
+  // if the color is set, it returns it on top of it all -- rejecting the disabled and active states
+  // otherwise keeps the default colors
+  const iconColor = getIconColor({
+    color,
+    active,
+    activeColor,
+    disabled,
+    disabledColor,
+    defaultColor: ICON_COLOR_DEFAULT,
+  });
+
+  // realSize is an icon reducer alternative to keep icon proportion between font-families
+  const realSize = sizeNumeric * ratio;
+  const containerStyles: any[] = [styles.container, styles[sizeNamed]];
+  // nested is used to discard the container styles when it is nested inside another base component
+  const extraStyles = !nested ? getPropStyles(common) : null;
+  const Component = Fonts[iconFont];
+
+  if (extraStyles?.length) {
+    containerStyles.push(...extraStyles);
+  }
+
+  if (style) {
+    containerStyles.push(style);
+  }
+
+  return (
+    <View style={containerStyles}>
+      <Component
+        name={iconName}
+        size={realSize}
+        color={iconColor}
+        testID={testID}
+      />
+    </View>
+  );
+}
+
+export function IconC({
+  color = null,
+  name = ICON_DEFAULT,
+  size = ICON_SIZE_DEFAULT,
+  style,
+  active = false,
+  activeColor = ICON_COLOR_ACTIVE,
+  disabled = false,
+  disabledColor = ICON_COLOR_DISABLED,
+  nested = false,
+  testID,
+  ...common
+}: IIcon) {
+  const { font: iconFont, name: iconName, ratio = 1 } =
+    ICON_MAP[name] || ICON_MAP[ICON_DEFAULT];
+
+  // gets the numeric size value from the legacy number and current string alternative
+  const sizeNumeric = useMemo(() => {
+    return getNumericSize(size, ICON_SIZES, ICON_SIZE_DEFAULT);
+  }, [size]);
+  // get the string name from the legacy numbered size
+  const sizeNamed = useMemo(() => {
+    return getNamedSize(size, ICON_SIZES, ICON_SIZE_DEFAULT);
+  }, [size]);
+
+  // if the color is set, it returns it on top of it all -- rejecting the disabled and active states
+  // otherwise keeps the default colors
+  const iconColor = useMemo(() => {
+    return getIconColor({
+      color,
+      active,
+      activeColor,
+      disabled,
+      disabledColor,
+      defaultColor: ICON_COLOR_DEFAULT,
+    });
+  }, [color, active, activeColor, disabled, disabledColor]);
+
+  // realSize is an icon reducer alternative to keep icon proportion between font-families
+  const realSize = sizeNumeric * ratio;
+  const containerStyles: any[] = [styles.container, styles[sizeNamed]];
+  // nested is used to discard the container styles when it is nested inside another base component
+  const extraStyles = !nested ? getPropStyles(common) : null;
+  const Component = Fonts[iconFont];
+
+  if (extraStyles?.length) {
+    containerStyles.push(...extraStyles);
+  }
+
+  if (style) {
+    containerStyles.push(style);
+  }
+
+  return (
+    <View style={containerStyles}>
+      <Component
+        name={iconName}
+        size={realSize}
+        color={iconColor}
+        testID={testID}
+      />
+    </View>
+  );
+}
+
+export function IconD({
+  color = '#000000',
+  name = ICON_DEFAULT,
+  size = ICON_SIZE_DEFAULT,
+}: IIcon) {
+  const { font: iconFont, name: iconName, ratio = 1 } =
+    ICON_MAP[name] || ICON_MAP[ICON_DEFAULT];
+
+  // gets the numeric size value from the legacy number and current string alternative
+  const sizeNumeric = useMemo(() => {
+    return getNumericSize(size, ICON_SIZES, ICON_SIZE_DEFAULT);
+  }, [size]);
+
+  // if the color is set, it returns it  top of it all -- rejecting the disabled and active states
+  // otherwise keeps the default colors
+  // const iconColor = useMemo(() => {
+  //   return getIconColor({
+  //     color,
+  //     active,
+  //     activeColor,
+  //     disabled,
+  //     disabledColor,
+  //     defaultColor: ICON_COLOR_DEFAULT,
+  //   });
+  // }, [color, active, activeColor, disabled, disabledColor]);
+
+  // realSize is an icon reducer alternative to keep icon proportion between font-families
+  const realSize = sizeNumeric * ratio;
+  // nested is used to discard the container styles when it is nested inside another base component
+  const Component = Fonts[iconFont];
+
+  return (
+    <View style={[styles.container, styles[size]]}>
+      <Component name={iconName} size={realSize} color={color} />
     </View>
   );
 }
