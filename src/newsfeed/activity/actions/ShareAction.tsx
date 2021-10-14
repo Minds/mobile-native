@@ -90,6 +90,7 @@ export default observer(function ShareAction({ entity }: PropsType) {
     <>
       <IconButtonNext
         scale
+        fill
         style={actionsContainerStyle}
         onPress={localStore.onPress}
         name="share"

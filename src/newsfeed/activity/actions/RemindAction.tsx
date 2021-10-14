@@ -18,7 +18,7 @@ import {
   MenuItem,
 } from '../../../common/components/bottom-sheet';
 
-const CounterSpaced: any = withSpacer(Counter);
+const CounterSpaced = withSpacer(Counter);
 
 type PropsTypes = {
   entity: ActivityModel | BlogModel;
@@ -126,6 +126,7 @@ export default function ({ entity, hideCount }: PropsTypes) {
         disabled={disabled}
         name="remind"
         size="small"
+        fill
         active={reminded}
         onPress={showDropdown}
         extra={

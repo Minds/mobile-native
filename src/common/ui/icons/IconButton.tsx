@@ -11,12 +11,14 @@ import { ICON_SIZES, ICON_SIZE_DEFAULT, IUISizing } from '~styles/Tokens';
 import { getNumericSize, getPropStyles } from '~ui/helpers';
 import PressableScale from '~/common/components/PressableScale';
 import withSpacer from '~ui/spacer/withSpacer';
+import ThemedStyles from '~/styles/ThemedStyles';
 
 const SLOP_PROP = 1 / 3;
 
 export interface IIconButton extends IIcon {
   onPress: () => void;
   scale?: boolean;
+  fill?: boolean;
   extra?: any;
 }
 
@@ -25,6 +27,7 @@ export interface IIconButtonNext extends IIconNext {
   scale?: boolean;
   style?: ViewStyle | any;
   extra?: any;
+  fill?: boolean;
 }
 
 export const IconButtonNext = ({
@@ -33,6 +36,7 @@ export const IconButtonNext = ({
   style,
   scale,
   extra,
+  fill,
   ...more
 }: IIconButtonNext) => {
   const size: IUISizing | any = more?.size || 'medium';
@@ -51,9 +55,16 @@ export const IconButtonNext = ({
   }, [size]);
 
   const onStyle = ({ pressed }: any) => {
+    if (fill) {
+      if (pressed === true) {
+        return [styles.pressed, styles.fill];
+      }
+      return [styles.released, styles.fill];
+    }
     if (pressed === true) {
       return styles.pressed;
     }
+    return styles.released;
   };
 
   const PressableComponent = scale ? PressableScale : Pressable;
@@ -86,6 +97,7 @@ export default function IconButton({
   style,
   testID,
   scale,
+  fill,
   extra,
   ...more
 }: IIconButton) {
@@ -113,9 +125,16 @@ export default function IconButton({
   }, [size]);
 
   const onStyle = ({ pressed }: any) => {
+    if (fill) {
+      if (pressed === true) {
+        return [styles.pressed, styles.fill];
+      }
+      return [styles.released, styles.fill];
+    }
     if (pressed === true) {
       return styles.pressed;
     }
+    return styles.released;
   };
 
   const PressableComponent = scale ? PressableScale : Pressable;
@@ -143,10 +162,18 @@ export default function IconButton({
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    position: 'relative',
+    ...ThemedStyles.style.alignCenter,
+  },
+  released: {
+    ...ThemedStyles.style.alignCenter,
+  },
+  fill: {
+    ...ThemedStyles.style.centered,
+    ...StyleSheet.absoluteFillObject,
   },
   pressed: {
+    ...ThemedStyles.style.alignCenter,
     opacity: 0.75,
   },
   wrapper: {

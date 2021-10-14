@@ -6,7 +6,7 @@ import abbrev from '../../../common/helpers/abbrev';
 import ThemedStyles from '../../../styles/ThemedStyles';
 
 type PropsType = {
-  size: number;
+  size?: number;
   count: number;
   testID?: string;
 };

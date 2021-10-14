@@ -10,11 +10,14 @@ import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import { FLAG_VOTE } from '../../../common/Permissions';
 import remoteAction from '../../../common/RemoteAction';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
-import { actionsContainerStyle } from './styles';
+import { actionsContainerStyle, actionsContainerWrapper } from './styles';
 import PressableScale from '~/common/components/PressableScale';
+import withSpacer from '~ui/spacer/withSpacer';
+
+const CounterSpaced = withSpacer(Counter);
 
 // prevent double tap in touchable
-const TouchableOpacityCustom = withPreventDoubleTap(PressableScale);
+const PressableScaleCustom = withPreventDoubleTap(PressableScale);
 
 type PropsType = {
   entity: ActivityModel;
@@ -99,7 +102,6 @@ const AnimatedThumb = ({
       name={name}
       size={size}
       state={animation}
-      spacingRight="1x"
     />
   );
 };
@@ -137,13 +139,14 @@ class ThumbUpAction extends Component<PropsType> {
 
     const canVote = entity.can(FLAG_VOTE);
 
-    const Touchable = this.props.touchableComponent || TouchableOpacityCustom;
+    const Touchable = this.props.touchableComponent || PressableScaleCustom;
 
     return (
       <Touchable
+        style={actionsContainerStyle}
         onPress={this.toggleThumb}
         testID={`Thumb ${this.direction} activity button`}>
-        <View style={actionsContainerStyle}>
+        <View style={actionsContainerWrapper}>
           <AnimatedThumb
             canVote={canVote}
             voted={this.voted}
@@ -152,8 +155,8 @@ class ThumbUpAction extends Component<PropsType> {
             down={this.direction !== 'up'}
           />
           {count && !this.props.hideCount ? (
-            <Counter
-              // size={this.props.size * 0.7}
+            <CounterSpaced
+              left="1x"
               count={count}
               testID={`Thumb ${this.direction} count`}
             />
