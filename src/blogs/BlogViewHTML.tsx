@@ -166,7 +166,7 @@ const renderHTML = function (props) {
 
 type PropsType = {
   html: string;
-  onHeightUpdated: () => void;
+  onHeightUpdated?: () => void;
 };
 
 /**
@@ -200,9 +200,7 @@ export default class BlogViewHTML extends PureComponent<PropsType> {
 
     if (height > this.state.style.height) {
       this.setState({ style: { height, flex: 0 } }, () => {
-        if (this.props.onHeightUpdated) {
-          this.props.onHeightUpdated();
-        }
+        this.props.onHeightUpdated?.();
       });
     }
   };
