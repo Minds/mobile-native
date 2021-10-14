@@ -1,4 +1,3 @@
-import { TouchableOpacity } from '@gorhom/bottom-sheet';
 import React, { Component } from 'react';
 import {
   TextStyle,
@@ -6,6 +5,7 @@ import {
   GestureResponderEvent,
   TouchableOpacityProps,
   Platform,
+  TouchableOpacity,
 } from 'react-native';
 import { DotIndicator } from 'react-native-reanimated-indicators';
 
