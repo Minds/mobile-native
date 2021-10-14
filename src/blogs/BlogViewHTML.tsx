@@ -7,6 +7,7 @@ import { WebView } from 'react-native-webview';
 import ThemedStyles from '../styles/ThemedStyles';
 import CenteredLoading from '../common/components/CenteredLoading';
 import MText from '../common/components/MText';
+import openUrlService from '~/common/services/open-url.service';
 
 const style = () => `
   <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700,800'>
@@ -224,7 +225,7 @@ export default class BlogViewHTML extends PureComponent<PropsType> {
   onStateChange = event => {
     if (event.url.indexOf('http') > -1) {
       this.webview.stopLoading();
-      Linking.openURL(event.url);
+      openUrlService.open(event.url);
     }
   };
 
