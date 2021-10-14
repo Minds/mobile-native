@@ -264,11 +264,10 @@ export default class BlogViewHTML extends PureComponent<PropsType> {
         scrollEnabled={false}
         source={this.state.html}
         mixedContentMode="compatibility"
-        style={this.state.style}
+        style={[ThemedStyles.style.bgSecondaryBackground, this.state.style]}
         javaScriptEnabled={true}
         domStorageEnabled={true}
         allowsInlineMediaPlayback={true}
-        // startInLoadingState={true}
         injectedJavaScript={injectedJavaScript}
         onMessage={this.onMessage}
         // renderLoading={this.renderLoading}
