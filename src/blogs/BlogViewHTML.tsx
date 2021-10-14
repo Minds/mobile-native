@@ -1,7 +1,7 @@
 //@ts-nocheck
 import React, { PureComponent } from 'react';
 
-import { Dimensions, Linking, View } from 'react-native';
+import { Dimensions, Linking, Platform, View } from 'react-native';
 
 import { WebView } from 'react-native-webview';
 import ThemedStyles from '../styles/ThemedStyles';
@@ -245,6 +245,15 @@ export default class BlogViewHTML extends PureComponent<PropsType> {
   }
 
   /**
+   * @description a hack used only on android to prevent the link openning in webview
+   * @return { boolean }
+   */
+  private handleShouldStartLoadWithRequest({ url }: any) {
+    openUrlService.open(url);
+    return false;
+  }
+
+  /**
    * Render
    */
   render() {
@@ -263,10 +272,17 @@ export default class BlogViewHTML extends PureComponent<PropsType> {
         injectedJavaScript={injectedJavaScript}
         onMessage={this.onMessage}
         // renderLoading={this.renderLoading}
+        onShouldStartLoadWithRequest={
+          Platform.OS === 'android'
+            ? this.handleShouldStartLoadWithRequest
+            : undefined
+        }
         startInLoadingState={true}
         renderLoading={() => <View style={ThemedStyles.style.flexContainer} />}
         renderError={this.onError}
-        onNavigationStateChange={this.onStateChange}
+        onNavigationStateChange={
+          Platform.OS === 'android' ? undefined : this.onStateChange
+        }
       />
     );
   }
