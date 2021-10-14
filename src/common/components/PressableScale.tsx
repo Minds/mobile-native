@@ -9,7 +9,7 @@ export default function PressableScale(props) {
   const onPressInCb = useCallback(
     e => {
       Animated.timing(scaleAnimation, {
-        toValue: 0.75,
+        toValue: 0.8,
         duration: 125,
         useNativeDriver: true,
       }).start();

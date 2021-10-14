@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { View, StyleSheet, ViewStyle } from 'react-native';
+import withSpacer from '~ui/spacer/withSpacer';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -88,17 +89,19 @@ function Icon({
 
   // realSize is an icon reducer alternative to keep icon proportion between font-families
   const realSize = sizeNumeric * ratio;
-  const containerStyles: ViewStyle[] = [styles.container, styles[sizeNamed]];
+  // const containerStyles: ViewStyle[] = [styles.container, styles[sizeNamed]];
   // nested is used to discard the container styles when it is nested inside another base component
-  const extraStyles = useMemo(() => {
-    return !nested ? getPropStyles(common) : null;
-  }, [nested, common]);
+  const containerStyles = useMemo(() => {
+    const base = [styles.container, styles[sizeNamed]];
+    const extra = !nested ? getPropStyles(common) : null;
+    if (extra) {
+      base.push(extra);
+    }
+
+    return base;
+  }, [nested, common, sizeNamed]);
 
   const Component = Fonts[iconFont];
-
-  if (extraStyles?.length) {
-    containerStyles.push(...extraStyles);
-  }
 
   if (style) {
     containerStyles.push(style);
@@ -115,6 +118,62 @@ function Icon({
     </View>
   );
 }
+
+export interface IIconNext extends IUIBase {
+  color?: ColorsNameType | null;
+  name: string;
+  size?: IUISizing;
+  active?: boolean;
+  disabled?: boolean;
+}
+
+export function IconNext({
+  color = ICON_COLOR_DEFAULT,
+  name = ICON_DEFAULT,
+  size = ICON_SIZE_DEFAULT,
+  active = false,
+  disabled = false,
+  testID,
+}: IIconNext) {
+  const { font: iconFont, name: iconName, ratio = 1 } =
+    ICON_MAP[name] || ICON_MAP[ICON_DEFAULT];
+
+  const sizeNumeric = ICON_SIZES[size] || ICON_SIZES[ICON_SIZE_DEFAULT];
+
+  const iconColor = useMemo(() => {
+    return getIconColor({
+      color,
+      active,
+      activeColor: ICON_COLOR_ACTIVE,
+      disabled,
+      disabledColor: ICON_COLOR_DISABLED,
+      defaultColor: ICON_COLOR_DEFAULT,
+    });
+  }, [active, disabled]);
+
+  const realSize = sizeNumeric * ratio;
+
+  const containerStyles = useMemo(() => {
+    const base = [styles.container, styles[size]];
+
+    return base;
+  }, [size]);
+
+  const Component = Fonts[iconFont];
+
+  return (
+    <View style={containerStyles}>
+      <Component
+        name={iconName}
+        size={realSize}
+        color={iconColor}
+        testID={testID}
+      />
+    </View>
+  );
+}
+
+export const IconNextSpaced = withSpacer(IconNext);
 
 const styles = StyleSheet.create({
   container: {

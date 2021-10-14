@@ -16,15 +16,17 @@ export const getIconColor = ({
   disabledColor: ColorsNameType;
   defaultColor: ColorsNameType;
 }) => {
-  if (disabled === true && disabledColor) {
-    return ThemedStyles.getColor(disabledColor);
+  if (color && !active) {
+    return ThemedStyles.getColor(color);
   }
-  if (!color && active === true && activeColor) {
-    return ThemedStyles.getColor(activeColor);
-  }
-  if (!color) {
+
+  if (!color && !disabled && !active) {
     return ThemedStyles.getColor(defaultColor);
   }
 
-  return ThemedStyles.getColor(color);
+  if (active === true) {
+    return ThemedStyles.getColor(activeColor);
+  }
+
+  return ThemedStyles.getColor(disabledColor);
 };

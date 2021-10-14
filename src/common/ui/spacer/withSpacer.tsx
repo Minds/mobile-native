@@ -1,7 +1,6 @@
-import React from 'react';
-import { View } from 'react-native';
+import React, { useMemo } from 'react';
+import { View, ViewStyle } from 'react-native';
 import { getSpacingStyles } from '~ui/helpers';
-import { useMemoStyle, useStyle, StyleOrCustom } from '~styles/ThemedStyles';
 
 export interface ISpacer {
   top?: string;
@@ -14,7 +13,9 @@ export interface ISpacer {
   style?: any;
 }
 
-const withSpacer = Component => ({
+const withSpacer = <P extends object>(
+  Component: React.ComponentType<P>,
+): React.FC<P & ISpacer> => ({
   top,
   left,
   right,
@@ -22,34 +23,28 @@ const withSpacer = Component => ({
   horizontal,
   vertical,
   style,
-  memo,
   ...more
-}: ISpacer) => {
-  const styles: StyleOrCustom[] = [];
-  const spacing = getSpacingStyles({
-    top,
-    left,
-    right,
-    bottom,
-    horizontal,
-    vertical,
-  });
+}) => {
+  const styleList: ViewStyle[] = useMemo(() => {
+    const styles: ViewStyle[] = getSpacingStyles({
+      top,
+      left,
+      right,
+      bottom,
+      horizontal,
+      vertical,
+    });
 
-  if (spacing) {
-    styles.push(spacing);
-  }
+    if (style) {
+      styles.push(style);
+    }
 
-  if (style) {
-    styles.push(style);
-  }
-
-  const styleObject = memo
-    ? useMemoStyle(styles, [style])
-    : useStyle(...styles);
+    return styles;
+  }, [top, left, right, bottom, horizontal, vertical, style]);
 
   return (
-    <View style={styleObject}>
-      <Component {...more} />
+    <View style={styleList}>
+      <Component {...(more as P)} />
     </View>
   );
 };

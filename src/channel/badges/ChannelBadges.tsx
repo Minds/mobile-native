@@ -1,6 +1,6 @@
 import React, { FC, PureComponent } from 'react';
 import { TextStyle, ViewStyle } from 'react-native';
-import { Icon } from '~ui/icons';
+import { IconNextSpaced } from '~ui/icons';
 import type UserModel from '../UserModel';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
@@ -37,25 +37,21 @@ export default class ChannelBadges extends PureComponent<PropsType> {
    * Render
    */
   render() {
-    const size = this.props.size || 25;
+    // const size = this.props.size || 25;
+    const size = 'tiny';
     const channel = this.props.channel;
-
     const badges: Array<React.ReactNode> = [];
-
-    const style = this.props.iconStyle
-      ? [styles.icon, this.props.iconStyle]
-      : styles.icon;
 
     if (channel.plus) {
       badges.push(
         <BadgeTooltip
           label={i18n.t('channel.badge.plus')}
           color={ThemedStyles.getColor('Link')}>
-          <Icon
+          <IconNextSpaced
             active
             name="plus-circle-outline"
             size={size}
-            style={style}
+            horizontal="0x"
             key={1}
           />
         </BadgeTooltip>,
@@ -67,12 +63,11 @@ export default class ChannelBadges extends PureComponent<PropsType> {
         <BadgeTooltip
           label={i18n.t('channel.badge.verified')}
           color={ThemedStyles.getColor('SuccessBackground')}>
-          <Icon
+          <IconNextSpaced
             name="verified"
             size={size}
             color={channel.isAdmin() ? 'Green' : null}
-            active
-            style={[styles.icon, this.props.iconStyle as any]}
+            horizontal="0x"
             key={2}
           />
         </BadgeTooltip>,
@@ -84,7 +79,13 @@ export default class ChannelBadges extends PureComponent<PropsType> {
         <BadgeTooltip
           label={i18n.t('channel.badge.founder')}
           color={ThemedStyles.getColor('Link')}>
-          <Icon name="founder" active size={size} style={style} key={3} />
+          <IconNextSpaced
+            horizontal="0x"
+            name="founder"
+            active
+            size={size}
+            key={3}
+          />
         </BadgeTooltip>,
       );
     }

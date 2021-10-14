@@ -1,10 +1,9 @@
 import React from 'react';
 
-import { Linking, Platform, TouchableOpacity } from 'react-native';
+import { Linking, Platform } from 'react-native';
 
-import { IconButton } from '~ui/icons';
+import { IconButtonNext } from '~ui/icons';
 
-import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import type ActivityModel from '../../ActivityModel';
 import { observer, useLocalStore } from 'mobx-react';
@@ -17,9 +16,6 @@ import { ANDROID_CHAT_APP, MINDS_URI } from '../../../config/Config';
 import logService from '../../../common/services/log.service';
 import ShareService from '../../../share/ShareService';
 import { actionsContainerStyle } from './styles';
-
-// prevent double tap in touchable
-const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
 
 type PropsType = {
   entity: ActivityModel;
@@ -92,7 +88,7 @@ export default observer(function ShareAction({ entity }: PropsType) {
 
   return (
     <>
-      <IconButton
+      <IconButtonNext
         scale
         style={actionsContainerStyle}
         onPress={localStore.onPress}
