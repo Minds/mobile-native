@@ -1430,9 +1430,6 @@ exports[`Activity screen component renders correctly  1`] = `
               swipeThreshold={100}
             >
               <View
-                collapsable={false}
-                forwardedRef={[Function]}
-                nativeID="animatedComponent"
                 style={
                   Object {
                     "paddingBottom": 4,
@@ -1440,9 +1437,6 @@ exports[`Activity screen component renders correctly  1`] = `
                 }
               >
                 <View
-                  collapsable={false}
-                  forwardedRef={[Function]}
-                  nativeID="animatedComponent"
                   style={
                     Object {
                       "paddingBottom": 8,
@@ -1633,9 +1627,6 @@ exports[`Activity screen component renders correctly  1`] = `
                   </View>
                 </View>
                 <View
-                  collapsable={false}
-                  forwardedRef={[Function]}
-                  nativeID="animatedComponent"
                   style={
                     Object {
                       "paddingBottom": 8,
