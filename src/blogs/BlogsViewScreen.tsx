@@ -23,7 +23,7 @@ import Lock from '../wire/v2/lock/Lock';
 import BlogActionSheet from './BlogActionSheet';
 
 import BlogViewHTML from './BlogViewHTML';
-import type BlogsViewStore from './BlogsViewStore';
+import BlogsViewStore from './BlogsViewStore';
 import { AppStackParamList } from '../navigation/NavigationTypes';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -45,11 +45,12 @@ type PropsType = {
 /**
  * Blog View Screen
  */
-@inject('user', 'blogsView')
+@inject('user')
 @observer
 export default class BlogsViewScreen extends Component<PropsType> {
   listRef: any;
   commentsRef: any;
+  blogsView: BlogsViewStore;
 
   /**
    * Disable navigation bar
@@ -59,7 +60,7 @@ export default class BlogsViewScreen extends Component<PropsType> {
   };
 
   share = () => {
-    const blog = this.props.blogsView.blog;
+    const blog = this.blogsView.blog;
     if (blog) {
       shareService.share(blog.title, blog.perma_url);
     }
@@ -78,6 +79,7 @@ export default class BlogsViewScreen extends Component<PropsType> {
 
     this.listRef = React.createRef();
     this.commentsRef = React.createRef();
+    this.blogsView = props.blogsView ?? new BlogsViewStore();
   }
 
   /**
@@ -87,13 +89,13 @@ export default class BlogsViewScreen extends Component<PropsType> {
     const params = this.props.route.params;
     try {
       if (params.blog) {
-        await this.props.blogsView.setBlog(params.blog);
+        await this.blogsView.setBlog(params.blog);
 
         if (!params.blog.description) {
-          await this.props.blogsView.loadBlog(params.blog.guid);
+          await this.blogsView.loadBlog(params.blog.guid);
         }
       } else {
-        this.props.blogsView.reset();
+        this.blogsView.reset();
         let guid;
         if (params.slug) {
           guid = params.slug.substr(params.slug.lastIndexOf('-') + 1);
@@ -101,17 +103,17 @@ export default class BlogsViewScreen extends Component<PropsType> {
           guid = params.guid;
         }
 
-        await this.props.blogsView.loadBlog(guid);
+        await this.blogsView.loadBlog(guid);
       }
 
       // check permissions
-      if (!this.props.blogsView.blog?.can(FLAG_VIEW, true)) {
+      if (!this.blogsView.blog?.can(FLAG_VIEW, true)) {
         this.props.navigation.goBack();
         return;
       }
 
-      if (this.props.blogsView.blog) {
-        this.props.blogsView.blog.sendViewed('single');
+      if (this.blogsView.blog) {
+        this.blogsView.blog.sendViewed('single');
       }
     } catch (error) {
       logService.exception(error);
@@ -128,7 +130,7 @@ export default class BlogsViewScreen extends Component<PropsType> {
    * On component will unmount
    */
   componentWillUnmount() {
-    this.props.blogsView.reset();
+    this.blogsView.reset();
   }
 
   /**
@@ -145,7 +147,7 @@ export default class BlogsViewScreen extends Component<PropsType> {
    * Render blog
    */
   getBody() {
-    const blog = this.props.blogsView.blog;
+    const blog = this.blogsView.blog;
     if (!blog) return null;
 
     const theme = ThemedStyles.style;
@@ -244,7 +246,7 @@ export default class BlogsViewScreen extends Component<PropsType> {
       case i18n.t('disableComments'):
       case i18n.t('enableComments'):
         try {
-          await this.props.blogsView.blog?.toggleAllowComments();
+          await this.blogsView.blog?.toggleAllowComments();
         } catch (err) {
           console.error(err);
           this.showError();
@@ -275,16 +277,16 @@ export default class BlogsViewScreen extends Component<PropsType> {
   render() {
     const theme = ThemedStyles.style;
 
-    if (!this.props.blogsView.blog) {
+    if (!this.blogsView.blog) {
       return <CenteredLoading />;
     } else {
       // force observe on description
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const desc = this.props.blogsView.blog.description;
+      const desc = this.blogsView.blog.description;
     }
 
     // check async update of permissions
-    if (!this.props.blogsView.blog.can(FLAG_VIEW, true)) {
+    if (!this.blogsView.blog.can(FLAG_VIEW, true)) {
       this.props.navigation.goBack();
       return null;
     }
@@ -294,11 +296,11 @@ export default class BlogsViewScreen extends Component<PropsType> {
         {!this.state.error ? (
           <>
             <ScrollView ref={this.listRef}>{this.getBody()}</ScrollView>
-            {this.props.blogsView.comments && (
+            {this.blogsView.comments && (
               <CommentBottomSheet
                 ref={this.commentsRef}
                 hideContent={false}
-                commentsStore={this.props.blogsView.comments}
+                commentsStore={this.blogsView.comments}
               />
             )}
           </>
