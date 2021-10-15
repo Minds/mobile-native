@@ -3,43 +3,52 @@
 exports[`Comment action component renders correctly 1`] = `
 <preventDoubleTap(PressableScale)
   onPress={[Function]}
+  style={
+    Array [
+      Object {
+        "flex": 1,
+        "flexDirection": "column",
+      },
+      Object {
+        "margin": 4,
+      },
+      Object {
+        "paddingVertical": 12,
+      },
+      Object {
+        "alignItems": "center",
+      },
+    ]
+  }
 >
   <View
     style={
       Array [
         Object {
+          "alignItems": "center",
+        },
+        Object {
+          "margin": 4,
+        },
+        Object {
           "flexDirection": "row",
           "justifyContent": "center",
         },
         Object {
-          "paddingHorizontal": 12,
-        },
-        Object {
-          "paddingVertical": 16,
-        },
-        Object {
           "alignItems": "center",
+        },
+        Object {
+          "flexWrap": "wrap",
         },
       ]
     }
   >
-    <Icon
-      color="SecondaryText"
+    <Component
       name="chat-off"
       size="small"
-      style={
-        Array [
-          Object {
-            "color": "#7D7D82",
-          },
-          Object {
-            "marginRight": 4,
-          },
-        ]
-      }
     />
-    <Counter
-      size={15}
+    <Component
+      left="1x"
     />
   </View>
 </preventDoubleTap(PressableScale)>

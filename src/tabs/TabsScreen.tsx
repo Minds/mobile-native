@@ -159,6 +159,7 @@ const Tabs = observer(function ({ navigation }) {
     <View style={theme.flexContainer}>
       <Topbar navigation={navigation} />
       <Tab.Navigator
+        detachInactiveScreens={false}
         initialRouteName="Newsfeed"
         tabBar={tabBar}
         screenOptions={tabOptions}>
@@ -263,7 +264,7 @@ const tabOptions = ({ route }): BottomTabNavigationOptions => ({
         return <ComposeIcon style={styles.compose} />;
     }
 
-    return <Icon active={focused} name={iconName} />;
+    return <Icon size="large" active={focused} name={iconName} />;
   },
 });
 

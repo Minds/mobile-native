@@ -2,14 +2,10 @@
 
 exports[`Thumb action component renders correctly 1`] = `
 <Fragment>
-  <IconButton
+  <IconButtonNext
     disabled={false}
-    extra={
-      <Unknown
-        count={0}
-        left="1x"
-      />
-    }
+    extra={null}
+    fill={true}
     name="remind"
     onPress={[Function]}
     scale={true}
@@ -17,14 +13,14 @@ exports[`Thumb action component renders correctly 1`] = `
     style={
       Array [
         Object {
-          "flexDirection": "row",
-          "justifyContent": "center",
+          "flex": 1,
+          "flexDirection": "column",
         },
         Object {
-          "paddingHorizontal": 12,
+          "margin": 4,
         },
         Object {
-          "paddingVertical": 16,
+          "paddingVertical": 12,
         },
         Object {
           "alignItems": "center",

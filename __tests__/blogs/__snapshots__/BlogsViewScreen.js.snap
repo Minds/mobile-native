@@ -558,46 +558,48 @@ exports[`blog view screen component should renders correctly 1`] = `
                     style={
                       Array [
                         Object {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                          "justifyContent": "center",
-                          "overflow": "hidden",
+                          "marginHorizontal": 1,
                         },
-                        Object {
-                          "height": 16,
-                          "width": 16,
-                        },
-                        Array [
-                          Object {
-                            "marginHorizontal": 1,
-                          },
-                          Object {
-                            "color": "#1B85D6",
-                          },
-                        ],
                       ]
                     }
                   >
-                    <Text
-                      allowFontScaling={false}
+                    <View
                       style={
                         Array [
                           Object {
-                            "color": "#0085DD",
-                            "fontSize": 16,
+                            "alignItems": "center",
+                            "flexDirection": "row",
+                            "justifyContent": "center",
+                            "overflow": "hidden",
                           },
-                          undefined,
                           Object {
-                            "fontFamily": "Material Icons",
-                            "fontStyle": "normal",
-                            "fontWeight": "normal",
+                            "height": 16,
+                            "width": 16,
                           },
-                          Object {},
                         ]
                       }
                     >
-                      
-                    </Text>
+                      <Text
+                        allowFontScaling={false}
+                        style={
+                          Array [
+                            Object {
+                              "color": "#0085DD",
+                              "fontSize": 16,
+                            },
+                            undefined,
+                            Object {
+                              "fontFamily": "Material Icons",
+                              "fontStyle": "normal",
+                              "fontWeight": "normal",
+                            },
+                            Object {},
+                          ]
+                        }
+                      >
+                        
+                      </Text>
+                    </View>
                   </View>
                 </View>
               </View>
@@ -879,46 +881,48 @@ exports[`blog view screen component should renders correctly 1`] = `
                     style={
                       Array [
                         Object {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                          "justifyContent": "center",
-                          "overflow": "hidden",
+                          "marginHorizontal": 1,
                         },
-                        Object {
-                          "height": 16,
-                          "width": 16,
-                        },
-                        Array [
-                          Object {
-                            "marginHorizontal": 1,
-                          },
-                          Object {
-                            "color": "#1B85D6",
-                          },
-                        ],
                       ]
                     }
                   >
-                    <Text
-                      allowFontScaling={false}
+                    <View
                       style={
                         Array [
                           Object {
-                            "color": "#0085DD",
-                            "fontSize": 15.68,
+                            "alignItems": "center",
+                            "flexDirection": "row",
+                            "justifyContent": "center",
+                            "overflow": "hidden",
                           },
-                          undefined,
                           Object {
-                            "fontFamily": "Material Icons",
-                            "fontStyle": "normal",
-                            "fontWeight": "normal",
+                            "height": 16,
+                            "width": 16,
                           },
-                          Object {},
                         ]
                       }
                     >
-                      
-                    </Text>
+                      <Text
+                        allowFontScaling={false}
+                        style={
+                          Array [
+                            Object {
+                              "color": "#0085DD",
+                              "fontSize": 15.68,
+                            },
+                            undefined,
+                            Object {
+                              "fontFamily": "Material Icons",
+                              "fontStyle": "normal",
+                              "fontWeight": "normal",
+                            },
+                            Object {},
+                          ]
+                        }
+                      >
+                        
+                      </Text>
+                    </View>
                   </View>
                 </View>
               </View>

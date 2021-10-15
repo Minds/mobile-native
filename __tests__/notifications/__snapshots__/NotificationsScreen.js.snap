@@ -48,13 +48,15 @@ Array [
                 Object {
                   "alignItems": "center",
                   "justifyContent": "center",
+                  "position": "relative",
                 },
+                undefined,
                 Array [
                   Object {
                     "alignItems": "center",
                     "flex": 1,
-                    "paddingBottom": 17,
-                    "paddingTop": 14,
+                    "height": 52,
+                    "paddingBottom": 3,
                   },
                 ],
                 undefined,
@@ -67,10 +69,10 @@ Array [
               focusable={true}
               hitSlop={
                 Object {
-                  "bottom": 13.333333333333332,
-                  "left": 13.333333333333332,
-                  "right": 13.333333333333332,
-                  "top": 13.333333333333332,
+                  "bottom": 8,
+                  "left": 8,
+                  "right": 8,
+                  "top": 8,
                 }
               }
               onBlur={[Function]}
@@ -82,9 +84,23 @@ Array [
               onResponderTerminate={[Function]}
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                }
+              }
             >
               <View
-                style={[Function]}
+                style={
+                  Object {
+                    "transform": Array [
+                      Object {
+                        "scale": 1,
+                      },
+                    ],
+                  }
+                }
               >
                 <View
                   style={
@@ -175,13 +191,15 @@ Array [
                 Object {
                   "alignItems": "center",
                   "justifyContent": "center",
+                  "position": "relative",
                 },
+                undefined,
                 Array [
                   Object {
                     "alignItems": "center",
                     "flex": 1,
-                    "paddingBottom": 17,
-                    "paddingTop": 14,
+                    "height": 52,
+                    "paddingBottom": 3,
                   },
                 ],
                 undefined,
@@ -194,10 +212,10 @@ Array [
               focusable={true}
               hitSlop={
                 Object {
-                  "bottom": 13.333333333333332,
-                  "left": 13.333333333333332,
-                  "right": 13.333333333333332,
-                  "top": 13.333333333333332,
+                  "bottom": 8,
+                  "left": 8,
+                  "right": 8,
+                  "top": 8,
                 }
               }
               onBlur={[Function]}
@@ -209,9 +227,23 @@ Array [
               onResponderTerminate={[Function]}
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                }
+              }
             >
               <View
-                style={[Function]}
+                style={
+                  Object {
+                    "transform": Array [
+                      Object {
+                        "scale": 1,
+                      },
+                    ],
+                  }
+                }
               >
                 <View
                   style={
@@ -302,13 +334,15 @@ Array [
                 Object {
                   "alignItems": "center",
                   "justifyContent": "center",
+                  "position": "relative",
                 },
+                undefined,
                 Array [
                   Object {
                     "alignItems": "center",
                     "flex": 1,
-                    "paddingBottom": 17,
-                    "paddingTop": 14,
+                    "height": 52,
+                    "paddingBottom": 3,
                   },
                 ],
                 undefined,
@@ -321,10 +355,10 @@ Array [
               focusable={true}
               hitSlop={
                 Object {
-                  "bottom": 13.333333333333332,
-                  "left": 13.333333333333332,
-                  "right": 13.333333333333332,
-                  "top": 13.333333333333332,
+                  "bottom": 8,
+                  "left": 8,
+                  "right": 8,
+                  "top": 8,
                 }
               }
               onBlur={[Function]}
@@ -336,9 +370,23 @@ Array [
               onResponderTerminate={[Function]}
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                }
+              }
             >
               <View
-                style={[Function]}
+                style={
+                  Object {
+                    "transform": Array [
+                      Object {
+                        "scale": 1,
+                      },
+                    ],
+                  }
+                }
               >
                 <View
                   style={
@@ -371,7 +419,7 @@ Array [
                         Array [
                           Object {
                             "color": "#7D7D82",
-                            "fontSize": 22.56,
+                            "fontSize": 22.080000000000002,
                           },
                           undefined,
                           Object {
@@ -429,13 +477,15 @@ Array [
                 Object {
                   "alignItems": "center",
                   "justifyContent": "center",
+                  "position": "relative",
                 },
+                undefined,
                 Array [
                   Object {
                     "alignItems": "center",
                     "flex": 1,
-                    "paddingBottom": 17,
-                    "paddingTop": 14,
+                    "height": 52,
+                    "paddingBottom": 3,
                   },
                 ],
                 undefined,
@@ -448,10 +498,10 @@ Array [
               focusable={true}
               hitSlop={
                 Object {
-                  "bottom": 13.333333333333332,
-                  "left": 13.333333333333332,
-                  "right": 13.333333333333332,
-                  "top": 13.333333333333332,
+                  "bottom": 8,
+                  "left": 8,
+                  "right": 8,
+                  "top": 8,
                 }
               }
               onBlur={[Function]}
@@ -463,9 +513,23 @@ Array [
               onResponderTerminate={[Function]}
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                }
+              }
             >
               <View
-                style={[Function]}
+                style={
+                  Object {
+                    "transform": Array [
+                      Object {
+                        "scale": 1,
+                      },
+                    ],
+                  }
+                }
               >
                 <View
                   style={
@@ -498,7 +562,7 @@ Array [
                         Array [
                           Object {
                             "color": "#7D7D82",
-                            "fontSize": 20.16,
+                            "fontSize": 19.200000000000003,
                           },
                           undefined,
                           Object {
@@ -556,13 +620,15 @@ Array [
                 Object {
                   "alignItems": "center",
                   "justifyContent": "center",
+                  "position": "relative",
                 },
+                undefined,
                 Array [
                   Object {
                     "alignItems": "center",
                     "flex": 1,
-                    "paddingBottom": 17,
-                    "paddingTop": 14,
+                    "height": 52,
+                    "paddingBottom": 3,
                   },
                 ],
                 undefined,
@@ -575,10 +641,10 @@ Array [
               focusable={true}
               hitSlop={
                 Object {
-                  "bottom": 13.333333333333332,
-                  "left": 13.333333333333332,
-                  "right": 13.333333333333332,
-                  "top": 13.333333333333332,
+                  "bottom": 8,
+                  "left": 8,
+                  "right": 8,
+                  "top": 8,
                 }
               }
               onBlur={[Function]}
@@ -590,9 +656,23 @@ Array [
               onResponderTerminate={[Function]}
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                }
+              }
             >
               <View
-                style={[Function]}
+                style={
+                  Object {
+                    "transform": Array [
+                      Object {
+                        "scale": 1,
+                      },
+                    ],
+                  }
+                }
               >
                 <View
                   style={
@@ -625,7 +705,7 @@ Array [
                         Array [
                           Object {
                             "color": "#7D7D82",
-                            "fontSize": 24,
+                            "fontSize": 23.04,
                           },
                           undefined,
                           Object {
@@ -683,13 +763,15 @@ Array [
                 Object {
                   "alignItems": "center",
                   "justifyContent": "center",
+                  "position": "relative",
                 },
+                undefined,
                 Array [
                   Object {
                     "alignItems": "center",
                     "flex": 1,
-                    "paddingBottom": 17,
-                    "paddingTop": 14,
+                    "height": 52,
+                    "paddingBottom": 3,
                   },
                 ],
                 undefined,
@@ -702,10 +784,10 @@ Array [
               focusable={true}
               hitSlop={
                 Object {
-                  "bottom": 13.333333333333332,
-                  "left": 13.333333333333332,
-                  "right": 13.333333333333332,
-                  "top": 13.333333333333332,
+                  "bottom": 8,
+                  "left": 8,
+                  "right": 8,
+                  "top": 8,
                 }
               }
               onBlur={[Function]}
@@ -717,9 +799,23 @@ Array [
               onResponderTerminate={[Function]}
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                }
+              }
             >
               <View
-                style={[Function]}
+                style={
+                  Object {
+                    "transform": Array [
+                      Object {
+                        "scale": 1,
+                      },
+                    ],
+                  }
+                }
               >
                 <View
                   style={

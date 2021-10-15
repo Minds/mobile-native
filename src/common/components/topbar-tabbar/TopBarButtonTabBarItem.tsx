@@ -131,8 +131,8 @@ const styles = StyleSheet.create({
   },
   touchableContainer: {
     flex: 1,
-    paddingTop: 14,
-    paddingBottom: 17,
+    height: 52,
+    paddingBottom: 3,
     alignItems: 'center',
   },
   text: {

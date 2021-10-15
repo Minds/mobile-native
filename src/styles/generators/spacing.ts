@@ -8,8 +8,11 @@ function getSpacing(name) {
   const result = regex.exec(name);
   if (result) {
     const n = parseInt(result[1], 10);
-    if (n === 0 || n > 0) {
+    if (n > 0) {
       return n * STEP;
+    }
+    if (n === 0) {
+      return STEP / 4;
     }
   }
   return null;

@@ -1,59 +1,41 @@
-import React, { useCallback } from 'react';
-import { Pressable } from 'react-native';
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withSpring,
-  withTiming,
-  Easing,
-} from 'react-native-reanimated';
-
-const SPRING = {
-  mass: 1,
-  damping: 8,
-  stiffness: 800,
-};
-
-const TIMED = {
-  duration: 125,
-  easing: Easing.quad,
-};
+import React, { useCallback, useRef } from 'react';
+import { Pressable, Animated } from 'react-native';
 
 export default function PressableScale(props) {
   const { children, onPressIn, onPressOut, style, ...otherProps } = props;
 
-  const scale = useSharedValue(1);
-  const opacity = useSharedValue(1);
-
-  const animatedStyles = useAnimatedStyle(() => {
-    return {
-      transform: [{ scale: scale.value }],
-      opacity: opacity.value,
-    };
-  });
+  const scaleAnimation = useRef(new Animated.Value(1)).current;
 
   const onPressInCb = useCallback(
     e => {
-      scale.value = withTiming(0.84, TIMED);
-      opacity.value = withTiming(0.8, TIMED);
+      Animated.timing(scaleAnimation, {
+        toValue: 0.8,
+        duration: 125,
+        useNativeDriver: true,
+      }).start();
 
       if (onPressIn) {
         onPressIn(e);
       }
     },
-    [onPressIn, scale.value, opacity.value],
+    [onPressIn, scaleAnimation],
   );
 
   const onPressOutCb = useCallback(
     e => {
-      scale.value = withSpring(1, SPRING);
-      opacity.value = withTiming(1, TIMED);
+      Animated.spring(scaleAnimation, {
+        toValue: 1,
+        mass: 1.3,
+        damping: 20,
+        stiffness: 800,
+        useNativeDriver: true,
+      }).start();
 
       if (onPressOut) {
         onPressOut(e);
       }
     },
-    [onPressOut, scale.value, opacity.value],
+    [onPressOut, scaleAnimation],
   );
 
   return (
@@ -62,7 +44,12 @@ export default function PressableScale(props) {
       onPressIn={onPressInCb}
       onPressOut={onPressOutCb}
       {...otherProps}>
-      <Animated.View style={animatedStyles}>{children}</Animated.View>
+      <Animated.View
+        style={{
+          transform: [{ scale: scaleAnimation }],
+        }}>
+        {children}
+      </Animated.View>
     </Pressable>
   );
 }
