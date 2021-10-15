@@ -174,7 +174,11 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
 
   return (
     <>
-      <NotificationsTopBar store={notifications} setResult={setResult} />
+      <NotificationsTopBar
+        store={notifications}
+        setResult={setResult}
+        refresh={refresh}
+      />
       <View style={theme.flexContainer}>
         <FlatList
           data={data.slice()}
