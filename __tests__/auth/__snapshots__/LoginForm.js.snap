@@ -75,7 +75,7 @@ exports[`LoginForm component should renders correctly 1`] = `
                       "fontSize": 16,
                     },
                     Object {
-                      "paddingLeft": 0,
+                      "paddingLeft": 1,
                     },
                     undefined,
                   ],
@@ -101,7 +101,7 @@ exports[`LoginForm component should renders correctly 1`] = `
               "fontSize": 16,
             },
             Object {
-              "paddingLeft": 0,
+              "paddingLeft": 1,
             },
             undefined,
           ]
@@ -130,7 +130,7 @@ exports[`LoginForm component should renders correctly 1`] = `
                 "paddingVertical": 8,
               },
               Object {
-                "paddingLeft": 0,
+                "paddingLeft": 1,
               },
               Object {
                 "fontSize": 18,
@@ -225,7 +225,7 @@ exports[`LoginForm component should renders correctly 1`] = `
                         "fontSize": 16,
                       },
                       Object {
-                        "paddingLeft": 0,
+                        "paddingLeft": 1,
                       },
                       undefined,
                     ],
@@ -250,7 +250,7 @@ exports[`LoginForm component should renders correctly 1`] = `
                 "fontSize": 16,
               },
               Object {
-                "paddingLeft": 0,
+                "paddingLeft": 1,
               },
               undefined,
             ]
@@ -280,7 +280,7 @@ exports[`LoginForm component should renders correctly 1`] = `
                   "paddingVertical": 8,
                 },
                 Object {
-                  "paddingLeft": 0,
+                  "paddingLeft": 1,
                 },
                 Object {
                   "fontSize": 18,
@@ -517,7 +517,7 @@ exports[`LoginForm component should renders correctly 1`] = `
                 "justifyContent": "flex-end",
               },
               Object {
-                "margin": 0,
+                "margin": 1,
               },
             ],
             Object {
@@ -565,7 +565,7 @@ exports[`LoginForm component should renders correctly 1`] = `
             "flex": 1,
             "justifyContent": "flex-end",
             "left": 0,
-            "margin": 0,
+            "margin": 1,
             "top": 0,
             "transform": Array [
               Object {
@@ -836,7 +836,7 @@ exports[`LoginForm component should renders correctly 1`] = `
                           "paddingVertical": 8,
                         },
                         Object {
-                          "paddingLeft": 0,
+                          "paddingLeft": 1,
                         },
                         Object {
                           "fontSize": 18,

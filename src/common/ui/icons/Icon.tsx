@@ -149,7 +149,7 @@ export function IconNext({
       disabledColor: ICON_COLOR_DISABLED,
       defaultColor: ICON_COLOR_DEFAULT,
     });
-  }, [active, disabled]);
+  }, [active, disabled, color]);
 
   const realSize = sizeNumeric * ratio;
 

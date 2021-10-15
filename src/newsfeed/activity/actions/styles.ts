@@ -3,7 +3,7 @@ import ThemedStyles from '../../../styles/ThemedStyles';
 export const actionsContainerStyle = ThemedStyles.combine(
   'flexColumn',
   'margin',
-  'paddingVertical2x',
+  'paddingVertical3x',
   'alignCenter',
 );
 
