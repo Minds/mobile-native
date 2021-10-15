@@ -92,8 +92,6 @@ Array [
               }
             >
               <View
-                collapsable={false}
-                nativeID="animatedComponent"
                 style={
                   Object {
                     "transform": Array [
@@ -237,8 +235,6 @@ Array [
               }
             >
               <View
-                collapsable={false}
-                nativeID="animatedComponent"
                 style={
                   Object {
                     "transform": Array [
@@ -382,8 +378,6 @@ Array [
               }
             >
               <View
-                collapsable={false}
-                nativeID="animatedComponent"
                 style={
                   Object {
                     "transform": Array [
@@ -527,8 +521,6 @@ Array [
               }
             >
               <View
-                collapsable={false}
-                nativeID="animatedComponent"
                 style={
                   Object {
                     "transform": Array [
@@ -672,8 +664,6 @@ Array [
               }
             >
               <View
-                collapsable={false}
-                nativeID="animatedComponent"
                 style={
                   Object {
                     "transform": Array [
@@ -817,8 +807,6 @@ Array [
               }
             >
               <View
-                collapsable={false}
-                nativeID="animatedComponent"
                 style={
                   Object {
                     "transform": Array [
