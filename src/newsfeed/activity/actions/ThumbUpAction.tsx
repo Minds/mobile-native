@@ -5,6 +5,7 @@ import { motify, useAnimationState } from 'moti';
 import { Icon } from '~ui/icons';
 import withClass from '~ui/withClass';
 import { IUISizing } from '~styles/Tokens';
+import { frameThrower } from '~ui/helpers';
 import Counter from './Counter';
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import { FLAG_VOTE } from '../../../common/Permissions';
@@ -51,31 +52,25 @@ const AnimatedThumb = ({
     },
     up: {
       scale: [
-        { value: 1, type: 'timing', duration: 120 },
-        { value: 1.08, type: 'timing', duration: 150 },
-        { value: 1, type: 'spring', delay: 80 },
+        { value: 1, type: 'timing', duration: 80 },
+        { value: 1.05, type: 'timing', duration: 100 },
+        { value: 1, type: 'spring', delay: 80, stiffness: 600 },
       ],
       rotate: [
-        { value: '0deg', type: 'timing', duration: 120 },
-        { value: '-12deg', type: 'timing', duration: 160 },
-        { value: '0deg', type: 'spring', delay: 150 },
+        { value: '0deg', type: 'timing', duration: 80 },
+        { value: '-12deg', type: 'timing', duration: 100 },
+        { value: '0deg', type: 'spring', delay: 80, stiffness: 600 },
       ],
       translateY: [
-        { value: 0, type: 'timing', duration: 150 },
-        { value: down ? 6 : -6, type: 'timing', duration: 150 },
-        { value: 0, type: 'spring', delay: 150 },
+        { value: 0, type: 'timing', duration: 80 },
+        { value: down ? 6 : -6, type: 'timing', duration: 100 },
+        { value: 0, type: 'spring', delay: 80, stiffness: 600 },
       ],
     },
     down: {
-      scale: [
-        { value: 0.9, type: 'timing', duration: 80 },
-        { value: 1, type: 'spring', delay: 80 },
-      ],
       translateX: [
-        { value: -2, type: 'timing', duration: 100 },
-        { value: 3, type: 'timing', duration: 100 },
-        { value: -2, type: 'timing', duration: 100 },
-        { value: 0, type: 'timing', duration: 100 },
+        { value: -4, type: 'spring', stiffness: 660, damping: 10, mass: 1 },
+        { value: 0, type: 'spring', stiffness: 660, damping: 10, mass: 1 },
       ],
     },
   });
@@ -86,10 +81,11 @@ const AnimatedThumb = ({
       return;
     }
     if (voted) {
-      animation.transitionTo('up');
+      frameThrower(10, () => animation.transitionTo('up'));
     } else {
-      animation.transitionTo('down');
+      frameThrower(20, () => animation.transitionTo('down'));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [voted]);
 
   const disabled = !canVote;
@@ -134,11 +130,8 @@ class ThumbUpAction extends Component<PropsType> {
    */
   render() {
     const entity = this.props.entity;
-
     const count = entity[`thumbs:${this.direction}:count`];
-
     const canVote = entity.can(FLAG_VOTE);
-
     const Touchable = this.props.touchableComponent || PressableScaleCustom;
 
     return (

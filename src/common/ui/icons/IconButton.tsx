@@ -163,17 +163,21 @@ export default function IconButton({
 const styles = StyleSheet.create({
   container: {
     position: 'relative',
-    ...ThemedStyles.style.alignCenter,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   released: {
-    ...ThemedStyles.style.alignCenter,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   fill: {
-    ...ThemedStyles.style.centered,
+    alignItems: 'center',
+    justifyContent: 'center',
     ...StyleSheet.absoluteFillObject,
   },
   pressed: {
-    ...ThemedStyles.style.alignCenter,
+    alignItems: 'center',
+    justifyContent: 'center',
     opacity: 0.75,
   },
   wrapper: {

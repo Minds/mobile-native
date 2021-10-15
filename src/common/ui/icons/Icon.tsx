@@ -128,7 +128,7 @@ export interface IIconNext extends IUIBase {
 }
 
 export function IconNext({
-  color = ICON_COLOR_DEFAULT,
+  color = null,
   name = ICON_DEFAULT,
   size = ICON_SIZE_DEFAULT,
   active = false,

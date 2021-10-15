@@ -20,7 +20,6 @@ export default class Counter extends PureComponent<PropsType> {
    */
   static defaultProps = {
     size: 15,
-    style: undefined,
   };
 
   /**
@@ -39,4 +38,4 @@ export default class Counter extends PureComponent<PropsType> {
   }
 }
 
-const textStyle = ThemedStyles.combine('colorIcon', 'fontL', 'fontMedium');
+const textStyle = ThemedStyles.combine('colorIcon', 'fontM', 'fontMedium');

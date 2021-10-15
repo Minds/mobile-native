@@ -67,6 +67,7 @@ export default class ChannelBadges extends PureComponent<PropsType> {
             name="verified"
             size={size}
             color={channel.isAdmin() ? 'Green' : null}
+            active
             horizontal="0x"
             key={2}
           />
@@ -93,14 +94,3 @@ export default class ChannelBadges extends PureComponent<PropsType> {
     return <>{badges}</>;
   }
 }
-
-const styles = ThemedStyles.create({
-  view: {
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-  },
-  icon: {
-    marginHorizontal: 1,
-  },
-  badgeLabelStyle: ['colorWhite'],
-});
