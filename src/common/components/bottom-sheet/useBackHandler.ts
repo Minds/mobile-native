@@ -3,20 +3,15 @@ import { useFocusEffect } from '@react-navigation/native';
 import { useCallback, useState } from 'react';
 
 export default function useBackHandler(onBack, props) {
-  // TODO: consider using a ref because we don't care about rendering
   const [opened, setOpened] = useState(false);
 
   /**
    * The back handler function
    */
   const backHandler = useCallback(() => {
-    // if the bottomsheet was open, close it and handle the back button
-    if (opened) {
-      onBack();
-      return true;
-    }
-    return false;
-  }, [opened, onBack]);
+    onBack();
+    return true;
+  }, [onBack]);
 
   /**
    * add and remove backhandler on focus and blur
@@ -24,11 +19,13 @@ export default function useBackHandler(onBack, props) {
   useFocusEffect(
     useCallback(() => {
       // this is for when we're returning to a screen that already has the bottom sheet opened
-      BackHandler.addEventListener('hardwareBackPress', backHandler);
+      if (opened) {
+        BackHandler.addEventListener('hardwareBackPress', backHandler);
+      }
 
       return () =>
         BackHandler.removeEventListener('hardwareBackPress', backHandler);
-    }, [backHandler]),
+    }, [backHandler, opened]),
   );
 
   /**

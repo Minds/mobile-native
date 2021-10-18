@@ -1,4 +1,9 @@
-import React, { forwardRef, useCallback } from 'react';
+import React, {
+  forwardRef,
+  useCallback,
+  useImperativeHandle,
+  useRef,
+} from 'react';
 import {
   BottomSheetModal,
   BottomSheetModalProps,
@@ -10,6 +15,7 @@ import ThemedStyles, { useStyle } from '../../../styles/ThemedStyles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Handle from './Handle';
 import MText from '../MText';
+import useBackHandler from './useBackHandler';
 
 interface PropsType extends Omit<BottomSheetModalProps, 'snapPoints'> {
   title?: string;
@@ -22,6 +28,11 @@ interface PropsType extends Omit<BottomSheetModalProps, 'snapPoints'> {
 
 export default forwardRef<BottomSheetModal, PropsType>((props, ref) => {
   const { title, detail, snapPoints, autoShow, children, ...other } = props;
+  const { onAnimateHandler } = useBackHandler(
+    // @ts-ignore
+    useCallback(() => ref?.current?.dismiss(), [ref]),
+    props,
+  );
 
   const insets = useSafeAreaInsets();
 
@@ -51,9 +62,9 @@ export default forwardRef<BottomSheetModal, PropsType>((props, ref) => {
   const renderHandle = useCallback(() => <Handle />, []);
 
   const renderBackdrop = useCallback(
-    props => (
+    backdropProps => (
       <BottomSheetBackdrop
-        {...props}
+        {...backdropProps}
         pressBehavior="close"
         opacity={0.5}
         appearsOnIndex={0}
@@ -75,7 +86,8 @@ export default forwardRef<BottomSheetModal, PropsType>((props, ref) => {
       enablePanDownToClose={true}
       backgroundComponent={null}
       style={styles.sheetContainer as any}
-      {...other}>
+      {...other}
+      onAnimate={onAnimateHandler}>
       <View style={contStyle} onLayout={handleContentLayout}>
         {Boolean(title) && <MText style={styles.title}>{title}</MText>}
         {Boolean(detail) && <MText style={styles.detail}>{detail}</MText>}
