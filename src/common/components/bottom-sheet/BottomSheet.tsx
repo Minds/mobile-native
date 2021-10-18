@@ -103,6 +103,8 @@ const MBottomSheet = forwardRef<BottomSheet, PropsType>((props, ref) => {
       handleComponent={renderHandle}
       backdropComponent={renderBackdrop}
       enablePanDownToClose={true}
+      enableContentPanningGesture={false}
+      enableHandlePanningGesture={true}
       backgroundComponent={null}
       onAnimate={onAnimateHandler}
       {...props}

@@ -1,9 +1,5 @@
 import React, { forwardRef, useCallback } from 'react';
-import BottomSheet, {
-  BottomSheetBackdrop,
-  BottomSheetBackgroundProps,
-} from '@gorhom/bottom-sheet';
-import { Dimensions, View } from 'react-native';
+import { Dimensions } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import CommentList from './CommentList';
 import CommentsStore from './CommentsStore';
@@ -16,6 +12,7 @@ import { useRoute } from '@react-navigation/native';
 import CommentInput from './CommentInput';
 import { useLocalStore } from 'mobx-react';
 import Handle from '../../common/components/bottom-sheet/Handle';
+import BottomSheet from '~/common/components/bottom-sheet/BottomSheet';
 
 const BottomSheetLocalStore = ({ onChange }) => ({
   isOpen: 0,
@@ -27,17 +24,7 @@ const BottomSheetLocalStore = ({ onChange }) => ({
   },
 });
 
-const { height: windowHeight } = Dimensions.get('window');
-
 const snapPoints = ['85%'];
-
-/**
- * Custom background
- * (fixes visual issues on Android dark mode)
- */
-const CustomBackground = ({ style }: BottomSheetBackgroundProps) => {
-  return <View style={style} />;
-};
 
 type PropsType = {
   commentsStore: CommentsStore;
@@ -105,19 +92,6 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
 
   // renders
 
-  const renderBackdrop = useCallback(
-    props => (
-      <BottomSheetBackdrop
-        {...props}
-        pressBehavior="close"
-        opacity={0.5}
-        appearsOnIndex={0}
-        disappearsOnIndex={-1}
-      />
-    ),
-    [],
-  );
-
   const renderHandle = useCallback(
     () => <Handle style={ThemedStyles.style.bgPrimaryBackground} />,
     [],
@@ -127,14 +101,9 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
     <BottomSheet
       key="commentSheet"
       ref={ref}
-      index={-1}
-      enablePanDownToClose={true}
       onChange={localStore.setOpen}
-      containerHeight={windowHeight}
       snapPoints={snapPoints}
-      handleComponent={renderHandle}
-      backgroundComponent={CustomBackground}
-      backdropComponent={renderBackdrop}>
+      handleComponent={renderHandle}>
       {!props.hideContent && ( // we disable the navigator until the screen is focused (for the post swiper)
         <Stack.Navigator screenOptions={screenOptions}>
           <Stack.Screen
