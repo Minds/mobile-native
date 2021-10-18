@@ -135,7 +135,7 @@ export function IconNext({
   disabled = false,
   testID,
 }: IIconNext) {
-  const { font: iconFont, name: iconName, ratio = 1 } =
+  const { font: iconFont, name: iconName, ratio = 1, top } =
     ICON_MAP[name] || ICON_MAP[ICON_DEFAULT];
 
   const sizeNumeric = ICON_SIZES[size] || ICON_SIZES[ICON_SIZE_DEFAULT];
@@ -156,7 +156,11 @@ export function IconNext({
   const containerStyles = useMemo(() => {
     const base = [styles.container, styles[size]];
 
-    return base;
+    if (top) {
+      base.push({ marginTop: top });
+    }
+
+    return StyleSheet.flatten(base);
   }, [size]);
 
   const Component = Fonts[iconFont];
