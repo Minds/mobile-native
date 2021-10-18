@@ -26,7 +26,7 @@ import Tags from '../common/components/Tags';
 import KeyboardSpacingView from '../common/components/KeyboardSpacingView';
 import SoftInputMode from 'react-native-set-soft-input-mode';
 import TextInput from '../common/components/TextInput';
-import BottomSheet from '../common/components/bottom-sheet/BottomSheet';
+import BottomSheet from '../common/components/bottom-sheet/BottomSheetModal';
 import BottomSheetButton from '../common/components/bottom-sheet/BottomSheetButton';
 
 const { width } = Dimensions.get('window');

@@ -22,7 +22,7 @@ import type GroupsBarStore from '../GroupsBarStore';
 import GroupViewStore from '../GroupViewStore';
 import DismissKeyboard from '../../common/components/DismissKeyboard';
 import AnimatedSearch from './AnimatedSearch';
-import BottomSheet from '../../common/components/bottom-sheet/BottomSheet';
+import BottomSheet from '../../common/components/bottom-sheet/BottomSheetModal';
 import MenuItem from '../../common/components/bottom-sheet/MenuItem';
 import BottomSheetButton from '../../common/components/bottom-sheet/BottomSheetButton';
 import MText from '../../common/components/MText';
