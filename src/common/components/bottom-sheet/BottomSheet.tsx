@@ -1,59 +1,89 @@
-import React, { forwardRef, useCallback } from 'react';
-import {
-  BottomSheetModal,
-  BottomSheetModalProps,
-  useBottomSheetDynamicSnapPoints,
+import BottomSheet, {
   BottomSheetBackdrop,
+  BottomSheetProps,
 } from '@gorhom/bottom-sheet';
-import { StatusBar, View } from 'react-native';
-import ThemedStyles, { useStyle } from '../../../styles/ThemedStyles';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useFocusEffect } from '@react-navigation/native';
+import React, {
+  forwardRef,
+  useCallback,
+  useRef,
+  useImperativeHandle,
+  useState,
+} from 'react';
+import { BackHandler, Dimensions, StatusBar } from 'react-native';
 import Handle from './Handle';
-import MText from '../MText';
 
-interface PropsType extends Omit<BottomSheetModalProps, 'snapPoints'> {
-  title?: string;
-  subtitle?: string;
-  detail?: string;
-  autoShow?: boolean;
+const { height: windowHeight } = Dimensions.get('window');
+const DEFAULT_SNAP_POINTS = [Math.floor(windowHeight * 0.8)];
+
+interface PropsType extends Omit<BottomSheetProps, 'snapPoints'> {
   snapPoints?: Array<number | string>;
-  forceHeight?: number;
 }
 
-export default forwardRef<BottomSheetModal, PropsType>((props, ref) => {
-  const { title, detail, snapPoints, autoShow, children, ...other } = props;
+/**
+ * @description The bottom sheet component with a default behavior (snapPoints, backHandler, handle, etc.)
+ */
+const MBottomSheet = forwardRef<BottomSheet, PropsType>((props, ref) => {
+  const bottomSheetRef = useRef<BottomSheet | null>(null);
+  const [opened, setOpened] = useState(false);
 
-  const insets = useSafeAreaInsets();
-
-  const snapPointsMemo = React.useMemo(() => snapPoints || ['CONTENT_HEIGHT'], [
-    snapPoints,
-  ]);
-
-  const {
-    animatedHandleHeight,
-    animatedSnapPoints,
-    animatedContentHeight,
-    handleContentLayout,
-  } = useBottomSheetDynamicSnapPoints(snapPointsMemo);
-
-  const contStyle = useStyle(styles.contentContainer, {
-    paddingBottom: insets.bottom || 24,
-  });
-
-  React.useEffect(() => {
-    //@ts-ignore
-    if (ref && ref.current && autoShow) {
-      //@ts-ignore
-      ref.current.present();
+  const backHandler = useCallback(() => {
+    if (opened) {
+      bottomSheetRef?.current?.close?.();
+      return true;
     }
-  }, [autoShow, ref]);
+    return false;
+  }, [opened]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      BackHandler.addEventListener('hardwareBackPress', backHandler);
+
+      return () =>
+        BackHandler.removeEventListener('hardwareBackPress', backHandler);
+    }, [backHandler]),
+  );
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      close: (config?: any) => bottomSheetRef.current?.close(config),
+      expand: (config?: any) => bottomSheetRef.current?.expand(config),
+      snapToIndex: (index: number, config?: any) =>
+        bottomSheetRef.current?.snapToIndex(index, config),
+      collapse: (config?: any) => bottomSheetRef.current?.collapse(config),
+      forceClose: (config?: any) => bottomSheetRef.current?.forceClose(config),
+      snapToPosition: (position: any, config: any) =>
+        bottomSheetRef.current?.snapToPosition(position, config),
+    }),
+    [bottomSheetRef],
+  );
+
+  /**
+   * Monitor bottom sheet changes
+   */
+  const onAnimateHandler = useCallback(
+    (fromIndex: number, toIndex: number) => {
+      // bottom sheet opened
+      if (fromIndex < 0) {
+        setOpened(true);
+        BackHandler.addEventListener('hardwareBackPress', backHandler);
+      }
+      // bottom sheet cosed
+      if (toIndex < 0) {
+        setOpened(false);
+        BackHandler.removeEventListener('hardwareBackPress', backHandler);
+      }
+    },
+    [backHandler],
+  );
 
   const renderHandle = useCallback(() => <Handle />, []);
 
   const renderBackdrop = useCallback(
-    props => (
+    backdropProps => (
       <BottomSheetBackdrop
-        {...props}
+        {...backdropProps}
         pressBehavior="close"
         opacity={0.5}
         appearsOnIndex={0}
@@ -64,48 +94,20 @@ export default forwardRef<BottomSheetModal, PropsType>((props, ref) => {
   );
 
   return (
-    <BottomSheetModal
-      ref={ref}
+    <BottomSheet
+      ref={bottomSheetRef}
+      index={-1}
+      containerHeight={windowHeight}
+      snapPoints={DEFAULT_SNAP_POINTS}
       topInset={StatusBar.currentHeight || 0}
       handleComponent={renderHandle}
-      snapPoints={animatedSnapPoints}
-      handleHeight={animatedHandleHeight}
-      contentHeight={animatedContentHeight}
       backdropComponent={renderBackdrop}
       enablePanDownToClose={true}
       backgroundComponent={null}
-      style={styles.sheetContainer as any}
-      {...other}>
-      <View style={contStyle} onLayout={handleContentLayout}>
-        {Boolean(title) && <MText style={styles.title}>{title}</MText>}
-        {Boolean(detail) && <MText style={styles.detail}>{detail}</MText>}
-        {children}
-      </View>
-    </BottomSheetModal>
+      onAnimate={onAnimateHandler}
+      {...props}
+    />
   );
 });
 
-const styles = ThemedStyles.create({
-  contentContainer: ['bgPrimaryBackgroundHighlight'],
-  title: ['fontXXL', 'bold', 'textCenter', 'marginVertical3x'],
-  detail: [
-    'fontL',
-    'fontMedium',
-    'textCenter',
-    'marginTop3x',
-    'marginBottom5x',
-    'colorSecondaryText',
-  ],
-  sheetContainer: [
-    'shadowBlack',
-    {
-      shadowOffset: {
-        width: 0,
-        height: -3,
-      },
-      shadowOpacity: 0.58,
-      shadowRadius: 4.0,
-      elevation: 16,
-    },
-  ],
-});
+export default MBottomSheet;
