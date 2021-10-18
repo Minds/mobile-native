@@ -2,12 +2,7 @@ import BottomSheet, {
   BottomSheetBackdrop,
   BottomSheetProps,
 } from '@gorhom/bottom-sheet';
-import React, {
-  forwardRef,
-  useCallback,
-  useImperativeHandle,
-  useRef,
-} from 'react';
+import React, { forwardRef, useCallback } from 'react';
 import { Dimensions, StatusBar } from 'react-native';
 import Handle from './Handle';
 import useBackHandler from './useBackHandler';
@@ -23,28 +18,10 @@ interface PropsType extends Omit<BottomSheetProps, 'snapPoints'> {
  * @description The bottom sheet component with a default behavior (snapPoints, backHandler, handle, etc.)
  */
 const MBottomSheet = forwardRef<BottomSheet, PropsType>((props, ref) => {
-  const bottomSheetRef = useRef<BottomSheet | null>(null);
   const { onAnimateHandler } = useBackHandler(
-    useCallback(() => bottomSheetRef.current?.close(), [bottomSheetRef]),
+    // @ts-ignore
+    useCallback(() => ref?.current?.close(), [ref]),
     props,
-  );
-
-  /**
-   * we proxy these methods so we can use the bottom sheet ref internally and externally
-   */
-  useImperativeHandle(
-    ref,
-    () => ({
-      close: (config?: any) => bottomSheetRef.current?.close(config),
-      expand: (config?: any) => bottomSheetRef.current?.expand(config),
-      snapToIndex: (index: number, config?: any) =>
-        bottomSheetRef.current?.snapToIndex(index, config),
-      collapse: (config?: any) => bottomSheetRef.current?.collapse(config),
-      forceClose: (config?: any) => bottomSheetRef.current?.forceClose(config),
-      snapToPosition: (position: any, config: any) =>
-        bottomSheetRef.current?.snapToPosition(position, config),
-    }),
-    [bottomSheetRef],
   );
 
   const renderHandle = useCallback(() => <Handle />, []);
@@ -64,7 +41,7 @@ const MBottomSheet = forwardRef<BottomSheet, PropsType>((props, ref) => {
 
   return (
     <BottomSheet
-      ref={bottomSheetRef}
+      ref={ref}
       index={-1}
       containerHeight={windowHeight}
       snapPoints={DEFAULT_SNAP_POINTS}
