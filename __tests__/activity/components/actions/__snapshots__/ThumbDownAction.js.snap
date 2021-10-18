@@ -26,20 +26,12 @@ exports[`Thumb action component renders correctly 1`] = `
     style={
       Array [
         Object {
-          "alignItems": "center",
-        },
-        Object {
-          "margin": 4,
-        },
-        Object {
           "flexDirection": "row",
+          "flexWrap": "nowrap",
           "justifyContent": "center",
         },
         Object {
-          "alignItems": "center",
-        },
-        Object {
-          "flexWrap": "wrap",
+          "margin": 4,
         },
       ]
     }

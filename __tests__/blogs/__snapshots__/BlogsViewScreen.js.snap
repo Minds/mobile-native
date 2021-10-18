@@ -565,18 +565,14 @@ exports[`blog view screen component should renders correctly 1`] = `
                   >
                     <View
                       style={
-                        Array [
-                          Object {
-                            "alignItems": "center",
-                            "flexDirection": "row",
-                            "justifyContent": "center",
-                            "overflow": "hidden",
-                          },
-                          Object {
-                            "height": 16,
-                            "width": 16,
-                          },
-                        ]
+                        Object {
+                          "alignItems": "center",
+                          "flexDirection": "row",
+                          "height": 16,
+                          "justifyContent": "center",
+                          "overflow": "hidden",
+                          "width": 16,
+                        }
                       }
                     >
                       <Text
@@ -888,18 +884,14 @@ exports[`blog view screen component should renders correctly 1`] = `
                   >
                     <View
                       style={
-                        Array [
-                          Object {
-                            "alignItems": "center",
-                            "flexDirection": "row",
-                            "justifyContent": "center",
-                            "overflow": "hidden",
-                          },
-                          Object {
-                            "height": 16,
-                            "width": 16,
-                          },
-                        ]
+                        Object {
+                          "alignItems": "center",
+                          "flexDirection": "row",
+                          "height": 16,
+                          "justifyContent": "center",
+                          "overflow": "hidden",
+                          "width": 16,
+                        }
                       }
                     >
                       <Text

@@ -374,18 +374,14 @@ exports[`Activity screen component renders correctly  1`] = `
                   >
                     <View
                       style={
-                        Array [
-                          Object {
-                            "alignItems": "center",
-                            "flexDirection": "row",
-                            "justifyContent": "center",
-                            "overflow": "hidden",
-                          },
-                          Object {
-                            "height": 28,
-                            "width": 28,
-                          },
-                        ]
+                        Object {
+                          "alignItems": "center",
+                          "flexDirection": "row",
+                          "height": 28,
+                          "justifyContent": "center",
+                          "overflow": "hidden",
+                          "width": 28,
+                        }
                       }
                     >
                       <Text
@@ -883,20 +879,12 @@ exports[`Activity screen component renders correctly  1`] = `
               style={
                 Array [
                   Object {
-                    "alignItems": "center",
-                  },
-                  Object {
-                    "margin": 4,
-                  },
-                  Object {
                     "flexDirection": "row",
+                    "flexWrap": "nowrap",
                     "justifyContent": "center",
                   },
                   Object {
-                    "alignItems": "center",
-                  },
-                  Object {
-                    "flexWrap": "wrap",
+                    "margin": 4,
                   },
                 ]
               }
@@ -995,20 +983,12 @@ exports[`Activity screen component renders correctly  1`] = `
               style={
                 Array [
                   Object {
-                    "alignItems": "center",
-                  },
-                  Object {
-                    "margin": 4,
-                  },
-                  Object {
                     "flexDirection": "row",
+                    "flexWrap": "nowrap",
                     "justifyContent": "center",
                   },
                   Object {
-                    "alignItems": "center",
-                  },
-                  Object {
-                    "flexWrap": "wrap",
+                    "margin": 4,
                   },
                 ]
               }
@@ -1059,89 +1039,105 @@ exports[`Activity screen component renders correctly  1`] = `
           </View>
         </View>
         <View
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          onBlur={[Function]}
-          onClick={[Function]}
-          onFocus={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
           style={
             Array [
               Object {
-                "flex": 1,
-                "flexDirection": "column",
-              },
-              Object {
-                "margin": 4,
-              },
-              Object {
-                "paddingVertical": 12,
-              },
-              Object {
                 "alignItems": "center",
+                "justifyContent": "center",
+                "position": "relative",
               },
+              undefined,
+              Array [
+                Object {
+                  "flex": 1,
+                  "flexDirection": "column",
+                },
+                Object {
+                  "margin": 4,
+                },
+                Object {
+                  "paddingVertical": 12,
+                },
+                Object {
+                  "alignItems": "center",
+                },
+              ],
             ]
           }
-          testID=""
         >
           <View
+            accessible={true}
             collapsable={false}
-            nativeID="animatedComponent"
-            style={
+            focusable={true}
+            hitSlop={
               Object {
-                "transform": Array [
-                  Object {
-                    "scale": 1,
-                  },
-                ],
+                "bottom": 6.666666666666666,
+                "left": 6.666666666666666,
+                "right": 6.666666666666666,
+                "top": 6.666666666666666,
               }
             }
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                },
+                Object {
+                  "alignItems": "center",
+                  "bottom": 0,
+                  "justifyContent": "center",
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+              ]
+            }
+            testID=""
           >
             <View
+              collapsable={false}
+              nativeID="animatedComponent"
               style={
-                Array [
-                  Object {
-                    "alignItems": "center",
-                  },
-                  Object {
-                    "margin": 4,
-                  },
-                  Object {
-                    "flexDirection": "row",
-                    "justifyContent": "center",
-                  },
-                  Object {
-                    "alignItems": "center",
-                  },
-                  Object {
-                    "flexWrap": "wrap",
-                  },
-                ]
+                Object {
+                  "transform": Array [
+                    Object {
+                      "scale": 1,
+                    },
+                  ],
+                }
               }
             >
               <View
-                style={Array []}
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  }
+                }
               >
                 <View
                   style={
-                    Array [
-                      Object {
-                        "alignItems": "center",
-                        "flexDirection": "row",
-                        "justifyContent": "center",
-                        "overflow": "hidden",
-                      },
-                      Object {
-                        "height": 20,
-                        "width": 20,
-                      },
-                    ]
+                    Object {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                      "height": 20,
+                      "justifyContent": "center",
+                      "marginTop": 1,
+                      "overflow": "hidden",
+                      "width": 20,
+                    }
                   }
                 >
                   <Text
@@ -1165,51 +1161,51 @@ exports[`Activity screen component renders correctly  1`] = `
                     󰍡
                   </Text>
                 </View>
-              </View>
-              <View
-                style={
-                  Array [
-                    Object {
-                      "marginLeft": 4,
-                    },
-                  ]
-                }
-              >
                 <View
                   style={
-                    Object {
-                      "alignItems": "center",
-                      "flexDirection": "column",
-                    }
+                    Array [
+                      Object {
+                        "marginLeft": 4,
+                      },
+                    ]
                   }
                 >
-                  <Text
-                    size={15}
+                  <View
                     style={
-                      Array [
-                        Object {
-                          "color": "#43434D",
-                        },
-                        Object {
-                          "fontFamily": "Roboto",
-                        },
-                        Array [
-                          Object {
-                            "color": "#7D7D82",
-                          },
-                          Object {
-                            "fontSize": 14,
-                          },
-                          Object {
-                            "fontFamily": "Roboto-Medium",
-                            "fontWeight": "500",
-                          },
-                        ],
-                      ]
+                      Object {
+                        "alignItems": "center",
+                        "flexDirection": "column",
+                      }
                     }
                   >
-                    
-                  </Text>
+                    <Text
+                      size={15}
+                      style={
+                        Array [
+                          Object {
+                            "color": "#43434D",
+                          },
+                          Object {
+                            "fontFamily": "Roboto",
+                          },
+                          Array [
+                            Object {
+                              "color": "#7D7D82",
+                            },
+                            Object {
+                              "fontSize": 14,
+                            },
+                            Object {
+                              "fontFamily": "Roboto-Medium",
+                              "fontWeight": "500",
+                            },
+                          ],
+                        ]
+                      }
+                    >
+                      
+                    </Text>
+                  </View>
                 </View>
               </View>
             </View>
@@ -1306,18 +1302,15 @@ exports[`Activity screen component renders correctly  1`] = `
               >
                 <View
                   style={
-                    Array [
-                      Object {
-                        "alignItems": "center",
-                        "flexDirection": "row",
-                        "justifyContent": "center",
-                        "overflow": "hidden",
-                      },
-                      Object {
-                        "height": 20,
-                        "width": 20,
-                      },
-                    ]
+                    Object {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                      "height": 20,
+                      "justifyContent": "center",
+                      "marginTop": -1,
+                      "overflow": "hidden",
+                      "width": 20,
+                    }
                   }
                 >
                   <Text
@@ -1326,7 +1319,7 @@ exports[`Activity screen component renders correctly  1`] = `
                       Array [
                         Object {
                           "color": "#7D7D82",
-                          "fontSize": 20,
+                          "fontSize": 20.8,
                         },
                         undefined,
                         Object {
@@ -1435,18 +1428,15 @@ exports[`Activity screen component renders correctly  1`] = `
               >
                 <View
                   style={
-                    Array [
-                      Object {
-                        "alignItems": "center",
-                        "flexDirection": "row",
-                        "justifyContent": "center",
-                        "overflow": "hidden",
-                      },
-                      Object {
-                        "height": 20,
-                        "width": 20,
-                      },
-                    ]
+                    Object {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                      "height": 20,
+                      "justifyContent": "center",
+                      "marginTop": -2,
+                      "overflow": "hidden",
+                      "width": 20,
+                    }
                   }
                 >
                   <Text
