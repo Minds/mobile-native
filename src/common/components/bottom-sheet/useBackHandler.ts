@@ -29,7 +29,7 @@ export default function useBackHandler(onBack, props) {
   );
 
   /**
-   * Monitor bottom sheet changes. We use this instead of onChange because onChange doesn't seem to work
+   * Monitor bottom sheet changes. We use this instead of onChange because onChange doesn't seem to work.
    * When the bottomsheet opens add backhandler listener, and when it closes, remove them
    */
   const onAnimateHandler = useCallback(
