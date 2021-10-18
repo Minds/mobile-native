@@ -13,6 +13,7 @@ import CommentInput from './CommentInput';
 import { useLocalStore } from 'mobx-react';
 import Handle from '../../common/components/bottom-sheet/Handle';
 import BottomSheet from '~/common/components/bottom-sheet/BottomSheet';
+import { useBackHandler } from '@react-native-community/hooks';
 
 const BottomSheetLocalStore = ({ onChange }) => ({
   isOpen: 0,
@@ -35,8 +36,13 @@ type PropsType = {
 
 const Stack = createStackNavigator();
 
-const ScreenReplyComment = () => {
+const ScreenReplyComment = ({ navigation }) => {
   const route = useRoute<any>();
+
+  useBackHandler(() => {
+    navigation.goBack();
+    return true;
+  });
   const store = React.useMemo(() => {
     const s = new CommentsStore(route.params.entity);
     s.setParent(route.params.comment);
