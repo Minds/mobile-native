@@ -154,10 +154,11 @@ export function IconNext({
   const realSize = sizeNumeric * ratio;
 
   const containerStyles = useMemo(() => {
-    const base = [styles.container, styles[size]];
+    const base: ViewStyle[] = [styles.container, styles[size]];
 
     if (top) {
-      base.push({ marginTop: top });
+      const topStyle = { marginTop: top };
+      base.push(topStyle);
     }
 
     return StyleSheet.flatten(base);
