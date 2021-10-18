@@ -2,16 +2,15 @@ import BottomSheet, {
   BottomSheetBackdrop,
   BottomSheetProps,
 } from '@gorhom/bottom-sheet';
-import { useFocusEffect } from '@react-navigation/native';
 import React, {
   forwardRef,
   useCallback,
-  useRef,
   useImperativeHandle,
-  useState,
+  useRef,
 } from 'react';
-import { BackHandler, Dimensions, StatusBar } from 'react-native';
+import { Dimensions, StatusBar } from 'react-native';
 import Handle from './Handle';
+import useBackHandler from './useBackHandler';
 
 const { height: windowHeight } = Dimensions.get('window');
 const DEFAULT_SNAP_POINTS = [Math.floor(windowHeight * 0.8)];
@@ -25,25 +24,14 @@ interface PropsType extends Omit<BottomSheetProps, 'snapPoints'> {
  */
 const MBottomSheet = forwardRef<BottomSheet, PropsType>((props, ref) => {
   const bottomSheetRef = useRef<BottomSheet | null>(null);
-  const [opened, setOpened] = useState(false);
-
-  const backHandler = useCallback(() => {
-    if (opened) {
-      bottomSheetRef?.current?.close?.();
-      return true;
-    }
-    return false;
-  }, [opened]);
-
-  useFocusEffect(
-    React.useCallback(() => {
-      BackHandler.addEventListener('hardwareBackPress', backHandler);
-
-      return () =>
-        BackHandler.removeEventListener('hardwareBackPress', backHandler);
-    }, [backHandler]),
+  const { onAnimateHandler } = useBackHandler(
+    useCallback(() => bottomSheetRef.current?.close(), [bottomSheetRef]),
+    props,
   );
 
+  /**
+   * we proxy these methods so we can use the bottom sheet ref internally and externally
+   */
   useImperativeHandle(
     ref,
     () => ({
@@ -57,25 +45,6 @@ const MBottomSheet = forwardRef<BottomSheet, PropsType>((props, ref) => {
         bottomSheetRef.current?.snapToPosition(position, config),
     }),
     [bottomSheetRef],
-  );
-
-  /**
-   * Monitor bottom sheet changes
-   */
-  const onAnimateHandler = useCallback(
-    (fromIndex: number, toIndex: number) => {
-      // bottom sheet opened
-      if (fromIndex < 0) {
-        setOpened(true);
-        BackHandler.addEventListener('hardwareBackPress', backHandler);
-      }
-      // bottom sheet cosed
-      if (toIndex < 0) {
-        setOpened(false);
-        BackHandler.removeEventListener('hardwareBackPress', backHandler);
-      }
-    },
-    [backHandler],
   );
 
   const renderHandle = useCallback(() => <Handle />, []);
@@ -106,8 +75,8 @@ const MBottomSheet = forwardRef<BottomSheet, PropsType>((props, ref) => {
       enableContentPanningGesture={false}
       enableHandlePanningGesture={true}
       backgroundComponent={null}
-      onAnimate={onAnimateHandler}
       {...props}
+      onAnimate={onAnimateHandler}
     />
   );
 });
