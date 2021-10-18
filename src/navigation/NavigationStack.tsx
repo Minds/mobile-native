@@ -128,6 +128,8 @@ import EmailNotificationsSettings from '../notifications/v3/settings/email/Email
 import ChannelEditScreen from '../channel/v2/edit/ChannelEditScreen';
 import MultiUserScreen from '../auth/multi-user/MultiUserScreen';
 import RelogScreen from '../auth/RelogScreen';
+import ChooseBrowserScreen from '~/settings/screens/ChooseBrowserScreen';
+import ChooseBrowserModalScreen from '~/settings/screens/ChooseBrowserModalScreen';
 
 const isIos = Platform.OS === 'ios';
 
@@ -537,6 +539,11 @@ const AppStack = function () {
           options={{ title: i18n.t('settings.other') }}
         />
         <AppStackNav.Screen
+          name="ChooseBrowser"
+          component={ChooseBrowserScreen}
+          options={{ title: i18n.t('settings.chooseBrowser') }}
+        />
+        <AppStackNav.Screen
           name="Resources"
           component={ResourcesScreen}
           options={{ title: i18n.t('settings.resources') }}
@@ -738,6 +745,11 @@ const RootStack = function (props) {
           <RootStackNav.Screen
             name="JoinMembershipScreen"
             component={JoinMembershipScreen}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen
+            name="ChooseBrowserModal"
+            component={ChooseBrowserModalScreen}
             options={modalOptions}
           />
           <RootStackNav.Screen name="ViewImage" component={ViewImageScreen} />
