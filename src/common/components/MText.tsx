@@ -1,6 +1,6 @@
 import React from 'react';
-import { Text, TextProps } from 'react-native';
-import { useMemoStyle, useStyle } from '../../../src/styles/ThemedStyles';
+import { StyleSheet, Text, TextProps } from 'react-native';
+import ThemedStyles from '~styles/ThemedStyles';
 
 /**
  * Base font with default family and color
@@ -18,33 +18,17 @@ const MText = ({
     | Element
     | null;
 }) => {
-  const defaultStyle = useStyle(
-    'colorPrimaryText',
-    { fontFamily: 'Roboto' },
+  const defaultStyle = [
+    ThemedStyles.style.colorPrimaryText,
+    styles.text,
     style as any,
-  );
+  ];
+
   return <Text style={defaultStyle} {...p} />;
 };
 
-// Temporary DText used on the Button component
-export const DText = ({
-  style,
-  ...p
-}: TextProps & {
-  children:
-    | (string | Element)[]
-    | string
-    | string[]
-    | number
-    | undefined
-    | Element
-    | null;
-}) => {
-  const defaultStyle = useMemoStyle(
-    ['colorPrimaryText', { fontFamily: 'Roboto' }, style as any],
-    [style],
-  );
-  return <Text style={defaultStyle} {...p} />;
-};
+const styles = StyleSheet.create({
+  text: { fontFamily: 'Roboto' },
+});
 
 export default MText;

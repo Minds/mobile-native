@@ -30,7 +30,7 @@ const ICON_MAP = {
   subscriptions: {
     font: 'FontAwesome',
     name: 'group',
-    ratio: 0.84,
+    ratio: 0.8,
   },
   list: {
     font: 'MaterialIcons',
@@ -66,10 +66,12 @@ const ICON_MAP = {
   'thumb-up': {
     font: 'MaterialIcons',
     name: 'thumb-up',
+    ratio: 0.96,
   },
   'thumb-down': {
     font: 'MaterialIcons',
     name: 'thumb-down',
+    ratio: 0.96,
   },
   'plus-circle': {
     font: 'MaterialCommunityIcons',
@@ -103,12 +105,12 @@ const ICON_MAP = {
   chat: {
     font: 'MaterialCommunityIcons',
     name: 'message-outline',
-    ratio: 0.94,
+    ratio: 0.92,
   },
   'chat-solid': {
     font: 'MaterialCommunityIcons',
     name: 'message',
-    ratio: 0.94,
+    ratio: 0.92,
   },
   'chevron-left': {
     font: 'MaterialCommunityIcons',
@@ -172,7 +174,7 @@ const ICON_MAP = {
   notification: {
     font: 'MaterialCommunityIcons',
     name: 'bell',
-    ratio: 0.96,
+    ratio: 0.94,
   },
   menu: {
     font: 'IonIcon',

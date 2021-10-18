@@ -11,7 +11,9 @@ const Scheduled = ({ isScheduled, time_created }: PropsType) => {
   if (!isScheduled) {
     return null;
   }
-  const message = `${i18n.t('activity.scheduled')} ${i18n.date(time_created)}.`;
+  const message = `${i18n.t('activity.scheduled')} ${i18n.date(
+    Number(time_created) * 1000,
+  )}.`;
   return <Banner message={message} />;
 };
 

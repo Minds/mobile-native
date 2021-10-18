@@ -83,8 +83,8 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    paddingHorizontal: 10,
+    justifyContent: 'space-around',
+    paddingHorizontal: 16,
     borderTopWidth: StyleSheet.hairlineWidth,
   },
   avatar: {
