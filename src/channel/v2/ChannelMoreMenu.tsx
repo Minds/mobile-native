@@ -9,7 +9,7 @@ import shareService from '../../share/ShareService';
 import { MINDS_URI } from '../../config/Config';
 import { observer } from 'mobx-react';
 import {
-  BottomSheet,
+  BottomSheetModal,
   BottomSheetButton,
   MenuItem,
 } from '../../common/components/bottom-sheet';
@@ -223,12 +223,12 @@ const ChannelMoreMenu = forwardRef((props: PropsType, ref: any) => {
   }, [ref]);
 
   return (
-    <BottomSheet ref={ref}>
+    <BottomSheetModal ref={ref}>
       {options.map((b, i) => (
         <MenuItem {...b} key={i} />
       ))}
       <BottomSheetButton text={i18n.t('cancel')} onPress={close} />
-    </BottomSheet>
+    </BottomSheetModal>
   );
 });
 
