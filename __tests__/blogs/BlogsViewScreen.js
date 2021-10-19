@@ -9,6 +9,7 @@ import UserStore from '../../src/auth/UserStore';
 import renderer from 'react-test-renderer';
 import NavigationService from '../../src/navigation/NavigationService';
 import { StoresProvider } from '../../src/common/hooks/use-stores';
+import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
 
 jest.mock('../../src/navigation/NavigationService');
 jest.mock('../../src/blogs/BlogsViewStore');
@@ -33,6 +34,11 @@ jest.mock(
 jest.mock(
   '../../src/newsfeed/activity/actions/CommentsAction',
   () => 'CommentsAction',
+);
+
+jest.mock(
+  'react-native-safe-area-context',
+  () => require('react-native-safe-area-context/jest/mock').default,
 );
 
 /**
