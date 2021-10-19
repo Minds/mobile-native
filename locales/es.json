@@ -1,22 +1,17 @@
 {
-  "date": {
-    "formats": {
-      "small": "%b %-d, %Y",
-      "medium": "%a, %b %-d, %Y"
-    }
-  },
-  "datetime": {
-    "formats": {
-      "small": "%b %-d, %Y %-I:%M%p"
-    }
+  "dateformats": {
+    "date": "MMM DD, YYYY",
+    "short": "MMM DD",
+    "nameDay": "ddd MMM Do",
+    "datetime": "MMM DD YYYY · HH:mm"
   },
   "activity": {
     "loadEarlier": "CARGAR ANTERIOR",
     "loadLater": "CARGAR SIGUIENTES",
     "notSafeComment": "Este comentario no es seguro para el trabajo y no se puede acceder en iOS",
     "explicitComment": "El comentario está marcado como explícito",
-    "typeComment": "Agregar tu comentario",
-    "typeReply": "Añadir tu respuesta",
+    "typeComment": "Deja tu comentario",
+    "typeReply": "Deja tu respuesta",
     "replyTo": "Responder a @{{user}}",
     "error": "PERDÓN, NO SE PUEDE CARGAR LA ACTIVIDAD",
     "tryAgain": "POR FAVOR INTENTA MAS TARDE",
@@ -53,7 +48,6 @@
       "edit_post": "No tienes permiso para editar esta publicación",
       "invite": "No tienes permiso para invitar",
       "join": "No tienes permiso para unirte",
-      "gathering": "No tienes permiso para unirte a esta gathering",
       "message": "No tienes permiso para enviar mensajes a este usuario",
       "subscribe": "No tienes permiso para suscribirte",
       "tag": "No tienes permiso para crear tags en este contenido",
@@ -64,9 +58,16 @@
     }
   },
   "auth": {
+    "2faRequired": "2FA requerida",
+    "2faEmailDescription": "Para continuar, por favor confirma el código de verificación de dos factores que enviamos a al email ({{email}}).",
+    "2faSmsDescription": "Para continuar, por favor confirma el código de verificación de dos factores que enviamos a tu telefono.",
+    "2faAppDescription": "Para continuar, inserte el código de seis digitos de su app de autenticación.",
+    "2faInvalid": "Código invalido",
     "fieldRequired": "Requerido",
+    "matchPattern": "El nombre de usuario solo puede tener letras, números o guiones bajos.",
     "login": "Ingresar",
     "forgot": "Olvidé mi clave",
+    "alreadyLogged": "Ya ingresaste con esta cuenta",
     "email": "E-mail",
     "username": "Usuario",
     "password": "Clave",
@@ -84,9 +85,36 @@
     "createChannel": "Únete a Minds",
     "haveAccount": "¿No tienes una cuenta?",
     "alreadyHaveAccount": "¿Ya tienes una cuenta? &{login}&",
-    "failedToLoginNewAccount": "El inicio de sesión con su nueva cuenta ha fallado, por favor intente iniciar sesión en la pantalla"
+    "failedToLoginNewAccount": "El inicio de sesión con su nueva cuenta ha fallado, por favor intente iniciar sesión en la pantalla",
+    "authCode": "Código de autenticación",
+    "recoveryCode": "Código de recuperación",
+    "totpDesc": "Abre la aplicación de autenticación en tu dispositivo para ver el código y verificar tu identidad.",
+    "smsDesc": "Minds te envió un código de verificación a tu teléfono.",
+    "recoveryDesc": "Ingresa to código de recuperación en caso que hayas perdido acceso a tu dispositivo.",
+    "recoveryFail": "El código de recuperación no coincide",
+    "confirmPasswordModal": "Por favor, confirma la contraseña de tu cuenta para continuar",
+    "loginFail": "Usuario o contraseña incorrectos",
+    "userTaken": "Nombre de usuario ya registrado",
+    "waitLogin": "Iniciando sesión con nuevas credenciales...",
+    "resetPassword": "Restablecer contraseña",
+    "createNewPassword": "Crear una nueva contraseña",
+    "inputUser": "Introduzca el nombre de su canal para iniciar el proceso de recuperación de contraseña.",
+    "emailSent": "Se te ha enviado un email con instrucciones para restablecer tu contraseña.",
+    "followInstuctions": "Siga las instrucciones para continuar el proceso de restablecimiento.",
+    "sendAgain": "Envíar email nuevamente",
+    "waitMoment": "Tienes que esperar 10 segundos después de la última vez que has solicitado el email",
+    "newPassword": "Crear una nueva contraseña. Utilizarás esta para acceder a tu cuenta."
+  },
+  "multiUser": {
+    "switchChannel": "Cambiar cuenta",
+    "login": "Agregar cuenta existente",
+    "create": "Crear nuevo canal",
+    "sessionExpired": "Sesión cerrada"
   },
   "blockchain": {
+    "exportLegacyWallet": "Exportar billeteras antiguas",
+    "exportLegacy1": "Tiene las claves privadas de al menos una billetera en la aplicación.",
+    "exportLegacy2": "Por favor, guárdelo si no quieres perder el acceso a ellas.",
     "boostCreate": "Impulsar Red {{tokensAmount}} Minds Tokens. {{message}}",
     "boostPeerCreate": "Impulsar Canal por {{tokensAmount}} Minds Tokens to {{receiver}}. {{message}}",
     "tokenApprove": "Aprobar {{address}} para gastar {{tokensAmount}} tokens en el futuro. {{message}}",
@@ -191,7 +219,8 @@
       "7": "Spam",
       "8": "Apelar la decición del Boost",
       "12": "Pago OnChain fallido",
-      "13": "Publicación original removida"
+      "13": "Publicación original removida",
+      "14": "Cantidad de Boost muy alta"
     },
     "boostChannel": "Promocionar Canal",
     "boostPost": "Promocionar Publicación",
@@ -211,6 +240,10 @@
     "hold": "Mantén pulsado para seleccionar solo uno"
   },
   "capture": {
+    "discardPost": "Descartar esta publicación?",
+    "discardPostDescription": "Si descartas perderás esta publicación",
+    "keepEditing": "Seguir editando",
+    "yesDiscard": "Sí, Descartar",
     "licenseDescription": "Seleccione su tipo de licencia deseada. Esto puede cambiarse en cualquier momento después de publicar.",
     "pupularLicenses": "Licencias populares",
     "mediaPortraitError": "El medio seleccionado no es vertical",
@@ -250,6 +283,8 @@
     "editChannel": "Cambia la configuración de tu canal",
     "confirmUnsubscribe": "Estás seguro que quieres desuscribirte de este canal?",
     "subscribe": "Suscribir",
+    "subscribed": "Suscrito",
+    "message": "Mensaje vía chat",
     "requestSubscription": "Pedir Suscripción",
     "briefDescription": "Breve descripción acerca de ti...",
     "block": "Bloquear",
@@ -257,9 +292,14 @@
     "unblock": "Desbloquear canal",
     "report": "Reportar",
     "createFirstPost": "Crear tu primer post",
+    "createFirstPostTitle": "Tus noticias estan vacías",
+    "createFirstPostSubTitle": "No llamaras la atención sin publicaciones",
+    "createFirstPostAction": "Crear tu primer post",
     "blocked": "Canal bloqueado",
     "banned": "Este canal está baneado",
     "viewScheduled": "Agendado",
+    "notExist": "Lo sentimos, parece que este canal no existe",
+    "subscriber": "Se subscribió a ti",
     "edit": {
       "bio": "Bio",
       "about": "Sobre Info",
@@ -270,6 +310,11 @@
       "dob": "Fecha de nacimiento"
     },
     "badges": "Insignias",
+    "badge": {
+      "plus": "Minds Plus",
+      "verified": "Verificado",
+      "founder": "Fundador"
+    },
     "fabSend": "Enviar propina",
     "fabPay": "Propina",
     "share": "Compartir canal"
@@ -335,14 +380,17 @@
     "checkCredentials": "Por favor verifica tus credenciales",
     "errorCreatingKeys": "Error creando las llaves de encriptación",
     "messenger": "Mensajero",
-    "noMessages": "Buscar a alguien para enviar un mensaje",
+    "noMessages": "Busca a alguien para enviarle un mensaje",
     "logoutMessage": "Quieres salir del Messenger?",
     "changeKeyMessage": "Cambiar tu contraseña de encriptación causara que tus mensajes previos sean ilegibles",
     "notEncryptedMessage": "Hola @{{user}} al parecer tu no has configurado tu contraseña para el chat encriptado aún. Te recomendamos que tu uses una contraseña diferente a la de tu cuenta para mayor seguridad.",
     "onboardingText": "Una contraseña adicional es requerida para el messenger con el objetivo de asegurar que tus mensajes sean privados y completamente encriptados.",
     "setupMessage1": "Tu solo necesitas ingresar esta contraseña de encriptación una vez y permanecerás logeado.",
     "setupMessage2": "Es importante que ningún otro mas que tu y la persona con la que te estas comunicando tengan acceso al contenido de tus mensajes.",
-    "setupMessage3": "Por defecto el contenido de tus mensajes está totalmente encriptado. Para más seguridad puedes querer apagar las notificaciones push desde la pantalla de configuración para bloquear el seguimiento de metadatos."
+    "setupMessage3": "Por defecto el contenido de tus mensajes está totalmente encriptado. Para más seguridad puedes querer apagar las notificaciones push desde la pantalla de configuración para bloquear el seguimiento de metadatos.",
+    "messengerRekey": "Cambia tu contraseña de encriptación",
+    "legacyMessenger": "Mensajero antiguo",
+    "errorDirectMessage": "¡Ups! Inténtalo de nuevo en un momento"
   },
   "newsfeed": {
     "title": "Noticias",
@@ -406,10 +454,51 @@
     "rewardsStateDecrease": "Te extrañamos! Has bajado a un usuario {{state}}.",
     "rewardsStateDecrease1": "Hemos reducido tu multiplicador de rewards diarios a {{multiplier}}x",
     "rewardsStateDecreaseToday": "No es tarde! Tu bajaras a un usuario {{state}} para el final del día y tu multiplicador diario de reward se reducira a {{multiplier}}x. Comienza a votar y comentar para recuperar tu puntaje.",
-    "rewardsSummary": "Ganaste {{amount}} tokens ayer."
+    "rewardsSummary": "Ganaste {{amount}} tokens ayer.",
+    "verbs": {
+      "vote_up": "voto a favor",
+      "vote_down": "votado en contra",
+      "comment": "comentado sobre",
+      "reply": "respondido a",
+      "tag": "te ha etiquetado en",
+      "remind": "ha recordado",
+      "quote": "quoted",
+      "subscribe": "subscribed to",
+      "group_queue_add": "Your post is awaiting approval from the group administrators",
+      "group_queue_approve": "aprobado",
+      "group_queue_reject": "rechazado",
+      "wire_received": "paid",
+      "boost_peer_request": "sent you",
+      "boost_peer_accepted": "accepted",
+      "boost_peer_rejected": "declined",
+      "boost_rejected": "is unable to approve",
+      "token_rewards_summary": "You earned {{amount}} tokens yesterday. Nice job!"
+    }
+  },
+  "interactions": {
+    "upVotes": {
+      "one": "upvote",
+      "other": "upvotes"
+    },
+    "downVotes": {
+      "one": "downvote",
+      "other": "downvotes"
+    },
+    "reminds": {
+      "one": "recordar",
+      "other": "reminds"
+    },
+    "quotes": {
+      "one": "cita",
+      "other": "quotes"
+    },
+    "subscribers": {
+      "one": "subscriber",
+      "other": "suscriptores"
+    }
   },
   "notificationSettings": {
-    "enableDisable": "Activa y desactiva las notificaciones",
+    "enableDisable": "Enable Push Notifications",
     "comment": "Comentarios",
     "like": "Votos",
     "tag": "etiquetas",
@@ -417,22 +506,46 @@
     "remind": "Recordatorios",
     "boost_request": "Boost ofertados",
     "boost_rejected": "Boost rechazados",
-    "boost_completed": "Boost terminados",
     "rewards_reminder": "Recordatorio de Recompensas",
     "rewards_summary": "Sumario Diario Recompensas",
     "message": "Mensajero",
     "messenger_invite": "Invitaciones al Messenger",
-    "daily": "Diario",
     "group_invite": "Invitaciones de Grupos",
     "boost_gift": "Boost Regalo",
     "boost_accepted": "Boost aceptado",
     "boost_revoked": "Boost revocado",
     "referral_ping": "Ping de Referido",
     "referral_pending": "Referido Pendiente",
-    "referral_complete": "Referido Completado"
+    "referral_complete": "Referido Completado",
+    "votes": "Votos",
+    "tags": "etiquetas",
+    "subscriptions": "Suscripciones",
+    "comments": "Comentarios",
+    "reminds": "Reminds",
+    "boosts": "Optimizar",
+    "tokens": "Tokens",
+    "related": "Related to your posts and channel",
+    "emailWhen": "Escríbeme cuando",
+    "emailWith": "Escríbeme con",
+    "emailUpdated": "Mantenerme informado con",
+    "exclusive_promotions": "Exclusive Promotions",
+    "minds_news": "Noticias acerca de nuevos productos y servicios en Minds",
+    "minds_tips": "Consejos para utilizar Minds",
+    "boost_completed": "Mi promocion ha sido completada",
+    "unread_notifications": "Tengo notificaciones sin leer",
+    "wire_received": "Recibo una transferencia",
+    "channel_improvement_tips": "Consejos sobre cómo mejorar mi canal",
+    "new_channels": "New things to subscribe to",
+    "posts_missed_since_login": "Things I’ve missed since my last login",
+    "top_posts": "Publicaciones principales de mi red",
+    "frecuency": "Notification Frequency",
+    "periodically": "Periodically",
+    "daily": "Diario",
+    "weekly": "Semanal",
+    "never": "Never"
   },
   "plus": {
-    "freeTrialDesciption": "Comience su prueba gratuita durante 7 días"
+    "freeTrialDesciption": "Comienza tu prueba gratuita durante 7 días"
   },
   "payments": {
     "confirmDeleteCard": "Quieres borrar esta tarjeta?"
@@ -548,6 +661,7 @@
     "darkMode": "Modo oscuro",
     "lightMode": "Modo claro",
     "other": "Otros",
+    "resources": "Resources",
     "referrals": "Referencias",
     "account": "Cuenta",
     "network": "Red",
@@ -561,12 +675,39 @@
     "passwordFormatNumber": "Al menos 1 número",
     "passwordFormatNoSpaces": "No tiene espacios",
     "showMatureContent": "Mostrar siempre contenido adulto (+18)",
-    "TFA": "Autenticación en dos pasos",
-    "TFAdescription": "Añade una capa extra de seguridad a tu cuenta activando 2FA",
-    "TFAEnabled": "Puede desactivar 2FA en cualquier momento. Si ha cambiado el número de móvil, necesitará desactivar y volver a habilitar 2FA",
+    "TFA": "2FA",
+    "TFAdescription": "Two-factor authentication adds an extra layer of security to your account. In addition to your username and password, you’ll need to enter a code that Minds sends to you via text or an app on your phone.",
+    "TFAEnabled": "2FA Enabled",
+    "TFADisabled": "2FA Disabled",
     "TFADisable": "Desactivar 2FA",
-    "sessionsOpened": "Actualmente tienes {{amount}} sesiones abiertas",
-    "closeSessions": "LIMPIAR TODAS LAS SESIONES",
+    "TFADisableYes": "Yes, Disable 2FA",
+    "TFADisableDesc": "Are you sure you wish to disable two-factor authentication on your Minds account?",
+    "TFAEnterCode": "Enter the six-digit code from the application",
+    "TFARecoveryCodes": "Recovery codes",
+    "TFARecoveryCodesTitle": "2. Recovery codes",
+    "TFARecoveryCodesDesc": "Recovery codes are used to access your account in the event you cannot receive two-factor authentication codes.",
+    "TFARecoveryCodesBeSure": "Please make sure to store this information securely. If you lose it we can not guarantee that you will regain access to your account",
+    "TFAVerifyTitle": "1. Verify with authenticator app",
+    "TFAVerifyDesc": "Enter the following two-factor secret into your authenticator app",
+    "TFAVerifyPhoneTitle1": "1. Phone number",
+    "TFAVerifyPhoneTitle2": "2. Confirm code",
+    "TFAVerifyPhoneDesc2": "Código de verificación enviado",
+    "TFAVerifyPhoneDesc1": "This is the phone number where SMS verification codes will be sent each time you login.",
+    "TFARecoveryCodeEnter": "Enter a two-factor recovery code",
+    "TFARecoveryCodeUsedDesc": "2FA has been disabled on your Minds account because you used your one-time TOTP recovery code.",
+    "TFARecoveryCodeUsedEnable": "Enable 2FA",
+    "TFARecoveryCodeUsedSettings": "Security Settings",
+    "TFARecoveryCodeUsedContact": "If you did not enter your recovery code or believe you have received this message in error, please contact us immediately at",
+    "TFARecoveryCodeUsedMailto": "info@minds.com",
+    "TFAOptions": {
+      "appTitle": "App",
+      "appDescription": "Utilice una aplicación en su teléfono para obtener códigos de autenticación de doble factor cuando se le solicite.",
+      "smsTitle": "SMS",
+      "smsDescription": "Minds te enviará un SMS con un código de autenticación de dos factores cuando se te solicite"
+    },
+    "sessionsOpened": "Has iniciado sesión en la cuenta de Minds en los siguientes dispositivos.",
+    "closeSessions": "Cerrar todas las sesiones",
+    "closeSession": "Cerrar sesión",
     "subscriptionListEmpty": "No tienes ninguna suscripción recurrente",
     "recurringPaymentsDescription": "Registra los pagos recurrentes que realices para soportar otros canales.",
     "enterDark": "Entrar en modo oscuro",
@@ -575,10 +716,14 @@
     "usdTiers": "NIVELES USD",
     "addTier": "Agregar Nivel",
     "noTiers": "No tienes ningún nivel de suscripción",
+    "noTiersTitle": "No tienes niveles de membresía",
+    "noTiersSubTitle": "Aumenta tus ingresos creando contenido exclusivo para tus miembros",
+    "addFirstTier": "Añadir un nivel de membresía",
     "payment": "Pago",
     "dataSaverDisableOnWifi": "Desactivar en Wi-Fi",
     "dataSaverDescription": "Cuando el salvador de datos está activado, los vídeos no se cargarán por adelantado para ayudarte a usar menos datos.",
     "dataSaverDisableOnWiFiDescription": "Cuando está activado, el modo Ahorro de Datos se desactivará automáticamente cuando se detecte una conexión Wi-Fi.",
+    "saved": "Configuración guardada",
     "reportedContent": {
       "action": {
         "actionNSFW": "marcado NSFW",
@@ -606,7 +751,8 @@
       "4": "Notificaciones",
       "5": "Contenido NSFW",
       "6": "Mensajero",
-      "7": "Videos de reproducción automática"
+      "7": "Videos de reproducción automática",
+      "8": "Contenido promovido"
     },
     "networkOptions": {
       "1": "Ahorrador de datos"
@@ -630,11 +776,73 @@
       "d": "INFO",
       "d1": "App"
     },
+    "notificationsOptions": {
+      "push": "Push",
+      "email": "E-mail"
+    },
     "autoplay": {
       "description": "Controla si los vídeos de tu feed se reproducen automáticamente.",
       "enable": "Activar reproducción automática de vídeo",
       "saved": "Cambios guardados",
       "notPlus": "Esta función está disponible para usuarios Plus."
+    },
+    "boost": {
+      "description": "Controle cómo funcionan los boosts en el sitio.",
+      "learn": "Saber más al respecto",
+      "viewBoostedContent": "Ver contenido promovido",
+      "viewBoostedContentTooltip": "Los usuarios Plus pueden ocutar las promociones de su sección de noticias",
+      "boostAutoRotation": "Auto-rotacion de Boosts",
+      "boostAutoRotationTooltip": "Esto habilitará/deshabilitará la rotación de la caja de promociones en la parte superior de tu sección de noticias",
+      "openContent": "Abrir contenido",
+      "openContentTooltip": "Abrir puede contener contenido polémico. Al seleccionar Abrir, reconoce que está dispuesto a ver contenido polémico.",
+      "liquiditySpot": "Punto de liquidez",
+      "liquiditySpotTooltip": "Los proveedores de liquidez de Minds Token son recompensados con un aumento del espacio de anuncios en relación a su % del pool de liquidez.",
+      "optIn": "Adherirse",
+      "optOut": "Darse de baja",
+      "enable": "Habilitar",
+      "disable": "Deshabilitar"
+    },
+    "about": {
+      "title": "acerca de",
+      "mobile": "Móvil",
+      "careers": "Carreras",
+      "blog": "Blog",
+      "whitepaper": "Whitepaper",
+      "rights": "Declaración de Derechos",
+      "events": "Eventos",
+      "store": "Tienda",
+      "terms": "Términos de Servicio",
+      "privacy": "Política de privacidad",
+      "content": "Política de contenido",
+      "dmca": "DMCA"
+    },
+    "support": {
+      "title": "soporte",
+      "help": "Mesa de Ayuda",
+      "contact": "Contacto",
+      "community": "Comunidad",
+      "languages": "Idiomas",
+      "status": "Estado"
+    },
+    "business": {
+      "title": "Negocio",
+      "upgrade": "Mejorar",
+      "token": "Token",
+      "plus": "Plus",
+      "pro": "Pro",
+      "pay": "Pagar",
+      "nodes": "Nodes",
+      "boost": "Boost",
+      "rewards": "Recompensas",
+      "youtube": "Migración de YouTube"
+    },
+    "developers": {
+      "title": "Desarrolladores",
+      "docs": "Documentación",
+      "community": "Comunidad",
+      "code": "codigo",
+      "canary": "Canary",
+      "branding": "Marca"
     }
   },
   "comingSoon": {
@@ -648,13 +856,13 @@
   "onboarding": {
     "startEarning": "Empieza a ganar tokens",
     "improveExperience": "Mejora tu experiencia",
-    "joinGroup": "Unirse a un grupo",
     "hidePanel": "Ocultar este panel",
+    "joinGroup": "Unirse a un grupo",
     "subscribeToChannel": "Suscríbete a un canal",
     "completeToEarn": "Completa para ganar tokens",
-    "tooltipInitial1": "Para obtener más de Minds",
+    "tooltipInitial1": "Para obtener el mayor provecho de Minds",
     "tooltipInitial2": "por favor, completa estos pasos",
-    "verifyEmailAddress": "Confirma tu dirección de correo electrónico",
+    "verifyEmailAddress": "Verifica tu dirección de correo electrónico",
     "selectTags": "Seleccionar etiquetas",
     "setupChannel": "Configurar canal",
     "verifyUniqueness": "Verificar unicidad",
@@ -690,6 +898,7 @@
     "infoDateBirth": "Fecha de nacimiento",
     "groupTitle": "Grupos",
     "numberConfirmed": "Tu número ha sido validado",
+    "phoneNumberInvalid": "Número de teléfono inválido",
     "phoneNumberTooltip": "Tu número de teléfono móvil puede ser usado para seguridad adicional de tu cuenta, identificación única y para ayudar a tus amigos a encontrarte. Estos datos son privados y cifrados.",
     "dateofBirthTooltip": "Por favor, introduzca su fecha de nacimiento para confirmar su edad y ayudarnos a mejorar nuestras recomendaciones.",
     "locationTooltip": "Por favor, introduce tu ciudad para ayudarnos a conectarte con los canales de tu área. No rastreamos tu ubicación exacta.",
@@ -700,7 +909,9 @@
     "connectBank": "Conectar con el Banco",
     "buyTokens": "Comprar Tokens",
     "onboardingCompleted": "Ahora puedes ganar tokens",
-    "improvedExperience": "¡Tu feed debería estar más animada!"
+    "improvedExperience": "¡Tu feed debería estar más animada!",
+    "mustVerify": "Antes de empezar a ganar o comprar tokens, es importante que podamos simplemente verificar que es unico. Cuantas menos tokens los spammers tomen, ¡más te quedan! Para aprender sobre cómo mantener tus datos privados,",
+    "codeSent": "Código de verificación enviado"
   },
   "membership": {
     "noTokens": "No acepta tokens",
@@ -711,9 +922,11 @@
   },
   "wallet": {
     "wallet": "Billetera",
+    "connect": "Conectar a cartera",
+    "reconnect": "Reconectar el monedero",
     "cash": "Efectivo",
     "activeAddress": "Dirección de recepción móvil (activa)",
-    "alternateReceiver": "Cambiar dirección de recepción",
+    "alternateReceiver": "Cambiar dirección",
     "createAddress": "Crear una nueva dirección (Recomendado)",
     "transferToOnchain": "Transferir a On-chain",
     "usePrivateKey": "Usa tu clave privada",
@@ -725,8 +938,29 @@
     "walletActions": "ACCIONES BILLETERA",
     "walletBalance": "Balance de la Billetera",
     "transactionsEmpty": "Tu lista de transacciones está vacía",
+    "unpaid": "Impago",
+    "unpaidEarnings": "Ganancias impagas",
+    "total": "Total",
+    "totalPaidout": "Total pagado",
+    "alltime": "Ganancias Totales",
+    "addressCopied": "Dirección copiada al portapapeles",
+    "wire": "Pago de mentes",
+    "wireAll": "Membresías y propinas",
+    "partner": "Reparto de ingresos",
+    "plus": "Contenido Minds+",
+    "wireReferral": "Comisiones de pago de Minds",
+    "yourScore": "Tu puntaje",
+    "networkScore": "Puntaje Red",
+    "yourShare": "Tu parte",
+    "rewards": {
+      "one": "Recompensa",
+      "other": "Recompensas"
+    },
+    "completeStep": "Por favor, complete el paso en su aplicación de cartera",
+    "connectFirst": "Conectar primero la billetera",
+    "verified": "Su dirección on-chain está ahora configurada y verificada",
     "withdraw": {
-      "errorOnlyOnceDay": "Tu puedes retirar solo una vez por día",
+      "errorOnlyOnceDay": "Sólo puede tener un retiro pendiente a la vez",
       "errorWithdrawing": "Error retirando tokens",
       "amount": "Monto",
       "errorAmountNegative": "El monto debería ser un número positivo",
@@ -747,7 +981,18 @@
       "leaveButton": "Dejar el Programa de Monetización",
       "confirmLeave": "¿Estás seguro? No podrás volver a unirte.",
       "sure": "Si, estoy seguro",
-      "earnings": "Ganancias"
+      "earnings": "Ganancias",
+      "tooltips": {
+        "proTitle": "Resumen de tus ganancias a través de tu membresía Minds Pro.",
+        "plusTitle": "Resumen de tus ganancias a través de tu membresía Minds Pro.",
+        "plusScore": "Tu puntuación por la actividad en tu contenido enviado a Minds+.",
+        "plusTotal": "Total network score for engagement on all content submissions to Minds+.",
+        "plusPercentage": "Your score divided by the total network score.",
+        "plusReward": "Your estimated token reward based on your percent share.",
+        "plusActivity": "Your account's activity level to determine your multiplier",
+        "proPageviews": "Your total earnings for registered pageviews on your content or channel",
+        "proReferrals": "Your total earning for active users you have referred."
+      }
     },
     "transactions": {
       "transaction": "Transacción",
@@ -756,9 +1001,9 @@
       "filter": "Filtro",
       "reward": "Recompensa diaria de hoy",
       "filterTransactions": "Filtrar transacciones",
-      "filterTypes": "TIPOS DE TRANSACCIÓN",
+      "filterTypes": "Transaction types",
       "allFilter": "Todo",
-      "mindsReward": "Recompensa de la mente",
+      "mindsReward": "Recompensa de Minds",
       "rewardsFilter": "Recompensas",
       "boostsFilter": "Optimizar",
       "transferFilter": "Transferencias en cadena",
@@ -803,7 +1048,7 @@
       "description": "Puedes recibir pagos de Bitcoin enlazando tu dirección de receptor de Bitcoin a continuación.",
       "add": "Añadir dirección bitcoin",
       "current": "ADRESO DE RECEIVER ACTUAL",
-      "update": "Actualizar dirección",
+      "update": "Update Bitcoin Address",
       "error": "SORRY, NOS COULDN'T SET YOUR ADRESS"
     },
     "bank": {
@@ -830,6 +1075,46 @@
       "fail": "Algo salió mal",
       "finish": "Termina de añadir tus datos bancarios para empezar a recibir pagos en efectivo",
       "complete": "Datos bancarios completos"
+    },
+    "date": "Fecha",
+    "today": "Today",
+    "todayEstimate": "Today’s estimate",
+    "payout": "Pagos",
+    "engagement": "Participación",
+    "holding": "Holding",
+    "liquidity": "Liquidity",
+    "tokens": {
+      "tooltips": {
+        "todayEstimate": "Your estimated token payout for today's contribution.",
+        "prevDateEarnings": "Your token payout for this date.",
+        "nextPayout": "Countdown until your next token payout is issued.",
+        "engagement": "Summary of your token rewards for engagement on your content.",
+        "holding": "Summary of your token rewards for holding tokens on-chain.",
+        "liquidity": "Summary of your token rewards for providing liquidity.",
+        "engagementScore": "Your score for referrals and engagement on your content and channel.",
+        "engagementTotal": "Total network score for all referrals and engagement on the app.",
+        "engagementPercentage": "Your score divided by the total network score.",
+        "engagementReward": "Your estimated token reward based on your percent share.",
+        "engagementActivity": "Your account's activity level to determine your multiplier.",
+        "holdingScore": "Your score for holding your tokens on-chain.",
+        "holdingTotal": "Total network score for holding tokens on-chain.",
+        "holdingPercentage": "Your score divided by the total network score.",
+        "holdingReward": "Your estimated token reward based on your percent share.",
+        "holdingBalance": "Your current on-chain token balance.",
+        "holdingDuration": "The number of consecutive days you have held tokens on-chain",
+        "holdingMultiplier": "Your score multiplier as determined by duration.",
+        "liquidityScore": "Your score for providing liquidity.",
+        "liquidityTotal": "Total network score for providing liquidity.",
+        "liquidityPercentage": "Your score divided by the total network score.",
+        "liquidityReward": "Your estimated token reward based on your percent share.",
+        "liquidityBalance": "Your current liquidity position.",
+        "liquidityDuration": "The number of consecutive days you have provided liquidity.",
+        "liquidityMultiplier": "Your score multiplier as determined by duration."
+      },
+      "completeToTransfer": "Please complete the following before transferring MINDS tokens on-chain.",
+      "tokenAmount": "Cantidad",
+      "transferRequest": "You can request to transfer up to 25,000 tokens from your rewards to your on-chain wallet. You can only have one pending withdrawal at a time.",
+      "transferNote": "Note: a small amount of ETH will be charged to cover the transaction fee."
     }
   },
   "analytics": {
@@ -843,6 +1128,45 @@
       "totalViews": "Visitas Totales",
       "organic": "Orgánico",
       "pageViews": "Vistas de paginas"
+    },
+    "tokens": {
+      "title": "Tokens",
+      "labels": {
+        "LiquidityFees": "Fees (24h)",
+        "LiquidityTotal": "Total liquidity",
+        "LiquidityTradedVolume": "Traded volume (24h)",
+        "EngagementScore": "Participación",
+        "HoldingScore": "Holding",
+        "LiquidityScore": "Liquidity",
+        "EmissionBreakDown": "Emission breakdown",
+        "CirculatingSupply": "Circulating supply",
+        "MarketCap": "Market cap",
+        "TokenHolders": "All-time token holders",
+        "TokensReclaimed": "Tokens reclaimed",
+        "TokensRewarded": "Tokens rewarded",
+        "TotalSupply": "Total Supply",
+        "TransactionsCount": "Transactions count",
+        "TransactionsUnique": "Active token users",
+        "TransactionsVolume": "Transactions volume"
+      },
+      "tooltips": {
+        "LiquidityFees": "Total fees earned by liquidity providers in the past 24 hours",
+        "LiquidityTotal": "Total liquidity pooled on Uniswap",
+        "LiquidityTradedVolume": "Total volume traded on Uniswap in the past 24 hours",
+        "EngagementScore": "The total number of points generated by the community for receiving engagement on their posts in the past 24 hours",
+        "HoldingScore": "The total number of points generated by the community for holding tokens on-chain in the past 24 hours",
+        "LiquidityScore": "The total number of points generated by the community for providing liquidity in the past 24 hours",
+        "EmissionBreakDown": "A summary of how many tokens are rewarded each day and how they are allocated",
+        "CirculatingSupply": "The number of tokens circulating in the community",
+        "MarketCap": "The circulating supply multiplied by the current market price of the token",
+        "TokenHolders": "The total number of users who have ever held a token",
+        "TokensReclaimed": "The total number of tokens reclaimed by Minds for providing services",
+        "TokensRewarded": "The total number of tokens rewarded to the community",
+        "TotalSupply": "The total number of tokens that can ever exist",
+        "TransactionsCount": "The total number of token transactions in the past 24 hours",
+        "TransactionsUnique": "The total number of unique users who have performed a token transaction in the past 24 hours",
+        "TransactionsVolume": "The total volume of tokens exchanged in the past 24 hours"
+      }
     }
   },
   "wire": {
@@ -909,7 +1233,7 @@
     "button": "NSFW"
   },
   "update": {
-    "title": "Actualizar a v{{version}}",
+    "title": "Updating to v{{version}}",
     "failed": "Error actualizando la Aplicación"
   },
   "searchBar": {
@@ -947,15 +1271,15 @@
       "always": "Siempre"
     },
     "membershipMonetize": {
-      "description": "Haz que esta publicación esté disponible exclusivamente para miembros.",
+      "description": "Make this post available exclusively to one of your membership tiers.",
       "noTiers": "No tienes ningún nivel de membrecía",
       "tiersDescription": "Configurar tus niveles ed membrecía es rápido y fácil. Empieza a ganar ingresos adicionales por tu contenido hoy.",
-      "setup": "Configura nieveles de membrecía",
+      "setup": "Setup membership tiers",
       "label": "NIVELES MEMBRESIA",
       "manage": "Administrar"
     },
     "customMonetize": {
-      "usd": "Contribución en USD (se convertirá en tokens si es necesario)",
+      "usd": "Contribution in USD (will be converted to tokens if necessary)",
       "hasUsd": "Aceptar USD",
       "hasTokens": "Aceptar Tokens"
     }
@@ -973,7 +1297,7 @@
     "user": "Usuario",
     "status": "Estado",
     "rewardsSignup": "Regístrate en recompensas",
-    "description": "Si tu amigo se registra en Mente dentro de las 24 horas después de hacer clic en el enlace que has compartido con ellos, se añadirán a tus referencias pendientes. Una vez que se registren en el programa de recompensas configurando su cartera de Mentas, la recomendación está completa y ambos obtendrás +1 añadido a tus puntuaciones de contribución!"
+    "description": "Si tu amigo se registra en Mente dentro de las 24 horas después de hacer clic en el enlace que has compartido con ellos, se añadirán a tus referencias pendientes. Una vez que se registren en el programa de recompensas configurando su cartera de Mentas, la recomendación está completa y ambos obtendrás +10 añadido a tus puntuaciones de contribución!"
   },
   "add": "Añadir",
   "downloading": "Descargando",
@@ -1037,6 +1361,7 @@
   "unlockPost": "Desbloquear Post",
   "setup": "Configurar",
   "send": "Enviar",
+  "sendTo": "Send to",
   "passwordPlaceholder": "contraseña...",
   "passwordConmfirmPlaceholder": "confirmar contraseña...",
   "boost": "Boost",
@@ -1094,6 +1419,7 @@
   "copied": "Copiado al portapapeles",
   "close": "Cerrar",
   "now": "Ahora",
+  "joined": "Se unió",
   "title": "Título",
   "filter": "Filtro",
   "captcha": "Introduzca los caracteres de arriba",
@@ -1110,6 +1436,7 @@
   "uploadFailed": "Error al subir",
   "imageViewer": "Ver Imagen",
   "remindedBy": "Recordado por",
+  "pinnedPost": "Pinned post",
   "postReminded": "La publicación ha sido recordada",
   "remindRemoved": "Republicación eliminada",
   "deletedRemind": "Este contenido recordado no está disponible. Puede que haya sido eliminado o que no tenga permiso para verlo",
@@ -1123,5 +1450,58 @@
     "viewOnPermaweb": "Permaweb"
   },
   "help": "Ayuda",
-  "unblock": "Desbloquear"
+  "unblock": "Desbloquear",
+  "buyTokensScreen": {
+    "title": "Comprar Tokens",
+    "paymentMethod": "Métodos Pago",
+    "deliverEstimate": "Delivery Estimate: 1-2 {{estimate}}",
+    "terms": "I have read and accept the &{link}& for the Minds Token.",
+    "linkText": "Terms Of Sale",
+    "learnMore": "Learn more about tokens",
+    "buy": "Continuar"
+  },
+  "earnScreen": {
+    "title": "Earn",
+    "increase": "Increase your earnings",
+    "resources": {
+      "title": "Resources",
+      "rewards": "How rewards are calculated",
+      "tokens": "How to use tokens",
+      "earnings": "Track your earnings",
+      "analytics": "View token analytics"
+    },
+    "pool": {
+      "title": "Add liquidity"
+    },
+    "transfer": {
+      "title": "Transfer on-chain"
+    },
+    "create": {
+      "title": "Create content"
+    },
+    "refer": {
+      "title": "Refer"
+    },
+    "unlock": {
+      "title": "Unlock revenue-sharing",
+      "mindsPlus": "Actualizar a Minds+",
+      "pro": "Upgrade to Minds Pro"
+    }
+  },
+  "orderReport": {
+    "thanksMessage": "Thank you. We've received your order for {{tokenAmount}} Minds tokens.",
+    "processDuration": "It normally takes a few minutes for your order to be delivered. You will receive a confirmation email once your order is processed.",
+    "paymentMethod": "Métodos Pago",
+    "tokenAmount": "Cantidad de Token",
+    "totalPayment": "Total Payment"
+  },
+  "points": "puntos",
+  "mindsPlusFeature": "Minds+ Feature",
+  "browserOnly": "Browser Only",
+  "clickHere": "click here",
+  "enabled": "Enabled",
+  "copyToClipboard": "Copy to Clipboard",
+  "emptyList": "Sorry the list is empty",
+  "and": "and",
+  "others": "others"
 }

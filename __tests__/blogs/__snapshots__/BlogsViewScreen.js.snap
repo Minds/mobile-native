@@ -342,8 +342,6 @@ exports[`blog view screen component should renders correctly 1`] = `
                       }
                     >
                       <View
-                        collapsable={false}
-                        nativeID="animatedComponent"
                         style={
                           Object {
                             "opacity": 1,
@@ -458,8 +456,6 @@ exports[`blog view screen component should renders correctly 1`] = `
                   }
                 >
                   <View
-                    collapsable={false}
-                    nativeID="animatedComponent"
                     style={
                       Object {
                         "opacity": 0,
@@ -661,8 +657,6 @@ exports[`blog view screen component should renders correctly 1`] = `
                       }
                     >
                       <View
-                        collapsable={false}
-                        nativeID="animatedComponent"
                         style={
                           Object {
                             "opacity": 1,
@@ -777,8 +771,6 @@ exports[`blog view screen component should renders correctly 1`] = `
                   }
                 >
                   <View
-                    collapsable={false}
-                    nativeID="animatedComponent"
                     style={
                       Object {
                         "opacity": 0,
