@@ -9,7 +9,6 @@ import UserStore from '../../src/auth/UserStore';
 import renderer from 'react-test-renderer';
 import NavigationService from '../../src/navigation/NavigationService';
 import { StoresProvider } from '../../src/common/hooks/use-stores';
-import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
 
 jest.mock('../../src/navigation/NavigationService');
 jest.mock('../../src/blogs/BlogsViewStore');
