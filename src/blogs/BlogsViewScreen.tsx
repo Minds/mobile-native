@@ -2,7 +2,7 @@ import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { inject, observer } from 'mobx-react';
 import React, { Component } from 'react';
-import { Alert, FlatList, SafeAreaView, View } from 'react-native';
+import { Alert, SafeAreaView, ScrollView, View } from 'react-native';
 import { Icon } from 'react-native-elements';
 import FastImage, { Source } from 'react-native-fast-image';
 import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
@@ -149,97 +149,78 @@ export default class BlogsViewScreen extends Component<PropsType> {
     const image = blog.getBannerSource();
 
     return (
-      <FlatList
-        data={['header', 'ownerBlock', 'body']}
-        stickyHeaderIndices={[1]}
-        renderItem={({ item }) => {
-          switch (item) {
-            case 'header':
-              return (
-                <>
-                  <SmartImage
-                    source={image as Source}
-                    resizeMode={FastImage.resizeMode.cover}
-                    style={styles.image}
-                  />
-                  <MText style={styles.title}>{blog.title}</MText>
-                  <SafeAreaView style={styles.header}>
-                    <SmallCircleButton
-                      name="chevron-left"
-                      raised
-                      size={20}
-                      style={theme.colorIcon}
-                      onPress={this.props.navigation.goBack}
-                      iconStyle={styles.iconStyle}
+      <ScrollView stickyHeaderIndices={[1]}>
+        <>
+          <SmartImage
+            source={image as Source}
+            resizeMode={FastImage.resizeMode.cover}
+            style={styles.image}
+          />
+          <MText style={styles.title}>{blog.title}</MText>
+          <SafeAreaView style={styles.header}>
+            <SmallCircleButton
+              name="chevron-left"
+              raised
+              size={20}
+              style={theme.colorIcon}
+              onPress={this.props.navigation.goBack}
+              iconStyle={styles.iconStyle}
+            />
+          </SafeAreaView>
+        </>
+
+        <SafeAreaInsetsContext.Consumer>
+          {insets => (
+            <View
+              style={[styles.ownerBlockContainer, { paddingTop: insets?.top }]}>
+              <OwnerBlock
+                entity={blog}
+                navigation={this.props.navigation}
+                rightToolbar={
+                  <View style={styles.actionSheet}>
+                    <BlogActionSheet
+                      entity={blog}
+                      navigation={this.props.navigation}
                     />
-                  </SafeAreaView>
-                </>
-              );
-            case 'ownerBlock':
-              return (
-                <SafeAreaInsetsContext.Consumer>
-                  {insets => (
-                    <View
-                      style={[
-                        styles.ownerBlockContainer,
-                        { paddingTop: insets?.top },
-                      ]}>
-                      <OwnerBlock
-                        entity={blog}
-                        navigation={this.props.navigation}
-                        rightToolbar={
-                          <View style={styles.actionSheet}>
-                            <BlogActionSheet
-                              entity={blog}
-                              navigation={this.props.navigation}
-                            />
-                          </View>
-                        }>
-                        <MText
-                          style={[styles.timestamp, theme.colorSecondaryText]}>
-                          {i18n.date(parseInt(blog.time_created, 10) * 1000)}
-                        </MText>
-                      </OwnerBlock>
-                    </View>
-                  )}
-                </SafeAreaInsetsContext.Consumer>
-              );
-            case 'body':
-              return (
-                <View>
-                  <View style={styles.description}>
-                    {blog.description ? (
-                      <BlogViewHTML html={blog.description} />
-                    ) : blog.paywall ? (
-                      // FIXME: Lock text is white on white and overlaps with license
-                      <Lock entity={blog} navigation={this.props.navigation} />
-                    ) : (
-                      <CenteredLoading />
-                    )}
                   </View>
-                  {!blog.paywall && (
-                    <View style={styles.moreInformation}>
-                      {Boolean(blog.getLicenseText()) && (
-                        <Icon style={theme.colorIcon} size={18} name="public" />
-                      )}
-                      <MText
-                        style={[
-                          theme.fontXS,
-                          theme.paddingLeft,
-                          theme.colorSecondaryText,
-                          theme.paddingRight2x,
-                        ]}>
-                        {blog.getLicenseText()}
-                      </MText>
-                    </View>
-                  )}
-                </View>
-              );
-            default:
-              return null;
-          }
-        }}
-      />
+                }>
+                <MText style={[styles.timestamp, theme.colorSecondaryText]}>
+                  {i18n.date(parseInt(blog.time_created, 10) * 1000)}
+                </MText>
+              </OwnerBlock>
+            </View>
+          )}
+        </SafeAreaInsetsContext.Consumer>
+
+        <View>
+          <View style={styles.description}>
+            {blog.description ? (
+              <BlogViewHTML html={blog.description} />
+            ) : blog.paywall ? (
+              // FIXME: Lock text is white on white and overlaps with license
+              <Lock entity={blog} navigation={this.props.navigation} />
+            ) : (
+              <CenteredLoading />
+            )}
+          </View>
+          {!blog.paywall && (
+            <View style={styles.moreInformation}>
+              {Boolean(blog.getLicenseText()) && (
+                <Icon style={theme.colorIcon} size={18} name="public" />
+              )}
+              <MText
+                style={[
+                  theme.fontXS,
+                  theme.paddingLeft,
+                  theme.colorSecondaryText,
+                  theme.paddingRight2x,
+                ]}>
+                {blog.getLicenseText()}
+              </MText>
+            </View>
+          )}
+        </View>
+      </ScrollView>
     );
   }
 
