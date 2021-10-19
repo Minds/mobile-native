@@ -877,9 +877,9 @@ exports[`Activity screen component renders correctly  1`] = `
               style={
                 Array [
                   Object {
+                    "alignItems": "center",
                     "flexDirection": "row",
                     "flexWrap": "nowrap",
-                    "justifyContent": "center",
                   },
                   Object {
                     "margin": 4,
@@ -979,9 +979,9 @@ exports[`Activity screen component renders correctly  1`] = `
               style={
                 Array [
                   Object {
+                    "alignItems": "center",
                     "flexDirection": "row",
                     "flexWrap": "nowrap",
-                    "justifyContent": "center",
                   },
                   Object {
                     "margin": 4,
