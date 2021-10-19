@@ -1,8 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Comment action component renders correctly 1`] = `
-<preventDoubleTap(PressableScale)
+<IconButtonNext
+  extra={
+    <Unknown
+      left="1x"
+    />
+  }
+  fill={true}
+  name="chat-off"
   onPress={[Function]}
+  scale={true}
+  size="small"
   style={
     Array [
       Object {
@@ -20,36 +29,5 @@ exports[`Comment action component renders correctly 1`] = `
       },
     ]
   }
->
-  <View
-    style={
-      Array [
-        Object {
-          "alignItems": "center",
-        },
-        Object {
-          "margin": 4,
-        },
-        Object {
-          "flexDirection": "row",
-          "justifyContent": "center",
-        },
-        Object {
-          "alignItems": "center",
-        },
-        Object {
-          "flexWrap": "wrap",
-        },
-      ]
-    }
-  >
-    <Component
-      name="chat-off"
-      size="small"
-    />
-    <Component
-      left="1x"
-    />
-  </View>
-</preventDoubleTap(PressableScale)>
+/>
 `;

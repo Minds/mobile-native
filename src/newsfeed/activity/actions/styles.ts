@@ -8,11 +8,12 @@ export const actionsContainerStyle = ThemedStyles.combine(
 );
 
 export const actionsContainerWrapper = ThemedStyles.combine(
-  'alignCenter',
+  {
+    alignItems: 'center',
+    flexWrap: 'nowrap',
+    flexDirection: 'row',
+  },
   'margin',
-  'rowJustifyCenter',
-  'alignCenter',
-  'flexWrap',
 );
 
 export const iconActiveStyle = ThemedStyles.combine('colorLink', 'marginRight');
