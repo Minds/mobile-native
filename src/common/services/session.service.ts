@@ -405,7 +405,10 @@ export class SessionService {
   }
 
   getIndexSessionFromGuid(guid: string) {
-    const index = this.tokensData.findIndex(v => guid === v.user.guid);
+    const index = this.tokensData.findIndex(
+      v => String(guid) === String(v.user.guid),
+    );
+
     return index >= 0 ? index : false;
   }
 

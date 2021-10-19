@@ -155,11 +155,19 @@ class AuthService {
     resetStackAndGoBack();
   }
 
+  /**
+   * Logs in with a given user id. Used in multi-user functionality
+   * @param guid user guid
+   * @param callback the callback to be called on success
+   */
   async loginWithGuid(guid: string, callback: Function) {
     const index = session.getIndexSessionFromGuid(guid);
-    if (index !== false && index !== session.activeIndex) {
+
+    if (index !== false) {
       await this.loginWithIndex(index);
       callback();
+    } else {
+      logService.exception('[AuthService] loginWithGuid');
     }
   }
 
