@@ -9,7 +9,7 @@ export const actionsContainerStyle = ThemedStyles.combine(
 
 export const actionsContainerWrapper = ThemedStyles.combine(
   {
-    justifyContent: 'center',
+    alignItems: 'center',
     flexWrap: 'nowrap',
     flexDirection: 'row',
   },
