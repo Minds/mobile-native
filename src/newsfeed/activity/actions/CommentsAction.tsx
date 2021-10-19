@@ -1,20 +1,14 @@
 import React, { useCallback } from 'react';
-import { View } from 'react-native';
-import { IconNextSpaced } from '~ui/icons/Icon';
+import { IconButtonNext } from '~ui/icons';
 import Counter from './Counter';
-import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
 import type BlogModel from '../../../blogs/BlogModel';
 import { useRoute } from '@react-navigation/native';
 import { ActivityRouteProp } from '../../ActivityScreen';
-import { actionsContainerStyle, actionsContainerWrapper } from './styles';
-import PressableScale from '~/common/components/PressableScale';
+import { actionsContainerStyle } from './styles';
 import withSpacer from '~ui/spacer/withSpacer';
 
 const CounterSpaced = withSpacer(Counter);
-
-// prevent double tap in touchable
-const TouchableOpacityCustom = withPreventDoubleTap(PressableScale);
 
 type PropsType = {
   entity: ActivityModel | BlogModel;
@@ -58,17 +52,20 @@ const CommentsAction = (props: PropsType) => {
   }, [props, route]);
 
   return (
-    <TouchableOpacityCustom
+    <IconButtonNext
+      style={actionsContainerStyle}
+      scale
+      name={icon}
+      size="small"
+      fill
       onPress={openComments}
       testID={props.testID}
-      style={actionsContainerStyle}>
-      <View style={actionsContainerWrapper}>
-        <IconNextSpaced size="small" name={icon} />
-        {!props.hideCount && (
+      extra={
+        !props.hideCount ? (
           <CounterSpaced left="1x" count={props.entity['comments:count']} />
-        )}
-      </View>
-    </TouchableOpacityCustom>
+        ) : null
+      }
+    />
   );
 };
 
