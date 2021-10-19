@@ -20,13 +20,6 @@ const getOptionsList = navigation => {
 
   let list = [
     {
-      name: 'Performance',
-      icon: <Icon name="home" />,
-      onPress: () => {
-        navigation.navigate('Performance');
-      },
-    },
-    {
       name: i18n.t('newsfeed.title'),
       icon: <Icon name="home" />,
       onPress: () => {
