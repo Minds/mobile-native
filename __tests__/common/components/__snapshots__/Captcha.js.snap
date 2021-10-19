@@ -29,10 +29,8 @@ exports[`renders correctly 1`] = `
 >
   <View
     accessible={true}
-    collapsable={false}
     focusable={true}
     forwardedRef={[Function]}
-    nativeID="animatedComponent"
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -77,7 +75,7 @@ exports[`renders correctly 1`] = `
               "width": "100%",
             },
             Object {
-              "margin": 0,
+              "margin": 1,
             },
             Object {
               "justifyContent": "flex-end",
@@ -94,12 +92,10 @@ exports[`renders correctly 1`] = `
     }
   >
     <View
-      collapsable={false}
       deviceHeight={null}
       deviceWidth={null}
       forwardedRef={[Function]}
       hideModalContentWhileAnimating={false}
-      nativeID="animatedComponent"
       onBackdropPress={[Function]}
       onModalHide={[Function]}
       onModalWillHide={[Function]}
@@ -114,7 +110,7 @@ exports[`renders correctly 1`] = `
         Object {
           "flex": 1,
           "justifyContent": "flex-end",
-          "margin": 0,
+          "margin": 1,
           "transform": Array [
             Object {
               "translateY": 0,
@@ -332,6 +328,7 @@ exports[`renders correctly 1`] = `
               </View>
             </View>
             <TextInput
+              allowFontScaling={true}
               autoCapitalize="none"
               autofocus={true}
               containerStyle={
@@ -354,6 +351,7 @@ exports[`renders correctly 1`] = `
               onEndEditing={[Function]}
               placeholder=""
               placeholderTextColor="#444"
+              rejectResponderTermination={true}
               returnKeyType="done"
               style={
                 Array [
@@ -375,7 +373,7 @@ exports[`renders correctly 1`] = `
                       "paddingVertical": 8,
                     },
                     Object {
-                      "paddingLeft": 0,
+                      "paddingLeft": 1,
                     },
                     Object {
                       "fontSize": 18,

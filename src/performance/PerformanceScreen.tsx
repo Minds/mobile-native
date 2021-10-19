@@ -1,50 +1,25 @@
-import React, { useState, Profiler, useRef, useMemo } from 'react';
-
+import React, {
+  useState,
+  Profiler,
+  useRef,
+  useMemo,
+  useCallback,
+  useEffect,
+} from 'react';
 import { StyleSheet, ScrollView, View, Text, Button } from 'react-native';
+import ActivityIndicator from '~/common/components/ActivityIndicator';
+import { frameThrower } from '~/common/ui/helpers';
 import experiments from './experiments/icons';
 
 const PerformanceScreen = () => {
-  const [components, setComponents] = useState(null);
+  const [loading, setLoading]: any = useState(false);
+  const [components, setComponents]: any = useState(null);
+  const [experiment, setExperiment]: any = useState(null);
   const [results, setResults] = useState([]);
   const res = useRef({});
   const stages: any = useRef({});
 
-  const experiment = experiments[0];
-
-  function onRenderCallback(
-    id, // the "id" prop of the Profiler tree that has just committed
-    phase, // either "mount" (if the tree just mounted) or "update" (if it re-rendered)
-    actualDuration, // time spent rendering the committed update
-    baseDuration, // estimated time to render the entire subtree without memoization
-    startTime, // when React began rendering this update
-    commitTime, // when React committed this update
-    interactions, // the Set of interactions belonging to this update
-  ) {
-    console.log(id);
-    console.log(`startTime: ${startTime}`);
-    console.log(`commitTime: ${commitTime}`);
-    console.log(`actualDuration: ${actualDuration}`);
-    console.log(`baseDuration: ${baseDuration}`);
-    console.log(`interactions: ${interactions}`);
-    console.log(interactions);
-
-    if (!res.current[stages.current.id]) {
-      console.log('CR3ATING CURR#NT ID');
-
-      res.current[stages.current.id] = [];
-    }
-
-    res.current[stages.current.id].push([
-      `${phase}`,
-      `${actualDuration.toFixed()}`,
-    ]);
-    console.log(res);
-    console.log(stages.current.id);
-
-    runNextStage();
-  }
-
-  const runNextStage = () => {
+  const runNextStage = useCallback(() => {
     if (!stages.current?.stages?.length) {
       return;
     }
@@ -52,17 +27,36 @@ const PerformanceScreen = () => {
     const next = stages.current.stages[stages.current.nextStage];
     if (next) {
       stages.current.nextStage += 1;
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            next();
-          });
-        });
-      });
+      frameThrower(20, next);
       return;
     }
+
     handleUpdateResults();
-  };
+    setComponents(null);
+    setLoading(false);
+  }, [stages]);
+
+  const onRenderCallback = useCallback(
+    (id, phase, actualDuration) => {
+      if (!res.current[stages.current.id]) {
+        res.current[stages.current.id] = [];
+      }
+
+      res.current[stages.current.id].push([
+        `${phase}`,
+        `${actualDuration.toFixed(1)}`,
+      ]);
+
+      runNextStage();
+    },
+    [runNextStage, res],
+  );
+
+  useEffect(() => {
+    stages.current = experiment;
+    runNextStage();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [experiment]);
 
   const handleDestroyResults = () => {
     setComponents(null);
@@ -75,10 +69,6 @@ const PerformanceScreen = () => {
   };
 
   const handleUpdateResults = () => {
-    console.log('HANDLE UPDATE RESULTS');
-
-    console.log(res.current);
-
     setResults(JSON.parse(JSON.stringify(res.current)));
   };
 
@@ -87,35 +77,38 @@ const PerformanceScreen = () => {
       return null;
     }
 
-    const Component = experiment.component();
+    const Component = experiment.component;
 
     return (
-      <Profiler id="experiment" onRender={onRenderCallback}>
+      <Profiler id={experiment.id} onRender={onRenderCallback}>
         {components.length
-          ? components.map(item => {
-              return <Component {...item} />;
+          ? components.map((item, index) => {
+              return <Component key={`component-${index}`} {...item} />;
             })
           : null}
       </Profiler>
     );
-  }, [components]);
+  }, [components, onRenderCallback, experiment]);
 
   const renderExperiments = () => {
     if (!experiments?.length) {
       return null;
     }
 
-    return experiments.map(({ id, name, mount, update }) => {
+    return experiments.map(({ id, name, component, mount, update }) => {
       return (
         <Experiment
           key={id}
           name={name}
           results={results[id]}
           onRun={() => {
-            stages.current = {
+            setLoading(true);
+
+            setExperiment({
               id,
-              nextStage: 0,
               name,
+              component,
+              nextStage: 0,
               stages: [
                 () => {
                   setComponents(mount());
@@ -133,8 +126,7 @@ const PerformanceScreen = () => {
                   setComponents([]);
                 },
               ],
-            };
-            runNextStage();
+            });
           }}
         />
       );
@@ -149,10 +141,12 @@ const PerformanceScreen = () => {
         onUpdate={handleUpdateResults}
         onDestroy={handleDestroyResults}
       />
-
-      <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-        {renderComponents}
-      </View>
+      {loading ? (
+        <View style={styles.loader}>
+          <ActivityIndicator />
+        </View>
+      ) : null}
+      <View style={styles.experimentWrapper}>{renderComponents}</View>
     </ScrollView>
   );
 };
@@ -169,39 +163,6 @@ const Controls = ({ onClear, onUpdate, onDestroy }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  controls: { flexDirection: 'row' },
-  experiment: { backgroundColor: 'rgba(0,0,0,0.1)' },
-  experimentRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-  },
-  experimentControl: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    // backgroundColor: 'red',
-    paddingHorizontal: 16,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#FAFAFA',
-  },
-  experimentResults: {
-    backgroundColor: 'rgba(0,0,0,0.1)',
-  },
-  text: {
-    fontSize: 14,
-    lineHeight: 20,
-  },
-  general: {
-    marginTop: 16,
-    padding: 16,
-    marginBottom: 24,
-  },
-});
 
 const Experiment = ({ name, results, onRun }) => {
   return (
@@ -228,5 +189,44 @@ const Experiment = ({ name, results, onRun }) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  controls: { flexDirection: 'row' },
+  experiment: { backgroundColor: 'rgba(0,0,0,0.1)' },
+  experimentWrapper: { flexDirection: 'row', flexWrap: 'wrap' },
+  experimentRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+  },
+  experimentControl: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: '#FAFAFA',
+  },
+  experimentResults: {
+    backgroundColor: 'rgba(0,0,0,0.1)',
+  },
+  text: {
+    fontSize: 14,
+    lineHeight: 20,
+  },
+  general: {
+    marginTop: 16,
+    padding: 16,
+    marginBottom: 24,
+  },
+  loader: {
+    backgroundColor: '#FAFAFA',
+    height: 48,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 
 export default PerformanceScreen;

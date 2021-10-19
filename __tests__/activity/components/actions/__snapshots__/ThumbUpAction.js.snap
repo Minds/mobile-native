@@ -3,23 +3,35 @@
 exports[`Thumb action component renders correctly 1`] = `
 <preventDoubleTap(PressableScale)
   onPress={[Function]}
+  style={
+    Array [
+      Object {
+        "flex": 1,
+        "flexDirection": "column",
+      },
+      Object {
+        "margin": 4,
+      },
+      Object {
+        "paddingVertical": 12,
+      },
+      Object {
+        "alignItems": "center",
+      },
+    ]
+  }
   testID="Thumb up activity button"
 >
   <View
     style={
       Array [
         Object {
-          "flexDirection": "row",
-          "justifyContent": "center",
-        },
-        Object {
-          "paddingHorizontal": 12,
-        },
-        Object {
-          "paddingVertical": 16,
-        },
-        Object {
           "alignItems": "center",
+          "flexDirection": "row",
+          "flexWrap": "nowrap",
+        },
+        Object {
+          "margin": 4,
         },
       ]
     }
