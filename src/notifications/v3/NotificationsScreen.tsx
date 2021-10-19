@@ -99,7 +99,10 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
 
   const onFocus = React.useCallback(() => {
     notifications.setUnread(0);
-    refresh();
+    // only refresh if we already have notifications
+    if (result) {
+      refresh();
+    }
   }, [notifications, refresh]);
 
   //useFocusEffect(onFocus);
@@ -145,11 +148,9 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
   const ListEmptyComponent = React.useMemo(() => {
     if (error && !loading) {
       return (
-        <MText style={errorStyle} onPress={() => fetch()}>
+        <MText style={styles.errorStyle} onPress={() => fetch()}>
           {i18n.t('cantReachServer') + '\n'}
-          <MText style={[theme.colorLink, theme.marginTop2x]}>
-            {i18n.t('tryAgain')}
-          </MText>
+          <MText style={styles.errorText}>{i18n.t('tryAgain')}</MText>
         </MText>
       );
     }
@@ -173,26 +174,25 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
   const data = result?.notifications || [];
 
   return (
-    <>
+    <View style={styles.container}>
       <NotificationsTopBar
         store={notifications}
         setResult={setResult}
         refresh={refresh}
       />
-      <View style={theme.flexContainer}>
-        <FlatList
-          data={data.slice()}
-          keyExtractor={keyExtractor}
-          renderItem={renderItem}
-          onEndReached={onFetchMore}
-          onRefresh={handleListRefresh}
-          refreshing={isRefreshing}
-          onViewableItemsChanged={onViewableItemsChanged}
-          viewabilityConfig={viewabilityConfig}
-          ListEmptyComponent={ListEmptyComponent}
-        />
-      </View>
-    </>
+      <FlatList
+        style={theme.flexContainer}
+        data={data.slice()}
+        keyExtractor={keyExtractor}
+        renderItem={renderItem}
+        onEndReached={onFetchMore}
+        onRefresh={handleListRefresh}
+        refreshing={isRefreshing}
+        onViewableItemsChanged={onViewableItemsChanged}
+        viewabilityConfig={viewabilityConfig}
+        ListEmptyComponent={ListEmptyComponent}
+      />
+    </View>
   );
 });
 
@@ -212,9 +212,13 @@ const renderItem = (row: any): React.ReactElement => {
 
 export default NotificationsScreen;
 
-const errorStyle = ThemedStyles.combine(
-  'colorSecondaryText',
-  'textCenter',
-  'fontXL',
-  'marginVertical4x',
-);
+const styles = ThemedStyles.create({
+  container: ['bgPrimaryBackground', 'flexContainer'],
+  errorStyle: [
+    'colorSecondaryText',
+    'textCenter',
+    'fontXL',
+    'marginVertical4x',
+  ],
+  errorText: ['colorLink', 'marginTop2x'],
+});
