@@ -12734,10 +12734,10 @@ react-native-minds-encryption@Minds/react-native-minds-encryption#736571522c9d5f
   version "0.1.0"
   resolved "https://codeload.github.com/Minds/react-native-minds-encryption/tar.gz/736571522c9d5f96c9bc4b454b2828e3940b6ccc"
 
-react-native-mmkv-storage@0.6.4:
-  version "0.6.4"
-  resolved "https://registry.yarnpkg.com/react-native-mmkv-storage/-/react-native-mmkv-storage-0.6.4.tgz#a2e01781147bde96ddaeebc8fec2be5eed909f41"
-  integrity sha512-55K8RRm0ZPpN8RbFjMdoBZWo2S7e9RkIYIB8HsI5toGAwpMvM68nORPtW/Q3XhRZJ8PA6wE5wGyTOTEgbGyeGA==
+react-native-mmkv-storage@^0.6.6:
+  version "0.6.6"
+  resolved "https://registry.yarnpkg.com/react-native-mmkv-storage/-/react-native-mmkv-storage-0.6.6.tgz#bd2cabecdcfa751dff7c3b517bce77a2e9a45355"
+  integrity sha512-SV7tm3K5nD9x0KZf6ayj8G+xx1LmqKnwcvhXrg66awopEf8Y7JAy9kH4G4ngJzBWfXVyYo5E93RPv9MlQdCfxQ==
 
 react-native-modal-datetime-picker@^8.5.1:
   version "8.9.3"
