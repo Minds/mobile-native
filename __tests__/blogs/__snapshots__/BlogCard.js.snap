@@ -1,13 +1,33 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`blog card component should renders correctly 1`] = `
-<View>
+<View
+  style={
+    Object {
+      "backgroundColor": "#F6F7F7",
+    }
+  }
+>
   <View
-    onPress={[Function]}
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
     style={
-      Object {
-        "backgroundColor": "#F6F7F7",
-      }
+      Array [
+        Object {
+          "backgroundColor": undefined,
+        },
+        undefined,
+      ]
     }
   >
     <View
