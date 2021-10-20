@@ -1,7 +1,7 @@
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import React from 'react';
-import { BackHandler, View } from 'react-native';
+import { View } from 'react-native';
 import DismissKeyboard from '../../../common/components/DismissKeyboard';
 import i18n from '../../../common/services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
@@ -35,13 +35,6 @@ export default observer(function PhoneValidationScreen() {
     onCancel();
     navigation.goBack();
   }, [navigation, onCancel]);
-
-  // Disable back button on Android
-  React.useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', () => true);
-    return () =>
-      BackHandler.removeEventListener('hardwareBackPress', () => true);
-  }, []);
 
   const params = {
     onConfirm: confirmAction,
