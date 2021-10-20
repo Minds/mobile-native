@@ -39,7 +39,9 @@ exports[`LoginScreen component should renders correctly 1`] = `
             "backgroundColor": "#F8FAFA",
           },
         ],
-        undefined,
+        Object {
+          "backgroundColor": "#FFFFFF",
+        },
       ]
     }
   >
