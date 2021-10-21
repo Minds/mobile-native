@@ -15,7 +15,7 @@ interface PropsType extends Omit<BottomSheetProps, 'snapPoints'> {
 }
 
 /**
- * @description The bottom sheet component with a default behavior (snapPoints, backHandler, handle, etc.)
+ * The bottom sheet component with a default behavior (snapPoints, backHandler, handle, etc.)
  */
 const MBottomSheet = forwardRef<BottomSheet, PropsType>((props, ref) => {
   const { onAnimateHandler } = useBackHandler(
