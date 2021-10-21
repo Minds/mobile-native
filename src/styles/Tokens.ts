@@ -13,6 +13,7 @@ export const MULTIPLIER: number = 1;
 
 // eslint-disable-next-line no-shadow
 export enum EUnit {
+  XXXS = 'XXXS',
   XXS = 'XXS',
   XS = 'XS',
   S = 'S',
@@ -20,9 +21,11 @@ export enum EUnit {
   L = 'L',
   XL = 'XL',
   XXL = 'XXL',
+  XXXL = 'XXXL',
 }
 
 export interface IUISpacers {
+  [EUnit.XXXS]: number;
   [EUnit.XXS]: number;
   [EUnit.XS]: number;
   [EUnit.S]: number;
@@ -30,6 +33,7 @@ export interface IUISpacers {
   [EUnit.L]: number;
   [EUnit.XL]: number;
   [EUnit.XXL]: number;
+  [EUnit.XXXL]: number;
 }
 
 export interface IUIBase {
@@ -44,6 +48,7 @@ export interface IUIBase {
 }
 
 export const UNIT: IUISpacers = {
+  XXXS: 1 * MULTIPLIER,
   XXS: 2 * MULTIPLIER,
   XS: 4 * MULTIPLIER,
   S: 8 * MULTIPLIER,
@@ -51,6 +56,7 @@ export const UNIT: IUISpacers = {
   L: 16 * MULTIPLIER,
   XL: 20 * MULTIPLIER,
   XXL: 24 * MULTIPLIER,
+  XXXL: 28 * MULTIPLIER,
 };
 
 export type UISpacing = keyof typeof UNIT;
@@ -100,3 +106,21 @@ export const ICON_COLOR_ACTIVE = 'IconActive';
 export const ICON_COLOR_DISABLED = 'IconDisabled';
 export const ICON_SIZE_DEFAULT = 'medium';
 export const ICON_DEFAULT = 'remind';
+
+// Font sizes are declared separetedly as they do not affect the layout grid - which is done by its line-height
+export const FONT_SIZES = {
+  XXXS: 8,
+  XXS: 10,
+  XS: 12,
+  S: 14,
+  M: 16,
+  L: 18,
+  XL: 20,
+  XXL: 24,
+  XXXL: 30,
+};
+
+export const FONT_FAMILY_REGULAR = 'Roboto';
+export const FONT_FAMILY_MEDIUM = 'Roboto-Medium';
+export const FONT_FAMILY_BOLD = 'Roboto-Bold';
+export const FONT_FAMILY_BLACK = 'Roboto-Black';
