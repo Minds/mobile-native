@@ -101,7 +101,7 @@ export default observer(function (props) {
             onPress={props.navigation.goBack}
             light
             shadow
-            style={[theme.paddingLeft3x]}
+            style={theme.paddingLeft3x}
           />
         </>
       ) : store.mode === 'confirm' ? (
