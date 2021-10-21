@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextStyle, TouchableOpacity, ViewStyle } from 'react-native';
+import { Keyboard, TextStyle, TouchableOpacity, ViewStyle } from 'react-native';
 import i18n from '../services/i18n.service';
 import { useStyle } from '../../styles/ThemedStyles';
 import MdIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -28,6 +28,7 @@ const FeedFilter = (props: PropsType) => {
     ref.current?.dismiss();
   }, [ref]);
   const show = React.useCallback(() => {
+    Keyboard.dismiss();
     ref.current?.present();
   }, [ref]);
   const iconStyle = useStyle('colorIcon');
