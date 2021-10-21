@@ -1,9 +1,4 @@
-import React, {
-  forwardRef,
-  useCallback,
-  useImperativeHandle,
-  useRef,
-} from 'react';
+import React, { forwardRef, useCallback } from 'react';
 import {
   BottomSheetModal,
   BottomSheetModalProps,
@@ -26,76 +21,79 @@ interface PropsType extends Omit<BottomSheetModalProps, 'snapPoints'> {
   forceHeight?: number;
 }
 
-export default forwardRef<BottomSheetModal, PropsType>((props, ref) => {
-  const { title, detail, snapPoints, autoShow, children, ...other } = props;
-  const { onAnimateHandler } = useBackHandler(
-    // @ts-ignore
-    useCallback(() => ref?.current?.dismiss(), [ref]),
-    props,
-  );
+const MBottomSheetModal = forwardRef<BottomSheetModal, PropsType>(
+  (props, ref) => {
+    const { title, detail, snapPoints, autoShow, children, ...other } = props;
+    const { onAnimateHandler } = useBackHandler(
+      // @ts-ignore
+      useCallback(() => ref?.current?.dismiss(), [ref]),
+      props,
+    );
 
-  const insets = useSafeAreaInsets();
+    const insets = useSafeAreaInsets();
 
-  const snapPointsMemo = React.useMemo(() => snapPoints || ['CONTENT_HEIGHT'], [
-    snapPoints,
-  ]);
+    const snapPointsMemo = React.useMemo(
+      () => snapPoints || ['CONTENT_HEIGHT'],
+      [snapPoints],
+    );
 
-  const {
-    animatedHandleHeight,
-    animatedSnapPoints,
-    animatedContentHeight,
-    handleContentLayout,
-  } = useBottomSheetDynamicSnapPoints(snapPointsMemo);
+    const {
+      animatedHandleHeight,
+      animatedSnapPoints,
+      animatedContentHeight,
+      handleContentLayout,
+    } = useBottomSheetDynamicSnapPoints(snapPointsMemo);
 
-  const contStyle = useStyle(styles.contentContainer, {
-    paddingBottom: insets.bottom || 24,
-  });
+    const contStyle = useStyle(styles.contentContainer, {
+      paddingBottom: insets.bottom || 24,
+    });
 
-  React.useEffect(() => {
-    //@ts-ignore
-    if (ref && ref.current && autoShow) {
+    React.useEffect(() => {
       //@ts-ignore
-      ref.current.present();
-    }
-  }, [autoShow, ref]);
+      if (ref && ref.current && autoShow) {
+        //@ts-ignore
+        ref.current.present();
+      }
+    }, [autoShow, ref]);
 
-  const renderHandle = useCallback(() => <Handle />, []);
+    const renderHandle = useCallback(() => <Handle />, []);
 
-  const renderBackdrop = useCallback(
-    backdropProps => (
-      <BottomSheetBackdrop
-        {...backdropProps}
-        pressBehavior="close"
-        opacity={0.5}
-        appearsOnIndex={0}
-        disappearsOnIndex={-1}
-      />
-    ),
-    [],
-  );
+    const renderBackdrop = useCallback(
+      backdropProps => (
+        <BottomSheetBackdrop
+          {...backdropProps}
+          pressBehavior="close"
+          opacity={0.5}
+          appearsOnIndex={0}
+          disappearsOnIndex={-1}
+        />
+      ),
+      [],
+    );
 
-  return (
-    <BottomSheetModal
-      ref={ref}
-      topInset={StatusBar.currentHeight || 0}
-      handleComponent={renderHandle}
-      snapPoints={animatedSnapPoints}
-      handleHeight={animatedHandleHeight}
-      contentHeight={animatedContentHeight}
-      backdropComponent={renderBackdrop}
-      enablePanDownToClose={true}
-      backgroundComponent={null}
-      style={styles.sheetContainer as any}
-      {...other}
-      onAnimate={onAnimateHandler}>
-      <View style={contStyle} onLayout={handleContentLayout}>
-        {Boolean(title) && <MText style={styles.title}>{title}</MText>}
-        {Boolean(detail) && <MText style={styles.detail}>{detail}</MText>}
-        {children}
-      </View>
-    </BottomSheetModal>
-  );
-});
+    return (
+      <BottomSheetModal
+        ref={ref}
+        topInset={StatusBar.currentHeight || 0}
+        handleComponent={renderHandle}
+        snapPoints={animatedSnapPoints}
+        handleHeight={animatedHandleHeight}
+        contentHeight={animatedContentHeight}
+        backdropComponent={renderBackdrop}
+        enablePanDownToClose={true}
+        backgroundComponent={null}
+        style={styles.sheetContainer as any}
+        {...other}
+        onAnimate={onAnimateHandler}>
+        <View style={contStyle} onLayout={handleContentLayout}>
+          {Boolean(title) && <MText style={styles.title}>{title}</MText>}
+          {Boolean(detail) && <MText style={styles.detail}>{detail}</MText>}
+          {children}
+        </View>
+      </BottomSheetModal>
+    );
+  },
+);
 
 const styles = ThemedStyles.create({
   contentContainer: ['bgPrimaryBackgroundHighlight'],
@@ -121,3 +119,5 @@ const styles = ThemedStyles.create({
     },
   ],
 });
+
+export default MBottomSheetModal;
