@@ -63,12 +63,16 @@ const createLoginStore = ({ props, resetRef }) => ({
         }
 
         if (err.response?.data && !err.response.data.message) {
-          this.setError(`Server error: Status ${err.response.status}`);
+          this.setError(
+            err.response.status === 403
+              ? 'Error: Forbidden'
+              : `Error: Status ${err.response.status}`,
+          );
         } else {
           this.setError(errJson.message || 'Unknown error');
         }
 
-        logService.exception('[LoginForm]', errJson);
+        logService.exception('[LoginStore]', errJson);
       });
   },
   onForgotPress() {
