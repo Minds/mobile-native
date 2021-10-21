@@ -140,7 +140,7 @@ const PortraitActivity = observer((props: PropsType) => {
         <FloatingBackButton
           size={35}
           onPress={navigation.goBack}
-          style={[theme.colorPrimaryText, styles.backButton]}
+          style={[styles.backButton]}
         />
       }
       rightToolbar={

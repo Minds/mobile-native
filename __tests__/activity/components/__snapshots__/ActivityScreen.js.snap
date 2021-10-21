@@ -171,7 +171,7 @@ exports[`Activity screen component renders correctly  1`] = `
                         "color": "#7D7D82",
                         "fontSize": 40,
                       },
-                      undefined,
+                      Object {},
                       Object {
                         "fontFamily": "Material Design Icons",
                         "fontStyle": "normal",
@@ -390,7 +390,7 @@ exports[`Activity screen component renders correctly  1`] = `
                               "color": "#7D7D82",
                               "fontSize": 25.76,
                             },
-                            undefined,
+                            Object {},
                             Object {
                               "fontFamily": "Material Icons",
                               "fontStyle": "normal",
@@ -916,7 +916,7 @@ exports[`Activity screen component renders correctly  1`] = `
                         "color": "#7D7D82",
                         "fontSize": 19.2,
                       },
-                      undefined,
+                      Object {},
                       Object {
                         "fontFamily": "Material Icons",
                         "fontStyle": "normal",
@@ -1018,7 +1018,7 @@ exports[`Activity screen component renders correctly  1`] = `
                         "color": "#7D7D82",
                         "fontSize": 19.2,
                       },
-                      undefined,
+                      Object {},
                       Object {
                         "fontFamily": "Material Icons",
                         "fontStyle": "normal",
@@ -1142,7 +1142,7 @@ exports[`Activity screen component renders correctly  1`] = `
                           "color": "#7D7D82",
                           "fontSize": 18.400000000000002,
                         },
-                        undefined,
+                        Object {},
                         Object {
                           "fontFamily": "Material Design Icons",
                           "fontStyle": "normal",
@@ -1313,7 +1313,7 @@ exports[`Activity screen component renders correctly  1`] = `
                           "color": "#7D7D82",
                           "fontSize": 20.8,
                         },
-                        undefined,
+                        Object {},
                         Object {
                           "fontFamily": "Material Design Icons",
                           "fontStyle": "normal",
@@ -1437,7 +1437,7 @@ exports[`Activity screen component renders correctly  1`] = `
                           "color": "#7D7D82",
                           "fontSize": 20,
                         },
-                        undefined,
+                        Object {},
                         Object {
                           "fontFamily": "Material Icons",
                           "fontStyle": "normal",

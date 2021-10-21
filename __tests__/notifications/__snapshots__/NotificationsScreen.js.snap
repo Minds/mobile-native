@@ -146,7 +146,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                             "color": "#0085DD",
                             "fontSize": 24,
                           },
-                          undefined,
+                          Object {},
                           Object {
                             "fontFamily": "Material Icons",
                             "fontStyle": "normal",
@@ -289,7 +289,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                             "color": "#7D7D82",
                             "fontSize": 22.080000000000002,
                           },
-                          undefined,
+                          Object {},
                           Object {
                             "fontFamily": "Material Icons",
                             "fontStyle": "normal",
@@ -432,7 +432,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                             "color": "#7D7D82",
                             "fontSize": 22.080000000000002,
                           },
-                          undefined,
+                          Object {},
                           Object {
                             "fontFamily": "Material Design Icons",
                             "fontStyle": "normal",
@@ -575,7 +575,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                             "color": "#7D7D82",
                             "fontSize": 19.200000000000003,
                           },
-                          undefined,
+                          Object {},
                           Object {
                             "fontFamily": "FontAwesome",
                             "fontStyle": "normal",
@@ -718,7 +718,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                             "color": "#7D7D82",
                             "fontSize": 23.04,
                           },
-                          undefined,
+                          Object {},
                           Object {
                             "fontFamily": "Material Icons",
                             "fontStyle": "normal",
@@ -861,7 +861,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                             "color": "#7D7D82",
                             "fontSize": 24.96,
                           },
-                          undefined,
+                          Object {},
                           Object {
                             "fontFamily": "Material Design Icons",
                             "fontStyle": "normal",
