@@ -579,7 +579,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                               "color": "#0085DD",
                               "fontSize": 16,
                             },
-                            undefined,
+                            Object {},
                             Object {
                               "fontFamily": "Material Icons",
                               "fontStyle": "normal",
@@ -894,7 +894,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                               "color": "#0085DD",
                               "fontSize": 15.68,
                             },
-                            undefined,
+                            Object {},
                             Object {
                               "fontFamily": "Material Icons",
                               "fontStyle": "normal",
