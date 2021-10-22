@@ -2,6 +2,25 @@
 
 Minds Mobile
 
+## 4.19.0 - 2021-10-25
+
+### Changed
+
+- Improved multi-user transitions
+- New welcome, login, and register screens
+- Improves error handling on the login screen
+- New camera with zoom, HDR, and low light modes
+- Help & support added.
+- Improved UI consistency
+- Improved 2FA settings screen
+- Fix camera issues
+- Fix push notification navigation and un-registering
+- Fix link navigation in the blog viewer
+- Fix issues with the android back button
+- Fix data saver crash
+- Compress the images to improve the upload speed
+- General bug fixing
+
 ## 4.18.0 - 2021-09-20
 
 ### Changed
