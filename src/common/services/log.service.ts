@@ -51,7 +51,14 @@ class LogService {
       process.env.JEST_WORKER_ID === undefined &&
       !__DEV__
     ) {
-      Sentry.captureException(error);
+      if (prepend) {
+        Sentry.withScope(scope => {
+          scope.setExtra('where', prepend);
+          Sentry.captureException(error);
+        });
+      } else {
+        Sentry.captureException(error);
+      }
     }
   }
 }

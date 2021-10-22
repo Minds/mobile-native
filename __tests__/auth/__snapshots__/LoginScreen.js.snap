@@ -185,7 +185,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                       "color": "#7D7D82",
                       "fontSize": 28,
                     },
-                    undefined,
+                    Object {},
                     Object {
                       "fontFamily": "Material Icons",
                       "fontStyle": "normal",
