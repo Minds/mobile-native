@@ -2,38 +2,41 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Spacer } from '~ui/layout';
 
-const Row = ({
-  center,
+export const Row = ({
+  flex,
+  centerBoth,
   centerStart,
-  spaceBetween,
+  centerBetween,
   centerEnd,
   children,
   style,
-  ...extra
+  ...more
 }: any) => {
-  const container = [
+  const containerStyle = [
     styles.container,
-    center && styles.center,
+    centerBoth && styles.centerBoth,
     centerStart && styles.centerStart,
-    spaceBetween && styles.spaceBetween,
+    centerBetween && styles.centerBetween,
     centerEnd && styles.centerEnd,
+    flex && styles.flex,
     style && style,
   ];
 
   return (
-    <Spacer style={container} {...extra}>
+    <Spacer style={containerStyle} {...more}>
       {children}
     </Spacer>
   );
 };
 
-export default Row;
-
 const styles = StyleSheet.create({
+  flex: {
+    flex: 1,
+  },
   container: {
     flexDirection: 'row',
   },
-  center: {
+  centerBoth: {
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -45,7 +48,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-end',
   },
-  spaceBetween: {
+  centerBetween: {
+    alignItems: 'center',
     justifyContent: 'space-between',
   },
 });

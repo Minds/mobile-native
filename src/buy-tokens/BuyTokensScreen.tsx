@@ -15,9 +15,7 @@ import OrderReportModal, {
 import { startCase as _startCase } from 'lodash';
 import i18n from '../common/services/i18n.service';
 import mindsConfigService from '../common/services/minds-config.service';
-import { ScreenHeader, ScreenSection } from '~ui/screen';
-import { B1, B2, B3 } from '~ui/typography';
-import { Spacer } from '~ui/layout';
+import { B1, B2, B3, ScreenHeader, ScreenSection, Spacer, Row } from '~ui';
 
 type PaymentMethod = 'card' | 'bank' | 'crypto';
 type PaymentOption = { type: PaymentMethod; name: string };
@@ -88,6 +86,7 @@ export default observer(() => {
             ]}>
             {paymentMethodsList.map(({ type, name }, index) => {
               const isSelected = store.paymentMethod === type;
+
               return (
                 <Pressable
                   style={[
@@ -115,7 +114,7 @@ export default observer(() => {
               onPress={() => store.setAggressTerms(!store.aggressTerms)}
               containerStyle={theme.checkbox}
               title={
-                <Spacer left="1x">
+                <Spacer left="XS">
                   <B3>
                     {i18n.to(
                       'buyTokensScreen.terms',
@@ -139,18 +138,10 @@ export default observer(() => {
               }
             />
           </View>
-          <View
-            style={[
-              theme.flexContainer,
-              theme.rowJustifySpaceBetween,
-              theme.alignCenter,
-            ]}>
+          <Row top="M" centerBetween>
             <B2 bold onPress={navToTokens}>
               {i18n.t('buyTokensScreen.learnMore')}
             </B2>
-            {/* <MText style={[theme.colorPrimaryText, styles.learMoreLink]}>
-
-            </MText> */}
             <Button
               text={i18n.t('buyTokensScreen.buy')}
               containerStyle={
@@ -168,7 +159,7 @@ export default observer(() => {
               }}
               disabled={!canBuyTokens}
             />
-          </View>
+          </Row>
         </ScreenSection>
       </ScrollView>
       <UniswapWidget

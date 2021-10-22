@@ -6,7 +6,7 @@ import FitScrollView from '../common/components/FitScrollView';
 import requirePhoneValidation from '../common/hooks/requirePhoneValidation';
 import {
   H2,
-  H3,
+  H3S,
   B1,
   Spacer,
   Row,
@@ -146,7 +146,7 @@ export default function Drawer(props) {
   return (
     <Screen safe>
       <FitScrollView>
-        <HairlineSpacer top="6x">
+        <HairlineSpacer top="XXL">
           <DrawerHeader
             avatar={avatar}
             username={channel.username}
@@ -155,7 +155,7 @@ export default function Drawer(props) {
             onUserPress={handleChannelNav}
           />
         </HairlineSpacer>
-        <Spacer top="8x">
+        <Spacer top="XXL">
           <DrawerList list={optionsList} />
         </Spacer>
       </FitScrollView>
@@ -178,9 +178,9 @@ const DrawerList = ({ list }) => {
 
 const DrawerHeader = ({ name, username, avatar, onUserPress, onIconPress }) => {
   return (
-    <Row left="10x" right="4x" bottom="6x">
+    <Row left="XL2" right="XL" bottom="XXL">
       <Avatar source={avatar} size="medium" onPress={onUserPress} />
-      <Column flex centerStart horizontal="3x">
+      <Column flex centerStart horizontal="M">
         <H2 onPress={onUserPress} bold>
           {name || `@${username}`}
         </H2>
@@ -204,11 +204,11 @@ const DrawerHeader = ({ name, username, avatar, onUserPress, onIconPress }) => {
 const DrawerNavItem = ({ icon, name, onPress }) => {
   return (
     <PressableLine onPress={onPress}>
-      <Row centerStart flex left="10x" vertical="4x">
+      <Row centerStart flex left="XL2" vertical="L">
         <Icon name={icon} />
-        <Spacer left="2x">
-          <H3 bold>{name}</H3>
-        </Spacer>
+        <H3S left="S" bold>
+          {name}
+        </H3S>
       </Row>
     </PressableLine>
   );

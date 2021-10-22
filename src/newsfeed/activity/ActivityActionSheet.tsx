@@ -383,7 +383,7 @@ export default withSafeAreaInsets(
             size="large"
             onPress={this.showActionSheet}
             testID={this.props.testID}
-            left="1x"
+            // left="XS"
           />
           {this.state.shown && (
             <BottomSheet ref={this.ref} autoShow>

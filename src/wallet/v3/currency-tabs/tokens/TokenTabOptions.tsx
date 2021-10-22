@@ -3,7 +3,6 @@ import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import React from 'react';
 import { IconButton } from '~ui/icons';
-import { IconType } from 'react-native-elements';
 import { showNotification } from '../../../../../AppMessages';
 import i18n from '../../../../common/services/i18n.service';
 import { WalletStoreType } from '../../../v2/createWalletStore';
@@ -22,7 +21,7 @@ type PropsType = {
 
 type ItemType = {
   iconName: string;
-  iconType: IconType;
+  iconType: string;
   title: string;
   onPress: () => void;
 };
@@ -79,7 +78,7 @@ const TokenTabOptions = observer((props: PropsType) => {
 
   return (
     <>
-      <IconButton spacingLeft="2x" name="more" onPress={show} />
+      <IconButton left="S" name="more" onPress={show} />
       <BottomSheet ref={ref}>
         {dismissOptions.map((b, i) => (
           <MenuItem {...b} key={i} />

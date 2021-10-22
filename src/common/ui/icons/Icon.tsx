@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { View, StyleSheet, ViewStyle } from 'react-native';
-import withSpacer from '~ui/layout/withSpacer';
+import { withSpacer } from '~ui/layout';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -22,7 +22,11 @@ import {
   IUIBase,
 } from '~styles/Tokens';
 import { ColorsNameType } from '~styles/Colors';
-import { getPropStyles, getNumericSize, getNamedSize } from '~ui/helpers';
+import {
+  getSpacingStylesNext,
+  getNumericSize,
+  getNamedSize,
+} from '~ui/helpers';
 import { getIconColor } from './helpers';
 
 const Fonts = {
@@ -48,7 +52,7 @@ export interface IIcon extends IUIBase {
   disabledColor?: ColorsNameType;
 }
 
-function Icon({
+export function Icon({
   color = null,
   name = ICON_DEFAULT,
   size = ICON_SIZE_DEFAULT,
@@ -93,7 +97,7 @@ function Icon({
   // nested is used to discard the container styles when it is nested inside another base component
   const containerStyles = useMemo(() => {
     const base = [styles.container, styles[sizeNamed]];
-    const extra = !nested ? getPropStyles(common) : null;
+    const extra = !nested ? getSpacingStylesNext(common) : null;
     if (extra) {
       base.push(extra);
     }
@@ -162,6 +166,7 @@ export function IconNext({
     }
 
     return StyleSheet.flatten(base);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [size]);
 
   const Component = Fonts[iconFont];
@@ -212,5 +217,3 @@ const styles = StyleSheet.create({
     height: ICON_SIZES.huge,
   },
 });
-
-export default Icon;

@@ -146,7 +146,7 @@ class OwnerBlock extends PureComponent<PropsType> {
     // Remind header
     const remind = this.props.entity.remind_users ? (
       <View style={remindContainer}>
-        <Icon name="remind" size="tiny" active spacingRight="1x" />
+        <Icon name="remind" size="tiny" active right="XS" />
         <MText>
           <MText style={theme.colorSecondaryText}>
             {i18nService.t('remindedBy')}{' '}

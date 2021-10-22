@@ -2,30 +2,30 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Spacer } from '~ui/layout';
 
-const Column = ({
+export const Column = ({
   flex,
-  center,
+  centerBoth,
   centerStart,
   centerEnd,
   children,
+  style,
   ...more
 }: any) => {
-  const style = [
+  const containerStyle = [
     styles.container,
-    center && styles.center,
+    centerBoth && styles.centerBoth,
     centerStart && styles.centerStart,
     centerEnd && styles.centerEnd,
     flex && styles.flex,
+    style && style,
   ];
 
   return (
-    <Spacer style={style} {...more}>
+    <Spacer style={containerStyle} {...more}>
       {children}
     </Spacer>
   );
 };
-
-export default Column;
 
 const styles = StyleSheet.create({
   container: {
@@ -33,9 +33,8 @@ const styles = StyleSheet.create({
   },
   flex: {
     flex: 1,
-    alignItems: 'stretch',
   },
-  center: {
+  centerBoth: {
     alignItems: 'center',
     justifyContent: 'center',
   },

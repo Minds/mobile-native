@@ -1,14 +1,9 @@
 import React from 'react';
 import { TouchableHighlight } from 'react-native';
-import ThemedStyles from '~/styles/ThemedStyles';
+import { TRANSPARENCY } from '~/styles/Tokens';
 
-const PressableLine = props => {
+export const PressableLine = props => {
   return (
-    <TouchableHighlight
-      underlayColor={ThemedStyles.getColor('Darken10')}
-      {...props}
-    />
+    <TouchableHighlight underlayColor={TRANSPARENCY.DARKEN10} {...props} />
   );
 };
-
-export default PressableLine;

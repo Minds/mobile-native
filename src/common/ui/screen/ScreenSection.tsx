@@ -1,12 +1,10 @@
 import React from 'react';
 import { Spacer } from '~ui/layout';
 
-const ScreenSection = ({ children, ...more }) => {
+export const ScreenSection = ({ children, ...more }) => {
   return (
-    <Spacer horizontal="4x" {...more}>
+    <Spacer horizontal="L" {...more}>
       {children}
     </Spacer>
   );
 };
-
-export default ScreenSection;

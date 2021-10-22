@@ -1,38 +1,40 @@
 import React, { useMemo } from 'react';
-import { Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import { Text, TouchableWithoutFeedback } from 'react-native';
 import { FONT_FAMILY } from '~styles/Tokens';
 import { UNIT } from '~styles/Tokens';
-import ThemedStyles from '~/styles/ThemedStyles';
+import ThemedStyles from '~styles/ThemedStyles';
 
-const Typography = ({
+export const Typography = ({
   center,
   bold,
   children,
   defStyle,
   link,
-  light,
+  secondary,
   flat,
   style,
   italic,
+  white,
   onPress,
   ...more
 }: any) => {
+  // This could use global memoization
   const fontStyle = useMemo(() => {
     return [
       defStyle,
-      ThemedStyles.style.colorPrimaryText,
+      styles.primary,
       styles.regular,
       center && styles.center,
       bold && styles.bold,
       italic && styles.italic,
-      link && ThemedStyles.style.link,
-      light && ThemedStyles.style.colorSecondaryText,
-      flat && { lineHeight: 0 },
+      flat && styles.flat,
+      link && styles.link,
+      secondary && styles.secondary,
+      white && styles.white,
       style,
     ];
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [center, bold, style, link, light]);
+  }, [center, bold, style, link, secondary, white]);
 
   const renderedText = (
     <Text style={fontStyle} {...more}>
@@ -53,9 +55,16 @@ const Typography = ({
   );
 };
 
-const styles = StyleSheet.create({
+const styles = ThemedStyles.create({
+  primary: ['colorPrimaryText'],
+  white: ['colorWhite'],
+  secondary: ['colorSecondaryText'],
+  link: ['colorLink'],
   center: {
     textAlign: 'center',
+  },
+  flat: {
+    lineHeight: 0,
   },
   bold: {
     fontFamily: FONT_FAMILY.bold,
@@ -70,5 +79,3 @@ const styles = StyleSheet.create({
     fontFamily: FONT_FAMILY.italic,
   },
 });
-
-export default Typography;

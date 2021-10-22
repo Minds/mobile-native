@@ -13,7 +13,7 @@ import remoteAction from '../../../common/RemoteAction';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
 import { actionsContainerStyle, actionsContainerWrapper } from './styles';
 import PressableScale from '~/common/components/PressableScale';
-import withSpacer from '~ui/layout/withSpacer';
+import { withSpacer } from '~ui/layout';
 
 const CounterSpaced = withSpacer(Counter);
 

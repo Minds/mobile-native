@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Pressable } from 'react-native';
+import { View, Pressable } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { IconCircled } from '~ui/icons';
@@ -10,7 +10,7 @@ import {
   UNIT,
 } from '~styles/Tokens';
 
-const Avatar = ({
+export const Avatar = ({
   source,
   size = AVATAR_SIZE_DEFAULT,
   border,
@@ -47,20 +47,13 @@ const Avatar = ({
   );
 };
 
-export default Avatar;
-
-const styles = StyleSheet.create({
+const styles = ThemedStyles.create({
   container: {
     flexDirection: 'row',
     borderRadius: AVATAR_SIZE.large,
   },
-  border: {
-    borderWidth: UNIT.XXS,
-    borderColor: ThemedStyles.getColor('Icon'),
-  },
-  borderWhite: {
-    borderColor: ThemedStyles.getColor('White'),
-  },
+  border: [{ borderWidth: UNIT.XXS }, 'bcolorIcon'],
+  borderWhite: ['bcolorWhite'],
   icon: {
     alignItems: 'center',
     justifyContent: 'center',

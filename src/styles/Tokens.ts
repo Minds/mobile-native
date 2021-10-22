@@ -47,12 +47,12 @@ export interface IUISpacers {
 export interface IUIBase {
   testID?: string;
   nested?: boolean;
-  spacingTop?: string;
-  spacingLeft?: string;
-  spacingRight?: string;
-  spacingBottom?: string;
-  spacingHorizontal?: string;
-  spacingVertical?: string;
+  top?: string;
+  left?: string;
+  right?: string;
+  bottom?: string;
+  horizontal?: string;
+  vertical?: string;
 }
 
 export const UNIT: IUISpacers = {
@@ -147,4 +147,13 @@ export const AVATAR_SIZE = {
   small: UNIT.XL2,
   medium: UNIT.XXL2,
   large: UNIT.XL2 * 2,
+};
+
+export const TRANSPARENCY = {
+  DARKEN10: 'rgba(0,0,0,0.1)',
+  DARKEN20: 'rgba(0,0,0,0.2)',
+  DARKEN30: 'rgba(0,0,0,0.3)',
+  LIGHTEN10: 'rgba(255,255,255,0.1)',
+  LIGHTEN20: 'rgba(255,255,255,0.2)',
+  LIGHTEN30: 'rgba(255,255,255,0.3)',
 };

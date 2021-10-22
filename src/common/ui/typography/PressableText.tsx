@@ -3,7 +3,12 @@ import { TouchableWithoutFeedback } from 'react-native';
 import { B1 } from './Body';
 import { UNIT } from '~styles/Tokens';
 
-const PressableText = ({ component, children, onPress, ...more }: any) => {
+export const PressableText = ({
+  component,
+  children,
+  onPress,
+  ...more
+}: any) => {
   const Renderer = component || B1;
   return (
     <TouchableWithoutFeedback
@@ -13,5 +18,3 @@ const PressableText = ({ component, children, onPress, ...more }: any) => {
     </TouchableWithoutFeedback>
   );
 };
-
-export default PressableText;

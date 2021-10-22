@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { View, ViewStyle, StyleSheet } from 'react-native';
-import { getSpacingStyles } from '~ui/helpers';
+import { getSpacingStylesNext } from '~ui/helpers';
 
 export interface ISpacer {
   top?: string;
@@ -10,10 +10,10 @@ export interface ISpacer {
   horizontal?: string;
   vertical?: string;
   style?: any;
-  children?: any;
+  children?: React.ReactNode;
 }
 
-const Spacer = ({
+export const Spacer = ({
   top,
   left,
   right,
@@ -24,7 +24,8 @@ const Spacer = ({
   children,
 }: ISpacer) => {
   const styleList: ViewStyle = useMemo(() => {
-    const styles: ViewStyle[] = getSpacingStyles({
+    const styles: ViewStyle[] = [];
+    const spacing: ViewStyle = getSpacingStylesNext({
       top,
       left,
       right,
@@ -32,6 +33,10 @@ const Spacer = ({
       horizontal,
       vertical,
     });
+
+    if (spacing) {
+      styles.push(spacing);
+    }
 
     if (style) {
       styles.push(style);
@@ -43,4 +48,21 @@ const Spacer = ({
   return <View style={styleList}>{children}</View>;
 };
 
-export default Spacer;
+export const withSpacer = <P extends object>(
+  Component: React.ComponentType<P>,
+): React.FC<P & ISpacer> => ({
+  top,
+  left,
+  right,
+  bottom,
+  horizontal,
+  vertical,
+  style,
+  ...more
+}) => {
+  return (
+    <Spacer {...{ top, left, right, bottom, horizontal, vertical, style }}>
+      <Component {...(more as P)} />
+    </Spacer>
+  );
+};

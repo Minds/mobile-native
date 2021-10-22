@@ -6,11 +6,11 @@ import {
   InteractionManager,
   ViewStyle,
 } from 'react-native';
-import Icon, { IIcon, IIconNext, IconNext } from './Icon';
+import { Icon, IIcon, IIconNext, IconNext } from './Icon';
 import { ICON_SIZES, ICON_SIZE_DEFAULT, IUISizing } from '~styles/Tokens';
-import { getNumericSize, getPropStyles } from '~ui/helpers';
+import { getNumericSize, getSpacingStylesNext } from '~ui/helpers';
 import PressableScale from '~/common/components/PressableScale';
-import withSpacer from '~ui/layout/withSpacer';
+import { withSpacer } from '~ui/layout';
 
 const SLOP_PROP = 1 / 3;
 
@@ -91,7 +91,7 @@ export const IconButtonNext = ({
 
 export const IconButtonNextSpaced = withSpacer(IconButtonNext);
 
-export default function IconButton({
+export function IconButton({
   onPress,
   style,
   testID,
@@ -104,7 +104,7 @@ export default function IconButton({
 
   const containerStyles = useMemo(() => {
     const stylesObj = [styles.container, styles[size]];
-    const extraStyles = getPropStyles(more);
+    const extraStyles = getSpacingStylesNext(more);
 
     if (extraStyles?.length) {
       stylesObj.push(...extraStyles);
@@ -114,9 +114,7 @@ export default function IconButton({
       stylesObj.push(style);
     }
 
-    stylesObj.push(styles[size]);
-
-    return stylesObj;
+    return StyleSheet.flatten(stylesObj);
   }, [size, more, style]);
 
   const sizeNumeric = useMemo(() => {

@@ -3,9 +3,9 @@ import { View, StyleSheet } from 'react-native';
 import { H2 } from '~ui/typography';
 import { Row } from '~ui/layout';
 
-const PageHeader = ({ title, extra, ...more }) => {
+export const ScreenHeader = ({ title, extra, ...more }: any) => {
   return (
-    <Row center spaceBetween top="4x" horizontal="4x" bottom="4x" {...more}>
+    <Row center spaceBetween vertical="L" horizontal="L" {...more}>
       <View style={styles.title}>
         <H2 bold>{title}</H2>
       </View>
@@ -20,5 +20,3 @@ const styles = StyleSheet.create({
   },
   extra: {},
 });
-
-export default PageHeader;

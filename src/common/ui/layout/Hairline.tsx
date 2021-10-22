@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import Row from './Row';
-import Spacer from './Spacer';
+import { Row } from './Row';
+import { Spacer } from './Spacer';
 import ThemedStyles from '~/styles/ThemedStyles';
 
 export const HairlineSpacer = ({ children, bordered = true, ...more }) => {
@@ -20,11 +20,11 @@ export const HairlineRow = ({ children, bordered = true, ...more }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  border: {
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: ThemedStyles.getColor('PrimaryBorder'),
-  },
+const styles = ThemedStyles.create({
+  border: [
+    { borderBottomWidth: StyleSheet.hairlineWidth },
+    'bcolorPrimaryBorder',
+  ],
 });
 
 export default HairlineRow;
