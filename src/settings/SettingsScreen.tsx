@@ -10,7 +10,7 @@ import openUrlService from '../common/services/open-url.service';
 import sessionService from '../common/services/session.service';
 import apiService from '../common/services/api.service';
 import ThemedStyles from '../styles/ThemedStyles';
-import MText from '../common/components/MText';
+import { ScreenHeader } from '~/common/ui/screen';
 
 /**
  * Retrieves the link & jwt for zendesk and navigate to it.
@@ -165,10 +165,7 @@ export default function ({ navigation }) {
     <ScrollView
       style={[theme.flexContainer, theme.bgPrimaryBackground]}
       contentContainerStyle={theme.paddingBottom4x}>
-      <MText
-        style={[theme.titleText, theme.paddingLeft4x, theme.paddingVertical2x]}>
-        {i18n.t('moreScreen.settings')}
-      </MText>
+      <ScreenHeader title={i18n.t('moreScreen.settings')} />
       <View style={[innerWrapper, theme.bgPrimaryBackground]}>
         {items.map((item, index) => (
           <MenuItem

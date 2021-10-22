@@ -10,8 +10,7 @@ import Icon, { IIcon, IIconNext, IconNext } from './Icon';
 import { ICON_SIZES, ICON_SIZE_DEFAULT, IUISizing } from '~styles/Tokens';
 import { getNumericSize, getPropStyles } from '~ui/helpers';
 import PressableScale from '~/common/components/PressableScale';
-import withSpacer from '~ui/spacer/withSpacer';
-import ThemedStyles from '~/styles/ThemedStyles';
+import withSpacer from '~ui/layout/withSpacer';
 
 const SLOP_PROP = 1 / 3;
 

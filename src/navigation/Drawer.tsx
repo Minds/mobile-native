@@ -1,19 +1,23 @@
 import React from 'react';
-import { View, Image, StyleSheet, Platform } from 'react-native';
-
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { IconButton, Icon } from '~ui/icons';
-
-import { ListItem } from 'react-native-elements';
-
 import i18n from '../common/services/i18n.service';
-import ThemedStyles from '../styles/ThemedStyles';
 import featuresService from '../common/services/features.service';
 import sessionService from '../common/services/session.service';
 import FitScrollView from '../common/components/FitScrollView';
 import requirePhoneValidation from '../common/hooks/requirePhoneValidation';
-import MText from '../common/components/MText';
+import {
+  H2,
+  H3,
+  B1,
+  Spacer,
+  Row,
+  Column,
+  HairlineSpacer,
+  IconButton,
+  Icon,
+  Avatar,
+  Screen,
+  PressableLine,
+} from '~ui';
 
 const getOptionsList = navigation => {
   const hasRewards = sessionService.getUser().rewards;
@@ -21,14 +25,14 @@ const getOptionsList = navigation => {
   let list = [
     {
       name: i18n.t('newsfeed.title'),
-      icon: <Icon name="home" />,
+      icon: 'home',
       onPress: () => {
         navigation.navigate('Newsfeed');
       },
     },
     {
       name: i18n.t('discovery.title'),
-      icon: <Icon name="hashtag" />,
+      icon: 'hashtag',
       onPress: () => {
         navigation.navigate('Discovery');
       },
@@ -36,7 +40,7 @@ const getOptionsList = navigation => {
     featuresService.has('plus-2020')
       ? {
           name: i18n.t('wire.lock.plus'),
-          icon: <Icon name="queue" />,
+          icon: 'queue',
           onPress: () => {
             navigation.navigate('Tabs', {
               screen: 'CaptureTab',
@@ -48,7 +52,7 @@ const getOptionsList = navigation => {
     featuresService.has('crypto')
       ? {
           name: i18n.t('moreScreen.wallet'),
-          icon: <Icon name="bank" />,
+          icon: 'bank',
           onPress: () => {
             navigation.navigate('Tabs', {
               screen: 'CaptureTab',
@@ -59,14 +63,14 @@ const getOptionsList = navigation => {
       : null,
     {
       name: i18n.t('earnScreen.title'),
-      icon: <Icon name="money" />,
+      icon: 'money',
       onPress: () => {
         navigation.navigate('EarnModal');
       },
     },
     {
       name: 'Buy Tokens',
-      icon: <Icon name="coins" />,
+      icon: 'coins',
       onPress: async () => {
         const navToBuyTokens = () => {
           navigation.navigate('Tabs', {
@@ -87,7 +91,7 @@ const getOptionsList = navigation => {
     ...list,
     {
       name: 'Analytics',
-      icon: <Icon name="analytics" />,
+      icon: 'analytics',
 
       onPress: () => {
         navigation.navigate('Tabs', {
@@ -98,7 +102,7 @@ const getOptionsList = navigation => {
     },
     {
       name: i18n.t('discovery.groups'),
-      icon: <Icon name="group" />,
+      icon: 'group',
       onPress: () => {
         navigation.navigate('Tabs', {
           screen: 'CaptureTab',
@@ -108,7 +112,7 @@ const getOptionsList = navigation => {
     },
     {
       name: i18n.t('moreScreen.settings'),
-      icon: <Icon name="settings" />,
+      icon: 'settings',
       onPress: () => {
         navigation.navigate('Tabs', {
           screen: 'CaptureTab',
@@ -128,134 +132,84 @@ const getOptionsList = navigation => {
 export default function Drawer(props) {
   const channel = sessionService.getUser();
 
-  const navToChannel = () => {
+  const handleChannelNav = () => {
     props.navigation.closeDrawer();
     props.navigation.push('Channel', { entity: channel });
   };
+
+  const handleMultiUserNav = () => props.navigation.navigate('MultiUserScreen');
 
   const avatar =
     channel && channel.getAvatarSource ? channel.getAvatarSource('medium') : {};
 
   const optionsList = getOptionsList(props.navigation);
   return (
-    <SafeAreaView style={containerStyle}>
-      <FitScrollView style={containerStyle}>
-        <View style={styles.headerContainer}>
-          <TouchableOpacity onPress={navToChannel}>
-            <Image source={avatar} style={styles.wrappedAvatar} />
-          </TouchableOpacity>
-          <View style={styles.row}>
-            <View style={titleContainerStyle}>
-              <MText style={titleStyle} onPress={navToChannel}>
-                {channel.name || `@${channel.username}`}
-              </MText>
-              {channel.name && (
-                <MText
-                  onPress={navToChannel}
-                  style={subtitleStyle}
-                  testID="channelUsername">
-                  @{channel.username}
-                </MText>
-              )}
-            </View>
-            <IconButton
-              scale
-              color="SecondaryText"
-              name="account-multi"
-              testID="multiUserIcon"
-              onPress={() => props.navigation.navigate('MultiUserScreen')}
-            />
-          </View>
-        </View>
-        <View style={styles.body}>
-          {optionsList.map((l, i) =>
-            !l ? null : (
-              <ListItem
-                Component={TouchableOpacity}
-                pad={5}
-                key={i}
-                onPress={l.onPress}
-                containerStyle={styles.listItem}>
-                {l.icon}
-                <ListItem.Content>
-                  <ListItem.Title style={menuTitleStyle}>
-                    {l.name}
-                  </ListItem.Title>
-                </ListItem.Content>
-              </ListItem>
-            ),
-          )}
-        </View>
+    <Screen safe>
+      <FitScrollView>
+        <HairlineSpacer top="6x">
+          <DrawerHeader
+            avatar={avatar}
+            username={channel.username}
+            name={channel.name}
+            onIconPress={handleMultiUserNav}
+            onUserPress={handleChannelNav}
+          />
+        </HairlineSpacer>
+        <Spacer top="8x">
+          <DrawerList list={optionsList} />
+        </Spacer>
       </FitScrollView>
-    </SafeAreaView>
+    </Screen>
   );
 }
 
-const styles = StyleSheet.create({
-  titleText: {
-    fontFamily: 'Roboto',
-    fontSize: Platform.select({ ios: 26, android: 24 }),
-    fontWeight: '700',
-  },
-  subTitleText: {
-    fontFamily: 'Roboto',
-    fontSize: Platform.select({ ios: 16, android: 15 }),
-    fontWeight: '400',
-  },
-  headerContainer: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    paddingTop: Platform.select({ ios: 33, android: 23 }),
-    paddingLeft: 40,
-    paddingBottom: 25,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#CCC',
-  },
-  icon: {
-    width: 30,
-  },
-  menuText: {
-    fontSize: Platform.select({ ios: 21, android: 19 }),
-    fontWeight: '700',
-    paddingLeft: 10,
-  },
-  wrappedAvatar: {
-    height: 55,
-    width: 55,
-    borderRadius: 55,
-  },
-  body: {
-    paddingLeft: Platform.select({ ios: 35, android: 25 }),
-    paddingTop: Platform.select({ ios: 50, android: 30 }),
-  },
-  container: {
-    borderTopWidth: 0,
-    borderBottomWidth: 0,
-    paddingLeft: 30,
-  },
-  listItem: {
-    borderBottomWidth: 0,
-    backgroundColor: 'transparent',
-    paddingVertical: Platform.select({ ios: 15, android: 12.5 }),
-  },
-  row: {
-    flexDirection: 'row',
-    flex: 1,
-    paddingRight: 30,
-  },
-});
-const menuTitleStyle = ThemedStyles.combine(
-  styles.menuText,
-  'colorPrimaryText',
-);
-const containerStyle = ThemedStyles.combine(
-  'flexContainer',
-  'bgPrimaryBackground',
-);
-const subtitleStyle = ThemedStyles.combine(
-  styles.subTitleText,
-  'colorSecondaryText',
-);
-const titleContainerStyle = ThemedStyles.combine('flexColumn', 'marginLeft2x');
-const titleStyle = ThemedStyles.combine(styles.titleText, 'colorPrimaryText');
-// const iconStyle = ThemedStyles.combine('colorIcon', styles.icon);
+const DrawerList = ({ list }) => {
+  return list.map((l, i) =>
+    !l ? null : (
+      <DrawerNavItem
+        key={'list' + i}
+        name={l.name}
+        icon={l.icon}
+        onPress={l.onPress}
+      />
+    ),
+  );
+};
+
+const DrawerHeader = ({ name, username, avatar, onUserPress, onIconPress }) => {
+  return (
+    <Row left="10x" right="4x" bottom="6x">
+      <Avatar source={avatar} size="medium" onPress={onUserPress} />
+      <Column flex centerStart horizontal="3x">
+        <H2 onPress={onUserPress} bold>
+          {name || `@${username}`}
+        </H2>
+        {name && (
+          <B1 flat light onPress={onUserPress} testID="channelUsername">
+            @{username}
+          </B1>
+        )}
+      </Column>
+      <IconButton
+        scale
+        color="SecondaryText"
+        name="account-multi"
+        testID="multiUserIcon"
+        onPress={onIconPress}
+      />
+    </Row>
+  );
+};
+
+const DrawerNavItem = ({ icon, name, onPress }) => {
+  return (
+    <PressableLine onPress={onPress}>
+      <Row centerStart flex left="10x" vertical="4x">
+        <Icon name={icon} />
+        <Spacer left="2x">
+          <H3 bold>{name}</H3>
+        </Spacer>
+      </Row>
+    </PressableLine>
+  );
+};

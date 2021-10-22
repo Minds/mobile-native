@@ -1,18 +1,4 @@
-import {
-  FONT_FAMILY_REGULAR,
-  FONT_FAMILY_MEDIUM,
-  FONT_FAMILY_BOLD,
-  FONT_FAMILY_BLACK,
-  FONT_SIZES,
-  UNIT,
-} from '~styles/Tokens';
-
-export const FAMILY = {
-  regular: FONT_FAMILY_REGULAR,
-  medium: FONT_FAMILY_MEDIUM,
-  bold: FONT_FAMILY_BOLD,
-  black: FONT_FAMILY_BLACK,
-};
+import { FONT_SIZES, UNIT } from '~styles/Tokens';
 
 export const TYPES = {
   header1: {

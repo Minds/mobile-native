@@ -2,12 +2,14 @@ import { observer } from 'mobx-react';
 import React, { useCallback, useState } from 'react';
 import { View } from 'react-native';
 import MText from '../common/components/MText';
+import { H1 } from '~ui/typography';
 import TopbarTabbar from '../common/components/topbar-tabbar/TopbarTabbar';
 import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
 import DashboardTab from './tabs/dashboard/DashboardTab';
 import TokensTab from './tabs/tokens/TokensTab';
 import TrendingTab from './tabs/trending/TrendingTab';
+import { ScreenHeader } from '~/common/ui/screen';
 
 type TAnalyticsTabs =
   | 'earnings'
@@ -94,7 +96,7 @@ const AnalyticsScreen = observer(
 
     return (
       <View style={theme.flexContainer}>
-        <MText style={title}>{i18n.t('analytics.title')}</MText>
+        <ScreenHeader title={i18n.t('analytics.title')} />
         <TopbarTabbar
           current={activeTabId}
           onChange={_onTabBarChange}
@@ -112,6 +114,6 @@ const AnalyticsScreen = observer(
   },
 );
 
-const title = ThemedStyles.combine('padding4x', 'titleText', 'paddingBottom2x');
+const title = ThemedStyles.combine('padding4x', 'paddingBottom2x');
 
 export default AnalyticsScreen;

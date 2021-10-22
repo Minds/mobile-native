@@ -15,7 +15,9 @@ import OrderReportModal, {
 import { startCase as _startCase } from 'lodash';
 import i18n from '../common/services/i18n.service';
 import mindsConfigService from '../common/services/minds-config.service';
-import MText from '../common/components/MText';
+import { ScreenHeader, ScreenSection } from '~ui/screen';
+import { B1, B2, B3 } from '~ui/typography';
+import { Spacer } from '~ui/layout';
 
 type PaymentMethod = 'card' | 'bank' | 'crypto';
 type PaymentOption = { type: PaymentMethod; name: string };
@@ -71,109 +73,103 @@ export default observer(() => {
 
   return (
     <>
-      <ScrollView
-        style={[theme.flexContainer, theme.bgPrimaryBackground]}
-        contentContainerStyle={theme.padding4x}>
-        <View style={theme.alignCenter}>
-          <MText
+      <ScrollView style={[theme.flexContainer, theme.bgPrimaryBackground]}>
+        <ScreenHeader title={i18n.t('buyTokensScreen.paymentMethod')} />
+        <ScreenSection>
+          <View
             style={[
-              theme.colorPrimaryText,
+              theme.flexContainer,
+              theme.rowJustifySpaceBetween,
               theme.marginBottom5x,
-              theme.fontXXL,
-              theme.bold,
+              styles.optionsContainer,
+              theme.border2x,
+              styles.buttonsContainer,
+              theme.bcolorPrimaryBorder,
             ]}>
-            {i18n.t('buyTokensScreen.paymentMethod')}
-          </MText>
-        </View>
-        <View
-          style={[
-            theme.flexContainer,
-            theme.rowJustifySpaceBetween,
-            theme.marginBottom5x,
-            styles.optionsContainer,
-            theme.border2x,
-            styles.buttonsContainer,
-            theme.bcolorPrimaryBorder,
-          ]}>
-          {paymentMethodsList.map(({ type, name }, index) => (
-            <Pressable
-              style={[
-                theme.bcolorPrimaryBorder,
-                styles.option,
-                ...buildButtonStyles(index, store.paymentMethod === type),
-                store.paymentMethod === type ? theme.bgLink : '',
-              ]}
-              onPress={() => store.handleOptionSelection(type)}>
-              <MText
-                style={
-                  store.paymentMethod === type
-                    ? theme.colorWhite
-                    : theme.colorPrimaryText
-                }>
-                {name}
-              </MText>
-            </Pressable>
-          ))}
-        </View>
-        <View style={[theme.flexContainer, theme.rowStretch]}>
-          <MText style={theme.colorPrimaryText}>
+            {paymentMethodsList.map(({ type, name }, index) => {
+              const isSelected = store.paymentMethod === type;
+              return (
+                <Pressable
+                  style={[
+                    theme.bcolorPrimaryBorder,
+                    styles.option,
+                    ...buildButtonStyles(index, isSelected),
+                    isSelected ? theme.bgLink : '',
+                  ]}
+                  onPress={() => store.handleOptionSelection(type)}>
+                  <B1 white={isSelected} bold>
+                    {name}
+                  </B1>
+                </Pressable>
+              );
+            })}
+          </View>
+          <B3>
             {i18n.t('buyTokensScreen.deliverEstimate', {
               estimate: store.paymentMethod === 'bank' ? 'days' : 'minutes',
             })}
-          </MText>
-        </View>
-        <View>
-          <CheckBox
-            checked={store.aggressTerms}
-            onPress={() => store.setAggressTerms(!store.aggressTerms)}
-            containerStyle={[theme.checkbox]}
-            title={
-              <MText style={[theme.colorPrimaryText, theme.marginLeft3x]}>
-                {i18n.to(
-                  'buyTokensScreen.terms',
-                  {},
-                  {
-                    link: (
-                      <MText
-                        style={theme.link}
-                        onPress={() => {
-                          Linking.openURL(
-                            'https://cdn-assets.minds.com/front/dist/assets/documents/TermsOfSale-v0.1.pdf',
-                          );
-                        }}>
-                        {i18n.t('buyTokensScreen.linkText')}
-                      </MText>
-                    ),
-                  },
-                )}
-              </MText>
-            }
-          />
-        </View>
-        <View style={[theme.flexContainer, theme.rowJustifySpaceBetween]}>
-          <MText
-            style={[theme.colorPrimaryText, styles.learMoreLink]}
-            onPress={navToTokens}>
-            {i18n.t('buyTokensScreen.learnMore')}
-          </MText>
-          <Button
-            text={i18n.t('buyTokensScreen.buy')}
-            containerStyle={
-              [
-                theme.alignCenter,
-                !canBuyTokens ? styles.disabledButton : null,
-              ] as any
-            }
-            onPress={() => {
-              if (store.paymentMethod === 'crypto') {
-                store.setShowUniswapWidget(!store.showUniswapWidget);
-              } else {
-                store.setShowTransakWidget(!store.showTransakWidget);
+          </B3>
+          <View>
+            <CheckBox
+              checked={store.aggressTerms}
+              onPress={() => store.setAggressTerms(!store.aggressTerms)}
+              containerStyle={theme.checkbox}
+              title={
+                <Spacer left="1x">
+                  <B3>
+                    {i18n.to(
+                      'buyTokensScreen.terms',
+                      {},
+                      {
+                        link: (
+                          <B3
+                            link
+                            onPress={() => {
+                              Linking.openURL(
+                                'https://cdn-assets.minds.com/front/dist/assets/documents/TermsOfSale-v0.1.pdf',
+                              );
+                            }}>
+                            {i18n.t('buyTokensScreen.linkText')}
+                          </B3>
+                        ),
+                      },
+                    )}
+                  </B3>
+                </Spacer>
               }
-            }}
-            disabled={!canBuyTokens}
-          />
-        </View>
+            />
+          </View>
+          <View
+            style={[
+              theme.flexContainer,
+              theme.rowJustifySpaceBetween,
+              theme.alignCenter,
+            ]}>
+            <B2 bold onPress={navToTokens}>
+              {i18n.t('buyTokensScreen.learnMore')}
+            </B2>
+            {/* <MText style={[theme.colorPrimaryText, styles.learMoreLink]}>
+
+            </MText> */}
+            <Button
+              text={i18n.t('buyTokensScreen.buy')}
+              containerStyle={
+                [
+                  theme.alignCenter,
+                  !canBuyTokens ? styles.disabledButton : null,
+                ] as any
+              }
+              onPress={() => {
+                if (store.paymentMethod === 'crypto') {
+                  store.setShowUniswapWidget(!store.showUniswapWidget);
+                } else {
+                  store.setShowTransakWidget(!store.showTransakWidget);
+                }
+              }}
+              disabled={!canBuyTokens}
+            />
+          </View>
+        </ScreenSection>
       </ScrollView>
       <UniswapWidget
         isVisible={store.showUniswapWidget}

@@ -1,33 +1,55 @@
 import React, { useMemo } from 'react';
-import { Text, StyleSheet } from 'react-native';
-import { FAMILY } from './constants';
+import { Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import { FONT_FAMILY } from '~styles/Tokens';
+import { UNIT } from '~styles/Tokens';
+import ThemedStyles from '~/styles/ThemedStyles';
 
 const Typography = ({
   center,
   bold,
   children,
-  color,
   defStyle,
+  link,
+  light,
+  flat,
   style,
+  italic,
+  onPress,
   ...more
-}) => {
+}: any) => {
   const fontStyle = useMemo(() => {
     return [
       defStyle,
+      ThemedStyles.style.colorPrimaryText,
       styles.regular,
       center && styles.center,
       bold && styles.bold,
-      color && { color },
+      italic && styles.italic,
+      link && ThemedStyles.style.link,
+      light && ThemedStyles.style.colorSecondaryText,
+      flat && { lineHeight: 0 },
       style,
     ];
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [center, bold, color, style]);
+  }, [center, bold, style, link, light]);
 
-  return (
+  const renderedText = (
     <Text style={fontStyle} {...more}>
       {children}
     </Text>
+  );
+
+  if (!onPress) {
+    return renderedText;
+  }
+
+  return (
+    <TouchableWithoutFeedback
+      hitSlop={{ top: UNIT.XS, left: UNIT.XS, right: UNIT.XS, bottom: UNIT.XS }}
+      onPress={onPress}>
+      {renderedText}
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -36,13 +58,16 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   bold: {
-    fontFamily: FAMILY.bold,
+    fontFamily: FONT_FAMILY.bold,
   },
   medium: {
-    fontFamily: FAMILY.medium,
+    fontFamily: FONT_FAMILY.medium,
   },
   regular: {
-    fontFamily: FAMILY.regular,
+    fontFamily: FONT_FAMILY.regular,
+  },
+  italic: {
+    fontFamily: FONT_FAMILY.italic,
   },
 });
 

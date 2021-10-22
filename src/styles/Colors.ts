@@ -32,6 +32,10 @@ export const LIGHT_THEME = {
   White: '#FFFFFF',
   Black: '#000000',
   Transparent: 'transparent',
+  Darken10: 'rgba(0,0,0,0.10)',
+  Darken20: 'rgba(0,0,0,0.20)',
+  Lighten10: 'rgba(255,255,255,0.10)',
+  Lighten20: 'rgba(255,255,255,0.20)',
 };
 
 export const DARK_THEME: ColorsType = {
@@ -65,4 +69,8 @@ export const DARK_THEME: ColorsType = {
   White: '#FFFFFF',
   Black: '#000000',
   Transparent: 'transparent',
+  Darken10: 'rgba(0,0,0,0.10)',
+  Darken20: 'rgba(0,0,0,0.20)',
+  Lighten10: 'rgba(255,255,255,0.10)',
+  Lighten20: 'rgba(255,255,255,0.20)',
 };

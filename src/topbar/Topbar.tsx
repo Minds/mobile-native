@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, View, Platform, TouchableOpacity } from 'react-native';
-import { IconButton, IconCircled } from '~ui/icons';
+import { StyleSheet, View, Platform } from 'react-native';
+import { IconButton, Avatar } from '~ui';
 import { observer } from 'mobx-react';
 import SearchComponent from './searchbar/SearchComponent';
 import ThemedStyles from '../styles/ThemedStyles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import FastImage from 'react-native-fast-image';
 import { useStores } from '../common/hooks/use-stores';
 import useCurrentUser from '../common/hooks/useCurrentUser';
 import intword from '../common/helpers/intword';
@@ -65,18 +64,14 @@ export const Topbar = observer((props: PropsType) => {
         ]}>
         <View style={styles.topbar}>
           <View style={styles.topbarLeft}>
-            <TouchableOpacity onPress={openMenu} testID="topbarAvatar">
-              <FastImage
-                source={avatar}
-                style={avatarStyle}
-                resizeMode="contain"
-              />
-              <IconCircled
-                style={styles.menuIconContainer}
-                name="menu"
-                size="micro"
-              />
-            </TouchableOpacity>
+            <Avatar
+              testID="topbarAvatar"
+              onPress={openMenu}
+              source={avatar}
+              size="tiny"
+              border
+              icon="menu"
+            />
             <SearchComponent navigation={props.navigation} />
           </View>
           <View style={styles.topbarRight}>
@@ -108,13 +103,6 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     // paddingBottom: 8,
   },
-  menuIconContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'absolute',
-    bottom: -3,
-    right: -3,
-  },
   shadow: {
     zIndex: 999,
     shadowColor: '#000',
@@ -125,13 +113,6 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 1.41,
     elevation: 3,
-  },
-  avatar: {
-    width: 42,
-    height: 42,
-    borderRadius: 21,
-    alignSelf: 'flex-start',
-    borderWidth: 2.5,
   },
   topbar: {
     flex: 1,
@@ -157,7 +138,6 @@ export const styles = StyleSheet.create({
   },
 });
 
-const avatarStyle = ThemedStyles.combine(styles.avatar, 'bcolorIcon');
 const containerStyle = ThemedStyles.combine(
   'bgPrimaryBackground',
   styles.shadow,

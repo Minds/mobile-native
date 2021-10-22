@@ -6,7 +6,7 @@ import type BlogModel from '../../../blogs/BlogModel';
 import { useRoute } from '@react-navigation/native';
 import { ActivityRouteProp } from '../../ActivityScreen';
 import { actionsContainerStyle } from './styles';
-import withSpacer from '~ui/spacer/withSpacer';
+import withSpacer from '~ui/layout/withSpacer';
 
 const CounterSpaced = withSpacer(Counter);
 

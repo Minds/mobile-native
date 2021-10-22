@@ -1,6 +1,6 @@
 import React, { useCallback, useRef } from 'react';
 import { IconButtonNext } from '~ui/icons';
-import withSpacer from '~ui/spacer/withSpacer';
+import withSpacer from '~ui/layout/withSpacer';
 import Counter from './Counter';
 import { FLAG_REMIND } from '../../../common/Permissions';
 import { useRoute, useNavigation } from '@react-navigation/native';

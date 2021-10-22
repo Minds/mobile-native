@@ -22,6 +22,10 @@ export enum EUnit {
   XL = 'XL',
   XXL = 'XXL',
   XXXL = 'XXXL',
+  L2 = 'L2',
+  XL2 = 'XL2',
+  XXL2 = 'XXL2',
+  XXXL2 = 'XXXL2',
 }
 
 export interface IUISpacers {
@@ -34,6 +38,10 @@ export interface IUISpacers {
   [EUnit.XL]: number;
   [EUnit.XXL]: number;
   [EUnit.XXXL]: number;
+  [EUnit.L2]: number;
+  [EUnit.XL2]: number;
+  [EUnit.XXL2]: number;
+  [EUnit.XXXL2]: number;
 }
 
 export interface IUIBase {
@@ -57,6 +65,23 @@ export const UNIT: IUISpacers = {
   XL: 20 * MULTIPLIER,
   XXL: 24 * MULTIPLIER,
   XXXL: 28 * MULTIPLIER,
+  L2: 32 * MULTIPLIER,
+  XL2: 40 * MULTIPLIER,
+  XXL2: 48 * MULTIPLIER,
+  XXXL2: 56 * MULTIPLIER,
+};
+
+// Font sizes are declared separetedly as they do not affect the layout grid - which is done by its line-height
+export const FONT_SIZES = {
+  XXXS: 8 * MULTIPLIER,
+  XXS: 10 * MULTIPLIER,
+  XS: 12 * MULTIPLIER,
+  S: 14 * MULTIPLIER,
+  M: 16 * MULTIPLIER,
+  L: 18 * MULTIPLIER,
+  XL: 20 * MULTIPLIER,
+  XXL: 24 * MULTIPLIER,
+  XXXL: 30 * MULTIPLIER,
 };
 
 export type UISpacing = keyof typeof UNIT;
@@ -107,20 +132,19 @@ export const ICON_COLOR_DISABLED = 'IconDisabled';
 export const ICON_SIZE_DEFAULT = 'medium';
 export const ICON_DEFAULT = 'remind';
 
-// Font sizes are declared separetedly as they do not affect the layout grid - which is done by its line-height
-export const FONT_SIZES = {
-  XXXS: 8,
-  XXS: 10,
-  XS: 12,
-  S: 14,
-  M: 16,
-  L: 18,
-  XL: 20,
-  XXL: 24,
-  XXXL: 30,
+export const FONT_FAMILY = {
+  regular: 'Roboto',
+  medium: 'Roboto-Medium',
+  bold: 'Roboto-Bold',
+  black: 'Roboto-Black',
+  italic: 'Roboto-Italic',
 };
 
-export const FONT_FAMILY_REGULAR = 'Roboto';
-export const FONT_FAMILY_MEDIUM = 'Roboto-Medium';
-export const FONT_FAMILY_BOLD = 'Roboto-Bold';
-export const FONT_FAMILY_BLACK = 'Roboto-Black';
+export const AVATAR_SIZE_DEFAULT = 'medium';
+
+export const AVATAR_SIZE = {
+  tiny: UNIT.L2,
+  small: UNIT.XL2,
+  medium: UNIT.XXL2,
+  large: UNIT.XL2 * 2,
+};

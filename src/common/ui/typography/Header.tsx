@@ -10,10 +10,10 @@ export const H2 = (props: any) => (
   <Typography defStyle={styles.h2} {...props} />
 );
 export const H3 = (props: any) => (
-  <Typography defStyle={styles.h2} {...props} />
+  <Typography defStyle={styles.h3} {...props} />
 );
 export const H4 = (props: any) => (
-  <Typography defStyle={styles.h2} {...props} />
+  <Typography defStyle={styles.h4} {...props} />
 );
 
 const styles = StyleSheet.create({
