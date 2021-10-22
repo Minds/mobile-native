@@ -32,6 +32,8 @@ type PropsType = {
   hideItems?: boolean;
   ListEmptyComponent?: React.ReactNode;
   onRefresh?: () => void;
+  onScrollBeginDrag?: () => void;
+  onMomentumScrollEnd?: () => void;
   afterRefresh?: () => void;
   onScroll?: (e: any) => void;
   refreshControlTintColor?: string;
