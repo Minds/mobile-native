@@ -142,7 +142,7 @@ build:androidproduction:
     name: 'Minds APK'
     paths:
       - Minds-$CI_COMMIT_REF_SLUG.apk
-    expire_in: 7 days
+    expire_in: 45 days
     when: on_success
   only:
     refs:
