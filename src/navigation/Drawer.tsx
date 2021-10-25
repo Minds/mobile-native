@@ -181,11 +181,11 @@ const DrawerHeader = ({ name, username, avatar, onUserPress, onIconPress }) => {
     <Row left="XL2" right="XL" bottom="XXL">
       <Avatar source={avatar} size="medium" onPress={onUserPress} />
       <Column flex centerStart horizontal="M">
-        <H2 onPress={onUserPress} bold>
+        <H2 onPress={onUserPress} font="medium" color="link" numberOfLines={1}>
           {name || `@${username}`}
         </H2>
         {name && (
-          <B1 flat light onPress={onUserPress} testID="channelUsername">
+          <B1 flat onPress={onUserPress} testID="channelUsername">
             @{username}
           </B1>
         )}
@@ -206,7 +206,7 @@ const DrawerNavItem = ({ icon, name, onPress }) => {
     <PressableLine onPress={onPress}>
       <Row centerStart flex left="XL2" vertical="L">
         <Icon name={icon} />
-        <H3S left="S" bold>
+        <H3S left="S" font="bold">
           {name}
         </H3S>
       </Row>

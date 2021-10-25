@@ -1,40 +1,43 @@
-import React, { useMemo } from 'react';
-import { Text, TouchableWithoutFeedback } from 'react-native';
-import { FONT_FAMILY } from '~styles/Tokens';
+import React from 'react';
+import { Text, TextProps, TouchableWithoutFeedback } from 'react-native';
+import type { FONT_FAMILY } from '~styles/Tokens';
 import { UNIT } from '~styles/Tokens';
 import ThemedStyles from '~styles/ThemedStyles';
 
+const hitSlop = {
+  top: UNIT.XS,
+  left: UNIT.XS,
+  right: UNIT.XS,
+  bottom: UNIT.XS,
+};
+
+type FontFamily = keyof typeof FONT_FAMILY;
+
+type TypographyType = 'H1' | 'H2' | 'H3' | 'H4' | 'B1' | 'B2' | 'B3';
+
+export type TypographyPropsType = {
+  align?: 'auto' | 'left' | 'right' | 'center' | 'justify';
+  color?: 'primary' | 'secondary' | 'link' | 'white';
+  type?: TypographyType;
+  font?: FontFamily;
+  flat?: boolean;
+  children?: React.ReactNode;
+  onPress?: () => void;
+} & Omit<TextProps, 'style'>;
+
 export const Typography = ({
-  center,
-  bold,
+  align = 'left',
   children,
-  defStyle,
-  link,
-  secondary,
+  color = 'primary',
+  font = 'regular',
+  type = 'B1',
   flat,
-  style,
-  italic,
-  white,
   onPress,
   ...more
-}: any) => {
-  // This could use global memoization
-  const fontStyle = useMemo(() => {
-    return [
-      defStyle,
-      styles.primary,
-      styles.regular,
-      center && styles.center,
-      bold && styles.bold,
-      italic && styles.italic,
-      flat && styles.flat,
-      link && styles.link,
-      secondary && styles.secondary,
-      white && styles.white,
-      style,
-    ];
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [center, bold, style, link, secondary, white]);
+}: TypographyPropsType) => {
+  const styleName = `typo_${type}_${font}_${color}_${align}_${!!flat}`;
+
+  const fontStyle = ThemedStyles.style[styleName];
 
   const renderedText = (
     <Text style={fontStyle} {...more}>
@@ -47,35 +50,8 @@ export const Typography = ({
   }
 
   return (
-    <TouchableWithoutFeedback
-      hitSlop={{ top: UNIT.XS, left: UNIT.XS, right: UNIT.XS, bottom: UNIT.XS }}
-      onPress={onPress}>
+    <TouchableWithoutFeedback hitSlop={hitSlop} onPress={onPress}>
       {renderedText}
     </TouchableWithoutFeedback>
   );
 };
-
-const styles = ThemedStyles.create({
-  primary: ['colorPrimaryText'],
-  white: ['colorWhite'],
-  secondary: ['colorSecondaryText'],
-  link: ['colorLink'],
-  center: {
-    textAlign: 'center',
-  },
-  flat: {
-    lineHeight: 0,
-  },
-  bold: {
-    fontFamily: FONT_FAMILY.bold,
-  },
-  medium: {
-    fontFamily: FONT_FAMILY.medium,
-  },
-  regular: {
-    fontFamily: FONT_FAMILY.regular,
-  },
-  italic: {
-    fontFamily: FONT_FAMILY.italic,
-  },
-});

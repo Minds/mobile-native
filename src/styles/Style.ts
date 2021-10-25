@@ -6,6 +6,7 @@ import spacing from './generators/spacing';
 import ThemedStyles from './ThemedStyles';
 import { DynamicStyles } from './types';
 import type { ColorsType } from './Colors';
+import typography from './generators/typography';
 
 const dynamicStyleHandler = {
   get: function (target, name) {
@@ -18,6 +19,7 @@ const dynamicStyleHandler = {
     const m =
       spacing(name) ||
       colors(name, ThemedStyles) ||
+      typography(name, ThemedStyles) || // it must be after colors because it uses colors inside
       borders(name) ||
       sizes(name);
 
