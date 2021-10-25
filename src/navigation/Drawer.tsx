@@ -180,8 +180,8 @@ const DrawerHeader = ({ name, username, avatar, onUserPress, onIconPress }) => {
   return (
     <Row left="XL2" right="XL" bottom="XXL">
       <Avatar source={avatar} size="medium" onPress={onUserPress} />
-      <Column flex centerStart horizontal="M">
-        <H2 onPress={onUserPress} font="medium" color="link" numberOfLines={1}>
+      <Column flex centerStart right="M" left="S">
+        <H2 onPress={onUserPress} numberOfLines={1} flat>
           {name || `@${username}`}
         </H2>
         {name && (

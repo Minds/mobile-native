@@ -143,17 +143,19 @@ export const FONT_FAMILY = {
 export const AVATAR_SIZE_DEFAULT = 'medium';
 
 export const AVATAR_SIZE = {
-  tiny: UNIT.L2,
-  small: UNIT.XL2,
-  medium: UNIT.XXL2,
+  tiny: UNIT.L2 + UNIT.XS, // 36
+  small: UNIT.XL2, // 40
+  medium: UNIT.XXL2 + UNIT.XS,
   large: UNIT.XL2 * 2,
+  border: UNIT.XXS,
 };
 
 export const TRANSPARENCY = {
-  DARKEN10: 'rgba(0,0,0,0.1)',
-  DARKEN20: 'rgba(0,0,0,0.2)',
-  DARKEN30: 'rgba(0,0,0,0.3)',
-  LIGHTEN10: 'rgba(255,255,255,0.1)',
-  LIGHTEN20: 'rgba(255,255,255,0.2)',
-  LIGHTEN30: 'rgba(255,255,255,0.3)',
+  DARKEN05: 'rgba(0, 0, 0, 0.05)',
+  DARKEN10: 'rgba(0, 0, 0, 0.1)',
+  DARKEN20: 'rgba(0, 0, 0, 0.2)',
+  DARKEN30: 'rgba(0, 0, 0, 0.3)',
+  LIGHTEN10: 'rgba(255, 255, 255, 0.1)',
+  LIGHTEN20: 'rgba(255, 255, 255, 0.2)',
+  LIGHTEN30: 'rgba(255, 255, 255, 0.3)',
 };

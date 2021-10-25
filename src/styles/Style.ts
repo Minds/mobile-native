@@ -73,6 +73,7 @@ const _buildStyle = (theme: ColorsType) =>
     justifyEnd: {
       justifyContent: 'flex-end',
     },
+    absoluteFill: StyleSheet.absoluteFillObject,
     columnAlignCenter: {
       alignItems: 'center',
       flexDirection: 'column',

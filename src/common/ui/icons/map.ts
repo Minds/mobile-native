@@ -50,10 +50,6 @@ const ICON_MAP = {
     font: 'MaterialIcons',
     name: 'close',
   },
-  'plus-circle-outline': {
-    font: 'MaterialIcons',
-    name: 'add-circle-outline',
-  },
   founder: {
     font: 'MaterialIcons',
     name: 'flight-takeoff',
@@ -72,10 +68,6 @@ const ICON_MAP = {
     font: 'MaterialIcons',
     name: 'thumb-down',
     ratio: 0.96,
-  },
-  'plus-circle': {
-    font: 'MaterialCommunityIcons',
-    name: 'plus-circle',
   },
   'account-multi': {
     font: 'MaterialCommunityIcons',
@@ -98,8 +90,16 @@ const ICON_MAP = {
     top: -2,
   },
   plus: {
-    font: 'EvilIcons',
+    font: 'MaterialCommunityIcons',
     name: 'plus',
+  },
+  'plus-circle-outline': {
+    font: 'MaterialIcons',
+    name: 'add-circle-outline',
+  },
+  'plus-circle': {
+    font: 'MaterialCommunityIcons',
+    name: 'plus-circle',
   },
   user: {
     font: 'EvilIcons',

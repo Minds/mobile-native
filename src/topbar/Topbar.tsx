@@ -68,8 +68,8 @@ export const Topbar = observer((props: PropsType) => {
               testID="topbarAvatar"
               onPress={openMenu}
               source={avatar}
+              border="solid"
               size="tiny"
-              border
               icon="menu"
             />
             <SearchComponent navigation={props.navigation} />
@@ -121,7 +121,7 @@ export const styles = StyleSheet.create({
   },
   topbarLeft: {
     flexGrow: 1,
-    marginLeft: 20,
+    marginLeft: 16,
     flexDirection: 'row',
     alignItems: 'center',
   },

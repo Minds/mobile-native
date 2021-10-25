@@ -1,11 +1,12 @@
 import React from 'react';
-import { View, Pressable } from 'react-native';
+import { View } from 'react-native';
 import FastImage from 'react-native-fast-image';
+import PressableScale from '~/common/components/PressableScale';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { IconCircled } from '~ui/icons';
 import {
-  AVATAR_SIZE,
   ICON_SIZES,
+  AVATAR_SIZE,
   AVATAR_SIZE_DEFAULT,
   UNIT,
 } from '~styles/Tokens';
@@ -14,46 +15,37 @@ export const Avatar = ({
   source,
   size = AVATAR_SIZE_DEFAULT,
   border,
-  borderWhite,
   icon,
   onPress,
 }: any) => {
-  const containerStyle = [
-    styles.container,
-    border && styles.border,
-    borderWhite && styles.borderWhite,
-  ];
-  const image = <FastImage source={source} style={styles[size]} />;
-  let extra: any = null;
+  const containerStyle = [styles.container, border && styles[border]];
+  let iconView: any = null;
 
   if (icon) {
-    extra = <IconCircled style={styles.icon} name="menu" size="micro" />;
+    iconView = <IconCircled style={styles.icon} name="menu" size="micro" />;
   }
 
-  if (onPress) {
-    return (
-      <Pressable onPress={onPress} style={containerStyle}>
-        {image}
-        {extra}
-      </Pressable>
-    );
-  }
-
-  return (
+  const avatar = (
     <View style={containerStyle}>
-      {image}
-      {extra}
+      <FastImage source={source} style={styles[size]} />
+      {iconView}
     </View>
   );
+
+  if (onPress) {
+    return <PressableScale onPress={onPress}>{avatar}</PressableScale>;
+  }
+
+  return avatar;
 };
 
 const styles = ThemedStyles.create({
   container: {
-    flexDirection: 'row',
     borderRadius: AVATAR_SIZE.large,
   },
-  border: [{ borderWidth: UNIT.XXS }, 'bcolorIcon'],
-  borderWhite: ['bcolorWhite'],
+  active: [{ borderWidth: UNIT.XXS }, 'bcolorAvatarActive'],
+  solid: [{ borderWidth: UNIT.XXS }, 'bcolorAvatarCircled'],
+  transparent: { borderColor: 'transparent', borderWidth: UNIT.XXS },
   icon: {
     alignItems: 'center',
     justifyContent: 'center',

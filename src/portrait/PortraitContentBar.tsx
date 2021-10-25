@@ -7,14 +7,15 @@ import React, {
 import { FlatList } from 'react-native-gesture-handler';
 import { PlaceholderMedia, Fade, Placeholder } from 'rn-placeholder';
 import { observer } from 'mobx-react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-
+import { StyleSheet, View } from 'react-native';
+import { Icon, B3S, Column } from '~ui';
+import { AVATAR_SIZE } from '~/styles/Tokens';
+import PressableScale from '~/common/components/PressableScale';
 import ThemedStyles from '../styles/ThemedStyles';
 import PortraitContentBarItem from './PortraitContentBarItem';
 import { PortraitBarItem } from './createPortraitStore';
 import { useNavigation } from '@react-navigation/native';
 import { useStores } from '../common/hooks/use-stores';
-import MText from '../common/components/MText';
 
 /**
  * Header component
@@ -28,11 +29,20 @@ const Header = () => {
   );
 
   return (
-    <TouchableOpacity
-      onPress={nav}
-      style={[styles.add, theme.bgTertiaryBackground, theme.centered]}>
-      <MText style={[theme.fontXXL, theme.colorSecondaryText]}>+</MText>
-    </TouchableOpacity>
+    <Column centerBoth flex horizontal="XS">
+      <PressableScale onPress={nav}>
+        <Column
+          horizontal="XXS"
+          vertical="XXS"
+          style={[styles.addCircle, theme.bgTertiaryBackground]}
+          centerBoth>
+          <Icon name="plus" />
+        </Column>
+      </PressableScale>
+      <B3S color="secondary" top="XXS">
+        Add
+      </B3S>
+    </Column>
   );
 };
 
@@ -115,22 +125,21 @@ const styles = StyleSheet.create({
     height: 80,
     alignSelf: 'center',
   },
-  add: {
-    margin: 10,
-    height: 55,
-    width: 55,
-    borderRadius: 27.5,
+  addCircle: {
+    height: AVATAR_SIZE.medium,
+    width: AVATAR_SIZE.medium,
+    borderRadius: AVATAR_SIZE.medium / 2,
   },
   placeholder: {
-    height: 55,
-    width: 55,
-    borderRadius: 27.5,
+    height: AVATAR_SIZE.medium,
+    width: AVATAR_SIZE.medium,
+    borderRadius: AVATAR_SIZE.medium / 2,
     ...ThemedStyles.style.margin2x,
   },
 });
 
 const listContainerStyle = ThemedStyles.combine(
-  'paddingLeft',
+  'paddingLeft2x',
   'rowJustifyStart',
   'bgPrimaryBackground',
 );

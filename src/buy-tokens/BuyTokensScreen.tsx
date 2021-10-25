@@ -122,7 +122,7 @@ export default observer(() => {
                       {
                         link: (
                           <B3
-                            link
+                            color="link"
                             onPress={() => {
                               Linking.openURL(
                                 'https://cdn-assets.minds.com/front/dist/assets/documents/TermsOfSale-v0.1.pdf',
@@ -139,7 +139,7 @@ export default observer(() => {
             />
           </View>
           <Row top="M" centerBetween>
-            <B2 bold onPress={navToTokens}>
+            <B2 font="bold" onPress={navToTokens}>
               {i18n.t('buyTokensScreen.learnMore')}
             </B2>
             <Button

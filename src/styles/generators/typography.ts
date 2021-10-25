@@ -1,6 +1,6 @@
-import { TYPES } from '~/common/ui/typography/constants';
-import type { ThemedStylesStore } from '../ThemedStyles';
-import { FONT_FAMILY } from '../Tokens';
+import { TYPES } from '~ui/typography/constants';
+import type { ThemedStylesStore } from '~styles/ThemedStyles';
+import { FONT_FAMILY } from '~styles/Tokens';
 
 const regex = /^typo_(.+)_(.+)_(.+)_(.+)_(.+)/g;
 
