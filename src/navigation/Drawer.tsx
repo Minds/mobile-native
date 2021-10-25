@@ -18,6 +18,7 @@ import {
   Screen,
   PressableLine,
 } from '~ui';
+import { Typography } from '~/common/ui/typography/Typography';
 
 const getOptionsList = navigation => {
   const hasRewards = sessionService.getUser().rewards;
@@ -178,26 +179,37 @@ const DrawerList = ({ list }) => {
 
 const DrawerHeader = ({ name, username, avatar, onUserPress, onIconPress }) => {
   return (
-    <Row left="XL2" right="XL" bottom="XXL">
-      <Avatar source={avatar} size="medium" onPress={onUserPress} />
-      <Column flex centerStart horizontal="M">
-        <H2 onPress={onUserPress} bold>
-          {name || `@${username}`}
-        </H2>
-        {name && (
-          <B1 flat light onPress={onUserPress} testID="channelUsername">
-            @{username}
-          </B1>
-        )}
+    <>
+      <Row left="XL2" right="XL" bottom="XXL">
+        <Avatar source={avatar} size="medium" onPress={onUserPress} />
+        <Column flex centerStart horizontal="M">
+          <H2
+            onPress={onUserPress}
+            font="medium"
+            color="link"
+            numberOfLines={1}>
+            {name || `@${username}`}
+          </H2>
+          {name && (
+            <B1 flat onPress={onUserPress} testID="channelUsername">
+              @{username}
+            </B1>
+          )}
+        </Column>
+        <IconButton
+          scale
+          color="SecondaryText"
+          name="account-multi"
+          testID="multiUserIcon"
+          onPress={onIconPress}
+        />
+      </Row>
+      <Column>
+        <Typography align="center" type="H1" color="link" font="italic">
+          Test
+        </Typography>
       </Column>
-      <IconButton
-        scale
-        color="SecondaryText"
-        name="account-multi"
-        testID="multiUserIcon"
-        onPress={onIconPress}
-      />
-    </Row>
+    </>
   );
 };
 
@@ -206,7 +218,7 @@ const DrawerNavItem = ({ icon, name, onPress }) => {
     <PressableLine onPress={onPress}>
       <Row centerStart flex left="XL2" vertical="L">
         <Icon name={icon} />
-        <H3S left="S" bold>
+        <H3S left="S" font="bold" type="B1">
           {name}
         </H3S>
       </Row>
