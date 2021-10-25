@@ -294,8 +294,8 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
       snapPoints={snapPoints}
       enablePanDownToClose={true}
       handleComponent={Header}
-      // enableContentPanningGesture={false}
-      // enableHandlePanningGesture={true}
+      enableContentPanningGesture={false}
+      enableHandlePanningGesture={true}
       onChange={onBottomSheetVisibilityChange}
       backgroundComponent={null}
       backdropComponent={renderBackdrop}>

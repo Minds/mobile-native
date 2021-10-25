@@ -23,7 +23,7 @@ const MPressable = ({ ...props }) => {
           style: [
             {
               backgroundColor: pressed
-                ? ThemedStyles.getColor('TertiaryBackground')
+                ? ThemedStyles.getColor('SecondaryBackground')
                 : undefined,
             },
             props.style,
