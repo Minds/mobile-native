@@ -190,6 +190,7 @@ export default class FeedList<T> extends Component<PropsType> {
         keyboardShouldPersistTaps="always"
         testID="feedlistCMP"
         {...passThroughProps}
+        keyboardDismissMode="on-drag"
         onScroll={this.onScroll}
       />
     );
