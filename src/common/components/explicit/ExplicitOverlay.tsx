@@ -90,7 +90,7 @@ export default class ExplicitOverlay extends PureComponent<PropsType> {
       <View
         pointerEvents="box-none"
         style={[
-          theme.centered,
+          theme.flexColumnStretch,
           theme.bgSecondaryBackground,
           styles.onTop,
           containerStyle,
@@ -155,5 +155,6 @@ export default class ExplicitOverlay extends PureComponent<PropsType> {
 const styles = StyleSheet.create({
   onTop: {
     minHeight: 400,
+    alignItems: 'center',
   },
 });
