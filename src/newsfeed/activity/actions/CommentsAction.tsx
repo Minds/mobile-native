@@ -1,19 +1,14 @@
 import React, { useCallback } from 'react';
-import { View } from 'react-native';
-import { observer } from 'mobx-react';
-import { Icon } from '~ui/icons';
+import { IconButtonNext } from '~ui/icons';
 import Counter from './Counter';
-import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
-import ThemedStyles from '../../../styles/ThemedStyles';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
 import type BlogModel from '../../../blogs/BlogModel';
 import { useRoute } from '@react-navigation/native';
 import { ActivityRouteProp } from '../../ActivityScreen';
 import { actionsContainerStyle } from './styles';
-import PressableScale from '~/common/components/PressableScale';
+import withSpacer from '~ui/spacer/withSpacer';
 
-// prevent double tap in touchable
-const TouchableOpacityCustom = withPreventDoubleTap(PressableScale);
+const CounterSpaced = withSpacer(Counter);
 
 type PropsType = {
   entity: ActivityModel | BlogModel;
@@ -26,10 +21,8 @@ type PropsType = {
 /**
  * Comments Action Component
  */
-const CommentsAction = observer((props: PropsType) => {
-  const theme = ThemedStyles.style;
+const CommentsAction = (props: PropsType) => {
   const icon = props.entity.allow_comments ? 'chat-solid' : 'chat-off';
-
   const route: ActivityRouteProp = useRoute();
 
   const openComments = useCallback(() => {
@@ -59,18 +52,21 @@ const CommentsAction = observer((props: PropsType) => {
   }, [props, route]);
 
   return (
-    <TouchableOpacityCustom onPress={openComments} testID={props.testID}>
-      <View style={actionsContainerStyle}>
-        <Icon
-          style={[theme.colorIcon, theme.marginRight]}
-          size="small"
-          color="SecondaryText"
-          name={icon}
-        />
-        {!props.hideCount && <Counter count={props.entity['comments:count']} />}
-      </View>
-    </TouchableOpacityCustom>
+    <IconButtonNext
+      style={actionsContainerStyle}
+      scale
+      name={icon}
+      size="small"
+      fill
+      onPress={openComments}
+      testID={props.testID}
+      extra={
+        !props.hideCount ? (
+          <CounterSpaced left="1x" count={props.entity['comments:count']} />
+        ) : null
+      }
+    />
   );
-});
+};
 
 export default CommentsAction;

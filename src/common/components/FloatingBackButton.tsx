@@ -7,6 +7,8 @@ type PropsType = {
   onPress: () => void;
   style?: any;
   size?: number;
+  light?: boolean;
+  shadow?: boolean;
 };
 
 const FloatingBackButton = (props: PropsType) => {
@@ -18,6 +20,8 @@ const FloatingBackButton = (props: PropsType) => {
       name="chevron-left"
       style={[iconStyle, styles.backIcon, props.style]}
       onPress={props.onPress}
+      light={props.light}
+      shadow={props.shadow}
       testID="floatingBackButton"
     />
   );

@@ -1,18 +1,7 @@
 import React from 'react';
-import {
-  View,
-  StyleProp,
-  TextStyle,
-  StyleSheet,
-  Platform,
-  // TouchableOpacity,
-  ViewStyle,
-} from 'react-native';
-// import { IconButton } from '~ui/icons';
+import { View, StyleProp, TextStyle, Platform, ViewStyle } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import ThemedStyles from '../../../styles/ThemedStyles';
-// import Button from '../Button';
-import MText from '../MText';
 import TabBarButtonTabBarItem from './TopBarButtonTabBarItem';
 
 export type ButtonTabType<T> = {

@@ -26,7 +26,7 @@ import Tags from '../common/components/Tags';
 import KeyboardSpacingView from '../common/components/KeyboardSpacingView';
 import SoftInputMode from 'react-native-set-soft-input-mode';
 import TextInput from '../common/components/TextInput';
-import BottomSheet from '../common/components/bottom-sheet/BottomSheet';
+import BottomSheetModal from '../common/components/bottom-sheet/BottomSheetModal';
 import BottomSheetButton from '../common/components/bottom-sheet/BottomSheetButton';
 
 const { width } = Dimensions.get('window');
@@ -206,7 +206,7 @@ export default observer(function (props) {
         </KeyboardSpacingView>
       )}
       <PosterOptions ref={optionsRef} store={props.store} />
-      <BottomSheet
+      <BottomSheetModal
         ref={confirmRef}
         title={i18n.t('capture.discardPost')}
         detail={i18n.t('capture.discardPostDescription')}>
@@ -219,7 +219,7 @@ export default observer(function (props) {
           text={i18n.t('capture.keepEditing')}
           onPress={closeConfirm}
         />
-      </BottomSheet>
+      </BottomSheetModal>
     </View>
   );
 });

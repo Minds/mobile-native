@@ -1,59 +1,35 @@
-import React, { forwardRef, useCallback } from 'react';
-import {
-  BottomSheetModal,
-  BottomSheetModalProps,
-  useBottomSheetDynamicSnapPoints,
+import BottomSheet, {
   BottomSheetBackdrop,
+  BottomSheetProps,
 } from '@gorhom/bottom-sheet';
-import { StatusBar, View } from 'react-native';
-import ThemedStyles, { useStyle } from '../../../styles/ThemedStyles';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import React, { forwardRef, useCallback } from 'react';
+import { Dimensions, StatusBar } from 'react-native';
 import Handle from './Handle';
-import MText from '../MText';
+import useBackHandler from './useBackHandler';
 
-interface PropsType extends Omit<BottomSheetModalProps, 'snapPoints'> {
-  title?: string;
-  subtitle?: string;
-  detail?: string;
-  autoShow?: boolean;
+const { height: windowHeight } = Dimensions.get('window');
+const DEFAULT_SNAP_POINTS = [Math.floor(windowHeight * 0.8)];
+
+interface PropsType extends Omit<BottomSheetProps, 'snapPoints'> {
   snapPoints?: Array<number | string>;
-  forceHeight?: number;
 }
 
-export default forwardRef<BottomSheetModal, PropsType>((props, ref) => {
-  const { title, detail, snapPoints, autoShow, children, ...other } = props;
-
-  const insets = useSafeAreaInsets();
-
-  const snapPointsMemo = React.useMemo(() => snapPoints || ['CONTENT_HEIGHT'], [
-    snapPoints,
-  ]);
-
-  const {
-    animatedHandleHeight,
-    animatedSnapPoints,
-    animatedContentHeight,
-    handleContentLayout,
-  } = useBottomSheetDynamicSnapPoints(snapPointsMemo);
-
-  const contStyle = useStyle(styles.contentContainer, {
-    paddingBottom: insets.bottom || 24,
-  });
-
-  React.useEffect(() => {
-    //@ts-ignore
-    if (ref && ref.current && autoShow) {
-      //@ts-ignore
-      ref.current.present();
-    }
-  }, [autoShow, ref]);
+/**
+ * The bottom sheet component with a default behavior (snapPoints, backHandler, handle, etc.)
+ */
+const MBottomSheet = forwardRef<BottomSheet, PropsType>((props, ref) => {
+  const { onAnimateHandler } = useBackHandler(
+    // @ts-ignore
+    useCallback(() => ref?.current?.close(), [ref]),
+    props,
+  );
 
   const renderHandle = useCallback(() => <Handle />, []);
 
   const renderBackdrop = useCallback(
-    props => (
+    backdropProps => (
       <BottomSheetBackdrop
-        {...props}
+        {...backdropProps}
         pressBehavior="close"
         opacity={0.5}
         appearsOnIndex={0}
@@ -64,48 +40,22 @@ export default forwardRef<BottomSheetModal, PropsType>((props, ref) => {
   );
 
   return (
-    <BottomSheetModal
+    <BottomSheet
       ref={ref}
+      index={-1}
+      containerHeight={windowHeight}
+      snapPoints={DEFAULT_SNAP_POINTS}
       topInset={StatusBar.currentHeight || 0}
       handleComponent={renderHandle}
-      snapPoints={animatedSnapPoints}
-      handleHeight={animatedHandleHeight}
-      contentHeight={animatedContentHeight}
       backdropComponent={renderBackdrop}
       enablePanDownToClose={true}
+      enableContentPanningGesture={false}
+      enableHandlePanningGesture={true}
       backgroundComponent={null}
-      style={styles.sheetContainer as any}
-      {...other}>
-      <View style={contStyle} onLayout={handleContentLayout}>
-        {Boolean(title) && <MText style={styles.title}>{title}</MText>}
-        {Boolean(detail) && <MText style={styles.detail}>{detail}</MText>}
-        {children}
-      </View>
-    </BottomSheetModal>
+      {...props}
+      onAnimate={onAnimateHandler}
+    />
   );
 });
 
-const styles = ThemedStyles.create({
-  contentContainer: ['bgPrimaryBackgroundHighlight'],
-  title: ['fontXXL', 'bold', 'textCenter', 'marginVertical3x'],
-  detail: [
-    'fontL',
-    'fontMedium',
-    'textCenter',
-    'marginTop3x',
-    'marginBottom5x',
-    'colorSecondaryText',
-  ],
-  sheetContainer: [
-    'shadowBlack',
-    {
-      shadowOffset: {
-        width: 0,
-        height: -3,
-      },
-      shadowOpacity: 0.58,
-      shadowRadius: 4.0,
-      elevation: 16,
-    },
-  ],
-});
+export default MBottomSheet;

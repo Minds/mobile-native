@@ -1,10 +1,19 @@
 import ThemedStyles from '../../../styles/ThemedStyles';
 
 export const actionsContainerStyle = ThemedStyles.combine(
-  'rowJustifyCenter',
-  'paddingHorizontal3x',
-  'paddingVertical4x',
+  'flexColumn',
+  'margin',
+  'paddingVertical3x',
   'alignCenter',
+);
+
+export const actionsContainerWrapper = ThemedStyles.combine(
+  {
+    alignItems: 'center',
+    flexWrap: 'nowrap',
+    flexDirection: 'row',
+  },
+  'margin',
 );
 
 export const iconActiveStyle = ThemedStyles.combine('colorLink', 'marginRight');

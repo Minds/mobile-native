@@ -7,7 +7,7 @@ import MdIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import i18n from '../../../../common/services/i18n.service';
 import { TokensTransactionsListStoreType } from '../../../v2/TransactionList/createTokensTransactionsStore';
 import {
-  BottomSheet,
+  BottomSheetModal,
   BottomSheetButton,
   RadioButton,
   SectionTitle,
@@ -61,7 +61,7 @@ const Filter = observer((props: PropsType) => {
         <MdIcon name="filter" size={18} style={ThemedStyles.style.colorIcon} />
         <MText style={itemStyle}>{i18n.t('filter')}</MText>
       </TouchableOpacity>
-      <BottomSheet
+      <BottomSheetModal
         ref={ref}
         title={
           i18n.t('filter') + ' ' + i18n.t('wallet.transactions.transactions')
@@ -75,7 +75,7 @@ const Filter = observer((props: PropsType) => {
           })}
         </ScrollView>
         <BottomSheetButton text={i18n.t('close')} onPress={close} />
-      </BottomSheet>
+      </BottomSheetModal>
     </>
   );
 });

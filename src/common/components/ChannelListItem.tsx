@@ -12,6 +12,7 @@ import type UserModel from '../../channel/UserModel';
 import FastImage from 'react-native-fast-image';
 import Subscribe from '../../channel/v2/buttons/Subscribe';
 import MText from './MText';
+import MPressable from './MPressable';
 
 type PropsType = {
   channel: UserModel;
@@ -67,23 +68,21 @@ const ChannelListItem = (props: PropsType) => {
   const { ...otherProps } = props;
 
   return (
-    <TouchableHighlight activeOpacity={0.9} onPress={_navToChannel}>
-      <View style={containerStyle} {...otherProps}>
-        <FastImage
-          source={props.channel.getAvatarSource('medium')}
-          style={styles.avatar}
-        />
-        <View style={styles.nameContainer}>
-          <MText style={nameStyles}>{props.channel.name}</MText>
-          <MText
-            style={usernameStyles}
-            testID={`username${props.channel.username}`}>
-            @{props.channel.username}
-          </MText>
-        </View>
-        {renderRightButton()}
+    <MPressable onPress={_navToChannel} style={containerStyle} {...otherProps}>
+      <FastImage
+        source={props.channel.getAvatarSource('medium')}
+        style={styles.avatar}
+      />
+      <View style={styles.nameContainer}>
+        <MText style={nameStyles}>{props.channel.name}</MText>
+        <MText
+          style={usernameStyles}
+          testID={`username${props.channel.username}`}>
+          @{props.channel.username}
+        </MText>
       </View>
-    </TouchableHighlight>
+      {renderRightButton()}
+    </MPressable>
   );
 };
 
@@ -104,7 +103,6 @@ const styles = ThemedStyles.create({
     'paddingHorizontal2x',
     'bcolorPrimaryBorder',
     'borderBottom1x',
-    'bgPrimaryBackground',
   ],
   nameContainer: ['flexContainerCenter', 'paddingLeft2x', 'justifyCenter'],
   name: [bodyStyle, 'fontL'],

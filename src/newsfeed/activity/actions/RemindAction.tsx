@@ -1,10 +1,7 @@
 import React, { useCallback, useRef } from 'react';
-
-// import { TouchableOpacity } from 'react-native';
-import { IconButton } from '~ui/icons';
+import { IconButtonNext } from '~ui/icons';
 import withSpacer from '~ui/spacer/withSpacer';
 import Counter from './Counter';
-// import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import { FLAG_REMIND } from '../../../common/Permissions';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
@@ -16,15 +13,12 @@ import sessionService from '../../../common/services/session.service';
 import { actionsContainerStyle } from './styles';
 import { useLegacyStores } from '../../../common/hooks/use-stores';
 import {
-  BottomSheet,
+  BottomSheetModal,
   BottomSheetButton,
   MenuItem,
 } from '../../../common/components/bottom-sheet';
 
-// prevent double tap in touchable
-// const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
-
-const CounterSpaced: any = withSpacer(Counter);
+const CounterSpaced = withSpacer(Counter);
 
 type PropsTypes = {
   entity: ActivityModel | BlogModel;
@@ -36,7 +30,7 @@ type PropsTypes = {
 /**
  * Remind Action Component
  */
-export default function ({ entity, size = 21, hideCount }: PropsTypes) {
+export default function ({ entity, hideCount }: PropsTypes) {
   // Do not render BottomSheet unless it is necessary
   const [shown, setShown] = React.useState(false);
 
@@ -125,19 +119,24 @@ export default function ({ entity, size = 21, hideCount }: PropsTypes) {
 
   return (
     <>
-      <IconButton
+      <IconButtonNext
         testID="Remind activity button"
         style={actionsContainerStyle}
         scale
         disabled={disabled}
         name="remind"
         size="small"
+        fill
         active={reminded}
         onPress={showDropdown}
-        extra={!hideCount && <CounterSpaced left="1x" count={entity.reminds} />}
+        extra={
+          !hideCount && entity.reminds ? (
+            <CounterSpaced left="1x" count={entity.reminds} />
+          ) : null
+        }
       />
       {shown && (
-        <BottomSheet ref={ref} autoShow>
+        <BottomSheetModal ref={ref} autoShow>
           {reminded ? (
             <MenuItem
               onPress={undo}
@@ -162,7 +161,7 @@ export default function ({ entity, size = 21, hideCount }: PropsTypes) {
             </>
           )}
           <BottomSheetButton text={i18n.t('cancel')} onPress={close} />
-        </BottomSheet>
+        </BottomSheetModal>
       )}
     </>
   );

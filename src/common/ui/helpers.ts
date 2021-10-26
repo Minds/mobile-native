@@ -1,5 +1,15 @@
 import ThemedStyles from '~styles/ThemedStyles';
 
+export function frameThrower(frames, callback) {
+  if (!(Number.isInteger(frames) && frames > 0)) {
+    callback();
+    return;
+  }
+  requestAnimationFrame(() => {
+    frameThrower(frames - 1, callback);
+  });
+}
+
 function getKeyByValue(object, value) {
   return Object.keys(object).find(key => object[key] === value);
 }

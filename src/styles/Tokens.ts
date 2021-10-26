@@ -60,7 +60,7 @@ export const ICON_SIZES: IOUISizing = {
   tiny: UNIT.L,
   small: UNIT.XL,
   medium: UNIT.XXL,
-  large: UNIT.L * 2,
+  large: UNIT.XXL + UNIT.XS,
   huge: UNIT.XL * 2,
 };
 
@@ -98,5 +98,6 @@ export const ICON_BACKGROUND = 'IconBackground';
 export const ICON_COLOR_DEFAULT = 'Icon';
 export const ICON_COLOR_ACTIVE = 'IconActive';
 export const ICON_COLOR_DISABLED = 'IconDisabled';
+export const ICON_COLOR_LIGHT = 'IconLight';
 export const ICON_SIZE_DEFAULT = 'medium';
 export const ICON_DEFAULT = 'remind';

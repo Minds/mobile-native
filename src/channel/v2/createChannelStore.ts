@@ -47,6 +47,7 @@ const createChannelStore = () => {
     tab: 'feed' as ChannelTabType,
     channel: null as UserModel | null,
     loaded: false,
+    showPosterFab: true,
     tiers: <Array<SupportTiersType>>[],
     filter: 'all' as FilterType,
     feedStore: new FeedStore(true),
@@ -75,6 +76,9 @@ const createChannelStore = () => {
         case 'blogs':
           return 'blogs';
       }
+    },
+    setShowPosterFab(value: boolean) {
+      this.showPosterFab = value;
     },
     setTab(value: ChannelTabType) {
       this.tab = value;
