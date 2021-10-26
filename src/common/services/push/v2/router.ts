@@ -1,3 +1,4 @@
+import sessionService from './../../session.service';
 import AuthService from '../../../../auth/AuthService';
 import { MINDS_URI } from '../../../../config/Config';
 import navigation from '../../../../navigation/NavigationService';
@@ -28,7 +29,11 @@ export const router = {
         callback = () => notificationsRouter.navigate(data);
       }
 
-      if (data.user_guid) {
+      if (
+        data.user_guid &&
+        sessionService.activeIndex !==
+          sessionService.getIndexSessionFromGuid(data.user_guid)
+      ) {
         AuthService.loginWithGuid(data.user_guid, () => {
           setTimeout(callback, 700);
         });

@@ -138,9 +138,6 @@ const captureOptions = {
   title: '',
   animation: 'fade',
   headerShown: false,
-  ...Platform.select({
-    android: { statusBarColor: 'black', statusBarStyle: 'auto' },
-  }),
 } as NativeStackNavigationOptions;
 
 const AppStackNav = createNativeStackNavigator<AppStackParamList>();

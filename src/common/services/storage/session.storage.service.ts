@@ -37,6 +37,9 @@ export class SessionStorageService {
   getAll() {
     try {
       const sessionData = storages.session.getMap<SessionsData>(KEY);
+      if (sessionData === null || sessionData === undefined) {
+        return this.checkAndMigrate();
+      }
       return sessionData;
     } catch (err) {
       return null;
@@ -79,8 +82,7 @@ export class SessionStorageService {
 
   save(sessionsData: SessionsData) {
     try {
-      const res = storages.session.setMap(KEY, sessionsData);
-      console.log('save(sessionsData: SessionsData)', res);
+      storages.session.setMap(KEY, sessionsData);
     } catch (err) {
       logService.exception('[SessionStorage] save', err);
     }

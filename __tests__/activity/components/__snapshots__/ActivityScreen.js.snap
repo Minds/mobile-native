@@ -171,7 +171,7 @@ exports[`Activity screen component renders correctly  1`] = `
                         "color": "#7D7D82",
                         "fontSize": 40,
                       },
-                      undefined,
+                      Object {},
                       Object {
                         "fontFamily": "Material Design Icons",
                         "fontStyle": "normal",
@@ -351,8 +351,6 @@ exports[`Activity screen component renders correctly  1`] = `
                 }
               >
                 <View
-                  collapsable={false}
-                  nativeID="animatedComponent"
                   style={
                     Object {
                       "transform": Array [
@@ -374,18 +372,14 @@ exports[`Activity screen component renders correctly  1`] = `
                   >
                     <View
                       style={
-                        Array [
-                          Object {
-                            "alignItems": "center",
-                            "flexDirection": "row",
-                            "justifyContent": "center",
-                            "overflow": "hidden",
-                          },
-                          Object {
-                            "height": 28,
-                            "width": 28,
-                          },
-                        ]
+                        Object {
+                          "alignItems": "center",
+                          "flexDirection": "row",
+                          "height": 28,
+                          "justifyContent": "center",
+                          "overflow": "hidden",
+                          "width": 28,
+                        }
                       }
                     >
                       <Text
@@ -396,7 +390,7 @@ exports[`Activity screen component renders correctly  1`] = `
                               "color": "#7D7D82",
                               "fontSize": 25.76,
                             },
-                            undefined,
+                            Object {},
                             Object {
                               "fontFamily": "Material Icons",
                               "fontStyle": "normal",
@@ -546,10 +540,8 @@ exports[`Activity screen component renders correctly  1`] = `
             >
               <View
                 accessible={true}
-                collapsable={false}
                 focusable={true}
                 forwardedRef={[Function]}
-                nativeID="animatedComponent"
                 onClick={[Function]}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
@@ -572,12 +564,10 @@ exports[`Activity screen component renders correctly  1`] = `
                 }
               />
               <View
-                collapsable={false}
                 deviceHeight={null}
                 deviceWidth={null}
                 forwardedRef={[Function]}
                 hideModalContentWhileAnimating={false}
-                nativeID="animatedComponent"
                 onBackdropPress={[Function]}
                 onModalHide={[Function]}
                 onModalWillHide={[Function]}
@@ -630,13 +620,17 @@ exports[`Activity screen component renders correctly  1`] = `
                   >
                     <RCTScrollView
                       data={null}
+                      disableVirtualization={false}
                       extraData=""
                       getItem={[Function]}
                       getItemCount={[Function]}
+                      horizontal={false}
+                      initialNumToRender={10}
                       keyExtractor={[Function]}
+                      maxToRenderPerBatch={10}
                       onContentSizeChange={[Function]}
+                      onEndReachedThreshold={2}
                       onLayout={[Function]}
-                      onMomentumScrollBegin={[Function]}
                       onMomentumScrollEnd={[Function]}
                       onScroll={[Function]}
                       onScrollBeginDrag={[Function]}
@@ -651,7 +645,9 @@ exports[`Activity screen component renders correctly  1`] = `
                           "flex": 1,
                         }
                       }
+                      updateCellsBatchingPeriod={50}
                       viewabilityConfigCallbackPairs={Array []}
+                      windowSize={21}
                     >
                       <View />
                     </RCTScrollView>
@@ -867,8 +863,6 @@ exports[`Activity screen component renders correctly  1`] = `
           testID="Thumb up activity button"
         >
           <View
-            collapsable={false}
-            nativeID="animatedComponent"
             style={
               Object {
                 "transform": Array [
@@ -884,19 +878,11 @@ exports[`Activity screen component renders correctly  1`] = `
                 Array [
                   Object {
                     "alignItems": "center",
+                    "flexDirection": "row",
+                    "flexWrap": "nowrap",
                   },
                   Object {
                     "margin": 4,
-                  },
-                  Object {
-                    "flexDirection": "row",
-                    "justifyContent": "center",
-                  },
-                  Object {
-                    "alignItems": "center",
-                  },
-                  Object {
-                    "flexWrap": "wrap",
                   },
                 ]
               }
@@ -930,7 +916,7 @@ exports[`Activity screen component renders correctly  1`] = `
                         "color": "#7D7D82",
                         "fontSize": 19.2,
                       },
-                      undefined,
+                      Object {},
                       Object {
                         "fontFamily": "Material Icons",
                         "fontStyle": "normal",
@@ -979,8 +965,6 @@ exports[`Activity screen component renders correctly  1`] = `
           testID="Thumb down activity button"
         >
           <View
-            collapsable={false}
-            nativeID="animatedComponent"
             style={
               Object {
                 "transform": Array [
@@ -996,19 +980,11 @@ exports[`Activity screen component renders correctly  1`] = `
                 Array [
                   Object {
                     "alignItems": "center",
+                    "flexDirection": "row",
+                    "flexWrap": "nowrap",
                   },
                   Object {
                     "margin": 4,
-                  },
-                  Object {
-                    "flexDirection": "row",
-                    "justifyContent": "center",
-                  },
-                  Object {
-                    "alignItems": "center",
-                  },
-                  Object {
-                    "flexWrap": "wrap",
                   },
                 ]
               }
@@ -1042,7 +1018,7 @@ exports[`Activity screen component renders correctly  1`] = `
                         "color": "#7D7D82",
                         "fontSize": 19.2,
                       },
-                      undefined,
+                      Object {},
                       Object {
                         "fontFamily": "Material Icons",
                         "fontStyle": "normal",
@@ -1059,89 +1035,103 @@ exports[`Activity screen component renders correctly  1`] = `
           </View>
         </View>
         <View
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          onBlur={[Function]}
-          onClick={[Function]}
-          onFocus={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
           style={
             Array [
               Object {
-                "flex": 1,
-                "flexDirection": "column",
-              },
-              Object {
-                "margin": 4,
-              },
-              Object {
-                "paddingVertical": 12,
-              },
-              Object {
                 "alignItems": "center",
+                "justifyContent": "center",
+                "position": "relative",
               },
+              undefined,
+              Array [
+                Object {
+                  "flex": 1,
+                  "flexDirection": "column",
+                },
+                Object {
+                  "margin": 4,
+                },
+                Object {
+                  "paddingVertical": 12,
+                },
+                Object {
+                  "alignItems": "center",
+                },
+              ],
             ]
           }
-          testID=""
         >
           <View
+            accessible={true}
             collapsable={false}
-            nativeID="animatedComponent"
-            style={
+            focusable={true}
+            hitSlop={
               Object {
-                "transform": Array [
-                  Object {
-                    "scale": 1,
-                  },
-                ],
+                "bottom": 6.666666666666666,
+                "left": 6.666666666666666,
+                "right": 6.666666666666666,
+                "top": 6.666666666666666,
               }
             }
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                },
+                Object {
+                  "alignItems": "center",
+                  "bottom": 0,
+                  "justifyContent": "center",
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+              ]
+            }
+            testID=""
           >
             <View
               style={
-                Array [
-                  Object {
-                    "alignItems": "center",
-                  },
-                  Object {
-                    "margin": 4,
-                  },
-                  Object {
-                    "flexDirection": "row",
-                    "justifyContent": "center",
-                  },
-                  Object {
-                    "alignItems": "center",
-                  },
-                  Object {
-                    "flexWrap": "wrap",
-                  },
-                ]
+                Object {
+                  "transform": Array [
+                    Object {
+                      "scale": 1,
+                    },
+                  ],
+                }
               }
             >
               <View
-                style={Array []}
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  }
+                }
               >
                 <View
                   style={
-                    Array [
-                      Object {
-                        "alignItems": "center",
-                        "flexDirection": "row",
-                        "justifyContent": "center",
-                        "overflow": "hidden",
-                      },
-                      Object {
-                        "height": 20,
-                        "width": 20,
-                      },
-                    ]
+                    Object {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                      "height": 20,
+                      "justifyContent": "center",
+                      "marginTop": 1,
+                      "overflow": "hidden",
+                      "width": 20,
+                    }
                   }
                 >
                   <Text
@@ -1152,7 +1142,7 @@ exports[`Activity screen component renders correctly  1`] = `
                           "color": "#7D7D82",
                           "fontSize": 18.400000000000002,
                         },
-                        undefined,
+                        Object {},
                         Object {
                           "fontFamily": "Material Design Icons",
                           "fontStyle": "normal",
@@ -1165,51 +1155,51 @@ exports[`Activity screen component renders correctly  1`] = `
                     󰍡
                   </Text>
                 </View>
-              </View>
-              <View
-                style={
-                  Array [
-                    Object {
-                      "marginLeft": 4,
-                    },
-                  ]
-                }
-              >
                 <View
                   style={
-                    Object {
-                      "alignItems": "center",
-                      "flexDirection": "column",
-                    }
+                    Array [
+                      Object {
+                        "marginLeft": 4,
+                      },
+                    ]
                   }
                 >
-                  <Text
-                    size={15}
+                  <View
                     style={
-                      Array [
-                        Object {
-                          "color": "#43434D",
-                        },
-                        Object {
-                          "fontFamily": "Roboto",
-                        },
-                        Array [
-                          Object {
-                            "color": "#7D7D82",
-                          },
-                          Object {
-                            "fontSize": 14,
-                          },
-                          Object {
-                            "fontFamily": "Roboto-Medium",
-                            "fontWeight": "500",
-                          },
-                        ],
-                      ]
+                      Object {
+                        "alignItems": "center",
+                        "flexDirection": "column",
+                      }
                     }
                   >
-                    
-                  </Text>
+                    <Text
+                      size={15}
+                      style={
+                        Array [
+                          Object {
+                            "color": "#43434D",
+                          },
+                          Object {
+                            "fontFamily": "Roboto",
+                          },
+                          Array [
+                            Object {
+                              "color": "#7D7D82",
+                            },
+                            Object {
+                              "fontSize": 14,
+                            },
+                            Object {
+                              "fontFamily": "Roboto-Medium",
+                              "fontWeight": "500",
+                            },
+                          ],
+                        ]
+                      }
+                    >
+                      
+                    </Text>
+                  </View>
                 </View>
               </View>
             </View>
@@ -1283,8 +1273,6 @@ exports[`Activity screen component renders correctly  1`] = `
             testID="Remind activity button"
           >
             <View
-              collapsable={false}
-              nativeID="animatedComponent"
               style={
                 Object {
                   "transform": Array [
@@ -1306,18 +1294,15 @@ exports[`Activity screen component renders correctly  1`] = `
               >
                 <View
                   style={
-                    Array [
-                      Object {
-                        "alignItems": "center",
-                        "flexDirection": "row",
-                        "justifyContent": "center",
-                        "overflow": "hidden",
-                      },
-                      Object {
-                        "height": 20,
-                        "width": 20,
-                      },
-                    ]
+                    Object {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                      "height": 20,
+                      "justifyContent": "center",
+                      "marginTop": -1,
+                      "overflow": "hidden",
+                      "width": 20,
+                    }
                   }
                 >
                   <Text
@@ -1326,9 +1311,9 @@ exports[`Activity screen component renders correctly  1`] = `
                       Array [
                         Object {
                           "color": "#7D7D82",
-                          "fontSize": 20,
+                          "fontSize": 20.8,
                         },
-                        undefined,
+                        Object {},
                         Object {
                           "fontFamily": "Material Design Icons",
                           "fontStyle": "normal",
@@ -1412,8 +1397,6 @@ exports[`Activity screen component renders correctly  1`] = `
             }
           >
             <View
-              collapsable={false}
-              nativeID="animatedComponent"
               style={
                 Object {
                   "transform": Array [
@@ -1435,18 +1418,15 @@ exports[`Activity screen component renders correctly  1`] = `
               >
                 <View
                   style={
-                    Array [
-                      Object {
-                        "alignItems": "center",
-                        "flexDirection": "row",
-                        "justifyContent": "center",
-                        "overflow": "hidden",
-                      },
-                      Object {
-                        "height": 20,
-                        "width": 20,
-                      },
-                    ]
+                    Object {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                      "height": 20,
+                      "justifyContent": "center",
+                      "marginTop": -2,
+                      "overflow": "hidden",
+                      "width": 20,
+                    }
                   }
                 >
                   <Text
@@ -1457,7 +1437,7 @@ exports[`Activity screen component renders correctly  1`] = `
                           "color": "#7D7D82",
                           "fontSize": 20,
                         },
-                        undefined,
+                        Object {},
                         Object {
                           "fontFamily": "Material Icons",
                           "fontStyle": "normal",
@@ -1504,10 +1484,8 @@ exports[`Activity screen component renders correctly  1`] = `
         >
           <View
             accessible={true}
-            collapsable={false}
             focusable={true}
             forwardedRef={[Function]}
-            nativeID="animatedComponent"
             onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
@@ -1569,12 +1547,10 @@ exports[`Activity screen component renders correctly  1`] = `
             }
           >
             <View
-              collapsable={false}
               deviceHeight={null}
               deviceWidth={null}
               forwardedRef={[Function]}
               hideModalContentWhileAnimating={false}
-              nativeID="animatedComponent"
               onBackdropPress={[Function]}
               onModalHide={[Function]}
               onModalWillHide={[Function]}
@@ -1621,9 +1597,7 @@ exports[`Activity screen component renders correctly  1`] = `
               swipeThreshold={100}
             >
               <View
-                collapsable={false}
                 forwardedRef={[Function]}
-                nativeID="animatedComponent"
                 style={
                   Object {
                     "paddingBottom": 4,
@@ -1631,9 +1605,7 @@ exports[`Activity screen component renders correctly  1`] = `
                 }
               >
                 <View
-                  collapsable={false}
                   forwardedRef={[Function]}
-                  nativeID="animatedComponent"
                   style={
                     Object {
                       "paddingBottom": 8,
@@ -1824,9 +1796,7 @@ exports[`Activity screen component renders correctly  1`] = `
                   </View>
                 </View>
                 <View
-                  collapsable={false}
                   forwardedRef={[Function]}
-                  nativeID="animatedComponent"
                   style={
                     Object {
                       "paddingBottom": 8,
