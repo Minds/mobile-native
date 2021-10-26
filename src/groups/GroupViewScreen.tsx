@@ -213,6 +213,12 @@ export default class GroupViewScreen extends Component {
             feedStore={group.feed}
             header={header}
             navigation={this.props.navigation}
+            onScrollBeginDrag={() =>
+              this.props.groupView.setShowPosterFab(false)
+            }
+            onMomentumScrollEnd={() =>
+              this.props.groupView.setShowPosterFab(true)
+            }
           />
         );
       case 'members':
@@ -447,6 +453,7 @@ export default class GroupViewScreen extends Component {
         {this.getList()}
         {showPosterFab && (
           <CaptureFab
+            visible={this.props.groupView.showPosterFab}
             navigation={this.props.navigation}
             group={group}
             route={this.props.route}
