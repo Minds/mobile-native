@@ -1,4 +1,15 @@
-const ICON_MAP = {
+export type IconMapNameType = keyof typeof ICON_MAP;
+
+type IconMap = {
+  font: string;
+  name: string;
+  ratio?: number;
+  top?: number;
+};
+
+const ICON_MAP: {
+  [name: string]: IconMap;
+} = {
   info: {
     font: 'MaterialCommunityIcons',
     name: 'information-variant',

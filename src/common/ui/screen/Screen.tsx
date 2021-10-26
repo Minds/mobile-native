@@ -1,14 +1,37 @@
-import React from 'react';
-import { View } from 'react-native';
+import React, { ReactNode } from 'react';
+import { View, ScrollView } from 'react-native';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-export const Screen = ({ children, safe }: any) => {
-  const Renderer = safe ? SafeAreaView : View;
-  return <Renderer style={styles.container}>{children}</Renderer>;
+export type ScreenPropType = {
+  safe?: boolean;
+  scroll?: boolean;
+  background?: 'primary' | 'secondary' | 'tertiary';
+  children?: ReactNode;
 };
 
-// themed
+export const Screen = ({
+  children,
+  safe,
+  scroll,
+  background = 'primary',
+}: ScreenPropType) => {
+  const Renderer = safe ? SafeAreaView : View;
+
+  if (scroll) {
+    return (
+      <Renderer style={styles[background]}>
+        <ScrollView style={styles.flex}>{children}</ScrollView>
+      </Renderer>
+    );
+  }
+
+  return <Renderer style={styles[background]}>{children}</Renderer>;
+};
+
 const styles = ThemedStyles.create({
-  container: [{ flex: 1 }, 'bgPrimaryBackground'],
+  primary: [{ flex: 1 }, 'bgPrimaryBackground'],
+  secondary: [{ flex: 1 }, 'bgPrimaryBackground'],
+  tertiary: [{ flex: 1 }, 'bgPrimaryBackground'],
+  flex: { flex: 1 },
 });

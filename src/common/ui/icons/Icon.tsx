@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { View, StyleSheet, ViewStyle } from 'react-native';
-import { withSpacer } from '~ui/layout';
+import { withSpacer, SpacerPropType } from '~ui/layout';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -10,7 +10,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Entypo from 'react-native-vector-icons/Entypo';
-import ICON_MAP from './map';
+import ICON_MAP, { IconMapNameType } from './map';
 import {
   ICON_DEFAULT,
   ICON_SIZES,
@@ -18,8 +18,8 @@ import {
   ICON_COLOR_DEFAULT,
   ICON_COLOR_ACTIVE,
   ICON_COLOR_DISABLED,
-  IUISizing,
-  IUIBase,
+  UIIconSizeType,
+  UIBaseType,
 } from '~styles/Tokens';
 import { ColorsNameType } from '~styles/Colors';
 import {
@@ -41,11 +41,11 @@ const Fonts = {
   Feather,
 };
 
-export interface IIcon extends IUIBase {
+export interface IIcon extends UIBaseType {
   color?: ColorsNameType | null;
   activeColor?: ColorsNameType;
-  name: string;
-  size?: IUISizing | number | string;
+  name: IconMapNameType;
+  size?: UIIconSizeType | number | string;
   style?: ViewStyle | any;
   active?: boolean;
   disabled?: boolean;
@@ -64,7 +64,7 @@ export function Icon({
   nested = false,
   testID,
   ...common
-}: IIcon) {
+}: IIcon & SpacerPropType) {
   const { font: iconFont, name: iconName, ratio = 1 } =
     ICON_MAP[name] || ICON_MAP[ICON_DEFAULT];
 
@@ -123,16 +123,16 @@ export function Icon({
   );
 }
 
-export interface IIconNext extends IUIBase {
-  color?: ColorsNameType | null;
-  name: string;
-  size?: IUISizing;
+export interface IIconNext extends UIBaseType {
+  color?: ColorsNameType;
+  name: IconMapNameType;
+  size?: UIIconSizeType;
   active?: boolean;
   disabled?: boolean;
 }
 
 export function IconNext({
-  color = null,
+  color,
   name = ICON_DEFAULT,
   size = ICON_SIZE_DEFAULT,
   active = false,
@@ -183,7 +183,7 @@ export function IconNext({
   );
 }
 
-export const IconNextSpaced = withSpacer(IconNext);
+export const IconNextSpacer = withSpacer(IconNext);
 
 const styles = StyleSheet.create({
   container: {

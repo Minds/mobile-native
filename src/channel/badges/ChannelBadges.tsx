@@ -1,10 +1,10 @@
 import React, { FC, PureComponent } from 'react';
-import { TextStyle, ViewStyle } from 'react-native';
-import { IconNextSpaced } from '~ui/icons';
+import { IconNextSpacer } from '~ui/icons';
 import type UserModel from '../UserModel';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
 import { Popable } from 'react-native-popable';
+import { Row, SpacerPropType } from '~ui';
 
 /**
  * Badge tooltip using Poppable because react-native-elements/Tooltip
@@ -24,22 +24,20 @@ const BadgeTooltip: FC<any> = ({ label, color, children }) => {
 
 type PropsType = {
   channel: UserModel;
-  size?: number | string;
-  style?: ViewStyle;
-  iconStyle: TextStyle;
 };
 
 /**
  * Channel Badges
  */
-export default class ChannelBadges extends PureComponent<PropsType> {
+export default class ChannelBadges extends PureComponent<
+  PropsType & SpacerPropType
+> {
   /**
    * Render
    */
   render() {
-    // const size = this.props.size || 25;
+    const { channel, ...spacer } = this.props;
     const size = 'tiny';
-    const channel = this.props.channel;
     const badges: Array<React.ReactNode> = [];
 
     if (channel.plus) {
@@ -47,11 +45,11 @@ export default class ChannelBadges extends PureComponent<PropsType> {
         <BadgeTooltip
           label={i18n.t('channel.badge.plus')}
           color={ThemedStyles.getColor('Link')}>
-          <IconNextSpaced
+          <IconNextSpacer
             active
             name="plus-circle-outline"
             size={size}
-            horizontal="0x"
+            horizontal="XXXS"
             key={1}
           />
         </BadgeTooltip>,
@@ -63,12 +61,12 @@ export default class ChannelBadges extends PureComponent<PropsType> {
         <BadgeTooltip
           label={i18n.t('channel.badge.verified')}
           color={ThemedStyles.getColor('SuccessBackground')}>
-          <IconNextSpaced
+          <IconNextSpacer
             name="verified"
             size={size}
-            color={channel.isAdmin() ? 'Green' : null}
+            color={channel.isAdmin() ? 'Green' : undefined}
             active
-            horizontal="0x"
+            horizontal="XXXS"
             key={2}
           />
         </BadgeTooltip>,
@@ -80,8 +78,8 @@ export default class ChannelBadges extends PureComponent<PropsType> {
         <BadgeTooltip
           label={i18n.t('channel.badge.founder')}
           color={ThemedStyles.getColor('Link')}>
-          <IconNextSpaced
-            horizontal="0x"
+          <IconNextSpacer
+            horizontal="XXXS"
             name="founder"
             active
             size={size}
@@ -91,6 +89,6 @@ export default class ChannelBadges extends PureComponent<PropsType> {
       );
     }
 
-    return <>{badges}</>;
+    return <Row {...spacer}>{badges}</Row>;
   }
 }

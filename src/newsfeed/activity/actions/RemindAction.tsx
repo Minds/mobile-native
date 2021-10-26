@@ -131,7 +131,7 @@ export default function ({ entity, hideCount }: PropsTypes) {
         onPress={showDropdown}
         extra={
           !hideCount && entity.reminds ? (
-            <CounterSpaced left="1x" count={entity.reminds} />
+            <CounterSpaced left="XS" count={entity.reminds} />
           ) : null
         }
       />

@@ -8,54 +8,25 @@ export const IS_IPAD = (Platform as PlatformIOSStatic).isPad;
 // export const IS_TABLET = isTablet();
 
 export const HAS_BOTTOM_EXTRA_SPACE = !!initialWindowMetrics?.insets.bottom;
-
 export const MULTIPLIER: number = 1;
 
-// eslint-disable-next-line no-shadow
-export enum EUnit {
-  XXXS = 'XXXS',
-  XXS = 'XXS',
-  XS = 'XS',
-  S = 'S',
-  M = 'M',
-  L = 'L',
-  XL = 'XL',
-  XXL = 'XXL',
-  XXXL = 'XXXL',
-  L2 = 'L2',
-  XL2 = 'XL2',
-  XXL2 = 'XXL2',
-  XXXL2 = 'XXXL2',
-}
-
-export interface IUISpacers {
-  [EUnit.XXXS]: number;
-  [EUnit.XXS]: number;
-  [EUnit.XS]: number;
-  [EUnit.S]: number;
-  [EUnit.M]: number;
-  [EUnit.L]: number;
-  [EUnit.XL]: number;
-  [EUnit.XXL]: number;
-  [EUnit.XXXL]: number;
-  [EUnit.L2]: number;
-  [EUnit.XL2]: number;
-  [EUnit.XXL2]: number;
-  [EUnit.XXXL2]: number;
-}
-
-export interface IUIBase {
+export type UIBaseType = {
   testID?: string;
   nested?: boolean;
-  top?: string;
-  left?: string;
-  right?: string;
-  bottom?: string;
-  horizontal?: string;
-  vertical?: string;
-}
+};
 
-export const UNIT: IUISpacers = {
+export type UISpacingPropType = {
+  top?: UIUnitType;
+  left?: UIUnitType;
+  right?: UIUnitType;
+  bottom?: UIUnitType;
+  horizontal?: UIUnitType;
+  vertical?: UIUnitType;
+  space?: UIUnitType;
+};
+
+export type UIUnitType = keyof typeof UNIT;
+export const UNIT = {
   XXXS: 1 * MULTIPLIER,
   XXS: 2 * MULTIPLIER,
   XS: 4 * MULTIPLIER,
@@ -72,6 +43,7 @@ export const UNIT: IUISpacers = {
 };
 
 // Font sizes are declared separetedly as they do not affect the layout grid - which is done by its line-height
+export type UIFontSizeType = keyof typeof FONT_SIZES;
 export const FONT_SIZES = {
   XXXS: 8 * MULTIPLIER,
   XXS: 10 * MULTIPLIER,
@@ -84,9 +56,8 @@ export const FONT_SIZES = {
   XXXL: 30 * MULTIPLIER,
 };
 
-export type UISpacing = keyof typeof UNIT;
-
-export const ICON_SIZES: IOUISizing = {
+export type UIIconSizeType = keyof typeof ICON_SIZES;
+export const ICON_SIZES = {
   micro: UNIT.M,
   tiny: UNIT.L,
   small: UNIT.XL,
@@ -99,37 +70,13 @@ export const STEP: number = UNIT.XS;
 export const BOTTOM_TABS_HEIGHT: number = UNIT.XXL * 2;
 export const HORIZONTAL = UNIT.L;
 
-export type IUISizing =
-  | 'micro'
-  | 'tiny'
-  | 'small'
-  | 'medium'
-  | 'large'
-  | 'huge';
-
-export enum EUISizing {
-  micro = 'micro',
-  tiny = 'tiny',
-  small = 'small',
-  medium = 'medium',
-  large = 'large',
-  huge = 'huge',
-}
-
-export interface IOUISizing {
-  [EUISizing.micro]: number;
-  [EUISizing.tiny]: number;
-  [EUISizing.small]: number;
-  [EUISizing.medium]: number;
-  [EUISizing.large]: number;
-  [EUISizing.huge]: number;
-}
+export type UISizing = 'micro' | 'tiny' | 'small' | 'medium' | 'large' | 'huge';
 
 export const ICON_BACKGROUND = 'IconBackground';
 export const ICON_COLOR_DEFAULT = 'Icon';
 export const ICON_COLOR_ACTIVE = 'IconActive';
 export const ICON_COLOR_DISABLED = 'IconDisabled';
-export const ICON_SIZE_DEFAULT = 'medium';
+export const ICON_SIZE_DEFAULT: UIIconSizeType = 'medium';
 export const ICON_DEFAULT = 'remind';
 
 export const FONT_FAMILY = {

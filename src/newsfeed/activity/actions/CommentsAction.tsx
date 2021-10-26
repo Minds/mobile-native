@@ -62,7 +62,7 @@ const CommentsAction = (props: PropsType) => {
       testID={props.testID}
       extra={
         !props.hideCount ? (
-          <CounterSpaced left="1x" count={props.entity['comments:count']} />
+          <CounterSpaced left="XS" count={props.entity['comments:count']} />
         ) : null
       }
     />

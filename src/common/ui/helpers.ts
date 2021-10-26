@@ -58,7 +58,7 @@ export const getSpacingStylesNext = (props: any) => {
   for (let i = 0; i < keys.length; i += 1) {
     const key = keys[i];
     if (
-      !key.match(/^(top|left|right|bottom|vertical|horizontal)$/) ||
+      !key.match(/^(top|left|right|bottom|vertical|horizontal|space)$/) ||
       props[key] === undefined
     ) {
       continue;
@@ -67,6 +67,10 @@ export const getSpacingStylesNext = (props: any) => {
     const unit = UNIT[props[key]];
     if (!unit) {
       continue;
+    }
+
+    if (key === 'space') {
+      styles.margin = unit;
     }
 
     styles[`margin${capitalizeFirst(key)}`] = unit;

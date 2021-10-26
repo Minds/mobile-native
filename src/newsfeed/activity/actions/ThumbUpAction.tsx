@@ -149,7 +149,7 @@ class ThumbUpAction extends Component<PropsType> {
           />
           {count && !this.props.hideCount ? (
             <CounterSpaced
-              left="1x"
+              left="XS"
               count={count}
               testID={`Thumb ${this.direction} count`}
             />

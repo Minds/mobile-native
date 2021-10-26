@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { ScrollView, View, StyleSheet, Pressable, Linking } from 'react-native';
+import { View, StyleSheet, Pressable, Linking } from 'react-native';
 import { autorun } from 'mobx';
 import { observer, useLocalStore } from 'mobx-react';
 import ThemedStyles from '../styles/ThemedStyles';
@@ -15,7 +15,17 @@ import OrderReportModal, {
 import { startCase as _startCase } from 'lodash';
 import i18n from '../common/services/i18n.service';
 import mindsConfigService from '../common/services/minds-config.service';
-import { B1, B2, B3, ScreenHeader, ScreenSection, Spacer, Row } from '~ui';
+import {
+  B1,
+  B2,
+  B3,
+  B3S,
+  ScreenHeader,
+  ScreenSection,
+  Spacer,
+  Row,
+  Screen,
+} from '~ui';
 
 type PaymentMethod = 'card' | 'bank' | 'crypto';
 type PaymentOption = { type: PaymentMethod; name: string };
@@ -71,14 +81,13 @@ export default observer(() => {
 
   return (
     <>
-      <ScrollView style={[theme.flexContainer, theme.bgPrimaryBackground]}>
+      <Screen scroll>
         <ScreenHeader title={i18n.t('buyTokensScreen.paymentMethod')} />
         <ScreenSection>
-          <View
+          <Row
+            align="centerBetween"
+            bottom="XL"
             style={[
-              theme.flexContainer,
-              theme.rowJustifySpaceBetween,
-              theme.marginBottom5x,
               styles.optionsContainer,
               theme.border2x,
               styles.buttonsContainer,
@@ -86,7 +95,6 @@ export default observer(() => {
             ]}>
             {paymentMethodsList.map(({ type, name }, index) => {
               const isSelected = store.paymentMethod === type;
-
               return (
                 <Pressable
                   style={[
@@ -96,13 +104,13 @@ export default observer(() => {
                     isSelected ? theme.bgLink : '',
                   ]}
                   onPress={() => store.handleOptionSelection(type)}>
-                  <B1 white={isSelected} bold>
+                  <B1 color={isSelected ? 'white' : undefined} font="bold">
                     {name}
                   </B1>
                 </Pressable>
               );
             })}
-          </View>
+          </Row>
           <B3>
             {i18n.t('buyTokensScreen.deliverEstimate', {
               estimate: store.paymentMethod === 'bank' ? 'days' : 'minutes',
@@ -114,31 +122,29 @@ export default observer(() => {
               onPress={() => store.setAggressTerms(!store.aggressTerms)}
               containerStyle={theme.checkbox}
               title={
-                <Spacer left="XS">
-                  <B3>
-                    {i18n.to(
-                      'buyTokensScreen.terms',
-                      {},
-                      {
-                        link: (
-                          <B3
-                            color="link"
-                            onPress={() => {
-                              Linking.openURL(
-                                'https://cdn-assets.minds.com/front/dist/assets/documents/TermsOfSale-v0.1.pdf',
-                              );
-                            }}>
-                            {i18n.t('buyTokensScreen.linkText')}
-                          </B3>
-                        ),
-                      },
-                    )}
-                  </B3>
-                </Spacer>
+                <B3S left="XS">
+                  {i18n.to(
+                    'buyTokensScreen.terms',
+                    {},
+                    {
+                      link: (
+                        <B3
+                          color="link"
+                          onPress={() => {
+                            Linking.openURL(
+                              'https://cdn-assets.minds.com/front/dist/assets/documents/TermsOfSale-v0.1.pdf',
+                            );
+                          }}>
+                          {i18n.t('buyTokensScreen.linkText')}
+                        </B3>
+                      ),
+                    },
+                  )}
+                </B3S>
               }
             />
           </View>
-          <Row top="M" centerBetween>
+          <Row top="M" align="centerBetween">
             <B2 font="bold" onPress={navToTokens}>
               {i18n.t('buyTokensScreen.learnMore')}
             </B2>
@@ -161,7 +167,7 @@ export default observer(() => {
             />
           </Row>
         </ScreenSection>
-      </ScrollView>
+      </Screen>
       <UniswapWidget
         isVisible={store.showUniswapWidget}
         onCloseButtonPress={() =>
@@ -251,7 +257,9 @@ const styles = StyleSheet.create({
     height: 70,
   },
   option: {
+    height: '100%',
     flexGrow: 1,
+    flex: 1,
     flexBasis: 0,
     alignItems: 'center',
     justifyContent: 'center',
