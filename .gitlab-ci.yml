@@ -115,8 +115,7 @@ test:jest:
 #     refs:
 #       - /^release-*/
 
-# Web version (Higher version code)
-build:androidproduction:
+.build_android: &build_android
   image: circleci/android:api-30-node
   stage: build
   cache:
@@ -142,13 +141,27 @@ build:androidproduction:
     name: 'Minds APK'
     paths:
       - Minds-$CI_COMMIT_REF_SLUG.apk
-    expire_in: 7 days
+    expire_in: 45 days
     when: on_success
+
+# Web version (Higher version code)
+build:androidproduction:
+  <<: *build_android
   only:
     refs:
       - /^stable-*/
       - /^test-*/
       - /^release-*/
+
+# Production version for MR testing (manual)
+build:android-mr-production:
+  <<: *build_android
+  when: manual
+  only:
+    refs:
+      - /^feat-*/
+      - /^fix-*/
+      - /^chore-*/
 
 # Play store version (Lowest version code)
 build:androidproduction-playstore:
