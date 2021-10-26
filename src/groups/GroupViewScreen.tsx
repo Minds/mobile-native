@@ -34,7 +34,7 @@ import sessionService from '../common/services/session.service';
 import ExplicitOverlay from '../common/components/explicit/ExplicitOverlay';
 import CommentBottomSheet from '../comments/v2/CommentBottomSheet';
 import ActivityModel from '../newsfeed/ActivityModel';
-import BottomSheet from '../common/components/bottom-sheet/BottomSheet';
+import BottomSheetModal from '../common/components/bottom-sheet/BottomSheetModal';
 import MenuItem, {
   MenuItemProps,
 } from '../common/components/bottom-sheet/MenuItem';
@@ -412,7 +412,7 @@ export default class GroupViewScreen extends Component {
       !this.state.conversationIsOpen;
 
     const memberActionSheet = this.state.memberActions ? (
-      <BottomSheet
+      <BottomSheetModal
         key={`sheet${this.state.memberActions.length}`}
         ref={this.actionSheetRef}
         title={truncate(this.state.member.name, {
@@ -422,7 +422,7 @@ export default class GroupViewScreen extends Component {
         {this.state.memberActions.map((o, i) => (
           <MenuItem {...o} key={i} />
         ))}
-      </BottomSheet>
+      </BottomSheetModal>
     ) : null;
 
     const theme = ThemedStyles.style;

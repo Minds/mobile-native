@@ -16,7 +16,6 @@ import {
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useKeyboard } from '@react-native-community/hooks';
-import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { observer } from 'mobx-react';
 import moment from 'moment';
 
@@ -29,6 +28,7 @@ import {
 } from '../common/services/list-options.service';
 import featuresService from '../common/services/features.service';
 import MText from '../common/components/MText';
+import BottomSheet from '~/common/components/bottom-sheet/BottomSheet';
 
 const Touchable = Platform.select({
   ios: RNTouchableOpacity,
@@ -171,28 +171,11 @@ export default observer(
       ? i18n.t('permaweb.description')
       : null;
 
-    const renderBackdrop = useCallback(
-      props => (
-        <BottomSheetBackdrop
-          {...props}
-          pressBehavior="close"
-          opacity={0.5}
-          appearsOnIndex={0}
-          disappearsOnIndex={-1}
-        />
-      ),
-      [],
-    );
-
     return (
       <BottomSheet
         ref={sheetRef}
-        index={-1}
-        backdropComponent={renderBackdrop}
         topInset={StatusBar.currentHeight || 0}
-        enablePanDownToClose={true}
         snapPoints={snapPoints}
-        backgroundComponent={null}
         handleComponent={() => <Header onPress={onHeaderPress} />}>
         <View
           style={[
