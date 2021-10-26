@@ -41,6 +41,9 @@ export type InternalStackParamList = {
 
 export type RootStackParamList = {
   MultiUserScreen: {};
+  ChooseBrowserModal: {
+    onSelected?: () => void;
+  };
   TwoFactorConfirmation: {
     onConfirm: (string) => void;
     title?: string;
@@ -119,6 +122,7 @@ export type AuthStackParamList = {
 };
 
 export type AppStackParamList = {
+  ChooseBrowser: {};
   PortraitViewerScreen: {
     items: Array<PortraitBarItem>;
     index: number;

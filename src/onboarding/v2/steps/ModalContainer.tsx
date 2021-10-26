@@ -1,19 +1,20 @@
 import React, { useRef } from 'react';
-import { View, Platform, ViewStyle, TextStyle } from 'react-native';
+import { View, Platform, ViewStyle, TextStyle, StyleProp } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { IconButton } from '~ui/icons';
 import { ICON_SIZES, HORIZONTAL } from '~styles/Tokens';
 import Handle from '../../../common/components/bottom-sheet/Handle';
 import MText from '../../../common/components/MText';
 import ThemedStyles, { useStyle } from '../../../styles/ThemedStyles';
+import { useNavigation } from '@react-navigation/core';
 
 type PropsType = {
   title: string;
   onPressBack: () => void;
   children: React.ReactNode;
   marginTop?: number;
-  contentContainer?: ViewStyle;
-  titleStyle?: TextStyle;
+  contentContainer?: StyleProp<ViewStyle>;
+  titleStyle?: StyleProp<TextStyle>;
 };
 
 /**
@@ -22,17 +23,27 @@ type PropsType = {
  */
 export default function ModalContainer(props: PropsType) {
   const insets = useSafeAreaInsets();
+  const navigation = useNavigation();
   const margin = props.marginTop || 50;
   const { current: cleanTop } = useRef({
     marginTop: insets.top + (Platform.OS === 'ios' ? margin + 10 : margin),
     paddingBottom: insets.bottom,
   });
+
+  // Set the gestureResponseDistance dynamically (to match empty space plus the header)
+  React.useLayoutEffect(() => {
+    navigation.setOptions({ gestureResponseDistance: cleanTop.marginTop + 80 });
+  }, [cleanTop.marginTop, navigation]);
+
   const contentContainer = useStyle(
     cleanTop,
     styles.contentContainer,
-    props.contentContainer || {},
+    (props.contentContainer || {}) as ViewStyle,
   );
-  const titleStyle = useStyle(styles.title, props.titleStyle || {});
+  const titleStyle = useStyle(
+    styles.title,
+    (props.titleStyle || {}) as TextStyle,
+  );
 
   return (
     <View style={contentContainer}>
