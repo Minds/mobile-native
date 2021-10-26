@@ -1,9 +1,8 @@
 import React, { useCallback, useState } from 'react';
-import { Dimensions, ScrollView, View } from 'react-native';
+import { Dimensions, ScrollView, View, Image } from 'react-native';
 import IconM from 'react-native-vector-icons/MaterialIcons';
 import { observer } from 'mobx-react';
 import type { ChannelStoreType, ChannelTabType } from './createChannelStore';
-import { Image } from 'react-native-animatable';
 import ThemedStyles, { useMemoStyle } from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
 import abbrev from '../../common/helpers/abbrev';

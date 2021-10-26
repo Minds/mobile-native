@@ -1597,7 +1597,6 @@ exports[`Activity screen component renders correctly  1`] = `
               swipeThreshold={100}
             >
               <View
-                forwardedRef={[Function]}
                 style={
                   Object {
                     "paddingBottom": 4,
@@ -1605,7 +1604,6 @@ exports[`Activity screen component renders correctly  1`] = `
                 }
               >
                 <View
-                  forwardedRef={[Function]}
                   style={
                     Object {
                       "paddingBottom": 8,
@@ -1796,7 +1794,6 @@ exports[`Activity screen component renders correctly  1`] = `
                   </View>
                 </View>
                 <View
-                  forwardedRef={[Function]}
                   style={
                     Object {
                       "paddingBottom": 8,
