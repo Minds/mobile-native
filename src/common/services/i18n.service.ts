@@ -188,7 +188,7 @@ class I18nService {
         const diff = moment.duration(date.diff(now));
 
         if (diff.asMilliseconds() > -86400000) {
-          return diff.humanize(true);
+          return diff.humanize(false);
         }
         return now.year() === date.year()
           ? date.format(this.dateFormat.short)
