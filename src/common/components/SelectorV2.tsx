@@ -11,7 +11,7 @@ import React, {
 import { TextStyle, View, ViewProps } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import ThemedStyles from '../../styles/ThemedStyles';
-import { BottomSheet, BottomSheetButton, MenuItem } from './bottom-sheet';
+import { BottomSheetModal, BottomSheetButton, MenuItem } from './bottom-sheet';
 import i18n from '../../common/services/i18n.service';
 import { LinearGradient } from 'expo-linear-gradient';
 import MText from './MText';
@@ -53,7 +53,7 @@ type PropsType = {
 };
 
 /**
- * Selector with BottomSheet
+ * Selector with BottomSheetModal
  *
  * It is used as such:
  * ```
@@ -108,7 +108,7 @@ const SelectorV2: ForwardRefRenderFunction<any, PropsType> = (
 
   // =====================| FUNCTIONS |==========================>
   /**
-   * Shows or hides the BottomSheet while optionally receiving a an item
+   * Shows or hides the BottomSheetModal while optionally receiving a an item
    * if an item was given, it makes that item selected
    * it also scrolls to the selected item
    **/
@@ -132,7 +132,7 @@ const SelectorV2: ForwardRefRenderFunction<any, PropsType> = (
   );
 
   /**
-   * Closes the BottomSheet
+   * Closes the BottomSheetModal
    **/
   const close = useCallback(() => setShown(false), []);
 
@@ -200,11 +200,11 @@ const SelectorV2: ForwardRefRenderFunction<any, PropsType> = (
   );
 
   const modal = shown ? (
-    <BottomSheet ref={bottomSheetRef} autoShow onDismiss={close}>
+    <BottomSheetModal ref={bottomSheetRef} autoShow onDismiss={close}>
       {Boolean(title) && <MText style={styles.title}>{title}</MText>}
       {showGradientView ? <GradientView>{flatList}</GradientView> : flatList}
       <BottomSheetButton text={i18n.t('cancel')} onPress={close} />
-    </BottomSheet>
+    </BottomSheetModal>
   ) : null;
 
   if (children) {

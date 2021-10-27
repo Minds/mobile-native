@@ -7,7 +7,7 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
 import { StyleProp, ViewStyle } from 'react-native';
 import {
-  BottomSheet,
+  BottomSheetModal,
   BottomSheetButton,
   MenuItem,
 } from '../../common/components/bottom-sheet';
@@ -103,12 +103,12 @@ export default observer(function CommentInputBottomMenu({
   return (
     <TouchableOpacity onPress={show} hitSlop={slop}>
       <Icon name="more-vert" size={18} style={theme.colorTertiaryText} />
-      <BottomSheet ref={ref}>
+      <BottomSheetModal ref={ref}>
         {dismissOptions.map((a, i) => (
           <MenuItem {...a} key={i} />
         ))}
         <BottomSheetButton text={i18n.t('cancel')} onPress={close} />
-      </BottomSheet>
+      </BottomSheetModal>
     </TouchableOpacity>
   );
 });

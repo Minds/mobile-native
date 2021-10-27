@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   View,
   StyleSheet,
@@ -25,6 +25,7 @@ import { DotIndicator } from 'react-native-reanimated-indicators';
 import { CHAR_LIMIT } from '../../config/Config';
 import TextInput from '../../common/components/TextInput';
 import MText from '../../common/components/MText';
+import { useBackHandler } from '@react-native-community/hooks';
 
 const { height } = Dimensions.get('window');
 
@@ -46,6 +47,26 @@ const CommentInput = observer(() => {
   const theme = ThemedStyles.style;
   const ref = React.useRef<TextInputType>(null);
   const provider = React.useContext(CommentInputContext);
+
+  /**
+   * hides the comment input
+   */
+  const hideInput = useCallback(() => provider.store?.setShowInput(false), [
+    provider.store,
+  ]);
+
+  /**
+   * hide the input when back is pressed if it was visible
+   */
+  useBackHandler(
+    useCallback(() => {
+      if (provider.store?.showInput) {
+        hideInput();
+        return true;
+      }
+      return false;
+    }, [hideInput, provider.store?.showInput]),
+  );
 
   React.useEffect(() => {
     if (Platform.OS === 'android') {
@@ -82,7 +103,7 @@ const CommentInput = observer(() => {
           <Touchable
             style={[theme.flexContainer, theme.bgBlack, theme.opacity50]}
             activeOpacity={0.5}
-            onPress={() => provider.store?.setShowInput(false)}
+            onPress={hideInput}
           />
           <MediaPreview attachment={provider.store.attachment} />
           {provider.store.embed.meta && (

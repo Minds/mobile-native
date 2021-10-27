@@ -9,7 +9,7 @@ import i18n from '../../../../common/services/i18n.service';
 import { WalletStoreType } from '../../../v2/createWalletStore';
 import { isConnected as isWalletConnected } from '../../useUniqueOnchain';
 import {
-  BottomSheet,
+  BottomSheetModal,
   BottomSheetButton,
   MenuItem,
 } from '../../../../common/components/bottom-sheet';
@@ -80,12 +80,12 @@ const TokenTabOptions = observer((props: PropsType) => {
   return (
     <>
       <IconButton spacingLeft="2x" name="more" onPress={show} />
-      <BottomSheet ref={ref}>
+      <BottomSheetModal ref={ref}>
         {dismissOptions.map((b, i) => (
           <MenuItem {...b} key={i} />
         ))}
         <BottomSheetButton text={i18n.t('cancel')} onPress={close} />
-      </BottomSheet>
+      </BottomSheetModal>
     </>
   );
 });

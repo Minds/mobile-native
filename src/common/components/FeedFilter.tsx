@@ -1,10 +1,10 @@
 import React from 'react';
-import { TextStyle, TouchableOpacity, ViewStyle } from 'react-native';
+import { Keyboard, TextStyle, TouchableOpacity, ViewStyle } from 'react-native';
 import i18n from '../services/i18n.service';
 import { useStyle } from '../../styles/ThemedStyles';
 import MdIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { observer } from 'mobx-react';
-import BottomSheet from './bottom-sheet/BottomSheet';
+import BottomSheetModal from './bottom-sheet/BottomSheetModal';
 import BottomSheetButton from './bottom-sheet/BottomSheetButton';
 import RadioButton from './bottom-sheet/RadioButton';
 import MText from './MText';
@@ -28,6 +28,7 @@ const FeedFilter = (props: PropsType) => {
     ref.current?.dismiss();
   }, [ref]);
   const show = React.useCallback(() => {
+    Keyboard.dismiss();
     ref.current?.present();
   }, [ref]);
   const iconStyle = useStyle('colorIcon');
@@ -71,12 +72,14 @@ const FeedFilter = (props: PropsType) => {
           <MText style={textStyle}>{i18n.t('filter')}</MText>
         )}
       </TouchableOpacity>
-      <BottomSheet ref={ref} title={i18n.t('filter') + ' ' + i18n.t('feed')}>
+      <BottomSheetModal
+        ref={ref}
+        title={i18n.t('filter') + ' ' + i18n.t('feed')}>
         {options.map((b, i) => (
           <RadioButton {...b} key={i} />
         ))}
         <BottomSheetButton text={i18n.t('close')} onPress={close} />
-      </BottomSheet>
+      </BottomSheetModal>
     </>
   );
 };

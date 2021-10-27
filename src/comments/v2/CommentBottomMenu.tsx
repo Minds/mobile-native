@@ -18,7 +18,7 @@ import sessionService from '../../common/services/session.service';
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
 import { MenuItemProps } from '../../common/components/bottom-sheet/MenuItem';
 import {
-  BottomSheet,
+  BottomSheetModal,
   BottomSheetButton,
   MenuItem,
 } from '../../common/components/bottom-sheet';
@@ -183,12 +183,12 @@ export default function CommentBottomMenu({
     <TouchableOpacity onPress={show} hitSlop={hitSlop}>
       <Icon name="more-vert" size={18} style={theme.colorTertiaryText} />
       {shown && (
-        <BottomSheet ref={ref} autoShow>
+        <BottomSheetModal ref={ref} autoShow>
           {dismissOptions.map((a, i) => (
             <MenuItem {...a} key={i} />
           ))}
           <BottomSheetButton text={i18n.t('cancel')} onPress={close} />
-        </BottomSheet>
+        </BottomSheetModal>
       )}
     </TouchableOpacity>
   );

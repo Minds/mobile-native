@@ -637,6 +637,11 @@
   },
   "settings": {
     "submit": "Submit",
+    "chooseBrowser": "Choose Browser",
+    "chooseBrowserDescription": "Please choose where you want to open the external links.",
+    "chooseBrowserHint": "This option can be changed from the settings",
+    "inAppBrowser": "In-App Browser",
+    "defaultBrowser": "Default Browser",
     "blockedChannels": "Blocked Channels",
     "noBlockedChannels": "You don't have any blocked Channels",
     "currentPassword": "Current Password",

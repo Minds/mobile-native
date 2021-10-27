@@ -2,7 +2,7 @@ import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import {
-  BottomSheet,
+  BottomSheetModal,
   BottomSheetButton,
   MenuItem,
 } from '../../../common/components/bottom-sheet';
@@ -60,13 +60,13 @@ const Options = ({ index, isActive, username, onSwitchPress }: PropsType) => {
   return (
     <TouchableOpacity onPress={show} hitSlop={hitSlop}>
       <MIcon name="more-vert" size={24} style={theme.colorSecondaryText} />
-      <BottomSheet ref={ref}>
+      <BottomSheetModal ref={ref}>
         <MText style={styles.username}>@{username}</MText>
         {userOptions.map((a, i) => (
           <MenuItem {...a} key={i} />
         ))}
         <BottomSheetButton text={i18n.t('cancel')} onPress={close} />
-      </BottomSheet>
+      </BottomSheetModal>
     </TouchableOpacity>
   );
 };

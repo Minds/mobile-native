@@ -32,6 +32,8 @@ type PropsType = {
   hideItems?: boolean;
   ListEmptyComponent?: React.ReactNode;
   onRefresh?: () => void;
+  onScrollBeginDrag?: () => void;
+  onMomentumScrollEnd?: () => void;
   afterRefresh?: () => void;
   onScroll?: (e: any) => void;
   refreshControlTintColor?: string;
@@ -188,6 +190,7 @@ export default class FeedList<T> extends Component<PropsType> {
         keyboardShouldPersistTaps="always"
         testID="feedlistCMP"
         {...passThroughProps}
+        keyboardDismissMode="on-drag"
         onScroll={this.onScroll}
       />
     );
