@@ -69,44 +69,25 @@ exports[`Activity screen component renders correctly  1`] = `
       >
         <View
           style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "justifyContent": "center",
-                "position": "relative",
+            Object {
+              "alignItems": "center",
+              "color": "#43434D",
+              "elevation": 4,
+              "justifyContent": "center",
+              "left": 0,
+              "marginLeft": -20,
+              "marginRight": -5,
+              "paddingTop": 0,
+              "position": undefined,
+              "shadowOffset": Object {
+                "height": 1,
+                "width": 1,
               },
-              undefined,
-              Array [
-                Object {
-                  "top": 5,
-                },
-                Object {
-                  "elevation": 4,
-                  "left": 0,
-                  "position": "absolute",
-                  "shadowOffset": Object {
-                    "height": 1,
-                    "width": 1,
-                  },
-                  "shadowOpacity": 0.2,
-                  "shadowRadius": 3,
-                },
-                Array [
-                  Object {
-                    "color": "#43434D",
-                  },
-                  Object {
-                    "marginLeft": -20,
-                    "marginRight": -5,
-                    "paddingTop": 0,
-                    "position": undefined,
-                    "top": undefined,
-                    "width": 50,
-                  },
-                ],
-              ],
-              undefined,
-            ]
+              "shadowOpacity": 0.2,
+              "shadowRadius": 3,
+              "top": undefined,
+              "width": 50,
+            }
           }
         >
           <View
@@ -260,31 +241,39 @@ exports[`Activity screen component renders correctly  1`] = `
               }
             >
               <Text
+                accessible={true}
+                focusable={true}
+                hitSlop={
+                  Object {
+                    "bottom": 4,
+                    "left": 4,
+                    "right": 4,
+                    "top": 4,
+                  }
+                }
                 numberOfLines={1}
-                onPress={[Function]}
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
                 style={
                   Array [
                     Object {
                       "color": "#43434D",
                     },
                     Object {
-                      "fontFamily": "Roboto",
+                      "fontFamily": "Roboto-Bold",
                     },
-                    Array [
-                      Object {
-                        "color": "#43434D",
-                      },
-                      Object {
-                        "fontFamily": "Roboto-Black",
-                        "fontWeight": "700",
-                      },
-                      Object {
-                        "fontSize": 17,
-                      },
-                      Object {
-                        "flex": 1,
-                      },
-                    ],
+                    Object {
+                      "fontSize": 16,
+                      "lineHeight": 24,
+                    },
+                    Object {
+                      "textAlign": "left",
+                    },
                   ]
                 }
               >
@@ -297,18 +286,19 @@ exports[`Activity screen component renders correctly  1`] = `
           style={
             Object {
               "flexDirection": "row",
+            }
+          }
+        />
+        <View
+          style={
+            Object {
+              "flexDirection": "row",
               "justifyContent": "center",
             }
           }
         >
           <View
-            style={
-              Array [
-                Object {
-                  "marginLeft": 4,
-                },
-              ]
-            }
+            style={Object {}}
           >
             <View
               style={
@@ -900,7 +890,7 @@ exports[`Activity screen component renders correctly  1`] = `
                       "height": 20,
                       "width": 20,
                     },
-                    Array [],
+                    Object {},
                     Array [
                       undefined,
                       [Function],
@@ -1002,7 +992,7 @@ exports[`Activity screen component renders correctly  1`] = `
                       "height": 20,
                       "width": 20,
                     },
-                    Array [],
+                    Object {},
                     Array [
                       undefined,
                       [Function],
@@ -1157,11 +1147,9 @@ exports[`Activity screen component renders correctly  1`] = `
                 </View>
                 <View
                   style={
-                    Array [
-                      Object {
-                        "marginLeft": 4,
-                      },
-                    ]
+                    Object {
+                      "marginLeft": 4,
+                    }
                   }
                 >
                   <View

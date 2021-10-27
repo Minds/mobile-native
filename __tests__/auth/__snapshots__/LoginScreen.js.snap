@@ -115,15 +115,11 @@ exports[`LoginScreen component should renders correctly 1`] = `
     <View>
       <View
         style={
-          Array [
-            Object {
-              "alignItems": "center",
-              "justifyContent": "center",
-              "position": "relative",
-            },
-            undefined,
-            undefined,
-          ]
+          Object {
+            "alignItems": "center",
+            "justifyContent": "center",
+            "position": "relative",
+          }
         }
       >
         <View

@@ -4,7 +4,7 @@ exports[`Comment action component renders correctly 1`] = `
 <IconButtonNext
   extra={
     <Unknown
-      left="1x"
+      left="XS"
     />
   }
   fill={true}
