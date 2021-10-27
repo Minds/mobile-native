@@ -6,7 +6,7 @@ import {
   ICON_SIZE_DEFAULT,
   ICON_COLOR_ACTIVE,
   ICON_COLOR_DEFAULT,
-  IUISizing,
+  UISizing,
   UNIT,
 } from '~styles/Tokens';
 import { getSpacingStylesNext } from '~ui/helpers';
@@ -24,7 +24,7 @@ export function IconCircled({ style, active, ...extra }: IIcon) {
     { backgroundColor: background },
   ];
 
-  let size: IUISizing | number | string = ICON_SIZE_DEFAULT;
+  let size: UISizing | number | string = ICON_SIZE_DEFAULT;
 
   const extraStyles = getSpacingStylesNext(extra);
 

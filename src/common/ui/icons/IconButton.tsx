@@ -7,7 +7,12 @@ import {
   ViewStyle,
 } from 'react-native';
 import { Icon, IIcon, IIconNext, IconNext } from './Icon';
-import { ICON_SIZES, ICON_SIZE_DEFAULT, IUISizing } from '~styles/Tokens';
+import {
+  ICON_SIZES,
+  ICON_SIZE_DEFAULT,
+  UISizing,
+  UISpacingPropType,
+} from '~styles/Tokens';
 import { getNumericSize, getSpacingStylesNext } from '~ui/helpers';
 import PressableScale from '~/common/components/PressableScale';
 import { withSpacer } from '~ui/layout';
@@ -38,7 +43,7 @@ export const IconButtonNext = ({
   fill,
   ...more
 }: IIconButtonNext) => {
-  const size: IUISizing | any = more?.size || 'medium';
+  const size: UISizing | any = more?.size || 'medium';
 
   const containerStyles = useMemo(() => {
     const styleArray = [styles.container, styles[size]];
@@ -99,8 +104,8 @@ export function IconButton({
   fill,
   extra,
   ...more
-}: IIconButton) {
-  const size: IUISizing | number | string = more?.size || 'medium';
+}: IIconButton & UISpacingPropType) {
+  const size: UISizing | number | string = more?.size || 'medium';
 
   const containerStyles = useMemo(() => {
     const stylesObj = [styles.container, styles[size]];

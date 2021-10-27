@@ -51,7 +51,7 @@ const SearchScreen = observer(() => {
             name="search"
             size={25}
             right="S"
-            style={[Platform.OS === 'android' ? theme.centered : null]}
+            style={Platform.OS === 'android' ? theme.centered : undefined}
           />
           <TextInput
             ref={inputRef}

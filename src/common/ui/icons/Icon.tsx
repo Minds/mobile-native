@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { View, StyleSheet, ViewStyle } from 'react-native';
-import { withSpacer, SpacerPropType } from '~ui/layout';
+import { withSpacer } from '~ui/layout';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -20,6 +20,7 @@ import {
   ICON_COLOR_DISABLED,
   UIIconSizeType,
   UIBaseType,
+  UISpacingPropType,
 } from '~styles/Tokens';
 import { ColorsNameType } from '~styles/Colors';
 import {
@@ -42,7 +43,7 @@ const Fonts = {
 };
 
 export interface IIcon extends UIBaseType {
-  color?: ColorsNameType | null;
+  color?: ColorsNameType;
   activeColor?: ColorsNameType;
   name: IconMapNameType;
   size?: UIIconSizeType | number | string;
@@ -53,7 +54,7 @@ export interface IIcon extends UIBaseType {
 }
 
 export function Icon({
-  color = null,
+  color,
   name = ICON_DEFAULT,
   size = ICON_SIZE_DEFAULT,
   style,
@@ -64,7 +65,7 @@ export function Icon({
   nested = false,
   testID,
   ...common
-}: IIcon & SpacerPropType) {
+}: IIcon & UISpacingPropType) {
   const { font: iconFont, name: iconName, ratio = 1 } =
     ICON_MAP[name] || ICON_MAP[ICON_DEFAULT];
 

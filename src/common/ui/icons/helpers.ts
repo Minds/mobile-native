@@ -9,7 +9,7 @@ export const getIconColor = ({
   disabledColor,
   defaultColor,
 }: {
-  color: ColorsNameType | null;
+  color?: ColorsNameType;
   active: boolean;
   activeColor: ColorsNameType;
   disabled: boolean;
