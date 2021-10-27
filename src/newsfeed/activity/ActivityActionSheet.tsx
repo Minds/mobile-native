@@ -14,7 +14,7 @@ import type ActivityModel from '../ActivityModel';
 import { showNotification } from '../../../AppMessages';
 import { withSafeAreaInsets } from 'react-native-safe-area-context';
 import {
-  BottomSheet,
+  BottomSheetModal,
   BottomSheetButton,
   MenuItem,
 } from '../../common/components/bottom-sheet';
@@ -386,7 +386,7 @@ export default withSafeAreaInsets(
             // left="XS"
           />
           {this.state.shown && (
-            <BottomSheet ref={this.ref} autoShow>
+            <BottomSheetModal ref={this.ref} autoShow>
               {this.state.options.map((a, i) => (
                 <MenuItem {...a} key={i} />
               ))}
@@ -394,7 +394,7 @@ export default withSafeAreaInsets(
                 text={i18n.t('cancel')}
                 onPress={this.hideActionSheet}
               />
-            </BottomSheet>
+            </BottomSheetModal>
           )}
         </>
       );

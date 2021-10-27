@@ -77,6 +77,7 @@ export const ICON_COLOR_DEFAULT = 'Icon';
 export const ICON_COLOR_ACTIVE = 'IconActive';
 export const ICON_COLOR_DISABLED = 'IconDisabled';
 export const ICON_SIZE_DEFAULT: UIIconSizeType = 'medium';
+export const ICON_COLOR_LIGHT = 'IconLight';
 export const ICON_DEFAULT = 'remind';
 
 export const FONT_FAMILY = {

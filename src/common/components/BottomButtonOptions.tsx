@@ -1,6 +1,5 @@
 import React from 'react';
-import { Platform, StyleProp, StyleSheet, TextStyle } from 'react-native';
-import { View } from 'react-native-animatable';
+import { Platform, StyleProp, StyleSheet, TextStyle, View } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import Modal from 'react-native-modal';
 import { DARK_THEME } from '../../styles/Colors';

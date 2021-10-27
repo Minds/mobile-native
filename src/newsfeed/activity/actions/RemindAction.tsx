@@ -13,7 +13,7 @@ import sessionService from '../../../common/services/session.service';
 import { actionsContainerStyle } from './styles';
 import { useLegacyStores } from '../../../common/hooks/use-stores';
 import {
-  BottomSheet,
+  BottomSheetModal,
   BottomSheetButton,
   MenuItem,
 } from '../../../common/components/bottom-sheet';
@@ -136,7 +136,7 @@ export default function ({ entity, hideCount }: PropsTypes) {
         }
       />
       {shown && (
-        <BottomSheet ref={ref} autoShow>
+        <BottomSheetModal ref={ref} autoShow>
           {reminded ? (
             <MenuItem
               onPress={undo}
@@ -161,7 +161,7 @@ export default function ({ entity, hideCount }: PropsTypes) {
             </>
           )}
           <BottomSheetButton text={i18n.t('cancel')} onPress={close} />
-        </BottomSheet>
+        </BottomSheetModal>
       )}
     </>
   );

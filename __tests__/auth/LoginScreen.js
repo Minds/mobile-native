@@ -4,6 +4,9 @@ import renderer from 'react-test-renderer';
 
 import LoginScreen from '../../src/auth/multi-user/LoginScreen';
 import { getStores } from '../../AppStores';
+import { useNavigation } from '@react-navigation/core';
+
+jest.mock('@react-navigation/core');
 jest.mock('@gorhom/bottom-sheet');
 jest.mock('react-native-reanimated', () =>
   require('react-native-reanimated/mock'),
@@ -24,7 +27,8 @@ describe('LoginScreen component', () => {
 
   it('should renders correctly', () => {
     const route = { params: {} };
-    const navigation = { goBack: jest.fn() };
+    const navigation = { goBack: jest.fn(), setOptions: jest.fn() };
+    useNavigation.mockReturnValue(navigation);
     const loginScreen = renderer
       .create(<LoginScreen route={route} navigation={navigation} />)
       .toJSON();

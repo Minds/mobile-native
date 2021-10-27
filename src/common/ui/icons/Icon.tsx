@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { View, StyleSheet, ViewStyle } from 'react-native';
+import { View, StyleSheet, ViewStyle, TextStyle } from 'react-native';
 import { withSpacer } from '~ui/layout';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -21,6 +21,7 @@ import {
   UIIconSizeType,
   UIBaseType,
   UISpacingPropType,
+  ICON_COLOR_LIGHT,
 } from '~styles/Tokens';
 import { ColorsNameType } from '~styles/Colors';
 import {
@@ -51,6 +52,9 @@ export interface IIcon extends UIBaseType {
   active?: boolean;
   disabled?: boolean;
   disabledColor?: ColorsNameType;
+  light?: boolean;
+  shadow?: boolean;
+  lightColor?: ColorsNameType;
 }
 
 export function Icon({
@@ -62,12 +66,20 @@ export function Icon({
   activeColor = ICON_COLOR_ACTIVE,
   disabled = false,
   disabledColor = ICON_COLOR_DISABLED,
+  light = false,
+  lightColor = ICON_COLOR_LIGHT,
+  shadow = false,
   nested = false,
   testID,
   ...common
 }: IIcon & UISpacingPropType) {
   const { font: iconFont, name: iconName, ratio = 1 } =
     ICON_MAP[name] || ICON_MAP[ICON_DEFAULT];
+  const iconStyles: TextStyle[] = [];
+
+  if (shadow) {
+    iconStyles.push(styles.shadow);
+  }
 
   // gets the numeric size value from the legacy number and current string alternative
   const sizeNumeric = useMemo(() => {
@@ -88,12 +100,15 @@ export function Icon({
       activeColor,
       disabled,
       disabledColor,
+      light,
+      lightColor,
       defaultColor: ICON_COLOR_DEFAULT,
     });
-  }, [color, active, activeColor, disabled, disabledColor]);
+  }, [color, active, activeColor, disabled, disabledColor, light, lightColor]);
 
   // realSize is an icon reducer alternative to keep icon proportion between font-families
   const realSize = sizeNumeric * ratio;
+
   // const containerStyles: ViewStyle[] = [styles.container, styles[sizeNamed]];
   // nested is used to discard the container styles when it is nested inside another base component
   const containerStyles = useMemo(() => {
@@ -103,18 +118,19 @@ export function Icon({
       base.push(extra);
     }
 
+    if (style) {
+      base.push(style);
+    }
+
     return base;
-  }, [nested, common, sizeNamed]);
+  }, [nested, common, sizeNamed, style]);
 
   const Component = Fonts[iconFont];
-
-  if (style) {
-    containerStyles.push(style);
-  }
 
   return (
     <View style={containerStyles}>
       <Component
+        style={StyleSheet.flatten(iconStyles)}
         name={iconName}
         size={realSize}
         color={iconColor}
@@ -129,7 +145,9 @@ export interface IIconNext extends UIBaseType {
   name: IconMapNameType;
   size?: UIIconSizeType;
   active?: boolean;
+  light?: boolean;
   disabled?: boolean;
+  shadow?: boolean;
 }
 
 export function IconNext({
@@ -138,23 +156,34 @@ export function IconNext({
   size = ICON_SIZE_DEFAULT,
   active = false,
   disabled = false,
+  light = false,
+  shadow = false,
   testID,
 }: IIconNext) {
   const { font: iconFont, name: iconName, ratio = 1, top } =
     ICON_MAP[name] || ICON_MAP[ICON_DEFAULT];
 
+  const iconStyles: TextStyle[] = [];
+
+  if (shadow) {
+    iconStyles.push(styles.shadow);
+  }
+
   const sizeNumeric = ICON_SIZES[size] || ICON_SIZES[ICON_SIZE_DEFAULT];
 
   const iconColor = useMemo(() => {
+    // This function can be eventually memoized externally
     return getIconColor({
       color,
       active,
       activeColor: ICON_COLOR_ACTIVE,
       disabled,
       disabledColor: ICON_COLOR_DISABLED,
+      light,
+      lightColor: ICON_COLOR_LIGHT,
       defaultColor: ICON_COLOR_DEFAULT,
     });
-  }, [active, disabled, color]);
+  }, [light, active, disabled, color]);
 
   const realSize = sizeNumeric * ratio;
 
@@ -167,8 +196,7 @@ export function IconNext({
     }
 
     return StyleSheet.flatten(base);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [size]);
+  }, [size, top]);
 
   const Component = Fonts[iconFont];
 
@@ -176,6 +204,7 @@ export function IconNext({
     <View style={containerStyles}>
       <Component
         name={iconName}
+        style={StyleSheet.flatten(iconStyles)}
         size={realSize}
         color={iconColor}
         testID={testID}
@@ -196,6 +225,11 @@ const styles = StyleSheet.create({
   micro: {
     width: ICON_SIZES.micro,
     height: ICON_SIZES.micro,
+  },
+  shadow: {
+    textShadowColor: 'rgba(0, 0, 0, 0.25)',
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 3,
   },
   tiny: {
     width: ICON_SIZES.tiny,

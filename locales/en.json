@@ -637,6 +637,11 @@
   },
   "settings": {
     "submit": "Submit",
+    "chooseBrowser": "Choose Browser",
+    "chooseBrowserDescription": "Please choose where you want to open the external links.",
+    "chooseBrowserHint": "This option can be changed from the settings",
+    "inAppBrowser": "In-App Browser",
+    "defaultBrowser": "Default Browser",
     "blockedChannels": "Blocked Channels",
     "noBlockedChannels": "You don't have any blocked Channels",
     "currentPassword": "Current Password",
@@ -703,7 +708,9 @@
       "appTitle": "App",
       "appDescription": "Use an application on your phone to get two-factor authentication codes when prompted.",
       "smsTitle": "SMS",
-      "smsDescription": "Minds will send you an SMS with a two-factor authentication code when prompted"
+      "smsDescription": "Minds will send you an SMS with a two-factor authentication code when prompted",
+      "emailTitle": "Email",
+      "emailDescription": "Minds will send you an email with a two-factor authentication code when no other Two-factor authentication is set-up."
     },
     "sessionsOpened": "Your currently signed into Minds account on the following devices.",
     "closeSessions": "Close all sessions",

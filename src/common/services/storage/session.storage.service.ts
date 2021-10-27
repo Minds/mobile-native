@@ -52,6 +52,10 @@ export class SessionStorageService {
       'object',
     );
 
+    if (!data) {
+      return null;
+    }
+
     const accessToken = data[0][1],
       refreshToken = data[1][1],
       user = data[2][1];

@@ -87,6 +87,10 @@ export default function ({ navigation }) {
       title: i18n.t('messenger.legacyMessenger'),
       screen: 'Messenger',
     },
+    {
+      title: i18n.t('settings.chooseBrowser'),
+      screen: 'ChooseBrowser',
+    },
   ];
 
   if (!user.plus) {

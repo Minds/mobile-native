@@ -1,6 +1,11 @@
 import React, { FunctionComponent, ReactNode } from 'react';
-import { ImageBackground, View, StyleSheet, Dimensions } from 'react-native';
-import { Image } from 'react-native-animatable';
+import {
+  ImageBackground,
+  View,
+  StyleSheet,
+  Dimensions,
+  Image,
+} from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { observer } from 'mobx-react';
 import { ChannelStoreType } from '../../channel/v2/createChannelStore';
