@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Platform, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import type { TextInput as TextInputType } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { IconButton, Icon } from '~ui/icons';
@@ -13,7 +13,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import TextInput from '../../common/components/TextInput';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import MText from '~/common/components/MText';
-import { UNIT } from '~styles/Tokens';
 
 const SearchScreen = observer(() => {
   const theme = ThemedStyles.style;
@@ -37,14 +36,23 @@ const SearchScreen = observer(() => {
     };
   }, [localStore, user]);
 
+  useEffect(() => {
+    localStore.input('');
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const handleClearInput = () => {
-    inputRef.current?.clear();
+    // inputRef.current?.clear();
     localStore.input('');
   };
 
-  const handleCancel = () => {
-    localStore.input('');
+  const handleCancelNav = () => {
     navigation.goBack();
+  };
+
+  const handleSubmit = () => {
+    localStore.searchDiscovery();
   };
 
   return (
@@ -55,18 +63,8 @@ const SearchScreen = observer(() => {
         paddingTop,
         paddingBottom,
       ]}>
-      <View
-        style={[
-          styles.header,
-          Platform.OS === 'android' ? theme.marginBottom : theme.marginBottom3x,
-          theme.marginTop3x,
-        ]}>
-        <View
-          style={[
-            theme.rowJustifyStart,
-            theme.paddingLeft4x,
-            styles.inputContainer,
-          ]}>
+      <View style={styles.header}>
+        <View style={styles.inputContainer}>
           <Icon name="search" spacingRight="2x" />
           <TextInput
             ref={inputRef}
@@ -77,7 +75,7 @@ const SearchScreen = observer(() => {
             testID="searchInput"
             style={[styles.textInput, theme.colorPrimaryText]}
             selectTextOnFocus={true}
-            onSubmitEditing={() => localStore.searchDiscovery()}
+            onSubmitEditing={handleSubmit}
             autoFocus
             returnKeyType="search"
           />
@@ -86,37 +84,49 @@ const SearchScreen = observer(() => {
               onPress={handleClearInput}
               name="close-circle"
               size="tiny"
-              spacingRight="2x"
               spacingLeft="1x"
             />
           ) : null}
         </View>
-        <TouchableWithoutFeedback style={styles.cancel} onPress={handleCancel}>
+        <TouchableWithoutFeedback
+          style={styles.cancel}
+          onPress={handleCancelNav}>
           <MText style={[theme.colorSecondaryText, theme.fontM]}>
             {i18n.t('cancel')}
           </MText>
         </TouchableWithoutFeedback>
       </View>
-
       <SearchResultComponent navigation={navigation} localStore={localStore} />
     </KeyboardSpacingView>
   );
 });
 
-const styles = StyleSheet.create({
+const styles = ThemedStyles.create({
   height: {
     height: 200,
   },
   body: {
     minHeight: 0,
   },
-  header: {
-    flexDirection: 'row',
-  },
-  inputContainer: {
-    flex: 1,
-    alignItems: 'center',
-  },
+  header: [
+    'paddingTop4x',
+    'paddingBottom3x',
+    'borderBottomHair',
+    'bcolorPrimaryBorder',
+    'paddingRight4x',
+    {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+  ],
+  inputContainer: [
+    'rowJustifyStart',
+    'paddingLeft4x',
+    {
+      flex: 1,
+      alignItems: 'center',
+    },
+  ],
   textInput: {
     flex: 1,
     fontSize: 14,
@@ -126,11 +136,7 @@ const styles = StyleSheet.create({
     margin: 0,
     justifyContent: 'flex-start',
   },
-  cancel: {
-    marginRight: UNIT.M,
-    marginLeft: UNIT.XS,
-    padding: UNIT.S,
-  },
+  cancel: ['marginLeft4x'],
 });
 
 export default SearchScreen;

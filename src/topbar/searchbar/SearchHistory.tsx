@@ -14,7 +14,12 @@ type PropsType = {
 
 const SearchHistory = ({ localStore, renderItem }: PropsType) => {
   const theme = ThemedStyles.style;
-  const textStyle = [theme.subTitleText, theme.colorSecondaryText, theme.fontM];
+  const titleStyle = [
+    theme.subTitleText,
+    theme.colorSecondaryText,
+    theme.fontM,
+  ];
+  const buttonStyle = [theme.colorSecondaryText, theme.fontM];
   const { user } = useLegacyStores();
   const keyboard = useKeyboard();
 
@@ -28,10 +33,12 @@ const SearchHistory = ({ localStore, renderItem }: PropsType) => {
   };
 
   return (
-    <ScrollView keyboardShouldPersistTaps="handled" style={scrollHeight}>
+    <ScrollView
+      keyboardShouldPersistTaps="handled"
+      style={[scrollHeight, theme.paddingTop4x]}>
       <View style={[styles.row, theme.marginBottom3x]}>
-        <MText style={textStyle}>{i18n.t('searchBar.searchHistory')}</MText>
-        <MText style={textStyle} onPress={clearSearchHistory}>
+        <MText style={titleStyle}>{i18n.t('searchBar.searchHistory')}</MText>
+        <MText style={buttonStyle} onPress={clearSearchHistory}>
           {i18n.t('searchBar.clear')}
         </MText>
       </View>
@@ -57,6 +64,7 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: 10,
+    paddingHorizontal: 16,
+    alignItems: 'center',
   },
 });
