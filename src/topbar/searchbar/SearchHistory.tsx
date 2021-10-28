@@ -1,6 +1,6 @@
 import React from 'react';
 import ThemedStyles from '../../styles/ThemedStyles';
-import { View, ScrollView, StyleSheet } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import i18n from '../../common/services/i18n.service';
 import { useLegacyStores } from '../../common/hooks/use-stores';
 import { useKeyboard } from '@react-native-community/hooks';
@@ -42,18 +42,22 @@ const SearchHistory = ({ localStore, renderItem }: PropsType) => {
           {i18n.t('searchBar.clear')}
         </MText>
       </View>
-      {localStore.history.length > 0 &&
-        localStore.history
-          .filter(item => typeof item === 'string')
-          .map((item, index) => {
-            return renderItem(item, index);
-          })}
-      {localStore.history.length > 0 &&
-        localStore.history
-          .filter(item => typeof item !== 'string')
-          .map((item, index) => {
-            return renderItem(item, index);
-          })}
+      <View style={styles.section}>
+        {localStore.history.length > 0 &&
+          localStore.history
+            .filter(item => typeof item === 'string')
+            .map((item, index) => {
+              return renderItem(item, index);
+            })}
+      </View>
+      <View>
+        {localStore.history.length > 0 &&
+          localStore.history
+            .filter(item => typeof item !== 'string')
+            .map((item, index) => {
+              return renderItem(item, index);
+            })}
+      </View>
     </ScrollView>
   );
 };
@@ -67,4 +71,5 @@ const styles = ThemedStyles.create({
     paddingHorizontal: 16,
     alignItems: 'center',
   },
+  section: ['marginBottom2x'],
 });
