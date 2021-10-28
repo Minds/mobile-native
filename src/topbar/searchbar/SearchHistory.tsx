@@ -19,7 +19,7 @@ const SearchHistory = ({ localStore, renderItem }: PropsType) => {
     theme.colorSecondaryText,
     theme.fontM,
   ];
-  const buttonStyle = [theme.colorSecondaryText, theme.fontM];
+  const buttonStyle = [theme.colorSecondaryText, theme.fontS];
   const { user } = useLegacyStores();
   const keyboard = useKeyboard();
 
@@ -36,7 +36,7 @@ const SearchHistory = ({ localStore, renderItem }: PropsType) => {
     <ScrollView
       keyboardShouldPersistTaps="handled"
       style={[scrollHeight, theme.paddingTop4x]}>
-      <View style={[styles.row, theme.marginBottom3x]}>
+      <View style={[styles.header, theme.marginBottom3x]}>
         <MText style={titleStyle}>{i18n.t('searchBar.searchHistory')}</MText>
         <MText style={buttonStyle} onPress={clearSearchHistory}>
           {i18n.t('searchBar.clear')}
@@ -60,8 +60,8 @@ const SearchHistory = ({ localStore, renderItem }: PropsType) => {
 
 export default SearchHistory;
 
-const styles = StyleSheet.create({
-  row: {
+const styles = ThemedStyles.create({
+  header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 16,
