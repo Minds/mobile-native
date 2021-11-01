@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
-import { IconButton } from '~ui/icons';
+import { Icon } from '~ui/icons';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import Button from '../Button';
 import MText from '../MText';
@@ -10,6 +10,7 @@ import Animated, {
   withTiming,
   Easing,
 } from 'react-native-reanimated';
+import PressableScale from '~/common/components/PressableScale';
 
 const TIMED = {
   duration: 175,
@@ -86,13 +87,26 @@ const TopBarButtonTabBarItem = ({ tab, buttonCmp, onChange, current }) => {
 
     if (tab.icon) {
       return (
-        <IconButton
-          scale
+        <PressableScale
           onPress={() => onChange(tab.id)}
-          name={tab.icon.name}
-          active={isCurrent}
-          style={touchableContainer}
-        />
+          style={[styles.iconContainer, touchableContainer]}>
+          <View style={theme.alignCenter}>
+            <Icon name={tab.icon.name} active={isCurrent} />
+          </View>
+          {tab.icon.subtitle ? (
+            <MText
+              numberOfLines={1}
+              style={[
+                theme.fontXS,
+                theme.colorSecondaryText,
+                theme.marginTop1x,
+                theme.alignSelfCenter,
+                isCurrent ? theme.colorLink : null,
+              ]}>
+              {tab.icon.subtitle}
+            </MText>
+          ) : null}
+        </PressableScale>
       );
     }
 
@@ -121,6 +135,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     borderRadius: 15,
   },
+  iconContainer: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   bottomLine: {
     position: 'absolute',
     bottom: -3 + StyleSheet.hairlineWidth,
@@ -133,7 +152,6 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 52,
     paddingBottom: 3,
-    alignItems: 'center',
   },
   text: {
     color: '#FFFFFF',

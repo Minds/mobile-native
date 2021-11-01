@@ -5,6 +5,7 @@ import TopBarButtonTabBar, {
 } from '../../common/components/topbar-tabbar/TopBarButtonTabBar';
 import { StyleSheet } from 'react-native';
 import { NotificationsStore } from './createNotificationsStore';
+import i18n from '~/common/services/i18n.service';
 
 type PropsType = {
   store: NotificationsStore;
@@ -21,12 +22,54 @@ export type NotificationsTabOptions =
   | 'reminds';
 
 const options: Array<ButtonTabType<NotificationsTabOptions>> = [
-  { id: 'all', icon: { name: 'list', type: 'material' } },
-  { id: 'tags', icon: { name: 'tags', type: 'material' } },
-  { id: 'comments', icon: { name: 'chat-solid', type: 'material' } },
-  { id: 'subscriptions', icon: { name: 'subscriptions', type: 'material' } },
-  { id: 'votes', icon: { name: 'thumb-up', type: 'material' } },
-  { id: 'reminds', icon: { name: 'remind', type: 'material' } },
+  {
+    id: 'all',
+    icon: {
+      name: 'list',
+      type: 'material',
+      subtitle: i18n.t('notification.filters.all'),
+    },
+  },
+  {
+    id: 'tags',
+    icon: {
+      name: 'tags',
+      type: 'material',
+      subtitle: i18n.t('notification.filters.tags'),
+    },
+  },
+  {
+    id: 'comments',
+    icon: {
+      name: 'chat-solid',
+      type: 'material',
+      subtitle: i18n.t('notification.filters.comments'),
+    },
+  },
+  {
+    id: 'subscriptions',
+    icon: {
+      name: 'subscriptions',
+      type: 'material',
+      subtitle: i18n.t('notification.filters.subscriptions'),
+    },
+  },
+  {
+    id: 'votes',
+    icon: {
+      name: 'thumb-up',
+      type: 'material',
+      subtitle: i18n.t('notification.filters.votes'),
+    },
+  },
+  {
+    id: 'reminds',
+    icon: {
+      name: 'remind',
+      type: 'material',
+      subtitle: i18n.t('notification.filters.reminds'),
+    },
+  },
 ];
 
 const NotificationsTopBar = observer(

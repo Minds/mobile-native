@@ -57,8 +57,6 @@ const updateState = (newData: NotificationList, oldData: NotificationList) => {
   return { notifications: [] };
 };
 
-const Empty = <EmptyList />;
-
 const NotificationsScreen = observer(({ navigation }: PropsType) => {
   const [isRefreshing, setRefreshing] = useState(false);
   const theme = ThemedStyles.style;
@@ -104,8 +102,6 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
       refresh();
     }
   }, [notifications, refresh]);
-
-  //useFocusEffect(onFocus);
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener(
@@ -166,9 +162,9 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
           <NotificationPlaceHolder />
         </View>
       );
-    } else {
-      return Empty;
     }
+
+    return <EmptyList />;
   }, [error, loading, fetch]);
 
   const data = result?.notifications || [];
@@ -189,6 +185,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
         onRefresh={handleListRefresh}
         refreshing={isRefreshing}
         onViewableItemsChanged={onViewableItemsChanged}
+        contentContainerStyle={styles.containerStyle}
         viewabilityConfig={viewabilityConfig}
         ListEmptyComponent={ListEmptyComponent}
       />
@@ -213,6 +210,7 @@ const renderItem = (row: any): React.ReactElement => {
 export default NotificationsScreen;
 
 const styles = ThemedStyles.create({
+  containerStyle: { flexGrow: 1 },
   container: ['bgPrimaryBackground', 'flexContainer'],
   errorStyle: [
     'colorSecondaryText',

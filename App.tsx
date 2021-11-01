@@ -134,6 +134,9 @@ class App extends Component<Props, State> {
     }
   }
 
+  // Improvement: Notification tab section purpose quick-fixes
+  // Improvement: Chat pre-installation bottom sheet
+  //
   /**
    * Handle hardware back button
    */

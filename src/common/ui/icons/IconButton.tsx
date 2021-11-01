@@ -11,7 +11,6 @@ import { ICON_SIZES, ICON_SIZE_DEFAULT, IUISizing } from '~styles/Tokens';
 import { getNumericSize, getPropStyles } from '~ui/helpers';
 import PressableScale from '~/common/components/PressableScale';
 import withSpacer from '~ui/spacer/withSpacer';
-import ThemedStyles from '~/styles/ThemedStyles';
 
 const SLOP_PROP = 1 / 3;
 

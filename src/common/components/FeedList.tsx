@@ -7,7 +7,6 @@ import {
   RefreshControl,
 } from 'react-native';
 import { observer } from 'mobx-react';
-
 import Activity from '../../newsfeed/activity/Activity';
 import TileElement from '../../newsfeed/TileElement';
 import { ComponentsStyle } from '../../styles/Components';
