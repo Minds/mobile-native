@@ -30,6 +30,7 @@ const snapPoints = ['85%'];
 type PropsType = {
   commentsStore: CommentsStore;
   hideContent: boolean;
+  autoOpen?: boolean; // auto opens the bottom sheet when the component mounts
   title?: string;
   onChange?: (isOpen: number) => void;
 };
@@ -107,6 +108,7 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
     <BottomSheet
       key="commentSheet"
       ref={ref}
+      index={props.autoOpen ? 0 : -1}
       onChange={localStore.setOpen}
       snapPoints={snapPoints}
       handleComponent={renderHandle}>
