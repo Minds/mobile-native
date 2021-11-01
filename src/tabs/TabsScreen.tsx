@@ -11,7 +11,7 @@ import {
   Dimensions,
   PlatformIOSStatic,
 } from 'react-native';
-import PerformanceScreen from '../performance/PerformanceScreen';
+// import PerformanceScreen from '../performance/PerformanceScreen';
 import NewsfeedScreen from '../newsfeed/NewsfeedScreen';
 import NotificationsScreen from '../notifications/v3/NotificationsScreen';
 import ThemedStyles, { useMemoStyle } from '../styles/ThemedStyles';
