@@ -4,10 +4,10 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import i18nService from '../services/i18n.service';
 import MText from './MText';
 
-const EmptyList = () => {
+const EmptyList = ({ text }: { text: string }) => {
   return (
     <View style={containerStyle}>
-      <MText style={textStyle}>{i18nService.t('emptyList')}</MText>
+      <MText style={textStyle}>{text || i18nService.t('emptyList')}</MText>
     </View>
   );
 };

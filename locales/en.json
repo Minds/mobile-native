@@ -463,6 +463,13 @@
       "votes": "Votes",
       "reminds": "Reminds"
     },
+    "empty": {
+      "all": "You have no notifications",
+      "tags": "You have no tags notification",
+      "subscriptions": "You have no subscriptions notification",
+      "votes": "You have no votes notification",
+      "reminds": "You have no reminds notification"
+    },
     "verbs": {
       "vote_up": "voted up",
       "vote_down": "voted down",
