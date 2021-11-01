@@ -6,10 +6,8 @@ import { AVATAR_SIZE, UNIT } from '~styles/Tokens';
 import { Avatar } from './Avatar';
 
 export const AvatarCircled = ({ active, onPress, ...more }: any) => {
-  const containerStyle = [styles.container, active && styles.active];
-
   const avatar = (
-    <View style={containerStyle}>
+    <View style={active ? styles.active : styles.container}>
       <Avatar {...more} />
     </View>
   );
@@ -32,6 +30,9 @@ const styles = ThemedStyles.create({
     borderWidth: UNIT.XXS,
     borderColor: 'transparent',
   },
-  active: ['bcolorAvatarActive'],
+  active: [
+    { borderRadius: AVATAR_SIZE.large, borderWidth: UNIT.XXS },
+    'bcolorAvatarActive',
+  ],
   circled: ['bcolorAvatarCircled'],
 });

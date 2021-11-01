@@ -112,7 +112,7 @@ export function Icon({
   // const containerStyles: ViewStyle[] = [styles.container, styles[sizeNamed]];
   // nested is used to discard the container styles when it is nested inside another base component
   const containerStyles = useMemo(() => {
-    const base = [styles.container, styles[sizeNamed]];
+    const base = [styles[sizeNamed]];
     const extra = !nested ? getSpacingStylesNext(common) : null;
     if (extra) {
       base.push(extra);
@@ -150,7 +150,7 @@ export interface IIconNext extends UIBaseType {
   shadow?: boolean;
 }
 
-export function IconNext({
+function IconNextComponent({
   color,
   name = ICON_DEFAULT,
   size = ICON_SIZE_DEFAULT,
@@ -171,40 +171,37 @@ export function IconNext({
 
   const sizeNumeric = ICON_SIZES[size] || ICON_SIZES[ICON_SIZE_DEFAULT];
 
-  const iconColor = useMemo(() => {
-    // This function can be eventually memoized externally
-    return getIconColor({
-      color,
-      active,
-      activeColor: ICON_COLOR_ACTIVE,
-      disabled,
-      disabledColor: ICON_COLOR_DISABLED,
-      light,
-      lightColor: ICON_COLOR_LIGHT,
-      defaultColor: ICON_COLOR_DEFAULT,
-    });
-  }, [light, active, disabled, color]);
+  const iconColor = getIconColor({
+    color,
+    active,
+    activeColor: ICON_COLOR_ACTIVE,
+    disabled,
+    disabledColor: ICON_COLOR_DISABLED,
+    light,
+    lightColor: ICON_COLOR_LIGHT,
+    defaultColor: ICON_COLOR_DEFAULT,
+  });
 
   const realSize = sizeNumeric * ratio;
 
-  const containerStyles = useMemo(() => {
-    const base: ViewStyle[] = [styles.container, styles[size]];
+  let iconStyle;
 
-    if (top) {
-      const topStyle = { marginTop: top };
-      base.push(topStyle);
-    }
-
-    return StyleSheet.flatten(base);
-  }, [size, top]);
+  if (top) {
+    // we can use a simple global memoization here
+    iconStyle = shadow
+      ? { marginTop: top, ...styles.shadow }
+      : { marginTop: top };
+  } else {
+    iconStyle = shadow ? styles.shadow : undefined;
+  }
 
   const Component = Fonts[iconFont];
 
   return (
-    <View style={containerStyles}>
+    <View style={styles[size]}>
       <Component
         name={iconName}
-        style={StyleSheet.flatten(iconStyles)}
+        style={iconStyle}
         size={realSize}
         color={iconColor}
         testID={testID}
@@ -213,15 +210,9 @@ export function IconNext({
   );
 }
 
-export const IconNextSpacer = withSpacer(IconNext);
+export const IconNext = withSpacer(IconNextComponent);
 
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    overflow: 'hidden',
-  },
   micro: {
     width: ICON_SIZES.micro,
     height: ICON_SIZES.micro,
@@ -232,22 +223,42 @@ const styles = StyleSheet.create({
     textShadowRadius: 3,
   },
   tiny: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden',
     width: ICON_SIZES.tiny,
     height: ICON_SIZES.tiny,
   },
   small: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden',
     width: ICON_SIZES.small,
     height: ICON_SIZES.small,
   },
   medium: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden',
     width: ICON_SIZES.medium,
     height: ICON_SIZES.medium,
   },
   large: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden',
     width: ICON_SIZES.large,
     height: ICON_SIZES.large,
   },
   huge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden',
     width: ICON_SIZES.huge,
     height: ICON_SIZES.huge,
   },

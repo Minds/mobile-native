@@ -3,6 +3,7 @@ import { Text, TextProps, TouchableWithoutFeedback } from 'react-native';
 import type { FONT_FAMILY } from '~styles/Tokens';
 import { UNIT } from '~styles/Tokens';
 import ThemedStyles from '~styles/ThemedStyles';
+import { SpacerPropType, withSpacer } from '~ui';
 
 const hitSlop = {
   top: UNIT.XS,
@@ -23,9 +24,10 @@ export type TypographyPropsType = {
   flat?: boolean;
   children?: React.ReactNode;
   onPress?: () => void;
-} & Omit<TextProps, 'style'>;
+} & SpacerPropType &
+  Omit<TextProps, 'style'>;
 
-export const Typography = ({
+export const TypographyComponent = ({
   align = 'left',
   children,
   color = 'primary',
@@ -55,3 +57,5 @@ export const Typography = ({
     </TouchableWithoutFeedback>
   );
 };
+
+export const Typography = withSpacer(TypographyComponent);

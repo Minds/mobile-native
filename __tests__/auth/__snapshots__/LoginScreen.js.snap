@@ -165,11 +165,9 @@ exports[`LoginScreen component should renders correctly 1`] = `
                   Object {
                     "alignItems": "center",
                     "flexDirection": "row",
+                    "height": 28,
                     "justifyContent": "center",
                     "overflow": "hidden",
-                  },
-                  Object {
-                    "height": 28,
                     "width": 28,
                   },
                 ]

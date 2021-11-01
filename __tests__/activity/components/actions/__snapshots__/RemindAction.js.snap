@@ -2,7 +2,7 @@
 
 exports[`Thumb action component renders correctly 1`] = `
 <Fragment>
-  <IconButtonNext
+  <withSpacer(IconButtonNextComponent)
     disabled={false}
     extra={null}
     fill={true}

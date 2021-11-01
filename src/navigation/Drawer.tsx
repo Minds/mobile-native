@@ -6,7 +6,7 @@ import FitScrollView from '../common/components/FitScrollView';
 import requirePhoneValidation from '../common/hooks/requirePhoneValidation';
 import {
   H2,
-  H3S,
+  H3,
   B1,
   Spacer,
   Row,
@@ -206,9 +206,9 @@ const DrawerNavItem = ({ icon, name, onPress }) => {
     <PressableLine onPress={onPress}>
       <Row align="centerStart" flex left="XL2" vertical="L">
         <Icon name={icon} />
-        <H3S left="S" font="bold">
+        <H3 left="S" font="bold">
           {name}
-        </H3S>
+        </H3>
       </Row>
     </PressableLine>
   );

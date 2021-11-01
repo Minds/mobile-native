@@ -20,7 +20,7 @@ import UserModel from '../../channel/UserModel';
 import { NavigationRouteV5 } from '@sentry/react-native/dist/js/tracing/reactnavigationv5';
 import { ChannelContext } from '../../channel/v2/ChannelContext';
 import MText from '../../common/components/MText';
-import { B1, B2, B3, Row, HairlineRow, IconNextSpacer } from '~ui';
+import { B1, B2, B3, Row, HairlineRow, IconNext } from '~ui';
 
 const DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
 
@@ -139,7 +139,6 @@ class OwnerBlock extends PureComponent<PropsType> {
    * Render
    */
   render() {
-    const theme = ThemedStyles.style;
     const channel = this.props.entity.ownerObj;
     const rightToolbar = this.props.rightToolbar || null;
 
@@ -147,7 +146,7 @@ class OwnerBlock extends PureComponent<PropsType> {
     const remind = this.props.entity.remind_users ? (
       <HairlineRow>
         <Row align="center" horizontal="XL" vertical="S">
-          <IconNextSpacer name="remind" size="tiny" active right="XS" />
+          <IconNext name="remind" size="tiny" active right="XS" />
           <B3>{i18nService.t('remindedBy')} </B3>
           {this.props.entity.remind_users.map(u => (
             <B3
@@ -233,14 +232,6 @@ const styles = StyleSheet.create({
 });
 
 const groupNameStyle = ThemedStyles.combine('fontM', 'colorSecondaryText');
-
-const remindContainer = ThemedStyles.combine(
-  // 'paddingVertical2x',
-  // 'paddingHorizontal4x',
-  'borderBottomHair',
-  'bcolorPrimaryBorder',
-  'rowJustifyStart',
-);
 
 const nameTouchableStyle = ThemedStyles.combine(
   'rowJustifyStart',

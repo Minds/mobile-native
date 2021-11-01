@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Comment action component renders correctly 1`] = `
-<IconButtonNext
+<withSpacer(IconButtonNextComponent)
   extra={
-    <Unknown
+    <withSpacer(Counter)
       left="XS"
     />
   }

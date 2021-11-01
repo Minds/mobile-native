@@ -18,7 +18,6 @@ export const Avatar = ({
   icon,
   onPress,
 }: any) => {
-  const containerStyle = [styles.container, border && styles[border]];
   let iconView: any = null;
 
   if (icon) {
@@ -26,7 +25,7 @@ export const Avatar = ({
   }
 
   const avatar = (
-    <View style={containerStyle}>
+    <View style={border && styles[border]}>
       <FastImage source={source} style={styles[size]} />
       {iconView}
     </View>
@@ -40,11 +39,14 @@ export const Avatar = ({
 };
 
 const styles = ThemedStyles.create({
-  container: {
-    borderRadius: AVATAR_SIZE.large,
-  },
-  active: [{ borderWidth: UNIT.XXS }, 'bcolorAvatarActive'],
-  solid: [{ borderWidth: UNIT.XXS }, 'bcolorAvatarCircled'],
+  active: [
+    { borderWidth: UNIT.XXS, borderRadius: AVATAR_SIZE.large },
+    'bcolorAvatarActive',
+  ],
+  solid: [
+    { borderWidth: UNIT.XXS, borderRadius: AVATAR_SIZE.large },
+    'bcolorAvatarCircled',
+  ],
   transparent: { borderColor: 'transparent', borderWidth: UNIT.XXS },
   icon: {
     alignItems: 'center',

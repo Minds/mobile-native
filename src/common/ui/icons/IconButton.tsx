@@ -34,7 +34,7 @@ export interface IIconButtonNext extends IIconNext {
   fill?: boolean;
 }
 
-export const IconButtonNext = ({
+const IconButtonNextComponent = ({
   onPress,
   testID,
   style,
@@ -94,7 +94,7 @@ export const IconButtonNext = ({
   );
 };
 
-export const IconButtonNextSpaced = withSpacer(IconButtonNext);
+export const IconButtonNext = withSpacer(IconButtonNextComponent);
 
 export function IconButton({
   onPress,

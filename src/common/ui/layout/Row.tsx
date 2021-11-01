@@ -7,18 +7,18 @@ export const Row = ({
   flex,
   stretch,
   align,
-  style,
+  containerStyle,
   ...more
 }: RowPropType & SpacerPropType) => {
-  const containerStyle: ViewStyle = StyleSheet.flatten([
+  const spacerStyle: ViewStyle = StyleSheet.flatten([
     styles.container,
     align && styles[align],
     flex && styles.flex,
     stretch && styles.stretch,
-    style && style,
+    containerStyle && containerStyle,
   ]);
 
-  return <Spacer style={containerStyle} {...more} />;
+  return <Spacer containerStyle={spacerStyle} {...more} />;
 };
 
 const styles = StyleSheet.create({
