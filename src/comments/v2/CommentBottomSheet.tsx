@@ -1,5 +1,4 @@
 import React, { forwardRef, useCallback } from 'react';
-import { Dimensions } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import CommentList from './CommentList';
 import CommentsStore from './CommentsStore';
@@ -111,6 +110,7 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
       index={props.autoOpen ? 0 : -1}
       onChange={localStore.setOpen}
       snapPoints={snapPoints}
+      enableContentPanningGesture={true}
       handleComponent={renderHandle}>
       {!props.hideContent && ( // we disable the navigator until the screen is focused (for the post swiper)
         <Stack.Navigator screenOptions={screenOptions}>
