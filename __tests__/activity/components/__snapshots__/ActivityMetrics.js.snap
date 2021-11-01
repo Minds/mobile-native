@@ -21,14 +21,14 @@ exports[`activity metrics component renders correctly 1`] = `
     style={
       Array [
         Object {
-          "color": "#43434D",
+          "color": "#FFFFFF",
         },
         Object {
           "fontFamily": "Roboto",
         },
         Array [
           Object {
-            "color": "#72727C",
+            "color": "#B8C1CA",
           },
           Object {
             "fontSize": 14,

@@ -131,7 +131,7 @@ exports[`renders correctly 1`] = `
         style={
           Array [
             Object {
-              "backgroundColor": "#FFFFFF",
+              "backgroundColor": "#242A30",
             },
             Object {
               "borderTopLeftRadius": 20,
@@ -162,7 +162,7 @@ exports[`renders correctly 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#43434D",
+                  "color": "#FFFFFF",
                 },
                 Object {
                   "fontFamily": "Roboto",
@@ -172,7 +172,7 @@ exports[`renders correctly 1`] = `
                     "fontSize": 18,
                   },
                   Object {
-                    "color": "#43434D",
+                    "color": "#FFFFFF",
                   },
                   Object {
                     "paddingVertical": 16,
@@ -190,7 +190,7 @@ exports[`renders correctly 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#43434D",
+                  "color": "#FFFFFF",
                 },
                 Object {
                   "fontFamily": "Roboto",
@@ -200,7 +200,7 @@ exports[`renders correctly 1`] = `
                     "fontSize": 18,
                   },
                   Object {
-                    "color": "#43434D",
+                    "color": "#FFFFFF",
                   },
                   Object {
                     "paddingVertical": 16,
@@ -223,7 +223,7 @@ exports[`renders correctly 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#43434D",
+                  "color": "#FFFFFF",
                 },
                 Object {
                   "fontFamily": "Roboto",
@@ -258,7 +258,7 @@ exports[`renders correctly 1`] = `
                 "paddingTop": 10,
               },
               Object {
-                "backgroundColor": "#F6F7F7",
+                "backgroundColor": "#1A2025",
               },
               Object {
                 "borderTopWidth": 1,
@@ -267,14 +267,14 @@ exports[`renders correctly 1`] = `
                 "borderBottomWidth": 1,
               },
               Object {
-                "borderColor": "#D3DBE3",
+                "borderColor": "#414C57",
               },
               Array [
                 Object {
-                  "backgroundColor": "#F6F7F7",
+                  "backgroundColor": "#1A2025",
                 },
                 Object {
-                  "borderColor": "#D3DBE3",
+                  "borderColor": "#414C57",
                 },
               ],
             ]
@@ -301,7 +301,7 @@ exports[`renders correctly 1`] = `
                   style={
                     Array [
                       Object {
-                        "color": "#43434D",
+                        "color": "#FFFFFF",
                       },
                       Object {
                         "fontFamily": "Roboto",
@@ -314,10 +314,10 @@ exports[`renders correctly 1`] = `
                           "marginBottom": 0,
                         },
                         Object {
-                          "color": "#72727C",
+                          "color": "#B8C1CA",
                         },
                         Object {
-                          "color": "#43434D",
+                          "color": "#FFFFFF",
                         },
                       ],
                     ]
@@ -334,17 +334,17 @@ exports[`renders correctly 1`] = `
               containerStyle={
                 Array [
                   Object {
-                    "backgroundColor": "#F6F7F7",
+                    "backgroundColor": "#1A2025",
                   },
                   Object {
-                    "borderColor": "#D3DBE3",
+                    "borderColor": "#414C57",
                   },
                 ]
               }
-              keyboardAppearance="light"
+              keyboardAppearance="dark"
               labelStyle={
                 Object {
-                  "color": "#43434D",
+                  "color": "#FFFFFF",
                 }
               }
               onChangeText={[Function]}
@@ -357,10 +357,10 @@ exports[`renders correctly 1`] = `
                 Array [
                   Object {
                     "backgroundColor": "transparent",
-                    "borderColor": "#D3DBE3",
+                    "borderColor": "#414C57",
                     "borderRadius": 2,
                     "borderWidth": 1,
-                    "color": "#43434D",
+                    "color": "#FFFFFF",
                     "fontFamily": "Roboto",
                     "fontSize": 16,
                     "lineHeight": 21,
@@ -379,10 +379,10 @@ exports[`renders correctly 1`] = `
                       "fontSize": 18,
                     },
                     Object {
-                      "color": "#43434D",
+                      "color": "#FFFFFF",
                     },
                     Object {
-                      "color": "#43434D",
+                      "color": "#FFFFFF",
                     },
                   ],
                 ]

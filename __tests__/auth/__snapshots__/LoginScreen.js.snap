@@ -10,7 +10,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
       },
       Array [
         Object {
-          "backgroundColor": "#FFFFFF",
+          "backgroundColor": "#242A30",
         },
         Object {
           "borderTopLeftRadius": 15,
@@ -20,7 +20,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
         },
       ],
       Object {
-        "backgroundColor": "#F8FAFA",
+        "backgroundColor": "#1E242A",
       },
     ]
   }
@@ -36,7 +36,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
             "paddingTop": 10,
           },
           Object {
-            "backgroundColor": "#F8FAFA",
+            "backgroundColor": "#1E242A",
           },
         ],
         undefined,
@@ -59,7 +59,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
               "width": 30,
             },
             Object {
-              "backgroundColor": "#E3E4E9",
+              "backgroundColor": "#404E53",
             },
           ]
         }
@@ -79,7 +79,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": "#43434D",
+            "color": "#FFFFFF",
           },
           Object {
             "fontFamily": "Roboto",
@@ -182,7 +182,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": "#7D7D82",
+                      "color": "#AEB0B8",
                       "fontSize": 28,
                     },
                     Object {},
@@ -220,14 +220,14 @@ exports[`LoginScreen component should renders correctly 1`] = `
             "paddingTop": 10,
           },
           Object {
-            "backgroundColor": "#F6F7F7",
+            "backgroundColor": "#1A2025",
           },
           Object {
             "borderTopWidth": 1,
           },
           null,
           Object {
-            "borderColor": "#D3DBE3",
+            "borderColor": "#414C57",
           },
           undefined,
         ]
@@ -254,7 +254,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
               style={
                 Array [
                   Object {
-                    "color": "#43434D",
+                    "color": "#FFFFFF",
                   },
                   Object {
                     "fontFamily": "Roboto",
@@ -267,11 +267,11 @@ exports[`LoginScreen component should renders correctly 1`] = `
                       "marginBottom": 0,
                     },
                     Object {
-                      "color": "#72727C",
+                      "color": "#B8C1CA",
                     },
                     Array [
                       Object {
-                        "color": "#72727C",
+                        "color": "#B8C1CA",
                       },
                       Object {
                         "fontSize": 16,
@@ -294,11 +294,11 @@ exports[`LoginScreen component should renders correctly 1`] = `
           autoCapitalize="none"
           autoCompleteType="username"
           autoFocus={true}
-          keyboardAppearance="light"
+          keyboardAppearance="dark"
           labelStyle={
             Array [
               Object {
-                "color": "#72727C",
+                "color": "#B8C1CA",
               },
               Object {
                 "fontSize": 16,
@@ -318,10 +318,10 @@ exports[`LoginScreen component should renders correctly 1`] = `
             Array [
               Object {
                 "backgroundColor": "transparent",
-                "borderColor": "#D3DBE3",
+                "borderColor": "#414C57",
                 "borderRadius": 2,
                 "borderWidth": 1,
-                "color": "#43434D",
+                "color": "#FFFFFF",
                 "fontFamily": "Roboto",
                 "fontSize": 16,
                 "lineHeight": 21,
@@ -340,7 +340,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                   "fontSize": 18,
                 },
                 Object {
-                  "color": "#43434D",
+                  "color": "#FFFFFF",
                 },
                 undefined,
               ],
@@ -370,7 +370,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
               "paddingTop": 10,
             },
             Object {
-              "backgroundColor": "#F6F7F7",
+              "backgroundColor": "#1A2025",
             },
             Object {
               "borderTopWidth": 1,
@@ -379,7 +379,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
               "borderBottomWidth": 1,
             },
             Object {
-              "borderColor": "#D3DBE3",
+              "borderColor": "#414C57",
             },
             undefined,
           ]
@@ -406,7 +406,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": "#43434D",
+                      "color": "#FFFFFF",
                     },
                     Object {
                       "fontFamily": "Roboto",
@@ -419,11 +419,11 @@ exports[`LoginScreen component should renders correctly 1`] = `
                         "marginBottom": 0,
                       },
                       Object {
-                        "color": "#72727C",
+                        "color": "#B8C1CA",
                       },
                       Array [
                         Object {
-                          "color": "#72727C",
+                          "color": "#B8C1CA",
                         },
                         Object {
                           "fontSize": 16,
@@ -445,11 +445,11 @@ exports[`LoginScreen component should renders correctly 1`] = `
             allowFontScaling={true}
             autoCapitalize="none"
             autoCompleteType="password"
-            keyboardAppearance="light"
+            keyboardAppearance="dark"
             labelStyle={
               Array [
                 Object {
-                  "color": "#72727C",
+                  "color": "#B8C1CA",
                 },
                 Object {
                   "fontSize": 16,
@@ -470,10 +470,10 @@ exports[`LoginScreen component should renders correctly 1`] = `
               Array [
                 Object {
                   "backgroundColor": "transparent",
-                  "borderColor": "#D3DBE3",
+                  "borderColor": "#414C57",
                   "borderRadius": 2,
                   "borderWidth": 1,
-                  "color": "#43434D",
+                  "color": "#FFFFFF",
                   "fontFamily": "Roboto",
                   "fontSize": 16,
                   "lineHeight": 21,
@@ -492,7 +492,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                     "fontSize": 18,
                   },
                   Object {
-                    "color": "#43434D",
+                    "color": "#FFFFFF",
                   },
                   undefined,
                 ],
@@ -521,7 +521,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                 "top": 30,
               },
               Object {
-                "color": "#72727C",
+                "color": "#B8C1CA",
               },
             ],
             Object {
@@ -551,7 +551,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
             "justifyContent": "center",
           },
           Object {
-            "backgroundColor": "#FFFFFF",
+            "backgroundColor": "#242A30",
             "borderColor": "#1B85D6",
             "borderRadius": 21,
             "borderWidth": 1,
@@ -584,7 +584,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
         style={
           Array [
             Object {
-              "color": "#43434D",
+              "color": "#FFFFFF",
             },
             Object {
               "fontFamily": "Roboto",
@@ -594,10 +594,10 @@ exports[`LoginScreen component should renders correctly 1`] = `
                 "fontSize": 17,
               },
               Object {
-                "color": "#E3E4E9",
+                "color": "#404E53",
               },
               Object {
-                "color": "#43434D",
+                "color": "#FFFFFF",
               },
               Object {
                 "fontWeight": "500",
@@ -623,14 +623,14 @@ exports[`LoginScreen component should renders correctly 1`] = `
         style={
           Array [
             Object {
-              "color": "#43434D",
+              "color": "#FFFFFF",
             },
             Object {
               "fontFamily": "Roboto",
             },
             Array [
               Object {
-                "color": "#43434D",
+                "color": "#FFFFFF",
               },
               Object {
                 "fontSize": 16,
@@ -790,7 +790,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
               Array [
                 Array [
                   Object {
-                    "backgroundColor": "#FFFFFF",
+                    "backgroundColor": "#242A30",
                   },
                   Object {
                     "paddingBottom": 8,
@@ -809,14 +809,14 @@ exports[`LoginScreen component should renders correctly 1`] = `
               style={
                 Array [
                   Object {
-                    "color": "#43434D",
+                    "color": "#FFFFFF",
                   },
                   Object {
                     "fontFamily": "Roboto",
                   },
                   Array [
                     Object {
-                      "color": "#43434D",
+                      "color": "#FFFFFF",
                     },
                     Object {
                       "marginTop": 20,
@@ -851,7 +851,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                   },
                   Array [
                     Object {
-                      "color": "#43434D",
+                      "color": "#FFFFFF",
                     },
                     Object {
                       "position": "absolute",
@@ -875,7 +875,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": "#43434D",
+                      "color": "#FFFFFF",
                     },
                     Object {
                       "fontFamily": "Roboto",
@@ -901,10 +901,10 @@ exports[`LoginScreen component should renders correctly 1`] = `
                         "paddingHorizontal": 16,
                       },
                       Object {
-                        "borderColor": "#D3DBE3",
+                        "borderColor": "#414C57",
                       },
                       Object {
-                        "color": "#72727C",
+                        "color": "#B8C1CA",
                       },
                     ],
                   ]
@@ -922,7 +922,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                       "paddingTop": 10,
                     },
                     Object {
-                      "backgroundColor": "#F6F7F7",
+                      "backgroundColor": "#1A2025",
                     },
                     Object {
                       "borderTopWidth": 1,
@@ -931,14 +931,14 @@ exports[`LoginScreen component should renders correctly 1`] = `
                       "borderBottomWidth": 1,
                     },
                     Object {
-                      "borderColor": "#D3DBE3",
+                      "borderColor": "#414C57",
                     },
                     Array [
                       Object {
-                        "backgroundColor": "#F8FAFA",
+                        "backgroundColor": "#1E242A",
                       },
                       Object {
-                        "borderColor": "#D3DBE3",
+                        "borderColor": "#414C57",
                       },
                     ],
                   ]
@@ -965,7 +965,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                         style={
                           Array [
                             Object {
-                              "color": "#43434D",
+                              "color": "#FFFFFF",
                             },
                             Object {
                               "fontFamily": "Roboto",
@@ -978,11 +978,11 @@ exports[`LoginScreen component should renders correctly 1`] = `
                                 "marginBottom": 0,
                               },
                               Object {
-                                "color": "#72727C",
+                                "color": "#B8C1CA",
                               },
                               Array [
                                 Object {
-                                  "color": "#72727C",
+                                  "color": "#B8C1CA",
                                 },
                               ],
                             ],
@@ -1000,18 +1000,18 @@ exports[`LoginScreen component should renders correctly 1`] = `
                     containerStyle={
                       Array [
                         Object {
-                          "backgroundColor": "#F8FAFA",
+                          "backgroundColor": "#1E242A",
                         },
                         Object {
-                          "borderColor": "#D3DBE3",
+                          "borderColor": "#414C57",
                         },
                       ]
                     }
-                    keyboardAppearance="light"
+                    keyboardAppearance="dark"
                     labelStyle={
                       Array [
                         Object {
-                          "color": "#72727C",
+                          "color": "#B8C1CA",
                         },
                       ]
                     }
@@ -1024,10 +1024,10 @@ exports[`LoginScreen component should renders correctly 1`] = `
                       Array [
                         Object {
                           "backgroundColor": "transparent",
-                          "borderColor": "#D3DBE3",
+                          "borderColor": "#414C57",
                           "borderRadius": 2,
                           "borderWidth": 1,
-                          "color": "#43434D",
+                          "color": "#FFFFFF",
                           "fontFamily": "Roboto",
                           "fontSize": 16,
                           "lineHeight": 21,
@@ -1046,11 +1046,11 @@ exports[`LoginScreen component should renders correctly 1`] = `
                             "fontSize": 18,
                           },
                           Object {
-                            "color": "#43434D",
+                            "color": "#FFFFFF",
                           },
                           Array [
                             Object {
-                              "color": "#43434D",
+                              "color": "#FFFFFF",
                             },
                           ],
                         ],
@@ -1072,7 +1072,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                     },
                     Object {},
                     Object {
-                      "backgroundColor": "#FFFFFF",
+                      "backgroundColor": "#242A30",
                       "borderColor": "#1B85D6",
                       "borderRadius": 21,
                       "borderWidth": 1,
@@ -1084,7 +1084,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                         "margin": 24,
                       },
                       Object {
-                        "backgroundColor": "#FFFFFF",
+                        "backgroundColor": "#242A30",
                       },
                     ],
                   ]
@@ -1095,7 +1095,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                   style={
                     Array [
                       Object {
-                        "color": "#43434D",
+                        "color": "#FFFFFF",
                       },
                       Object {
                         "fontFamily": "Roboto",
@@ -1105,7 +1105,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                           "fontSize": 17,
                         },
                         Object {
-                          "color": "#43434D",
+                          "color": "#FFFFFF",
                         },
                         undefined,
                         Object {
