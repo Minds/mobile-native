@@ -2337,6 +2337,7 @@ exports[`Activity screen component renders correctly  1`] = `
     }
   />
   <CommentBottomSheet
+    autoOpen={false}
     commentsStore={
       CommentsStore {
         "attachment": AttachmentStore {
