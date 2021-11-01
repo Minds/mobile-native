@@ -6,7 +6,7 @@ exports[`blog card component should renders correctly 1`] = `
     onPress={[Function]}
     style={
       Object {
-        "backgroundColor": "#F6F7F7",
+        "backgroundColor": "#1A2025",
       }
     }
   >
@@ -69,7 +69,7 @@ exports[`blog card component should renders correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#43434D",
+                "color": "#FFFFFF",
               },
               Object {
                 "fontFamily": "Roboto",
@@ -281,7 +281,7 @@ exports[`blog card component should renders correctly 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#43434D",
+                  "color": "#FFFFFF",
                 },
                 Object {
                   "fontFamily": "Roboto",
@@ -306,7 +306,7 @@ exports[`blog card component should renders correctly 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#43434D",
+                  "color": "#FFFFFF",
                 },
                 Object {
                   "fontFamily": "Roboto",
@@ -342,7 +342,7 @@ exports[`blog card component should renders correctly 1`] = `
                       "fontSize": 28,
                     },
                     Object {
-                      "color": "#9B9B9B",
+                      "color": "#797B82",
                     },
                     Object {
                       "fontFamily": "Material Icons",

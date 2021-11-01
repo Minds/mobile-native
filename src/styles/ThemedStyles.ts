@@ -42,7 +42,7 @@ export class ThemedStylesStore {
   style: Styles;
 
   constructor() {
-    this.theme = storages.app.getInt('theme') || 0;
+    this.theme = storages.app.getInt('theme') ?? 1;
     this.style = buildStyle(this.theme === 0 ? LIGHT_THEME : DARK_THEME);
     this.generateNavStyle();
   }

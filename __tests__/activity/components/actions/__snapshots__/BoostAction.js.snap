@@ -48,7 +48,7 @@ exports[`Boost action component renders correctly 1`] = `
               "fontSize": 21,
             },
             Object {
-              "color": "#72727C",
+              "color": "#B8C1CA",
             },
             Object {
               "fontFamily": "Material Design Icons",
