@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { Avatar, Column, B3S } from '~ui';
+import { Avatar, Column, B3 } from '~ui';
 import excerpt from '../common/helpers/excerpt';
 import type { PortraitBarItem } from './createPortraitStore';
 import navigationService from '../navigation/NavigationService';
@@ -29,7 +29,7 @@ export default observer(function PortraitContentBarItem(props: PropsType) {
         border={props.item.unseen ? 'active' : 'transparent'}
         size="medium"
       />
-      <B3S top="XXS">{excerpt(props.item.user.username, 10)}</B3S>
+      <B3 top="XXS">{excerpt(props.item.user.username, 10)}</B3>
     </Column>
   );
 });

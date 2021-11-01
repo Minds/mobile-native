@@ -134,11 +134,9 @@ exports[`Activity screen component renders correctly  1`] = `
                     Object {
                       "alignItems": "center",
                       "flexDirection": "row",
+                      "height": 40,
                       "justifyContent": "center",
                       "overflow": "hidden",
-                    },
-                    Object {
-                      "height": 40,
                       "width": 40,
                     },
                   ]
@@ -298,56 +296,62 @@ exports[`Activity screen component renders correctly  1`] = `
           }
         >
           <View
-            style={Object {}}
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                  "position": "relative",
+                },
+                undefined,
+              ]
+            }
           >
             <View
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              hitSlop={
+                Object {
+                  "bottom": 9.333333333333332,
+                  "left": 9.333333333333332,
+                  "right": 9.333333333333332,
+                  "top": 9.333333333333332,
+                }
+              }
+              onBlur={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
               style={
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "justifyContent": "center",
-                    "position": "relative",
-                  },
-                  undefined,
-                ]
+                Object {
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                }
               }
             >
               <View
-                accessible={true}
-                collapsable={false}
-                focusable={true}
-                hitSlop={
-                  Object {
-                    "bottom": 9.333333333333332,
-                    "left": 9.333333333333332,
-                    "right": 9.333333333333332,
-                    "top": 9.333333333333332,
-                  }
-                }
-                onBlur={[Function]}
-                onClick={[Function]}
-                onFocus={[Function]}
-                onResponderGrant={[Function]}
-                onResponderMove={[Function]}
-                onResponderRelease={[Function]}
-                onResponderTerminate={[Function]}
-                onResponderTerminationRequest={[Function]}
-                onStartShouldSetResponder={[Function]}
                 style={
                   Object {
-                    "alignItems": "center",
-                    "justifyContent": "center",
+                    "transform": Array [
+                      Object {
+                        "scale": 1,
+                      },
+                    ],
                   }
                 }
               >
                 <View
                   style={
                     Object {
-                      "transform": Array [
-                        Object {
-                          "scale": 1,
-                        },
-                      ],
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                      "justifyContent": "center",
                     }
                   }
                 >
@@ -356,43 +360,33 @@ exports[`Activity screen component renders correctly  1`] = `
                       Object {
                         "alignItems": "center",
                         "flexDirection": "row",
+                        "height": 28,
                         "justifyContent": "center",
+                        "overflow": "hidden",
+                        "width": 28,
                       }
                     }
                   >
-                    <View
+                    <Text
+                      allowFontScaling={false}
                       style={
-                        Object {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                          "height": 28,
-                          "justifyContent": "center",
-                          "overflow": "hidden",
-                          "width": 28,
-                        }
+                        Array [
+                          Object {
+                            "color": "#7D7D82",
+                            "fontSize": 25.76,
+                          },
+                          undefined,
+                          Object {
+                            "fontFamily": "Material Icons",
+                            "fontStyle": "normal",
+                            "fontWeight": "normal",
+                          },
+                          Object {},
+                        ]
                       }
                     >
-                      <Text
-                        allowFontScaling={false}
-                        style={
-                          Array [
-                            Object {
-                              "color": "#7D7D82",
-                              "fontSize": 25.76,
-                            },
-                            Object {},
-                            Object {
-                              "fontFamily": "Material Icons",
-                              "fontStyle": "normal",
-                              "fontWeight": "normal",
-                            },
-                            Object {},
-                          ]
-                        }
-                      >
-                        
-                      </Text>
-                    </View>
+                      
+                    </Text>
                   </View>
                 </View>
               </View>
@@ -883,11 +877,9 @@ exports[`Activity screen component renders correctly  1`] = `
                     Object {
                       "alignItems": "center",
                       "flexDirection": "row",
+                      "height": 20,
                       "justifyContent": "center",
                       "overflow": "hidden",
-                    },
-                    Object {
-                      "height": 20,
                       "width": 20,
                     },
                     Object {},
@@ -985,11 +977,9 @@ exports[`Activity screen component renders correctly  1`] = `
                     Object {
                       "alignItems": "center",
                       "flexDirection": "row",
+                      "height": 20,
                       "justifyContent": "center",
                       "overflow": "hidden",
-                    },
-                    Object {
-                      "height": 20,
                       "width": 20,
                     },
                     Object {},
@@ -1118,7 +1108,6 @@ exports[`Activity screen component renders correctly  1`] = `
                       "flexDirection": "row",
                       "height": 20,
                       "justifyContent": "center",
-                      "marginTop": 1,
                       "overflow": "hidden",
                       "width": 20,
                     }
@@ -1132,7 +1121,9 @@ exports[`Activity screen component renders correctly  1`] = `
                           "color": "#7D7D82",
                           "fontSize": 18.400000000000002,
                         },
-                        Object {},
+                        Object {
+                          "marginTop": 1,
+                        },
                         Object {
                           "fontFamily": "Material Design Icons",
                           "fontStyle": "normal",
@@ -1287,7 +1278,6 @@ exports[`Activity screen component renders correctly  1`] = `
                       "flexDirection": "row",
                       "height": 20,
                       "justifyContent": "center",
-                      "marginTop": -1,
                       "overflow": "hidden",
                       "width": 20,
                     }
@@ -1301,7 +1291,9 @@ exports[`Activity screen component renders correctly  1`] = `
                           "color": "#7D7D82",
                           "fontSize": 20.8,
                         },
-                        Object {},
+                        Object {
+                          "marginTop": -1,
+                        },
                         Object {
                           "fontFamily": "Material Design Icons",
                           "fontStyle": "normal",
@@ -1411,7 +1403,6 @@ exports[`Activity screen component renders correctly  1`] = `
                       "flexDirection": "row",
                       "height": 20,
                       "justifyContent": "center",
-                      "marginTop": -2,
                       "overflow": "hidden",
                       "width": 20,
                     }
@@ -1425,7 +1416,9 @@ exports[`Activity screen component renders correctly  1`] = `
                           "color": "#7D7D82",
                           "fontSize": 20,
                         },
-                        Object {},
+                        Object {
+                          "marginTop": -2,
+                        },
                         Object {
                           "fontFamily": "Material Icons",
                           "fontStyle": "normal",

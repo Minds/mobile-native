@@ -15,17 +15,7 @@ import OrderReportModal, {
 import { startCase as _startCase } from 'lodash';
 import i18n from '../common/services/i18n.service';
 import mindsConfigService from '../common/services/minds-config.service';
-import {
-  B1,
-  B2,
-  B3,
-  B3S,
-  ScreenHeader,
-  ScreenSection,
-  Spacer,
-  Row,
-  Screen,
-} from '~ui';
+import { B1, B2, B3, ScreenHeader, ScreenSection, Row, Screen } from '~ui';
 
 type PaymentMethod = 'card' | 'bank' | 'crypto';
 type PaymentOption = { type: PaymentMethod; name: string };
@@ -87,7 +77,7 @@ export default observer(() => {
           <Row
             align="centerBetween"
             bottom="XL"
-            style={[
+            containerStyle={[
               styles.optionsContainer,
               theme.border2x,
               styles.buttonsContainer,
@@ -122,7 +112,7 @@ export default observer(() => {
               onPress={() => store.setAggressTerms(!store.aggressTerms)}
               containerStyle={theme.checkbox}
               title={
-                <B3S left="XS">
+                <B3 left="XS">
                   {i18n.to(
                     'buyTokensScreen.terms',
                     {},
@@ -140,7 +130,7 @@ export default observer(() => {
                       ),
                     },
                   )}
-                </B3S>
+                </B3>
               }
             />
           </View>

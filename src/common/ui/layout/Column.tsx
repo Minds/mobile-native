@@ -7,18 +7,18 @@ export const Column = ({
   align,
   flex,
   stretch,
-  style,
+  containerStyle,
   ...more
 }: ColumnPropType & SpacerPropType) => {
-  const containerStyle: ViewStyle = StyleSheet.flatten([
+  const style: ViewStyle = StyleSheet.flatten([
     styles.container,
     align && styles[align],
     flex && styles.flex,
     stretch && styles.stretch,
-    style && style,
+    containerStyle && containerStyle,
   ]);
 
-  return <Spacer style={containerStyle} {...more} />;
+  return <Spacer containerStyle={style} {...more} />;
 };
 
 const styles = StyleSheet.create({

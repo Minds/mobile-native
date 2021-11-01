@@ -7,8 +7,8 @@ import React, {
 import { FlatList } from 'react-native-gesture-handler';
 import { PlaceholderMedia, Fade, Placeholder } from 'rn-placeholder';
 import { observer } from 'mobx-react';
-import { StyleSheet, View } from 'react-native';
-import { Icon, B3S, Column } from '~ui';
+import { View } from 'react-native';
+import { Icon, B3, Column } from '~ui';
 import { AVATAR_SIZE } from '~/styles/Tokens';
 import PressableScale from '~/common/components/PressableScale';
 import ThemedStyles from '../styles/ThemedStyles';
@@ -21,7 +21,6 @@ import { useStores } from '../common/hooks/use-stores';
  * Header component
  */
 const Header = () => {
-  const theme = ThemedStyles.style;
   const navigation = useNavigation<any>();
   const nav = useCallback(
     () => navigation.push('Capture', { portrait: true }),
@@ -34,14 +33,14 @@ const Header = () => {
         <Column
           horizontal="XXS"
           vertical="XXS"
-          style={[styles.addCircle, theme.bgTertiaryBackground]}
+          containerStyle={styles.addCircle}
           align="center">
           <Icon name="plus" />
         </Column>
       </PressableScale>
-      <B3S color="secondary" top="XXS">
+      <B3 color="secondary" top="XXS">
         Add
-      </B3S>
+      </B3>
     </Column>
   );
 };
@@ -97,11 +96,11 @@ const PortraitContentBar = observer(
     }, [store]);
 
     return (
-      <View style={containerStyle}>
+      <View style={styles.containerStyle}>
         <FlatList
           // @ts-ignore
           ref={portraitBarRef}
-          contentContainerStyle={listContainerStyle}
+          contentContainerStyle={styles.listContainerStyle}
           style={styles.bar}
           horizontal={true}
           ListHeaderComponent={Header}
@@ -117,7 +116,7 @@ const PortraitContentBar = observer(
 
 const keyExtractor = (item, _) => item.user.guid;
 
-const styles = StyleSheet.create({
+const styles = ThemedStyles.create({
   bar: {
     minHeight: 90,
   },
@@ -125,28 +124,28 @@ const styles = StyleSheet.create({
     height: 80,
     alignSelf: 'center',
   },
-  addCircle: {
-    height: AVATAR_SIZE.medium,
-    width: AVATAR_SIZE.medium,
-    borderRadius: AVATAR_SIZE.medium / 2,
-  },
-  placeholder: {
-    height: AVATAR_SIZE.medium,
-    width: AVATAR_SIZE.medium,
-    borderRadius: AVATAR_SIZE.medium / 2,
-    ...ThemedStyles.style.margin2x,
-  },
+  addCircle: [
+    {
+      height: AVATAR_SIZE.medium,
+      width: AVATAR_SIZE.medium,
+      borderRadius: AVATAR_SIZE.medium / 2,
+    },
+    'bgTertiaryBackground',
+  ],
+  placeholder: [
+    {
+      height: AVATAR_SIZE.medium,
+      width: AVATAR_SIZE.medium,
+      borderRadius: AVATAR_SIZE.medium / 2,
+    },
+    'margin2x',
+  ],
+  listContainerStyle: [
+    'paddingLeft2x',
+    'rowJustifyStart',
+    'bgPrimaryBackground',
+  ],
+  containerStyle: ['borderBottom8x', 'bcolorTertiaryBackground', 'fullWidth'],
 });
-
-const listContainerStyle = ThemedStyles.combine(
-  'paddingLeft2x',
-  'rowJustifyStart',
-  'bgPrimaryBackground',
-);
-const containerStyle = ThemedStyles.combine(
-  'borderBottom8x',
-  'bcolorTertiaryBackground',
-  'fullWidth',
-);
 
 export default PortraitContentBar;

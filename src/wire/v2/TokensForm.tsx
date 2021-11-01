@@ -94,13 +94,9 @@ const TokensForm = observer(({ store }: propsType) => {
 
 export const styles = ThemedStyles.create({
   type: ['fontL', 'fontMedium'],
-  inputContainer: [
-    'bgPrimaryBackgroundHighlight_Dark',
-    'bcolorPrimaryBorder_Dark',
-    'marginBottom4x',
-  ],
-  label: ['colorSecondaryText_Dark'],
-  inputText: ['colorPrimaryText_Dark', 'marginBottom0x'],
+  inputContainer: ['marginBottom4x'],
+  label: ['colorSecondaryText'],
+  inputText: ['colorPrimaryText', 'marginBottom0x'],
   checkbox: {
     marginRight: 0,
     marginTop: 0,

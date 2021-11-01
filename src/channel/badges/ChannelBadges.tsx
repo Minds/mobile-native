@@ -1,5 +1,5 @@
 import React, { FC, PureComponent } from 'react';
-import { IconNextSpacer } from '~ui/icons';
+import { IconNext } from '~ui/icons';
 import type UserModel from '../UserModel';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
@@ -45,7 +45,7 @@ export default class ChannelBadges extends PureComponent<
         <BadgeTooltip
           label={i18n.t('channel.badge.plus')}
           color={ThemedStyles.getColor('Link')}>
-          <IconNextSpacer
+          <IconNext
             active
             name="plus-circle-outline"
             size={size}
@@ -61,7 +61,7 @@ export default class ChannelBadges extends PureComponent<
         <BadgeTooltip
           label={i18n.t('channel.badge.verified')}
           color={ThemedStyles.getColor('SuccessBackground')}>
-          <IconNextSpacer
+          <IconNext
             name="verified"
             size={size}
             color={channel.isAdmin() ? 'Green' : undefined}
@@ -78,7 +78,7 @@ export default class ChannelBadges extends PureComponent<
         <BadgeTooltip
           label={i18n.t('channel.badge.founder')}
           color={ThemedStyles.getColor('Link')}>
-          <IconNextSpacer
+          <IconNext
             horizontal="XXXS"
             name="founder"
             active

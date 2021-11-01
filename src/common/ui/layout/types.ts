@@ -3,7 +3,7 @@ import { UISpacingPropType } from '~styles/Tokens';
 import { ViewStyle } from 'react-native';
 
 export type SpacerPropType = {
-  style?: ViewStyle | ViewStyle[];
+  containerStyle?: ViewStyle | ViewStyle[];
   children?: ReactNode;
 } & UISpacingPropType;
 

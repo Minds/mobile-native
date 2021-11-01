@@ -119,11 +119,9 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                         Object {
                           "alignItems": "center",
                           "flexDirection": "row",
+                          "height": 24,
                           "justifyContent": "center",
                           "overflow": "hidden",
-                        },
-                        Object {
-                          "height": 24,
                           "width": 24,
                         },
                       ]
@@ -253,11 +251,9 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                         Object {
                           "alignItems": "center",
                           "flexDirection": "row",
+                          "height": 24,
                           "justifyContent": "center",
                           "overflow": "hidden",
-                        },
-                        Object {
-                          "height": 24,
                           "width": 24,
                         },
                       ]
@@ -387,11 +383,9 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                         Object {
                           "alignItems": "center",
                           "flexDirection": "row",
+                          "height": 24,
                           "justifyContent": "center",
                           "overflow": "hidden",
-                        },
-                        Object {
-                          "height": 24,
                           "width": 24,
                         },
                       ]
@@ -521,11 +515,9 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                         Object {
                           "alignItems": "center",
                           "flexDirection": "row",
+                          "height": 24,
                           "justifyContent": "center",
                           "overflow": "hidden",
-                        },
-                        Object {
-                          "height": 24,
                           "width": 24,
                         },
                       ]
@@ -655,11 +647,9 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                         Object {
                           "alignItems": "center",
                           "flexDirection": "row",
+                          "height": 24,
                           "justifyContent": "center",
                           "overflow": "hidden",
-                        },
-                        Object {
-                          "height": 24,
                           "width": 24,
                         },
                       ]
@@ -789,11 +779,9 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                         Object {
                           "alignItems": "center",
                           "flexDirection": "row",
+                          "height": 24,
                           "justifyContent": "center",
                           "overflow": "hidden",
-                        },
-                        Object {
-                          "height": 24,
                           "width": 24,
                         },
                       ]

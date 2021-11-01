@@ -3,18 +3,14 @@ import { TouchableHighlight } from 'react-native';
 import { TRANSPARENCY } from '~/styles/Tokens';
 import ThemedStyles from '~/styles/ThemedStyles';
 
-export const PressableLine = props => {
+export const PressableLine = ({ children, ...props }) => {
   return (
     <TouchableHighlight
-      style={styles.container}
+      style={ThemedStyles.style.flexContainer}
       underlayColor={TRANSPARENCY.DARKEN05}
-      {...props}
-    />
+      {...props}>
+      {/*TouchableHighlight adds a style: undefined that break the layout of Row/Column  */}
+      <>{children}</>
+    </TouchableHighlight>
   );
 };
-
-const styles = ThemedStyles.create({
-  container: {
-    flex: 1,
-  },
-});

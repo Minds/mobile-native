@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { withSpacer } from '~ui/layout';
 import { Typography, TypographyPropsType } from './Typography';
 
 type HeaderType = Omit<TypographyPropsType, 'type'>;
@@ -17,8 +16,3 @@ export const H3 = (props: HeaderType) => (
 export const H4 = (props: HeaderType) => (
   <Typography type="H4" font="bold" {...props} />
 );
-
-export const H1S = withSpacer(H1);
-export const H2S = withSpacer(H2);
-export const H3S = withSpacer(H3);
-export const H4S = withSpacer(H4);
