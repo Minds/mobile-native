@@ -153,6 +153,7 @@ const styles = StyleSheet.create({
     minHeight: 150,
     zIndex: 10,
     padding: 10,
+    alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
   },

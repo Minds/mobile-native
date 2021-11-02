@@ -3,7 +3,6 @@ import BottomSheet from '../bottom-sheet/BottomSheet';
 import { observer, useLocalStore } from 'mobx-react';
 import { Platform, StyleSheet, View } from 'react-native';
 import BaseModel from '../../BaseModel';
-import navigationService from '../../../navigation/NavigationService';
 import Activity from '../../../newsfeed/activity/Activity';
 import UserModel from '../../../channel/UserModel';
 import ActivityModel from '../../../newsfeed/ActivityModel';
@@ -19,6 +18,7 @@ import Handle from '../bottom-sheet/Handle';
 import ChannelListItemPlaceholder from '../ChannelListItemPlaceholder';
 import ActivityPlaceHolder from '../../../newsfeed/ActivityPlaceHolder';
 import MText from '../MText';
+import { useNavigation } from '@react-navigation/core';
 
 type Interactions =
   | 'upVotes'
@@ -33,15 +33,18 @@ type PropsType = {
   entity: BaseModel;
 };
 
-const renderItemUser = (row: { item: any; index: number }) => (
-  <ChannelListItem channel={row.item} navigation={navigationService} />
+const _renderItemUser = navigation => (row: { item: any; index: number }) => (
+  <ChannelListItem channel={row.item} navigation={navigation} />
 );
-const renderItemActivity = (row: { item: any; index: number }) => (
+const _renderItemActivity = navigation => (row: {
+  item: any;
+  index: number;
+}) => (
   <Activity
     entity={row.item}
     hideTabs={true}
     hideRemind={true}
-    navigation={navigationService}
+    navigation={navigation}
   />
 );
 
@@ -70,6 +73,7 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
   // =====================| STATES & VARIABLES |=====================>
   const bottomSheetRef = React.useRef<any>(null);
   const insets = useSafeAreaInsets();
+  const navigation = useNavigation();
   const footerStyle = useStyle(styles.cancelContainer, {
     paddingBottom:
       insets.bottom + Platform.select({ default: 25, android: 45 }),
@@ -270,6 +274,13 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
 
     return <ActivityPlaceHolder />;
   }, [isVote, isChannels]);
+
+  const renderItemUser = useMemo(() => _renderItemUser(navigation), [
+    navigation,
+  ]);
+  const renderItemActivity = useMemo(() => _renderItemActivity(navigation), [
+    navigation,
+  ]);
 
   return (
     <BottomSheet
