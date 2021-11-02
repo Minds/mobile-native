@@ -393,8 +393,8 @@
     "errorDirectMessage": "Oops! Please try again in a moment",
     "modal": {
       "action": "Install Minds Chat",
-      "appname": "Minds Chat",
-      "text": "For an enhanced chat experience install Minds Chat directly from {{store}}.",
+      "appname": "Minds Chat Application",
+      "text": "For an enhanced chat experience install the application directly from {{store}}.",
       "theappstore": "the App Store",
       "googleplay": "Google Play"
     }

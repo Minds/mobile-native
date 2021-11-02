@@ -26,11 +26,7 @@ const MBottomSheetModal = forwardRef<BottomSheetModal, PropsType>(
     const { title, detail, snapPoints, autoShow, children, ...other } = props;
     const { onAnimateHandler } = useBackHandler(
       // @ts-ignore
-      useCallback(() => {
-        console.log('CALLING CLOSE');
-
-        ref?.current?.close();
-      }, [ref]),
+      useCallback(() => ref?.current?.close(), [ref]),
       props,
     );
 
@@ -56,8 +52,6 @@ const MBottomSheetModal = forwardRef<BottomSheetModal, PropsType>(
       //@ts-ignore
       if (ref && ref.current && autoShow) {
         //@ts-ignore
-        console.log('PRESENT');
-
         ref.current.present();
       }
     }, [autoShow, ref]);
