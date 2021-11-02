@@ -26,7 +26,7 @@ export default observer(function (props) {
         style={theme.colorPrimaryText}
         onPress={props.onPressBack}
         testID="topbarBack"
-        spacingLeft="2x"
+        left="S"
       />
       {props.leftText && (
         <MText style={styles.leftText}>{props.leftText}</MText>

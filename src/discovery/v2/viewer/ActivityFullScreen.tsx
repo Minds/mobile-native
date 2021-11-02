@@ -187,20 +187,6 @@ const ActivityFullScreen = observer((props: PropsType) => {
     };
   }, [focused, props.forceAutoplay, props.showCommentsOnFocus, store]);
 
-  useEffect(() => {
-    let openCommentsTimeOut: number | null = null;
-    if (route && (route.params?.focusedUrn || route.params?.scrollToBottom)) {
-      openCommentsTimeOut = setTimeout(() => {
-        onPressComment();
-      }, 400);
-    }
-    return () => {
-      if (openCommentsTimeOut) {
-        clearTimeout(openCommentsTimeOut);
-      }
-    };
-  }, [navigation, onPressComment, route]);
-
   const isShortText =
     !hasMedia && !hasRemind && entity.text.length < TEXT_SHORT_THRESHOLD;
 
@@ -268,7 +254,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
 
   const shadowOpt = {
     width: window.width,
-    height: 70 + (entity.remind_users ? 42 : 0),
+    height: 60 + (entity.remind_users ? 42 : 0),
     color: '#000',
     border: 5,
     opacity: 0.15,
@@ -397,6 +383,11 @@ const ActivityFullScreen = observer((props: PropsType) => {
       <CommentBottomSheet
         ref={commentsRef}
         hideContent={Boolean(!store.displayComment)}
+        autoOpen={
+          Boolean(route.params?.focusedUrn) ||
+          (Boolean(route.params?.scrollToBottom) &&
+            Boolean(commentsRef.current))
+        }
         commentsStore={store.comments}
       />
     </View>

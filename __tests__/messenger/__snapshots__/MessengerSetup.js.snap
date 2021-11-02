@@ -31,7 +31,7 @@ exports[`Messenger setup component should render correctly for setup 1`] = `
       <TextInput
         allowFontScaling={true}
         editable={true}
-        keyboardAppearance="light"
+        keyboardAppearance="dark"
         onChangeText={[Function]}
         placeholder="password..."
         rejectResponderTermination={true}
@@ -50,7 +50,7 @@ exports[`Messenger setup component should render correctly for setup 1`] = `
       <TextInput
         allowFontScaling={true}
         editable={true}
-        keyboardAppearance="light"
+        keyboardAppearance="dark"
         onChangeText={[Function]}
         placeholder="confirm password..."
         rejectResponderTermination={true}
@@ -83,7 +83,7 @@ exports[`Messenger setup component should render correctly for setup 1`] = `
         style={
           Array [
             Object {
-              "color": "#43434D",
+              "color": "#FFFFFF",
             },
             Object {
               "fontFamily": "Roboto",
@@ -144,7 +144,7 @@ exports[`Messenger setup component should render correctly for setup 1`] = `
         style={
           Array [
             Object {
-              "color": "#43434D",
+              "color": "#FFFFFF",
             },
             Object {
               "fontFamily": "Roboto",
@@ -204,7 +204,7 @@ exports[`Messenger setup component should render correctly for unlock 1`] = `
       <TextInput
         allowFontScaling={true}
         editable={true}
-        keyboardAppearance="light"
+        keyboardAppearance="dark"
         onChangeText={[Function]}
         placeholder="password..."
         rejectResponderTermination={true}
@@ -233,7 +233,7 @@ exports[`Messenger setup component should render correctly for unlock 1`] = `
         style={
           Array [
             Object {
-              "color": "#43434D",
+              "color": "#FFFFFF",
             },
             Object {
               "fontFamily": "Roboto",
@@ -252,7 +252,7 @@ exports[`Messenger setup component should render correctly for unlock 1`] = `
         style={
           Array [
             Object {
-              "color": "#43434D",
+              "color": "#FFFFFF",
             },
             Object {
               "fontFamily": "Roboto",
@@ -271,7 +271,7 @@ exports[`Messenger setup component should render correctly for unlock 1`] = `
         style={
           Array [
             Object {
-              "color": "#43434D",
+              "color": "#FFFFFF",
             },
             Object {
               "fontFamily": "Roboto",
@@ -333,7 +333,7 @@ exports[`Messenger setup component should render correctly for unlock 1`] = `
         style={
           Array [
             Object {
-              "color": "#43434D",
+              "color": "#FFFFFF",
             },
             Object {
               "fontFamily": "Roboto",

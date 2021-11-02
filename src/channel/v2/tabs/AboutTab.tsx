@@ -94,11 +94,7 @@ const AboutTab = observer(({ store, navigation }: PropsType) => {
       {hasBadges && (
         <LabeledComponent label={i18n.t('channel.badges')}>
           <View style={theme.rowJustifyStart}>
-            <ChannelBadges
-              channel={channel}
-              size={16}
-              iconStyle={theme.colorPrimaryText}
-            />
+            <ChannelBadges channel={channel} />
           </View>
         </LabeledComponent>
       )}

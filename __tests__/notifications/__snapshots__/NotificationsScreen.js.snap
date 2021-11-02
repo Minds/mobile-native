@@ -5,7 +5,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
   style={
     Array [
       Object {
-        "backgroundColor": "#FFFFFF",
+        "backgroundColor": "#242A30",
       },
       Object {
         "flex": 1,
@@ -55,23 +55,14 @@ exports[`Notifications Screen Component renders correctly 1`] = `
         >
           <View
             style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "justifyContent": "center",
-                  "position": "relative",
-                },
-                undefined,
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "flex": 1,
-                    "height": 52,
-                    "paddingBottom": 3,
-                  },
-                ],
-                undefined,
-              ]
+              Object {
+                "alignItems": "center",
+                "flex": 1,
+                "height": 52,
+                "justifyContent": "center",
+                "paddingBottom": 3,
+                "position": "relative",
+              }
             }
           >
             <View
@@ -128,11 +119,9 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                         Object {
                           "alignItems": "center",
                           "flexDirection": "row",
+                          "height": 24,
                           "justifyContent": "center",
                           "overflow": "hidden",
-                        },
-                        Object {
-                          "height": 24,
                           "width": 24,
                         },
                       ]
@@ -198,23 +187,14 @@ exports[`Notifications Screen Component renders correctly 1`] = `
         >
           <View
             style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "justifyContent": "center",
-                  "position": "relative",
-                },
-                undefined,
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "flex": 1,
-                    "height": 52,
-                    "paddingBottom": 3,
-                  },
-                ],
-                undefined,
-              ]
+              Object {
+                "alignItems": "center",
+                "flex": 1,
+                "height": 52,
+                "justifyContent": "center",
+                "paddingBottom": 3,
+                "position": "relative",
+              }
             }
           >
             <View
@@ -271,11 +251,9 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                         Object {
                           "alignItems": "center",
                           "flexDirection": "row",
+                          "height": 24,
                           "justifyContent": "center",
                           "overflow": "hidden",
-                        },
-                        Object {
-                          "height": 24,
                           "width": 24,
                         },
                       ]
@@ -286,7 +264,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                       style={
                         Array [
                           Object {
-                            "color": "#7D7D82",
+                            "color": "#AEB0B8",
                             "fontSize": 22.080000000000002,
                           },
                           Object {},
@@ -311,7 +289,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               Array [
                 Array [
                   Object {
-                    "backgroundColor": "#D3DBE3",
+                    "backgroundColor": "#414C57",
                   },
                   Object {
                     "bottom": -2.5,
@@ -341,23 +319,14 @@ exports[`Notifications Screen Component renders correctly 1`] = `
         >
           <View
             style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "justifyContent": "center",
-                  "position": "relative",
-                },
-                undefined,
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "flex": 1,
-                    "height": 52,
-                    "paddingBottom": 3,
-                  },
-                ],
-                undefined,
-              ]
+              Object {
+                "alignItems": "center",
+                "flex": 1,
+                "height": 52,
+                "justifyContent": "center",
+                "paddingBottom": 3,
+                "position": "relative",
+              }
             }
           >
             <View
@@ -414,11 +383,9 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                         Object {
                           "alignItems": "center",
                           "flexDirection": "row",
+                          "height": 24,
                           "justifyContent": "center",
                           "overflow": "hidden",
-                        },
-                        Object {
-                          "height": 24,
                           "width": 24,
                         },
                       ]
@@ -429,7 +396,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                       style={
                         Array [
                           Object {
-                            "color": "#7D7D82",
+                            "color": "#AEB0B8",
                             "fontSize": 22.080000000000002,
                           },
                           Object {},
@@ -454,7 +421,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               Array [
                 Array [
                   Object {
-                    "backgroundColor": "#D3DBE3",
+                    "backgroundColor": "#414C57",
                   },
                   Object {
                     "bottom": -2.5,
@@ -484,23 +451,14 @@ exports[`Notifications Screen Component renders correctly 1`] = `
         >
           <View
             style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "justifyContent": "center",
-                  "position": "relative",
-                },
-                undefined,
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "flex": 1,
-                    "height": 52,
-                    "paddingBottom": 3,
-                  },
-                ],
-                undefined,
-              ]
+              Object {
+                "alignItems": "center",
+                "flex": 1,
+                "height": 52,
+                "justifyContent": "center",
+                "paddingBottom": 3,
+                "position": "relative",
+              }
             }
           >
             <View
@@ -557,11 +515,9 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                         Object {
                           "alignItems": "center",
                           "flexDirection": "row",
+                          "height": 24,
                           "justifyContent": "center",
                           "overflow": "hidden",
-                        },
-                        Object {
-                          "height": 24,
                           "width": 24,
                         },
                       ]
@@ -572,7 +528,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                       style={
                         Array [
                           Object {
-                            "color": "#7D7D82",
+                            "color": "#AEB0B8",
                             "fontSize": 19.200000000000003,
                           },
                           Object {},
@@ -597,7 +553,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               Array [
                 Array [
                   Object {
-                    "backgroundColor": "#D3DBE3",
+                    "backgroundColor": "#414C57",
                   },
                   Object {
                     "bottom": -2.5,
@@ -627,23 +583,14 @@ exports[`Notifications Screen Component renders correctly 1`] = `
         >
           <View
             style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "justifyContent": "center",
-                  "position": "relative",
-                },
-                undefined,
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "flex": 1,
-                    "height": 52,
-                    "paddingBottom": 3,
-                  },
-                ],
-                undefined,
-              ]
+              Object {
+                "alignItems": "center",
+                "flex": 1,
+                "height": 52,
+                "justifyContent": "center",
+                "paddingBottom": 3,
+                "position": "relative",
+              }
             }
           >
             <View
@@ -700,11 +647,9 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                         Object {
                           "alignItems": "center",
                           "flexDirection": "row",
+                          "height": 24,
                           "justifyContent": "center",
                           "overflow": "hidden",
-                        },
-                        Object {
-                          "height": 24,
                           "width": 24,
                         },
                       ]
@@ -715,7 +660,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                       style={
                         Array [
                           Object {
-                            "color": "#7D7D82",
+                            "color": "#AEB0B8",
                             "fontSize": 23.04,
                           },
                           Object {},
@@ -740,7 +685,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               Array [
                 Array [
                   Object {
-                    "backgroundColor": "#D3DBE3",
+                    "backgroundColor": "#414C57",
                   },
                   Object {
                     "bottom": -2.5,
@@ -770,23 +715,14 @@ exports[`Notifications Screen Component renders correctly 1`] = `
         >
           <View
             style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "justifyContent": "center",
-                  "position": "relative",
-                },
-                undefined,
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "flex": 1,
-                    "height": 52,
-                    "paddingBottom": 3,
-                  },
-                ],
-                undefined,
-              ]
+              Object {
+                "alignItems": "center",
+                "flex": 1,
+                "height": 52,
+                "justifyContent": "center",
+                "paddingBottom": 3,
+                "position": "relative",
+              }
             }
           >
             <View
@@ -843,11 +779,9 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                         Object {
                           "alignItems": "center",
                           "flexDirection": "row",
+                          "height": 24,
                           "justifyContent": "center",
                           "overflow": "hidden",
-                        },
-                        Object {
-                          "height": 24,
                           "width": 24,
                         },
                       ]
@@ -858,7 +792,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                       style={
                         Array [
                           Object {
-                            "color": "#7D7D82",
+                            "color": "#AEB0B8",
                             "fontSize": 24.96,
                           },
                           Object {},
@@ -883,7 +817,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               Array [
                 Array [
                   Object {
-                    "backgroundColor": "#D3DBE3",
+                    "backgroundColor": "#414C57",
                   },
                   Object {
                     "bottom": -2.5,
@@ -981,7 +915,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                 "borderBottomWidth": 8,
               },
               Object {
-                "borderColor": "#FFFFFF",
+                "borderColor": "#242A30",
               },
               Object {
                 "paddingBottom": 16,
@@ -1009,7 +943,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               style={
                 Array [
                   Object {
-                    "backgroundColor": "#E3E4E9",
+                    "backgroundColor": "#404E53",
                     "borderRadius": 20,
                     "height": 40,
                     "width": 40,
@@ -1026,7 +960,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               <View
                 style={
                   Object {
-                    "backgroundColor": "#FFFFFF",
+                    "backgroundColor": "#242A30",
                     "height": "100%",
                     "opacity": 0.5,
                   }
@@ -1056,7 +990,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   style={
                     Array [
                       Object {
-                        "backgroundColor": "#E3E4E9",
+                        "backgroundColor": "#404E53",
                         "borderRadius": 3,
                         "height": 12,
                         "marginBottom": 12,
@@ -1072,7 +1006,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   <View
                     style={
                       Object {
-                        "backgroundColor": "#FFFFFF",
+                        "backgroundColor": "#242A30",
                         "height": "100%",
                         "opacity": 0.5,
                       }
@@ -1090,7 +1024,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                 "borderBottomWidth": 8,
               },
               Object {
-                "borderColor": "#FFFFFF",
+                "borderColor": "#242A30",
               },
               Object {
                 "paddingBottom": 16,
@@ -1118,7 +1052,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               style={
                 Array [
                   Object {
-                    "backgroundColor": "#E3E4E9",
+                    "backgroundColor": "#404E53",
                     "borderRadius": 20,
                     "height": 40,
                     "width": 40,
@@ -1135,7 +1069,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               <View
                 style={
                   Object {
-                    "backgroundColor": "#FFFFFF",
+                    "backgroundColor": "#242A30",
                     "height": "100%",
                     "opacity": 0.5,
                   }
@@ -1165,7 +1099,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   style={
                     Array [
                       Object {
-                        "backgroundColor": "#E3E4E9",
+                        "backgroundColor": "#404E53",
                         "borderRadius": 3,
                         "height": 12,
                         "marginBottom": 12,
@@ -1181,7 +1115,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   <View
                     style={
                       Object {
-                        "backgroundColor": "#FFFFFF",
+                        "backgroundColor": "#242A30",
                         "height": "100%",
                         "opacity": 0.5,
                       }
@@ -1199,7 +1133,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                 "borderBottomWidth": 8,
               },
               Object {
-                "borderColor": "#FFFFFF",
+                "borderColor": "#242A30",
               },
               Object {
                 "paddingBottom": 16,
@@ -1227,7 +1161,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               style={
                 Array [
                   Object {
-                    "backgroundColor": "#E3E4E9",
+                    "backgroundColor": "#404E53",
                     "borderRadius": 20,
                     "height": 40,
                     "width": 40,
@@ -1244,7 +1178,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               <View
                 style={
                   Object {
-                    "backgroundColor": "#FFFFFF",
+                    "backgroundColor": "#242A30",
                     "height": "100%",
                     "opacity": 0.5,
                   }
@@ -1274,7 +1208,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   style={
                     Array [
                       Object {
-                        "backgroundColor": "#E3E4E9",
+                        "backgroundColor": "#404E53",
                         "borderRadius": 3,
                         "height": 12,
                         "marginBottom": 12,
@@ -1290,7 +1224,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   <View
                     style={
                       Object {
-                        "backgroundColor": "#FFFFFF",
+                        "backgroundColor": "#242A30",
                         "height": "100%",
                         "opacity": 0.5,
                       }
@@ -1308,7 +1242,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                 "borderBottomWidth": 8,
               },
               Object {
-                "borderColor": "#FFFFFF",
+                "borderColor": "#242A30",
               },
               Object {
                 "paddingBottom": 16,
@@ -1336,7 +1270,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               style={
                 Array [
                   Object {
-                    "backgroundColor": "#E3E4E9",
+                    "backgroundColor": "#404E53",
                     "borderRadius": 20,
                     "height": 40,
                     "width": 40,
@@ -1353,7 +1287,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               <View
                 style={
                   Object {
-                    "backgroundColor": "#FFFFFF",
+                    "backgroundColor": "#242A30",
                     "height": "100%",
                     "opacity": 0.5,
                   }
@@ -1383,7 +1317,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   style={
                     Array [
                       Object {
-                        "backgroundColor": "#E3E4E9",
+                        "backgroundColor": "#404E53",
                         "borderRadius": 3,
                         "height": 12,
                         "marginBottom": 12,
@@ -1399,7 +1333,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   <View
                     style={
                       Object {
-                        "backgroundColor": "#FFFFFF",
+                        "backgroundColor": "#242A30",
                         "height": "100%",
                         "opacity": 0.5,
                       }
@@ -1417,7 +1351,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                 "borderBottomWidth": 8,
               },
               Object {
-                "borderColor": "#FFFFFF",
+                "borderColor": "#242A30",
               },
               Object {
                 "paddingBottom": 16,
@@ -1445,7 +1379,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               style={
                 Array [
                   Object {
-                    "backgroundColor": "#E3E4E9",
+                    "backgroundColor": "#404E53",
                     "borderRadius": 20,
                     "height": 40,
                     "width": 40,
@@ -1462,7 +1396,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               <View
                 style={
                   Object {
-                    "backgroundColor": "#FFFFFF",
+                    "backgroundColor": "#242A30",
                     "height": "100%",
                     "opacity": 0.5,
                   }
@@ -1492,7 +1426,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   style={
                     Array [
                       Object {
-                        "backgroundColor": "#E3E4E9",
+                        "backgroundColor": "#404E53",
                         "borderRadius": 3,
                         "height": 12,
                         "marginBottom": 12,
@@ -1508,7 +1442,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   <View
                     style={
                       Object {
-                        "backgroundColor": "#FFFFFF",
+                        "backgroundColor": "#242A30",
                         "height": "100%",
                         "opacity": 0.5,
                       }
@@ -1526,7 +1460,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                 "borderBottomWidth": 8,
               },
               Object {
-                "borderColor": "#FFFFFF",
+                "borderColor": "#242A30",
               },
               Object {
                 "paddingBottom": 16,
@@ -1554,7 +1488,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               style={
                 Array [
                   Object {
-                    "backgroundColor": "#E3E4E9",
+                    "backgroundColor": "#404E53",
                     "borderRadius": 20,
                     "height": 40,
                     "width": 40,
@@ -1571,7 +1505,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               <View
                 style={
                   Object {
-                    "backgroundColor": "#FFFFFF",
+                    "backgroundColor": "#242A30",
                     "height": "100%",
                     "opacity": 0.5,
                   }
@@ -1601,7 +1535,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   style={
                     Array [
                       Object {
-                        "backgroundColor": "#E3E4E9",
+                        "backgroundColor": "#404E53",
                         "borderRadius": 3,
                         "height": 12,
                         "marginBottom": 12,
@@ -1617,7 +1551,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   <View
                     style={
                       Object {
-                        "backgroundColor": "#FFFFFF",
+                        "backgroundColor": "#242A30",
                         "height": "100%",
                         "opacity": 0.5,
                       }

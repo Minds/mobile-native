@@ -4,7 +4,7 @@ import { observer } from 'mobx-react';
 import { motify, useAnimationState } from 'moti';
 import { Icon } from '~ui/icons';
 import withClass from '~ui/withClass';
-import { IUISizing } from '~styles/Tokens';
+import { UISizing } from '~styles/Tokens';
 import { frameThrower } from '~ui/helpers';
 import Counter from './Counter';
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
@@ -13,7 +13,7 @@ import remoteAction from '../../../common/RemoteAction';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
 import { actionsContainerStyle, actionsContainerWrapper } from './styles';
 import PressableScale from '~/common/components/PressableScale';
-import withSpacer from '~ui/spacer/withSpacer';
+import { withSpacer } from '~ui/layout';
 
 const CounterSpaced = withSpacer(Counter);
 
@@ -38,7 +38,7 @@ const AnimatedThumb = ({
   name,
 }: {
   voted: boolean;
-  size: IUISizing | string;
+  size: UISizing | string;
   canVote: boolean;
   down: boolean;
   name: string;
@@ -149,7 +149,7 @@ class ThumbUpAction extends Component<PropsType> {
           />
           {count && !this.props.hideCount ? (
             <CounterSpaced
-              left="1x"
+              left="XS"
               count={count}
               testID={`Thumb ${this.direction} count`}
             />

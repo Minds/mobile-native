@@ -1,6 +1,6 @@
 import React, { useCallback, useRef } from 'react';
 import { IconButtonNext } from '~ui/icons';
-import withSpacer from '~ui/spacer/withSpacer';
+import { withSpacer } from '~ui/layout';
 import Counter from './Counter';
 import { FLAG_REMIND } from '../../../common/Permissions';
 import { useRoute, useNavigation } from '@react-navigation/native';
@@ -131,7 +131,7 @@ export default function ({ entity, hideCount }: PropsTypes) {
         onPress={showDropdown}
         extra={
           !hideCount && entity.reminds ? (
-            <CounterSpaced left="1x" count={entity.reminds} />
+            <CounterSpaced left="XS" count={entity.reminds} />
           ) : null
         }
       />

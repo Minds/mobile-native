@@ -7,20 +7,20 @@ import React, {
 import { FlatList } from 'react-native-gesture-handler';
 import { PlaceholderMedia, Fade, Placeholder } from 'rn-placeholder';
 import { observer } from 'mobx-react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-
+import { View } from 'react-native';
+import { Icon, B3, Column } from '~ui';
+import { AVATAR_SIZE } from '~/styles/Tokens';
+import PressableScale from '~/common/components/PressableScale';
 import ThemedStyles from '../styles/ThemedStyles';
 import PortraitContentBarItem from './PortraitContentBarItem';
 import { PortraitBarItem } from './createPortraitStore';
 import { useNavigation } from '@react-navigation/native';
 import { useStores } from '../common/hooks/use-stores';
-import MText from '../common/components/MText';
 
 /**
  * Header component
  */
 const Header = () => {
-  const theme = ThemedStyles.style;
   const navigation = useNavigation<any>();
   const nav = useCallback(
     () => navigation.push('Capture', { portrait: true }),
@@ -28,11 +28,20 @@ const Header = () => {
   );
 
   return (
-    <TouchableOpacity
-      onPress={nav}
-      style={[styles.add, theme.bgTertiaryBackground, theme.centered]}>
-      <MText style={[theme.fontXXL, theme.colorSecondaryText]}>+</MText>
-    </TouchableOpacity>
+    <Column align="center" flex horizontal="XS">
+      <PressableScale onPress={nav}>
+        <Column
+          horizontal="XXS"
+          vertical="XXS"
+          containerStyle={styles.addCircle}
+          align="center">
+          <Icon name="plus" />
+        </Column>
+      </PressableScale>
+      <B3 color="secondary" top="XXS">
+        Add
+      </B3>
+    </Column>
   );
 };
 
@@ -87,11 +96,11 @@ const PortraitContentBar = observer(
     }, [store]);
 
     return (
-      <View style={containerStyle}>
+      <View style={styles.containerStyle}>
         <FlatList
           // @ts-ignore
           ref={portraitBarRef}
-          contentContainerStyle={listContainerStyle}
+          contentContainerStyle={styles.listContainerStyle}
           style={styles.bar}
           horizontal={true}
           ListHeaderComponent={Header}
@@ -107,7 +116,7 @@ const PortraitContentBar = observer(
 
 const keyExtractor = (item, _) => item.user.guid;
 
-const styles = StyleSheet.create({
+const styles = ThemedStyles.create({
   bar: {
     minHeight: 90,
   },
@@ -115,29 +124,28 @@ const styles = StyleSheet.create({
     height: 80,
     alignSelf: 'center',
   },
-  add: {
-    margin: 10,
-    height: 55,
-    width: 55,
-    borderRadius: 27.5,
-  },
-  placeholder: {
-    height: 55,
-    width: 55,
-    borderRadius: 27.5,
-    ...ThemedStyles.style.margin2x,
-  },
+  addCircle: [
+    {
+      height: AVATAR_SIZE.medium,
+      width: AVATAR_SIZE.medium,
+      borderRadius: AVATAR_SIZE.medium / 2,
+    },
+    'bgTertiaryBackground',
+  ],
+  placeholder: [
+    {
+      height: AVATAR_SIZE.medium,
+      width: AVATAR_SIZE.medium,
+      borderRadius: AVATAR_SIZE.medium / 2,
+    },
+    'margin2x',
+  ],
+  listContainerStyle: [
+    'paddingLeft2x',
+    'rowJustifyStart',
+    'bgPrimaryBackground',
+  ],
+  containerStyle: ['borderBottom8x', 'bcolorTertiaryBackground', 'fullWidth'],
 });
-
-const listContainerStyle = ThemedStyles.combine(
-  'paddingLeft',
-  'rowJustifyStart',
-  'bgPrimaryBackground',
-);
-const containerStyle = ThemedStyles.combine(
-  'borderBottom8x',
-  'bcolorTertiaryBackground',
-  'fullWidth',
-);
 
 export default PortraitContentBar;

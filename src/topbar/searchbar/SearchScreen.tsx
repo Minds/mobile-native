@@ -65,7 +65,7 @@ const SearchScreen = observer(() => {
       ]}>
       <View style={styles.header}>
         <View style={styles.inputContainer}>
-          <Icon name="search" spacingRight="2x" />
+          <Icon name="search" right="S" />
           <TextInput
             ref={inputRef}
             placeholder={i18n.t('discovery.search')}
@@ -84,7 +84,7 @@ const SearchScreen = observer(() => {
               onPress={handleClearInput}
               name="close-circle"
               size="tiny"
-              spacingLeft="1x"
+              left="XS"
             />
           ) : null}
         </View>
