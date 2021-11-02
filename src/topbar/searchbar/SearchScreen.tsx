@@ -50,8 +50,8 @@ const SearchScreen = observer(() => {
           <Icon
             name="search"
             size={25}
-            spacingRight="2x"
-            style={[Platform.OS === 'android' ? theme.centered : null]}
+            right="S"
+            style={Platform.OS === 'android' ? theme.centered : undefined}
           />
           <TextInput
             ref={inputRef}

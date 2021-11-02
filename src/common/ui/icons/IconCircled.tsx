@@ -1,18 +1,18 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import Icon, { IIcon } from './Icon';
+import { Icon, IIcon } from './Icon';
 import {
   ICON_BACKGROUND,
   ICON_SIZE_DEFAULT,
   ICON_COLOR_ACTIVE,
   ICON_COLOR_DEFAULT,
-  IUISizing,
+  UISizing,
   UNIT,
 } from '~styles/Tokens';
-import { getPropStyles } from '~ui/helpers';
+import { getSpacingStylesNext } from '~ui/helpers';
 import ThemedStyles from '~styles/ThemedStyles';
 
-export default function IconCircled({ style, active, ...extra }: IIcon) {
+export function IconCircled({ style, active, ...extra }: IIcon) {
   const background = active
     ? ThemedStyles.getColor(ICON_COLOR_ACTIVE)
     : ThemedStyles.getColor(ICON_BACKGROUND);
@@ -24,9 +24,9 @@ export default function IconCircled({ style, active, ...extra }: IIcon) {
     { backgroundColor: background },
   ];
 
-  let size: IUISizing | number | string = ICON_SIZE_DEFAULT;
+  let size: UISizing | number | string = ICON_SIZE_DEFAULT;
 
-  const extraStyles = getPropStyles(extra);
+  const extraStyles = getSpacingStylesNext(extra);
 
   if (extraStyles?.length) {
     containerStyles.push(...extraStyles);

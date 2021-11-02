@@ -20,6 +20,7 @@ import FadeView from '../../common/components/FadeView';
 import JoinMembershipScreen from '../../wire/v2/tiers/JoinMembership';
 import FastImage from 'react-native-fast-image';
 import MText from '../../common/components/MText';
+import { B1, B2, Column, H4, Row } from '~ui';
 
 const CENTERED = false;
 
@@ -200,31 +201,25 @@ const ChannelHeader = withErrorBoundary(
             </View>
           )}
 
-          <View style={CENTERED ? theme.centered : undefined}>
-            <View style={styles.nameWrapper}>
-              <MText style={styles.name} numberOfLines={1}>
+          <Column top="XL2" align={CENTERED ? 'center' : undefined}>
+            <Row align="centerStart">
+              <H4 numberOfLines={1}>
                 {channel ? channel.name : props.channelName}
-              </MText>
-              {channel && (
-                <ChannelBadges
-                  channel={channel}
-                  size="tiny"
-                  iconStyle={theme.colorLink}
-                />
-              )}
-            </View>
-            <View style={styles.usernameWrapper}>
-              <MText style={styles.username} numberOfLines={1}>
+              </H4>
+              {channel && <ChannelBadges channel={channel} left="XS" />}
+            </Row>
+            <Row top="XXXS">
+              <B2 color="secondary" numberOfLines={1}>
                 @{channel ? channel.username : props.channelName}
-              </MText>
+              </B2>
               {Boolean(channel!.subscriber) && (
-                <MText style={theme.colorSecondaryText}>
-                  {` · `}
+                <B2 color="secondary">
+                  {' · '}
                   {i18n.t('channel.subscriber')}
-                </MText>
+                </B2>
               )}
-            </View>
-          </View>
+            </Row>
+          </Column>
 
           {!props.hideButtons && (
             <ChannelButtons
@@ -359,7 +354,6 @@ const styles = ThemedStyles.create({
       textAlign: 'center',
     },
   ],
-  usernameWrapper: ['rowStretch', 'paddingBottom1x'],
   name: {
     fontSize: 18,
     fontWeight: '600',

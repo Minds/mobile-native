@@ -1,4 +1,4 @@
-import ThemedStyles from '~styles/ThemedStyles';
+import { UNIT } from '~styles/Tokens';
 
 export function frameThrower(frames, callback) {
   if (!(Number.isInteger(frames) && frames > 0)) {
@@ -47,32 +47,8 @@ export const getClosestSize = (size: number, options: any[]) => {
     });
 };
 
-export const getPropStyles = (props: any) => {
-  const styles: any = [];
-  if (!(props && typeof props === 'object')) {
-    return styles;
-  }
-
-  const keys = Object.keys(props);
-
-  for (let i = 0; i < keys.length; i += 1) {
-    const key = keys[i];
-    if (!key.match(/spacing/)) {
-      continue;
-    }
-    const label = `${key.replace(/^spacing/, 'margin')}${props[key]}`;
-    const style = ThemedStyles.style[label];
-
-    if (style) {
-      styles.push(style);
-    }
-  }
-
-  return styles;
-};
-
-export const getSpacingStyles = (props: any) => {
-  const styles: any = [];
+export const getSpacingStylesNext = (props: any) => {
+  const styles: any = {};
   if (!(props && typeof props === 'object')) {
     return styles;
   }
@@ -82,17 +58,22 @@ export const getSpacingStyles = (props: any) => {
   for (let i = 0; i < keys.length; i += 1) {
     const key = keys[i];
     if (
-      !key.match(/^(top|left|right|bottom|vertical|horizontal)$/) ||
+      !key.match(/^(top|left|right|bottom|vertical|horizontal|space)$/) ||
       props[key] === undefined
     ) {
       continue;
     }
-    const label = `margin${capitalizeFirst(key)}${props[key]}`;
-    const style = ThemedStyles.style[label];
 
-    if (style) {
-      styles.push(style);
+    const unit = UNIT[props[key]];
+    if (!unit) {
+      continue;
     }
+
+    if (key === 'space') {
+      styles.margin = unit;
+    }
+
+    styles[`margin${capitalizeFirst(key)}`] = unit;
   }
 
   return styles;

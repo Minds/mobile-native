@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { View } from 'react-native';
 import {
   RouteProp,
   useFocusEffect,
@@ -8,7 +7,6 @@ import {
 import { StackNavigationProp } from '@react-navigation/stack';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { observer, useLocalStore } from 'mobx-react';
-
 import TopbarTabbar from '../../common/components/topbar-tabbar/TopbarTabbar';
 import TokensTab from './currency-tabs/tokens/TokensTab';
 import type { CurrencyType } from '../../types/Payment';
@@ -26,7 +24,7 @@ import { createTokensTabStore } from './currency-tabs/tokens/createTokensTabStor
 import TokenPrice from './TokenPrice';
 import createUsdTabStore from './currency-tabs/cash/createUsdTabStore';
 import type { UsdOptions, TokensOptions } from '../v2/WalletTypes';
-import MText from '../../common/components/MText';
+import { ScreenHeader, Screen } from '~ui/screen';
 
 export type WalletScreenRouteProp = RouteProp<InternalStackParamList, 'Wallet'>;
 export type WalletScreenNavigationProp = CompositeNavigationProp<
@@ -135,29 +133,17 @@ const WalletScreen = observer((props: PropsType) => {
     body = <CenteredLoading />;
   }
   return (
-    <View style={[theme.flexContainer, theme.paddingTop4x]}>
-      <View
-        style={[
-          theme.rowJustifySpaceBetween,
-          theme.paddingHorizontal4x,
-          theme.alignCenter,
-        ]}>
-        <MText style={[theme.fontXXXL, theme.bold]}>
-          {i18n.t('wallet.wallet')}
-        </MText>
-        <TokenPrice />
-      </View>
-      <View style={theme.paddingTop3x}>
-        <TopbarTabbar
-          titleStyle={theme.fontXL}
-          tabs={tabs}
-          onChange={currency => store.setCurrent(currency)}
-          current={store.currency}
-          tabStyle={theme.paddingVertical}
-        />
-      </View>
+    <Screen>
+      <ScreenHeader title={i18n.t('wallet.wallet')} extra={<TokenPrice />} />
+      <TopbarTabbar
+        titleStyle={theme.fontXL}
+        tabs={tabs}
+        onChange={currency => store.setCurrent(currency)}
+        current={store.currency}
+        tabStyle={theme.paddingVertical}
+      />
       {body}
-    </View>
+    </Screen>
   );
 });
 

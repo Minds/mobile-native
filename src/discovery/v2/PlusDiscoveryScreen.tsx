@@ -10,7 +10,7 @@ import { TDiscoveryV2Tabs } from './DiscoveryV2Store';
 import TopbarTabbar from '../../common/components/topbar-tabbar/TopbarTabbar';
 import { DiscoveryTagsList } from './tags/DiscoveryTagsList';
 import i18n from '../../common/services/i18n.service';
-import MText from '../../common/components/MText';
+import { ScreenHeader } from '~ui/screen';
 
 /**
  * Discovery Feed Screen
@@ -36,14 +36,8 @@ const PlusDiscoveryScreen = observer(() => {
   return (
     <View style={ThemedStyles.style.flexContainer}>
       <View style={ThemedStyles.style.bgPrimaryBackground}>
-        <MText
-          style={[
-            theme.titleText,
-            theme.paddingLeft4x,
-            theme.paddingVertical2x,
-          ]}>
-          {i18n.t('plusTabTitleDiscovery')}
-        </MText>
+        <ScreenHeader title={i18n.t('plusTabTitleDiscovery')} />
+
         <TopbarTabbar
           current={store.activeTabId}
           onChange={tabId => {
