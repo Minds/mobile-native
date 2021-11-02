@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import ThemedStyles from '../../../styles/ThemedStyles';
-import MText from '../MText';
+import { B1, B2 } from '~ui';
 
 export type TabType<T> = {
   id: T;
@@ -49,10 +49,12 @@ function TopbarTabbar<T>(props: PropsType<T>) {
         theme.rowJustifyStart,
         theme.borderBottom,
         theme.bcolorPrimaryBorder,
-        theme.paddingHorizontal2x,
         props.containerStyle,
       ]}>
-      <ScrollView horizontal ref={topbarTabbarRef}>
+      <ScrollView
+        contentContainerStyle={theme.marginHorizontal2x}
+        horizontal
+        ref={topbarTabbarRef}>
         {props.tabs.map((tab, i) => (
           <TouchableOpacity
             onPress={() => props.onChange(tab.id)}
@@ -64,27 +66,13 @@ function TopbarTabbar<T>(props: PropsType<T>) {
                 ? theme.bcolorTabBorder
                 : theme.bcolorTransparent,
             ]}>
-            <MText
-              style={[
-                theme.fontL,
-                tab.id === props.current
-                  ? theme.colorPrimaryText
-                  : theme.colorSecondaryText,
-                props.titleStyle,
-              ]}>
+            <B1
+              font="medium"
+              horizontal="XS"
+              color={tab.id === props.current ? 'link' : 'secondary'}>
               {tab.title}
-            </MText>
-            {!!tab.subtitle && (
-              <MText
-                style={[
-                  theme.fontL,
-                  theme.colorSecondaryText,
-                  styles.subtitle,
-                  props.subtitleStyle,
-                ]}>
-                {tab.subtitle}
-              </MText>
-            )}
+            </B1>
+            {!!tab.subtitle && <B2 vertical="XXXS">{tab.subtitle}</B2>}
           </TouchableOpacity>
         ))}
       </ScrollView>
@@ -93,9 +81,3 @@ function TopbarTabbar<T>(props: PropsType<T>) {
 }
 
 export default TopbarTabbar;
-
-const styles = StyleSheet.create({
-  subtitle: {
-    paddingVertical: 2,
-  },
-});

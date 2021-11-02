@@ -1,9 +1,7 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import { ScrollView, Text, TouchableOpacity } from 'react-native';
-import ThemedStyles from '../../../../styles/ThemedStyles';
+import { ScrollView, TouchableOpacity } from 'react-native';
 import { transactionTypes } from '../../../v2/TransactionList/TransactionsListTypes';
-import MdIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import i18n from '../../../../common/services/i18n.service';
 import { TokensTransactionsListStoreType } from '../../../v2/TransactionList/createTokensTransactionsStore';
 import {
@@ -12,7 +10,7 @@ import {
   RadioButton,
   SectionTitle,
 } from '../../../../common/components/bottom-sheet';
-import MText from '../../../../common/components/MText';
+import { B3, Icon, Row } from '~ui';
 
 const filters: Array<{ id: transactionTypes; title: string }> = [
   { id: 'all', title: 'allFilter' },
@@ -54,12 +52,13 @@ const Filter = observer((props: PropsType) => {
 
   return (
     <>
-      <TouchableOpacity
-        style={ThemedStyles.style.rowJustifyEnd}
-        onPress={show}
-        testID="FilterToggle">
-        <MdIcon name="filter" size={18} style={ThemedStyles.style.colorIcon} />
-        <MText style={itemStyle}>{i18n.t('filter')}</MText>
+      <TouchableOpacity onPress={show} testID="FilterToggle">
+        <Row align="centerBoth">
+          <Icon name="filter" size="small" />
+          <B3 left="XXS" color="secondary">
+            {i18n.t('filter')}
+          </B3>
+        </Row>
       </TouchableOpacity>
       <BottomSheetModal
         ref={ref}
@@ -79,7 +78,5 @@ const Filter = observer((props: PropsType) => {
     </>
   );
 });
-
-const itemStyle = ThemedStyles.combine('fontL', 'paddingLeft');
 
 export default Filter;

@@ -86,9 +86,9 @@ const MBottomSheetModal = forwardRef<BottomSheetModal, PropsType>(
         {...other}
         onAnimate={onAnimateHandler}>
         <View style={contStyle} onLayout={handleContentLayout}>
-          {Boolean(title) && <MText style={styles.title}>{title}</MText>}
-          {Boolean(detail) && <MText style={styles.detail}>{detail}</MText>}
-          {children}
+          {/* {Boolean(title) && <MText style={styles.title}>{title}</MText>} */}
+          {/* {Boolean(detail) && <MText style={styles.detail}>{detail}</MText>} */}
+          {/* {children} */}
         </View>
       </BottomSheetModal>
     );

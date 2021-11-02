@@ -1,7 +1,6 @@
 import React from 'react';
-import ThemedStyles from '../../../../styles/ThemedStyles';
 import { format } from '../MindsTokens';
-import { Container, Info, Row, Title } from '../AccordionContent';
+import { Container, Info, RowRight, Title } from '../AccordionContent';
 import TimeMultiplier from './multipliers/TimeMultiplier';
 import { SummaryLabel } from './LiquiditySummary';
 import { Reward } from './createTokensTabStore';
@@ -11,26 +10,24 @@ type PropsType = {
 };
 
 const HoldingSummary = ({ reward }: PropsType) => {
-  const theme = ThemedStyles.style;
-
   return (
     <>
       <Container>
         <SummaryLabel>
           <Title>OnChain Tokens</Title>
         </SummaryLabel>
-        <Row>
+        <RowRight>
           <Info>{format(reward.score, false)} </Info>
-          <Title style={theme.marginLeft3x}>tokens</Title>
-        </Row>
+          <Title>tokens</Title>
+        </RowRight>
       </Container>
       <Container>
         <SummaryLabel>
           <Title>Time multiplier</Title>
         </SummaryLabel>
-        <Row>
+        <RowRight>
           <TimeMultiplier multiplier={reward.multiplier} />
-        </Row>
+        </RowRight>
       </Container>
     </>
   );

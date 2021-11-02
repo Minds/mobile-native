@@ -2,12 +2,13 @@ import React, { useRef } from 'react';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 import type { WalletStoreType } from '../../../v2/createWalletStore';
 import { Tooltip } from 'react-native-elements';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import { useDimensions } from '@react-native-community/hooks';
 import BalanceInfo from './BalanceInfo';
 import OnchainButton from './OnchainButton';
 import TokenTabOptions from './TokenTabOptions';
 import MindsTokens from '../MindsTokens';
+import { Row, Spacer } from '~ui';
 
 type PropsType = {
   walletStore: WalletStoreType;
@@ -24,8 +25,8 @@ const TokenTopBar = ({
   const tooltipRef = useRef<any>();
   const screen = useDimensions().screen;
   return (
-    <View style={[theme.paddingLeft2x, theme.marginBottom5x]}>
-      <View style={[theme.rowJustifyStart, theme.marginBottom]}>
+    <Spacer horizontal="M" bottom="XXL">
+      <Row bottom="S">
         <Tooltip
           ref={tooltipRef}
           closeOnlyOnBackdropPress={true}
@@ -44,23 +45,23 @@ const TokenTopBar = ({
             <MindsTokens
               mindsPrice={walletStore.prices.minds}
               value={walletStore.balance.toString()}
-              textStyles={styles.minds}
+              containerStyle={styles.minds}
             />
           </TouchableOpacity>
         </Tooltip>
-      </View>
-      <View style={theme.rowJustifyStart}>
+        <TokenTabOptions
+          onchainStore={onchainStore}
+          walletStore={walletStore}
+        />
+      </Row>
+      <Row align="centerStart">
         <OnchainButton
           walletStore={walletStore}
           onPress={connectWallet}
           onchainStore={onchainStore}
         />
-        <TokenTabOptions
-          onchainStore={onchainStore}
-          walletStore={walletStore}
-        />
-      </View>
-    </View>
+      </Row>
+    </Spacer>
   );
 };
 
@@ -68,9 +69,6 @@ const styles = StyleSheet.create({
   minds: {
     paddingHorizontal: 15,
     paddingVertical: 10,
-    fontSize: 15,
-    fontWeight: '500',
-    fontFamily: 'Roboto-Medium',
     overflow: 'hidden',
   },
   touchable: {

@@ -19,7 +19,7 @@ export const DeltaIcon = ({ delta }: DeltaIconPropsType) => {
       iconColor = '#D0021B';
       break;
   }
-  return <MIcon name={iconName} color={iconColor} size={24} />;
+  return <MIcon name={iconName} color={iconColor} size={20} />;
 };
 
 export const AvatarIcon = ({ name }) => (

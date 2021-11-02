@@ -14,6 +14,10 @@ const ICON_MAP: {
     font: 'MaterialCommunityIcons',
     name: 'information-variant',
   },
+  filter: {
+    font: 'MaterialCommunityIcons',
+    name: 'filter',
+  },
   refresh: {
     font: 'MaterialCommunityIcons',
     name: 'refresh',

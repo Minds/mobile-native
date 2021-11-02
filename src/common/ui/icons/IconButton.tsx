@@ -110,9 +110,10 @@ export function IconButton({
   const containerStyles = useMemo(() => {
     const stylesObj = [styles.container, styles[size]];
     const extraStyles = getSpacingStylesNext(more);
+    console.log(extraStyles);
 
-    if (extraStyles?.length) {
-      stylesObj.push(...extraStyles);
+    if (extraStyles) {
+      stylesObj.push(extraStyles);
     }
 
     if (style) {
@@ -121,6 +122,8 @@ export function IconButton({
 
     return StyleSheet.flatten(stylesObj);
   }, [size, more, style]);
+
+  console.log(containerStyles);
 
   const sizeNumeric = useMemo(() => {
     return getNumericSize(size, ICON_SIZES, ICON_SIZE_DEFAULT) * SLOP_PROP;

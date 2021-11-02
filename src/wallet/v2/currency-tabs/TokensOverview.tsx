@@ -11,7 +11,8 @@ import TokensChart from './TokensChart';
 import useWalletConnect from '../../../blockchain/v2/walletconnect/useWalletConnect';
 import { navToTokens } from '../../../buy-tokens/BuyTokensScreen';
 import { useNavigation } from '@react-navigation/core';
-import MText from '../../../common/components/MText';
+
+import { B1, B2, Row, Column, Spacer } from '~ui';
 
 type PropsType = {
   walletStore: WalletStoreType;
@@ -20,13 +21,6 @@ type PropsType = {
 
 const TokensOverview = observer(({ walletStore }: PropsType) => {
   const wc = useWalletConnect();
-  const theme = ThemedStyles.style;
-  const balanceStyle = [
-    theme.fontL,
-    theme.colorSecondaryText,
-    theme.paddingBottom,
-  ];
-
   const navigation = useNavigation();
 
   const walletActions = [
@@ -46,37 +40,25 @@ const TokensOverview = observer(({ walletStore }: PropsType) => {
 
   return (
     <>
+      <Row horizontal="L" top="L" align="centerBetween">
+        <Column>
+          <B2 color="secondary">{i18n.t('wallet.walletBalance')}</B2>
+          <B1 font="medium">{walletStore.balance}</B1>
+        </Column>
+        <Column>
+          <B2 color="secondary">{i18n.t('blockchain.offchain')}</B2>
+          <B1 font="medium">{walletStore.wallet.offchain.balance}</B1>
+        </Column>
+        <Column>
+          <B2 color="secondary">{i18n.t('blockchain.onchain')}</B2>
+          <B1 font="medium">{walletStore.wallet.onchain.balance}</B1>
+        </Column>
+      </Row>
       <TokensChart timespan={walletStore.chart} />
-      <View
-        style={[
-          theme.paddingHorizontal3x,
-          theme.paddingTop3x,
-          theme.rowJustifySpaceBetween,
-        ]}>
-        <View>
-          <MText style={balanceStyle}>{i18n.t('wallet.walletBalance')}</MText>
-          <MText style={theme.fontXL}>{walletStore.balance}</MText>
-        </View>
-        <View>
-          <MText style={balanceStyle}>{i18n.t('blockchain.offchain')}</MText>
-          <MText style={theme.fontXL}>
-            {walletStore.wallet.offchain.balance}
-          </MText>
-        </View>
-        <View>
-          <MText style={balanceStyle}>{i18n.t('blockchain.onchain')}</MText>
-          <MText style={theme.fontXL}>
-            {walletStore.wallet.onchain.balance}
-          </MText>
-        </View>
-      </View>
-
-      <View style={theme.paddingTop2x}>
-        <MenuSubtitle>{i18n.t('wallet.walletActions')}</MenuSubtitle>
-        {walletActions.map((item, i) => (
-          <MenuItem item={item} key={i} />
-        ))}
-      </View>
+      <MenuSubtitle>{i18n.t('wallet.walletActions')}</MenuSubtitle>
+      {walletActions.map((item, i) => (
+        <MenuItem item={item} key={i} />
+      ))}
     </>
   );
 });

@@ -22,7 +22,7 @@ const TokensEarnings = observer(
     const theme = ThemedStyles.style;
 
     return (
-      <View style={theme.paddingTop5x}>
+      <>
         <MonthPickerInput
           minimumDate={moment().subtract(6, 'months').toDate()}
           maximumDate={new Date()}
@@ -34,7 +34,7 @@ const TokensEarnings = observer(
           walletStore={walletStore}
           currencyType={currencyType}
         />
-      </View>
+      </>
     );
   },
 );

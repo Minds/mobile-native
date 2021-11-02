@@ -1,23 +1,18 @@
 import React from 'react';
-import ThemedStyles from '../../../styles/ThemedStyles';
-import MText from '../MText';
+import { Spacer, B3 } from '~ui';
 
 type PropsType = {
   children: React.ReactNode;
 };
 
 const MenuSubtitle = ({ children }: PropsType) => {
-  const theme = ThemedStyles.style;
-  const subTitleStyle = [
-    theme.colorSecondaryText,
-    theme.fontMedium,
-    theme.fontM,
-    theme.marginTop5x,
-    theme.marginBottom2x,
-    theme.paddingHorizontal4x,
-  ];
-
-  return <MText style={subTitleStyle}>{children}</MText>;
+  return (
+    <Spacer top="L" bottom="S">
+      <B3 font="medium" color="secondary" horizontal="L">
+        {children}
+      </B3>
+    </Spacer>
+  );
 };
 
 export default MenuSubtitle;

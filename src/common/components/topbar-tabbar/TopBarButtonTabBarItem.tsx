@@ -117,9 +117,10 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   buttonContainer: {
-    paddingVertical: 5,
-    paddingHorizontal: 15,
-    borderRadius: 15,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 16,
+    marginVertical: 4,
   },
   bottomLine: {
     position: 'absolute',

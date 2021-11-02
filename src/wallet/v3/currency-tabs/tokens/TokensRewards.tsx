@@ -1,6 +1,5 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import { View } from 'react-native';
 import CenteredLoading from '../../../../common/components/CenteredLoading';
 import DatePicker from '../../../../common/components/DatePicker';
 import MText from '../../../../common/components/MText';
@@ -32,7 +31,7 @@ const TokensRewards = observer(({ walletStore, store }: PropsType) => {
   }
 
   return (
-    <View style={theme.paddingTop5x}>
+    <>
       <DatePicker
         onConfirm={store.onConfirm}
         maximumDate={new Date()}
@@ -45,7 +44,7 @@ const TokensRewards = observer(({ walletStore, store }: PropsType) => {
         store={store}
       />
       <MindsScores store={store} prices={walletStore.prices} />
-    </View>
+    </>
   );
 });
 
