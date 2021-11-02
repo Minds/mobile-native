@@ -13,6 +13,7 @@ const createChatStore = () => ({
   inProgress: false,
   createInProgress: false,
   polling: 0,
+  // hasSeenModal: false,
   async checkAppInstalled(openStore = true) {
     try {
       let installed = false;

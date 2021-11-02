@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   createBottomTabNavigator,
   BottomTabNavigationOptions,
@@ -29,6 +29,7 @@ import TopShadow from '../common/components/TopShadow';
 import { useStores } from '../common/hooks/use-stores';
 import ChatTabIcon from '../chat/ChatTabIcon';
 import PressableScale from '~/common/components/PressableScale';
+import TabChatPreModal from './TabChatPreModal';
 // import navigationService from '../navigation/NavigationService';
 
 const isIOS = Platform.OS === 'ios';
@@ -59,6 +60,7 @@ const Tab = createBottomTabNavigator<TabParamList>();
 
 const TabBar = ({ state, descriptors, navigation }) => {
   const focusedOptions = descriptors[state.routes[state.index].key].options;
+  const [isModalVisible, setModaVisible] = useState(false);
   const insets = useSafeAreaInsets();
   const { chat } = useStores();
 
@@ -84,9 +86,15 @@ const TabBar = ({ state, descriptors, navigation }) => {
     return null;
   }
 
+  const handleChatOpening = () => {
+    //            chat.openChat();
+    setModaVisible(true);
+  };
+
   return (
     <View style={containerStyle}>
       {!isIOS && <TopShadow setting={shadowOpt} />}
+      <TabChatPreModal isShown={isModalVisible} />
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const focused = state.index === index;
@@ -100,7 +108,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
           });
 
           if (route.name === 'MessengerTab') {
-            chat.openChat();
+            handleChatOpening();
             return;
           }
 
