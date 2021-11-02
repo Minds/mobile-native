@@ -6,10 +6,13 @@ type IconMap = {
   ratio?: number;
   top?: number;
 };
-
 const ICON_MAP: {
   [name: string]: IconMap;
 } = {
+  dev: {
+    font: 'MaterialCommunityIcons',
+    name: 'dev-to',
+  },
   info: {
     font: 'MaterialCommunityIcons',
     name: 'information-variant',
