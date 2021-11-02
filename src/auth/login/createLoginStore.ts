@@ -47,6 +47,7 @@ const createLoginStore = ({ props, resetRef }) => ({
       })
       .catch(err => {
         const errJson = err.response ? err.response.data : err;
+
         LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
         if (
           errJson.error === 'invalid_grant' ||
@@ -56,14 +57,22 @@ const createLoginStore = ({ props, resetRef }) => ({
           return;
         }
 
-        if (errJson.message.includes('user could not be found')) {
+        if (errJson.message?.includes('user could not be found')) {
           this.setError(i18n.t('auth.loginFail'));
           return;
         }
 
-        this.setError(errJson.message || 'Unknown error');
+        if (err.response?.data && !err.response.data.message) {
+          this.setError(
+            err.response.status === 403
+              ? 'Error: Forbidden'
+              : `Error: Status ${err.response.status}`,
+          );
+        } else {
+          this.setError(errJson.message || 'Unknown error');
+        }
 
-        logService.exception('[LoginForm]', errJson);
+        logService.exception('[LoginStore]', errJson);
       });
   },
   onForgotPress() {

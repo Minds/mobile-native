@@ -186,6 +186,7 @@ class I18nService {
       case 'friendly':
         const now = moment();
         const diff = moment.duration(date.diff(now));
+
         if (diff.asMilliseconds() > -86400000) {
           return diff.humanize(false);
         }
@@ -272,6 +273,10 @@ class I18nService {
         },
       });
     }
+
+    // least number of hours to be considered a day.
+    moment.relativeTimeThreshold('h', 24); // default is 22
+    moment.relativeTimeThreshold('m', 50); // default is 45
 
     this.dateFormat = {
       date:

@@ -1,7 +1,7 @@
 import React, { forwardRef, useCallback, useMemo, useRef } from 'react';
-import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
+import BottomSheet from '../bottom-sheet/BottomSheet';
 import { observer, useLocalStore } from 'mobx-react';
-import { Dimensions, Platform, StyleSheet, View } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 import BaseModel from '../../BaseModel';
 import navigationService from '../../../navigation/NavigationService';
 import Activity from '../../../newsfeed/activity/Activity';
@@ -33,9 +33,6 @@ type PropsType = {
   entity: BaseModel;
 };
 
-const { height: windowHeight } = Dimensions.get('window');
-
-const snapPoints = [Math.floor(windowHeight * 0.8)];
 const renderItemUser = (row: { item: any; index: number }) => (
   <ChannelListItem channel={row.item} navigation={navigationService} />
 );
@@ -71,7 +68,7 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
   PropsType
 > = (props: PropsType, ref) => {
   // =====================| STATES & VARIABLES |=====================>
-  const bottomSheetRef = React.useRef<BottomSheet>(null);
+  const bottomSheetRef = React.useRef<any>(null);
   const insets = useSafeAreaInsets();
   const footerStyle = useStyle(styles.cancelContainer, {
     paddingBottom:
@@ -165,18 +162,6 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
       this.offset = offset;
     },
   }));
-  const renderBackdrop = useCallback(
-    props => (
-      <BottomSheetBackdrop
-        {...props}
-        pressBehavior="close"
-        opacity={0.5}
-        appearsOnIndex={0}
-        disappearsOnIndex={-1}
-      />
-    ),
-    [],
-  );
   const isVote =
     store.interaction === 'upVotes' || store.interaction === 'downVotes';
   const isChannels =
@@ -289,16 +274,8 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
   return (
     <BottomSheet
       ref={bottomSheetRef}
-      index={-1}
-      containerHeight={windowHeight}
-      snapPoints={snapPoints}
-      enablePanDownToClose={true}
       handleComponent={Header}
-      enableContentPanningGesture={false}
-      enableHandlePanningGesture={true}
-      onChange={onBottomSheetVisibilityChange}
-      backgroundComponent={null}
-      backdropComponent={renderBackdrop}>
+      onChange={onBottomSheetVisibilityChange}>
       <View style={styles.container}>
         {store.visible && (
           <>

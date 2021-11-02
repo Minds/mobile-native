@@ -22,6 +22,7 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import { migrateLegacyStorage } from './src/common/services/storage/legacyStorageMigrator';
 import experimentsService from './src/common/services/experiments.service';
 import mindsConfigService from './src/common/services/minds-config.service';
+import openUrlService from '~/common/services/open-url.service';
 
 /**
  * App initialization manager
@@ -57,6 +58,8 @@ export default class AppInitManager {
 
     //on app logout
     sessionService.onLogout(this.onLogout);
+
+    openUrlService.init();
 
     //TODO: remove store migrator
     migrateLegacyStorage().then(() => {

@@ -1,7 +1,7 @@
 import { observer, useLocalStore } from 'mobx-react';
 import React, { useEffect, useCallback, forwardRef } from 'react';
 import {
-  BottomSheet,
+  BottomSheetModal,
   BottomSheetButton,
 } from '../../../common/components/bottom-sheet';
 import {
@@ -163,7 +163,7 @@ const DiscoveryTagsManager = (props: Props, ref) => {
    * Render
    */
   return (
-    <BottomSheet title={i18n.t('discovery.manage')} ref={ref}>
+    <BottomSheetModal title={i18n.t('discovery.manage')} ref={ref}>
       <View style={theme.rowJustifyCenter}>
         <View style={theme.width50}>
           <BottomSheetButton text={i18n.t('add')} onPress={onAdd} action />
@@ -203,7 +203,7 @@ const DiscoveryTagsManager = (props: Props, ref) => {
           style={theme.colorSecondaryText}
         />
       </FloatingInput>
-    </BottomSheet>
+    </BottomSheetModal>
   );
 };
 

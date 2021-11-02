@@ -243,7 +243,7 @@ export default class BlogViewHTML extends PureComponent<PropsType> {
   }
 
   /**
-   * @description a hack used only on android to prevent the link openning in webview
+   * a hack used only on android to prevent the link openning in webview
    * @return { boolean }
    */
   private handleShouldStartLoadWithRequest({ url }: any) {

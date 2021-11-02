@@ -1,4 +1,8 @@
 const ICON_MAP = {
+  dev: {
+    font: 'MaterialCommunityIcons',
+    name: 'dev-to',
+  },
   info: {
     font: 'MaterialCommunityIcons',
     name: 'information-variant',
