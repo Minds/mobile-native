@@ -1,46 +1,45 @@
-import React, { useEffect, useRef, useCallback } from 'react';
-import MText from '~/common/components/MText';
+import React, { forwardRef, useCallback } from 'react';
+import { Platform } from 'react-native';
 import i18n from '~/common/services/i18n.service';
 import {
-  MenuItem,
   BottomSheetModal,
   BottomSheetButton,
 } from '~/common/components/bottom-sheet';
 
-export const TabChatPreModal = ({ isShown, onPress, onCancel }) => {
-  const ref = useRef<any>();
+type PropsType = {
+  onAction: () => void;
+  onCancel: () => void;
+};
+
+export const TabChatPreModal = forwardRef((props: PropsType, ref: any) => {
+  const { onAction, onCancel } = props;
+
   const close = useCallback(() => {
+    onCancel();
+
     ref.current?.dismiss();
-  }, []);
-  const show = useCallback(() => {
-    ref.current?.present();
-  }, []);
-
-  useEffect(() => {
-    if (isShown) {
-      close();
-      return;
-    }
-    show();
-  }, [isShown, close, show]);
-
-  const item = {
-    title: 'Install Minds Chat',
-    iconName: 'ios-flag-outline',
-    iconType: 'ionicon',
-    onPress,
-  };
+  }, [ref, onCancel]);
 
   return (
-    <BottomSheetModal ref={ref}>
-      <MText>
-        For an enhanced chat experience install the external Minds Chat
-        application directly from the store
-      </MText>
-      <MenuItem {...item} />
-      <BottomSheetButton text={i18n.t('cancel')} onPress={onCancel} />
+    <BottomSheetModal
+      title={i18n.t('messenger.modal.appname')}
+      detail={i18n.t('messenger.modal.text', {
+        store: i18n.t(
+          `messenger.modal.${
+            Platform.OS === 'ios' ? 'theappstore' : 'googleplay'
+          }`,
+        ),
+      })}
+      autoShow={false}
+      ref={ref}>
+      <BottomSheetButton
+        action={true}
+        text={i18n.t('messenger.modal.action')}
+        onPress={onAction}
+      />
+      <BottomSheetButton text={i18n.t('cancel')} onPress={close} />
     </BottomSheetModal>
   );
-};
+});
 
 export default TabChatPreModal;

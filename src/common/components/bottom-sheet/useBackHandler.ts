@@ -9,6 +9,8 @@ export default function useBackHandler(onBack, props) {
    * The back handler function
    */
   const backHandler = useCallback(() => {
+    console.log('ON BACK');
+
     onBack();
     return true;
   }, [onBack]);
@@ -34,18 +36,23 @@ export default function useBackHandler(onBack, props) {
    */
   const onAnimateHandler = useCallback(
     (fromIndex: number, toIndex: number) => {
+      console.log('ON ANIMATE CALLBACK');
+      console.log(toIndex);
+
       // bottom sheet opened
       if (toIndex >= 0) {
-        setOpened(true);
-        BackHandler.addEventListener('hardwareBackPress', backHandler);
+        console.log('SET OPENED');
+        // setOpened(true);
+        // BackHandler.addEventListener('hardwareBackPress', backHandler);
       }
       // bottom sheet cosed
       if (toIndex < 0) {
-        setOpened(false);
-        BackHandler.removeEventListener('hardwareBackPress', backHandler);
+        console.log('SET CLOSED');
+        // setOpened(false);
+        // BackHandler.removeEventListener('hardwareBackPress', backHandler);
       }
 
-      props.onAnimate?.(fromIndex, toIndex);
+      // props.onAnimate?.(fromIndex, toIndex);
     },
     [backHandler, props],
   );

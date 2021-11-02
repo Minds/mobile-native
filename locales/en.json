@@ -390,7 +390,14 @@
     "setupMessage3": "By default the content of your messages is fully encrypted. For heightened security you may wish to go to your app settings and turn off push notifications in order to disallow metadata from being tracked.",
     "messengerRekey": "Change your encryption password",
     "legacyMessenger": "Legacy Messenger",
-    "errorDirectMessage": "Oops! Please try again in a moment"
+    "errorDirectMessage": "Oops! Please try again in a moment",
+    "modal": {
+      "action": "Install Minds Chat",
+      "appname": "Minds Chat",
+      "text": "For an enhanced chat experience install Minds Chat directly from {{store}}.",
+      "theappstore": "the App Store",
+      "googleplay": "Google Play"
+    }
   },
   "newsfeed": {
     "title": "Newsfeed",

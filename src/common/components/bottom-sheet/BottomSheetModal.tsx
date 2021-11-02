@@ -9,8 +9,8 @@ import { StatusBar, View } from 'react-native';
 import ThemedStyles, { useStyle } from '../../../styles/ThemedStyles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Handle from './Handle';
-import MText from '../MText';
 import useBackHandler from './useBackHandler';
+import { H3, B1 } from '~ui';
 
 interface PropsType extends Omit<BottomSheetModalProps, 'snapPoints'> {
   title?: string;
@@ -26,7 +26,11 @@ const MBottomSheetModal = forwardRef<BottomSheetModal, PropsType>(
     const { title, detail, snapPoints, autoShow, children, ...other } = props;
     const { onAnimateHandler } = useBackHandler(
       // @ts-ignore
-      useCallback(() => ref?.current?.dismiss(), [ref]),
+      useCallback(() => {
+        console.log('CALLING CLOSE');
+
+        ref?.current?.close();
+      }, [ref]),
       props,
     );
 
@@ -52,6 +56,8 @@ const MBottomSheetModal = forwardRef<BottomSheetModal, PropsType>(
       //@ts-ignore
       if (ref && ref.current && autoShow) {
         //@ts-ignore
+        console.log('PRESENT');
+
         ref.current.present();
       }
     }, [autoShow, ref]);
@@ -86,8 +92,21 @@ const MBottomSheetModal = forwardRef<BottomSheetModal, PropsType>(
         {...other}
         onAnimate={onAnimateHandler}>
         <View style={contStyle} onLayout={handleContentLayout}>
-          {Boolean(title) && <MText style={styles.title}>{title}</MText>}
-          {Boolean(detail) && <MText style={styles.detail}>{detail}</MText>}
+          {Boolean(title) && (
+            <H3 vertical="M" align="center">
+              {title}
+            </H3>
+          )}
+          {Boolean(detail) && (
+            <B1
+              horizontal="L"
+              bottom="M"
+              align="center"
+              color="secondary"
+              font="medium">
+              {detail}
+            </B1>
+          )}
           {children}
         </View>
       </BottomSheetModal>
