@@ -157,8 +157,6 @@ export class ThemedStylesStore {
     // Fix for the header's extra padding on android
     if (Platform.OS === 'android') {
       this.defaultScreenOptions.headerTopInsetEnabled = false;
-      this.defaultScreenOptions.statusBarColor = theme.SecondaryBackground;
-      this.defaultScreenOptions.statusBarStyle = this.theme ? 'light' : 'dark';
     }
   }
 }

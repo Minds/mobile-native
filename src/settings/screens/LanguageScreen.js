@@ -1,6 +1,6 @@
 //@ts-nocheck
 import React, { useCallback, useState, useRef } from 'react';
-import { View } from 'react-native-animatable';
+import { View } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
 import Selector from '../../common/components/SelectorV2';

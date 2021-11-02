@@ -13,6 +13,7 @@ import type BlogModel from './BlogModel';
 import BlogActionSheet from './BlogActionSheet';
 import i18n from '../common/services/i18n.service';
 import MText from '../common/components/MText';
+import MPressable from '~/common/components/MPressable';
 
 type PropsType = {
   entity: BlogModel;
@@ -86,10 +87,8 @@ export default class BlogCard extends PureComponent<PropsType> {
       return this.renderOnlyContent(image, title);
     }
     return (
-      <View>
-        <TouchableOpacity
-          onPress={this.navToBlog}
-          style={theme.bgSecondaryBackground}>
+      <View style={theme.bgSecondaryBackground}>
+        <MPressable onPress={this.navToBlog}>
           <FastImage
             source={image}
             style={styles.banner}
@@ -142,7 +141,7 @@ export default class BlogCard extends PureComponent<PropsType> {
           {!this.props.hideTabs && (
             <Actions entity={blog} navigation={this.props.navigation} />
           )}
-        </TouchableOpacity>
+        </MPressable>
       </View>
     );
   }

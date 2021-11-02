@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
 import TopBarButtonTabBar, {
   ButtonTabType,
@@ -9,6 +9,7 @@ import { NotificationsStore } from './createNotificationsStore';
 type PropsType = {
   store: NotificationsStore;
   setResult: Function;
+  refresh: Function;
 };
 
 export type NotificationsTabOptions =
@@ -28,27 +29,41 @@ const options: Array<ButtonTabType<NotificationsTabOptions>> = [
   { id: 'reminds', icon: { name: 'remind', type: 'material' } },
 ];
 
-const NotificationsTopBar = observer(({ store, setResult }: PropsType) => {
-  const localStore = useLocalStore(() => ({
-    option: 'all' as NotificationsTabOptions,
-    setOption(option: NotificationsTabOptions) {
-      this.option = option;
-      setResult(null);
-      store.setOffset('');
-      store.setFilter(option === 'all' ? '' : option);
-    },
-  }));
+const NotificationsTopBar = observer(
+  ({ store, setResult, refresh }: PropsType) => {
+    const localStore = useLocalStore(() => ({
+      option: 'all' as NotificationsTabOptions,
+      setOption(option: NotificationsTabOptions) {
+        this.option = option;
+        setResult(null);
+        store.setOffset('');
+        store.setFilter(option === 'all' ? '' : option);
+      },
+    }));
 
-  return (
-    <TopBarButtonTabBar
-      tabs={options}
-      current={localStore.option}
-      onChange={localStore.setOption}
-      buttonCmp={'Touchable'}
-      scrollViewContainerStyle={styles.scrollViewContainerStyle}
-    />
-  );
-});
+    const onChange = useCallback(
+      id => {
+        if (localStore.option === id) {
+          refresh();
+          return;
+        }
+
+        localStore.setOption(id);
+      },
+      [refresh, localStore],
+    );
+
+    return (
+      <TopBarButtonTabBar
+        tabs={options}
+        current={localStore.option}
+        onChange={onChange}
+        buttonCmp={'Touchable'}
+        scrollViewContainerStyle={styles.scrollViewContainerStyle}
+      />
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   scrollViewContainerStyle: {

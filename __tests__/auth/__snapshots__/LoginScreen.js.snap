@@ -39,7 +39,9 @@ exports[`LoginScreen component should renders correctly 1`] = `
             "backgroundColor": "#F8FAFA",
           },
         ],
-        undefined,
+        Object {
+          "backgroundColor": "#FFFFFF",
+        },
       ]
     }
   >
@@ -88,7 +90,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
             Array [
               Object {
                 "fontSize": 20,
-                "marginLeft": 32,
+                "marginLeft": 28,
               },
               Object {
                 "paddingVertical": 12,
@@ -117,7 +119,9 @@ exports[`LoginScreen component should renders correctly 1`] = `
             Object {
               "alignItems": "center",
               "justifyContent": "center",
+              "position": "relative",
             },
+            undefined,
             undefined,
           ]
         }
@@ -128,10 +132,10 @@ exports[`LoginScreen component should renders correctly 1`] = `
           focusable={true}
           hitSlop={
             Object {
-              "bottom": 10.666666666666666,
-              "left": 10.666666666666666,
-              "right": 10.666666666666666,
-              "top": 10.666666666666666,
+              "bottom": 9.333333333333332,
+              "left": 9.333333333333332,
+              "right": 9.333333333333332,
+              "top": 9.333333333333332,
             }
           }
           onBlur={[Function]}
@@ -143,6 +147,12 @@ exports[`LoginScreen component should renders correctly 1`] = `
           onResponderTerminate={[Function]}
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "justifyContent": "center",
+            }
+          }
         >
           <View
             style={
@@ -163,8 +173,8 @@ exports[`LoginScreen component should renders correctly 1`] = `
                     "overflow": "hidden",
                   },
                   Object {
-                    "height": 32,
-                    "width": 32,
+                    "height": 28,
+                    "width": 28,
                   },
                 ]
               }
@@ -175,9 +185,9 @@ exports[`LoginScreen component should renders correctly 1`] = `
                   Array [
                     Object {
                       "color": "#7D7D82",
-                      "fontSize": 32,
+                      "fontSize": 28,
                     },
-                    undefined,
+                    Object {},
                     Object {
                       "fontFamily": "Material Icons",
                       "fontStyle": "normal",
@@ -269,7 +279,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                         "fontSize": 16,
                       },
                       Object {
-                        "paddingLeft": 0,
+                        "paddingLeft": 1,
                       },
                       undefined,
                     ],
@@ -282,6 +292,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
           </View>
         </View>
         <TextInput
+          allowFontScaling={true}
           autoCapitalize="none"
           autoCompleteType="username"
           autoFocus={true}
@@ -295,7 +306,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                 "fontSize": 16,
               },
               Object {
-                "paddingLeft": 0,
+                "paddingLeft": 1,
               },
               undefined,
             ]
@@ -303,6 +314,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
           onChangeText={[Function]}
           placeholder=""
           placeholderTextColor="#444"
+          rejectResponderTermination={true}
           returnKeyType="done"
           style={
             Array [
@@ -324,7 +336,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                   "paddingVertical": 8,
                 },
                 Object {
-                  "paddingLeft": 0,
+                  "paddingLeft": 1,
                 },
                 Object {
                   "fontSize": 18,
@@ -419,7 +431,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                           "fontSize": 16,
                         },
                         Object {
-                          "paddingLeft": 0,
+                          "paddingLeft": 1,
                         },
                         undefined,
                       ],
@@ -432,6 +444,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
             </View>
           </View>
           <TextInput
+            allowFontScaling={true}
             autoCapitalize="none"
             autoCompleteType="password"
             keyboardAppearance="light"
@@ -444,7 +457,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                   "fontSize": 16,
                 },
                 Object {
-                  "paddingLeft": 0,
+                  "paddingLeft": 1,
                 },
                 undefined,
               ]
@@ -452,6 +465,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
             onChangeText={[Function]}
             placeholder=""
             placeholderTextColor="#444"
+            rejectResponderTermination={true}
             returnKeyType="done"
             secureTextEntry={true}
             style={
@@ -474,7 +488,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                     "paddingVertical": 8,
                   },
                   Object {
-                    "paddingLeft": 0,
+                    "paddingLeft": 1,
                   },
                   Object {
                     "fontSize": 18,
@@ -663,10 +677,8 @@ exports[`LoginScreen component should renders correctly 1`] = `
     >
       <View
         accessible={true}
-        collapsable={false}
         focusable={true}
         forwardedRef={[Function]}
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -711,7 +723,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                   "justifyContent": "flex-end",
                 },
                 Object {
-                  "margin": 0,
+                  "margin": 1,
                 },
               ],
               Object {
@@ -725,12 +737,10 @@ exports[`LoginScreen component should renders correctly 1`] = `
         }
       >
         <View
-          collapsable={false}
           deviceHeight={null}
           deviceWidth={null}
           forwardedRef={[Function]}
           hideModalContentWhileAnimating={false}
-          nativeID="animatedComponent"
           onBackdropPress={[Function]}
           onModalHide={[Function]}
           onModalWillHide={[Function]}
@@ -759,7 +769,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
               "flex": 1,
               "justifyContent": "flex-end",
               "left": 0,
-              "margin": 0,
+              "margin": 1,
               "top": 0,
               "transform": Array [
                 Object {
@@ -986,6 +996,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                     </View>
                   </View>
                   <TextInput
+                    allowFontScaling={true}
                     autoCapitalize="none"
                     autoCompleteType="username"
                     containerStyle={
@@ -1009,6 +1020,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                     onChangeText={[Function]}
                     placeholder=""
                     placeholderTextColor="#444"
+                    rejectResponderTermination={true}
                     returnKeyType="done"
                     style={
                       Array [
@@ -1030,7 +1042,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                             "paddingVertical": 8,
                           },
                           Object {
-                            "paddingLeft": 0,
+                            "paddingLeft": 1,
                           },
                           Object {
                             "fontSize": 18,

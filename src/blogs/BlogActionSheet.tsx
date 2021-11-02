@@ -11,7 +11,7 @@ import ThemedStyles from '../styles/ThemedStyles';
 import type BlogModel from './BlogModel';
 import {
   MenuItem,
-  BottomSheet,
+  BottomSheetModal,
   BottomSheetButton,
 } from '../common/components/bottom-sheet';
 import { MenuItemProps } from '../common/components/bottom-sheet/MenuItem';
@@ -129,7 +129,7 @@ export default class BlogActionSheet extends Component<PropsType, StateType> {
           style={theme.colorTertiaryText}
         />
         {this.state.shown && (
-          <BottomSheet ref={this.ref} autoShow>
+          <BottomSheetModal ref={this.ref} autoShow>
             {this.state.options.map((a, i) => (
               <MenuItem {...a} key={i} />
             ))}
@@ -137,7 +137,7 @@ export default class BlogActionSheet extends Component<PropsType, StateType> {
               text={i18n.t('cancel')}
               onPress={this.hideActionSheet}
             />
-          </BottomSheet>
+          </BottomSheetModal>
         )}
       </View>
     );

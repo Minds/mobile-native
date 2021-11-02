@@ -6,15 +6,16 @@ exports[`Explicit overlay component renders correctly 1`] = `
   style={
     Array [
       Object {
-        "alignContent": "center",
-        "alignItems": "center",
-        "alignSelf": "center",
+        "alignItems": "stretch",
+        "flex": 1,
+        "flexDirection": "column",
         "justifyContent": "center",
       },
       Object {
         "backgroundColor": "#F6F7F7",
       },
       Object {
+        "alignItems": "center",
         "minHeight": 400,
       },
       undefined,
@@ -115,15 +116,16 @@ exports[`Explicit overlay component should renders the etag 1`] = `
   style={
     Array [
       Object {
-        "alignContent": "center",
-        "alignItems": "center",
-        "alignSelf": "center",
+        "alignItems": "stretch",
+        "flex": 1,
+        "flexDirection": "column",
         "justifyContent": "center",
       },
       Object {
         "backgroundColor": "#F6F7F7",
       },
       Object {
+        "alignItems": "center",
         "minHeight": 400,
       },
       undefined,

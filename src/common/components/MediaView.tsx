@@ -283,7 +283,9 @@ export default class MediaView extends Component<PropsType> {
    * Open a link
    */
   openLink = () => {
-    openUrlService.open(this.props.entity.perma_url);
+    if (this.props.entity.perma_url) {
+      openUrlService.open(this.props.entity.perma_url);
+    }
   };
 
   /**

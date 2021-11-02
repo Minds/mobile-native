@@ -75,7 +75,7 @@ exports[`LoginForm component should renders correctly 1`] = `
                       "fontSize": 16,
                     },
                     Object {
-                      "paddingLeft": 0,
+                      "paddingLeft": 1,
                     },
                     undefined,
                   ],
@@ -88,6 +88,7 @@ exports[`LoginForm component should renders correctly 1`] = `
         </View>
       </View>
       <TextInput
+        allowFontScaling={true}
         autoCapitalize="none"
         autoCompleteType="username"
         autoFocus={true}
@@ -101,7 +102,7 @@ exports[`LoginForm component should renders correctly 1`] = `
               "fontSize": 16,
             },
             Object {
-              "paddingLeft": 0,
+              "paddingLeft": 1,
             },
             undefined,
           ]
@@ -109,6 +110,7 @@ exports[`LoginForm component should renders correctly 1`] = `
         onChangeText={[Function]}
         placeholder=""
         placeholderTextColor="#444"
+        rejectResponderTermination={true}
         returnKeyType="done"
         style={
           Array [
@@ -130,7 +132,7 @@ exports[`LoginForm component should renders correctly 1`] = `
                 "paddingVertical": 8,
               },
               Object {
-                "paddingLeft": 0,
+                "paddingLeft": 1,
               },
               Object {
                 "fontSize": 18,
@@ -225,7 +227,7 @@ exports[`LoginForm component should renders correctly 1`] = `
                         "fontSize": 16,
                       },
                       Object {
-                        "paddingLeft": 0,
+                        "paddingLeft": 1,
                       },
                       undefined,
                     ],
@@ -238,6 +240,7 @@ exports[`LoginForm component should renders correctly 1`] = `
           </View>
         </View>
         <TextInput
+          allowFontScaling={true}
           autoCapitalize="none"
           autoCompleteType="password"
           keyboardAppearance="light"
@@ -250,7 +253,7 @@ exports[`LoginForm component should renders correctly 1`] = `
                 "fontSize": 16,
               },
               Object {
-                "paddingLeft": 0,
+                "paddingLeft": 1,
               },
               undefined,
             ]
@@ -258,6 +261,7 @@ exports[`LoginForm component should renders correctly 1`] = `
           onChangeText={[Function]}
           placeholder=""
           placeholderTextColor="#444"
+          rejectResponderTermination={true}
           returnKeyType="done"
           secureTextEntry={true}
           style={
@@ -280,7 +284,7 @@ exports[`LoginForm component should renders correctly 1`] = `
                   "paddingVertical": 8,
                 },
                 Object {
-                  "paddingLeft": 0,
+                  "paddingLeft": 1,
                 },
                 Object {
                   "fontSize": 18,
@@ -469,10 +473,8 @@ exports[`LoginForm component should renders correctly 1`] = `
   >
     <View
       accessible={true}
-      collapsable={false}
       focusable={true}
       forwardedRef={[Function]}
-      nativeID="animatedComponent"
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -517,7 +519,7 @@ exports[`LoginForm component should renders correctly 1`] = `
                 "justifyContent": "flex-end",
               },
               Object {
-                "margin": 0,
+                "margin": 1,
               },
             ],
             Object {
@@ -531,12 +533,10 @@ exports[`LoginForm component should renders correctly 1`] = `
       }
     >
       <View
-        collapsable={false}
         deviceHeight={null}
         deviceWidth={null}
         forwardedRef={[Function]}
         hideModalContentWhileAnimating={false}
-        nativeID="animatedComponent"
         onBackdropPress={[Function]}
         onModalHide={[Function]}
         onModalWillHide={[Function]}
@@ -565,7 +565,7 @@ exports[`LoginForm component should renders correctly 1`] = `
             "flex": 1,
             "justifyContent": "flex-end",
             "left": 0,
-            "margin": 0,
+            "margin": 1,
             "top": 0,
             "transform": Array [
               Object {
@@ -792,6 +792,7 @@ exports[`LoginForm component should renders correctly 1`] = `
                   </View>
                 </View>
                 <TextInput
+                  allowFontScaling={true}
                   autoCapitalize="none"
                   autoCompleteType="username"
                   containerStyle={
@@ -815,6 +816,7 @@ exports[`LoginForm component should renders correctly 1`] = `
                   onChangeText={[Function]}
                   placeholder=""
                   placeholderTextColor="#444"
+                  rejectResponderTermination={true}
                   returnKeyType="done"
                   style={
                     Array [
@@ -836,7 +838,7 @@ exports[`LoginForm component should renders correctly 1`] = `
                           "paddingVertical": 8,
                         },
                         Object {
-                          "paddingLeft": 0,
+                          "paddingLeft": 1,
                         },
                         Object {
                           "fontSize": 18,

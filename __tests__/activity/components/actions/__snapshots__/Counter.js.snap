@@ -19,7 +19,18 @@ exports[`Owner component renders correctly 1`] = `
         Object {
           "fontFamily": "Roboto",
         },
-        undefined,
+        Array [
+          Object {
+            "color": "#7D7D82",
+          },
+          Object {
+            "fontSize": 14,
+          },
+          Object {
+            "fontFamily": "Roboto-Medium",
+            "fontWeight": "500",
+          },
+        ],
       ]
     }
   >
