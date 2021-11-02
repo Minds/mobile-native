@@ -8,7 +8,7 @@ exports[`Update Screen Component renders correctly 1`] = `
         "flex": 1,
       },
       Object {
-        "backgroundColor": "#F6F7F7",
+        "backgroundColor": "#1A2025",
       },
       Object {
         "alignItems": "center",
@@ -35,7 +35,7 @@ exports[`Update Screen Component renders correctly 1`] = `
           "borderRadius": 14,
         },
         Object {
-          "backgroundColor": "#FFFFFF",
+          "backgroundColor": "#242A30",
         },
       ]
     }
@@ -59,7 +59,7 @@ exports[`Update Screen Component renders correctly 1`] = `
         style={
           Array [
             Object {
-              "color": "#43434D",
+              "color": "#FFFFFF",
             },
             Object {
               "fontFamily": "Roboto",
@@ -131,7 +131,7 @@ exports[`Update Screen Component renders correctly 1`] = `
         style={
           Array [
             Object {
-              "color": "#43434D",
+              "color": "#FFFFFF",
             },
             Object {
               "fontFamily": "Roboto",
@@ -148,7 +148,7 @@ exports[`Update Screen Component renders correctly 1`] = `
                 "textAlign": "center",
               },
               Object {
-                "color": "#43434D",
+                "color": "#FFFFFF",
               },
               Object {
                 "marginTop": 8,

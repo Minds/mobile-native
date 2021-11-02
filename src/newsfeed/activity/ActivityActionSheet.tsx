@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Alert, Linking } from 'react-native';
-import { IconButtonNextSpaced } from '~ui/icons';
+import { IconButtonNext } from '~ui/icons';
 import { MINDS_URI } from '../../config/Config';
 import { isFollowing } from '../NewsfeedService';
 import shareService from '../../share/ShareService';
@@ -18,6 +18,7 @@ import {
   BottomSheetButton,
   MenuItem,
 } from '../../common/components/bottom-sheet';
+import { GroupContext } from '~/groups/GroupViewScreen';
 
 type PropsType = {
   entity: ActivityModel;
@@ -40,6 +41,7 @@ type StateType = {
  */
 export default withSafeAreaInsets(
   class ActivityActionSheet extends PureComponent<PropsType, StateType> {
+    static contextType = GroupContext;
     ref = React.createRef<any>();
     deleteOption: React.ReactNode;
     state: StateType = {
@@ -294,11 +296,14 @@ export default withSafeAreaInsets(
         },
       });
 
+      // we use the group from the context, as the entity.containerObj is not updated
+      const group = this.context;
+
       // if can delete
       if (
         entity.isOwner() ||
         sessionService.getUser().isAdmin() ||
-        (entity.containerObj && entity.containerObj['is:owner'])
+        (group && (group['is:owner'] || group['is:moderator']))
       ) {
         options.push({
           iconName: 'delete',
@@ -377,13 +382,13 @@ export default withSafeAreaInsets(
     render() {
       return (
         <>
-          <IconButtonNextSpaced
+          <IconButtonNext
             scale
             name="more"
             size="large"
             onPress={this.showActionSheet}
             testID={this.props.testID}
-            left="1x"
+            // left="XS"
           />
           {this.state.shown && (
             <BottomSheetModal ref={this.ref} autoShow>

@@ -6,7 +6,7 @@ import type BlogModel from '../../../blogs/BlogModel';
 import { useRoute } from '@react-navigation/native';
 import { ActivityRouteProp } from '../../ActivityScreen';
 import { actionsContainerStyle } from './styles';
-import withSpacer from '~ui/spacer/withSpacer';
+import { withSpacer } from '~ui/layout';
 
 const CounterSpaced = withSpacer(Counter);
 
@@ -62,7 +62,7 @@ const CommentsAction = (props: PropsType) => {
       testID={props.testID}
       extra={
         !props.hideCount ? (
-          <CounterSpaced left="1x" count={props.entity['comments:count']} />
+          <CounterSpaced left="XS" count={props.entity['comments:count']} />
         ) : null
       }
     />

@@ -14,14 +14,14 @@ exports[`Owner component renders correctly 1`] = `
     style={
       Array [
         Object {
-          "color": "#43434D",
+          "color": "#FFFFFF",
         },
         Object {
           "fontFamily": "Roboto",
         },
         Array [
           Object {
-            "color": "#7D7D82",
+            "color": "#AEB0B8",
           },
           Object {
             "fontSize": 14,

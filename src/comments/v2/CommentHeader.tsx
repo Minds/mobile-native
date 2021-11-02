@@ -99,11 +99,7 @@ class CommentHeader extends PureComponent<PropsType> {
               </MText>
             </View>
           </View>
-          <ChannelBadges
-            size={20}
-            channel={this.props.entity.ownerObj}
-            iconStyle={theme.colorLink}
-          />
+          <ChannelBadges channel={this.props.entity.ownerObj} />
           {rightToolbar}
         </View>
       </View>

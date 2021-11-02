@@ -12,7 +12,6 @@ import withPreventDoubleTap from '../../common/components/PreventDoubleTap';
 import ThemedStyles from '../../styles/ThemedStyles';
 import type ActivityModel from '../ActivityModel';
 import i18nService from '../../common/services/i18n.service';
-import { Icon } from '~ui/icons';
 import { SearchResultStoreType } from '../../topbar/searchbar/createSearchResultStore';
 import { withSearchResultStore } from '../../common/hooks/withStores';
 import ChannelBadges from '../../channel/badges/ChannelBadges';
@@ -21,6 +20,7 @@ import UserModel from '../../channel/UserModel';
 import { NavigationRouteV5 } from '@sentry/react-native/dist/js/tracing/reactnavigationv5';
 import { ChannelContext } from '../../channel/v2/ChannelContext';
 import MText from '../../common/components/MText';
+import { B1, B2, B3, Row, HairlineRow, IconNext } from '~ui';
 
 const DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
 
@@ -36,8 +36,15 @@ type PropsType = {
   searchResultStore: SearchResultStoreType;
 };
 
-const getLastRoute = (navigation: NavigationProp<any>): NavigationRouteV5 => {
-  const routes = navigation.getState().routes;
+const getLastRoute = (
+  navigation: NavigationProp<any>,
+): NavigationRouteV5 | null => {
+  const routes = navigation.getState?.().routes;
+
+  if (!routes) {
+    return null;
+  }
+
   return routes[routes.length - 1];
 };
 
@@ -59,11 +66,15 @@ class OwnerBlock extends PureComponent<PropsType> {
       this.props.searchResultStore.user.searchBarItemTap(channel);
     }
 
+    if (!this.props.navigation) {
+      return null;
+    }
+
     const lastRoute = getLastRoute(this.props.navigation);
     /**
      * do not navigate to channel if we were already in its page
      **/
-    if (lastRoute.name === 'Channel') {
+    if (lastRoute && lastRoute.name === 'Channel') {
       const currentScreenChannelGuid =
         lastRoute.params?.guid || lastRoute.params?.entity?.guid;
       if (currentScreenChannelGuid === channel.guid) {
@@ -72,12 +83,10 @@ class OwnerBlock extends PureComponent<PropsType> {
       }
     }
 
-    if (this.props.navigation) {
-      this.props.navigation.push('Channel', {
-        guid: channel.guid,
-        entity: channel.ownerObj,
-      });
-    }
+    this.props.navigation.push('Channel', {
+      guid: channel.guid,
+      entity: channel.ownerObj,
+    });
   };
 
   _onNavToChannelPress = () => {
@@ -139,25 +148,25 @@ class OwnerBlock extends PureComponent<PropsType> {
    * Render
    */
   render() {
-    const theme = ThemedStyles.style;
     const channel = this.props.entity.ownerObj;
     const rightToolbar = this.props.rightToolbar || null;
 
     // Remind header
     const remind = this.props.entity.remind_users ? (
-      <View style={remindContainer}>
-        <Icon name="remind" size="tiny" active spacingRight="1x" />
-        <MText>
-          <MText style={theme.colorSecondaryText}>
-            {i18nService.t('remindedBy')}{' '}
-          </MText>
+      <HairlineRow>
+        <Row align="center" horizontal="XL" vertical="S">
+          <IconNext name="remind" size="tiny" active right="XS" />
+          <B3>{i18nService.t('remindedBy')} </B3>
           {this.props.entity.remind_users.map(u => (
-            <MText key={u.guid} onPress={() => this._navToChannel(u)}>
+            <B3
+              font="medium"
+              key={u.guid}
+              onPress={() => this._navToChannel(u)}>
               {u.username}
-            </MText>
+            </B3>
           ))}
-        </MText>
-      </View>
+        </Row>
+      </HairlineRow>
     ) : null;
 
     const name =
@@ -174,28 +183,24 @@ class OwnerBlock extends PureComponent<PropsType> {
           <View style={styles.body}>
             <View style={styles.nameContainer}>
               <View pointerEvents="box-none" style={nameTouchableStyle}>
-                <MText
+                <B1
                   numberOfLines={1}
-                  style={nameStyle}
+                  font="bold"
                   onPress={this._onNavToChannelPress}>
                   {name || channel.username}
                   {Boolean(name) && (
-                    <MText numberOfLines={1} style={usernameStyle}>
+                    <B2 font="bold" color="secondary" numberOfLines={1}>
                       {' '}
                       @{channel.username}
-                    </MText>
+                    </B2>
                   )}
-                </MText>
+                </B1>
               </View>
               {this.group}
               {this.props.children}
             </View>
           </View>
-          <ChannelBadges
-            size={18}
-            channel={this.props.entity.ownerObj}
-            iconStyle={theme.colorLink}
-          />
+          <ChannelBadges channel={this.props.entity.ownerObj} />
           {rightToolbar}
         </View>
       </View>
@@ -236,25 +241,6 @@ const styles = StyleSheet.create({
 });
 
 const groupNameStyle = ThemedStyles.combine('fontM', 'colorSecondaryText');
-const usernameStyle = ThemedStyles.combine(
-  'colorSecondaryText',
-  'fontMedium',
-  'bold',
-  'fontLM',
-);
-const nameStyle = ThemedStyles.combine(
-  'colorPrimaryText',
-  'fontBold',
-  'fontLM',
-  'flexContainer',
-);
-const remindContainer = ThemedStyles.combine(
-  'paddingVertical2x',
-  'paddingHorizontal4x',
-  'borderBottomHair',
-  'bcolorPrimaryBorder',
-  'rowJustifyStart',
-);
 
 const nameTouchableStyle = ThemedStyles.combine(
   'rowJustifyStart',

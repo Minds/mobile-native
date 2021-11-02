@@ -97,7 +97,7 @@ const UpgradeScreen = observer(({ navigation, route }: PropsType) => {
       <Header pro={pro} />
       {localStore.settings === false && <UpgradeScreenPlaceHolder />}
       {localStore.settings !== false && (
-        <FitScrollView style={theme.flexContainer}>
+        <FitScrollView>
           {!isIos && <PaymentMethod store={localStore} />}
           <PlanOptions store={localStore} pro={pro} />
           {localStore.method === 'usd' && (

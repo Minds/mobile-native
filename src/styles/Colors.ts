@@ -33,6 +33,8 @@ export const LIGHT_THEME = {
   White: '#FFFFFF',
   Black: '#000000',
   Transparent: 'transparent',
+  AvatarActive: '#ECDA51',
+  AvatarCircled: '#7D7D82',
 };
 
 export const DARK_THEME: ColorsType = {
@@ -67,4 +69,6 @@ export const DARK_THEME: ColorsType = {
   White: '#FFFFFF',
   Black: '#000000',
   Transparent: 'transparent',
+  AvatarActive: '#ECDA51',
+  AvatarCircled: '#AEB0B8',
 };

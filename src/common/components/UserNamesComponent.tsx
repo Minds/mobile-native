@@ -39,11 +39,7 @@ const UserNamesComponent: FunctionComponent<propsType> = observer(
           <MText style={styles.name} numberOfLines={1}>
             {channel.name}
           </MText>
-          <ChannelBadges
-            channel={channel}
-            size={22}
-            iconStyle={theme.colorLink}
-          />
+          <ChannelBadges channel={channel} />
         </View>
         <MText style={styles.username} numberOfLines={1}>
           @{channel.username}

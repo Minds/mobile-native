@@ -39,6 +39,8 @@ import MenuItem, {
   MenuItemProps,
 } from '../common/components/bottom-sheet/MenuItem';
 
+export const GroupContext = React.createContext(null);
+
 /**
  * Groups view screen
  */
@@ -450,25 +452,27 @@ export default class GroupViewScreen extends Component {
 
     return (
       <View style={[theme.flexContainer, theme.bgSecondaryBackground]}>
-        {this.getList()}
-        {showPosterFab && (
-          <CaptureFab
-            visible={this.props.groupView.showPosterFab}
-            navigation={this.props.navigation}
-            group={group}
-            route={this.props.route}
-          />
-        )}
-        {memberActionSheet}
-        {this.props.groupView.comments && (
-          <CommentBottomSheet
-            title={i18n.t('conversation')}
-            ref={this.commentsRef}
-            hideContent={!this.state.conversationIsOpen}
-            commentsStore={this.props.groupView.comments}
-            onChange={this.onChange}
-          />
-        )}
+        <GroupContext.Provider value={this.props.groupView.group}>
+          {this.getList()}
+          {showPosterFab && (
+            <CaptureFab
+              visible={this.props.groupView.showPosterFab}
+              navigation={this.props.navigation}
+              group={group}
+              route={this.props.route}
+            />
+          )}
+          {memberActionSheet}
+          {this.props.groupView.comments && (
+            <CommentBottomSheet
+              title={i18n.t('conversation')}
+              ref={this.commentsRef}
+              hideContent={!this.state.conversationIsOpen}
+              commentsStore={this.props.groupView.comments}
+              onChange={this.onChange}
+            />
+          )}
+        </GroupContext.Provider>
       </View>
     );
   }
