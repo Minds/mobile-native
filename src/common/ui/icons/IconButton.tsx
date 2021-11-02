@@ -6,12 +6,16 @@ import {
   InteractionManager,
   ViewStyle,
 } from 'react-native';
-import Icon, { IIcon, IIconNext, IconNext } from './Icon';
-import { ICON_SIZES, ICON_SIZE_DEFAULT, IUISizing } from '~styles/Tokens';
-import { getNumericSize, getPropStyles } from '~ui/helpers';
+import { Icon, IIcon, IIconNext, IconNext } from './Icon';
+import {
+  ICON_SIZES,
+  ICON_SIZE_DEFAULT,
+  UISizing,
+  UISpacingPropType,
+} from '~styles/Tokens';
+import { getNumericSize, getSpacingStylesNext } from '~ui/helpers';
 import PressableScale from '~/common/components/PressableScale';
-import withSpacer from '~ui/spacer/withSpacer';
-import ThemedStyles from '~/styles/ThemedStyles';
+import { withSpacer } from '~ui/layout';
 
 const SLOP_PROP = 1 / 3;
 
@@ -30,7 +34,7 @@ export interface IIconButtonNext extends IIconNext {
   fill?: boolean;
 }
 
-export const IconButtonNext = ({
+const IconButtonNextComponent = ({
   onPress,
   testID,
   style,
@@ -39,7 +43,7 @@ export const IconButtonNext = ({
   fill,
   ...more
 }: IIconButtonNext) => {
-  const size: IUISizing | any = more?.size || 'medium';
+  const size: UISizing | any = more?.size || 'medium';
 
   const containerStyles = useMemo(() => {
     const styleArray = [styles.container, styles[size]];
@@ -90,9 +94,9 @@ export const IconButtonNext = ({
   );
 };
 
-export const IconButtonNextSpaced = withSpacer(IconButtonNext);
+export const IconButtonNext = withSpacer(IconButtonNextComponent);
 
-export default function IconButton({
+export function IconButton({
   onPress,
   style,
   testID,
@@ -100,12 +104,12 @@ export default function IconButton({
   fill,
   extra,
   ...more
-}: IIconButton) {
-  const size: IUISizing | number | string = more?.size || 'medium';
+}: IIconButton & UISpacingPropType) {
+  const size: UISizing | number | string = more?.size || 'medium';
 
   const containerStyles = useMemo(() => {
     const stylesObj = [styles.container, styles[size]];
-    const extraStyles = getPropStyles(more);
+    const extraStyles = getSpacingStylesNext(more);
 
     if (extraStyles?.length) {
       stylesObj.push(...extraStyles);
@@ -115,9 +119,7 @@ export default function IconButton({
       stylesObj.push(style);
     }
 
-    stylesObj.push(styles[size]);
-
-    return stylesObj;
+    return StyleSheet.flatten(stylesObj);
   }, [size, more, style]);
 
   const sizeNumeric = useMemo(() => {

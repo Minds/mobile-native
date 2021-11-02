@@ -27,7 +27,7 @@ export default function ModalFullScreen({
   const goBack = React.useCallback(() => navigation.goBack(), [navigation]);
   return (
     <View style={styles.screen}>
-      <SafeAreaView>
+      <SafeAreaView style={theme.flexContainer}>
         <View style={styles.header}>
           <IconButton size="large" name="close" onPress={goBack} />
           <MText numberOfLines={1} style={styles.title}>
@@ -35,7 +35,7 @@ export default function ModalFullScreen({
           </MText>
           <View style={theme.padding4x} />
         </View>
-        {children}
+        <View style={theme.flexContainer}>{children}</View>
       </SafeAreaView>
       {loading && (
         <View style={styles.loading}>

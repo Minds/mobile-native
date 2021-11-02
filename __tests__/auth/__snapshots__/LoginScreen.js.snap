@@ -115,15 +115,11 @@ exports[`LoginScreen component should renders correctly 1`] = `
     <View>
       <View
         style={
-          Array [
-            Object {
-              "alignItems": "center",
-              "justifyContent": "center",
-              "position": "relative",
-            },
-            undefined,
-            undefined,
-          ]
+          Object {
+            "alignItems": "center",
+            "justifyContent": "center",
+            "position": "relative",
+          }
         }
       >
         <View
@@ -169,11 +165,9 @@ exports[`LoginScreen component should renders correctly 1`] = `
                   Object {
                     "alignItems": "center",
                     "flexDirection": "row",
+                    "height": 28,
                     "justifyContent": "center",
                     "overflow": "hidden",
-                  },
-                  Object {
-                    "height": 28,
                     "width": 28,
                   },
                 ]

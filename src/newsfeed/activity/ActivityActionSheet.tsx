@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Alert, Linking } from 'react-native';
-import { IconButtonNextSpaced } from '~ui/icons';
+import { IconButtonNext } from '~ui/icons';
 import { MINDS_URI } from '../../config/Config';
 import { isFollowing } from '../NewsfeedService';
 import shareService from '../../share/ShareService';
@@ -377,13 +377,13 @@ export default withSafeAreaInsets(
     render() {
       return (
         <>
-          <IconButtonNextSpaced
+          <IconButtonNext
             scale
             name="more"
             size="large"
             onPress={this.showActionSheet}
             testID={this.props.testID}
-            left="1x"
+            // left="XS"
           />
           {this.state.shown && (
             <BottomSheetModal ref={this.ref} autoShow>

@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { ScrollView, ScrollViewProps } from 'react-native';
+import { ScrollView, ScrollViewProps, StyleSheet } from 'react-native';
 import { useLayout } from '@react-native-community/hooks';
 
 /**
@@ -13,7 +13,6 @@ export default function FitScrollView(
     setContentHeight,
   ]);
   const { onLayout, ...layout } = useLayout();
-
   const shouldScroll = layout.height < contentHeight;
 
   return (
@@ -21,8 +20,14 @@ export default function FitScrollView(
       onLayout={onLayout}
       onContentSizeChange={onSizeChange}
       scrollEnabled={shouldScroll}
-      {...props}>
-      {props.children}
-    </ScrollView>
+      style={styles.flex}
+      {...props}
+    />
   );
 }
+
+const styles = StyleSheet.create({
+  flex: {
+    flex: 1,
+  },
+});
