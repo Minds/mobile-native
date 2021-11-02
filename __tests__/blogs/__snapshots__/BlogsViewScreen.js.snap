@@ -8,7 +8,7 @@ exports[`blog view screen component should renders correctly 1`] = `
         "flex": 1,
       },
       Object {
-        "backgroundColor": "#F6F7F7",
+        "backgroundColor": "#1A2025",
       },
     ]
   }
@@ -73,7 +73,7 @@ exports[`blog view screen component should renders correctly 1`] = `
         style={
           Array [
             Object {
-              "color": "#43434D",
+              "color": "#FFFFFF",
             },
             Object {
               "fontFamily": "Roboto",
@@ -106,7 +106,7 @@ exports[`blog view screen component should renders correctly 1`] = `
           style={
             Object {
               "borderRadius": 24,
-              "color": "#7D7D82",
+              "color": "#AEB0B8",
               "height": 44,
               "margin": 7,
               "overflow": "hidden",
@@ -126,7 +126,7 @@ exports[`blog view screen component should renders correctly 1`] = `
               style={
                 Object {
                   "alignItems": "center",
-                  "backgroundColor": "#FFFFFF",
+                  "backgroundColor": "#242A30",
                   "borderRadius": 24,
                   "height": 44,
                   "justifyContent": "center",
@@ -139,7 +139,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": "#43434D",
+                      "color": "#FFFFFF",
                       "fontSize": 20,
                     },
                     Object {
@@ -167,7 +167,7 @@ exports[`blog view screen component should renders correctly 1`] = `
           Array [
             Array [
               Object {
-                "backgroundColor": "#F6F7F7",
+                "backgroundColor": "#1A2025",
               },
             ],
             Object {
@@ -183,7 +183,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                 "borderBottomWidth": 0.5,
               },
               Object {
-                "borderColor": "#D3DBE3",
+                "borderColor": "#414C57",
               },
               undefined,
             ]
@@ -284,7 +284,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                     style={
                       Array [
                         Object {
-                          "color": "#43434D",
+                          "color": "#FFFFFF",
                         },
                         Object {
                           "fontFamily": "Roboto-Bold",
@@ -305,7 +305,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                       style={
                         Array [
                           Object {
-                            "color": "#72727C",
+                            "color": "#B8C1CA",
                           },
                           Object {
                             "fontFamily": "Roboto-Bold",
@@ -330,7 +330,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                   style={
                     Array [
                       Object {
-                        "color": "#43434D",
+                        "color": "#FFFFFF",
                       },
                       Object {
                         "fontFamily": "Roboto",
@@ -341,7 +341,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                           "fontSize": 11,
                         },
                         Object {
-                          "color": "#72727C",
+                          "color": "#B8C1CA",
                         },
                       ],
                     ]
@@ -1003,7 +1003,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                         "fontSize": 28,
                       },
                       Object {
-                        "color": "#9B9B9B",
+                        "color": "#797B82",
                       },
                       Object {
                         "fontFamily": "Material Icons",
@@ -1053,7 +1053,7 @@ exports[`blog view screen component should renders correctly 1`] = `
             <View
               style={
                 Object {
-                  "color": "#7D7D82",
+                  "color": "#AEB0B8",
                 }
               }
             >
@@ -1096,7 +1096,7 @@ exports[`blog view screen component should renders correctly 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#43434D",
+                  "color": "#FFFFFF",
                 },
                 Object {
                   "fontFamily": "Roboto",
@@ -1109,7 +1109,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                     "paddingLeft": 4,
                   },
                   Object {
-                    "color": "#72727C",
+                    "color": "#B8C1CA",
                   },
                   Object {
                     "paddingRight": 8,
@@ -1128,7 +1128,7 @@ exports[`blog view screen component should renders correctly 1`] = `
     emulateUnlessSupported={true}
     style={
       Object {
-        "backgroundColor": "#FFFFFF",
+        "backgroundColor": "#242A30",
       }
     }
   >
@@ -1144,7 +1144,7 @@ exports[`blog view screen component should renders correctly 1`] = `
               "paddingHorizontal": 16,
             },
             Object {
-              "borderColor": "#D3DBE3",
+              "borderColor": "#414C57",
             },
           ]
         }
@@ -1978,7 +1978,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                     style={
                       Array [
                         Object {
-                          "color": "#7D7D82",
+                          "color": "#AEB0B8",
                           "fontSize": 20,
                         },
                         Object {
@@ -2164,9 +2164,9 @@ exports[`blog view screen component should renders correctly 1`] = `
                       style={
                         Object {
                           "alignItems": "center",
-                          "backgroundColor": "#FFFFFF",
+                          "backgroundColor": "#242A30",
                           "borderBottomWidth": 0.5,
-                          "borderColor": "#D3DBE3",
+                          "borderColor": "#414C57",
                           "borderTopLeftRadius": 10,
                           "borderTopRightRadius": 10,
                           "flexDirection": "row",
@@ -2234,7 +2234,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                               "alignItems": "center",
                               "alignSelf": "center",
                               "backgroundColor": "transparent",
-                              "color": "#43434D",
+                              "color": "#FFFFFF",
                               "fontSize": 18,
                               "justifyContent": "center",
                               "paddingVertical": 4,
@@ -2255,10 +2255,10 @@ exports[`blog view screen component should renders correctly 1`] = `
                       style={
                         Object {
                           "alignItems": "center",
-                          "backgroundColor": "#FFFFFF",
+                          "backgroundColor": "#242A30",
                           "borderBottomLeftRadius": 10,
                           "borderBottomRightRadius": 10,
-                          "borderColor": "#D3DBE3",
+                          "borderColor": "#414C57",
                           "flexDirection": "row",
                           "marginBottom": 10,
                           "marginHorizontal": 12,
@@ -2325,7 +2325,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                               "alignItems": "center",
                               "alignSelf": "center",
                               "backgroundColor": "transparent",
-                              "color": "#43434D",
+                              "color": "#FFFFFF",
                               "fontSize": 18,
                               "justifyContent": "center",
                               "paddingVertical": 4,
@@ -2354,10 +2354,10 @@ exports[`blog view screen component should renders correctly 1`] = `
                       style={
                         Object {
                           "alignItems": "center",
-                          "backgroundColor": "#FFFFFF",
+                          "backgroundColor": "#242A30",
                           "borderBottomLeftRadius": 10,
                           "borderBottomRightRadius": 10,
-                          "borderColor": "#D3DBE3",
+                          "borderColor": "#414C57",
                           "borderTopLeftRadius": 10,
                           "borderTopRightRadius": 10,
                           "flexDirection": "row",
@@ -2426,7 +2426,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                               "alignItems": "center",
                               "alignSelf": "center",
                               "backgroundColor": "transparent",
-                              "color": "#72727C",
+                              "color": "#B8C1CA",
                               "fontSize": 18,
                               "justifyContent": "center",
                               "paddingVertical": 4,
