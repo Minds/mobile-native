@@ -55,23 +55,14 @@ exports[`Notifications Screen Component renders correctly 1`] = `
         >
           <View
             style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "justifyContent": "center",
-                  "position": "relative",
-                },
-                undefined,
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "flex": 1,
-                    "height": 52,
-                    "paddingBottom": 3,
-                  },
-                ],
-                undefined,
-              ]
+              Object {
+                "alignItems": "center",
+                "flex": 1,
+                "height": 52,
+                "justifyContent": "center",
+                "paddingBottom": 3,
+                "position": "relative",
+              }
             }
           >
             <View
@@ -128,11 +119,9 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                         Object {
                           "alignItems": "center",
                           "flexDirection": "row",
+                          "height": 24,
                           "justifyContent": "center",
                           "overflow": "hidden",
-                        },
-                        Object {
-                          "height": 24,
                           "width": 24,
                         },
                       ]
@@ -198,23 +187,14 @@ exports[`Notifications Screen Component renders correctly 1`] = `
         >
           <View
             style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "justifyContent": "center",
-                  "position": "relative",
-                },
-                undefined,
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "flex": 1,
-                    "height": 52,
-                    "paddingBottom": 3,
-                  },
-                ],
-                undefined,
-              ]
+              Object {
+                "alignItems": "center",
+                "flex": 1,
+                "height": 52,
+                "justifyContent": "center",
+                "paddingBottom": 3,
+                "position": "relative",
+              }
             }
           >
             <View
@@ -271,11 +251,9 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                         Object {
                           "alignItems": "center",
                           "flexDirection": "row",
+                          "height": 24,
                           "justifyContent": "center",
                           "overflow": "hidden",
-                        },
-                        Object {
-                          "height": 24,
                           "width": 24,
                         },
                       ]
@@ -341,23 +319,14 @@ exports[`Notifications Screen Component renders correctly 1`] = `
         >
           <View
             style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "justifyContent": "center",
-                  "position": "relative",
-                },
-                undefined,
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "flex": 1,
-                    "height": 52,
-                    "paddingBottom": 3,
-                  },
-                ],
-                undefined,
-              ]
+              Object {
+                "alignItems": "center",
+                "flex": 1,
+                "height": 52,
+                "justifyContent": "center",
+                "paddingBottom": 3,
+                "position": "relative",
+              }
             }
           >
             <View
@@ -414,11 +383,9 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                         Object {
                           "alignItems": "center",
                           "flexDirection": "row",
+                          "height": 24,
                           "justifyContent": "center",
                           "overflow": "hidden",
-                        },
-                        Object {
-                          "height": 24,
                           "width": 24,
                         },
                       ]
@@ -484,23 +451,14 @@ exports[`Notifications Screen Component renders correctly 1`] = `
         >
           <View
             style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "justifyContent": "center",
-                  "position": "relative",
-                },
-                undefined,
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "flex": 1,
-                    "height": 52,
-                    "paddingBottom": 3,
-                  },
-                ],
-                undefined,
-              ]
+              Object {
+                "alignItems": "center",
+                "flex": 1,
+                "height": 52,
+                "justifyContent": "center",
+                "paddingBottom": 3,
+                "position": "relative",
+              }
             }
           >
             <View
@@ -557,11 +515,9 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                         Object {
                           "alignItems": "center",
                           "flexDirection": "row",
+                          "height": 24,
                           "justifyContent": "center",
                           "overflow": "hidden",
-                        },
-                        Object {
-                          "height": 24,
                           "width": 24,
                         },
                       ]
@@ -627,23 +583,14 @@ exports[`Notifications Screen Component renders correctly 1`] = `
         >
           <View
             style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "justifyContent": "center",
-                  "position": "relative",
-                },
-                undefined,
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "flex": 1,
-                    "height": 52,
-                    "paddingBottom": 3,
-                  },
-                ],
-                undefined,
-              ]
+              Object {
+                "alignItems": "center",
+                "flex": 1,
+                "height": 52,
+                "justifyContent": "center",
+                "paddingBottom": 3,
+                "position": "relative",
+              }
             }
           >
             <View
@@ -700,11 +647,9 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                         Object {
                           "alignItems": "center",
                           "flexDirection": "row",
+                          "height": 24,
                           "justifyContent": "center",
                           "overflow": "hidden",
-                        },
-                        Object {
-                          "height": 24,
                           "width": 24,
                         },
                       ]
@@ -770,23 +715,14 @@ exports[`Notifications Screen Component renders correctly 1`] = `
         >
           <View
             style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "justifyContent": "center",
-                  "position": "relative",
-                },
-                undefined,
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "flex": 1,
-                    "height": 52,
-                    "paddingBottom": 3,
-                  },
-                ],
-                undefined,
-              ]
+              Object {
+                "alignItems": "center",
+                "flex": 1,
+                "height": 52,
+                "justifyContent": "center",
+                "paddingBottom": 3,
+                "position": "relative",
+              }
             }
           >
             <View
@@ -843,11 +779,9 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                         Object {
                           "alignItems": "center",
                           "flexDirection": "row",
+                          "height": 24,
                           "justifyContent": "center",
                           "overflow": "hidden",
-                        },
-                        Object {
-                          "height": 24,
                           "width": 24,
                         },
                       ]
