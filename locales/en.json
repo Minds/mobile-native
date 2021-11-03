@@ -455,6 +455,21 @@
     "rewardsStateDecrease1": "Your daily token reward multiplier has been reduced to {{multiplier}}x",
     "rewardsStateDecreaseToday": "It's not too late! You will drop down to a {{state}} user by the end of today and your daily token reward multiplier will reduce to {{multiplier}}x. Get liking and commenting to bring your score back up!",
     "rewardsSummary": "You earned {{amount}} tokens yesterday.",
+    "filters": {
+      "all": "All",
+      "tags": "Tags",
+      "comments": "Comments",
+      "subscriptions": "Subscribers",
+      "votes": "Votes",
+      "reminds": "Reminds"
+    },
+    "empty": {
+      "all": "You have no notifications",
+      "tags": "You have no tags notification",
+      "subscriptions": "You have no subscriptions notification",
+      "votes": "You have no votes notification",
+      "reminds": "You have no reminds notification"
+    },
     "verbs": {
       "vote_up": "voted up",
       "vote_down": "voted down",
