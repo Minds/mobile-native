@@ -101,8 +101,8 @@ export const DiscoveryV2Screen = withErrorBoundary(
     };
 
     return (
-      <View style={theme.flexContainer}>
-        <View style={[theme.bgPrimaryBackground, theme.paddingTop]}>
+      <View style={styles.container}>
+        <View style={theme.paddingTop}>
           <InitialOnboardingButton />
           <TopbarTabbar
             current={store.activeTabId}
@@ -119,3 +119,7 @@ export const DiscoveryV2Screen = withErrorBoundary(
     );
   }),
 );
+
+const styles = ThemedStyles.create({
+  container: ['flexContainer', 'bgPrimaryBackground'],
+});
