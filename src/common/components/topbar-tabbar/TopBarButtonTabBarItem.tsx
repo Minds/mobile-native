@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
-import { Icon } from '~ui/icons';
+import { Icon, B4, Row } from '~ui';
+import { ICON_TABS_HEIGHT } from '~styles/Tokens';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import Button from '../Button';
 import MText from '../MText';
@@ -94,17 +95,13 @@ const TopBarButtonTabBarItem = ({ tab, buttonCmp, onChange, current }) => {
             <Icon name={tab.icon.name} active={isCurrent} />
           </View>
           {tab.icon.subtitle ? (
-            <MText
-              numberOfLines={1}
-              style={[
-                theme.fontXS,
-                theme.colorSecondaryText,
-                theme.marginTop1x,
-                theme.alignSelfCenter,
-                isCurrent ? theme.colorLink : null,
-              ]}>
+            <B4
+              align="center"
+              top="XXXS"
+              font="medium"
+              color={isCurrent ? 'link' : 'secondary'}>
               {tab.icon.subtitle}
-            </MText>
+            </B4>
           ) : null}
         </PressableScale>
       );
@@ -150,7 +147,7 @@ const styles = StyleSheet.create({
   },
   touchableContainer: {
     flex: 1,
-    height: 52,
+    height: ICON_TABS_HEIGHT,
     paddingBottom: 3,
   },
   text: {

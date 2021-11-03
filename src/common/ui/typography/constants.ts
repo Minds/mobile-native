@@ -29,6 +29,10 @@ export const TYPES = {
     fontSize: FONT_SIZES.XS,
     lineHeight: UNIT.L,
   },
+  B4: {
+    fontSize: FONT_SIZES.XXS,
+    lineHeight: UNIT.L,
+  },
   button1: {
     fontSize: FONT_SIZES.L,
     lineHeight: UNIT.XXL,
@@ -65,6 +69,9 @@ export const FLAT = {
     lineHeight: UNIT.L,
   },
   B3: {
+    lineHeight: UNIT.M,
+  },
+  B4: {
     lineHeight: UNIT.M,
   },
   button1: {

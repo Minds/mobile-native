@@ -69,6 +69,7 @@ export const ICON_SIZES = {
 export const STEP: number = UNIT.XS;
 export const BOTTOM_TABS_HEIGHT: number = UNIT.XXL * 2;
 export const HORIZONTAL = UNIT.L;
+export const ICON_TABS_HEIGHT = UNIT.XXXL + UNIT.XXL;
 
 export type UISizing = 'micro' | 'tiny' | 'small' | 'medium' | 'large' | 'huge';
 
