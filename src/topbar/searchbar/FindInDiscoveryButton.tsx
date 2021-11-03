@@ -16,12 +16,19 @@ const FindInDiscoveryButton = ({ showBorder, localStore }: PropsType) => {
     : [];
   return (
     <TouchableOpacity
+      activeOpacity={0.85}
       onPress={() => localStore.searchDiscovery()}
-      style={[theme.flexColumnStretch, theme.padding3x, ...borders]}>
-      <MText
-        style={
-          theme.colorSecondaryText
-        }>{`SEARCH MINDS: ${localStore.search}`}</MText>
+      style={[
+        theme.flexColumnStretch,
+        theme.paddingHorizontal4x,
+        theme.paddingVertical2x,
+        theme.marginBottom1x,
+        ...borders,
+      ]}>
+      <MText style={theme.colorLink}>
+        See results for{' '}
+        <MText style={[theme.bold, theme.colorLink]}>{localStore.search}</MText>
+      </MText>
     </TouchableOpacity>
   );
 };

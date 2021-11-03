@@ -207,6 +207,10 @@ const ICON_MAP: {
     name: 'hashtag',
     ratio: 0.86,
   },
+  'close-circle': {
+    font: 'MaterialCommunityIcons',
+    name: 'close-circle',
+  },
 };
 
 export default ICON_MAP;
