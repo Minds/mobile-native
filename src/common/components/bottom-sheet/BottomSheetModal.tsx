@@ -9,8 +9,8 @@ import { StatusBar, View } from 'react-native';
 import ThemedStyles, { useStyle } from '../../../styles/ThemedStyles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Handle from './Handle';
-import MText from '../MText';
 import useBackHandler from './useBackHandler';
+import MText from '../MText';
 
 interface PropsType extends Omit<BottomSheetModalProps, 'snapPoints'> {
   title?: string;
@@ -86,9 +86,9 @@ const MBottomSheetModal = forwardRef<BottomSheetModal, PropsType>(
         {...other}
         onAnimate={onAnimateHandler}>
         <View style={contStyle} onLayout={handleContentLayout}>
-          {/* {Boolean(title) && <MText style={styles.title}>{title}</MText>} */}
-          {/* {Boolean(detail) && <MText style={styles.detail}>{detail}</MText>} */}
-          {/* {children} */}
+          {Boolean(title) && <MText style={styles.title}>{title}</MText>}
+          {Boolean(detail) && <MText style={styles.detail}>{detail}</MText>}
+          {children}
         </View>
       </BottomSheetModal>
     );

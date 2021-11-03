@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     paddingVertical: 8,
     paddingHorizontal: 12,
-    borderRadius: 16,
+    borderRadius: 24,
     marginVertical: 4,
   },
   bottomLine: {
