@@ -138,38 +138,35 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   </Text>
                 </View>
               </View>
-              <Text
-                numberOfLines={1}
+              <View
                 style={
-                  Array [
-                    Object {
-                      "color": "#FFFFFF",
-                    },
-                    Object {
-                      "fontFamily": "Roboto",
-                    },
+                  Object {
+                    "marginTop": 1,
+                  }
+                }
+              >
+                <Text
+                  style={
                     Array [
-                      Object {
-                        "fontSize": 10,
-                      },
-                      Object {
-                        "color": "#B8C1CA",
-                      },
-                      Object {
-                        "marginTop": 4,
-                      },
-                      Object {
-                        "alignSelf": "center",
-                      },
                       Object {
                         "color": "#1B85D6",
                       },
-                    ],
-                  ]
-                }
-              >
-                All
-              </Text>
+                      Object {
+                        "fontFamily": "Roboto-Medium",
+                      },
+                      Object {
+                        "fontSize": 10,
+                        "lineHeight": 16,
+                      },
+                      Object {
+                        "textAlign": "center",
+                      },
+                    ]
+                  }
+                >
+                  All
+                </Text>
+              </View>
             </View>
           </View>
           <View
@@ -290,36 +287,35 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   </Text>
                 </View>
               </View>
-              <Text
-                numberOfLines={1}
+              <View
                 style={
-                  Array [
-                    Object {
-                      "color": "#FFFFFF",
-                    },
-                    Object {
-                      "fontFamily": "Roboto",
-                    },
+                  Object {
+                    "marginTop": 1,
+                  }
+                }
+              >
+                <Text
+                  style={
                     Array [
-                      Object {
-                        "fontSize": 10,
-                      },
                       Object {
                         "color": "#B8C1CA",
                       },
                       Object {
-                        "marginTop": 4,
+                        "fontFamily": "Roboto-Medium",
                       },
                       Object {
-                        "alignSelf": "center",
+                        "fontSize": 10,
+                        "lineHeight": 16,
                       },
-                      null,
-                    ],
-                  ]
-                }
-              >
-                Tags
-              </Text>
+                      Object {
+                        "textAlign": "center",
+                      },
+                    ]
+                  }
+                >
+                  Tags
+                </Text>
+              </View>
             </View>
           </View>
           <View
@@ -440,36 +436,35 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   </Text>
                 </View>
               </View>
-              <Text
-                numberOfLines={1}
+              <View
                 style={
-                  Array [
-                    Object {
-                      "color": "#FFFFFF",
-                    },
-                    Object {
-                      "fontFamily": "Roboto",
-                    },
+                  Object {
+                    "marginTop": 1,
+                  }
+                }
+              >
+                <Text
+                  style={
                     Array [
-                      Object {
-                        "fontSize": 10,
-                      },
                       Object {
                         "color": "#B8C1CA",
                       },
                       Object {
-                        "marginTop": 4,
+                        "fontFamily": "Roboto-Medium",
                       },
                       Object {
-                        "alignSelf": "center",
+                        "fontSize": 10,
+                        "lineHeight": 16,
                       },
-                      null,
-                    ],
-                  ]
-                }
-              >
-                Comments
-              </Text>
+                      Object {
+                        "textAlign": "center",
+                      },
+                    ]
+                  }
+                >
+                  Comments
+                </Text>
+              </View>
             </View>
           </View>
           <View
@@ -590,36 +585,35 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   </Text>
                 </View>
               </View>
-              <Text
-                numberOfLines={1}
+              <View
                 style={
-                  Array [
-                    Object {
-                      "color": "#FFFFFF",
-                    },
-                    Object {
-                      "fontFamily": "Roboto",
-                    },
+                  Object {
+                    "marginTop": 1,
+                  }
+                }
+              >
+                <Text
+                  style={
                     Array [
-                      Object {
-                        "fontSize": 10,
-                      },
                       Object {
                         "color": "#B8C1CA",
                       },
                       Object {
-                        "marginTop": 4,
+                        "fontFamily": "Roboto-Medium",
                       },
                       Object {
-                        "alignSelf": "center",
+                        "fontSize": 10,
+                        "lineHeight": 16,
                       },
-                      null,
-                    ],
-                  ]
-                }
-              >
-                Subscribers
-              </Text>
+                      Object {
+                        "textAlign": "center",
+                      },
+                    ]
+                  }
+                >
+                  Subscribers
+                </Text>
+              </View>
             </View>
           </View>
           <View
@@ -740,36 +734,35 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   </Text>
                 </View>
               </View>
-              <Text
-                numberOfLines={1}
+              <View
                 style={
-                  Array [
-                    Object {
-                      "color": "#FFFFFF",
-                    },
-                    Object {
-                      "fontFamily": "Roboto",
-                    },
+                  Object {
+                    "marginTop": 1,
+                  }
+                }
+              >
+                <Text
+                  style={
                     Array [
-                      Object {
-                        "fontSize": 10,
-                      },
                       Object {
                         "color": "#B8C1CA",
                       },
                       Object {
-                        "marginTop": 4,
+                        "fontFamily": "Roboto-Medium",
                       },
                       Object {
-                        "alignSelf": "center",
+                        "fontSize": 10,
+                        "lineHeight": 16,
                       },
-                      null,
-                    ],
-                  ]
-                }
-              >
-                Votes
-              </Text>
+                      Object {
+                        "textAlign": "center",
+                      },
+                    ]
+                  }
+                >
+                  Votes
+                </Text>
+              </View>
             </View>
           </View>
           <View
@@ -890,36 +883,35 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   </Text>
                 </View>
               </View>
-              <Text
-                numberOfLines={1}
+              <View
                 style={
-                  Array [
-                    Object {
-                      "color": "#FFFFFF",
-                    },
-                    Object {
-                      "fontFamily": "Roboto",
-                    },
+                  Object {
+                    "marginTop": 1,
+                  }
+                }
+              >
+                <Text
+                  style={
                     Array [
-                      Object {
-                        "fontSize": 10,
-                      },
                       Object {
                         "color": "#B8C1CA",
                       },
                       Object {
-                        "marginTop": 4,
+                        "fontFamily": "Roboto-Medium",
                       },
                       Object {
-                        "alignSelf": "center",
+                        "fontSize": 10,
+                        "lineHeight": 16,
                       },
-                      null,
-                    ],
-                  ]
-                }
-              >
-                Reminds
-              </Text>
+                      Object {
+                        "textAlign": "center",
+                      },
+                    ]
+                  }
+                >
+                  Reminds
+                </Text>
+              </View>
             </View>
           </View>
           <View
