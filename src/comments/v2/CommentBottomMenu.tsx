@@ -22,6 +22,7 @@ import {
   BottomSheetButton,
   MenuItem,
 } from '../../common/components/bottom-sheet';
+import { GroupContext } from '~/groups/GroupViewScreen';
 
 type PropsType = {
   comment: CommentModel;
@@ -42,6 +43,7 @@ export default function CommentBottomMenu({
   onTranslate,
 }: PropsType) {
   const theme = ThemedStyles.style;
+  const group = React.useContext(GroupContext);
 
   const navigation = useNavigation<any>();
   // Do not render BottomSheet unless it is necessary
@@ -152,7 +154,10 @@ export default function CommentBottomMenu({
         } else {
           actions.push(removeExplicit);
         }
-      } else if (entity.isOwner()) {
+      } else if (
+        entity.isOwner() ||
+        (group && (group['is:owner'] || group['is:moderator']))
+      ) {
         actions.push(deleteOpt);
       }
 
@@ -177,7 +182,7 @@ export default function CommentBottomMenu({
       });
     }
     return actions;
-  }, [close, comment, entity, navigation, onTranslate, store]);
+  }, [close, comment, entity, navigation, onTranslate, store, group]);
 
   return (
     <TouchableOpacity onPress={show} hitSlop={hitSlop}>
