@@ -83,9 +83,21 @@ export const DiscoveryV2Screen = withErrorBoundary(
             </DiscoveryTabContent>
           );
         case 'trending-tags':
+          store.trendingFeed.fetchRemoteOrLocal();
           return (
             <DiscoveryTabContent key="trending-tags">
-              <DiscoveryTagsList type="trending" store={store} />
+              <FeedList
+                header={
+                  <DiscoveryTagsList
+                    type="trending"
+                    store={store}
+                    style={styles.bottomBorder}
+                    showManageTags={false}
+                  />
+                }
+                feedStore={store.trendingFeed}
+                navigation={navigation}
+              />
             </DiscoveryTabContent>
           );
         case 'boosts':
@@ -122,4 +134,8 @@ export const DiscoveryV2Screen = withErrorBoundary(
 
 const styles = ThemedStyles.create({
   container: ['flexContainer', 'bgPrimaryBackground'],
+  bottomBorder: {
+    borderBottomColor: '#eee',
+    borderBottomWidth: 10,
+  },
 });
