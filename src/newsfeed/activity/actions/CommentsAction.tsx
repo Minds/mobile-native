@@ -7,6 +7,7 @@ import { useRoute } from '@react-navigation/native';
 import { ActivityRouteProp } from '../../ActivityScreen';
 import { actionsContainerStyle } from './styles';
 import { withSpacer } from '~ui/layout';
+import { GroupContext } from '~/groups/GroupViewScreen';
 
 const CounterSpaced = withSpacer(Counter);
 
@@ -24,6 +25,7 @@ type PropsType = {
 const CommentsAction = (props: PropsType) => {
   const icon = props.entity.allow_comments ? 'chat-solid' : 'chat-off';
   const route: ActivityRouteProp = useRoute();
+  const group = React.useContext(GroupContext);
 
   const openComments = useCallback(() => {
     if (props.onPressComment) {
@@ -47,9 +49,10 @@ const CommentsAction = (props: PropsType) => {
         entity: props.entity,
         scrollToBottom: true,
         open: true,
+        group: group,
       });
     }
-  }, [props, route]);
+  }, [props, route, group]);
 
   return (
     <IconButtonNext

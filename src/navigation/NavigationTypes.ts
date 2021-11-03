@@ -10,6 +10,7 @@ import type { PortraitBarItem } from '../portrait/createPortraitStore';
 import type BlogModel from '../blogs/BlogModel';
 import { TwoFactorStore } from '../auth/twoFactorAuth/createTwoFactorStore';
 import { TwoFactorType } from '../common/services/api.service';
+import type GroupModel from '~/groups/GroupModel';
 
 type AnyType = any;
 
@@ -237,6 +238,7 @@ export type AppStackParamList = {
   };
   Activity: {
     entity?: ActivityModel;
+    group?: GroupModel;
     guid?: string;
     scrollToBottom?: boolean;
     focusedUrn?: string;
