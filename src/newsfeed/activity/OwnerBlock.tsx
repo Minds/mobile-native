@@ -154,7 +154,7 @@ class OwnerBlock extends PureComponent<PropsType> {
     // Remind header
     const remind = this.props.entity.remind_users ? (
       <HairlineRow>
-        <Row align="center" horizontal="XL" vertical="S">
+        <Row align="centerBoth" horizontal="XL" vertical="S">
           <IconNext name="remind" size="tiny" active right="XS" />
           <B3>{i18nService.t('remindedBy')} </B3>
           {this.props.entity.remind_users.map(u => (
