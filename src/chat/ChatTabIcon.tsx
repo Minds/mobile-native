@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Icon } from '~ui/icons';
-import { useStores } from '../common/hooks/use-stores';
+import { useStores } from '~/common/hooks/use-stores';
 import ChatBubbleIcon from './ChatBubbleIcon';
 
 type PropsType = {
