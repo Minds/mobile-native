@@ -60,7 +60,7 @@ export interface FetchOptions {
   /**
    * skips auto-firing when params change
    */
-  autoFire?: boolean;
+  skip?: boolean;
   /**
    * the data field of the response that has all the items
    */
@@ -226,9 +226,7 @@ const createStore = ({
  */
 export default function useApiFetch<T>(
   url: string,
-  options: FetchOptions = {
-    autoFire: true,
-  },
+  options: FetchOptions = {},
 ): FetchStore<T> {
   const store: FetchStore<T> = useLocalStore(createStore, {
     url,
@@ -242,12 +240,12 @@ export default function useApiFetch<T>(
   }, [store]);
 
   useEffect(() => {
-    if (options.autoFire) {
+    if (!options.skip) {
       reaction(() => ({ ...observableParams }), store.fetch, {
         fireImmediately: true,
       });
     }
-  }, [observableParams, store, url, options.autoFire]);
+  }, [observableParams, store, url, options.skip]);
 
   return store;
 }

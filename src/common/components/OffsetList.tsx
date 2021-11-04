@@ -68,7 +68,7 @@ export default observer(
       refreshing,
     } = useApiFetch<ApiFetchType>(props.fetchEndpoint, {
       params: opts,
-      autoFire: false,
+      skip: true,
       dataField: props.endpointData,
       updateStrategy: 'merge',
       map: props.map,
