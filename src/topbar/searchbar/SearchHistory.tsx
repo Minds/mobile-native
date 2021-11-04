@@ -1,6 +1,6 @@
 import React from 'react';
 import ThemedStyles from '../../styles/ThemedStyles';
-import { View, ScrollView, StyleSheet } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import i18n from '../../common/services/i18n.service';
 import { useLegacyStores } from '../../common/hooks/use-stores';
 import { useKeyboard } from '@react-native-community/hooks';
@@ -14,7 +14,12 @@ type PropsType = {
 
 const SearchHistory = ({ localStore, renderItem }: PropsType) => {
   const theme = ThemedStyles.style;
-  const textStyle = [theme.subTitleText, theme.colorSecondaryText, theme.fontM];
+  const titleStyle = [
+    theme.subTitleText,
+    theme.colorSecondaryText,
+    theme.fontM,
+  ];
+  const buttonStyle = [theme.colorSecondaryText, theme.fontS];
   const { user } = useLegacyStores();
   const keyboard = useKeyboard();
 
@@ -28,35 +33,43 @@ const SearchHistory = ({ localStore, renderItem }: PropsType) => {
   };
 
   return (
-    <ScrollView keyboardShouldPersistTaps="handled" style={scrollHeight}>
-      <View style={[styles.row, theme.marginBottom3x]}>
-        <MText style={textStyle}>{i18n.t('searchBar.searchHistory')}</MText>
-        <MText style={textStyle} onPress={clearSearchHistory}>
+    <ScrollView
+      keyboardShouldPersistTaps="handled"
+      style={[scrollHeight, theme.paddingTop4x]}>
+      <View style={[styles.header, theme.marginBottom3x]}>
+        <MText style={titleStyle}>{i18n.t('searchBar.searchHistory')}</MText>
+        <MText style={buttonStyle} onPress={clearSearchHistory}>
           {i18n.t('searchBar.clear')}
         </MText>
       </View>
-      {localStore.history.length > 0 &&
-        localStore.history
-          .filter(item => typeof item === 'string')
-          .map((item, index) => {
-            return renderItem(item, index);
-          })}
-      {localStore.history.length > 0 &&
-        localStore.history
-          .filter(item => typeof item !== 'string')
-          .map((item, index) => {
-            return renderItem(item, index);
-          })}
+      <View style={styles.section}>
+        {localStore.history.length > 0 &&
+          localStore.history
+            .filter(item => typeof item === 'string')
+            .map((item, index) => {
+              return renderItem(item, index);
+            })}
+      </View>
+      <View>
+        {localStore.history.length > 0 &&
+          localStore.history
+            .filter(item => typeof item !== 'string')
+            .map((item, index) => {
+              return renderItem(item, index);
+            })}
+      </View>
     </ScrollView>
   );
 };
 
 export default SearchHistory;
 
-const styles = StyleSheet.create({
-  row: {
+const styles = ThemedStyles.create({
+  header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: 10,
+    paddingHorizontal: 16,
+    alignItems: 'center',
   },
+  section: ['marginBottom2x'],
 });

@@ -23,13 +23,13 @@ export default function NotificationPlaceHolder() {
         theme.borderBottom8x,
         theme.bcolorPrimaryBackground,
         theme.paddingBottom4x,
-        theme.paddingTop2x,
+        theme.paddingTop4x,
       ]}>
       <Placeholder
         Left={() => (
           <PlaceholderMedia isRound color={color} style={theme.marginRight2x} />
         )}
-        style={theme.paddingHorizontal3x}
+        style={theme.paddingHorizontal5x}
         Animation={animation}>
         <View style={lineStyle}>
           <PlaceholderLine color={color} width={70} />

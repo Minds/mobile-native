@@ -34,6 +34,7 @@ export default class DiscoveryV2Store {
   @observable loadingTags = false;
   @observable refreshing = false;
   boostFeed: FeedStore;
+  trendingFeed: FeedStore;
   allFeed: FeedStore;
 
   constructor() {
@@ -45,6 +46,11 @@ export default class DiscoveryV2Store {
 
     this.boostFeed
       .setEndpoint('api/v2/boost/feed')
+      .setInjectBoost(false)
+      .setLimit(15);
+
+    this.trendingFeed = new FeedStore(true)
+      .setEndpoint('api/v2/feeds/global/trending/all')
       .setInjectBoost(false)
       .setLimit(15);
 

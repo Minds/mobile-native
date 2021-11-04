@@ -9,6 +9,13 @@ import ActivityModel from '../../../src/newsfeed/ActivityModel';
 import { activitiesServiceFaker } from '../../../__mocks__/fake/ActivitiesFaker';
 import { shallow } from 'enzyme';
 
+jest.mock('react-native-silent-switch');
+jest.mock('react-native-system-setting', () => {
+  return {
+    getVolume: jest.fn(() => Promise.resolve()),
+  };
+});
+
 describe('BottomContent component', () => {
   let model, navigation, screen;
   beforeEach(() => {

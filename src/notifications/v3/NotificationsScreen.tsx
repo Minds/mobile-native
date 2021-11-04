@@ -57,14 +57,13 @@ const updateState = (newData: NotificationList, oldData: NotificationList) => {
   return { notifications: [] };
 };
 
-const Empty = <EmptyList />;
-
 const NotificationsScreen = observer(({ navigation }: PropsType) => {
   const [isRefreshing, setRefreshing] = useState(false);
   const theme = ThemedStyles.style;
   const { notifications } = useStores();
+  const filter = notifications.filter;
   const params = {
-    filter: notifications.filter,
+    filter,
     limit: 15,
     offset: notifications.offset,
   };
@@ -88,9 +87,8 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
 
   const refresh = React.useCallback(() => {
     notifications.setOffset('');
-    setResult(null);
     fetch(params);
-  }, [notifications, setResult, fetch, params]);
+  }, [notifications, fetch, params]);
 
   const handleListRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -103,9 +101,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
     if (result) {
       refresh();
     }
-  }, [notifications, refresh]);
-
-  //useFocusEffect(onFocus);
+  }, [notifications, refresh, result]);
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener(
@@ -155,7 +151,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
       );
     }
 
-    if (loading) {
+    if (loading && !isRefreshing) {
       return (
         <View>
           <NotificationPlaceHolder />
@@ -166,10 +162,10 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
           <NotificationPlaceHolder />
         </View>
       );
-    } else {
-      return Empty;
     }
-  }, [error, loading, fetch]);
+
+    return <EmptyList text={i18n.t(`notification.empty.${filter}`)} />;
+  }, [error, loading, fetch, isRefreshing, filter]);
 
   const data = result?.notifications || [];
 
@@ -189,6 +185,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
         onRefresh={handleListRefresh}
         refreshing={isRefreshing}
         onViewableItemsChanged={onViewableItemsChanged}
+        contentContainerStyle={styles.containerStyle}
         viewabilityConfig={viewabilityConfig}
         ListEmptyComponent={ListEmptyComponent}
       />
@@ -213,6 +210,7 @@ const renderItem = (row: any): React.ReactElement => {
 export default NotificationsScreen;
 
 const styles = ThemedStyles.create({
+  containerStyle: { flexGrow: 1 },
   container: ['bgPrimaryBackground', 'flexContainer'],
   errorStyle: [
     'colorSecondaryText',
