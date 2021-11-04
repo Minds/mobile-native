@@ -91,12 +91,12 @@ export const FONT_FAMILY = {
 export const AVATAR_SIZE_DEFAULT = 'medium';
 
 export const AVATAR_SIZE = {
-  micro: UNIT.XXXL, // 28
-  tiny: UNIT.L2 + UNIT.XS, // 36
-  small: UNIT.XL2, // 40
-  medium: UNIT.XXL2 + UNIT.XS, //
-  large: UNIT.XL2 * 2, //
-  border: UNIT.XXS, //
+  micro: UNIT.XXXL,
+  tiny: UNIT.L2 + UNIT.XS,
+  small: UNIT.XL2,
+  medium: UNIT.XXL2 + UNIT.XS,
+  large: UNIT.XL2 * 2,
+  border: UNIT.XXS,
 };
 
 export const TRANSPARENCY = {
