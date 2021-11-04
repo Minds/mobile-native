@@ -152,13 +152,11 @@ const createStore = ({
       data = hookOptions?.params || {};
     }
     let { dataField, updateStrategy, map, updateState } = Object.assign(
-      {},
-      hookOptions,
-      opts,
-      // defaults
       {
         updateState: defaultUpdateState,
       },
+      hookOptions,
+      opts,
     );
     this.clearRetryTimer(!retry);
 
