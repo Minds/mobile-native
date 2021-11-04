@@ -1,5 +1,5 @@
 import React from 'react';
-import { Spacer, B3 } from '~ui';
+import { B3 } from '~ui';
 
 type PropsType = {
   children: React.ReactNode;
@@ -7,11 +7,9 @@ type PropsType = {
 
 const MenuSubtitle = ({ children }: PropsType) => {
   return (
-    <Spacer top="L" bottom="S">
-      <B3 font="medium" color="secondary" horizontal="L">
-        {children}
-      </B3>
-    </Spacer>
+    <B3 font="medium" color="secondary" horizontal="L" top="L" bottom="S">
+      {children}
+    </B3>
   );
 };
 
