@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback } from 'react';
 import {
   createBottomTabNavigator,
   BottomTabNavigationOptions,
@@ -26,10 +26,9 @@ import { InternalStack } from '../navigation/NavigationStack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import TopShadow from '../common/components/TopShadow';
 // import sessionService from '../common/services/session.service';
-import { useStores } from '../common/hooks/use-stores';
 import ChatTabIcon from '../chat/ChatTabIcon';
 import PressableScale from '~/common/components/PressableScale';
-import TabChatPreModal from './TabChatPreModal';
+import TabChatPreModal, { ChatModalHandle } from './TabChatPreModal';
 // import navigationService from '../navigation/NavigationService';
 
 const isIOS = Platform.OS === 'ios';
@@ -60,9 +59,8 @@ const Tab = createBottomTabNavigator<TabParamList>();
 
 const TabBar = ({ state, descriptors, navigation }) => {
   const focusedOptions = descriptors[state.routes[state.index].key].options;
-  const bottomSheet: any = useRef(null);
   const insets = useSafeAreaInsets();
-  const { chat } = useStores();
+  const chatModal = React.useRef<ChatModalHandle>(null);
 
   const bottomInset = {
     paddingBottom: insets.bottom
@@ -86,32 +84,10 @@ const TabBar = ({ state, descriptors, navigation }) => {
     return null;
   }
 
-  const handleChatOpen = async () => {
-    const isInstalled = await chat.checkAppInstalled(false);
-
-    if (isInstalled) {
-      chat.openChat();
-      return;
-    }
-    bottomSheet?.current?.present();
-  };
-
-  const handleChatConfirm = () => {
-    chat.openChat();
-  };
-
-  const handleChatCancel = () => {
-    //
-  };
-
   return (
     <View style={containerStyle}>
       {!isIOS && <TopShadow setting={shadowOpt} />}
-      <TabChatPreModal
-        ref={bottomSheet}
-        onAction={handleChatConfirm}
-        onCancel={handleChatCancel}
-      />
+      <TabChatPreModal ref={chatModal} />
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const focused = state.index === index;
@@ -125,7 +101,8 @@ const TabBar = ({ state, descriptors, navigation }) => {
           });
 
           if (route.name === 'MessengerTab') {
-            handleChatOpen();
+            chatModal.current?.showModal();
+
             return;
           }
 
