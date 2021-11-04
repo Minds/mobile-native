@@ -30,7 +30,7 @@ export default function typography(name: string, ts: ThemedStylesStore) {
 
       // flat?
       if (result[5] === 'true') {
-        style.push({ lineHeight: 0 });
+        style.push({ lineHeight: TYPES[result[1]].fontSize + 2 });
       }
       return style;
     }
