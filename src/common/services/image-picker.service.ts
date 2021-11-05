@@ -71,7 +71,7 @@ class ImagePickerService {
    */
   async launchCamera(type: mediaType = 'photo'): Promise<customImagePromise> {
     // check or ask for permissions
-    const allowed = await this.checkCameraPermissions();
+    await this.checkCameraPermissions();
 
     const opt = this.buildOptions(type);
 

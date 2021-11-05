@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
-import { SectionList, Text } from 'react-native';
+import { SectionList } from 'react-native';
 import CenteredLoading from '../../../common/components/CenteredLoading';
 import { useLegacyStores } from '../../../common/hooks/use-stores';
 import ThemedStyles from '../../../styles/ThemedStyles';

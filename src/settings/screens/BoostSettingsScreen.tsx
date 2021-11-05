@@ -10,7 +10,6 @@ import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { observer, useLocalStore } from 'mobx-react';
 import sessionService from '../../common/services/session.service';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Tooltip } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { UserError } from '../../common/UserError';
@@ -31,8 +30,6 @@ import MText from '../../common/components/MText';
 const BoostSettingsScreen = observer(() => {
   const theme = ThemedStyles.style;
   const user = sessionService.getUser();
-  const insets = useSafeAreaInsets();
-  const cleanTop = { marginTop: insets.top };
 
   const localStore = useLocalStore(() => ({
     loading: true,

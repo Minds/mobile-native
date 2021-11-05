@@ -11,7 +11,6 @@ import {
 import SmallCircleButton from '../../../common/components/SmallCircleButton';
 import * as Progress from 'react-native-progress';
 import LabeledComponent from '../../../common/components/LabeledComponent';
-import isIphoneX from '../../../common/helpers/isIphoneX';
 import SettingInput from '../../../common/components/SettingInput';
 import i18n from '../../../common/services/i18n.service';
 import { ChannelStoreType } from '../createChannelStore';

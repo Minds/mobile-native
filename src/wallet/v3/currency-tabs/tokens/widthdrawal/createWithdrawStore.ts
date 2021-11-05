@@ -3,7 +3,6 @@ import validatorService from '../../../../../common/services/validator.service';
 import logService from '../../../../../common/services/log.service';
 import api from '../../../../../common/services/api.service';
 import BlockchainWithdrawService from '../../../../../blockchain/v2/services/BlockchainWithdrawService';
-import { UserError } from '../../../../../common/UserError';
 import sessionService from '../../../../../common/services/session.service';
 import type { WalletStoreType } from '../../../../v2/createWalletStore';
 import type { WCStore } from '../../../../../blockchain/v2/walletconnect/WalletConnectContext';

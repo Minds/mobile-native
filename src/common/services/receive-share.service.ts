@@ -4,13 +4,6 @@ import type { EmitterSubscription } from 'react-native';
 
 import navigationService from '../../navigation/NavigationService';
 
-type MediaEvent = {
-  mime: string;
-  path: string;
-  name: string;
-  uri: string;
-};
-
 export type SharedItem = {
   mimeType: string;
   data: string;

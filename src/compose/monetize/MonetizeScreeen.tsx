@@ -11,16 +11,11 @@ import MenuSubtitle from '../../common/components/menus/MenuSubtitle';
 import { useNavCallback } from '../PosterOptions';
 import Wrapper from './common/Wrapper';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '../../navigation/NavigationTypes';
 import mindsService from '../../common/services/minds-config.service';
 import MText from '../../common/components/MText';
 
 type MonetizeScreenRouteProp = RouteProp<AppStackParamList, 'MonetizeSelector'>;
-type MonetizeScreenNavigationProp = StackNavigationProp<
-  AppStackParamList,
-  'MonetizeSelector'
->;
 
 type PropsType = {
   route: MonetizeScreenRouteProp;
@@ -48,11 +43,11 @@ const MonetizeScreen = observer(({ route }: PropsType) => {
 
   const support_tier_urn = mindsService.settings.plus.support_tier_urn;
 
-  const isCustomSelected =
-    store.wire_threshold &&
-    store.wire_threshold.support_tier &&
-    !store.wire_threshold.support_tier.public &&
-    store.wire_threshold.support_tier.urn !== support_tier_urn;
+  // const isCustomSelected =
+  //   store.wire_threshold &&
+  //   store.wire_threshold.support_tier &&
+  //   !store.wire_threshold.support_tier.public &&
+  //   store.wire_threshold.support_tier.urn !== support_tier_urn;
 
   const isMemembsershipSelected =
     store.wire_threshold &&

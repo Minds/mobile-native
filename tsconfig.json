@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "noUnusedLocals": true,
     "noImplicitAny": false,
     "allowJs": true,
     "checkJs": false,

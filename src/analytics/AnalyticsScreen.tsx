@@ -1,8 +1,6 @@
 import { observer } from 'mobx-react';
 import React, { useCallback, useState } from 'react';
 import { View } from 'react-native';
-import MText from '../common/components/MText';
-import { H1 } from '~ui/typography';
 import TopbarTabbar from '../common/components/topbar-tabbar/TopbarTabbar';
 import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
@@ -113,7 +111,5 @@ const AnalyticsScreen = observer(
     );
   },
 );
-
-const title = ThemedStyles.combine('padding4x', 'paddingBottom2x');
 
 export default AnalyticsScreen;
