@@ -1674,6 +1674,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
   </RCTScrollView>
   <InteractionsBottomSheet
     entity={Object {}}
+    keepOpen={false}
     snapPoints={
       Array [
         "90%",
