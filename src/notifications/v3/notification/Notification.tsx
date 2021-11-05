@@ -54,7 +54,7 @@ const NotificationItem = React.memo(
 
       // otherwise navigate to the sender channel
       return navToFromChannel();
-    }, [toGuid, user.guid, navToOwnChannel, navToFromChannel]);
+    }, [toGuid, user, router]);
 
     const Noun =
       notification.Noun !== '' ? (
