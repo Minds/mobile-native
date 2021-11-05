@@ -14,7 +14,18 @@ const hitSlop = {
 
 type FontFamily = keyof typeof FONT_FAMILY;
 
-type TypographyType = 'H1' | 'H2' | 'H3' | 'H4' | 'B1' | 'B2' | 'B3' | 'B4';
+type TypographyType =
+  | 'H1'
+  | 'H2'
+  | 'H3'
+  | 'H4'
+  | 'B1'
+  | 'B2'
+  | 'B3'
+  | 'B4'
+  | 'Btn1'
+  | 'Btn2'
+  | 'Btn3';
 
 export type TypographyPropsType = {
   align?: 'auto' | 'left' | 'right' | 'center' | 'justify';

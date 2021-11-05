@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useLayoutEffect } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
 import { RouteProp } from '@react-navigation/core';
 import {
@@ -46,6 +46,11 @@ const TwoFactorConfirmScreen = observer(({ route, navigation }: PropsType) => {
       return true;
     }, []),
   );
+
+  // Fix unhandled dismissal bug
+  useLayoutEffect(() => {
+    navigation.setOptions({ gestureEnabled: false });
+  }, [navigation]);
 
   // Local store
   const localStore = useLocalStore(() => ({

@@ -87,7 +87,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
   return (
     <View style={containerStyle}>
       {!isIOS && <TopShadow setting={shadowOpt} />}
-      <TabChatPreModal ref={chatModal} />
+      {/* <TabChatPreModal ref={chatModal} /> */}
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const focused = state.index === index;

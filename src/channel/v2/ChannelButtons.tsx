@@ -135,7 +135,9 @@ const ChannelButtons = withErrorBoundary(
             iconStyle={iconStyle}
           />
         )}
-        {showSubscribe && <Subscribe channel={props.store.channel} />}
+        {showSubscribe && (
+          <Subscribe right="S" top="XS" channel={props.store.channel} />
+        )}
         {shouldShow('more') && (
           <ChannelMoreMenu
             channel={props.store.channel}

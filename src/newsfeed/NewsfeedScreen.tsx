@@ -15,6 +15,7 @@ import ActivityPlaceHolder from './ActivityPlaceHolder';
 import PortraitContentBar from '../portrait/PortraitContentBar';
 import InitialOnboardingButton from '../onboarding/v2/InitialOnboardingButton';
 import { withErrorBoundary } from '../common/components/ErrorBoundary';
+import { Button, Spacer } from '~ui';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
@@ -110,11 +111,121 @@ class NewsfeedScreen extends Component<PropsType> {
   render() {
     const newsfeed = this.props.newsfeed;
 
+    const Container = props => (
+      <Spacer
+        containerStyle={{
+          flexDirection: 'row',
+          alignSelf: 'flex-start',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          flex: 1,
+          height: 800,
+        }}
+        {...props}
+      />
+    );
+
     const header = (
       <View>
         <CheckLanguage />
         <InitialOnboardingButton />
         <PortraitContentBar ref={this.portraitBar} />
+        {/* <Container>
+          <Button
+            horizontal="S"
+            vertical="S"
+            type="base"
+            mode="outline"
+            size="large">
+            Button with a long text
+          </Button>
+          <Button
+            horizontal="S"
+            vertical="S"
+            type="action"
+            mode="outline"
+            size="medium"
+            loader
+            onPress={release => {
+              setTimeout(() => {
+                release();
+              }, 2000);
+            }}>
+            Subscribe
+          </Button>
+          <Button
+            horizontal="S"
+            vertical="S"
+            type="warning"
+            mode="outline"
+            size="small">
+            Subscribe
+          </Button>
+          <Button
+            type="base"
+            mode="solid"
+            size="small"
+            horizontal="S"
+            vertical="S"
+            loader
+            onPress={release => {
+              setTimeout(() => {
+                release();
+              }, 2000);
+            }}>
+            Subscribe
+          </Button>
+          <Button
+            type="action"
+            mode="solid"
+            horizontal="S"
+            vertical="S"
+            loader
+            onPress={release => {
+              setTimeout(() => {
+                release();
+              }, 2000);
+            }}>
+            Subscribe
+          </Button>
+          <Button
+            type="warning"
+            mode="solid"
+            size="large"
+            horizontal="S"
+            vertical="S">
+            Subscribe
+          </Button>
+
+          <Button
+            type="action"
+            mode="flat"
+            size="medium"
+            loader
+            onPress={release => {
+              console.log('CREATING RELEASE');
+
+              setTimeout(() => {
+                release();
+              }, 2000);
+            }}>
+            Subscribe
+          </Button>
+          <Button
+            type="action"
+            mode="flat"
+            size="small"
+            loader
+            onPress={release => {
+              console.log('CREATING RELEASE');
+
+              setTimeout(() => {
+                release();
+              }, 2000);
+            }}>
+            Subscribe
+          </Button>
+        </Container> */}
       </View>
     );
 
