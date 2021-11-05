@@ -191,7 +191,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
 
   const data = result?.notifications || [];
 
-  return [
+  return (
     <View style={styles.container}>
       <NotificationsTopBar
         store={notifications}
@@ -211,14 +211,14 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
         viewabilityConfig={viewabilityConfig}
         ListEmptyComponent={ListEmptyComponent}
       />
-    </View>,
-    <InteractionsBottomSheet
-      entity={user}
-      ref={interactionsBottomSheetRef}
-      withoutInsets
-      snapPoints={['90%']}
-    />,
-  ];
+      <InteractionsBottomSheet
+        entity={user}
+        ref={interactionsBottomSheetRef}
+        withoutInsets
+        snapPoints={['90%']}
+      />
+    </View>
+  );
 });
 
 const keyExtractor = (item: NotificationModel, index) => `${item.urn}-${index}`;
