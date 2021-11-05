@@ -8,30 +8,24 @@ import {
   Animated,
 } from 'react-native';
 import { withSpacer } from '~ui/layout/Spacer';
-import { Btn1, Btn3 } from '~ui/typography';
 import { UNIT } from '~styles/Tokens';
 import ThemedStyles from '~/styles/ThemedStyles';
-import { timingAnimation, bounceAnimation, getColor } from './helpers';
+import {
+  timingAnimation,
+  bounceAnimation,
+  getColor,
+  configureLayoutAnimation,
+  getFontRenderer,
+} from './helpers';
 import { frameThrower } from '~ui/helpers';
-import { LayoutAnimation } from 'react-native';
-
-const configureLayout = () => {
-  LayoutAnimation.configureNext({
-    duration: 175,
-    update: {
-      springDamping: 0.9,
-      type: 'spring',
-    },
-  });
-};
 
 export type ButtonPropsType = {
   mode?: 'flat' | 'outline' | 'solid';
   type?: 'base' | 'action' | 'warning';
-  size?: 'large' | 'medium' | 'small';
+  size?: 'large' | 'medium' | 'small' | 'tiny';
   font?: 'regular' | 'medium';
   align?: 'start' | 'end' | 'stretch';
-  loader?: boolean;
+  spinner?: boolean;
   stretch?: boolean;
   disabled?: boolean;
   darkContent?: boolean;
@@ -49,11 +43,10 @@ export const ButtonComponent = ({
   size = 'medium',
   font = 'medium',
   stretch = false,
-  loader = false,
   disabled = false,
   darkContent = false,
+  spinner = false,
   align = 'start',
-  // Loading is here for accomodating the LEGACY pattern
   loading = false,
   onPress,
   children,
@@ -81,14 +74,15 @@ export const ButtonComponent = ({
   const textAnimation = useRef(new Animated.Value(1)).current;
   const stateRef = useRef({ state: 0, loading: false, pressing: false });
   const [text, setText]: any = useState(children);
-  const Font = size === 'small' ? Btn3 : Btn1;
+  const Font = getFontRenderer(size);
   const { textColor, spinnerColor } = getColor(
     ThemedStyles.theme,
     mode,
     darkContent,
     disabled,
+    type,
   );
-  const bounceType = loader ? 'long' : 'short';
+  const bounceType = spinner ? 'long' : 'short';
 
   // Added for the LEGACY loading prop;
   useEffect(() => {
@@ -119,7 +113,7 @@ export const ButtonComponent = ({
       0.6,
       () => {
         bounceAnimation(textAnimation, 1, 'long_fast');
-        configureLayout();
+        configureLayoutAnimation();
         setText(children);
       },
       100,
@@ -163,7 +157,7 @@ export const ButtonComponent = ({
       return;
     }
     stateRef.current.pressing = true;
-    if (loader) {
+    if (spinner) {
       showSpinner();
     }
     onPress(() => {
@@ -207,13 +201,13 @@ export const ButtonComponent = ({
   const hideActive = () => {
     // Avoid conditional on hide
     timingAnimation(activeAnimation, 0, () => {
-      if (loader) {
+      if (spinner) {
         return;
       }
       clearState();
     });
     // Avoid early bouce out when the spinner is up
-    if (loader && stateRef.current.loading === true) {
+    if (spinner && stateRef.current.loading === true) {
       return;
     }
     bounceAnimation(textAnimation, 1, bounceType);
@@ -223,8 +217,6 @@ export const ButtonComponent = ({
     stateRef.current.loading = false;
     stateRef.current.state = 0;
   };
-
-  console.log(color);
 
   return (
     <Pressable
@@ -239,7 +231,7 @@ export const ButtonComponent = ({
         {/** Border Overlay */}
         <View style={overlayStyle}>
           {/** Activity Indicator */}
-          {loader ? (
+          {spinner ? (
             <Animated.View style={{ transform: [{ scale: scaleAnimation }] }}>
               <ActivityIndicator
                 size="small"
@@ -314,8 +306,19 @@ const styles = ThemedStyles.create({
     paddingVertical: UNIT.XXS,
     height: UNIT.L2 + UNIT.XS,
   },
+  tiny: {
+    paddingHorizontal: UNIT.L,
+    paddingVertical: UNIT.XXS,
+    height: UNIT.L2 + UNIT.XS,
+  },
   flat: {
     borderColor: 'transparent',
+  },
+  flat_tiny: {
+    height: UNIT.XXXL,
+    borderRadius: 0,
+    paddingHorizontal: UNIT.S,
+    paddingVertical: UNIT.XXS,
   },
   flat_small: {
     height: UNIT.XXXL,
@@ -341,17 +344,16 @@ const styles = ThemedStyles.create({
   outline_base: ['bcolorBaseBackground'],
   outline_action: ['bcolorLink'],
   outline_warning: ['bcolorDangerBackground'],
+  outline_disabled: [
+    'bcolorPrimaryBorder',
+    { backgroundColor: 'rgba(0,0,0,0.1)' },
+  ],
   solid_base: ['bgBaseBackground'],
   solid_action: ['bgLink'],
   solid_warning: ['bgDangerBackground'],
   solid_disabled: {
     backgroundColor: 'rgba(0,0,0,0.1)',
   },
-  outline_disabled: [
-    'bcolorPrimaryBorder',
-    { backgroundColor: 'rgba(0,0,0,0.1)' },
-  ],
-
   flat_disabled: {
     backgroundColor: 'rgba(0,0,0,0.1)',
   },

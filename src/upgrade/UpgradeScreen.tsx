@@ -113,7 +113,7 @@ const UpgradeScreen = observer(({ navigation, route }: PropsType) => {
             horizontal="L"
             loading={localStore.loading}
             onPress={confirmSend}
-            loader>
+            spinner>
             {i18n.t(`monetize.${pro ? 'pro' : 'plus'}Join`)}
           </NewButton>
         </FitScrollView>

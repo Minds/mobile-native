@@ -92,7 +92,7 @@ export default observer(function LoginForm(props: PropsType) {
         mode="outline"
         type="action"
         testID="loginButton"
-        loader
+        spinner
         horizontal="XL"
         top="L"
         onPress={localStore.onLoginPress}>

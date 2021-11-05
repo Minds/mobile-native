@@ -145,7 +145,7 @@ class NewsfeedScreen extends Component<PropsType> {
             type="action"
             mode="outline"
             size="medium"
-            loader
+            spinner
             onPress={release => {
               setTimeout(() => {
                 release();
@@ -167,7 +167,7 @@ class NewsfeedScreen extends Component<PropsType> {
             size="small"
             horizontal="S"
             vertical="S"
-            loader
+            spinner
             onPress={release => {
               setTimeout(() => {
                 release();
@@ -180,7 +180,7 @@ class NewsfeedScreen extends Component<PropsType> {
             mode="solid"
             horizontal="S"
             vertical="S"
-            loader
+            spinner
             onPress={release => {
               setTimeout(() => {
                 release();
@@ -201,7 +201,7 @@ class NewsfeedScreen extends Component<PropsType> {
             type="action"
             mode="flat"
             size="medium"
-            loader
+            spinner
             onPress={release => {
               console.log('CREATING RELEASE');
 
@@ -215,7 +215,7 @@ class NewsfeedScreen extends Component<PropsType> {
             type="action"
             mode="flat"
             size="small"
-            loader
+            spinner
             onPress={release => {
               console.log('CREATING RELEASE');
 

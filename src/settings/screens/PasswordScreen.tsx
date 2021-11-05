@@ -15,7 +15,7 @@ import isIphoneX from '../../common/helpers/isIphoneX';
 import PasswordValidator from '../../common/components/password-input/PasswordValidator';
 import { isUserError } from '../../common/UserError';
 import { showNotification } from '../../../AppMessages';
-import MText from '../../common/components/MText';
+import { Button } from '~ui';
 
 export default observer(function () {
   const theme = ThemedStyles.style;
@@ -121,11 +121,9 @@ export default observer(function () {
    */
   navigation.setOptions({
     headerRight: () => (
-      <MText
-        onPress={confirmPassword}
-        style={[theme.colorLink, theme.fontL, theme.bold]}>
+      <Button type="action" mode="flat" size="small" onPress={confirmPassword}>
         {i18n.t('save')}
-      </MText>
+      </Button>
     ),
   });
 

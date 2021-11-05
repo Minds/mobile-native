@@ -1,6 +1,6 @@
 import React, { PropsWithChildren, useCallback, useRef } from 'react';
 import type { GestureResponderEvent } from 'react-native';
-import { Platform, View } from 'react-native';
+import { Platform } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
@@ -20,6 +20,7 @@ import Subscribe from './buttons/Subscribe';
 import SmallCircleButton from '../../common/components/SmallCircleButton';
 import { withErrorBoundary } from '../../common/components/ErrorBoundary';
 import Edit from './buttons/Edit';
+import { Row } from '~ui';
 
 type ButtonsType =
   | 'edit'
@@ -103,12 +104,7 @@ const ChannelButtons = withErrorBoundary(
 
     const showSubscribe = shouldShow('subscribe');
     return (
-      <View
-        style={[
-          theme.rowJustifyEnd,
-          theme.marginRight2x,
-          props.containerStyle,
-        ]}>
+      <Row right="S" containerStyle={[props.containerStyle]}>
         {props.children}
         {shouldShow('edit') && <Edit {...props} />}
         {shouldShow('wire') && (
@@ -135,9 +131,7 @@ const ChannelButtons = withErrorBoundary(
             iconStyle={iconStyle}
           />
         )}
-        {showSubscribe && (
-          <Subscribe right="S" top="XS" channel={props.store.channel} />
-        )}
+        {showSubscribe && <Subscribe channel={props.store.channel} />}
         {shouldShow('more') && (
           <ChannelMoreMenu
             channel={props.store.channel}
@@ -146,7 +140,7 @@ const ChannelButtons = withErrorBoundary(
             isSubscribedToTier={isSubscribedToTier(props.store.tiers)}
           />
         )}
-      </View>
+      </Row>
     );
   }),
 );

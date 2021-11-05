@@ -20,7 +20,7 @@ import FadeView from '../../common/components/FadeView';
 import JoinMembershipScreen from '../../wire/v2/tiers/JoinMembership';
 import FastImage from 'react-native-fast-image';
 import MText from '../../common/components/MText';
-import { B1, B2, Column, H4, Row } from '~ui';
+import { B2, Column, H4, Row } from '~ui';
 
 const CENTERED = false;
 
@@ -300,10 +300,9 @@ const ChannelHeader = withErrorBoundary(
 const styles = ThemedStyles.create({
   channelDescription: ['paddingVertical'],
   buttonsMarginContainer: {
-    marginTop: 5,
     position: 'absolute',
-    right: 0,
-    top: 5,
+    right: 7,
+    top: 12,
   },
   bannerSmallButton: {
     position: 'absolute',

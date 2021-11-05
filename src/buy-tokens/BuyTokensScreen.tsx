@@ -159,7 +159,7 @@ export default observer(() => {
             disabled={!canBuyTokens}>
             {i18n.t('buyTokensScreen.buy')}
           </Button>
-          <Row top="M" align="centerBetween">
+          <Row top="XL" align="centerBoth">
             <B2 font="bold" onPress={navToTokens}>
               {i18n.t('buyTokensScreen.learnMore')}
             </B2>

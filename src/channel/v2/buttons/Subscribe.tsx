@@ -3,7 +3,7 @@ import i18n from '../../../common/services/i18n.service';
 import UserModel from '../../UserModel';
 import { observer } from 'mobx-react';
 import { Alert } from 'react-native';
-import { Button, withSpacer } from '~ui';
+import { Button } from '~ui';
 
 const Subscribe = (props: { channel: UserModel; testID?: string }) => {
   const { channel } = props;
@@ -32,7 +32,7 @@ const Subscribe = (props: { channel: UserModel; testID?: string }) => {
       <Button
         mode="outline"
         type={channel.subscribed ? 'base' : 'action'}
-        size="small"
+        size="tiny"
         onPress={onSubscriptionPress}
         testID={props.testID}>
         {subscriptionText}
@@ -41,4 +41,4 @@ const Subscribe = (props: { channel: UserModel; testID?: string }) => {
   );
 };
 
-export default withSpacer(observer(Subscribe));
+export default observer(Subscribe);

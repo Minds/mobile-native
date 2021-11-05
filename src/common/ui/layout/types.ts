@@ -13,7 +13,7 @@ export type HairlinePropType = {
 
 export type RowPropType = {
   align?:
-    | 'center'
+    | 'centerBoth'
     | 'centerStart'
     | 'centerEnd'
     | 'centerBetween'

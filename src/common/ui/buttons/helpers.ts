@@ -1,5 +1,7 @@
 import { Animated } from 'react-native';
 import ThemedStyles from '~styles/ThemedStyles';
+import { LayoutAnimation } from 'react-native';
+import { Btn1, Btn2, Btn3 } from '~ui/typography';
 
 const BOUNCE_CONFIG = {
   short: {
@@ -45,21 +47,55 @@ export const timingAnimation = (
   }).start(callback);
 };
 
-export const getColor = (theme, mode, darkContent, disabled) => {
+export const getColor = (theme, mode, darkContent, disabled, type) => {
   let textColor: 'primary' | 'link' | 'secondary' | 'white' | undefined =
     'primary';
   let spinnerColor = 'white';
+
   if ((theme === 0 && mode === 'solid') || (darkContent && mode !== 'solid')) {
     textColor = 'white';
     spinnerColor = 'white';
   }
+
+  if (mode === 'flat' && type === 'action') {
+    textColor = 'link';
+  }
+
   spinnerColor = ThemedStyles.style.colorPrimaryText.color || 'grey';
 
   if (disabled) {
     textColor = 'secondary';
   }
+
+  console.log(textColor);
+
   return {
     textColor,
     spinnerColor,
   };
+};
+
+export function getFontRenderer(size) {
+  switch (size) {
+    case 'tiny':
+      return Btn3;
+    case 'small':
+      return Btn2;
+    case 'medium':
+      return Btn1;
+    case 'large':
+      return Btn1;
+    default:
+      return Btn1;
+  }
+}
+
+export const configureLayoutAnimation = () => {
+  LayoutAnimation.configureNext({
+    duration: 175,
+    update: {
+      springDamping: 0.9,
+      type: 'spring',
+    },
+  });
 };
