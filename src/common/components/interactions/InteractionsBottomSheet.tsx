@@ -31,6 +31,9 @@ type Interactions =
 
 type PropsType = {
   entity: BaseModel;
+  modal?: boolean;
+  withoutInsets?: boolean;
+  snapPoints?: any;
 };
 
 const _renderItemUser = navigation => (row: { item: any; index: number }) => (
@@ -73,11 +76,11 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
   // =====================| STATES & VARIABLES |=====================>
   const bottomSheetRef = React.useRef<any>(null);
   const insets = useSafeAreaInsets();
+  const bottomInsets = props.withoutInsets ? 0 : insets.bottom;
   const navigation = useNavigation();
   const footerStyle = useStyle(styles.cancelContainer, {
-    paddingBottom:
-      insets.bottom + Platform.select({ default: 25, android: 45 }),
-    paddingTop: insets.bottom * 1.5,
+    paddingBottom: bottomInsets + Platform.select({ default: 25, android: 45 }),
+    paddingTop: bottomInsets * 1.5,
   });
   const footerGradientColors = useMemo(
     () => [
@@ -286,7 +289,8 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
     <BottomSheet
       ref={bottomSheetRef}
       handleComponent={Header}
-      onChange={onBottomSheetVisibilityChange}>
+      onChange={onBottomSheetVisibilityChange}
+      snapPoints={props.snapPoints}>
       <View style={styles.container}>
         {store.visible && (
           <>

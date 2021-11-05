@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { observer } from 'mobx-react';
 import { View, FlatList, ViewToken } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -13,6 +13,8 @@ import UserModel from '../../channel/UserModel';
 import EmptyList from '../../common/components/EmptyList';
 import NotificationPlaceHolder from './notification/NotificationPlaceHolder';
 import MText from '../../common/components/MText';
+import InteractionsBottomSheet from '~/common/components/interactions/InteractionsBottomSheet';
+import sessionService from '~/common/services/session.service';
 
 type PropsType = {
   navigation?: any;
@@ -61,6 +63,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
   const [isRefreshing, setRefreshing] = useState(false);
   const theme = ThemedStyles.style;
   const { notifications } = useStores();
+  const interactionsBottomSheetRef = useRef<any>();
   const filter = notifications.filter;
   const params = {
     filter,
@@ -167,9 +170,28 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
     return <EmptyList text={i18n.t(`notification.empty.${filter}`)} />;
   }, [error, loading, fetch, isRefreshing, filter]);
 
+  const user = sessionService.getUser();
+
+  const renderItem = useCallback((row: any): React.ReactElement => {
+    const notification = row.item;
+
+    return (
+      <ErrorBoundary
+        message="Can't show this notification"
+        containerStyle={ThemedStyles.style.borderBottomHair}>
+        <NotificationItem
+          notification={notification}
+          onShowSubscribers={() =>
+            interactionsBottomSheetRef.current?.show('subscribers')
+          }
+        />
+      </ErrorBoundary>
+    );
+  }, []);
+
   const data = result?.notifications || [];
 
-  return (
+  return [
     <View style={styles.container}>
       <NotificationsTopBar
         store={notifications}
@@ -189,23 +211,17 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
         viewabilityConfig={viewabilityConfig}
         ListEmptyComponent={ListEmptyComponent}
       />
-    </View>
-  );
+    </View>,
+    <InteractionsBottomSheet
+      entity={user}
+      ref={interactionsBottomSheetRef}
+      withoutInsets
+      snapPoints={['90%']}
+    />,
+  ];
 });
 
 const keyExtractor = (item: NotificationModel, index) => `${item.urn}-${index}`;
-
-const renderItem = (row: any): React.ReactElement => {
-  const notification = row.item;
-
-  return (
-    <ErrorBoundary
-      message="Can't show this notification"
-      containerStyle={ThemedStyles.style.borderBottomHair}>
-      <NotificationItem notification={notification} />
-    </ErrorBoundary>
-  );
-};
 
 export default NotificationsScreen;
 

@@ -44,7 +44,6 @@ const MBottomSheet = forwardRef<BottomSheet, PropsType>((props, ref) => {
       ref={ref}
       index={-1}
       containerHeight={windowHeight}
-      snapPoints={DEFAULT_SNAP_POINTS}
       topInset={StatusBar.currentHeight || 0}
       handleComponent={renderHandle}
       backdropComponent={renderBackdrop}
@@ -53,6 +52,7 @@ const MBottomSheet = forwardRef<BottomSheet, PropsType>((props, ref) => {
       enableHandlePanningGesture={true}
       backgroundComponent={null}
       {...props}
+      snapPoints={props.snapPoints || DEFAULT_SNAP_POINTS}
       onAnimate={onAnimateHandler}
     />
   );
