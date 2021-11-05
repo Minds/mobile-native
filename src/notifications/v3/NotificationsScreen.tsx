@@ -216,6 +216,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
         ref={interactionsBottomSheetRef}
         withoutInsets
         snapPoints={['90%']}
+        keepOpen={false}
       />
     </View>
   );
