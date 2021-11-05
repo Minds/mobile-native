@@ -13,6 +13,10 @@ export interface FetchOptions {
   persist?: boolean;
   retry?: number;
   retryDelay?: number;
+  /**
+   * the data field of the response that has all the items
+   */
+  dataField?: string;
 }
 
 export interface FetchStore<T> {
@@ -32,7 +36,7 @@ export interface PostStore<T> extends FetchStore<T> {
   post: (object?) => Promise<any>;
 }
 
-const updateState = (newData, _) => newData;
+const defaultUpdateState = (newData, _) => newData;
 
 type MethodType = 'get' | 'post' | 'put';
 
@@ -87,18 +91,29 @@ const createStore = ({
     if (!data) {
       data = options?.params || {};
     }
+    let { dataField, offsetField, updateState } = Object.assign(
+      {
+        updateState: defaultUpdateState,
+        offsetField: 'load-next',
+        dataField: 'entities',
+      },
+      options,
+      opts,
+    );
     this.clearRetryTimer(!retry);
-    const updateStateMethod =
-      opts?.updateState || options?.updateState || updateState;
     this.setLoading(true);
     this.setError(null);
     try {
-      //@ts-ignore
       const result = await (method === 'get'
         ? apiService.get(url, data, this)
         : apiService.post(url, data));
 
-      const state = updateStateMethod(result, this.result);
+      // hack to remove the offset if the result was empty
+      if (dataField && result[dataField]?.length === 0) {
+        delete result[offsetField];
+      }
+
+      const state = updateState(result, this.result);
       this.setResult(state);
       this.persist(data);
     } catch (err) {
