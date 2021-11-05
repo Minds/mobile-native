@@ -19,7 +19,7 @@ type PropsType = {
 };
 
 const TokensOverview = observer(({ walletStore }: PropsType) => {
-  const wc = useWalletConnect();
+  useWalletConnect();
   const theme = ThemedStyles.style;
   const balanceStyle = [
     theme.fontL,

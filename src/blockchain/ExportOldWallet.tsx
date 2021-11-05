@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform, Text, TouchableOpacity, View } from 'react-native';
+import { Platform, TouchableOpacity, View } from 'react-native';
 import { hideMessage, showMessage } from 'react-native-flash-message';
 import Share from 'react-native-share';
 import Web3 from 'web3';

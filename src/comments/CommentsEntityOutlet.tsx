@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react';
 import React from 'react';
 
-import { View, Text, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, KeyboardAvoidingView, Platform } from 'react-native';
 import ActivityModel from '../newsfeed/ActivityModel';
 import ThemedStyles from '../styles/ThemedStyles';
 import { useNavigation } from '@react-navigation/native';
@@ -40,9 +40,9 @@ export const CommentsEntityOutlet = observer((props: Props) => {
     );
   };
 
-  const onNewComment = comment => {
-    GoToComments();
-  };
+  // const onNewComment = comment => {
+  //   GoToComments();
+  // };
 
   return (
     <KeyboardAvoidingView

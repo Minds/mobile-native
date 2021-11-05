@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 
-import { Text, View, Alert, StyleSheet } from 'react-native';
+import { View, Alert, StyleSheet } from 'react-native';
 
 import { Icon } from 'react-native-elements';
 import FastImage from 'react-native-fast-image';

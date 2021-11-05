@@ -10,7 +10,6 @@ import createTwoFactorStore, { Options } from './createTwoFactorStore';
 import requirePhoneValidation from '../../common/hooks/requirePhoneValidation';
 import { showNotification } from '../../../AppMessages';
 import MText from '../../common/components/MText';
-import { BottomSheetButton } from '~/common/components/bottom-sheet';
 import Button from '~/common/components/Button';
 import ActivityIndicator from '~/common/components/ActivityIndicator';
 

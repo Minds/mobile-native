@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import { MotiProps, View as MotiView } from 'moti';
 import { ViewProps, ViewStyle } from 'react-native';
-import TopBarButtonTabBarItem from '../topbar-tabbar/TopBarButtonTabBarItem';
 
 const animation = {
   from: {
