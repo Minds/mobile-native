@@ -29,11 +29,8 @@ function ShowHide({ children, ...other }) {
 
 @observer
 export default class CaptureFab extends Component<PropsType> {
-  /**
-   * Nav to activity full screen
-   */
   navToCapture = () => {
-    this.props.navigation.push('Capture', {
+    this.props.navigation.push('Compose', {
       group: this.props.group,
       parentKey: this.props.route.key,
     });
