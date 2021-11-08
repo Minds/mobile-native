@@ -145,7 +145,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
 const Tabs = observer(function ({ navigation }) {
   const theme = ThemedStyles.style;
 
-  const navToCapture = useCallback(() => navigation.push('Capture'), [
+  const navToCapture = useCallback(() => navigation.push('Compose'), [
     navigation,
   ]);
 

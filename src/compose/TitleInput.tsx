@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 
-import ThemedStyles from '../styles/ThemedStyles';
+import ThemedStyles, { useMemoStyle, useStyle } from '../styles/ThemedStyles';
 import i18nService from '../common/services/i18n.service';
 import { observer } from 'mobx-react';
 import TextInput from '../common/components/TextInput';
@@ -12,7 +12,7 @@ import MText from '../common/components/MText';
  * Title input
  * @param {Object} props
  */
-export default observer(function (props) {
+export default observer(function TitleInput(props) {
   const [open, setOpen] = useState(Boolean(props.store.title));
   const onPress = useCallback(() => {
     setOpen(old => {
@@ -25,34 +25,37 @@ export default observer(function (props) {
 
   const theme = ThemedStyles.style;
   return (
-    <View style={theme.fullWidth}>
+    <View
+      style={useMemoStyle(
+        ['fullWidth', open ? {} : { alignItems: 'flex-end' }],
+        [],
+      )}>
       <View
-        style={[
-          theme.fullWidth,
-          theme.rowJustifyEnd,
-          theme.alignCenter,
-          theme.paddingRight,
-          theme.marginTop3x,
-        ]}>
+        style={useMemoStyle(
+          [
+            'fullWidth',
+            'rowJustifyEnd',
+            'alignCenter',
+            'paddingRight',
+            open ? {} : { width: 80 },
+          ],
+          [open],
+        )}>
         <Icon
           name={open ? 'minus' : 'plus'}
-          size={20}
+          size={16}
           style={theme.colorTertiaryText}
           onPress={onPress}
         />
         <MText
-          style={[theme.fontXL, theme.colorIcon, theme.paddingHorizontal2x]}
+          style={useStyle('fontL', 'colorTertiaryText', 'paddingHorizontal2x')}
           onPress={onPress}>
           Title
         </MText>
       </View>
       {open && (
         <TextInput
-          style={[
-            theme.colorPrimaryText,
-            theme.fontXXL,
-            theme.paddingHorizontal4x,
-          ]}
+          style={textInputStyle}
           placeholder={i18nService.t('title')}
           placeholderTextColor={ThemedStyles.getColor('TertiaryText')}
           onChangeText={props.store.setTitle}
@@ -67,3 +70,5 @@ export default observer(function (props) {
     </View>
   );
 });
+
+const textInputStyle = ThemedStyles.combine('colorPrimaryText', 'fontXXL');

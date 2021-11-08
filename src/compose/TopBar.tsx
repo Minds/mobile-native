@@ -1,10 +1,9 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import { observer } from 'mobx-react';
-import { useSafeArea } from 'react-native-safe-area-context';
 import { DotIndicator } from 'react-native-reanimated-indicators';
 import { IconButton } from '~ui/icons';
-import ThemedStyles from '../styles/ThemedStyles';
+import ThemedStyles, { useMemoStyle, useStyle } from '../styles/ThemedStyles';
 import MText from '../common/components/MText';
 
 /**
@@ -12,21 +11,21 @@ import MText from '../common/components/MText';
  */
 export default observer(function (props) {
   const theme = ThemedStyles.style;
-  const insets = useSafeArea();
-  const menuStyle = [{ paddingTop: insets.top || 5 }, props.containerStyle];
-
-  const backIconName = props.backIconName || 'chevron-left';
-  const backIconSize = props.backIconSize || 45;
+  const backIconName = props.backIconName || 'close';
+  const backIconSize = props.backIconSize || 30;
+  const containerStyle = useMemoStyle(
+    [styles.topBar, props.containerStyle],
+    [props.containerStyle],
+  );
 
   return (
-    <View style={[styles.topBar, menuStyle]}>
+    <View style={containerStyle}>
       <IconButton
         size={backIconSize}
         name={backIconName}
-        style={theme.colorPrimaryText}
+        style={styles.back}
         onPress={props.onPressBack}
         testID="topbarBack"
-        left="S"
       />
       {props.leftText && (
         <MText style={styles.leftText}>{props.leftText}</MText>
@@ -34,7 +33,7 @@ export default observer(function (props) {
       <View style={theme.flexContainer} />
       {props.store.posting ? (
         <DotIndicator
-          containerStyle={[theme.rowJustifyEnd, theme.marginRight4x]}
+          containerStyle={styles.dotIndicatorContainerStyle}
           color={ThemedStyles.getColor('SecondaryText')}
           scaleEnabled={true}
         />
@@ -52,20 +51,27 @@ export default observer(function (props) {
   );
 });
 
-const styles = StyleSheet.create({
+const styles = ThemedStyles.create({
+  dotIndicatorContainerStyle: ['rowJustifyEnd', 'marginRight4x'],
   topBar: {
     width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    paddingVertical: 10,
   },
-  leftText: {
-    textAlign: 'left',
-    fontSize: 26,
-  },
+  leftText: [
+    'textCenter',
+    {
+      position: 'absolute',
+      textAlign: 'center',
+      fontSize: 20,
+    },
+  ],
   postButton: {
     textAlign: 'right',
-    fontSize: 20,
+    fontSize: 18,
     paddingRight: 20,
   },
+  back: ['colorIcon', 'paddingLeft2x', 'paddingRight2x'],
 });

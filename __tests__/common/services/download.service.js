@@ -7,6 +7,8 @@ CameraRoll.save = jest.fn();
 
 jest.mock('../../../src/common/services/permissions.service');
 jest.mock('../../../src/common/services/session.service');
+
+const FAKE_URL = 'https://fake.com';
 /**
  * Tests
  */
@@ -15,7 +17,7 @@ describe('Download service', () => {
     permissions.checkWriteExternalStorage.mockReturnValue(false);
     permissions.writeExternalStorage.mockReturnValue(false);
     Platform.OS = 'notios';
-    await service.downloadToGallery('url');
+    await service.downloadToGallery(FAKE_URL);
     expect(CameraRoll.save).not.toHaveBeenCalled();
   });
 
@@ -23,7 +25,7 @@ describe('Download service', () => {
     // call tested method
     Platform.OS = 'ios';
     permissions.checkMediaLibrary.mockReturnValue(true);
-    await service.downloadToGallery('url');
+    await service.downloadToGallery(FAKE_URL);
     expect(CameraRoll.save).toHaveBeenCalled();
   });
 });

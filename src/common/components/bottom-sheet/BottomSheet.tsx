@@ -24,7 +24,10 @@ const MBottomSheet = forwardRef<BottomSheet, PropsType>((props, ref) => {
     props,
   );
 
-  const renderHandle = useCallback(() => <Handle />, []);
+  const renderHandle = useCallback(
+    handleProps => <Handle {...handleProps} />,
+    [],
+  );
 
   const renderBackdrop = useCallback(
     backdropProps => (

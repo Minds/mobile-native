@@ -9,6 +9,7 @@ interface HandleProps {
 
 const Handle: FC<HandleProps> = ({ children, showHandleBar = true, style }) => (
   <View
+    renderToHardwareTextureAndroid={true}
     style={useMemoStyle(
       [children ? styles.containerWithChildren : styles.container, style],
       [style],

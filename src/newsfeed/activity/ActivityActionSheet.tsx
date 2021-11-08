@@ -132,7 +132,7 @@ export default withSafeAreaInsets(
           iconName: 'edit',
           iconType: 'material',
           onPress: async () => {
-            this.props.navigation.navigate('Capture', {
+            this.props.navigation.navigate('Compose', {
               isEdit: true,
               entity: this.props.entity,
             });

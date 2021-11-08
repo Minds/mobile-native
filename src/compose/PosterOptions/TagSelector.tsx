@@ -3,14 +3,14 @@ import { View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import ThemedStyles from '../styles/ThemedStyles';
-import TopBar from './TopBar';
-import i18n from '../common/services/i18n.service';
-import NavigationService from '../navigation/NavigationService';
-import hashtagService from '../common/services/hashtag.service';
-import HistoryStore from '../common/stores/HistoryStore';
-import TextInput from '../common/components/TextInput';
-import MText from '../common/components/MText';
+import ThemedStyles from '../../styles/ThemedStyles';
+import TopBar from '../TopBar';
+import i18n from '../../common/services/i18n.service';
+import NavigationService from '../../navigation/NavigationService';
+import hashtagService from '../../common/services/hashtag.service';
+import HistoryStore from '../../common/stores/HistoryStore';
+import TextInput from '../../common/components/TextInput';
+import MText from '../../common/components/MText';
 
 /**
  * Tag row
@@ -43,8 +43,8 @@ const TagRow = props => {
  */
 export default observer(function (props) {
   const theme = ThemedStyles.style;
-  const store = props.route.params.store;
-  const inputRef = useRef(null);
+  const store = props.route?.params?.store;
+  const inputRef = useRef<any>(null);
 
   const localStore = useLocalStore(
     ({ postStore }) => ({
@@ -102,23 +102,26 @@ export default observer(function (props) {
         rightText={i18n.t('done')}
         onPressRight={NavigationService.goBack}
         onPressBack={NavigationService.goBack}
+        backIconName="chevron-left"
+        backIconSize="large"
         store={store}
       />
       <MText
         style={[
-          theme.paddingVertical4x,
+          theme.paddingVertical2x,
           theme.colorSecondaryText,
-          theme.fontXL,
+          theme.fontL,
           theme.paddingHorizontal3x,
         ]}>
         {i18n.t('capture.tagsDescription')}
       </MText>
       <View style={styles.suggestedContainer}>
         <ScrollView
+          showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.suggestedScroll}
           horizontal={true}>
           <MIcon name="fire" size={23} style={theme.colorAlert} />
-          {localStore.suggested.map(t => (
+          {localStore.suggested.map((t: any) => (
             <MText
               style={[styles.tag, theme.colorIconActive]}
               onPress={() => store.addTag(t.value)}>

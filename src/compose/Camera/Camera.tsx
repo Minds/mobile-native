@@ -1,55 +1,60 @@
-import React, { useRef, useCallback, useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
-
-import { Camera } from 'react-native-vision-camera';
-import FIcon from 'react-native-vector-icons/Feather';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { useRoute, useNavigation, RouteProp } from '@react-navigation/native';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { when } from 'mobx';
 import { observer, useLocalStore } from 'mobx-react';
-
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { MotiView } from 'moti';
+import React, { useCallback, useEffect, useRef } from 'react';
+import { StyleSheet, View } from 'react-native';
+import Orientation from 'react-native-orientation-locker';
 import Reanimated, {
   useAnimatedProps,
   useSharedValue,
 } from 'react-native-reanimated';
-import ThemedStyles from '../../styles/ThemedStyles';
-import RecordButton from './RecordButton';
-
-import VideoClock from '../VideoClock';
-import FocusIndicator from './FocusIndicator';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import FIcon from 'react-native-vector-icons/Feather';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { Camera } from 'react-native-vision-camera';
+import FadeFrom from '../../common/components/animations/FadeFrom';
 import { IS_IOS } from '../../config/Config';
-import ZoomIndicator from './ZoomIndicator';
+import { RootStackParamList } from '../../navigation/NavigationTypes';
+import ThemedStyles, { useStyle } from '../../styles/ThemedStyles';
+import { PermissionsContext } from '../PermissionsCheck';
+import VideoClock from '../VideoClock';
+import CamIcon from './CamIcon';
 import createCameraStore from './createCameraStore';
 import FlashIcon from './FlashIcon';
-import CamIcon from './CamIcon';
-import HdrIcon from './HdrIcon';
-import FadeFrom from '../../common/components/animations/FadeFrom';
-import ZoomGesture from './ZoomGesture';
 import FocusGesture from './FocusGesture';
-import { MotiView } from 'moti';
+import FocusIndicator from './FocusIndicator';
+import HdrIcon from './HdrIcon';
+import RecordButton from './RecordButton';
 import useBestCameraAndFormat from './useBestCameraAndFormat';
 import useCameraStyle from './useCameraStyle';
-import { AppStackParamList } from '../../navigation/NavigationTypes';
-import { PermissionsContext } from '../PermissionsCheck';
-import Orientation from 'react-native-orientation-locker';
+import ZoomGesture from './ZoomGesture';
+import ZoomIndicator from './ZoomIndicator';
 
-type CaptureScreenRouteProp = RouteProp<AppStackParamList, 'Capture'>;
+type CaptureScreenRouteProp = RouteProp<RootStackParamList, 'Capture'>;
 
 const ReanimatedCamera = Reanimated.createAnimatedComponent(Camera);
 Reanimated.addWhitelistedNativeProps({
   zoom: true,
 });
 
-const camAnimTransition: any = { type: 'timing', duration: 100 };
+const camAnimTransition: any = { type: 'timing', duration: 0 };
 const MAX_ZOOM_FACTOR = 20;
 
 type PropsType = {
   onMedia: (media) => void;
   mode: 'photo' | 'video';
   onForceVideo?: () => void;
+  onSetPhotoPress?: () => void;
+  onSetVideoPress?: () => void;
   onPressGallery: () => void;
   portraitMode?: boolean;
+};
+
+const PRESENTATION_ORDER = {
+  first: 30,
+  second: 110,
+  third: 150,
 };
 
 /**
@@ -190,6 +195,7 @@ export default observer(function (props: PropsType) {
             </FocusGesture>
           </ZoomGesture>
         )}
+        {store.ready && <Shade />}
         {store.focusPoint && (
           <FocusIndicator x={store.focusPoint.x} y={store.focusPoint.y} />
         )}
@@ -202,7 +208,7 @@ export default observer(function (props: PropsType) {
         />
         <FadeFrom
           direction="right"
-          delay={190}
+          delay={PRESENTATION_ORDER.third}
           style={orientationStyle.lowLight}>
           <Icon
             size={30}
@@ -222,7 +228,7 @@ export default observer(function (props: PropsType) {
       {device && store.ready && (
         <View style={orientationStyle.buttonContainer}>
           <View style={orientationStyle.leftIconContainer}>
-            <FadeFrom delay={190}>
+            <FadeFrom delay={PRESENTATION_ORDER.third}>
               <FIcon
                 size={30}
                 name="image"
@@ -231,7 +237,7 @@ export default observer(function (props: PropsType) {
               />
             </FadeFrom>
             {supportsHdr ? (
-              <FadeFrom delay={130}>
+              <FadeFrom delay={PRESENTATION_ORDER.second}>
                 <HdrIcon store={store} style={orientationStyle.icon} />
               </FadeFrom>
             ) : (
@@ -240,21 +246,21 @@ export default observer(function (props: PropsType) {
           </View>
           <View style={orientationStyle.rightButtonsContainer}>
             {supportsFlash ? (
-              <FadeFrom delay={130}>
+              <FadeFrom delay={PRESENTATION_ORDER.second}>
                 <FlashIcon store={store} style={orientationStyle.icon} />
               </FadeFrom>
             ) : (
               <View />
             )}
             {supportsCameraFlipping && (!store.recording || IS_IOS) ? (
-              <FadeFrom delay={190}>
+              <FadeFrom delay={PRESENTATION_ORDER.third}>
                 <CamIcon store={store} style={orientationStyle.icon} />
               </FadeFrom>
             ) : (
               <View />
             )}
           </View>
-          <FadeFrom delay={50}>
+          <FadeFrom delay={PRESENTATION_ORDER.first}>
             <RecordButton
               size={70}
               store={store}
@@ -269,3 +275,16 @@ export default observer(function (props: PropsType) {
     </View>
   );
 });
+
+/**
+ * A black view that disappears with some delay. Used to smoothen camera appearance
+ */
+const Shade = () => (
+  <MotiView
+    from={{ opacity: 1 }}
+    animate={{ opacity: 0 }}
+    // delay={400}
+    transition={{ type: 'timing', duration: 1000 }}
+    style={useStyle('positionAbsolute', 'bgBlack')}
+  />
+);

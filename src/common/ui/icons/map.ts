@@ -63,6 +63,7 @@ const ICON_MAP: {
   close: {
     font: 'MaterialIcons',
     name: 'close',
+    ratio: 0.92,
   },
   founder: {
     font: 'MaterialIcons',
@@ -210,6 +211,14 @@ const ICON_MAP: {
   'close-circle': {
     font: 'MaterialCommunityIcons',
     name: 'close-circle',
+  },
+  edit: {
+    font: 'Feather',
+    name: 'edit',
+  },
+  download: {
+    font: 'Feather',
+    name: 'download',
   },
 };
 

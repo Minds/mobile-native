@@ -17,6 +17,7 @@ export const Avatar = ({
   border,
   icon,
   onPress,
+  children,
 }: any) => {
   let iconView: any = null;
 
@@ -28,6 +29,7 @@ export const Avatar = ({
     <View style={border && styles[border]}>
       <FastImage source={source} style={styles[size]} />
       {iconView}
+      {children}
     </View>
   );
 
