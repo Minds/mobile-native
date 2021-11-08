@@ -1,3 +1,4 @@
+import { useDimensions } from '@react-native-community/hooks';
 import React from 'react';
 import { View, TouchableOpacity, StyleProp } from 'react-native';
 import { ImageStyle, ResizeMode, Source } from 'react-native-fast-image';
@@ -36,6 +37,7 @@ export default function MediaViewImage({
   onImageLongPress,
 }: PropsType) {
   const [imageLoadFailed, setImageLoadFailed] = React.useState(false);
+  const { width, height } = useDimensions().window;
   const [size, setSize] = React.useState({ height: 0, width: 0 });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const source = React.useMemo(() => entity.getThumbSource('xlarge'), [
@@ -59,6 +61,9 @@ export default function MediaViewImage({
 
   let aspectRatio = 1.5;
 
+  const MIN_ASPECT_RATIO_FIXED = width / height; // the same as screen height
+  const MIN_ASPECT_RATIO_AUTO_WIDTH = width / (height * 4); // four times screen height
+
   if (
     entity.custom_data &&
     entity.custom_data[0] &&
@@ -68,6 +73,16 @@ export default function MediaViewImage({
     aspectRatio = entity.custom_data[0].width / entity.custom_data[0].height;
   } else if (size.height > 0) {
     aspectRatio = size.width / size.height;
+  }
+
+  if (autoHeight) {
+    if (aspectRatio < MIN_ASPECT_RATIO_AUTO_WIDTH) {
+      aspectRatio = MIN_ASPECT_RATIO_AUTO_WIDTH;
+    }
+  } else {
+    if (aspectRatio < MIN_ASPECT_RATIO_FIXED) {
+      aspectRatio = MIN_ASPECT_RATIO_FIXED;
+    }
   }
 
   const containerStyle = React.useMemo(
@@ -124,7 +139,12 @@ export default function MediaViewImage({
         activeOpacity={1}
         testID="Posted Image">
         <ExplicitImage
-          resizeMode={mode}
+          resizeMode={
+            aspectRatio === MIN_ASPECT_RATIO_FIXED ||
+            aspectRatio === MIN_ASPECT_RATIO_AUTO_WIDTH
+              ? 'contain'
+              : mode
+          }
           style={imageStyle}
           source={source}
           thumbnail={thumbnail}
