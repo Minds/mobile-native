@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { observer } from 'mobx-react';
 import { DotIndicator } from 'react-native-reanimated-indicators';
 import { IconButton } from '~ui/icons';
-import ThemedStyles, { useMemoStyle, useStyle } from '../styles/ThemedStyles';
+import ThemedStyles, { useMemoStyle } from '../styles/ThemedStyles';
 import MText from '../common/components/MText';
 
 /**
