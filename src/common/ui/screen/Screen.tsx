@@ -1,7 +1,6 @@
 import React, { ReactNode } from 'react';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, SafeAreaView } from 'react-native';
 import ThemedStyles from '~/styles/ThemedStyles';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 export type ScreenPropType = {
   safe?: boolean;

@@ -705,7 +705,7 @@
       "smsTitle": "SMS",
       "smsDescription": "Minds will send you an SMS with a two-factor authentication code when prompted"
     },
-    "sessionsOpened": "Your currently signed into Minds account on the following devices.",
+    "sessionsOpened": "You are currently signed into Minds account on the following devices.",
     "closeSessions": "सभी सत्र बंद करें",
     "closeSession": "Close session",
     "subscriptionListEmpty": "आपके पास कोई आवर्ती सदस्यता नहीं है",

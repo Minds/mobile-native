@@ -8,7 +8,6 @@ import {
   Animated,
 } from 'react-native';
 import { withSpacer } from '~ui/layout/Spacer';
-import { UNIT } from '~styles/Tokens';
 import ThemedStyles from '~/styles/ThemedStyles';
 import {
   timingAnimation,
@@ -18,13 +17,15 @@ import {
   getFontRenderer,
 } from './helpers';
 import { frameThrower } from '~ui/helpers';
+import { COMMON_BUTTON_STYLES, FLAT_BUTTON_STYLES } from './tokens';
+import { TRANSPARENCY, UNIT } from '~/styles/Tokens';
 
 export type ButtonPropsType = {
   mode?: 'flat' | 'outline' | 'solid';
   type?: 'base' | 'action' | 'warning';
   size?: 'large' | 'medium' | 'small' | 'tiny';
   font?: 'regular' | 'medium';
-  align?: 'start' | 'end' | 'stretch';
+  align?: 'start' | 'end' | 'stretch' | 'center';
   spinner?: boolean;
   stretch?: boolean;
   disabled?: boolean;
@@ -46,7 +47,7 @@ export const ButtonComponent = ({
   disabled = false,
   darkContent = false,
   spinner = false,
-  align = 'start',
+  align = 'stretch',
   loading = false,
   onPress,
   children,
@@ -54,19 +55,19 @@ export const ButtonComponent = ({
   testID,
   accessibilityLabel,
 }: ButtonPropsType) => {
-  const containerStyle: ViewStyle = StyleSheet.flatten([
+  const containerStyle = [
     styles.container,
     styles[mode],
     styles[size],
     styles[`${mode}_${type}`],
     styles[`${mode}_${size}`],
     disabled && styles[`${mode}_disabled`],
-  ]);
+  ];
+
   const overlayStyle: ViewStyle = StyleSheet.flatten([
     styles.overlay,
-    styles[`${mode}_${type}`],
-    styles[`${mode}_${size}`],
-    disabled && styles[`${mode}_disabled`],
+    styles[`${mode}_${type}__overlay`],
+    disabled && styles[`${mode}_disabled__overlay`],
   ]);
 
   const scaleAnimation = useRef(new Animated.Value(0)).current;
@@ -101,6 +102,7 @@ export const ButtonComponent = ({
   useEffect(() => {
     if (!text || !shouldAnimateChanges || !children) {
       setText(children);
+
       return;
     }
     if (typeof children === 'string') {
@@ -108,6 +110,7 @@ export const ButtonComponent = ({
         return;
       }
     }
+
     timingAnimation(
       textAnimation,
       0.6,
@@ -224,14 +227,14 @@ export const ButtonComponent = ({
       onPressOut={handlePressOut}
       onPress={handlePress}
       style={stretch ? styles.stretch : styles[align]}
-      testID={testID}
-      accessibilityLabel={accessibilityLabel}>
+      accessibilityLabel={accessibilityLabel}
+      testID={testID}>
       {/** Main Wrapper */}
       <View style={containerStyle}>
         {/** Border Overlay */}
         <View style={overlayStyle}>
           {/** Activity Indicator */}
-          {spinner ? (
+          {spinner && (
             <Animated.View style={{ transform: [{ scale: scaleAnimation }] }}>
               <ActivityIndicator
                 size="small"
@@ -239,10 +242,13 @@ export const ButtonComponent = ({
                 style={styles[`spinner_${size}`]}
               />
             </Animated.View>
-          ) : null}
+          )}
         </View>
         {/** Background Active */}
-        <Animated.View style={[{ opacity: activeAnimation }, styles.active]} />
+        <Animated.View
+          style={[{ opacity: activeAnimation }, styles[`active_${mode}`]]}
+        />
+        {darkContent && <View style={styles.darken} />}
         {/** Button Text */}
         <Animated.View style={{ transform: [{ scale: textAnimation }] }}>
           <Font font={font} color={textColor} numberOfLines={1}>
@@ -255,34 +261,39 @@ export const ButtonComponent = ({
 };
 
 const styles = ThemedStyles.create({
-  pressable: {
+  start: {
     alignSelf: 'flex-start',
+  },
+  end: {
+    alignSelf: 'flex-end',
+  },
+  center: {
+    alignSelf: 'center',
   },
   stretch: {
     alignSelf: 'stretch',
   },
   overlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0,
+    ...StyleSheet.absoluteFillObject,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 100,
     borderWidth: 1,
     borderColor: 'transparent',
   },
-  active: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0,
-    backgroundColor: 'rgba(0,0,0,0.10)',
+  active_flat: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: TRANSPARENCY.DARKEN05,
+  },
+  active_outline: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: TRANSPARENCY.DARKEN05,
+  },
+  active_solid: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: TRANSPARENCY.DARKEN10,
   },
   container: {
-    borderColor: 'transparent',
     backgroundColor: 'transparent',
     flexDirection: 'column',
     alignItems: 'center',
@@ -290,75 +301,66 @@ const styles = ThemedStyles.create({
     borderRadius: 100,
     overflow: 'hidden',
   },
-  // PUT SIZING IN THE TOKEN FILE
+  darken: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: TRANSPARENCY.DARKEN20,
+  },
   large: {
-    paddingHorizontal: UNIT.L2,
-    paddingVertical: UNIT.S,
-    height: UNIT.XL2 + UNIT.S,
+    ...COMMON_BUTTON_STYLES.LARGE,
   },
   medium: {
-    paddingHorizontal: UNIT.XXL,
-    paddingVertical: UNIT.XS,
-    height: UNIT.XL2 + UNIT.XS,
+    ...COMMON_BUTTON_STYLES.MEDIUM,
   },
   small: {
-    paddingHorizontal: UNIT.L,
-    paddingVertical: UNIT.XXS,
-    height: UNIT.L2 + UNIT.XS,
+    ...COMMON_BUTTON_STYLES.SMALL,
   },
   tiny: {
-    paddingHorizontal: UNIT.L,
-    paddingVertical: UNIT.XXS,
-    height: UNIT.L2 + UNIT.XS,
+    ...COMMON_BUTTON_STYLES.TINY,
   },
   flat: {
     borderColor: 'transparent',
+    borderRadius: UNIT.XS,
   },
   flat_tiny: {
-    height: UNIT.XXXL,
+    ...FLAT_BUTTON_STYLES.TINY,
     borderRadius: 0,
-    paddingHorizontal: UNIT.S,
-    paddingVertical: UNIT.XXS,
   },
   flat_small: {
-    height: UNIT.XXXL,
+    ...FLAT_BUTTON_STYLES.SMALL,
     borderRadius: 0,
-    paddingHorizontal: UNIT.S,
-    paddingVertical: UNIT.XXS,
   },
   flat_medium: {
-    height: UNIT.L2,
-    paddingHorizontal: UNIT.S,
-    paddingVertical: UNIT.XS,
+    ...FLAT_BUTTON_STYLES.MEDIUM,
     borderRadius: 0,
   },
   flat_large: {
-    height: UNIT.L2 + UNIT.XS,
-    paddingHorizontal: UNIT.S,
-    paddingVertical: UNIT.XXS,
+    ...FLAT_BUTTON_STYLES.LARGE,
     borderRadius: 0,
   },
   outline: {
     backgroundColor: 'transparent',
   },
-  outline_base: ['bcolorBaseBackground'],
-  outline_action: ['bcolorLink'],
-  outline_warning: ['bcolorDangerBackground'],
-  outline_disabled: [
+  outline_base__overlay: ['bcolorBaseBackground'],
+  outline_action__overlay: ['bcolorLink'],
+  outline_warning__overlay: ['bcolorDangerBackground'],
+  outline_disabled__overlay: [
     'bcolorPrimaryBorder',
-    { backgroundColor: 'rgba(0,0,0,0.1)' },
+    { backgroundColor: TRANSPARENCY.DARKEN10 },
   ],
-  solid_base: ['bgBaseBackground'],
-  solid_action: ['bgLink'],
-  solid_warning: ['bgDangerBackground'],
-  solid_disabled: {
-    backgroundColor: 'rgba(0,0,0,0.1)',
+  solid_base__overlay: ['bgBaseBackground'],
+  solid_action__overlay: ['bgLink'],
+  solid_warning__overlay: ['bgDangerBackground'],
+  solid_disabled__overlay: {
+    backgroundColor: TRANSPARENCY.DARKEN10,
   },
-  flat_disabled: {
-    backgroundColor: 'rgba(0,0,0,0.1)',
+  flat_disabled__overlay: {
+    backgroundColor: 'transparent',
   },
   spinner_small: {
     transform: [{ scale: 0.9 }],
+  },
+  spinner_tiny: {
+    transform: [{ scale: 0.8 }],
   },
 });
 

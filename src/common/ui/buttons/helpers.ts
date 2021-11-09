@@ -48,26 +48,40 @@ export const timingAnimation = (
 };
 
 export const getColor = (theme, mode, darkContent, disabled, type) => {
-  let textColor: 'primary' | 'link' | 'secondary' | 'white' | undefined =
-    'primary';
-  let spinnerColor = 'white';
+  let textColor:
+    | 'primary'
+    | 'link'
+    | 'tertiary'
+    | 'white'
+    | 'danger'
+    | undefined = 'primary';
+  let spinnerColor = ThemedStyles.style.colorPrimaryText.color || 'grey';
 
-  if ((theme === 0 && mode === 'solid') || (darkContent && mode !== 'solid')) {
+  if ((mode === 'solid' || darkContent) && !disabled) {
     textColor = 'white';
     spinnerColor = 'white';
+
+    return {
+      textColor,
+      spinnerColor,
+    };
   }
 
-  if (mode === 'flat' && type === 'action') {
-    textColor = 'link';
+  if (mode === 'flat') {
+    if (type === 'action') {
+      textColor = 'link';
+    }
+    if (type === 'warning') {
+      textColor = 'danger';
+    }
+    if (darkContent) {
+      spinnerColor = 'white';
+    }
   }
-
-  spinnerColor = ThemedStyles.style.colorPrimaryText.color || 'grey';
 
   if (disabled) {
-    textColor = 'secondary';
+    textColor = 'tertiary';
   }
-
-  console.log(textColor);
 
   return {
     textColor,
@@ -92,7 +106,7 @@ export function getFontRenderer(size) {
 
 export const configureLayoutAnimation = () => {
   LayoutAnimation.configureNext({
-    duration: 175,
+    duration: 165,
     update: {
       springDamping: 0.9,
       type: 'spring',

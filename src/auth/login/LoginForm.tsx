@@ -15,7 +15,6 @@ import InputContainer from '../../common/components/InputContainer';
 import i18n from '../../common/services/i18n.service';
 import MText from '../../common/components/MText';
 import { IS_IOS } from '../../config/Config';
-
 import { Button, B3, Row } from '~ui';
 
 type PropsType = {

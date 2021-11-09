@@ -7,6 +7,10 @@ export type SpacerPropType = {
   children?: ReactNode;
 } & UISpacingPropType;
 
+export type ItemPropType = {
+  noBorder?: boolean;
+};
+
 export type HairlinePropType = {
   noBorder?: boolean;
 };

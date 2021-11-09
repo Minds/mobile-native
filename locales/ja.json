@@ -705,7 +705,7 @@
       "smsTitle": "SMS",
       "smsDescription": "Minds will send you an SMS with a two-factor authentication code when prompted"
     },
-    "sessionsOpened": "Your currently signed into Minds account on the following devices.",
+    "sessionsOpened": "You are currently signed into Minds account on the following devices.",
     "closeSessions": "すべてのセッションを閉じる",
     "closeSession": "Close session",
     "subscriptionListEmpty": "定期購読がありません",

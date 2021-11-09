@@ -7,7 +7,6 @@ import { inject, observer, Observer } from 'mobx-react';
 
 import { ComponentsStyle } from '../styles/Components';
 import NavNextButton from '../common/components/NavNextButton';
-import Button from '../common/components/Button';
 import logService from '../common/services/log.service';
 import i18n from '../common/services/i18n.service';
 import ActivityIndicator from '../common/components/ActivityIndicator';
@@ -15,6 +14,7 @@ import ThemedStyles from '../styles/ThemedStyles';
 import { showNotification } from '../../AppMessages';
 import TextInput from '../common/components/TextInput';
 import MText from '../common/components/MText';
+import { Button, Screen, ScreenSection, B2, Spacer } from '~ui';
 
 type PropsType = {
   rekey?: boolean;
@@ -42,19 +42,15 @@ export default class MessengerSetup extends Component<PropsType> {
 
     if (this.props.user.me.chat && !this.props.rekey) {
       button = (
-        <NavNextButton
-          onPress={this.unlock}
-          title={i18n.t('unlock').toUpperCase()}
-          color={ThemedStyles.style.colorLink}
-        />
+        <Button type="action" mode="flat" size="small" onPress={this.unlock}>
+          {i18n.t('unlock')}
+        </Button>
       );
     } else {
       button = (
-        <NavNextButton
-          onPress={this.setup}
-          title={i18n.t('setup').toUpperCase()}
-          color={ThemedStyles.style.colorLink}
-        />
+        <Button type="action" mode="flat" size="small" onPress={this.setup}>
+          {i18n.t('setup').toUpperCase()}
+        </Button>
       );
     }
 
@@ -106,11 +102,7 @@ export default class MessengerSetup extends Component<PropsType> {
 
   renderUnlock() {
     return (
-      <View
-        style={[
-          ThemedStyles.style.flexContainer,
-          ThemedStyles.style.padding2x,
-        ]}>
+      <ScreenSection flex top="L">
         <View style={{ flexDirection: 'column', alignItems: 'stretch' }}>
           <TextInput
             style={ComponentsStyle.passwordinput}
@@ -123,18 +115,12 @@ export default class MessengerSetup extends Component<PropsType> {
           />
         </View>
 
-        <View style={{ paddingTop: 32 }}>
-          <MText style={styles.infoText}>
-            · {i18n.t('messenger.setupMessage1')}
-          </MText>
-          <MText style={styles.infoText}>
-            · {i18n.t('messenger.setupMessage2')}
-          </MText>
-          <MText style={styles.infoText}>
-            · {i18n.t('messenger.setupMessage3')}
-          </MText>
-        </View>
-      </View>
+        <Spacer top="XL">
+          <B2>· {i18n.t('messenger.setupMessage1')}</B2>
+          <B2 top="M">· {i18n.t('messenger.setupMessage2')}</B2>
+          <B2 top="M">· {i18n.t('messenger.setupMessage3')}</B2>
+        </Spacer>
+      </ScreenSection>
     );
   }
 
@@ -184,7 +170,6 @@ export default class MessengerSetup extends Component<PropsType> {
    * Render
    */
   render() {
-    const theme = ThemedStyles.style;
     let body, buttonProps;
     if (this.props.user.me.chat && !this.props.rekey) {
       body = this.renderUnlock();
@@ -194,27 +179,27 @@ export default class MessengerSetup extends Component<PropsType> {
     if (this.props.user.me.chat && !this.props.rekey) {
       buttonProps = {
         onPress: this.unlock,
-        text: i18n.t('unlock').toUpperCase(),
+        children: i18n.t('unlock'),
       };
     } else {
       buttonProps = {
         onPress: this.setup,
-        text: i18n.t('setup').toUpperCase(),
+        children: i18n.t('setup'),
       };
     }
     return (
-      <View style={theme.flexContainer}>
+      <Screen safe>
         {body}
-        <View style={theme.padding4x}>
+        <ScreenSection>
           <Button
-            containerStyle={[theme.fullWidth, theme.marginTop6x]}
+            spinner
             loading={this.props.messengerList.unlocking}
             {...buttonProps}
             transparent
             large
           />
-        </View>
-      </View>
+        </ScreenSection>
+      </Screen>
     );
   }
 }
