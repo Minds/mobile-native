@@ -1,5 +1,5 @@
-import React, { useRef, useCallback, useEffect } from 'react';
-import { View, StyleSheet, Platform } from 'react-native';
+import React, { useRef, useCallback, useEffect, useState } from 'react';
+import { View, StyleSheet, Platform, InteractionManager } from 'react-native';
 import { useDimensions } from '@react-native-community/hooks';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { useFocus } from '@msantang78/react-native-pager';
@@ -145,6 +145,13 @@ const ActivityFullScreen = observer((props: PropsType) => {
   const { current: cleanBottom } = useRef({
     paddingBottom: insets.bottom - 10,
   });
+  const [fullRenderReady, setFullRenderReady] = useState(false);
+
+  useEffect(() => {
+    InteractionManager.runAfterInteractions(() => {
+      setFullRenderReady(true);
+    });
+  }, []);
 
   const onPressComment = useCallback(() => {
     if (commentsRef.current?.expand) {
@@ -378,23 +385,40 @@ const ActivityFullScreen = observer((props: PropsType) => {
             onPressComment={onPressComment}
           />
         </View>
-        <InteractionsActionSheet entity={entity} ref={upVotesInteractionsRef} />
-        <InteractionsActionSheet
-          entity={entity}
-          ref={downVotesInteractionsRef}
-        />
-        <InteractionsActionSheet entity={entity} ref={remindsInteractionsRef} />
-        <InteractionsActionSheet entity={entity} ref={quotesInteractionsRef} />
-        <CommentBottomSheet
-          ref={commentsRef}
-          hideContent={Boolean(!store.displayComment)}
-          autoOpen={
-            Boolean(route.params?.focusedUrn) ||
-            (Boolean(route.params?.scrollToBottom) &&
-              Boolean(commentsRef.current))
-          }
-          commentsStore={store.comments}
-        />
+
+        {fullRenderReady && (
+          <>
+            <InteractionsActionSheet
+              entity={entity}
+              ref={upVotesInteractionsRef}
+            />
+            <InteractionsActionSheet
+              entity={entity}
+              ref={downVotesInteractionsRef}
+            />
+            <InteractionsActionSheet
+              entity={entity}
+              ref={remindsInteractionsRef}
+            />
+            <InteractionsActionSheet
+              entity={entity}
+              ref={quotesInteractionsRef}
+            />
+          </>
+        )}
+
+        {fullRenderReady && (
+          <CommentBottomSheet
+            ref={commentsRef}
+            hideContent={Boolean(!store.displayComment)}
+            autoOpen={
+              Boolean(route.params?.focusedUrn) ||
+              (Boolean(route.params?.scrollToBottom) &&
+                Boolean(commentsRef.current))
+            }
+            commentsStore={store.comments}
+          />
+        )}
       </View>
     </GroupContext.Provider>
   );

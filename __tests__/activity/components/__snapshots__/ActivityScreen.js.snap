@@ -1960,8 +1960,13 @@ exports[`Activity screen component renders correctly  1`] = `
           "calls": Array [
             Array [],
             Array [],
+            Array [],
           ],
           "results": Array [
+            Object {
+              "type": "return",
+              "value": undefined,
+            },
             Object {
               "type": "return",
               "value": undefined,
@@ -2068,8 +2073,13 @@ exports[`Activity screen component renders correctly  1`] = `
           "calls": Array [
             Array [],
             Array [],
+            Array [],
           ],
           "results": Array [
+            Object {
+              "type": "return",
+              "value": undefined,
+            },
             Object {
               "type": "return",
               "value": undefined,
@@ -2176,8 +2186,13 @@ exports[`Activity screen component renders correctly  1`] = `
           "calls": Array [
             Array [],
             Array [],
+            Array [],
           ],
           "results": Array [
+            Object {
+              "type": "return",
+              "value": undefined,
+            },
             Object {
               "type": "return",
               "value": undefined,
@@ -2284,8 +2299,13 @@ exports[`Activity screen component renders correctly  1`] = `
           "calls": Array [
             Array [],
             Array [],
+            Array [],
           ],
           "results": Array [
+            Object {
+              "type": "return",
+              "value": undefined,
+            },
             Object {
               "type": "return",
               "value": undefined,
@@ -2407,8 +2427,13 @@ exports[`Activity screen component renders correctly  1`] = `
             "calls": Array [
               Array [],
               Array [],
+              Array [],
             ],
             "results": Array [
+              Object {
+                "type": "return",
+                "value": undefined,
+              },
               Object {
                 "type": "return",
                 "value": undefined,
