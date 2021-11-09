@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import Filter from './Filter';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 import i18n from '../../../../common/services/i18n.service';

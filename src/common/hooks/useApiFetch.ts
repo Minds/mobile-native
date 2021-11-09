@@ -7,12 +7,72 @@ import { storages } from '../services/storage/storages.service';
 const getCacheKey = (url: string, params: any) =>
   `useFetch:${url}${params ? `?${JSON.stringify(params)}` : ''}`;
 
+export interface PostStore<T> extends FetchStore<T> {
+  post: (object?) => Promise<any>;
+}
+
+type FetchResponseType = {
+  status: string;
+  'load-next': string | number;
+};
+
+type ApiFetchType = FetchResponseType;
+
+const defaultMap = data => data;
+
+const defaultUpdateState = (newData, _) => newData;
+
+/**
+ * a function that merges the new state with the old state
+ */
+const mergeState = (dataField: string, map = defaultMap) => (
+  newData: ApiFetchType,
+  oldData: ApiFetchType,
+) =>
+  ({
+    ...newData,
+    [dataField]: [
+      ...(oldData ? oldData[dataField] : []),
+      ...map(newData && newData[dataField] ? newData[dataField] : []),
+    ],
+  } as ApiFetchType);
+
+/**
+ * a function that replaces the state with the new state
+ */
+const replaceState = (dataField: string, map = defaultMap) => (
+  newData: any,
+) => ({
+  ...newData,
+  [dataField]: [
+    ...map(newData && newData[dataField] ? newData[dataField] : []),
+  ],
+});
+
+type MethodType = 'get' | 'post' | 'put';
+
 export interface FetchOptions {
   updateState?: (newData: any, oldData: any) => any;
   params?: object;
   persist?: boolean;
   retry?: number;
   retryDelay?: number;
+  /**
+   * skips auto-firing when params change
+   */
+  skip?: boolean;
+  /**
+   * the data field of the response that has all the items
+   */
+  dataField?: string;
+  /**
+   * how the data should be updated. Defaults to always returning new data
+   */
+  updateStrategy?: 'merge' | 'replace';
+  /**
+   * a function that maps the data field
+   */
+  map?: (data: any) => any;
 }
 
 export interface FetchStore<T> {
@@ -26,19 +86,19 @@ export interface FetchStore<T> {
   setError: (v: any) => void;
   fetch: (data?: any, retry?: any, options?: FetchOptions) => Promise<any>;
   hydrate: (params: any) => any;
+  /**
+   * fetches and replaces the data with the given options or the options of the hook
+   */
+  refresh: (data?: any, retry?: any, options?: FetchOptions) => Promise<any>;
+  /**
+   * whether it's being refreshed
+   */
+  refreshing?: boolean;
 }
-
-export interface PostStore<T> extends FetchStore<T> {
-  post: (object?) => Promise<any>;
-}
-
-const updateState = (newData, _) => newData;
-
-type MethodType = 'get' | 'post' | 'put';
 
 const createStore = ({
   url,
-  options,
+  options: hookOptions,
   method = 'get',
 }: {
   url: string;
@@ -48,6 +108,7 @@ const createStore = ({
   retryTimer: <any>null,
   retryCount: 0,
   loading: false,
+  refreshing: false,
   result: <any>null,
   error: null,
   clearRetryTimer(clearCount: boolean) {
@@ -80,16 +141,36 @@ const createStore = ({
   setLoading(v: boolean) {
     this.loading = v;
   },
+  setRefreshing(v: boolean) {
+    this.refreshing = v;
+  },
   setError(e) {
     this.error = e;
   },
-  async fetch(data?: object, retry = false, opts: any = {}) {
+  async fetch(data?: object, retry = false, opts: FetchOptions = {}) {
     if (!data) {
-      data = options?.params || {};
+      data = hookOptions?.params || {};
     }
+    let { dataField, updateStrategy, map, updateState } = Object.assign(
+      {
+        updateState: defaultUpdateState,
+      },
+      hookOptions,
+      opts,
+    );
     this.clearRetryTimer(!retry);
-    const updateStateMethod =
-      opts?.updateState || options?.updateState || updateState;
+
+    if (updateStrategy && dataField) {
+      switch (updateStrategy) {
+        case 'merge':
+          updateState = mergeState(dataField, map);
+          break;
+        case 'replace':
+          updateState = replaceState(dataField, map);
+          break;
+      }
+    }
+
     this.setLoading(true);
     this.setError(null);
     try {
@@ -98,17 +179,19 @@ const createStore = ({
         ? apiService.get(url, data, this)
         : apiService.post(url, data));
 
-      const state = updateStateMethod(result, this.result);
+      const state = updateState(result, this.result);
       this.setResult(state);
       this.persist(data);
     } catch (err) {
       this.setError(err);
-      if (options?.retry !== undefined && !isAbort(err)) {
-        if (options.retry > 0 ? this.retryCount < options?.retry : true) {
+      if (hookOptions?.retry !== undefined && !isAbort(err)) {
+        if (
+          hookOptions.retry > 0 ? this.retryCount < hookOptions?.retry : true
+        ) {
           this.retryCount++;
           this.retryTimer = setTimeout(() => {
             this.fetch(data, true);
-          }, options?.retryDelay || 3000);
+          }, hookOptions?.retryDelay || 3000);
         }
       }
     } finally {
@@ -116,6 +199,17 @@ const createStore = ({
     }
 
     return this.result;
+  },
+  /**
+   * the same as fetch with a 'replace' updateStrategy and handling of the state of refreshing
+   */
+  async refresh(data?: object, retry = false, opts: any = {}) {
+    this.setRefreshing(true);
+    await this.fetch(data, retry, {
+      ...opts,
+      updateStrategy: 'replace',
+    });
+    this.setRefreshing(false);
   },
 });
 
@@ -143,13 +237,13 @@ export default function useApiFetch<T>(
     return () => store.clearRetryTimer(true);
   }, [store]);
 
-  useEffect(
-    () =>
+  useEffect(() => {
+    if (!options.skip) {
       reaction(() => ({ ...observableParams }), store.fetch, {
         fireImmediately: true,
-      }),
-    [observableParams, store, url],
-  );
+      });
+    }
+  }, [observableParams, store, url, options.skip]);
 
   return store;
 }

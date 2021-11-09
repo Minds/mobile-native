@@ -137,11 +137,7 @@ class AuthService {
       password,
     } as loginParms;
 
-    const data = await api.post<LoginResponse>(
-      'api/v3/oauth/token',
-      params,
-      headers,
-    );
+    await api.post<LoginResponse>('api/v3/oauth/token', params, headers);
   }
 
   async loginWithIndex(sessionIndex: number) {

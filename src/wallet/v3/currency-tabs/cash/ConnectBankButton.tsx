@@ -1,5 +1,4 @@
 import React from 'react';
-import { Text } from 'react-native';
 import Button from '../../../../common/components/Button';
 import i18n from '../../../../common/services/i18n.service';
 import ThemedStyles from '../../../../styles/ThemedStyles';

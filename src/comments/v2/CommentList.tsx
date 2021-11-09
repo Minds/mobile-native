@@ -33,7 +33,6 @@ type PropsType = {
  * @param props
  */
 const CommentList: React.FC<PropsType> = (props: PropsType) => {
-  const theme = ThemedStyles.style;
   const ref = React.useRef<any>(null);
   const provider = React.useContext(CommentInputContext);
   const navigation = useNavigation<any>();

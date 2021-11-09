@@ -52,7 +52,7 @@ export default class EmailNotificationsSettingModel {
           [this._topic]: this.value,
         },
       };
-      const response = await apiService.post('api/v2/settings/emails', {
+      await apiService.post('api/v2/settings/emails', {
         notifications,
       });
     } catch (err) {

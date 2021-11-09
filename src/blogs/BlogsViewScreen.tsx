@@ -252,8 +252,7 @@ export default class BlogsViewScreen extends Component<PropsType> {
       return <CenteredLoading />;
     } else {
       // force observe on description
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const desc = this.blogsView.blog.description;
+      this.blogsView.blog.description;
     }
 
     // check async update of permissions

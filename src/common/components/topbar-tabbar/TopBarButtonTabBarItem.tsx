@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
-import { Icon, B4, Row } from '~ui';
+import { Icon, B4 } from '~ui';
 import { ICON_TABS_HEIGHT } from '~styles/Tokens';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import Button from '../Button';

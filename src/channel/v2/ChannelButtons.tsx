@@ -89,13 +89,6 @@ const ChannelButtons = withErrorBoundary(
       });
     }, [navigation, props.store.channel]);
 
-    /**
-     * called when edit button is pressed
-     **/
-    const onEditPress = useCallback(
-      () => navigation.push('ChannelEdit', { store: props.store }),
-      [],
-    );
     if (!props.store.channel) return null;
 
     const shouldShow = (button: ButtonsType) =>

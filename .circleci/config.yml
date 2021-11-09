@@ -34,7 +34,9 @@ jobs:
           paths: .
           root: .
   fastlane_release:
-    executor: rn/macos
+    executor:
+      name: rn/macos
+      xcode_version: '12.5.0'
     steps:
       - attach_workspace:
           at: .
@@ -53,7 +55,9 @@ jobs:
           command: fastlane upload_testflight
           name: Upload testflight
   e2e:
-    executor: rn/macos
+    executor:
+      name: rn/macos
+      xcode_version: '12.5.0'
     resource_class: xlarge
     steps:
       - attach_workspace:
