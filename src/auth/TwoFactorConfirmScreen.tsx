@@ -43,11 +43,6 @@ const TwoFactorConfirmScreen = observer(({ route, navigation }: PropsType) => {
     }, []),
   );
 
-  // Fix unhandled dismissal
-  useLayoutEffect(() => {
-    navigation.setOptions({ gestureEnabled: false });
-  }, [navigation]);
-
   // Local store
   const localStore = useLocalStore(() => ({
     code: oldCode,
@@ -67,8 +62,6 @@ const TwoFactorConfirmScreen = observer(({ route, navigation }: PropsType) => {
       navigation.goBack();
     },
     resend: () => {
-      console.log('RESEND?');
-
       onConfirm('');
     },
     submit() {
