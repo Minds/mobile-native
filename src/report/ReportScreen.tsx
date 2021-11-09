@@ -241,7 +241,13 @@ export default class ReportScreen extends Component<PropsType, StateType> {
       `${i18n.t('reports.reportAs')}\n${this.state.reason?.label}\n` +
         (this.state.subreason ? this.state.subreason.label : ''),
       [
-        { text: i18n.t('no') },
+        {
+          text: i18n.t('no'),
+          onPress: () =>
+            this.state.subreason
+              ? this.setState({ subreason: null })
+              : this.clearReason(),
+        },
         { text: i18n.t('yes'), onPress: () => this.submit() },
       ],
       { cancelable: false },
@@ -279,7 +285,7 @@ export default class ReportScreen extends Component<PropsType, StateType> {
     const reasonItems = reasons?.map((reason, i) => {
       return (
         <TouchableOpacity
-          style={[styles.reasonItem, ThemedStyles.style.bgTertiaryBackground]}
+          style={styles.reasonItem}
           key={i}
           onPress={() =>
             this.state.reason
@@ -319,11 +325,11 @@ export default class ReportScreen extends Component<PropsType, StateType> {
     if (!this.state.reasons) return <CenteredLoading />;
 
     const theme = ThemedStyles.style;
-
+    const showTitle = this.state.reason && this.state.reason.hasMore;
     return (
       <ScrollView
         style={[theme.flexContainer, ThemedStyles.style.bgSecondaryBackground]}>
-        {this.state.reason && (
+        {showTitle && (
           <MText
             style={[
               theme.fontL,
@@ -332,7 +338,7 @@ export default class ReportScreen extends Component<PropsType, StateType> {
               theme.paddingHorizontal2x,
               theme.paddingVertical3x,
             ]}>
-            {this.state.reason.label}
+            {this.state.reason?.label}
           </MText>
         )}
         <View style={theme.flexContainer}>
