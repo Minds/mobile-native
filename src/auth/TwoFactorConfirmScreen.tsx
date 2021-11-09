@@ -1,4 +1,4 @@
-import React, { useCallback, useLayoutEffect } from 'react';
+import React, { useCallback } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
 import { RouteProp } from '@react-navigation/core';
 import { KeyboardAvoidingView, Platform, View } from 'react-native';

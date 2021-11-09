@@ -28,13 +28,13 @@ const Header = () => {
   );
 
   return (
-    <Column align="center" flex horizontal="XS">
+    <Column align="centerBoth" flex horizontal="XS">
       <PressableScale onPress={nav}>
         <Column
           horizontal="XXS"
           vertical="XXS"
           containerStyle={styles.addCircle}
-          align="center">
+          align="centerBoth">
           <Icon name="plus" />
         </Column>
       </PressableScale>

@@ -22,7 +22,7 @@ export default observer(function PortraitContentBarItem(props: PropsType) {
   }, [props.index]);
 
   return (
-    <Column align="center" horizontal="XS">
+    <Column align="centerBoth" horizontal="XS">
       <Avatar
         source={props.item.user.getAvatarSource()}
         onPress={onPress}

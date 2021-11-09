@@ -28,7 +28,7 @@ export type RowPropType = {
 };
 
 export type ColumnPropType = {
-  align?: 'center' | 'centerStart' | 'centerEnd';
+  align?: 'centerBoth' | 'centerStart' | 'centerEnd';
   background?: 'primary' | 'secondary' | 'tertiary';
   flex?: boolean;
   stretch?: boolean;
