@@ -1,13 +1,7 @@
 import { autorun } from 'mobx';
 import { observer, useLocalStore } from 'mobx-react';
 import React, { FC, useEffect } from 'react';
-import {
-  Image,
-  Platform,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Image, Platform, TouchableOpacity, View } from 'react-native';
 import FastImage, { ResizeMode, Source } from 'react-native-fast-image';
 import ProgressCircle from 'react-native-progress/CircleSnail';
 import Animated from 'react-native-reanimated';
