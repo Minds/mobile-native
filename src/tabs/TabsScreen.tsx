@@ -29,8 +29,10 @@ import TopShadow from '../common/components/TopShadow';
 import ChatTabIcon from '../chat/ChatTabIcon';
 import PressableScale from '~/common/components/PressableScale';
 import TabChatPreModal, { ChatModalHandle } from './TabChatPreModal';
+import preventDoubleTap from '~/common/components/PreventDoubleTap';
 // import navigationService from '../navigation/NavigationService';
 
+const DoubleTapSafeTouchable = preventDoubleTap(TouchableOpacity);
 const isIOS = Platform.OS === 'ios';
 
 export type TabParamList = {
@@ -183,7 +185,7 @@ const Tabs = observer(function ({ navigation }) {
           options={{
             tabBarTestID: 'CaptureTabButton',
             tabBarButton: props => (
-              <TouchableOpacity
+              <DoubleTapSafeTouchable
                 {...props}
                 onPress={navToCapture}
                 onLongPress={navToVideoCapture}
