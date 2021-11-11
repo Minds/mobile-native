@@ -47,7 +47,9 @@ export default observer(function ComposeScreen(props) {
   const localStore = useLocalStore(() => ({
     height: 50, // input height
     onSizeChange(e) {
-      localStore.height = e.nativeEvent.contentSize.height * 1.15;
+      // adding 30 to prevent textinput flickering after a new line.
+      // but we should have a logic for this number, maybe the height of the header?
+      localStore.height = e.nativeEvent.contentSize.height + 30;
     },
   }));
   const theme = ThemedStyles.style;
@@ -66,7 +68,7 @@ export default observer(function ComposeScreen(props) {
         ? fontSize
         : [fontSize, { height: localStore.height }],
     ],
-    [fontSize],
+    [fontSize, localStore.height],
   );
   const placeholder = store.attachment.hasAttachment
     ? i18n.t('description')
