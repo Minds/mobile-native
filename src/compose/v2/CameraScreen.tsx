@@ -248,6 +248,7 @@ export default observer(function (props) {
             onForceVideo={setModeVideo}
             onPressGallery={handleGallerySelection}
             portraitMode={portraitMode}
+            disabled={Boolean(mediaToConfirm)}
           />
 
           {Boolean(mediaToConfirm) && (

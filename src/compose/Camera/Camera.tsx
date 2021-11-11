@@ -49,6 +49,10 @@ type PropsType = {
   onSetVideoPress?: () => void;
   onPressGallery: () => void;
   portraitMode?: boolean;
+  /**
+   * whether the camera should be disabled or not
+   */
+  disabled?: boolean;
 };
 
 const PRESENTATION_ORDER = {
@@ -183,7 +187,7 @@ export default observer(function (props: PropsType) {
                   device.supportsLowLightBoost && store.lowLightBoost
                 }
                 hdr={store.hdr}
-                isActive={store.show}
+                isActive={props.disabled ? false : store.show}
                 onInitialized={store.isReady}
                 onError={e => console.log(e)}
                 enableZoomGesture={false}
