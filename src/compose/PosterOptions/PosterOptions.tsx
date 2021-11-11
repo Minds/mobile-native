@@ -48,13 +48,10 @@ const Stack = createStackNavigator();
 const Item = props => {
   return (
     <MPressable
-      style={[styles.row, ThemedStyles.style.bcolorPrimaryBorder]}
+      style={styles.row}
       onPress={props.onPress}
       testID={props.testID}>
-      <MText
-        style={[styles.optionTitle, ThemedStyles.style.colorSecondaryText]}>
-        {props.title}
-      </MText>
+      <MText style={styles.optionTitle}>{props.title}</MText>
       <MText style={styles.optionDescription} numberOfLines={1}>
         {props.description}
       </MText>
@@ -135,12 +132,7 @@ const PosterOptions = props => {
     : null;
 
   return (
-    <View
-      style={[
-        theme.flexContainer,
-        theme.bgPrimaryBackground,
-        theme.fullHeight,
-      ]}>
+    <View style={styles.container}>
       <TopBar
         leftText={i18n.t('capture.postOptions')}
         rightText={i18n.t('close')}
@@ -269,7 +261,7 @@ export default observer(
   }),
 );
 
-const styles = StyleSheet.create({
+const styles = ThemedStyles.create({
   headerContainer: {
     overflow: 'hidden',
     paddingTop: 20,
@@ -294,19 +286,26 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 20,
   },
-  optionTitle: {
-    width: '40%',
-    fontSize: 16,
-  },
+  optionTitle: [
+    'colorSecondaryText',
+    {
+      width: '40%',
+      fontSize: 16,
+    },
+  ],
   optionDescription: {
     flex: 1,
     fontSize: 16,
   },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-    height: 55,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
+  row: [
+    'bcolorPrimaryBorder',
+    {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: 20,
+      height: 55,
+      borderBottomWidth: StyleSheet.hairlineWidth,
+    },
+  ],
+  container: ['flexContainer', 'bgPrimaryBackground', 'fullHeight'],
 });

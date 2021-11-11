@@ -25,11 +25,7 @@ export default observer(function TitleInput(props) {
 
   const theme = ThemedStyles.style;
   return (
-    <View
-      style={useMemoStyle(
-        ['fullWidth', open ? {} : { alignItems: 'flex-end' }],
-        [],
-      )}>
+    <View style={open ? container : containerClosed}>
       <View
         style={useMemoStyle(
           [
@@ -47,9 +43,7 @@ export default observer(function TitleInput(props) {
           style={theme.colorTertiaryText}
           onPress={onPress}
         />
-        <MText
-          style={useStyle('fontL', 'colorTertiaryText', 'paddingHorizontal2x')}
-          onPress={onPress}>
+        <MText style={titleStyle} onPress={onPress}>
           Title
         </MText>
       </View>
@@ -72,3 +66,12 @@ export default observer(function TitleInput(props) {
 });
 
 const textInputStyle = ThemedStyles.combine('colorPrimaryText', 'fontXXL');
+const container = ThemedStyles.combine('fullWidth');
+const containerClosed = ThemedStyles.combine('fullWidth', {
+  alignItems: 'flex-end',
+});
+const titleStyle = ThemedStyles.combine(
+  'fontL',
+  'colorTertiaryText',
+  'paddingHorizontal2x',
+);
