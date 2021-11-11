@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 
-import ThemedStyles, { useMemoStyle, useStyle } from '../styles/ThemedStyles';
+import ThemedStyles, { useMemoStyle } from '../styles/ThemedStyles';
 import i18nService from '../common/services/i18n.service';
 import { observer } from 'mobx-react';
 import TextInput from '../common/components/TextInput';

@@ -73,7 +73,6 @@ export function useNavCallback(screen, store, navigation) {
 const snapPoints = ['90%'];
 
 const PosterOptions = props => {
-  const theme = ThemedStyles.style;
   const store = props.route.params.store;
   // dereference observables to listen to his changes
   const nsfw = store.nsfw.slice();
