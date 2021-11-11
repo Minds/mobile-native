@@ -16,9 +16,7 @@ class AttachmentService {
    * @param {object} media
    * @param {function} onProgress
    */
-  async attachMedia(rawMedia, extra, onProgress = null) {
-    const media = await this.processMedia(rawMedia);
-
+  attachMedia(media, extra, onProgress = null) {
     const file = {
       uri: media.uri,
       path: media.path || null,
