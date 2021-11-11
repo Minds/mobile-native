@@ -422,7 +422,18 @@ export default function (props) {
       this.attachment.attachMedia(this.mediaToConfirm, this.extra);
       this.mode = 'text';
     },
+    /**
+     * is the composer input valid or not. Is it ready to be submitted?
+     */
+    get isValid() {
+      const isEmpty =
+        !this.attachment.hasAttachment &&
+        !this.text &&
+        (!this.embed.meta || !this.embed.meta.url) &&
+        !this.isRemind;
 
+      return !isEmpty;
+    },
     /**
      * Submit post
      */
@@ -467,12 +478,7 @@ export default function (props) {
         }
 
         // Something to post?
-        if (
-          !this.attachment.hasAttachment &&
-          !this.text &&
-          (!this.embed.meta || !this.embed.meta.url) &&
-          !this.isRemind
-        ) {
+        if (!this.isValid) {
           showError(i18n.t('capture.nothingToPost'));
           return false;
         }

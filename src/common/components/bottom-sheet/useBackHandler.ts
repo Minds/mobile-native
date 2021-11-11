@@ -37,11 +37,13 @@ export default function useBackHandler(onBack, props) {
       // bottom sheet opened
       if (toIndex >= 0) {
         setOpened(true);
+        props.onVisibilityChange?.(true);
         BackHandler.addEventListener('hardwareBackPress', backHandler);
       }
       // bottom sheet cosed
       if (toIndex < 0) {
         setOpened(false);
+        props.onVisibilityChange?.(false);
         BackHandler.removeEventListener('hardwareBackPress', backHandler);
       }
 

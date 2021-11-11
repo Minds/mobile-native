@@ -4,12 +4,12 @@ import { observer, useLocalStore } from 'mobx-react';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import moment from 'moment-timezone';
 
-import ThemedStyles from '../styles/ThemedStyles';
-import TopBar from './TopBar';
-import i18n from '../common/services/i18n.service';
-import NavigationService from '../navigation/NavigationService';
+import ThemedStyles from '../../styles/ThemedStyles';
+import TopBar from '../TopBar';
+import i18n from '../../common/services/i18n.service';
+import NavigationService from '../../navigation/NavigationService';
 import DateTimePicker from 'react-native-modal-datetime-picker';
-import MText from '../common/components/MText';
+import MText from '../../common/components/MText';
 
 /**
  * NSFW selector
@@ -48,6 +48,8 @@ export default observer(function (props) {
         rightText={i18n.t('done')}
         onPressRight={NavigationService.goBack}
         onPressBack={NavigationService.goBack}
+        backIconName="chevron-left"
+        backIconSize="large"
         store={store}
       />
       <MText

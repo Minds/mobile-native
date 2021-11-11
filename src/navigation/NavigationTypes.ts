@@ -41,6 +41,16 @@ export type InternalStackParamList = {
 };
 
 export type RootStackParamList = {
+  Capture: {
+    portrait?: boolean;
+    noText?: boolean;
+    isRemind?: boolean;
+    entity?: any;
+    text?: string;
+    media?: any;
+    start?: boolean;
+    mode?: 'photo' | 'video' | 'text';
+  };
   MultiUserScreen: {};
   ChooseBrowserModal: {
     onSelected?: () => void;
@@ -151,16 +161,7 @@ export type AppStackParamList = {
   BoostPostScreen: { entity: ActivityModel };
   ActivityFullScreenNav: {};
   Newsfeed: {};
-  Capture: {
-    portrait?: boolean;
-    noText?: boolean;
-    isRemind?: boolean;
-    entity?: any;
-    text?: string;
-    media?: any;
-    start?: boolean;
-    mode?: 'photo' | 'video' | 'text';
-  };
+  Compose: {};
   Main: {};
   Account: {};
   Network: {};

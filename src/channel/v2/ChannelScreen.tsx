@@ -398,7 +398,7 @@ const ChannelScreen = observer((props: PropsType) => {
       </MText>
 
       <Button
-        onPress={() => props.navigation.navigate('Capture')}
+        onPress={() => props.navigation.navigate('Compose')}
         text={i18n.t('channel.createFirstPostAction')}
         large
         action

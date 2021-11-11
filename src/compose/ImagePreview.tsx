@@ -1,8 +1,8 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import FastImage from 'react-native-fast-image';
-import { Platform, Dimensions } from 'react-native';
-import SmartImage from '../../src/common/components/SmartImage';
+import { Dimensions } from 'react-native';
+import SmartImage from '../common/components/SmartImage';
 import ThemedStyles from '../styles/ThemedStyles';
 import ImageZoom from 'react-native-image-pan-zoom';
 import { useDimensions } from '@react-native-community/hooks';
@@ -12,12 +12,14 @@ import { useDimensions } from '@react-native-community/hooks';
  * @param {Object} props
  */
 export default observer(function (props) {
-  const { width } = useDimensions().window;
+  let { width } = useDimensions().window;
+  width = width - 64; // needs to have some kind of logic. why 64
+
   // calculate the aspect ratio
   let aspectRatio =
     props.image.pictureOrientation > 2 || !props.image.pictureOrientation
-      ? props.image.height / props.image.width
-      : props.image.width / props.image.height;
+      ? props.image.width / props.image.height
+      : props.image.height / props.image.width;
 
   if (props.maxRatio && props.maxRatio < aspectRatio) {
     aspectRatio = props.maxRatio;
@@ -29,27 +31,37 @@ export default observer(function (props) {
 
   let imageHeight = Math.round(width / aspectRatio);
 
-  const imageStyle = {
-    height: imageHeight,
-    width: '100%',
-  };
+  const imageStyle = props.fullscreen
+    ? {
+        height: '100%',
+        width: '100%',
+      }
+    : {
+        height: imageHeight,
+        width: '100%',
+        borderRadius: 10,
+      };
 
   // workaround: we use sourceURL for the preview on iOS because the image is not displayed with the uri
   const uri = props.image.sourceURL || props.image.uri || props.image.path;
 
-  const source = React.useMemo(() => ({ uri }), [uri]);
-
   if (!props.zoom) {
     return (
-      <SmartImage
+      <FastImage
         key={props.image.key || 'imagePreview'}
         source={{ uri: uri + `?${props.image.key}` }} // we need to change the uri in order to force the reload of the image
         style={[
           imageStyle,
           props.style,
-          ThemedStyles.style.bgTertiaryBackground,
+          props.fullscreen
+            ? ThemedStyles.style.bgBlack
+            : ThemedStyles.style.bgTertiaryBackground,
         ]}
-        resizeMode={FastImage.resizeMode.contain}
+        resizeMode={
+          props.fullscreen
+            ? FastImage.resizeMode.cover
+            : FastImage.resizeMode.contain
+        }
       />
     );
   } else {

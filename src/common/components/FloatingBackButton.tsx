@@ -6,8 +6,9 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 type PropsType = {
   onPress: () => void;
   style?: any;
-  size?: number;
+  size?: number | string;
   light?: boolean;
+  icon?: string;
   shadow?: boolean;
 };
 
@@ -17,7 +18,7 @@ const FloatingBackButton = (props: PropsType) => {
   return (
     <IconButton
       size={props.size || 'huge'}
-      name="chevron-left"
+      name={props.icon || 'chevron-left'}
       style={[iconStyle, styles.backIcon, props.style]}
       onPress={props.onPress}
       light={props.light}

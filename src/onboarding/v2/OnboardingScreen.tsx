@@ -135,7 +135,7 @@ export default observer(function OnboardingScreen() {
       title: i18n.t('createAPost'),
       screen: '',
       onPress: () =>
-        navigation.navigate('Capture', {
+        navigation.navigate('Compose', {
           mode: 'text',
         }),
     },

@@ -47,13 +47,6 @@ class NewsfeedScreen extends Component<PropsType> {
     ),
   };
 
-  /**
-   * Nav to activity full screen
-   */
-  navToCapture = () => {
-    this.props.navigation.navigate('Capture', {});
-  };
-
   refreshNewsfeed = e => {
     if (this.props.navigation.isFocused()) {
       this.props.newsfeed.scrollToTop();

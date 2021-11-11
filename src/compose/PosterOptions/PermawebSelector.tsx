@@ -3,11 +3,11 @@ import { View, StyleSheet } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 import { observer } from 'mobx-react';
 
-import ThemedStyles from '../styles/ThemedStyles';
-import TopBar from './TopBar';
-import i18n from '../common/services/i18n.service';
-import NavigationService from '../navigation/NavigationService';
-import MText from '../common/components/MText';
+import ThemedStyles from '../../styles/ThemedStyles';
+import TopBar from '../TopBar';
+import i18n from '../../common/services/i18n.service';
+import NavigationService from '../../navigation/NavigationService';
+import MText from '../../common/components/MText';
 
 /**
  * Permaweb selector
@@ -23,6 +23,8 @@ export default observer(function (props) {
         rightText={i18n.t('done')}
         onPressRight={NavigationService.goBack}
         onPressBack={NavigationService.goBack}
+        backIconName="chevron-left"
+        backIconSize="large"
         store={store}
       />
       <MText style={[styles.permawebTerms]}>{i18n.t('permaweb.terms')}</MText>
@@ -38,6 +40,7 @@ export default observer(function (props) {
           checked={store.postToPermaweb}
           onPress={() => store.togglePostToPermaweb()}
           textStyle={theme.colorPrimaryText}
+          // @ts-ignore
           testID="checkbox"
         />
       </View>
