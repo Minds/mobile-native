@@ -99,6 +99,11 @@ const ICON_MAP: {
     ratio: 1.04,
     top: -1,
   },
+  boost: {
+    font: 'MaterialCommunityIcons',
+    name: 'trending-up',
+    ratio: 1.04,
+  },
   share: {
     font: 'MaterialIcons',
     name: 'ios-share',
