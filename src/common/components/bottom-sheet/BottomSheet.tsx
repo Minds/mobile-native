@@ -12,6 +12,7 @@ const DEFAULT_SNAP_POINTS = [Math.floor(windowHeight * 0.8)];
 
 interface PropsType extends Omit<BottomSheetProps, 'snapPoints'> {
   snapPoints?: Array<number | string>;
+  onVisibilityChange?: (visible: boolean) => void;
 }
 
 /**

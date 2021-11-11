@@ -223,12 +223,22 @@ export default observer(
       }),
       [],
     );
+    const handleVisibilityChange = useCallback(
+      visible => {
+        if (!visible) {
+          navigation.navigate('PosterOptions', { store: props.store });
+        }
+      },
+      [navigation, props.store],
+    );
 
     return (
       <BottomSheet
         // @ts-ignore
         ref={sheetRef}
         handleStyle={ThemedStyles.style.bgPrimaryBackground}
+        onVisibilityChange={handleVisibilityChange}
+        enableContentPanningGesture
         snapPoints={snapPoints}>
         <Stack.Navigator screenOptions={screenOptions}>
           <Stack.Screen
