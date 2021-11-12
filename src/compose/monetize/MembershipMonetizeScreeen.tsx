@@ -85,37 +85,39 @@ const MembershipMonetizeScreeen = observer(
 
     const title = [styles.title, theme.colorPrimaryText, theme.paddingTop3x];
 
-    if (!localStore.loaded) {
-      return <CenteredLoading />;
-    }
-
     return (
       <Wrapper
         store={store}
         doneText={i18n.t('save')}
         onPressRight={save}
         hideDone={!localStore.selectedTier.urn}>
-        <View style={[theme.paddingTop3x, theme.paddingHorizontal3x]}>
-          <MText style={title}>{i18n.t('monetize.subScreensTitle')}</MText>
-          <MText style={descriptionTextStyle}>
-            {i18n.t('monetize.membershipMonetize.description')}
-          </MText>
-          {localStore.supportTiers.length === 0 && (
-            <>
-              <MText style={title}>
-                {i18n.t('monetize.membershipMonetize.noTiers')}
-              </MText>
+        {localStore.loaded ? (
+          <>
+            <View style={[theme.paddingTop3x, theme.paddingHorizontal3x]}>
+              <MText style={title}>{i18n.t('monetize.subScreensTitle')}</MText>
               <MText style={descriptionTextStyle}>
-                {i18n.t('monetize.membershipMonetize.tiersDescription')}
+                {i18n.t('monetize.membershipMonetize.description')}
               </MText>
-            </>
-          )}
-        </View>
-        <TierManagementScreen
-          route={route}
-          navigation={navigation}
-          tierStore={localStore}
-        />
+              {localStore.supportTiers.length === 0 && (
+                <>
+                  <MText style={title}>
+                    {i18n.t('monetize.membershipMonetize.noTiers')}
+                  </MText>
+                  <MText style={descriptionTextStyle}>
+                    {i18n.t('monetize.membershipMonetize.tiersDescription')}
+                  </MText>
+                </>
+              )}
+            </View>
+            <TierManagementScreen
+              route={route}
+              navigation={navigation}
+              tierStore={localStore}
+            />
+          </>
+        ) : (
+          <CenteredLoading />
+        )}
       </Wrapper>
     );
   },

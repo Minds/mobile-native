@@ -1,4 +1,3 @@
-//@ts-nocheck
 import React, { Component } from 'react';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -22,13 +21,36 @@ import CenteredLoading from '../common/components/CenteredLoading';
 import ThemedStyles from '../styles/ThemedStyles';
 import TextInput from '../common/components/TextInput';
 import MText from '../common/components/MText';
+import { showNotification } from '../../AppMessages';
 
-export default class ReportScreen extends Component {
-  state = {
+type PropsType = {
+  route: any;
+  navigation: any;
+};
+
+type Reason = {
+  label: string;
+  value: number;
+  hasMore: boolean;
+  reasons?: Reason[];
+};
+
+type StateType = {
+  reason: Reason | null;
+  reasons: Array<Reason> | null;
+  subreason: Reason | null;
+  note: string;
+  entity?: any;
+  requireNote: boolean;
+};
+
+export default class ReportScreen extends Component<PropsType, StateType> {
+  state: StateType = {
     note: '',
     reason: null,
     subreason: null,
     reasons: null,
+    requireNote: false,
   };
 
   /**
@@ -53,20 +75,6 @@ export default class ReportScreen extends Component {
           />
         );
       },
-      headerRight: () => (
-        <View>
-          {this.props.route.params.requireNote && (
-            <Button
-              title={i18n.t('settings.submit')}
-              onPress={
-                this.props.route.params.confirmAndSubmit
-                  ? this.props.route.params.confirmAndSubmit
-                  : () => null
-              }
-            />
-          )}
-        </View>
-      ),
       transitionConfig: {
         isModal: true,
       },
@@ -109,6 +117,10 @@ export default class ReportScreen extends Component {
    * Submit the report
    */
   async submit() {
+    if (!this.state.reason) {
+      return;
+    }
+
     try {
       const subreason = this.state.subreason
         ? this.state.subreason.value
@@ -144,8 +156,18 @@ export default class ReportScreen extends Component {
    * Clear reason
    */
   clearReason = () => {
-    this.setState({ reason: null, requireNote: false, subreason: null });
-    this.props.navigation.setParams({ goBack: null, requireNote: false });
+    this.setState({
+      reason: null,
+      requireNote: false,
+      subreason: null,
+      note: '',
+    });
+    this.props.navigation.setParams({
+      goBack: null,
+      requireNote: false,
+    });
+
+    this.props.navigation.setOptions({ headerRight: null });
   };
 
   /**
@@ -167,14 +189,28 @@ export default class ReportScreen extends Component {
       reason = this.state.reason;
     }
 
-    if (reason.value == 11 && !this.state.note) {
+    if (reason.value === 11 && !this.state.note) {
       this.setState({
         requireNote: true,
         reason: reason,
       });
+
       this.props.navigation.setParams({
-        requireNote: true,
         goBack: this.clearReason,
+      });
+      this.props.navigation.setOptions({
+        headerRight: () => (
+          <View>
+            <Button
+              title={i18n.t('settings.submit')}
+              onPress={
+                this.props.route.params.confirmAndSubmit
+                  ? this.props.route.params.confirmAndSubmit
+                  : () => null
+              }
+            />
+          </View>
+        ),
       });
       return;
     }
@@ -195,12 +231,23 @@ export default class ReportScreen extends Component {
    * Confirm and submit
    */
   confirmAndSubmit() {
+    if (this.state.requireNote && this.state.note === '') {
+      showNotification(i18n.t('reports.explain'));
+      return;
+    }
+
     Alert.alert(
       i18n.t('confirm'),
-      `${i18n.t('reports.reportAs')}\n${this.state.reason.label}\n` +
+      `${i18n.t('reports.reportAs')}\n${this.state.reason?.label}\n` +
         (this.state.subreason ? this.state.subreason.label : ''),
       [
-        { text: i18n.t('no') },
+        {
+          text: i18n.t('no'),
+          onPress: () =>
+            this.state.subreason
+              ? this.setState({ subreason: null })
+              : this.clearReason(),
+        },
         { text: i18n.t('yes'), onPress: () => this.submit() },
       ],
       { cancelable: false },
@@ -220,7 +267,7 @@ export default class ReportScreen extends Component {
   renderReasons() {
     const theme = ThemedStyles.style;
 
-    if (this.state.reason && this.state.reason.value == 10) {
+    if (this.state.reason && this.state.reason.value === 10) {
       return (
         <MText
           style={[theme.fontL, theme.padding2x, theme.textCenter]}
@@ -235,10 +282,10 @@ export default class ReportScreen extends Component {
         ? this.state.reason.reasons
         : this.state.reasons;
 
-    const reasonItems = reasons.map((reason, i) => {
+    const reasonItems = reasons?.map((reason, i) => {
       return (
         <TouchableOpacity
-          style={[styles.reasonItem, ThemedStyles.bgTertiaryBackground]}
+          style={styles.reasonItem}
           key={i}
           onPress={() =>
             this.state.reason
@@ -278,45 +325,44 @@ export default class ReportScreen extends Component {
     if (!this.state.reasons) return <CenteredLoading />;
 
     const theme = ThemedStyles.style;
-
-    const noteInput = (
-      <TextInput
-        multiline={true}
-        numberOfLines={4}
-        style={[
-          theme.padding2x,
-          theme.margin,
-          theme.borderBottom,
-          theme.colorPrimaryText,
-        ]}
-        placeholder={i18n.t('reports.explain')}
-        returnKeyType="done"
-        autoFocus={true}
-        placeholderTextColor="gray"
-        underlineColorAndroid="transparent"
-        onChangeText={this.updateNote}
-        autoCapitalize={'none'}
-      />
-    );
-
+    const showTitle = this.state.reason && this.state.reason.hasMore;
     return (
       <ScrollView
         style={[theme.flexContainer, ThemedStyles.style.bgSecondaryBackground]}>
-        {this.state.reason && (
+        {showTitle && (
           <MText
             style={[
-              theme.fontM,
+              theme.fontL,
               theme.bgPrimaryBackground,
               theme.colorWhite,
-              theme.padding,
+              theme.paddingHorizontal2x,
+              theme.paddingVertical3x,
             ]}>
-            {this.state.reason.label}
+            {this.state.reason?.label}
           </MText>
         )}
         <View style={theme.flexContainer}>
           {!this.state.requireNote && this.renderReasons()}
 
-          {this.state.requireNote && noteInput}
+          {this.state.requireNote && (
+            <TextInput
+              multiline={true}
+              numberOfLines={4}
+              style={[
+                theme.padding3x,
+                theme.margin2x,
+                theme.fontL,
+                theme.colorPrimaryText,
+              ]}
+              placeholder={i18n.t('reports.explain')}
+              returnKeyType="done"
+              autoFocus={true}
+              placeholderTextColor="gray"
+              underlineColorAndroid="transparent"
+              onChangeText={this.updateNote}
+              autoCapitalize={'none'}
+            />
+          )}
         </View>
       </ScrollView>
     );

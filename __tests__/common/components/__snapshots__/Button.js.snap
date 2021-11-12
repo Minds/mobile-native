@@ -28,6 +28,7 @@ exports[`renders correctly 1`] = `
   text="hello"
 >
   <Text
+    onLayout={[Function]}
     style={
       Array [
         Object {

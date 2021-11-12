@@ -18,6 +18,7 @@ import logService from '../common/services/log.service';
 import { runInAction } from 'mobx';
 import { Image, Platform } from 'react-native';
 import { hashRegex } from '../common/components/Tags';
+import getNetworkError from '~/common/helpers/getNetworkError';
 
 /**
  * Display an error message to the user.
@@ -421,7 +422,18 @@ export default function (props) {
       this.attachment.attachMedia(this.mediaToConfirm, this.extra);
       this.mode = 'text';
     },
+    /**
+     * is the composer input valid or not. Is it ready to be submitted?
+     */
+    get isValid() {
+      const isEmpty =
+        !this.attachment.hasAttachment &&
+        !this.text &&
+        (!this.embed.meta || !this.embed.meta.url) &&
+        !this.isRemind;
 
+      return !isEmpty;
+    },
     /**
      * Submit post
      */
@@ -466,12 +478,7 @@ export default function (props) {
         }
 
         // Something to post?
-        if (
-          !this.attachment.hasAttachment &&
-          !this.text &&
-          (!this.embed.meta || !this.embed.meta.url) &&
-          !this.isRemind
-        ) {
+        if (!this.isValid) {
           showError(i18n.t('capture.nothingToPost'));
           return false;
         }
@@ -547,8 +554,9 @@ export default function (props) {
           return ActivityModel.create(response.activity);
         }
       } catch (e) {
-        if (e instanceof ApiError) {
-          showError(e.message);
+        const message = getNetworkError(e);
+        if (message) {
+          showError(message);
         } else {
           showError(i18n.t('errorMessage') + '\n' + i18n.t('pleaseTryAgain'));
         }

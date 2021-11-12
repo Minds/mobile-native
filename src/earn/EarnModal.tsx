@@ -84,7 +84,7 @@ export default observer(function ({ navigation }) {
     {
       name: 'create',
       icon: 'plus-box',
-      onPress: () => navTo('Capture', { mode: 'text', start: true }),
+      onPress: () => navTo('Compose', { mode: 'text', start: true }),
     },
     {
       name: 'refer',
