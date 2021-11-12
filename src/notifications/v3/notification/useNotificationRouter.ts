@@ -1,5 +1,4 @@
 import { useNavigation } from '@react-navigation/core';
-import React from 'react';
 import UserModel from '../../../channel/UserModel';
 import type NotificationModel from './NotificationModel';
 
