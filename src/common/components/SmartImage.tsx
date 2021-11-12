@@ -218,7 +218,10 @@ const createSmartImageStore = props => {
       }
     },
     onLoadEnd() {
-      this.showOverlay = false;
+      // if the entity should be blurred or was locked, don't remove the overlay
+      if (!props.entity?.shouldBeBlured() && !props.entity?.isLocked()) {
+        this.showOverlay = false;
+      }
       this.progress = undefined;
       this.retries = 0;
 
@@ -260,6 +263,12 @@ const createSmartImageStore = props => {
     },
     // shows image if cache exists and shows overlay if it didn't
     async showImageIfCacheExists() {
+      // if entity was locked, show overlay
+      if (props.entity?.shouldBeBlured() || props.entity?.isLocked()) {
+        this.showOverlay = true;
+        return;
+      }
+
       if (await this.isCached()) {
         this.showImage();
       } else {
