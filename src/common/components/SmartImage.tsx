@@ -49,7 +49,7 @@ const SmartImage = observer(function (props: SmartImageProps) {
 
   useEffect(() => {
     try {
-      store.showImageIfCacheExists();
+      store.onInit();
     } catch (e) {
       console.error(e);
     }
@@ -143,18 +143,11 @@ const BlurredThumbnail = ({
   thumbnailSource,
   entity,
 }) => {
+  const blurhash = entity?.custom_data[0]?.blurhash || entity?.blurhash;
   // TODO: use Blurhash.clearCosineCache()
   // FIXME: this doesn't look nice
-  if (entity?.custom_data[0]?.blurhash) {
-    return (
-      <Blurhash
-        decodeAsync
-        blurhash={
-          entity?.custom_data[0]?.blurhash || 'LGFFaXYk^6#M@-5c,1J5@[or[Q6.'
-        }
-        style={style}
-      />
-    );
+  if (blurhash) {
+    return <Blurhash decodeAsync blurhash={blurhash} style={style} />;
   }
 
   if (thumbnailSource) {
@@ -262,13 +255,14 @@ const createSmartImageStore = props => {
       return cached;
     },
     // shows image if cache exists and shows overlay if it didn't
-    async showImageIfCacheExists() {
-      // if entity was locked, show overlay
+    async onInit() {
+      // if entity was locked, show overlay and return
       if (props.entity?.shouldBeBlured() || props.entity?.isLocked()) {
         this.showOverlay = true;
         return;
       }
 
+      // if it was cached, show the image, otherwise show the overlay
       if (await this.isCached()) {
         this.showImage();
       } else {
