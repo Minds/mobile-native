@@ -1,14 +1,14 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import _ from 'lodash';
 import { View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { observer } from 'mobx-react';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import ThemedStyles from '../styles/ThemedStyles';
-import TopBar from './TopBar';
-import i18n from '../common/services/i18n.service';
-import NavigationService from '../navigation/NavigationService';
-import MText from '../common/components/MText';
+import ThemedStyles from '../../styles/ThemedStyles';
+import TopBar from '../TopBar';
+import i18n from '../../common/services/i18n.service';
+import NavigationService from '../../navigation/NavigationService';
+import MText from '../../common/components/MText';
 
 /**
  * Nsfw Option
@@ -42,54 +42,42 @@ const NsfwOption = props => {
  * NSFW selector
  */
 export default observer(function (props) {
-  const theme = ThemedStyles.style;
   const store = props.route.params.store;
 
-  const options = _.times(7, i => ({
-    value: i,
-    selected: i === 0 ? store.nsfw.length === 0 : store.nsfw.some(o => i === o),
-    label: i18n.t(`nsfw.${i}`),
-  }));
+  const options = useMemo(
+    () =>
+      _.times(7, i => ({
+        value: i,
+        selected:
+          i === 0 ? store.nsfw.length === 0 : store.nsfw.some(o => i === o),
+        label: i18n.t(`nsfw.${i}`),
+      })),
+    [store.nsfw],
+  );
 
   return (
-    <View style={[theme.flexContainer, theme.bgPrimaryBackground]}>
+    <View style={styles.container}>
       <TopBar
         leftText="NSFW"
         rightText={i18n.t('done')}
         onPressRight={NavigationService.goBack}
         onPressBack={NavigationService.goBack}
+        backIconName="chevron-left"
+        backIconSize="large"
         store={store}
       />
-      <MText
-        style={[
-          theme.paddingVertical3x,
-          theme.colorSecondaryText,
-          theme.fontL,
-          theme.paddingHorizontal3x,
-        ]}>
-        {i18n.t('nsfw.description1') + '\n\n' + i18n.t('nsfw.description2')}
-      </MText>
+      <ScrollView>
+        <MText style={styles.descStyle}>
+          {i18n.t('nsfw.description1') + '\n\n' + i18n.t('nsfw.description2')}
+        </MText>
 
-      <ScrollView style={styles.body}>
-        <MText
-          style={[
-            theme.paddingVertical4x,
-            theme.colorTertiaryText,
-            theme.fontM,
-            theme.paddingHorizontal3x,
-          ]}>
+        <MText style={styles.textStyle}>
           {i18n.t('nsfw.safe').toUpperCase()}
         </MText>
         <View style={styles.optsContainer}>
           <NsfwOption option={options[0]} store={store} />
         </View>
-        <MText
-          style={[
-            theme.paddingVertical4x,
-            theme.colorTertiaryText,
-            theme.fontM,
-            theme.paddingHorizontal3x,
-          ]}>
+        <MText style={styles.textStyle}>
           {i18n.t('nsfw.categories').toUpperCase()}
         </MText>
         <View style={styles.optsContainer}>
@@ -102,7 +90,8 @@ export default observer(function (props) {
   );
 });
 
-const styles = StyleSheet.create({
+const styles = ThemedStyles.create({
+  container: ['flexContainer', 'bgPrimaryBackground'],
   optsContainer: {
     marginBottom: 10,
   },
@@ -113,4 +102,16 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderTopWidth: StyleSheet.hairlineWidth,
   },
+  descStyle: [
+    'paddingVertical3x',
+    'colorTertiaryText',
+    'fontL',
+    'paddingHorizontal3x',
+  ],
+  textStyle: [
+    'paddingVertical4x',
+    'colorTertiaryText',
+    'fontM',
+    'paddingHorizontal3x',
+  ],
 });

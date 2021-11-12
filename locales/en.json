@@ -277,7 +277,9 @@
     "noHashtags": "Sorry, Plus monetized posts must have hashtags.",
     "noExternalLinks": "Sorry, Plus monetized posts mustn't have external links.",
     "attach": "Photo & Video Library",
-    "takePhoto": "Camera"
+    "takePhoto": "Camera",
+    "usePhoto": "Use photo",
+    "useVideo": "Use video"
   },
   "channel": {
     "editChannel": "Edit Channel",
@@ -1534,5 +1536,6 @@
   "copyToClipboard": "Copy to Clipboard",
   "emptyList": "Sorry the list is empty",
   "and": "and",
-  "others": "others"
+  "others": "others",
+  "newMoment": "New Moment"
 }

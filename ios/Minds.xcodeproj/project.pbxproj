@@ -661,7 +661,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\nif [ \"${CONFIGURATION}\" = \"Release\" ] && [\"${SENTRY}\" != \"No\"]; then\n    export SENTRY_PROPERTIES=sentry.properties\n\n    ../node_modules/@sentry/cli/bin/sentry-cli react-native xcode ../node_modules/react-native/scripts/react-native-xcode.sh\nelse \n    ../node_modules/react-native/scripts/react-native-xcode.sh\nfi\n";
+			shellScript = "export NODE_BINARY=node\nif [ \"${CONFIGURATION}\" = \"Release\" ]; then\n    export SENTRY_PROPERTIES=sentry.properties\n\n    ../node_modules/@sentry/cli/bin/sentry-cli react-native xcode ../node_modules/react-native/scripts/react-native-xcode.sh\nelse \n    ../node_modules/react-native/scripts/react-native-xcode.sh\nfi\n";
 		};
 		059C47C9DEAC146D386870C0 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1003,7 +1003,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"${CONFIGURATION}\" = \"Release\" ] && [\"${SENTRY}\" != \"No\"]; then\n    export SENTRY_PROPERTIES=sentry.properties\n    ../node_modules/@sentry/cli/bin/sentry-cli upload-dsym\nfi\n";
+			shellScript = "\n\nif [ \"${CONFIGURATION}\" = \"Release\" ]; then\n    export SENTRY_PROPERTIES=sentry.properties\n    ../node_modules/@sentry/cli/bin/sentry-cli upload-dsym\nfi\n";
 		};
 		F5CAB89671CA7F423DE58B52 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1595,7 +1595,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.minds.mobile.ImageNotification;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.minds.mobile.ImageNotification";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

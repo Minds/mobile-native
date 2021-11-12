@@ -31,8 +31,6 @@ const PlusDiscoveryScreen = observer(() => {
     }
   };
 
-  const theme = ThemedStyles.style;
-
   return (
     <View style={ThemedStyles.style.flexContainer}>
       <View style={ThemedStyles.style.bgPrimaryBackground}>

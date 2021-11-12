@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, ViewStyle } from 'react-native';
+import { ViewStyle } from 'react-native';
 import MText from '../../../../common/components/MText';
 import SegmentedButton from '../../../../common/components/SegmentedButton';
 import i18n from '../../../../common/services/i18n.service';

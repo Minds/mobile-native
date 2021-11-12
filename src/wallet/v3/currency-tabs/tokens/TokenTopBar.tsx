@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 import type { WalletStoreType } from '../../../v2/createWalletStore';
 import { Tooltip } from 'react-native-elements';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { useDimensions } from '@react-native-community/hooks';
 import BalanceInfo from './BalanceInfo';
 import OnchainButton from './OnchainButton';

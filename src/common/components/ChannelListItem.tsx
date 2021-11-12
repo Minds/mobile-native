@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  Keyboard,
-  TextStyle,
-  TouchableHighlight,
-  View,
-  ViewStyle,
-} from 'react-native';
+import { Keyboard, TextStyle, View, ViewStyle } from 'react-native';
 import { FLAG_SUBSCRIBE, FLAG_VIEW } from '../Permissions';
 import ThemedStyles, { useStyle } from '../../styles/ThemedStyles';
 import type UserModel from '../../channel/UserModel';

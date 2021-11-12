@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useCallback } from 'react';
 
-import { Text, View, FlatList } from 'react-native';
+import { View, FlatList } from 'react-native';
 
 import { observer } from 'mobx-react';
 

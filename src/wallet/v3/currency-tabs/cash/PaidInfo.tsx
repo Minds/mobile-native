@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import MText from '../../../../common/components/MText';
 import i18n from '../../../../common/services/i18n.service';
 import ThemedStyles from '../../../../styles/ThemedStyles';

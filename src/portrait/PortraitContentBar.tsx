@@ -8,40 +8,37 @@ import { FlatList } from 'react-native-gesture-handler';
 import { PlaceholderMedia, Fade, Placeholder } from 'rn-placeholder';
 import { observer } from 'mobx-react';
 import { View } from 'react-native';
-import { Icon, B3, Column } from '~ui';
-import { AVATAR_SIZE } from '~/styles/Tokens';
-import PressableScale from '~/common/components/PressableScale';
 import ThemedStyles from '../styles/ThemedStyles';
+import { AVATAR_SIZE } from '~/styles/Tokens';
 import PortraitContentBarItem from './PortraitContentBarItem';
 import { PortraitBarItem } from './createPortraitStore';
 import { useNavigation } from '@react-navigation/native';
 import { useStores } from '../common/hooks/use-stores';
+import sessionService from '~/common/services/session.service';
+import { Row } from '~/common/ui';
+import i18nService from '~/common/services/i18n.service';
 
 /**
  * Header component
  */
 const Header = () => {
   const navigation = useNavigation<any>();
+  const user = sessionService.getUser();
+
   const nav = useCallback(
     () => navigation.push('Capture', { portrait: true }),
     [navigation],
   );
 
   return (
-    <Column align="center" flex horizontal="XS">
-      <PressableScale onPress={nav}>
-        <Column
-          horizontal="XXS"
-          vertical="XXS"
-          containerStyle={styles.addCircle}
-          align="center">
-          <Icon name="plus" />
-        </Column>
-      </PressableScale>
-      <B3 color="secondary" top="XXS">
-        Add
-      </B3>
-    </Column>
+    <Row align="center" containerStyle={ThemedStyles.style.flexContainer}>
+      <PortraitContentBarItem
+        avatarUrl={user.getAvatarSource()}
+        withPlus
+        onPress={nav}
+        title={i18nService.t('newMoment')}
+      />
+    </Row>
   );
 };
 
@@ -67,8 +64,21 @@ const BarPlaceholder = () => {
   );
 };
 
-const renderItem = (row: { item: PortraitBarItem; index: number }) => {
-  return <PortraitContentBarItem item={row.item} index={row.index} />;
+const renderItem = ({
+  item,
+  index,
+}: {
+  item: PortraitBarItem;
+  index: number;
+}) => {
+  return (
+    <PortraitContentBarItem
+      avatarUrl={item.user.getAvatarSource()}
+      title={item.user.username}
+      unseen={item.unseen}
+      index={index}
+    />
+  );
 };
 
 /**

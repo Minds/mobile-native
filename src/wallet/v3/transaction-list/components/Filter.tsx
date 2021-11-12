@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import { ScrollView, Text, TouchableOpacity } from 'react-native';
+import { ScrollView, TouchableOpacity } from 'react-native';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 import { transactionTypes } from '../../../v2/TransactionList/TransactionsListTypes';
 import MdIcon from 'react-native-vector-icons/MaterialCommunityIcons';

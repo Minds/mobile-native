@@ -12,6 +12,7 @@ const DEFAULT_SNAP_POINTS = [Math.floor(windowHeight * 0.8)];
 
 interface PropsType extends Omit<BottomSheetProps, 'snapPoints'> {
   snapPoints?: Array<number | string>;
+  onVisibilityChange?: (visible: boolean) => void;
 }
 
 /**
@@ -24,7 +25,10 @@ const MBottomSheet = forwardRef<BottomSheet, PropsType>((props, ref) => {
     props,
   );
 
-  const renderHandle = useCallback(() => <Handle />, []);
+  const renderHandle = useCallback(
+    handleProps => <Handle {...handleProps} />,
+    [],
+  );
 
   const renderBackdrop = useCallback(
     backdropProps => (

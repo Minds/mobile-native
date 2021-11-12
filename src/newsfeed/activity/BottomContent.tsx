@@ -26,10 +26,12 @@ const BottomContent = (props: PropsType) => {
         showCommentsOutlet={props.showCommentsOutlet}
         hideTabs={props.hideTabs}
       />
-      <Scheduled
-        isScheduled={props.entity.isScheduled()}
-        time_created={props.entity.time_created}
-      />
+      {props.entity.isOwner() && (
+        <Scheduled
+          isScheduled={props.entity.isScheduled()}
+          time_created={props.entity.time_created}
+        />
+      )}
       <Pending isPending={props.entity.isPending()} />
     </>
   );

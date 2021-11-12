@@ -2,7 +2,6 @@ import type { CurrencyType } from '../../types/Payment';
 import api from '../../common/services/api.service';
 import toFriendlyCrypto from '../../common/helpers/toFriendlyCrypto';
 import logService from '../../common/services/log.service';
-import number from '../../common/helpers/number';
 import type {
   StripeDetails,
   Wallet,

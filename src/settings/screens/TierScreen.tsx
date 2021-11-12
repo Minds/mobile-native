@@ -44,13 +44,22 @@ const createTierStore = () => {
     async saveTier() {
       let response;
       try {
-        response = await supportTiersService.createPublic(
-          this.support_tier.name,
-          this.support_tier.usd,
-          this.support_tier.description,
-          this.support_tier.has_usd,
-          this.support_tier.has_tokens,
-        );
+        // should update?
+        if (this.support_tier.urn) {
+          response = await supportTiersService.update(
+            this.support_tier.urn,
+            this.support_tier.name,
+            this.support_tier.description,
+          );
+        } else {
+          response = await supportTiersService.createPublic(
+            this.support_tier.name,
+            this.support_tier.usd,
+            this.support_tier.description,
+            this.support_tier.has_usd,
+            this.support_tier.has_tokens,
+          );
+        }
       } catch (err) {
         response = false;
         throw new UserError(err.message);
@@ -120,6 +129,7 @@ const TierScreen = observer(({ route, navigation }: PropsType) => {
         onChangeText={localStore.setUsd}
         value={localStore.support_tier.usd}
         testID="usdInput"
+        editable={!localStore.support_tier.urn}
         wrapperBorder={theme.borderTop}
         keyboardType="number-pad"
       />
