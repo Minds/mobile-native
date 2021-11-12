@@ -21,7 +21,9 @@ export const Screen = ({
   if (scroll) {
     return (
       <Renderer style={styles[background]}>
-        <ScrollView style={styles.flex}>{children}</ScrollView>
+        <ScrollView style={ThemedStyles.style.flexContainer}>
+          {children}
+        </ScrollView>
       </Renderer>
     );
   }
@@ -30,8 +32,7 @@ export const Screen = ({
 };
 
 const styles = ThemedStyles.create({
-  primary: [{ flex: 1 }, 'bgPrimaryBackground'],
-  secondary: [{ flex: 1 }, 'bgPrimaryBackground'],
-  tertiary: [{ flex: 1 }, 'bgPrimaryBackground'],
-  flex: { flex: 1 },
+  primary: ['flexContainer', 'bgPrimaryBackground'],
+  secondary: ['flexContainer', 'bgPrimaryBackground'],
+  tertiary: ['flexContainer', 'bgPrimaryBackground'],
 });
