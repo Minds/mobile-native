@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View, ViewStyle } from 'react-native';
+import { View, ViewStyle } from 'react-native';
 import Animated, {
   interpolate,
   runOnJS,

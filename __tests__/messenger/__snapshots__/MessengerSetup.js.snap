@@ -141,6 +141,7 @@ exports[`Messenger setup component should render correctly for setup 1`] = `
       text="SETUP"
     >
       <Text
+        onLayout={[Function]}
         style={
           Array [
             Object {
@@ -330,6 +331,7 @@ exports[`Messenger setup component should render correctly for unlock 1`] = `
       text="UNLOCK"
     >
       <Text
+        onLayout={[Function]}
         style={
           Array [
             Object {

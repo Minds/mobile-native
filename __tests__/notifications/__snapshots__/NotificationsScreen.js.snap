@@ -54,101 +54,118 @@ exports[`Notifications Screen Component renders correctly 1`] = `
           }
         >
           <View
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
             style={
-              Object {
-                "alignItems": "center",
-                "flex": 1,
-                "height": 52,
-                "justifyContent": "center",
-                "paddingBottom": 3,
-                "position": "relative",
-              }
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "column",
+                  "justifyContent": "center",
+                },
+                Array [
+                  Object {
+                    "flex": 1,
+                    "height": 52,
+                    "paddingBottom": 3,
+                  },
+                ],
+              ]
             }
           >
             <View
-              accessible={true}
-              collapsable={false}
-              focusable={true}
-              hitSlop={
-                Object {
-                  "bottom": 8,
-                  "left": 8,
-                  "right": 8,
-                  "top": 8,
-                }
-              }
-              onBlur={[Function]}
-              onClick={[Function]}
-              onFocus={[Function]}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
               style={
                 Object {
-                  "alignItems": "center",
-                  "justifyContent": "center",
+                  "transform": Array [
+                    Object {
+                      "scale": 1,
+                    },
+                  ],
                 }
               }
             >
               <View
                 style={
                   Object {
-                    "transform": Array [
-                      Object {
-                        "scale": 1,
-                      },
-                    ],
+                    "alignItems": "center",
                   }
                 }
               >
                 <View
                   style={
-                    Object {
-                      "alignItems": "center",
-                      "flexDirection": "row",
-                      "justifyContent": "center",
-                    }
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                        "height": 24,
+                        "justifyContent": "center",
+                        "overflow": "hidden",
+                        "width": 24,
+                      },
+                      Object {},
+                    ]
                   }
                 >
-                  <View
+                  <Text
+                    allowFontScaling={false}
                     style={
                       Array [
                         Object {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                          "height": 24,
-                          "justifyContent": "center",
-                          "overflow": "hidden",
-                          "width": 24,
+                          "color": "#0085DD",
+                          "fontSize": 24,
                         },
+                        Object {},
+                        Object {
+                          "fontFamily": "Material Icons",
+                          "fontStyle": "normal",
+                          "fontWeight": "normal",
+                        },
+                        Object {},
                       ]
                     }
                   >
-                    <Text
-                      allowFontScaling={false}
-                      style={
-                        Array [
-                          Object {
-                            "color": "#0085DD",
-                            "fontSize": 24,
-                          },
-                          Object {},
-                          Object {
-                            "fontFamily": "Material Icons",
-                            "fontStyle": "normal",
-                            "fontWeight": "normal",
-                          },
-                          Object {},
-                        ]
-                      }
-                    >
-                      
-                    </Text>
-                  </View>
+                    
+                  </Text>
                 </View>
+              </View>
+              <View
+                style={
+                  Object {
+                    "marginTop": 1,
+                  }
+                }
+              >
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#1B85D6",
+                      },
+                      Object {
+                        "fontFamily": "Roboto-Medium",
+                      },
+                      Object {
+                        "fontSize": 10,
+                        "lineHeight": 16,
+                      },
+                      Object {
+                        "textAlign": "center",
+                      },
+                    ]
+                  }
+                >
+                  All
+                </Text>
               </View>
             </View>
           </View>
@@ -186,101 +203,118 @@ exports[`Notifications Screen Component renders correctly 1`] = `
           }
         >
           <View
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
             style={
-              Object {
-                "alignItems": "center",
-                "flex": 1,
-                "height": 52,
-                "justifyContent": "center",
-                "paddingBottom": 3,
-                "position": "relative",
-              }
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "column",
+                  "justifyContent": "center",
+                },
+                Array [
+                  Object {
+                    "flex": 1,
+                    "height": 52,
+                    "paddingBottom": 3,
+                  },
+                ],
+              ]
             }
           >
             <View
-              accessible={true}
-              collapsable={false}
-              focusable={true}
-              hitSlop={
-                Object {
-                  "bottom": 8,
-                  "left": 8,
-                  "right": 8,
-                  "top": 8,
-                }
-              }
-              onBlur={[Function]}
-              onClick={[Function]}
-              onFocus={[Function]}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
               style={
                 Object {
-                  "alignItems": "center",
-                  "justifyContent": "center",
+                  "transform": Array [
+                    Object {
+                      "scale": 1,
+                    },
+                  ],
                 }
               }
             >
               <View
                 style={
                   Object {
-                    "transform": Array [
-                      Object {
-                        "scale": 1,
-                      },
-                    ],
+                    "alignItems": "center",
                   }
                 }
               >
                 <View
                   style={
-                    Object {
-                      "alignItems": "center",
-                      "flexDirection": "row",
-                      "justifyContent": "center",
-                    }
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                        "height": 24,
+                        "justifyContent": "center",
+                        "overflow": "hidden",
+                        "width": 24,
+                      },
+                      Object {},
+                    ]
                   }
                 >
-                  <View
+                  <Text
+                    allowFontScaling={false}
                     style={
                       Array [
                         Object {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                          "height": 24,
-                          "justifyContent": "center",
-                          "overflow": "hidden",
-                          "width": 24,
+                          "color": "#AEB0B8",
+                          "fontSize": 22.080000000000002,
                         },
+                        Object {},
+                        Object {
+                          "fontFamily": "Material Icons",
+                          "fontStyle": "normal",
+                          "fontWeight": "normal",
+                        },
+                        Object {},
                       ]
                     }
                   >
-                    <Text
-                      allowFontScaling={false}
-                      style={
-                        Array [
-                          Object {
-                            "color": "#AEB0B8",
-                            "fontSize": 22.080000000000002,
-                          },
-                          Object {},
-                          Object {
-                            "fontFamily": "Material Icons",
-                            "fontStyle": "normal",
-                            "fontWeight": "normal",
-                          },
-                          Object {},
-                        ]
-                      }
-                    >
-                      
-                    </Text>
-                  </View>
+                    
+                  </Text>
                 </View>
+              </View>
+              <View
+                style={
+                  Object {
+                    "marginTop": 1,
+                  }
+                }
+              >
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#B8C1CA",
+                      },
+                      Object {
+                        "fontFamily": "Roboto-Medium",
+                      },
+                      Object {
+                        "fontSize": 10,
+                        "lineHeight": 16,
+                      },
+                      Object {
+                        "textAlign": "center",
+                      },
+                    ]
+                  }
+                >
+                  Tags
+                </Text>
               </View>
             </View>
           </View>
@@ -318,101 +352,118 @@ exports[`Notifications Screen Component renders correctly 1`] = `
           }
         >
           <View
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
             style={
-              Object {
-                "alignItems": "center",
-                "flex": 1,
-                "height": 52,
-                "justifyContent": "center",
-                "paddingBottom": 3,
-                "position": "relative",
-              }
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "column",
+                  "justifyContent": "center",
+                },
+                Array [
+                  Object {
+                    "flex": 1,
+                    "height": 52,
+                    "paddingBottom": 3,
+                  },
+                ],
+              ]
             }
           >
             <View
-              accessible={true}
-              collapsable={false}
-              focusable={true}
-              hitSlop={
-                Object {
-                  "bottom": 8,
-                  "left": 8,
-                  "right": 8,
-                  "top": 8,
-                }
-              }
-              onBlur={[Function]}
-              onClick={[Function]}
-              onFocus={[Function]}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
               style={
                 Object {
-                  "alignItems": "center",
-                  "justifyContent": "center",
+                  "transform": Array [
+                    Object {
+                      "scale": 1,
+                    },
+                  ],
                 }
               }
             >
               <View
                 style={
                   Object {
-                    "transform": Array [
-                      Object {
-                        "scale": 1,
-                      },
-                    ],
+                    "alignItems": "center",
                   }
                 }
               >
                 <View
                   style={
-                    Object {
-                      "alignItems": "center",
-                      "flexDirection": "row",
-                      "justifyContent": "center",
-                    }
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                        "height": 24,
+                        "justifyContent": "center",
+                        "overflow": "hidden",
+                        "width": 24,
+                      },
+                      Object {},
+                    ]
                   }
                 >
-                  <View
+                  <Text
+                    allowFontScaling={false}
                     style={
                       Array [
                         Object {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                          "height": 24,
-                          "justifyContent": "center",
-                          "overflow": "hidden",
-                          "width": 24,
+                          "color": "#AEB0B8",
+                          "fontSize": 22.080000000000002,
                         },
+                        Object {},
+                        Object {
+                          "fontFamily": "Material Design Icons",
+                          "fontStyle": "normal",
+                          "fontWeight": "normal",
+                        },
+                        Object {},
                       ]
                     }
                   >
-                    <Text
-                      allowFontScaling={false}
-                      style={
-                        Array [
-                          Object {
-                            "color": "#AEB0B8",
-                            "fontSize": 22.080000000000002,
-                          },
-                          Object {},
-                          Object {
-                            "fontFamily": "Material Design Icons",
-                            "fontStyle": "normal",
-                            "fontWeight": "normal",
-                          },
-                          Object {},
-                        ]
-                      }
-                    >
-                      󰍡
-                    </Text>
-                  </View>
+                    󰍡
+                  </Text>
                 </View>
+              </View>
+              <View
+                style={
+                  Object {
+                    "marginTop": 1,
+                  }
+                }
+              >
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#B8C1CA",
+                      },
+                      Object {
+                        "fontFamily": "Roboto-Medium",
+                      },
+                      Object {
+                        "fontSize": 10,
+                        "lineHeight": 16,
+                      },
+                      Object {
+                        "textAlign": "center",
+                      },
+                    ]
+                  }
+                >
+                  Comments
+                </Text>
               </View>
             </View>
           </View>
@@ -450,101 +501,118 @@ exports[`Notifications Screen Component renders correctly 1`] = `
           }
         >
           <View
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
             style={
-              Object {
-                "alignItems": "center",
-                "flex": 1,
-                "height": 52,
-                "justifyContent": "center",
-                "paddingBottom": 3,
-                "position": "relative",
-              }
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "column",
+                  "justifyContent": "center",
+                },
+                Array [
+                  Object {
+                    "flex": 1,
+                    "height": 52,
+                    "paddingBottom": 3,
+                  },
+                ],
+              ]
             }
           >
             <View
-              accessible={true}
-              collapsable={false}
-              focusable={true}
-              hitSlop={
-                Object {
-                  "bottom": 8,
-                  "left": 8,
-                  "right": 8,
-                  "top": 8,
-                }
-              }
-              onBlur={[Function]}
-              onClick={[Function]}
-              onFocus={[Function]}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
               style={
                 Object {
-                  "alignItems": "center",
-                  "justifyContent": "center",
+                  "transform": Array [
+                    Object {
+                      "scale": 1,
+                    },
+                  ],
                 }
               }
             >
               <View
                 style={
                   Object {
-                    "transform": Array [
-                      Object {
-                        "scale": 1,
-                      },
-                    ],
+                    "alignItems": "center",
                   }
                 }
               >
                 <View
                   style={
-                    Object {
-                      "alignItems": "center",
-                      "flexDirection": "row",
-                      "justifyContent": "center",
-                    }
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                        "height": 24,
+                        "justifyContent": "center",
+                        "overflow": "hidden",
+                        "width": 24,
+                      },
+                      Object {},
+                    ]
                   }
                 >
-                  <View
+                  <Text
+                    allowFontScaling={false}
                     style={
                       Array [
                         Object {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                          "height": 24,
-                          "justifyContent": "center",
-                          "overflow": "hidden",
-                          "width": 24,
+                          "color": "#AEB0B8",
+                          "fontSize": 19.200000000000003,
                         },
+                        Object {},
+                        Object {
+                          "fontFamily": "FontAwesome",
+                          "fontStyle": "normal",
+                          "fontWeight": "normal",
+                        },
+                        Object {},
                       ]
                     }
                   >
-                    <Text
-                      allowFontScaling={false}
-                      style={
-                        Array [
-                          Object {
-                            "color": "#AEB0B8",
-                            "fontSize": 19.200000000000003,
-                          },
-                          Object {},
-                          Object {
-                            "fontFamily": "FontAwesome",
-                            "fontStyle": "normal",
-                            "fontWeight": "normal",
-                          },
-                          Object {},
-                        ]
-                      }
-                    >
-                      
-                    </Text>
-                  </View>
+                    
+                  </Text>
                 </View>
+              </View>
+              <View
+                style={
+                  Object {
+                    "marginTop": 1,
+                  }
+                }
+              >
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#B8C1CA",
+                      },
+                      Object {
+                        "fontFamily": "Roboto-Medium",
+                      },
+                      Object {
+                        "fontSize": 10,
+                        "lineHeight": 16,
+                      },
+                      Object {
+                        "textAlign": "center",
+                      },
+                    ]
+                  }
+                >
+                  Subscribers
+                </Text>
               </View>
             </View>
           </View>
@@ -582,101 +650,118 @@ exports[`Notifications Screen Component renders correctly 1`] = `
           }
         >
           <View
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
             style={
-              Object {
-                "alignItems": "center",
-                "flex": 1,
-                "height": 52,
-                "justifyContent": "center",
-                "paddingBottom": 3,
-                "position": "relative",
-              }
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "column",
+                  "justifyContent": "center",
+                },
+                Array [
+                  Object {
+                    "flex": 1,
+                    "height": 52,
+                    "paddingBottom": 3,
+                  },
+                ],
+              ]
             }
           >
             <View
-              accessible={true}
-              collapsable={false}
-              focusable={true}
-              hitSlop={
-                Object {
-                  "bottom": 8,
-                  "left": 8,
-                  "right": 8,
-                  "top": 8,
-                }
-              }
-              onBlur={[Function]}
-              onClick={[Function]}
-              onFocus={[Function]}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
               style={
                 Object {
-                  "alignItems": "center",
-                  "justifyContent": "center",
+                  "transform": Array [
+                    Object {
+                      "scale": 1,
+                    },
+                  ],
                 }
               }
             >
               <View
                 style={
                   Object {
-                    "transform": Array [
-                      Object {
-                        "scale": 1,
-                      },
-                    ],
+                    "alignItems": "center",
                   }
                 }
               >
                 <View
                   style={
-                    Object {
-                      "alignItems": "center",
-                      "flexDirection": "row",
-                      "justifyContent": "center",
-                    }
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                        "height": 24,
+                        "justifyContent": "center",
+                        "overflow": "hidden",
+                        "width": 24,
+                      },
+                      Object {},
+                    ]
                   }
                 >
-                  <View
+                  <Text
+                    allowFontScaling={false}
                     style={
                       Array [
                         Object {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                          "height": 24,
-                          "justifyContent": "center",
-                          "overflow": "hidden",
-                          "width": 24,
+                          "color": "#AEB0B8",
+                          "fontSize": 23.04,
                         },
+                        Object {},
+                        Object {
+                          "fontFamily": "Material Icons",
+                          "fontStyle": "normal",
+                          "fontWeight": "normal",
+                        },
+                        Object {},
                       ]
                     }
                   >
-                    <Text
-                      allowFontScaling={false}
-                      style={
-                        Array [
-                          Object {
-                            "color": "#AEB0B8",
-                            "fontSize": 23.04,
-                          },
-                          Object {},
-                          Object {
-                            "fontFamily": "Material Icons",
-                            "fontStyle": "normal",
-                            "fontWeight": "normal",
-                          },
-                          Object {},
-                        ]
-                      }
-                    >
-                      
-                    </Text>
-                  </View>
+                    
+                  </Text>
                 </View>
+              </View>
+              <View
+                style={
+                  Object {
+                    "marginTop": 1,
+                  }
+                }
+              >
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#B8C1CA",
+                      },
+                      Object {
+                        "fontFamily": "Roboto-Medium",
+                      },
+                      Object {
+                        "fontSize": 10,
+                        "lineHeight": 16,
+                      },
+                      Object {
+                        "textAlign": "center",
+                      },
+                    ]
+                  }
+                >
+                  Votes
+                </Text>
               </View>
             </View>
           </View>
@@ -714,101 +799,118 @@ exports[`Notifications Screen Component renders correctly 1`] = `
           }
         >
           <View
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
             style={
-              Object {
-                "alignItems": "center",
-                "flex": 1,
-                "height": 52,
-                "justifyContent": "center",
-                "paddingBottom": 3,
-                "position": "relative",
-              }
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "column",
+                  "justifyContent": "center",
+                },
+                Array [
+                  Object {
+                    "flex": 1,
+                    "height": 52,
+                    "paddingBottom": 3,
+                  },
+                ],
+              ]
             }
           >
             <View
-              accessible={true}
-              collapsable={false}
-              focusable={true}
-              hitSlop={
-                Object {
-                  "bottom": 8,
-                  "left": 8,
-                  "right": 8,
-                  "top": 8,
-                }
-              }
-              onBlur={[Function]}
-              onClick={[Function]}
-              onFocus={[Function]}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
               style={
                 Object {
-                  "alignItems": "center",
-                  "justifyContent": "center",
+                  "transform": Array [
+                    Object {
+                      "scale": 1,
+                    },
+                  ],
                 }
               }
             >
               <View
                 style={
                   Object {
-                    "transform": Array [
-                      Object {
-                        "scale": 1,
-                      },
-                    ],
+                    "alignItems": "center",
                   }
                 }
               >
                 <View
                   style={
-                    Object {
-                      "alignItems": "center",
-                      "flexDirection": "row",
-                      "justifyContent": "center",
-                    }
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                        "height": 24,
+                        "justifyContent": "center",
+                        "overflow": "hidden",
+                        "width": 24,
+                      },
+                      Object {},
+                    ]
                   }
                 >
-                  <View
+                  <Text
+                    allowFontScaling={false}
                     style={
                       Array [
                         Object {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                          "height": 24,
-                          "justifyContent": "center",
-                          "overflow": "hidden",
-                          "width": 24,
+                          "color": "#AEB0B8",
+                          "fontSize": 24.96,
                         },
+                        Object {},
+                        Object {
+                          "fontFamily": "Material Design Icons",
+                          "fontStyle": "normal",
+                          "fontWeight": "normal",
+                        },
+                        Object {},
                       ]
                     }
                   >
-                    <Text
-                      allowFontScaling={false}
-                      style={
-                        Array [
-                          Object {
-                            "color": "#AEB0B8",
-                            "fontSize": 24.96,
-                          },
-                          Object {},
-                          Object {
-                            "fontFamily": "Material Design Icons",
-                            "fontStyle": "normal",
-                            "fontWeight": "normal",
-                          },
-                          Object {},
-                        ]
-                      }
-                    >
-                      󰑖
-                    </Text>
-                  </View>
+                    󰑖
+                  </Text>
                 </View>
+              </View>
+              <View
+                style={
+                  Object {
+                    "marginTop": 1,
+                  }
+                }
+              >
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#B8C1CA",
+                      },
+                      Object {
+                        "fontFamily": "Roboto-Medium",
+                      },
+                      Object {
+                        "fontSize": 10,
+                        "lineHeight": 16,
+                      },
+                      Object {
+                        "textAlign": "center",
+                      },
+                    ]
+                  }
+                >
+                  Reminds
+                </Text>
               </View>
             </View>
           </View>
@@ -846,6 +948,11 @@ exports[`Notifications Screen Component renders correctly 1`] = `
         <NotificationPlaceHolder />
         <NotificationPlaceHolder />
       </View>
+    }
+    contentContainerStyle={
+      Object {
+        "flexGrow": 1,
+      }
     }
     data={Array []}
     disableVirtualization={false}
@@ -921,7 +1028,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                 "paddingBottom": 16,
               },
               Object {
-                "paddingTop": 8,
+                "paddingTop": 16,
               },
             ]
           }
@@ -934,7 +1041,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   "width": "100%",
                 },
                 Object {
-                  "paddingHorizontal": 12,
+                  "paddingHorizontal": 20,
                 },
               ]
             }
@@ -1030,7 +1137,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                 "paddingBottom": 16,
               },
               Object {
-                "paddingTop": 8,
+                "paddingTop": 16,
               },
             ]
           }
@@ -1043,7 +1150,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   "width": "100%",
                 },
                 Object {
-                  "paddingHorizontal": 12,
+                  "paddingHorizontal": 20,
                 },
               ]
             }
@@ -1139,7 +1246,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                 "paddingBottom": 16,
               },
               Object {
-                "paddingTop": 8,
+                "paddingTop": 16,
               },
             ]
           }
@@ -1152,7 +1259,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   "width": "100%",
                 },
                 Object {
-                  "paddingHorizontal": 12,
+                  "paddingHorizontal": 20,
                 },
               ]
             }
@@ -1248,7 +1355,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                 "paddingBottom": 16,
               },
               Object {
-                "paddingTop": 8,
+                "paddingTop": 16,
               },
             ]
           }
@@ -1261,7 +1368,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   "width": "100%",
                 },
                 Object {
-                  "paddingHorizontal": 12,
+                  "paddingHorizontal": 20,
                 },
               ]
             }
@@ -1357,7 +1464,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                 "paddingBottom": 16,
               },
               Object {
-                "paddingTop": 8,
+                "paddingTop": 16,
               },
             ]
           }
@@ -1370,7 +1477,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   "width": "100%",
                 },
                 Object {
-                  "paddingHorizontal": 12,
+                  "paddingHorizontal": 20,
                 },
               ]
             }
@@ -1466,7 +1573,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                 "paddingBottom": 16,
               },
               Object {
-                "paddingTop": 8,
+                "paddingTop": 16,
               },
             ]
           }
@@ -1479,7 +1586,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   "width": "100%",
                 },
                 Object {
-                  "paddingHorizontal": 12,
+                  "paddingHorizontal": 20,
                 },
               ]
             }
@@ -1565,5 +1672,15 @@ exports[`Notifications Screen Component renders correctly 1`] = `
       </View>
     </View>
   </RCTScrollView>
+  <InteractionsBottomSheet
+    entity={Object {}}
+    keepOpen={false}
+    snapPoints={
+      Array [
+        "90%",
+      ]
+    }
+    withoutInsets={true}
+  />
 </View>
 `;

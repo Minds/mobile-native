@@ -4,7 +4,6 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import ModalContainer from '../../onboarding/v2/steps/ModalContainer';
 import { useNavigation } from '@react-navigation/native';
 import RegisterForm from '../register/RegisterForm';
-import { resetStackAndGoBack } from './resetStackAndGoBack';
 
 type PropsType = {
   route: any;

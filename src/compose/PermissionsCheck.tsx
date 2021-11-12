@@ -58,12 +58,13 @@ export default function PermissionsCheck(props: PropsType) {
   if (status[1] === 'not-determined' || (status[1] === 'denied' && !IS_IOS)) {
     return (
       <TouchableOpacity
-        style={[theme.flexContainer, theme.centered, theme.padding2x]}
+        activeOpacity={0.7}
+        style={[theme.flexContainer, theme.centered, theme.padding8x]}
         onPress={tap}>
-        <MText style={[theme.fontXL, theme.textCenter]}>
+        <MText style={[theme.fontXL, theme.textCenter, theme.colorWhite]}>
           {i18nService.t('capture.allowMinds')}
         </MText>
-        <MText style={[theme.fontL, theme.paddingTop2x]}>
+        <MText style={[theme.fontL, theme.paddingTop2x, theme.colorLink]}>
           {i18nService.t('permissions.tapAllow')}
         </MText>
       </TouchableOpacity>
@@ -72,14 +73,14 @@ export default function PermissionsCheck(props: PropsType) {
 
   if (status[1] === 'denied' || status[1] === 'restricted') {
     return (
-      <View style={[theme.flexContainer, theme.centered, theme.padding2x]}>
+      <View style={[theme.flexContainer, theme.centered, theme.padding8x]}>
         <MText
-          style={[theme.fontXL, theme.textCenter]}
+          style={[theme.fontXL, theme.textCenter, theme.colorWhite]}
           onPress={() => openSettings()}>
           {i18nService.t('capture.blockedMinds')}
         </MText>
         <MText
-          style={[theme.fontL, theme.paddingTop2x]}
+          style={[theme.fontL, theme.paddingTop2x, theme.colorLink]}
           onPress={() => openSettings()}>
           {i18nService.t('permissions.tapAllow')}
         </MText>

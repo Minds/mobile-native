@@ -277,7 +277,9 @@
     "noHashtags": "Sorry, Plus monetized posts must have hashtags.",
     "noExternalLinks": "Sorry, Plus monetized posts mustn't have external links.",
     "attach": "Photo & Video Library",
-    "takePhoto": "Camera"
+    "takePhoto": "Camera",
+    "usePhoto": "Use photo",
+    "useVideo": "Use video"
   },
   "channel": {
     "editChannel": "Edit Channel",
@@ -390,7 +392,14 @@
     "setupMessage3": "By default the content of your messages is fully encrypted. For heightened security you may wish to go to your app settings and turn off push notifications in order to disallow metadata from being tracked.",
     "messengerRekey": "Change your encryption password",
     "legacyMessenger": "Legacy Messenger",
-    "errorDirectMessage": "Oops! Please try again in a moment"
+    "errorDirectMessage": "Oops! Please try again in a moment",
+    "modal": {
+      "action": "Install Minds Chat",
+      "appname": "Minds Chat Application",
+      "text": "For an enhanced chat experience install the application directly from {{store}}.",
+      "theappstore": "the App Store",
+      "googleplay": "Google Play"
+    }
   },
   "newsfeed": {
     "title": "Newsfeed",
@@ -455,6 +464,21 @@
     "rewardsStateDecrease1": "Your daily token reward multiplier has been reduced to {{multiplier}}x",
     "rewardsStateDecreaseToday": "It's not too late! You will drop down to a {{state}} user by the end of today and your daily token reward multiplier will reduce to {{multiplier}}x. Get liking and commenting to bring your score back up!",
     "rewardsSummary": "You earned {{amount}} tokens yesterday.",
+    "filters": {
+      "all": "All",
+      "tags": "Tags",
+      "comments": "Comments",
+      "subscriptions": "Subscribers",
+      "votes": "Votes",
+      "reminds": "Reminds"
+    },
+    "empty": {
+      "all": "You have no notifications",
+      "tags": "You have no tags notification",
+      "subscriptions": "You have no subscriptions notification",
+      "votes": "You have no votes notification",
+      "reminds": "You have no reminds notification"
+    },
     "verbs": {
       "vote_up": "voted up",
       "vote_down": "voted down",
@@ -1512,5 +1536,6 @@
   "copyToClipboard": "Copy to Clipboard",
   "emptyList": "Sorry the list is empty",
   "and": "and",
-  "others": "others"
+  "others": "others",
+  "newMoment": "New Moment"
 }

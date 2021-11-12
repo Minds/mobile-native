@@ -6,7 +6,7 @@ type ResizeOpts = {
 };
 
 class ImageManipulatorService {
-  private resize(uri: string, opts: ResizeOpts) {
+  resize(uri: string, opts: ResizeOpts) {
     return ImageManipulator.manipulateAsync(
       uri,
       [

@@ -93,9 +93,14 @@ export default class AttachmentStore {
     this.height = media.height;
 
     try {
-      const uploadPromise = attachmentService.attachMedia(media, extra, pct => {
-        this.setProgress(pct);
-      });
+      const resizedMedia = await attachmentService.processMedia(media);
+      const uploadPromise = attachmentService.attachMedia(
+        resizedMedia,
+        extra,
+        pct => {
+          this.setProgress(pct);
+        },
+      );
 
       // we need to defer the set because a cenceled promise could set it to false
       setTimeout(() => this.setUploading(true), 0);

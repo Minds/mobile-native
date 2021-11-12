@@ -1,10 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Boost action component renders correctly 1`] = `
-<View>
-  <View
-    onPress={[Function]}
-    style={
+<View
+  style={
+    Array [
+      Object {
+        "alignItems": "center",
+        "justifyContent": "center",
+        "position": "relative",
+      },
+      undefined,
       Array [
         Object {
           "flex": 1,
@@ -19,48 +24,104 @@ exports[`Boost action component renders correctly 1`] = `
         Object {
           "alignItems": "center",
         },
+      ],
+    ]
+  }
+>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    hitSlop={
+      Object {
+        "bottom": 6.666666666666666,
+        "left": 6.666666666666666,
+        "right": 6.666666666666666,
+        "top": 6.666666666666666,
+      }
+    }
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "justifyContent": "center",
+        },
+        Object {
+          "alignItems": "center",
+          "bottom": 0,
+          "justifyContent": "center",
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
       ]
     }
-    underlayColor="transparent"
+    testID="Boost"
   >
     <View
       style={
-        Array [
-          Object {
-            "flexDirection": "row",
-            "justifyContent": "flex-start",
-          },
-          Object {
-            "alignContent": "center",
-            "alignItems": "center",
-            "alignSelf": "center",
-            "justifyContent": "center",
-          },
-        ]
+        Object {
+          "transform": Array [
+            Object {
+              "scale": 1,
+            },
+          ],
+        }
       }
     >
-      <Text
-        allowFontScaling={false}
+      <View
         style={
-          Array [
-            Object {
-              "color": undefined,
-              "fontSize": 21,
-            },
-            Object {
-              "color": "#B8C1CA",
-            },
-            Object {
-              "fontFamily": "Material Design Icons",
-              "fontStyle": "normal",
-              "fontWeight": "normal",
-            },
-            Object {},
-          ]
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "center",
+          }
         }
       >
-        󰔵
-      </Text>
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "height": 20,
+              "justifyContent": "center",
+              "overflow": "hidden",
+              "width": 20,
+            }
+          }
+        >
+          <Text
+            allowFontScaling={false}
+            style={
+              Array [
+                Object {
+                  "color": "#AEB0B8",
+                  "fontSize": 20.8,
+                },
+                undefined,
+                Object {
+                  "fontFamily": "Material Design Icons",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                Object {},
+              ]
+            }
+          >
+            󰔵
+          </Text>
+        </View>
+      </View>
     </View>
   </View>
 </View>

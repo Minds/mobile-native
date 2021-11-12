@@ -110,6 +110,10 @@ const ChannelTopBar = observer(
           backgroundColor:
             backgroundColor || theme.bgPrimaryBackground.backgroundColor,
           paddingLeft: 70,
+          paddingRight: Platform.select({
+            ios: 50,
+            android: 100,
+          }),
         },
         backgroundOpacityAnimatedStyle,
       ],

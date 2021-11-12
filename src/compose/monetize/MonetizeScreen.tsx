@@ -8,19 +8,15 @@ import i18n from '../../common/services/i18n.service';
 import NavigationService from '../../navigation/NavigationService';
 import MenuItem from '../../common/components/menus/MenuItem';
 import MenuSubtitle from '../../common/components/menus/MenuSubtitle';
-import { useNavCallback } from '../PosterOptions';
+import { useNavCallback } from '../PosterOptions/PosterOptions';
 import Wrapper from './common/Wrapper';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
+import { useNavigation } from '@react-navigation/core';
 import { AppStackParamList } from '../../navigation/NavigationTypes';
 import mindsService from '../../common/services/minds-config.service';
 import MText from '../../common/components/MText';
 
 type MonetizeScreenRouteProp = RouteProp<AppStackParamList, 'MonetizeSelector'>;
-type MonetizeScreenNavigationProp = StackNavigationProp<
-  AppStackParamList,
-  'MonetizeSelector'
->;
 
 type PropsType = {
   route: MonetizeScreenRouteProp;
@@ -43,16 +39,17 @@ const IconItem = ({ isActive }: IconItemPropsType) => {
 };
 
 const MonetizeScreen = observer(({ route }: PropsType) => {
+  const navigation = useNavigation();
   const theme = ThemedStyles.style;
   const store = route.params.store;
 
   const support_tier_urn = mindsService.settings.plus.support_tier_urn;
 
-  const isCustomSelected =
-    store.wire_threshold &&
-    store.wire_threshold.support_tier &&
-    !store.wire_threshold.support_tier.public &&
-    store.wire_threshold.support_tier.urn !== support_tier_urn;
+  // const isCustomSelected =
+  //   store.wire_threshold &&
+  //   store.wire_threshold.support_tier &&
+  //   !store.wire_threshold.support_tier.public &&
+  //   store.wire_threshold.support_tier.urn !== support_tier_urn;
 
   const isMemembsershipSelected =
     store.wire_threshold &&
@@ -97,7 +94,7 @@ const MonetizeScreen = observer(({ route }: PropsType) => {
         <MenuSubtitle>{i18n.t('monetize.options')}</MenuSubtitle>
         <MenuItem
           item={{
-            onPress: useNavCallback('PlusMonetize', store),
+            onPress: useNavCallback('PlusMonetize', store, navigation),
             title: i18n.t('monetize.plus'),
             icon: <IconItem isActive={isPlusSelected} />,
           }}

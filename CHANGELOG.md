@@ -2,6 +2,13 @@
 
 Minds Mobile
 
+## 4.19.1 - 2021-11-04
+
+### Changed
+
+- Fix unresponsive UI in some Android devices
+- Fix discovery visual errors
+
 ## 4.19.0 - 2021-10-25
 
 ### Changed

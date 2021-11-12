@@ -379,6 +379,7 @@ exports[`LoginForm component should renders correctly 1`] = `
     text="Login"
   >
     <Text
+      onLayout={[Function]}
       style={
         Array [
           Object {
@@ -890,6 +891,7 @@ exports[`LoginForm component should renders correctly 1`] = `
               text="Continue"
             >
               <Text
+                onLayout={[Function]}
                 style={
                   Array [
                     Object {

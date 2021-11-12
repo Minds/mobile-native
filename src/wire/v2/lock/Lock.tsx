@@ -3,7 +3,6 @@ import { observer } from 'mobx-react';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
 import { View, StyleSheet } from 'react-native';
 import ThemedStyles from '../../../styles/ThemedStyles';
-import LockTag from './LockTag';
 import { SupportTiersType } from '../../WireTypes';
 import mindsService from '../../../common/services/minds-config.service';
 import Button from '../../../common/components/Button';

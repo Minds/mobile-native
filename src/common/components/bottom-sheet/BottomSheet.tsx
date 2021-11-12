@@ -12,6 +12,7 @@ const DEFAULT_SNAP_POINTS = [Math.floor(windowHeight * 0.8)];
 
 interface PropsType extends Omit<BottomSheetProps, 'snapPoints'> {
   snapPoints?: Array<number | string>;
+  onVisibilityChange?: (visible: boolean) => void;
 }
 
 /**
@@ -24,7 +25,10 @@ const MBottomSheet = forwardRef<BottomSheet, PropsType>((props, ref) => {
     props,
   );
 
-  const renderHandle = useCallback(() => <Handle />, []);
+  const renderHandle = useCallback(
+    handleProps => <Handle {...handleProps} />,
+    [],
+  );
 
   const renderBackdrop = useCallback(
     backdropProps => (
@@ -44,7 +48,6 @@ const MBottomSheet = forwardRef<BottomSheet, PropsType>((props, ref) => {
       ref={ref}
       index={-1}
       containerHeight={windowHeight}
-      snapPoints={DEFAULT_SNAP_POINTS}
       topInset={StatusBar.currentHeight || 0}
       handleComponent={renderHandle}
       backdropComponent={renderBackdrop}
@@ -53,6 +56,7 @@ const MBottomSheet = forwardRef<BottomSheet, PropsType>((props, ref) => {
       enableHandlePanningGesture={true}
       backgroundComponent={null}
       {...props}
+      snapPoints={props.snapPoints || DEFAULT_SNAP_POINTS}
       onAnimate={onAnimateHandler}
     />
   );

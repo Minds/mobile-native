@@ -4,7 +4,7 @@ import { View } from 'react-native';
 import { WalletStoreType } from '../createWalletStore';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import i18n from '../../../common/services/i18n.service';
-import { UniqueOnChainStoreType, isConnected } from '../../v3/useUniqueOnchain';
+import { UniqueOnChainStoreType } from '../../v3/useUniqueOnchain';
 import MenuItem from '../../../common/components/menus/MenuItem';
 import { observer } from 'mobx-react';
 import MenuSubtitle from '~/common/components/menus/MenuSubtitle';

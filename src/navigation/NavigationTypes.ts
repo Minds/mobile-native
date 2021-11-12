@@ -10,6 +10,7 @@ import type { PortraitBarItem } from '../portrait/createPortraitStore';
 import type BlogModel from '../blogs/BlogModel';
 import { TwoFactorStore } from '../auth/twoFactorAuth/createTwoFactorStore';
 import { TwoFactorType } from '../common/services/api.service';
+import type GroupModel from '~/groups/GroupModel';
 
 type AnyType = any;
 
@@ -40,6 +41,16 @@ export type InternalStackParamList = {
 };
 
 export type RootStackParamList = {
+  Capture: {
+    portrait?: boolean;
+    noText?: boolean;
+    isRemind?: boolean;
+    entity?: any;
+    text?: string;
+    media?: any;
+    start?: boolean;
+    mode?: 'photo' | 'video' | 'text';
+  };
   MultiUserScreen: {};
   ChooseBrowserModal: {
     onSelected?: () => void;
@@ -150,16 +161,7 @@ export type AppStackParamList = {
   BoostPostScreen: { entity: ActivityModel };
   ActivityFullScreenNav: {};
   Newsfeed: {};
-  Capture: {
-    portrait?: boolean;
-    noText?: boolean;
-    isRemind?: boolean;
-    entity?: any;
-    text?: string;
-    media?: any;
-    start?: boolean;
-    mode?: 'photo' | 'video' | 'text';
-  };
+  Compose: {};
   Main: {};
   Account: {};
   Network: {};
@@ -237,6 +239,7 @@ export type AppStackParamList = {
   };
   Activity: {
     entity?: ActivityModel;
+    group?: GroupModel;
     guid?: string;
     scrollToBottom?: boolean;
     focusedUrn?: string;

@@ -7,6 +7,7 @@ import ThemedStyles, { useMemoStyle } from '../../../styles/ThemedStyles';
 export type MenuItemItem = {
   onPress?: () => void;
   title: string | JSX.Element;
+  content?: JSX.Element;
   icon?:
     | {
         name: string;
@@ -74,9 +75,12 @@ export default function ({
       underlayColor="transparent"
       testID={testID}>
       <ListItem.Content>
-        <ListItem.Title style={[baseTitleStyle, titleStyle]}>
-          {item.title}
-        </ListItem.Title>
+        {Boolean(item.title) && (
+          <ListItem.Title style={[baseTitleStyle, titleStyle]}>
+            {item.title}
+          </ListItem.Title>
+        )}
+        {item.content}
       </ListItem.Content>
       {chevronStyle && <ListItem.Chevron {...chevronStyle} />}
       {isIconElement && item.icon}

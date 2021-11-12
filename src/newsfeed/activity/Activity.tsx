@@ -19,7 +19,6 @@ import blockListService from '../../common/services/block-list.service';
 import i18n from '../../common/services/i18n.service';
 import ActivityModel from '../ActivityModel';
 import ThemedStyles from '../../styles/ThemedStyles';
-import type FeedStore from '../../common/stores/FeedStore';
 import sessionService from '../../common/services/session.service';
 import NavigationService from '../../navigation/NavigationService';
 import { showNotification } from '../../../AppMessages';

@@ -11,7 +11,7 @@ import {
   Dimensions,
   PlatformIOSStatic,
 } from 'react-native';
-import PerformanceScreen from '../performance/PerformanceScreen';
+// import PerformanceScreen from '../performance/PerformanceScreen';
 import NewsfeedScreen from '../newsfeed/NewsfeedScreen';
 import NotificationsScreen from '../notifications/v3/NotificationsScreen';
 import ThemedStyles, { useMemoStyle } from '../styles/ThemedStyles';
@@ -26,11 +26,13 @@ import { InternalStack } from '../navigation/NavigationStack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import TopShadow from '../common/components/TopShadow';
 // import sessionService from '../common/services/session.service';
-import { useStores } from '../common/hooks/use-stores';
 import ChatTabIcon from '../chat/ChatTabIcon';
 import PressableScale from '~/common/components/PressableScale';
+import TabChatPreModal, { ChatModalHandle } from './TabChatPreModal';
+import preventDoubleTap from '~/common/components/PreventDoubleTap';
 // import navigationService from '../navigation/NavigationService';
 
+const DoubleTapSafeTouchable = preventDoubleTap(TouchableOpacity);
 const isIOS = Platform.OS === 'ios';
 
 export type TabParamList = {
@@ -60,7 +62,7 @@ const Tab = createBottomTabNavigator<TabParamList>();
 const TabBar = ({ state, descriptors, navigation }) => {
   const focusedOptions = descriptors[state.routes[state.index].key].options;
   const insets = useSafeAreaInsets();
-  const { chat } = useStores();
+  const chatModal = React.useRef<ChatModalHandle>(null);
 
   const bottomInset = {
     paddingBottom: insets.bottom
@@ -87,6 +89,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
   return (
     <View style={containerStyle}>
       {!isIOS && <TopShadow setting={shadowOpt} />}
+      <TabChatPreModal ref={chatModal} />
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const focused = state.index === index;
@@ -100,7 +103,8 @@ const TabBar = ({ state, descriptors, navigation }) => {
           });
 
           if (route.name === 'MessengerTab') {
-            chat.openChat();
+            chatModal.current?.showModal();
+
             return;
           }
 
@@ -143,7 +147,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
 const Tabs = observer(function ({ navigation }) {
   const theme = ThemedStyles.style;
 
-  const navToCapture = useCallback(() => navigation.push('Capture'), [
+  const navToCapture = useCallback(() => navigation.push('Compose'), [
     navigation,
   ]);
 
@@ -181,7 +185,7 @@ const Tabs = observer(function ({ navigation }) {
           options={{
             tabBarTestID: 'CaptureTabButton',
             tabBarButton: props => (
-              <TouchableOpacity
+              <DoubleTapSafeTouchable
                 {...props}
                 onPress={navToCapture}
                 onLongPress={navToVideoCapture}

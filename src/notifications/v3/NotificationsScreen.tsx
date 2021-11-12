@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { observer } from 'mobx-react';
 import { View, FlatList, ViewToken } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -13,6 +13,8 @@ import UserModel from '../../channel/UserModel';
 import EmptyList from '../../common/components/EmptyList';
 import NotificationPlaceHolder from './notification/NotificationPlaceHolder';
 import MText from '../../common/components/MText';
+import InteractionsBottomSheet from '~/common/components/interactions/InteractionsBottomSheet';
+import sessionService from '~/common/services/session.service';
 
 type PropsType = {
   navigation?: any;
@@ -57,14 +59,14 @@ const updateState = (newData: NotificationList, oldData: NotificationList) => {
   return { notifications: [] };
 };
 
-const Empty = <EmptyList />;
-
 const NotificationsScreen = observer(({ navigation }: PropsType) => {
   const [isRefreshing, setRefreshing] = useState(false);
   const theme = ThemedStyles.style;
   const { notifications } = useStores();
+  const interactionsBottomSheetRef = useRef<any>();
+  const filter = notifications.filter;
   const params = {
-    filter: notifications.filter,
+    filter,
     limit: 15,
     offset: notifications.offset,
   };
@@ -88,9 +90,8 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
 
   const refresh = React.useCallback(() => {
     notifications.setOffset('');
-    setResult(null);
     fetch(params);
-  }, [notifications, setResult, fetch, params]);
+  }, [notifications, fetch, params]);
 
   const handleListRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -103,9 +104,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
     if (result) {
       refresh();
     }
-  }, [notifications, refresh]);
-
-  //useFocusEffect(onFocus);
+  }, [notifications, refresh, result]);
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener(
@@ -155,7 +154,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
       );
     }
 
-    if (loading) {
+    if (loading && !isRefreshing) {
       return (
         <View>
           <NotificationPlaceHolder />
@@ -166,10 +165,29 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
           <NotificationPlaceHolder />
         </View>
       );
-    } else {
-      return Empty;
     }
-  }, [error, loading, fetch]);
+
+    return <EmptyList text={i18n.t(`notification.empty.${filter}`)} />;
+  }, [error, loading, fetch, isRefreshing, filter]);
+
+  const user = sessionService.getUser();
+
+  const renderItem = useCallback((row: any): React.ReactElement => {
+    const notification = row.item;
+
+    return (
+      <ErrorBoundary
+        message="Can't show this notification"
+        containerStyle={ThemedStyles.style.borderBottomHair}>
+        <NotificationItem
+          notification={notification}
+          onShowSubscribers={() =>
+            interactionsBottomSheetRef.current?.show('subscribers')
+          }
+        />
+      </ErrorBoundary>
+    );
+  }, []);
 
   const data = result?.notifications || [];
 
@@ -189,8 +207,16 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
         onRefresh={handleListRefresh}
         refreshing={isRefreshing}
         onViewableItemsChanged={onViewableItemsChanged}
+        contentContainerStyle={styles.containerStyle}
         viewabilityConfig={viewabilityConfig}
         ListEmptyComponent={ListEmptyComponent}
+      />
+      <InteractionsBottomSheet
+        entity={user}
+        ref={interactionsBottomSheetRef}
+        withoutInsets
+        snapPoints={['90%']}
+        keepOpen={false}
       />
     </View>
   );
@@ -198,21 +224,10 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
 
 const keyExtractor = (item: NotificationModel, index) => `${item.urn}-${index}`;
 
-const renderItem = (row: any): React.ReactElement => {
-  const notification = row.item;
-
-  return (
-    <ErrorBoundary
-      message="Can't show this notification"
-      containerStyle={ThemedStyles.style.borderBottomHair}>
-      <NotificationItem notification={notification} />
-    </ErrorBoundary>
-  );
-};
-
 export default NotificationsScreen;
 
 const styles = ThemedStyles.create({
+  containerStyle: { flexGrow: 1 },
   container: ['bgPrimaryBackground', 'flexContainer'],
   errorStyle: [
     'colorSecondaryText',

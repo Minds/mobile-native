@@ -3,7 +3,7 @@ import Filter from './Filter';
 import i18n from '../../../../common/services/i18n.service';
 import { TokensTransactionsListStoreType } from '../../../v2/TransactionList/createTokensTransactionsStore';
 import { AvatarIcon } from '../../../v2/TransactionList/components/Icons';
-import { B2, B3, Row, Spacer } from '~ui';
+import { B2, Row, Spacer } from '~ui';
 import capitalize from '~/common/helpers/capitalize';
 
 type PropsType = {

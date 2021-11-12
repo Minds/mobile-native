@@ -1,8 +1,6 @@
-import React, { useEffect, useCallback } from 'react';
-
+import React, { useCallback } from 'react';
 import { View } from 'react-native';
 import DiscoveryUserNew from '../../discovery/DiscoveryUserNew';
-
 import ThemedStyles from '../../styles/ThemedStyles';
 import UserModel from '../../channel/UserModel';
 import { observer } from 'mobx-react';
@@ -19,8 +17,6 @@ type PropsType = {
 
 const SearchResultComponent = observer(
   ({ navigation, localStore }: PropsType) => {
-    const theme = ThemedStyles.style;
-
     const renderUser = useCallback(
       (user, index) => {
         return (
@@ -43,14 +39,13 @@ const SearchResultComponent = observer(
 
     const renderItem = useCallback(
       (item, index) => {
-        const theme = ThemedStyles.style;
         if (item.user) {
           return renderUser(item.user, index);
         } else {
           if (typeof item === 'string') {
             return (
               <MenuItem
-                containerItemStyle={theme.bgTransparent}
+                containerItemStyle={styles.historyItem}
                 item={{
                   onPress: () => localStore.setSearchesAndQueryDiscovery(item),
                   title: item,
@@ -85,9 +80,12 @@ const SearchResultComponent = observer(
 
 const containerStyle = ThemedStyles.combine(
   'bgPrimaryBackground',
-  'padding2x',
   'flexContainer',
 );
+
+const styles = ThemedStyles.create({
+  historyItem: ['bgTransparent', { borderTopWidth: 0 }],
+});
 
 export default withErrorBoundary(
   SearchResultComponent,

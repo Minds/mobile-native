@@ -67,6 +67,7 @@ const ICON_MAP: {
   close: {
     font: 'MaterialIcons',
     name: 'close',
+    ratio: 0.92,
   },
   founder: {
     font: 'MaterialIcons',
@@ -101,6 +102,11 @@ const ICON_MAP: {
     name: 'repeat',
     ratio: 1.04,
     top: -1,
+  },
+  boost: {
+    font: 'MaterialCommunityIcons',
+    name: 'trending-up',
+    ratio: 1.04,
   },
   share: {
     font: 'MaterialIcons',
@@ -210,6 +216,18 @@ const ICON_MAP: {
     font: 'Fontisto',
     name: 'hashtag',
     ratio: 0.86,
+  },
+  'close-circle': {
+    font: 'MaterialCommunityIcons',
+    name: 'close-circle',
+  },
+  edit: {
+    font: 'Feather',
+    name: 'edit',
+  },
+  download: {
+    font: 'Feather',
+    name: 'download',
   },
 };
 

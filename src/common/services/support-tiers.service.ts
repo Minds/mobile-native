@@ -72,7 +72,7 @@ class SupportTiersService {
     description: string,
   ): Promise<SupportTiersType | undefined> {
     const response = <SupportTiersResponse>await api.post(
-      `${this.endpoint}/${urn}`,
+      `${this.endpoint}/${encodeURIComponent(urn)}`,
       {
         name,
         description,
@@ -83,7 +83,7 @@ class SupportTiersService {
 
   async delete(urn: string): Promise<'success' | 'error'> {
     const response = <SupportTiersResponse>(
-      await api.delete(`${this.endpoint}/${urn}`)
+      await api.delete(`${this.endpoint}/${encodeURIComponent(urn)}`)
     );
     return response.status;
   }

@@ -20,7 +20,7 @@ import FadeView from '../../common/components/FadeView';
 import JoinMembershipScreen from '../../wire/v2/tiers/JoinMembership';
 import FastImage from 'react-native-fast-image';
 import MText from '../../common/components/MText';
-import { B1, B2, Column, H4, Row } from '~ui';
+import { B2, Column, H4, Row } from '~ui';
 
 const CENTERED = false;
 

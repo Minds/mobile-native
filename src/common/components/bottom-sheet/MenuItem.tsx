@@ -4,6 +4,7 @@ import { Icon, IconType } from 'react-native-elements';
 import ThemedStyles, { useStyle } from '../../../styles/ThemedStyles';
 import MPressable from '../MPressable';
 import MText from '../MText';
+import { B1 } from '~ui';
 
 export type MenuItemProps = {
   title: string | JSX.Element;
@@ -26,7 +27,7 @@ const MenuItem = ({
   textStyle,
   testID = '',
 }: MenuItemProps) => {
-  iconSize = iconSize || 25;
+  iconSize = iconSize || 24;
 
   const txtStyle = useStyle(styles.menuText, textStyle);
   const containerStyle = useStyle(styles.menuContainer, style);
@@ -43,7 +44,11 @@ const MenuItem = ({
           />
         </View>
       )}
-      <MText style={txtStyle}>{title}</MText>
+      {textStyle ? (
+        <MText style={txtStyle}>{title}</MText>
+      ) : (
+        <B1 font="medium">{title}</B1>
+      )}
     </MPressable>
   );
 };
@@ -56,7 +61,7 @@ const styles = ThemedStyles.create({
     'alignCenter',
     'rowJustifyStart',
     'paddingVertical3x',
-    'paddingHorizontal5x',
+    'paddingHorizontal4x',
   ],
   menuText: ['fontL', 'fontMedium'],
 });

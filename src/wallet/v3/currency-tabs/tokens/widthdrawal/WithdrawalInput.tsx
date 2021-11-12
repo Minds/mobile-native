@@ -1,6 +1,6 @@
 import { observer, useLocalStore } from 'mobx-react';
 import React, { useEffect } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 import { WCStore } from '../../../../../blockchain/v2/walletconnect/WalletConnectContext';
 import Button from '../../../../../common/components/Button';
 import InputContainer from '../../../../../common/components/InputContainer';

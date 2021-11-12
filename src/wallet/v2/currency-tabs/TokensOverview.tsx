@@ -1,7 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
 import { observer } from 'mobx-react';
-import ThemedStyles from '../../../styles/ThemedStyles';
 import { WalletStoreType } from '../createWalletStore';
 import MenuSubtitle from '../../../common/components/menus/MenuSubtitle';
 import MenuItem from '../../../common/components/menus/MenuItem';
@@ -12,7 +10,7 @@ import useWalletConnect from '../../../blockchain/v2/walletconnect/useWalletConn
 import { navToTokens } from '../../../buy-tokens/BuyTokensScreen';
 import { useNavigation } from '@react-navigation/core';
 
-import { B1, B2, Row, Column, Spacer } from '~ui';
+import { B1, B2, Row, Column } from '~ui';
 
 type PropsType = {
   walletStore: WalletStoreType;
@@ -20,7 +18,8 @@ type PropsType = {
 };
 
 const TokensOverview = observer(({ walletStore }: PropsType) => {
-  const wc = useWalletConnect();
+  useWalletConnect();
+
   const navigation = useNavigation();
 
   const walletActions = [

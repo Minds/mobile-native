@@ -38,8 +38,9 @@ import BottomSheetModal from '../common/components/bottom-sheet/BottomSheetModal
 import MenuItem, {
   MenuItemProps,
 } from '../common/components/bottom-sheet/MenuItem';
+import type GroupModel from './GroupModel';
 
-export const GroupContext = React.createContext(null);
+export const GroupContext = React.createContext<GroupModel | null>(null);
 
 /**
  * Groups view screen

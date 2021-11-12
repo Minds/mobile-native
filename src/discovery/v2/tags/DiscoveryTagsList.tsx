@@ -17,6 +17,8 @@ interface Props {
   type: 'your' | 'trending';
   plus?: boolean;
   store: DiscoveryV2Store;
+  style?: any;
+  showManageTags?: boolean;
 }
 
 /**
@@ -28,7 +30,7 @@ const keyExtractor = item => String(item.value);
  * Discovery List Item
  */
 export const DiscoveryTagsList = withErrorBoundary(
-  observer(({ plus, store, type }: Props) => {
+  observer(({ plus, store, type, showManageTags = true, style }: Props) => {
     const navigation = useNavigation<StackNavigationProp<any>>();
     const ref = React.useRef<BottomSheetModal>();
 
@@ -142,7 +144,9 @@ export const DiscoveryTagsList = withErrorBoundary(
       <View style={ThemedStyles.style.flexContainer}>
         <SectionList
           renderItem={renderItem}
-          renderSectionHeader={SectionHeaderPatrial}
+          renderSectionHeader={
+            showManageTags ? SectionHeaderPatrial : undefined
+          }
           ListEmptyComponent={EmptyPartial}
           onRefresh={onRefresh}
           refreshing={store.refreshing}
@@ -153,6 +157,7 @@ export const DiscoveryTagsList = withErrorBoundary(
             },
           ]}
           keyExtractor={keyExtractor}
+          style={style}
         />
       </View>
     );

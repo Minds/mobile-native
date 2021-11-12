@@ -97,13 +97,13 @@ const createTwoFactorStore = () => ({
   async disable2fa(onComplete: Function, password: string) {
     try {
       this.error = false;
-      let response;
+
       if (this.appAuthEnabled) {
-        response = <any>await apiService.delete('api/v3/security/totp', {
+        <any>await apiService.delete('api/v3/security/totp', {
           code: this.appCode,
         });
       } else {
-        response = await twoFactorAuthenticationService.remove(password);
+        await twoFactorAuthenticationService.remove(password);
       }
       this.appAuthEnabled = false;
       this.smsAuthEnabled = false;

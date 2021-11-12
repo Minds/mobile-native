@@ -29,11 +29,8 @@ function ShowHide({ children, ...other }) {
 
 @observer
 export default class CaptureFab extends Component<PropsType> {
-  /**
-   * Nav to activity full screen
-   */
   navToCapture = () => {
-    this.props.navigation.push('Capture', {
+    this.props.navigation.push('Compose', {
       group: this.props.group,
       parentKey: this.props.route.key,
     });
@@ -43,7 +40,10 @@ export default class CaptureFab extends Component<PropsType> {
     return (
       <AnimatePresence>
         {this.props.visible && (
-          <ShowHide>
+          <ShowHide
+            style={
+              settingsStore.leftHanded ? styles.leftSide : styles.rightSide
+            }>
             <Icon
               raised
               reverse
@@ -51,9 +51,6 @@ export default class CaptureFab extends Component<PropsType> {
               type="material"
               color="#4690DF"
               size={28}
-              containerStyle={
-                settingsStore.leftHanded ? styles.leftSide : styles.rightSide
-              }
               iconProps={iconProps}
               onPress={() => this.navToCapture()}
               testID={this.props.testID}

@@ -238,12 +238,11 @@ export default class MediaView extends Component<PropsType> {
     const media = this.showMedia();
 
     // dereference to force re render on change (mobx)
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const paywall = this.props.entity.paywall;
+    this.props.entity.paywall;
 
     if (this.props.entity instanceof CommentModel) {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const attachment = this.props.entity.attachment_guid;
+      // dereference to force re render on change (mobx)
+      this.props.entity.attachment_guid;
     }
 
     if (!media) return null;

@@ -13,7 +13,14 @@ import {
 } from '~styles/Tokens';
 
 export const Avatar = withSpacer(
-  ({ source, size = AVATAR_SIZE_DEFAULT, border, icon, onPress }: any) => {
+  ({
+    source,
+    size = AVATAR_SIZE_DEFAULT,
+    border,
+    icon,
+    onPress,
+    children,
+  }: any) => {
     let iconView: any = null;
 
     if (icon) {
@@ -24,6 +31,7 @@ export const Avatar = withSpacer(
       <View style={border && styles[border]}>
         <FastImage source={source} style={styles[size]} />
         {iconView}
+        {children}
       </View>
     );
 
