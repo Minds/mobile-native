@@ -138,6 +138,7 @@ exports[`renders correctly 1`] = `
               "borderTopRightRadius": 20,
               "flexDirection": "column",
               "justifyContent": "center",
+              "minHeight": 300,
               "paddingBottom": 50,
               "width": "100%",
             },
@@ -250,147 +251,21 @@ exports[`renders correctly 1`] = `
         </View>
         <View
           style={
-            Array [
-              Object {
-                "paddingLeft": 16,
-              },
-              Object {
-                "paddingTop": 10,
-              },
-              Object {
-                "backgroundColor": "#1A2025",
-              },
-              Object {
-                "borderTopWidth": 1,
-              },
-              Object {
-                "borderBottomWidth": 1,
-              },
-              Object {
-                "borderColor": "#414C57",
-              },
-              Array [
-                Object {
-                  "backgroundColor": "#1A2025",
-                },
-                Object {
-                  "borderColor": "#414C57",
-                },
-              ],
-            ]
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "transparent",
+              "flex": 1,
+              "justifyContent": "center",
+              "minHeight": 100,
+            }
           }
         >
-          <View
-            style={
-              Object {
-                "paddingBottom": 10,
-                "paddingTop": 5,
-              }
-            }
-          >
-            <View>
-              <View
-                style={
-                  Object {
-                    "alignItems": "stretch",
-                    "flexDirection": "row",
-                  }
-                }
-              >
-                <Text
-                  style={
-                    Array [
-                      Object {
-                        "color": "#FFFFFF",
-                      },
-                      Object {
-                        "fontFamily": "Roboto",
-                      },
-                      Array [
-                        Object {
-                          "fontFamily": "Roboto",
-                          "fontSize": 16,
-                          "fontWeight": "400",
-                          "marginBottom": 0,
-                        },
-                        Object {
-                          "color": "#B8C1CA",
-                        },
-                        Object {
-                          "color": "#FFFFFF",
-                        },
-                      ],
-                    ]
-                  }
-                >
-                  Enter the characters above
-                </Text>
-              </View>
-            </View>
-            <TextInput
-              allowFontScaling={true}
-              autoCapitalize="none"
-              autofocus={true}
-              containerStyle={
-                Array [
-                  Object {
-                    "backgroundColor": "#1A2025",
-                  },
-                  Object {
-                    "borderColor": "#414C57",
-                  },
-                ]
-              }
-              keyboardAppearance="dark"
-              labelStyle={
-                Object {
-                  "color": "#FFFFFF",
-                }
-              }
-              onChangeText={[Function]}
-              onEndEditing={[Function]}
-              placeholder=""
-              placeholderTextColor="#444"
-              rejectResponderTermination={true}
-              returnKeyType="done"
-              style={
-                Array [
-                  Object {
-                    "backgroundColor": "transparent",
-                    "borderColor": "#414C57",
-                    "borderRadius": 2,
-                    "borderWidth": 1,
-                    "color": "#FFFFFF",
-                    "fontFamily": "Roboto",
-                    "fontSize": 16,
-                    "lineHeight": 21,
-                  },
-                  Array [
-                    Object {
-                      "borderWidth": 0,
-                      "marginBottom": 7,
-                      "paddingHorizontal": 0,
-                      "paddingVertical": 8,
-                    },
-                    Object {
-                      "paddingLeft": 1,
-                    },
-                    Object {
-                      "fontSize": 18,
-                    },
-                    Object {
-                      "color": "#FFFFFF",
-                    },
-                    Object {
-                      "color": "#FFFFFF",
-                    },
-                  ],
-                ]
-              }
-              testID="captchaInput"
-              underlineColorAndroid="transparent"
-            />
-          </View>
+          <ActivityIndicator
+            animating={true}
+            color="#1B85D6"
+            hidesWhenStopped={true}
+            size="large"
+          />
         </View>
       </View>
     </View>
