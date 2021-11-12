@@ -151,9 +151,17 @@ const createStore = ({
     if (!data) {
       data = hookOptions?.params || {};
     }
-    let { dataField, updateStrategy, map, updateState } = Object.assign(
+    let {
+      updateState,
+      offsetField,
+      dataField,
+      updateStrategy,
+      map,
+    } = Object.assign(
       {
         updateState: defaultUpdateState,
+        offsetField: 'load-next',
+        dataField: 'entities',
       },
       hookOptions,
       opts,
@@ -174,10 +182,14 @@ const createStore = ({
     this.setLoading(true);
     this.setError(null);
     try {
-      //@ts-ignore
       const result = await (method === 'get'
         ? apiService.get(url, data, this)
         : apiService.post(url, data));
+
+      // hack to remove the offset if the result was empty
+      if (dataField && result[dataField]?.length === 0) {
+        delete result[offsetField];
+      }
 
       const state = updateState(result, this.result);
       this.setResult(state);

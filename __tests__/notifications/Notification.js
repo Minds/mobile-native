@@ -10,7 +10,6 @@ import i18n from '../../src/common/services/i18n.service.ts';
 
 jest.mock('react-native-system-setting');
 jest.mock('react-native-silent-switch');
-
 jest.mock('../../src/common/services/session.service.ts');
 jest.mock('../../src/common/services/i18n.service.ts');
 
