@@ -1261,7 +1261,8 @@
     "categories": "NSFW Categories",
     "description1": "If this post contains content that is NSFW (Not Safe for Work)  it is your responsibility to tag it accordingly.",
     "description2": "See guidelines for further information.",
-    "button": "NSFW"
+    "button": "NSFW",
+    "showContent": "Show NSFW content in results"
   },
   "update": {
     "title": "Updating to v{{version}}",

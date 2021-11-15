@@ -68,6 +68,7 @@ export const DiscoverySearchHeader = observer(() => {
         />
         {shouldRenderFilter && (
           <FeedFilter
+            nsfw
             store={store}
             containerStyles={styles.feedFilterContainer}
             textStyle={ThemedStyles.style.colorSecondaryText}
