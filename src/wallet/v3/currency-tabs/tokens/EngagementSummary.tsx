@@ -7,7 +7,6 @@ import ActivityMultiplier from './multipliers/ActivityMultiplier';
 import { SummaryLabel } from './LiquiditySummary';
 import { Reward } from './createTokensTabStore';
 import capitalize from '../../../../common/helpers/capitalize';
-import MText from '../../../../common/components/MText';
 
 type PropsType = {
   contributionScores: ContributionMetric[];
@@ -15,7 +14,6 @@ type PropsType = {
 };
 
 const ContributionScores = ({ metric }: { metric: ContributionMetric }) => {
-  const theme = ThemedStyles.style;
   return (
     <Container>
       <Row>

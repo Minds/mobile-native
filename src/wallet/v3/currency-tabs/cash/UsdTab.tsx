@@ -1,6 +1,5 @@
 import React, { useRef } from 'react';
 import { observer } from 'mobx-react';
-import { View } from 'react-native';
 import TopBarButtonTabBar, {
   ButtonTabType,
 } from '../../../../common/components/topbar-tabbar/TopBarButtonTabBar';

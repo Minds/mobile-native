@@ -4,7 +4,6 @@ import {
   TouchableOpacity,
   StyleProp,
   TextStyle,
-  StyleSheet,
   ViewStyle,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';

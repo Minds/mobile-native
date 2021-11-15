@@ -4,7 +4,6 @@ import {
   ExtendedEntity,
   currencyType,
 } from '../TransactionsListTypes';
-import ThemedStyles from '../../../../styles/ThemedStyles';
 import { AvatarIcon, DeltaIcon } from './Icons';
 import i18n from '../../../../common/services/i18n.service';
 import capitalize from '../../../../common/helpers/capitalize';
@@ -57,8 +56,6 @@ const getTypeStringAndIcon = (
   currency: currencyType,
   navigation: any,
 ) => {
-  const theme = ThemedStyles.style;
-
   let typeString: JSX.Element, avatar: JSX.Element;
   switch (entity.superType) {
     case 'reward':

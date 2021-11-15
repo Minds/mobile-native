@@ -2,17 +2,12 @@ import { observer } from 'mobx-react';
 import React from 'react';
 import { Pressable, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import MText from '../../common/components/MText';
 import number from '../../common/helpers/number';
 import useApiFetch from '../../common/hooks/useApiFetch';
 import ThemedStyles from '~styles/ThemedStyles';
 import { B3 } from '~ui';
 
 export default observer(function TokenPrice() {
-  const theme = ThemedStyles.style;
-  const textStyles = [theme.colorSecondaryText, theme.fontM, theme.fontMedium];
-  const textStylesBold = [theme.colorPrimaryText, theme.bold];
-
   const { result } = useApiFetch<{ minds: number }>(
     'api/v3/blockchain/token-prices',
     {
