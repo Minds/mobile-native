@@ -9,14 +9,15 @@ import ThemedStyles from '~/styles/ThemedStyles';
 import i18n from '../../services/i18n.service';
 import QuestionSlider from './QuestionSlider';
 import { useAnswers } from './useAnswers';
-import { IQuestion, useQuestions } from './useQuestions';
+import { IQuestion } from './useQuestions';
 
 type PropsType = {
   onSubmit: () => void;
+  questions?: IQuestion[];
+  loading: boolean;
 };
 
-const Questions = observer(({ onSubmit }: PropsType) => {
-  const { result, loading } = useQuestions();
+const Questions = observer(({ onSubmit, ...props }: PropsType) => {
   const [questions, setQuestions] = useState<IQuestion[]>([]);
   const { answer, loading: answering } = useAnswers(questions);
   const height = useDimensions().window.height;
@@ -24,10 +25,10 @@ const Questions = observer(({ onSubmit }: PropsType) => {
 
   // #region effects
   useEffect(() => {
-    if (result?.questions.length && !questions.length) {
-      setQuestions(result?.questions);
+    if (props.questions?.length && !questions.length) {
+      setQuestions(props.questions);
     }
-  }, [questions.length, result]);
+  }, [questions.length, props.questions]);
   // #endregion
 
   // #region methods
@@ -55,7 +56,7 @@ const Questions = observer(({ onSubmit }: PropsType) => {
   }, [answer, onSubmit]);
   // #endregion
 
-  if (loading && !questions.length) {
+  if (props.loading && !questions.length) {
     return <CenteredLoading />;
   }
 

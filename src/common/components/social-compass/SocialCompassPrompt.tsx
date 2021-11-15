@@ -7,6 +7,7 @@ import { BottomSheetModal } from '../../components/bottom-sheet';
 import Button from '../../components/Button';
 import i18n from '../../services/i18n.service';
 import Questions from './Questions';
+import { useQuestions } from './useQuestions';
 
 type PropsType = {};
 
@@ -15,6 +16,7 @@ const SOCIAL_COMPASS_QUESTIONNAIRE_DISMISSED_KEY =
 
 const SocialCompassPrompt = ({}: PropsType) => {
   const ref = React.useRef<any>();
+  const { result: questionsResult, loading } = useQuestions();
   const [dismissed, setDismissed] = useState<boolean | undefined>(undefined);
 
   // #region methods
@@ -30,13 +32,22 @@ const SocialCompassPrompt = ({}: PropsType) => {
   }, []);
   // #endregion
 
+  // determine whether we've already answered the questions or not
   useEffect(() => {
-    storageService
-      .getItem(SOCIAL_COMPASS_QUESTIONNAIRE_DISMISSED_KEY)
-      .then(_dismissed => setDismissed(Boolean(_dismissed)));
-  }, []);
+    if (!questionsResult) {
+      return;
+    }
 
-  if (dismissed === true) {
+    if (questionsResult.answersProvided) {
+      setDismissed(true);
+    } else {
+      storageService
+        .getItem(SOCIAL_COMPASS_QUESTIONNAIRE_DISMISSED_KEY)
+        .then(_dismissed => setDismissed(Boolean(_dismissed)));
+    }
+  }, [questionsResult]);
+
+  if (dismissed !== false) {
     return null;
   }
 
@@ -60,7 +71,11 @@ const SocialCompassPrompt = ({}: PropsType) => {
         style={ThemedStyles.style.positionAbsoluteTopRight}
       />
       <BottomSheetModal ref={ref} title={i18n.t('socialCompass.callToAction')}>
-        <Questions onSubmit={dismiss} />
+        <Questions
+          questions={questionsResult?.questions}
+          loading={loading}
+          onSubmit={dismiss}
+        />
       </BottomSheetModal>
     </Column>
   );

@@ -15,11 +15,11 @@ export interface IQuestion {
 }
 
 export const useQuestions = () => {
-  return useApiFetch<{ result; questions: IQuestion[] }>(
+  return useApiFetch<{ questions: IQuestion[]; answersProvided: boolean }>(
     'api/v3/social-compass/questions',
     {
       dataField: 'questions',
-      persist: true,
+      persist: false,
     },
   );
 };
