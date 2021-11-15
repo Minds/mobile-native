@@ -3,12 +3,7 @@ import { StyleSheet } from 'react-native';
 import { Row } from './Row';
 import { Spacer } from './Spacer';
 import ThemedStyles from '~/styles/ThemedStyles';
-import {
-  HairlinePropType,
-  RowPropType,
-  ColumnPropType,
-  SpacerPropType,
-} from './types';
+import { HairlinePropType, RowPropType, SpacerPropType } from './types';
 
 export const HairlineSpacer = ({
   noBorder,
@@ -27,7 +22,7 @@ export const HairlineRow = ({
 export const HairlineColumn = ({
   noBorder,
   ...more
-}: HairlinePropType & ColumnPropType & SpacerPropType) => {
+}: HairlinePropType & RowPropType & SpacerPropType) => {
   return <Row containerStyle={!noBorder && styles.border} {...more} />;
 };
 

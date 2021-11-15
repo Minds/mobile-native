@@ -1,8 +1,6 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import { StyleProp, View, ViewStyle } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import MText from '../../../../common/components/MText';
+import { ActivityIndicator, StyleProp, View, ViewStyle } from 'react-native';
 
 import SegmentedButton from '../../../../common/components/SegmentedButton';
 import i18n from '../../../../common/services/i18n.service';
@@ -12,6 +10,7 @@ import {
   UniqueOnChainStoreType,
   isConnected as isWalletConnected,
 } from '../../useUniqueOnchain';
+import { B2, Icon, Row } from '~ui';
 
 type PropsType = {
   containerStyle?: ViewStyle | Array<ViewStyle>;
@@ -21,9 +20,9 @@ type PropsType = {
   style?: StyleProp<ViewStyle>;
 };
 
+const B2C = props => <B2 flat font="medium" {...props} />;
+
 const OnchainButton = observer((props: PropsType) => {
-  const theme = ThemedStyles.style;
-  const textStyles = [theme.colorPrimaryText, theme.fontM, theme.fontMedium];
   const hasReceiver =
     props.walletStore.wallet.receiver &&
     props.walletStore.wallet.receiver.address;
@@ -33,40 +32,39 @@ const OnchainButton = observer((props: PropsType) => {
   const children: any = {};
 
   children.childrenButton1 = (
-    <MText style={[textStyles]}>
-      {props.walletStore.wallet.eth.balance} ETH
-    </MText>
+    <B2C>{props.walletStore.wallet.eth.balance} ETH</B2C>
   );
 
   children.childrenButton2 = !isConnected ? (
-    <MText style={textStyles}>
-      <MText style={[theme.colorSecondaryText, theme.fontMedium]}>
+    <Row align="centerBoth">
+      <B2C color="secondary">
         {i18n.t(hasReceiver ? 'wallet.reconnect' : 'wallet.connect') + ' '}
-        <Icon name="plus-circle" size={15} style={theme.colorPrimaryText} />
-      </MText>{' '}
-    </MText>
+      </B2C>
+      <Icon name="plus-circle" size="tiny" />
+    </Row>
   ) : (
-    <MText style={textStyles}>
-      <MText style={[theme.colorSecondaryText, theme.fontMedium]}>
-        {props.walletStore.wallet.receiver.address?.substr(0, 4)}...
-        {props.walletStore.wallet.receiver.address?.substr(-4)}
-      </MText>
-    </MText>
+    <B2C color="secondary">
+      {props.walletStore.wallet.receiver.address?.substr(0, 6)}...
+      {props.walletStore.wallet.receiver.address?.substr(-6)}
+    </B2C>
   );
 
   return props.onchainStore.loading ? (
-    <View>
-      <MText style={[props.style, theme.bgPrimaryBorder, theme.marginLeft2x]}>
-        ...
-      </MText>
+    <View style={styles.loader}>
+      <ActivityIndicator color={ThemedStyles.getColor('Link')} size="small" />
     </View>
   ) : (
-    <SegmentedButton
-      containerStyle={props.containerStyle}
-      {...children}
-      onPress={props.onPress}
-    />
+    <SegmentedButton {...children} onPress={props.onPress} />
   );
+});
+
+const styles = ThemedStyles.create({
+  loader: {
+    minHeight: 39,
+    minWidth: 206,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
 
 export default OnchainButton;

@@ -1,17 +1,15 @@
 import { useNavigation } from '@react-navigation/core';
 import { observer } from 'mobx-react';
 import React from 'react';
-import MText from '../../../common/components/MText';
 import sessionService from '../../../common/services/session.service';
-import ThemedStyles from '../../../styles/ThemedStyles';
 import { getFriendlyLabel } from './EarningsOverview';
+import { B1, B2, Column } from '~ui';
 
 type PropsType = {
   earningId: string;
 };
 
 const AccordionHeaderTitle = observer(({ earningId }: PropsType) => {
-  const theme = ThemedStyles.style;
   const user = sessionService.getUser();
   const navigation = useNavigation();
 
@@ -38,31 +36,24 @@ const AccordionHeaderTitle = observer(({ earningId }: PropsType) => {
       pro: false,
     });
 
-  const upgradeStyle = [
-    theme.fontL,
-    theme.fontMedium,
-    theme.colorSecondaryText,
-  ];
-
   return (
-    <MText style={[theme.fontLM, theme.fontMedium]}>
-      {getFriendlyLabel(earningId)}
+    <Column flex>
+      <B1 font="medium">{getFriendlyLabel(earningId)}</B1>
       {earningId === 'partner' && !user.pro && (
-        <MText style={upgradeStyle}>
-          {'\n'}
+        <B2>
           Upgrade to{' '}
           {!user.plus && (
-            <MText style={[upgradeStyle, theme.colorLink]} onPress={navToPlus}>
+            <B2 font="medium" color="link" onPress={navToPlus}>
               plus
-            </MText>
+            </B2>
           )}
-          {!user.plus ? ' or ' : ' '}{' '}
-          <MText style={[upgradeStyle, theme.colorLink]} onPress={navToPro}>
+          {!user.plus ? ' or ' : ' '}
+          <B2 font="medium" color="link" onPress={navToPro}>
             pro
-          </MText>
-        </MText>
+          </B2>
+        </B2>
       )}
-    </MText>
+    </Column>
   );
 });
 

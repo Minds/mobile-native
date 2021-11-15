@@ -457,7 +457,7 @@ PODS:
   - RNSentry (2.6.0):
     - React-Core
     - Sentry (= 7.0.0)
-  - RNShare (6.0.1):
+  - RNShare (7.2.1):
     - React-Core
   - RNSharedElement (0.8.2):
     - React
@@ -815,7 +815,7 @@ SPEC CHECKSUMS:
   EXLinearGradient: f9ea3259f096b27008860ca50764184225dc71c9
   ExpoModulesCore: 2734852616127a6c1fc23012197890a6f3763dc7
   FBLazyVector: e686045572151edef46010a6f819ade377dfeb4b
-  FBReactNativeSpec: 9ee71124deb3ad1c36b9cba0b9be90d0a4176c43
+  FBReactNativeSpec: aed77751d06df1313df482694720f097cc2b7a79
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
   hermes-engine: 7d97ba46a1e29bacf3e3c61ecb2804a5ddd02d4f
@@ -886,7 +886,7 @@ SPEC CHECKSUMS:
   RNReanimated: c789b02465eff0114c281eb7442933695fb4629a
   RNScreens: 6e1ea5787989f92b0671049b808aef64fa1ef98c
   RNSentry: a2b02b326ae4fce91ce7c57d3f7dcf8df4f72269
-  RNShare: 755de6bac084428f8fd8fb54c376f126f40e560c
+  RNShare: edd621a71124961e29a7ba43a84bd1c6f9980d88
   RNSharedElement: 87baf6d04da5b068f000dd8c953d28a1196999c0
   RNShareMenu: 6a821c28a1e03a9fdcad7b1919ca401641db6d43
   RNSnowplowTracker: ca97090a5d73271ff946426848da26fea447c400

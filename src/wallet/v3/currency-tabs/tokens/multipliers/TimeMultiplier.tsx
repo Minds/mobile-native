@@ -82,7 +82,6 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     flexDirection: 'row',
-    paddingRight: 10,
   },
   multiplierContainer: {
     flex: 1,

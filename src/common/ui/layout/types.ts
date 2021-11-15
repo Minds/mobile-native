@@ -13,13 +13,15 @@ export type HairlinePropType = {
 
 export type RowPropType = {
   align?:
-    | 'center'
+    | 'centerBoth'
     | 'centerStart'
     | 'centerEnd'
     | 'centerBetween'
-    | 'centerAround';
+    | 'centerAround'
+    | 'baseline';
   background?: 'primary' | 'secondary' | 'tertiary';
   flex?: boolean;
+  flexWrap?: boolean;
   stretch?: boolean;
 };
 

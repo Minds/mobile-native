@@ -9,7 +9,7 @@ import Item from './components/Item';
 import createTokensTransactionsStore from './createTokensTransactionsStore';
 import Empty from './components/Empty';
 import Header from '../../v3/transaction-list/components/Header';
-import MText from '../../../common/components/MText';
+import { B2 } from '~ui';
 
 const TransactionsListTokens = observer(
   ({ navigation, currency, wallet }: PropsType) => {
@@ -29,13 +29,10 @@ const TransactionsListTokens = observer(
 
     const renderHeader = useCallback(() => <Header store={store} />, [store]);
 
-    const renderSectionHeader = useCallback(
-      ({ section: { title } }) => (
-        <MText style={[theme.colorSecondaryText, theme.marginBottom2x]}>
-          {title.toUpperCase()}
-        </MText>
-      ),
-      [theme],
+    const renderSectionHeader = ({ section: { title } }) => (
+      <B2 vertical="M" color="secondary">
+        {title}
+      </B2>
     );
 
     useEffect(() => {
@@ -62,10 +59,13 @@ const TransactionsListTokens = observer(
           theme.bgPrimaryBackground,
           theme.paddingLeft4x,
           theme.paddingRight4x,
+          theme.paddingTop4x,
         ]}
+        contentContainerStyle={theme.paddingBottom12x}
         refreshing={store.ledger.list.refreshing}
         onRefresh={store.refresh}
         onEndReached={store.loadMore}
+        stickySectionHeadersEnabled={false}
       />
     );
   },

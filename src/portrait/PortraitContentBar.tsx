@@ -31,7 +31,7 @@ const Header = () => {
   );
 
   return (
-    <Row align="center" containerStyle={ThemedStyles.style.flexContainer}>
+    <Row containerStyle={ThemedStyles.style.flexContainer}>
       <PortraitContentBarItem
         avatarUrl={user.getAvatarSource()}
         withPlus

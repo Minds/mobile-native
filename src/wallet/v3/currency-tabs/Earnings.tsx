@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import MonthPickerInput from '../../../common/components/MonthPickerInput';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import {
@@ -22,7 +22,7 @@ const TokensEarnings = observer(
     const theme = ThemedStyles.style;
 
     return (
-      <View style={theme.paddingTop5x}>
+      <>
         <MonthPickerInput
           minimumDate={moment().subtract(6, 'months').toDate()}
           maximumDate={new Date()}
@@ -34,7 +34,7 @@ const TokensEarnings = observer(
           walletStore={walletStore}
           currencyType={currencyType}
         />
-      </View>
+      </>
     );
   },
 );
