@@ -1,17 +1,20 @@
 //@ts-nocheck
 import React, { Component } from 'react';
-import Menu, { MenuItem } from 'react-native-material-menu';
-import MdIcon from 'react-native-vector-icons/MaterialIcons';
-
-import Touchable from '../Touchable';
 import autobind from '../../helpers/autobind';
 import i18n from '../../services/i18n.service';
-import ThemedStyles from '../../../styles/ThemedStyles';
-import MText from '../MText';
-
-export default class NsfwToggle extends Component {
+import CheckButton from '../bottom-sheet/CheckButton';
+import SectionSubtitle from '../bottom-sheet/SectionSubtitle';
+type PropsType = {
+  value: Array<number>;
+  onChange: (value: Array<number>) => void;
+};
+export default class NsfwToggle extends Component<PropsType> {
   constructor(props) {
     super(props);
+
+    this.state = {
+      active: Boolean(props.value && props.value.length),
+    };
 
     this.reasons = [
       { value: 1, label: i18n.t('nsfw.1') },
@@ -21,19 +24,14 @@ export default class NsfwToggle extends Component {
       { value: 5, label: i18n.t('nsfw.5') },
       { value: 6, label: i18n.t('nsfw.6') },
     ];
-
-    this.menuRef = React.createRef();
   }
 
   @autobind
-  showDropdown() {
-    const menu = this.menuRef.current;
-
-    if (!menu) {
-      return;
+  toggle() {
+    if (this.state.active) {
+      this.props.onChange([]);
     }
-
-    menu.show();
+    this.setState({ active: !this.state.active });
   }
 
   @autobind
@@ -56,53 +54,24 @@ export default class NsfwToggle extends Component {
   }
 
   render() {
-    const isActive = Boolean(this.props.value && this.props.value.length);
-    const themed = ThemedStyles.style;
-
-    const button = (
-      <Touchable
-        style={this.props.containerStyle}
-        onPress={this.showDropdown}
-        testID="NsfwToggle">
-        <MdIcon
-          name="explicit"
-          size={25}
-          style={[
-            this.props.iconStyle,
-            isActive && this.props.iconActiveStyle,
-            isActive ? themed.colorAlert : themed.colorIcon,
-          ]}
-        />
-
-        {isActive && !this.props.hideLabel && (
-          <MText style={this.props.labelStyle}>{i18n.t('nsfw.button')}</MText>
-        )}
-      </Touchable>
-    );
-
     return (
       <React.Fragment>
-        <Menu ref={this.menuRef} style={menuStyle} button={button}>
-          {this.reasons.map((reason, i) => (
-            <MenuItem
+        <SectionSubtitle>{i18n.t('nsfw.button')}</SectionSubtitle>
+        <CheckButton
+          onPress={this.toggle}
+          selected={this.state.active}
+          title={i18n.t('nsfw.showContent')}
+        />
+        {this.state.active &&
+          this.reasons.map((reason, i) => (
+            <CheckButton
               key={i}
               onPress={() => this.toggleDropdownOption(reason)}
-              textStyle={[this.isReasonActive(reason) && themed.colorLink]}
-              testID={`NsfwReason${reason.label}`}>
-              {this.isReasonActive(reason) && <MdIcon name="check" />}{' '}
-              {reason.label}
-            </MenuItem>
+              selected={this.isReasonActive(reason)}
+              title={reason.label}
+            />
           ))}
-        </Menu>
       </React.Fragment>
     );
   }
 }
-
-const menuStyle = ThemedStyles.combine(
-  {
-    width: 180,
-  },
-  'marginTop4x',
-  'bgTertiaryBackground',
-);
