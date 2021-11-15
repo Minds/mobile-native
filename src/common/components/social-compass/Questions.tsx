@@ -1,6 +1,6 @@
 import { useDimensions } from '@react-native-community/hooks';
 import { observer } from 'mobx-react';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { ScrollView, Text } from 'react-native';
 import { BottomSheetButton } from '~/common/components/bottom-sheet';
 import CenteredLoading from '~/common/components/CenteredLoading';
@@ -20,6 +20,7 @@ const Questions = observer(({ onSubmit }: PropsType) => {
   const [questions, setQuestions] = useState<IQuestion[]>([]);
   const { answer, loading: answering } = useAnswers(questions);
   const height = useDimensions().window.height;
+  const containerHeight = useMemo(() => ({ height: height * 0.7 }), [height]);
 
   // #region effects
   useEffect(() => {
@@ -60,7 +61,7 @@ const Questions = observer(({ onSubmit }: PropsType) => {
 
   return (
     <>
-      <ScrollView style={{ height: height * 0.7 }}>
+      <ScrollView style={containerHeight}>
         <Spacer horizontal="M">
           <Text style={styles.desc}>{i18n.t('discovery.questionsDesc')}</Text>
           {questions.map(question => (

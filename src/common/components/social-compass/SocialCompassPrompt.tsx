@@ -13,7 +13,7 @@ type PropsType = {};
 const SOCIAL_COMPASS_QUESTIONNAIRE_DISMISSED_KEY =
   'social-compass-questionnaire:dismissed';
 
-const Customize = ({}: PropsType) => {
+const SocialCompassPrompt = ({}: PropsType) => {
   const ref = React.useRef<any>();
   const [dismissed, setDismissed] = useState<boolean | undefined>(undefined);
 
@@ -75,4 +75,4 @@ const styles = ThemedStyles.create({
   ],
 });
 
-export default Customize;
+export default SocialCompassPrompt;
