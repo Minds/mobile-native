@@ -171,6 +171,8 @@
     "blogListEmpty": "This list is empty"
   },
   "boosts": {
+    "emptyList": "There is no boosts to display",
+    "emptyListSubtitle": "To see boosted content, go to settings and enable boosted content.",
     "selected": "SELECTED",
     "target": "TARGET",
     "boostType": "BOOST TYPE",

@@ -2,12 +2,10 @@ import React, { useEffect, useState } from 'react';
 
 import { View } from 'react-native';
 import { observer } from 'mobx-react';
-import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 
 import i18n from '../../common/services/i18n.service';
 
 import { DiscoveryTrendsList } from './trends/DiscoveryTrendsList';
-import { TabParamList } from '../../tabs/TabsScreen';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { useDiscoveryV2Store } from './useDiscoveryV2Store';
 import { TDiscoveryV2Tabs } from './DiscoveryV2Store';
@@ -18,9 +16,11 @@ import InitialOnboardingButton from '../../onboarding/v2/InitialOnboardingButton
 import { withErrorBoundary } from '../../common/components/ErrorBoundary';
 import { AnimatePresence } from 'moti';
 import DiscoveryTabContent from './DiscoveryTabContent';
+import Empty from '~/common/components/Empty';
+import Button from '~/common/components/Button';
 
 interface Props {
-  navigation: BottomTabNavigationProp<TabParamList>;
+  navigation: any;
 }
 
 /**
@@ -43,6 +43,22 @@ export const DiscoveryV2Screen = withErrorBoundary(
         { id: 'boosts', title: i18n.t('boosted') },
       ],
       [i18n.locale],
+    );
+
+    const emptyBoosts = React.useMemo(
+      () => (
+        <Empty
+          title={i18n.t('boosts.emptyList')}
+          subtitle={i18n.t('boosts.emptyListSubtitle')}>
+          <Button
+            onPress={() => navigation.navigate('BoostSettingsScreen')}
+            text={i18n.t('moreScreen.settings')}
+            large
+            action
+          />
+        </Empty>
+      ),
+      [navigation],
     );
 
     useEffect(() => {
@@ -104,7 +120,11 @@ export const DiscoveryV2Screen = withErrorBoundary(
           store.boostFeed.fetchRemoteOrLocal();
           return (
             <DiscoveryTabContent key="boosts">
-              <FeedList feedStore={store.boostFeed} navigation={navigation} />
+              <FeedList
+                feedStore={store.boostFeed}
+                navigation={navigation}
+                emptyMessage={emptyBoosts}
+              />
             </DiscoveryTabContent>
           );
         default:
