@@ -63,7 +63,9 @@ const Questions = observer(({ onSubmit }: PropsType) => {
     <>
       <ScrollView style={containerHeight}>
         <Spacer horizontal="M">
-          <Text style={styles.desc}>{i18n.t('discovery.questionsDesc')}</Text>
+          <Text style={styles.desc}>
+            {i18n.t('socialCompass.questionsDesc')}
+          </Text>
           {questions.map(question => (
             <QuestionSlider
               question={question}

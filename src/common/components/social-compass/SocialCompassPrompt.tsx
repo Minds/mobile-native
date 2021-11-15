@@ -43,10 +43,12 @@ const SocialCompassPrompt = ({}: PropsType) => {
   return (
     <Column vertical="L" horizontal="L">
       <Column align="center" vertical="XL">
-        <MText style={styles.title}>{i18n.t('discovery.customizeTitle')}</MText>
-        <MText style={styles.desc}>{i18n.t('discovery.customizeDesc')}</MText>
+        <MText style={styles.title}>
+          {i18n.t('socialCompass.promptTitle')}
+        </MText>
+        <MText style={styles.desc}>{i18n.t('socialCompass.promptDesc')}</MText>
         <Button
-          text={i18n.t('discovery.customize')}
+          text={i18n.t('socialCompass.callToAction')}
           action
           onPress={showSheet}
           testID="customizeBtn"
@@ -57,7 +59,7 @@ const SocialCompassPrompt = ({}: PropsType) => {
         onPress={dismiss}
         style={ThemedStyles.style.positionAbsoluteTopRight}
       />
-      <BottomSheetModal ref={ref} title={'Content preferences'}>
+      <BottomSheetModal ref={ref} title={i18n.t('socialCompass.callToAction')}>
         <Questions onSubmit={dismiss} />
       </BottomSheetModal>
     </Column>

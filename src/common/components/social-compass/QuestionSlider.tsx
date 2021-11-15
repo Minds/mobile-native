@@ -22,7 +22,7 @@ const QuestionSlider = ({ question, onAnswer }: PropsType) => {
     <View style={styles.container}>
       <MText style={styles.title}>
         {i18n.tf(
-          `discovery.customizeQuestions.${question.questionId}.title`,
+          `socialCompass.customizeQuestions.${question.questionId}.title`,
           question.questionText,
         )}
       </MText>
@@ -46,13 +46,13 @@ const QuestionSlider = ({ question, onAnswer }: PropsType) => {
       <View style={styles.textContainer} pointerEvents="none">
         <MText style={styles.text}>
           {i18n.tf(
-            `discovery.customizeQuestions.${question.questionId}.leftText`,
+            `socialCompass.customizeQuestions.${question.questionId}.leftText`,
             question.minimumStepLabel,
           )}
         </MText>
         <MText style={styles.text}>
           {i18n.tf(
-            `discovery.customizeQuestions.${question.questionId}.rightText`,
+            `socialCompass.customizeQuestions.${question.questionId}.rightText`,
             question.maximumStepLabel,
           )}
         </MText>
