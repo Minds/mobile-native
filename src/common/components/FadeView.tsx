@@ -7,6 +7,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 interface FadeViewProps extends ViewProps {
   fades: ('left' | 'right' | 'top' | 'bottom')[];
   fadeLength?: number;
+  backgroundColor?: string;
 }
 
 /**
@@ -16,9 +17,11 @@ const FadeView: FC<FadeViewProps> = ({
   children,
   fades,
   fadeLength = 20,
+  backgroundColor: backgroundColorProp,
   ...props
 }) => {
-  const backgroundColor = ThemedStyles.getColor('PrimaryBackground');
+  const backgroundColor =
+    backgroundColorProp || ThemedStyles.getColor('PrimaryBackground');
   const endColor = backgroundColor + 'FF';
   const startColor = backgroundColor + '00';
 
@@ -78,7 +81,7 @@ const FadeView: FC<FadeViewProps> = ({
         case 'bottom':
           array.push(
             createGradient({
-              colors: [endColor, startColor],
+              colors: [startColor, endColor],
               style: {
                 position: 'absolute',
                 right: 0,

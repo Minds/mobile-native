@@ -341,7 +341,14 @@
     "addTags": "Add tags to personalize your feed",
     "selectTags": "Select tags",
     "posts": "posts",
-    "votes": "votes"
+    "votes": "votes",
+    "customizeTitle": "Customize your content preferences",
+    "customizeDesc": "Tell us a little about yourself and discover exciting new content just for you.",
+    "customize": "Customize",
+    "customizeContent": "Customize Content",
+    "questionsDesc": "Complete the following questions so Minds can present you with the most appropraite content.",
+    "tagsTitle": "What tags are you most interested in?",
+    "tagsDesc": "You’ll see posts about these right in your discovery feed."
   },
   "groups": {
     "ongoingGathering": "Ongoing gathering",
