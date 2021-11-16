@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { observer, useLocalStore } from 'mobx-react';
+import { observer } from 'mobx-react';
 import OffsetList from '../../../../../common/components/OffsetList';
 import WithdrawalEntry from './WithdrawalEntry';
 import ThemedStyles from '../../../../../styles/ThemedStyles';
@@ -10,36 +10,6 @@ import { Text } from 'react-native-elements';
  * Transactions list for a users  withdrawals.
  */
 const TransactionsListWithdrawals = observer(() => {
-  const store = useLocalStore(() => ({
-    endpoint: 'api/v3/rewards/withdrawals',
-    endpointData: 'withdrawals',
-    offsetField: '',
-  }));
-
-  const containerStyle = ThemedStyles.combine(
-    'height75',
-    'bgPrimaryBackground',
-    'padding3x',
-    'borderRadius5x',
-  );
-
-  const headerContainerStyle = ThemedStyles.combine(
-    'flexContainer',
-    'fullWidth',
-    'rowJustifySpaceBetween',
-    'borderBottom1x',
-    'bcolorPrimaryBorder',
-  );
-
-  const headerTextStyle = ThemedStyles.combine(
-    'colorSecondaryText',
-    'flexContainer',
-    'padding3x',
-    'alignCenter',
-    'justifyCenter',
-    'textLeft',
-  );
-
   /**
    * Renders a withdrawal item, for consumption by OffsetList.
    */
@@ -65,9 +35,9 @@ const TransactionsListWithdrawals = observer(() => {
     <View style={containerStyle}>
       <OffsetList
         renderItem={renderWithdrawalItem}
-        fetchEndpoint={store.endpoint}
-        endpointData={store.endpointData}
-        offsetField={store.offsetField}
+        fetchEndpoint={'api/v3/rewards/withdrawals'}
+        endpointData={'withdrawals'}
+        offsetField={''}
         header={renderHeader}
       />
     </View>
@@ -75,3 +45,27 @@ const TransactionsListWithdrawals = observer(() => {
 });
 
 export default TransactionsListWithdrawals;
+
+const containerStyle = ThemedStyles.combine(
+  'height75',
+  'bgPrimaryBackground',
+  'padding3x',
+  'borderRadius5x',
+);
+
+const headerContainerStyle = ThemedStyles.combine(
+  'flexContainer',
+  'fullWidth',
+  'rowJustifySpaceBetween',
+  'borderBottom1x',
+  'bcolorPrimaryBorder',
+);
+
+const headerTextStyle = ThemedStyles.combine(
+  'colorSecondaryText',
+  'flexContainer',
+  'padding3x',
+  'alignCenter',
+  'justifyCenter',
+  'textLeft',
+);

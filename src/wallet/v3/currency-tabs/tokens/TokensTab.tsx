@@ -158,10 +158,11 @@ const TokensTab = observer(({ walletStore, navigation, store }: PropsType) => {
       break;
   }
 
-  const isTransactions = store.option === 'transactions';
+  const isScollable =
+    store.option === 'transactions' || store.option === 'onchain_transfers';
 
   return (
-    <Screen scroll={!isTransactions}>
+    <Screen scroll={!isScollable}>
       <Column top="XL" flex>
         <TokenTopBar
           walletStore={walletStore}
@@ -174,7 +175,7 @@ const TokensTab = observer(({ walletStore, navigation, store }: PropsType) => {
           onChange={store.setOption}
           scrollViewContainerStyle={theme.paddingRight2x}
         />
-        {isTransactions ? body : <Column bottom="XXL">{body}</Column>}
+        {isScollable ? body : <Column bottom="XXL">{body}</Column>}
       </Column>
     </Screen>
   );

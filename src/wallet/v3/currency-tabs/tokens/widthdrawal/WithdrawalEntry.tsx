@@ -9,44 +9,14 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
 import { Tooltip } from 'react-native-elements';
 import i18n from '../../../../../common/services/i18n.service';
+import MText from '~/common/components/MText';
 
 /**
  * Individual withdrawal row
  */
 const WithdrawalEntry = ({ withdrawal }: WithdrawalItemPropsType) => {
   const theme = ThemedStyles.style;
-
   const tooltipRef = useRef<any>();
-
-  const outerContainerStyle = ThemedStyles.combine(
-    'flexContainer',
-    'fullWidth',
-    'rowJustifySpaceBetween',
-  );
-
-  const innerColumnStyle = ThemedStyles.combine(
-    'flexColumn',
-    'padding3x',
-    'justifyCenter',
-  );
-
-  const launchButtonContainerStyle = ThemedStyles.combine(
-    'flexContainer',
-    'fullWidth',
-    'rowJustifyStart',
-    'alignCenter',
-    { flexWrap: 'nowrap' },
-  );
-
-  const tooltipViewStyle = ThemedStyles.combine(
-    'flexContainer',
-    'fullWidth',
-    'rowJustifyCenter',
-    'alignCenter',
-    'bgPrimaryBackground',
-  );
-
-  const inlineIconStyle = ThemedStyles.combine('colorWhite', 'marginLeft1x');
 
   /**
    * Truncates middle of address e.g. 0xd...10a
@@ -110,7 +80,7 @@ const WithdrawalEntry = ({ withdrawal }: WithdrawalItemPropsType) => {
       <TouchableOpacity
         style={launchButtonContainerStyle}
         onPress={() => navigateToEtherscan(props.address)}>
-        <Text>{truncateAddress(withdrawal.tx)}</Text>
+        <MText>{truncateAddress(withdrawal.tx)}</MText>
         <Icon name={'launch'} size={15} style={inlineIconStyle} />
       </TouchableOpacity>
     );
@@ -149,14 +119,14 @@ const WithdrawalEntry = ({ withdrawal }: WithdrawalItemPropsType) => {
       <View style={innerColumnStyle}>
         <TransactionAddress address={withdrawal.tx} />
         <Text style={theme.colorSecondaryText}>
-          {i18n.date(withdrawal.timestamp, 'friendly')}
+          {i18n.date(withdrawal.timestamp * 1000, 'date')}
         </Text>
       </View>
       <View style={innerColumnStyle}>
-        <Text>
+        <MText>
           {gweiToWholeTokens(withdrawal.amount)}{' '}
-          <Text style={theme.colorSecondaryText}>MINDS</Text>
-        </Text>
+          <MText style={mindsTokenTextStyle}>MINDS</MText>
+        </MText>
       </View>
       <View style={innerColumnStyle}>
         <TouchableOpacity onPress={() => tooltipRef.current.toggleTooltip()}>
@@ -171,7 +141,7 @@ const WithdrawalEntry = ({ withdrawal }: WithdrawalItemPropsType) => {
             popover={<TooltipText status={withdrawal.status} />}
           />
           <View style={tooltipViewStyle}>
-            <Text>{getHumanReadableStatus(withdrawal.status)}</Text>
+            <MText>{getHumanReadableStatus(withdrawal.status)}</MText>
             <Icon
               name={'information-variant'}
               size={15}
@@ -179,12 +149,44 @@ const WithdrawalEntry = ({ withdrawal }: WithdrawalItemPropsType) => {
             />
           </View>
         </TouchableOpacity>
-        {withdrawal.completed_tx && (
-          <TransactionAddress address={withdrawal.tx} />
-        )}
       </View>
     </View>
   );
 };
 
 export default React.memo(WithdrawalEntry);
+
+const outerContainerStyle = ThemedStyles.combine(
+  'flexContainer',
+  'fullWidth',
+  'rowJustifySpaceBetween',
+);
+
+const innerColumnStyle = ThemedStyles.combine(
+  'flexColumn',
+  'padding3x',
+  'justifyCenter',
+);
+
+const launchButtonContainerStyle = ThemedStyles.combine(
+  'flexContainer',
+  'fullWidth',
+  'rowJustifyStart',
+  'alignCenter',
+  { flexWrap: 'nowrap' },
+);
+
+const tooltipViewStyle = ThemedStyles.combine(
+  'flexContainer',
+  'fullWidth',
+  'rowJustifyCenter',
+  'alignCenter',
+  'bgPrimaryBackground',
+);
+
+const inlineIconStyle = ThemedStyles.combine('colorWhite', 'marginLeft1x');
+
+const mindsTokenTextStyle = ThemedStyles.combine(
+  'colorSecondaryText',
+  'fontXS',
+);
