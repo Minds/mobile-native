@@ -3,13 +3,14 @@ import {
   WithdrawalItemPropsType,
   WithdrawalStatus,
 } from './TransactionsListWithdrawalTypes';
-import { Linking, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import ThemedStyles from '../../../../../styles/ThemedStyles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
 import { Tooltip } from 'react-native-elements';
 import i18n from '../../../../../common/services/i18n.service';
 import MText from '~/common/components/MText';
+import openUrlService from '~/common/services/open-url.service';
 
 /**
  * Individual withdrawal row
@@ -67,7 +68,7 @@ const WithdrawalEntry = ({ withdrawal }: WithdrawalItemPropsType) => {
    * @returns { void }
    */
   const navigateToEtherscan = (address: string): void => {
-    Linking.openURL(`https://etherscan.com/tx/${address}`);
+    openUrlService.open(`https://etherscan.com/tx/${address}`);
   };
 
   /**
