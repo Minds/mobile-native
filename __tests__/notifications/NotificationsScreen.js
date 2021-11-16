@@ -7,17 +7,11 @@ import { getStores } from '../../AppStores';
 
 jest.mock('@react-navigation/native');
 jest.mock('react-native-system-setting');
-jest.mock('react-native-silent-switch');
 jest.mock('react-native-notifications');
 jest.mock(
   '../../src/common/components/interactions/InteractionsBottomSheet',
   () => 'InteractionsBottomSheet',
 );
-jest.mock('react-native-system-setting', () => {
-  return {
-    getVolume: jest.fn(() => Promise.resolve()),
-  };
-});
 
 getStores.mockReturnValue({
   user: {
