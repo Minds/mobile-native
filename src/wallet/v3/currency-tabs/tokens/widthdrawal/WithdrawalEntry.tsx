@@ -3,7 +3,7 @@ import {
   WithdrawalItemPropsType,
   WithdrawalStatus,
 } from './TransactionsListWithdrawalTypes';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import ThemedStyles from '../../../../../styles/ThemedStyles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
