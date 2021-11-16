@@ -112,16 +112,16 @@ const WithdrawalEntry = ({ withdrawal }: WithdrawalItemPropsType) => {
           'Following review your tokens are not available for withdrawl. TOS violation.';
         break;
     }
-    return <Text style={theme.colorWhite}>{text}</Text>;
+    return <MText style={theme.colorWhite}>{text}</MText>;
   };
 
   return (
     <View style={outerContainerStyle}>
       <View style={innerColumnStyle}>
         <TransactionAddress address={withdrawal.tx} />
-        <Text style={theme.colorSecondaryText}>
+        <MText style={theme.colorSecondaryText}>
           {i18n.date(withdrawal.timestamp * 1000, 'date')}
-        </Text>
+        </MText>
       </View>
       <View style={innerColumnStyle}>
         <MText>

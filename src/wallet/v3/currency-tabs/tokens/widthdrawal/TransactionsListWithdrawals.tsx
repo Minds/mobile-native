@@ -4,7 +4,7 @@ import OffsetList from '../../../../../common/components/OffsetList';
 import WithdrawalEntry from './WithdrawalEntry';
 import ThemedStyles from '../../../../../styles/ThemedStyles';
 import { View } from 'react-native';
-import { Text } from 'react-native-elements';
+import MText from '~/common/components/MText';
 
 /**
  * Transactions list for a users  withdrawals.
@@ -25,9 +25,9 @@ const TransactionsListWithdrawals = observer(() => {
    */
   const header = (
     <View style={headerContainerStyle}>
-      <Text style={headerTextStyle}>TXID</Text>
-      <Text style={headerTextStyle}>Amount</Text>
-      <Text style={headerTextStyle}>Status</Text>
+      <MText style={headerTextStyle}>TXID</MText>
+      <MText style={headerTextStyle}>Amount</MText>
+      <MText style={headerTextStyle}>Status</MText>
     </View>
   );
 
