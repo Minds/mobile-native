@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useStores } from '../common/hooks/use-stores';
+import { Icon } from '~ui/icons';
+import { useStores } from '~/common/hooks/use-stores';
 import ChatBubbleIcon from './ChatBubbleIcon';
 
 type PropsType = {
-  color: string | undefined;
+  active: boolean;
 };
 
-const ChatTabIcon = ({ color }: PropsType) => {
+const ChatTabIcon = ({ active }: PropsType) => {
   const { chat } = useStores();
 
   useEffect(() => {
@@ -20,7 +20,7 @@ const ChatTabIcon = ({ color }: PropsType) => {
 
   return (
     <View style={styles.container}>
-      <Icon name="message-outline" size={28} color={color} />
+      <Icon size="large" name="chat" active={active} />
       <ChatBubbleIcon chatStore={chat} />
     </View>
   );

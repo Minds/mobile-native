@@ -12,7 +12,10 @@ import {
   unfollow,
   follow,
 } from '../newsfeed/NewsfeedService';
-import api from '../common/services/api.service';
+import api, {
+  isApiError,
+  isNetworkError,
+} from '../common/services/api.service';
 
 import { GOOGLE_PLAY_STORE, MINDS_CDN_URI, MINDS_URI } from '../config/Config';
 import i18n from '../common/services/i18n.service';
@@ -20,7 +23,7 @@ import logService from '../common/services/log.service';
 import type { ThumbSize, LockType } from '../types/Common';
 import type GroupModel from '../groups/GroupModel';
 import { SupportTiersType } from '../wire/WireTypes';
-import mindsService from '../common/services/minds.service';
+import mindsService from '../common/services/minds-config.service';
 import NavigationService from '../navigation/NavigationService';
 import { showNotification } from '../../AppMessages';
 import mediaProxyUrl from '../common/helpers/media-proxy-url';
@@ -40,15 +43,17 @@ export default class ActivityModel extends BaseModel {
   @observable edited: '0' | '1' = '0';
   @observable paywall: true | '1' | '' = '';
 
+  time_updated: string = '';
   // decorated observables
   'is:following': boolean;
   'thumbs:down:count': number;
   'thumbs:up:count': number;
   'comments:count': number;
-  'thumbs:down:user_guids': Array<number>;
-  'thumbs:up:user_guids': Array<number>;
+  'thumbs:down:user_guids': Array<string>;
+  'thumbs:up:user_guids': Array<string>;
   seen?: boolean;
   rowKey?: string;
+  boosted_guid?: string;
   description?: string; // on image objects in some cases the message is on description field
   containerObj?: GroupModel;
   remind_object?: ActivityModel;
@@ -217,6 +222,17 @@ export default class ActivityModel extends BaseModel {
       };
     }
 
+    if (
+      this.type === 'object' &&
+      this.subtype === 'image' &&
+      this.thumbnail_src
+    ) {
+      return {
+        uri: this.thumbnail_src,
+        headers: api.buildHeaders(),
+      };
+    }
+
     if (this.thumbnails && this.thumbnails[size]) {
       return { uri: this.thumbnails[size], headers: api.buildHeaders() };
     }
@@ -365,10 +381,21 @@ export default class ActivityModel extends BaseModel {
 
       return result;
     } catch (err) {
-      if (!ignoreError) {
-        Alert.alert(err.message);
+      const isApiErr = isApiError(err);
+
+      if (isApiErr && !ignoreError) {
+        showNotification(err.message, 'warning', 3000, 'top');
       }
-      return false;
+
+      if (isApiErr) {
+        return false;
+      }
+
+      if (isNetworkError(err)) {
+        showNotification(i18n.t('cantReachServer'), 'warning', 3000, 'top');
+      }
+
+      return -1;
     }
   }
 
@@ -398,7 +425,7 @@ export default class ActivityModel extends BaseModel {
   async unlockOrPay() {
     const result = await this.unlock(true);
 
-    if (result) {
+    if (result !== false) {
       return;
     }
 

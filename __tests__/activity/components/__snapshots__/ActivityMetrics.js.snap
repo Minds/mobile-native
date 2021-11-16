@@ -9,10 +9,10 @@ exports[`activity metrics component renders correctly 1`] = `
         "justifyContent": "space-between",
       },
       Object {
-        "padding": 10,
+        "padding": 8,
       },
       Object {
-        "paddingLeft": 20,
+        "paddingLeft": 16,
       },
     ]
   }
@@ -21,19 +21,27 @@ exports[`activity metrics component renders correctly 1`] = `
     style={
       Array [
         Object {
-          "color": "#72727C",
+          "color": "#FFFFFF",
         },
         Object {
-          "fontSize": 14,
+          "fontFamily": "Roboto",
         },
-        Object {
-          "paddingVertical": 5,
-        },
+        Array [
+          Object {
+            "color": "#B8C1CA",
+          },
+          Object {
+            "fontSize": 14,
+          },
+          Object {
+            "paddingVertical": 4,
+          },
+        ],
       ]
     }
   >
     20 views · 
-    Mar 25th, 2018
+    Mar 25, 2018
   </Text>
 </View>
 `;

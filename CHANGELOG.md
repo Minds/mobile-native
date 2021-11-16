@@ -2,6 +2,80 @@
 
 Minds Mobile
 
+## 4.19.1 - 2021-11-04
+
+### Changed
+
+- Fix unresponsive UI in some Android devices
+- Fix discovery visual errors
+
+## 4.19.0 - 2021-10-25
+
+### Changed
+
+- Improved multi-user transitions
+- New welcome, login, and register screens
+- Improves error handling on the login screen
+- New camera with zoom, HDR, and low light modes
+- Help & support added.
+- Improved UI consistency
+- Improved 2FA settings screen
+- Fix camera issues
+- Fix push notification navigation and un-registering
+- Fix link navigation in the blog viewer
+- Fix issues with the android back button
+- Fix data saver crash
+- Compress the images to improve the upload speed
+- General bug fixing
+
+## 4.18.0 - 2021-09-20
+
+### Changed
+
+- Multi-user support
+- New camera with zoom, HDR, and low light modes.
+- Improved channel screen design
+- 2FA modals
+- Bug fixing
+
+## 4.17.0 - 2021-08-27
+
+### Changed
+
+- Performance improvements
+- New and faster storage system
+- Keeps awake device while playing a video
+- Improved UI/UX in discovery
+- New interaction modals design
+- Bug fixing
+
+## 4.16.0 - 2021-07-26
+
+### Changed
+
+- Fix comments scroll problems
+- Date format
+- Detect chat app installed on iOS
+- Improves UX on comments
+- Bug fixing
+
+## 4.15.0 - 2021-07-10
+
+### Changed
+
+- New bottom sheets
+- New password reset screens
+- Keyboard dark theme support on iOS
+- Snowplow analytics
+- Search filter added to discovery
+- Bug fixing
+
+## 4.14.3 - 2021-07-01
+
+### Changed
+
+- Fix notifications navigation
+
 ## 4.14.2 - 2021-06-25
 
 ### Changed

@@ -8,6 +8,13 @@ const EXCEPTIONS_401 = [
   'api/v3/oauth/token',
 ];
 
+export const TWO_FACTOR_ERROR =
+  'Minds::Core::Security::TwoFactor::TwoFactorRequiredException';
+export const TWO_FACTOR_INVALID =
+  'Minds::Core::Security::TwoFactor::TwoFactorInvalidCodeException';
+
+export type TwoFactorType = 'sms' | 'email' | 'totp';
+
 import session, { isTokenExpired } from './session.service';
 import {
   MINDS_API_URI,
@@ -22,6 +29,7 @@ import logService from './log.service';
 import { observable, action } from 'mobx';
 import { UserError } from '../UserError';
 import i18n from './i18n.service';
+import NavigationService from '../../navigation/NavigationService';
 
 export interface ApiResponse {
   status: 'success' | 'error';
@@ -70,13 +78,15 @@ export class ApiService {
   axios: AxiosInstance;
   abortTags = new Map<any, CancelTokenSource>();
   @observable mustVerify = false;
+  sessionIndex: number | null;
 
   @action
   setMustVerify(value) {
     this.mustVerify = value;
   }
 
-  constructor(axiosInstance = null) {
+  constructor(sessionIndex: number | null = null, axiosInstance = null) {
+    this.sessionIndex = sessionIndex;
     this.axios =
       axiosInstance ||
       axios.create({
@@ -96,15 +106,105 @@ export class ApiService {
       },
       async error => {
         const { config: originalReq, response, request } = error;
-
         if (response) {
+          // 2FA authentication interceptor
+          if (
+            response.data &&
+            (response.data.errorId === TWO_FACTOR_ERROR ||
+              response.data.errorId === TWO_FACTOR_INVALID)
+          ) {
+            let smsKey,
+              emailKey,
+              oldCode = '';
+
+            if (response.data.errorId === TWO_FACTOR_ERROR) {
+              smsKey = response.headers['x-minds-sms-2fa-key'];
+              emailKey = response.headers['x-minds-email-2fa-key'];
+              // We store the keys on the original request in case the code is invalid (The invalid response doesn't include it)
+              originalReq.smsKey = smsKey;
+              originalReq.emailKey = emailKey;
+            } else {
+              smsKey = originalReq.smsKey;
+              emailKey = originalReq.emailKey;
+              oldCode = originalReq.oldCode;
+            }
+
+            let mfaType: TwoFactorType = 'email';
+
+            if (smsKey) {
+              mfaType = 'sms';
+            } else if (emailKey) {
+              // already set above
+            } else {
+              mfaType = 'totp';
+            }
+
+            let data: any = {};
+
+            if (originalReq.data) {
+              data = JSON.parse(originalReq.data);
+            }
+
+            const hasRecovery =
+              mfaType === 'totp' && data.password && data.username;
+
+            try {
+              // console.log( NavigationService.navigate)
+              const promise = new Promise<string>((resolve, reject) => {
+                NavigationService.navigate('TwoFactorConfirmation', {
+                  onConfirm: resolve,
+                  onCancel: reject,
+                  mfaType,
+                  oldCode,
+                  showRecovery: hasRecovery,
+                });
+              });
+              const code = await promise;
+
+              if (code) {
+                // is a recovery code?
+                if (hasRecovery && code.length > 6) {
+                  const recoveryResponse = <any>await this.post(
+                    'api/v3/security/totp/recovery',
+                    {
+                      username: data.username,
+                      password: data.password,
+                      recovery_code: code,
+                    },
+                  );
+                  if (!recoveryResponse.matches) {
+                    throw new UserError(i18n.t('auth.recoveryFail'));
+                  }
+                } else {
+                  originalReq.headers['X-MINDS-2FA-CODE'] = code;
+
+                  if (smsKey) {
+                    originalReq.headers['X-MINDS-SMS-2FA-KEY'] = smsKey;
+                  }
+
+                  if (emailKey) {
+                    originalReq.headers['X-MINDS-EMAIL-2FA-KEY'] = emailKey;
+                  }
+                }
+
+                originalReq.oldCode = code;
+              }
+              return this.axios.request(originalReq);
+            } catch (err) {
+              throw new UserError('Canceled');
+            }
+          }
+
           // refresh token if possible and repeat the call
           if (
             response.status === 401 &&
             !originalReq._isRetry &&
             isNot401Exception(originalReq.url)
           ) {
-            await this.refreshToken();
+            await this.tokenRefresh(() => {
+              originalReq._isRetry = true;
+              this.axios.request(originalReq);
+            });
             originalReq._isRetry = true;
             return this.axios.request(originalReq);
           }
@@ -125,27 +225,68 @@ export class ApiService {
     );
   }
 
+  setSessionIndex(index) {
+    this.sessionIndex = index;
+  }
+
+  get accessToken() {
+    return this.sessionIndex !== null
+      ? session.getAccessTokenFrom(this.sessionIndex)
+      : session.token;
+  }
+
+  get refreshToken() {
+    return this.sessionIndex !== null
+      ? session.getRefreshTokenFrom(this.sessionIndex)
+      : session.refreshToken;
+  }
+
+  get refreshAuthTokenPromise() {
+    return this.sessionIndex !== null
+      ? session.refreshAuthTokenFrom(this.sessionIndex)
+      : session.refreshAuthToken();
+  }
+
+  async tryToRelog(onLogin: Function) {
+    const onCancel = () => {
+      if (session.sessionExpired) {
+        session.logoutFrom(session.activeIndex);
+      }
+    };
+    const promise = new Promise((resolve, reject) => {
+      NavigationService.navigate('RelogScreen', {
+        onLogin,
+        onCancel,
+      });
+    });
+    await promise;
+  }
+
   /**
    * Refresh token (only one call at the time)
    */
-  async refreshToken() {
+  async tokenRefresh(onLogin: Function) {
     if (!this.refreshPromise) {
-      this.refreshPromise = session.refreshAuthToken();
+      this.refreshPromise = this.refreshAuthTokenPromise;
     }
     try {
       await this.refreshPromise;
+      this.refreshPromise = null;
     } catch (error) {
+      this.refreshPromise = null;
       if (
         (isTokenExpired(error) ||
           (error.response && error.response.status === 401)) &&
-        session.token
+        this.accessToken
       ) {
-        session.logout();
-        throw new UserError('Session expired');
+        if (this.sessionIndex !== null) {
+          session.setSessionExpiredFor(true, this.sessionIndex);
+        } else {
+          session.setSessionExpired(true);
+          await this.tryToRelog(onLogin);
+        }
       }
       throw error;
-    } finally {
-      this.refreshPromise = null;
     }
   }
 
@@ -161,8 +302,8 @@ export class ApiService {
       apiError.headers = response.headers;
       throw apiError;
     }
-    if (response.status === 500) {
-      throw new ApiError('Server error');
+    if (response.status >= 500) {
+      throw new ApiError('Server error ' + response.status);
     }
 
     return data;
@@ -193,7 +334,7 @@ export class ApiService {
    * Build headers
    */
   buildHeaders(customHeaders: any = {}) {
-    const headers: any = {
+    let headers: any = {
       'Content-Type': 'application/json',
       'Cache-Control': 'no-cache, no-store, must-revalidate',
       Pragma: 'no-cache',
@@ -202,17 +343,24 @@ export class ApiService {
     };
 
     if (MINDS_STAGING) {
-      headers.Cookie = 'staging=1';
+      headers.Cookie = `${headers.Cookie};staging=1`;
     }
     if (MINDS_CANARY) {
-      headers.Cookie = 'canary=1';
+      headers.Cookie = `${headers.Cookie};canary=1`;
     }
 
-    if (session.token) {
-      headers.Authorization = 'Bearer ' + session.token;
+    if (this.accessToken && !headers.Authorization) {
+      headers = {
+        ...headers,
+        ...this.buildAuthorizationHeader(this.accessToken),
+      };
     }
 
     return headers;
+  }
+
+  buildAuthorizationHeader(token: string) {
+    return { Authorization: `Bearer ${token}` };
   }
 
   /**
@@ -259,8 +407,9 @@ export class ApiService {
     url: string,
     params: object = {},
     tag: any = null,
+    headers: any = null,
   ): Promise<T> {
-    let opt;
+    let opt: any = {};
     if (tag) {
       const source = this.abortTags.get(tag);
       // cancel previous if exists
@@ -271,7 +420,9 @@ export class ApiService {
       opt = { cancelToken: s.token };
       this.abortTags.set(tag, opt.cancelToken);
     }
-
+    if (headers) {
+      opt.headers = headers;
+    }
     const response = await this.axios.get(this.buildUrl(url, params), opt);
 
     return response.data;
@@ -357,7 +508,7 @@ export class ApiService {
         }
       };
       xhr.onerror = function () {
-        reject(new TypeError('Network request failed'));
+        reject(new NetworkError('Network request failed'));
       };
 
       xhr.send(file);
@@ -402,7 +553,7 @@ export class ApiService {
         xhr.upload.addEventListener('progress', progress);
       }
       xhr.open('POST', MINDS_API_URI + this.buildUrl(url));
-      xhr.setRequestHeader('Authorization', `Bearer ${session.token}`);
+      xhr.setRequestHeader('Authorization', `Bearer ${this.accessToken}`);
       xhr.setRequestHeader('Accept', 'application/json');
       xhr.setRequestHeader('Content-Type', 'multipart/form-data;');
       xhr.setRequestHeader('App-Version', Version.VERSION);
@@ -426,7 +577,7 @@ export class ApiService {
         }
       };
       xhr.onerror = function () {
-        reject(new TypeError('Network request failed'));
+        reject(new NetworkError('Network request failed'));
       };
 
       xhr.send(formData);

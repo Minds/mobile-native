@@ -1,19 +1,18 @@
 import React, { useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { useLocalStore, observer } from 'mobx-react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 import InputContainer from '../../../../common/components/InputContainer';
 import i18n from '../../../../common/services/i18n.service';
 import type { WalletStoreType } from '../../createWalletStore';
-import type { BottomOptionsStoreType } from '../../../../common/components/BottomOptionPopup';
 import CenteredLoading from '../../../../common/components/CenteredLoading';
 import createWithdrawStore from '../../../v3/currency-tabs/tokens/widthdrawal/createWithdrawStore';
 import type { WCStore } from '../../../../blockchain/v2/walletconnect/WalletConnectContext';
+import MText from '../../../../common/components/MText';
 
 type PropsType = {
   walletStore: WalletStoreType;
-  bottomStore: BottomOptionsStoreType;
   wc: WCStore;
 };
 
@@ -44,8 +43,6 @@ const Withdraw = observer((props: PropsType) => {
             onChangeText={store.setAmount}
             value={store.amount}
             testID="amountInput"
-            style={store.error ? theme.colorAlert : null}
-            error={store.error}
             selectTextOnFocus={true}
           />
           <View
@@ -57,9 +54,9 @@ const Withdraw = observer((props: PropsType) => {
               theme.paddingVertical2x,
               theme.alignCenter,
             ]}>
-            <Text style={[theme.colorSecondaryText, theme.fontL]}>
+            <MText style={[theme.colorSecondaryText, theme.fontL]}>
               {i18n.t('wallet.withdraw.acceptTerms')}
-            </Text>
+            </MText>
             <Icon
               onPress={store.toggleAccept}
               name={
@@ -73,7 +70,7 @@ const Withdraw = observer((props: PropsType) => {
               size={34}
             />
           </View>
-          <Text
+          <MText
             style={[
               theme.marginTop4x,
               theme.marginHorizontal4x,
@@ -84,13 +81,13 @@ const Withdraw = observer((props: PropsType) => {
               '\n\n'}
             {i18n.t('wallet.withdraw.notes2') + '\n\n'}
             {i18n.t('wallet.withdraw.notes3')}
-          </Text>
+          </MText>
         </>
       ) : (
-        <Text
+        <MText
           style={[theme.fontXL, theme.colorSecondaryText, theme.textCenter]}>
           {i18n.t('wallet.withdraw.errorOnlyOnceDay')}
-        </Text>
+        </MText>
       )}
     </View>
   );

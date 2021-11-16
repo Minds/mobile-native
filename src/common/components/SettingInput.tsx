@@ -29,10 +29,7 @@ const SettingInput = ({ onError, ref, ...props }: PropsType) => {
   return (
     <View style={wrapperStyle}>
       <Input
-        style={[
-          theme.border0x,
-          props.multiline ? styles.areaHeight : styles.inputHeight,
-        ]}
+        style={styles.input}
         labelStyle={labelStyle}
         onError={onError ?? (() => {})}
         ref={ref ?? (() => {})}
@@ -42,13 +39,8 @@ const SettingInput = ({ onError, ref, ...props }: PropsType) => {
   );
 };
 
-const styles = {
-  inputHeight: {
-    height: 40,
-  },
-  areaHeight: {
-    height: 230,
-  },
-};
+const styles = ThemedStyles.create({
+  input: ['border0x', 'paddingBottom2x'],
+});
 
 export default SettingInput;

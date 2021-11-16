@@ -1,20 +1,17 @@
-import login from "./actions/login";
+/* eslint-env detox/detox, jest */
+import { expect } from 'detox';
+import login from './actions/login';
 
 describe('Login Flow', () => {
   beforeEach(async () => {
-    await device.launchApp({
-      newInstance: true,
-      permissions: {
-        notifications: 'YES',
-      },
-    });
+    await device.reloadReactNative();
   });
 
   it('should show world screen after tap', async () => {
     await expect(element(by.id('loginscreentext'))).toBeVisible();
   });
 
-  /*it('should show error', async () => {
+  it('should show error', async () => {
     // login should be visible
     await waitFor(element(by.id('usernameInput')))
       .toBeVisible()
@@ -30,10 +27,12 @@ describe('Login Flow', () => {
 
     // it should show the error message
     // according to the detox docs it should be toHaveText but it only works with toHaveLabel
-    await expect(element(by.id('loginMsg'))).toHaveText('The user credentials were incorrect.');
-  });*/
+    await expect(element(by.id('loginMsg'))).toHaveText(
+      'Incorrect username/password. Please try again.',
+    );
+  });
 
-  /*it('should login successfully', async () => {
+  it('should login successfully', async () => {
     // login should be visible
     await waitFor(element(by.id('usernameInput')))
       .toBeVisible()
@@ -43,6 +42,6 @@ describe('Login Flow', () => {
     await login(process.env.loginUser, process.env.loginPass);
 
     // it should show the newsfeed screen
-    await expect(element(by.id('NewsfeedScreen'))).toBeVisible();
-  });*/
+    await expect(element(by.id('feedlistCMP'))).toBeVisible();
+  });
 });

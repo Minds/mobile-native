@@ -1,51 +1,22 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { observer } from 'mobx-react';
-
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import {
-  StyleSheet,
-  View,
-  SafeAreaView,
-  Platform,
-  TextInput,
-  TouchableHighlight,
-  Text,
-} from 'react-native';
 import i18n from '../../common/services/i18n.service';
-// import TextInput from '../common/components/TextInput';
-import SearchResult from './SearchResultComponent';
-
-import Modal from 'react-native-modal';
-import ThemedStyles from '../../styles/ThemedStyles';
-import { useLegacyStores, useStores } from '../../common/hooks/use-stores';
-import { GOOGLE_PLAY_STORE } from '../../config/Config';
-import DisabledStoreFeature from '../../common/components/DisabledStoreFeature';
-
+import { B1, Row, PressableLine } from '~ui';
 interface Props {
   navigation: any;
 }
 
 const SearchComponent = observer((props: Props) => {
-  const theme = ThemedStyles.style;
-
   return (
-    <TouchableHighlight
-      style={theme.flexContainer}
-      onPress={() => props.navigation.navigate('SearchScreen')}
-      underlayColor="transparent">
-      <View>
-        <Text
-          style={[
-            theme.fontL,
-            theme.colorSecondaryText,
-            theme.paddingLeft3x,
-            theme.fullWidth,
-            theme.paddingVertical2x,
-          ]}>
+    <Row left="M" flex>
+      <PressableLine
+        onPress={() => props.navigation.navigate('SearchScreen')}
+        underlayColor="transparent">
+        <B1 vertical="XS" color="secondary">
           {i18n.t('searchBar.title')}
-        </Text>
-      </View>
-    </TouchableHighlight>
+        </B1>
+      </PressableLine>
+    </Row>
   );
 });
 

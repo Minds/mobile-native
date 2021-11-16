@@ -1,4 +1,4 @@
-import mindsService from '../../../common/services/minds.service';
+import mindsConfigService from '../../../common/services/minds-config.service';
 import BlockchainTokenService from './BlockchainTokenService';
 import ContractServiceAbstract from './ContractServiceAbstract';
 
@@ -13,7 +13,7 @@ export default class BlockchainWireService extends ContractServiceAbstract {
    * @param {string} from
    */
   async create(receiver: string, tokensAmount: number, from): Promise<string> {
-    const settings = (await mindsService.getSettings()).blockchain;
+    const settings = mindsConfigService.getSettings().blockchain;
     const token = await this.getContract('token'),
       wireAddress = settings.wire.address;
 

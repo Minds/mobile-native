@@ -24,7 +24,9 @@ const SuggestedSearch = observer(({ localStore, renderUser }: PropsType) => {
     }
   } else {
     return (
-      <ScrollView keyboardShouldPersistTaps="handled">
+      <ScrollView
+        keyboardShouldPersistTaps="handled"
+        style={ThemedStyles.style.paddingTop3x}>
         <FindInDiscoveryButton localStore={localStore} />
         {localStore.suggested.map(renderUser)}
       </ScrollView>

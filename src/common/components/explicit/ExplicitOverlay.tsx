@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 
 import {
-  Text,
   StyleSheet,
   View,
   TextStyle,
@@ -17,6 +16,7 @@ import type ActivityModel from '../../../newsfeed/ActivityModel';
 import type UserModel from '../../../channel/UserModel';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import GroupModel from '../../../groups/GroupModel';
+import MText from '../MText';
 
 type PropsType = {
   entity: ActivityModel | UserModel | GroupModel;
@@ -90,7 +90,7 @@ export default class ExplicitOverlay extends PureComponent<PropsType> {
       <View
         pointerEvents="box-none"
         style={[
-          theme.centered,
+          theme.flexColumnStretch,
           theme.bgSecondaryBackground,
           styles.onTop,
           containerStyle,
@@ -104,7 +104,7 @@ export default class ExplicitOverlay extends PureComponent<PropsType> {
         {!hideText && (
           <>
             {!!this.props.text && (
-              <Text
+              <MText
                 style={[
                   theme.colorPrimaryText,
                   theme.paddingTop6x,
@@ -113,9 +113,9 @@ export default class ExplicitOverlay extends PureComponent<PropsType> {
                   fontStyle,
                 ]}>
                 {this.props.text}
-              </Text>
+              </MText>
             )}
-            <Text
+            <MText
               style={[
                 theme.colorPrimaryText,
                 theme.paddingTop6x,
@@ -123,8 +123,8 @@ export default class ExplicitOverlay extends PureComponent<PropsType> {
                 theme.bold,
               ]}>
               NSFW
-            </Text>
-            <Text
+            </MText>
+            <MText
               style={[
                 theme.colorTertiaryText,
                 theme.paddingVertical2x,
@@ -132,7 +132,7 @@ export default class ExplicitOverlay extends PureComponent<PropsType> {
                 theme.fontXL,
               ]}>
               {this.getLocalizedReasons()}
-            </Text>
+            </MText>
             <TouchableOpacity
               style={[
                 theme.bcolorPrimaryBorder,
@@ -141,9 +141,9 @@ export default class ExplicitOverlay extends PureComponent<PropsType> {
                 theme.margin4x,
               ]}
               onPress={this.toggle}>
-              <Text style={[theme.padding2x, theme.fontL, fontStyle]}>
+              <MText style={[theme.padding2x, theme.fontL, fontStyle]}>
                 {text}
-              </Text>
+              </MText>
             </TouchableOpacity>
           </>
         )}
@@ -155,5 +155,6 @@ export default class ExplicitOverlay extends PureComponent<PropsType> {
 const styles = StyleSheet.create({
   onTop: {
     minHeight: 400,
+    alignItems: 'center',
   },
 });

@@ -3,16 +3,16 @@ import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import {
   TouchableOpacity,
-  Text,
   StyleSheet,
   ScrollView,
+  TextStyle,
   View,
   StyleProp,
   ViewStyle,
-  TextStyle,
 } from 'react-native';
 
 import ThemedStyles from '../../styles/ThemedStyles';
+import MText from './MText';
 
 interface PropsType {
   tagStyle?: StyleProp<ViewStyle>;
@@ -93,7 +93,7 @@ export default class TagSelect extends Component<PropsType> {
               onPress={() => this.toogle(tag)}
               onLongPress={() => this.toogleOne(tag)}
               testID={tag.value + 'TestID'}>
-              <Text
+              <MText
                 style={[
                   styles.tagText,
                   textStyle,
@@ -102,7 +102,7 @@ export default class TagSelect extends Component<PropsType> {
                     : null,
                 ]}>
                 #{tag.value}
-              </Text>
+              </MText>
             </TouchableOpacity>
           ))}
         </View>

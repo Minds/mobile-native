@@ -1,9 +1,6 @@
 import React, { PureComponent } from 'react';
-
-import { View, Alert, Linking } from 'react-native';
-
-import Icon from 'react-native-vector-icons/MaterialIcons';
-
+import { Alert, Linking } from 'react-native';
+import { IconButtonNext } from '~ui/icons';
 import { MINDS_URI } from '../../config/Config';
 import { isFollowing } from '../NewsfeedService';
 import shareService from '../../share/ShareService';
@@ -13,15 +10,15 @@ import translationService from '../../common/services/translation.service';
 import { FLAG_EDIT_POST } from '../../common/Permissions';
 import sessionService from '../../common/services/session.service';
 import NavigationService from '../../navigation/NavigationService';
-import ThemedStyles from '../../styles/ThemedStyles';
 import type ActivityModel from '../ActivityModel';
 import { showNotification } from '../../../AppMessages';
 import { withSafeAreaInsets } from 'react-native-safe-area-context';
 import {
-  BottomSheet,
+  BottomSheetModal,
   BottomSheetButton,
   MenuItem,
 } from '../../common/components/bottom-sheet';
+import { GroupContext } from '~/groups/GroupViewScreen';
 
 type PropsType = {
   entity: ActivityModel;
@@ -44,6 +41,7 @@ type StateType = {
  */
 export default withSafeAreaInsets(
   class ActivityActionSheet extends PureComponent<PropsType, StateType> {
+    static contextType = GroupContext;
     ref = React.createRef<any>();
     deleteOption: React.ReactNode;
     state: StateType = {
@@ -94,6 +92,7 @@ export default withSafeAreaInsets(
         iconName: string;
         iconType: string;
         title: string;
+        testID?: string;
         onPress: () => void;
       }> = [];
 
@@ -133,7 +132,7 @@ export default withSafeAreaInsets(
           iconName: 'edit',
           iconType: 'material',
           onPress: async () => {
-            this.props.navigation.navigate('Capture', {
+            this.props.navigation.navigate('Compose', {
               isEdit: true,
               entity: this.props.entity,
             });
@@ -297,16 +296,20 @@ export default withSafeAreaInsets(
         },
       });
 
+      // we use the group from the context, as the entity.containerObj is not updated
+      const group = this.context;
+
       // if can delete
       if (
         entity.isOwner() ||
         sessionService.getUser().isAdmin() ||
-        (entity.containerObj && entity.containerObj['is:owner'])
+        (group && (group['is:owner'] || group['is:moderator']))
       ) {
         options.push({
           iconName: 'delete',
           iconType: 'material-community',
           title: i18n.t('delete'),
+          testID: 'deleteOption',
           onPress: () => {
             this.hideActionSheet();
             setTimeout(() => {
@@ -377,19 +380,18 @@ export default withSafeAreaInsets(
      * Render Header
      */
     render() {
-      const theme = ThemedStyles.style;
-
       return (
-        <View style={theme.paddingLeft2x}>
-          <Icon
-            name="more-vert"
+        <>
+          <IconButtonNext
+            scale
+            name="more"
+            size="large"
             onPress={this.showActionSheet}
-            size={28}
-            style={theme.colorTertiaryText}
             testID={this.props.testID}
+            // left="XS"
           />
           {this.state.shown && (
-            <BottomSheet ref={this.ref} autoShow>
+            <BottomSheetModal ref={this.ref} autoShow>
               {this.state.options.map((a, i) => (
                 <MenuItem {...a} key={i} />
               ))}
@@ -397,9 +399,9 @@ export default withSafeAreaInsets(
                 text={i18n.t('cancel')}
                 onPress={this.hideActionSheet}
               />
-            </BottomSheet>
+            </BottomSheetModal>
           )}
-        </View>
+        </>
       );
     }
   },

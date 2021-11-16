@@ -1,8 +1,9 @@
 import React from 'react';
-import { Platform, Text, TouchableOpacity, View } from 'react-native';
+import { Platform, TouchableOpacity, View } from 'react-native';
 import { hideMessage, showMessage } from 'react-native-flash-message';
 import Share from 'react-native-share';
 import Web3 from 'web3';
+import MText from '../common/components/MText';
 import i18n from '../common/services/i18n.service';
 import storageService from '../common/services/storage.service';
 import NavigationService from '../navigation/NavigationService';
@@ -69,14 +70,14 @@ export async function showMessageForPrivateKey() {
     //@ts-ignore
     renderCustomContent: () => (
       <View>
-        <Text style={[theme.fontXL, theme.textCenter]} onPress={hideMessage}>
+        <MText style={[theme.fontXL, theme.textCenter]} onPress={hideMessage}>
           {i18n.t('blockchain.exportLegacy1')}
-        </Text>
-        <Text
+        </MText>
+        <MText
           style={[theme.fontLM, theme.marginTop4x, theme.textCenter]}
           onPress={hideMessage}>
           {i18n.t('blockchain.exportLegacy2')}
-        </Text>
+        </MText>
         <View
           style={[
             theme.rowJustifySpaceEvenly,
@@ -93,11 +94,11 @@ export async function showMessageForPrivateKey() {
               theme.justifyCenter,
               styles.messageVerticalLine,
             ]}>
-            <Text
+            <MText
               style={[theme.fontXL, theme.colorLink, theme.paddingHorizontal4x]}
               onPress={hideMessage}>
               {i18n.t('no')}
-            </Text>
+            </MText>
           </View>
           <TouchableOpacity
             style={theme.justifyCenter}
@@ -105,14 +106,14 @@ export async function showMessageForPrivateKey() {
               hideMessage();
               NavigationService.navigate('ExportLegacyWallet');
             }}>
-            <Text
+            <MText
               style={[
                 theme.fontXL,
                 theme.colorLink,
                 theme.paddingHorizontal4x,
               ]}>
               {i18n.t('yes')}
-            </Text>
+            </MText>
           </TouchableOpacity>
         </View>
       </View>

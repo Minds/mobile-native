@@ -2,35 +2,24 @@
 import _ from 'lodash';
 
 import apiService, { isApiForbidden } from './api.service';
-import sessionService from './session.service';
-import blockListService from './block-list.service';
 import GroupModel from '../../groups/GroupModel';
 import UserModel from '../../channel/UserModel';
 import BlogModel from '../../blogs/BlogModel';
 import ActivityModel from '../../newsfeed/ActivityModel';
-import entitiesStorage from './sql/entities.storage';
+import entitiesStorage from './storage/entities.storage';
 
 // types
 import type { FeedRecordType } from './feeds.service';
 import type BaseModel from '../BaseModel';
-
-const CACHE_TTL_MINUTES = 15;
 
 /**
  * Entities services
  */
 class EntitiesService {
   /**
-   * @var {Map} entities
-   */
-  entities: Map<string, BaseModel> = new Map();
-
-  /**
-   * Contructor
+   * Constructor
    */
   constructor() {
-    setInterval(this.garbageCollector, 60000);
-
     // delete the cache when activities are deleted
     ActivityModel.events.on('deleteEntity', activity =>
       this.deleteFromCache(activity.urn),
@@ -38,35 +27,10 @@ class EntitiesService {
   }
 
   /**
-   * Get one from memory cache
-   * @param {string} urn
-   * @param {boolean} updateLast
-   */
-  getFromCache(urn: string, updateLast: boolean = true): BaseModel | null {
-    const record = this.entities.get(urn);
-    if (record && updateLast) record.last = Date.now() / 1000;
-    return record ? record.entity : null;
-  }
-
-  /**
-   * Garbage collector
-   */
-  garbageCollector = () => {
-    const boundary = Date.now() / 1000 - 60 * CACHE_TTL_MINUTES;
-
-    for (const [key, record] of this.entities.entries()) {
-      if (record.last < boundary) {
-        this.entities.delete(key);
-      }
-    }
-  };
-
-  /**
    * Delete an entity from the cache
    * @param {string} urn
    */
   deleteFromCache(urn: string) {
-    this.entities.delete(urn);
     entitiesStorage.remove(urn);
   }
 
@@ -75,7 +39,6 @@ class EntitiesService {
    * @param {Array<string>} urn
    */
   deleteManyFromCache(urns: Array<string>) {
-    urns.forEach((urn: string): boolean => this.entities.delete(urn));
     entitiesStorage.removeMany(urns);
   }
 
@@ -97,42 +60,59 @@ class EntitiesService {
     let urnsToFetch = [];
     const urnsToResync = [];
     const entities = [];
+    const entitiesMap = new Map();
 
     for (const feedItem of feed) {
       if (feedItem.entity) {
         // fix entity urn is different than feed urn
         feedItem.entity.urn = feedItem.urn;
 
-        this.addEntity(feedItem.entity);
-      } else if (!this.entities.has(feedItem.urn)) {
-        urnsToFetch.push(feedItem.urn);
+        // store it on cache
+        this.save(feedItem.entity);
+
+        const entity = this.mapToModel(feedItem.entity);
+
+        entitiesMap.set(entity.urn, entity);
       } else {
-        urnsToResync.push(feedItem.urn);
+        urnsToFetch.push(feedItem.urn);
       }
     }
 
-    // if we have urnsToFetch we try to load from the sql storage first
+    // if we have urnsToFetch we try to load from the storage first
     if (urnsToFetch.length > 0) {
-      const localEntities = await entitiesStorage.readMany(urnsToFetch);
-      if (localEntities) {
+      const localEntities = entitiesStorage
+        .readMany(urnsToFetch)
+        .filter(e => e !== null);
+      if (localEntities.length > 0) {
         urnsToFetch = _.difference(
           urnsToFetch,
           localEntities.map((m: any): string => m.urn),
         );
 
         // we add to resync list
-        localEntities.forEach((entity: any) => {
-          urnsToResync.push(entity.urn);
-          this.addEntity(entity, false);
+        localEntities.forEach((entityObj: any) => {
+          urnsToResync.push(entityObj.urn);
+          const entity = this.mapToModel(entityObj);
+          entitiesMap.set(entity.urn, entity);
         });
       }
     }
 
     // Fetch entities we don't have
-
     if (urnsToFetch.length) {
       try {
-        await this.fetch(urnsToFetch, abortTag, asActivities);
+        const fetchedEntities = await this.fetch(
+          urnsToFetch,
+          abortTag,
+          asActivities,
+        );
+
+        if (fetchedEntities) {
+          fetchedEntities.forEach(entity => {
+            entitiesMap.set(entity.urn, this.mapToModel(entity));
+            this.save(entity);
+          });
+        }
       } catch (err) {
         // we ignore the fetch error if there are local entities to show
         if (urnsToResync.length === 0 || err.code === 'Abort') throw err;
@@ -141,15 +121,23 @@ class EntitiesService {
 
     // Fetch entities asynchronously
     if (urnsToResync.length) {
-      this.fetch(urnsToResync, abortTag, asActivities);
+      this.fetch(urnsToResync, abortTag, asActivities).then(fetchedEntities => {
+        if (fetchedEntities) {
+          // update entities
+          fetchedEntities.forEach(entityObj => {
+            entitiesMap.get(entityObj.urn)?.update(entityObj);
+            this.save(entityObj);
+          });
+        }
+      });
     }
 
     for (const feedItem of feed) {
-      const entity = this.getFromCache(feedItem.urn, false);
+      const entity = entitiesMap.get(feedItem.urn);
       if (entity) {
         entities.push(entity);
       } else {
-        console.log('ENTITY MISSINNG ' + feedItem.urn);
+        console.log('ENTITY MISSING ' + feedItem.urn);
       }
     }
 
@@ -173,33 +161,45 @@ class EntitiesService {
       urn = `urn:activity:${urn}`; // and assume activity
     }
 
-    // from memory
-    let entity = this.getFromCache(urn);
+    // from sql storage
+    let entity = entitiesStorage.read(urn);
 
-    if (!entity) {
-      // from sql storage
-      const stored = await entitiesStorage.read(urn);
-
-      if (stored) {
-        this.addEntity(stored, false);
-        entity = this.getFromCache(urn, false);
+    if (entity) {
+      entity = this.mapToModel(entity);
+    } else {
+      if (defaultEntity) {
+        // if there not exist in memory or sql we use the default entity and we update it later
+        entity = defaultEntity;
       } else {
-        if (defaultEntity) {
-          // if there not exist in memory or sql we use the default entity and we update it later
-          this.entities.set(urn, {
-            entity: defaultEntity,
-            last: Date.now() / 1000,
-          });
-          entity = defaultEntity;
-        } else {
-          // we fetch from the server
-          await this.fetch([urn], null, asActivities, e => (e.urn = urn));
-          entity = this.getFromCache(urn, false);
+        // we fetch from the server
+        const fetchedEntities = await this.fetch(
+          [urn],
+          null,
+          asActivities,
+          e => (e.urn = urn),
+        );
+        if (fetchedEntities && fetchedEntities[0]) {
+          return this.mapToModel(fetchedEntities[0]);
         }
+        return null;
       }
     }
 
-    if (entity) this.fetch([urn], null, asActivities, e => (e.urn = urn)); // Update in the background
+    if (entity) {
+      // Update in the background
+      this.fetch([urn], null, asActivities, e => (e.urn = urn)).then(
+        fetchedEntities => {
+          if (
+            fetchedEntities &&
+            fetchedEntities[0] &&
+            entity &&
+            entity.update
+          ) {
+            entity.update(fetchedEntities[0]);
+          }
+        },
+      );
+    }
 
     return entity;
   }
@@ -224,14 +224,16 @@ class EntitiesService {
         abortTag,
       );
 
+      const entities = [];
+
       for (const entity of response.entities) {
         if (transform) {
           transform(entity);
         }
-        this.addEntity(entity);
+        entities.push(entity);
       }
 
-      return response.entities;
+      return entities;
     } catch (err) {
       // if the server response is a 403
       if (isApiForbidden(err)) {
@@ -254,49 +256,8 @@ class EntitiesService {
     }
   }
 
-  /**
-   * Add or resync an entity
-   * @param {Object} entity
-   * @param {boolean} store
-   */
-  addEntity(entity: Object, store: boolean = true) {
-    this.cleanEntity(entity);
-
-    const storedEntity = this.getFromCache(entity.urn);
-
-    if (storedEntity) {
-      storedEntity.update(entity);
-    } else {
-      this.entities.set(entity.urn, {
-        entity: this.mapToModel(entity),
-        last: Date.now() / 1000,
-      });
-    }
-    if (store) entitiesStorage.save(entity);
-  }
-
-  /**
-   * Clean properties to save memory and storage space
-   * @param {Object} entity
-   */
-  cleanEntity(entity: Object) {
-    if (
-      entity['thumbs:up:user_guids'] &&
-      Array.isArray(entity['thumbs:up:user_guids'])
-    ) {
-      entity['thumbs:up:user_guids'] = entity['thumbs:up:user_guids'].filter(
-        (guid: string): boolean => guid == sessionService.guid,
-      );
-    }
-
-    if (
-      entity['thumbs:down:user_guids'] &&
-      Array.isArray(entity['thumbs:down:user_guids'])
-    ) {
-      entity['thumbs:down:user_guids'] = entity[
-        'thumbs:down:user_guids'
-      ].filter((guid: string): boolean => guid == sessionService.guid);
-    }
+  save(entity: any) {
+    entitiesStorage.save(entity);
   }
 
   /**

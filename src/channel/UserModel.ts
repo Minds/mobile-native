@@ -1,4 +1,4 @@
-import { observable, action, runInAction, computed } from 'mobx';
+import { observable, action, runInAction } from 'mobx';
 
 import { MINDS_CDN_URI, GOOGLE_PLAY_STORE } from '../config/Config';
 import api from '../common/services/api.service';
@@ -29,12 +29,14 @@ export default class UserModel extends BaseModel {
    * Eth wallet
    */
   eth_wallet: string = '';
+  time_updated: string = '';
   sums;
   btc_address?: string;
   icontime!: string;
   username!: string;
   briefdescription!: string;
   city!: string;
+  type!: string;
   name!: string;
   is_admin = false;
   canary = false;

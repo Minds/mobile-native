@@ -10,6 +10,7 @@ export default class GroupModel extends BaseModel {
   @observable conversationDisabled = false;
   @observable mature_visibility = false;
   name!: string;
+  type!: string;
   nsfw: Array<number> = [];
   icontime: any;
   entity_guid?: string;

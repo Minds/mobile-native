@@ -1,7 +1,7 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import { Text, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { observer } from 'mobx-react';
 
@@ -10,6 +10,7 @@ import connectivityService from '../services/connectivity.service';
 import Button from './Button';
 import i18n from '../services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
+import MText from './MText';
 
 // types
 type Props = {
@@ -38,17 +39,19 @@ export default class ErrorLoading extends Component<Props> {
             ? styles.errorLoadingInverted
             : styles.errorLoading,
         ]}>
-        <Text style={[theme.fontM, theme.colorDarkGreyed, theme.marginBottom]}>
-          <Text style={theme.fontSemibold}>{i18n.t('ops')}</Text>{' '}
+        <MText style={[theme.fontSemibold, theme.marginBottom]}>
+          {i18n.t('ops')}
+        </MText>
+        <MText
+          style={[theme.fontM, theme.colorSecondaryText, theme.marginBottom2x]}>
           {this.props.message}
-        </Text>
-        {!connectivityService.isConnected && (
-          <Text
-            style={[theme.fontM, theme.colorDarkGreyed, theme.marginBottom]}>
-            {' '}
-            {i18n.t('noInternet')}
-          </Text>
-        )}
+          {'. '}
+          {!connectivityService.isConnected && (
+            <MText style={[theme.fontM, theme.colorSecondaryText]}>
+              {i18n.t('noInternet')}
+            </MText>
+          )}
+        </MText>
         <Button onPress={this.props.tryAgain} text={i18n.t('tryAgain')} />
       </View>
     );

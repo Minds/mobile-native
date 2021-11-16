@@ -2,6 +2,7 @@
 import NotificationsIOS from 'react-native-notifications';
 import AbstractPlatform from './abstract-platform';
 import logService from '../log.service';
+import sessionService from '../session.service';
 
 /**
  * Ios Platform
@@ -23,7 +24,6 @@ export default class IosPlatfom extends AbstractPlatform {
       'notificationOpened',
       this._onNotificationOpened.bind(this),
     );
-    NotificationsIOS.requestPermissions();
   }
 
   /**
@@ -74,6 +74,10 @@ export default class IosPlatfom extends AbstractPlatform {
     }
   }
 
+  requestPermission() {
+    return NotificationsIOS.requestPermissions();
+  }
+
   /**
    * Returns a promise that resolves the user permissions
    */
@@ -87,6 +91,7 @@ export default class IosPlatfom extends AbstractPlatform {
 
   _onPushRegistered(deviceToken) {
     this.token = deviceToken;
+    sessionService.deviceToken = deviceToken;
 
     if (this.shouldRegister) {
       this.registerToken();

@@ -1,7 +1,7 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import { Text, Image, View, StyleSheet } from 'react-native';
+import { Image, View, StyleSheet } from 'react-native';
 import SmartImage from '../../common/components/SmartImage';
 
 import { MINDS_CDN_URI } from '../../config/Config';
@@ -9,6 +9,7 @@ import abbrev from '../../common/helpers/abbrev';
 import FastImage from 'react-native-fast-image';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
+import MText from '../../common/components/MText';
 
 /**
  * Group Card
@@ -56,33 +57,33 @@ export default class GroupCard extends Component {
         <View style={styles.headertextcontainer}>
           <View style={styles.countercontainer}>
             <View style={[theme.columnAlignCenter, theme.flexContainer]}>
-              <Text style={styles.countertitle}>
+              <MText style={styles.countertitle}>
                 {i18n.t('members').toUpperCase()}
-              </Text>
-              <Text style={styles.countervalue}>
+              </MText>
+              <MText style={styles.countervalue}>
                 {abbrev(group['members:count'], 0)}
-              </Text>
+              </MText>
             </View>
             <View style={[theme.columnAlignCenter, theme.flexContainer]}>
-              <Text style={styles.countertitle}>
+              <MText style={styles.countertitle}>
                 {i18n.t('feed').toUpperCase()}
-              </Text>
-              <Text style={styles.countervalue}>
+              </MText>
+              <MText style={styles.countervalue}>
                 {abbrev(group['activity:count'], 0)}
-              </Text>
+              </MText>
             </View>
             <View style={[theme.columnAlignCenter, theme.flexContainer]}>
-              <Text style={styles.countertitle}>
+              <MText style={styles.countertitle}>
                 {i18n.t('comments.comments').toUpperCase()}
-              </Text>
-              <Text style={styles.countervalue}>
+              </MText>
+              <MText style={styles.countervalue}>
                 {abbrev(group['comments:count'], 0)}
-              </Text>
+              </MText>
             </View>
           </View>
           <View style={[theme.rowJustifyCenter]}>
             <View style={styles.namecol}>
-              <Text style={styles.name}>{group.name.toUpperCase()}</Text>
+              <MText style={styles.name}>{group.name.toUpperCase()}</MText>
             </View>
           </View>
         </View>

@@ -8,6 +8,13 @@ export type TDiscoveryV2Tabs =
   | 'trending-tags'
   | 'boosts';
 
+const tabIndex: Record<TDiscoveryV2Tabs, number> = {
+  foryou: 0,
+  'your-tags': 1,
+  'trending-tags': 2,
+  boosts: 3,
+};
+
 export type TDiscoveryTrendsTrend = {};
 
 export type TDiscoveryTagsTag = {
@@ -20,10 +27,14 @@ export default class DiscoveryV2Store {
   @observable tags: TDiscoveryTagsTag[] = [];
   @observable trendingTags: TDiscoveryTagsTag[] = [];
   @observable loading = false;
+  /**
+   * Tab animation direction
+   */
+  @observable direction = -1;
   @observable loadingTags = false;
   @observable refreshing = false;
-  @observable showManageTags = false;
   boostFeed: FeedStore;
+  trendingFeed: FeedStore;
   allFeed: FeedStore;
 
   constructor() {
@@ -35,6 +46,11 @@ export default class DiscoveryV2Store {
 
     this.boostFeed
       .setEndpoint('api/v2/boost/feed')
+      .setInjectBoost(false)
+      .setLimit(15);
+
+    this.trendingFeed = new FeedStore(true)
+      .setEndpoint('api/v2/feeds/global/trending/all')
       .setInjectBoost(false)
       .setLimit(15);
 
@@ -51,24 +67,22 @@ export default class DiscoveryV2Store {
   }
 
   @action
-  setShowManageTags(value: boolean) {
-    this.showManageTags = value;
-  }
-
-  @action
   setTabId(id: TDiscoveryV2Tabs) {
-    switch (id) {
-      case 'foryou':
-        if (id === this.activeTabId) {
-          // already on tab
-          this.refreshTrends();
-        }
-        break;
-      case 'trending-tags':
-        break;
-      case 'boosts':
-        break;
-    }
+    // set animation direction based on current and target tabs
+    this.direction = tabIndex[id] > tabIndex[this.activeTabId] ? 1 : 0;
+    if (tabIndex)
+      switch (id) {
+        case 'foryou':
+          if (id === this.activeTabId) {
+            // already on tab
+            this.refreshTrends();
+          }
+          break;
+        case 'trending-tags':
+          break;
+        case 'boosts':
+          break;
+      }
     this.activeTabId = id;
   }
 

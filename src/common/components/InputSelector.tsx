@@ -1,9 +1,10 @@
 //@ts-nocheck
 import React, { useCallback, useState, useRef } from 'react';
-import { View, Text } from 'react-native-animatable';
+import { View } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
-import Selector from '../../common/components/Selector';
+import Selector from '../../common/components/SelectorV2';
 import { StyleProp, TextStyle, ViewStyle } from 'react-native';
+import MText from './MText';
 
 type PropsType = {
   data: Array<any>;
@@ -61,7 +62,7 @@ const InputSelector = (props: PropsType) => {
           theme.borderHair,
           props.containerStyle,
         ]}>
-        <Text
+        <MText
           style={[
             theme.marginLeft,
             theme.colorSecondaryText,
@@ -69,12 +70,12 @@ const InputSelector = (props: PropsType) => {
             props.labelStyle,
           ]}>
           {props.label}
-        </Text>
-        <Text
+        </MText>
+        <MText
           style={[theme.colorPrimaryText, theme.fontM]}
           onPress={() => selectorRef.current.show(item)}>
           {getValueOf(item)}
-        </Text>
+        </MText>
       </View>
       <Selector
         ref={selectorRef}

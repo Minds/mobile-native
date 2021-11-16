@@ -9,7 +9,6 @@ import {
   Platform,
   SafeAreaView,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -18,20 +17,33 @@ import IonIcon from 'react-native-vector-icons/Ionicons';
 import InputContainer from '../common/components/InputContainer';
 import { icon } from './styles';
 import authService from './AuthService';
+import NavigationService from '../navigation/NavigationService';
+import MText from '../common/components/MText';
 
-type ForgotScreenRouteProp = RouteProp<
+type PasswordConfirmation = RouteProp<
   RootStackParamList,
   'PasswordConfirmation'
 >;
 
 type PropsType = {
-  route: ForgotScreenRouteProp;
-  navigation: any;
+  route?: PasswordConfirmation;
+  navigation?: any;
+  onConfirm?: (password: string) => void;
+  title?: string;
+  onGoBackPress?: Function;
 };
 
-const PasswordConfirmScreen = observer(({ route, navigation }: PropsType) => {
+const PasswordConfirmScreen = observer((props: PropsType) => {
   const theme = ThemedStyles.style;
-  const { onConfirm, title } = route.params;
+  const onConfirm = props.route?.params?.onConfirm || props.onConfirm;
+  const title = props.route?.params?.title || props.title;
+  const onGoBackPress = React.useCallback(() => {
+    if (props.route?.params?.onConfirm !== undefined) {
+      NavigationService.goBack();
+    } else {
+      props.onGoBackPress && props.onGoBackPress();
+    }
+  }, [props]);
   const localStore = useLocalStore(() => ({
     password: '',
     error: false,
@@ -49,7 +61,7 @@ const PasswordConfirmScreen = observer(({ route, navigation }: PropsType) => {
       this.error = false;
       try {
         await authService.validatePassword(this.password);
-        onConfirm(this.password);
+        onConfirm && onConfirm(this.password);
         this.password = '';
       } catch (err) {
         this.error = true;
@@ -57,7 +69,7 @@ const PasswordConfirmScreen = observer(({ route, navigation }: PropsType) => {
     },
   }));
   const msg = localStore.error ? (
-    <Text style={styles.error}>{i18n.t('auth.invalidPassword')}</Text>
+    <MText style={styles.error}>{i18n.t('auth.invalidPassword')}</MText>
   ) : null;
   const iconStyle = { flex: 2 };
   const touchStyle = { flex: 3, alignItems: 'flex-end' };
@@ -73,16 +85,16 @@ const PasswordConfirmScreen = observer(({ route, navigation }: PropsType) => {
             size={32}
             color={ThemedStyles.getColor('SecondaryText')}
             style={iconStyle}
-            onPress={navigation.goBack}
+            onPress={onGoBackPress}
           />
-          <Text style={styles.titleText}>
+          <MText style={styles.titleText}>
             {title || i18n.t('auth.confirmpassword')}
-          </Text>
+          </MText>
           <TouchableOpacity
             onPress={localStore.submit}
             //@ts-ignore
             style={touchStyle}>
-            <Text
+            <MText
               style={[
                 theme.fontL,
                 theme.fontMedium,
@@ -90,18 +102,18 @@ const PasswordConfirmScreen = observer(({ route, navigation }: PropsType) => {
                 theme.paddingTop,
               ]}>
               {i18n.t('continue')}
-            </Text>
+            </MText>
           </TouchableOpacity>
         </View>
         {msg}
-        <Text
+        <MText
           style={[
             theme.colorSecondaryText,
             theme.marginBottom6x,
             theme.paddingLeft4x,
           ]}>
           {i18n.t('auth.confirmPasswordModal')}
-        </Text>
+        </MText>
         <View style={theme.fullWidth}>
           <InputContainer
             labelStyle={theme.colorPrimaryText}

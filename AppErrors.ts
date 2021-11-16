@@ -27,7 +27,6 @@ if (process.env.JEST_WORKER_ID === undefined) {
       // for dev only log into the console
       if (__DEV__) {
         console.log(hint.originalException);
-        console.log('sentry', event, hint);
         return null;
       }
 

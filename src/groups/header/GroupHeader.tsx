@@ -1,7 +1,7 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import { Text, Image, View, StyleSheet, Alert } from 'react-native';
+import { Image, View, StyleSheet, Alert } from 'react-native';
 
 import { observer, inject } from 'mobx-react';
 
@@ -22,9 +22,10 @@ import type GroupsBarStore from '../GroupsBarStore';
 import GroupViewStore from '../GroupViewStore';
 import DismissKeyboard from '../../common/components/DismissKeyboard';
 import AnimatedSearch from './AnimatedSearch';
-import BottomSheet from '../../common/components/bottom-sheet/BottomSheet';
+import BottomSheetModal from '../../common/components/bottom-sheet/BottomSheetModal';
 import MenuItem from '../../common/components/bottom-sheet/MenuItem';
 import BottomSheetButton from '../../common/components/bottom-sheet/BottomSheetButton';
+import MText from '../../common/components/MText';
 
 type PropsTypes = {
   groupsBar: GroupsBarStore;
@@ -261,7 +262,7 @@ export default class GroupHeader extends Component<PropsTypes> {
           size={26}
           style={ThemedStyles.style.colorPrimaryText}
         />
-        <BottomSheet ref={this.refActionSheet} title={i18n.t('actions')}>
+        <BottomSheetModal ref={this.refActionSheet} title={i18n.t('actions')}>
           {this.props.store.group.conversationDisabled ? (
             <MenuItem
               title={i18n.t('groups.enableConversations')}
@@ -282,7 +283,7 @@ export default class GroupHeader extends Component<PropsTypes> {
             text={i18n.t('cancel')}
             onPress={this.hideActionSheet}
           />
-        </BottomSheet>
+        </BottomSheetModal>
       </View>
     );
   }
@@ -337,7 +338,7 @@ export default class GroupHeader extends Component<PropsTypes> {
             </View>
             <View style={theme.rowJustifyCenter}>
               <View style={styles.namecol}>
-                <Text style={styles.name}>{group.name}</Text>
+                <MText style={styles.name}>{group.name}</MText>
               </View>
               <View style={styles.buttonscol}>
                 <Icon

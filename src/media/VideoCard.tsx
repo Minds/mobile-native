@@ -1,13 +1,14 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import { Text, Image, View, StyleSheet } from 'react-native';
+import { Image, View, StyleSheet } from 'react-native';
 
 import { observer } from 'mobx-react';
 
 import { MINDS_CDN_URI } from '../config/Config';
 import MindsVideo from './v2/mindsVideo/MindsVideo';
-import formatDate from '../common/helpers/date';
+import i18n from '../common/services/i18n.service';
+import MText from '../common/components/MText';
 
 /**
  * Video Card
@@ -43,12 +44,12 @@ export default class VideoCard extends Component {
             <View style={styles.namecol}>
               <View style={styles.ownerContainer}>
                 <Image source={this.getAvatar()} style={styles.avatar} />
-                <Text style={styles.username}>
+                <MText style={styles.username}>
                   {entity.ownerObj.username.toUpperCase()}
-                </Text>
-                <Text style={styles.createdDate}>
-                  {formatDate(entity.time_created)}
-                </Text>
+                </MText>
+                <MText style={styles.createdDate}>
+                  {i18n.date(entity.time_created * 1000)}
+                </MText>
               </View>
             </View>
           </View>

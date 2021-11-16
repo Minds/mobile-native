@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
+import MText from '../../common/components/MText';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import BoostButton from './BoostButton';
@@ -20,7 +21,7 @@ const NewsfeedBoostTab = observer(({ localStore }: PropsType) => {
   return (
     <View style={[theme.flexContainer, theme.marginTop5x]}>
       <View style={theme.marginBottom4x}>
-        <Text
+        <MText
           style={[
             theme.colorSecondaryText,
             theme.fontL,
@@ -28,7 +29,7 @@ const NewsfeedBoostTab = observer(({ localStore }: PropsType) => {
             theme.marginBottom4x,
           ]}>
           {i18n.t('boosts.feedsDescription')}
-        </Text>
+        </MText>
         <BoostInput localStore={localStore} />
         <BoostPayment localStore={localStore} />
       </View>

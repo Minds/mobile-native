@@ -1,9 +1,6 @@
 import React from 'react';
 import WalletConnectProvider from '@walletconnect/web3-provider';
-import type {
-  IMobileRegistryEntry,
-  IPushSubscription,
-} from '@walletconnect/types';
+import type { IMobileRegistryEntry } from '@walletconnect/types';
 import Web3 from 'web3';
 import { useLocalStore } from 'mobx-react';
 import { makeAccessRequest } from './util';
@@ -11,7 +8,6 @@ import { Linking, Platform } from 'react-native';
 import { when } from 'mobx';
 import WalletConnectModal from './modal/WalletConnectModal';
 import { showNotification } from '../../../../AppMessages';
-import pushService from '../../../common/services/push.service';
 
 let registry: Array<IMobileRegistryEntry> | null = null;
 
@@ -154,9 +150,9 @@ export const createStore = (): WCStore => ({
       this.setConnected(true);
       this.setChainId(provider.chainId);
 
-      const token = pushService.push.token;
+      // const token = pushService.push.token;
       const topic = provider.wc.clientId;
-      const bridge = provider.wc.bridge;
+      // const bridge = provider.wc.bridge;
 
       const subscribeOpts = {
         topic,

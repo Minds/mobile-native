@@ -7,9 +7,9 @@ import { action, observable } from 'mobx';
 import navigationService from '../../navigation/NavigationService';
 import logService from './log.service';
 import i18n from './i18n.service';
-import storageService from './storage.service';
 import * as UpdateAPK from 'rn-update-apk';
 import { showNotification } from '../../../AppMessages';
+import { storages } from './storage/storages.service';
 
 /**
  * Update service
@@ -24,7 +24,7 @@ class UpdateService {
    */
   async rememberTomorrow() {
     try {
-      const ignoreDate = await storageService.getItem('@mindsUpdateDate');
+      const ignoreDate = storages.app.getString('@mindsUpdateDate');
       if (ignoreDate) {
         const now = moment();
         if (ignoreDate === now.format('YYYY-MM-DD')) return true;
@@ -58,7 +58,7 @@ class UpdateService {
               {
                 text: i18n.t('rememberTomorrow'),
                 onPress: () => {
-                  storageService.setItem(
+                  storages.app.setString(
                     '@mindsUpdateDate',
                     moment().format('YYYY-MM-DD'),
                   );
@@ -166,7 +166,7 @@ class UpdateService {
     this.setDownloading(true);
 
     const updater = new UpdateAPK.UpdateAPK({
-      fileProviderAuthority: 'com.minds.mobile.fileprovider',
+      fileProviderAuthority: 'com.minds.mobile.provider',
 
       downloadApkProgress: progress => {
         this.setProgress(progress);

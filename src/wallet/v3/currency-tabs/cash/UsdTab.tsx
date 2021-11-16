@@ -1,13 +1,11 @@
 import React, { useRef } from 'react';
 import { observer } from 'mobx-react';
-import { View } from 'react-native';
 import TopBarButtonTabBar, {
   ButtonTabType,
 } from '../../../../common/components/topbar-tabbar/TopBarButtonTabBar';
 import { UsdOptions } from '../../../v2/WalletTypes';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 import type { WalletStoreType } from '../../../v2/createWalletStore';
-import { ScrollView } from 'react-native-gesture-handler';
 import {
   WalletScreenRouteProp,
   WalletScreenNavigationProp,
@@ -23,6 +21,7 @@ import PaidInfo from './PaidInfo';
 import Earnings from '../Earnings';
 import { TokensTabStore } from '../tokens/createTokensTabStore';
 import { UsdTabStore } from './createUsdTabStore';
+import { Screen, Column, Row } from '~ui';
 
 type PropsType = {
   walletStore: WalletStoreType;
@@ -84,51 +83,46 @@ const UsdTab = observer(
         break;
     }
 
-    const mainBody = (
-      <View style={theme.paddingTop5x}>
-        <View
-          style={[
-            theme.rowJustifyStart,
-            theme.paddingLeft2x,
-            theme.marginBottom5x,
-          ]}>
-          <Tooltip
-            ref={tooltipRef}
-            closeOnlyOnBackdropPress={true}
-            skipAndroidStatusBar={true}
-            toggleOnPress={false}
-            withOverlay={false}
-            containerStyle={theme.borderRadius}
-            width={screen.width - 20}
-            height={250}
-            backgroundColor={ThemedStyles.getColor('SecondaryBackground')}
-            popover={<PaidInfo walletStore={walletStore} />}>
-            <PaidButton
-              containerStyle={theme.marginRight2x}
-              onPress={() => tooltipRef.current.toggleTooltip()}
-              walletStore={walletStore}
-            />
-          </Tooltip>
-          <ConnectBankButton
-            walletStore={walletStore}
-            navigation={navigation}
+    const isTransactions = usdTabStore.option === 'transactions';
+
+    return (
+      <Screen scroll={!isTransactions}>
+        <Column top="XL" flex>
+          <Row horizontal="M" bottom="XXL">
+            <Tooltip
+              ref={tooltipRef}
+              closeOnlyOnBackdropPress={true}
+              skipAndroidStatusBar={true}
+              toggleOnPress={false}
+              withOverlay={false}
+              containerStyle={theme.borderRadius}
+              width={screen.width - 20}
+              height={250}
+              backgroundColor={ThemedStyles.getColor('SecondaryBackground')}
+              popover={<PaidInfo walletStore={walletStore} />}>
+              <PaidButton
+                containerStyle={theme.marginRight2x}
+                onPress={() => tooltipRef.current.toggleTooltip()}
+                walletStore={walletStore}
+              />
+            </Tooltip>
+            <Row left="M">
+              <ConnectBankButton
+                walletStore={walletStore}
+                navigation={navigation}
+              />
+            </Row>
+          </Row>
+
+          <TopBarButtonTabBar
+            tabs={options}
+            current={usdTabStore.option}
+            onChange={usdTabStore.setOption}
           />
-        </View>
-
-        <TopBarButtonTabBar
-          tabs={options}
-          current={usdTabStore.option}
-          onChange={usdTabStore.setOption}
-        />
-        {body}
-      </View>
+          {isTransactions ? body : <Column bottom="XXL">{body}</Column>}
+        </Column>
+      </Screen>
     );
-
-    if (usdTabStore.option !== 'transactions') {
-      return <ScrollView>{mainBody}</ScrollView>;
-    } else {
-      return <View style={theme.flexContainer}>{mainBody}</View>;
-    }
   },
 );
 

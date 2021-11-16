@@ -1,14 +1,14 @@
 import React from 'react';
 import {
   View,
-  Text,
   TouchableOpacity,
   StyleProp,
   TextStyle,
-  StyleSheet,
   ViewStyle,
 } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import ThemedStyles from '../../../styles/ThemedStyles';
+import { B1, B2 } from '~ui';
 
 export type TabType<T> = {
   id: T;
@@ -27,6 +27,11 @@ type PropsType<T> = {
 };
 
 /**
+ * topbarTabbarRef Ref
+ */
+export const topbarTabbarRef = React.createRef<ScrollView>();
+
+/**
  * Tab bar
  */
 function TopbarTabbar<T>(props: PropsType<T>) {
@@ -43,51 +48,35 @@ function TopbarTabbar<T>(props: PropsType<T>) {
         theme.rowJustifyStart,
         theme.borderBottom,
         theme.bcolorPrimaryBorder,
-        theme.paddingHorizontal2x,
         props.containerStyle,
       ]}>
-      {props.tabs.map((tab, i) => (
-        <TouchableOpacity
-          onPress={() => props.onChange(tab.id)}
-          key={i}
-          style={[
-            tabStyle,
-            props.tabStyle,
-            tab.id === props.current
-              ? theme.bcolorTabBorder
-              : theme.bcolorTransparent,
-          ]}>
-          <Text
+      <ScrollView
+        contentContainerStyle={theme.marginHorizontal2x}
+        horizontal
+        ref={topbarTabbarRef}>
+        {props.tabs.map((tab, i) => (
+          <TouchableOpacity
+            onPress={() => props.onChange(tab.id)}
+            key={i}
             style={[
-              theme.fontL,
+              tabStyle,
+              props.tabStyle,
               tab.id === props.current
-                ? theme.colorPrimaryText
-                : theme.colorSecondaryText,
-              props.titleStyle,
+                ? theme.bcolorTabBorder
+                : theme.bcolorTransparent,
             ]}>
-            {tab.title}
-          </Text>
-          {!!tab.subtitle && (
-            <Text
-              style={[
-                theme.fontL,
-                theme.colorSecondaryText,
-                styles.subtitle,
-                props.subtitleStyle,
-              ]}>
-              {tab.subtitle}
-            </Text>
-          )}
-        </TouchableOpacity>
-      ))}
+            <B1
+              font="medium"
+              horizontal="XS"
+              color={tab.id === props.current ? 'link' : 'secondary'}>
+              {tab.title}
+            </B1>
+            {!!tab.subtitle && <B2 vertical="XXXS">{tab.subtitle}</B2>}
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
     </View>
   );
 }
 
 export default TopbarTabbar;
-
-const styles = StyleSheet.create({
-  subtitle: {
-    paddingVertical: 2,
-  },
-});

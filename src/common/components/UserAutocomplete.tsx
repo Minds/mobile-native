@@ -10,6 +10,7 @@ import UserTypeahead from './user-typeahead/UserTypeahead';
 import userTypeaheadService from './user-typeahead/UserTypeaheadService';
 import logService from '../services/log.service';
 import ThemedStyles from '../../styles/ThemedStyles';
+import MText from './MText';
 
 type PropsType = {
   text: string;
@@ -101,7 +102,9 @@ export default class UserAutocomplete extends PureComponent<PropsType> {
       ? this.state.users.map((user, i) => {
           return (
             <View style={[style.tags, theme.bgTertiaryBackground]} key={i}>
-              <Text onPress={() => this.selectTag(user)}>@{user.username}</Text>
+              <MText onPress={() => this.selectTag(user)}>
+                @{user.username}
+              </MText>
             </View>
           );
         })

@@ -3,10 +3,10 @@ import validatorService from '../../../../../common/services/validator.service';
 import logService from '../../../../../common/services/log.service';
 import api from '../../../../../common/services/api.service';
 import BlockchainWithdrawService from '../../../../../blockchain/v2/services/BlockchainWithdrawService';
-import { UserError } from '../../../../../common/UserError';
 import sessionService from '../../../../../common/services/session.service';
 import type { WalletStoreType } from '../../../../v2/createWalletStore';
 import type { WCStore } from '../../../../../blockchain/v2/walletconnect/WalletConnectContext';
+import { showNotification } from '../../../../../../AppMessages';
 
 const createWithdrawStore = (p: {
   walletStore: WalletStoreType;
@@ -27,7 +27,7 @@ const createWithdrawStore = (p: {
       this.accept = !this.accept;
     },
     async onPressTransfer() {
-      if (this.error || !this.canTransfer || this.inProgress) {
+      if (this.hasError() || !this.canTransfer || this.inProgress) {
         return;
       }
       try {
@@ -43,14 +43,19 @@ const createWithdrawStore = (p: {
     setInProgress(value: boolean) {
       this.inProgress = value;
     },
-    get error(): string {
+    hasError(): boolean {
       const v = parseFloat(this.amount);
       if (v <= 0) {
-        return i18n.t('wallet.withdraw.errorAmountNegative');
+        showNotification(
+          i18n.t('wallet.withdraw.errorAmountNegative'),
+          'danger',
+        );
+        return true;
       } else if (v > p.walletStore.wallet.offchain.balance) {
-        return i18n.t('wallet.withdraw.errorAmountToHigh');
+        showNotification(i18n.t('wallet.withdraw.errorAmountToHigh'), 'danger');
+        return true;
       }
-      return '';
+      return false;
     },
     async getCanTransfer(): Promise<boolean> {
       try {
@@ -104,7 +109,7 @@ const createWithdrawStore = (p: {
         if (err.message !== 'E_CANCELLED') {
           const error =
             err.message || i18n.t('wallet.withdraw.errorWithdrawing');
-          throw new UserError(error, 'warning');
+          showNotification(error, 'warning');
         }
       } finally {
         this.setInProgress(false);

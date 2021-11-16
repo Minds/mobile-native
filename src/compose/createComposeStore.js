@@ -5,11 +5,11 @@ import AttachmentStore from '../common/stores/AttachmentStore';
 import RichEmbedStore from '../common/stores/RichEmbedStore';
 import i18n from '../common/services/i18n.service';
 import hashtagService from '../common/services/hashtag.service';
-import api from '../common/services/api.service';
+import api, { ApiError } from '../common/services/api.service';
 import ActivityModel from '../newsfeed/ActivityModel';
 import ThemedStyles from '../styles/ThemedStyles';
 import featuresService from '../common/services/features.service';
-import mindsService from '../common/services/minds.service';
+import mindsConfigService from '../common/services/minds-config.service';
 import supportTiersService from '../common/services/support-tiers.service';
 import settingsStore from '../settings/SettingsStore';
 import attachmentService from '../common/services/attachment.service';
@@ -18,6 +18,7 @@ import logService from '../common/services/log.service';
 import { runInAction } from 'mobx';
 import { Image, Platform } from 'react-native';
 import { hashRegex } from '../common/components/Tags';
+import getNetworkError from '~/common/helpers/getNetworkError';
 
 /**
  * Display an error message to the user.
@@ -27,8 +28,11 @@ const showError = message => {
   showMessage({
     position: 'top',
     message: message,
-    titleStyle: ThemedStyles.style.fontXL,
-    duration: 2000,
+    titleStyle: [
+      ThemedStyles.style.fontXL,
+      ThemedStyles.style.colorPrimaryText,
+    ],
+    duration: 3000,
     backgroundColor: ThemedStyles.getColor('TertiaryBackground'),
     type: 'danger',
   });
@@ -270,10 +274,12 @@ export default function (props) {
     parseTags() {
       let result = this.text.match(hashRegex);
       if (result) {
+        // unique results
         result = result.map(v => v.trim().slice(1));
+        const all = [...new Set(result.concat(this.tags))];
 
-        if (this.tags.length + result.length <= hashtagService.maxHashtags) {
-          this.tags.push(...result);
+        if (all.length <= hashtagService.maxHashtags) {
+          this.tags = all;
           return true;
         } else {
           this.maxHashtagsError();
@@ -416,7 +422,18 @@ export default function (props) {
       this.attachment.attachMedia(this.mediaToConfirm, this.extra);
       this.mode = 'text';
     },
+    /**
+     * is the composer input valid or not. Is it ready to be submitted?
+     */
+    get isValid() {
+      const isEmpty =
+        !this.attachment.hasAttachment &&
+        !this.text &&
+        (!this.embed.meta || !this.embed.meta.url) &&
+        !this.isRemind;
 
+      return !isEmpty;
+    },
     /**
      * Submit post
      */
@@ -430,115 +447,103 @@ export default function (props) {
         return false;
       }
 
-      // Plus Monetize?
-      if (
-        this.wire_threshold &&
-        'support_tier' in this.wire_threshold &&
-        this.wire_threshold.support_tier.urn ===
-          mindsService.settings.plus.support_tier_urn
-      ) {
-        // Must have tags
-        if (this.tags.length === 0) {
-          showError(i18n.t('capture.noHashtags'));
-          return false;
-        }
-
-        // Mustn't have external links
-        if (
-          this.embed.hasRichEmbed &&
-          !this.embed.meta.url.toLowerCase().includes('minds.com')
-        ) {
-          showError(i18n.t('capture.noExternalLinks'));
-          return false;
-        }
-      }
-
-      // is uploading?
-      if (this.attachment.hasAttachment && this.attachment.uploading) {
-        showError(i18n.t('capture.pleaseTryAgain'));
-        return false;
-      }
-
-      // Something to post?
-      if (
-        !this.attachment.hasAttachment &&
-        !this.text &&
-        (!this.embed.meta || !this.embed.meta.url) &&
-        !this.isRemind
-      ) {
-        showError(i18n.t('capture.nothingToPost'));
-        return false;
-      }
-
-      // check hashtag limit
-      if (this.tags.length > hashtagService.maxHashtags) {
-        this.maxHashtagsError();
-        return false;
-      }
-
-      let newPost = {
-        message: this.text,
-        accessId: this.accessId,
-        time_created:
-          Math.floor(this.time_created / 1000) || Math.floor(Date.now() / 1000),
-      };
-
-      if (this.paywalled) {
-        newPost.paywall = true;
-        newPost.wire_threshold = featuresService.has('paywall-2020')
-          ? this.wire_threshold
-          : this.wire_threshold.min;
-      }
-
-      // add remind
-      if (this.isRemind) {
-        newPost.remind_guid = this.entity.guid;
-      }
-
-      if (this.postToPermaweb) {
-        if (this.paywalled) {
-          showError(i18n.t('permaweb.cannotMonetize'));
-          return false;
-        }
-        newPost.post_to_permaweb = true;
-      }
-
-      if (this.title) {
-        newPost.title = this.title;
-      }
-
-      newPost.nsfw = this.nsfw || [];
-
-      if (this.attachment.guid) {
-        newPost.entity_guid = this.attachment.guid;
-        newPost.license = this.attachment.license;
-      }
-
-      if (this.embed.meta) {
-        newPost = Object.assign(newPost, this.embed.meta);
-      }
-
-      if (props.route?.params && props.route.params.group) {
-        newPost.container_guid = props.route.params.group.guid;
-        this.group = props.route.params.group;
-        // remove the group to avoid reuse it on future posts
-        props.navigation.setParams({ group: undefined });
-      }
-
-      // keep the container if it is an edited activity
-      if (this.isEdit && typeof this.entity.container_guid !== 'undefined') {
-        newPost.container_guid = this.entity.container_guid;
-      }
-
-      if (this.tags.length) {
-        newPost.tags = this.tags;
-      }
-
-      this.setPosting(true);
-
-      const guidParam = this.isEdit ? `/${this.entity.guid}` : '';
-
       try {
+        // Plus Monetize?
+        if (
+          this.wire_threshold &&
+          'support_tier' in this.wire_threshold &&
+          this.wire_threshold.support_tier.urn ===
+            mindsConfigService.settings.plus.support_tier_urn
+        ) {
+          // Must have tags
+          if (this.tags.length === 0) {
+            showError(i18n.t('capture.noHashtags'));
+            return false;
+          }
+
+          // Mustn't have external links
+          if (
+            this.embed.hasRichEmbed &&
+            !this.embed.meta.url.toLowerCase().includes('minds.com')
+          ) {
+            showError(i18n.t('capture.noExternalLinks'));
+            return false;
+          }
+        }
+
+        // is uploading?
+        if (this.attachment.hasAttachment && this.attachment.uploading) {
+          showError(i18n.t('capture.pleaseTryAgain'));
+          return false;
+        }
+
+        // Something to post?
+        if (!this.isValid) {
+          showError(i18n.t('capture.nothingToPost'));
+          return false;
+        }
+
+        let newPost = {
+          message: this.text,
+          accessId: this.accessId,
+          time_created: Math.floor(this.time_created / 1000) || null,
+        };
+
+        if (this.paywalled) {
+          newPost.paywall = true;
+          newPost.wire_threshold = featuresService.has('paywall-2020')
+            ? this.wire_threshold
+            : this.wire_threshold.min;
+        }
+
+        // add remind
+        if (this.isRemind) {
+          newPost.remind_guid = this.entity.guid;
+        }
+
+        if (this.postToPermaweb) {
+          if (this.paywalled) {
+            showError(i18n.t('permaweb.cannotMonetize'));
+            return false;
+          }
+          newPost.post_to_permaweb = true;
+        }
+
+        if (this.title) {
+          newPost.title = this.title;
+        }
+
+        newPost.nsfw = this.nsfw || [];
+
+        if (this.attachment.guid) {
+          newPost.entity_guid = this.attachment.guid;
+          newPost.license = this.attachment.license;
+        }
+
+        if (this.embed.meta) {
+          newPost = Object.assign(newPost, this.embed.meta);
+        }
+
+        if (props.route?.params && props.route.params.group) {
+          newPost.container_guid = props.route.params.group.guid;
+          this.group = props.route.params.group;
+          // remove the group to avoid reuse it on future posts
+          props.navigation.setParams({ group: undefined });
+        }
+
+        // keep the container if it is an edited activity
+        if (this.isEdit && typeof this.entity.container_guid !== 'undefined') {
+          newPost.container_guid = this.entity.container_guid;
+        }
+
+        if (this.tags.length) {
+          newPost.tags = this.tags;
+        }
+
+        this.setPosting(true);
+
+        const guidParam = this.isEdit ? `/${this.entity.guid}` : '';
+
         const response = await api.post(`api/v2/newsfeed${guidParam}`, newPost);
         if (response && response.activity) {
           if (this.isEdit) {
@@ -549,7 +554,13 @@ export default function (props) {
           return ActivityModel.create(response.activity);
         }
       } catch (e) {
-        console.log(e);
+        const message = getNetworkError(e);
+        if (message) {
+          showError(message);
+        } else {
+          showError(i18n.t('errorMessage') + '\n' + i18n.t('pleaseTryAgain'));
+        }
+        logService.exception(e);
       } finally {
         this.setPosting(false);
       }
@@ -572,7 +583,7 @@ export default function (props) {
     async savePlusMonetize(expires) {
       this.wire_threshold = {
         support_tier: {
-          urn: (await mindsService.getSettings()).plus.support_tier_urn,
+          urn: mindsConfigService.getSettings().plus.support_tier_urn,
           expires,
         },
       };

@@ -1,11 +1,12 @@
 import React from 'react';
+import { get } from 'lodash';
 import * as RNLocalize from 'react-native-localize';
 import i18n from 'i18n-js';
 import { memoize } from 'lodash';
 import { I18nManager } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
 import moment from 'moment-timezone';
 import { observable, action } from 'mobx';
+import { storages } from './storage/storages.service';
 
 const translationGetters = {
   // lazy requires (metro bundler does not support symlinks)
@@ -14,54 +15,67 @@ const translationGetters = {
   },
   es: () => {
     require('moment/locale/es');
+    moment.locale('es');
     return require('../../../locales/es.json');
   },
   ar: () => {
     require('moment/locale/ar');
+    moment.locale('ar');
     return require('../../../locales/ar.json');
   },
   de: () => {
     require('moment/locale/de');
+    moment.locale('de');
     return require('../../../locales/de.json');
   },
   fr: () => {
     require('moment/locale/fr');
+    moment.locale('fr');
     return require('../../../locales/fr.json');
   },
   hi: () => {
     require('moment/locale/hi');
+    moment.locale('hi');
     return require('../../../locales/hi.json');
   },
   it: () => {
     require('moment/locale/it');
+    moment.locale('it');
     return require('../../../locales/it.json');
   },
   ja: () => {
     require('moment/locale/ja');
+    moment.locale('ja');
     return require('../../../locales/ja.json');
   },
   pt: () => {
     require('moment/locale/pt');
+    moment.locale('pt');
     return require('../../../locales/pt.json');
   },
   ru: () => {
     require('moment/locale/ru');
+    moment.locale('ru');
     return require('../../../locales/ru.json');
   },
   th: () => {
     require('moment/locale/th');
+    moment.locale('th');
     return require('../../../locales/th.json');
   },
   vi: () => {
     require('moment/locale/vi');
+    moment.locale('vi');
     return require('../../../locales/vi.json');
   },
   zh: () => {
     require('moment/locale/zh-cn');
+    moment.locale('zh-cn');
     return require('../../../locales/zh.json');
   },
   sk: () => {
     require('moment/locale/sk');
+    moment.locale('sk');
     return require('../../../locales/sk.json');
   },
 };
@@ -71,11 +85,17 @@ const translate = memoize(
   (key, config) => (config ? key + JSON.stringify(config) : key),
 );
 
-const namespace = '@Minds:Locale';
+type DateFormat = {
+  date: string;
+  short: string;
+  nameDay: string;
+  datetime: string;
+};
 
 class I18nService {
   @observable locale = 'en';
   bestLocale = 'en';
+  dateFormat?: DateFormat;
 
   constructor() {
     if (process.env.JEST_WORKER_ID === undefined) {
@@ -88,9 +108,9 @@ class I18nService {
   /**
    * Initialize service
    */
-  async init() {
+  init() {
     // read locale from storage
-    let language = await AsyncStorage.getItem(namespace);
+    let language = storages.app.getString('locale');
     // get best available language when app start
     this.bestLocale = this.getBestLanguage();
 
@@ -132,6 +152,53 @@ class I18nService {
    */
   l(scope: string, value, options?: object) {
     return i18n.l(scope, value, options);
+  }
+
+  date(
+    value: moment.MomentInput,
+    format: 'date' | 'nameDay' | 'time' | 'friendly' | 'datetime' = 'datetime',
+    timezone = '',
+  ) {
+    if (!this.dateFormat) {
+      return '';
+    }
+
+    let options;
+    const date = moment(value);
+
+    if (timezone) {
+      date.tz(timezone);
+    }
+
+    switch (format) {
+      case 'date':
+        options = this.dateFormat.date;
+        break;
+      case 'nameDay':
+        if (date.isSame(moment().subtract(1, 'day'), 'day')) {
+          return i18n.t('yesterday');
+        }
+        options = this.dateFormat.nameDay;
+        break;
+      case 'time':
+        options = 'hh:mm';
+        break;
+      case 'friendly':
+        const now = moment();
+        const diff = moment.duration(date.diff(now));
+
+        if (diff.asMilliseconds() > -86400000) {
+          return diff.humanize(false);
+        }
+        return now.year() === date.year()
+          ? date.format(this.dateFormat.short)
+          : date.format(this.dateFormat.date);
+      case 'datetime':
+      default:
+        options = this.dateFormat.datetime;
+    }
+
+    return date.format(options);
   }
 
   /**
@@ -176,7 +243,7 @@ class I18nService {
   @action
   setLocale(locale: string, store = true) {
     if (store) {
-      AsyncStorage.setItem(namespace, locale);
+      storages.app.setString('locale', locale);
     }
     // clear translation cache
     translate.cache.clear();
@@ -193,20 +260,38 @@ class I18nService {
       };
     }
     i18n.locale = locale;
-    moment.locale(locale);
 
-    if (locale === 'en') {
-      moment.updateLocale('en', {
+    if (locale === 'en' || locale === 'es') {
+      moment.updateLocale(locale, {
         relativeTime: {
-          s: 'a few secs',
-          ss: '%d secs',
-          m: 'a min',
-          mm: '%d mins',
-          h: 'an hr',
-          hh: '%d hrs',
+          s: '%ds',
+          ss: '%ds',
+          m: '%dm',
+          mm: '%dm',
+          h: '%dh',
+          hh: '%dh',
         },
       });
     }
+
+    // least number of hours to be considered a day.
+    moment.relativeTimeThreshold('h', 24); // default is 22
+    moment.relativeTimeThreshold('m', 50); // default is 45
+
+    this.dateFormat = {
+      date:
+        get(i18n.translations[locale], 'dateformats.date') ||
+        get(i18n.translations.en, 'dateformats.date'),
+      nameDay:
+        get(i18n.translations[locale], 'dateformats.nameDay') ||
+        get(i18n.translations.en, 'dateformats.nameDay'),
+      datetime:
+        get(i18n.translations[locale], 'dateformats.datetime') ||
+        get(i18n.translations.en, 'dateformats.datetime'),
+      short:
+        get(i18n.translations[locale], 'dateformats.short') ||
+        get(i18n.translations.en, 'dateformats.short'),
+    };
 
     // update observable to fire app reload
     this.locale = locale;

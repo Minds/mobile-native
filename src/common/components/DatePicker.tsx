@@ -1,16 +1,9 @@
 import { observer, useLocalStore } from 'mobx-react';
 import React from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  ViewStyle,
-} from 'react-native';
+import { ViewStyle } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../services/i18n.service';
+import { Icon, B1, B2, Row, Column, PressableLine, HairlineRow } from '~ui';
 
 type PropsType = {
   date?: Date;
@@ -20,7 +13,6 @@ type PropsType = {
 };
 
 const DatePicker = observer((props: PropsType) => {
-  const theme = ThemedStyles.style;
   const localStore = useLocalStore(() => ({
     selectedDate: props.date || new Date(),
     isVisible: false,
@@ -43,53 +35,31 @@ const DatePicker = observer((props: PropsType) => {
       : i18n.l('date.formats.small', localStore.selectedDate);
 
   return (
-    <TouchableOpacity
-      style={[
-        styles.container,
-        theme.bcolorPrimaryBorder,
-        props.containerStyle,
-      ]}
-      onPress={localStore.openPicker}>
-      <View>
-        <Text style={[theme.fontL, theme.colorSecondaryText]}>
-          {i18n.t('wallet.date')}
-        </Text>
-        <Text style={styles.date}>{shownDate}</Text>
-      </View>
-      <Icon
-        name="calendar"
-        size={21}
-        color={ThemedStyles.getColor('SecondaryText')}
-        style={theme.centered}
-      />
-      <DateTimePicker
-        isVisible={localStore.isVisible}
-        onConfirm={localStore.onConfirm}
-        date={props.date}
-        maximumDate={props.maximumDate}
-        onCancel={localStore.closePicker}
-        mode="date"
-        display="spinner"
-      />
-    </TouchableOpacity>
+    <PressableLine
+      onPress={localStore.openPicker}
+      containerStyle={props.containerStyle}>
+      <HairlineRow flex>
+        <Row flex space="L">
+          <Column stretch>
+            <B2 color="secondary">{i18n.t('wallet.date')}</B2>
+            <B1 font="medium">{shownDate}</B1>
+          </Column>
+          <Row align="centerBoth">
+            <Icon name="calendar" size="small" />
+          </Row>
+          <DateTimePicker
+            isVisible={localStore.isVisible}
+            onConfirm={localStore.onConfirm}
+            date={props.date}
+            maximumDate={props.maximumDate}
+            onCancel={localStore.closePicker}
+            mode="date"
+            display="spinner"
+          />
+        </Row>
+      </HairlineRow>
+    </PressableLine>
   );
-});
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 20,
-    paddingVertical: 15,
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-  },
-  date: {
-    paddingTop: 1,
-    fontSize: 17,
-    fontWeight: '500',
-    fontFamily: 'Roboto-Medium',
-  },
 });
 
 export default DatePicker;

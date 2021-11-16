@@ -1,24 +1,16 @@
 import React, { useEffect } from 'react';
-import {
-  StyleSheet,
-  View,
-  Platform,
-  TouchableOpacity,
-  Text,
-} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import IconFA from 'react-native-vector-icons/FontAwesome5';
-
+import { StyleSheet, View, Platform } from 'react-native';
+import { IconButton, Avatar } from '~ui';
 import { observer } from 'mobx-react';
 import SearchComponent from './searchbar/SearchComponent';
 import ThemedStyles from '../styles/ThemedStyles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import FastImage from 'react-native-fast-image';
 import { useStores } from '../common/hooks/use-stores';
 import useCurrentUser from '../common/hooks/useCurrentUser';
 import intword from '../common/helpers/intword';
 import featuresService from '../common/services/features.service';
 import EmailConfirmation from './EmailConfirmation';
+import MText from '../common/components/MText';
 
 type PropsType = {
   navigation: any;
@@ -72,28 +64,18 @@ export const Topbar = observer((props: PropsType) => {
         ]}>
         <View style={styles.topbar}>
           <View style={styles.topbarLeft}>
-            <TouchableOpacity onPress={openMenu}>
-              <FastImage
-                source={avatar}
-                style={avatarStyle}
-                resizeMode="contain"
-              />
-              <View style={styles.menuIconContainer}>
-                <Icon
-                  name="md-menu"
-                  style={
-                    ThemedStyles.theme
-                      ? theme.colorPrimaryBackground
-                      : theme.colorSecondaryText
-                  }
-                  size={14}
-                />
-              </View>
-            </TouchableOpacity>
+            <Avatar
+              testID="topbarAvatar"
+              onPress={openMenu}
+              source={avatar}
+              border="solid"
+              size="tiny"
+              icon="menu"
+            />
             <SearchComponent navigation={props.navigation} />
           </View>
           <View style={styles.topbarRight}>
-            <Text
+            <MText
               onPress={openWallet}
               style={[
                 theme.fontL,
@@ -102,14 +84,8 @@ export const Topbar = observer((props: PropsType) => {
                 theme.paddingVertical2x,
               ]}>
               {usdBalance > 0 && '$' + intword(usdBalance)}
-            </Text>
-
-            <IconFA
-              name="coins"
-              size={20}
-              style={theme.colorIcon}
-              onPress={openWallet}
-            />
+            </MText>
+            <IconButton scale onPress={openWallet} name="coins" />
           </View>
         </View>
       </View>
@@ -127,18 +103,6 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     // paddingBottom: 8,
   },
-  menuIconContainer: {
-    backgroundColor: '#d8d8d8',
-    paddingTop: 1,
-    height: 20,
-    width: 20,
-    borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'absolute',
-    bottom: -3,
-    right: -3,
-  },
   shadow: {
     zIndex: 999,
     shadowColor: '#000',
@@ -150,13 +114,6 @@ export const styles = StyleSheet.create({
     shadowRadius: 1.41,
     elevation: 3,
   },
-  avatar: {
-    width: 42,
-    height: 42,
-    borderRadius: 21,
-    borderWidth: 2.5,
-    alignSelf: 'flex-start',
-  },
   topbar: {
     flex: 1,
     // alignItems: 'center',
@@ -164,7 +121,7 @@ export const styles = StyleSheet.create({
   },
   topbarLeft: {
     flexGrow: 1,
-    marginLeft: 20,
+    marginLeft: 16,
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -181,7 +138,6 @@ export const styles = StyleSheet.create({
   },
 });
 
-const avatarStyle = ThemedStyles.combine(styles.avatar, 'bcolorIcon');
 const containerStyle = ThemedStyles.combine(
   'bgPrimaryBackground',
   styles.shadow,

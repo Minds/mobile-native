@@ -1,11 +1,37 @@
 //@ts-nocheck
 import React, { useCallback } from 'react';
-import { Linking, ScrollView, Text, View } from 'react-native';
-import authService from '../auth/AuthService';
+import { ScrollView, View } from 'react-native';
+import { showMessage } from 'react-native-flash-message';
+import AuthService from '../auth/AuthService';
 import MenuItem from '../common/components/menus/MenuItem';
+import { isNetworkError } from '../common/services/api.service';
 import i18n from '../common/services/i18n.service';
+import openUrlService from '../common/services/open-url.service';
 import sessionService from '../common/services/session.service';
+import apiService from '../common/services/api.service';
 import ThemedStyles from '../styles/ThemedStyles';
+import { ScreenHeader } from '~/common/ui/screen';
+
+/**
+ * Retrieves the link & jwt for zendesk and navigate to it.
+ */
+const navigateToHelp = async () => {
+  try {
+    const response = await apiService.get('api/v3/helpdesk/zendesk', {
+      returnUrl: 'true',
+    });
+    if (response && response.url) {
+      openUrlService.openLinkInInAppBrowser(unescape(response.url));
+    }
+  } catch (err) {
+    console.log(err);
+    if (isNetworkError(err)) {
+      showMessage(i18n.t('errorMessage'));
+    } else {
+      showMessage(i18n.t('cantReachServer'));
+    }
+  }
+};
 
 export default function ({ navigation }) {
   const theme = ThemedStyles.style;
@@ -61,6 +87,10 @@ export default function ({ navigation }) {
       title: i18n.t('messenger.legacyMessenger'),
       screen: 'Messenger',
     },
+    {
+      title: i18n.t('settings.chooseBrowser'),
+      screen: 'ChooseBrowser',
+    },
   ];
 
   if (!user.plus) {
@@ -85,6 +115,12 @@ export default function ({ navigation }) {
     params: {},
   });
 
+  itemsMapping.push({
+    title: i18n.t('settings.resources'),
+    screen: 'Resources',
+    params: {},
+  });
+
   const items = itemsMapping.map(({ title, screen, params }) => ({
     title,
     onPress: () => navigation.push(screen, params),
@@ -106,7 +142,7 @@ export default function ({ navigation }) {
 
   const logOut = {
     title: i18n.t('settings.logout'),
-    onPress: authService.logout,
+    onPress: () => AuthService.logout(),
     icon: {
       name: 'login-variant',
       type: 'material-community',
@@ -122,7 +158,7 @@ export default function ({ navigation }) {
 
   const help = {
     title: i18n.t('help'),
-    onPress: () => Linking.openURL('https://www.minds.com/help'),
+    onPress: navigateToHelp,
     icon: {
       name: 'help-circle-outline',
       type: 'material-community',
@@ -133,19 +169,19 @@ export default function ({ navigation }) {
     <ScrollView
       style={[theme.flexContainer, theme.bgPrimaryBackground]}
       contentContainerStyle={theme.paddingBottom4x}>
-      <Text
-        style={[theme.titleText, theme.paddingLeft4x, theme.paddingVertical2x]}>
-        {i18n.t('moreScreen.settings')}
-      </Text>
+      <ScreenHeader title={i18n.t('moreScreen.settings')} />
       <View style={[innerWrapper, theme.bgPrimaryBackground]}>
-        {items.map(item => (
-          <MenuItem item={item} />
+        {items.map((item, index) => (
+          <MenuItem
+            item={item}
+            containerItemStyle={index > 0 ? theme.borderTop0x : undefined}
+          />
         ))}
       </View>
       <View style={[innerWrapper, theme.marginTop7x]}>
         <MenuItem item={themeChange} i={4} />
-        <MenuItem item={help} i={5} />
-        <MenuItem item={logOut} i={6} />
+        <MenuItem item={help} i={5} containerItemStyle={theme.borderTop0x} />
+        <MenuItem item={logOut} i={6} containerItemStyle={theme.borderTop0x} />
       </View>
     </ScrollView>
   );

@@ -1,0 +1,168 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Update Screen Component renders correctly 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "flex": 1,
+      },
+      Object {
+        "backgroundColor": "#1A2025",
+      },
+      Object {
+        "alignItems": "center",
+      },
+      Object {
+        "justifyContent": "center",
+      },
+    ]
+  }
+>
+  <View
+    style={
+      Array [
+        Object {
+          "alignContent": "center",
+          "alignItems": "center",
+          "alignSelf": "center",
+          "justifyContent": "center",
+        },
+        Object {
+          "padding": 20,
+        },
+        Object {
+          "borderRadius": 14,
+        },
+        Object {
+          "backgroundColor": "#242A30",
+        },
+      ]
+    }
+  >
+    <Image
+      resizeMode="contain"
+      source={
+        Object {
+          "testUri": "../../../src/assets/logos/bulb.png",
+        }
+      }
+      style={
+        Object {
+          "height": 90,
+          "width": 80,
+        }
+      }
+    />
+    <View>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+            },
+            Object {
+              "fontFamily": "Roboto",
+            },
+            Array [
+              Object {
+                "fontSize": 22,
+              },
+              Object {
+                "textAlign": "center",
+              },
+              Object {
+                "paddingVertical": 12,
+              },
+            ],
+          ]
+        }
+      >
+        Updating to v
+      </Text>
+      <View
+        animated={true}
+        animationConfig={
+          Object {
+            "bounciness": 0,
+          }
+        }
+        animationType="spring"
+        indeterminate={false}
+        indeterminateAnimationDuration={1000}
+        onLayout={[Function]}
+        progress={0}
+        style={
+          Array [
+            Object {
+              "backgroundColor": undefined,
+              "borderColor": "#1B85D6",
+              "borderRadius": 4,
+              "borderWidth": 1,
+              "overflow": "hidden",
+              "width": null,
+            },
+            undefined,
+          ]
+        }
+        useNativeDriver={false}
+      >
+        <View
+          style={
+            Object {
+              "backgroundColor": "#1B85D6",
+              "height": 6,
+              "transform": Array [
+                Object {
+                  "translateX": 0,
+                },
+                Object {
+                  "translateX": 1,
+                },
+                Object {
+                  "scaleX": 0.0001,
+                },
+              ],
+            }
+          }
+        />
+      </View>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+            },
+            Object {
+              "fontFamily": "Roboto",
+            },
+            Array [
+              Object {
+                "fontSize": 14,
+              },
+              Object {
+                "fontFamily": "Roboto-Medium",
+                "fontWeight": "500",
+              },
+              Object {
+                "textAlign": "center",
+              },
+              Object {
+                "color": "#FFFFFF",
+              },
+              Object {
+                "marginTop": 8,
+              },
+            ],
+          ]
+        }
+      >
+        Downloading
+         
+        0
+        %
+      </Text>
+    </View>
+  </View>
+</View>
+`;

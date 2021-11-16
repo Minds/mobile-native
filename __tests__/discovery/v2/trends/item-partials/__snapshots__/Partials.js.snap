@@ -1,0 +1,422 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Partials tests renders correctly HeroPartial 1`] = `
+<View
+  style={
+    Array [
+      Array [
+        Object {
+          "flexDirection": "column",
+          "paddingHorizontal": 0,
+          "paddingTop": 0,
+        },
+      ],
+    ]
+  }
+>
+  <View
+    style={
+      Array [
+        Array [
+          Object {
+            "height": 100,
+            "width": 100,
+          },
+        ],
+        Array [
+          Object {
+            "height": 444.6666666666667,
+            "width": "100%",
+          },
+        ],
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "overflow": "hidden",
+          },
+          Array [
+            Array [
+              Object {
+                "height": 100,
+                "width": 100,
+              },
+            ],
+            Array [
+              Object {
+                "height": 444.6666666666667,
+                "width": "100%",
+              },
+            ],
+          ],
+        ]
+      }
+    >
+      <FastImageView
+        onFastImageError={[Function]}
+        onFastImageLoadEnd={[Function]}
+        onFastImageProgress={[Function]}
+        resizeMode="cover"
+        retry={2}
+        source={
+          Object {
+            "uri": "https://cdn.minds.com/fs/v1/thumbnail/1273869385403994122/xlarge/",
+          }
+        }
+        style={
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+      />
+    </View>
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "borderBottomWidth": 1,
+          "display": "flex",
+          "flexDirection": "row",
+        },
+        Object {
+          "padding": 16,
+        },
+        Object {
+          "borderColor": "#414C57",
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "flex": 1,
+            "paddingRight": 10,
+          },
+        ]
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+            },
+            Object {
+              "fontFamily": "Roboto",
+            },
+            Array [
+              Object {
+                "fontSize": 16,
+                "fontWeight": "bold",
+              },
+            ],
+          ]
+        }
+      >
+        Wow, what do we call this? It's beautiful, isn't it?
+#Nature
+      </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+            },
+            Object {
+              "fontFamily": "Roboto",
+            },
+            Array [
+              Object {
+                "paddingTop": 8,
+              },
+              Object {
+                "color": "#B8C1CA",
+              },
+            ],
+          ]
+        }
+      >
+        5
+         channels discussing -
+         
+        1h
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`Partials tests renders correctly RichPartial 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "alignItems": "center",
+        "borderBottomWidth": 1,
+        "display": "flex",
+        "flexDirection": "row",
+      },
+      Object {
+        "padding": 16,
+      },
+      Object {
+        "borderColor": "#414C57",
+      },
+    ]
+  }
+>
+  <View
+    style={
+      Array [
+        Object {
+          "flex": 1,
+          "paddingRight": 10,
+        },
+      ]
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#FFFFFF",
+          },
+          Object {
+            "fontFamily": "Roboto",
+          },
+          Array [
+            Object {
+              "fontSize": 16,
+              "fontWeight": "bold",
+            },
+          ],
+        ]
+      }
+    >
+      Wow, what do we call this? It's beautiful, isn't it?
+#Nature
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#FFFFFF",
+          },
+          Object {
+            "fontFamily": "Roboto",
+          },
+          Array [
+            Object {
+              "paddingTop": 8,
+            },
+            Object {
+              "color": "#B8C1CA",
+            },
+          ],
+        ]
+      }
+    >
+      5
+       channels discussing -
+       
+      1h
+    </Text>
+  </View>
+  <View
+    style={
+      Array [
+        Array [
+          Object {
+            "height": 100,
+            "width": 100,
+          },
+        ],
+        null,
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "overflow": "hidden",
+          },
+          Array [
+            Array [
+              Object {
+                "height": 100,
+                "width": 100,
+              },
+            ],
+            null,
+          ],
+        ]
+      }
+    >
+      <FastImageView
+        onFastImageError={[Function]}
+        onFastImageLoadEnd={[Function]}
+        onFastImageProgress={[Function]}
+        resizeMode="cover"
+        retry={2}
+        source={
+          Object {
+            "uri": "https://cdn.minds.com/fs/v1/thumbnail/1273869385403994122/xlarge/",
+          }
+        }
+        style={
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+      />
+    </View>
+  </View>
+</View>
+`;
+
+exports[`Partials tests renders correctly TrendingHashtagPartial 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "alignItems": "center",
+        "borderBottomWidth": 1,
+        "display": "flex",
+        "flexDirection": "row",
+      },
+      Object {
+        "padding": 16,
+      },
+      Object {
+        "borderColor": "#414C57",
+      },
+    ]
+  }
+>
+  <View
+    style={
+      Array [
+        Object {
+          "flex": 1,
+          "paddingRight": 10,
+        },
+      ]
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#FFFFFF",
+          },
+          Object {
+            "fontFamily": "Roboto",
+          },
+          Array [
+            Object {
+              "paddingBottom": 8,
+            },
+            Object {
+              "color": "#B8C1CA",
+            },
+          ],
+        ]
+      }
+    >
+      Trending 
+      9.224444444444444
+      h - 
+      5
+       posts
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#FFFFFF",
+          },
+          Object {
+            "fontFamily": "Roboto",
+          },
+          Array [
+            Object {
+              "fontSize": 16,
+              "fontWeight": "bold",
+            },
+          ],
+        ]
+      }
+    >
+      #
+      nature
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "overflow": "hidden",
+      }
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "alignSelf": "center",
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "transparent",
+            "justifyContent": "center",
+          }
+        }
+      >
+        <Text
+          allowFontScaling={false}
+          style={
+            Array [
+              Object {
+                "color": "#797B82",
+                "fontSize": 32,
+              },
+              Object {
+                "backgroundColor": "transparent",
+              },
+              Object {
+                "fontFamily": "Material Design Icons",
+                "fontStyle": "normal",
+                "fontWeight": "normal",
+              },
+              Object {},
+            ]
+          }
+          testID="iconIcon"
+        >
+          󰅂
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
+`;

@@ -1,7 +1,8 @@
 import { observer } from 'mobx-react';
 import React, { useEffect, useRef } from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import CenteredLoading from '../../../common/components/CenteredLoading';
+import MText from '../../../common/components/MText';
 import i18n from '../../../common/services/i18n.service';
 import FeedStore from '../../../common/stores/FeedStore';
 import type GroupModel from '../../../groups/GroupModel';
@@ -34,14 +35,14 @@ export default observer(function SuggestedGroupsScreen() {
       title={i18n.t('onboarding.joinGroup')}
       onPressBack={NavigationService.goBack}>
       <View style={[theme.flexContainer, theme.paddingHorizontal2x]}>
-        <Text
+        <MText
           style={[
             theme.subTitleText,
             theme.colorPrimaryText,
             theme.paddingHorizontal2x,
           ]}>
           {i18n.t('onboarding.suggestedGroupsDescription')}
-        </Text>
+        </MText>
         <ScrollView style={theme.flexContainer}>
           {listStore.loading && <CenteredLoading />}
           {listStore.entities.slice().map(group => (

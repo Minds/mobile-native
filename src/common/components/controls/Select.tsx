@@ -1,13 +1,8 @@
 import React from 'react';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import ThemedStyles from '../../../styles/ThemedStyles';
+import MText from '../MText';
 
 interface SelectProps {
   label: string;
@@ -29,7 +24,7 @@ const Select = ({ label, onPress }: SelectProps) => {
           theme.bcolorPrimaryBorder,
           styles.container,
         ]}>
-        <Text style={styles.label}>{label}</Text>
+        <MText style={styles.label}>{label}</MText>
         <Icon
           name={'arrow-drop-down'}
           size={15}

@@ -1,7 +1,7 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import { View, Text, Alert, Platform, ScrollView } from 'react-native';
+import { View, Alert, Platform, ScrollView } from 'react-native';
 
 import { ComponentsStyle as CmpS } from '../styles/Components';
 import { Version } from '../config/Version';
@@ -9,6 +9,7 @@ import Button from '../common/components/Button';
 import gitlab from '../common/services/gitlab.service';
 import ThemedStyles from '../styles/ThemedStyles';
 import TextInput from '../common/components/TextInput';
+import MText from '../common/components/MText';
 
 /**
  * Issue report screen
@@ -106,7 +107,7 @@ export default class IssueReportScreen extends Component {
         style={[theme.flexContainer, theme.padding2x, theme.backgroundLight]}
         keyboardShouldPersistTaps="always">
         <View style={{ flexDirection: 'column', alignItems: 'stretch' }}>
-          <Text style={theme.fontThin}>Title</Text>
+          <MText style={theme.fontThin}>Title</MText>
           <TextInput
             style={CmpS.input}
             editable={true}
@@ -115,11 +116,11 @@ export default class IssueReportScreen extends Component {
             onChangeText={v => this.setField('title', v)}
           />
           {this.state.titleRequired && (
-            <Text style={[theme.colorDanger, theme.fontS, theme.fontThin]}>
+            <MText style={[theme.colorDanger, theme.fontS, theme.fontThin]}>
               The title is required
-            </Text>
+            </MText>
           )}
-          <Text style={[theme.marginTop2x, theme.fontThin]}>Description</Text>
+          <MText style={[theme.marginTop2x, theme.fontThin]}>Description</MText>
           <TextInput
             style={[CmpS.input, theme.paddingTop2x, { minHeight: 100 }]}
             editable={true}
@@ -130,13 +131,13 @@ export default class IssueReportScreen extends Component {
             onChangeText={v => this.setField('description', v)}
           />
           {this.state.descriptionRequired && (
-            <Text style={[theme.colorDanger, theme.fontS, theme.fontThin]}>
+            <MText style={[theme.colorDanger, theme.fontS, theme.fontThin]}>
               The description is required
-            </Text>
+            </MText>
           )}
-          <Text style={[theme.marginTop2x, theme.fontThin]}>
+          <MText style={[theme.marginTop2x, theme.fontThin]}>
             Steps to reproduce
-          </Text>
+          </MText>
           <TextInput
             style={[CmpS.input, theme.paddingTop2x, { minHeight: 100 }]}
             editable={true}
@@ -147,23 +148,25 @@ export default class IssueReportScreen extends Component {
             onChangeText={v => this.setField('steps', v)}
           />
           {this.state.stepsRequired && (
-            <Text style={[theme.colorDanger, theme.fontS, theme.fontThin]}>
+            <MText style={[theme.colorDanger, theme.fontS, theme.fontThin]}>
               The steps are required
-            </Text>
+            </MText>
           )}
         </View>
         <View style={theme.paddingTop3x}>
-          <Text style={[theme.fontM, theme.fontHairline]}>{this.getApp()}</Text>
+          <MText style={[theme.fontM, theme.fontHairline]}>
+            {this.getApp()}
+          </MText>
         </View>
         <View style={theme.paddingTop1x}>
-          <Text style={[theme.fontM, theme.fontThin]}>
+          <MText style={[theme.fontM, theme.fontThin]}>
             {this.getPlatform()}
-          </Text>
+          </MText>
         </View>
         <View style={theme.paddingTop3x}>
-          <Text style={[theme.fontM, theme.fontThin]}>
+          <MText style={[theme.fontM, theme.fontThin]}>
             This bug report is anonymous
-          </Text>
+          </MText>
         </View>
         <View style={[theme.paddingTop2x, theme.centered]}>
           <Button

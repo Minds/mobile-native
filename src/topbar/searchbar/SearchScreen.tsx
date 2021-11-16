@@ -1,18 +1,18 @@
 import React, { useEffect, useRef } from 'react';
-import { Platform, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import type { TextInput as TextInputType } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { IconButton, Icon } from '~ui/icons';
 import i18n from '../../common/services/i18n.service';
 import { useLegacyStores, useStores } from '../../common/hooks/use-stores';
 import { useNavigation } from '@react-navigation/core';
-import DisabledStoreFeature from '../../common/components/DisabledStoreFeature';
 import SearchResultComponent from './SearchResultComponent';
-import { GOOGLE_PLAY_STORE } from '../../config/Config';
 import { observer } from 'mobx-react';
 import KeyboardSpacingView from '../../common/components/KeyboardSpacingView';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import TextInput from '../../common/components/TextInput';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import MText from '~/common/components/MText';
 
 const SearchScreen = observer(() => {
   const theme = ThemedStyles.style;
@@ -23,9 +23,38 @@ const SearchScreen = observer(() => {
   const insets = useSafeAreaInsets();
   const paddingTop = { paddingTop: insets.top };
   const paddingBottom = { paddingBottom: insets.bottom };
+
   useEffect(() => {
     localStore.init(user);
-  });
+
+    // #3522 autofocus wasn't working
+    const timeout = setTimeout(() => inputRef.current?.focus(), 300);
+    return () => {
+      if (timeout) {
+        clearTimeout(timeout);
+      }
+    };
+  }, [localStore, user]);
+
+  useEffect(() => {
+    localStore.input('');
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleClearInput = () => {
+    // inputRef.current?.clear();
+    localStore.input('');
+  };
+
+  const handleCancelNav = () => {
+    navigation.goBack();
+  };
+
+  const handleSubmit = () => {
+    localStore.searchDiscovery();
+  };
+
   return (
     <KeyboardSpacingView
       style={[
@@ -34,22 +63,9 @@ const SearchScreen = observer(() => {
         paddingTop,
         paddingBottom,
       ]}>
-      <View
-        style={[
-          styles.header,
-          Platform.OS === 'android' ? theme.marginBottom : theme.marginBottom3x,
-          theme.marginTop3x,
-        ]}>
-        <View style={[theme.rowJustifyStart, theme.paddingLeft3x]}>
-          <Icon
-            name="search"
-            size={25}
-            style={[
-              theme.colorIcon,
-              theme.marginRight2x,
-              Platform.OS === 'android' ? theme.centered : null,
-            ]}
-          />
+      <View style={styles.header}>
+        <View style={styles.inputContainer}>
+          <Icon name="search" right="S" />
           <TextInput
             ref={inputRef}
             placeholder={i18n.t('discovery.search')}
@@ -59,55 +75,68 @@ const SearchScreen = observer(() => {
             testID="searchInput"
             style={[styles.textInput, theme.colorPrimaryText]}
             selectTextOnFocus={true}
-            onSubmitEditing={() => localStore.searchDiscovery()}
+            onSubmitEditing={handleSubmit}
             autoFocus
+            returnKeyType="search"
           />
+          {localStore.searchText ? (
+            <IconButton
+              onPress={handleClearInput}
+              name="close-circle"
+              size="tiny"
+              left="XS"
+            />
+          ) : null}
         </View>
-        <Icon
-          onPress={navigation.goBack}
-          name="close"
-          size={18}
-          style={[
-            styles.button,
-            theme.colorIcon,
-            Platform.OS === 'android' ? theme.centered : null,
-          ]}
-        />
+        <TouchableWithoutFeedback
+          style={styles.cancel}
+          onPress={handleCancelNav}>
+          <MText style={[theme.colorSecondaryText, theme.fontM]}>
+            {i18n.t('cancel')}
+          </MText>
+        </TouchableWithoutFeedback>
       </View>
-      {GOOGLE_PLAY_STORE ? (
-        <DisabledStoreFeature
-          style={[styles.height, theme.bgPrimaryBackground]}
-        />
-      ) : (
-        <SearchResultComponent
-          navigation={navigation}
-          localStore={localStore}
-        />
-      )}
+      <SearchResultComponent navigation={navigation} localStore={localStore} />
     </KeyboardSpacingView>
   );
 });
 
-const styles = StyleSheet.create({
+const styles = ThemedStyles.create({
   height: {
     height: 200,
-  },
-  button: {
-    paddingHorizontal: 10,
   },
   body: {
     minHeight: 0,
   },
-  header: {
-    flexDirection: 'row',
-  },
+  header: [
+    'paddingTop4x',
+    'paddingBottom3x',
+    'borderBottomHair',
+    'bcolorPrimaryBorder',
+    'paddingRight4x',
+    {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+  ],
+  inputContainer: [
+    'rowJustifyStart',
+    'paddingLeft4x',
+    {
+      flex: 1,
+      alignItems: 'center',
+    },
+  ],
   textInput: {
-    width: '80%',
+    flex: 1,
+    fontSize: 14,
+    fontFamily: 'Roboto-Regular',
   },
   modal: {
     margin: 0,
     justifyContent: 'flex-start',
   },
+  cancel: ['marginLeft4x'],
 });
 
 export default SearchScreen;

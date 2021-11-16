@@ -5,7 +5,11 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { useFocus } from '@msantang78/react-native-pager';
 import { LinearGradient } from 'expo-linear-gradient';
 import { observer, useLocalStore } from 'mobx-react';
+import { ScrollView } from 'react-native-gesture-handler';
 import * as entities from 'entities';
+import type BottomSheet from '@gorhom/bottom-sheet';
+import { TouchableOpacity } from '@gorhom/bottom-sheet';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 import type ActivityModel from '../../../newsfeed/ActivityModel';
 import MediaView from '../../../common/components/MediaView';
@@ -20,14 +24,11 @@ import Translate from '../../../common/components/translate/Translate';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Actions from '../../../newsfeed/activity/Actions';
 import Activity from '../../../newsfeed/activity/Activity';
-
 import CommentsStore from '../../../comments/v2/CommentsStore';
-import { ScrollView } from 'react-native-gesture-handler';
 import sessionService from '../../../common/services/session.service';
 import videoPlayerService from '../../../common/services/video-player.service';
 import ExplicitOverlay from '../../../common/components/explicit/ExplicitOverlay';
 import featuresService from '../../../common/services/features.service';
-
 import LockV2 from '../../../wire/v2/lock/Lock';
 import Lock from '../../../wire/lock/Lock';
 import { showNotification } from '../../../../AppMessages';
@@ -35,10 +36,9 @@ import { AppStackParamList } from '../../../navigation/NavigationTypes';
 import BoxShadow from '../../../common/components/BoxShadow';
 import ActivityMetrics from '../../../newsfeed/activity/metrics/ActivityMetrics';
 import CommentBottomSheet from '../../../comments/v2/CommentBottomSheet';
-import type BottomSheet from '@gorhom/bottom-sheet';
-import { TouchableOpacity } from '@gorhom/bottom-sheet';
-import Clipboard from '@react-native-clipboard/clipboard';
 import InteractionsBar from '../../../common/components/interactions/InteractionsBar';
+import InteractionsActionSheet from '../../../common/components/interactions/InteractionsBottomSheet';
+import { GroupContext } from '~/groups/GroupViewScreen';
 
 type ActivityRoute = RouteProp<AppStackParamList, 'Activity'>;
 
@@ -134,6 +134,10 @@ const ActivityFullScreen = observer((props: PropsType) => {
   const remindRef = useRef<Activity>(null);
   const translateRef = useRef<typeof Translate>(null);
   const commentsRef = useRef<BottomSheet>(null);
+  const upVotesInteractionsRef = useRef<any>(null);
+  const downVotesInteractionsRef = useRef<any>(null);
+  const remindsInteractionsRef = useRef<any>(null);
+  const quotesInteractionsRef = useRef<any>(null);
   const navigation = useNavigation();
   const hasMedia = entity.hasMedia();
   const hasRemind = !!entity.remind_object;
@@ -184,25 +188,6 @@ const ActivityFullScreen = observer((props: PropsType) => {
     };
   }, [focused, props.forceAutoplay, props.showCommentsOnFocus, store]);
 
-  useEffect(() => {
-    let openCommentsTimeOut: number | null = null;
-    if (route && (route.params?.focusedUrn || route.params?.scrollToBottom)) {
-      openCommentsTimeOut = setTimeout(() => {
-        onPressComment();
-        // remove the values to avoid reopens (test fix)
-        navigation.setParams({
-          focusedUrn: undefined,
-          scrollToBottom: undefined,
-        });
-      }, 400);
-    }
-    return () => {
-      if (openCommentsTimeOut) {
-        clearTimeout(openCommentsTimeOut);
-      }
-    };
-  }, [navigation, onPressComment, route]);
-
   const isShortText =
     !hasMedia && !hasRemind && entity.text.length < TEXT_SHORT_THRESHOLD;
 
@@ -222,6 +207,19 @@ const ActivityFullScreen = observer((props: PropsType) => {
   const gradientColors = useRef([startColor, endColor]).current;
 
   const showNSFW = entity.shouldBeBlured() && !entity.mature_visibility;
+
+  const showUpVotes = useCallback(() => {
+    upVotesInteractionsRef.current?.show('upVotes');
+  }, [upVotesInteractionsRef]);
+  const showDownVotes = useCallback(() => {
+    downVotesInteractionsRef.current?.show('downVotes');
+  }, [downVotesInteractionsRef]);
+  const showReminds = useCallback(() => {
+    remindsInteractionsRef.current?.show('reminds');
+  }, [remindsInteractionsRef]);
+  const showQuotes = useCallback(() => {
+    quotesInteractionsRef.current?.show('quotes');
+  }, [quotesInteractionsRef]);
 
   const copyText = useCallback(() => {
     Clipboard.setString(
@@ -257,7 +255,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
 
   const shadowOpt = {
     width: window.width,
-    height: 70 + (entity.remind_users ? 42 : 0),
+    height: 60 + (entity.remind_users ? 42 : 0),
     color: '#000',
     border: 5,
     opacity: 0.15,
@@ -295,90 +293,110 @@ const ActivityFullScreen = observer((props: PropsType) => {
   );
 
   return (
-    <View style={containerStyle}>
-      <View style={theme.flexContainer}>
-        {ownerBlockShadow}
-        <ScrollView
-          style={theme.flexContainer}
-          onLayout={store.onScrollViewSizeChange}
-          onContentSizeChange={store.onContentSizeChange}
-          contentContainerStyle={
-            store.contentFit ? contentFitStyle : contentNotFitStyle
-          }>
-          {showNSFW ? (
-            <ExplicitOverlay entity={entity} />
-          ) : (
-            <>
-              {hasMedia ? (
-                <View>
-                  {lock}
-                  <MediaView
-                    ref={mediaRef}
-                    entity={entity}
-                    navigation={navigation}
-                    autoHeight
-                    ignoreDataSaver
-                  />
-                </View>
-              ) : (
-                <>{lock}</>
-              )}
-              <TouchableOpacity
-                accessibilityLabel="touchableTextCopy"
-                onLongPress={copyText}
-                style={textCopyTouchableStyle}>
-                {showText && (
-                  <>
-                    <ExplicitText
+    <GroupContext.Provider value={route.params.group || null}>
+      <View style={containerStyle}>
+        <View style={theme.flexContainer}>
+          {ownerBlockShadow}
+          <ScrollView
+            style={theme.flexContainer}
+            onLayout={store.onScrollViewSizeChange}
+            onContentSizeChange={store.onContentSizeChange}
+            contentContainerStyle={
+              store.contentFit ? contentFitStyle : contentNotFitStyle
+            }>
+            {showNSFW ? (
+              <ExplicitOverlay entity={entity} />
+            ) : (
+              <>
+                {hasMedia ? (
+                  <View>
+                    {lock}
+                    <MediaView
+                      ref={mediaRef}
                       entity={entity}
                       navigation={navigation}
-                      style={fontStyle}
-                      selectable={false}
-                      noTruncate={true}
+                      autoHeight
+                      ignoreDataSaver
                     />
-                    <Translate
-                      ref={translateRef}
-                      entity={entity}
-                      style={fontStyle}
-                    />
-                  </>
+                  </View>
+                ) : (
+                  <>{lock}</>
                 )}
-              </TouchableOpacity>
-              {hasRemind && (
-                <View style={remindContainerStyle}>
-                  <Activity
-                    ref={remindRef}
-                    hideTabs={true}
-                    entity={entity.remind_object as ActivityModel}
-                    navigation={navigation}
-                    isReminded={true}
-                    hydrateOnNav={true}
-                  />
-                </View>
-              )}
-            </>
+                <TouchableOpacity
+                  accessibilityLabel="touchableTextCopy"
+                  onLongPress={copyText}
+                  style={textCopyTouchableStyle}>
+                  {showText && (
+                    <>
+                      <ExplicitText
+                        entity={entity}
+                        navigation={navigation}
+                        style={fontStyle}
+                        selectable={false}
+                        noTruncate={true}
+                      />
+                      <Translate
+                        ref={translateRef}
+                        entity={entity}
+                        style={fontStyle}
+                      />
+                    </>
+                  )}
+                </TouchableOpacity>
+                {hasRemind && (
+                  <View style={remindContainerStyle}>
+                    <Activity
+                      ref={remindRef}
+                      hideTabs={true}
+                      entity={entity.remind_object as ActivityModel}
+                      navigation={navigation}
+                      isReminded={true}
+                      hydrateOnNav={true}
+                    />
+                  </View>
+                )}
+              </>
+            )}
+            <ActivityMetrics entity={props.entity} fullDate />
+          </ScrollView>
+          {!store.contentFit && (
+            <LinearGradient colors={gradientColors} style={styles.linear} />
           )}
-          <ActivityMetrics entity={props.entity} />
-        </ScrollView>
-        {!store.contentFit && (
-          <LinearGradient colors={gradientColors} style={styles.linear} />
-        )}
-      </View>
-      <View style={cleanBottom}>
-        <InteractionsBar entity={entity} />
-        <Actions
+        </View>
+        <View style={cleanBottom}>
+          <InteractionsBar
+            onShowUpVotesPress={showUpVotes}
+            onShowDownVotesPress={showDownVotes}
+            onShowRemindsPress={showReminds}
+            onShowQuotesPress={showQuotes}
+            entity={entity}
+          />
+          <Actions
+            entity={entity}
+            hideCount
+            showCommentsOutlet={false}
+            onPressComment={onPressComment}
+          />
+        </View>
+        <InteractionsActionSheet entity={entity} ref={upVotesInteractionsRef} />
+        <InteractionsActionSheet
           entity={entity}
-          hideCount
-          showCommentsOutlet={false}
-          onPressComment={onPressComment}
+          ref={downVotesInteractionsRef}
+        />
+        <InteractionsActionSheet entity={entity} ref={remindsInteractionsRef} />
+        <InteractionsActionSheet entity={entity} ref={quotesInteractionsRef} />
+        <CommentBottomSheet
+          ref={commentsRef}
+          hideContent={Boolean(!store.displayComment)}
+          autoOpen={
+            Boolean(route.params?.focusedUrn) ||
+            (Boolean(route.params?.scrollToBottom) &&
+              Boolean(commentsRef.current))
+          }
+          commentsStore={store.comments}
         />
       </View>
-      <CommentBottomSheet
-        ref={commentsRef}
-        hideContent={Boolean(!store.displayComment)}
-        commentsStore={store.comments}
-      />
-    </View>
+    </GroupContext.Provider>
   );
 });
 
@@ -392,11 +410,8 @@ const styles = StyleSheet.create({
     position: undefined,
     top: undefined,
     width: 50,
-    paddingTop: Platform.select({
-      ios: 5,
-      android: 0,
-    }),
-    marginLeft: -17,
+    paddingTop: 0,
+    marginLeft: -20,
     marginRight: -5,
   },
   content: {

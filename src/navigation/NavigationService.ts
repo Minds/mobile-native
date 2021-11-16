@@ -7,6 +7,10 @@ import {
 
 let _navigator = null;
 
+export function getTopLevelNavigator() {
+  return _navigator;
+}
+
 function getStateFrom(nav) {
   if (nav.routes && nav.routes[nav.index].state) {
     return getStateFrom(nav.routes[nav.index].state);
@@ -27,6 +31,10 @@ function navigate(...args) {
   _navigator.navigate(...args);
 }
 
+function dispatch(...args) {
+  _navigator.dispatch(...args);
+}
+
 function push(...args) {
   _navigator.dispatch(StackActions.push(...args));
 }
@@ -39,14 +47,6 @@ function jumpTo(route) {
   _navigator.dispatch(SwitchActions.jumpTo({ route }));
 }
 
-function reset(routeName, params) {
-  const resetAction = StackActions.reset({
-    index: 0,
-    actions: [CommonActions.navigate({ routeName: routeName })],
-  });
-  _navigator.dispatch(resetAction);
-}
-
 function addListener(name, fn) {
   return _navigator?.addListener(name, fn);
 }
@@ -54,9 +54,9 @@ function addListener(name, fn) {
 // add other navigation functions that you need and export them
 
 export default {
+  dispatch,
   navigate,
   jumpTo,
-  reset,
   getCurrentState,
   push,
   setTopLevelNavigator,

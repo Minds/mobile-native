@@ -1,16 +1,18 @@
-const STEP = 5;
-const multiplier = 1;
+import { STEP } from '../Tokens';
 
 function getSpacing(name) {
   if (!name) {
-    return STEP * multiplier;
+    return STEP;
   }
   const regex = /(\d?\d)x/g;
   const result = regex.exec(name);
   if (result) {
     const n = parseInt(result[1], 10);
-    if (n === 0 || n > 0) {
-      return n * STEP * multiplier;
+    if (n > 0) {
+      return n * STEP;
+    }
+    if (n === 0) {
+      return STEP / 4;
     }
   }
   return null;

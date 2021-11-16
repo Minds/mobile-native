@@ -19,6 +19,10 @@ const createNotificationsStore = () => ({
   pollInterval: null as number | null,
   pushNotificationsSettings: [] as PushNotificationsSettingModel[],
   mailsNotificationsSettings: [] as EmailNotificationsSettingModel[],
+  loaded: false,
+  setLoaded(loaded: boolean) {
+    this.loaded = loaded;
+  },
   init() {
     sessionService.onSession((token: string) => {
       if (token) {
@@ -116,6 +120,11 @@ const createNotificationsStore = () => ({
     } catch (err) {
       logService.exception('[NotificationsStore] loadSettings', err);
     }
+  },
+  reset() {
+    this.unlisten();
+    this.stopPollCount();
+    this.setUnread(0);
   },
 });
 

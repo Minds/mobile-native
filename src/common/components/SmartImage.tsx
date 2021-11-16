@@ -38,7 +38,7 @@ const defaultBlur = Platform.select({ android: 1, ios: 4 });
  * Fast-image wrapper with retry and connectivity awareness
  * @param {Object} props
  */
-export default observer(function (props: SmartImageProps) {
+const SmartImage = observer(function (props: SmartImageProps) {
   const { withoutDownloadButton, ...otherProps } = props;
 
   const dataSaverEnabled = settingsStore.dataSaverEnabled;
@@ -120,6 +120,10 @@ export default observer(function (props: SmartImageProps) {
     </View>
   );
 });
+
+export default SmartImage;
+
+export type { Source };
 
 const styles = StyleSheet.create({
   downloadButton: {

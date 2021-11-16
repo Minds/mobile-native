@@ -11,6 +11,28 @@ exports[`Owner component renders correctly 1`] = `
 >
   <Text
     size={15}
+    style={
+      Array [
+        Object {
+          "color": "#FFFFFF",
+        },
+        Object {
+          "fontFamily": "Roboto",
+        },
+        Array [
+          Object {
+            "color": "#AEB0B8",
+          },
+          Object {
+            "fontSize": 14,
+          },
+          Object {
+            "fontFamily": "Roboto-Medium",
+            "fontWeight": "500",
+          },
+        ],
+      ]
+    }
   >
     100
   </Text>

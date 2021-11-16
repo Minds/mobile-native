@@ -7,31 +7,38 @@ import React, {
 import { FlatList } from 'react-native-gesture-handler';
 import { PlaceholderMedia, Fade, Placeholder } from 'rn-placeholder';
 import { observer } from 'mobx-react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-
+import { View } from 'react-native';
 import ThemedStyles from '../styles/ThemedStyles';
+import { AVATAR_SIZE } from '~/styles/Tokens';
 import PortraitContentBarItem from './PortraitContentBarItem';
 import { PortraitBarItem } from './createPortraitStore';
 import { useNavigation } from '@react-navigation/native';
 import { useStores } from '../common/hooks/use-stores';
+import sessionService from '~/common/services/session.service';
+import { Row } from '~/common/ui';
+import i18nService from '~/common/services/i18n.service';
 
 /**
  * Header component
  */
 const Header = () => {
-  const theme = ThemedStyles.style;
   const navigation = useNavigation<any>();
+  const user = sessionService.getUser();
+
   const nav = useCallback(
     () => navigation.push('Capture', { portrait: true }),
     [navigation],
   );
 
   return (
-    <TouchableOpacity
-      onPress={nav}
-      style={[styles.add, theme.bgTertiaryBackground, theme.centered]}>
-      <Text style={[theme.fontXXL, theme.colorSecondaryText]}>+</Text>
-    </TouchableOpacity>
+    <Row containerStyle={ThemedStyles.style.flexContainer}>
+      <PortraitContentBarItem
+        avatarUrl={user.getAvatarSource()}
+        withPlus
+        onPress={nav}
+        title={i18nService.t('newMoment')}
+      />
+    </Row>
   );
 };
 
@@ -57,8 +64,21 @@ const BarPlaceholder = () => {
   );
 };
 
-const renderItem = (row: { item: PortraitBarItem; index: number }) => {
-  return <PortraitContentBarItem item={row.item} index={row.index} />;
+const renderItem = ({
+  item,
+  index,
+}: {
+  item: PortraitBarItem;
+  index: number;
+}) => {
+  return (
+    <PortraitContentBarItem
+      avatarUrl={item.user.getAvatarSource()}
+      title={item.user.username}
+      unseen={item.unseen}
+      index={index}
+    />
+  );
 };
 
 /**
@@ -86,24 +106,27 @@ const PortraitContentBar = observer(
     }, [store]);
 
     return (
-      <View style={containerStyle}>
+      <View style={styles.containerStyle}>
         <FlatList
           // @ts-ignore
           ref={portraitBarRef}
-          contentContainerStyle={listContainerStyle}
+          contentContainerStyle={styles.listContainerStyle}
           style={styles.bar}
           horizontal={true}
           ListHeaderComponent={Header}
           ListEmptyComponent={Empty}
           renderItem={renderItem}
           data={store.items.slice()}
+          keyExtractor={keyExtractor}
         />
       </View>
     );
   }),
 );
 
-const styles = StyleSheet.create({
+const keyExtractor = (item, _) => item.user.guid;
+
+const styles = ThemedStyles.create({
   bar: {
     minHeight: 90,
   },
@@ -111,29 +134,28 @@ const styles = StyleSheet.create({
     height: 80,
     alignSelf: 'center',
   },
-  add: {
-    margin: 10,
-    height: 55,
-    width: 55,
-    borderRadius: 27.5,
-  },
-  placeholder: {
-    height: 55,
-    width: 55,
-    borderRadius: 27.5,
-    ...ThemedStyles.style.margin2x,
-  },
+  addCircle: [
+    {
+      height: AVATAR_SIZE.medium,
+      width: AVATAR_SIZE.medium,
+      borderRadius: AVATAR_SIZE.medium / 2,
+    },
+    'bgTertiaryBackground',
+  ],
+  placeholder: [
+    {
+      height: AVATAR_SIZE.medium,
+      width: AVATAR_SIZE.medium,
+      borderRadius: AVATAR_SIZE.medium / 2,
+    },
+    'margin2x',
+  ],
+  listContainerStyle: [
+    'paddingLeft2x',
+    'rowJustifyStart',
+    'bgPrimaryBackground',
+  ],
+  containerStyle: ['borderBottom8x', 'bcolorTertiaryBackground', 'fullWidth'],
 });
-
-const listContainerStyle = ThemedStyles.combine(
-  'paddingLeft',
-  'rowJustifyStart',
-  'bgPrimaryBackground',
-);
-const containerStyle = ThemedStyles.combine(
-  'borderBottom8x',
-  'bcolorTertiaryBackground',
-  'fullWidth',
-);
 
 export default PortraitContentBar;

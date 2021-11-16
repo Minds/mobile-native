@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { observer } from 'mobx-react';
 import ThemedStyles from '../../styles/ThemedStyles';
+import MText from './MText';
 
 interface StoreType {
   tab: string;
@@ -44,7 +45,7 @@ const HeaderTabsComponent = observer(({ store, tabList }: PropsType) => {
               tabStyle,
               tab === name ? theme.bcolorLink : theme.bcolorPrimaryBackground,
             ]}>
-            <Text style={theme.fontL}>{label}</Text>
+            <MText style={theme.fontL}>{label}</MText>
           </TouchableOpacity>
         );
       })}

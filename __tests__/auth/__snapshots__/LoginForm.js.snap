@@ -10,18 +10,151 @@ exports[`LoginForm component should renders correctly 1`] = `
 >
   <View
     style={
-      Object {
-        "backgroundColor": "#00000000",
-        "elevation": 6,
-        "overflow": "visible",
-        "shadowColor": "#000",
-        "shadowOffset": Object {
-          "height": 0,
-          "width": 0,
+      Array [
+        Object {
+          "paddingLeft": 16,
         },
-        "shadowOpacity": 0.8,
-        "shadowRadius": 20,
-        "zIndex": 999,
+        Object {
+          "paddingTop": 10,
+        },
+        Object {
+          "backgroundColor": "#1A2025",
+        },
+        Object {
+          "borderTopWidth": 1,
+        },
+        null,
+        Object {
+          "borderColor": "#414C57",
+        },
+        undefined,
+      ]
+    }
+  >
+    <View
+      style={
+        Object {
+          "paddingBottom": 10,
+          "paddingTop": 5,
+        }
+      }
+    >
+      <View>
+        <View
+          style={
+            Object {
+              "alignItems": "stretch",
+              "flexDirection": "row",
+            }
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                },
+                Object {
+                  "fontFamily": "Roboto",
+                },
+                Array [
+                  Object {
+                    "fontFamily": "Roboto",
+                    "fontSize": 16,
+                    "fontWeight": "400",
+                    "marginBottom": 0,
+                  },
+                  Object {
+                    "color": "#B8C1CA",
+                  },
+                  Array [
+                    Object {
+                      "color": "#B8C1CA",
+                    },
+                    Object {
+                      "fontSize": 16,
+                    },
+                    Object {
+                      "paddingLeft": 1,
+                    },
+                    undefined,
+                  ],
+                ],
+              ]
+            }
+          >
+            Username
+          </Text>
+        </View>
+      </View>
+      <TextInput
+        allowFontScaling={true}
+        autoCapitalize="none"
+        autoCompleteType="username"
+        autoFocus={true}
+        keyboardAppearance="dark"
+        labelStyle={
+          Array [
+            Object {
+              "color": "#B8C1CA",
+            },
+            Object {
+              "fontSize": 16,
+            },
+            Object {
+              "paddingLeft": 1,
+            },
+            undefined,
+          ]
+        }
+        onChangeText={[Function]}
+        placeholder=""
+        placeholderTextColor="#444"
+        rejectResponderTermination={true}
+        returnKeyType="done"
+        style={
+          Array [
+            Object {
+              "backgroundColor": "transparent",
+              "borderColor": "#414C57",
+              "borderRadius": 2,
+              "borderWidth": 1,
+              "color": "#FFFFFF",
+              "fontFamily": "Roboto",
+              "fontSize": 16,
+              "lineHeight": 21,
+            },
+            Array [
+              Object {
+                "borderWidth": 0,
+                "marginBottom": 7,
+                "paddingHorizontal": 0,
+                "paddingVertical": 8,
+              },
+              Object {
+                "paddingLeft": 1,
+              },
+              Object {
+                "fontSize": 18,
+              },
+              Object {
+                "color": "#FFFFFF",
+              },
+              undefined,
+            ],
+          ]
+        }
+        testID="usernameInput"
+        textContentType="username"
+        underlineColorAndroid="transparent"
+        value=""
+      />
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "marginBottom": 16,
       }
     }
   >
@@ -29,25 +162,24 @@ exports[`LoginForm component should renders correctly 1`] = `
       style={
         Array [
           Object {
-            "paddingLeft": 20,
+            "paddingLeft": 16,
           },
           Object {
             "paddingTop": 10,
           },
           Object {
-            "backgroundColor": "#F6F7F7",
+            "backgroundColor": "#1A2025",
           },
           Object {
             "borderTopWidth": 1,
           },
-          null,
           Object {
-            "borderColor": "#D3DBE3",
+            "borderBottomWidth": 1,
           },
           Object {
-            "backgroundColor": "rgba(0,0,0,0.25)",
-            "borderColor": "rgba(255,255,255,0.30)",
+            "borderColor": "#414C57",
           },
+          undefined,
         ]
       }
     >
@@ -72,53 +204,74 @@ exports[`LoginForm component should renders correctly 1`] = `
               style={
                 Array [
                   Object {
-                    "fontFamily": "Roboto",
-                    "fontSize": 16,
-                    "fontWeight": "400",
-                    "marginBottom": 0,
-                  },
-                  Object {
-                    "color": "#72727C",
-                  },
-                  Object {
                     "color": "#FFFFFF",
                   },
+                  Object {
+                    "fontFamily": "Roboto",
+                  },
+                  Array [
+                    Object {
+                      "fontFamily": "Roboto",
+                      "fontSize": 16,
+                      "fontWeight": "400",
+                      "marginBottom": 0,
+                    },
+                    Object {
+                      "color": "#B8C1CA",
+                    },
+                    Array [
+                      Object {
+                        "color": "#B8C1CA",
+                      },
+                      Object {
+                        "fontSize": 16,
+                      },
+                      Object {
+                        "paddingLeft": 1,
+                      },
+                      undefined,
+                    ],
+                  ],
                 ]
               }
             >
-              Username
+              Password
             </Text>
           </View>
         </View>
         <TextInput
           allowFontScaling={true}
           autoCapitalize="none"
-          autoCompleteType="username"
-          containerStyle={
-            Object {
-              "backgroundColor": "rgba(0,0,0,0.25)",
-              "borderColor": "rgba(255,255,255,0.30)",
-            }
-          }
+          autoCompleteType="password"
           keyboardAppearance="dark"
           labelStyle={
-            Object {
-              "color": "#FFFFFF",
-            }
+            Array [
+              Object {
+                "color": "#B8C1CA",
+              },
+              Object {
+                "fontSize": 16,
+              },
+              Object {
+                "paddingLeft": 1,
+              },
+              undefined,
+            ]
           }
           onChangeText={[Function]}
           placeholder=""
           placeholderTextColor="#444"
           rejectResponderTermination={true}
           returnKeyType="done"
+          secureTextEntry={true}
           style={
             Array [
               Object {
                 "backgroundColor": "transparent",
-                "borderColor": "#D3DBE3",
+                "borderColor": "#414C57",
                 "borderRadius": 2,
                 "borderWidth": 1,
-                "color": "#43434D",
+                "color": "#FFFFFF",
                 "fontFamily": "Roboto",
                 "fontSize": 16,
                 "lineHeight": 21,
@@ -131,7 +284,7 @@ exports[`LoginForm component should renders correctly 1`] = `
                   "paddingVertical": 8,
                 },
                 Object {
-                  "paddingLeft": 0,
+                  "paddingLeft": 1,
                 },
                 Object {
                   "fontSize": 18,
@@ -139,256 +292,141 @@ exports[`LoginForm component should renders correctly 1`] = `
                 Object {
                   "color": "#FFFFFF",
                 },
+                undefined,
               ],
             ]
           }
-          testID="usernameInput"
-          textContentType="username"
+          testID="userPasswordInput"
+          textContentType="password"
           underlineColorAndroid="transparent"
           value=""
         />
       </View>
     </View>
-    <View>
-      <View
-        style={
-          Array [
-            Object {
-              "paddingLeft": 20,
-            },
-            Object {
-              "paddingTop": 10,
-            },
-            Object {
-              "backgroundColor": "#F6F7F7",
-            },
-            Object {
-              "borderTopWidth": 1,
-            },
-            Object {
-              "borderBottomWidth": 1,
-            },
-            Object {
-              "borderColor": "#D3DBE3",
-            },
-            Object {
-              "backgroundColor": "rgba(0,0,0,0.25)",
-              "borderColor": "rgba(255,255,255,0.30)",
-            },
-          ]
-        }
-      >
-        <View
-          style={
-            Object {
-              "paddingBottom": 10,
-              "paddingTop": 5,
-            }
-          }
-        >
-          <View>
-            <View
-              style={
-                Object {
-                  "alignItems": "stretch",
-                  "flexDirection": "row",
-                }
-              }
-            >
-              <Text
-                style={
-                  Array [
-                    Object {
-                      "fontFamily": "Roboto",
-                      "fontSize": 16,
-                      "fontWeight": "400",
-                      "marginBottom": 0,
-                    },
-                    Object {
-                      "color": "#72727C",
-                    },
-                    Object {
-                      "color": "#FFFFFF",
-                    },
-                  ]
-                }
-              >
-                Password
-              </Text>
-            </View>
-          </View>
-          <TextInput
-            allowFontScaling={true}
-            autoCapitalize="none"
-            autoCompleteType="password"
-            containerStyle={
-              Object {
-                "backgroundColor": "rgba(0,0,0,0.25)",
-                "borderColor": "rgba(255,255,255,0.30)",
-              }
-            }
-            keyboardAppearance="dark"
-            labelStyle={
-              Object {
-                "color": "#FFFFFF",
-              }
-            }
-            onChangeText={[Function]}
-            placeholder=""
-            placeholderTextColor="#444"
-            rejectResponderTermination={true}
-            returnKeyType="done"
-            secureTextEntry={true}
-            style={
-              Array [
-                Object {
-                  "backgroundColor": "transparent",
-                  "borderColor": "#D3DBE3",
-                  "borderRadius": 2,
-                  "borderWidth": 1,
-                  "color": "#43434D",
-                  "fontFamily": "Roboto",
-                  "fontSize": 16,
-                  "lineHeight": 21,
-                },
-                Array [
-                  Object {
-                    "borderWidth": 0,
-                    "marginBottom": 7,
-                    "paddingHorizontal": 0,
-                    "paddingVertical": 8,
-                  },
-                  Object {
-                    "paddingLeft": 0,
-                  },
-                  Object {
-                    "fontSize": 18,
-                  },
-                  Object {
-                    "color": "#FFFFFF",
-                  },
-                ],
-              ]
-            }
-            testID="userPasswordInput"
-            textContentType="password"
-            underlineColorAndroid="transparent"
-            value=""
-          />
-        </View>
-      </View>
-      <Text
-        allowFontScaling={false}
-        onPress={[Function]}
-        style={
-          Array [
-            Object {
-              "color": undefined,
-              "fontSize": 25,
-            },
-            Array [
-              Object {
-                "color": "#43434D",
-                "position": "absolute",
-                "right": 8,
-                "top": 36,
-              },
-              Object {
-                "top": 30,
-              },
-            ],
-            Object {
-              "fontFamily": "Ionicons",
-              "fontStyle": "normal",
-              "fontWeight": "normal",
-            },
-            Object {},
-          ]
-        }
-      >
-        
-      </Text>
-    </View>
-  </View>
-  <View
-    style={
-      Array [
-        Object {
-          "margin": 30,
-        },
-        Object {
-          "flex": 1,
-        },
-      ]
-    }
-  >
-    <View
-      accessibilityLabel="loginButton"
-      disabled={false}
+    <Text
+      allowFontScaling={false}
       onPress={[Function]}
       style={
         Array [
           Object {
-            "flexDirection": "row",
-            "justifyContent": "center",
-          },
-          Object {
-            "alignContent": "center",
-            "alignItems": "center",
-            "alignSelf": "center",
-            "justifyContent": "center",
-          },
-          Object {
-            "backgroundColor": "rgba(0,0,0,0.40)",
-            "borderColor": "rgba(255,255,255,0.60)",
-            "borderRadius": 21,
-            "borderWidth": 1,
-            "paddingHorizontal": 23,
-            "paddingVertical": 10,
+            "color": undefined,
+            "fontSize": 25,
           },
           Array [
             Object {
-              "marginTop": 24.254545454545454,
+              "position": "absolute",
+              "right": 12,
+              "top": 30,
             },
             Object {
-              "width": "100%",
+              "color": "#B8C1CA",
             },
           ],
+          Object {
+            "fontFamily": "Ionicons",
+            "fontStyle": "normal",
+            "fontWeight": "normal",
+          },
+          Object {},
         ]
       }
-      text="Login"
     >
-      <Text
-        style={
+      
+    </Text>
+  </View>
+  <View
+    onPress={[Function]}
+    style={
+      Array [
+        Object {
+          "flexDirection": "row",
+          "justifyContent": "center",
+        },
+        Object {
+          "alignContent": "center",
+          "alignItems": "center",
+          "alignSelf": "center",
+          "justifyContent": "center",
+        },
+        Object {
+          "backgroundColor": "#242A30",
+          "borderColor": "#1B85D6",
+          "borderRadius": 21,
+          "borderWidth": 1,
+          "paddingHorizontal": 21,
+          "paddingVertical": 10,
+        },
+        Array [
+          Object {
+            "alignSelf": "stretch",
+          },
+          Object {
+            "marginTop": 12,
+          },
+          Object {
+            "marginHorizontal": 20,
+          },
+          Object {
+            "backgroundColor": "transparent",
+          },
+          Object {
+            "height": 42,
+          },
+        ],
+      ]
+    }
+    testID="loginButton"
+    text="Login"
+  >
+    <Text
+      onLayout={[Function]}
+      style={
+        Array [
+          Object {
+            "color": "#FFFFFF",
+          },
+          Object {
+            "fontFamily": "Roboto",
+          },
           Array [
             Object {
-              "fontSize": 19,
+              "fontSize": 17,
+            },
+            Object {
+              "color": "#404E53",
             },
             Object {
               "color": "#FFFFFF",
             },
-            undefined,
             Object {
               "fontWeight": "500",
             },
-          ]
-        }
-      >
-         
-        Login
-         
-      </Text>
-    </View>
-    <View
-      style={
-        Object {
-          "marginTop": 20,
-        }
+          ],
+        ]
       }
     >
-      <Text
-        onPress={[Function]}
-        style={
+       
+      Login
+       
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "marginTop": 16,
+      }
+    }
+  >
+    <Text
+      onPress={[Function]}
+      style={
+        Array [
+          Object {
+            "color": "#FFFFFF",
+          },
+          Object {
+            "fontFamily": "Roboto",
+          },
           Array [
             Object {
               "color": "#FFFFFF",
@@ -399,75 +437,12 @@ exports[`LoginForm component should renders correctly 1`] = `
             Object {
               "textAlign": "center",
             },
-          ]
-        }
-      >
-        Forgot your password?
-      </Text>
-    </View>
-    <View
-      style={
-        Object {
-          "flex": 1,
-        }
-      }
-    />
-    <View
-      disabled={false}
-      style={
-        Array [
-          Object {
-            "flexDirection": "row",
-            "justifyContent": "center",
-          },
-          Object {
-            "alignContent": "center",
-            "alignItems": "center",
-            "alignSelf": "center",
-            "justifyContent": "center",
-          },
-          Object {
-            "backgroundColor": "rgba(0,0,0,0.40)",
-            "borderColor": "rgba(255,255,255,0.60)",
-            "borderRadius": 21,
-            "borderWidth": 1,
-            "paddingHorizontal": 23,
-            "paddingVertical": 10,
-          },
-          Array [
-            Object {
-              "width": "100%",
-            },
-            Object {
-              "marginTop": 30,
-            },
           ],
         ]
       }
-      testID="registerButton"
-      text="Join Minds"
     >
-      <Text
-        style={
-          Array [
-            Object {
-              "fontSize": 19,
-            },
-            Object {
-              "color": "#FFFFFF",
-            },
-            undefined,
-            Object {
-              "fontWeight": "500",
-            },
-          ]
-        }
-      >
-         
-        Join Minds
-         
-      </Text>
-    </View>
+      Forgot your password?
+    </Text>
   </View>
   <Modal
     animationType="none"
@@ -523,244 +498,240 @@ exports[`LoginForm component should renders correctly 1`] = `
       }
     />
     <View
-      deviceHeight={null}
-      deviceWidth={null}
-      forwardedRef={[Function]}
-      hideModalContentWhileAnimating={false}
-      onBackdropPress={[Function]}
-      onModalHide={[Function]}
-      onModalWillHide={[Function]}
-      onModalWillShow={[Function]}
-      onMoveShouldSetResponder={[Function]}
-      onMoveShouldSetResponderCapture={[Function]}
-      onResponderEnd={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderReject={[Function]}
-      onResponderRelease={[Function]}
-      onResponderStart={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
-      onStartShouldSetResponderCapture={[Function]}
-      onSwipeComplete={[Function]}
-      panResponderThreshold={4}
+      onLayout={[Function]}
       pointerEvents="box-none"
-      scrollHorizontal={false}
-      scrollOffset={0}
-      scrollOffsetMax={0}
-      scrollTo={null}
       style={
-        Object {
-          "flex": 1,
-          "justifyContent": "flex-end",
-          "left": 0,
-          "margin": 0,
-          "top": 0,
-          "transform": Array [
-            Object {
-              "translateY": 0,
-            },
-          ],
-        }
-      }
-      supportedOrientations={
         Array [
-          "portrait",
-          "landscape",
-        ]
-      }
-      swipeDirection="down"
-      swipeThreshold={100}
-    >
-      <View
-        style={
           Array [
+            Object {
+              "margin": 37.5,
+              "transform": Array [
+                Object {
+                  "translateY": 0,
+                },
+              ],
+            },
+            Object {
+              "flex": 1,
+              "justifyContent": "center",
+            },
             Array [
               Object {
-                "backgroundColor": "#242A30",
+                "justifyContent": "flex-end",
               },
               Object {
-                "paddingBottom": 10,
-              },
-              Object {
-                "borderTopLeftRadius": 15,
-                "borderTopRightRadius": 15,
-                "overflow": "hidden",
+                "margin": 1,
               },
             ],
-            undefined,
+            Object {
+              "margin": 0,
+            },
+          ],
+          Object {
+            "paddingBottom": 0,
+          },
+        ]
+      }
+    >
+      <View
+        deviceHeight={null}
+        deviceWidth={null}
+        forwardedRef={[Function]}
+        hideModalContentWhileAnimating={false}
+        onBackdropPress={[Function]}
+        onModalHide={[Function]}
+        onModalWillHide={[Function]}
+        onModalWillShow={[Function]}
+        onMoveShouldSetResponder={[Function]}
+        onMoveShouldSetResponderCapture={[Function]}
+        onResponderEnd={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderReject={[Function]}
+        onResponderRelease={[Function]}
+        onResponderStart={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        onStartShouldSetResponderCapture={[Function]}
+        onSwipeComplete={[Function]}
+        panResponderThreshold={4}
+        pointerEvents="box-none"
+        scrollHorizontal={false}
+        scrollOffset={0}
+        scrollOffsetMax={0}
+        scrollTo={null}
+        style={
+          Object {
+            "flex": 1,
+            "justifyContent": "flex-end",
+            "left": 0,
+            "margin": 1,
+            "top": 0,
+            "transform": Array [
+              Object {
+                "translateY": 0,
+              },
+            ],
+          }
+        }
+        supportedOrientations={
+          Array [
+            "portrait",
+            "landscape",
           ]
         }
+        swipeDirection="down"
+        swipeThreshold={100}
       >
-        <Text
+        <View
           style={
             Array [
-              Object {
-                "color": "#FFFFFF",
-              },
-              Object {
-                "marginTop": 25,
-              },
-              Object {
-                "marginBottom": 20,
-              },
-              Object {
-                "fontWeight": "700",
-              },
-              Object {
-                "fontSize": 22,
-              },
-              Object {
-                "textAlign": "center",
-              },
+              Array [
+                Object {
+                  "backgroundColor": "#242A30",
+                },
+                Object {
+                  "paddingBottom": 8,
+                },
+                Object {
+                  "borderTopLeftRadius": 15,
+                  "borderTopRightRadius": 15,
+                  "overflow": "hidden",
+                },
+              ],
+              undefined,
             ]
           }
         >
-          Reset Password
-        </Text>
-        <Text
-          allowFontScaling={false}
-          onPress={[Function]}
-          style={
-            Array [
-              Object {
-                "color": undefined,
-                "fontSize": 34,
-              },
+          <Text
+            style={
               Array [
                 Object {
                   "color": "#FFFFFF",
                 },
                 Object {
-                  "position": "absolute",
-                  "right": 10,
-                  "top": 24,
-                },
-              ],
-              Object {
-                "fontFamily": "Material Design Icons",
-                "fontStyle": "normal",
-                "fontWeight": "normal",
-              },
-              Object {},
-            ]
-          }
-        >
-          󰅖
-        </Text>
-        <View>
-          <Text
-            style={
-              Array [
-                Object {
-                  "fontFamily": "Roboto-Medium",
-                  "fontWeight": "500",
-                },
-                Object {
-                  "fontSize": 16,
-                },
-                Object {
-                  "borderTopWidth": 0.5,
-                },
-                Object {
-                  "textAlign": "center",
-                },
-                Object {
-                  "paddingVertical": 30,
-                },
-                Object {
-                  "paddingHorizontal": 20,
-                },
-                Object {
-                  "borderColor": "#414C57",
-                },
-                Object {
-                  "color": "#B8C1CA",
-                },
-              ]
-            }
-          >
-            Enter your channel name below to start the password recovery process.
-          </Text>
-          <View
-            style={
-              Array [
-                Object {
-                  "paddingLeft": 20,
-                },
-                Object {
-                  "paddingTop": 10,
-                },
-                Object {
-                  "backgroundColor": "#F6F7F7",
-                },
-                Object {
-                  "borderTopWidth": 1,
-                },
-                Object {
-                  "borderBottomWidth": 1,
-                },
-                Object {
-                  "borderColor": "#D3DBE3",
+                  "fontFamily": "Roboto",
                 },
                 Array [
                   Object {
-                    "backgroundColor": "#1E242A",
+                    "color": "#FFFFFF",
                   },
                   Object {
-                    "borderColor": "#414C57",
+                    "marginTop": 20,
+                  },
+                  Object {
+                    "marginBottom": 16,
+                  },
+                  Object {
+                    "fontFamily": "Roboto-Black",
+                    "fontWeight": "700",
+                  },
+                  Object {
+                    "fontSize": 22,
+                  },
+                  Object {
+                    "textAlign": "center",
                   },
                 ],
               ]
             }
           >
-            <View
-              style={
+            Reset Password
+          </Text>
+          <Text
+            allowFontScaling={false}
+            onPress={[Function]}
+            style={
+              Array [
                 Object {
-                  "paddingBottom": 10,
-                  "paddingTop": 5,
-                }
+                  "color": undefined,
+                  "fontSize": 34,
+                },
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                  },
+                  Object {
+                    "position": "absolute",
+                    "right": 10,
+                    "top": 24,
+                  },
+                ],
+                Object {
+                  "fontFamily": "Material Design Icons",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                Object {},
+              ]
+            }
+          >
+            󰅖
+          </Text>
+          <View>
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                  },
+                  Object {
+                    "fontFamily": "Roboto",
+                  },
+                  Array [
+                    Object {
+                      "fontFamily": "Roboto-Medium",
+                      "fontWeight": "500",
+                    },
+                    Object {
+                      "fontSize": 16,
+                    },
+                    Object {
+                      "borderTopWidth": 0.5,
+                    },
+                    Object {
+                      "textAlign": "center",
+                    },
+                    Object {
+                      "paddingVertical": 24,
+                    },
+                    Object {
+                      "paddingHorizontal": 16,
+                    },
+                    Object {
+                      "borderColor": "#414C57",
+                    },
+                    Object {
+                      "color": "#B8C1CA",
+                    },
+                  ],
+                ]
               }
             >
-              <View>
-                <View
-                  style={
-                    Object {
-                      "alignItems": "stretch",
-                      "flexDirection": "row",
-                    }
-                  }
-                >
-                  <Text
-                    style={
-                      Array [
-                        Object {
-                          "fontFamily": "Roboto",
-                          "fontSize": 16,
-                          "fontWeight": "400",
-                          "marginBottom": 0,
-                        },
-                        Object {
-                          "color": "#72727C",
-                        },
-                        Array [
-                          Object {
-                            "color": "#B8C1CA",
-                          },
-                        ],
-                      ]
-                    }
-                  >
-                    Username
-                  </Text>
-                </View>
-              </View>
-              <TextInput
-                allowFontScaling={true}
-                autoCapitalize="none"
-                autoCompleteType="username"
-                containerStyle={
+              Enter your channel name below to start the password recovery process.
+            </Text>
+            <View
+              style={
+                Array [
+                  Object {
+                    "paddingLeft": 16,
+                  },
+                  Object {
+                    "paddingTop": 10,
+                  },
+                  Object {
+                    "backgroundColor": "#1A2025",
+                  },
+                  Object {
+                    "borderTopWidth": 1,
+                  },
+                  Object {
+                    "borderBottomWidth": 1,
+                  },
+                  Object {
+                    "borderColor": "#414C57",
+                  },
                   Array [
                     Object {
                       "backgroundColor": "#1E242A",
@@ -768,109 +739,187 @@ exports[`LoginForm component should renders correctly 1`] = `
                     Object {
                       "borderColor": "#414C57",
                     },
-                  ]
-                }
-                keyboardAppearance="dark"
-                labelStyle={
-                  Array [
-                    Object {
-                      "color": "#B8C1CA",
-                    },
-                  ]
-                }
-                onChangeText={[Function]}
-                placeholder=""
-                placeholderTextColor="#444"
-                rejectResponderTermination={true}
-                returnKeyType="done"
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "transparent",
-                      "borderColor": "#D3DBE3",
-                      "borderRadius": 2,
-                      "borderWidth": 1,
-                      "color": "#43434D",
-                      "fontFamily": "Roboto",
-                      "fontSize": 16,
-                      "lineHeight": 21,
-                    },
-                    Array [
-                      Object {
-                        "borderWidth": 0,
-                        "marginBottom": 7,
-                        "paddingHorizontal": 0,
-                        "paddingVertical": 8,
-                      },
-                      Object {
-                        "paddingLeft": 0,
-                      },
-                      Object {
-                        "fontSize": 18,
-                      },
-                      Array [
-                        Object {
-                          "color": "#FFFFFF",
-                        },
-                      ],
-                    ],
-                  ]
-                }
-                textContentType="username"
-                underlineColorAndroid="transparent"
-                value=""
-              />
-            </View>
-          </View>
-          <View
-            onPress={[Function]}
-            style={
-              Array [
-                Object {
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                },
-                Object {},
-                Object {
-                  "backgroundColor": "#FFFFFF",
-                  "borderColor": "#1B85D6",
-                  "borderRadius": 21,
-                  "borderWidth": 1,
-                  "paddingHorizontal": 21,
-                  "paddingVertical": 10,
-                },
-                Array [
-                  Object {
-                    "margin": 30,
-                  },
-                  Object {
-                    "backgroundColor": "#242A30",
-                  },
-                ],
-              ]
-            }
-            text="Continue"
-          >
-            <Text
-              style={
-                Array [
-                  Object {
-                    "fontSize": 17,
-                  },
-                  Object {
-                    "color": "#FFFFFF",
-                  },
-                  undefined,
-                  Object {
-                    "fontWeight": "500",
-                  },
+                  ],
                 ]
               }
             >
-               
-              Continue
-               
-            </Text>
+              <View
+                style={
+                  Object {
+                    "paddingBottom": 10,
+                    "paddingTop": 5,
+                  }
+                }
+              >
+                <View>
+                  <View
+                    style={
+                      Object {
+                        "alignItems": "stretch",
+                        "flexDirection": "row",
+                      }
+                    }
+                  >
+                    <Text
+                      style={
+                        Array [
+                          Object {
+                            "color": "#FFFFFF",
+                          },
+                          Object {
+                            "fontFamily": "Roboto",
+                          },
+                          Array [
+                            Object {
+                              "fontFamily": "Roboto",
+                              "fontSize": 16,
+                              "fontWeight": "400",
+                              "marginBottom": 0,
+                            },
+                            Object {
+                              "color": "#B8C1CA",
+                            },
+                            Array [
+                              Object {
+                                "color": "#B8C1CA",
+                              },
+                            ],
+                          ],
+                        ]
+                      }
+                    >
+                      Username
+                    </Text>
+                  </View>
+                </View>
+                <TextInput
+                  allowFontScaling={true}
+                  autoCapitalize="none"
+                  autoCompleteType="username"
+                  containerStyle={
+                    Array [
+                      Object {
+                        "backgroundColor": "#1E242A",
+                      },
+                      Object {
+                        "borderColor": "#414C57",
+                      },
+                    ]
+                  }
+                  keyboardAppearance="dark"
+                  labelStyle={
+                    Array [
+                      Object {
+                        "color": "#B8C1CA",
+                      },
+                    ]
+                  }
+                  onChangeText={[Function]}
+                  placeholder=""
+                  placeholderTextColor="#444"
+                  rejectResponderTermination={true}
+                  returnKeyType="done"
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "transparent",
+                        "borderColor": "#414C57",
+                        "borderRadius": 2,
+                        "borderWidth": 1,
+                        "color": "#FFFFFF",
+                        "fontFamily": "Roboto",
+                        "fontSize": 16,
+                        "lineHeight": 21,
+                      },
+                      Array [
+                        Object {
+                          "borderWidth": 0,
+                          "marginBottom": 7,
+                          "paddingHorizontal": 0,
+                          "paddingVertical": 8,
+                        },
+                        Object {
+                          "paddingLeft": 1,
+                        },
+                        Object {
+                          "fontSize": 18,
+                        },
+                        Object {
+                          "color": "#FFFFFF",
+                        },
+                        Array [
+                          Object {
+                            "color": "#FFFFFF",
+                          },
+                        ],
+                      ],
+                    ]
+                  }
+                  textContentType="username"
+                  underlineColorAndroid="transparent"
+                  value=""
+                />
+              </View>
+            </View>
+            <View
+              onPress={[Function]}
+              style={
+                Array [
+                  Object {
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  Object {},
+                  Object {
+                    "backgroundColor": "#242A30",
+                    "borderColor": "#1B85D6",
+                    "borderRadius": 21,
+                    "borderWidth": 1,
+                    "paddingHorizontal": 21,
+                    "paddingVertical": 10,
+                  },
+                  Array [
+                    Object {
+                      "margin": 24,
+                    },
+                    Object {
+                      "backgroundColor": "#242A30",
+                    },
+                  ],
+                ]
+              }
+              text="Continue"
+            >
+              <Text
+                onLayout={[Function]}
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                    },
+                    Object {
+                      "fontFamily": "Roboto",
+                    },
+                    Array [
+                      Object {
+                        "fontSize": 17,
+                      },
+                      Object {
+                        "color": "#FFFFFF",
+                      },
+                      undefined,
+                      Object {
+                        "fontWeight": "500",
+                      },
+                    ],
+                  ]
+                }
+              >
+                 
+                Continue
+                 
+              </Text>
+            </View>
           </View>
         </View>
       </View>

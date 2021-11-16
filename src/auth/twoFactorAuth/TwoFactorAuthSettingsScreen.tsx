@@ -1,24 +1,24 @@
 import { useNavigation } from '@react-navigation/native';
 import { observer, useLocalStore } from 'mobx-react';
 import React, { useEffect } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import { Platform, View } from 'react-native';
+
 import MenuItem from '../../common/components/menus/MenuItem';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import createTwoFactorStore, { Options } from './createTwoFactorStore';
-import settingsService from '../../settings/SettingsService';
+import requirePhoneValidation from '../../common/hooks/requirePhoneValidation';
+import { showNotification } from '../../../AppMessages';
+import MText from '../../common/components/MText';
+import Button from '~/common/components/Button';
+import ActivityIndicator from '~/common/components/ActivityIndicator';
 
 const TwoFactorAuthSettingsScreen = observer(() => {
-  const theme = ThemedStyles.style;
   const navigation = useNavigation();
   const localStore = useLocalStore(createTwoFactorStore);
 
   useEffect(() => {
-    const getSettings = async () => {
-      const settings = await settingsService.getSettings();
-      localStore.has2fa(settings.channel.has2fa);
-    };
-    getSettings();
+    localStore.load();
   }, [localStore]);
 
   const items = [
@@ -26,23 +26,36 @@ const TwoFactorAuthSettingsScreen = observer(() => {
       id: 'app' as Options,
       enabled: localStore.appAuthEnabled,
     },
-    {
-      id: 'sms' as Options,
-      enabled: localStore.smsAuthEnabled,
-    },
   ];
 
-  const onConfirmPasswordSuccess = (password: string) => {
+  if (!localStore.appAuthEnabled) {
+    items.push({
+      id: 'email' as Options,
+      enabled: !localStore.appAuthEnabled,
+    });
+  }
+
+  const onConfirmPasswordSuccess = async (password: string) => {
     const screen =
       localStore.selectedOption === 'app'
         ? 'VerifyAuthAppScreen'
         : localStore.selectedOption === 'sms'
         ? 'VerifyPhoneNumberScreen'
         : 'DisableTFA';
-    navigation.navigate(screen, {
-      store: localStore,
-      password,
-    });
+    if (screen === 'VerifyPhoneNumberScreen') {
+      const response = await requirePhoneValidation(
+        i18n.t('settings.TFAVerifyPhoneDesc1'),
+      );
+      if (response) {
+        navigation.goBack();
+        showNotification(i18n.t('settings.TFAEnabled'));
+      }
+    } else {
+      navigation.navigate(screen, {
+        store: localStore,
+        password,
+      });
+    }
   };
 
   const confirmPassword = () => {
@@ -54,84 +67,101 @@ const TwoFactorAuthSettingsScreen = observer(() => {
 
   return (
     <View>
-      <Text style={[styles.description, theme.colorSecondaryText]}>
+      <MText style={styles.description}>
         {i18n.t('settings.TFAdescription')}
-      </Text>
-      {items.map(item => (
-        <MenuItem
-          item={{
-            onPress: () => {
-              if (localStore.has2faEnabled) {
-                return false;
-              }
-              localStore.setSelected(item.id);
-              confirmPassword();
-            },
-            title: <ItemTitle id={item.id} enabled={item.enabled} />,
-            noIcon: localStore.has2faEnabled,
-          }}
-          titleStyle={styles.titleContainer}
-        />
-      ))}
-      {localStore.has2faEnabled && (
-        <MenuItem
-          item={{
-            onPress: () => {
-              localStore.setSelected('disable');
-              confirmPassword();
-            },
-            title: i18n.t('settings.TFADisable'),
-          }}
-        />
+      </MText>
+      {localStore.loaded ? (
+        <>
+          {items.map(item => (
+            <MenuItem
+              item={{
+                onPress: () => {
+                  if (localStore.has2faEnabled || item.id === 'email') {
+                    return false;
+                  }
+                  localStore.setSelected(item.id);
+                  confirmPassword();
+                },
+                title: <ItemTitle id={item.id} enabled={item.enabled} />,
+                noIcon: localStore.has2faEnabled || item.id === 'email',
+              }}
+              titleStyle={styles.titleContainer}
+            />
+          ))}
+          {localStore.has2faEnabled && (
+            <MenuItem
+              item={{
+                onPress: () => {
+                  localStore.setSelected('disable');
+                  confirmPassword();
+                },
+                title: i18n.t('settings.TFADisable'),
+              }}
+            />
+          )}
+        </>
+      ) : localStore.loadError ? (
+        <>
+          <MText style={styles.error}>{i18n.t('cantReachServer')}</MText>
+          <Button
+            action
+            text={i18n.t('tryAgain')}
+            onPress={() => localStore.load()}
+          />
+        </>
+      ) : (
+        <ActivityIndicator />
       )}
     </View>
   );
 });
 
 const ItemTitle = ({ id, enabled }) => {
-  const theme = ThemedStyles.style;
-  const enabledColors = {
-    backgroundColor: ThemedStyles.theme ? '#FFFFFF' : '#242A30',
-    color: ThemedStyles.theme ? '#43434D' : '#FFFFFF',
-  };
+  // Inverted colors
+  const backgroundColor = ThemedStyles.theme
+    ? ThemedStyles.style.bgPrimaryBackground_Light
+    : ThemedStyles.style.bgPrimaryBackground_Dark;
+  const color = ThemedStyles.theme
+    ? ThemedStyles.style.colorPrimaryText_Light
+    : ThemedStyles.style.colorPrimaryText_Dark;
+
   return (
     <View style={styles.container}>
-      <View style={[theme.rowJustifyStart, theme.marginBottom2x]}>
-        <Text style={styles.title}>
+      <View style={styles.row}>
+        <MText style={styles.title}>
           {i18n.t(`settings.TFAOptions.${id}Title`)}
-        </Text>
+        </MText>
         {enabled && (
-          <Text style={[styles.enabled, enabledColors]}>
+          <MText style={[styles.enabled, backgroundColor, color]}>
             {i18n.t('enabled')}
-          </Text>
+          </MText>
         )}
       </View>
-      <Text style={[theme.colorSecondaryText, theme.fontL]}>
+      <MText style={styles.optDescription}>
         {i18n.t(`settings.TFAOptions.${id}Description`)}
-      </Text>
+      </MText>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
+const styles = ThemedStyles.create({
+  optDescription: ['colorSecondaryText', 'fontL'],
+  row: ['rowJustifyStart', 'marginBottom2x'],
   titleContainer: {
     marginTop: Platform.select({ ios: 20, android: 10 }),
     paddingTop: 0,
   },
-  description: {
-    fontSize: 15,
-    paddingLeft: 21,
-    paddingRight: 23,
-    marginVertical: 30,
-  },
+  error: ['fontXL', 'textCenter', 'paddingVertical4x'],
+  description: [
+    'fontL',
+    'paddingHorizontal4x',
+    'paddingVertical6x',
+    'colorSecondaryText',
+  ],
   container: {
     width: 300,
   },
-  title: {
-    fontWeight: '500',
-    fontFamily: 'Roboto-Medium',
-    fontSize: 16,
-  },
+  title: ['fontMedium', 'fontL'],
   enabled: {
     marginLeft: 18,
     paddingHorizontal: 6,

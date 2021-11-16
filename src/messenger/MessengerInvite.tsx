@@ -1,11 +1,12 @@
 //@ts-nocheck
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import { observer } from 'mobx-react';
 
 import Button from '../common/components/Button';
 import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
+import MText from '../common/components/MText';
 
 /**
  * Messenger Invite
@@ -39,13 +40,13 @@ export default class MessengerInvite extends Component {
       <View
         style={[theme.flexContainer, theme.padding2x, theme.backgroundLight]}>
         <View style={[theme.paddingBottom3x, theme.padding3x]}>
-          <Text style={[theme.fontXL, theme.textCenter]}>
+          <MText style={[theme.fontXL, theme.textCenter]}>
             {i18n.t('messenger.looksLike')}{' '}
-            <Text style={theme.flexContainerCenter}>
+            <MText style={theme.flexContainerCenter}>
               @{invitable[0].username}
-            </Text>{' '}
+            </MText>{' '}
             {i18n.t('messenger.isntUsingMessenger')}.
-          </Text>
+          </MText>
         </View>
         <View style={[theme.centered]}>{button}</View>
       </View>

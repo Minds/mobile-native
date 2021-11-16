@@ -1,19 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Thumb action component renders correctly 1`] = `
-<preventDoubleTap(TouchableOpacity)
+<preventDoubleTap(PressableScale)
   onPress={[Function]}
   style={
     Array [
       Object {
-        "flexDirection": "row",
-        "justifyContent": "center",
+        "flex": 1,
+        "flexDirection": "column",
       },
       Object {
-        "paddingHorizontal": 15,
+        "margin": 4,
       },
       Object {
-        "paddingVertical": 20,
+        "paddingVertical": 12,
       },
       Object {
         "alignItems": "center",
@@ -22,20 +22,27 @@ exports[`Thumb action component renders correctly 1`] = `
   }
   testID="Thumb down activity button"
 >
-  <Icon
-    allowFontScaling={false}
-    name="thumb-down"
-    size={21}
+  <View
     style={
       Array [
         Object {
-          "color": "#7D7D82",
+          "alignItems": "center",
+          "flexDirection": "row",
+          "flexWrap": "nowrap",
         },
         Object {
-          "marginRight": 5,
+          "margin": 4,
         },
       ]
     }
-  />
-</preventDoubleTap(TouchableOpacity)>
+  >
+    <AnimatedThumb
+      canVote={true}
+      down={true}
+      name="thumb-down"
+      size={21}
+      voted={false}
+    />
+  </View>
+</preventDoubleTap(PressableScale)>
 `;

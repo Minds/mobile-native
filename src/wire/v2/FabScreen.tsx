@@ -1,13 +1,6 @@
 import React, { Fragment, useEffect } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
-import {
-  View,
-  StyleSheet,
-  Text,
-  ScrollView,
-  Alert,
-  Platform,
-} from 'react-native';
+import { View, StyleSheet, ScrollView, Alert, Platform } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import HeaderComponent from '../../common/components/HeaderComponent';
@@ -21,9 +14,10 @@ import i18n from '../../common/services/i18n.service';
 import logService from '../../common/services/log.service';
 import api from '../../common/services/api.service';
 import toFriendlyCrypto from '../../common/helpers/toFriendlyCrypto';
-import storageService from '../../common/services/storage.service';
 import useWalletConnect from '../../blockchain/v2/walletconnect/useWalletConnect';
 import { WCStore } from '../../blockchain/v2/walletconnect/WalletConnectContext';
+import { storages } from '../../common/services/storage/storages.service';
+import MText from '../../common/components/MText';
 
 const isIos = Platform.OS === 'ios';
 
@@ -51,13 +45,13 @@ const createFabScreenStore = ({ wc }: { wc: WCStore }) => {
       this.goBack = goBack;
       this.loaded = true;
     },
-    async getLastAmount() {
-      const lastAmount = await storageService.getItem(lastAmountStorageKey);
-      this.amount = parseFloat(lastAmount) || 0;
+    getLastAmount() {
+      const lastAmount = storages.user?.getString(lastAmountStorageKey);
+      this.amount = lastAmount ? parseFloat(lastAmount) : 0;
       this.wire.setAmount(this.amount);
     },
     async setLastAmount(amount: string) {
-      await storageService.setItem(lastAmountStorageKey, amount);
+      storages.user?.setString(lastAmountStorageKey, amount);
     },
     setCard(card: any) {
       this.card = card;
@@ -185,7 +179,7 @@ const FabScreen = observer(({ route, navigation }) => {
   return (
     <Fragment>
       <ScrollView
-        keyboardShouldPersistTaps={true}
+        keyboardShouldPersistTaps="always"
         contentContainerStyle={cleanTop}>
         <View style={theme.rowJustifySpaceBetween}>
           <View style={theme.rowJustifyStart}>
@@ -195,21 +189,21 @@ const FabScreen = observer(({ route, navigation }) => {
               style={[styles.backIcon, theme.colorIcon]}
               onPress={navigation.goBack}
             />
-            <Text style={[theme.centered, theme.fontXXL, theme.bold]}>
+            <MText style={[theme.centered, theme.fontXXL, theme.bold]}>
               {i18n.t('channel.fabPay')}
-            </Text>
+            </MText>
           </View>
-          <Text
+          <MText
             style={[theme.centered, theme.bold, theme.paddingRight4x]}
             onPress={store.confirmSend}>
             {i18n.t('channel.fabSend')}
-          </Text>
+          </MText>
         </View>
         <View style={styles.container}>
           <HeaderComponent user={owner} />
           <UserNamesComponent user={owner} pay={true} />
           <HeaderTabsComponent tabList={tabList} store={store} />
-          <View style={theme.padding4x}>
+          <View style={theme.paddingVertical4x}>
             {store.tab === 'tokens' && <TokensForm store={store} />}
             {store.tab === 'usd' && <UsdForm store={store} />}
           </View>

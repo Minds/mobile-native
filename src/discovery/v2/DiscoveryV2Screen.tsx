@@ -2,24 +2,25 @@ import React, { useEffect, useState } from 'react';
 
 import { View } from 'react-native';
 import { observer } from 'mobx-react';
-import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 
 import i18n from '../../common/services/i18n.service';
 
 import { DiscoveryTrendsList } from './trends/DiscoveryTrendsList';
-import { TabParamList } from '../../tabs/TabsScreen';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { useDiscoveryV2Store } from './useDiscoveryV2Store';
 import { TDiscoveryV2Tabs } from './DiscoveryV2Store';
 import TopbarTabbar from '../../common/components/topbar-tabbar/TopbarTabbar';
 import { DiscoveryTagsList } from './tags/DiscoveryTagsList';
 import FeedList from '../../common/components/FeedList';
-import DiscoveryTagsManager from './tags/DiscoveryTagsManager';
 import InitialOnboardingButton from '../../onboarding/v2/InitialOnboardingButton';
 import { withErrorBoundary } from '../../common/components/ErrorBoundary';
+import { AnimatePresence } from 'moti';
+import DiscoveryTabContent from './DiscoveryTabContent';
+import Empty from '~/common/components/Empty';
+import Button from '~/common/components/Button';
 
 interface Props {
-  navigation: BottomTabNavigationProp<TabParamList>;
+  navigation: any;
 }
 
 /**
@@ -33,6 +34,32 @@ export const DiscoveryV2Screen = withErrorBoundary(
     );
     const store = useDiscoveryV2Store();
     const navigation = props.navigation;
+
+    const tabs = React.useMemo(
+      () => [
+        { id: 'foryou', title: i18n.t('discovery.justForYou') },
+        { id: 'your-tags', title: i18n.t('discovery.yourTags') },
+        { id: 'trending-tags', title: i18n.t('discovery.trending') },
+        { id: 'boosts', title: i18n.t('boosted') },
+      ],
+      [i18n.locale],
+    );
+
+    const emptyBoosts = React.useMemo(
+      () => (
+        <Empty
+          title={i18n.t('boosts.emptyList')}
+          subtitle={i18n.t('boosts.emptyListSubtitle')}>
+          <Button
+            onPress={() => navigation.navigate('BoostSettingsScreen')}
+            text={i18n.t('moreScreen.settings')}
+            large
+            action
+          />
+        </Empty>
+      ),
+      [navigation],
+    );
 
     useEffect(() => {
       const unsubscribe = navigation.addListener('tabPress', () => {
@@ -57,53 +84,78 @@ export const DiscoveryV2Screen = withErrorBoundary(
       return unsubscribe;
     }, [store, navigation]);
 
-    const closeManageTags = () => {
-      store.setShowManageTags(false);
-      store.refreshTrends();
-    };
-
     const screen = () => {
       switch (store.activeTabId) {
         case 'foryou':
-          return <DiscoveryTrendsList store={store} />;
+          return (
+            <DiscoveryTabContent key="foryou">
+              <DiscoveryTrendsList store={store} />
+            </DiscoveryTabContent>
+          );
         case 'your-tags':
-          return <DiscoveryTagsList type="your" store={store} />;
+          return (
+            <DiscoveryTabContent key="your-tags">
+              <DiscoveryTagsList type="your" store={store} />
+            </DiscoveryTabContent>
+          );
         case 'trending-tags':
-          return <DiscoveryTagsList type="trending" store={store} />;
+          store.trendingFeed.fetchRemoteOrLocal();
+          return (
+            <DiscoveryTabContent key="trending-tags">
+              <FeedList
+                header={
+                  <DiscoveryTagsList
+                    type="trending"
+                    store={store}
+                    style={styles.bottomBorder}
+                    showManageTags={false}
+                  />
+                }
+                feedStore={store.trendingFeed}
+                navigation={navigation}
+              />
+            </DiscoveryTabContent>
+          );
         case 'boosts':
           store.boostFeed.fetchRemoteOrLocal();
           return (
-            <FeedList feedStore={store.boostFeed} navigation={navigation} />
+            <DiscoveryTabContent key="boosts">
+              <FeedList
+                feedStore={store.boostFeed}
+                navigation={navigation}
+                emptyMessage={emptyBoosts}
+              />
+            </DiscoveryTabContent>
           );
         default:
-          return <View />;
+          return <View key="none" />;
       }
     };
 
     return (
-      <View style={theme.flexContainer}>
-        <View style={[theme.bgPrimaryBackground, theme.paddingTop]}>
+      <View style={styles.container}>
+        <View style={theme.paddingTop}>
           <InitialOnboardingButton />
           <TopbarTabbar
             current={store.activeTabId}
             onChange={tabId => {
               store.setTabId(tabId as TDiscoveryV2Tabs);
             }}
-            tabs={[
-              { id: 'foryou', title: i18n.t('discovery.justForYou') },
-              { id: 'your-tags', title: i18n.t('discovery.yourTags') },
-              { id: 'trending-tags', title: i18n.t('discovery.trending') },
-              { id: 'boosts', title: i18n.t('boosted') },
-            ]}
+            tabs={tabs}
           />
         </View>
-        <View style={theme.flexContainer}>{screen()}</View>
-        <DiscoveryTagsManager
-          show={store.showManageTags}
-          onCancel={closeManageTags}
-          onDone={closeManageTags}
-        />
+        <View style={theme.flexContainer}>
+          <AnimatePresence>{screen()}</AnimatePresence>
+        </View>
       </View>
     );
   }),
 );
+
+const styles = ThemedStyles.create({
+  container: ['flexContainer', 'bgPrimaryBackground'],
+  bottomBorder: {
+    borderBottomColor: '#eee',
+    borderBottomWidth: 10,
+  },
+});

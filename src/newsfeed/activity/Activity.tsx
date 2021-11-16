@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { reaction } from 'mobx';
 import { observer } from 'mobx-react';
 
-import { Text, TouchableOpacity, View, LayoutChangeEvent } from 'react-native';
+import { TouchableOpacity, View, LayoutChangeEvent } from 'react-native';
 import Clipboard from '@react-native-clipboard/clipboard';
 import * as entities from 'entities';
 
@@ -19,7 +19,6 @@ import blockListService from '../../common/services/block-list.service';
 import i18n from '../../common/services/i18n.service';
 import ActivityModel from '../ActivityModel';
 import ThemedStyles from '../../styles/ThemedStyles';
-import type FeedStore from '../../common/stores/FeedStore';
 import sessionService from '../../common/services/session.service';
 import NavigationService from '../../navigation/NavigationService';
 import { showNotification } from '../../../AppMessages';
@@ -35,6 +34,7 @@ import {
   styles,
   textStyle,
 } from './styles';
+import MText from '../../common/components/MText';
 
 const FONT_THRESHOLD = 300;
 
@@ -90,25 +90,10 @@ export default class Activity extends Component<PropsType> {
     const navOpts = {
       entity: this.props.entity,
       hydrate: false,
-      feed: undefined as FeedStore | undefined,
-      current: 0,
     };
 
     if (this.props.entity.remind_object || this.props.hydrateOnNav) {
       navOpts.hydrate = true;
-    }
-
-    if (this.props.entity.__list && !this.props.isReminded) {
-      const index = this.props.entity.__list.entities.findIndex(
-        e => e === this.props.entity,
-      );
-      navOpts.feed = this.props.entity.__list;
-      navOpts.current = index;
-      this.props.navigation.push('ActivityFullScreenNav', {
-        screen: 'ActivityFullScreen',
-        params: navOpts,
-      });
-      return;
     }
 
     this.props.navigation.push('Activity', navOpts);
@@ -160,7 +145,15 @@ export default class Activity extends Component<PropsType> {
             const user = sessionService.getUser();
             if (
               !user.disable_autoplay_videos &&
-              !settingsStore.dataSaverEnabled
+              !settingsStore.dataSaverEnabled &&
+              !(
+                // do not autoplay minds+ videos for non plus users
+                (
+                  !user.plus &&
+                  this.props.entity.getLockType &&
+                  this.props.entity.getLockType() === 'plus'
+                )
+              )
             ) {
               const state = NavigationService.getCurrentState();
 
@@ -371,15 +364,15 @@ export default class Activity extends Component<PropsType> {
       if (blockListService.has(remind_object.owner_guid)) {
         return (
           <View style={remindBlockContainerStyle}>
-            <Text style={styles.blockedNoticeDesc}>
+            <MText style={styles.blockedNoticeDesc}>
               {i18n.t('activity.remindBlocked')}
-              <Text
+              <MText
                 onPress={this.navToRemindChannel}
                 style={ThemedStyles.style.bold}>
                 {' '}
                 @{remind_object.ownerObj.username}
-              </Text>
-            </Text>
+              </MText>
+            </MText>
           </View>
         );
       }

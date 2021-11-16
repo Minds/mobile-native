@@ -2,7 +2,7 @@ import React from 'react';
 import { BottomSheetFlatList, TouchableOpacity } from '@gorhom/bottom-sheet';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import Comment from './Comment';
 import type CommentsStore from './CommentsStore';
@@ -10,12 +10,11 @@ import CommentListHeader from './CommentListHeader';
 import LoadMore from './LoadMore';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { CommentInputContext } from './CommentInput';
-import { GOOGLE_PLAY_STORE } from '../../config/Config';
-import DisabledStoreFeature from '../../common/components/DisabledStoreFeature';
 import sessionService from '../../common/services/session.service';
 import GroupModel from '../../groups/GroupModel';
 import FastImage from 'react-native-fast-image';
 import i18n from '../../common/services/i18n.service';
+import MText from '../../common/components/MText';
 
 // types
 type PropsType = {
@@ -34,7 +33,6 @@ type PropsType = {
  * @param props
  */
 const CommentList: React.FC<PropsType> = (props: PropsType) => {
-  const theme = ThemedStyles.style;
   const ref = React.useRef<any>(null);
   const provider = React.useContext(CommentInputContext);
   const navigation = useNavigation<any>();
@@ -44,16 +42,6 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
     props.store.entity instanceof GroupModel
       ? 'messenger.typeYourMessage'
       : 'activity.typeComment';
-
-  const touchableStyles = [
-    theme.rowJustifyStart,
-    theme.borderTopHair,
-    theme.borderBottomHair,
-    theme.bcolorPrimaryBorder,
-    theme.paddingTop2x,
-    theme.paddingBottom2x,
-    theme.alignCenter,
-  ];
 
   useFocusEffect(
     React.useCallback(() => {
@@ -66,18 +54,14 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
     const focusedUrn = props.store?.focusedUrn;
 
     props.store.loadComments(true).then(() => {
-      if (!focusedUrn) {
-        setTimeout(() => ref.current?.scrollToEnd(), 600);
-      } else {
+      if (focusedUrn) {
         // open focused if necessary
         const focused = props.store.comments.find(c => c.expanded);
         if (focused) {
-          if (!GOOGLE_PLAY_STORE) {
-            navigation.push('ReplyComment', {
-              comment: focused,
-              entity: props.store.entity,
-            });
-          }
+          navigation.push('ReplyComment', {
+            comment: focused,
+            entity: props.store.entity,
+          });
         } else {
           const index = props.store.comments.findIndex(c => c.focused);
           if (index && index > 0) {
@@ -110,12 +94,7 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
     return (
       <>
         {props.store.parent && (
-          <View
-            style={[
-              styles.headerCommentContainer,
-              theme.bcolorPrimaryBorder,
-              theme.bgSecondaryBackground,
-            ]}>
+          <View style={styles.headerCommentContainer}>
             <Comment
               comment={props.store.parent}
               store={props.store}
@@ -124,79 +103,80 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
             />
           </View>
         )}
-        {!GOOGLE_PLAY_STORE && (
-          <TouchableOpacity
-            onPress={() => props.store.setShowInput(true)}
-            style={touchableStyles}>
-            <FastImage source={user.getAvatarSource()} style={styles.avatar} />
-            <Text style={[theme.fontL, theme.colorSecondaryText]}>
-              {i18n.t(props.store.parent ? 'activity.typeReply' : placeHolder)}
-            </Text>
-          </TouchableOpacity>
-        )}
-        <LoadMore store={props.store} />
+
+        <TouchableOpacity
+          onPress={() => props.store.setShowInput(true)}
+          style={styles.touchableStyles}>
+          <FastImage source={user.getAvatarSource()} style={styles.avatar} />
+          <MText style={styles.reply}>
+            {i18n.t(props.store.parent ? 'activity.typeReply' : placeHolder)}
+          </MText>
+        </TouchableOpacity>
+
+        <LoadMore store={props.store} next={true} />
       </>
     );
-  }, [
-    placeHolder,
-    props.store,
-    theme.bgSecondaryBackground,
-    theme.bcolorPrimaryBorder,
-    theme.colorSecondaryText,
-    theme.fontL,
-    touchableStyles,
-    user,
-  ]);
+  }, [placeHolder, props.store, user]);
 
   const Footer = React.useCallback(() => {
-    return <LoadMore store={props.store} next={true} />;
+    return <LoadMore store={props.store} />;
+  }, [props.store]);
+  const loadMore = React.useCallback(() => {
+    return props.store.loadComments();
   }, [props.store]);
 
   return (
-    <View style={[theme.flexContainer, theme.bgPrimaryBackground]}>
+    <View style={styles.container}>
       <CommentListHeader store={props.store} />
-      {GOOGLE_PLAY_STORE ? (
-        <DisabledStoreFeature
-          style={[
-            theme.bgPrimaryBackground,
-            theme.flexContainer,
-            theme.padding4x,
-          ]}
-        />
-      ) : (
-        <BottomSheetFlatList
-          focusHook={useFocusEffect}
-          ref={ref}
-          data={props.store.comments.slice()}
-          ListHeaderComponent={Header}
-          ListFooterComponent={Footer}
-          keyExtractor={keyExtractor}
-          renderItem={renderItem}
-          style={[theme.flexContainer, theme.bgPrimaryBackground]}
-          contentContainerStyle={[
-            theme.bgPrimaryBackground,
-            theme.paddingBottom3x,
-          ]}
-        />
-      )}
+      <BottomSheetFlatList
+        focusHook={useFocusEffect}
+        ref={ref}
+        data={props.store.comments.slice()}
+        ListHeaderComponent={Header}
+        ListFooterComponent={Footer}
+        keyExtractor={keyExtractor}
+        onEndReached={loadMore}
+        renderItem={renderItem}
+        style={styles.list}
+        contentContainerStyle={styles.listContainer}
+      />
     </View>
   );
 };
 
-const keyExtractor = item => item.guid;
-
-const styles = StyleSheet.create({
-  headerCommentContainer: {
-    borderTopWidth: StyleSheet.hairlineWidth,
-    overflow: 'scroll',
-  },
-  avatar: {
-    height: 37,
-    width: 37,
-    borderRadius: 18.5,
-    marginRight: 15,
-    marginLeft: 15,
-  },
+const styles = ThemedStyles.create({
+  list: ['flexContainer', 'bgPrimaryBackground'],
+  listContainer: ['bgPrimaryBackground', 'paddingBottom3x'],
+  container: ['flexContainer', 'bgPrimaryBackground'],
+  touchableStyles: [
+    'rowJustifyStart',
+    'borderTopHair',
+    'borderBottomHair',
+    'bcolorPrimaryBorder',
+    'paddingTop2x',
+    'paddingBottom2x',
+    'alignCenter',
+  ],
+  replay: ['fontL', 'colorSecondaryText'],
+  headerCommentContainer: [
+    'bcolorPrimaryBorder',
+    'bgSecondaryBackground',
+    {
+      borderTopWidth: StyleSheet.hairlineWidth,
+      overflow: 'scroll',
+    },
+  ],
+  avatar: [
+    {
+      height: 37,
+      width: 37,
+      borderRadius: 18.5,
+      marginRight: 15,
+      marginLeft: 15,
+    },
+  ],
 });
+
+const keyExtractor = item => item.guid;
 
 export default observer(CommentList);

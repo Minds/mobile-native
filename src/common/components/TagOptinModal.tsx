@@ -1,12 +1,13 @@
 //@ts-nocheck
 import React, { Component } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { inject, observer } from 'mobx-react';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import Modal from 'react-native-modal';
 import TagSelect from './TagSelect';
 import TagInput from './TagInput';
 import i18n from '../services/i18n.service';
+import MText from './MText';
 
 /**
  * Tag Opt in Modal
@@ -46,7 +47,7 @@ export default class TagOptinModal extends Component {
         onBackdropPress={this.dismissModal}>
         <View style={styles.modalView}>
           <View style={styles.modalHeader}>
-            <Text style={styles.modalTitle}>{i18n.t('hashtags.title')}</Text>
+            <MText style={styles.modalTitle}>{i18n.t('hashtags.title')}</MText>
             <IonIcon
               style={styles.modalCloseIcon}
               size={28}

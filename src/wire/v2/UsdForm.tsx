@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react';
 import { observer } from 'mobx-react';
-import { View, StyleSheet, Text, ScrollView } from 'react-native';
-import Input from '../../common/components/Input';
+import { View, ScrollView } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import type { FabScreenStore } from './FabScreen';
 import LabeledComponent from '../../common/components/LabeledComponent';
 import { CheckBox } from 'react-native-elements';
 import StripeCardSelector from '../methods/StripeCardSelector';
+import { styles } from './TokensForm';
+import InputContainer from '../../common/components/InputContainer';
+import MText from '../../common/components/MText';
 
 type propsType = {
   store: FabScreenStore;
@@ -21,67 +23,51 @@ const UsdForm = observer(({ store }: propsType) => {
 
   return (
     <View>
-      <Input
+      <InputContainer
+        containerStyle={styles.inputContainer}
         labelStyle={styles.label}
-        style={[theme.marginBottom2x, styles.input]}
+        style={styles.inputText}
         placeholder={'USD'}
         onChangeText={store.setAmount}
         value={store.amount.toString()}
-        testID="fabTokensInput"
         keyboardType="decimal-pad"
+        testID="fabTokensInput"
       />
+      <View style={theme.paddingHorizontal4x}>
+        <LabeledComponent
+          label="Select Card"
+          wrapperStyle={theme.marginBottom4x}>
+          <ScrollView contentContainerStyle={scrollviewStyle}>
+            <StripeCardSelector onCardSelected={store.setCard} />
+          </ScrollView>
+        </LabeledComponent>
 
-      <LabeledComponent label="Select Card" wrapperStyle={theme.marginBottom4x}>
-        <ScrollView
-          contentContainerStyle={[
-            theme.paddingLeft2x,
-            theme.paddingRight2x,
-            theme.columnAlignCenter,
-            theme.alignCenter,
-            theme.flexContainer,
-            theme.paddingTop2x,
-          ]}>
-          <StripeCardSelector onCardSelected={store.setCard} />
-        </ScrollView>
-      </LabeledComponent>
-
-      <LabeledComponent label="Repeat Payment Monthly">
-        <CheckBox
-          containerStyle={[theme.checkbox, styles.checkbox]}
-          title={
-            <Text
-              style={[
-                theme.colorPrimaryText,
-                theme.fontMedium,
-                theme.paddingLeft,
-                theme.fontL,
-              ]}>
-              Repeat ?
-            </Text>
-          }
-          checked={store.wire.recurring}
-          onPress={store.setRepeat}
-        />
-      </LabeledComponent>
+        <LabeledComponent label="Repeat Payment Monthly">
+          <CheckBox
+            containerStyle={[theme.checkbox, styles.checkbox]}
+            title={<MText style={textStyle}>Repeat ?</MText>}
+            checked={store.wire.recurring}
+            onPress={store.setRepeat}
+          />
+        </LabeledComponent>
+      </View>
     </View>
   );
 });
 
-const styles = StyleSheet.create({
-  label: {
-    fontSize: 16,
-    marginBottom: 10,
-  },
-  input: {
-    height: 30,
-    padding: 0,
-    paddingLeft: 10,
-  },
-  checkbox: {
-    marginRight: 0,
-    marginTop: 0,
-    paddingTop: 0,
-  },
-});
+const scrollviewStyle = ThemedStyles.combine(
+  'paddingHorizontal2x',
+  'columnAlignCenter',
+  'alignCenter',
+  'flexContainer',
+  'paddingTop2x',
+);
+
+const textStyle = ThemedStyles.combine(
+  'colorPrimaryText',
+  'fontMedium',
+  'paddingLeft',
+  'fontL',
+);
 
 export default UsdForm;

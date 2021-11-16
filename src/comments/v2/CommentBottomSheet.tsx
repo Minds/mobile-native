@@ -1,9 +1,5 @@
-import React, { forwardRef } from 'react';
-import BottomSheet, { BottomSheetBackgroundProps } from '@gorhom/bottom-sheet';
-import { Dimensions, View } from 'react-native';
-
+import React, { forwardRef, useCallback } from 'react';
 import ThemedStyles from '../../styles/ThemedStyles';
-import Handle from './Handle';
 import CommentList from './CommentList';
 import CommentsStore from './CommentsStore';
 import {
@@ -14,9 +10,9 @@ import {
 import { useRoute } from '@react-navigation/native';
 import CommentInput from './CommentInput';
 import { useLocalStore } from 'mobx-react';
-import { GOOGLE_PLAY_STORE } from '../../config/Config';
-
-import Backdrop from '../../common/components/bottom-sheet/Backdrop';
+import Handle from '../../common/components/bottom-sheet/Handle';
+import BottomSheet from '~/common/components/bottom-sheet/BottomSheet';
+import { useBackHandler } from '@react-native-community/hooks';
 
 const BottomSheetLocalStore = ({ onChange }) => ({
   isOpen: 0,
@@ -28,29 +24,25 @@ const BottomSheetLocalStore = ({ onChange }) => ({
   },
 });
 
-const { height: windowHeight } = Dimensions.get('window');
-
-const snapPoints = [-150, windowHeight * 0.85];
-
-/**
- * Custom background
- * (fixes visual issues on Android dark mode)
- */
-const CustomBackground = ({ style }: BottomSheetBackgroundProps) => {
-  return <View style={style} />;
-};
+const snapPoints = ['85%'];
 
 type PropsType = {
   commentsStore: CommentsStore;
   hideContent: boolean;
+  autoOpen?: boolean; // auto opens the bottom sheet when the component mounts
   title?: string;
   onChange?: (isOpen: number) => void;
 };
 
 const Stack = createStackNavigator();
 
-const ScreenReplyComment = () => {
+const ScreenReplyComment = ({ navigation }) => {
   const route = useRoute<any>();
+
+  useBackHandler(() => {
+    navigation.goBack();
+    return true;
+  });
   const store = React.useMemo(() => {
     const s = new CommentsStore(route.params.entity);
     s.setParent(route.params.comment);
@@ -70,17 +62,15 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
     onChange: props.onChange,
   });
   const { current: focusedUrn } = React.useRef(
-    props.commentsStore.getFocuedUrn(),
+    props.commentsStore.getFocusedUrn(),
   );
   const route = useRoute<any>();
 
   React.useEffect(() => {
     if (
-      !GOOGLE_PLAY_STORE &&
-      ((props.commentsStore.parent &&
+      (props.commentsStore.parent &&
         props.commentsStore.parent['comments:count'] === 0) ||
-        (route.params.open &&
-          props.commentsStore.entity['comments:count'] === 0))
+      (route.params.open && props.commentsStore.entity['comments:count'] === 0)
     ) {
       setTimeout(() => {
         if (props?.commentsStore) {
@@ -107,26 +97,23 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
   );
 
   // renders
-  const renderBackdrop = React.useCallback(
-    props =>
-      localStore.isOpen ? (
-        <Backdrop {...props} pressBehavior="collapse" />
-      ) : null,
-    [localStore],
+
+  const renderHandle = useCallback(
+    () => <Handle style={ThemedStyles.style.bgPrimaryBackground} />,
+    [],
   );
 
   return [
     <BottomSheet
+      key="commentSheet"
       ref={ref}
-      index={0}
+      index={props.autoOpen ? 0 : -1}
       onChange={localStore.setOpen}
-      containerHeight={windowHeight + 10}
       snapPoints={snapPoints}
-      handleComponent={Handle}
-      backgroundComponent={CustomBackground}
-      backdropComponent={renderBackdrop}>
+      enableContentPanningGesture={true}
+      handleComponent={renderHandle}>
       {!props.hideContent && ( // we disable the navigator until the screen is focused (for the post swiper)
-        <Stack.Navigator screenOptions={screenOptions} headerMode="none">
+        <Stack.Navigator screenOptions={screenOptions}>
           <Stack.Screen
             name="Comments"
             component={ScreenComment}
@@ -142,7 +129,7 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
         </Stack.Navigator>
       )}
     </BottomSheet>,
-    <CommentInput />,
+    <CommentInput key="commentInput" />,
   ];
 };
 

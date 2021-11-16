@@ -1,51 +1,55 @@
-import React, { useCallback } from 'react';
-import { Pressable } from 'react-native';
-import { View as MotiView, useAnimationState } from 'moti';
+import React, { useCallback, useRef } from 'react';
+import { Pressable, Animated } from 'react-native';
 
 export default function PressableScale(props) {
-  // console.log(pressed)
   const { children, onPressIn, onPressOut, style, ...otherProps } = props;
 
-  const scaleIn = useAnimationState({
-    from: {
-      scale: 0.8,
-      opacity: 0.7,
-    },
-    to: {
-      scale: 1,
-      opacity: 1,
-    },
-  });
+  const scaleAnimation = useRef(new Animated.Value(1)).current;
 
   const onPressInCb = useCallback(
     e => {
-      scaleIn.transitionTo('from');
-      if (onPressIn) onPressIn(e);
+      Animated.timing(scaleAnimation, {
+        toValue: 0.84,
+        duration: 125,
+        useNativeDriver: true,
+      }).start();
+
+      if (onPressIn) {
+        onPressIn(e);
+      }
     },
-    [onPressIn, scaleIn],
+    [onPressIn, scaleAnimation],
   );
 
   const onPressOutCb = useCallback(
     e => {
-      scaleIn.transitionTo('to');
-      if (onPressOut) onPressOut(e);
+      Animated.spring(scaleAnimation, {
+        toValue: 1,
+        mass: 1.3,
+        damping: 20,
+        stiffness: 800,
+        useNativeDriver: true,
+      }).start();
+
+      if (onPressOut) {
+        onPressOut(e);
+      }
     },
-    [onPressOut, scaleIn],
+    [onPressOut, scaleAnimation],
   );
 
   return (
     <Pressable
+      style={style}
       onPressIn={onPressInCb}
       onPressOut={onPressOutCb}
       {...otherProps}>
-      <MotiView
-        state={scaleIn}
-        style={style}
-        transition={{
-          type: 'timing',
+      <Animated.View
+        style={{
+          transform: [{ scale: scaleAnimation }],
         }}>
         {children}
-      </MotiView>
+      </Animated.View>
     </Pressable>
   );
 }

@@ -2,7 +2,7 @@ import type Web3 from 'web3/types';
 import { Contract } from 'web3-eth-contract';
 
 import logService from '../../../common/services/log.service';
-import mindsService from '../../../common/services/minds.service';
+import mindsConfigService from '../../../common/services/minds-config.service';
 import type { WCStore } from '../walletconnect/WalletConnectContext';
 
 export type TransactionResponse = { transactionHash: string };
@@ -66,7 +66,7 @@ export default abstract class ContractServiceAbstract {
 
     const nonce = await this.web3.eth.getTransactionCount(from);
 
-    const settings = (await mindsService.getSettings()).blockchain;
+    const settings = mindsConfigService.getSettings().blockchain;
 
     const gasPriceGwei = settings.default_gas_price || 200;
 
@@ -115,7 +115,7 @@ export default abstract class ContractServiceAbstract {
   static async getContractConfig(
     contract: ContractName,
   ): Promise<{ abi: any; address: string }> {
-    const settings = (await mindsService.getSettings()).blockchain;
+    const settings = mindsConfigService.getSettings().blockchain;
     return settings[contract];
   }
 
@@ -130,7 +130,7 @@ export default abstract class ContractServiceAbstract {
 
     const nonce = await this.web3.eth.getTransactionCount(from);
 
-    const settings = (await mindsService.getSettings()).blockchain;
+    const settings = mindsConfigService.getSettings().blockchain;
 
     const gasPrice =
       (settings && settings.default_gas_price

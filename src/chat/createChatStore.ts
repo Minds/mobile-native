@@ -4,7 +4,7 @@ import { showNotification } from '../../AppMessages';
 import apiService from '../common/services/api.service';
 import i18nService from '../common/services/i18n.service';
 import logService from '../common/services/log.service';
-import mindsService from '../common/services/minds.service';
+import mindsService from '../common/services/minds-config.service';
 import { ANDROID_CHAT_APP } from '../config/Config';
 
 const createChatStore = () => ({
@@ -13,13 +13,24 @@ const createChatStore = () => ({
   inProgress: false,
   createInProgress: false,
   polling: 0,
+  // hasSeenModal: false,
   async checkAppInstalled(openStore = true) {
     try {
-      const installed = await SendIntentAndroid.isAppInstalled(
-        ANDROID_CHAT_APP,
-      );
-      if (!installed && openStore) {
-        Linking.openURL('market://details?id=com.minds.chat');
+      let installed = false;
+      if (Platform.OS === 'android') {
+        installed = await SendIntentAndroid.isAppInstalled(ANDROID_CHAT_APP);
+        if (!installed && openStore) {
+          Linking.openURL('market://details?id=com.minds.chat');
+        }
+      } else {
+        try {
+          installed = await Linking.canOpenURL('mindschat:mindschat');
+        } catch (error) {}
+        if (!installed && openStore) {
+          Linking.openURL(
+            'https://itunes.apple.com/us/app/keynote/id1562887434?mt=8',
+          );
+        }
       }
       return installed;
     } catch (error) {
@@ -29,11 +40,9 @@ const createChatStore = () => ({
     }
   },
   async openChat() {
-    if (Platform.OS === 'android') {
-      const installed = await this.checkAppInstalled();
-      if (!installed) {
-        return;
-      }
+    const installed = await this.checkAppInstalled();
+    if (!installed) {
+      return;
     }
     if (this.chatUrl) {
       if (Platform.OS === 'ios') {
@@ -45,7 +54,7 @@ const createChatStore = () => ({
   },
   async init() {
     this.loadCount();
-    const chatUrl = (await mindsService.getSettings()).matrix?.chat_url;
+    const chatUrl = mindsService.getSettings().matrix?.chat_url;
     if (chatUrl) {
       this.chatUrl = chatUrl;
     }

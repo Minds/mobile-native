@@ -15,7 +15,7 @@ exports[`Notifications component renders correctly 1`] = `
         "borderBottomWidth": 0.5,
       },
       Object {
-        "borderColor": "#D3DBE3",
+        "borderColor": "#414C57",
       },
     ]
   }
@@ -74,7 +74,7 @@ exports[`Notifications component renders correctly 1`] = `
         }
       }
     >
-      <Text
+      <MText
         style={
           Array [
             Object {
@@ -85,7 +85,7 @@ exports[`Notifications component renders correctly 1`] = `
               "fontWeight": "400",
             },
             Object {
-              "color": "#72727C",
+              "color": "#B8C1CA",
             },
           ]
         }
@@ -323,9 +323,8 @@ exports[`Notifications component renders correctly 1`] = `
             }
           }
         />
-        You earned 0.332 tokens yesterday. Nice job!
          
-      </Text>
+      </MText>
     </View>
     <View
       style={
@@ -337,7 +336,7 @@ exports[`Notifications component renders correctly 1`] = `
         }
       }
     >
-      <Text
+      <MText
         style={
           Array [
             Object {
@@ -348,13 +347,13 @@ exports[`Notifications component renders correctly 1`] = `
               "fontWeight": "400",
             },
             Object {
-              "color": "#72727C",
+              "color": "#B8C1CA",
             },
           ]
         }
       >
         1w
-      </Text>
+      </MText>
     </View>
   </View>
   <Memo()

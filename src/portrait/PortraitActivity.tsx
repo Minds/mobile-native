@@ -5,10 +5,9 @@ import {
   Platform,
   TouchableOpacity,
   useWindowDimensions,
-  Text,
 } from 'react-native';
 import { useDimensions } from '@react-native-community/hooks';
-import { RouteProp, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { useFocus } from '@msantang78/react-native-pager';
 import { observer, useLocalStore } from 'mobx-react';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -30,14 +29,11 @@ import videoPlayerService from '../common/services/video-player.service';
 import ExplicitOverlay from '../common/components/explicit/ExplicitOverlay';
 
 import LockV2 from '../wire/v2/lock/Lock';
-import { AppStackParamList } from '../navigation/NavigationTypes';
 import CommentBottomSheet from '../comments/v2/CommentBottomSheet';
 import BoxShadow from '../common/components/BoxShadow';
-import formatDate from '../common/helpers/date';
-import i18nService from '../common/services/i18n.service';
+import i18n from '../common/services/i18n.service';
 import { withErrorBoundary } from '../common/components/ErrorBoundary';
-
-type ActivityRoute = RouteProp<AppStackParamList, 'Activity'>;
+import MText from '../common/components/MText';
 
 type PropsType = {
   entity: ActivityModel;
@@ -141,7 +137,7 @@ const PortraitActivity = observer((props: PropsType) => {
         <FloatingBackButton
           size={35}
           onPress={navigation.goBack}
-          style={[theme.colorPrimaryText, styles.backButton]}
+          style={styles.backButton}
         />
       }
       rightToolbar={
@@ -150,17 +146,17 @@ const PortraitActivity = observer((props: PropsType) => {
         </View>
       }>
       <View style={theme.rowJustifyStart}>
-        <Text
+        <MText
           numberOfLines={1}
           style={[theme.fontM, theme.colorSecondaryText, theme.paddingRight]}>
-          {formatDate(entity.time_created, 'friendly')}
+          {i18n.date(parseInt(entity.time_created, 10) * 1000, 'friendly')}
           {!!entity.edited && (
-            <Text style={[theme.fontS, theme.colorSecondaryText]}>
+            <MText style={[theme.fontS, theme.colorSecondaryText]}>
               {' '}
-              · {i18nService.t('edited').toUpperCase()}
-            </Text>
+              · {i18n.t('edited').toUpperCase()}
+            </MText>
           )}
-        </Text>
+        </MText>
       </View>
     </OwnerBlock>
   );

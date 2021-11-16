@@ -1,5 +1,6 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import MText from '../../../../common/components/MText';
 import i18n from '../../../../common/services/i18n.service';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 import { WalletStoreType } from '../../../v2/createWalletStore';
@@ -24,8 +25,8 @@ const PaidInfo = ({ walletStore }: PropsType) => {
     <View style={styles.container}>
       <ScrollView>
         <View style={viewPadding}>
-          <Text style={titleStyle}>{i18n.t('wallet.unpaidEarnings')}</Text>
-          <Text style={earningStyle}>${unpaidEarnings}</Text>
+          <MText style={titleStyle}>{i18n.t('wallet.unpaidEarnings')}</MText>
+          <MText style={earningStyle}>${unpaidEarnings}</MText>
         </View>
         <View
           style={[
@@ -34,11 +35,11 @@ const PaidInfo = ({ walletStore }: PropsType) => {
             theme.marginTop3x,
             ...viewPadding,
           ]}>
-          <Text style={titleStyle}>{i18n.t('wallet.totalPaidout')}</Text>
-          <Text style={earningStyle}>${totalPaidOuts}</Text>
+          <MText style={titleStyle}>{i18n.t('wallet.totalPaidout')}</MText>
+          <MText style={earningStyle}>${totalPaidOuts}</MText>
 
-          <Text style={titleStyle}>{i18n.t('wallet.alltime')}</Text>
-          <Text style={earningStyle}>${allTimeEarnings}</Text>
+          <MText style={titleStyle}>{i18n.t('wallet.alltime')}</MText>
+          <MText style={earningStyle}>${allTimeEarnings}</MText>
         </View>
       </ScrollView>
     </View>

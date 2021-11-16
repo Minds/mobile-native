@@ -15,7 +15,18 @@ global.XMLHttpRequest = XMLHttpRequest;
 
 configure({ adapter: new Adapter() });
 
+jest.mock('react-native-reanimated', () =>
+  require('react-native-reanimated/mock'),
+);
+
+jest.mock('./src/common/services/analytics.service');
+jest.mock('./src/newsfeed/NewsfeedService');
+
 jest.mock('react-native-localize');
+// jest.mock('react-native-device-info', () =>
+//   require('./node_modules/react-native-device-info/jest/react-native-device-info-mock'),
+// );
+// jest.mock('@snowplow/react-native-tracker');
 // jest.mock('mobx-react', () => require('mobx-react/custom'));
 
 jest.mock('./AppStores');

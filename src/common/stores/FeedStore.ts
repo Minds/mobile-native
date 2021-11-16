@@ -89,9 +89,17 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   /**
    * Add an entity to the viewed list and inform to the backend
    * @param {BaseModel} entity
+   * @param {string} medium
    */
-  async addViewed(entity) {
-    return await this.viewed.addViewed(entity, this.metadataService);
+  addViewed(entity, medium?: string, position?: number) {
+    return this.metadataService
+      ? this.viewed.addViewed(
+          entity,
+          this.metadataService as MetadataService,
+          medium,
+          position,
+        )
+      : Promise.resolve();
   }
 
   /**
@@ -110,13 +118,15 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   @action
   addEntities(entities, replace = false) {
     if (replace) {
-      entities.forEach(entity => {
+      entities.forEach((entity, index) => {
         entity._list = this;
+        entity.position = index + 1;
       });
       this.entities = entities;
     } else {
       entities.forEach(entity => {
         entity._list = this;
+        entity.position = this.entities.length + 1;
         this.entities.push(entity);
       });
 
@@ -324,14 +334,19 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
    * Fetch from the endpoint
    */
   @action
-  async fetch() {
+  async fetch(local: boolean = false, replace?: boolean) {
     this.setLoading(true).setErrorLoading(false);
 
     const endpoint = this.feedsService.endpoint;
     const params = this.feedsService.params;
 
     try {
-      await this.feedsService.fetch();
+      if (local) {
+        await this.feedsService.fetchLocal();
+      } else {
+        await this.feedsService.fetch();
+      }
+
       const entities = await this.feedsService.getEntities();
 
       // if the endpoint or the params are changed we ignore the result
@@ -341,7 +356,7 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
       )
         return;
 
-      this.addEntities(entities);
+      this.addEntities(entities, replace);
     } catch (err) {
       // ignore aborts
       if (err.code === 'Abort') return;
@@ -440,6 +455,52 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   }
 
   /**
+   * Fetch from remote endpoint or from the local storage if it fails
+   * @param {boolean} refresh
+   */
+  async fetchLocalThenRemote(refresh = false) {
+    this.setLoading(true).setErrorLoading(false);
+
+    const endpoint = this.feedsService.endpoint;
+    const params = this.feedsService.params;
+
+    try {
+      await this.feedsService.fetchLocal();
+      if (refresh) this.setOffset(0);
+      const localEntities = await this.feedsService.getEntities();
+
+      // if the endpoint or the params are changed we ignore the result
+      if (
+        endpoint !== this.feedsService.endpoint ||
+        params !== this.feedsService.params
+      )
+        return;
+
+      if (refresh) this.clear();
+      this.addEntities(localEntities);
+
+      await this.feedsService.fetch();
+      const remoteEntities = await this.feedsService.getEntities();
+
+      if (
+        endpoint !== this.feedsService.endpoint ||
+        params !== this.feedsService.params
+      )
+        return;
+      this.clear();
+      this.addEntities(remoteEntities);
+    } catch (err) {
+      // ignore aborts
+      if (err.code === 'Abort') return;
+      console.log(err);
+      logService.exception('[FeedStore]', err);
+      if (this.entities.length === 0) this.setErrorLoading(true);
+    } finally {
+      this.setLoading(false);
+    }
+  }
+
+  /**
    * Load next page
    */
   loadMore = async () => {
@@ -499,6 +560,7 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
     this.loading = false;
     this.entities = [];
     this.feedsService.setOffset(0);
+    this.viewed.clearViewed();
     return this;
   }
 

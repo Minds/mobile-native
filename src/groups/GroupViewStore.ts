@@ -21,6 +21,7 @@ class GroupViewStore {
    * Top members (used to display avatars on top)
    */
   @observable topMembers = [];
+  @observable showPosterFab = true;
 
   /**
    * List Members
@@ -73,6 +74,13 @@ class GroupViewStore {
 
   constructor() {
     this.feed.getMetadataService().setSource('feed/groups').setMedium('feed');
+  }
+
+  /**
+   * Show/hide poster fab
+   */
+  setShowPosterFab(value: boolean) {
+    this.showPosterFab = value;
   }
 
   /**
@@ -340,11 +348,11 @@ class GroupViewStore {
    */
   @action
   setGroup(group) {
-    this.group = GroupModel.checkOrCreate(group);
-    this.setGuid(group.guid);
     if (!this.comments) {
       this.comments = new CommentsStore(group);
     }
+    this.group = GroupModel.checkOrCreate(group);
+    this.setGuid(group.guid);
   }
 
   /**

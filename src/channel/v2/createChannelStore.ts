@@ -47,6 +47,7 @@ const createChannelStore = () => {
     tab: 'feed' as ChannelTabType,
     channel: null as UserModel | null,
     loaded: false,
+    showPosterFab: true,
     tiers: <Array<SupportTiersType>>[],
     filter: 'all' as FilterType,
     feedStore: new FeedStore(true),
@@ -76,6 +77,9 @@ const createChannelStore = () => {
           return 'blogs';
       }
     },
+    setShowPosterFab(value: boolean) {
+      this.showPosterFab = value;
+    },
     setTab(value: ChannelTabType) {
       this.tab = value;
     },
@@ -96,13 +100,14 @@ const createChannelStore = () => {
           NavigationService.goBack();
           showNotification(i18n.t('nsfw.notSafeChannel'));
         }
-        this.loadFromEntity(params.entity);
+        await this.loadFromEntity(params.entity);
         this.tiers =
           (await supportTiersService.getAllFromGuid(params.entity.guid)) || [];
       } else if (params.guid || params.username) {
         //@ts-ignore
-        this.loadFromGuidOrUsername(params.guid || params.username);
+        await this.loadFromGuidOrUsername(params.guid || params.username);
       }
+      this.channel?.sendViewed('single');
     },
     /**
      * Load selected feed
@@ -376,6 +381,8 @@ const createChannelStore = () => {
       );
     },
   };
+
+  store.feedStore.getMetadataService()?.setSource('feed/channel');
   return store;
 };
 

@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { TouchableOpacity, StyleSheet } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 // import ReadMore from 'react-native-read-more-text';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -9,6 +9,7 @@ import i18n from '../../common/services/i18n.service';
 import type UserModel from '../UserModel';
 import ReadMore from '../../common/components/ReadMore';
 import { withErrorBoundary } from '../../common/components/ErrorBoundary';
+import MText from '../../common/components/MText';
 
 type PropsType = {
   channel: UserModel;
@@ -28,11 +29,11 @@ const ChannelDescription = withErrorBoundary((props: PropsType) => {
   const renderRevealedFooter = useCallback(
     handlePress => {
       return (
-        <Text
+        <MText
           style={[theme.fontL, theme.bold, theme.colorLink, theme.marginTop2x]}
           onPress={handlePress}>
           {i18n.t('showLess')}
-        </Text>
+        </MText>
       );
     },
     [theme],
@@ -57,7 +58,7 @@ const ChannelDescription = withErrorBoundary((props: PropsType) => {
       numberOfLines={4}
       text={props.channel.briefdescription}
       renderTruncatedFooter={renderTruncatedFooter}
-      style={[theme.fontL, theme.colorSecondaryText]}
+      style={[theme.fontM, theme.colorSecondaryText]}
       navigation={navigation}
       renderRevealedFooter={renderRevealedFooter}
     />

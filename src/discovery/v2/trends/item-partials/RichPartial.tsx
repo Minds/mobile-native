@@ -1,0 +1,34 @@
+import React from 'react';
+import { View } from 'react-native';
+import RichPartialThumbnail from './RichPartialThumbnail';
+import excerpt from '../../../../common/helpers/excerpt';
+import {
+  DISCOVERY_TRENDING_MAX_LENGTH,
+  styles,
+} from '../DiscoveryTrendsListItem';
+import i18n from '../../../../common/services/i18n.service';
+import MText from '../../../../common/components/MText';
+
+type PropsType = {
+  data: any;
+};
+
+const RichPartial = ({ data }: PropsType) => {
+  const entity = data.entity;
+  return (
+    <View style={styles.container}>
+      <View style={styles.body}>
+        <MText style={styles.title}>
+          {excerpt(data.title, DISCOVERY_TRENDING_MAX_LENGTH)}
+        </MText>
+        <MText style={styles.secondaryInformationBottom}>
+          {data.volume} channels discussing -{' '}
+          {i18n.date(parseInt(entity.time_created, 10) * 1000, 'friendly')}
+        </MText>
+      </View>
+      <RichPartialThumbnail entity={data.entity} />
+    </View>
+  );
+};
+
+export default RichPartial;

@@ -1,4 +1,4 @@
-import { observable, decorate, action } from 'mobx';
+import { observable, decorate } from 'mobx';
 
 import ActivityModel from '../../newsfeed/ActivityModel';
 

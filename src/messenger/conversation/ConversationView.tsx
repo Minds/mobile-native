@@ -1,7 +1,7 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import { Text, Image, TouchableOpacity } from 'react-native';
+import { Image, TouchableOpacity } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import { observer } from 'mobx-react';
@@ -13,6 +13,7 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import { UserError } from '../../common/UserError';
 import i18n from '../../common/services/i18n.service';
 import featuresService from '../../common/services/features.service';
+import MText from '../../common/components/MText';
 
 /**
  * Conversation Component
@@ -79,7 +80,7 @@ export default class ConversationView extends Component {
         onPress={this._navToConversation}
         testID={this.props.testID}>
         <Image source={avatarImg} style={styles.avatar} />
-        <Text style={styles.body}>{item.username.toUpperCase()}</Text>
+        <MText style={styles.body}>{item.username.toUpperCase()}</MText>
         {unread}
         {online}
       </TouchableOpacity>

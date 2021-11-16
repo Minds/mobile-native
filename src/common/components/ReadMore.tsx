@@ -1,6 +1,7 @@
 import React from 'react';
-import { Platform, StyleSheet, Text, TextStyle, View } from 'react-native';
+import { Platform, StyleSheet, TextStyle, View } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
+import MText from './MText';
 import Tags from './Tags';
 const VIEW_MORE_HEIGHT = 33;
 
@@ -20,26 +21,26 @@ const MoreLessComponent = ({
   const handlePressReadLess = React.useCallback(() => setMore(false), []);
   return (
     <View>
-      <Text>
+      <MText>
         <Tags navigation={navigation} style={style} selectable={true}>
           {!more ? `${truncatedText}...` : fullText}
         </Tags>
-      </Text>
+      </MText>
       <View style={styles.readMore}>
         {!more ? (
           renderTruncatedFooter ? (
             renderTruncatedFooter(handlePressReadMore)
           ) : (
-            <Text style={buttonStyle} onPress={handlePressReadMore}>
+            <MText style={buttonStyle} onPress={handlePressReadMore}>
               Read more
-            </Text>
+            </MText>
           )
         ) : renderRevealedFooter ? (
           renderRevealedFooter(handlePressReadLess)
         ) : (
-          <Text style={buttonStyle} onPress={handlePressReadLess}>
+          <MText style={buttonStyle} onPress={handlePressReadLess}>
             Hide
-          </Text>
+          </MText>
         )}
       </View>
     </View>
@@ -93,7 +94,7 @@ export default function ReadMore({
     />
   ) : (
     <View>
-      <Text
+      <MText
         numberOfLines={numberOfLines + additional}
         ellipsizeMode={'tail'}
         style={style}
@@ -101,7 +102,7 @@ export default function ReadMore({
         <Tags navigation={navigation} style={style} selectable={true}>
           {text}
         </Tags>
-      </Text>
+      </MText>
     </View>
   );
 }

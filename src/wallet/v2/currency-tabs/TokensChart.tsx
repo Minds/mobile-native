@@ -2,9 +2,10 @@ import { useDimensions } from '@react-native-community/hooks';
 import { observer } from 'mobx-react';
 import moment from 'moment';
 import React from 'react';
-import { Text } from 'react-native';
+import { View } from 'react-native';
 import CenteredLoading from '../../../common/components/CenteredLoading';
 import LineChart from '../../../common/components/charts/LineChart';
+import MText from '../../../common/components/MText';
 import useApiFetch from '../../../common/hooks/useApiFetch';
 import i18n from '../../../common/services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
@@ -33,7 +34,11 @@ const TokensChart = observer(({ timespan }: PropsType) => {
   });
 
   if (store.loading) {
-    return <CenteredLoading />;
+    return (
+      <View style={{ height: width * 0.6 + 70, width }}>
+        <CenteredLoading />
+      </View>
+    );
   }
 
   try {
@@ -44,7 +49,7 @@ const TokensChart = observer(({ timespan }: PropsType) => {
 
   if (store.error || dataError) {
     return (
-      <Text
+      <MText
         style={[
           theme.colorSecondaryText,
           theme.textCenter,
@@ -53,8 +58,8 @@ const TokensChart = observer(({ timespan }: PropsType) => {
         ]}
         onPress={store.fetch}>
         {i18n.t('error') + '\n'}
-        <Text style={theme.colorLink}>{i18n.t('tryAgain')}</Text>
-      </Text>
+        <MText style={theme.colorLink}>{i18n.t('tryAgain')}</MText>
+      </MText>
     );
   }
 

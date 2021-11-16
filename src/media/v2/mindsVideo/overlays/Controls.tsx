@@ -4,13 +4,14 @@ import type { MindsVideoStoreType } from '../createMindsVideoStore';
 import Icon from 'react-native-vector-icons/Ionicons';
 import type ActivityModel from '../../../../newsfeed/ActivityModel';
 import type CommentModel from '../../../../comments/v2/CommentModel';
-import { View, TouchableWithoutFeedback, Text } from 'react-native';
+import { View, TouchableWithoutFeedback } from 'react-native';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 import withPreventDoubleTap from '../../../../common/components/PreventDoubleTap';
 import ProgressBar from '../ProgressBar';
 import { styles, iconSize, iconResSize, playSize } from './styles';
 // workaround to fix tooltips on android
 import Tooltip from 'rne-modal-tooltip';
+import MText from '../../../../common/components/MText';
 
 type PropsType = {
   entity?: ActivityModel | CommentModel;
@@ -37,7 +38,7 @@ const SourceSelector = ({ localStore }: SourceSelectorPropsType) => {
   return (
     <View>
       {localStore.sources.map((s, i) => (
-        <Text
+        <MText
           style={[
             theme.colorWhite,
             theme.fontL,
@@ -46,7 +47,7 @@ const SourceSelector = ({ localStore }: SourceSelectorPropsType) => {
           ]}
           onPress={() => localStore.setSource(i)}>
           {s.size}p
-        </Text>
+        </MText>
       ))}
     </View>
   );

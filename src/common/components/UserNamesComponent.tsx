@@ -1,13 +1,14 @@
 import React, { FunctionComponent } from 'react';
+import { View } from 'react-native';
+import { observer } from 'mobx-react';
+import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import ThemedStyles from '../../styles/ThemedStyles';
 import { ChannelStoreType } from '../../channel/v2/createChannelStore';
-import { observer } from 'mobx-react';
-import { View, Text, StyleSheet } from 'react-native';
 import ChannelBadges from '../../channel/badges/ChannelBadges';
 import UserStore from '../../auth/UserStore';
 import type UserModel from '../../channel/UserModel';
-import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MText from './MText';
 
 type propsType = {
   store?: ChannelStoreType | UserStore;
@@ -28,48 +29,37 @@ const UserNamesComponent: FunctionComponent<propsType> = observer(
 
     return (
       <View>
-        <View
-          style={[
-            theme.rowJustifyCenter,
-            theme.alignCenter,
-            theme.paddingTop8x,
-          ]}>
+        <View style={styles.container}>
           {pay && (
-            <View style={[theme.rowStretch, theme.centered]}>
-              <Text style={[theme.bold, theme.fontXL]}>Tip</Text>
+            <View style={styles.payContainer}>
+              <MText style={[theme.bold, theme.fontXL]}>Tip</MText>
               <MIcon size={30} name="menu-right" color="#95C064" />
             </View>
           )}
-          <Text style={styles.name} numberOfLines={1}>
+          <MText style={styles.name} numberOfLines={1}>
             {channel.name}
-          </Text>
-          <ChannelBadges
-            channel={channel}
-            size={22}
-            iconStyle={theme.colorLink}
-          />
+          </MText>
+          <ChannelBadges channel={channel} />
         </View>
-        <Text
-          style={[
-            styles.username,
-            theme.colorSecondaryText,
-            theme.paddingTop2x,
-            theme.paddingBottom3x,
-          ]}
-          numberOfLines={1}>
+        <MText style={styles.username} numberOfLines={1}>
           @{channel.username}
-        </Text>
+        </MText>
       </View>
     );
   },
 );
 
-const styles = StyleSheet.create({
-  username: {
-    fontSize: 16,
-    width: '100%',
-    textAlign: 'center',
-  },
+const styles = ThemedStyles.create({
+  container: ['rowJustifyCenter', 'alignCenter', 'paddingTop8x', 'flexWrap'],
+  payContainer: ['rowStretch', 'centered'],
+  username: [
+    'colorSecondaryText',
+    'paddingTop2x',
+    'paddingBottom3x',
+    'fontL',
+    'fullWidth',
+    'textCenter',
+  ],
   name: {
     fontSize: 22,
     fontWeight: '600',

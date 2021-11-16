@@ -1,17 +1,18 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { ScrollView, StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import CountrySelector from '../../../../common/components/CountrySelector';
 import MenuItem from '../../../../common/components/menus/MenuItem';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 import SettingInput from '../../../../common/components/SettingInput';
-import PhoneInput from 'react-native-phone-input';
 import i18n from '../../../../common/services/i18n.service';
 import { BankInfoStore } from './createBankInfoStore';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import KeyboardSpacingView from '../../../../common/components/KeyboardSpacingView';
 import DismissKeyboard from '../../../../common/components/DismissKeyboard';
+import PhoneInput from 'react-native-phone-number-input';
+import MText from '../../../../common/components/MText';
 
 type PropsType = {
   localStore: BankInfoStore;
@@ -28,7 +29,7 @@ const CashOnboarding = observer(
 
     return (
       <DismissKeyboard>
-        <KeyboardAwareScrollView keyboardShouldPersistTaps={true}>
+        <KeyboardAwareScrollView keyboardShouldPersistTaps="always">
           <KeyboardSpacingView>
             <CountrySelector
               onlyAllowed="allowedCountriesBankAccount"
@@ -59,25 +60,32 @@ const CashOnboarding = observer(
                 onChangeText={localStore.setDob}
                 value={localStore.dob}
                 testID="firstNameInput"
-                wrapperBorder={theme.borderTop}
+                wrapperBorder={[theme.borderTop, theme.borderBottom]}
                 dateFormat={'ISOString'}
                 inputType={'dateInput'}
               />
             </View>
-            <View style={[theme.bgSecondaryBackground, styles.phoneContainer]}>
-              <Text
+            <View
+              style={[
+                theme.bgSecondaryBackground,
+                styles.phoneContainer,
+                theme.bcolorPrimaryBorder,
+                theme.borderTop,
+                theme.borderBottom,
+              ]}>
+              <MText
                 style={[
                   theme.colorSecondaryText,
                   theme.fontL,
                   theme.marginBottom2x,
                 ]}>
                 {i18n.t('wallet.bank.phoneNumber')}
-              </Text>
+              </MText>
               <PhoneInput
-                style={styles.phoneInput}
-                textStyle={theme.colorPrimaryText}
-                value={localStore.wallet.stripeDetails.phoneNumber}
-                onChangePhoneNumber={localStore.setPhoneNumber}
+                defaultCode="US"
+                onChangeFormattedText={localStore.setPhoneNumber}
+                placeholder=" "
+                {...phoneInputStyles}
               />
             </View>
             {localStore.isCountry(['HK', 'SG']) && (
@@ -158,6 +166,14 @@ const CashOnboarding = observer(
     );
   },
 );
+
+const phoneInputStyles = ThemedStyles.create({
+  containerStyle: ['bgSecondaryBackground'],
+  textContainerStyle: ['bgSecondaryBackground'],
+  codeTextStyle: ['colorPrimaryText'],
+  textInputStyle: ['colorPrimaryText'],
+  flagButtonStyle: [{ justifyContent: 'flex-start', width: 20 }],
+});
 
 const styles = StyleSheet.create({
   phoneContainer: {

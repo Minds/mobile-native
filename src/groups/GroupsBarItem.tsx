@@ -3,24 +3,18 @@ import React, { Component } from 'react';
 
 import { observer, inject } from 'mobx-react';
 import { showMessage, hideMessage } from 'react-native-flash-message';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-} from 'react-native';
+import { Platform, StyleSheet, View, TouchableOpacity } from 'react-native';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
 
 import { MINDS_CDN_URI } from '../config/Config';
 
-import colors from '../styles/Colors';
 import FastImage from 'react-native-fast-image';
 import PulseAnimAvatar from '../common/components/PulseAnimAvatar';
 import excerpt from '../common/helpers/excerpt';
 import navigationService from '../navigation/NavigationService';
 import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
+import MText from '../common/components/MText';
 
 @inject('groupsBar')
 @observer
@@ -52,12 +46,12 @@ export default class GroupsBarItem extends Component {
       duration: 4000,
       renderCustomContent: () => (
         <View style={[theme.rowJustifySpaceEvenly, theme.marginTop4x]}>
-          <Text style={theme.fontXL} onPress={this.navToGathering}>
+          <MText style={theme.fontXL} onPress={this.navToGathering}>
             {i18n.t('groups.joinGathering')}
-          </Text>
-          <Text style={theme.fontXL} onPress={this.navToGroup}>
+          </MText>
+          <MText style={theme.fontXL} onPress={this.navToGroup}>
             {i18n.t('groups.gotoGroup')}
-          </Text>
+          </MText>
         </View>
       ),
       color: ThemedStyles.getColor('PrimaryText'),
@@ -91,9 +85,9 @@ export default class GroupsBarItem extends Component {
             />
             {group.marker_activity ? <View style={styles.acitivity} /> : null}
           </View>
-          <Text style={[theme.fontXS, theme.marginTop, theme.fontMedium]}>
+          <MText style={[theme.fontXS, theme.marginTop, theme.fontMedium]}>
             {excerpt(group.name, 11)}
-          </Text>
+          </MText>
           {group.marker_conversation ? (
             <FAIcon
               name="circle"
@@ -122,9 +116,9 @@ export default class GroupsBarItem extends Component {
             <View style={[styles.acitivity, theme.bcolorPrimaryBorder]} />
           ) : null}
         </TouchableOpacity>
-        <Text style={[theme.fontXS, theme.marginTop, theme.fontMedium]}>
+        <MText style={[theme.fontXS, theme.marginTop, theme.fontMedium]}>
           {excerpt(group.name, 11)}
-        </Text>
+        </MText>
         {group.marker_conversation ? (
           <FAIcon
             name="circle"

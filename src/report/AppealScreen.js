@@ -1,6 +1,6 @@
 //@ts-nocheck
 import React, { useCallback, useState } from 'react';
-import { Text, Alert, View } from 'react-native';
+import { Alert, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import ThemedStyles from '../styles/ThemedStyles';
@@ -8,6 +8,7 @@ import i18n from '../common/services/i18n.service';
 import Button from '../common/components/Button';
 import reportService from './ReportService';
 import TextInput from '../common/components/TextInput';
+import MText from '../common/components/MText';
 
 export default function ({ route }) {
   const CS = ThemedStyles.style;
@@ -16,7 +17,7 @@ export default function ({ route }) {
   if (!appeal) {
     return (
       <View style={[CS.flexContainer, CS.bgSecondaryBackground, CS.centered]}>
-        <Text>{i18n.t('settings.reportedContent.noAppealData')}</Text>
+        <MText>{i18n.t('settings.reportedContent.noAppealData')}</MText>
       </View>
     );
   }

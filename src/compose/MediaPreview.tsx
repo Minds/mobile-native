@@ -12,8 +12,6 @@ import { ResizeMode } from 'expo-av';
 
 type PropsType = {
   store: any;
-  width: number;
-  height: number;
 };
 
 type VideoSizeType = {
@@ -26,6 +24,15 @@ export default observer(function MediaPreview(props: PropsType) {
 
   const { width } = useDimensions().window;
   const [videoSize, setVideoSize] = useState<VideoSizeType>(null);
+
+  const onVideoLoaded = React.useCallback(e => {
+    if (e.naturalSize.orientation === 'portrait' && Platform.OS === 'ios') {
+      const w = e.naturalSize.width;
+      e.naturalSize.width = e.naturalSize.height;
+      e.naturalSize.height = w;
+    }
+    setVideoSize(e.naturalSize);
+  }, []);
 
   if (!props.store.attachment.hasAttachment) {
     return null;
@@ -45,13 +52,14 @@ export default observer(function MediaPreview(props: PropsType) {
     videoHeight = Math.round(width / aspectRatio);
   }
 
-  const previewStyle = {
-    height: videoHeight,
-    width: width,
+  const previewStyle: any = {
+    height: isImage ? undefined : videoHeight,
+    borderRadius: 10,
+    overflow: 'hidden',
   };
 
   return (
-    <>
+    <View style={previewStyle}>
       {props.store.attachment.uploading && (
         <Progress.Bar
           indeterminate={true}
@@ -64,9 +72,10 @@ export default observer(function MediaPreview(props: PropsType) {
         />
       )}
       {isImage ? (
-        <View>
+        <>
           {!props.store.isEdit && !props.store.portraitMode && (
             <TouchableOpacity
+              testID="AttachmentDeleteButton"
               onPress={() =>
                 props.store.attachment.cancelOrDelete(!props.store.isEdit)
               }
@@ -79,9 +88,9 @@ export default observer(function MediaPreview(props: PropsType) {
             </TouchableOpacity>
           )}
           <ImagePreview image={props.store.mediaToConfirm} />
-        </View>
+        </>
       ) : (
-        <View style={previewStyle}>
+        <>
           {!props.store.isEdit && (
             <TouchableOpacity
               onPress={props.store.attachment.cancelOrDelete}
@@ -96,24 +105,15 @@ export default observer(function MediaPreview(props: PropsType) {
           <MindsVideo
             entity={props.store.entity}
             video={props.store.mediaToConfirm}
+            // @ts-ignore
             containerStyle={previewStyle}
             resizeMode={ResizeMode.CONTAIN}
             autoplay
-            onReadyForDisplay={e => {
-              if (
-                e.naturalSize.orientation === 'portrait' &&
-                Platform.OS === 'ios'
-              ) {
-                const w = e.naturalSize.width;
-                e.naturalSize.width = e.naturalSize.height;
-                e.naturalSize.height = w;
-              }
-              setVideoSize(e.naturalSize);
-            }}
+            onReadyForDisplay={onVideoLoaded}
           />
-        </View>
+        </>
       )}
-    </>
+    </View>
   );
 });
 

@@ -1,88 +1,76 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import type BlogModel from '../../../blogs/BlogModel';
 import type CommentModel from '../../../comments/v2/CommentModel';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import abbrev from '../../helpers/abbrev';
 import i18n from '../../services/i18n.service';
+import MText from '../MText';
 import PressableScale from '../PressableScale';
-import InteractionsModal from './InteractionsModal';
 
 interface PropsType {
   entity: ActivityModel | CommentModel | BlogModel;
+  onShowUpVotesPress: () => void;
+  onShowDownVotesPress: () => void;
+  onShowRemindsPress: () => void;
+  onShowQuotesPress: () => void;
 }
 /**
  * Interactions Bar
  */
-export default observer(function InteractionsBar({ entity }: PropsType) {
-  const modalRef = React.useRef<any>(null);
-  const showUpVotes = React.useCallback(() => {
-    if (modalRef.current) {
-      modalRef.current.show('upVotes');
-    }
-  }, []);
-  const showDownVotes = React.useCallback(() => {
-    if (modalRef.current) {
-      modalRef.current.show('downVotes');
-    }
-  }, []);
-  const showReminds = React.useCallback(() => {
-    if (modalRef.current) {
-      modalRef.current.show('reminds');
-    }
-  }, []);
-  const showQuotes = React.useCallback(() => {
-    if (modalRef.current) {
-      modalRef.current.show('quotes');
-    }
-  }, []);
+export default observer(function InteractionsBar({
+  entity,
+  onShowUpVotesPress,
+  onShowDownVotesPress,
+  onShowRemindsPress,
+  onShowQuotesPress,
+}: PropsType) {
   return (
     <View style={containerStyle}>
-      <InteractionsModal entity={entity} ref={modalRef} />
       {entity['thumbs:up:count'] > 0 && (
-        <PressableScale style={buttonStyle} onPress={showUpVotes}>
-          <Text style={textStyle}>
-            <Text style={countStyle}>
+        <PressableScale style={buttonStyle} onPress={onShowUpVotesPress}>
+          <MText style={textStyle}>
+            <MText style={countStyle}>
               {abbrev(entity['thumbs:up:count'], 0)}
-            </Text>{' '}
+            </MText>{' '}
             {i18n.t('interactions.upVotes', {
               count: entity['thumbs:up:count'],
             })}
-          </Text>
+          </MText>
         </PressableScale>
       )}
       {entity['thumbs:down:count'] > 0 && (
-        <PressableScale style={buttonStyle} onPress={showDownVotes}>
-          <Text style={textStyle}>
-            <Text style={countStyle}>
+        <PressableScale style={buttonStyle} onPress={onShowDownVotesPress}>
+          <MText style={textStyle}>
+            <MText style={countStyle}>
               {abbrev(entity['thumbs:down:count'], 0)}
-            </Text>{' '}
+            </MText>{' '}
             {i18n.t('interactions.downVotes', {
               count: entity['thumbs:down:count'],
             })}
-          </Text>
+          </MText>
         </PressableScale>
       )}
       {entity.reminds > 0 && (
-        <PressableScale style={buttonStyle} onPress={showReminds}>
-          <Text style={textStyle}>
-            <Text style={countStyle}>{abbrev(entity.reminds, 0)}</Text>{' '}
+        <PressableScale style={buttonStyle} onPress={onShowRemindsPress}>
+          <MText style={textStyle}>
+            <MText style={countStyle}>{abbrev(entity.reminds, 0)}</MText>{' '}
             {i18n.t('interactions.reminds', {
               count: entity.reminds,
             })}
-          </Text>
+          </MText>
         </PressableScale>
       )}
       {entity.quotes > 0 && (
-        <PressableScale style={buttonStyle} onPress={showQuotes}>
-          <Text style={textStyle}>
-            <Text style={countStyle}>{abbrev(entity.quotes, 0)}</Text>{' '}
+        <PressableScale style={buttonStyle} onPress={onShowQuotesPress}>
+          <MText style={textStyle}>
+            <MText style={countStyle}>{abbrev(entity.quotes, 0)}</MText>{' '}
             {i18n.t('interactions.quotes', {
               count: entity.quotes,
             })}
-          </Text>
+          </MText>
         </PressableScale>
       )}
     </View>

@@ -107,7 +107,7 @@ export async function getComments(
       response,
     );
   } catch (err) {
-    response = await commentStorageService.read(
+    response = commentStorageService.read(
       entity_guid,
       parent_path,
       descending,

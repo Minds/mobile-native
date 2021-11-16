@@ -5,10 +5,10 @@ import {
 } from './TransactionsListWithdrawalTypes';
 import { Linking, Text, View } from 'react-native';
 import ThemedStyles from '../../../../../styles/ThemedStyles';
-import formatDate from '../../../../../common/helpers/date';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
 import { Tooltip } from 'react-native-elements';
+import i18n from '../../../../../common/services/i18n.service';
 
 /**
  * Individual withdrawal row
@@ -149,7 +149,7 @@ const WithdrawalEntry = ({ withdrawal }: WithdrawalItemPropsType) => {
       <View style={innerColumnStyle}>
         <TransactionAddress address={withdrawal.tx} />
         <Text style={theme.colorSecondaryText}>
-          {formatDate(withdrawal.timestamp, 'date')}
+          {i18n.date(withdrawal.timestamp, 'friendly')}
         </Text>
       </View>
       <View style={innerColumnStyle}>

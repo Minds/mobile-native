@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   View,
   StyleSheet,
   Dimensions,
   TouchableOpacity,
-  Text,
   Platform,
 } from 'react-native';
 import type { TextInput as TextInputType } from 'react-native';
@@ -25,6 +24,8 @@ import preventDoubleTap from '../../common/components/PreventDoubleTap';
 import { DotIndicator } from 'react-native-reanimated-indicators';
 import { CHAR_LIMIT } from '../../config/Config';
 import TextInput from '../../common/components/TextInput';
+import MText from '../../common/components/MText';
+import { useBackHandler } from '@react-native-community/hooks';
 
 const { height } = Dimensions.get('window');
 
@@ -46,6 +47,26 @@ const CommentInput = observer(() => {
   const theme = ThemedStyles.style;
   const ref = React.useRef<TextInputType>(null);
   const provider = React.useContext(CommentInputContext);
+
+  /**
+   * hides the comment input
+   */
+  const hideInput = useCallback(() => provider.store?.setShowInput(false), [
+    provider.store,
+  ]);
+
+  /**
+   * hide the input when back is pressed if it was visible
+   */
+  useBackHandler(
+    useCallback(() => {
+      if (provider.store?.showInput) {
+        hideInput();
+        return true;
+      }
+      return false;
+    }, [hideInput, provider.store?.showInput]),
+  );
 
   React.useEffect(() => {
     if (Platform.OS === 'android') {
@@ -82,7 +103,7 @@ const CommentInput = observer(() => {
           <Touchable
             style={[theme.flexContainer, theme.bgBlack, theme.opacity50]}
             activeOpacity={0.5}
-            onPress={() => provider.store?.setShowInput(false)}
+            onPress={hideInput}
           />
           <MediaPreview attachment={provider.store.attachment} />
           {provider.store.embed.meta && (
@@ -103,13 +124,13 @@ const CommentInput = observer(() => {
                 theme.paddingHorizontal4x,
                 theme.marginBottom2x,
               ]}>
-              <Text style={theme.colorSecondaryText}>
+              <MText style={theme.colorSecondaryText}>
                 {provider.store.edit
                   ? i18n.t('edit')
                   : i18n.t('activity.replyTo', {
                       user: provider.store.parent?.ownerObj.username,
                     })}
-              </Text>
+              </MText>
             </View>
           )}
 
@@ -120,6 +141,7 @@ const CommentInput = observer(() => {
               theme.paddingHorizontal4x,
             ]}>
             <TextInput
+              testID="CommentTextInput"
               ref={ref}
               autoFocus={true}
               multiline={true}
@@ -165,9 +187,9 @@ const CommentInput = observer(() => {
                     beforeSelect={beforeSelect}
                   />
                 </View>
-                <Text style={[theme.fontXS, theme.colorSecondaryText]}>
+                <MText style={[theme.fontXS, theme.colorSecondaryText]}>
                   {provider.store.text.length} / {CHAR_LIMIT}
-                </Text>
+                </MText>
               </View>
             ) : (
               <View>

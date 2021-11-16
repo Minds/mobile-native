@@ -8,26 +8,9 @@ exports[`AnalyticsScreen component should render correctly 1`] = `
     }
   }
 >
-  <Text
-    style={
-      Array [
-        Object {
-          "padding": 20,
-        },
-        Object {
-          "fontFamily": "Roboto",
-          "fontSize": 26,
-          "fontWeight": "500",
-          "lineHeight": 44,
-        },
-        Object {
-          "paddingBottom": 10,
-        },
-      ]
-    }
-  >
-    Analytics
-  </Text>
+  <ScreenHeader
+    title="Analytics"
+  />
   <TopbarTabbar
     current="token"
     onChange={[Function]}

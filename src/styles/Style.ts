@@ -6,16 +6,20 @@ import spacing from './generators/spacing';
 import ThemedStyles from './ThemedStyles';
 import { DynamicStyles } from './types';
 import type { ColorsType } from './Colors';
+import typography from './generators/typography';
 
 const dynamicStyleHandler = {
   get: function (target, name) {
     // if already exist we return it
-    if (name in target) return target[name];
+    if (name in target) {
+      return target[name];
+    }
 
     // generate dynamic style
     const m =
       spacing(name) ||
       colors(name, ThemedStyles) ||
+      typography(name, ThemedStyles) || // it must be after colors because it uses colors inside
       borders(name) ||
       sizes(name);
 
@@ -23,7 +27,10 @@ const dynamicStyleHandler = {
       target[name] = m;
       return target[name];
     }
-    throw new Error(`Style not defined: ${name}`);
+    if (__DEV__) {
+      throw new Error(`Style not defined: ${name}`);
+    }
+    return null;
   },
 };
 
@@ -49,6 +56,9 @@ const _buildStyle = (theme: ColorsType) =>
     flexContainer: {
       flex: 1,
     },
+    flexWrap: {
+      flexWrap: 'wrap',
+    },
     flexContainerCenter: {
       flex: 1,
       justifyContent: 'center',
@@ -63,6 +73,7 @@ const _buildStyle = (theme: ColorsType) =>
     justifyEnd: {
       justifyContent: 'flex-end',
     },
+    absoluteFill: StyleSheet.absoluteFillObject,
     columnAlignCenter: {
       alignItems: 'center',
       flexDirection: 'column',
@@ -135,6 +146,12 @@ const _buildStyle = (theme: ColorsType) =>
       bottom: 0,
       right: 0,
     },
+    positionAbsoluteTop: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+    },
     positionAbsoluteTopLeft: {
       position: 'absolute',
       top: 0,
@@ -143,6 +160,12 @@ const _buildStyle = (theme: ColorsType) =>
     positionAbsoluteTopRight: {
       position: 'absolute',
       top: 0,
+      right: 0,
+    },
+    positionAbsoluteBottom: {
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
       right: 0,
     },
     positionAbsoluteBottomLeft: {
@@ -210,8 +233,14 @@ const _buildStyle = (theme: ColorsType) =>
     halfHeight: {
       height: '50%',
     },
+    // todo: replace by fontBold
     bold: {
       fontWeight: '700',
+      fontFamily: 'Roboto-Black',
+    },
+    fontBold: {
+      fontWeight: '700',
+      fontFamily: 'Roboto-Black',
     },
     extraBold: {
       // fontWeight: '800'

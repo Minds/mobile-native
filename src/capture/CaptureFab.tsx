@@ -1,19 +1,36 @@
-//@ts-nocheck
 import React, { Component } from 'react';
 
 import { observer } from 'mobx-react';
 import { StyleSheet } from 'react-native';
+import { MotiView, AnimatePresence } from 'moti';
 
 import { Icon } from 'react-native-elements';
 import settingsStore from '../settings/SettingsStore';
+import GroupModel from '~/groups/GroupModel';
+
+type PropsType = {
+  group?: GroupModel;
+  visible?: boolean;
+  route: { key: string };
+  navigation: any;
+  testID?: string;
+};
+
+/**
+ * Animated presence container
+ */
+function ShowHide({ children, ...other }) {
+  return (
+    <MotiView {...animation} {...other}>
+      {children}
+    </MotiView>
+  );
+}
 
 @observer
-export default class CaptureFab extends Component {
-  /**
-   * Nav to activity full screen
-   */
+export default class CaptureFab extends Component<PropsType> {
   navToCapture = () => {
-    this.props.navigation.push('Capture', {
+    this.props.navigation.push('Compose', {
       group: this.props.group,
       parentKey: this.props.route.key,
     });
@@ -21,36 +38,64 @@ export default class CaptureFab extends Component {
 
   render() {
     return (
-      <Icon
-        raised
-        reverse
-        name="md-create"
-        type="ionicon"
-        color="#4690DF"
-        size={28}
-        containerStyle={
-          settingsStore.leftHanded ? styles.leftSide : styles.rightSide
-        }
-        onPress={() => this.navToCapture()}
-        testID={this.props.testID}
-      />
+      <AnimatePresence>
+        {this.props.visible && (
+          <ShowHide
+            style={
+              settingsStore.leftHanded ? styles.leftSide : styles.rightSide
+            }>
+            <Icon
+              raised
+              reverse
+              name="edit"
+              type="material"
+              color="#4690DF"
+              size={28}
+              iconProps={iconProps}
+              onPress={() => this.navToCapture()}
+              testID={this.props.testID}
+            />
+          </ShowHide>
+        )}
+      </AnimatePresence>
     );
   }
 }
+
+const iconProps = { size: 23 } as any;
 
 const styles = StyleSheet.create({
   rightSide: {
     position: 'absolute',
     // backgroundColor:'#4690DF',
-    bottom: 8,
+    bottom: 35,
     // zIndex: 1,
     right: 8,
   },
   leftSide: {
     position: 'absolute',
     // backgroundColor:'#4690DF',
-    bottom: 8,
+    bottom: 35,
     zIndex: 1000,
     left: 8,
   },
 });
+
+// Animation definition
+const animation = {
+  from: {
+    opacity: 0,
+    translateY: 70,
+  },
+  transition: {
+    delay: 200,
+  },
+  animate: {
+    opacity: 1,
+    translateY: 0,
+  },
+  exit: {
+    opacity: 0,
+    translateY: 70,
+  },
+};

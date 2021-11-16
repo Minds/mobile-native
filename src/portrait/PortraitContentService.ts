@@ -1,7 +1,5 @@
-import moment from 'moment';
-
-import sqliteStorageProviderService from '../common/services/sqlite-storage-provider.service';
 import logService from '../common/services/log.service';
+import { storages } from '../common/services/storage/storages.service';
 
 /**
  * Portrait content service
@@ -11,13 +9,9 @@ export class PortraitContentService {
    * Mark as seen
    * @param {string} urn
    */
-  async seen(urn: string) {
+  seen(urn: string) {
     try {
-      const db = await sqliteStorageProviderService.get();
-      await db.executeSql(
-        'REPLACE INTO seen_portrait_entities (urn, updated) values (?,?)',
-        [urn, Math.floor(Date.now() / 1000)],
-      );
+      storages.userPortrait?.setInt(urn, Math.floor(Date.now() / 1000));
     } catch (err) {
       logService.exception('[PortraitContentService]', err);
     }
@@ -26,28 +20,20 @@ export class PortraitContentService {
   /**
    * Get the seen urns
    */
-  async getSeen() {
+  async getSeen(): Promise<Map<string, number> | null> {
     try {
-      const db = await sqliteStorageProviderService.get();
+      const urns: any =
+        (await storages.userPortrait?.indexer.numbers.getAll()) || [];
 
-      // It should be ordered to do a binary search
-      const [result] = await db.executeSql<{ urn: string }>(
-        'SELECT urn FROM seen_portrait_entities ORDER BY urn',
-      );
-
-      const rows = result.rows.raw();
-
-      if (!rows) {
-        return null;
+      if (
+        urns &&
+        Array.isArray(urns[0]) &&
+        urns[0][1] < Date.now() / 1000 - 172800
+      ) {
+        this.cleanOld(urns);
       }
 
-      const urns: Array<string> = [];
-
-      rows.forEach((row: { urn: string }) => {
-        return urns.push(row.urn);
-      });
-
-      return urns;
+      return new Map(urns);
     } catch (err) {
       logService.exception('[PortraitContentService]', err);
       return null;
@@ -55,17 +41,16 @@ export class PortraitContentService {
   }
 
   /**
-   * Remove seen_portrait_entities older than given days
-   *
-   * @param {integer} days
+   * Delete old information (older than 48hs)
    */
-  async removeOlderThan(days: number) {
+  async cleanOld(urns: Array<[string, number]>) {
+    const threshold = Date.now() / 1000 - 172800;
     try {
-      const when = moment().subtract(days, 'days');
-      const db = await sqliteStorageProviderService.get();
-      db.executeSql('DELETE FROM seen_portrait_entities WHERE updated < ?', [
-        when.format('X'),
-      ]);
+      urns.forEach(data => {
+        if (data[1] < threshold) {
+          storages.userPortrait?.removeItem(data[0]);
+        }
+      });
     } catch (err) {
       logService.exception('[PortraitContentService]', err);
     }

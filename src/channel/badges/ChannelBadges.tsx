@@ -1,77 +1,94 @@
-import React, { PureComponent } from 'react';
-
-import { StyleSheet, ViewStyle, TextStyle, Falsy } from 'react-native';
-
-import Icon from 'react-native-vector-icons/MaterialIcons';
-
+import React, { FC, PureComponent } from 'react';
+import { IconNext } from '~ui/icons';
 import type UserModel from '../UserModel';
 import ThemedStyles from '../../styles/ThemedStyles';
+import i18n from '../../common/services/i18n.service';
+import { Popable } from 'react-native-popable';
+import { Row, SpacerPropType } from '~ui';
+
+/**
+ * Badge tooltip using Poppable because react-native-elements/Tooltip
+ * doesn't have a way to show the Tooltip on top
+ **/
+const BadgeTooltip: FC<any> = ({ label, color, children }) => {
+  return (
+    <Popable
+      backgroundColor={color}
+      position={'top'}
+      animationType={'spring'}
+      content={label}>
+      {children}
+    </Popable>
+  );
+};
 
 type PropsType = {
   channel: UserModel;
-  size?: number;
-  style?: ViewStyle;
-  iconStyle: TextStyle;
 };
 
 /**
  * Channel Badges
  */
-export default class ChannelBadges extends PureComponent<PropsType> {
+export default class ChannelBadges extends PureComponent<
+  PropsType & SpacerPropType
+> {
   /**
    * Render
    */
   render() {
-    const size = this.props.size || 25;
-    const channel = this.props.channel;
-
+    const { channel, ...spacer } = this.props;
+    const size = 'tiny';
     const badges: Array<React.ReactNode> = [];
-
-    const style = this.props.iconStyle
-      ? [styles.icon, this.props.iconStyle]
-      : styles.icon;
 
     if (channel.plus) {
       badges.push(
-        //@ts-ignore style not defined in types
-        <Icon name="add-circle-outline" size={size} style={style} key={1} />,
+        <BadgeTooltip
+          label={i18n.t('channel.badge.plus')}
+          color={ThemedStyles.getColor('Link')}>
+          <IconNext
+            active
+            name="plus-circle-outline"
+            size={size}
+            horizontal="XXXS"
+            key={1}
+          />
+        </BadgeTooltip>,
       );
     }
 
     if (channel.verified) {
       badges.push(
-        <Icon
-          name="verified-user"
-          size={size}
-          style={[
-            styles.icon,
-            this.props.iconStyle as any,
-            channel.isAdmin() ? ThemedStyles.style.colorGreen : null,
-          ]}
-          key={2}
-        />,
+        <BadgeTooltip
+          label={i18n.t('channel.badge.verified')}
+          color={ThemedStyles.getColor('SuccessBackground')}>
+          <IconNext
+            name="verified"
+            size={size}
+            color={channel.isAdmin() ? 'Green' : undefined}
+            active
+            horizontal="XXXS"
+            key={2}
+          />
+        </BadgeTooltip>,
       );
     }
 
     if (channel.founder) {
       badges.push(
-        //@ts-ignore style not defined in types
-        <Icon name="flight-takeoff" size={size} style={style} key={3} />,
+        <BadgeTooltip
+          label={i18n.t('channel.badge.founder')}
+          color={ThemedStyles.getColor('Link')}>
+          <IconNext
+            horizontal="XXXS"
+            name="founder"
+            active
+            size={size}
+            key={3}
+          />
+        </BadgeTooltip>,
       );
     }
 
-    return <>{badges}</>;
+    return <Row {...spacer}>{badges}</Row>;
   }
 }
-
-const styles = StyleSheet.create({
-  view: {
-    flexDirection: 'row',
-    backgroundColor: 'red',
-    alignItems: 'flex-end',
-  },
-  icon: {
-    marginLeft: 5,
-    alignSelf: 'center',
-  },
-});

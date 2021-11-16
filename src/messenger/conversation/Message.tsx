@@ -2,12 +2,13 @@ import React, { useCallback } from 'react';
 
 import { observer } from 'mobx-react';
 
-import { Text, View, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
-import formatDate from '../../common/helpers/date';
 import Tags from '../../common/components/Tags';
 import ThemedStyles from '../../styles/ThemedStyles';
 import type MessageModel from './MessageModel';
+import i18n from '../../common/services/i18n.service';
+import MText from '../../common/components/MText';
 
 type PropsType = {
   message: MessageModel;
@@ -48,7 +49,7 @@ export default observer(function (props: PropsType) {
               styles.textContainer,
               theme.bgLink,
             ]}>
-            <Text
+            <MText
               selectable={true}
               style={[styles.message, theme.colorWhite]}
               onLongPress={props.message.toggleShowDate}>
@@ -58,7 +59,7 @@ export default observer(function (props: PropsType) {
                 navigation={props.navigation}>
                 {props.message.decryptedMessage}
               </Tags>
-            </Text>
+            </MText>
           </View>
           <TouchableOpacity onPress={navToChannel}>
             <Image
@@ -68,11 +69,13 @@ export default observer(function (props: PropsType) {
           </TouchableOpacity>
         </View>
         {props.message.showDate ? (
-          <Text
+          <MText
             selectable={true}
             style={[styles.messagedate, styles.rightText]}>
-            {formatDate(props.message.time_created)}
-          </Text>
+            {props.message.time_created
+              ? i18n.date(props.message.time_created * 1000)
+              : ''}
+          </MText>
         ) : null}
       </View>
     );
@@ -97,20 +100,20 @@ export default observer(function (props: PropsType) {
             styles.textContainer,
             theme.bgTertiaryBackground,
           ]}>
-          <Text
+          <MText
             selectable={true}
             style={[styles.message]}
             onLongPress={props.message.toggleShowDate}>
             <Tags style={styles.message} navigation={props.navigation}>
               {props.message.decryptedMessage}
             </Tags>
-          </Text>
+          </MText>
         </View>
       </View>
       {props.message.showDate ? (
-        <Text selectable={true} style={styles.messagedate}>
-          {formatDate(props.message.time_created)}
-        </Text>
+        <MText selectable={true} style={styles.messagedate}>
+          {i18n.date(props.message.time_created)}
+        </MText>
       ) : null}
     </View>
   );

@@ -1,12 +1,13 @@
 import { observer } from 'mobx-react';
 import React from 'react';
 
-import { View, Text, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, KeyboardAvoidingView, Platform } from 'react-native';
 import ActivityModel from '../newsfeed/ActivityModel';
 import ThemedStyles from '../styles/ThemedStyles';
 import { useNavigation } from '@react-navigation/native';
 import { AppStackParamList } from '../navigation/NavigationTypes';
-import { NativeStackNavigationProp } from 'react-native-screens/native-stack';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import MText from '../common/components/MText';
 
 type Props = {
   entity: ActivityModel;
@@ -27,7 +28,7 @@ export const CommentsEntityOutlet = observer((props: Props) => {
 
   const ViewCommentsButton = () => {
     return (
-      <Text
+      <MText
         style={[
           ThemedStyles.style.colorIconActive,
           ThemedStyles.style.paddingHorizontal2x,
@@ -35,13 +36,13 @@ export const CommentsEntityOutlet = observer((props: Props) => {
         ]}
         onPress={() => GoToComments()}>
         View {count} comments
-      </Text>
+      </MText>
     );
   };
 
-  const onNewComment = comment => {
-    GoToComments();
-  };
+  // const onNewComment = comment => {
+  //   GoToComments();
+  // };
 
   return (
     <KeyboardAvoidingView

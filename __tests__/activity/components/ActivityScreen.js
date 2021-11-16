@@ -12,7 +12,7 @@ import {
   useRoute,
 } from '../../../__mocks__/@react-navigation/native';
 import { getStores } from '../../../AppStores';
-
+jest.mock('react-native/Libraries/LogBox/LogBox');
 jest.mock('react-native-reanimated', () =>
   require('react-native-reanimated/mock'),
 );
@@ -34,7 +34,6 @@ jest.mock('@react-navigation/native');
 jest.mock('react-native-gesture-handler');
 jest.mock('react-native-redash');
 jest.mock('../../../src/common/components/KeyboardSpacingView');
-jest.mock('reanimated-bottom-sheet', () => 'BottomSheet');
 jest.mock('@gorhom/bottom-sheet', () => {
   const react = require('react-native');
 
@@ -58,6 +57,10 @@ jest.mock('../../../src/common/hooks/use-stores');
 jest.mock(
   '../../../src/comments/v2/CommentBottomSheet',
   () => 'CommentBottomSheet',
+);
+jest.mock(
+  '../../../src/common/components/interactions/InteractionsBottomSheet',
+  () => 'InteractionsBottomSheet',
 );
 
 // react testing library has a problem with the fake timers

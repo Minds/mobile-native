@@ -1,10 +1,10 @@
 //@ts-nocheck
 import React, { useCallback, useState, useRef } from 'react';
-import { View, Text } from 'react-native-animatable';
+import { View } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
-import ModalPicker from '../../common/components/ModalPicker';
-import Selector from '../../common/components/Selector';
+import Selector from '../../common/components/SelectorV2';
+import MText from '../../common/components/MText';
 
 export default function () {
   const CS = ThemedStyles.style;
@@ -32,14 +32,14 @@ export default function () {
           CS.bcolorPrimaryBorder,
           CS.borderHair,
         ]}>
-        <Text style={[CS.marginLeft, CS.colorSecondaryText, CS.fontM]}>
+        <MText style={[CS.marginLeft, CS.colorSecondaryText, CS.fontM]}>
           {i18n.t('settings.accountOptions.2')}
-        </Text>
-        <Text
+        </MText>
+        <MText
           style={[CS.colorPrimaryText, CS.fontM]}
           onPress={() => selectorRef.current.show(language)}>
           {i18n.getCurrentLanguageName()}
-        </Text>
+        </MText>
       </View>
       <Selector
         ref={selectorRef}

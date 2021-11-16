@@ -1,12 +1,13 @@
 import { observer } from 'mobx-react';
 import React, { useCallback, useState } from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import TopbarTabbar from '../common/components/topbar-tabbar/TopbarTabbar';
 import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
 import DashboardTab from './tabs/dashboard/DashboardTab';
 import TokensTab from './tabs/tokens/TokensTab';
 import TrendingTab from './tabs/trending/TrendingTab';
+import { ScreenHeader } from '~/common/ui/screen';
 
 type TAnalyticsTabs =
   | 'earnings'
@@ -34,46 +35,66 @@ const AnalyticsScreen = observer(
       }
     }, [_onTabBarChange, route]);
 
-    const screen = () => {
+    const Earnings = React.useMemo(
+      () => (
+        <DashboardTab
+          key={'earnings'}
+          url={'api/v2/analytics/dashboards/earnings'}
+          defaultMetric={'earnings_total'}
+        />
+      ),
+      [],
+    );
+
+    const Engagement = React.useMemo(
+      () => (
+        <DashboardTab
+          key={'engagement'}
+          url={'api/v2/analytics/dashboards/engagement'}
+          defaultMetric={'votes_up'}
+        />
+      ),
+      [],
+    );
+
+    const Traffic = React.useMemo(
+      () => (
+        <DashboardTab
+          key={'traffic'}
+          url={'api/v2/analytics/dashboards/traffic'}
+          defaultMetric={'page_views'}
+        />
+      ),
+      [],
+    );
+
+    const Trending = React.useMemo(
+      () => <TrendingTab navigation={navigation} />,
+      [navigation],
+    );
+
+    const Token = React.useMemo(() => <TokensTab route={route} />, [route]);
+
+    const screen = React.useCallback(() => {
       switch (activeTabId) {
         case 'earnings':
-          return (
-            <DashboardTab
-              key={'earnings'}
-              url={'api/v2/analytics/dashboards/earnings'}
-              defaultMetric={'earnings_total'}
-            />
-          );
+          return Earnings;
         case 'engagement':
-          return (
-            <DashboardTab
-              key={'engagement'}
-              url={'api/v2/analytics/dashboards/engagement'}
-              defaultMetric={'votes_up'}
-            />
-          );
+          return Engagement;
         case 'traffic':
-          return (
-            <DashboardTab
-              key={'traffic'}
-              url={'api/v2/analytics/dashboards/traffic'}
-              defaultMetric={'page_views'}
-            />
-          );
+          return Traffic;
         case 'trending':
-          return <TrendingTab navigation={navigation} />;
+          return Trending;
         case 'token':
-          return <TokensTab route={route} />;
+          return Token;
         default:
           return <View />;
       }
-    };
+    }, [Earnings, Engagement, Token, Traffic, Trending, activeTabId]);
 
     return (
       <View style={theme.flexContainer}>
-        <Text style={[theme.padding4x, theme.titleText, theme.paddingBottom2x]}>
-          {i18n.t('analytics.title')}
-        </Text>
+        <ScreenHeader title={i18n.t('analytics.title')} />
         <TopbarTabbar
           current={activeTabId}
           onChange={_onTabBarChange}

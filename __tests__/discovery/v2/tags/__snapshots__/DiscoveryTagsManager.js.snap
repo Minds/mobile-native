@@ -1,14 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`DiscoveryTagsManager component should render correctly 1`] = `
-<ErrorBoundary
-  message="Error displaying the content"
-  textSmall={false}
->
-  <Memo(wrappedComponent)
-    onClose={[Function]}
-    onDone={[Function]}
-    show={false}
-  />
-</ErrorBoundary>
+<Observer>
+  <Component />
+</Observer>
 `;

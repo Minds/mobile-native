@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
 import { SupportTiersType } from '../../wire/WireTypes';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import SettingInput from '../../common/components/SettingInput';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
@@ -9,6 +9,7 @@ import SaveButton from '../../common/components/SaveButton';
 import supportTiersService from '../../common/services/support-tiers.service';
 import Switch from 'react-native-switch-pro';
 import { UserError } from '../../common/UserError';
+import MText from '../../common/components/MText';
 
 type PropsType = {
   route: any;
@@ -43,13 +44,22 @@ const createTierStore = () => {
     async saveTier() {
       let response;
       try {
-        response = await supportTiersService.createPublic(
-          this.support_tier.name,
-          this.support_tier.usd,
-          this.support_tier.description,
-          this.support_tier.has_usd,
-          this.support_tier.has_tokens,
-        );
+        // should update?
+        if (this.support_tier.urn) {
+          response = await supportTiersService.update(
+            this.support_tier.urn,
+            this.support_tier.name,
+            this.support_tier.description,
+          );
+        } else {
+          response = await supportTiersService.createPublic(
+            this.support_tier.name,
+            this.support_tier.usd,
+            this.support_tier.description,
+            this.support_tier.has_usd,
+            this.support_tier.has_tokens,
+          );
+        }
       } catch (err) {
         response = false;
         throw new UserError(err.message);
@@ -119,14 +129,15 @@ const TierScreen = observer(({ route, navigation }: PropsType) => {
         onChangeText={localStore.setUsd}
         value={localStore.support_tier.usd}
         testID="usdInput"
+        editable={!localStore.support_tier.urn}
         wrapperBorder={theme.borderTop}
         keyboardType="number-pad"
       />
       <View style={theme.rowJustifySpaceBetween}>
         <View style={theme.flexColumnCentered}>
-          <Text style={labelStyle}>
+          <MText style={labelStyle}>
             {i18n.t('monetize.customMonetize.hasTokens')}
-          </Text>
+          </MText>
           <Switch
             value={localStore.support_tier.has_usd}
             onSyncPress={localStore.setHasUsd}

@@ -34,10 +34,13 @@ import sessionService from '../common/services/session.service';
 import ExplicitOverlay from '../common/components/explicit/ExplicitOverlay';
 import CommentBottomSheet from '../comments/v2/CommentBottomSheet';
 import ActivityModel from '../newsfeed/ActivityModel';
-import BottomSheet from '../common/components/bottom-sheet/BottomSheet';
+import BottomSheetModal from '../common/components/bottom-sheet/BottomSheetModal';
 import MenuItem, {
   MenuItemProps,
 } from '../common/components/bottom-sheet/MenuItem';
+import type GroupModel from './GroupModel';
+
+export const GroupContext = React.createContext<GroupModel | null>(null);
 
 /**
  * Groups view screen
@@ -109,7 +112,15 @@ export default class GroupViewScreen extends Component {
       return;
     }
 
+    this.props.groupView.group.sendViewed('single');
+
     this.props.groupView.loadTopMembers();
+
+    if (this.props.route.params && this.props.route.params.focusedUrn) {
+      setTimeout(() => {
+        this.openComments();
+      }, 300);
+    }
   }
 
   /**
@@ -205,6 +216,12 @@ export default class GroupViewScreen extends Component {
             feedStore={group.feed}
             header={header}
             navigation={this.props.navigation}
+            onScrollBeginDrag={() =>
+              this.props.groupView.setShowPosterFab(false)
+            }
+            onMomentumScrollEnd={() =>
+              this.props.groupView.setShowPosterFab(true)
+            }
           />
         );
       case 'members':
@@ -398,7 +415,7 @@ export default class GroupViewScreen extends Component {
       !this.state.conversationIsOpen;
 
     const memberActionSheet = this.state.memberActions ? (
-      <BottomSheet
+      <BottomSheetModal
         key={`sheet${this.state.memberActions.length}`}
         ref={this.actionSheetRef}
         title={truncate(this.state.member.name, {
@@ -408,7 +425,7 @@ export default class GroupViewScreen extends Component {
         {this.state.memberActions.map((o, i) => (
           <MenuItem {...o} key={i} />
         ))}
-      </BottomSheet>
+      </BottomSheetModal>
     ) : null;
 
     const theme = ThemedStyles.style;
@@ -436,24 +453,27 @@ export default class GroupViewScreen extends Component {
 
     return (
       <View style={[theme.flexContainer, theme.bgSecondaryBackground]}>
-        {this.getList()}
-        {showPosterFab && (
-          <CaptureFab
-            navigation={this.props.navigation}
-            group={group}
-            route={this.props.route}
-          />
-        )}
-        {memberActionSheet}
-        {this.props.groupView.comments && (
-          <CommentBottomSheet
-            title={i18n.t('conversation')}
-            ref={this.commentsRef}
-            hideContent={false}
-            commentsStore={this.props.groupView.comments}
-            onChange={this.onChange}
-          />
-        )}
+        <GroupContext.Provider value={this.props.groupView.group}>
+          {this.getList()}
+          {showPosterFab && (
+            <CaptureFab
+              visible={this.props.groupView.showPosterFab}
+              navigation={this.props.navigation}
+              group={group}
+              route={this.props.route}
+            />
+          )}
+          {memberActionSheet}
+          {this.props.groupView.comments && (
+            <CommentBottomSheet
+              title={i18n.t('conversation')}
+              ref={this.commentsRef}
+              hideContent={!this.state.conversationIsOpen}
+              commentsStore={this.props.groupView.comments}
+              onChange={this.onChange}
+            />
+          )}
+        </GroupContext.Provider>
       </View>
     );
   }

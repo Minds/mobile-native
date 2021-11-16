@@ -238,12 +238,11 @@ export default class MediaView extends Component<PropsType> {
     const media = this.showMedia();
 
     // dereference to force re render on change (mobx)
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const paywall = this.props.entity.paywall;
+    this.props.entity.paywall;
 
     if (this.props.entity instanceof CommentModel) {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const attachment = this.props.entity.attachment_guid;
+      // dereference to force re render on change (mobx)
+      this.props.entity.attachment_guid;
     }
 
     if (!media) return null;
@@ -274,7 +273,7 @@ export default class MediaView extends Component<PropsType> {
   //         size={18}
   //         underlayColor="white"
   //       />
-  //       <Text style={styles.licenseText}>{license}</Text>
+  //       <MText style={styles.licenseText}>{license}</MText>
   //     </View>
   //   );
   // }
@@ -283,7 +282,9 @@ export default class MediaView extends Component<PropsType> {
    * Open a link
    */
   openLink = () => {
-    openUrlService.open(this.props.entity.perma_url);
+    if (this.props.entity.perma_url) {
+      openUrlService.open(this.props.entity.perma_url);
+    }
   };
 
   /**

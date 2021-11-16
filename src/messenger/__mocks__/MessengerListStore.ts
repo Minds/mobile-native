@@ -1,5 +1,4 @@
 import { extendObservable } from 'mobx';
-import OffsetListStore from '../../common/stores/OffsetListStore';
 
 const mock = jest.fn().mockImplementation(() => {
   return extendObservable(

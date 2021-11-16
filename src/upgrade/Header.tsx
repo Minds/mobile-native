@@ -1,5 +1,6 @@
 import React from 'react';
-import { ImageBackground, View, Text, StyleSheet } from 'react-native';
+import { ImageBackground, View, StyleSheet } from 'react-native';
+import MText from '../common/components/MText';
 import i18n from '../common/services/i18n.service';
 
 type PropsType = {
@@ -14,13 +15,13 @@ const Header = ({ pro }: PropsType) => {
       source={require('../assets/plus-image.png')}
       resizeMode="cover">
       <View style={styles.textContainer}>
-        <Text style={styles.minds}>
+        <MText style={styles.minds}>
           {i18n.t(`monetize.${texts}`).toUpperCase()}
-        </Text>
-        <Text style={styles.title}>{i18n.t(`monetize.${texts}Title`)}</Text>
-        <Text style={styles.text}>
+        </MText>
+        <MText style={styles.title}>{i18n.t(`monetize.${texts}Title`)}</MText>
+        <MText style={styles.text}>
           {i18n.t(`monetize.${texts}Description`)}
-        </Text>
+        </MText>
       </View>
     </ImageBackground>
   );

@@ -16,6 +16,9 @@ export const LIGHT_THEME = {
   Action: '#A5A5A5',
   Icon: '#7D7D82',
   IconActive: '#0085DD',
+  IconDisabled: '#9B9B9B',
+  IconBackground: '#E3E4E9',
+  IconLight: '#F8FAFA',
   Link: '#1B85D6',
   Alert: '#E03C20',
   InfoBackground: '#5A91BB',
@@ -30,6 +33,8 @@ export const LIGHT_THEME = {
   White: '#FFFFFF',
   Black: '#000000',
   Transparent: 'transparent',
+  AvatarActive: '#ECDA51',
+  AvatarCircled: '#7D7D82',
 };
 
 export const DARK_THEME: ColorsType = {
@@ -47,6 +52,9 @@ export const DARK_THEME: ColorsType = {
   Action: '#A5A5A5',
   Icon: '#AEB0B8',
   IconActive: '#0085DD',
+  IconDisabled: '#797B82',
+  IconLight: '#F8FAFA',
+  IconBackground: '#404e53',
   Link: '#1B85D6',
   Alert: '#E03C20',
   InfoBackground: '#5A91BB',
@@ -61,4 +69,6 @@ export const DARK_THEME: ColorsType = {
   White: '#FFFFFF',
   Black: '#000000',
   Transparent: 'transparent',
+  AvatarActive: '#ECDA51',
+  AvatarCircled: '#AEB0B8',
 };

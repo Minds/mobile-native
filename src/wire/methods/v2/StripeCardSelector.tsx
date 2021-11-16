@@ -1,14 +1,15 @@
 import * as React from 'react';
+import { View } from 'react-native';
 
 import type { StripeCard } from '../../WireTypes';
 import MenuItem from '../../../common/components/menus/MenuItem';
 import ThemedStyles from '../../../styles/ThemedStyles';
-import Selector from '../../../common/components/Selector';
+import Selector from '../../../common/components/SelectorV2';
 import stripe, { initStripe } from '../../../common/services/stripe.service';
 import api, { ApiResponse } from '../../../common/services/api.service';
 import i18n from '../../../common/services/i18n.service';
 import { showNotification } from '../../../../AppMessages';
-import { Text, View } from 'react-native';
+import MText from '../../../common/components/MText';
 
 type PropsType = {
   onCardSelected: Function;
@@ -57,7 +58,7 @@ export default class StripeCardSelector extends React.PureComponent<
     inProgress: false,
   } as StateType;
 
-  selectorRef = React.createRef<Selector>();
+  selectorRef = React.createRef<any>();
 
   /**
    * Component did mount
@@ -94,8 +95,8 @@ export default class StripeCardSelector extends React.PureComponent<
     return (
       <View>
         <View style={[theme.rowJustifySpaceBetween, theme.padding2x]}>
-          <Text>SELECT CARD</Text>
-          <Text onPress={this.addNewCard}>Add Card</Text>
+          <MText>SELECT CARD</MText>
+          <MText onPress={this.addNewCard}>Add Card</MText>
         </View>
         {current && (
           <>

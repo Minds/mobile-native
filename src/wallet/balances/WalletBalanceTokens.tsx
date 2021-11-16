@@ -1,29 +1,20 @@
 //@ts-nocheck
-//@ts-nocheck
 import React, { Component } from 'react';
 
-import {
-  View,
-  Image,
-  Text,
-  StyleSheet,
-  TouchableHighlight,
-} from 'react-native';
+import { View, Image, Text, StyleSheet } from 'react-native';
 
 import { observer, inject } from 'mobx-react';
 import token from '../../common/helpers/token';
 import number from '../../common/helpers/number';
 import i18n from '../../common/services/i18n.service';
 import colors from '../../styles/Colors';
+import MText from '../../common/components/MText';
 
 @inject('wallet')
 @observer
 export default class WalletBalanceTokens extends Component {
   componentDidMount() {
     this.props.wallet.refresh();
-  }
-
-  componentWillMount() {
     this.disposeEnter = this.props.navigation.addListener('focus', () => {
       this.triggerRender(this.props.wallet);
     });
@@ -57,30 +48,30 @@ export default class WalletBalanceTokens extends Component {
             return (
               <View style={styles.addressesRow} key={i}>
                 <View style={styles.addressColumn}>
-                  <Text style={styles.addressesLabel}>
+                  <MText style={styles.addressesLabel}>
                     {address.label} {i18n.t('wallet.address')}
-                  </Text>
-                  <Text
+                  </MText>
+                  <MText
                     style={styles.addressesAddress}
                     ellipsizeMode="tail"
                     numberOfLines={1}
                     selectable>
                     {address.address}
-                  </Text>
+                  </MText>
                 </View>
                 <View style={styles.addressColumn}>
-                  <Text style={styles.addressesBalance}>
+                  <MText style={styles.addressesBalance}>
                     {number(token(address.balance, 18), 3)}
-                  </Text>
+                  </MText>
                   {address.address != 'offchain' && (
-                    <Text
+                    <MText
                       style={[
                         styles.addressesBalance,
                         styles.addressesEthBalance,
                       ]}>
                       {address.ethBalance ? number(address.ethBalance, 3) : 0}{' '}
                       ETH
-                    </Text>
+                    </MText>
                   )}
                 </View>
               </View>
@@ -98,10 +89,10 @@ export default class WalletBalanceTokens extends Component {
             style={styles.logo}
             source={require('../../assets/logos/bulb.png')}
           />
-          <Text style={styles.amount}>
+          <MText style={styles.amount}>
             {this.props.wallet.formattedBalance}
-          </Text>
-          <Text style={styles.currency}>{i18n.t('tokens')}</Text>
+          </MText>
+          <MText style={styles.currency}>{i18n.t('tokens')}</MText>
           <View style={{ flex: 1 }}></View>
         </View>
 

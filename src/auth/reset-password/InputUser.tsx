@@ -1,12 +1,12 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { ResetPasswordStore } from './createLocalStore';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
 import InputContainer from '../../common/components/InputContainer';
 import Button from '../../common/components/Button';
-import { DARK_THEME } from '../../styles/Colors';
+import MText from '../../common/components/MText';
 
 type PropsType = {
   store: ResetPasswordStore;
@@ -15,7 +15,7 @@ type PropsType = {
 const InputUser = observer(({ store }: PropsType) => {
   return (
     <View>
-      <Text style={styles.text}>{i18n.t('auth.inputUser')}</Text>
+      <MText style={styles.text}>{i18n.t('auth.inputUser')}</MText>
       <InputContainer
         containerStyle={styles.inputContainer}
         labelStyle={styles.label}
@@ -32,7 +32,6 @@ const InputUser = observer(({ store }: PropsType) => {
         centered={false}
         containerStyle={styles.button}
         loading={store.sending}
-        textColor={DARK_THEME.PrimaryText}
         action
       />
     </View>
@@ -49,14 +48,14 @@ export const styles = {
     'textCenter',
     'paddingVertical6x',
     'paddingHorizontal4x',
-    'bcolorPrimaryBorder_Dark',
-    'colorSecondaryText_Dark',
+    'bcolorPrimaryBorder',
+    'colorSecondaryText',
   ),
   inputContainer: ThemedStyles.combine(
-    'bgPrimaryBackgroundHighlight_Dark',
-    'bcolorPrimaryBorder_Dark',
+    'bgPrimaryBackgroundHighlight',
+    'bcolorPrimaryBorder',
   ),
-  label: ThemedStyles.combine('colorSecondaryText_Dark'),
-  inputText: ThemedStyles.combine('colorPrimaryText_Dark'),
-  button: ThemedStyles.combine('margin6x', 'bgPrimaryBackground_Dark'),
+  label: ThemedStyles.combine('colorSecondaryText'),
+  inputText: ThemedStyles.combine('colorPrimaryText'),
+  button: ThemedStyles.combine('margin6x', 'bgPrimaryBackground'),
 };

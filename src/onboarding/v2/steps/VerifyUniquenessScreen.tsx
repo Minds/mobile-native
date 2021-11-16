@@ -23,14 +23,17 @@ export default observer(function VerifyUniquenessScreen() {
 
   const mappingCallback = ({ title, screen, params }: MappingItems) => ({
     title,
-    onPress: () => navigation.navigate(screen, params),
+    onPress: () => navigation.navigate(screen as any, params),
   });
 
   const stepsMapping: Array<MappingItems> = [
     {
       title: i18n.t('onboarding.phoneNumber'),
       screen: 'PhoneValidation',
-      params: {},
+      params: {
+        onConfirm: () => navigation.goBack(),
+        onCancel: () => false,
+      },
     },
     /*{
       title: i18n.t('onboarding.connectWallet'),
@@ -61,8 +64,6 @@ export default observer(function VerifyUniquenessScreen() {
       params: {},
     },*/
   ];
-
-  console.log(otherMapping);
 
   const steps = stepsMapping.map(mappingCallback);
 

@@ -2,12 +2,13 @@ import { useDimensions } from '@react-native-community/hooks';
 import { observer } from 'mobx-react';
 import moment from 'moment';
 import React, { useCallback, useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, TouchableOpacity, View } from 'react-native';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import ActivityIndicator from '../../../common/components/ActivityIndicator';
 import LineChart from '../../../common/components/charts/LineChart';
 import Select from '../../../common/components/controls/Select';
-import Selector from '../../../common/components/Selector';
+import MText from '../../../common/components/MText';
+import Selector from '../../../common/components/SelectorV2';
 import useApiFetch from '../../../common/hooks/useApiFetch';
 import i18n from '../../../common/services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
@@ -81,12 +82,7 @@ const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
   });
 
   if (!result && loading) {
-    return (
-      <ActivityIndicator
-        style={[theme.positionAbsolute, styles.activityIndicator]}
-        size={'large'}
-      />
-    );
+    return <ActivityIndicator style={activityIndicatorStyle} size={'large'} />;
   }
 
   if (!result) {
@@ -110,17 +106,10 @@ const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
 
   if (error || dataError) {
     return (
-      <Text
-        style={[
-          theme.colorSecondaryText,
-          theme.textCenter,
-          theme.fontL,
-          theme.marginVertical4x,
-        ]}
-        onPress={fetch}>
+      <MText style={errorStyle} onPress={fetch}>
         {i18n.t('error') + '\n'}
-        <Text style={theme.colorLink}>{i18n.t('tryAgain')}</Text>
-      </Text>
+        <MText style={theme.colorLink}>{i18n.t('tryAgain')}</MText>
+      </MText>
     );
   }
 
@@ -152,12 +141,7 @@ const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
         .label;
 
   return (
-    <View
-      style={[
-        { width: width - theme.padding3x.padding * 2 },
-        theme.justifyCenter,
-        theme.paddingTop3x,
-      ]}>
+    <View style={styles.mainContainer}>
       <Selector
         onItemSelect={_onMetricsChange}
         data={result.dashboard.metrics!}
@@ -168,13 +152,7 @@ const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
         )}
       </Selector>
 
-      <View
-        style={[
-          theme.rowJustifySpaceBetween,
-          theme.alignCenter,
-          theme.marginTop,
-          theme.padding,
-        ]}>
+      <View style={styles.secondaryContainer}>
         <Selector
           onItemSelect={_onTimespanChange}
           data={result.dashboard.timespans!}
@@ -183,16 +161,14 @@ const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
           {show => (
             <View>
               <TouchableOpacity
-                style={[theme.rowJustifyCenter, theme.alignCenter]}
+                style={styles.dateTouch}
                 onPress={() => show(timeSpanKey)}>
                 <MIcon
                   name={'date-range'}
                   color={ThemedStyles.getColor('Icon')}
                   size={18}
                 />
-                <Text style={[theme.colorSecondaryText, theme.marginLeft]}>
-                  {timeSpanLabel}
-                </Text>
+                <MText style={styles.timeSpanLabel}>{timeSpanLabel}</MText>
               </TouchableOpacity>
             </View>
           )}
@@ -209,11 +185,11 @@ const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
               {show => (
                 <View>
                   <TouchableOpacity
-                    style={[theme.rowJustifyCenter, theme.alignCenter]}
+                    style={styles.filterTouch}
                     onPress={() => show(_getFilterKey(filter))}>
-                    <Text style={[theme.colorSecondaryText, theme.marginRight]}>
+                    <MText style={styles.filterText}>
                       {_getFilterLabel(filter)}
-                    </Text>
+                    </MText>
                     <MIcon
                       name={'filter-alt'}
                       color={ThemedStyles.getColor('Icon')}
@@ -235,17 +211,37 @@ const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
       )}
 
       {loading && (
-        <ActivityIndicator
-          style={[theme.positionAbsolute, styles.activityIndicator]}
-          size={'large'}
-        />
+        <ActivityIndicator style={activityIndicatorStyle} size={'large'} />
       )}
     </View>
   );
 });
+const width = Dimensions.get('window').width;
+export const activityIndicatorStyle = ThemedStyles.combine('positionAbsolute', {
+  top: 200,
+});
+export const errorStyle = ThemedStyles.combine(
+  'colorSecondaryText',
+  'textCenter',
+  'fontL',
+  'marginVertical4x',
+);
+const styles = ThemedStyles.create({
+  mainContainer: [
+    { width: width - ThemedStyles.style.padding3x.padding * 2 },
+    'justifyCenter',
+    'paddingTop3x',
+  ],
+  secondaryContainer: [
+    'rowJustifySpaceBetween',
+    'alignCenter',
+    'marginTop',
+    'padding',
+  ],
+  dateTouch: ['rowJustifyCenter', 'alignCenter'],
+  timeSpanLabel: ['colorSecondaryText', 'marginLeft'],
+  filterTouch: ['rowJustifyCenter', 'alignCenter'],
+  filterText: ['colorSecondaryText', 'marginRight'],
+});
 
 export default DashboardTab;
-
-const styles = StyleSheet.create({
-  activityIndicator: { top: 200 },
-});

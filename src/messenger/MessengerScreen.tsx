@@ -1,13 +1,6 @@
 //@ts-nocheck
 import React, { Component } from 'react';
-import {
-  Text,
-  View,
-  Alert,
-  Platform,
-  FlatList,
-  StyleSheet,
-} from 'react-native';
+import { View, Alert, Platform, FlatList, StyleSheet } from 'react-native';
 
 import { inject, observer } from 'mobx-react';
 
@@ -24,6 +17,7 @@ import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
 import ActivityIndicator from '../common/components/ActivityIndicator';
 import MessengerSetup from './MessengerSetup';
+import MText from '../common/components/MText';
 
 /**
  * Messenger Conversation List Screen
@@ -99,9 +93,9 @@ class MessengerScreen extends Component {
         <View style={ComponentsStyle.emptyComponentContainer}>
           <View style={ComponentsStyle.emptyComponent}>
             <Icon name="person-add" size={72} color="#444" />
-            <Text style={ComponentsStyle.emptyComponentMessage}>
+            <MText style={ComponentsStyle.emptyComponentMessage}>
               {i18n.t('messenger.noMessages')}
-            </Text>
+            </MText>
           </View>
         </View>
       );

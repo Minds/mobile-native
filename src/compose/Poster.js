@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 
-import IonIcon from 'react-native-vector-icons/Ionicons';
+import { Icon } from '~ui/icons';
 
 import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
@@ -17,16 +17,16 @@ import MetaPreview from './MetaPreview';
 import TitleInput from './TitleInput';
 import NavigationService from '../navigation/NavigationService';
 import RemindPreview from './RemindPreview';
-import PosterOptions from './PosterOptions';
+import PosterOptions from './PosterOptions/PosterOptions';
 import TopBar from './TopBar';
 import { ScrollView } from 'react-native-gesture-handler';
-import BottomBar from './BottomBar';
+import BottomBar from './ComposeBottomBar';
 import MediaPreview from './MediaPreview';
 import Tags from '../common/components/Tags';
 import KeyboardSpacingView from '../common/components/KeyboardSpacingView';
 import SoftInputMode from 'react-native-set-soft-input-mode';
 import TextInput from '../common/components/TextInput';
-import BottomSheet from '../common/components/bottom-sheet/BottomSheet';
+import BottomSheetModal from '../common/components/bottom-sheet/BottomSheetModal';
 import BottomSheetButton from '../common/components/bottom-sheet/BottomSheetButton';
 
 const { width } = Dimensions.get('window');
@@ -105,7 +105,7 @@ export default observer(function (props) {
   const rightButton = props.store.isEdit ? (
     i18n.t('save')
   ) : (
-    <IonIcon
+    <Icon
       name="send"
       size={27}
       style={[
@@ -117,9 +117,11 @@ export default observer(function (props) {
 
   useEffect(() => {
     InteractionManager.runAfterInteractions(() => {
-      if (inputRef.current) {
-        inputRef.current.focus();
-      }
+      setTimeout(() => {
+        if (inputRef.current) {
+          inputRef.current.focus();
+        }
+      }, 300);
     });
   }, [inputRef]);
 
@@ -190,7 +192,6 @@ export default observer(function (props) {
           />
         )}
       </ScrollView>
-      <PosterOptions ref={optionsRef} store={props.store} />
       {showBottomBar && (
         <KeyboardSpacingView
           enabled={Platform.OS === 'ios'}
@@ -204,7 +205,8 @@ export default observer(function (props) {
           />
         </KeyboardSpacingView>
       )}
-      <BottomSheet
+      <PosterOptions ref={optionsRef} store={props.store} />
+      <BottomSheetModal
         ref={confirmRef}
         title={i18n.t('capture.discardPost')}
         detail={i18n.t('capture.discardPostDescription')}>
@@ -217,7 +219,7 @@ export default observer(function (props) {
           text={i18n.t('capture.keepEditing')}
           onPress={closeConfirm}
         />
-      </BottomSheet>
+      </BottomSheetModal>
     </View>
   );
 });

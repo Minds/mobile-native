@@ -1,10 +1,11 @@
 //@ts-nocheck
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import ThemedStyle from '../../../styles/ThemedStyles';
 import validatePassword from '../../helpers/validatePassword';
 import i18n from '../../services/i18n.service';
+import MText from '../MText';
 
 const checked = value => {
   return (
@@ -33,33 +34,33 @@ export default function (props) {
     <View>
       <View style={[theme.rowJustifyStart, theme.alignCenter]}>
         {checked(val.lengthCheck)}
-        <Text style={[theme.fontL, theme.paddingLeft2x, props.textStyle]}>
+        <MText style={[theme.fontL, theme.paddingLeft2x, props.textStyle]}>
           {i18n.t('settings.passwordFormatMinCharacters')}
-        </Text>
+        </MText>
       </View>
       <View style={[theme.rowJustifyStart, theme.alignCenter]}>
         {checked(val.specialCharCheck)}
-        <Text style={[theme.fontL, theme.paddingLeft2x, props.textStyle]}>
+        <MText style={[theme.fontL, theme.paddingLeft2x, props.textStyle]}>
           {i18n.t('settings.passwordFormatSpecialCharacters')}
-        </Text>
+        </MText>
       </View>
       <View style={[theme.rowJustifyStart, theme.alignCenter]}>
         {checked(val.mixedCaseCheck)}
-        <Text style={[theme.fontL, theme.paddingLeft2x, props.textStyle]}>
+        <MText style={[theme.fontL, theme.paddingLeft2x, props.textStyle]}>
           {i18n.t('settings.passwordFormatMixedCase')}
-        </Text>
+        </MText>
       </View>
       <View style={[theme.rowJustifyStart, theme.alignCenter]}>
         {checked(val.numbersCheck)}
-        <Text style={[theme.fontL, theme.paddingLeft2x, props.textStyle]}>
+        <MText style={[theme.fontL, theme.paddingLeft2x, props.textStyle]}>
           {i18n.t('settings.passwordFormatNumber')}
-        </Text>
+        </MText>
       </View>
       <View style={[theme.rowJustifyStart, theme.alignCenter]}>
         {checked(val.spacesCheck)}
-        <Text style={[theme.fontL, theme.paddingLeft2x, props.textStyle]}>
+        <MText style={[theme.fontL, theme.paddingLeft2x, props.textStyle]}>
           {i18n.t('settings.passwordFormatNoSpaces')}
-        </Text>
+        </MText>
       </View>
     </View>
   );

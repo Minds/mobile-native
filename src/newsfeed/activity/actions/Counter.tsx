@@ -1,12 +1,12 @@
 import React, { PureComponent } from 'react';
-
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
+import MText from '../../../common/components/MText';
 
 import abbrev from '../../../common/helpers/abbrev';
 import ThemedStyles from '../../../styles/ThemedStyles';
 
 type PropsType = {
-  size: number;
+  size?: number;
   count: number;
   testID?: string;
 };
@@ -20,7 +20,6 @@ export default class Counter extends PureComponent<PropsType> {
    */
   static defaultProps = {
     size: 15,
-    style: undefined,
   };
 
   /**
@@ -31,12 +30,12 @@ export default class Counter extends PureComponent<PropsType> {
 
     return (
       <View style={ThemedStyles.style.columnAlignCenter}>
-        <Text style={textStyle} {...otherProps}>
+        <MText style={textStyle} {...otherProps}>
           {count > 0 ? abbrev(count, 0) : ''}
-        </Text>
+        </MText>
       </View>
     );
   }
 }
 
-const textStyle = ThemedStyles.combine('colorIcon', 'fontL', 'fontMedium');
+const textStyle = ThemedStyles.combine('colorIcon', 'fontM', 'fontMedium');

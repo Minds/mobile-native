@@ -2,19 +2,17 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
-import { IconType } from 'react-native-elements';
+import { IconButton } from '~ui/icons';
 import { showNotification } from '../../../../../AppMessages';
 import i18n from '../../../../common/services/i18n.service';
-import ThemedStyles from '../../../../styles/ThemedStyles';
 import { WalletStoreType } from '../../../v2/createWalletStore';
 import { isConnected as isWalletConnected } from '../../useUniqueOnchain';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {
-  BottomSheet,
+  BottomSheetModal,
   BottomSheetButton,
   MenuItem,
 } from '../../../../common/components/bottom-sheet';
+import { ONCHAIN_ENABLED } from '../../../../config/Config';
 
 type PropsType = {
   walletStore: WalletStoreType;
@@ -23,14 +21,13 @@ type PropsType = {
 
 type ItemType = {
   iconName: string;
-  iconType: IconType;
+  iconType: string;
   title: string;
   onPress: () => void;
 };
 
 const TokenTabOptions = observer((props: PropsType) => {
   const ref = React.useRef<any>();
-  const theme = ThemedStyles.style;
   const navigation = useNavigation();
   const isConnected = isWalletConnected(props.onchainStore);
   const address = props.walletStore.wallet.receiver.address || '';
@@ -45,15 +42,16 @@ const TokenTabOptions = observer((props: PropsType) => {
 
   const dismissOptions: Array<ItemType> = React.useMemo(() => {
     const actions: Array<ItemType> = [];
-    actions.push({
-      title: i18n.t('wallet.transferToOnchain'),
-      onPress: () => {
-        close();
-        navigation.navigate('WalletWithdrawal');
-      },
-      iconName: 'arrow-right',
-      iconType: 'material-community',
-    });
+    ONCHAIN_ENABLED &&
+      actions.push({
+        title: i18n.t('wallet.transferToOnchain'),
+        onPress: () => {
+          close();
+          navigation.navigate('WalletWithdrawal');
+        },
+        iconName: 'arrow-right',
+        iconType: 'material-community',
+      });
     actions.push({
       title: i18n.t('buyTokensScreen.title'),
       onPress: () => {
@@ -80,15 +78,13 @@ const TokenTabOptions = observer((props: PropsType) => {
 
   return (
     <>
-      <TouchableOpacity style={theme.alignSelfCenter} onPress={show}>
-        <Icon size={24} name="dots-vertical" style={theme.colorSecondaryText} />
-      </TouchableOpacity>
-      <BottomSheet ref={ref}>
+      <IconButton left="S" name="more" onPress={show} />
+      <BottomSheetModal ref={ref}>
         {dismissOptions.map((b, i) => (
           <MenuItem {...b} key={i} />
         ))}
         <BottomSheetButton text={i18n.t('cancel')} onPress={close} />
-      </BottomSheet>
+      </BottomSheetModal>
     </>
   );
 });

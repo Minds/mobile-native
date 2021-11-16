@@ -24,7 +24,7 @@ import { showNotification } from '../../../AppMessages';
 import i18n from '../../common/services/i18n.service';
 import { isNetworkError } from '../../common/services/api.service';
 
-const COMMENTS_PAGE_SIZE = 6;
+const COMMENTS_PAGE_SIZE = 12;
 
 /**
  * Comments Store
@@ -52,7 +52,6 @@ export default class CommentsStore {
   embed = new RichEmbedStore();
 
   entity: ActivityModel | BlogModel | GroupModel;
-  guid = '';
   reversed = true;
   loadNext = '';
   loadPrevious = '';
@@ -63,7 +62,7 @@ export default class CommentsStore {
   parent: CommentModel | null = null;
 
   constructor(entity) {
-    this.focusedUrn = this.getFocuedUrn();
+    this.focusedUrn = this.getFocusedUrn();
     this.entity = entity;
   }
 
@@ -139,7 +138,7 @@ export default class CommentsStore {
   /**
    * Get focused urn
    */
-  getFocuedUrn() {
+  getFocusedUrn() {
     const params = NavigationService.getCurrentState().params;
 
     let value = null;
@@ -149,17 +148,18 @@ export default class CommentsStore {
     return value;
   }
 
+  get guid() {
+    return this.entity.entity_guid || this.entity.guid;
+  }
+
   /**
    * Load Comments
    */
   @action
   async loadComments(descending = true) {
-    const guid = this.entity.entity_guid || this.entity.guid;
-
-    if (this.cantLoadMore(guid, descending)) {
+    if (this.cantLoadMore(descending)) {
       return;
     }
-    this.guid = guid;
 
     if (descending) {
       this.setErrorLoadingPrevious(false);
@@ -302,7 +302,7 @@ export default class CommentsStore {
     try {
       const comment = await getComment(this.guid, guid, this.getParentPath());
       if (comment) {
-        this.comments.push(CommentModel.create(comment));
+        this.comments.unshift(CommentModel.create(comment));
       }
     } catch (err) {
       logService.exception('[CommentsStore] commentSocket', err);
@@ -343,9 +343,9 @@ export default class CommentsStore {
       const comments = CommentModel.createMany(response.comments);
 
       if (descending) {
-        comments.reverse().forEach(c => this.comments.unshift(c));
+        comments.reverse().forEach(c => this.comments.push(c));
       } else {
-        comments.forEach(c => this.comments.push(c));
+        comments.forEach(c => this.comments.unshift(c));
       }
     }
     this.reversed = response.reversed;
@@ -357,7 +357,7 @@ export default class CommentsStore {
    */
   @action
   pushComment(comment) {
-    this.comments.push(CommentModel.create(comment));
+    this.comments.unshift(CommentModel.create(comment));
   }
 
   /**
@@ -373,6 +373,16 @@ export default class CommentsStore {
       comment: this.text.trim(),
       attachment_guid: <string | undefined>undefined,
     };
+
+    if (comment.comment === '') {
+      showNotification(
+        i18n.t('messenger.typeYourMessage'),
+        'info',
+        3000,
+        'top',
+      );
+      return;
+    }
 
     if (this.attachment.guid || this.edit?.attachment_guid) {
       comment.attachment_guid = this.attachment.guid;
@@ -497,16 +507,15 @@ export default class CommentsStore {
   }
 
   /**
-   * Cant load more
-   * @param {string} guid
+   * Can't load more
    * @param {boolean} descending
    */
-  cantLoadMore(guid, descending) {
+  cantLoadMore(descending) {
     return (
       this.loaded &&
-      !(descending ? this.loadPrevious : this.loadNext) &&
-      !this.refreshing &&
-      this.guid === guid
+      (!(descending ? this.loadPrevious : this.loadNext) ||
+        this.refreshing ||
+        (descending ? this.loadingPrevious : this.loadingNext))
     );
   }
 
@@ -518,7 +527,6 @@ export default class CommentsStore {
     this.clearComments();
     this.parent = null;
     this.refreshing = false;
-    this.guid = '';
     this.reversed = true;
   }
 
