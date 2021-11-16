@@ -130,26 +130,28 @@ const WithdrawalEntry = ({ withdrawal }: WithdrawalItemPropsType) => {
         </MText>
       </View>
       <View style={innerColumnStyle}>
-        <TouchableOpacity onPress={() => tooltipRef.current.toggleTooltip()}>
-          <Tooltip
-            ref={tooltipRef}
-            skipAndroidStatusBar={true}
-            withOverlay={false}
-            containerStyle={theme.borderRadius}
-            width={250}
-            height={100}
-            backgroundColor={ThemedStyles.getColor('Link')}
-            popover={<TooltipText status={withdrawal.status} />}
-          />
-          <View style={tooltipViewStyle}>
-            <MText>{getHumanReadableStatus(withdrawal.status)}</MText>
-            <Icon
-              name={'information-variant'}
-              size={15}
-              style={inlineIconStyle}
+        {Boolean(withdrawal.status) && (
+          <TouchableOpacity onPress={() => tooltipRef.current.toggleTooltip()}>
+            <Tooltip
+              ref={tooltipRef}
+              skipAndroidStatusBar={true}
+              withOverlay={false}
+              containerStyle={theme.borderRadius}
+              width={250}
+              height={100}
+              backgroundColor={ThemedStyles.getColor('Link')}
+              popover={<TooltipText status={withdrawal.status} />}
             />
-          </View>
-        </TouchableOpacity>
+            <View style={tooltipViewStyle}>
+              <MText>{getHumanReadableStatus(withdrawal.status)}</MText>
+              <Icon
+                name={'information-variant'}
+                size={15}
+                style={inlineIconStyle}
+              />
+            </View>
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );
