@@ -23,7 +23,7 @@ const TransactionsListWithdrawals = observer(() => {
   /**
    * Renders list header, for consumption by OffsetList.
    */
-  const renderHeader = (
+  const header = (
     <View style={headerContainerStyle}>
       <Text style={headerTextStyle}>TXID</Text>
       <Text style={headerTextStyle}>Amount</Text>
@@ -37,8 +37,7 @@ const TransactionsListWithdrawals = observer(() => {
         renderItem={renderWithdrawalItem}
         fetchEndpoint={'api/v3/rewards/withdrawals'}
         endpointData={'withdrawals'}
-        offsetField={''}
-        header={renderHeader}
+        header={header}
       />
     </View>
   );
