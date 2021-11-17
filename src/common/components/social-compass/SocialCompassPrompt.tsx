@@ -101,13 +101,13 @@ function useDismissHandler(questionsResult): [boolean | undefined, () => void] {
     } else {
       storages.user
         ?.getItem(SOCIAL_COMPASS_QUESTIONNAIRE_DISMISSED_KEY)
-        .then(async _dismissedTs => {
-          if (!_dismissedTs) {
-            setDismissed(false);
+        .then(async dismissedTs => {
+          if (!dismissedTs) {
+            return setDismissed(false);
           }
 
           // if 3 days had passed since we last dismissed prompt, remove dismiss key and show the prompt again!
-          if (Date.now() - Number(_dismissedTs) > PROMPT_DISMISS_DURATION) {
+          if (Date.now() - Number(dismissedTs) > PROMPT_DISMISS_DURATION) {
             await storages.user?.removeItem(
               SOCIAL_COMPASS_QUESTIONNAIRE_DISMISSED_KEY,
             );
