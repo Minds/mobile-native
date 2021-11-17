@@ -1,12 +1,13 @@
 import { useDimensions } from '@react-native-community/hooks';
 import { observer } from 'mobx-react';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { ScrollView, Text } from 'react-native';
+import { ScrollView } from 'react-native';
 import { BottomSheetButton } from '~/common/components/bottom-sheet';
 import CenteredLoading from '~/common/components/CenteredLoading';
 import { Spacer } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
 import i18n from '../../services/i18n.service';
+import MText from '../MText';
 import QuestionSlider from './QuestionSlider';
 import { useAnswers } from './useAnswers';
 import { IQuestion } from './useQuestions';
@@ -64,9 +65,9 @@ const Questions = observer(({ onSubmit, ...props }: PropsType) => {
     <>
       <ScrollView style={containerHeight}>
         <Spacer horizontal="M">
-          <Text style={styles.desc}>
+          <MText style={styles.desc}>
             {i18n.t('socialCompass.questionsDesc')}
-          </Text>
+          </MText>
           {questions.map(question => (
             <QuestionSlider
               question={question}
