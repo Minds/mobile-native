@@ -1,4 +1,4 @@
-import useApiFetch from '~/common/hooks/useApiFetch';
+import useApiFetch from '../../hooks/useApiFetch';
 
 export interface IQuestion {
   questionText: string;

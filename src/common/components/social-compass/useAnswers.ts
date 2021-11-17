@@ -1,4 +1,4 @@
-import { useApiPost } from '~/common/hooks/useApiFetch';
+import { useApiPost } from '../../hooks/useApiFetch';
 import { IQuestion } from './useQuestions';
 
 export const useAnswers = (questions: IQuestion[]) => {
