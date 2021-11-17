@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import MText from '~/common/components/MText';
-import storageService from '~/common/services/storage.service';
+import { storages } from '~/common/services/storage/storages.service';
 import { Column, IconButtonNext } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { BottomSheetModal } from '../../components/bottom-sheet';
@@ -11,41 +11,24 @@ import { useQuestions } from './useQuestions';
 
 type PropsType = {};
 
+/**
+ * the duration that the prompt should be dismissed in ms
+ */
+const PROMPT_DISMISS_DURATION = 3 * 24 * 60 * 60 * 1000; // 3 days
+
 const SOCIAL_COMPASS_QUESTIONNAIRE_DISMISSED_KEY =
   'social-compass-questionnaire:dismissed';
 
 const SocialCompassPrompt = ({}: PropsType) => {
   const ref = React.useRef<any>();
   const { result: questionsResult, loading } = useQuestions();
-  const [dismissed, setDismissed] = useState<boolean | undefined>(undefined);
+  const [dismissed, dismiss] = useDismissHandler(questionsResult);
 
   // #region methods
-  const showSheet = React.useCallback(() => {
+  const showSheet = useCallback(() => {
     ref.current?.present();
   }, []);
-  const dismiss = React.useCallback(async () => {
-    await storageService.setItem(
-      SOCIAL_COMPASS_QUESTIONNAIRE_DISMISSED_KEY,
-      true,
-    );
-    setDismissed(true);
-  }, []);
   // #endregion
-
-  // determine whether we've already answered the questions or not
-  useEffect(() => {
-    if (!questionsResult) {
-      return;
-    }
-
-    if (questionsResult.answersProvided) {
-      setDismissed(true);
-    } else {
-      storageService
-        .getItem(SOCIAL_COMPASS_QUESTIONNAIRE_DISMISSED_KEY)
-        .then(_dismissed => setDismissed(Boolean(_dismissed)));
-    }
-  }, [questionsResult]);
 
   if (dismissed !== false) {
     return null;
@@ -93,3 +76,48 @@ const styles = ThemedStyles.create({
 });
 
 export default SocialCompassPrompt;
+
+function useDismissHandler(questionsResult): [boolean | undefined, () => void] {
+  const answersProvideed = questionsResult?.answersProvided;
+  const [dismissed, setDismissed] = useState<boolean | undefined>(undefined);
+
+  const dismiss = useCallback(async () => {
+    await storages.user?.setItem(
+      SOCIAL_COMPASS_QUESTIONNAIRE_DISMISSED_KEY,
+      String(Date.now()),
+    );
+    setDismissed(true);
+  }, [setDismissed]);
+
+  // determine whether we've already answered the questions or not
+  useEffect(() => {
+    if (!questionsResult) {
+      return;
+    }
+
+    // if we had already answered
+    if (answersProvideed) {
+      setDismissed(true);
+    } else {
+      storages.user
+        ?.getItem(SOCIAL_COMPASS_QUESTIONNAIRE_DISMISSED_KEY)
+        .then(async _dismissedTs => {
+          if (!_dismissedTs) {
+            setDismissed(false);
+          }
+
+          // if 3 days had passed since we last dismissed prompt, remove dismiss key and show the prompt again!
+          if (Date.now() - Number(_dismissedTs) > PROMPT_DISMISS_DURATION) {
+            await storages.user?.removeItem(
+              SOCIAL_COMPASS_QUESTIONNAIRE_DISMISSED_KEY,
+            );
+            setDismissed(false);
+          } else {
+            setDismissed(true);
+          }
+        });
+    }
+  }, [answersProvideed, questionsResult, setDismissed]);
+
+  return [dismissed, dismiss];
+}
