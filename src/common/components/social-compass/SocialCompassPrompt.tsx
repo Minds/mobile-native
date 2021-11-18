@@ -82,7 +82,7 @@ function useDismissHandler(questionsResult): [boolean | undefined, () => void] {
   const [dismissed, setDismissed] = useState<boolean | undefined>(undefined);
 
   const dismiss = useCallback(async () => {
-    await storages.user?.setItem(
+    storages.user?.setString(
       SOCIAL_COMPASS_QUESTIONNAIRE_DISMISSED_KEY,
       String(Date.now()),
     );
@@ -99,23 +99,21 @@ function useDismissHandler(questionsResult): [boolean | undefined, () => void] {
     if (answersProvideed) {
       setDismissed(true);
     } else {
-      storages.user
-        ?.getItem(SOCIAL_COMPASS_QUESTIONNAIRE_DISMISSED_KEY)
-        .then(async dismissedTs => {
-          if (!dismissedTs) {
-            return setDismissed(false);
-          }
+      const dismissedTs = storages.user?.getString(
+        SOCIAL_COMPASS_QUESTIONNAIRE_DISMISSED_KEY,
+      );
 
-          // if 3 days had passed since we last dismissed prompt, remove dismiss key and show the prompt again!
-          if (Date.now() - Number(dismissedTs) > PROMPT_DISMISS_DURATION) {
-            await storages.user?.removeItem(
-              SOCIAL_COMPASS_QUESTIONNAIRE_DISMISSED_KEY,
-            );
-            setDismissed(false);
-          } else {
-            setDismissed(true);
-          }
-        });
+      if (!dismissedTs) {
+        return setDismissed(false);
+      }
+
+      // if 3 days had passed since we last dismissed prompt, remove dismiss key and show the prompt again!
+      if (Date.now() - Number(dismissedTs) > PROMPT_DISMISS_DURATION) {
+        storages.user?.removeItem(SOCIAL_COMPASS_QUESTIONNAIRE_DISMISSED_KEY);
+        setDismissed(false);
+      } else {
+        setDismissed(true);
+      }
     }
   }, [answersProvideed, questionsResult, setDismissed]);
 
