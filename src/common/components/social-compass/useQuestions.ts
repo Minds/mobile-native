@@ -20,6 +20,7 @@ export const useQuestions = () => {
     {
       dataField: 'questions',
       persist: false,
+      retry: 2,
     },
   );
 };
