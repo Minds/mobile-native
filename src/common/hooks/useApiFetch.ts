@@ -60,6 +60,10 @@ export interface FetchOptions {
   /**
    * skips auto-firing when params change
    */
+  offsetField?: string;
+  /**
+   * skips auto-firing when params change
+   */
   skip?: boolean;
   /**
    * the data field of the response that has all the items
@@ -151,21 +155,14 @@ const createStore = ({
     if (!data) {
       data = hookOptions?.params || {};
     }
-    let {
-      updateState,
-      offsetField,
-      dataField,
-      updateStrategy,
-      map,
-    } = Object.assign(
-      {
-        updateState: defaultUpdateState,
-        offsetField: 'load-next',
-        dataField: 'entities',
-      },
-      hookOptions,
-      opts,
-    );
+    let updateState =
+      hookOptions?.updateState || opts.updateState || defaultUpdateState;
+    const offsetField =
+      hookOptions?.offsetField || opts.offsetField || 'load-next';
+    const dataField = hookOptions?.dataField || opts.dataField || 'entities';
+    const updateStrategy = hookOptions?.updateStrategy || opts.updateStrategy;
+    const map = hookOptions?.map || opts.map;
+
     this.clearRetryTimer(!retry);
 
     if (updateStrategy && dataField) {
