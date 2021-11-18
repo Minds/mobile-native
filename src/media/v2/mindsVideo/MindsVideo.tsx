@@ -90,15 +90,13 @@ const MindsVideo = observer((props: PropsType) => {
   const transCodingOverlay = localStore.transcoding && <Transcoding />;
 
   // ^...else, show controls
-  const controlsOverlay = !localStore.inProgress &&
-    !localStore.error &&
-    !localStore.transcoding && (
-      <Controls
-        localStore={localStore}
-        entity={props.entity}
-        hideOverlay={props.hideOverlay}
-      />
-    );
+  const controlsOverlay = !localStore.inProgress && !localStore.error && (
+    <Controls
+      localStore={localStore}
+      entity={props.entity}
+      hideOverlay={props.hideOverlay}
+    />
+  );
 
   const imageStyle = useMemo(
     () => ({ opacity: localStore.showThumbnail ? 1 : 0 }),
