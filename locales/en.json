@@ -807,7 +807,9 @@
       "c": "ACCOUNT",
       "c2": "Delete Account",
       "d": "INFO",
-      "d1": "App"
+      "d1": "App",
+      "e": "LEGACY",
+      "f": "DATA"
     },
     "notificationsOptions": {
       "push": "Push",

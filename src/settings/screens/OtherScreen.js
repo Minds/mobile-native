@@ -50,6 +50,24 @@ export default function ({ navigation }) {
     },
   ];
 
+  const legacy = [
+    {
+      title: i18n.t('blockchain.exportLegacyWallet'),
+      onPress: useNavCallback('ExportLegacyWallet'),
+    },
+    {
+      title: i18n.t('messenger.legacyMessenger'),
+      onPress: useNavCallback('Messenger'),
+    },
+  ];
+
+  const data = [
+    {
+      title: i18n.t('settings.networkOptions.1'),
+      onPress: useNavCallback('DataSaverScreen'),
+    },
+  ];
+
   const info = [
     {
       title: i18n.t('settings.otherOptions.d1'),
@@ -84,6 +102,16 @@ export default function ({ navigation }) {
           i={i}
           containerItemStyle={i > 0 ? theme.borderTop0x : undefined}
         />
+      ))}
+
+      <MenuSubtitle>{i18n.t('settings.otherOptions.e')}</MenuSubtitle>
+      {legacy.map((item, i) => (
+        <MenuItem item={item} i={i} />
+      ))}
+
+      <MenuSubtitle>{i18n.t('settings.otherOptions.f')}</MenuSubtitle>
+      {data.map((item, i) => (
+        <MenuItem item={item} i={i} />
       ))}
 
       <MenuSubtitle>{i18n.t('settings.otherOptions.d')}</MenuSubtitle>
