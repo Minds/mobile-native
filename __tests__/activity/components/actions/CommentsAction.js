@@ -8,13 +8,6 @@ import { activitiesServiceFaker } from '../../../../__mocks__/fake/ActivitiesFak
 import CommentsAction from '../../../../src/newsfeed/activity/actions/CommentsAction';
 import IconButtonNext from '../../../../src/common/ui/icons';
 
-jest.mock('react-native-silent-switch');
-jest.mock('react-native-system-setting', () => {
-  return {
-    getVolume: jest.fn(() => Promise.resolve()),
-  };
-});
-
 describe('Comment action component', () => {
   let screen, navigatorStore, navigation;
   beforeEach(() => {

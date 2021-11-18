@@ -58,6 +58,7 @@ export const createTokensTabStore = (walletStore: WalletStoreType) => ({
     this.loading = loading;
   },
   onConfirm(date: Date) {
+    console.log('onConfirm', date);
     if (
       Math.abs(date.getTime() - this.rewardsSelectedDate.getTime()) > 300000
     ) {

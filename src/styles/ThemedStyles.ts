@@ -114,8 +114,8 @@ export class ThemedStylesStore {
    * Get color of theme based on property
    * @param {String} prop
    */
-  getColor(prop: ColorsNameType) {
-    const theme = this.theme === 1 ? DARK_THEME : LIGHT_THEME;
+  getColor(prop: ColorsNameType, t = this.theme) {
+    const theme = t === 1 ? DARK_THEME : LIGHT_THEME;
     return theme[prop];
   }
 
