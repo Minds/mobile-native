@@ -148,6 +148,20 @@ class I18nService {
   }
 
   /**
+   * Translate with fallback
+   */
+  tf(scope: string, fallback: string, options?: object) {
+    const translation = translate(scope, options);
+    if (
+      translation.includes('missing') &&
+      translation.includes('translation')
+    ) {
+      return fallback;
+    }
+    return translation;
+  }
+
+  /**
    * Localize
    */
   l(scope: string, value, options?: object) {
