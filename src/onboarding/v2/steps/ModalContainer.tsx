@@ -47,7 +47,7 @@ export default function ModalContainer(props: PropsType) {
 
   return (
     <View style={contentContainer}>
-      <Handle style={ThemedStyles.style.bgPrimaryBackground} />
+      <Handle style={ThemedStyles.style.bgPrimaryBackgroundHighlight} />
       <View style={styles.header}>
         <MText style={titleStyle}>{props.title}</MText>
         <View style={styles.backIcon}>
