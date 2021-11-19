@@ -1,7 +1,6 @@
 import React, { PropsWithChildren, useCallback, useRef } from 'react';
 import type { GestureResponderEvent } from 'react-native';
 import { Platform } from 'react-native';
-import ThemedStyles from '../../styles/ThemedStyles';
 import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -78,7 +77,6 @@ const check = {
 const ChannelButtons = withErrorBoundary(
   observer((props: PropsWithChildren<ChannelButtonsPropsType>) => {
     const menuRef = useRef<any>();
-    const theme = ThemedStyles.style;
     const navigation = useNavigation<
       NativeStackNavigationProp<AppStackParamList>
     >();

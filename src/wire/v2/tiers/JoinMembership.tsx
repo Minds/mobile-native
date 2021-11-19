@@ -1,10 +1,7 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
 import { Platform, View } from 'react-native';
-import ThemedStyles, {
-  useMemoStyle,
-  useStyle,
-} from '../../../styles/ThemedStyles';
+import ThemedStyles, { useMemoStyle } from '../../../styles/ThemedStyles';
 import capitalize from '../../../common/helpers/capitalize';
 import StripeCardSelector from '../../methods/v2/StripeCardSelector';
 import Switch from 'react-native-switch-pro';

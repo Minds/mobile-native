@@ -28,7 +28,7 @@ import TopShadow from '../common/components/TopShadow';
 // import sessionService from '../common/services/session.service';
 import ChatTabIcon from '../chat/ChatTabIcon';
 import PressableScale from '~/common/components/PressableScale';
-import TabChatPreModal, { ChatModalHandle } from './TabChatPreModal';
+import { ChatModalHandle } from './TabChatPreModal';
 import preventDoubleTap from '~/common/components/PreventDoubleTap';
 // import navigationService from '../navigation/NavigationService';
 

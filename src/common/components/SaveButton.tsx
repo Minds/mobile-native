@@ -1,8 +1,6 @@
 import React from 'react';
 import i18n from '../services/i18n.service';
-import ThemedStyles from '../../styles/ThemedStyles';
 import { TextStyle } from 'react-native';
-import MText from './MText';
 import { Button, Spacer } from '~ui';
 
 type propsType = {

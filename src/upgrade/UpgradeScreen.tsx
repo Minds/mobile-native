@@ -7,7 +7,6 @@ import i18n from '../common/services/i18n.service';
 import StripeCardSelector from '../wire/methods/v2/StripeCardSelector';
 
 import { UserError } from '../common/UserError';
-import Button from '../common/components/Button';
 import FitScrollView from '../common/components/FitScrollView';
 import { useStores } from '../common/hooks/use-stores';
 import Header from './Header';
