@@ -37,7 +37,18 @@ export type ButtonPropsType = {
   testID?: string;
   accessibilityLabel?: string;
 };
+const shouldBreak = (num, disabled, state) => {
+  return (
+    disabled ||
+    state.loading === true ||
+    state.pressing === true ||
+    state.loading > num
+  );
+};
 
+/**
+ * Base button component
+ */
 export const ButtonComponent = ({
   mode = 'solid',
   type = 'base',
@@ -125,17 +136,8 @@ export const ButtonComponent = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [children]);
 
-  const shouldBreak = num => {
-    return (
-      disabled ||
-      stateRef.current.loading === true ||
-      stateRef.current.pressing === true ||
-      stateRef.current.loading > num
-    );
-  };
-
   const handlePressIn = () => {
-    if (shouldBreak(0)) {
+    if (shouldBreak(0, disabled, stateRef.current)) {
       return;
     }
     stateRef.current.state = 1;
@@ -143,7 +145,7 @@ export const ButtonComponent = ({
   };
 
   const handlePressOut = () => {
-    if (shouldBreak(1)) {
+    if (shouldBreak(1, disabled, stateRef.current)) {
       return;
     }
     stateRef.current.state = 2;
@@ -151,7 +153,7 @@ export const ButtonComponent = ({
   };
 
   const handlePress = () => {
-    if (shouldBreak(2)) {
+    if (shouldBreak(2, disabled, stateRef.current)) {
       return;
     }
     stateRef.current.state = 3;
