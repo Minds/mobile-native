@@ -28,7 +28,7 @@ import TopShadow from '../common/components/TopShadow';
 // import sessionService from '../common/services/session.service';
 import ChatTabIcon from '../chat/ChatTabIcon';
 import PressableScale from '~/common/components/PressableScale';
-import { ChatModalHandle } from './TabChatPreModal';
+import TabChatPreModal, { ChatModalHandle } from './TabChatPreModal';
 import preventDoubleTap from '~/common/components/PreventDoubleTap';
 // import navigationService from '../navigation/NavigationService';
 
@@ -89,7 +89,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
   return (
     <View style={containerStyle}>
       {!isIOS && <TopShadow setting={shadowOpt} />}
-      {/* <TabChatPreModal ref={chatModal} /> */}
+      <TabChatPreModal ref={chatModal} />
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const focused = state.index === index;
