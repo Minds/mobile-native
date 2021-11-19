@@ -37,6 +37,8 @@ const Wrapper = ({
         onPressRight={onPressRightCallBack}
         onPressBack={NavigationService.goBack}
         store={store}
+        backIconName="chevron-left"
+        backIconSize="large"
       />
       {children}
     </View>

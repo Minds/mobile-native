@@ -41,7 +41,7 @@ export default class BoostConsoleScreen extends Component {
   }
 
   createPost() {
-    this.props.navigation.navigate('Capture');
+    this.props.navigation.navigate('Compose');
   }
   /**
    * Render component

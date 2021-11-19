@@ -27,7 +27,14 @@ export const TabChatPreModal = forwardRef<ChatModalHandle, ChatModalProps>(
     useImperativeHandle(
       ref,
       () => ({
-        showModal() {
+        async showModal() {
+          const isInstalled = await chat.checkAppInstalled(false);
+          if (isInstalled) {
+            // if it is installed opens the chat
+            chat.openChat();
+            return;
+          }
+
           if (isShown === true) {
             modalRef.current?.present();
             return;
@@ -35,7 +42,7 @@ export const TabChatPreModal = forwardRef<ChatModalHandle, ChatModalProps>(
           setShown(true);
         },
       }),
-      [setShown, isShown],
+      [chat, isShown],
     );
 
     const close = () => {

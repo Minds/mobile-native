@@ -17,6 +17,10 @@ const ICON_MAP: {
     font: 'MaterialCommunityIcons',
     name: 'information-variant',
   },
+  filter: {
+    font: 'MaterialCommunityIcons',
+    name: 'filter',
+  },
   refresh: {
     font: 'MaterialCommunityIcons',
     name: 'refresh',
@@ -63,6 +67,7 @@ const ICON_MAP: {
   close: {
     font: 'MaterialIcons',
     name: 'close',
+    ratio: 0.92,
   },
   founder: {
     font: 'MaterialIcons',
@@ -97,6 +102,11 @@ const ICON_MAP: {
     name: 'repeat',
     ratio: 1.04,
     top: -1,
+  },
+  boost: {
+    font: 'MaterialCommunityIcons',
+    name: 'trending-up',
+    ratio: 1.04,
   },
   share: {
     font: 'MaterialIcons',
@@ -216,9 +226,13 @@ const ICON_MAP: {
     font: 'MaterialCommunityIcons',
     name: 'close-circle',
   },
-  filter: {
-    font: 'MaterialCommunityIcons',
-    name: 'filter-variant',
+  edit: {
+    font: 'Feather',
+    name: 'edit',
+  },
+  download: {
+    font: 'Feather',
+    name: 'download',
   },
 };
 

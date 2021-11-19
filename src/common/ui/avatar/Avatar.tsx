@@ -4,6 +4,7 @@ import FastImage from 'react-native-fast-image';
 import PressableScale from '~/common/components/PressableScale';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { IconCircled } from '~ui/icons';
+import { withSpacer } from '~ui/layout';
 import {
   ICON_SIZES,
   AVATAR_SIZE,
@@ -11,32 +12,36 @@ import {
   UNIT,
 } from '~styles/Tokens';
 
-export const Avatar = ({
-  source,
-  size = AVATAR_SIZE_DEFAULT,
-  border,
-  icon,
-  onPress,
-}: any) => {
-  let iconView: any = null;
+export const Avatar = withSpacer(
+  ({
+    source,
+    size = AVATAR_SIZE_DEFAULT,
+    border,
+    icon,
+    onPress,
+    children,
+  }: any) => {
+    let iconView: any = null;
 
-  if (icon) {
-    iconView = <IconCircled style={styles.icon} name="menu" size="micro" />;
-  }
+    if (icon) {
+      iconView = <IconCircled style={styles.icon} name="menu" size="micro" />;
+    }
 
-  const avatar = (
-    <View style={border && styles[border]}>
-      <FastImage source={source} style={styles[size]} />
-      {iconView}
-    </View>
-  );
+    const avatar = (
+      <View style={border && styles[border]}>
+        <FastImage source={source} style={styles[size]} />
+        {iconView}
+        {children}
+      </View>
+    );
 
-  if (onPress) {
-    return <PressableScale onPress={onPress}>{avatar}</PressableScale>;
-  }
+    if (onPress) {
+      return <PressableScale onPress={onPress}>{avatar}</PressableScale>;
+    }
 
-  return avatar;
-};
+    return avatar;
+  },
+);
 
 const styles = ThemedStyles.create({
   active: [
@@ -54,6 +59,11 @@ const styles = ThemedStyles.create({
     position: 'absolute',
     bottom: -ICON_SIZES.micro / 2,
     right: -ICON_SIZES.micro / 2,
+  },
+  micro: {
+    width: AVATAR_SIZE.micro,
+    height: AVATAR_SIZE.micro,
+    borderRadius: AVATAR_SIZE.micro / 2,
   },
   tiny: {
     width: AVATAR_SIZE.tiny,

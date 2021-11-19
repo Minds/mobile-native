@@ -4,6 +4,7 @@ import { StyleSheet, View } from 'react-native';
 import { Tooltip } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MText from '../../../common/components/MText';
+import { B2, B1, Row as LayoutRow } from '~ui';
 
 export type AccordionContentData = {
   title: string;
@@ -24,34 +25,36 @@ export const Container = ({ style = {}, children }) => {
   const theme = ThemedStyles.style;
   const paddingPointsView = [
     theme.rowJustifyStart,
-    theme.paddingLeft5x,
-    theme.paddingTop3x,
+    theme.paddingLeft4x,
+    theme.paddingRight5x,
+    theme.paddingVertical1x,
     style,
   ];
   return <View style={paddingPointsView}>{children}</View>;
 };
 
-export const Row = ({ style = {}, children }) => {
-  const theme = ThemedStyles.style;
-  const rowView = [theme.rowStretch, theme.flexContainer, style];
-  return <View style={rowView}>{children}</View>;
+export const Row = ({ children }) => {
+  return <LayoutRow align="centerStart">{children}</LayoutRow>;
 };
 
-export const Title = ({ style = {}, children }) => {
-  const theme = ThemedStyles.style;
-  const titleStyle = [
-    theme.colorSecondaryText,
-    theme.fontNormal,
-    theme.fontL,
-    style,
-  ];
-  return <MText style={titleStyle}>{children}</MText>;
+export const RowRight = ({ children }) => {
+  return (
+    <LayoutRow align="centerStart" flex left="XXL">
+      {children}
+    </LayoutRow>
+  );
 };
 
-export const Info = ({ style = {}, children }) => {
-  const theme = ThemedStyles.style;
-  const infoStyle = [theme.fontMedium, theme.alignSelfEnd, theme.fontL, style];
-  return <MText style={infoStyle}>{children}</MText>;
+export const Title = ({ children }) => {
+  return <B2 color="secondary">{children}</B2>;
+};
+
+export const Info = ({ children }) => {
+  return (
+    <LayoutRow flex align="centerEnd">
+      <B2 font="medium">{children}</B2>
+    </LayoutRow>
+  );
 };
 
 const AccordionContent = ({ data, summary }: PropsType) => {
@@ -93,26 +96,16 @@ const AccordionContent = ({ data, summary }: PropsType) => {
                 </View>
               )}
             </Row>
-            <Row style={theme.paddingRight5x}>
+            <RowRight>
               <Info>{row.info}</Info>
-            </Row>
+            </RowRight>
           </Container>
         );
       })}
       {summary && (
-        <MText
-          style={[
-            theme.fontLM,
-            theme.fontMedium,
-            theme.marginLeft5x,
-            theme.paddingTop3x,
-            theme.bcolorPrimaryBorder,
-            theme.borderTop,
-            theme.marginTop7x,
-            theme.width80,
-          ]}>
+        <B1 font="medium" top="L" left="L">
           Summary
-        </MText>
+        </B1>
       )}
       {summary && summary}
     </View>

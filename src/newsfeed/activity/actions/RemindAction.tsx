@@ -75,7 +75,7 @@ export default function ({ entity, hideCount }: PropsTypes) {
     const { key } = route;
     // We remove it instead of hiding it because it causes some issues in some versions of Android (issue 3543)
     setShown(false);
-    navigation.navigate('Capture', {
+    navigation.navigate('Compose', {
       isRemind: true,
       entity,
       parentKey: key,

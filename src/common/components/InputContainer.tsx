@@ -15,7 +15,7 @@ const InputContainer = (props: PropsType) => {
   return (
     <View
       style={[
-        theme.paddingLeft4x,
+        theme.paddingHorizontal4x,
         styles.container,
         theme.bgSecondaryBackground,
         theme.borderTop,

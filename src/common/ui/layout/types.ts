@@ -21,9 +21,11 @@ export type RowPropType = {
     | 'centerStart'
     | 'centerEnd'
     | 'centerBetween'
-    | 'centerAround';
+    | 'centerAround'
+    | 'baseline';
   background?: 'primary' | 'secondary' | 'tertiary';
   flex?: boolean;
+  flexWrap?: boolean;
   stretch?: boolean;
 };
 

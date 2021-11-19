@@ -12,7 +12,7 @@ exports[`LoginForm component should renders correctly 1`] = `
     style={
       Array [
         Object {
-          "paddingLeft": 16,
+          "paddingHorizontal": 16,
         },
         Object {
           "paddingTop": 10,
@@ -162,7 +162,7 @@ exports[`LoginForm component should renders correctly 1`] = `
       style={
         Array [
           Object {
-            "paddingLeft": 16,
+            "paddingHorizontal": 16,
           },
           Object {
             "paddingTop": 10,
@@ -792,7 +792,7 @@ exports[`LoginForm component should renders correctly 1`] = `
               style={
                 Array [
                   Object {
-                    "paddingLeft": 16,
+                    "paddingHorizontal": 16,
                   },
                   Object {
                     "paddingTop": 10,
@@ -968,6 +968,7 @@ exports[`LoginForm component should renders correctly 1`] = `
               text="Continue"
             >
               <Text
+                onLayout={[Function]}
                 style={
                   Array [
                     Object {

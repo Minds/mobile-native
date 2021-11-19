@@ -1,13 +1,18 @@
 import React from 'react';
 import { observer } from 'mobx-react';
+import ThemedStyles from '../styles/ThemedStyles';
+import { Icon } from '~/common/ui/icons';
 import { Avatar, Column, B3 } from '~ui';
 import excerpt from '../common/helpers/excerpt';
-import type { PortraitBarItem } from './createPortraitStore';
 import navigationService from '../navigation/NavigationService';
 
 type PropsType = {
-  item: PortraitBarItem;
-  index: number;
+  avatarUrl?: any;
+  unseen?: boolean;
+  title: string;
+  index?: number;
+  onPress?: any;
+  withPlus?: boolean;
 };
 
 /**
@@ -24,12 +29,55 @@ export default observer(function PortraitContentBarItem(props: PropsType) {
   return (
     <Column align="centerBoth" horizontal="XS">
       <Avatar
-        source={props.item.user.getAvatarSource()}
-        onPress={onPress}
-        border={props.item.unseen ? 'active' : 'transparent'}
-        size="medium"
-      />
-      <B3 top="XXS">{excerpt(props.item.user.username, 10)}</B3>
+        source={props.avatarUrl}
+        onPress={props.onPress ? props.onPress : onPress}
+        border={props.unseen ? 'active' : 'transparent'}
+        size="medium">
+        {props.withPlus && <PlusIcon />}
+      </Avatar>
+      <B3 top="XXS">{excerpt(props.title, 10)}</B3>
     </Column>
   );
+});
+
+const PlusIcon = () => (
+  <Icon style={styles.plusIcon} name="plus-circle" color="Link" />
+);
+
+const styles = ThemedStyles.create({
+  container: {
+    padding: 10,
+    overflow: 'visible',
+  },
+  text: {
+    marginTop: 8,
+  },
+  unseen: {
+    zIndex: 9990,
+    top: -1,
+    left: -1,
+    right: -1,
+    bottom: -1,
+    borderWidth: 2.2,
+    borderRadius: 30,
+    position: 'absolute',
+    borderColor: '#ECDA51',
+  },
+  avatar: [
+    'bgTertiaryBackground',
+    {
+      height: 55,
+      width: 55,
+      borderRadius: 27.5,
+    },
+  ],
+  plusIcon: [
+    {
+      position: 'absolute',
+      right: -5,
+      bottom: -5,
+      borderRadius: 100,
+    },
+    'bgPrimaryBackground',
+  ],
 });

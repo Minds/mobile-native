@@ -104,7 +104,6 @@ const Comparative = ({
 };
 
 const AmountInfo = ({ metrics }: { metrics: TokensMetrics }) => {
-  const theme = ThemedStyles.style;
   const { wallet } = useStores();
   let body;
   switch (metrics.format) {
@@ -112,7 +111,6 @@ const AmountInfo = ({ metrics }: { metrics: TokensMetrics }) => {
     case 'usd':
       body = (
         <MindsTokens
-          textStyles={[styles.amountText, theme.colorPrimaryText]}
           secondaryTextStyle={styles.amountTextSecondary}
           mindsPrice={wallet.prices.minds}
           currencyType={metrics.format === 'token' ? 'tokens' : 'usd'}

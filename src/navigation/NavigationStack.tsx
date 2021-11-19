@@ -12,6 +12,7 @@ import { Dimensions, Platform, StatusBar, View } from 'react-native';
 import {
   createStackNavigator,
   StackNavigationOptions,
+  TransitionPresets,
 } from '@react-navigation/stack';
 import AnalyticsScreen from '../analytics/AnalyticsScreen';
 
@@ -32,21 +33,13 @@ import BlogsViewScreen from '../blogs/BlogsViewScreen';
 import FabScreenV2 from '../wire/v2/FabScreen';
 import ViewImageScreen from '../media/ViewImageScreen';
 import ReportScreen from '../report/ReportScreen';
-// import OnboardingScreen from '../onboarding/OnboardingScreen';
 import UpdatingScreen from '../update/UpdateScreen';
 import { DiscoverySearchScreen } from '../discovery/v2/search/DiscoverySearchScreen';
 import EmailConfirmationScreen from '../onboarding/EmailConfirmationScreen';
 import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
-import ComposeScreen from '../compose/ComposeScreen';
-import TagSelector from '../compose/TagSelector';
-import AccessSelector from '../compose/AccessSelector';
-import NsfwSelector from '../compose/NsfwSelector';
-import ScheduleSelector from '../compose/ScheduleSelector';
-import PermawebSelector from '../compose/PermawebSelector';
-import MonetizeSelector from '../compose/MonetizeSelector';
-import MonetizeScreen from '../compose/monetize/MonetizeScreeen';
-import LicenseSelector from '../compose/LicenseSelector';
+import ComposeScreen from '../compose/v2/ComposeScreen';
+import CameraScreen from '../compose/v2/CameraScreen';
 import ChannelScreenV2 from '../channel/v2/ChannelScreen';
 import SettingsScreen from '../settings/SettingsScreen';
 import OtherScreen from '../settings/screens/OtherScreen';
@@ -55,14 +48,10 @@ import EmailScreen from '../settings/screens/EmailScreen';
 import ReceiverAddressScreen from '../wallet/v2/address/ReceiverAddressScreen';
 import BtcReceiverAddressScreen from '../wallet/v2/address/BtcAddressScreen';
 import BankInfoScreen from '../wallet/v2/address/BankInfoScreen';
-// import ViewerScreen from '../discovery/v2/viewer/ViewerScreen';
-import PlusMonetizeScreen from '../compose/monetize/PlusMonetizeScreeen';
-import MembershipMonetizeScreeen from '../compose/monetize/MembershipMonetizeScreeen';
 import CustomMonetizeScreen from '../compose/monetize/CustomMonetizeScreeen';
 import TierScreen from '../settings/screens/TierScreen';
 import UpgradeScreen from '../upgrade/UpgradeScreen';
 import PlusDiscoveryScreen from '../discovery/v2/PlusDiscoveryScreen';
-import featuresService from '../common/services/features.service';
 import JoinMembershipScreen from '../wire/v2/tiers/JoinMembershipScreen';
 
 import {
@@ -134,15 +123,14 @@ import ChooseBrowserModalScreen from '~/settings/screens/ChooseBrowserModalScree
 const isIos = Platform.OS === 'ios';
 
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
-const captureOptions = {
-  title: '',
-  animation: 'fade',
-  headerShown: false,
-} as NativeStackNavigationOptions;
 
 const AppStackNav = createNativeStackNavigator<AppStackParamList>();
 const AuthStackNav = createStackNavigator<AuthStackParamList>();
 const RootStackNav = createStackNavigator<RootStackParamList>();
+/**
+ * A js stack navigator to allow animating compose screens in a way the AppStackNav doesn't allow
+ */
+const ComposeStackNav = createStackNavigator<any>();
 const InternalStackNav = createNativeStackNavigator<InternalStackParamList>();
 // const MainSwiper = createMaterialTopTabNavigator<MainSwiperParamList>();
 const DrawerNav = createDrawerNavigator<DrawerParamList>();
@@ -325,62 +313,8 @@ const AppStack = function () {
           options={{ title: i18n.t('messenger.legacyMessenger') }}
         />
         <AppStackNav.Screen
-          name="Capture"
-          component={ComposeScreen}
-          options={captureOptions}
-        />
-        <AppStackNav.Screen
-          name="TagSelector"
-          component={TagSelector}
-          options={hideHeader}
-        />
-        <AppStackNav.Screen
-          name="NsfwSelector"
-          component={NsfwSelector}
-          options={hideHeader}
-        />
-        <AppStackNav.Screen
-          name="PermawebSelector"
-          component={PermawebSelector}
-          options={hideHeader}
-        />
-        <AppStackNav.Screen
-          name="ScheduleSelector"
-          component={ScheduleSelector}
-          options={hideHeader}
-        />
-        <AppStackNav.Screen
-          name="MonetizeSelector"
-          component={
-            featuresService.has('paywall-2020')
-              ? MonetizeScreen
-              : MonetizeSelector
-          }
-          options={hideHeader}
-        />
-        <AppStackNav.Screen
-          name="PlusMonetize"
-          component={PlusMonetizeScreen}
-          options={hideHeader}
-        />
-        <AppStackNav.Screen
-          name="MembershipMonetize"
-          component={MembershipMonetizeScreeen}
-          options={hideHeader}
-        />
-        <AppStackNav.Screen
           name="CustomMonetize"
           component={CustomMonetizeScreen}
-          options={hideHeader}
-        />
-        <AppStackNav.Screen
-          name="LicenseSelector"
-          component={LicenseSelector}
-          options={hideHeader}
-        />
-        <AppStackNav.Screen
-          name="AccessSelector"
-          component={AccessSelector}
           options={hideHeader}
         />
         <AppStackNav.Screen
@@ -730,6 +664,16 @@ const RootStack = function (props) {
               animationEnabled: false,
               cardStyle: ThemedStyles.style.bgPrimaryBackground, // avoid dark fade in android transition
             }}
+          />
+          <ComposeStackNav.Screen
+            name="Capture"
+            component={CameraScreen}
+            options={TransitionPresets.RevealFromBottomAndroid}
+          />
+          <ComposeStackNav.Screen
+            name="Compose"
+            component={ComposeScreen}
+            options={TransitionPresets.ModalPresentationIOS}
           />
           {/* Modal screens here */}
           <RootStackNav.Screen

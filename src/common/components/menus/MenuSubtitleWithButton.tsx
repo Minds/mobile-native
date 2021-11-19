@@ -1,12 +1,9 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import ThemedStyles from '../../../styles/ThemedStyles';
-import MText from '../MText';
+import { B3, B2, Row } from '~ui';
 
 type PropsType = {
   labelText: string;
   linkText: string;
-  labelStyle?: any;
   linkStyle?: any;
   containerStyle?: any;
   onLinkPress: () => void;
@@ -15,38 +12,21 @@ type PropsType = {
 const MenuSubtitleWithButton = ({
   labelText,
   linkText,
-  labelStyle,
-  linkStyle,
   containerStyle,
   onLinkPress,
 }: PropsType) => {
-  const theme = ThemedStyles.style;
-
   return (
-    <View
-      style={[theme.rowJustifySpaceBetween, theme.marginTop3x, containerStyle]}>
-      <MText style={[styles.subTitle, theme.colorSecondaryText, labelStyle]}>
-        {labelText}
-      </MText>
-      <MText
-        style={[styles.manage, theme.link, linkStyle]}
-        onPress={onLinkPress}>
+    <Row
+      align="centerBetween"
+      top="M"
+      horizontal="L"
+      containerStyle={containerStyle}>
+      <B3 color="secondary">{labelText}</B3>
+      <B2 color="link" onPress={onLinkPress}>
         {linkText}
-      </MText>
-    </View>
+      </B2>
+    </Row>
   );
 };
 
 export default MenuSubtitleWithButton;
-
-const styles = StyleSheet.create({
-  subTitle: {
-    fontFamily: 'Roboto-Regular',
-    fontSize: 13,
-    letterSpacing: 1.7,
-  },
-  manage: {
-    fontFamily: 'Roboto-Regular',
-    fontSize: 17,
-  },
-});

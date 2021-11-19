@@ -15,6 +15,7 @@ import ActivityPlaceHolder from './ActivityPlaceHolder';
 import PortraitContentBar from '../portrait/PortraitContentBar';
 import InitialOnboardingButton from '../onboarding/v2/InitialOnboardingButton';
 import { withErrorBoundary } from '../common/components/ErrorBoundary';
+import SocialCompassPrompt from '../common/components/social-compass/SocialCompassPrompt';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
@@ -45,13 +46,6 @@ class NewsfeedScreen extends Component<PropsType> {
         <ActivityPlaceHolder />
       </View>
     ),
-  };
-
-  /**
-   * Nav to activity full screen
-   */
-  navToCapture = () => {
-    this.props.navigation.navigate('Capture', {});
   };
 
   refreshNewsfeed = e => {
@@ -112,6 +106,7 @@ class NewsfeedScreen extends Component<PropsType> {
 
     const header = (
       <View>
+        <SocialCompassPrompt />
         <CheckLanguage />
         <InitialOnboardingButton />
         <PortraitContentBar ref={this.portraitBar} />

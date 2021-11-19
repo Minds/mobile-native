@@ -171,6 +171,8 @@
     "blogListEmpty": "This list is empty"
   },
   "boosts": {
+    "emptyList": "There is no boosts to display",
+    "emptyListSubtitle": "To see boosted content, go to settings and enable boosted content.",
     "selected": "SELECTED",
     "target": "TARGET",
     "boostType": "BOOST TYPE",
@@ -277,7 +279,9 @@
     "noHashtags": "Sorry, Plus monetized posts must have hashtags.",
     "noExternalLinks": "Sorry, Plus monetized posts mustn't have external links.",
     "attach": "Photo & Video Library",
-    "takePhoto": "Camera"
+    "takePhoto": "Camera",
+    "usePhoto": "Use photo",
+    "useVideo": "Use video"
   },
   "channel": {
     "editChannel": "Edit Channel",
@@ -1259,7 +1263,8 @@
     "categories": "NSFW Categories",
     "description1": "If this post contains content that is NSFW (Not Safe for Work)  it is your responsibility to tag it accordingly.",
     "description2": "See guidelines for further information.",
-    "button": "NSFW"
+    "button": "NSFW",
+    "showContent": "Show NSFW content in results"
   },
   "update": {
     "title": "Updating to v{{version}}",
@@ -1329,6 +1334,12 @@
     "rewardsSignup": "Rewards Signup",
 
     "description": "If your friend signs up for Minds within 24 hours of clicking the link you shared with them, they’ll be added to your pending referrals. Once they sign up for the rewards program by setting up their Minds wallet, the referral is complete and you’ll both get +10 added to your contribution scores!"
+  },
+  "socialCompass": {
+    "promptTitle": "Customize your content preferences",
+    "promptDesc": "Tell us a little about yourself and discover exciting new content just for you.",
+    "questionsDesc": "Complete the following questions so Minds can present you with the most appropraite content.",
+    "callToAction": "Build your algorithm"
   },
   "add": "Add",
   "downloading": "Downloading",
@@ -1534,5 +1545,6 @@
   "copyToClipboard": "Copy to Clipboard",
   "emptyList": "Sorry the list is empty",
   "and": "and",
-  "others": "others"
+  "others": "others",
+  "newMoment": "New Moment"
 }

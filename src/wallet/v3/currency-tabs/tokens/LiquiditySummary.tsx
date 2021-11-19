@@ -1,29 +1,24 @@
 import React, { useEffect } from 'react';
-import ThemedStyles from '../../../../styles/ThemedStyles';
-import { View } from 'react-native';
 import { format } from '../MindsTokens';
-import { Container, Info, Row, Title } from '../AccordionContent';
+import { Container, Info, Row, Title, RowRight } from '../AccordionContent';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import useCurrentUser from '../../../../common/hooks/useCurrentUser';
 import NavigationService from '../../../../navigation/NavigationService';
 import { observer, useLocalStore } from 'mobx-react';
 import { useIsFocused } from '@react-navigation/native';
 import TimeMultiplier from './multipliers/TimeMultiplier';
 import { Reward } from './createTokensTabStore';
+import { B3 } from '~ui';
 
 type PropsType = {
   liquidityPositions: any;
   reward: Reward;
 };
 
-export const SummaryLabel = ({ style = {}, children }) => (
-  <Row style={[{ marginRight: -25 }, style]}>{children}</Row>
-);
+export const SummaryLabel = ({ children }) => <Row>{children}</Row>;
 
 const LiquiditySummary = observer(
   ({ liquidityPositions, reward }: PropsType) => {
-    const theme = ThemedStyles.style;
     const user = useCurrentUser();
     const isFocused = useIsFocused();
 
@@ -54,55 +49,58 @@ const LiquiditySummary = observer(
           <SummaryLabel>
             <Title>Provided Liquidity</Title>
           </SummaryLabel>
-          <Row>
-            <Info>${format(providedLiquidity, false)} </Info>
-          </Row>
+          <RowRight>
+            {/* Conditional added as providedLiquidity was returning NaN on my account @rcaferati */}
+            {providedLiquidity ? (
+              <Info>${format(providedLiquidity, false)}</Info>
+            ) : null}
+          </RowRight>
         </Container>
         <Container>
           <SummaryLabel>
             <Title>Liquidity position</Title>
           </SummaryLabel>
-          <Row>
-            <Info>
-              ${format(liquidityPositions?.current_liquidity?.USD, false)}{' '}
-            </Info>
-            <View style={[theme.rowJustifyStart, theme.centered]}>
-              <Icon
-                name={`arrow-${increase ? 'up' : 'down'}`}
-                size={20}
-                color={increase ? '#59B814' : '#e03c20'}
-              />
-              <Info style={theme.colorSecondaryText}>
-                ${format(yieldLiquidity, false)}{' '}
+          <RowRight>
+            {yieldLiquidity ? (
+              <Info>
+                ${format(liquidityPositions?.current_liquidity?.USD, false)}{' '}
+                <Icon
+                  name={`arrow-${increase ? 'up' : 'down'}`}
+                  size={16}
+                  color={increase ? '#59B814' : '#e03c20'}
+                />{' '}
+                ${format(yieldLiquidity, false)}
               </Info>
-            </View>
-          </Row>
+            ) : null}
+          </RowRight>
         </Container>
         <Container>
           <SummaryLabel>
             <Title>Yield</Title>
           </SummaryLabel>
-          <Row>
-            <Info>{format(yieldLiquidityPrcnt, false)}%</Info>
-          </Row>
+          <RowRight>
+            {yieldLiquidityPrcnt ? (
+              <Info>{format(yieldLiquidityPrcnt, false)}%</Info>
+            ) : null}
+          </RowRight>
         </Container>
         <Container>
           <SummaryLabel>
             <Title>Time multiplier</Title>
           </SummaryLabel>
-          <Row>
+          <RowRight>
             <TimeMultiplier multiplier={reward.multiplier} />
-          </Row>
+          </RowRight>
         </Container>
         <Container>
           <Row>
-            <TouchableOpacity
+            <B3
+              top="S"
+              color="link"
               onPress={() => NavigationService.navigate('BoostSettingsScreen')}>
-              <Title style={theme.colorLink}>
-                {user?.liquidity_spot_opt_out ? 'Opt-in to' : 'Opt-out of'}{' '}
-                showing in liquidity spot
-              </Title>
-            </TouchableOpacity>
+              {user?.liquidity_spot_opt_out ? 'Opt-in to' : 'Opt-out of'}{' '}
+              showing in liquidity spot
+            </B3>
           </Row>
         </Container>
       </>

@@ -1,15 +1,14 @@
 import React, { useCallback } from 'react';
-import _ from 'lodash';
 import { View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { observer } from 'mobx-react';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import ThemedStyles from '../styles/ThemedStyles';
-import TopBar from './TopBar';
-import i18n from '../common/services/i18n.service';
-import NavigationService from '../navigation/NavigationService';
-import { LICENSES } from '../common/services/list-options.service';
-import MText from '../common/components/MText';
+import ThemedStyles from '../../styles/ThemedStyles';
+import TopBar from '../TopBar';
+import i18n from '../../common/services/i18n.service';
+import NavigationService from '../../navigation/NavigationService';
+import { LICENSES } from '../../common/services/list-options.service';
+import MText from '../../common/components/MText';
 
 const licenses = LICENSES.filter(l => l.selectable);
 
@@ -55,6 +54,8 @@ export default observer(function (props) {
         rightText={i18n.t('done')}
         onPressRight={NavigationService.goBack}
         onPressBack={NavigationService.goBack}
+        backIconName="chevron-left"
+        backIconSize="large"
         store={store}
       />
       <MText
@@ -67,7 +68,7 @@ export default observer(function (props) {
         {i18n.t('capture.licenseDescription')}
       </MText>
 
-      <ScrollView style={styles.body}>
+      <ScrollView>
         <MText
           style={[
             theme.paddingVertical4x,

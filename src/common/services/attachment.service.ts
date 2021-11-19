@@ -16,9 +16,7 @@ class AttachmentService {
    * @param {object} media
    * @param {function} onProgress
    */
-  async attachMedia(rawMedia, extra, onProgress = null) {
-    const media = await this.processMedia(rawMedia);
-
+  attachMedia(media, extra, onProgress = null) {
     const file = {
       uri: media.uri,
       path: media.path || null,
@@ -131,7 +129,7 @@ class AttachmentService {
     return api.get(`api/v1/media/transcoding/${guid}`);
   }
 
-  getVideoSources(guid) {
+  getVideo(guid) {
     return api.get(`api/v2/media/video/${guid}`);
   }
 

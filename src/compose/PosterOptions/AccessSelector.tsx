@@ -3,12 +3,12 @@ import { View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { observer } from 'mobx-react';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import ThemedStyles from '../styles/ThemedStyles';
-import TopBar from './TopBar';
-import i18n from '../common/services/i18n.service';
-import NavigationService from '../navigation/NavigationService';
-import { ACCESS } from '../common/services/list-options.service';
-import MText from '../common/components/MText';
+import ThemedStyles from '../../styles/ThemedStyles';
+import TopBar from '../TopBar';
+import i18n from '../../common/services/i18n.service';
+import NavigationService from '../../navigation/NavigationService';
+import { ACCESS } from '../../common/services/list-options.service';
+import MText from '../../common/components/MText';
 
 /**
  * Option
@@ -50,11 +50,13 @@ export default observer(function (props) {
       <TopBar
         leftText={i18n.t('visibility')}
         rightText={i18n.t('done')}
+        backIconName="chevron-left"
+        backIconSize="large"
         onPressRight={NavigationService.goBack}
         onPressBack={NavigationService.goBack}
         store={store}
       />
-      <ScrollView style={styles.body}>
+      <ScrollView>
         {ACCESS.map(o => (
           <Option
             option={o}

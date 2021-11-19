@@ -3,13 +3,13 @@ import {
   WalletScreenNavigationProp,
   WalletScreenRouteProp,
 } from '../../v3/WalletScreen';
-import { View, StyleSheet, Alert } from 'react-native';
+import { View, Alert } from 'react-native';
 import { WalletStoreType } from '../createWalletStore';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import MenuItem from '../../../common/components/menus/MenuItem';
 import i18n from '../../../common/services/i18n.service';
 import Button from '../../../common/components/Button';
-import MText from '../../../common/components/MText';
+import { H3, B2, B1, Spacer } from '~ui';
 
 type PropsType = {
   navigation: WalletScreenNavigationProp;
@@ -43,22 +43,25 @@ const UsdSettings = ({ walletStore, navigation }: PropsType) => {
   }, [walletStore]);
 
   return (
-    <View style={theme.paddingTop4x}>
-      <View style={theme.paddingHorizontal3x}>
-        <MText style={[theme.colorPrimaryText, styles.title]}>
-          {i18n.t('wallet.usd.bankInfo')}
-        </MText>
+    <Spacer top="M">
+      <Spacer horizontal="L">
+        <H3 bottom="S">{i18n.t('wallet.usd.bankInfo')}</H3>
         {!hasBankInfo && (
           <View style={theme.marginBottom7x}>
-            <MText style={[theme.paddingBottom3x, theme.colorSecondaryText]}>
+            <B1 color="secondary">
               {i18n.t('wallet.usd.bankInfoDescription')}
-            </MText>
-            <Button onPress={navToBankScreen} text={i18n.t('wallet.usd.add')} />
+            </B1>
+            <Spacer top="XXL">
+              <Button
+                onPress={navToBankScreen}
+                text={i18n.t('wallet.usd.add')}
+              />
+            </Spacer>
           </View>
         )}
-      </View>
+      </Spacer>
       {hasBankInfo && (
-        <View style={theme.marginBottom7x}>
+        <Spacer bottom="XL2">
           <MenuItem
             item={{
               title: hasBankAccount
@@ -67,18 +70,14 @@ const UsdSettings = ({ walletStore, navigation }: PropsType) => {
               onPress: navToBankScreen,
             }}
           />
-        </View>
+        </Spacer>
       )}
       {hasBankInfo && (
         <>
-          <View style={[theme.paddingHorizontal3x, theme.marginBottom3x]}>
-            <MText style={[theme.colorPrimaryText, styles.title]}>
-              {i18n.t('wallet.usd.leave')}
-            </MText>
-            <MText style={theme.colorSecondaryText}>
-              {i18n.t('wallet.usd.leaveDescription')}
-            </MText>
-          </View>
+          <Spacer horizontal="M" bottom="M">
+            <H3 bottom="XS">{i18n.t('wallet.usd.leave')}</H3>
+            <B2 color="secondary">{i18n.t('wallet.usd.leaveDescription')}</B2>
+          </Spacer>
           <MenuItem
             item={{
               title: i18n.t('wallet.usd.leaveButton'),
@@ -87,16 +86,8 @@ const UsdSettings = ({ walletStore, navigation }: PropsType) => {
           />
         </>
       )}
-    </View>
+    </Spacer>
   );
 };
-
-const styles = StyleSheet.create({
-  title: {
-    fontSize: 21,
-    fontFamily: 'Roboto-Medium',
-    marginBottom: 5,
-  },
-});
 
 export default UsdSettings;

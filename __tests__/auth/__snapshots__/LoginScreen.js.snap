@@ -26,6 +26,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
   }
 >
   <View
+    renderToHardwareTextureAndroid={true}
     style={
       Array [
         Array [
@@ -40,7 +41,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
           },
         ],
         Object {
-          "backgroundColor": "#242A30",
+          "backgroundColor": "#1E242A",
         },
       ]
     }
@@ -179,7 +180,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                   Array [
                     Object {
                       "color": "#AEB0B8",
-                      "fontSize": 28,
+                      "fontSize": 25.76,
                     },
                     Object {},
                     Object {
@@ -210,7 +211,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
       style={
         Array [
           Object {
-            "paddingLeft": 16,
+            "paddingHorizontal": 16,
           },
           Object {
             "paddingTop": 10,
@@ -360,7 +361,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
         style={
           Array [
             Object {
-              "paddingLeft": 16,
+              "paddingHorizontal": 16,
             },
             Object {
               "paddingTop": 10,
@@ -990,7 +991,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                 style={
                   Array [
                     Object {
-                      "paddingLeft": 16,
+                      "paddingHorizontal": 16,
                     },
                     Object {
                       "paddingTop": 10,
@@ -1166,6 +1167,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                 text="Continue"
               >
                 <Text
+                  onLayout={[Function]}
                   style={
                     Array [
                       Object {

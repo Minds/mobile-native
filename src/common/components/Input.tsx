@@ -7,12 +7,12 @@ import {
   TextStyle,
   TextInputProps,
 } from 'react-native';
-import DateTimePicker from 'react-native-modal-datetime-picker';
 import InfoPopup from './InfoPopup';
 
 import ThemedStyles from '../../styles/ThemedStyles';
 import TextInput from './TextInput';
 import MText from './MText';
+import DatePicker from './DatePicker';
 
 export interface PropsType extends TextInputProps {
   TFA?: any;
@@ -46,12 +46,6 @@ export interface PropsType extends TextInputProps {
  */
 export default class Input extends Component<PropsType> {
   timeoutCleanup = null;
-  /**
-   * State
-   */
-  state = {
-    datePickerVisible: false,
-  };
 
   /**
    * Constructor
@@ -81,20 +75,6 @@ export default class Input extends Component<PropsType> {
   }
 
   /**
-   * Show date picker
-   */
-  showDatePicker = () => {
-    this.setState({ datePickerVisible: true });
-  };
-
-  /**
-   * Dismiss date picker
-   */
-  dismissDatePicker = () => {
-    this.setState({ datePickerVisible: false });
-  };
-
-  /**
    * Confirm date picker
    */
   confirmDatePicker = date => {
@@ -107,7 +87,6 @@ export default class Input extends Component<PropsType> {
         dateString = date.toLocaleDateString();
         break;
     }
-    this.dismissDatePicker();
     this.props.onChangeText(dateString);
   };
 
@@ -134,32 +113,16 @@ export default class Input extends Component<PropsType> {
    * Date input
    */
   dateInput = () => {
-    const theme = ThemedStyles.style;
-    const maxDate = new Date();
-    maxDate.setFullYear(maxDate.getFullYear() - 13);
     return (
-      <View>
-        <TouchableOpacity
-          {...this.props}
-          style={[theme.input, this.props.style]}
-          placeholderTextColor="#444"
-          returnKeyType={'done'}
-          autoCapitalize={'none'}
-          underlineColorAndroid="transparent"
-          placeholder=""
-          onPress={this.showDatePicker}>
-          <MText style={theme.colorPrimaryText}>{this.props.value}</MText>
-        </TouchableOpacity>
-        <DateTimePicker
-          isVisible={this.state.datePickerVisible}
-          onConfirm={this.confirmDatePicker}
-          date={maxDate}
-          maximumDate={maxDate}
-          onCancel={this.dismissDatePicker}
-          mode="date"
-          display="spinner"
-        />
-      </View>
+      <DatePicker
+        hideTitle
+        spacing="S"
+        noHorizontal
+        date={this.props.value}
+        onConfirm={d => this.confirmDatePicker(d)}
+        maximumDate={this.props.maximumDate}
+        minimumDate={this.props.minimumDate}
+      />
     );
   };
 

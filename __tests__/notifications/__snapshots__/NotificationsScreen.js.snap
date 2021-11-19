@@ -28,7 +28,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
             "paddingBottom": 8,
           },
           Object {
-            "paddingLeft": 8,
+            "paddingLeft": 12,
           },
           Object {
             "flex": 1,
@@ -1672,5 +1672,15 @@ exports[`Notifications Screen Component renders correctly 1`] = `
       </View>
     </View>
   </RCTScrollView>
+  <InteractionsBottomSheet
+    entity={Object {}}
+    keepOpen={false}
+    snapPoints={
+      Array [
+        "90%",
+      ]
+    }
+    withoutInsets={true}
+  />
 </View>
 `;

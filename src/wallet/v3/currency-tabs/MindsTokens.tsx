@@ -1,13 +1,12 @@
 import React from 'react';
-import { StyleSheet, TextStyle } from 'react-native';
+import { TextStyle, ViewStyle } from 'react-native';
 import number from '~/common/helpers/number';
-import MText from '../../../common/components/MText';
 import abbrev from '../../../common/helpers/abbrev';
-import ThemedStyles from '../../../styles/ThemedStyles';
 import { EarningsCurrencyType } from '../../v2/createWalletStore';
+import { B2, Row } from '~ui';
 
 type PropsType = {
-  textStyles?: TextStyle | TextStyle[];
+  containerStyle?: ViewStyle | ViewStyle[];
   secondaryTextStyle?: TextStyle | TextStyle[];
   value: string;
   mindsPrice: string;
@@ -45,56 +44,61 @@ export const format = (number: number | string, decimals = true) => {
 };
 
 const MindsTokens = ({
-  textStyles,
-  secondaryTextStyle,
   value,
   mindsPrice,
   currencyType,
   cashAsPrimary,
+  containerStyle,
 }: PropsType) => {
   const isTokens = !currencyType || currencyType === 'tokens';
-  const theme = ThemedStyles.style;
   const mindsPriceF = parseFloat(mindsPrice);
   const mindsF = parseFloat(value);
   const cash = isTokens ? mindsPriceF * mindsF : mindsF;
+
+  const text: any = [];
+  const mindsFNumber = number(mindsF, 0, 2);
+
+  if (!isTokens) {
+    text.push(
+      <B2 font="medium" flat>
+        ${mindsFNumber}
+      </B2>,
+    );
+  } else {
+    text.push(
+      <B2 font="medium" flat>
+        {mindsFNumber}
+      </B2>,
+    );
+  }
+
+  if (isTokens) {
+    text.push(
+      <B2 flat font="medium">
+        {' '}
+      </B2>,
+    );
+    text.push(
+      <B2 flat color="secondary" font="medium">
+        tokens
+      </B2>,
+    );
+    text.push(
+      <B2 flat color="secondary" font="bold">
+        {' · '}
+      </B2>,
+    );
+    text.push(
+      <B2 flat color={cashAsPrimary ? 'primary' : 'secondary'} font="medium">
+        ${number(cash, 0, 2)}
+      </B2>,
+    );
+  }
   return (
-    <MText style={[styles.minds, textStyles]}>
-      {isTokens ? '' : '$'}
-      {number(mindsF, 0, 2)}
-      {isTokens ? (
-        <MText
-          style={[styles.cash, theme.colorSecondaryText, secondaryTextStyle]}>
-          {' '}
-          tokens{' '}
-        </MText>
-      ) : (
-        ''
-      )}
-      {isTokens && (
-        <MText
-          style={[
-            styles.cash,
-            theme.colorSecondaryText,
-            cashAsPrimary ? textStyles : secondaryTextStyle,
-          ]}>
-          · ${number(cash, 0, 2)}
-        </MText>
-      )}
-    </MText>
+    <Row containerStyle={containerStyle} align="baseline">
+      {text}
+    </Row>
   );
 };
-
-const styles = StyleSheet.create({
-  minds: {
-    fontSize: 17,
-    fontWeight: '500',
-    fontFamily: 'Roboto-Medium',
-  },
-  cash: {
-    fontSize: 15,
-    fontWeight: '500',
-    fontFamily: 'Roboto-Medium',
-  },
-});
 
 export default MindsTokens;

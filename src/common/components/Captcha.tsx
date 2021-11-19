@@ -13,6 +13,7 @@ import i18nService from '../services/i18n.service';
 import InputContainer from './InputContainer';
 import MText from './MText';
 import logService from '../services/log.service';
+import CenteredLoading from './CenteredLoading';
 
 interface CaptchaResponse extends ApiResponse {
   base64_image: string;
@@ -66,8 +67,12 @@ const Captcha = observer(
         try {
           this.setError(false);
           const response: CaptchaResponse = await api.get('api/v2/captcha');
-          store.captchaImage.uri = response.base64_image;
-          store.jwtToken = response.jwt_token;
+          if (response && response.base64_image) {
+            store.captchaImage.uri = response.base64_image;
+            store.jwtToken = response.jwt_token;
+          } else {
+            this.setError(true);
+          }
         } catch (err) {
           logService.exception(err);
           this.setError(true);
@@ -116,36 +121,38 @@ const Captcha = observer(
             )}
           </View>
           {store.captchaImage.uri !== '' && !store.error && (
-            <View style={styles.imageContainer}>
-              <Image source={src} style={styles.image} />
-              <Icon
-                name="reload"
-                type="material-community"
-                underlayColor={ThemedStyles.getColor('PrimaryBackground')}
-                size={45}
-                iconStyle={theme.colorIcon}
-                onPress={store.load}
+            <>
+              <View style={styles.imageContainer}>
+                <Image source={src} style={styles.image} />
+                <Icon
+                  name="reload"
+                  type="material-community"
+                  underlayColor={ThemedStyles.getColor('PrimaryBackground')}
+                  size={45}
+                  iconStyle={theme.colorIcon}
+                  onPress={store.load}
+                />
+              </View>
+              <InputContainer
+                labelStyle={theme.colorPrimaryText}
+                containerStyle={styles.inputContainer}
+                style={theme.colorPrimaryText}
+                placeholder={i18n.t('captcha')}
+                onChangeText={store.setText}
+                onEndEditing={store.send}
+                testID="captchaInput"
+                autofocus
               />
-            </View>
+            </>
           )}
-          {store.error ? (
+          {!store.captchaImage.uri && <CenteredLoading />}
+          {store.error && (
             <View style={theme.centered}>
               <MText style={theme.fontXL}>{i18n.t('errorMessage')}</MText>
               <MText style={styles.textSend} onPress={store.load}>
                 {i18n.t('tryAgain')}
               </MText>
             </View>
-          ) : (
-            <InputContainer
-              labelStyle={theme.colorPrimaryText}
-              containerStyle={styles.inputContainer}
-              style={theme.colorPrimaryText}
-              placeholder={i18n.t('captcha')}
-              onChangeText={store.setText}
-              onEndEditing={store.send}
-              testID="captchaInput"
-              autofocus
-            />
           )}
         </View>
       </Modal>
@@ -182,6 +189,7 @@ const styles = ThemedStyles.create({
       justifyContent: 'center',
       paddingBottom: 50,
       flexDirection: 'column',
+      minHeight: 300,
       width: '100%',
     },
   ],

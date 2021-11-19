@@ -17,9 +17,10 @@ class DownloadService {
    * @param {url} string
    * @param {object} entity
    */
-  async downloadToGallery(url: string, entity: ActivityModel) {
+  async downloadToGallery(url: string, entity?: ActivityModel, name?: string) {
     try {
-      if (Platform.OS === 'ios') {
+      // if it was iOS or the url wasn't a remote resource, use cameraroll
+      if (Platform.OS === 'ios' || url.indexOf('http') < 0) {
         return CameraRoll.save(url, { type: 'photo' });
       } else {
         let allowed = await permissionsService.checkWriteExternalStorage(true);
@@ -32,8 +33,10 @@ class DownloadService {
           return;
         }
 
-        const type = this.isGif(entity) ? 'gif' : 'jpg';
-        const filePath = `${RNFS.CachesDirectoryPath}/${entity.guid}.${type}`;
+        const type = entity && this.isGif(entity) ? 'gif' : 'jpg';
+        const filePath = `${RNFS.CachesDirectoryPath}/${
+          entity?.guid || name || 'untitled'
+        }.${type}`;
         const download = RNFS.downloadFile({
           fromUrl: url,
           toFile: filePath,

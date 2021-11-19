@@ -111,8 +111,8 @@ export function IconButton({
     const stylesObj = [styles.container, styles[size]];
     const extraStyles = getSpacingStylesNext(more);
 
-    if (extraStyles?.length) {
-      stylesObj.push(...extraStyles);
+    if (extraStyles) {
+      stylesObj.push(extraStyles);
     }
 
     if (style) {

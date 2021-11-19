@@ -42,5 +42,6 @@ const styles = StyleSheet.create({
   },
   stretch: {
     height: '100%',
+    flexGrow: 1,
   },
 });
