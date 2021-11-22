@@ -24,8 +24,8 @@ export default function ComposeBottomBar(props) {
       },
     });
   }, [navigation, props.store]);
-  const onEditPress = useCallback(
-    () => props.store.selectFromGallery(props.store.mode),
+  const onGalleryPress = useCallback(
+    () => props.store.selectFromGallery('any'),
     [props.store],
   );
 
@@ -35,7 +35,7 @@ export default function ComposeBottomBar(props) {
         <IconButton
           name="image"
           style={iconStyle}
-          onPress={onEditPress}
+          onPress={onGalleryPress}
           testID="attachImage"
           scale
         />
