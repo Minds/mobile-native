@@ -5,6 +5,10 @@ import GroupsListItem from './GroupsListItem';
 import withPreventDoubleTap from '../common/components/PreventDoubleTap';
 import OffsetList from '../common/components/OffsetList';
 import GroupModel from './GroupModel';
+import { View } from 'react-native';
+import { ScreenHeader } from '~/common/ui';
+import i18n from '~/common/services/i18n.service';
+import ThemedStyles from '~/styles/ThemedStyles';
 
 const DebouncedGroupsListItem = withErrorBoundary(
   withPreventDoubleTap(GroupsListItem),
@@ -19,11 +23,14 @@ const GroupsListScreen = observer(() => {
   );
 
   return (
-    <OffsetList
-      renderItem={renderGroup}
-      fetchEndpoint={'api/v1/groups/member'}
-      endpointData={'groups'}
-    />
+    <View style={ThemedStyles.style.flexContainer}>
+      <ScreenHeader title={i18n.t('discovery.groups')} />
+      <OffsetList
+        renderItem={renderGroup}
+        fetchEndpoint={'api/v1/groups/member'}
+        endpointData={'groups'}
+      />
+    </View>
   );
 });
 
