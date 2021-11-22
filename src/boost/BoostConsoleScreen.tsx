@@ -13,6 +13,7 @@ import BoostTabBar from './BoostTabBar';
 import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
 import MText from '../common/components/MText';
+import { Button } from '~ui';
 
 /**
  * News feed list component
@@ -61,11 +62,15 @@ export default class BoostConsoleScreen extends Component {
             <MText style={ComponentsStyle.emptyComponentMessage}>
               {i18n.t('boosts.youDontHaveBoosts')}
             </MText>
-            <MText
-              style={ComponentsStyle.emptyComponentLink}
-              onPress={() => this.props.navigation.navigate('Compose')}>
+            <Button
+              onPress={() => this.props.navigation.navigate('Capture')}
+              type="action"
+              mode="outline"
+              align="center"
+              top="L"
+              size="large">
               {i18n.t('createAPost')}
-            </MText>
+            </Button>
           </View>
         </View>
       );

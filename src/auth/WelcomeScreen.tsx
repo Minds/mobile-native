@@ -3,10 +3,10 @@ import React, { useCallback } from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Button from '../common/components/Button';
+import { Button } from '~ui';
 import i18n from '../common/services/i18n.service';
 import { AuthStackParamList } from '../navigation/NavigationTypes';
-import ThemedStyles, { useStyle } from '../styles/ThemedStyles';
+import ThemedStyles from '../styles/ThemedStyles';
 import ResetPasswordModal, {
   ResetPasswordModalHandles,
 } from './reset-password/ResetPasswordModal';
@@ -49,30 +49,19 @@ export default function WelcomeScreen(props: PropsType) {
           source={require('./../assets/logos/logo-white.png')}
           style={styles.image}
         />
-
         <View style={styles.buttonContainer}>
           <Button
-            text={i18n.t('auth.createChannel')}
+            mode="outline"
+            type="action"
+            font="medium"
+            bottom="XL"
             onPress={onRegisterPress}
-            large
-            action
-            transparent
-            containerStyle={useStyle(
-              styles.buttonContainerStyle,
-              theme.marginBottom5x,
-            )}
-          />
-          <Button
-            text={i18n.t('auth.login')}
-            onPress={onLoginPress}
-            large
-            borderless
-            color={ThemedStyles.getColor('White')}
-            containerStyle={useStyle(
-              styles.buttonContainerStyle,
-              theme.bgPrimaryBorder_Dark,
-            )}
-          />
+            darkContent>
+            {i18n.t('auth.createChannel')}
+          </Button>
+          <Button font="medium" onPress={onLoginPress}>
+            {i18n.t('auth.login')}
+          </Button>
         </View>
       </View>
       <ResetPasswordModal ref={resetRef} />

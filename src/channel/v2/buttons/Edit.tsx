@@ -1,10 +1,14 @@
 import React from 'react';
-import Button from '../../../common/components/Button';
 import i18n from '../../../common/services/i18n.service';
 import { ChannelButtonsPropsType } from '../ChannelButtons';
+import { Button } from '~ui';
 
 const Edit = (props: ChannelButtonsPropsType) => {
-  return <Button text={i18n.t('edit')} onPress={props.onEditPress} small />;
+  return (
+    <Button onPress={props.onEditPress} size="tiny" mode="outline">
+      {i18n.t('edit')}
+    </Button>
+  );
 };
 
 export default Edit;

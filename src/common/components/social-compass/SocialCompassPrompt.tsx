@@ -36,7 +36,7 @@ const SocialCompassPrompt = ({}: PropsType) => {
 
   return (
     <Column vertical="L" horizontal="L">
-      <Column align="center" vertical="XL">
+      <Column vertical="XL">
         <MText style={styles.title}>
           {i18n.t('socialCompass.promptTitle')}
         </MText>

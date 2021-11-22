@@ -7,8 +7,10 @@ const regex = /^typo_(.+)_(.+)_(.+)_(.+)_(.+)/g;
 const colorMap = {
   primary: 'colorPrimaryText',
   secondary: 'colorSecondaryText',
+  tertiary: 'colorTertiaryText',
   link: 'colorLink',
   white: 'colorWhite',
+  danger: 'colorDangerBackground',
 };
 
 /**

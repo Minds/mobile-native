@@ -1,17 +1,14 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
 import { Platform, View } from 'react-native';
-import ThemedStyles, {
-  useMemoStyle,
-  useStyle,
-} from '../../../styles/ThemedStyles';
+import ThemedStyles, { useMemoStyle } from '../../../styles/ThemedStyles';
 import capitalize from '../../../common/helpers/capitalize';
 import StripeCardSelector from '../../methods/v2/StripeCardSelector';
 import Switch from 'react-native-switch-pro';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../../navigation/NavigationTypes';
-import Button from '../../../common/components/Button';
+// import Button from '../../../common/components/Button';
 import i18n from '../../../common/services/i18n.service';
 import { UserError } from '../../../common/UserError';
 import supportTiersService from '../../../common/services/support-tiers.service';
@@ -25,6 +22,7 @@ import MenuItem, {
 import { showNotification } from '../../../../AppMessages';
 import WireStore from '../../WireStore';
 import MText from '../../../common/components/MText';
+import { Button } from '~ui';
 
 const isIos = Platform.OS === 'ios';
 
@@ -331,24 +329,15 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
                 </MText>
               )}
               <Button
-                action
+                top="L"
+                type="action"
+                mode="outline"
                 onPress={confirmSend}
-                text={payText}
-                containerStyle={useMemoStyle(
-                  [
-                    'paddingVertical2x',
-                    'marginHorizontal4x',
-                    'alignSelfStretch',
-                    store.currentTier?.subscription_urn
-                      ? styles.disabled
-                      : null,
-                  ],
-                  [store.currentTier?.subscription_urn],
-                )}
-                textStyle={useStyle('fontMedium', 'fontL')}
-                loading={store.loading}
                 disabled={!!store.currentTier?.subscription_urn}
-              />
+                spinner
+                loading={store.loading}>
+                {payText}
+              </Button>
             </View>
           </View>
         </>

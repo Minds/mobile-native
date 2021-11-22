@@ -8,8 +8,9 @@ import MenuItem from '../menus/MenuItem';
 import i18n from '../../services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { navToTierScreen } from './TierManagementScreen';
-import Button from '../../../common/components/Button';
+// import Button from '../../../common/components/Button';
 import MText from '../MText';
+import { Button } from '~ui';
 
 type PropsType = {
   tiers: SupportTiersType[];
@@ -50,10 +51,12 @@ const TiersList = observer(
 
           <Button
             onPress={onLinkPress}
-            text={i18n.t('settings.addFirstTier')}
-            large
-            action
-          />
+            mode="outline"
+            type="action"
+            size="large"
+            align="center">
+            {i18n.t('settings.addFirstTier')}
+          </Button>
         </View>
       );
     }

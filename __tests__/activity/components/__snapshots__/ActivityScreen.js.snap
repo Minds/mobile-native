@@ -1122,7 +1122,7 @@ exports[`Activity screen component renders correctly  1`] = `
                           "fontSize": 18.400000000000002,
                         },
                         Object {
-                          "marginTop": 1,
+                          "marginTop": 2,
                         },
                         Object {
                           "fontFamily": "Material Design Icons",

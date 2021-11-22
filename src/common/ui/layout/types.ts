@@ -7,6 +7,10 @@ export type SpacerPropType = {
   children?: ReactNode;
 } & UISpacingPropType;
 
+export type ItemPropType = {
+  noBorder?: boolean;
+};
+
 export type HairlinePropType = {
   noBorder?: boolean;
 };
@@ -26,7 +30,7 @@ export type RowPropType = {
 };
 
 export type ColumnPropType = {
-  align?: 'center' | 'centerStart' | 'centerEnd';
+  align?: 'centerBoth' | 'centerStart' | 'centerEnd';
   background?: 'primary' | 'secondary' | 'tertiary';
   flex?: boolean;
   stretch?: boolean;

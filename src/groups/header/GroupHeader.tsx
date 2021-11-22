@@ -14,7 +14,6 @@ import abbrev from '../../common/helpers/abbrev';
 import Toolbar from '../../common/components/toolbar/Toolbar';
 import i18n from '../../common/services/i18n.service';
 import { FLAG_JOIN } from '../../common/Permissions';
-import Button from '../../common/components/Button';
 import ThemedStyles from '../../styles/ThemedStyles';
 import ShareService from '../../share/ShareService';
 import ActivityIndicator from '../../common/components/ActivityIndicator';
@@ -26,6 +25,7 @@ import BottomSheetModal from '../../common/components/bottom-sheet/BottomSheetMo
 import MenuItem from '../../common/components/bottom-sheet/MenuItem';
 import BottomSheetButton from '../../common/components/bottom-sheet/BottomSheetButton';
 import MText from '../../common/components/MText';
+import { Button, IconButtonNext } from '~ui';
 
 type PropsTypes = {
   groupsBar: GroupsBarStore;
@@ -102,21 +102,20 @@ export default class GroupHeader extends Component<PropsTypes> {
     const store = this.props.store;
     const group = store.group;
 
-    const buttonProps = {
-      onPress: !group['is:member'] ? store.join : store.leave,
-      text: i18n.t(!group['is:member'] ? 'join' : 'leave'),
-    };
+    const onPress = !group['is:member'] ? store.join : store.leave;
 
     return (
       <Button
-        {...buttonProps}
+        onPress={onPress}
         accessibilityLabel={i18n.t('groups.subscribeMessage')}
-        containerStyle={ThemedStyles.style.marginLeft}
-        textStyle={actionButtonStyle}
-        loading={store.saving}
-        disabled={store.saving}
-        xSmall
-      />
+        mode="outline"
+        type={!group['is:member'] ? 'action' : 'base'}
+        size="tiny"
+        left="M"
+        shouldAnimateChanges={false}
+        loading={store.saving}>
+        {i18n.t(!group['is:member'] ? 'join' : 'leave')}
+      </Button>
     );
   }
 
@@ -341,22 +340,22 @@ export default class GroupHeader extends Component<PropsTypes> {
                 <MText style={styles.name}>{group.name}</MText>
               </View>
               <View style={styles.buttonscol}>
-                <Icon
+                <IconButtonNext
                   name="search"
-                  size={25}
+                  size="medium"
                   onPress={this.toggleSearch}
                   style={iconStyle}
                 />
-                <Icon
-                  name="share"
-                  size={25}
+                <IconButtonNext
+                  name="share-alt"
+                  size="medium"
                   style={iconStyle}
                   onPress={this.share}
                 />
                 {!this.props.store.group?.conversationDisabled && (
-                  <Icon
-                    name="chat-bubble-outline"
-                    size={25}
+                  <IconButtonNext
+                    name="chat"
+                    size="medium"
                     style={iconStyle}
                     onPress={this.props.onPressComment}
                   />
