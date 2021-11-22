@@ -1003,7 +1003,8 @@
       "notes2": "A small amount of ETH will be changed to cover the transaction fee.",
       "notes1": "You can transfer up to {{amount}} tokens to your on-chain wallet.",
       "errorAmountToHigh": "You don't have enough tokens",
-      "acceptTerms": "I agree and understand the terms"
+      "acceptTerms": "I agree and understand the terms",
+      "onchain_transfers": "Onchain Transfers"
     },
     "usd": {
       "bankInfo": "Bank Information",

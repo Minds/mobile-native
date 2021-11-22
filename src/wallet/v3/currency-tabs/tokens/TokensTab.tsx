@@ -21,6 +21,7 @@ import { showNotification } from '../../../../../AppMessages';
 import { TokensTabStore } from './createTokensTabStore';
 import i18n from '../../../../common/services/i18n.service';
 import { Screen, Column } from '~ui';
+import TransactionsListWithdrawals from './widthdrawal/TransactionsListWithdrawals';
 
 type PropsType = {
   walletStore: WalletStoreType;
@@ -41,6 +42,10 @@ const TokensTab = observer(({ walletStore, navigation, store }: PropsType) => {
     { id: 'earnings', title: i18n.t('wallet.usd.earnings') },
     { id: 'balance', title: i18n.t('blockchain.balance') },
     { id: 'transactions', title: i18n.t('wallet.transactions.transactions') },
+    {
+      id: 'onchain_transfers',
+      title: i18n.t('wallet.withdraw.onchain_transfers'),
+    },
     { id: 'settings', title: i18n.t('moreScreen.settings') },
   ];
 
@@ -138,6 +143,9 @@ const TokensTab = observer(({ walletStore, navigation, store }: PropsType) => {
         />
       );
       break;
+    case 'onchain_transfers':
+      body = <TransactionsListWithdrawals />;
+      break;
     case 'settings':
       body = (
         <ReceiverSettings
@@ -150,10 +158,11 @@ const TokensTab = observer(({ walletStore, navigation, store }: PropsType) => {
       break;
   }
 
-  const isTransactions = store.option === 'transactions';
+  const isScollable =
+    store.option === 'transactions' || store.option === 'onchain_transfers';
 
   return (
-    <Screen scroll={!isTransactions}>
+    <Screen scroll={!isScollable}>
       <Column top="XL" flex>
         <TokenTopBar
           walletStore={walletStore}
@@ -166,7 +175,7 @@ const TokensTab = observer(({ walletStore, navigation, store }: PropsType) => {
           onChange={store.setOption}
           scrollViewContainerStyle={theme.paddingRight2x}
         />
-        {isTransactions ? body : <Column bottom="XXL">{body}</Column>}
+        {isScollable ? body : <Column bottom="XXL">{body}</Column>}
       </Column>
     </Screen>
   );

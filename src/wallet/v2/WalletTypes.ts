@@ -5,7 +5,9 @@ export type TokensOptions =
   | 'balance'
   | 'transactions'
   | 'settings'
-  | 'earnings';
+  | 'earnings'
+  | 'onchain_transfers';
+
 export type UsdOptions = 'earnings' | 'transactions' | 'settings';
 
 export interface StripeDetails {
