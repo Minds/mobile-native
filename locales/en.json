@@ -1339,7 +1339,7 @@
   "socialCompass": {
     "promptTitle": "Customize your content preferences",
     "promptDesc": "Tell us a little about yourself and discover exciting new content just for you.",
-    "questionsDesc": "Complete the following questions so Minds can present you with the most appropraite content.",
+    "questionsDesc": "Complete the following questions so Minds can present you with the most appropriate content.",
     "callToAction": "Build your algorithm"
   },
   "add": "Add",
