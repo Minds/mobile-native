@@ -34,6 +34,7 @@ import { useBackHandler } from '@react-native-community/hooks';
 import useComposeStore from '../useComposeStore';
 import { useFocusEffect } from '@react-navigation/core';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import MText from '~/common/components/MText';
 
 const { width } = Dimensions.get('window');
 
@@ -194,13 +195,18 @@ export default observer(function ComposeScreen(props) {
           <View style={useStyle('paddingHorizontal2x', 'paddingTop')}>
             <FastImage source={avatar} style={styles.wrappedAvatar} />
           </View>
-          <View style={useStyle('flexContainer', 'marginRight2x')}>
+          <View
+            style={useStyle('flexContainer', 'marginRight2x')}
+            onLayout={e => console.log(e.nativeEvent)}>
             {!store.noText && (
               <>
                 {store.attachment.hasAttachment && <TitleInput store={store} />}
                 {/*
                   // @ts-ignore */}
                 <TextInput
+                  onSelectionChange={e =>
+                    store.selectionChanged(e.nativeEvent.selection)
+                  }
                   style={textStyle}
                   onContentSizeChange={localStore.onSizeChange}
                   ref={inputRef}
@@ -215,7 +221,7 @@ export default observer(function ComposeScreen(props) {
                   testID="PostInput">
                   {/*
                   // @ts-ignore */}
-                  <Tags>{store.text}</Tags>
+                  <MText>{store.text}</MText>
                 </TextInput>
               </>
             )}
@@ -236,6 +242,16 @@ export default observer(function ComposeScreen(props) {
               />
             )}
           </View>
+          <View
+            style={{
+              width: '100%',
+              height: 50,
+              backgroundColor: '#FFFFFF',
+              position: 'absolute',
+              top: store.textHeight + 20,
+              zIndex: 100,
+            }}
+          />
         </View>
       </ScrollView>
 

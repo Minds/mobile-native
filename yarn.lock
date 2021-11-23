@@ -1545,6 +1545,11 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@bigbee.dev/react-native-measure-text-size@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@bigbee.dev/react-native-measure-text-size/-/react-native-measure-text-size-1.0.0.tgz#e967059c597aa0cddd3d036a7d1c3f07bf379ec7"
+  integrity sha512-PDTMhdM7z3NBCYBxANKrIQuAMa79p6N1G8Ff3dwKS2v0CHc5cgofdTe0GFcuSdwo8U6cIuZzw6oYYRJGFUKt3g==
+
 "@callstack/react-theme-provider@3.0.3":
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/@callstack/react-theme-provider/-/react-theme-provider-3.0.3.tgz#f964dda28cd6e731c3fbcf916b0579c6f9fb2db7"

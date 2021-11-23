@@ -1,5 +1,6 @@
 import { showMessage } from 'react-native-flash-message';
 import RNPhotoEditor from 'react-native-photo-editor';
+import { measureHeights } from '@bigbee.dev/react-native-measure-text-size';
 
 import AttachmentStore from '../common/stores/AttachmentStore';
 import RichEmbedStore from '../common/stores/RichEmbedStore';
@@ -16,9 +17,11 @@ import attachmentService from '../common/services/attachment.service';
 import { CommonActions } from '@react-navigation/native';
 import logService from '../common/services/log.service';
 import { runInAction } from 'mobx';
-import { Image, Platform } from 'react-native';
+import { Dimensions, Image, Platform } from 'react-native';
 import { hashRegex } from '../common/components/Tags';
 import getNetworkError from '~/common/helpers/getNetworkError';
+
+const width = Dimensions.get('window').width - 80;
 
 /**
  * Display an error message to the user.
@@ -48,6 +51,11 @@ const DEFAULT_MONETIZE = {
  */
 export default function (props) {
   return {
+    selection: {
+      start: 0,
+      end: 0,
+    },
+    textHeight: 26,
     portraitMode: false,
     noText: false,
     isRemind: false,
@@ -119,6 +127,23 @@ export default function (props) {
         portrait: undefined,
         noText: undefined,
       });
+    },
+    selectionChanged(s) {
+      this.selection = s;
+      console.log('selection:', s);
+      measureHeights({
+        texts: [this.text.substr(0, this.selection.start)],
+        width: 326,
+        fontFamily: 'Roboto',
+        fontSize: 22,
+      })
+        .then(result => {
+          console.log(result);
+          this.textHeight = Math.max(result[0], 26);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     onPost(entity, isEdit) {
       const { goBack, dispatch } = props.navigation;
