@@ -2457,7 +2457,6 @@ exports[`Activity screen component renders correctly  1`] = `
         "text": "",
       }
     }
-    hideContent={false}
   />
 </View>
 `;

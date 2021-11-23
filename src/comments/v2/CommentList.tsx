@@ -135,6 +135,8 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
         ListHeaderComponent={Header}
         ListFooterComponent={Footer}
         keyExtractor={keyExtractor}
+        initialNumToRender={4}
+        maxToRenderPerBatch={4}
         onEndReached={loadMore}
         renderItem={renderItem}
         style={styles.list}

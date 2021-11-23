@@ -270,7 +270,6 @@ export default class BlogsViewScreen extends Component<PropsType> {
             {this.blogsView.comments && (
               <CommentBottomSheet
                 ref={this.commentsRef}
-                hideContent={false}
                 commentsStore={this.blogsView.comments}
               />
             )}

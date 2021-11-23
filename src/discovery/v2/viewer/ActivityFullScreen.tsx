@@ -47,7 +47,6 @@ const TEXT_MEDIUM_THRESHOLD = 300;
 
 type PropsType = {
   entity: ActivityModel;
-  showCommentsOnFocus?: boolean;
   forceAutoplay?: boolean;
 };
 
@@ -104,13 +103,6 @@ const ActivityFullScreen = observer((props: PropsType) => {
     comments: new CommentsStore(props.entity),
     scrollViewHeight: 0,
     contentHeight: 0,
-    displayComment: !props.showCommentsOnFocus,
-    showComments() {
-      store.displayComment = true;
-    },
-    hideComments() {
-      store.displayComment = false;
-    },
     onContentSizeChange(width, height) {
       store.contentHeight = height;
     },
@@ -155,13 +147,6 @@ const ActivityFullScreen = observer((props: PropsType) => {
   useEffect(() => {
     let time: any;
     if (focused) {
-      if (props.showCommentsOnFocus) {
-        time = setTimeout(() => {
-          if (store) {
-            store.showComments();
-          }
-        }, 300);
-      }
       const user = sessionService.getUser();
 
       // if we have some video playing we pause it and reset the current video
@@ -177,16 +162,13 @@ const ActivityFullScreen = observer((props: PropsType) => {
       }
     } else {
       mediaRef.current?.pauseVideo();
-      if (props.showCommentsOnFocus) {
-        store.hideComments();
-      }
     }
     return () => {
       if (time) {
         clearTimeout(time);
       }
     };
-  }, [focused, props.forceAutoplay, props.showCommentsOnFocus, store]);
+  }, [focused, props.forceAutoplay, store]);
 
   const isShortText =
     !hasMedia && !hasRemind && entity.text.length < TEXT_SHORT_THRESHOLD;
@@ -387,11 +369,9 @@ const ActivityFullScreen = observer((props: PropsType) => {
         <InteractionsActionSheet entity={entity} ref={quotesInteractionsRef} />
         <CommentBottomSheet
           ref={commentsRef}
-          hideContent={Boolean(!store.displayComment)}
           autoOpen={
             Boolean(route.params?.focusedUrn) ||
-            (Boolean(route.params?.scrollToBottom) &&
-              Boolean(commentsRef.current))
+            Boolean(route.params?.scrollToBottom)
           }
           commentsStore={store.comments}
         />
