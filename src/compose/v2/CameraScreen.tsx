@@ -159,6 +159,10 @@ export default observer(function (props) {
         stickers: ['sticker6', 'sticker9'],
         hiddenControls: ['save', 'share'],
         onDone: () => {
+          // reset the filter as a workaround because we will have to rerender the filter slider.
+          // but ideally we should keep the filter and scroll to that filter slide
+          setFilter(null);
+
           Image.getSize(
             mediaToConfirm.uri,
             (w, h) => {
