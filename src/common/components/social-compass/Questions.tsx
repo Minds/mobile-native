@@ -1,7 +1,7 @@
 import { useDimensions } from '@react-native-community/hooks';
 import { observer } from 'mobx-react';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import { BottomSheetButton } from '~/common/components/bottom-sheet';
 import CenteredLoading from '~/common/components/CenteredLoading';
 import { Spacer } from '~/common/ui';
