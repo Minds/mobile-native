@@ -121,24 +121,9 @@ export default function (props) {
       });
     },
     onPost(entity, isEdit) {
-      const { goBack, dispatch } = props.navigation;
-      const { params } = props.route;
+      const { popToTop } = props.navigation;
 
-      if (params && params.parentKey) {
-        const routeParams = {
-          group: null,
-        };
-
-        if (this.group) {
-          routeParams.group = this.group;
-        }
-
-        dispatch({
-          ...CommonActions.setParams(routeParams),
-          source: params.parentKey, // passed from index
-        });
-      }
-      goBack();
+      popToTop();
       this.clear(false);
 
       if (!isEdit) {
