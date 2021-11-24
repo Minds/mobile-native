@@ -65,8 +65,13 @@ const SocialCompassPrompt = ({}: PropsType) => {
 };
 
 const styles = ThemedStyles.create({
-  title: ['colorPrimaryText', 'fontLM', 'fontMedium', 'marginBottom'],
-  titleXL: ['colorPrimaryText', 'fontXXL', 'fontMedium', 'marginBottom4x'],
+  title: [
+    'colorPrimaryText',
+    'fontLM',
+    'fontMedium',
+    'marginBottom',
+    'textCenter',
+  ],
   desc: [
     'colorSecondaryText',
     { fontSize: 15 },
