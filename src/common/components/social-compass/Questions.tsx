@@ -1,7 +1,7 @@
+import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { useDimensions } from '@react-native-community/hooks';
 import { observer } from 'mobx-react';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { ScrollView } from 'react-native-gesture-handler';
 import { BottomSheetButton } from '~/common/components/bottom-sheet';
 import CenteredLoading from '~/common/components/CenteredLoading';
 import { Spacer } from '~/common/ui';
@@ -63,7 +63,7 @@ const Questions = observer(({ onSubmit, ...props }: PropsType) => {
 
   return (
     <>
-      <ScrollView style={containerHeight}>
+      <BottomSheetScrollView style={containerHeight}>
         <Spacer horizontal="M">
           <MText style={styles.desc}>
             {i18n.t('socialCompass.questionsDesc')}
@@ -75,7 +75,7 @@ const Questions = observer(({ onSubmit, ...props }: PropsType) => {
             />
           ))}
         </Spacer>
-      </ScrollView>
+      </BottomSheetScrollView>
       <BottomSheetButton
         loading={answering}
         action
