@@ -28,6 +28,13 @@ export default function ({ navigation }) {
     },
   ];
 
+  const referrals = [
+    {
+      title: i18n.t('settings.referrals'),
+      onPress: useNavCallback('Referrals'),
+    },
+  ];
+
   const paidContent = [
     {
       title: i18n.t('settings.otherOptions.b1'),
@@ -76,48 +83,38 @@ export default function ({ navigation }) {
   ];
 
   return (
-    <ScrollView style={[theme.flexContainer, theme.bgPrimaryBackground]}>
-      <MenuSubtitle>{i18n.t('settings.otherOptions.a')}</MenuSubtitle>
-      {contentAdmin.map((item, i) => (
-        <MenuItem item={item} i={i} />
-      ))}
-
-      {featuresService.has('paywall-2020') && (
-        <MenuSubtitle>{i18n.t('settings.otherOptions.b')}</MenuSubtitle>
-      )}
-
+    <ScrollView style={containerStyle}>
+      {generateSection(i18n.t('settings.otherOptions.a'), contentAdmin)}
+      {generateSection(i18n.t('settings.otherOptions.g'), referrals)}
       {featuresService.has('paywall-2020') &&
-        paidContent.map((item, i) => (
-          <MenuItem
-            item={item}
-            i={i}
-            containerItemStyle={i > 0 ? theme.borderTop0x : undefined}
-          />
-        ))}
-
-      <MenuSubtitle>{i18n.t('settings.otherOptions.c')}</MenuSubtitle>
-      {account.map((item, i) => (
-        <MenuItem
-          item={item}
-          i={i}
-          containerItemStyle={i > 0 ? theme.borderTop0x : undefined}
-        />
-      ))}
-
-      <MenuSubtitle>{i18n.t('settings.otherOptions.e')}</MenuSubtitle>
-      {legacy.map((item, i) => (
-        <MenuItem item={item} i={i} />
-      ))}
-
-      <MenuSubtitle>{i18n.t('settings.otherOptions.f')}</MenuSubtitle>
-      {data.map((item, i) => (
-        <MenuItem item={item} i={i} />
-      ))}
-
-      <MenuSubtitle>{i18n.t('settings.otherOptions.d')}</MenuSubtitle>
-      {info.map((item, i) => (
-        <MenuItem item={item} i={i} />
-      ))}
+        generateSection(i18n.t('settings.otherOptions.b'), paidContent)}
+      {generateSection(i18n.t('settings.otherOptions.c'), account)}
+      {generateSection(i18n.t('settings.otherOptions.e'), legacy)}
+      {generateSection(i18n.t('settings.otherOptions.f'), data)}
+      {generateSection(i18n.t('settings.otherOptions.d'), info)}
     </ScrollView>
   );
 }
+
+const generateSection = (title, items) => (
+  <>
+    <MenuSubtitle>{title}</MenuSubtitle>
+    {items.map((item, i) => (
+      <MenuItem
+        item={item}
+        i={i}
+        containerItemStyle={i > 0 ? menuItemStyle : firstMenuItemStyle}
+      />
+    ))}
+  </>
+);
+
+const firstMenuItemStyle = ThemedStyles.combine('bgPrimaryBackground');
+const menuItemStyle = ThemedStyles.combine(
+  'bgPrimaryBackground',
+  'borderTop0x',
+);
+const containerStyle = ThemedStyles.combine(
+  'flexContainer',
+  'bgSecondaryBackground',
+);

@@ -809,7 +809,8 @@
       "d": "INFO",
       "d1": "App",
       "e": "LEGACY",
-      "f": "DATA"
+      "f": "DATA",
+      "g": "REFERRALS"
     },
     "notificationsOptions": {
       "push": "Push",

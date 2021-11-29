@@ -65,43 +65,40 @@ export default function ({ navigation }) {
       screen: 'Billing',
       params: {},
     },
-
-    // {
-    //   title: i18n.t('settings.referrals'),
-    //   screen: 'Referrals',
-    //   params: {},
-    // },
-    // {
-    //   title: i18n.t('settings.chooseBrowser'),
-    //   screen: 'ChooseBrowser',
-    // },
-    {
-      title: i18n.t('settings.other'),
-      screen: 'Other',
-      params: {},
-    },
-    {
-      title: i18n.t('settings.resources'),
-      screen: 'Resources',
-      params: {},
-    },
   ];
 
-  // if (!user.plus) {
-  //   firstSection.push({
-  //     title: i18n.t('monetize.plus'),
-  //     screen: 'UpgradeScreen',
-  //     params: { onComplete: onComplete(false), pro: false },
-  //   });
-  // }
+  if (!user.plus) {
+    firstSection.push({
+      title: i18n.t('monetize.plus'),
+      screen: 'UpgradeScreen',
+      params: { onComplete: onComplete(false), pro: false },
+    });
+  }
 
-  // if (!user.pro) {
-  //   firstSection.push({
-  //     title: i18n.t('monetize.pro'),
-  //     screen: 'UpgradeScreen',
-  //     params: { onComplete: onComplete(true), pro: true },
-  //   });
-  // }
+  if (!user.pro) {
+    firstSection.push({
+      title: i18n.t('monetize.pro'),
+      screen: 'UpgradeScreen',
+      params: { onComplete: onComplete(true), pro: true },
+    });
+  }
+
+  firstSection.push({
+    title: i18n.t('settings.chooseBrowser'),
+    screen: 'ChooseBrowser',
+  });
+
+  firstSection.push({
+    title: i18n.t('settings.other'),
+    screen: 'Other',
+    params: {},
+  });
+
+  firstSection.push({
+    title: i18n.t('settings.resources'),
+    screen: 'Resources',
+    params: {},
+  });
 
   const themeChange = {
     title: i18n.t(
@@ -153,22 +150,18 @@ export default function ({ navigation }) {
     }
   };
 
-  const innerWrapper = [
-    theme.borderTopHair,
-    theme.borderBottomHair,
-    theme.bcolorPrimaryBorder,
-  ];
-
   return (
     <ScrollView
-      style={[theme.flexContainer, theme.bgPrimaryBackground]}
+      style={containerStyle}
       contentContainerStyle={theme.paddingBottom4x}>
       <ScreenHeader title={i18n.t('moreScreen.settings')} />
       <View style={[innerWrapper, theme.bgPrimaryBackground]}>
         {firstSectionItems.map((item, index) => (
           <MenuItem
             item={item}
-            containerItemStyle={index > 0 ? theme.borderTop0x : undefined}
+            containerItemStyle={
+              index > 0 ? menuItemStyle : ThemedStyles.style.bgPrimaryBackground
+            }
           />
         ))}
       </View>
@@ -176,10 +169,26 @@ export default function ({ navigation }) {
         {secondSectionItems.map((item, index) => (
           <MenuItem
             item={item}
-            containerItemStyle={index > 0 ? theme.borderTop0x : undefined}
+            containerItemStyle={
+              index > 0 ? menuItemStyle : ThemedStyles.style.bgPrimaryBackground
+            }
           />
         ))}
       </View>
     </ScrollView>
   );
 }
+
+const innerWrapper = ThemedStyles.combine(
+  'borderTopHair',
+  'borderBottomHair',
+  'bcolorPrimaryBorder',
+);
+const menuItemStyle = ThemedStyles.combine(
+  'borderTop0x',
+  'bgPrimaryBackground',
+);
+const containerStyle = ThemedStyles.combine(
+  'flexContainer',
+  'bgSecondaryBackground',
+);
