@@ -62,7 +62,6 @@ const FloatingInput = React.forwardRef(
     return (
       <Portal key={key} name={key}>
         <KeyboardSpacingView
-          noInset={true}
           style={StyleSheet.absoluteFill}
           enabled={Platform.OS === 'ios'}
           pointerEvents="box-none">
