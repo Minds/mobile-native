@@ -47,7 +47,7 @@ export default observer(function KeyboardSpacingView({
         store.height =
           heightContext -
           e.endCoordinates.screenY -
-          (noInset ? 0 : insets.bottom);
+          (noInset ? insets.bottom : 0);
         if (onKeyboardShown) {
           onKeyboardShown(store.height);
         }
