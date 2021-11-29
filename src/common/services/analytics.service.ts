@@ -10,8 +10,8 @@ import { Version } from '../../config/Version';
 import type ActivityModel from '../../newsfeed/ActivityModel';
 import type BlogModel from '../../blogs/BlogModel';
 import { getTopLevelNavigator } from '../../navigation/NavigationService';
-import GroupModel from '../../groups/GroupModel';
-import UserModel from '../../channel/UserModel';
+import type GroupModel from '../../groups/GroupModel';
+import type UserModel from '../../channel/UserModel';
 
 const IGNORE_SCREENS = ['Comments'];
 
@@ -24,25 +24,32 @@ export class AnalyticsService {
   contexts: EventContext[] = [];
 
   constructor() {
-    this.tracker = createTracker('ma', {
-      // required
-      endpoint: 'sp.minds.com',
-      appId: 'minds',
+    this.tracker = createTracker(
+      'ma',
+      {
+        // required
+        endpoint: 'sp.minds.com',
 
-      // optional
-      method: 'post',
-      protocol: 'https',
-      base64Encoded: true,
-      platformContext: true,
-      applicationContext: false,
-      lifecycleEvents: false,
-      screenContext: true,
-      sessionContext: true,
-      foregroundTimeout: 600,
-      backgroundTimeout: 300,
-      checkInterval: 15,
-      installTracking: false,
-    });
+        // optional
+        method: 'post',
+      },
+      {
+        trackerConfig: {
+          appId: 'minds',
+          platformContext: true,
+          applicationContext: false,
+          lifecycleAutotracking: false,
+          screenContext: true,
+          sessionContext: true,
+          installAutotracking: false,
+          base64Encoding: true,
+        },
+        sessionConfig: {
+          foregroundTimeout: 600,
+          backgroundTimeout: 300,
+        },
+      },
+    );
 
     const screen = Dimensions.get('screen');
     const window = Dimensions.get('window');
@@ -59,6 +66,13 @@ export class AnalyticsService {
       viewportWidth: window.width,
       viewportHeight: window.height,
     });
+  }
+
+  /**
+   * Sets the user id
+   */
+  setUserId(userId: string) {
+    this.tracker?.setUserId(userId);
   }
 
   /**
@@ -108,7 +122,10 @@ export class AnalyticsService {
    * @param screenName
    */
   trackScreenViewEvent(screenName: string) {
-    return this.tracker?.trackScreenViewEvent({ screenName }, this.contexts);
+    return this.tracker?.trackScreenViewEvent(
+      { name: screenName },
+      this.contexts,
+    );
   }
 
   /**
@@ -120,6 +137,7 @@ export class AnalyticsService {
     entity: ActivityModel | BlogModel | GroupModel | UserModel,
     clientMeta: any,
   ) {
+    console.log('TRACKING!!!');
     this.tracker?.trackSelfDescribingEvent(
       {
         schema: 'iglu:com.minds/view/jsonschema/1-0-0',
@@ -137,14 +155,18 @@ export class AnalyticsService {
             entity_owner_guid: entity.ownerObj?.guid || entity.owner_guid,
             entity_type: entity.type,
             entity_subtype:
-              !(entity instanceof GroupModel || entity instanceof UserModel) &&
-              entity.subtype
-                ? entity.subtype
+              !(
+                entity.instanceOf('GroupModel') ||
+                entity.instanceOf('UserModel')
+              ) && (entity as any).subtype
+                ? (entity as any).subtype!
                 : '',
             entity_container_guid:
-              !(entity instanceof GroupModel || entity instanceof UserModel) &&
-              entity.containerObj
-                ? entity.containerObj.guid
+              !(
+                entity.instanceOf('GroupModel') ||
+                entity.instanceOf('UserModel')
+              ) && (entity as any).containerObj!
+                ? (entity as any).containerObj!.guid
                 : '',
           },
         },

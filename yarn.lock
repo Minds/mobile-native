@@ -3111,10 +3111,10 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@snowplow/react-native-tracker@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@snowplow/react-native-tracker/-/react-native-tracker-0.2.0.tgz#504a94c82933830e1db87c987701b17dfd74c4e7"
-  integrity sha512-3+IYnJ8EGDQXwZJTqXjgju9c2cALOH29+VkTGvlHQrA4T3bnHsvfjC1xR3ZTWmwte1wMzxVz0Fv46cBNUZfB3g==
+"@snowplow/react-native-tracker@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@snowplow/react-native-tracker/-/react-native-tracker-1.0.0.tgz#5e024f4a348b91c0468a4be720be0998457d861c"
+  integrity sha512-bbrNfcyxMx1sbBa7uWXED7/a6/Ei9wH33yappS9XYqVQkuCUw0+wDR8YRep/aAHKRJ9xMGZovoiPH5h3/AWyXA==
 
 "@szmarczak/http-timer@^1.1.2":
   version "1.1.2"
