@@ -15,7 +15,7 @@ import InputContainer from '../../common/components/InputContainer';
 import i18n from '../../common/services/i18n.service';
 import MText from '../../common/components/MText';
 import { IS_IOS } from '../../config/Config';
-import { BottomSheetButton } from '../../common/components/bottom-sheet';
+import { Button, B3, Row } from '~ui';
 
 type PropsType = {
   onLogin?: Function;
@@ -87,18 +87,19 @@ export default observer(function LoginForm(props: PropsType) {
           style={styles.icon}
         />
       </View>
-      <BottomSheetButton
-        action
-        loading={localStore.inProgress}
-        text={i18n.t('auth.login')}
+      <Button
+        mode="outline"
+        type="action"
         testID="loginButton"
-        onPress={localStore.onLoginPress}
-      />
-      <View style={theme.marginTop4x}>
-        <MText style={styles.forgotText} onPress={localStore.onForgotPress}>
-          {i18n.t('auth.forgot')}
-        </MText>
-      </View>
+        spinner
+        horizontal="XL"
+        top="L"
+        onPress={localStore.onLoginPress}>
+        {i18n.t('auth.login')}
+      </Button>
+      <Row top="XL" align="centerBoth">
+        <B3 onPress={localStore.onForgotPress}>{i18n.t('auth.forgot')}</B3>
+      </Row>
       <ResetPasswordModal ref={resetRef} />
     </View>
   );

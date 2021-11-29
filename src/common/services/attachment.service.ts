@@ -129,7 +129,7 @@ class AttachmentService {
     return api.get(`api/v1/media/transcoding/${guid}`);
   }
 
-  getVideoSources(guid) {
+  getVideo(guid) {
     return api.get(`api/v2/media/video/${guid}`);
   }
 

@@ -12,6 +12,7 @@ import { inject } from 'mobx-react';
 import Input from '../../common/components/Input';
 import ThemedStyles from '../../styles/ThemedStyles';
 import MText from '../../common/components/MText';
+import { Button } from '~ui';
 
 /**
  * Email settings screen
@@ -39,15 +40,16 @@ class EmailScreen extends Component {
 
   componentDidMount() {
     const { setOptions } = this.props.navigation;
-    const CS = ThemedStyles.style;
 
     setOptions({
       headerRight: () => (
-        <MText
-          onPress={this.confirmPassword}
-          style={[CS.colorLink, CS.fontL, CS.bold]}>
+        <Button
+          type="action"
+          mode="flat"
+          size="small"
+          onPress={this.confirmPassword}>
           {i18n.t('save')}
-        </MText>
+        </Button>
       ),
     });
   }

@@ -2,13 +2,6 @@ import videoPlayerService from '../../../src/common/services/video-player.servic
 import SystemSetting from 'react-native-system-setting';
 
 jest.mock('react-native-system-setting');
-jest.mock('react-native-silent-switch');
-
-jest.mock('react-native-system-setting', () => {
-  return {
-    getVolume: jest.fn(() => Promise.resolve())
-  }
-})
 
 const mockPlayerRef1 = {
   pause: jest.fn(),

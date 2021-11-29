@@ -8,7 +8,6 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import TopBar from '../TopBar';
 import i18n from '../../common/services/i18n.service';
 import NavigationService from '../../navigation/NavigationService';
-import DateTimePicker from 'react-native-modal-datetime-picker';
 import MText from '../../common/components/MText';
 
 /**
@@ -81,13 +80,13 @@ export default observer(function (props) {
           <MText>{current.format('ddd MMM Do YYYY h.mma')}</MText>
         )}
       </TouchableOpacity>
-      <DateTimePicker
-        isVisible={localStore.picker}
+      {/* <DateTimePicker
+        open={localStore.picker}
         onConfirm={localStore.onSelect}
         date={store.time_created || new Date()}
         onCancel={localStore.hidePicker}
         mode="datetime"
-      />
+      /> */}
     </View>
   );
 });

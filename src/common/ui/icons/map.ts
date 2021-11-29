@@ -113,6 +113,11 @@ const ICON_MAP: {
     name: 'ios-share',
     top: -2,
   },
+  'share-alt': {
+    font: 'MaterialCommunityIcons',
+    name: 'share-variant',
+    ratio: 0.96,
+  },
   plus: {
     font: 'MaterialCommunityIcons',
     name: 'plus',
@@ -134,13 +139,13 @@ const ICON_MAP: {
     font: 'MaterialCommunityIcons',
     name: 'message-outline',
     ratio: 0.92,
-    top: 1,
+    top: 2,
   },
   'chat-solid': {
     font: 'MaterialCommunityIcons',
     name: 'message',
     ratio: 0.92,
-    top: 1,
+    top: 2,
   },
   'chevron-left': {
     font: 'MaterialCommunityIcons',

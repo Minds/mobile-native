@@ -2,7 +2,13 @@ import { showNotification } from 'AppMessages';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Image, StatusBar, StyleSheet, View } from 'react-native';
+import {
+  Image,
+  InteractionManager,
+  StatusBar,
+  StyleSheet,
+  View,
+} from 'react-native';
 import { showMessage } from 'react-native-flash-message';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import RNPhotoEditor from 'react-native-photo-editor';
@@ -72,6 +78,15 @@ export default observer(function (props) {
 
   // #region methods
   /**
+   * reset the state
+   */
+  const reset = useCallback(() => {
+    setFilter(null);
+    setDownloading(false);
+    setMediaToConfirm(null);
+    setExtractEnabled(false);
+  }, []);
+  /**
    * sets mode to photo
    */
   const setModePhoto = useCallback(() => setMode('photo'), []);
@@ -102,9 +117,12 @@ export default observer(function (props) {
 
       NavigationService.navigate('Compose', {
         media: extractedImage || mediaToConfirm,
+        portrait: portraitMode,
       });
+
+      InteractionManager.runAfterInteractions(reset);
     },
-    [filter, mediaToConfirm, onMediaConfirmed],
+    [filter, mediaToConfirm, onMediaConfirmed, reset, portraitMode],
   );
 
   /**
@@ -141,6 +159,10 @@ export default observer(function (props) {
         stickers: ['sticker6', 'sticker9'],
         hiddenControls: ['save', 'share'],
         onDone: () => {
+          // reset the filter as a workaround because we will have to rerender the filter slider.
+          // but ideally we should keep the filter and scroll to that filter slide
+          setFilter(null);
+
           Image.getSize(
             mediaToConfirm.uri,
             (w, h) => {

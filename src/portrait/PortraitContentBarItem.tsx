@@ -27,7 +27,7 @@ export default observer(function PortraitContentBarItem(props: PropsType) {
   }, [props.index]);
 
   return (
-    <Column align="center" horizontal="XS">
+    <Column align="centerBoth" horizontal="XS">
       <Avatar
         source={props.avatarUrl}
         onPress={props.onPress ? props.onPress : onPress}
@@ -71,11 +71,13 @@ const styles = ThemedStyles.create({
       borderRadius: 27.5,
     },
   ],
-  plusIcon: {
-    position: 'absolute',
-    right: -5,
-    bottom: -5,
-    backgroundColor: '#fff',
-    borderRadius: 100,
-  },
+  plusIcon: [
+    {
+      position: 'absolute',
+      right: -5,
+      bottom: -5,
+      borderRadius: 100,
+    },
+    'bgPrimaryBackground',
+  ],
 });

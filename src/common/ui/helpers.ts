@@ -54,7 +54,6 @@ export const getSpacingStylesNext = (props: any) => {
   }
 
   const keys = Object.keys(props);
-
   for (let i = 0; i < keys.length; i += 1) {
     const key = keys[i];
     if (
@@ -71,6 +70,7 @@ export const getSpacingStylesNext = (props: any) => {
 
     if (key === 'space') {
       styles.margin = unit;
+      continue;
     }
 
     styles[`margin${capitalizeFirst(key)}`] = unit;

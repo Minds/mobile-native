@@ -38,16 +38,17 @@ const createLoginStore = ({ props, resetRef }) => ({
     showNotification(msg, 'warning', 3000, 'top');
     this.inProgress = false;
   },
-  onLoginPress() {
+  onLoginPress(releaseButton: any) {
     this.initLogin();
     // is two factor auth
     AuthService.login(this.username, this.password)
       .then(() => {
         props.onLogin && props.onLogin();
+        releaseButton();
       })
       .catch(err => {
         const errJson = err.response ? err.response.data : err;
-
+        releaseButton();
         LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
         if (
           errJson.error === 'invalid_grant' ||

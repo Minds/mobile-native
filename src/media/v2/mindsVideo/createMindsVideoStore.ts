@@ -101,26 +101,13 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
       this.duration = duration;
     },
     async onError(err: string) {
+      console.log(err);
       // entity is null only on video previews.
       if (!entity) {
         return;
       }
-      try {
-        const response: any = await attachmentService.isTranscoding(
-          entity.entity_guid,
-        );
-        if (response.transcoding) {
-          this.transcoding = true;
-        } else {
-          logService.exception('[MindsVideo]', new Error(err));
-          this.error = true;
-          this.inProgress = false;
-        }
-      } catch (error) {
-        logService.exception('[MindsVideo]', new Error(error));
-        this.error = true;
-        this.inProgress = false;
-      }
+      this.error = true;
+      this.inProgress = false;
     },
     onVideoEnd() {
       this.player?.pauseAsync();
@@ -134,7 +121,7 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
     },
     onLoadEnd() {
       this.error = false;
-      //this.inProgress = false;
+      this.inProgress = false;
     },
     /**
      * Called once the video has been loaded.
@@ -239,22 +226,40 @@ const createMindsVideoStore = ({ entity, autoplay }) => {
           }
         }
 
-        const response: any = await attachmentService.getVideoSources(
-          entity.attachments && entity.attachments.attachment_guid
-            ? entity.attachments.attachment_guid
-            : entity.entity_guid || entity.guid,
-        );
+        try {
+          this.setInProgress(true);
+          const videoObj: any = await attachmentService.getVideo(
+            entity.attachments && entity.attachments.attachment_guid
+              ? entity.attachments.attachment_guid
+              : entity.entity_guid || entity.guid,
+          );
 
-        this.setSources(
-          response.sources.filter(
-            v =>
-              [
-                'video/mp4',
-                'video/hls',
-                'application/vnd.apple.mpegURL',
-              ].indexOf(v.type) > -1,
-          ),
-        );
+          if (videoObj && videoObj.entity.transcoding_status) {
+            this.transcoding =
+              videoObj.entity.transcoding_status !== 'completed';
+            if (this.transcoding) {
+              this.setInProgress(false);
+              return;
+            }
+          }
+
+          this.setSources(videoObj.sources);
+
+          this.setSources(
+            videoObj.sources.filter(
+              v =>
+                [
+                  'video/mp4',
+                  'video/hls',
+                  'application/vnd.apple.mpegURL',
+                ].indexOf(v.type) > -1,
+            ),
+          );
+        } catch (error) {
+          if (error instanceof Error) {
+            logService.exception('[MindsVideo]', error);
+          }
+        }
       }
 
       // do not sleep while video is playing

@@ -738,7 +738,7 @@
       "emailTitle": "Email",
       "emailDescription": "Minds will send you an email with a two-factor authentication code when no other Two-factor authentication is set-up."
     },
-    "sessionsOpened": "Your currently signed into Minds account on the following devices.",
+    "sessionsOpened": "You are currently signed into Minds account on the following devices.",
     "closeSessions": "Close all sessions",
     "closeSession": "Close session",
     "subscriptionListEmpty": "You don't have any recurring subscription",
@@ -1005,7 +1005,8 @@
       "notes2": "A small amount of ETH will be changed to cover the transaction fee.",
       "notes1": "You can transfer up to {{amount}} tokens to your on-chain wallet.",
       "errorAmountToHigh": "You don't have enough tokens",
-      "acceptTerms": "I agree and understand the terms"
+      "acceptTerms": "I agree and understand the terms",
+      "onchain_transfers": "Onchain Transfers"
     },
     "usd": {
       "bankInfo": "Bank Information",
@@ -1336,6 +1337,12 @@
     "rewardsSignup": "Rewards Signup",
 
     "description": "If your friend signs up for Minds within 24 hours of clicking the link you shared with them, they’ll be added to your pending referrals. Once they sign up for the rewards program by setting up their Minds wallet, the referral is complete and you’ll both get +10 added to your contribution scores!"
+  },
+  "socialCompass": {
+    "promptTitle": "Customize your content preferences",
+    "promptDesc": "Tell us a little about yourself and discover exciting new content just for you.",
+    "questionsDesc": "Complete the following questions so Minds can present you with the most appropriate content.",
+    "callToAction": "Build your algorithm"
   },
   "add": "Add",
   "downloading": "Downloading",

@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
 import type { TextInput as TextInputType } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
-import { IconButton, Icon } from '~ui/icons';
 import i18n from '../../common/services/i18n.service';
 import { useLegacyStores, useStores } from '../../common/hooks/use-stores';
 import { useNavigation } from '@react-navigation/core';
@@ -11,8 +10,7 @@ import { observer } from 'mobx-react';
 import KeyboardSpacingView from '../../common/components/KeyboardSpacingView';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import TextInput from '../../common/components/TextInput';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import MText from '~/common/components/MText';
+import { Button, IconButton, Icon } from '~ui';
 
 const SearchScreen = observer(() => {
   const theme = ThemedStyles.style;
@@ -88,13 +86,11 @@ const SearchScreen = observer(() => {
             />
           ) : null}
         </View>
-        <TouchableWithoutFeedback
-          style={styles.cancel}
-          onPress={handleCancelNav}>
-          <MText style={[theme.colorSecondaryText, theme.fontM]}>
+        <View>
+          <Button mode="flat" size="tiny" type="base" onPress={handleCancelNav}>
             {i18n.t('cancel')}
-          </MText>
-        </TouchableWithoutFeedback>
+          </Button>
+        </View>
       </View>
       <SearchResultComponent navigation={navigation} localStore={localStore} />
     </KeyboardSpacingView>
@@ -117,6 +113,7 @@ const styles = ThemedStyles.create({
     {
       flexDirection: 'row',
       alignItems: 'center',
+      justifyContent: 'center',
     },
   ],
   inputContainer: [

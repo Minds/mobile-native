@@ -94,7 +94,6 @@ const CommentInput = observer(() => {
 
   return (
     <KeyboardSpacingView
-      noInset={true}
       style={StyleSheet.absoluteFill}
       enabled={Platform.OS === 'ios'}
       pointerEvents="box-none">

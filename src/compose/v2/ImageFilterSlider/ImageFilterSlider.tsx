@@ -123,32 +123,34 @@ export default function ImageFilter({
   );
 
   const Filters = useMemo(() => {
-    return FILTERS.map(({ filterComponent: FilterComponent }, index) => {
-      return (
-        <FilterComponent
-          onExtractImage={_onExtractImage}
-          extractImageEnabled={activeIndex === index && extractEnabled} // one on each side
-          image={createImg(image, imageStyle)}
-        />
-      );
-    });
+    return FILTERS.slice(0, filtersToLoad).map(
+      ({ filterComponent: FilterComponent }, index) => {
+        return (
+          <FilterComponent
+            onExtractImage={_onExtractImage}
+            extractImageEnabled={activeIndex === index && extractEnabled} // one on each side
+            image={createImg(image, imageStyle)}
+          />
+        );
+      },
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [_onExtractImage, activeIndex, extractEnabled, image]);
+  }, [_onExtractImage, activeIndex, extractEnabled, image, filtersToLoad]);
 
   const filters = (
     <View style={filtersContainer}>
       {[
         <Animated.View style={[styles.filterWrapper, style0]}>
-          <Delayed delay={4}>{Filters[0]}</Delayed>
+          <Delayed delay={4}>{Filters[4]}</Delayed>
         </Animated.View>,
         <Animated.View style={[styles.filterWrapper, style1]}>
-          <Delayed delay={3}>{Filters[1]}</Delayed>
+          <Delayed delay={3}>{Filters[3]}</Delayed>
         </Animated.View>,
         <Animated.View style={[styles.filterWrapper, style2]}>
           <Delayed delay={2}>{Filters[2]}</Delayed>
         </Animated.View>,
         <Animated.View style={[styles.filterWrapper, style3]}>
-          <Delayed delay={1}>{Filters[3]}</Delayed>
+          <Delayed delay={1}>{Filters[1]}</Delayed>
         </Animated.View>,
         <Animated.View style={[styles.filterWrapper, style4]}>
           <ImagePreview fullscreen style={imageStyle} image={image} />

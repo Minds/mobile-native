@@ -70,7 +70,7 @@ PODS:
     - React-Core
   - MMKV (1.2.10):
     - MMKVCore (~> 1.2.10)
-  - MMKVCore (1.2.10)
+  - MMKVCore (1.2.11)
   - Permission-Camera (3.0.4):
     - RNPermissions
   - Permission-Microphone (3.0.4):
@@ -395,8 +395,6 @@ PODS:
     - React
   - RNConvertPhAsset (1.0.3):
     - React
-  - RNDateTimePicker (2.6.2):
-    - React
   - RNDeviceInfo (7.3.1):
     - React-Core
   - RNFastImage (8.3.5):
@@ -476,9 +474,9 @@ PODS:
     - React
   - RNVectorIcons (7.1.0):
     - React
-  - SDWebImage (5.12.0):
-    - SDWebImage/Core (= 5.12.0)
-  - SDWebImage/Core (5.12.0)
+  - SDWebImage (5.12.1):
+    - SDWebImage/Core (= 5.12.1)
+  - SDWebImage/Core (5.12.1)
   - SDWebImageWebPCoder (0.6.1):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.7)
@@ -575,7 +573,6 @@ DEPENDENCIES:
   - "RNCClipboard (from `../node_modules/@react-native-clipboard/clipboard`)"
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
   - RNConvertPhAsset (from `../node_modules/react-native-convert-ph-asset`)
-  - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNFastImage (from `../node_modules/react-native-fast-image`)
   - RNFS (from `../node_modules/react-native-fs`)
@@ -754,8 +751,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/masked-view"
   RNConvertPhAsset:
     :path: "../node_modules/react-native-convert-ph-asset"
-  RNDateTimePicker:
-    :path: "../node_modules/@react-native-community/datetimepicker"
   RNDeviceInfo:
     :path: "../node_modules/react-native-device-info"
   RNFastImage:
@@ -839,7 +834,7 @@ SPEC CHECKSUMS:
   lottie-ios: 48fac6be217c76937e36e340e2d09cf7b10b7f5f
   lottie-react-native: 69740f3742cc82d8211979e2b48681e002c22bff
   MMKV: 76033b9ace2006623308910a3afcc0e25eba3140
-  MMKVCore: b00e7a09ec77a1b916aef336eedd3b99ec249978
+  MMKVCore: f9e4f56742fdebbd042f7a273e278927f182cee7
   Permission-Camera: 74dc395c37a06ebe915069c5dca954c7a2a5a2e3
   Permission-Microphone: 450ff628a7146c415cfb98025e518810d9fa76ad
   Permission-PhotoLibrary: 440f206f0d36e5951c4c9b28567f60471fdddfb5
@@ -888,7 +883,6 @@ SPEC CHECKSUMS:
   RNCClipboard: 245417a78ab585e0d4d83926c28907e7b2bc24bd
   RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f
   RNConvertPhAsset: 9b366b8a1abc194b76572712c6f7dd89c9e4e37f
-  RNDateTimePicker: 968ccf716b3b6aee07849641966005924de5c0f9
   RNDeviceInfo: 6ecb1d1c87d20e4c62354be0348de23362824dcd
   RNFastImage: 811ade1ec186fa437ff92bd189dd6721c0ed11d9
   RNFS: 3ab21fa6c56d65566d1fb26c2228e2b6132e5e32
@@ -908,7 +902,7 @@ SPEC CHECKSUMS:
   RNSnowplowTracker: ca97090a5d73271ff946426848da26fea447c400
   RNSVG: ce9d996113475209013317e48b05c21ee988d42e
   RNVectorIcons: bc69e6a278b14842063605de32bec61f0b251a59
-  SDWebImage: 4ea20cca2986adc5aacde07aa686742fd4c67a37
+  SDWebImage: 4dc3e42d9ec0c1028b960a33ac6b637bb432207b
   SDWebImageWebPCoder: d0dac55073088d24b2ac1b191a71a8f8d0adac21
   Sentry: 89d26e036063b9cb9caa59b6951dd2f8277aa13b
   SnowplowTracker: c393b26c456142ad5a78f4e4d771c71cb194f06c

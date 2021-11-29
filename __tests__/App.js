@@ -29,15 +29,8 @@ jest.mock('../src/comments/v2/CommentBottomSheet', () => 'CommentBottomSheet');
 // use the web3 mock to prevent syntax error from node_tar
 jest.mock('web3');
 
-jest.mock('react-native-system-setting', () => {
-  return {
-    getVolume: jest.fn(() => Promise.resolve()),
-  };
-});
-
 //mock packages
 jest.mock('react-native-share-menu');
-jest.mock('react-native-silent-switch');
 jest.mock('@gorhom/bottom-sheet', () => {
   const react = require('react-native');
 

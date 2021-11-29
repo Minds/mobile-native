@@ -21,15 +21,8 @@ getStores.mockReturnValue({
   newsfeed: {},
 });
 
-jest.mock('react-native-system-setting', () => {
-  return {
-    getVolume: jest.fn(() => Promise.resolve()),
-  };
-});
-
 jest.mock('react-native-safe-area-context');
 jest.mock('react-native-material-menu');
-jest.mock('react-native-silent-switch');
 jest.mock('@react-navigation/native');
 jest.mock('react-native-gesture-handler');
 jest.mock('react-native-redash');
