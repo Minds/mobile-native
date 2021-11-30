@@ -79,7 +79,7 @@ const Questions = observer(({ onSubmit, ...props }: PropsType) => {
       <BottomSheetButton
         loading={answering}
         action
-        text="Continue"
+        text={i18n.t('save')}
         onPress={_onSubmit}
       />
     </>
