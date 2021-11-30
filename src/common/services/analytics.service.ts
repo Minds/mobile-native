@@ -137,7 +137,6 @@ export class AnalyticsService {
     entity: ActivityModel | BlogModel | GroupModel | UserModel,
     clientMeta: any,
   ) {
-    console.log('TRACKING!!!');
     this.tracker?.trackSelfDescribingEvent(
       {
         schema: 'iglu:com.minds/view/jsonschema/1-0-0',
