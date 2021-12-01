@@ -1337,10 +1337,10 @@
     "description": "If your friend signs up for Minds within 24 hours of clicking the link you shared with them, they’ll be added to your pending referrals. Once they sign up for the rewards program by setting up their Minds wallet, the referral is complete and you’ll both get +10 added to your contribution scores!"
   },
   "socialCompass": {
-    "promptTitle": "Customize your content preferences",
-    "promptDesc": "Tell us a little about yourself and discover exciting new content just for you.",
-    "questionsDesc": "Complete the following questions so Minds can present you with the most appropriate content.",
-    "callToAction": "Build your algorithm"
+    "promptTitle": "Build your algorithm",
+    "promptDesc": "Set your echo chamber preferences.",
+    "questionsDesc": "The preferences you set will improve your feed over time as the open source machine learning monkeys evolve",
+    "callToAction": "Start"
   },
   "add": "Add",
   "downloading": "Downloading",

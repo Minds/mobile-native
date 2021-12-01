@@ -86,9 +86,11 @@ const SearchScreen = observer(() => {
             />
           ) : null}
         </View>
-        <Button mode="flat" size="tiny" type="base" onPress={handleCancelNav}>
-          {i18n.t('cancel')}
-        </Button>
+        <View>
+          <Button mode="flat" size="tiny" type="base" onPress={handleCancelNav}>
+            {i18n.t('cancel')}
+          </Button>
+        </View>
       </View>
       <SearchResultComponent navigation={navigation} localStore={localStore} />
     </KeyboardSpacingView>
@@ -111,6 +113,7 @@ const styles = ThemedStyles.create({
     {
       flexDirection: 'row',
       alignItems: 'center',
+      justifyContent: 'center',
     },
   ],
   inputContainer: [
