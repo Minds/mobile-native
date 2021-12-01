@@ -218,7 +218,9 @@ const createChannelStore = () => {
       if (channel) {
         if (this.checkBanned(channel)) return false;
         this.setChannel(channel);
-        this.loadFeed();
+        if (!channel.blocked) {
+          this.loadFeed();
+        }
         return channel;
       }
       return false;
