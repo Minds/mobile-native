@@ -1,5 +1,5 @@
 import { observer, useLocalStore } from 'mobx-react';
-import React, { forwardRef, useImperativeHandle, useState } from 'react';
+import React, { forwardRef, useImperativeHandle } from 'react';
 import { View, ViewStyle } from 'react-native';
 import i18n from '../services/i18n.service';
 import ThemedStyles from '~/styles/ThemedStyles';
@@ -25,16 +25,6 @@ type PropsType = {
   minimumDate?: Date;
   onDateSelected(date: Date): void;
   containerStyle?: ViewStyle | ViewStyle[];
-};
-
-const animation = {
-  from: {
-    scale: 0,
-  },
-
-  to: {
-    scale: 1,
-  },
 };
 
 const DateTimePicker = observer(
@@ -63,15 +53,15 @@ const DateTimePicker = observer(
       }),
       [],
     );
-    const [pickerState, setPickerState] = useState<'date' | 'time'>('date');
-
     const localStore = useLocalStore(
       (p: PropsType) => ({
         selectedDate: p.date,
+        pickerState: 'date',
         get textDate() {
-          return localStore.selectedDate
-            ? localStore.selectedDate.toISOString().substring(0, 10)
-            : '';
+          return p.date ? p.date.toISOString().substring(0, 10) : '';
+        },
+        setPickerState(state: 'time' | 'date') {
+          this.pickerState = state;
         },
         openPicker() {
           bottomSheetRef.current?.present();
@@ -81,24 +71,24 @@ const DateTimePicker = observer(
         },
         setDate(calendarDate) {
           localStore.selectedDate = new Date(calendarDate.dateString);
-          setPickerState('time');
+          this.pickerState = 'time';
         },
-
         setRawDate(date) {
           localStore.selectedDate = date;
         },
-        onConfirm(date) {
+        onConfirm() {
+          const date = timePickerRef.current?.getTime();
           if (date) {
             const [hour, minute] = date.split(':');
             localStore.selectedDate?.setHours(hour);
             localStore.selectedDate?.setMinutes(minute);
           }
-          bottomSheetRef.current?.dismiss();
-        },
-        send() {
+
           if (p && p.onDateSelected && localStore.selectedDate) {
             p.onDateSelected(localStore.selectedDate);
           }
+
+          bottomSheetRef.current?.dismiss();
         },
       }),
       props,
@@ -119,7 +109,7 @@ const DateTimePicker = observer(
     const animatedStyle = useAnimatedStyle(() => ({
       transform: [
         {
-          scale: withTiming(pickerState === 'time' ? 1 : 0, {
+          scale: withTiming(localStore.pickerState === 'time' ? 1 : 0, {
             duration: 300,
           }),
         },
@@ -128,7 +118,7 @@ const DateTimePicker = observer(
     const animatedStyle2 = useAnimatedStyle(() => ({
       transform: [
         {
-          scale: withTiming(pickerState === 'time' ? 0 : 1, {
+          scale: withTiming(localStore.pickerState === 'time' ? 0 : 1, {
             duration: 300,
           }),
         },
@@ -137,7 +127,7 @@ const DateTimePicker = observer(
     const animatedStyle3 = useAnimatedStyle(() => ({
       transform: [
         {
-          translateY: withTiming(pickerState === 'time' ? 0 : 500, {
+          translateY: withTiming(localStore.pickerState === 'time' ? 0 : 500, {
             duration: 300,
           }),
         },
@@ -145,7 +135,7 @@ const DateTimePicker = observer(
     }));
 
     return (
-      <BottomSheetModal ref={bottomSheetRef} onDismiss={localStore.send}>
+      <BottomSheetModal ref={bottomSheetRef}>
         <View
           style={{
             height: 400,
@@ -167,8 +157,6 @@ const DateTimePicker = observer(
               markedDates={{
                 [localStore.textDate]: {
                   selected: true,
-
-                  disableTouchEvent: true,
                 },
               }}
               onDayPress={localStore.setDate}
@@ -190,8 +178,6 @@ const DateTimePicker = observer(
               ref={timePickerRef}
               mode="time"
               confirmButtonVisible={false}
-              current={localStore.selectedDate}
-              selected={localStore.selectedDate}
               options={{
                 backgroundColor: ThemedStyles.getColor(
                   'PrimaryBackgroundHighlight',
@@ -204,7 +190,6 @@ const DateTimePicker = observer(
                 borderColor: 'rgba(122, 146, 165, 0.1)',
               }}
               minuteInterval={5}
-              onTimeChange={localStore.onConfirm}
             />
             <MText
               style={{
@@ -217,7 +202,7 @@ const DateTimePicker = observer(
             </MText>
             <MText
               style={backButtonStyle}
-              onPress={() => setPickerState('date')}>
+              onPress={() => localStore.setPickerState('date')}>
               Back
             </MText>
           </Animated.View>
@@ -226,7 +211,7 @@ const DateTimePicker = observer(
         <Animated.View style={[animatedStyle3]}>
           <BottomSheetButton
             text={i18n.t('done')}
-            onPress={() => timePickerRef.current?.confirm()}
+            onPress={() => localStore.onConfirm()}
           />
         </Animated.View>
       </BottomSheetModal>
