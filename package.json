@@ -26,6 +26,7 @@
     "@gorhom/bottom-sheet": "^4.0.3",
     "@gorhom/portal": "^1.0.8",
     "@growthbook/growthbook": "^0.13.0",
+    "@manishoo/react-native-modern-datepicker": "^1.0.0-beta.91",
     "@msantang78/react-native-pager": "^0.2.4",
     "@react-native-clipboard/clipboard": "^1.7.0",
     "@react-native-community/art": "^1.1.2",
