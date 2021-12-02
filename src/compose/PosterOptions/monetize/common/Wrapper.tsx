@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react';
-import TopBar from '../../TopBar';
-import ThemedStyles from '../../../styles/ThemedStyles';
+import TopBar from '../../../TopBar';
+import ThemedStyles from '../../../../styles/ThemedStyles';
 import { View } from 'react-native';
-import i18n from '../../../common/services/i18n.service';
-import NavigationService from '../../../navigation/NavigationService';
+import i18n from '../../../../common/services/i18n.service';
+import NavigationService from '../../../../navigation/NavigationService';
 
 type PropsType = {
   store: any;

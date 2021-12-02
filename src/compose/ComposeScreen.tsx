@@ -1,37 +1,34 @@
-import React, { useCallback, useRef, useEffect } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import {
-  View,
   Dimensions,
+  InteractionManager,
   Keyboard,
   Platform,
-  InteractionManager,
+  View,
 } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import { Icon } from '~ui/icons';
-import ThemedStyles, {
-  useMemoStyle,
-  useStyle,
-} from '../../styles/ThemedStyles';
-import i18n from '../../common/services/i18n.service';
-import MetaPreview from '../MetaPreview';
-import TitleInput from '../TitleInput';
-import NavigationService from '../../navigation/NavigationService';
-import RemindPreview from '../RemindPreview';
-import PosterOptions from '../PosterOptions/PosterOptions';
-import TopBar from '../TopBar';
+import ThemedStyles, { useMemoStyle, useStyle } from '../styles/ThemedStyles';
+import i18n from '../common/services/i18n.service';
+import MetaPreview from './MetaPreview';
+import TitleInput from './TitleInput';
+import NavigationService from '../navigation/NavigationService';
+import RemindPreview from './RemindPreview';
+import PosterBottomSheet from './PosterOptions/PosterBottomSheet';
+import TopBar from './TopBar';
 import { ScrollView } from 'react-native-gesture-handler';
-import BottomBar from '../ComposeBottomBar';
-import MediaPreview from '../MediaPreview';
-import Tags from '../../common/components/Tags';
-import KeyboardSpacingView from '../../common/components/KeyboardSpacingView';
+import BottomBar from './ComposeBottomBar';
+import MediaPreview from './MediaPreview';
+import Tags from '../common/components/Tags';
+import KeyboardSpacingView from '../common/components/KeyboardSpacingView';
 import SoftInputMode from 'react-native-set-soft-input-mode';
-import TextInput from '../../common/components/TextInput';
-import BottomSheet from '../../common/components/bottom-sheet/BottomSheetModal';
-import BottomSheetButton from '../../common/components/bottom-sheet/BottomSheetButton';
+import TextInput from '../common/components/TextInput';
+import BottomSheet from '../common/components/bottom-sheet/BottomSheetModal';
+import BottomSheetButton from '../common/components/bottom-sheet/BottomSheetButton';
 import sessionService from '~/common/services/session.service';
 import FastImage from 'react-native-fast-image';
 import { useBackHandler } from '@react-native-community/hooks';
-import useComposeStore from '../useComposeStore';
+import useComposeStore, { ComposeContext } from './useComposeStore';
 import { useFocusEffect } from '@react-navigation/core';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -176,99 +173,103 @@ export default observer(function ComposeScreen(props) {
   // #endregion
 
   return (
-    <SafeAreaView style={styles.container}>
-      <TopBar
-        containerStyle={theme.paddingLeft}
-        rightText={rightButton}
-        onPressRight={onPost}
-        onPressBack={onPressBack}
-        store={store}
-      />
+    <ComposeContext.Provider value={store}>
+      <SafeAreaView style={styles.container}>
+        <TopBar
+          containerStyle={theme.paddingLeft}
+          rightText={rightButton}
+          onPressRight={onPost}
+          onPressBack={onPressBack}
+          store={store}
+        />
 
-      <ScrollView
-        keyboardShouldPersistTaps={'handled'}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.bodyContainer}>
-        <View style={theme.rowJustifyStart}>
-          <View style={useStyle('paddingHorizontal2x', 'paddingTop')}>
-            <FastImage source={avatar} style={styles.wrappedAvatar} />
-          </View>
-          <View style={useStyle('flexContainer', 'marginRight2x')}>
-            {!store.noText && (
-              <>
-                {store.attachment.hasAttachment && <TitleInput store={store} />}
-                {/*
-                  // @ts-ignore */}
-                <TextInput
-                  style={textStyle}
-                  onContentSizeChange={localStore.onSizeChange}
-                  ref={inputRef}
-                  scrollEnabled={false}
-                  placeholder={placeholder}
-                  placeholderTextColor={ThemedStyles.getColor('TertiaryText')}
-                  onChangeText={store.setText}
-                  textAlignVertical="top"
-                  multiline={true}
-                  selectTextOnFocus={false}
-                  underlineColorAndroid="transparent"
-                  testID="PostInput">
+        <ScrollView
+          keyboardShouldPersistTaps={'handled'}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.bodyContainer}>
+          <View style={theme.rowJustifyStart}>
+            <View style={useStyle('paddingHorizontal2x', 'paddingTop')}>
+              <FastImage source={avatar} style={styles.wrappedAvatar} />
+            </View>
+            <View style={useStyle('flexContainer', 'marginRight2x')}>
+              {!store.noText && (
+                <>
+                  {store.attachment.hasAttachment && (
+                    <TitleInput store={store} />
+                  )}
                   {/*
                   // @ts-ignore */}
-                  <Tags>{store.text}</Tags>
-                </TextInput>
-              </>
-            )}
-            <MediaPreview store={store} />
-            {store.isRemind && <RemindPreview entity={store.entity} />}
-            {
-              // @ts-ignore
-              store.isEdit && store.entity?.remind_object && (
+                  <TextInput
+                    style={textStyle}
+                    onContentSizeChange={localStore.onSizeChange}
+                    ref={inputRef}
+                    scrollEnabled={false}
+                    placeholder={placeholder}
+                    placeholderTextColor={ThemedStyles.getColor('TertiaryText')}
+                    onChangeText={store.setText}
+                    textAlignVertical="top"
+                    multiline={true}
+                    selectTextOnFocus={false}
+                    underlineColorAndroid="transparent"
+                    testID="PostInput">
+                    {/*
+                  // @ts-ignore */}
+                    <Tags>{store.text}</Tags>
+                  </TextInput>
+                </>
+              )}
+              <MediaPreview store={store} />
+              {store.isRemind && <RemindPreview entity={store.entity} />}
+              {
                 // @ts-ignore
-                <RemindPreview entity={store.entity.remind_object} />
-              )
-            }
-            {showEmbed && (
-              <MetaPreview
-                meta={store.embed.meta}
-                onRemove={store.embed.clearRichEmbed}
-                isEdit={store.isEdit}
-              />
-            )}
+                store.isEdit && store.entity?.remind_object && (
+                  // @ts-ignore
+                  <RemindPreview entity={store.entity.remind_object} />
+                )
+              }
+              {showEmbed && (
+                <MetaPreview
+                  meta={store.embed.meta}
+                  onRemove={store.embed.clearRichEmbed}
+                  isEdit={store.isEdit}
+                />
+              )}
+            </View>
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
 
-      {showBottomBar && (
-        <KeyboardSpacingView
-          enabled={Platform.OS === 'ios'}
-          noInset
-          style={styles.bottomBarContainer}>
-          <BottomBar
-            store={store}
-            onHashtag={handleHashtagPress}
-            onMoney={handleMoneyPress}
-            onOptions={handleOptionsPress}
+        {showBottomBar && (
+          <KeyboardSpacingView
+            enabled={Platform.OS === 'ios'}
+            noInset
+            style={styles.bottomBarContainer}>
+            <BottomBar
+              store={store}
+              onHashtag={handleHashtagPress}
+              onMoney={handleMoneyPress}
+              onOptions={handleOptionsPress}
+            />
+          </KeyboardSpacingView>
+        )}
+
+        <PosterBottomSheet ref={optionsRef} />
+
+        <BottomSheet
+          ref={confirmRef}
+          title={i18n.t('capture.discardPost')}
+          detail={i18n.t('capture.discardPostDescription')}>
+          <BottomSheetButton
+            text={i18n.t('capture.yesDiscard')}
+            onPress={discard}
+            action
           />
-        </KeyboardSpacingView>
-      )}
-
-      <PosterOptions ref={optionsRef} store={store} />
-
-      <BottomSheet
-        ref={confirmRef}
-        title={i18n.t('capture.discardPost')}
-        detail={i18n.t('capture.discardPostDescription')}>
-        <BottomSheetButton
-          text={i18n.t('capture.yesDiscard')}
-          onPress={discard}
-          action
-        />
-        <BottomSheetButton
-          text={i18n.t('capture.keepEditing')}
-          onPress={closeConfirm}
-        />
-      </BottomSheet>
-    </SafeAreaView>
+          <BottomSheetButton
+            text={i18n.t('capture.keepEditing')}
+            onPress={closeConfirm}
+          />
+        </BottomSheet>
+      </SafeAreaView>
+    </ComposeContext.Provider>
   );
 });
 

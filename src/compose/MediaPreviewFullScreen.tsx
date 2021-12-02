@@ -3,8 +3,8 @@ import { ResizeMode } from 'expo-av';
 import { observer } from 'mobx-react';
 import React, { useState } from 'react';
 import { Platform } from 'react-native';
-import MindsVideo from '../../media/v2/mindsVideo/MindsVideo';
-import ImagePreview from '../ImagePreview';
+import MindsVideo from '../media/v2/mindsVideo/MindsVideo';
+import ImagePreview from './ImagePreview';
 
 type PropsType = {
   mediaToConfirm: any;

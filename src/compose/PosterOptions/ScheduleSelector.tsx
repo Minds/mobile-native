@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { FC, useCallback } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -10,13 +10,20 @@ import i18n from '../../common/services/i18n.service';
 import NavigationService from '../../navigation/NavigationService';
 import MText from '../../common/components/MText';
 import DateTimePicker from '~/common/components/DateTimePicker';
+import { StackScreenProps } from '@react-navigation/stack';
+import { PosterStackParamList } from '~/compose/PosterOptions/PosterStackNavigator';
+import { useComposeContext } from '~/compose/useComposeStore';
+
+interface ScheduleSelectorProps
+  extends FC,
+    StackScreenProps<PosterStackParamList, 'ScheduleSelector'> {}
 
 /**
  * NSFW selector
  */
-export default observer(function (props) {
+export default observer(function ({}: ScheduleSelectorProps) {
   const theme = ThemedStyles.style;
-  const store = props.route.params.store;
+  const store = useComposeContext();
   const dateTimePickerRef = useRef<any>(null); // todo: don't use any
   const localStore = useLocalStore(() => ({
     showPicker() {

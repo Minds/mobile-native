@@ -38,8 +38,8 @@ import { DiscoverySearchScreen } from '../discovery/v2/search/DiscoverySearchScr
 import EmailConfirmationScreen from '../onboarding/EmailConfirmationScreen';
 import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
-import ComposeScreen from '../compose/v2/ComposeScreen';
-import CameraScreen from '../compose/v2/CameraScreen';
+import ComposeScreen from '../compose/ComposeScreen';
+import CameraScreen from '../compose/CameraScreen';
 import ChannelScreenV2 from '../channel/v2/ChannelScreen';
 import SettingsScreen from '../settings/SettingsScreen';
 import OtherScreen from '../settings/screens/OtherScreen';
@@ -48,7 +48,6 @@ import EmailScreen from '../settings/screens/EmailScreen';
 import ReceiverAddressScreen from '../wallet/v2/address/ReceiverAddressScreen';
 import BtcReceiverAddressScreen from '../wallet/v2/address/BtcAddressScreen';
 import BankInfoScreen from '../wallet/v2/address/BankInfoScreen';
-import CustomMonetizeScreen from '../compose/monetize/CustomMonetizeScreeen';
 import TierScreen from '../settings/screens/TierScreen';
 import UpgradeScreen from '../upgrade/UpgradeScreen';
 import PlusDiscoveryScreen from '../discovery/v2/PlusDiscoveryScreen';
@@ -307,11 +306,6 @@ const AppStack = function () {
           name="Messenger"
           component={MessengerScreen}
           options={{ title: i18n.t('messenger.legacyMessenger') }}
-        />
-        <AppStackNav.Screen
-          name="CustomMonetize"
-          component={CustomMonetizeScreen}
-          options={hideHeader}
         />
         <AppStackNav.Screen
           name="EmailConfirmation"

@@ -210,19 +210,6 @@ export type AppStackParamList = {
   AccessSelector: {
     store: ComposeStoreType;
   };
-  MonetizeSelector: {
-    store: ComposeStoreType;
-  };
-  PlusMonetize: {
-    store: ComposeStoreType;
-  };
-  MembershipMonetize: {
-    store: ComposeStoreType;
-    useForSelection: boolean;
-  };
-  CustomMonetize: {
-    store: ComposeStoreType;
-  };
   LicenseSelector: {};
   EmailConfirmation: {};
   Update: {};

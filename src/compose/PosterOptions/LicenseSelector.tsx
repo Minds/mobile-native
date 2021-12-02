@@ -1,5 +1,5 @@
-import React, { useCallback } from 'react';
-import { View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import React, { FC, useCallback } from 'react';
+import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { observer } from 'mobx-react';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -7,10 +7,17 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import TopBar from '../TopBar';
 import i18n from '../../common/services/i18n.service';
 import NavigationService from '../../navigation/NavigationService';
-import { LICENSES } from '../../common/services/list-options.service';
+import { LICENSES } from '~/common/services/list-options.service';
 import MText from '../../common/components/MText';
+import { StackScreenProps } from '@react-navigation/stack';
+import { PosterStackParamList } from '~/compose/PosterOptions/PosterStackNavigator';
+import { useComposeContext } from '~/compose/useComposeStore';
 
 const licenses = LICENSES.filter(l => l.selectable);
+
+interface LicenseSelectorProps
+  extends FC,
+    StackScreenProps<PosterStackParamList, 'LicenseSelector'> {}
 
 /**
  * Option
@@ -43,9 +50,9 @@ const Option = props => {
 /**
  * License selector
  */
-export default observer(function (props) {
+export default observer(function ({}: LicenseSelectorProps) {
   const theme = ThemedStyles.style;
-  const store = props.route.params.store;
+  const store = useComposeContext();
 
   return (
     <View style={[theme.flexContainer, theme.bgPrimaryBackground]}>
