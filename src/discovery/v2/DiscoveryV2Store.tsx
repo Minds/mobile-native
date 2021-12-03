@@ -26,6 +26,9 @@ export default class DiscoveryV2Store {
   @observable trends: TDiscoveryTrendsTrend[] = [];
   @observable tags: TDiscoveryTagsTag[] = [];
   @observable trendingTags: TDiscoveryTagsTag[] = [];
+  /**
+   * trends loading state
+   */
   @observable loading = false;
   /**
    * Tab animation direction
