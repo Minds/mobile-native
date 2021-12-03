@@ -127,10 +127,6 @@ const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 const AppStackNav = createNativeStackNavigator<AppStackParamList>();
 const AuthStackNav = createStackNavigator<AuthStackParamList>();
 const RootStackNav = createStackNavigator<RootStackParamList>();
-/**
- * A js stack navigator to allow animating compose screens in a way the AppStackNav doesn't allow
- */
-const ComposeStackNav = createStackNavigator<any>();
 const InternalStackNav = createNativeStackNavigator<InternalStackParamList>();
 // const MainSwiper = createMaterialTopTabNavigator<MainSwiperParamList>();
 const DrawerNav = createDrawerNavigator<DrawerParamList>();
@@ -665,12 +661,12 @@ const RootStack = function (props) {
               cardStyle: ThemedStyles.style.bgPrimaryBackground, // avoid dark fade in android transition
             }}
           />
-          <ComposeStackNav.Screen
+          <RootStackNav.Screen
             name="Capture"
             component={CameraScreen}
             options={TransitionPresets.RevealFromBottomAndroid}
           />
-          <ComposeStackNav.Screen
+          <RootStackNav.Screen
             name="Compose"
             component={ComposeScreen}
             options={TransitionPresets.ModalPresentationIOS}
