@@ -1,5 +1,5 @@
-import React, { useCallback } from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useCallback, useRef } from 'react';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import moment from 'moment-timezone';
@@ -9,6 +9,7 @@ import TopBar from '../TopBar';
 import i18n from '../../common/services/i18n.service';
 import NavigationService from '../../navigation/NavigationService';
 import MText from '../../common/components/MText';
+import DateTimePicker from '~/common/components/DateTimePicker';
 
 /**
  * NSFW selector
@@ -16,17 +17,12 @@ import MText from '../../common/components/MText';
 export default observer(function (props) {
   const theme = ThemedStyles.style;
   const store = props.route.params.store;
+  const dateTimePickerRef = useRef<any>(null); // todo: don't use any
   const localStore = useLocalStore(() => ({
-    picker: false,
     showPicker() {
-      this.picker = true;
-    },
-    hidePicker() {
-      this.picker = false;
+      dateTimePickerRef.current.show();
     },
     onSelect(data) {
-      this.picker = false;
-
       // only asign if the date is gt than now
       if (moment(data).diff(moment()) > 0) {
         store.setTimeCreated(data);
@@ -39,7 +35,6 @@ export default observer(function (props) {
   }, [store]);
 
   const current = moment(store.time_created);
-
   return (
     <View style={[theme.flexContainer, theme.bgPrimaryBackground]}>
       <TopBar
@@ -80,13 +75,12 @@ export default observer(function (props) {
           <MText>{current.format('ddd MMM Do YYYY h.mma')}</MText>
         )}
       </TouchableOpacity>
-      {/* <DateTimePicker
-        open={localStore.picker}
-        onConfirm={localStore.onSelect}
-        date={store.time_created || new Date()}
-        onCancel={localStore.hidePicker}
-        mode="datetime"
-      /> */}
+      <DateTimePicker
+        ref={dateTimePickerRef}
+        date={store.time_created}
+        minimumDate={new Date()}
+        onDateSelected={localStore.onSelect}
+      />
     </View>
   );
 });
