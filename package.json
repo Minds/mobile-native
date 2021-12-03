@@ -23,9 +23,10 @@
     "check-prettier-version": "prettier -v"
   },
   "dependencies": {
-    "@gorhom/bottom-sheet": "^4.0.3",
+    "@gorhom/bottom-sheet": "^4.1.4",
     "@gorhom/portal": "^1.0.8",
     "@growthbook/growthbook": "^0.13.0",
+    "@manishoo/react-native-modern-datepicker": "^1.0.0-beta.95",
     "@msantang78/react-native-pager": "^0.2.4",
     "@react-native-clipboard/clipboard": "^1.7.0",
     "@react-native-community/art": "^1.1.2",
@@ -93,7 +94,7 @@
     "react-native-fs": "^2.18.0",
     "react-native-gesture-handler": "^1.8.0",
     "react-native-image-colors": "^1.3.1",
-    "react-native-image-crop-picker": "^0.35.1",
+    "react-native-image-crop-picker": "0.35.3",
     "react-native-image-filter-kit": "^0.8.0",
     "react-native-image-pan-zoom": "^2.1.12",
     "react-native-image-progress": "^1.1.1",

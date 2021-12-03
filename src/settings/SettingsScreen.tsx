@@ -33,6 +33,14 @@ const navigateToHelp = async () => {
   }
 };
 
+const setDarkMode = () => {
+  if (ThemedStyles.theme) {
+    ThemedStyles.setLight();
+  } else {
+    ThemedStyles.setDark();
+  }
+};
+
 export default function ({ navigation }) {
   const theme = ThemedStyles.style;
 
@@ -49,15 +57,10 @@ export default function ({ navigation }) {
     [user],
   );
 
-  const itemsMapping = [
+  const firstSection = [
     {
       title: i18n.t('settings.account'),
       screen: 'Account',
-      params: {},
-    },
-    {
-      title: i18n.t('settings.networkOptions.1'),
-      screen: 'DataSaverScreen',
       params: {},
     },
     {
@@ -70,31 +73,10 @@ export default function ({ navigation }) {
       screen: 'Billing',
       params: {},
     },
-    {
-      title: i18n.t('settings.referrals'),
-      screen: 'Referrals',
-      params: {},
-    },
-    {
-      title: i18n.t('boost'),
-      screen: 'BoostConsole',
-    },
-    {
-      title: i18n.t('blockchain.exportLegacyWallet'),
-      screen: 'ExportLegacyWallet',
-    },
-    {
-      title: i18n.t('messenger.legacyMessenger'),
-      screen: 'Messenger',
-    },
-    {
-      title: i18n.t('settings.chooseBrowser'),
-      screen: 'ChooseBrowser',
-    },
   ];
 
   if (!user.plus) {
-    itemsMapping.push({
+    firstSection.push({
       title: i18n.t('monetize.plus'),
       screen: 'UpgradeScreen',
       params: { onComplete: onComplete(false), pro: false },
@@ -102,87 +84,109 @@ export default function ({ navigation }) {
   }
 
   if (!user.pro) {
-    itemsMapping.push({
+    firstSection.push({
       title: i18n.t('monetize.pro'),
       screen: 'UpgradeScreen',
       params: { onComplete: onComplete(true), pro: true },
     });
   }
 
-  itemsMapping.push({
+  firstSection.push({
+    title: i18n.t('settings.chooseBrowser'),
+    screen: 'ChooseBrowser',
+  });
+
+  firstSection.push({
     title: i18n.t('settings.other'),
     screen: 'Other',
     params: {},
   });
 
-  itemsMapping.push({
+  firstSection.push({
     title: i18n.t('settings.resources'),
     screen: 'Resources',
     params: {},
   });
 
-  const items = itemsMapping.map(({ title, screen, params }) => ({
-    title,
-    onPress: () => navigation.push(screen, params),
-  }));
-
-  const setDarkMode = () => {
-    if (ThemedStyles.theme) {
-      ThemedStyles.setLight();
-    } else {
-      ThemedStyles.setDark();
-    }
-  };
-
-  const innerWrapper = [
-    theme.borderTopHair,
-    theme.borderBottomHair,
-    theme.bcolorPrimaryBorder,
+  const secondSection = [
+    {
+      title: i18n.t('boost'),
+      screen: 'BoostConsole',
+    },
+    {
+      title: i18n.t(
+        ThemedStyles.theme ? 'settings.enterLight' : 'settings.enterDark',
+      ),
+      onPress: setDarkMode,
+    },
+    {
+      title: i18n.t('help'),
+      onPress: navigateToHelp,
+    },
+    {
+      title: i18n.t('settings.logout'),
+      onPress: () => AuthService.logout(),
+      icon: {
+        name: 'login-variant',
+        type: 'material-community',
+      },
+    },
   ];
 
-  const logOut = {
-    title: i18n.t('settings.logout'),
-    onPress: () => AuthService.logout(),
-    icon: {
-      name: 'login-variant',
-      type: 'material-community',
-    },
-  };
-
-  const themeChange = {
-    title: i18n.t(
-      ThemedStyles.theme ? 'settings.enterLight' : 'settings.enterDark',
-    ),
-    onPress: setDarkMode,
-  };
-
-  const help = {
-    title: i18n.t('help'),
-    onPress: navigateToHelp,
-    icon: {
-      name: 'help-circle-outline',
-      type: 'material-community',
-    },
-  };
+  const firstSectionItems = firstSection.map(
+    ({ title, screen, params, ...rest }) => ({
+      title,
+      onPress: () => navigation.push(screen, params),
+      ...rest,
+    }),
+  );
+  const secondSectionItems = secondSection.map(
+    ({ title, screen, params, ...rest }) => ({
+      title,
+      onPress: () => navigation.push(screen, params),
+      ...rest,
+    }),
+  );
 
   return (
     <ScrollView
-      style={[theme.flexContainer, theme.bgPrimaryBackground]}
+      style={containerStyle}
       contentContainerStyle={theme.paddingBottom4x}>
       <ScreenHeader title={i18n.t('moreScreen.settings')} />
       <View style={[innerWrapper, theme.bgPrimaryBackground]}>
-        {items.map((item, index) => (
+        {firstSectionItems.map((item, index) => (
           <MenuItem
             item={item}
-            containerItemStyle={index > 0 ? theme.borderTop0x : undefined}
+            containerItemStyle={
+              index > 0 ? menuItemStyle : ThemedStyles.style.bgPrimaryBackground
+            }
           />
         ))}
       </View>
       <View style={[innerWrapper, theme.marginTop7x]}>
-        <MenuItem item={themeChange} i={4} />
-        <MenuItem item={help} i={5} containerItemStyle={theme.borderTop0x} />
-        <MenuItem item={logOut} i={6} containerItemStyle={theme.borderTop0x} />
+        {secondSectionItems.map((item, index) => (
+          <MenuItem
+            item={item}
+            containerItemStyle={
+              index > 0 ? menuItemStyle : ThemedStyles.style.bgPrimaryBackground
+            }
+          />
+        ))}
       </View>
     </ScrollView>
   );
 }
+
+const innerWrapper = ThemedStyles.combine(
+  'borderTopHair',
+  'borderBottomHair',
+  'bcolorPrimaryBorder',
+);
+const menuItemStyle = ThemedStyles.combine(
+  'borderTop0x',
+  'bgPrimaryBackground',
+);
+const containerStyle = ThemedStyles.combine(
+  'flexContainer',
+  'bgSecondaryBackground',
+);

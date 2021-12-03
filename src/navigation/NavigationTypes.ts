@@ -41,6 +41,7 @@ export type InternalStackParamList = {
 };
 
 export type RootStackParamList = {
+  Compose: {};
   Capture: {
     portrait?: boolean;
     noText?: boolean;
@@ -161,7 +162,6 @@ export type AppStackParamList = {
   BoostPostScreen: { entity: ActivityModel };
   ActivityFullScreenNav: {};
   Newsfeed: {};
-  Compose: {};
   Main: {};
   Account: {};
   Network: {};

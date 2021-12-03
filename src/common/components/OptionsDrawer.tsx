@@ -9,7 +9,7 @@ const renderItem = item => (
   <MenuItem
     item={item.item}
     containerItemStyle={
-      item.index > 0 ? ThemedStyles.style.borderTop0x : undefined
+      item.index > 0 ? styles.menuItemStyle : styles.firstMenuItemStyle
     }
   />
 );
@@ -36,7 +36,9 @@ export default function ({ navigation, route }) {
 }
 
 const styles = ThemedStyles.create({
-  container: ['flexContainer', 'bgPrimaryBackground'],
+  container: ['flexContainer', 'bgSecondaryBackground'],
   innerWrapper: ['borderBottomHair', 'bcolorPrimaryBorder'],
-  list: ['bgPrimaryBackground', 'paddingTop4x'],
+  list: ['bgSecondaryBackground', 'paddingTop4x'],
+  firstMenuItemStyle: ['bgPrimaryBackground'],
+  menuItemStyle: ['bgPrimaryBackground', 'borderTop0x'],
 });

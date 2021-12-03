@@ -239,6 +239,7 @@ class AuthService {
       session.setSwitchingAccount(false);
       return true;
     } catch (err) {
+      session.setSwitchingAccount(false);
       logService.exception('[AuthService] logout', err);
       return false;
     }
