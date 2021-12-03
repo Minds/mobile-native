@@ -33,6 +33,14 @@ const navigateToHelp = async () => {
   }
 };
 
+const setDarkMode = () => {
+  if (ThemedStyles.theme) {
+    ThemedStyles.setLight();
+  } else {
+    ThemedStyles.setDark();
+  }
+};
+
 export default function ({ navigation }) {
   const theme = ThemedStyles.style;
 
@@ -100,19 +108,17 @@ export default function ({ navigation }) {
     params: {},
   });
 
-  const themeChange = {
-    title: i18n.t(
-      ThemedStyles.theme ? 'settings.enterLight' : 'settings.enterDark',
-    ),
-    onPress: setDarkMode,
-  };
-
   const secondSection = [
     {
       title: i18n.t('boost'),
       screen: 'BoostConsole',
     },
-    themeChange,
+    {
+      title: i18n.t(
+        ThemedStyles.theme ? 'settings.enterLight' : 'settings.enterDark',
+      ),
+      onPress: setDarkMode,
+    },
     {
       title: i18n.t('help'),
       onPress: navigateToHelp,
@@ -141,14 +147,6 @@ export default function ({ navigation }) {
       ...rest,
     }),
   );
-
-  const setDarkMode = () => {
-    if (ThemedStyles.theme) {
-      ThemedStyles.setLight();
-    } else {
-      ThemedStyles.setDark();
-    }
-  };
 
   return (
     <ScrollView
