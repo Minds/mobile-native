@@ -1,18 +1,13 @@
 //@ts-nocheck
 import React, { Component } from 'react';
-import {
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  TextStyle,
-  TextInputProps,
-} from 'react-native';
+import { View, StyleSheet, TextStyle, TextInputProps } from 'react-native';
 import InfoPopup from './InfoPopup';
 
 import ThemedStyles from '../../styles/ThemedStyles';
 import TextInput from './TextInput';
 import MText from './MText';
 import DatePicker from './DatePicker';
+import ErrorBoundary from './ErrorBoundary';
 
 export interface PropsType extends TextInputProps {
   TFA?: any;
@@ -154,30 +149,33 @@ export default class Input extends Component<PropsType> {
     ) : null;
 
     return (
-      <View style={styles.container}>
-        <View>
-          <View style={theme.rowStretch}>
-            <MText
-              style={[
-                styles.label,
-                theme.colorSecondaryText,
-                this.props.labelStyle,
-              ]}>
-              {this.props.placeholder}
-            </MText>
-            {this.props.info && <InfoPopup info={this.props.info} />}
-            {!!this.props.error && (
-              <View style={styles.errorContainer}>
-                <MText style={[theme.colorAlert, theme.fontL, theme.textRight]}>
-                  {this.props.error}
-                </MText>
-              </View>
-            )}
+      <ErrorBoundary>
+        <View style={styles.container}>
+          <View>
+            <View style={theme.rowStretch}>
+              <MText
+                style={[
+                  styles.label,
+                  theme.colorSecondaryText,
+                  this.props.labelStyle,
+                ]}>
+                {this.props.placeholder}
+              </MText>
+              {this.props.info && <InfoPopup info={this.props.info} />}
+              {!!this.props.error && (
+                <View style={styles.errorContainer}>
+                  <MText
+                    style={[theme.colorAlert, theme.fontL, theme.textRight]}>
+                    {this.props.error}
+                  </MText>
+                </View>
+              )}
+            </View>
+            {optional}
           </View>
-          {optional}
+          {this.renderInput()}
         </View>
-        {this.renderInput()}
-      </View>
+      </ErrorBoundary>
     );
   }
 }

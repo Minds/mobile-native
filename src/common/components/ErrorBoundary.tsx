@@ -69,11 +69,10 @@ export default class ErrorBoundary extends Component<PropsType, StateType> {
       <View style={[theme.columnAlignCenter, containerStyle]}>
         <MText
           style={[
-            textSmall ? theme.fontS : theme.fontM,
+            textSmall ? theme.fontM : theme.fontM,
             theme.textCenter,
             theme.marginTop2x,
-            theme.fontHairline,
-            theme.colorAlert,
+            theme.colorSecondaryText,
           ]}
           onPress={this.copy}>
           {this.props.message || i18n.t('errorDisplaying')}
