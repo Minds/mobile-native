@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import * as entities from 'entities';
 // import ReadMore from 'react-native-read-more-text';
 import { LinearGradient } from 'expo-linear-gradient';
-import { View, StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
 
 import ReplyAction from '../ReplyAction';
@@ -39,11 +39,7 @@ export default observer(function Comment(props: PropsType) {
 
   const mature = props.comment.mature && !props.comment.mature_visibility;
 
-  const canReply =
-    props.comment.can_reply &&
-    props.comment.parent_guid_l2 === '0' &&
-    !props.hideReply;
-
+  const canReply = props.comment.parent_guid_l2 && !props.hideReply;
   const backgroundColor = ThemedStyles.getColor(
     props.isHeader ? 'SecondaryBackground' : 'PrimaryBackground',
   );
@@ -108,6 +104,15 @@ export default observer(function Comment(props: PropsType) {
   }, [translateRef]);
 
   const reply = React.useCallback(() => {
+    // if we can't reply, open input and fill in owner username
+    if (!props.comment.can_reply) {
+      return props.store.setShowInput(
+        true,
+        undefined,
+        `@${props.comment.ownerObj.username} `,
+      );
+    }
+
     navigation.push('ReplyComment', {
       comment: props.comment,
       entity: props.store.entity,
