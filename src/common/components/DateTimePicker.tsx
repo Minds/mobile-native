@@ -75,9 +75,6 @@ const DateTimePicker = observer(
         openPicker() {
           bottomSheetRef.current?.present();
         },
-        closePicker() {
-          bottomSheetRef.current?.close();
-        },
         setDate(calendarDate) {
           localStore.selectedDate = new Date(calendarDate.dateString);
           this.pickerState = 'time';

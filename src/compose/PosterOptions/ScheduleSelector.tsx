@@ -19,7 +19,6 @@ export default observer(function (props) {
   const store = props.route.params.store;
   const dateTimePickerRef = useRef<any>(null); // todo: don't use any
   const localStore = useLocalStore(() => ({
-    // picker: false,
     showPicker() {
       dateTimePickerRef.current.show();
     },
