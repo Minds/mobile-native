@@ -44,11 +44,12 @@ const FeedFilter = (props: PropsType) => {
         title: i18n.t(`discovery.${f}`),
         onPress: () => {
           close();
+          // we need to delay due to a bug on the bottomsheet that opens it again if rendered too fast
           setTimeout(() => {
             if (props.store && props.store.setFilter) {
               props.store.setFilter(f);
             }
-          }, 200);
+          }, 1000);
         },
         selected: props.store.filter === f,
       })),
