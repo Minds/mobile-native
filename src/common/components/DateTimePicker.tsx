@@ -1,11 +1,10 @@
 import { observer, useLocalStore } from 'mobx-react';
 import React, { forwardRef, useImperativeHandle, useMemo } from 'react';
-import { View, ViewStyle } from 'react-native';
+import { View } from 'react-native';
 import i18n from '../services/i18n.service';
 import ThemedStyles, { useStyle } from '~/styles/ThemedStyles';
 import { BottomSheetButton, BottomSheetModal } from './bottom-sheet';
 import type { BottomSheetModal as BottomSheetModalType } from '@gorhom/bottom-sheet';
-import { UIUnitType } from '~/styles/Tokens';
 import ModernDatePicker from '@manishoo/react-native-modern-datepicker';
 import { Calendar } from 'react-native-calendars';
 import MText from '~/common/components/MText';
@@ -17,14 +16,10 @@ import Animated, {
 import moment from 'moment';
 
 type PropsType = {
-  hideTitle?: boolean;
-  noHorizontal?: boolean;
-  spacing?: UIUnitType;
   date?: Date | null;
   maximumDate?: Date;
   minimumDate?: Date;
   onDateSelected(date: Date): void;
-  containerStyle?: ViewStyle | ViewStyle[];
 };
 
 const DateTimePicker = observer(
@@ -70,13 +65,9 @@ const DateTimePicker = observer(
         selectedDate: p.date,
         pickerState: 'date',
         get textDate() {
-          console.log('p.date', p.date);
           if (!p.date) return '';
 
-          const tzoffset = new Date().getTimezoneOffset() * 60000; //offset in milliseconds
-          return new Date(Number(p.date) - tzoffset)
-            .toISOString()
-            .substring(0, 10);
+          return moment(p.date).format('YYYY-MM-DD');
         },
         setPickerState(state: 'time' | 'date') {
           this.pickerState = state;
