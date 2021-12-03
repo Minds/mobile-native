@@ -1,5 +1,6 @@
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { useDimensions } from '@react-native-community/hooks';
+import { showNotification } from 'AppMessages';
 import { observer } from 'mobx-react';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { BottomSheetButton } from '~/common/components/bottom-sheet';
@@ -53,6 +54,7 @@ const Questions = observer(({ onSubmit, ...props }: PropsType) => {
 
   const _onSubmit = useCallback(async () => {
     await answer();
+    showNotification(i18n.t('socialCompass.thanks'), 'success', 3000, 'top');
     onSubmit();
   }, [answer, onSubmit]);
   // #endregion
