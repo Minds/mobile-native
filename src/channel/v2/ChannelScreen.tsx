@@ -88,6 +88,7 @@ const ChannelScreen = observer((props: PropsType) => {
   const topBarAnimationEnabled = useRef(true);
   const channelContext = useMemo(
     () => ({
+      channel: store.channel || undefined,
       /**
        * when the user tapped on channel when they were
        * on that channel page, wiggle the feedList scroll
@@ -98,7 +99,7 @@ const ChannelScreen = observer((props: PropsType) => {
         setTimeout(() => (topBarAnimationEnabled.current = true), 500);
       },
     }),
-    [feedRef],
+    [feedRef, store.channel],
   );
   const bannerUri = store.channel?.getBannerSource().uri;
   const subscribersActionSheetRef = useRef<any>(null);
