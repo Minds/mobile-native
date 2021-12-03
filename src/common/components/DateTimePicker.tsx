@@ -162,7 +162,7 @@ const DateTimePicker = observer(
     });
 
     return (
-      <BottomSheetModal ref={bottomSheetRef}>
+      <BottomSheetModal ref={bottomSheetRef} enableDismissOnClose>
         <View style={styles.container}>
           <Animated.View style={[calendarAnimatedStyle, viewStyle]}>
             <Calendar
