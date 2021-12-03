@@ -21,15 +21,9 @@ export default observer(function (props) {
   const localStore = useLocalStore(() => ({
     // picker: false,
     showPicker() {
-      // this.picker = true;
       dateTimePickerRef.current.show();
     },
-    hidePicker() {
-      // this.picker = false;
-    },
     onSelect(data) {
-      // this.picker = false;
-      //
       // only asign if the date is gt than now
       if (moment(data).diff(moment()) > 0) {
         store.setTimeCreated(data);
@@ -85,6 +79,7 @@ export default observer(function (props) {
       <DateTimePicker
         ref={dateTimePickerRef}
         date={store.time_created}
+        minimumDate={new Date()}
         onDateSelected={localStore.onSelect}
       />
     </View>
