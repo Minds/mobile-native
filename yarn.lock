@@ -2609,10 +2609,10 @@
   dependencies:
     "@json-rpc-tools/types" "^1.6.1"
 
-"@manishoo/react-native-modern-datepicker@^1.0.0-beta.94":
-  version "1.0.0-beta.94"
-  resolved "https://registry.yarnpkg.com/@manishoo/react-native-modern-datepicker/-/react-native-modern-datepicker-1.0.0-beta.94.tgz#1a7576cc615e851b3645533e61267e3baf5dab0f"
-  integrity sha512-uo8ne/rlh7fpb75uJssfIz7G3RvIZQmV0I5fl28LBchig2sHWmdH0B4N3HDx4kopmSH+xfAQuKuTBStd+ik3tA==
+"@manishoo/react-native-modern-datepicker@^1.0.0-beta.95":
+  version "1.0.0-beta.95"
+  resolved "https://registry.yarnpkg.com/@manishoo/react-native-modern-datepicker/-/react-native-modern-datepicker-1.0.0-beta.95.tgz#59e2cc0c2a8a7c927a58c7649caaa2fb9cb15b01"
+  integrity sha512-FC14PEV25JF6GrcDV2Z7DyHayINDdIteeCbqakW0kfOLGmq/Bs5ZrvhLtH1QbZVH8rDBx6NQiCF+RX95Uv5Vag==
   dependencies:
     moment-jalaali "^0.9.2"
     prop-types "^15.7.2"

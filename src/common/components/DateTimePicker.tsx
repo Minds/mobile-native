@@ -1,8 +1,8 @@
 import { observer, useLocalStore } from 'mobx-react';
-import React, { forwardRef, useImperativeHandle } from 'react';
+import React, { forwardRef, useImperativeHandle, useMemo } from 'react';
 import { View, ViewStyle } from 'react-native';
 import i18n from '../services/i18n.service';
-import ThemedStyles from '~/styles/ThemedStyles';
+import ThemedStyles, { useStyle } from '~/styles/ThemedStyles';
 import { BottomSheetButton, BottomSheetModal } from './bottom-sheet';
 import type { BottomSheetModal as BottomSheetModalType } from '@gorhom/bottom-sheet';
 import { UIUnitType } from '~/styles/Tokens';
@@ -53,12 +53,30 @@ const DateTimePicker = observer(
       }),
       [],
     );
+    const timePickerOptions = useMemo(
+      () => ({
+        backgroundColor: ThemedStyles.getColor('PrimaryBackgroundHighlight'),
+        textHeaderColor: ThemedStyles.getColor('PrimaryText'),
+        textDefaultColor: ThemedStyles.getColor('PrimaryText'),
+        selectedTextColor: ThemedStyles.getColor('PrimaryText'),
+        mainColor: ThemedStyles.getColor('Link'),
+        textSecondaryColor: ThemedStyles.getColor('SecondaryText'),
+        borderColor: 'rgba(122, 146, 165, 0.1)',
+      }),
+      [],
+    );
     const localStore = useLocalStore(
       (p: PropsType) => ({
         selectedDate: p.date,
         pickerState: 'date',
         get textDate() {
-          return p.date ? p.date.toISOString().substring(0, 10) : '';
+          console.log('p.date', p.date);
+          if (!p.date) return '';
+
+          const tzoffset = new Date().getTimezoneOffset() * 60000; //offset in milliseconds
+          return new Date(Number(p.date) - tzoffset)
+            .toISOString()
+            .substring(0, 10);
         },
         setPickerState(state: 'time' | 'date') {
           this.pickerState = state;
@@ -90,6 +108,9 @@ const DateTimePicker = observer(
 
           bottomSheetRef.current?.dismiss();
         },
+        onBack() {
+          this.pickerState = 'date';
+        },
       }),
       props,
     );
@@ -106,7 +127,7 @@ const DateTimePicker = observer(
       }
     }, [localStore, props.date]);
 
-    const animatedStyle = useAnimatedStyle(() => ({
+    const timePickerAnimatedStyle = useAnimatedStyle(() => ({
       transform: [
         {
           scale: withTiming(localStore.pickerState === 'time' ? 1 : 0, {
@@ -115,7 +136,7 @@ const DateTimePicker = observer(
         },
       ],
     }));
-    const animatedStyle2 = useAnimatedStyle(() => ({
+    const calendarAnimatedStyle = useAnimatedStyle(() => ({
       transform: [
         {
           scale: withTiming(localStore.pickerState === 'time' ? 0 : 1, {
@@ -124,7 +145,7 @@ const DateTimePicker = observer(
         },
       ],
     }));
-    const animatedStyle3 = useAnimatedStyle(() => ({
+    const bottomSheetButtonAnimatedStyle = useAnimatedStyle(() => ({
       transform: [
         {
           translateY: withTiming(localStore.pickerState === 'time' ? 0 : 500, {
@@ -133,23 +154,17 @@ const DateTimePicker = observer(
         },
       ],
     }));
+    const viewStyle = useStyle({
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width,
+    });
 
     return (
       <BottomSheetModal ref={bottomSheetRef}>
-        <View
-          style={{
-            height: 400,
-          }}>
-          <Animated.View
-            style={[
-              animatedStyle2,
-              {
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width,
-              },
-            ]}>
+        <View style={styles.container}>
+          <Animated.View style={[calendarAnimatedStyle, viewStyle]}>
             <Calendar
               current={localStore.textDate}
               maxDate={props.maximumDate}
@@ -164,60 +179,45 @@ const DateTimePicker = observer(
             />
           </Animated.View>
 
-          <Animated.View
-            style={[
-              animatedStyle,
-              {
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width,
-              },
-            ]}>
+          <Animated.View style={[timePickerAnimatedStyle, viewStyle]}>
             <ModernDatePicker
               ref={timePickerRef}
               mode="time"
               confirmButtonVisible={false}
-              options={{
-                backgroundColor: ThemedStyles.getColor(
-                  'PrimaryBackgroundHighlight',
-                ),
-                textHeaderColor: ThemedStyles.getColor('PrimaryText'),
-                textDefaultColor: ThemedStyles.getColor('PrimaryText'),
-                selectedTextColor: ThemedStyles.getColor('PrimaryText'),
-                mainColor: ThemedStyles.getColor('Link'),
-                textSecondaryColor: ThemedStyles.getColor('SecondaryText'),
-                borderColor: 'rgba(122, 146, 165, 0.1)',
-              }}
+              options={timePickerOptions}
               minuteInterval={5}
             />
-            <MText
-              style={{
-                position: 'absolute',
-                top: 16,
-                fontSize: 18,
-                alignSelf: 'center',
-              }}>
+            <MText style={styles.timePickerTitle}>
               {moment(localStore.selectedDate).format('MMMM Do')}
             </MText>
-            <MText
-              style={backButtonStyle}
-              onPress={() => localStore.setPickerState('date')}>
+            <MText style={backButtonStyle} onPress={localStore.onBack}>
               Back
             </MText>
           </Animated.View>
         </View>
 
-        <Animated.View style={[animatedStyle3]}>
+        <Animated.View style={bottomSheetButtonAnimatedStyle}>
           <BottomSheetButton
             text={i18n.t('done')}
-            onPress={() => localStore.onConfirm()}
+            onPress={localStore.onConfirm}
           />
         </Animated.View>
       </BottomSheetModal>
     );
   }),
 );
+
+const styles = ThemedStyles.create({
+  container: {
+    height: 400,
+  },
+  timePickerTitle: {
+    position: 'absolute',
+    top: 16,
+    fontSize: 18,
+    alignSelf: 'center',
+  },
+});
 
 const backButtonStyle = ThemedStyles.combine('colorLink', 'fontL', {
   position: 'absolute',

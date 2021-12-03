@@ -42,7 +42,6 @@ export default observer(function (props) {
   }, [store]);
 
   const current = moment(store.time_created);
-
   return (
     <View style={[theme.flexContainer, theme.bgPrimaryBackground]}>
       <TopBar
@@ -85,7 +84,7 @@ export default observer(function (props) {
       </TouchableOpacity>
       <DateTimePicker
         ref={dateTimePickerRef}
-        date={store.rewardsSelectedDate}
+        date={store.time_created}
         onDateSelected={localStore.onSelect}
       />
     </View>
