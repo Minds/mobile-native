@@ -19,7 +19,7 @@ const createBankInfoStore = wallet => ({
   },
   get dob() {
     return this.wallet.stripeDetails.dob
-      ? new Date(this.wallet.stripeDetails.dob).toLocaleDateString()
+      ? new Date(this.wallet.stripeDetails.dob)
       : '';
   },
   setPhoneNumber(phoneNumber: string) {
