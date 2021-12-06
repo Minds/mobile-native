@@ -2,7 +2,7 @@ import { observer, useLocalStore } from 'mobx-react';
 import React from 'react';
 import { ViewStyle } from 'react-native';
 import i18n from '../services/i18n.service';
-import { Icon, B1, B2, Row, Column, PressableLine } from '~ui';
+import { B1, B2, Column, Icon, PressableLine, Row } from '~ui';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { BottomSheetButton, BottomSheetModal } from './bottom-sheet';
 import type { BottomSheetModal as BottomSheetModalType } from '@gorhom/bottom-sheet';
@@ -83,12 +83,11 @@ const DatePicker = observer((props: PropsType) => {
     }
   }, [localStore, props.date]);
 
-  const shownDate =
-    localStore.selectedDate === null
-      ? '-'
-      : todaysDate === localStore.textDate
-      ? i18n.t('wallet.today')
-      : i18n.date(localStore.selectedDate, 'date', 'UTC');
+  const shownDate = !localStore.selectedDate
+    ? ''
+    : todaysDate === localStore.textDate
+    ? i18n.t('wallet.today')
+    : i18n.date(localStore.selectedDate, 'date', 'UTC');
 
   const space = props.spacing || 'L';
 
