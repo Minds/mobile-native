@@ -11,6 +11,7 @@ import type UserModel from '../../channel/UserModel';
 import { createUserStore } from './storage/storages.service';
 import SettingsStore from '../../settings/SettingsStore';
 import { ApiService } from './api.service';
+import analyticsService from './analytics.service';
 
 export class TokenExpiredError extends Error {}
 
@@ -103,9 +104,12 @@ export class SessionService {
       this.setActiveIndex(sessionData.activeIndex);
       this.setTokensData(sessionData.tokensData);
 
-      const { accessToken, refreshToken, user } = this.tokensData[
+      const { accessToken, refreshToken, user, pseudoId } = this.tokensData[
         this.activeIndex
       ];
+
+      // set the analytics pseudo id
+      analyticsService.setUserId(pseudoId);
 
       const { access_token, access_token_expires } = accessToken;
       const { refresh_token, refresh_token_expires } = refreshToken;
@@ -307,7 +311,9 @@ export class SessionService {
       tokensData.push(sessionData);
       this.setTokensData(tokensData);
 
-      // set the active index wich will be logged
+      analyticsService.setUserId(sessionData.pseudoId);
+
+      // set the active index which will be logged
       this.setActiveIndex(this.tokensData.length - 1);
       this.apiServiceInstances.push(new ApiService(this.activeIndex));
 
@@ -358,6 +364,7 @@ export class SessionService {
     const token_refresh_expire = token_expire + 60 * 60 * 24 * 30;
     return {
       user: user || getStores().user.me,
+      pseudoId: tokens.pseudo_id,
       sessionExpired: false,
       accessToken: {
         access_token: tokens.access_token,
