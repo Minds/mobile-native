@@ -469,7 +469,7 @@ PODS:
     - React
   - RNSnowplowTracker (1.0.0):
     - React-Core
-    - SnowplowTracker (~> 1.7.0)
+    - SnowplowTracker (~> 2.2)
   - RNSVG (12.1.0):
     - React
   - RNVectorIcons (7.1.0):
@@ -483,8 +483,8 @@ PODS:
   - Sentry (7.0.0):
     - Sentry/Core (= 7.0.0)
   - Sentry/Core (7.0.0)
-  - SnowplowTracker (1.7.1):
-    - FMDB (~> 2.6)
+  - SnowplowTracker (2.2.2):
+    - FMDB (~> 2.7)
   - TOCropViewController (2.6.0)
   - UMAppLoader (2.2.0)
   - UMCore (7.1.2)
@@ -589,7 +589,7 @@ DEPENDENCIES:
   - RNShare (from `../node_modules/react-native-share`)
   - RNSharedElement (from `../node_modules/react-native-shared-element`)
   - RNShareMenu (from `../node_modules/react-native-share-menu`)
-  - "RNSnowplowTracker (from `../node_modules/@snowplow/react-native-tracker/ios`)"
+  - "RNSnowplowTracker (from `../node_modules/@snowplow/react-native-tracker`)"
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - UMAppLoader (from `../node_modules/unimodules-app-loader/ios`)
@@ -784,7 +784,7 @@ EXTERNAL SOURCES:
   RNShareMenu:
     :path: "../node_modules/react-native-share-menu"
   RNSnowplowTracker:
-    :path: "../node_modules/@snowplow/react-native-tracker/ios"
+    :path: "../node_modules/@snowplow/react-native-tracker"
   RNSVG:
     :path: "../node_modules/react-native-svg"
   RNVectorIcons:
@@ -899,13 +899,13 @@ SPEC CHECKSUMS:
   RNShare: edd621a71124961e29a7ba43a84bd1c6f9980d88
   RNSharedElement: 87baf6d04da5b068f000dd8c953d28a1196999c0
   RNShareMenu: 6a821c28a1e03a9fdcad7b1919ca401641db6d43
-  RNSnowplowTracker: ca97090a5d73271ff946426848da26fea447c400
+  RNSnowplowTracker: dae187f1e5392e3786fae8a933536453ccfb7528
   RNSVG: ce9d996113475209013317e48b05c21ee988d42e
   RNVectorIcons: bc69e6a278b14842063605de32bec61f0b251a59
   SDWebImage: 4dc3e42d9ec0c1028b960a33ac6b637bb432207b
   SDWebImageWebPCoder: d0dac55073088d24b2ac1b191a71a8f8d0adac21
   Sentry: 89d26e036063b9cb9caa59b6951dd2f8277aa13b
-  SnowplowTracker: c393b26c456142ad5a78f4e4d771c71cb194f06c
+  SnowplowTracker: 2eee2d6606a60db98f7c4e1515499bb216b6c8ad
   TOCropViewController: 3105367e808b7d3d886a74ff59bf4804e7d3ab38
   UMAppLoader: 21af63390e55c82e037fb9752d93114a80ecf16e
   UMCore: ce3a4faa010239063b8343895b29a6d97b01069d
