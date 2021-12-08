@@ -153,10 +153,7 @@ const Item = React.memo(
               source={{
                 uri: image.uri,
               }}
-              style={{
-                width,
-                height: height - 65,
-              }}
+              style={styles.mainImage}
               resizeMode={image.width > image.height ? 'contain' : 'cover'}
             />
           )}
