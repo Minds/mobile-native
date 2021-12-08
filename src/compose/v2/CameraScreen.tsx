@@ -12,7 +12,10 @@ import {
 import { showMessage } from 'react-native-flash-message';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import RNPhotoEditor from 'react-native-photo-editor';
-import { useSafeArea } from 'react-native-safe-area-context';
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context';
 import ActivityIndicator from '~/common/components/ActivityIndicator';
 import Button from '~/common/components/Button';
 import MText from '~/common/components/MText';
@@ -288,13 +291,13 @@ export default observer(function (props) {
                     onFilterChange={setFilter}
                   />
 
-                  <View style={styles.topToolbarContainer}>
+                  <SafeAreaView style={styles.topToolbarContainer}>
                     <DownloadIconButton
                       downloading={downloading}
                       onDownload={runDownload}
                     />
                     <EditIconButton onPress={onEdit} />
-                  </View>
+                  </SafeAreaView>
                 </View>
               ) : (
                 <MediaPreviewFullScreen mediaToConfirm={mediaToConfirm} />
@@ -339,7 +342,7 @@ const TabButton = ({ onPress, active, children }) => {
 };
 
 const useBottomBarStyle = () => {
-  const insets = useSafeArea();
+  const insets = useSafeAreaInsets();
   return useStyle(styles.tabContainer, 'paddingVertical2x', {
     paddingBottom: insets.bottom || 16,
     backgroundColor: '#000',
