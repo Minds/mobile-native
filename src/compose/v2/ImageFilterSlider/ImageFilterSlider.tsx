@@ -193,10 +193,6 @@ export default function ImageFilterSlider({
   const _onExtractImage = React.useCallback(
     ({ nativeEvent }) => {
       const uri = IS_IOS ? `file://${nativeEvent.uri}` : nativeEvent.uri;
-      console.log({
-        ...image,
-        uri,
-      });
       onExtractImage({
         ...image,
         uri,
