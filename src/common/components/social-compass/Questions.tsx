@@ -90,7 +90,7 @@ const Questions = observer(({ onSubmit, ...props }: PropsType) => {
 
 const styles = ThemedStyles.create({
   container: ['paddingVertical2x'],
-  desc: ['colorSecondaryText', 'marginBottom5x'],
+  desc: ['colorSecondaryText', 'marginBottom5x', 'textCenter'],
 });
 
 export default Questions;
