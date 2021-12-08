@@ -85,7 +85,7 @@ const ThumbFilter = React.memo(({ image, item }: ThumbFilterPropsType) => {
       image={
         <Image
           source={{
-            uri: image.uri + '?{item.title}',
+            uri: image.uri + `?thumb${image.key}}`,
           }}
           style={styles.thumbImage}
           resizeMode="cover"
@@ -95,7 +95,7 @@ const ThumbFilter = React.memo(({ image, item }: ThumbFilterPropsType) => {
   ) : (
     <Image
       source={{
-        uri: image.uri,
+        uri: image.uri + `?thumb${image.key}}`,
       }}
       style={styles.thumbImage}
       resizeMode="cover"
@@ -140,7 +140,7 @@ const Item = React.memo(
                 <Image
                   fadeDuration={0}
                   source={{
-                    uri: image.uri,
+                    uri: image.uri + `?${image.key}`,
                   }}
                   style={styles.mainImage}
                   resizeMode={image.width > image.height ? 'contain' : 'cover'}
@@ -151,7 +151,7 @@ const Item = React.memo(
             <Image
               fadeDuration={0}
               source={{
-                uri: image.uri,
+                uri: image.uri + `?${image.key}`,
               }}
               style={styles.mainImage}
               resizeMode={image.width > image.height ? 'contain' : 'cover'}
@@ -235,7 +235,7 @@ export default function ImageFilterSlider({
       {!IS_IOS && ( // on Android we show a placeholder because the filtered image sometimes takes a while to load
         <Image
           source={{
-            uri: image.uri + '?thumb',
+            uri: image.uri + `?t${image.key}`,
           }}
           style={styles.placeholder}
           resizeMode={image.width > image.height ? 'contain' : 'cover'}
