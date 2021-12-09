@@ -1,6 +1,7 @@
 import { MotiView } from '@motify/components';
 import React from 'react';
 import { Dimensions, Image, View } from 'react-native';
+import { debounce } from 'lodash';
 import { FlatList } from 'react-native-gesture-handler';
 
 import Animated, {
@@ -202,33 +203,62 @@ export default function ImageFilterSlider({
     [image],
   );
 
-  const mainScrollEnd = e => {
-    const current = Math.round(e.nativeEvent.contentOffset.x / width);
-    changeIndex(current);
-  };
+  const changeIndex = React.useCallback(
+    // workaround for bug in android where the onMomentumScrollEnd event is fired many times
+    debounce(
+      index => {
+        if (index * ITEM_WIDTH + ITEM_WIDTH * 0.5 > width / 2) {
+          const offset = index * ITEM_WIDTH + ITEM_WIDTH * 0.5 - width / 2;
+          galleryRef.current?.scrollToOffset({
+            offset,
+            animated: true,
+          });
+        } else {
+          galleryRef.current?.scrollToOffset({
+            offset: 0,
+            animated: true,
+          });
+        }
+        index > 0 ? onFilterChange(FILTERS[index].title) : onFilterChange(null);
+        setIndex(index);
+      },
+      100,
+      {
+        leading: false,
+        trailing: true,
+      },
+    ),
+    [onFilterChange],
+  );
 
-  const changeIndex = index => {
-    if (index * ITEM_WIDTH + ITEM_WIDTH * 0.5 > width / 2) {
-      const offset = index * ITEM_WIDTH + ITEM_WIDTH * 0.5 - width / 2;
-      galleryRef.current?.scrollToOffset({
-        offset,
-        animated: true,
-      });
-    } else {
-      galleryRef.current?.scrollToOffset({
-        offset: 0,
-        animated: true,
-      });
-    }
-    index > 0 ? onFilterChange(FILTERS[index].title) : onFilterChange(null);
-    setIndex(index);
-  };
+  const mainScrollEnd = React.useCallback(
+    e => {
+      const current = Math.round(e.nativeEvent.contentOffset.x / width);
+      changeIndex(current);
+    },
+    [changeIndex],
+  );
 
   const onTapGallery = index => {
-    const animated = IS_IOS ? true : Math.abs(activeIndex - index) <= 1;
+    const animated = IS_IOS ? true : false;
     changeIndex(index);
     swiperRef.current?.scrollToIndex({ index, animated });
   };
+
+  const renderMainItem = React.useCallback(
+    ({ item, index }) => (
+      <Item
+        item={item}
+        position={position}
+        index={index}
+        image={image}
+        activeIndex={activeIndex}
+        extractEnabled={extractEnabled}
+        onExtractImage={_onExtractImage}
+      />
+    ),
+    [_onExtractImage, activeIndex, extractEnabled, image, position],
+  );
 
   return (
     <View style={ThemedStyles.style.flexContainer}>
@@ -245,6 +275,7 @@ export default function ImageFilterSlider({
         horizontal
         ref={swiperRef}
         pagingEnabled
+        bounces={false}
         windowSize={3}
         onMomentumScrollEnd={mainScrollEnd}
         showsHorizontalScrollIndicator={false}
@@ -254,17 +285,7 @@ export default function ImageFilterSlider({
         scrollEventThrottle={0.1}
         onScroll={scrollHandler}
         data={FILTERS}
-        renderItem={({ item, index }) => (
-          <Item
-            item={item}
-            position={position}
-            index={index}
-            image={image}
-            activeIndex={activeIndex}
-            extractEnabled={extractEnabled}
-            onExtractImage={_onExtractImage}
-          />
-        )}
+        renderItem={renderMainItem}
       />
       <FlatList
         style={styles.gallery}
@@ -274,7 +295,6 @@ export default function ImageFilterSlider({
         windowSize={6}
         showsHorizontalScrollIndicator={false}
         initialNumToRender={6}
-        scrollEventThrottle={0.01}
         data={FILTERS}
         getItemLayout={getGalleryItemLayout}
         renderItem={({ item, index }) => (
@@ -302,7 +322,6 @@ const styles = ThemedStyles.create({
     width: width - (IS_IOS ? 0 : 0.1), //workaround for android
     height,
     overflow: 'hidden',
-    opacity: 1,
   },
   activeThumb: {
     borderRadius: 8,
