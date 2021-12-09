@@ -8,6 +8,7 @@ import CenteredLoading from '~/common/components/CenteredLoading';
 import { Spacer } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
 import i18n from '../../services/i18n.service';
+import FadeView from '../FadeView';
 import MText from '../MText';
 import QuestionSlider from './QuestionSlider';
 import { useAnswers } from './useAnswers';
@@ -18,6 +19,8 @@ type PropsType = {
   questions?: IQuestion[];
   loading: boolean;
 };
+
+const gradients: any = ['bottom'];
 
 const Questions = observer(({ onSubmit, ...props }: PropsType) => {
   const [questions, setQuestions] = useState<IQuestion[]>([]);
@@ -65,19 +68,24 @@ const Questions = observer(({ onSubmit, ...props }: PropsType) => {
 
   return (
     <>
-      <BottomSheetScrollView style={containerHeight}>
-        <Spacer horizontal="M">
-          <MText style={styles.desc}>
-            {i18n.t('socialCompass.questionsDesc')}
-          </MText>
-          {questions.map(question => (
-            <QuestionSlider
-              question={question}
-              onAnswer={onAnswer(question.questionId)}
-            />
-          ))}
-        </Spacer>
-      </BottomSheetScrollView>
+      <FadeView
+        fades={gradients}
+        fadeLength={100}
+        backgroundColor={ThemedStyles.getColor('PrimaryBackgroundHighlight')}>
+        <BottomSheetScrollView style={containerHeight}>
+          <Spacer horizontal="M" bottom="XL">
+            <MText style={styles.desc}>
+              {i18n.t('socialCompass.questionsDesc')}
+            </MText>
+            {questions.map(question => (
+              <QuestionSlider
+                question={question}
+                onAnswer={onAnswer(question.questionId)}
+              />
+            ))}
+          </Spacer>
+        </BottomSheetScrollView>
+      </FadeView>
       <BottomSheetButton
         loading={answering}
         action
@@ -90,7 +98,7 @@ const Questions = observer(({ onSubmit, ...props }: PropsType) => {
 
 const styles = ThemedStyles.create({
   container: ['paddingVertical2x'],
-  desc: ['colorSecondaryText', 'marginBottom5x'],
+  desc: ['colorSecondaryText', 'marginBottom5x', 'textCenter'],
 });
 
 export default Questions;

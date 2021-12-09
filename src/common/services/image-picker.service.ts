@@ -165,7 +165,9 @@ class ImagePickerService {
         return response.map((image: PatchImage) =>
           Object.assign(
             {
-              uri: image.path,
+              uri: image.path.startsWith('/')
+                ? `file://${image.path}`
+                : image.path,
               sourceURL: image.sourceURL,
               type: image.mime,
             },
@@ -173,7 +175,9 @@ class ImagePickerService {
           ),
         );
       } else {
-        const uri = response.path;
+        const uri = response.path.startsWith('/')
+          ? `file://${response.path}`
+          : response.path;
         return Object.assign(
           {
             uri,
