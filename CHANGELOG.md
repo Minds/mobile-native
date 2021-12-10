@@ -4,6 +4,8 @@ Minds Mobile
 
 ## 4.20.0 - 2021-12-10
 
+### Changed
+
 - New post composer screen
 - New photo filters
 - New date picker
@@ -17,11 +19,6 @@ Minds Mobile
 - Improved blog view screen
 - Allow group owners and moderators to delete posts/comments
 - Bug fixing
-
-### Changed
-
-- Fix unresponsive UI in some Android devices
-- Fix discovery visual errors
 
 ## 4.19.1 - 2021-11-04
 
