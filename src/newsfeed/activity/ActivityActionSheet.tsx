@@ -20,7 +20,7 @@ import {
 } from '../../common/components/bottom-sheet';
 import { GroupContext } from '~/groups/GroupViewScreen';
 import { withChannelContext } from '~/channel/v2/ChannelContext';
-import UserModel from '~/channel/UserModel';
+import type UserModel from '~/channel/UserModel';
 
 type PropsType = {
   entity: ActivityModel;
