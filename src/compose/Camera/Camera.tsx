@@ -4,7 +4,6 @@ import { observer, useLocalStore } from 'mobx-react';
 import { MotiView } from 'moti';
 import React, { useCallback, useEffect, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
-import Orientation from 'react-native-orientation-locker';
 import Reanimated, {
   useAnimatedProps,
   useSharedValue,
@@ -115,11 +114,6 @@ export default observer(function (props: PropsType) {
   useEffect(() => {
     zoom.value = neutralZoom;
   }, [neutralZoom, zoom]);
-
-  useEffect(() => {
-    Orientation.unlockAllOrientations();
-    return () => Orientation.lockToPortrait();
-  }, []);
 
   useEffect(() => {
     const t = setTimeout(() => {

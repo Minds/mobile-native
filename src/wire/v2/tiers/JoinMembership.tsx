@@ -115,6 +115,19 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
    */
   const store = useLocalStore(createJoinMembershipStore, { tiers });
 
+  const urn = store.currentTier?.subscription_urn;
+
+  const membershipStyle = useMemoStyle(
+    [
+      urn ? 'rowJustifySpaceBetween' : 'rowJustifyEnd',
+      {
+        flexDirection: 'column',
+        alignItems: 'stretch',
+      },
+    ],
+    [urn],
+  );
+
   useEffect(() => {
     const { entity, user } = route.params;
 
@@ -310,19 +323,7 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
               </View>
             )}
           <View style={styles.alreadyAMemberWrapper}>
-            <View
-              style={useMemoStyle(
-                [
-                  store.currentTier?.subscription_urn
-                    ? 'rowJustifySpaceBetween'
-                    : 'rowJustifyEnd',
-                  {
-                    flexDirection: 'column',
-                    alignItems: 'stretch',
-                  },
-                ],
-                [store.currentTier?.subscription_urn],
-              )}>
+            <View style={membershipStyle}>
               {!!store.currentTier?.subscription_urn && (
                 <MText style={styles.alreadyAMemberText}>
                   {i18n.t('membership.alreadyMember')}

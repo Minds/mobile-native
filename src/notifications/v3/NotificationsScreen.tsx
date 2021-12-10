@@ -166,8 +166,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
         </View>
       );
     }
-
-    return <EmptyList text={i18n.t(`notification.empty.${filter}`)} />;
+    return <EmptyList text={i18n.t(`notification.empty.${filter || 'all'}`)} />;
   }, [error, loading, fetch, isRefreshing, filter]);
 
   const user = sessionService.getUser();

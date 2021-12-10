@@ -50,7 +50,7 @@ describe('auth service login', () => {
   it('login returns errors', async () => {
     const response = { status: 'error', error: 'some error' };
 
-    api.post.mockRejectedValue(response);
+    api.rawPost.mockRejectedValue(response);
 
     try {
       const promise = authService.login('user', 'pass');

@@ -13,13 +13,9 @@ import { useDimensions } from '@react-native-community/hooks';
  */
 export default observer(function (props) {
   let { width } = useDimensions().window;
-  width = width - 64; // needs to have some kind of logic. why 64
 
   // calculate the aspect ratio
-  let aspectRatio =
-    props.image.pictureOrientation > 2 || !props.image.pictureOrientation
-      ? props.image.width / props.image.height
-      : props.image.height / props.image.width;
+  let aspectRatio = props.image.width / props.image.height;
 
   if (props.maxRatio && props.maxRatio < aspectRatio) {
     aspectRatio = props.maxRatio;
@@ -37,13 +33,13 @@ export default observer(function (props) {
         width: '100%',
       }
     : {
-        height: imageHeight,
+        aspectRatio,
         width: '100%',
         borderRadius: 10,
       };
 
   // workaround: we use sourceURL for the preview on iOS because the image is not displayed with the uri
-  const uri = props.image.sourceURL || props.image.uri || props.image.path;
+  const uri = props.image.uri || props.image.path;
 
   if (!props.zoom) {
     return (

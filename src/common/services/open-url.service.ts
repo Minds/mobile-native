@@ -21,7 +21,6 @@ class OpenURLService {
    * Load settings from storage
    */
   init() {
-    storages.app.removeItem(STORAGE_NAMESPACE);
     this.preferredBrowser = storages.app.getInt(STORAGE_NAMESPACE) ?? undefined;
   }
 
