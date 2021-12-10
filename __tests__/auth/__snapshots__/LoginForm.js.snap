@@ -89,7 +89,7 @@ exports[`LoginForm component should renders correctly 1`] = `
       </View>
       <TextInput
         autoCapitalize="none"
-        autoCompleteType="username"
+        autoComplete="username"
         autoFocus={true}
         keyboardAppearance="dark"
         labelStyle={
