@@ -57,7 +57,7 @@ export default observer(function LoginForm(props: PropsType) {
     <InputContainer
       placeholder={i18n.t('auth.username')}
       onChangeText={localStore.setUsername}
-      autoCompleteType="username"
+      autoComplete="username"
       textContentType="username"
       value={localStore.username}
       testID="usernameInput"
@@ -73,7 +73,7 @@ export default observer(function LoginForm(props: PropsType) {
         <InputContainer
           placeholder={i18n.t('auth.password')}
           secureTextEntry={localStore.hidePassword}
-          autoCompleteType="password"
+          autoComplete="password"
           textContentType="password"
           onChangeText={localStore.setPassword}
           value={localStore.password}

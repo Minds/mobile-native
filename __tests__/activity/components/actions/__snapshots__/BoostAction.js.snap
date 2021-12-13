@@ -69,6 +69,8 @@ exports[`Boost action component renders correctly 1`] = `
     testID="Boost"
   >
     <View
+      collapsable={false}
+      nativeID="animatedComponent"
       style={
         Object {
           "transform": Array [

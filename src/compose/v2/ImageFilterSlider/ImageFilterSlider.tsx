@@ -159,10 +159,11 @@ const Item = React.memo(
             />
           )}
           <MotiView
+            from={{ opacity: 1 }}
             animate={{
-              opacity:
-                activeIndex === index ? [1, { value: 0, delay: 1200 }] : 0,
+              opacity: activeIndex === index ? 0 : 1,
             }}
+            delay={1500}
             style={styles.filterContainer}>
             <MText style={styles.filterTitle}>{item.title}</MText>
           </MotiView>
