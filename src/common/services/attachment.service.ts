@@ -6,6 +6,7 @@ import logService from './log.service';
 import { showNotification } from '../../../AppMessages';
 import imageManipulatorService from './image-manipulator.service';
 import { IMAGE_MAX_SIZE } from './../../config/Config';
+import { Alert } from 'react-native';
 
 /**
  * Attachment service
@@ -192,6 +193,7 @@ class AttachmentService {
    * @param {string} mediaType photo or video (or mixed only ios)
    */
   async gallery(mediaType = 'photo', crop = true) {
+    Alert.alert('attachment service: gallery');
     const response = await imagePicker.launchImageLibrary(mediaType, crop);
 
     if (!response) {

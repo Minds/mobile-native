@@ -1,4 +1,4 @@
-import { Platform } from 'react-native';
+import { Alert, Platform } from 'react-native';
 import ImagePicker, { Options, Image } from 'react-native-image-crop-picker';
 import { IMAGE_MAX_SIZE } from './../../config/Config';
 import permissions from './permissions.service';
@@ -27,6 +27,8 @@ class ImagePickerService {
   async checkGalleryPermissions(): Promise<boolean> {
     let allowed = true;
 
+    Alert.alert('image picker service: checkGalleryPermissions starting');
+
     if (Platform.OS !== 'ios') {
       allowed = await permissions.checkReadExternalStorage(true);
       if (!allowed) {
@@ -38,6 +40,10 @@ class ImagePickerService {
         allowed = await permissions.mediaLibrary();
       }
     }
+
+    Alert.alert(
+      'image picker service: checkGalleryPermissions finish: ' + allowed,
+    );
 
     return allowed;
   }
@@ -87,10 +93,13 @@ class ImagePickerService {
     type: mediaType = 'photo',
     crop = true,
   ): Promise<customImagePromise> {
+    Alert.alert('image picker service: launchImageLibrary');
     // check permissions
     await this.checkGalleryPermissions();
 
     const opt = this.buildOptions(type, crop);
+
+    Alert.alert('image picker service: calling picker');
 
     return this.returnCustom(ImagePicker.openPicker(opt));
   }
@@ -154,8 +163,11 @@ class ImagePickerService {
   async returnCustom(
     promise: Promise<imagePromise>,
   ): Promise<customImagePromise> {
+    Alert.alert('image picker service: return custom started');
     try {
       const response = await promise;
+
+      Alert.alert('image picker service: result', JSON.stringify(response));
 
       if (!response) {
         return false;

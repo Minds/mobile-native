@@ -16,7 +16,7 @@ import attachmentService from '../common/services/attachment.service';
 import { CommonActions } from '@react-navigation/native';
 import logService from '../common/services/log.service';
 import { runInAction } from 'mobx';
-import { Image, Platform } from 'react-native';
+import { Alert, Image, Platform } from 'react-native';
 import { hashRegex } from '../common/components/Tags';
 import getNetworkError from '~/common/helpers/getNetworkError';
 
@@ -379,6 +379,7 @@ export default function (props) {
      * Select media from gallery
      */
     async selectFromGallery(mode) {
+      Alert.alert('composer: selectFromGallery');
       const response = await attachmentService.gallery(
         mode || this.mode,
         false,
