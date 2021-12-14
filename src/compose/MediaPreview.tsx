@@ -26,11 +26,6 @@ export default observer(function MediaPreview(props: PropsType) {
   const [videoSize, setVideoSize] = useState<VideoSizeType>(null);
 
   const onVideoLoaded = React.useCallback(e => {
-    if (e.naturalSize.orientation === 'portrait' && Platform.OS === 'ios') {
-      const w = e.naturalSize.width;
-      e.naturalSize.width = e.naturalSize.height;
-      e.naturalSize.height = w;
-    }
     setVideoSize(e.naturalSize);
   }, []);
 
