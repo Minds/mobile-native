@@ -140,7 +140,6 @@ export type AppStackParamList = {
     index: number;
   };
   ExportLegacyWallet: {};
-  Messenger: {};
   Fab: {
     disableThresholdCheck?: boolean;
     owner: UserModel;
@@ -172,7 +171,6 @@ export type AppStackParamList = {
   Other: {};
   Resources: {};
   SettingsEmail: {};
-  MessengerSettingsScreen: {};
   RekeyScreen: {};
   AutoplaySettingsScreen: {};
   BoostSettingsScreen: {};

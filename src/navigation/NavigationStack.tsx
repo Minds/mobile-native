@@ -25,7 +25,6 @@ import TabsScreen from '../tabs/TabsScreen';
 import NotificationsScreen from '../notifications/v3/NotificationsScreen';
 import ActivityScreen from '../newsfeed/ActivityScreen';
 import ChannelSubscribers from '../channel/subscribers/ChannelSubscribers';
-import ConversationScreen from '../messenger/ConversationScreen';
 import GroupsListScreen from '../groups/GroupsListScreen';
 import GroupViewScreen from '../groups/GroupViewScreen';
 import BoostConsoleScreen from '../boost/BoostConsoleScreen';
@@ -71,7 +70,6 @@ import DeleteChannelScreen from '../settings/screens/DeleteChannelScreen';
 import DeactivateChannelScreen from '../settings/screens/DeactivateChannelScreen';
 import LanguageScreen from '../settings/screens/LanguageScreen';
 import NSFWScreen from '../settings/screens/NSFWScreen';
-import MessengerSettingsScreen from '../settings/screens/MessengerScreen';
 import DevicesScreen from '../settings/screens/DevicesScreen';
 import BillingScreen from '../settings/screens/BillingScreen';
 import RecurringPayments from '../settings/screens/RecurringPayments';
@@ -101,7 +99,6 @@ import { topbarTabbarRef } from '../common/components/topbar-tabbar/TopbarTabbar
 import ExportLegacyWallet from '../settings/screens/ExportLegacyWallet';
 import Withdrawal from '../wallet/v3/currency-tabs/tokens/widthdrawal/Withdrawal';
 import EarnModal from '../earn/EarnModal';
-import RekeyScreen from '../settings/screens/RekeyScreen';
 import BoostSettingsScreen from '../settings/screens/BoostSettingsScreen';
 import TwoFactorAuthSettingsScreen from '../auth/twoFactorAuth/TwoFactorAuthSettingsScreen';
 import RecoveryCodesScreen from '../auth/twoFactorAuth/RecoveryCodesScreen';
@@ -111,7 +108,6 @@ import SearchScreen from '../topbar/searchbar/SearchScreen';
 import PasswordConfirmScreen from '../auth/PasswordConfirmScreen';
 import TwoFactorConfirmScreen from '../auth/TwoFactorConfirmScreen';
 import RecoveryCodeUsedScreen from '../auth/twoFactorAuth/RecoveryCodeUsedScreen';
-import MessengerScreen from '../messenger/MessengerScreen';
 import PushNotificationsSettings from '../notifications/v3/settings/push/PushNotificationsSettings';
 import EmailNotificationsSettings from '../notifications/v3/settings/email/EmailNotificationsSettings';
 import ChannelEditScreen from '../channel/v2/edit/ChannelEditScreen';
@@ -154,10 +150,6 @@ const AccountScreenOptions = navigation => [
         onPress: () => navigation.push('NSFWScreen'),
       }
     : null,
-  {
-    title: i18n.t('settings.accountOptions.6'),
-    onPress: () => navigation.push('MessengerSettingsScreen'),
-  },
   {
     title: i18n.t('settings.accountOptions.7'),
     onPress: () => navigation.push('AutoplaySettingsScreen'),
@@ -304,11 +296,6 @@ const AppStack = function () {
           options={{ title: 'Export Wallet' }}
         />
         <AppStackNav.Screen
-          name="Messenger"
-          component={MessengerScreen}
-          options={{ title: i18n.t('messenger.legacyMessenger') }}
-        />
-        <AppStackNav.Screen
           name="CustomMonetize"
           component={CustomMonetizeScreen}
           options={hideHeader}
@@ -344,10 +331,6 @@ const AppStack = function () {
           name="Activity"
           component={ActivityScreen}
           options={hideHeader}
-        />
-        <AppStackNav.Screen
-          name="Conversation"
-          component={ConversationScreen}
         />
         <AppStackNav.Screen
           name="DiscoverySearch"
@@ -538,16 +521,6 @@ const AppStack = function () {
           name="NSFWScreen"
           component={NSFWScreen}
           options={{ title: i18n.t('settings.accountOptions.5') }}
-        />
-        <AppStackNav.Screen
-          name="MessengerSettingsScreen"
-          component={MessengerSettingsScreen}
-          options={{ title: i18n.t('settings.accountOptions.6') }}
-        />
-        <AppStackNav.Screen
-          name="RekeyScreen"
-          component={RekeyScreen}
-          options={{ title: i18n.t('settings.accountOptions.6') }}
         />
         <AppStackNav.Screen
           name="AutoplaySettingsScreen"

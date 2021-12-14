@@ -7,7 +7,6 @@ import { View } from 'react-native';
 
 import FeedList from '../common/components/FeedList';
 import type { AppStackParamList } from '../navigation/NavigationTypes';
-import type MessengerListStore from '../messenger/MessengerListStore';
 import type UserStore from '../auth/UserStore';
 import type NewsfeedStore from './NewsfeedStore';
 import CheckLanguage from '../common/components/CheckLanguage';
@@ -27,7 +26,6 @@ type NewsfeedScreenNavigationProp = StackNavigationProp<
 type PropsType = {
   navigation: NewsfeedScreenNavigationProp;
   user: UserStore;
-  messengerList: MessengerListStore;
   newsfeed: NewsfeedStore<any>;
   route: NewsfeedScreenRouteProp;
 };
@@ -35,7 +33,7 @@ type PropsType = {
 /**
  * News Feed Screen
  */
-@inject('newsfeed', 'user', 'messengerList')
+@inject('newsfeed', 'user')
 @observer
 class NewsfeedScreen extends Component<PropsType> {
   disposeTabPress?: Function;
@@ -75,19 +73,12 @@ class NewsfeedScreen extends Component<PropsType> {
     // this.props.discovery.init();
 
     await this.props.newsfeed.feedStore.fetchLocalThenRemote();
-
-    // load messenger
-    this.props.messengerList.loadList();
-
-    // listen socket on app start
-    this.props.messengerList.listen();
   }
 
   /**
    * Component will unmount
    */
   componentWillUnmount() {
-    this.props.messengerList.unlisten();
     if (this.disposeTabPress) {
       this.disposeTabPress();
     }
