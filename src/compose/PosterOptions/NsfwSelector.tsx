@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from 'react';
+import React, { FC, useCallback, useMemo } from 'react';
 import _ from 'lodash';
 import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { observer } from 'mobx-react';
@@ -50,6 +50,7 @@ interface NsfwProps
  */
 export default observer(function ({}: NsfwProps) {
   const store = useComposeContext();
+  const length = store.nsfw.length;
   const options = useMemo(
     () =>
       _.times(7, i => ({
