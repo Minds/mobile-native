@@ -1,25 +1,39 @@
 stages:
-  - test
+  - test and build
   - e2e
   - build
   - deploy
   - release
   - uploadstore
 
-# Spec test
-test:jest:
+cache:
+  key:
+    files:
+      - package.json
+    prefix: ${CI_JOB_NAME}
+  paths:
+    - node_modules/
+    - .jest/cache/
+
+lint:
   image: node:12.13.0
-  stage: test
-  cache:
-    key: ${CI_COMMIT_REF_SLUG}
-    paths:
-      - node_modules/
-      - .jest/cache/
+  stage: test and build
   before_script:
     - yarn install --frozen-lockfile
   script:
     - 'yarn prettier --check "./src/**/*.{ts,tsx,js,json}" "./*.{tsx,ts}"'
     - yarn tsc
+    - yarn test --forceExit
+
+build:
+  stage: test and build
+  script:
+    - yarn tsc
+    - yarn test --forceExit
+
+test:
+  stage: test and build
+  script:
     - yarn test --forceExit
 
 # e2e test
