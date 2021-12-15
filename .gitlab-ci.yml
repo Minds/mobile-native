@@ -6,35 +6,28 @@ stages:
   - release
   - uploadstore
 
-cache:
-  key:
-    files:
-      - package.json
-    prefix: ${CI_JOB_NAME}
-  paths:
-    - node_modules/
-    - .jest/cache/
-
-lint:
-  image: node:12.13.0
-  stage: test and build
-  before_script:
-    - yarn install --frozen-lockfile
-  script:
-    - 'yarn prettier --check "./src/**/*.{ts,tsx,js,json}" "./*.{tsx,ts}"'
-    - yarn tsc
-    - yarn test --forceExit
-
-build:
-  stage: test and build
-  script:
-    - yarn tsc
-    - yarn test --forceExit
-
 test:
   stage: test and build
   script:
     - yarn test --forceExit
+
+lint:
+  stage: test and build
+  script:
+    - 'yarn prettier --check "./src/**/*.{ts,tsx,js,json}" "./*.{tsx,ts}"'
+
+build:
+  image: node:12.13.0
+  stage: test and build
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - node_modules/
+      - .jest/cache/
+  before_script:
+    - yarn install --frozen-lockfile
+  script:
+    - yarn tsc
 
 # e2e test
 # e2e:detox:
