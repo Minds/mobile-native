@@ -2,6 +2,24 @@
 
 Minds Mobile
 
+## 4.20.0 - 2021-12-10
+
+### Changed
+
+- New post composer screen
+- New photo filters
+- New date picker
+- Social compass
+- Comments improvements
+- Improved UI consistency
+- Withdrawal console added to wallet
+- Post button added to user's profile screen
+- Browser selector (in-app or default)
+- Improved search UX
+- Improved blog view screen
+- Allow group owners and moderators to delete posts/comments
+- Bug fixing
+
 ## 4.19.1 - 2021-11-04
 
 ### Changed

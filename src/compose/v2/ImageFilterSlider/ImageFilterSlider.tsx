@@ -1,208 +1,370 @@
-import { useDimensions } from '@react-native-community/hooks';
+import { MotiView } from '@motify/components';
+import React from 'react';
+import { Dimensions, Image, View } from 'react-native';
 import { debounce } from 'lodash';
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
-import { Image, ScrollView, StyleSheet, View } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
+
 import Animated, {
-  cancelAnimation,
-  useAnimatedStyle,
   useSharedValue,
+  useAnimatedStyle,
+  useAnimatedScrollHandler,
+  interpolate,
+  Extrapolate,
 } from 'react-native-reanimated';
 import MText from '~/common/components/MText';
-import ThemedStyles, { useMemoStyle } from '~/styles/ThemedStyles';
-import ImagePreview from '../../ImagePreview';
-import FILTERS from './filters';
+import PressableScale from '~/common/components/PressableScale';
+import { IS_IOS } from '~/config/Config';
+import ThemedStyles from '~/styles/ThemedStyles';
+import FILTERS, { PhotoFilter } from './filters';
 
-// to delay the rendering of a component for performance reasons
-const Delayed = ({ delay, children }) => {
-  const [hidden, setHidden] = useState(true);
-  useEffect(() => {
-    setTimeout(() => setHidden(false), delay);
-  }, [delay]);
-  return hidden ? null : children;
+const { width, height } = Dimensions.get('window');
+const GALLERY_ITEM_WIDTH = 90;
+const GALLERY_MARGIN = 5;
+const ITEM_WIDTH = GALLERY_MARGIN * 2 + GALLERY_ITEM_WIDTH;
+const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
+
+// ---- Types ------------------------------------------------------------------
+
+type ItemThumbPropsType = {
+  item: PhotoFilter;
+  active: boolean;
+  onTap: () => void;
+  image: any;
 };
 
-const createImg = (source: any, imageStyle) => (
-  <Image
-    style={imageStyle}
-    resizeMode="cover"
-    source={{ ...source, uri: source.uri + '?' + source.key }}
-  />
+type ThumbFilterPropsType = {
+  item: PhotoFilter;
+  image: any;
+};
+
+type ItemPropsType = {
+  item: PhotoFilter;
+  index: number;
+  position;
+  image: any;
+  activeIndex: number;
+  onExtractImage: ({ nativeEvent }: any) => void;
+  extractEnabled: boolean;
+};
+
+type PropsType = {
+  image: any;
+  extractEnabled: boolean;
+  onExtractImage: (any) => void;
+  onFilterChange: (filter: string | null) => void;
+};
+
+// ---- Methods -------------------------------------------------------------
+
+const getItemLayout = (data, index) => ({
+  length: width,
+  offset: width * index - (IS_IOS ? 0 : 0.1),
+  index,
+});
+
+const getGalleryItemLayout = (data, index) => ({
+  length: ITEM_WIDTH,
+  offset: ITEM_WIDTH * index,
+  index,
+});
+
+// ---- Components -------------------------------------------------------------
+
+const ItemThumb = ({ item, active, onTap, image }: ItemThumbPropsType) => {
+  return (
+    <PressableScale onPress={onTap}>
+      <View style={active ? styles.activeThumb : styles.thumb}>
+        <ThumbFilter item={item} image={image} />
+      </View>
+    </PressableScale>
+  );
+};
+
+const ThumbFilter = React.memo(({ image, item }: ThumbFilterPropsType) => {
+  return item.filterComponent ? (
+    <item.filterComponent
+      image={
+        <Image
+          source={{
+            uri: image.uri + `?thumb${image.key}}`,
+          }}
+          style={styles.thumbImage}
+          resizeMode="cover"
+        />
+      }
+    />
+  ) : (
+    <Image
+      source={{
+        uri: image.uri + `?thumb${image.key}}`,
+      }}
+      style={styles.thumbImage}
+      resizeMode="cover"
+    />
+  );
+});
+
+const Item = React.memo(
+  ({
+    item,
+    index,
+    position,
+    image,
+    activeIndex,
+    onExtractImage,
+    extractEnabled,
+  }: ItemPropsType) => {
+    const style = useAnimatedStyle(() => {
+      const translateX = interpolate(
+        position.value,
+        [(index - 1) * width, index * width, (index + 1) * width],
+        [-width, 0, width],
+        Extrapolate.CLAMP,
+      );
+      return {
+        width,
+        height,
+        transform: [{ translateX }],
+      };
+    });
+
+    const FilterComponent = item.filterComponent;
+    return (
+      <View style={styles.itemContainer}>
+        <Animated.View style={style}>
+          {FilterComponent ? (
+            <FilterComponent
+              fadeDuration={0}
+              onExtractImage={onExtractImage}
+              extractImageEnabled={activeIndex === index && extractEnabled} // one on each side
+              image={
+                <Image
+                  fadeDuration={0}
+                  source={{
+                    uri: image.uri + `?${image.key}`,
+                  }}
+                  style={styles.mainImage}
+                  resizeMode={image.width > image.height ? 'contain' : 'cover'}
+                />
+              }
+            />
+          ) : (
+            <Image
+              fadeDuration={0}
+              source={{
+                uri: image.uri + `?${image.key}`,
+              }}
+              style={styles.mainImage}
+              resizeMode={image.width > image.height ? 'contain' : 'cover'}
+            />
+          )}
+          <MotiView
+            from={{ opacity: 1 }}
+            animate={{
+              opacity: activeIndex === index ? 0 : 1,
+            }}
+            delay={1500}
+            style={styles.filterContainer}>
+            <MText style={styles.filterTitle}>{item.title}</MText>
+          </MotiView>
+        </Animated.View>
+      </View>
+    );
+  },
 );
 
-const createVw = width => (
-  <View
-    style={{
-      height: '100%',
-      width,
-      overflow: 'hidden',
-    }}
-  />
-);
-
-export default function ImageFilter({
+/**
+ * ImageFilterSlider component
+ */
+export default function ImageFilterSlider({
   image,
-  onImageChange: _onImageChange,
   extractEnabled,
   onExtractImage,
   onFilterChange,
-}) {
-  const timeout = useRef<any>();
-  const offset = useSharedValue(0);
-  const { width, height } = useDimensions().window;
-  const filtersContainer = useMemo(
-    () => ({
-      ...StyleSheet.absoluteFillObject,
-      height: '100%',
-      width,
-    }),
-    [width],
-  );
-  // the number of filters to load, probably should be depreacted.
-  // introduced to lazy load the filters for performance sake
-  const [filtersToLoad] = useState<any>(5);
-  // the current filter index
-  const [activeIndex, setActiveIndex] = useState(0);
-  // the title of the filter, shown in the center of the screen when filter changes
-  const [showingTitle, _setShowingTitle] = useState('');
-  const setShowingTitle = useCallback(
-    debounce(title => _setShowingTitle(title), 100),
-    [],
-  );
+}: PropsType) {
+  const position = useSharedValue(0);
 
-  useEffect(() => {
-    if (activeIndex === 0) {
-      return;
-    }
+  const swiperRef = React.useRef<any>(null);
+  const galleryRef = React.useRef<any>(null);
+  const [activeIndex, setIndex] = React.useState(0);
 
-    onFilterChange(FILTERS[activeIndex]);
-  }, [activeIndex, onFilterChange]);
+  const scrollHandler = useAnimatedScrollHandler(e => {
+    position.value = e.contentOffset.x;
+  });
 
-  const style0 = useAnimatedStyle(() => ({
-    right: Math.max(offset.value - width * (filtersToLoad - 1), 0),
-  }));
-  const style1 = useAnimatedStyle(() => ({
-    right: Math.max(offset.value - width * (filtersToLoad - 2), 0),
-  }));
-  const style2 = useAnimatedStyle(() => ({
-    right: Math.max(offset.value - width * (filtersToLoad - 3), 0),
-  }));
-  const style3 = useAnimatedStyle(() => ({
-    right: Math.max(offset.value - width * (filtersToLoad - 4), 0),
-  }));
-  const style4 = useAnimatedStyle(() => ({
-    right: Math.max(offset.value - width * (filtersToLoad - 5), 0),
-  }));
-  const imageStyle = useMemoStyle(
-    [
-      {
-        height: height - 50,
-        width,
-        position: 'absolute',
-        top: 0,
-        left: 0,
-      },
-    ],
-    [height, width],
-  );
-
-  const _onExtractImage = useCallback(
+  const _onExtractImage = React.useCallback(
     ({ nativeEvent }) => {
+      const uri = IS_IOS ? `file://${nativeEvent.uri}` : nativeEvent.uri;
       onExtractImage({
         ...image,
-        uri: nativeEvent.uri,
+        uri,
       });
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [image],
   );
 
-  const Filters = useMemo(() => {
-    return FILTERS.map(({ filterComponent: FilterComponent }, index) => {
-      return (
-        <FilterComponent
-          onExtractImage={_onExtractImage}
-          extractImageEnabled={activeIndex === index && extractEnabled} // one on each side
-          image={createImg(image, imageStyle)}
-        />
-      );
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [_onExtractImage, activeIndex, extractEnabled, image]);
-
-  const filters = (
-    <View style={filtersContainer}>
-      {[
-        <Animated.View style={[styles.filterWrapper, style0]}>
-          <Delayed delay={4}>{Filters[0]}</Delayed>
-        </Animated.View>,
-        <Animated.View style={[styles.filterWrapper, style1]}>
-          <Delayed delay={3}>{Filters[1]}</Delayed>
-        </Animated.View>,
-        <Animated.View style={[styles.filterWrapper, style2]}>
-          <Delayed delay={2}>{Filters[2]}</Delayed>
-        </Animated.View>,
-        <Animated.View style={[styles.filterWrapper, style3]}>
-          <Delayed delay={1}>{Filters[3]}</Delayed>
-        </Animated.View>,
-        <Animated.View style={[styles.filterWrapper, style4]}>
-          <ImagePreview fullscreen style={imageStyle} image={image} />
-        </Animated.View>,
-      ].slice(0, filtersToLoad)}
-    </View>
+  const changeIndex = React.useCallback(
+    // workaround for bug in android where the onMomentumScrollEnd event is fired many times
+    debounce(
+      index => {
+        if (index * ITEM_WIDTH + ITEM_WIDTH * 0.5 > width / 2) {
+          const offset = index * ITEM_WIDTH + ITEM_WIDTH * 0.5 - width / 2;
+          galleryRef.current?.scrollToOffset({
+            offset,
+            animated: true,
+          });
+        } else {
+          galleryRef.current?.scrollToOffset({
+            offset: 0,
+            animated: true,
+          });
+        }
+        index > 0 ? onFilterChange(FILTERS[index].title) : onFilterChange(null);
+        setIndex(index);
+      },
+      100,
+      {
+        leading: false,
+        trailing: true,
+      },
+    ),
+    [onFilterChange],
   );
 
-  const onScroll = useCallback(event => {
-    cancelAnimation(offset);
-    offset.value = event.nativeEvent.contentOffset.x;
-    const index = Math.round(event.nativeEvent.contentOffset.x / width);
-    setActiveIndex(index);
-    if (timeout.current) {
-      clearTimeout(timeout.current);
-    }
-    setShowingTitle(FILTERS[index].title);
+  const mainScrollEnd = React.useCallback(
+    e => {
+      const current = Math.round(e.nativeEvent.contentOffset.x / width);
+      changeIndex(current);
+    },
+    [changeIndex],
+  );
 
-    timeout.current = setTimeout(() => {
-      setShowingTitle('');
-    }, 2000);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const onTapGallery = index => {
+    const animated = IS_IOS ? true : false;
+    changeIndex(index);
+    swiperRef.current?.scrollToIndex({ index, animated });
+  };
+
+  const renderMainItem = React.useCallback(
+    ({ item, index }) => (
+      <Item
+        item={item}
+        position={position}
+        index={index}
+        image={image}
+        activeIndex={activeIndex}
+        extractEnabled={extractEnabled}
+        onExtractImage={_onExtractImage}
+      />
+    ),
+    [_onExtractImage, activeIndex, extractEnabled, image, position],
+  );
 
   return (
     <View style={ThemedStyles.style.flexContainer}>
-      {filters}
-
-      <ScrollView
-        horizontal
-        pagingEnabled
-        showsHorizontalScrollIndicator={false}
-        onScroll={onScroll}>
-        {useMemo(
-          () => new Array(filtersToLoad).fill(null).map(() => createVw(width)),
-          [width, filtersToLoad],
-        )}
-      </ScrollView>
-
-      {Boolean(showingTitle) && (
-        <View style={styles.filterContainer}>
-          <MText style={styles.filterTitle}>{showingTitle}</MText>
-        </View>
+      {!IS_IOS && ( // on Android we show a placeholder because the filtered image sometimes takes a while to load
+        <Image
+          source={{
+            uri: image.uri + `?t${image.key}`,
+          }}
+          style={styles.placeholder}
+          resizeMode={image.width > image.height ? 'contain' : 'cover'}
+        />
       )}
+      <AnimatedFlatList
+        horizontal
+        ref={swiperRef}
+        pagingEnabled
+        bounces={false}
+        windowSize={3}
+        onMomentumScrollEnd={mainScrollEnd}
+        showsHorizontalScrollIndicator={false}
+        initialNumToRender={3}
+        maxToRenderPerBatch={6}
+        getItemLayout={getItemLayout}
+        scrollEventThrottle={0.1}
+        onScroll={scrollHandler}
+        data={FILTERS}
+        renderItem={renderMainItem}
+      />
+      <FlatList
+        style={styles.gallery}
+        ref={galleryRef}
+        removeClippedSubviews={false}
+        horizontal
+        windowSize={6}
+        showsHorizontalScrollIndicator={false}
+        initialNumToRender={6}
+        data={FILTERS}
+        getItemLayout={getGalleryItemLayout}
+        renderItem={({ item, index }) => (
+          <ItemThumb
+            item={item}
+            active={index === activeIndex}
+            onTap={() => onTapGallery(index)}
+            image={image}
+          />
+        )}
+      />
     </View>
   );
 }
 
 const styles = ThemedStyles.create({
-  filterWrapper: {
-    ...StyleSheet.absoluteFillObject,
-    overflow: 'hidden',
-    right: 0,
+  placeholder: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: width - (IS_IOS ? 0 : 0.1),
+    height: height - 65,
   },
-  filterContainer: ['centered', 'absoluteFill'],
-  filterTitle: ['textCenter', 'colorWhite', 'fontXL'],
+  itemContainer: {
+    width: width - (IS_IOS ? 0 : 0.1), //workaround for android
+    height,
+    overflow: 'hidden',
+  },
+  activeThumb: {
+    borderRadius: 8,
+    width: GALLERY_ITEM_WIDTH,
+    height: GALLERY_ITEM_WIDTH,
+    margin: GALLERY_MARGIN,
+    borderWidth: 3,
+    borderColor: 'white',
+    overflow: 'hidden',
+  },
+  gallery: {
+    position: 'absolute',
+    bottom: 50,
+  },
+  mainImage: {
+    width,
+    height: height - 65,
+  },
+  thumbImage: {
+    width: GALLERY_ITEM_WIDTH,
+    height: GALLERY_ITEM_WIDTH,
+  },
+  thumb: {
+    borderRadius: 8,
+    width: GALLERY_ITEM_WIDTH,
+    height: GALLERY_ITEM_WIDTH,
+    margin: GALLERY_MARGIN,
+    borderWidth: 0,
+    borderColor: 'white',
+    overflow: 'hidden',
+  },
+  filterContainer: ['centered', 'positionAbsolute'],
+  filterTitle: [
+    'textCenter',
+    'colorWhite',
+    'fontXXXL',
+    {
+      marginTop: -height / 2,
+      textShadowColor: 'rgba(0,0,0,1)',
+      shadowOffset: { width: 2, height: 2 },
+      shadowRadius: 0,
+      shadowOpacity: 0.7,
+    },
+  ],
 });

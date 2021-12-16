@@ -37,7 +37,7 @@ export function createClassStores() {
     groupsBar: new groupsBar(),
     reportstore: new reportStore(),
     discoveryV2Store: new DiscoveryV2Store(),
-    mindsPlusV2Store: new DiscoveryV2Store(),
+    mindsPlusV2Store: new DiscoveryV2Store(true),
     wallet: new wallet(),
   };
   sessionService.onLogout(() => {

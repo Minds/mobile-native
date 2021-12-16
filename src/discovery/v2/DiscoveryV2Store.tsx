@@ -26,6 +26,9 @@ export default class DiscoveryV2Store {
   @observable trends: TDiscoveryTrendsTrend[] = [];
   @observable tags: TDiscoveryTagsTag[] = [];
   @observable trendingTags: TDiscoveryTagsTag[] = [];
+  /**
+   * trends loading state
+   */
   @observable loading = false;
   /**
    * Tab animation direction
@@ -37,7 +40,7 @@ export default class DiscoveryV2Store {
   trendingFeed: FeedStore;
   allFeed: FeedStore;
 
-  constructor() {
+  constructor(plus: boolean = false) {
     this.boostFeed = new FeedStore(true);
     this.boostFeed
       .getMetadataService()!
@@ -50,7 +53,8 @@ export default class DiscoveryV2Store {
       .setLimit(15);
 
     this.trendingFeed = new FeedStore(true)
-      .setEndpoint('api/v2/feeds/global/trending/all')
+      .setEndpoint('api/v2/feeds/global/top/all')
+      .setParams({ period: '12h', plus })
       .setInjectBoost(false)
       .setLimit(15);
 

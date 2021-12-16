@@ -131,6 +131,8 @@ test:jest:
     - export GRADLE_USER_HOME="$CI_PROJECT_DIR/.gradle"
     - sudo sysctl fs.inotify.max_user_watches=524288
     - sudo sysctl -p
+    - sudo ln -s /lib/x86_64-linux-gnu/libncurses.so.6 /lib/x86_64-linux-gnu/libncurses.so.5
+    - sudo ln -s /lib/x86_64-linux-gnu/libncursesw.so.6 /lib/x86_64-linux-gnu/libtinfo.so.5
     - yarn install --frozen-lockfile
     - cd android
     - bundle install --path=vendor/bundle
@@ -182,6 +184,8 @@ build:androidproduction-playstore:
     - export GRADLE_USER_HOME="$CI_PROJECT_DIR/.gradle"
     - sudo sysctl fs.inotify.max_user_watches=524288
     - sudo sysctl -p
+    - sudo ln -s /lib/x86_64-linux-gnu/libncurses.so.6 /lib/x86_64-linux-gnu/libncurses.so.5
+    - sudo ln -s /lib/x86_64-linux-gnu/libncursesw.so.6 /lib/x86_64-linux-gnu/libtinfo.so.5
     - yarn install --frozen-lockfile
     - cd android
     - bundle install --path=vendor/bundle

@@ -51,7 +51,7 @@
         android:windowSoftInputMode="adjustPan"
         tools:replace="android:allowBackup"
         android:requestLegacyExternalStorage="true">
-        <activity android:name=".CustomErrorScreen"></activity>
+        <activity  android:exported="false" android:name=".CustomErrorScreen"></activity>
         <activity
             android:name=".MainActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"
@@ -109,11 +109,12 @@
                 <data android:mimeType="video/*" />
             </intent-filter>
         </activity>
-        <activity android:name="com.ahmedadeltito.photoeditor.PhotoEditorActivity"/>
-        <activity android:name="com.yalantis.ucrop.UCropActivity" />
-        <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+        <activity android:exported="false" android:name="com.ahmedadeltito.photoeditor.PhotoEditorActivity"/>
+        <activity android:exported="false" android:name="com.yalantis.ucrop.UCropActivity" />
+        <activity android:exported="false" android:name="com.facebook.react.devsupport.DevSettingsActivity" />
         <activity
             android:screenOrientation="portrait"
+            android:exported="true"
             android:name="com.zoontek.rnbootsplash.RNBootSplashActivity"
             android:theme="@style/BootTheme"> <!-- apply the theme you created at step 3. -->
             <intent-filter>

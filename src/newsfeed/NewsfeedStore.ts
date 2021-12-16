@@ -84,8 +84,6 @@ class NewsfeedStore<T> {
     const model = ActivityModel.checkOrCreate(entity);
 
     this.feedStore.prepend(model);
-
-    model.listRef = this.listRef?.listRef;
   }
 
   @action

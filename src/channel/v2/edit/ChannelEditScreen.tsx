@@ -50,7 +50,7 @@ const createEditChannelStore = () => ({
     this.city = city;
   },
   setDob(dob) {
-    this.dob = dob instanceof Date ? dob : new Date(dob);
+    this.dob = dob ? (dob instanceof Date ? dob : new Date(dob)) : null;
   },
   initialLoad(channelStore: ChannelStoreType) {
     if (channelStore.channel) {

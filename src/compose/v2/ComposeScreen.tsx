@@ -109,7 +109,6 @@ export default observer(function ComposeScreen(props) {
   const onPressBack = useCallback(() => {
     if (store.attachment.hasAttachment || store.embed.hasRichEmbed) {
       Keyboard.dismiss();
-      console.log('showConfirm');
 
       showConfirm();
     } else {

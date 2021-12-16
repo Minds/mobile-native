@@ -1,8 +1,8 @@
 import React, {
-  useRef,
-  useCallback,
   forwardRef,
+  useCallback,
   useImperativeHandle,
+  useRef,
 } from 'react';
 import { StyleSheet, View } from 'react-native';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -12,8 +12,8 @@ import moment from 'moment';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
 import {
-  getLicenseText,
   getAccessText,
+  getLicenseText,
 } from '../../common/services/list-options.service';
 import featuresService from '../../common/services/features.service';
 import MText from '../../common/components/MText';
@@ -72,7 +72,7 @@ export function useNavCallback(screen, store, navigation) {
 
 const snapPoints = ['90%'];
 
-const PosterOptions = props => {
+const PosterOptions = observer(props => {
   const store = props.route.params.store;
   // dereference observables to listen to his changes
   const nsfw = store.nsfw.slice();
@@ -193,7 +193,7 @@ const PosterOptions = props => {
       )}
     </View>
   );
-};
+});
 
 /**
  * Options
