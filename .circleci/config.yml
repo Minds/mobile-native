@@ -40,6 +40,8 @@ jobs:
     steps:
       - attach_workspace:
           at: .
+      - node/install:
+          node-version: '12.13.0'
       - rn/yarn_install:
           cache_folder: /Users/distiller/Library/Caches/Yarn
       - run:
@@ -98,6 +100,7 @@ jobs:
 
 orbs:
   rn: react-native-community/react-native@5.4.0
+  node: circleci/node@4.0.0
 version: 2.1
 workflows:
   test:
