@@ -379,12 +379,15 @@ export default function (props) {
      * Select media from gallery
      */
     async selectFromGallery(mode) {
-      Alert.alert('composer: selectFromGallery');
+      // Alert.alert('composer: selectFromGallery');
       const response = await attachmentService.gallery(
         mode || this.mode,
         false,
       );
-
+      Alert.alert(
+        'composer: selectFromGallery response',
+        JSON.stringify(response),
+      );
       if (response) {
         this.onMediaFromGallery(response);
       }

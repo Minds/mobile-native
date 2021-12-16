@@ -95,7 +95,7 @@ class ImagePickerService {
   ): Promise<customImagePromise> {
     Alert.alert('image picker service: launchImageLibrary');
     // check permissions
-    await this.checkGalleryPermissions();
+    // await this.checkGalleryPermissions();
 
     const opt = this.buildOptions(type, crop);
 
