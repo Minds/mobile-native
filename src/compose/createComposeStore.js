@@ -6,7 +6,7 @@ import AttachmentStore from '../common/stores/AttachmentStore';
 import RichEmbedStore from '../common/stores/RichEmbedStore';
 import i18n from '../common/services/i18n.service';
 import hashtagService from '../common/services/hashtag.service';
-import api, { ApiError } from '../common/services/api.service';
+import api from '../common/services/api.service';
 import ActivityModel from '../newsfeed/ActivityModel';
 import ThemedStyles from '../styles/ThemedStyles';
 import featuresService from '../common/services/features.service';
@@ -14,7 +14,6 @@ import mindsConfigService from '../common/services/minds-config.service';
 import supportTiersService from '../common/services/support-tiers.service';
 import settingsStore from '../settings/SettingsStore';
 import attachmentService from '../common/services/attachment.service';
-import { CommonActions } from '@react-navigation/native';
 import logService from '../common/services/log.service';
 import { runInAction } from 'mobx';
 import { Dimensions, Image, Platform } from 'react-native';
@@ -128,22 +127,18 @@ export default function (props) {
         noText: undefined,
       });
     },
-    selectionChanged(s) {
-      this.selection = s;
-      console.log('selection:', s);
+    selectionChanged(e) {
+      this.selection = e.nativeEvent.selection;
+      const fontSmall = this.attachment.hasAttachment || this.text.length > 85;
+
       measureHeights({
         texts: [this.text.substr(0, this.selection.start)],
         width: 326,
         fontFamily: 'Roboto',
-        fontSize: 22,
+        fontSize: fontSmall ? 18 : 22,
       })
-        .then(result => {
-          console.log(result);
-          this.textHeight = Math.max(result[0], 26);
-        })
-        .catch(err => {
-          console.log(err);
-        });
+        .then(result => (this.textHeight = Math.max(result[0], 26)))
+        .catch(err => console.error('error ======>', err));
     },
     onPost(entity, isEdit) {
       const { popToTop } = props.navigation;
@@ -322,6 +317,12 @@ export default function (props) {
      */
     setTitle(title) {
       this.title = title;
+    },
+    /**
+     * Set selection
+     */
+    setSelection(selection) {
+      this.selection = selection;
     },
     /**
      * Set mode photo
