@@ -181,6 +181,7 @@ build:android-mr-production:
   script:
     - bundle exec fastlane assemble_mr_build
     - mv app/build/outputs/apk/release/app-release.apk ../Minds-$CI_COMMIT_REF_SLUG.apk
+    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@../Minds-$CI_COMMIT_REF_SLUG.apk"
   artifacts:
     name: 'Minds APK'
     paths:
