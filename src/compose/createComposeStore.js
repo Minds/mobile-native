@@ -1,11 +1,12 @@
 import { showMessage } from 'react-native-flash-message';
 import RNPhotoEditor from 'react-native-photo-editor';
+import { measureHeights } from '@bigbee.dev/react-native-measure-text-size';
 
 import AttachmentStore from '../common/stores/AttachmentStore';
 import RichEmbedStore from '../common/stores/RichEmbedStore';
 import i18n from '../common/services/i18n.service';
 import hashtagService from '../common/services/hashtag.service';
-import api, { ApiError } from '../common/services/api.service';
+import api from '../common/services/api.service';
 import ActivityModel from '../newsfeed/ActivityModel';
 import ThemedStyles from '../styles/ThemedStyles';
 import featuresService from '../common/services/features.service';
@@ -13,12 +14,13 @@ import mindsConfigService from '../common/services/minds-config.service';
 import supportTiersService from '../common/services/support-tiers.service';
 import settingsStore from '../settings/SettingsStore';
 import attachmentService from '../common/services/attachment.service';
-import { CommonActions } from '@react-navigation/native';
 import logService from '../common/services/log.service';
 import { runInAction } from 'mobx';
-import { Image, Platform } from 'react-native';
+import { Dimensions, Image, Platform } from 'react-native';
 import { hashRegex } from '../common/components/Tags';
 import getNetworkError from '~/common/helpers/getNetworkError';
+
+const width = Dimensions.get('window').width - 80;
 
 /**
  * Display an error message to the user.
@@ -48,6 +50,11 @@ const DEFAULT_MONETIZE = {
  */
 export default function (props) {
   return {
+    selection: {
+      start: 0,
+      end: 0,
+    },
+    textHeight: 26,
     portraitMode: false,
     noText: false,
     isRemind: false,
@@ -119,6 +126,19 @@ export default function (props) {
         portrait: undefined,
         noText: undefined,
       });
+    },
+    selectionChanged(e) {
+      this.selection = e.nativeEvent.selection;
+      const fontSmall = this.attachment.hasAttachment || this.text.length > 85;
+
+      measureHeights({
+        texts: [this.text.substr(0, this.selection.start)],
+        width: 326,
+        fontFamily: 'Roboto',
+        fontSize: fontSmall ? 18 : 22,
+      })
+        .then(result => (this.textHeight = Math.max(result[0], 26)))
+        .catch(err => console.error('error ======>', err));
     },
     onPost(entity, isEdit) {
       const { popToTop } = props.navigation;
@@ -297,6 +317,12 @@ export default function (props) {
      */
     setTitle(title) {
       this.title = title;
+    },
+    /**
+     * Set selection
+     */
+    setSelection(selection) {
+      this.selection = selection;
     },
     /**
      * Set mode photo

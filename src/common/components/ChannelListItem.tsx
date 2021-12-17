@@ -9,6 +9,7 @@ import MText from './MText';
 import MPressable from './MPressable';
 
 type PropsType = {
+  onPress?: (channel: UserModel) => void;
   channel: UserModel;
   navigation?: any;
   onUserTap?: Function;
@@ -27,7 +28,12 @@ const ChannelListItem = (props: PropsType) => {
   );
   const nameStyles = useStyle(props.nameStyles || {}, styles.name);
   const usernameStyles = useStyle(props.usernameStyles || {}, styles.username);
-  const _navToChannel = React.useCallback(() => {
+  const _onPress = React.useCallback(() => {
+    if (props.onPress) {
+      props.onPress(props.channel);
+      return;
+    }
+
     Keyboard.dismiss();
     if (props.onUserTap) {
       props.onUserTap(props.channel);
@@ -62,7 +68,7 @@ const ChannelListItem = (props: PropsType) => {
   const { ...otherProps } = props;
 
   return (
-    <MPressable onPress={_navToChannel} style={containerStyle} {...otherProps}>
+    <MPressable style={containerStyle} {...otherProps} onPress={_onPress}>
       <FastImage
         source={props.channel.getAvatarSource('medium')}
         style={styles.avatar}
