@@ -36,7 +36,7 @@ jobs:
   fastlane_release:
     executor:
       name: rn/macos
-      xcode_version: '12.5.0'
+      xcode_version: '13.2.0'
     steps:
       - attach_workspace:
           at: .
@@ -57,7 +57,7 @@ jobs:
   e2e:
     executor:
       name: rn/macos
-      xcode_version: '12.5.0'
+      xcode_version: '13.2.0'
     resource_class: xlarge
     steps:
       - attach_workspace:
