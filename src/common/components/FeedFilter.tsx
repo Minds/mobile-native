@@ -21,8 +21,8 @@ type PropsType = {
   dateRange?: boolean;
   store: {
     filter: string;
-    range?: { from: Date; to: Date } | null;
-    clearDateRange: () => void;
+    range?: { from: number; to: number } | null;
+    clearDateRange?: () => void;
     setDateRange?: (a: any, b: any) => void;
     setFilter: Function;
     setNsfw?: Function;

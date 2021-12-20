@@ -5,7 +5,7 @@ import DateRangePicker, { DateRangePickerPropsType } from './DateRangePicker';
 
 type PropsType = {
   filtered: boolean;
-  clear: () => void;
+  clear?: () => void;
 } & Omit<DateRangePickerPropsType, 'inputComponent'>;
 
 export default function DateRangeFilter(props: PropsType) {

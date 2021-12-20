@@ -62,7 +62,7 @@ const DateRangePicker = observer((props: DateRangePickerPropsType) => {
 
   // Store --------------------------------------------------
   const localStore = useLocalStore(
-    (p: PropsType) => ({
+    (p: DateRangePickerPropsType) => ({
       settingStart: true,
       startDate: p.startDate,
       endDate: p.endDate,
