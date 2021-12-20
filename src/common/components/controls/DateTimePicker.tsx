@@ -5,7 +5,7 @@ import i18n from '../../services/i18n.service';
 import ThemedStyles, { useStyle } from '~/styles/ThemedStyles';
 import { BottomSheetButton, BottomSheetModal } from '../bottom-sheet';
 import type { BottomSheetModal as BottomSheetModalType } from '@gorhom/bottom-sheet';
-import ModernDatePicker from '@manishoo/react-native-modern-datepicker';
+import ModernDatePicker from 'react-native-modern-datepicker';
 import { Calendar } from 'react-native-calendars';
 import MText from '~/common/components/MText';
 import { useDimensions } from '@react-native-community/hooks';
