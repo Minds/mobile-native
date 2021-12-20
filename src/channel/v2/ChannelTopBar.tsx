@@ -175,7 +175,7 @@ const ChannelTopBar = observer(
             value={store?.channelSearch}
             onChangeText={store?.setChannelSearch}
             returnKeyType={'search'}
-            onSubmitEditing={store?.searchInChannel}
+            onSubmitEditing={store?.filterChannelFeed}
           />
           <Icon
             reverse

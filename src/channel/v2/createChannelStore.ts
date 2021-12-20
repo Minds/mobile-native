@@ -14,6 +14,7 @@ import NavigationService from '../../navigation/NavigationService';
 import i18n from '../../common/services/i18n.service';
 import { showNotification } from '../../../AppMessages';
 import { Platform } from 'react-native';
+import moment from 'moment';
 
 type Entity = { guid: string; nsfw?: Array<string> } | UserModel;
 type InitialLoadParams = {
@@ -50,6 +51,7 @@ const createChannelStore = () => {
     showPosterFab: true,
     tiers: <Array<SupportTiersType>>[],
     filter: 'all' as FilterType,
+    range: <{ from: number; to: number } | null>null,
     feedStore: new FeedStore(true),
     showScheduled: false,
     uploading: false,
@@ -57,6 +59,17 @@ const createChannelStore = () => {
     avatarProgress: 0,
     channelSearch: '',
     avatarPath: '',
+    clearDateRange() {
+      this.range = null;
+      this.filterChannelFeed();
+    },
+    setDateRange(from: Date, to: Date) {
+      this.range = {
+        from: moment.utc(from).startOf('day').valueOf(),
+        to: moment.utc(to).endOf('day').valueOf(),
+      };
+      this.filterChannelFeed();
+    },
     setChannelSearch(channelSearch: string) {
       this.channelSearch = channelSearch;
     },
@@ -151,7 +164,7 @@ const createChannelStore = () => {
         .clear()
         .fetchRemoteOrLocal();
     },
-    async searchInChannel() {
+    async filterChannelFeed() {
       this.feedStore.clear();
 
       if (!this.channel) {
@@ -159,12 +172,17 @@ const createChannelStore = () => {
       }
 
       const params: any = {
-        period: '1y',
+        period: 'all',
         all: 1,
         query: this.channelSearch,
         sync: 1,
         force_public: 1,
       };
+
+      if (this.range) {
+        params.to_timestamp = this.range.from;
+        params.from_timestamp = this.range.to;
+      }
 
       this.feedStore
         .setEndpoint(

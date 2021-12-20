@@ -1,10 +1,10 @@
 import { observer, useLocalStore } from 'mobx-react';
 import React from 'react';
 import { ViewStyle } from 'react-native';
-import i18n from '../services/i18n.service';
+import i18n from '../../services/i18n.service';
 import { B1, B2, Column, Icon, PressableLine, Row } from '~ui';
 import ThemedStyles from '~/styles/ThemedStyles';
-import { BottomSheetButton, BottomSheetModal } from './bottom-sheet';
+import { BottomSheetButton, BottomSheetModal } from '../bottom-sheet';
 import type { BottomSheetModal as BottomSheetModalType } from '@gorhom/bottom-sheet';
 import { Calendar } from 'react-native-calendars';
 import { UIUnitType } from '~/styles/Tokens';
@@ -107,27 +107,27 @@ const DatePicker = observer((props: PropsType) => {
           <Row align="centerBoth">
             <Icon name="calendar" size="small" />
           </Row>
-          <BottomSheetModal ref={ref} onDismiss={localStore.send}>
-            <Calendar
-              current={localStore.textDate}
-              maxDate={props.maximumDate}
-              minDate={props.minimumDate}
-              markedDates={{
-                [localStore.textDate]: {
-                  selected: true,
-                  disableTouchEvent: true,
-                },
-              }}
-              onDayPress={localStore.setDate}
-              theme={theme}
-            />
-            <BottomSheetButton
-              text={i18n.t('done')}
-              onPress={localStore.onConfirm}
-            />
-          </BottomSheetModal>
         </Row>
       </Row>
+      <BottomSheetModal ref={ref} onDismiss={localStore.send}>
+        <Calendar
+          current={localStore.textDate}
+          maxDate={props.maximumDate}
+          minDate={props.minimumDate}
+          markedDates={{
+            [localStore.textDate]: {
+              selected: true,
+              disableTouchEvent: true,
+            },
+          }}
+          onDayPress={localStore.setDate}
+          theme={theme}
+        />
+        <BottomSheetButton
+          text={i18n.t('done')}
+          onPress={localStore.onConfirm}
+        />
+      </BottomSheetModal>
     </PressableLine>
   );
 });
