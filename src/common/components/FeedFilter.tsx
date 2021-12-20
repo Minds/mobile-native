@@ -103,23 +103,25 @@ const FeedFilter = (props: PropsType) => {
             <RadioButton {...b} key={i} />
           ))}
           <Spacer top="L" />
-          <SectionTitle>{i18n.t('wallet.date')}</SectionTitle>
           {props.dateRange && (
-            <DateRangeFilter
-              onConfirm={setDateRange}
-              clear={props.store.clearDateRange}
-              filtered={Boolean(props.store.range)}
-              startDate={
-                props.store.range?.from
-                  ? new Date(props.store.range?.from)
-                  : undefined
-              }
-              endDate={
-                props.store.range?.to
-                  ? new Date(props.store.range?.to)
-                  : undefined
-              }
-            />
+            <>
+              <SectionTitle>{i18n.t('wallet.date')}</SectionTitle>
+              <DateRangeFilter
+                onConfirm={setDateRange}
+                clear={props.store.clearDateRange}
+                filtered={Boolean(props.store.range)}
+                startDate={
+                  props.store.range?.from
+                    ? new Date(props.store.range?.from)
+                    : undefined
+                }
+                endDate={
+                  props.store.range?.to
+                    ? new Date(props.store.range?.to)
+                    : undefined
+                }
+              />
+            </>
           )}
           {!props.nsfw && IS_FROM_STORE && props.store.nsfw && (
             <NsfwToggle
