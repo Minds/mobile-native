@@ -41,6 +41,24 @@ platform :android do
     )
   end
 
+  desc "Create a MR staging build"
+  lane :assemble_mr_build do
+    sh("echo $SENTRY_ANDROID_PROPERTIES | base64 --decode > ../sentry.properties")
+    gradle(
+      task: "assemble",
+      build_type: "Release",
+      print_command: false,
+      properties: {
+        "android.enableJetifier" => "true",
+        "android.useAndroidX" => "true",
+        "android.injected.signing.store.file" => "debug.keystore",
+        "android.injected.signing.store.password" => "android",
+        "android.injected.signing.key.alias" => "androiddebugkey",
+        "android.injected.signing.key.password" => "android",
+      }
+    )
+  end
+
   desc "Submit a new Beta Build to Crashlytics Beta"
   lane :beta do
     gradle(task: "clean assembleRelease")
