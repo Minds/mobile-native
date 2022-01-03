@@ -6,7 +6,6 @@ import {
   NativeScrollEvent,
   NativeSyntheticEvent,
   Platform,
-  StyleSheet,
   TextInput as RNTextInput,
   View,
 } from 'react-native';
@@ -39,7 +38,7 @@ import { useFocusEffect } from '@react-navigation/core';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Animated, {
   useAnimatedStyle,
-  withSpring,
+  withTiming,
 } from 'react-native-reanimated';
 import UserModel from '~/channel/UserModel';
 import Tags from '~/common/components/Tags';
@@ -224,39 +223,40 @@ export default observer(function ComposeScreen(props) {
   const avatar =
     channel && channel.getAvatarSource ? channel.getAvatarSource('medium') : {};
   // TODO: what is the logic of these numbers
-  const autoCompleteTopPadding = Platform.select({ ios: 150, default: 100 });
+  const keyboard = useKeyboard();
+  const [scrollViewHeight, setScrollViewHeight] = useState(0);
+
   /**
    * animated style for the popover appearing and disappearing functionality
    **/
   const autoCompletePopupAnimatedStyle = useAnimatedStyle(
     () => ({
-      transform: [
-        {
-          translateY: withSpring(
-            autoCompleteVisible
-              ? store.textHeight + autoCompleteTopPadding - scrollOffset
-              : 1000,
-            {
-              mass: 0.3,
-            },
-          ),
-        },
-      ],
+      height: withTiming(
+        autoCompleteVisible
+          ? (scrollViewHeight -
+              (keyboard.keyboardShown ? keyboard.keyboardHeight : 0)) /
+              2
+          : 0,
+      ),
     }),
-    [store.textHeight, autoCompleteVisible, scrollOffset],
+    [
+      // store.textHeight,
+      autoCompleteVisible,
+      // scrollOffset,
+      scrollViewHeight,
+      keyboard,
+    ],
   );
-  /**
-   * Used to add spacing on the bottom of scrollview when the Autocomplete popup is visible
-   **/
-  const spacerAnimatedStyle = useAnimatedStyle(
-    () => ({
-      // TODO: why 320 and 75, make it dynamic
-      height: withSpring(autoCompleteVisible ? 320 : 75, {
-        mass: 0.5,
-      }),
-    }),
-    [autoCompleteVisible],
-  );
+
+  useEffect(() => {
+    if (autoCompleteVisible) {
+      setTimeout(() => {
+        InteractionManager.runAfterInteractions(() =>
+          scrollViewRef.current?.scrollTo(store.textHeight + 35),
+        );
+      }, 0);
+    }
+  }, [autoCompleteVisible, store.textHeight]);
   // #endregion
 
   // #region methods
@@ -374,7 +374,13 @@ export default observer(function ComposeScreen(props) {
         ref={scrollViewRef}
         keyboardShouldPersistTaps={'always'}
         keyboardDismissMode={'none'}
+        onLayout={e =>
+          scrollViewHeight
+            ? null
+            : setScrollViewHeight(e.nativeEvent.layout.height)
+        }
         showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 35 }}
         onScroll={onScrollHandler}>
         <View style={theme.rowJustifyStart}>
           <View style={useStyle('paddingHorizontal2x', 'paddingTop')}>
@@ -397,6 +403,10 @@ export default observer(function ComposeScreen(props) {
                   textAlignVertical="top"
                   multiline={true}
                   selectTextOnFocus={false}
+                  autoCorrect={false}
+                  autoComplete={'off'}
+                  spellCheck={false}
+                  autoCapitalize={'none'}
                   underlineColorAndroid="transparent"
                   testID="PostInput">
                   <Tags navigation={props.navigation} selectable={true}>
@@ -423,8 +433,19 @@ export default observer(function ComposeScreen(props) {
             )}
           </View>
         </View>
-        <Animated.View style={spacerAnimatedStyle} />
+        {/*<Animated.View style={spacerAnimatedStyle} />*/}
       </ScrollView>
+
+      {/**
+       * Autocomplete popup
+       **/}
+      <Animated.View style={autoCompletePopupAnimatedStyle}>
+        <ChannelAutoCompleteList
+          query={query}
+          onChannels={handleAutoCompleteUsersLoaded}
+          onSelect={handleAutoCompleteSelect}
+        />
+      </Animated.View>
 
       {showBottomBar && (
         <KeyboardSpacingView
