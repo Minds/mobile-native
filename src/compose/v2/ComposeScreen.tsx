@@ -210,6 +210,8 @@ export default observer(function ComposeScreen(props) {
   const channel = sessionService.getUser();
   const avatar =
     channel && channel.getAvatarSource ? channel.getAvatarSource('medium') : {};
+  // TODO: what is the logic of these numbers
+  const autoCompleteTopPadding = Platform.select({ ios: 150, default: 100 });
   /**
    * animated style for the popover appearing and disappearing functionality
    **/
@@ -218,7 +220,9 @@ export default observer(function ComposeScreen(props) {
       transform: [
         {
           translateY: withSpring(
-            autoCompleteVisible ? store.textHeight + 100 - scrollOffset : 1000,
+            autoCompleteVisible
+              ? store.textHeight + autoCompleteTopPadding - scrollOffset
+              : 1000,
             {
               mass: 0.3,
             },
@@ -343,7 +347,6 @@ export default observer(function ComposeScreen(props) {
     />
   );
   // #endregion
-
   return (
     <SafeAreaView style={styles.container}>
       <TopBar
@@ -369,7 +372,7 @@ export default observer(function ComposeScreen(props) {
               <>
                 {store.attachment.hasAttachment && <TitleInput store={store} />}
                 <TextInput
-                  selection={store.selection}
+                  // selection={store.selection}
                   onSelectionChange={store.selectionChanged}
                   style={textStyle}
                   onContentSizeChange={localStore.onSizeChange}
