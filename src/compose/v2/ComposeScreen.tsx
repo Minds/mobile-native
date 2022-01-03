@@ -48,16 +48,27 @@ import ChannelAutoCompleteList from '~/common/components/ChannelAutoCompleteList
 
 const { width, height } = Dimensions.get('window');
 
-const useAutoComplete = ({
+interface AutoCompleteInput {
+  text: string;
+  selection: { start: number; end: number };
+  textHeight?: number;
+  scrollOffset?: number;
+  onScrollToOffset?: (offset: number) => void;
+  onTextChange: (text: string) => void;
+  onSelectionChange: (selection: { start: number; end: number }) => void;
+  onTextInputFocus?: () => void;
+}
+
+export const useAutoComplete = ({
   text,
   selection,
-  textHeight,
+  textHeight = 29,
   scrollOffset = 0,
   onScrollToOffset,
   onTextChange,
   onSelectionChange,
   onTextInputFocus,
-}) => {
+}: AutoCompleteInput) => {
   const [query, setQuery] = useState('');
   const [visible, setVisible] = useState(false);
   const keyboard = useKeyboard();
@@ -105,7 +116,7 @@ const useAutoComplete = ({
   );
   const handleAutoCompleteSelect = useCallback(
     (user: UserModel) => {
-      let endword = [''],
+      let endword: RegExpMatchArray | null = [''],
         matchText = text.substr(0, selection.end);
 
       // search end of word
@@ -130,9 +141,11 @@ const useAutoComplete = ({
         start: preText.length,
         end: preText.length,
       });
-      InteractionManager.runAfterInteractions(() => {
-        onTextInputFocus();
-      });
+      if (onTextInputFocus) {
+        InteractionManager.runAfterInteractions(() => {
+          onTextInputFocus();
+        });
+      }
     },
     [text, selection, onTextChange, onSelectionChange, onTextInputFocus],
   );

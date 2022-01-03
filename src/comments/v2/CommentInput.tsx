@@ -1,12 +1,12 @@
 import React, { useCallback } from 'react';
-import {
-  View,
-  StyleSheet,
-  Dimensions,
-  TouchableOpacity,
-  Platform,
-} from 'react-native';
 import type { TextInput as TextInputType } from 'react-native';
+import {
+  Dimensions,
+  Platform,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import SoftInputMode from 'react-native-set-soft-input-mode';
 
@@ -26,6 +26,15 @@ import { CHAR_LIMIT } from '../../config/Config';
 import TextInput from '../../common/components/TextInput';
 import MText from '../../common/components/MText';
 import { useBackHandler } from '@react-native-community/hooks';
+import Animated, {
+  useAnimatedStyle,
+  withSpring,
+} from 'react-native-reanimated';
+import ChannelAutoCompleteList from '~/common/components/ChannelAutoCompleteList/ChannelAutoCompleteList';
+import { useAutoComplete } from '~/compose/v2/ComposeScreen';
+import Tags from '~/common/components/Tags';
+import { useNavigation } from '@react-navigation/native';
+import { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 
 const { height } = Dimensions.get('window');
 
@@ -34,6 +43,7 @@ class StoreProvider {
   @action
   setStore = (s: CommentsStore) => (this.store = s);
 }
+
 const storeProvider = new StoreProvider();
 
 const Touchable = preventDoubleTap(TouchableOpacity);
@@ -44,6 +54,7 @@ export const CommentInputContext = React.createContext(storeProvider);
  * Floating Input component
  */
 const CommentInput = observer(() => {
+  const navigation = useNavigation();
   const theme = ThemedStyles.style;
   const ref = React.useRef<TextInputType>(null);
   const provider = React.useContext(CommentInputContext);
@@ -77,6 +88,27 @@ const CommentInput = observer(() => {
 
   const afterSelected = () => setTimeout(() => ref.current?.focus(), 400);
   const beforeSelect = () => ref.current?.blur();
+
+  const {
+    visible: autoCompleteVisible,
+    query,
+    handleAutoCompleteUsersLoaded,
+    handleAutoCompleteSelect,
+  } = useAutoComplete({
+    selection: provider.store?.selection || { start: 0, end: 0 },
+    onSelectionChange: selection => provider.store?.setSelection(selection),
+    text: provider.store?.text || '',
+    onTextChange: text => provider.store?.setText(text),
+  });
+  const autoCompleteAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [
+      {
+        translateY: withSpring(autoCompleteVisible ? 0 : height, {
+          mass: 0.3,
+        }),
+      },
+    ],
+  }));
 
   if (!provider.store || !provider.store.showInput) {
     return null;
@@ -112,6 +144,19 @@ const CommentInput = observer(() => {
               containerStyle={styles.meta}
             />
           )}
+          <Animated.View
+            style={[
+              theme.absoluteFill,
+              { top: 35 }, // TODO: logic of number
+              autoCompleteAnimatedStyle,
+            ]}>
+            <ChannelAutoCompleteList
+              query={query}
+              onChannels={handleAutoCompleteUsersLoaded}
+              onSelect={handleAutoCompleteSelect}
+              flatListComponent={BottomSheetFlatList}
+            />
+          </Animated.View>
         </View>
         <View style={[theme.bgPrimaryBackground, styles.inputContainer]}>
           {(provider.store.parent || provider.store.edit) && (
@@ -149,18 +194,22 @@ const CommentInput = observer(() => {
               placeholderTextColor={ThemedStyles.getColor('TertiaryText')}
               placeholder={placeHolder}
               underlineColorAndroid="transparent"
-              onChangeText={provider.store.setText}
-              value={provider.store.text}
+              onChangeText={provider.store?.setText}
               maxLength={CHAR_LIMIT}
-              // onBlur={() => provider.store?.setShowInput(false)}
+              onSelectionChange={e =>
+                provider.store?.setSelection(e.nativeEvent.selection)
+              }
               style={[
                 theme.fullWidth,
                 theme.colorPrimaryText,
                 theme.fontL,
                 styles.input,
                 inputMaxHeight,
-              ]}
-            />
+              ]}>
+              <Tags navigation={navigation} selectable={true}>
+                {provider.store.text}
+              </Tags>
+            </TextInput>
             {!provider.store.saving ? (
               <View>
                 <View

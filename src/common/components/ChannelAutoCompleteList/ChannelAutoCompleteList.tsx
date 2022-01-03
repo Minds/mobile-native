@@ -5,6 +5,7 @@ import ThemedStyles from '~styles/ThemedStyles';
 import UserModel from '~/channel/UserModel';
 import { observer } from 'mobx-react';
 import useChannelSuggestion from './useChannelSuggestion';
+import { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 
 export interface ChannelAutoCompleteListProps {
   /**
@@ -19,12 +20,14 @@ export interface ChannelAutoCompleteListProps {
    * when a channel is selected
    **/
   onSelect?: (channel: UserModel) => void;
+  flatListComponent?: FlatList | typeof BottomSheetFlatList;
 }
 
 function ChannelAutoCompleteList({
   query,
   onChannels,
   onSelect,
+  flatListComponent,
 }: ChannelAutoCompleteListProps) {
   const { result } = useChannelSuggestion(query);
   const channels = result?.entities || [];
@@ -41,11 +44,13 @@ function ChannelAutoCompleteList({
     [onSelect],
   );
 
+  const CustomFlatList = (flatListComponent || FlatList) as any;
+
   // TODO: add empty state
   // TODO: add loading state
   // TODO: add error state
   return (
-    <FlatList
+    <CustomFlatList
       keyboardShouldPersistTaps={'always'}
       keyboardDismissMode={'none'}
       data={channels}

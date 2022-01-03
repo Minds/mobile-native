@@ -11,7 +11,6 @@ import type BottomSheetType from '@gorhom/bottom-sheet';
 
 import CommentList from './CommentList';
 import CommentsStore from './CommentsStore';
-import CommentInput from './CommentInput';
 import ThemedStyles from '~/styles/ThemedStyles';
 import Handle from '~/common/components/bottom-sheet/Handle';
 import BottomSheet from '~/common/components/bottom-sheet/BottomSheet';
@@ -158,7 +157,6 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
           />
         </Stack.Navigator>
       </BottomSheet>
-      <CommentInput key="commentInput" />
     </>
   );
 };
