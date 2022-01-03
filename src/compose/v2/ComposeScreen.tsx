@@ -222,10 +222,8 @@ export default observer(function ComposeScreen(props) {
   const channel = sessionService.getUser();
   const avatar =
     channel && channel.getAvatarSource ? channel.getAvatarSource('medium') : {};
-  // TODO: what is the logic of these numbers
   const keyboard = useKeyboard();
   const [scrollViewHeight, setScrollViewHeight] = useState(0);
-
   /**
    * animated style for the popover appearing and disappearing functionality
    **/
@@ -239,24 +237,8 @@ export default observer(function ComposeScreen(props) {
           : 0,
       ),
     }),
-    [
-      // store.textHeight,
-      autoCompleteVisible,
-      // scrollOffset,
-      scrollViewHeight,
-      keyboard,
-    ],
+    [autoCompleteVisible, scrollViewHeight, keyboard],
   );
-
-  useEffect(() => {
-    if (autoCompleteVisible) {
-      setTimeout(() => {
-        InteractionManager.runAfterInteractions(() =>
-          scrollViewRef.current?.scrollTo(store.textHeight + 35),
-        );
-      }, 0);
-    }
-  }, [autoCompleteVisible, store.textHeight]);
   // #endregion
 
   // #region methods
@@ -345,6 +327,20 @@ export default observer(function ComposeScreen(props) {
       }, 300);
     });
   }, [inputRef]);
+
+  /**
+   * The point of this effect is to move the scroll to the
+   * caret if it was behind the autocomplete view
+   **/
+  useEffect(() => {
+    if (autoCompleteVisible) {
+      setTimeout(() => {
+        InteractionManager.runAfterInteractions(() =>
+          scrollViewRef.current?.scrollTo(store.textHeight + 35),
+        );
+      }, 0);
+    }
+  }, [autoCompleteVisible, store.textHeight]);
   // #endregion
 
   // #region renders
@@ -477,18 +473,6 @@ export default observer(function ComposeScreen(props) {
           onPress={closeConfirm}
         />
       </BottomSheet>
-
-      {/**
-       * Autocomplete popup
-       **/}
-      <Animated.View
-        style={[StyleSheet.absoluteFillObject, autoCompletePopupAnimatedStyle]}>
-        <ChannelAutoCompleteList
-          query={query}
-          onChannels={handleAutoCompleteUsersLoaded}
-          onSelect={handleAutoCompleteSelect}
-        />
-      </Animated.View>
     </SafeAreaView>
   );
 });
