@@ -24,7 +24,7 @@ const TokensEarnings = observer(
     return (
       <>
         <MonthPickerInput
-          minimumDate={moment().subtract(6, 'months').toDate()}
+          minimumDate={new Date(moment().subtract(6, 'months').toDate())}
           maximumDate={new Date()}
           containerStyle={[styles.container, theme.bcolorPrimaryBorder]}
           onConfirm={store.monthPickerOnConfirm}
