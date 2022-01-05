@@ -148,7 +148,7 @@ export class ThemedStylesStore {
       },
       animation: Platform.select({
         ios: 'default',
-        android: 'fade',
+        android: 'slide_from_right',
       }),
     };
 

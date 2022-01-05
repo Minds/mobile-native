@@ -17,12 +17,16 @@ import InitialOnboardingButton from '../onboarding/v2/InitialOnboardingButton';
 import { withErrorBoundary } from '../common/components/ErrorBoundary';
 import SocialCompassPrompt from '../common/components/social-compass/SocialCompassPrompt';
 import Feature from '~/common/components/Feature';
+import Topbar from '~/topbar/Topbar';
+import ThemedStyles from '~/styles/ThemedStyles';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
   'Newsfeed'
 >;
+
+const sticky = [0];
 
 type PropsType = {
   navigation: NewsfeedScreenNavigationProp;
@@ -61,7 +65,7 @@ class NewsfeedScreen extends Component<PropsType> {
    * Load data on mount
    */
   componentDidMount() {
-    this.disposeTabPress = this.props.navigation.addListener(
+    this.disposeTabPress = this.props.navigation.getParent().addListener(
       //@ts-ignore
       'tabPress',
       this.refreshNewsfeed,
@@ -106,7 +110,13 @@ class NewsfeedScreen extends Component<PropsType> {
     const newsfeed = this.props.newsfeed;
 
     const header = (
-      <View>
+      <View style={ThemedStyles.style.bgPrimaryBackground}>
+        <Topbar navigation={this.props.navigation} />
+      </View>
+    );
+
+    const prepend = (
+      <View style={ThemedStyles.style.bgPrimaryBackground}>
         <Feature feature="social-compass">
           <SocialCompassPrompt />
         </Feature>
@@ -121,6 +131,9 @@ class NewsfeedScreen extends Component<PropsType> {
 
     return (
       <FeedList
+        stickyHeaderHiddenOnScroll={true}
+        prepend={prepend}
+        stickyHeaderIndices={sticky}
         ref={newsfeed.setListRef}
         header={header}
         feedStore={newsfeed.feedStore}

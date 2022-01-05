@@ -243,6 +243,7 @@ export type AppStackParamList = {
     guid?: string;
     scrollToBottom?: boolean;
     focusedUrn?: string;
+    noBottomInset?: boolean;
   };
   Conversation: {};
   DiscoveryFeed: {};

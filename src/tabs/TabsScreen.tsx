@@ -7,29 +7,26 @@ import {
   View,
   Platform,
   TouchableOpacity,
-  StyleSheet,
   Dimensions,
   PlatformIOSStatic,
 } from 'react-native';
 // import PerformanceScreen from '../performance/PerformanceScreen';
-import NewsfeedScreen from '../newsfeed/NewsfeedScreen';
 import NotificationsScreen from '../notifications/v3/NotificationsScreen';
 import ThemedStyles, { useMemoStyle } from '../styles/ThemedStyles';
 import { Icon } from '~ui/icons';
 import NotificationIcon from '../notifications/v3/notifications-tab-icon/NotificationsTabIcon';
 import gatheringService from '../common/services/gathering.service';
 import { observer } from 'mobx-react';
-import { DiscoveryV2Screen } from '../discovery/v2/DiscoveryV2Screen';
 import ComposeIcon from '../compose/ComposeIcon';
-import Topbar from '../topbar/Topbar';
 import { InternalStack } from '../navigation/NavigationStack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import TopShadow from '../common/components/TopShadow';
 // import sessionService from '../common/services/session.service';
-import ChatTabIcon from '../chat/ChatTabIcon';
 import PressableScale from '~/common/components/PressableScale';
-import TabChatPreModal, { ChatModalHandle } from './TabChatPreModal';
 import preventDoubleTap from '~/common/components/PreventDoubleTap';
+import NewsfeedStack from '~/navigation/NewsfeedStack';
+import MoreStack from '~/navigation/MoreStack';
+import DiscoveryStack from '~/navigation/DiscoveryStack';
 // import navigationService from '../navigation/NavigationService';
 
 const DoubleTapSafeTouchable = preventDoubleTap(TouchableOpacity);
@@ -62,7 +59,6 @@ const Tab = createBottomTabNavigator<TabParamList>();
 const TabBar = ({ state, descriptors, navigation }) => {
   const focusedOptions = descriptors[state.routes[state.index].key].options;
   const insets = useSafeAreaInsets();
-  const chatModal = React.useRef<ChatModalHandle>(null);
 
   const bottomInset = {
     paddingBottom: insets.bottom
@@ -89,7 +85,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
   return (
     <View style={containerStyle}>
       {!isIOS && <TopShadow setting={shadowOpt} />}
-      <TabChatPreModal ref={chatModal} />
+
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const focused = state.index === index;
@@ -101,12 +97,6 @@ const TabBar = ({ state, descriptors, navigation }) => {
             target: route.key,
             canPreventDefault: true,
           });
-
-          if (route.name === 'MessengerTab') {
-            chatModal.current?.showModal();
-
-            return;
-          }
 
           if (!focused && !event.defaultPrevented) {
             navigation.navigate(route.name);
@@ -131,7 +121,9 @@ const TabBar = ({ state, descriptors, navigation }) => {
             testID={options.tabBarTestID}
             onPress={onPress}
             onLongPress={onLongPress}
-            style={styles.buttonContainer}>
+            style={
+              focused ? styles.buttonContainerFocused : styles.buttonContainer
+            }>
             {icon}
           </Component>
         );
@@ -162,7 +154,7 @@ const Tabs = observer(function ({ navigation }) {
 
   return (
     <View style={theme.flexContainer}>
-      <Topbar navigation={navigation} />
+      {/* <Topbar navigation={navigation} /> */}
       <Tab.Navigator
         detachInactiveScreens={false}
         initialRouteName="Newsfeed"
@@ -170,13 +162,13 @@ const Tabs = observer(function ({ navigation }) {
         screenOptions={tabOptions}>
         <Tab.Screen
           name="Newsfeed"
-          component={NewsfeedScreen}
+          component={NewsfeedStack}
           options={{ tabBarTestID: 'Menu tab button' }}
         />
         {/* <Tab.Screen name="Performance" component={PerformanceScreen} /> */}
         <Tab.Screen
           name="Discovery"
-          component={DiscoveryV2Screen}
+          component={DiscoveryStack}
           options={discoveryOptions}
         />
         <Tab.Screen
@@ -200,8 +192,8 @@ const Tabs = observer(function ({ navigation }) {
           options={notificationOptions}
         />
         <Tab.Screen
-          name="MessengerTab"
-          component={empty}
+          name="More"
+          component={MoreStack}
           options={messengerOptions}
         />
       </Tab.Navigator>
@@ -209,29 +201,47 @@ const Tabs = observer(function ({ navigation }) {
   );
 });
 
-const styles = StyleSheet.create({
+const styles = ThemedStyles.create({
   compose: {
     width: 48,
     height: 46,
   },
   buttonContainer: {
+    paddingTop: 17,
     flex: 1,
+    borderTopWidth: 4,
+    borderTopColor: 'transparent',
     alignContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
     justifyContent: 'center',
-    height: 35,
-    marginBottom: 3,
+    height: 40,
+    marginBottom: 10,
   },
-  tabBar: {
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: -1 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-    paddingTop: 12,
-    paddingLeft: 20,
-    paddingRight: 20,
+  buttonContainerFocused: {
+    paddingTop: 17,
+    flex: 1,
+    borderTopWidth: 4,
+    borderTopColor: '#1B85D6',
+    alignContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    justifyContent: 'center',
+    height: 40,
+    marginBottom: 10,
   },
+  tabBar: [
+    {
+      borderTopWidth: 1,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: -1 },
+      shadowOpacity: 0.2,
+      shadowRadius: 4,
+      paddingLeft: 20,
+      paddingRight: 20,
+    },
+    'bcolorPrimaryBorder',
+  ],
 });
 
 // const navToChannel = () =>
@@ -246,15 +256,15 @@ const tabBar = props => <TabBar {...props} />;
 //   tabBarTestID: 'CaptureTabButton',
 //   tabBarButton: props => <TouchableOpacity {...props} onPress={navToChannel} />,
 // };
-const empty = () => null;
 const tabOptions = ({ route }): BottomTabNavigationOptions => ({
   headerShown: false,
   tabBarIcon: ({ focused }) => {
     let iconName;
 
     switch (route.name) {
-      case 'MessengerTab':
-        return <ChatTabIcon active={focused} />;
+      case 'More':
+        iconName = 'menu';
+        break;
       case 'Newsfeed':
         iconName = 'home';
         break;
@@ -275,7 +285,9 @@ const tabOptions = ({ route }): BottomTabNavigationOptions => ({
         return <ComposeIcon style={styles.compose} />;
     }
 
-    return <Icon size="large" active={focused} name={iconName} />;
+    return (
+      <Icon size="large" active={focused} name={iconName} activeColor="White" />
+    );
   },
 });
 

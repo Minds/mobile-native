@@ -18,34 +18,18 @@ import {
   Screen,
   PressableLine,
 } from '~ui';
+import FadeFrom from '~/common/components/animations/FadeFrom';
 
 const getOptionsList = navigation => {
   const hasRewards = sessionService.getUser().rewards;
 
   let list = [
-    {
-      name: i18n.t('newsfeed.title'),
-      icon: 'home',
-      onPress: () => {
-        navigation.navigate('Newsfeed');
-      },
-    },
-    {
-      name: i18n.t('discovery.title'),
-      icon: 'hashtag',
-      onPress: () => {
-        navigation.navigate('Discovery');
-      },
-    },
     featuresService.has('plus-2020')
       ? {
           name: i18n.t('wire.lock.plus'),
           icon: 'queue',
           onPress: () => {
-            navigation.navigate('Tabs', {
-              screen: 'CaptureTab',
-              params: { screen: 'PlusDiscoveryScreen' },
-            });
+            navigation.navigate('PlusDiscoveryScreen');
           },
         }
       : null,
@@ -54,10 +38,7 @@ const getOptionsList = navigation => {
           name: i18n.t('moreScreen.wallet'),
           icon: 'bank',
           onPress: () => {
-            navigation.navigate('Tabs', {
-              screen: 'CaptureTab',
-              params: { screen: 'Wallet' },
-            });
+            navigation.navigate('Wallet');
           },
         }
       : null,
@@ -73,10 +54,7 @@ const getOptionsList = navigation => {
       icon: 'coins',
       onPress: async () => {
         const navToBuyTokens = () => {
-          navigation.navigate('Tabs', {
-            screen: 'CaptureTab',
-            params: { screen: 'BuyTokens' },
-          });
+          navigation.navigate('BuyTokens');
         };
         if (!hasRewards) {
           await requirePhoneValidation();
@@ -94,30 +72,21 @@ const getOptionsList = navigation => {
       icon: 'analytics',
 
       onPress: () => {
-        navigation.navigate('Tabs', {
-          screen: 'CaptureTab',
-          params: { screen: 'Analytics' },
-        });
+        navigation.navigate('Analytics');
       },
     },
     {
       name: i18n.t('discovery.groups'),
       icon: 'group',
       onPress: () => {
-        navigation.navigate('Tabs', {
-          screen: 'CaptureTab',
-          params: { screen: 'GroupsList' },
-        });
+        navigation.navigate('GroupsList');
       },
     },
     {
       name: i18n.t('moreScreen.settings'),
       icon: 'settings',
       onPress: () => {
-        navigation.navigate('Tabs', {
-          screen: 'CaptureTab',
-          params: { screen: 'Settings' },
-        });
+        navigation.navigate('Settings');
       },
     },
   ];
@@ -133,7 +102,6 @@ export default function Drawer(props) {
   const channel = sessionService.getUser();
 
   const handleChannelNav = () => {
-    props.navigation.closeDrawer();
     props.navigation.push('Channel', { entity: channel });
   };
 
@@ -147,13 +115,15 @@ export default function Drawer(props) {
     <Screen safe>
       <FitScrollView>
         <HairlineSpacer top="XXL">
-          <DrawerHeader
-            avatar={avatar}
-            username={channel.username}
-            name={channel.name}
-            onIconPress={handleMultiUserNav}
-            onUserPress={handleChannelNav}
-          />
+          <FadeFrom direction="top">
+            <DrawerHeader
+              avatar={avatar}
+              username={channel.username}
+              name={channel.name}
+              onIconPress={handleMultiUserNav}
+              onUserPress={handleChannelNav}
+            />
+          </FadeFrom>
         </HairlineSpacer>
         <Spacer top="XXL">
           <DrawerList list={optionsList} />
@@ -166,12 +136,14 @@ export default function Drawer(props) {
 const DrawerList = ({ list }) => {
   return list.map((l, i) =>
     !l ? null : (
-      <DrawerNavItem
-        key={'list' + i}
-        name={l.name}
-        icon={l.icon}
-        onPress={l.onPress}
-      />
+      <FadeFrom direction="left" delay={i * 50}>
+        <DrawerNavItem
+          key={'list' + i}
+          name={l.name}
+          icon={l.icon}
+          onPress={l.onPress}
+        />
+      </FadeFrom>
     ),
   );
 };

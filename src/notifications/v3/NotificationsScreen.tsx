@@ -15,6 +15,8 @@ import NotificationPlaceHolder from './notification/NotificationPlaceHolder';
 import MText from '../../common/components/MText';
 import InteractionsBottomSheet from '~/common/components/interactions/InteractionsBottomSheet';
 import sessionService from '~/common/services/session.service';
+import Topbar from '~/topbar/Topbar';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type PropsType = {
   navigation?: any;
@@ -80,6 +82,12 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
     params,
     updateState,
   });
+
+  const insets = useSafeAreaInsets();
+  const cleanTop = React.useRef({
+    marginTop: insets && insets.top ? insets.top - 5 : 0,
+    flexGrow: 1,
+  }).current;
 
   const onFetchMore = () => {
     !loading &&
@@ -147,10 +155,17 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
   const ListEmptyComponent = React.useMemo(() => {
     if (error && !loading) {
       return (
-        <MText style={styles.errorStyle} onPress={() => fetch()}>
-          {i18n.t('cantReachServer') + '\n'}
-          <MText style={styles.errorText}>{i18n.t('tryAgain')}</MText>
-        </MText>
+        <View>
+          <NotificationsTopBar
+            store={notifications}
+            setResult={setResult}
+            refresh={refresh}
+          />
+          <MText style={styles.errorStyle} onPress={() => fetch()}>
+            {i18n.t('cantReachServer') + '\n'}
+            <MText style={styles.errorText}>{i18n.t('tryAgain')}</MText>
+          </MText>
+        </View>
       );
     }
 
@@ -166,7 +181,11 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
         </View>
       );
     }
-    return <EmptyList text={i18n.t(`notification.empty.${filter || 'all'}`)} />;
+    return (
+      <View>
+        <EmptyList text={i18n.t(`notification.empty.${filter || 'all'}`)} />
+      </View>
+    );
   }, [error, loading, fetch, isRefreshing, filter]);
 
   const user = sessionService.getUser();
@@ -192,13 +211,20 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
 
   return (
     <View style={styles.container}>
-      <NotificationsTopBar
-        store={notifications}
-        setResult={setResult}
-        refresh={refresh}
-      />
       <FlatList
-        style={theme.flexContainer}
+        stickyHeaderIndices={[0]}
+        stickyHeaderHiddenOnScroll={true}
+        style={[theme.flexContainer, cleanTop]}
+        ListHeaderComponent={
+          <View>
+            <Topbar title="Notifications" navigation={navigation} noInsets />
+            <NotificationsTopBar
+              store={notifications}
+              setResult={setResult}
+              refresh={refresh}
+            />
+          </View>
+        }
         data={data.slice()}
         keyExtractor={keyExtractor}
         renderItem={renderItem}
@@ -206,7 +232,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
         onRefresh={handleListRefresh}
         refreshing={isRefreshing}
         onViewableItemsChanged={onViewableItemsChanged}
-        contentContainerStyle={styles.containerStyle}
+        // contentContainerStyle={}
         viewabilityConfig={viewabilityConfig}
         ListEmptyComponent={ListEmptyComponent}
       />
@@ -221,7 +247,8 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
   );
 });
 
-const keyExtractor = (item: NotificationModel, index) => `${item.urn}-${index}`;
+const keyExtractor = (item: NotificationModel, index) =>
+  item ? `${item.urn}-${index}` : 'menu';
 
 export default NotificationsScreen;
 

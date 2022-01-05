@@ -133,7 +133,7 @@ const WalletScreen = observer((props: PropsType) => {
     body = <CenteredLoading />;
   }
   return (
-    <Screen>
+    <Screen safe>
       <ScreenHeader title={i18n.t('wallet.wallet')} extra={<TokenPrice />} />
       <TopbarTabbar
         titleStyle={theme.fontXL}

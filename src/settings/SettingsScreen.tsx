@@ -10,7 +10,7 @@ import openUrlService from '../common/services/open-url.service';
 import sessionService from '../common/services/session.service';
 import apiService from '../common/services/api.service';
 import ThemedStyles from '../styles/ThemedStyles';
-import { ScreenHeader } from '~/common/ui/screen';
+import { ScreenHeader, Screen } from '~/common/ui/screen';
 
 /**
  * Retrieves the link & jwt for zendesk and navigate to it.
@@ -149,31 +149,37 @@ export default function ({ navigation }) {
   );
 
   return (
-    <ScrollView
-      style={containerStyle}
-      contentContainerStyle={theme.paddingBottom4x}>
-      <ScreenHeader title={i18n.t('moreScreen.settings')} />
-      <View style={[innerWrapper, theme.bgPrimaryBackground]}>
-        {firstSectionItems.map((item, index) => (
-          <MenuItem
-            item={item}
-            containerItemStyle={
-              index > 0 ? menuItemStyle : ThemedStyles.style.bgPrimaryBackground
-            }
-          />
-        ))}
-      </View>
-      <View style={[innerWrapper, theme.marginTop7x]}>
-        {secondSectionItems.map((item, index) => (
-          <MenuItem
-            item={item}
-            containerItemStyle={
-              index > 0 ? menuItemStyle : ThemedStyles.style.bgPrimaryBackground
-            }
-          />
-        ))}
-      </View>
-    </ScrollView>
+    <Screen safe>
+      <ScrollView
+        style={containerStyle}
+        contentContainerStyle={theme.paddingBottom4x}>
+        <ScreenHeader title={i18n.t('moreScreen.settings')} />
+        <View style={[innerWrapper, theme.bgPrimaryBackground]}>
+          {firstSectionItems.map((item, index) => (
+            <MenuItem
+              item={item}
+              containerItemStyle={
+                index > 0
+                  ? menuItemStyle
+                  : ThemedStyles.style.bgPrimaryBackground
+              }
+            />
+          ))}
+        </View>
+        <View style={[innerWrapper, theme.marginTop7x]}>
+          {secondSectionItems.map((item, index) => (
+            <MenuItem
+              item={item}
+              containerItemStyle={
+                index > 0
+                  ? menuItemStyle
+                  : ThemedStyles.style.bgPrimaryBackground
+              }
+            />
+          ))}
+        </View>
+      </ScrollView>
+    </Screen>
   );
 }
 

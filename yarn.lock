@@ -12913,10 +12913,10 @@ react-native-reanimated-indicators@^2.0.0:
   dependencies:
     react-native-reanimated-hooks "^2.0.0"
 
-react-native-reanimated@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-2.3.0.tgz#5d3bbcd140ab8ad47ac30d873635c7f1c3d06d4f"
-  integrity sha512-MSW2Uzj+Chd6qGS1gqNeF/U2l+xk44cD0PnNbU3v1paDI2/HAlzPhMtEy2WWtz83RZ4FtDuI/0o935SjJ7iSYg==
+react-native-reanimated@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-2.3.1.tgz#c7abad48f9e6c84610b0d5e270088ecd61750382"
+  integrity sha512-nzjVqwkB8eeyPKT2KoiA9EEz17ZMFSGMoOTC17Z9b5nE2Z4ZHjHM5EKhY0TlwzXFUuJAE9PhOfxF0wIO/maZSA==
   dependencies:
     "@babel/plugin-transform-object-assign" "^7.10.4"
     "@types/invariant" "^2.2.35"
@@ -12985,10 +12985,10 @@ react-native-set-soft-input-mode@^1.1.0:
   resolved "https://registry.yarnpkg.com/react-native-set-soft-input-mode/-/react-native-set-soft-input-mode-1.1.0.tgz#0bc0c5265dab5105c631bfc00c0fef186b1935c7"
   integrity sha512-xB/U7EQPUwFsUtJ78x3DRjmrezMf4oZVpfr6NOLawSWDvh8HxiDfBx8LsvRQmpC/g8k8veVfqVmVTQ8wYPdqqA==
 
-react-native-share-menu@^5.0.4:
-  version "5.0.4"
-  resolved "https://registry.yarnpkg.com/react-native-share-menu/-/react-native-share-menu-5.0.4.tgz#886828bc9d99fabc826e259a1ab8ee372f7d8686"
-  integrity sha512-0tDcqKuA96VZtMcXrE8weu40iN79bbvnVRv++P04xCQutjYHWcCqJ3KPHdw8Beil4zreh02bQhUfLQnsjjkq1g==
+react-native-share-menu@^5.0.5:
+  version "5.0.5"
+  resolved "https://registry.yarnpkg.com/react-native-share-menu/-/react-native-share-menu-5.0.5.tgz#0014cbfdff1d5f60ae7dc100ae63b5b41bcd01b7"
+  integrity sha512-AUetD75x2PKM1sgLqcEBeeI1LHVM4WgiY+SHTGbbSbrnPzjt9oadt8ZNw/ICNYM91toW4WQu+WktuXEIIarBQg==
 
 react-native-share@^7.2.1:
   version "7.2.1"
