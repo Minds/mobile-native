@@ -19,7 +19,7 @@ export default function ({ navigation }) {
   React.useEffect(() => {
     getExportableWallets(true).then(w => {
       console.log('wallets', w);
-      setShowWallets(w?.length === 0);
+      setShowWallets(w?.length > 0);
     });
   }, []);
 
