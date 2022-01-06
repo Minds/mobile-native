@@ -21,7 +21,7 @@ import MetaPreview from '../../compose/MetaPreview';
 import GroupModel from '../../groups/GroupModel';
 import CommentInputBottomMenu from './CommentInputBottomMenu';
 import preventDoubleTap from '../../common/components/PreventDoubleTap';
-import { DotIndicator } from 'react-native-reanimated-indicators';
+import { Flow } from 'react-native-animated-spinkit';
 import { CHAR_LIMIT } from '../../config/Config';
 import TextInput from '../../common/components/TextInput';
 import MText from '../../common/components/MText';
@@ -191,12 +191,8 @@ const CommentInput = observer(() => {
                 </MText>
               </View>
             ) : (
-              <View>
-                <DotIndicator
-                  containerStyle={[theme.alignSelfCenter, theme.justifyEnd]}
-                  color={ThemedStyles.getColor('PrimaryText')}
-                  scaleEnabled={true}
-                />
+              <View style={[theme.alignSelfCenter, theme.justifyEnd]}>
+                <Flow color={ThemedStyles.getColor('PrimaryText')} />
               </View>
             )}
           </View>

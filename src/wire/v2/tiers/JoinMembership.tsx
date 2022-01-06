@@ -14,7 +14,7 @@ import { UserError } from '../../../common/UserError';
 import supportTiersService from '../../../common/services/support-tiers.service';
 import type { SupportTiersType } from '../../WireTypes';
 import UserModel from '../../../channel/UserModel';
-import { DotIndicator } from 'react-native-reanimated-indicators';
+import { Flow } from 'react-native-animated-spinkit';
 import Selector from '../../../common/components/SelectorV2';
 import MenuItem, {
   MenuItemItem,
@@ -343,10 +343,7 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
           </View>
         </>
       ) : (
-        <DotIndicator
-          color={ThemedStyles.getColor('TertiaryText')}
-          dotSize={10}
-        />
+        <Flow color={ThemedStyles.getColor('TertiaryText')} size={10} />
       )}
       <Selector
         ref={selectorRef}

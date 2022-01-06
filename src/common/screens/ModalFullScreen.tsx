@@ -6,7 +6,7 @@ import { IconButton } from '~ui/icons';
 
 import ThemedStyles from '../../styles/ThemedStyles';
 import MText from '../components/MText';
-import { DotIndicator } from 'react-native-reanimated-indicators';
+import { Flow } from 'react-native-animated-spinkit';
 
 type PropsType = {
   title: string;
@@ -39,11 +39,7 @@ export default function ModalFullScreen({
       </SafeAreaView>
       {loading && (
         <View style={styles.loading}>
-          <DotIndicator
-            dotSize={12}
-            color={ThemedStyles.getColor('White')}
-            scaleEnabled={true}
-          />
+          <Flow size={12} color={ThemedStyles.getColor('White')} />
         </View>
       )}
     </View>

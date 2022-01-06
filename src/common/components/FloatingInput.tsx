@@ -14,7 +14,7 @@ import { Portal } from '@gorhom/portal';
 import KeyboardSpacingView from '../../common/components/KeyboardSpacingView';
 import ThemedStyles from '../../styles/ThemedStyles';
 import preventDoubleTap from '../../common/components/PreventDoubleTap';
-import { DotIndicator } from 'react-native-reanimated-indicators';
+import { Flow } from 'react-native-animated-spinkit';
 import TextInput from '../../common/components/TextInput';
 
 const { height } = Dimensions.get('window');
@@ -90,12 +90,8 @@ const FloatingInput = React.forwardRef(
                     </Touchable>
                   </View>
                 ) : (
-                  <View>
-                    <DotIndicator
-                      containerStyle={styles.indicator}
-                      color={ThemedStyles.getColor('PrimaryText')}
-                      scaleEnabled={true}
-                    />
+                  <View style={styles.indicator}>
+                    <Flow color={ThemedStyles.getColor('PrimaryText')} />
                   </View>
                 )}
               </View>

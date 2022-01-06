@@ -12537,6 +12537,11 @@ react-native-animatable@1.3.3, react-native-animatable@^1.3.3:
   dependencies:
     prop-types "^15.7.2"
 
+react-native-animated-spinkit@^1.5.2:
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/react-native-animated-spinkit/-/react-native-animated-spinkit-1.5.2.tgz#b1c00ecbadf48634273e6a843f8dfbcb7c006186"
+  integrity sha512-YCQGR3HzEQvyaAnepiyf/hv88Sta3UIZ2CFZPtFqwu+VbFJfMgjJZniOx4157TuR5AAYajEJP9Fgy+JLIU3jzQ==
+
 react-native-bootsplash@^3.2.4:
   version "3.2.4"
   resolved "https://registry.yarnpkg.com/react-native-bootsplash/-/react-native-bootsplash-3.2.4.tgz#73d3b38606ddc7e1d489012f007c1fbd26fc68d1"
@@ -12905,13 +12910,6 @@ react-native-reanimated-hooks@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/react-native-reanimated-hooks/-/react-native-reanimated-hooks-2.0.0.tgz#de4f14734a8fe3a0a0e1e37ca3b2f764c4a53f3e"
   integrity sha512-Lb1E8KarzABOyEXWFP7SFIzq8Lb/kPm+0D9BT6Z917iSBNa2WL2RPwyUFWm5Dq2mFEmoXiNYT8alZtbHiSccmQ==
-
-react-native-reanimated-indicators@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/react-native-reanimated-indicators/-/react-native-reanimated-indicators-2.0.0.tgz#eabf33e39b914afb554beef4db5db5ac4e47269b"
-  integrity sha512-pW0HkLrXjHvN9bf8vrmVD4Cy3l2Hoe8ypb3p/8ha2ayxwQTQpEl6lA3N6XO8hovVc9GgZCQm1PG4CA3N7XwEdQ==
-  dependencies:
-    react-native-reanimated-hooks "^2.0.0"
 
 react-native-reanimated@^2.3.0:
   version "2.3.0"
