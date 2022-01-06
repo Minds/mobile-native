@@ -65,7 +65,7 @@ class NewsfeedScreen extends Component<PropsType> {
    * Load data on mount
    */
   componentDidMount() {
-    this.disposeTabPress = this.props.navigation.getParent().addListener(
+    this.disposeTabPress = this.props.navigation.getParent()?.addListener(
       //@ts-ignore
       'tabPress',
       this.refreshNewsfeed,

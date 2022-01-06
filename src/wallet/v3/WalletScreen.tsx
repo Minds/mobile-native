@@ -13,8 +13,8 @@ import type { CurrencyType } from '../../types/Payment';
 import type { TabType } from '../../common/components/topbar-tabbar/TopbarTabbar';
 import type { WalletStoreType } from '../v2/createWalletStore';
 import type {
-  InternalStackParamList,
   AppStackParamList,
+  MoreStackParamList,
 } from '../../navigation/NavigationTypes';
 import CenteredLoading from '../../common/components/CenteredLoading';
 import UsdTab from './currency-tabs/cash/UsdTab';
@@ -26,9 +26,9 @@ import createUsdTabStore from './currency-tabs/cash/createUsdTabStore';
 import type { UsdOptions, TokensOptions } from '../v2/WalletTypes';
 import { ScreenHeader, Screen } from '~ui/screen';
 
-export type WalletScreenRouteProp = RouteProp<InternalStackParamList, 'Wallet'>;
+export type WalletScreenRouteProp = RouteProp<MoreStackParamList, 'Wallet'>;
 export type WalletScreenNavigationProp = CompositeNavigationProp<
-  StackNavigationProp<InternalStackParamList, 'Wallet'>,
+  StackNavigationProp<MoreStackParamList, 'Wallet'>,
   StackNavigationProp<AppStackParamList, 'Main'>
 >;
 

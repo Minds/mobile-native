@@ -4,7 +4,7 @@ import {
   NativeStackNavigationOptions,
 } from '@react-navigation/native-stack';
 
-import { AppStackParamList } from './NavigationTypes';
+import { MoreStackParamList } from './NavigationTypes';
 import ThemedStyles from '~/styles/ThemedStyles';
 import ChannelScreen from '~/channel/v2/ChannelScreen';
 import Drawer from './Drawer';
@@ -46,7 +46,7 @@ import EmailScreen from '~/settings/screens/EmailScreen';
 import DataSaverScreen from '~/settings/screens/DataSaverScreen';
 import ResourcesScreen from '~/settings/screens/ResourcesScreen';
 
-const MoreStack = createNativeStackNavigator<AppStackParamList>();
+const MoreStack = createNativeStackNavigator<MoreStackParamList>();
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 
 const WalletOptions = () => ({

@@ -36,7 +36,7 @@ export type TabParamList = {
   Newsfeed: {};
   User: {};
   Discovery: {};
-  MessengerTab: {};
+  More: {};
   Notifications: {};
   CaptureTab: {};
 };

@@ -35,7 +35,7 @@ exports[`Update Screen Component renders correctly 1`] = `
           "borderRadius": 14,
         },
         Object {
-          "backgroundColor": "#242A30",
+          "backgroundColor": "#1F252C",
         },
       ]
     }

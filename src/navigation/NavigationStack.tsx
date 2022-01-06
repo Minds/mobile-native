@@ -3,7 +3,7 @@ import {
   createNativeStackNavigator,
   NativeStackNavigationOptions,
 } from '@react-navigation/native-stack';
-import { Dimensions, StatusBar, View } from 'react-native';
+import { StatusBar, View } from 'react-native';
 import {
   createStackNavigator,
   StackNavigationOptions,
@@ -24,7 +24,6 @@ import FabScreenV2 from '../wire/v2/FabScreen';
 import ViewImageScreen from '../media/ViewImageScreen';
 import ReportScreen from '../report/ReportScreen';
 import UpdatingScreen from '../update/UpdateScreen';
-import { DiscoverySearchScreen } from '../discovery/v2/search/DiscoverySearchScreen';
 import EmailConfirmationScreen from '../onboarding/EmailConfirmationScreen';
 import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
@@ -51,7 +50,6 @@ import AuthTransition from './AuthTransition';
 import VideoBackground from '../common/components/VideoBackground';
 import TransparentLayer from '../common/components/TransparentLayer';
 import PortraitViewerScreen from '../portrait/PortraitViewerScreen';
-import { portraitBarRef } from '../portrait/PortraitContentBar';
 import OnboardingScreen from '../onboarding/v2/OnboardingScreen';
 import VerifyEmailScreen from '../onboarding/v2/steps/VerifyEmailScreen';
 import SelectHashtagsScreen from '../onboarding/v2/steps/SelectHashtagsScreen';
@@ -62,8 +60,6 @@ import SuggestedChannelsScreen from '../onboarding/v2/steps/SuggestedChannelsScr
 import SuggestedGroupsScreen from '../onboarding/v2/steps/SuggestedGroupsScreen';
 import BoostChannelScreen from '../boost/v2/BoostChannelScreen';
 import BoostPostScreen from '../boost/v2/BoostPostScreen';
-import { topBarButtonTabBarRef } from '../common/components/topbar-tabbar/TopBarButtonTabBar';
-import { topbarTabbarRef } from '../common/components/topbar-tabbar/TopbarTabbar';
 import ExportLegacyWallet from '../settings/screens/ExportLegacyWallet';
 import Withdrawal from '../wallet/v3/currency-tabs/tokens/widthdrawal/Withdrawal';
 import EarnModal from '../earn/EarnModal';
@@ -102,12 +98,6 @@ export const InternalStack = () => {
       <InternalStackNav.Screen name="Onboarding" component={OnboardingScreen} />
     </InternalStackNav.Navigator>
   );
-};
-
-const gestureHandlerProps = {
-  hitSlop: { left: 0, width: Dimensions.get('window').width },
-  //@ts-ignore
-  waitFor: [portraitBarRef, topBarButtonTabBarRef, topbarTabbarRef],
 };
 
 const AppStack = function () {
@@ -183,10 +173,6 @@ const AppStack = function () {
         <AppStackNav.Screen
           name="Conversation"
           component={ConversationScreen}
-        />
-        <AppStackNav.Screen
-          name="DiscoverySearch"
-          component={DiscoverySearchScreen}
         />
         <AppStackNav.Screen name="Subscribers" component={ChannelSubscribers} />
         <AppStackNav.Screen

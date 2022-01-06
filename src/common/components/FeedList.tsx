@@ -30,6 +30,8 @@ type PropsType = {
   navigation: any;
   style?: StyleProp<ViewStyle>;
   hideItems?: boolean;
+  stickyHeaderHiddenOnScroll?: boolean;
+  stickyHeaderIndices?: number[];
   ListEmptyComponent?: React.ReactNode;
   onRefresh?: () => void;
   onScrollBeginDrag?: () => void;

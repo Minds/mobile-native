@@ -9,7 +9,7 @@ exports[`Messenger setup component should render correctly for setup 1`] = `
         "flex": 1,
       },
       Object {
-        "backgroundColor": "#242A30",
+        "backgroundColor": "#1F252C",
       },
     ]
   }
@@ -252,7 +252,7 @@ exports[`Messenger setup component should render correctly for unlock 1`] = `
         "flex": 1,
       },
       Object {
-        "backgroundColor": "#242A30",
+        "backgroundColor": "#1F252C",
       },
     ]
   }

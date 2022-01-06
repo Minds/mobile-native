@@ -10,7 +10,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
       },
       Array [
         Object {
-          "backgroundColor": "#242A30",
+          "backgroundColor": "#1F252C",
         },
         Object {
           "borderTopLeftRadius": 15,
@@ -869,7 +869,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
               Array [
                 Array [
                   Object {
-                    "backgroundColor": "#242A30",
+                    "backgroundColor": "#1F252C",
                   },
                   Object {
                     "paddingBottom": 8,
@@ -1149,7 +1149,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                     },
                     Object {},
                     Object {
-                      "backgroundColor": "#242A30",
+                      "backgroundColor": "#1F252C",
                       "borderColor": "#1B85D6",
                       "borderRadius": 21,
                       "borderWidth": 1,
@@ -1161,7 +1161,7 @@ exports[`LoginScreen component should renders correctly 1`] = `
                         "margin": 24,
                       },
                       Object {
-                        "backgroundColor": "#242A30",
+                        "backgroundColor": "#1F252C",
                       },
                     ],
                   ]

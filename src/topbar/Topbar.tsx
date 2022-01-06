@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, View, Platform, Image } from 'react-native';
+import { StyleSheet, View, Platform, Image, ViewStyle } from 'react-native';
 import { IconCircled, Spacer, H1 } from '~ui';
 import { observer } from 'mobx-react';
 import ThemedStyles from '../styles/ThemedStyles';
@@ -26,7 +26,7 @@ export const Topbar = observer((props: PropsType) => {
     height: Platform.select({ ios: props.noInsets ? 70 : 110, android: 70 }),
     display: 'flex',
     flexDirection: 'row',
-  }).current;
+  }).current as ViewStyle;
   // dereference to react to observable changes
 
   const chatModal = React.useRef<ChatModalHandle>(null);

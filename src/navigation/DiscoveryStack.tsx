@@ -3,14 +3,14 @@ import {
   createNativeStackNavigator,
   NativeStackNavigationOptions,
 } from '@react-navigation/native-stack';
-import { AppStackParamList } from './NavigationTypes';
+import { DiscoveryStackParamList } from './NavigationTypes';
 import ThemedStyles from '~/styles/ThemedStyles';
 import ChannelScreen from '~/channel/v2/ChannelScreen';
 import ActivityScreen from '~/newsfeed/ActivityScreen';
 import { DiscoveryV2Screen } from '~/discovery/v2/DiscoveryV2Screen';
 import { DiscoverySearchScreen } from '~/discovery/v2/search/DiscoverySearchScreen';
 
-const DiscoveryStack = createNativeStackNavigator<AppStackParamList>();
+const DiscoveryStack = createNativeStackNavigator<DiscoveryStackParamList>();
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 
 export default function () {
