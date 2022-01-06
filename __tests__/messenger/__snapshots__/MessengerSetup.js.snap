@@ -35,12 +35,10 @@ exports[`Messenger setup component should render correctly for setup 1`] = `
       }
     >
       <TextInput
-        allowFontScaling={true}
         editable={true}
         keyboardAppearance="dark"
         onChangeText={[Function]}
         placeholder="password..."
-        rejectResponderTermination={true}
         secureTextEntry={true}
         style={
           Object {
@@ -54,12 +52,10 @@ exports[`Messenger setup component should render correctly for setup 1`] = `
         underlineColorAndroid="transparent"
       />
       <TextInput
-        allowFontScaling={true}
         editable={true}
         keyboardAppearance="dark"
         onChangeText={[Function]}
         placeholder="confirm password..."
-        rejectResponderTermination={true}
         secureTextEntry={true}
         style={
           Array [
@@ -172,6 +168,8 @@ exports[`Messenger setup component should render correctly for setup 1`] = `
           }
         >
           <View
+            collapsable={false}
+            nativeID="animatedComponent"
             style={
               Object {
                 "transform": Array [
@@ -183,14 +181,14 @@ exports[`Messenger setup component should render correctly for setup 1`] = `
             }
           >
             <ActivityIndicator
-              animating={true}
               color="white"
-              hidesWhenStopped={true}
               size="small"
             />
           </View>
         </View>
         <View
+          collapsable={false}
+          nativeID="animatedComponent"
           style={
             Object {
               "backgroundColor": "rgba(0, 0, 0, 0.1)",
@@ -204,6 +202,8 @@ exports[`Messenger setup component should render correctly for setup 1`] = `
           }
         />
         <View
+          collapsable={false}
+          nativeID="animatedComponent"
           style={
             Object {
               "transform": Array [
@@ -275,12 +275,10 @@ exports[`Messenger setup component should render correctly for unlock 1`] = `
       }
     >
       <TextInput
-        allowFontScaling={true}
         editable={true}
         keyboardAppearance="dark"
         onChangeText={[Function]}
         placeholder="password..."
-        rejectResponderTermination={true}
         secureTextEntry={true}
         style={
           Object {
@@ -453,6 +451,8 @@ exports[`Messenger setup component should render correctly for unlock 1`] = `
           }
         >
           <View
+            collapsable={false}
+            nativeID="animatedComponent"
             style={
               Object {
                 "transform": Array [
@@ -464,14 +464,14 @@ exports[`Messenger setup component should render correctly for unlock 1`] = `
             }
           >
             <ActivityIndicator
-              animating={true}
               color="white"
-              hidesWhenStopped={true}
               size="small"
             />
           </View>
         </View>
         <View
+          collapsable={false}
+          nativeID="animatedComponent"
           style={
             Object {
               "backgroundColor": "rgba(0, 0, 0, 0.1)",
@@ -485,6 +485,8 @@ exports[`Messenger setup component should render correctly for unlock 1`] = `
           }
         />
         <View
+          collapsable={false}
+          nativeID="animatedComponent"
           style={
             Object {
               "transform": Array [

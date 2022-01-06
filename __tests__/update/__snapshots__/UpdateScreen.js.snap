@@ -108,6 +108,8 @@ exports[`Update Screen Component renders correctly 1`] = `
         useNativeDriver={false}
       >
         <View
+          collapsable={false}
+          nativeID="animatedComponent"
           style={
             Object {
               "backgroundColor": "#1B85D6",
