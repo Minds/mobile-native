@@ -1,15 +1,13 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, View, Platform, Image } from 'react-native';
-import { IconButton, Avatar, IconCircled, Spacer, H1 } from '~ui';
+import { IconCircled, Spacer, H1 } from '~ui';
 import { observer } from 'mobx-react';
 import ThemedStyles from '../styles/ThemedStyles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useStores } from '../common/hooks/use-stores';
 import useCurrentUser from '../common/hooks/useCurrentUser';
-import intword from '../common/helpers/intword';
 import featuresService from '../common/services/features.service';
 import EmailConfirmation from './EmailConfirmation';
-import MText from '../common/components/MText';
 import PressableScale from '~/common/components/PressableScale';
 import TabChatPreModal, { ChatModalHandle } from '~/tabs/TabChatPreModal';
 
@@ -80,6 +78,12 @@ export const Topbar = observer((props: PropsType) => {
 export default Topbar;
 
 export const styles = StyleSheet.create({
+  container: {
+    height: Platform.select({ ios: 110, android: 70 }),
+    display: 'flex',
+    flexDirection: 'row',
+    // paddingBottom: 8,
+  },
   logo: {
     marginTop: -12,
     width: 130,
