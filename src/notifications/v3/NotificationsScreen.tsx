@@ -98,8 +98,9 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
 
   const refresh = React.useCallback(() => {
     notifications.setOffset('');
+    setResult(null);
     fetch(params);
-  }, [notifications, fetch, params]);
+  }, [notifications, fetch, params, setResult]);
 
   const handleListRefresh = React.useCallback(() => {
     setRefreshing(true);
