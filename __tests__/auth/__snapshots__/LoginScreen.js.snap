@@ -31,9 +31,9 @@ exports[`LoginScreen component should renders correctly 1`] = `
       Array [
         Array [
           Object {
-            "borderTopLeftRadius": 20,
-            "borderTopRightRadius": 20,
-            "paddingBottom": 5,
+            "borderTopLeftRadius": 18,
+            "borderTopRightRadius": 18,
+            "height": 22,
             "paddingTop": 10,
           },
           Object {
