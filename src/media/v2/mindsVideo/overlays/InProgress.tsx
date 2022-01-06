@@ -12,7 +12,7 @@ const InProgress = () => {
         styles.overlayContainerTransparent,
         ThemedStyles.style.rowJustifyCenter,
       ]}>
-      <Flow color={ThemedStyles.getColor('Link')} size={15} />
+      <Flow color={ThemedStyles.getColor('Link')} />
     </View>
   );
 };

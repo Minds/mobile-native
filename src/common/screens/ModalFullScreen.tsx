@@ -39,7 +39,7 @@ export default function ModalFullScreen({
       </SafeAreaView>
       {loading && (
         <View style={styles.loading}>
-          <Flow size={12} color={ThemedStyles.getColor('White')} />
+          <Flow color={ThemedStyles.getColor('White')} />
         </View>
       )}
     </View>

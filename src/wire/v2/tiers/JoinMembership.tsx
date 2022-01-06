@@ -343,7 +343,7 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
           </View>
         </>
       ) : (
-        <Flow color={ThemedStyles.getColor('TertiaryText')} size={10} />
+        <Flow color={ThemedStyles.getColor('TertiaryText')} />
       )}
       <Selector
         ref={selectorRef}
