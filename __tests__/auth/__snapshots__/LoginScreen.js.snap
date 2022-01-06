@@ -287,9 +287,8 @@ exports[`LoginScreen component should renders correctly 1`] = `
           </View>
         </View>
         <TextInput
-          allowFontScaling={true}
           autoCapitalize="none"
-          autoCompleteType="username"
+          autoComplete="username"
           autoFocus={true}
           keyboardAppearance="dark"
           labelStyle={
@@ -309,7 +308,6 @@ exports[`LoginScreen component should renders correctly 1`] = `
           onChangeText={[Function]}
           placeholder=""
           placeholderTextColor="#444"
-          rejectResponderTermination={true}
           returnKeyType="done"
           style={
             Array [
@@ -439,9 +437,8 @@ exports[`LoginScreen component should renders correctly 1`] = `
             </View>
           </View>
           <TextInput
-            allowFontScaling={true}
             autoCapitalize="none"
-            autoCompleteType="password"
+            autoComplete="password"
             keyboardAppearance="dark"
             labelStyle={
               Array [
@@ -460,7 +457,6 @@ exports[`LoginScreen component should renders correctly 1`] = `
             onChangeText={[Function]}
             placeholder=""
             placeholderTextColor="#444"
-            rejectResponderTermination={true}
             returnKeyType="done"
             secureTextEntry={true}
             style={
@@ -603,6 +599,8 @@ exports[`LoginScreen component should renders correctly 1`] = `
             }
           >
             <View
+              collapsable={false}
+              nativeID="animatedComponent"
               style={
                 Object {
                   "transform": Array [
@@ -614,14 +612,14 @@ exports[`LoginScreen component should renders correctly 1`] = `
               }
             >
               <ActivityIndicator
-                animating={true}
                 color="#FFFFFF"
-                hidesWhenStopped={true}
                 size="small"
               />
             </View>
           </View>
           <View
+            collapsable={false}
+            nativeID="animatedComponent"
             style={
               Object {
                 "backgroundColor": "rgba(0, 0, 0, 0.05)",
@@ -635,6 +633,8 @@ exports[`LoginScreen component should renders correctly 1`] = `
             }
           />
           <View
+            collapsable={false}
+            nativeID="animatedComponent"
             style={
               Object {
                 "transform": Array [
@@ -750,8 +750,10 @@ exports[`LoginScreen component should renders correctly 1`] = `
     >
       <View
         accessible={true}
+        collapsable={false}
         focusable={true}
         forwardedRef={[Function]}
+        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -810,10 +812,12 @@ exports[`LoginScreen component should renders correctly 1`] = `
         }
       >
         <View
+          collapsable={false}
           deviceHeight={null}
           deviceWidth={null}
           forwardedRef={[Function]}
           hideModalContentWhileAnimating={false}
+          nativeID="animatedComponent"
           onBackdropPress={[Function]}
           onModalHide={[Function]}
           onModalWillHide={[Function]}
@@ -1069,9 +1073,8 @@ exports[`LoginScreen component should renders correctly 1`] = `
                     </View>
                   </View>
                   <TextInput
-                    allowFontScaling={true}
                     autoCapitalize="none"
-                    autoCompleteType="username"
+                    autoComplete="username"
                     containerStyle={
                       Array [
                         Object {
@@ -1093,7 +1096,6 @@ exports[`LoginScreen component should renders correctly 1`] = `
                     onChangeText={[Function]}
                     placeholder=""
                     placeholderTextColor="#444"
-                    rejectResponderTermination={true}
                     returnKeyType="done"
                     style={
                       Array [
