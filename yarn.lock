@@ -2842,14 +2842,6 @@
   dependencies:
     "@json-rpc-tools/types" "^1.6.1"
 
-"@manishoo/react-native-modern-datepicker@^1.0.0-beta.95":
-  version "1.0.0-beta.95"
-  resolved "https://registry.yarnpkg.com/@manishoo/react-native-modern-datepicker/-/react-native-modern-datepicker-1.0.0-beta.95.tgz#59e2cc0c2a8a7c927a58c7649caaa2fb9cb15b01"
-  integrity sha512-FC14PEV25JF6GrcDV2Z7DyHayINDdIteeCbqakW0kfOLGmq/Bs5ZrvhLtH1QbZVH8rDBx6NQiCF+RX95Uv5Vag==
-  dependencies:
-    moment-jalaali "^0.9.2"
-    prop-types "^15.7.2"
-
 "@metamask/safe-event-emitter@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@metamask/safe-event-emitter/-/safe-event-emitter-2.0.0.tgz#af577b477c683fad17c619a78208cede06f9605c"
@@ -12808,6 +12800,13 @@ react-native-modal@^11.10.0:
   dependencies:
     prop-types "^15.6.2"
     react-native-animatable "1.3.3"
+
+"react-native-modern-datepicker@https://gitlab.com/minds/react-native-modern-datepicker.git":
+  version "1.0.0-beta.91"
+  resolved "https://gitlab.com/minds/react-native-modern-datepicker.git#b9652fb43c1c87a40dc57733c15b391e767b6e93"
+  dependencies:
+    moment-jalaali "^0.9.2"
+    prop-types "^15.7.2"
 
 react-native-month-year-picker@^1.6.3:
   version "1.6.4"
