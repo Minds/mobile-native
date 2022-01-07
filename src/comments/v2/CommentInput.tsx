@@ -132,8 +132,8 @@ const CommentInput = observer(() => {
       <View style={[theme.justifyEnd, theme.flexContainer]}>
         <View style={theme.flexContainer}>
           <Touchable
-            style={[theme.flexContainer, theme.bgBlack, theme.opacity50]}
-            activeOpacity={0.5}
+            style={[theme.flexContainer, theme.bgBlack, theme.opacity25]}
+            activeOpacity={0.15}
             onPress={hideInput}
           />
           <MediaPreview attachment={provider.store.attachment} />
