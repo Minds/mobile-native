@@ -38,7 +38,6 @@ import {
 } from 'react-native-image-colors/lib/typescript/types';
 import AnimatedBanner from './AnimatedBanner';
 import InteractionsBottomSheet from '../../common/components/interactions/InteractionsBottomSheet';
-import CaptureFab from '~/capture/CaptureFab';
 import Empty from '~/common/components/Empty';
 
 const tinycolor = require('tinycolor2');

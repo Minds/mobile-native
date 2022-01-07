@@ -27,7 +27,7 @@ import { showMessage } from 'react-native-flash-message';
  */
 const navigateToHelp = async () => {
   try {
-    const response = await apiService.get('api/v3/helpdesk/zendesk', {
+    const response = await apiService.get<any>('api/v3/helpdesk/zendesk', {
       returnUrl: 'true',
     });
     if (response && response.url) {
