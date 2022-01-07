@@ -119,7 +119,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
     const unsubscribe = navigation.addListener(
       //@ts-ignore
       'tabPress',
-      onFocus,
+      () => navigation.isFocused() && onFocus(),
     );
 
     return unsubscribe;
@@ -200,9 +200,10 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
         containerStyle={ThemedStyles.style.borderBottomHair}>
         <NotificationItem
           notification={notification}
-          onShowSubscribers={() =>
-            interactionsBottomSheetRef.current?.show('subscribers')
-          }
+          onShowSubscribers={() => {
+            console.log('onShowSubscribers');
+            interactionsBottomSheetRef.current?.show('subscribers');
+          }}
         />
       </ErrorBoundary>
     );
@@ -241,12 +242,14 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
         entity={user}
         ref={interactionsBottomSheetRef}
         withoutInsets
-        snapPoints={['90%']}
+        snapPoints={snapPoints}
         keepOpen={false}
       />
     </View>
   );
 });
+
+const snapPoints = ['90%'];
 
 const keyExtractor = (item: NotificationModel, index) =>
   item ? `${item.urn}-${index}` : 'menu';
