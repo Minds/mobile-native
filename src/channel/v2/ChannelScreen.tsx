@@ -417,8 +417,6 @@ const ChannelScreen = observer((props: PropsType) => {
         renderActivity={renderActivity}
         onScroll={onScroll}
         refreshControlTintColor={textColor}
-        onScrollBeginDrag={() => store.setShowPosterFab(false)}
-        onMomentumScrollEnd={() => store.setShowPosterFab(true)}
         header={
           <ChannelHeader
             store={store}
@@ -444,12 +442,6 @@ const ChannelScreen = observer((props: PropsType) => {
           onPress={onTopBarPress}
         />
       </Animated.View>
-
-      <CaptureFab
-        visible={store.showPosterFab}
-        navigation={props.navigation}
-        route={props.route}
-      />
 
       <InteractionsBottomSheet
         entity={store.channel}
