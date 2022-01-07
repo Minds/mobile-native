@@ -70,6 +70,7 @@ export const useAutoComplete = ({
 }: AutoCompleteInput) => {
   const [query, setQuery] = useState('');
   const [visible, setVisible] = useState(false);
+  const setVisibleDebounced = useDebouncedCallback(v => setVisible(v), 100, []);
   const keyboard = useKeyboard();
 
   useEffect(() => {
@@ -89,14 +90,14 @@ export const useAutoComplete = ({
     const query = lastItem.substring(1);
 
     if (lastItem && (lastItem[0] === '@' || lastItem[0] === '#') && query) {
-      setVisible(true);
+      setVisibleDebounced(true);
 
       if (textHeight - scrollOffset > threshold) {
         onScrollToOffset?.(textHeight - 29);
       }
       setQuery(query);
     } else {
-      setVisible(false);
+      setVisibleDebounced(false);
       setQuery('');
     }
   }, [
@@ -133,7 +134,8 @@ export const useAutoComplete = ({
         /\@[a-zA-Z0-9]+$/,
         '@' + user.username + ' ',
       );
-      const postText = text.substr(selection.end + 1 + endword[0].length);
+      const postText = text.substr(selection.end + endword[0].length);
+
       onTextChange(preText + postText);
 
       onSelectionChange({
@@ -192,7 +194,17 @@ export default observer(function ComposeScreen(props) {
     textHeight: store.textHeight,
     scrollOffset,
     selection: store.selection,
-    onSelectionChange: selection => store.setSelection(selection),
+    onSelectionChange: selection => {
+      store.setSelection(selection);
+      setTimeout(() => {
+        inputRef.current?.setNativeProps({
+          selection: {
+            start: selection.start,
+            end: selection.end,
+          },
+        });
+      });
+    },
     text: store.text,
     onTextChange: text => store.setText(text),
     onTextInputFocus: () => inputRef.current?.focus(),
@@ -387,7 +399,6 @@ export default observer(function ComposeScreen(props) {
               <>
                 {store.attachment.hasAttachment && <TitleInput store={store} />}
                 <TextInput
-                  // selection={store.selection}
                   onSelectionChange={store.selectionChanged}
                   style={textStyle}
                   onContentSizeChange={localStore.onSizeChange}
