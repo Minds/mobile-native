@@ -191,11 +191,7 @@ const Tabs = observer(function ({ navigation }) {
           component={NotificationsScreen}
           options={notificationOptions}
         />
-        <Tab.Screen
-          name="More"
-          component={MoreStack}
-          options={messengerOptions}
-        />
+        <Tab.Screen name="More" component={MoreStack} options={moreOptions} />
       </Tab.Navigator>
     </View>
   );
@@ -248,7 +244,10 @@ const styles = ThemedStyles.create({
 //   navigationService.push('Channel', { entity: sessionService.getUser() });
 
 const notificationOptions = { tabBarTestID: 'Notifications tab button' };
-const messengerOptions = { tabBarTestID: 'Messenger tab button' };
+const moreOptions = {
+  tabBarTestID: 'Messenger tab button',
+  unmountOnBlur: true,
+};
 const discoveryOptions = { tabBarTestID: 'Discovery tab button' };
 const focusedState = { selected: true };
 const tabBar = props => <TabBar {...props} />;
