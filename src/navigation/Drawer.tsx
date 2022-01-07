@@ -8,17 +8,63 @@ import {
   H2,
   H3,
   B1,
-  Spacer,
   Row,
   Column,
   HairlineSpacer,
   IconButton,
-  Icon,
   Avatar,
   Screen,
   PressableLine,
+  Spacer,
 } from '~ui';
 import FadeFrom from '~/common/components/animations/FadeFrom';
+import apiService, { isNetworkError } from '~/common/services/api.service';
+import openUrlService from '~/common/services/open-url.service';
+import { showMessage } from 'react-native-flash-message';
+
+/**
+ * Retrieves the link & jwt for zendesk and navigate to it.
+ */
+const navigateToHelp = async () => {
+  try {
+    const response = await apiService.get('api/v3/helpdesk/zendesk', {
+      returnUrl: 'true',
+    });
+    if (response && response.url) {
+      openUrlService.openLinkInInAppBrowser(unescape(response.url));
+    }
+  } catch (err) {
+    console.log(err);
+    if (isNetworkError(err)) {
+      showMessage(i18n.t('errorMessage'));
+    } else {
+      showMessage(i18n.t('cantReachServer'));
+    }
+  }
+};
+
+const getOptionsSmallList = navigation => {
+  return [
+    {
+      name: i18n.t('help'),
+      onPress: () => {
+        navigateToHelp();
+      },
+    },
+    {
+      name: i18n.t('earnScreen.title'),
+      onPress: () => {
+        navigation.navigate('EarnModal');
+      },
+    },
+    {
+      name: i18n.t('referrals.menu'),
+      onPress: () => {
+        navigation.navigate('Referrals');
+      },
+    },
+  ];
+};
 
 const getOptionsList = navigation => {
   const hasRewards = sessionService.getUser().rewards;
@@ -42,13 +88,6 @@ const getOptionsList = navigation => {
           },
         }
       : null,
-    {
-      name: i18n.t('earnScreen.title'),
-      icon: 'money',
-      onPress: () => {
-        navigation.navigate('EarnModal');
-      },
-    },
     {
       name: 'Buy Tokens',
       icon: 'coins',
@@ -111,6 +150,7 @@ export default function Drawer(props) {
     channel && channel.getAvatarSource ? channel.getAvatarSource('medium') : {};
 
   const optionsList = getOptionsList(props.navigation);
+  const optionsSmallList = getOptionsSmallList(props.navigation);
   return (
     <Screen safe>
       <FitScrollView>
@@ -125,19 +165,24 @@ export default function Drawer(props) {
             />
           </FadeFrom>
         </HairlineSpacer>
-        <Spacer top="XXL">
-          <DrawerList list={optionsList} />
+        <Spacer vertical="M">
+          <DrawerList list={optionsList} small={false} />
+        </Spacer>
+        <HairlineSpacer />
+        <Spacer vertical="M">
+          <DrawerList list={optionsSmallList} small />
         </Spacer>
       </FitScrollView>
     </Screen>
   );
 }
 
-const DrawerList = ({ list }) => {
+const DrawerList = ({ list, small }) => {
   return list.map((l, i) =>
     !l ? null : (
       <FadeFrom direction="left" delay={i * 50}>
         <DrawerNavItem
+          small={small}
           key={'list' + i}
           name={l.name}
           icon={l.icon}
@@ -150,7 +195,7 @@ const DrawerList = ({ list }) => {
 
 const DrawerHeader = ({ name, username, avatar, onUserPress, onIconPress }) => {
   return (
-    <Row left="XL2" right="XL" bottom="XXL">
+    <Row left="XL" right="XL" bottom="XXL">
       <Avatar source={avatar} size="medium" onPress={onUserPress} />
       <Column flex align="centerStart" right="M" left="S">
         <H2 onPress={onUserPress} numberOfLines={1} flat>
@@ -173,14 +218,12 @@ const DrawerHeader = ({ name, username, avatar, onUserPress, onIconPress }) => {
   );
 };
 
-const DrawerNavItem = ({ icon, name, onPress }) => {
+const DrawerNavItem = ({ icon, name, onPress, small }) => {
+  const T = small ? B1 : H3;
   return (
     <PressableLine onPress={onPress}>
-      <Row align="centerStart" flex left="XL2" vertical="L">
-        <Icon name={icon} />
-        <H3 left="S" font="bold">
-          {name}
-        </H3>
+      <Row align="centerStart" flex left="XL" vertical="M">
+        <T font={small ? 'regular' : 'bold'}>{name}</T>
       </Row>
     </PressableLine>
   );
