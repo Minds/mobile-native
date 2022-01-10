@@ -146,6 +146,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                 }
               >
                 <Text
+                  numberOfLines={1}
                   style={
                     Array [
                       Object {
@@ -301,6 +302,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                 }
               >
                 <Text
+                  numberOfLines={1}
                   style={
                     Array [
                       Object {
@@ -456,6 +458,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                 }
               >
                 <Text
+                  numberOfLines={1}
                   style={
                     Array [
                       Object {
@@ -611,6 +614,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                 }
               >
                 <Text
+                  numberOfLines={1}
                   style={
                     Array [
                       Object {
@@ -766,6 +770,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                 }
               >
                 <Text
+                  numberOfLines={1}
                   style={
                     Array [
                       Object {
@@ -921,6 +926,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                 }
               >
                 <Text
+                  numberOfLines={1}
                   style={
                     Array [
                       Object {
