@@ -2130,10 +2130,10 @@
     lodash.pick "^4.4.0"
     lodash.template "^4.5.0"
 
-"@gorhom/bottom-sheet@^4.1.4":
-  version "4.1.4"
-  resolved "https://registry.yarnpkg.com/@gorhom/bottom-sheet/-/bottom-sheet-4.1.4.tgz#35c401ee94ea7d7440eaf3fed98c044f221184fc"
-  integrity sha512-e8GXz96HfcSqWc+3CYzyTkb2xb3SgynK81K8Z0sd1ExXVMAC+FaLcWf8XRFL4pzJkqgQR+R3JEgHWOJSzwe4EQ==
+"@gorhom/bottom-sheet@^4.1.5":
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/@gorhom/bottom-sheet/-/bottom-sheet-4.1.5.tgz#35341d45799de28082c380db6639537b04fa0b26"
+  integrity sha512-3F5P8jK3NXwT2lGwkAdkdLwDVHaRvMZalUTXjK6Ogf0Tki6idffJ3TNlQZlg8k6+OnXAx0+i80f4XaI+J4GFrA==
   dependencies:
     "@gorhom/portal" "^1.0.11"
     invariant "^2.2.4"
@@ -2147,12 +2147,11 @@
   dependencies:
     nanoid "^3.1.23"
 
-"@gorhom/portal@^1.0.8":
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/@gorhom/portal/-/portal-1.0.8.tgz#1582f7f2ce288e4622382c19ca4a5dff9f56c11a"
-  integrity sha512-APBRdSEPzxK5lOHU5zFoc9y938ACWBzkNBSDajubvtw5XGIWsxggCSyateDnIVs94LTuw1hWyYvM4OsYeepBQw==
+"@gorhom/portal@^1.0.12":
+  version "1.0.12"
+  resolved "https://registry.yarnpkg.com/@gorhom/portal/-/portal-1.0.12.tgz#1c0deabb3f9057c736352a88bae9ca891a100346"
+  integrity sha512-JOYe85RUwiksgdMbhLWDCLpH3kgFFz+LCu1lnxOMMBQSfAKtL5kkTKVrhtmQ3Lq3lJM2paGnLc4wJrlVuaC5Jw==
   dependencies:
-    immer "^9.0.3"
     nanoid "^3.1.23"
 
 "@growthbook/growthbook@^0.13.0":
@@ -8277,11 +8276,6 @@ immediate@~3.0.5:
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/immediate/-/immediate-3.0.6.tgz#9db1dbd0faf8de6fbe0f5dd5e56bb606280de69b"
   integrity sha1-nbHb0Pr43m++D13V5Wu2BigN5ps=
-
-immer@^9.0.3:
-  version "9.0.6"
-  resolved "https://registry.yarnpkg.com/immer/-/immer-9.0.6.tgz#7a96bf2674d06c8143e327cbf73539388ddf1a73"
-  integrity sha512-G95ivKpy+EvVAnAab4fVa4YGYn24J1SpEktnJX7JJ45Bd7xqME/SCplFzYFmTbrkwZbQ4xJK1xMTUYBkN6pWsQ==
 
 immutable@^4.0.0-rc.12:
   version "4.0.0"
