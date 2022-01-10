@@ -50,7 +50,7 @@ const NotificationsTabIcon = observer((props: PropsType) => {
         size="large"
         name="notification"
         active={active}
-        activeColor="White"
+        activeColor="PrimaryText"
       />
       {showIndicator && Indicator}
     </View>

@@ -60,12 +60,16 @@ export const Topbar = observer((props: PropsType) => {
           <View style={styles.topbarRight}>
             <Spacer right="L">
               <PressableScale onPress={() => chatModal.current?.showModal()}>
-                <IconCircled size="small" name="chat-solid" color="White" />
+                <IconCircled
+                  size="small"
+                  name="chat-solid"
+                  color="PrimaryText"
+                />
               </PressableScale>
             </Spacer>
             <PressableScale
               onPress={() => props.navigation.navigate('SearchScreen')}>
-              <IconCircled size="small" name="search" color="White" />
+              <IconCircled size="small" name="search" color="PrimaryText" />
             </PressableScale>
           </View>
         </View>

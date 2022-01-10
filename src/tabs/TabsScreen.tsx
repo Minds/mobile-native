@@ -285,7 +285,12 @@ const tabOptions = ({ route }): BottomTabNavigationOptions => ({
     }
 
     return (
-      <Icon size="large" active={focused} name={iconName} activeColor="White" />
+      <Icon
+        size="large"
+        active={focused}
+        name={iconName}
+        activeColor="PrimaryText"
+      />
     );
   },
 });
