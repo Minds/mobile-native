@@ -269,8 +269,6 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                       onStartShouldSetResponder={[Function]}
                     >
                       <View
-                        collapsable={false}
-                        nativeID="animatedComponent"
                         style={
                           Object {
                             "transform": Array [
@@ -283,52 +281,62 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                       >
                         <View
                           style={
-                            Array [
-                              Object {
-                                "borderRadius": 200,
-                                "overflow": "hidden",
-                                "padding": 6,
-                              },
-                              Object {
-                                "backgroundColor": "#404e53",
-                              },
-                            ]
+                            Object {
+                              "alignItems": "center",
+                              "flexGrow": 1,
+                              "justifyContent": "center",
+                            }
                           }
                         >
                           <View
                             style={
                               Array [
                                 Object {
-                                  "alignItems": "center",
-                                  "flexDirection": "row",
-                                  "height": 20,
-                                  "justifyContent": "center",
+                                  "borderRadius": 200,
                                   "overflow": "hidden",
-                                  "width": 20,
+                                  "padding": 6,
+                                },
+                                Object {
+                                  "backgroundColor": "#404e53",
                                 },
                               ]
                             }
                           >
-                            <Text
-                              allowFontScaling={false}
+                            <View
                               style={
                                 Array [
                                   Object {
-                                    "color": "#FFFFFF",
-                                    "fontSize": 18.400000000000002,
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "height": 20,
+                                    "justifyContent": "center",
+                                    "overflow": "hidden",
+                                    "width": 20,
                                   },
-                                  Object {},
-                                  Object {
-                                    "fontFamily": "Material Design Icons",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "normal",
-                                  },
-                                  Object {},
                                 ]
                               }
                             >
-                              󰍡
-                            </Text>
+                              <Text
+                                allowFontScaling={false}
+                                style={
+                                  Array [
+                                    Object {
+                                      "color": "#FFFFFF",
+                                      "fontSize": 18.400000000000002,
+                                    },
+                                    Object {},
+                                    Object {
+                                      "fontFamily": "Material Design Icons",
+                                      "fontStyle": "normal",
+                                      "fontWeight": "normal",
+                                    },
+                                    Object {},
+                                  ]
+                                }
+                              >
+                                󰍡
+                              </Text>
+                            </View>
                           </View>
                         </View>
                       </View>
@@ -349,8 +357,6 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                     onStartShouldSetResponder={[Function]}
                   >
                     <View
-                      collapsable={false}
-                      nativeID="animatedComponent"
                       style={
                         Object {
                           "transform": Array [

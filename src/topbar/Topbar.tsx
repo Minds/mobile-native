@@ -10,6 +10,7 @@ import featuresService from '../common/services/features.service';
 import EmailConfirmation from './EmailConfirmation';
 import PressableScale from '~/common/components/PressableScale';
 import TabChatPreModal, { ChatModalHandle } from '~/tabs/TabChatPreModal';
+import ChatIcon from '~/chat/ChatIcon';
 
 type PropsType = {
   navigation: any;
@@ -60,11 +61,7 @@ export const Topbar = observer((props: PropsType) => {
           <View style={styles.topbarRight}>
             <Spacer right="L">
               <PressableScale onPress={() => chatModal.current?.showModal()}>
-                <IconCircled
-                  size="small"
-                  name="chat-solid"
-                  color="PrimaryText"
-                />
+                <ChatIcon />
               </PressableScale>
             </Spacer>
             <PressableScale
