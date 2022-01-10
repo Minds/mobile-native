@@ -99,6 +99,7 @@ const TopBarButtonTabBarItem = ({ tab, buttonCmp, onChange, current }) => {
               align="center"
               top="XXXS"
               font="medium"
+              numberOfLines={1}
               color={isCurrent ? 'link' : 'secondary'}>
               {tab.icon.subtitle}
             </B4>
