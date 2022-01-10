@@ -13,9 +13,9 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import MText from '../../common/components/MText';
 import { Button } from '~ui';
 import InputContainer from '~/common/components/InputContainer';
-import { AppStackParamList } from '~/navigation/NavigationTypes';
+import { MoreStackParamList } from '~/navigation/NavigationTypes';
 import type UserStore from '~/auth/UserStore';
-type NavigationProp = StackNavigationProp<AppStackParamList, 'SettingsEmail'>;
+type NavigationProp = StackNavigationProp<MoreStackParamList, 'SettingsEmail'>;
 /**
  * Email settings screen
  */
