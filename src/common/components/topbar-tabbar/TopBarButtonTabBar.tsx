@@ -31,7 +31,7 @@ function TopBarButtonTabBar<T>(props: PropsType<T>) {
   const theme = ThemedStyles.style;
 
   return (
-    <View style={theme.rowJustifyStart}>
+    <View style={[theme.rowJustifyStart, theme.bgPrimaryBackground]}>
       <ScrollView
         horizontal
         ref={topBarButtonTabBarRef}

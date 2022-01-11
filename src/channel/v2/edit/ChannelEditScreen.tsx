@@ -169,12 +169,14 @@ const About = observer(({ store }: PropsType) => {
           inputType="dateInput"
         />
       )}
-      <LocationAutoSuggest
-        value={store.city}
-        onChangeText={store.setCity}
-        onEdit={store.setEditingCity}
-        wrapperBorder={theme.borderBottom}
-      />
+      {store.loaded && (
+        <LocationAutoSuggest
+          value={store.city}
+          onChangeText={store.setCity}
+          onEdit={store.setEditingCity}
+          wrapperBorder={theme.borderBottom}
+        />
+      )}
     </>
   );
 });

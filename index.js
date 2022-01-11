@@ -15,9 +15,6 @@ import reanimated from 'react-native-reanimated';
 import App from './App';
 import { enableScreens } from 'react-native-screens';
 
-// polyfill to avoid react-native-reanimated-indicators error with new reanimated
-reanimated.interpolate = reanimated.interpolateNode;
-
 enableScreens();
 
 // // grab this text blob, and put it in a file named packager/modulePaths.js
