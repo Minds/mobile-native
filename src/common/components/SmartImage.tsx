@@ -12,6 +12,7 @@ import ThemedStyles, { useStyle } from '../../styles/ThemedStyles';
 import connectivityService from '../services/connectivity.service';
 import RetryableImage from './RetryableImage';
 import { Blurhash } from 'react-native-blurhash';
+import ActivityModel from '~/newsfeed/ActivityModel';
 
 interface SmartImageProps {
   thumbnail?: Source;
@@ -25,7 +26,7 @@ interface SmartImageProps {
   withoutDownloadButton?: boolean;
   imageVisible?: boolean;
   thumbBlurRadius?: number;
-  entity?: any;
+  entity?: ActivityModel;
 }
 
 const defaultBlur = Platform.select({ android: 1, ios: 4 });
