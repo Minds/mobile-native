@@ -144,8 +144,6 @@ const BlurredThumbnail = ({
   entity,
 }) => {
   const blurhash = entity?.custom_data[0]?.blurhash || entity?.blurhash;
-  // TODO: use Blurhash.clearCosineCache()
-  // FIXME: this doesn't look nice
   if (blurhash) {
     return <Blurhash decodeAsync blurhash={blurhash} style={style} />;
   }
