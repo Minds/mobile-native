@@ -33,4 +33,5 @@ if (typeof localStorage !== 'undefined') {
 }
 
 // Fix: growthbook error
+if (!global.window) global.window = {};
 global.window.location = { href: '' };

@@ -24,23 +24,23 @@ export default function ComposeBottomBar(props) {
       },
     });
   }, [navigation, props.store]);
-  const onEditPress = useCallback(
-    () => props.store.selectFromGallery(props.store.mode),
+  const onGalleryPress = useCallback(
+    () => props.store.selectFromGallery('any'),
     [props.store],
   );
 
   return (
     <View style={styles.bottomBar}>
-      {!props.store.isEdit && (
+      {!props.store.isEdit && !props.store.isRemind && (
         <IconButton
           name="image"
           style={iconStyle}
-          onPress={onEditPress}
+          onPress={onGalleryPress}
           testID="attachImage"
           scale
         />
       )}
-      {!props.store.isEdit && (
+      {!props.store.isEdit && !props.store.isRemind && (
         <IconButton
           name="camera"
           style={iconStyle}

@@ -1,11 +1,10 @@
 import { useNavigation } from '@react-navigation/core';
-import React from 'react';
 import UserModel from '../../../channel/UserModel';
 import type NotificationModel from './NotificationModel';
 
 const useNotificationRouter = (
   notification: NotificationModel,
-  modalRef: React.MutableRefObject<any>,
+  showSubscribersModal: () => void,
 ) => {
   const navigation = useNavigation();
   const router = {
@@ -27,7 +26,7 @@ const useNotificationRouter = (
         if (!notification.hasMerged) {
           router.navToChannel(notification.from);
         } else {
-          modalRef.current.show('subscribers');
+          showSubscribersModal();
         }
       } else {
         switch (notification.entity.type) {

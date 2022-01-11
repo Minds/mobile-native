@@ -171,6 +171,8 @@
     "blogListEmpty": "This list is empty"
   },
   "boosts": {
+    "emptyList": "There is no boosts to display",
+    "emptyListSubtitle": "To see boosted content, go to settings and enable boosted content.",
     "selected": "SELECTED",
     "target": "TARGET",
     "boostType": "BOOST TYPE",
@@ -736,7 +738,7 @@
       "emailTitle": "Email",
       "emailDescription": "Minds will send you an email with a two-factor authentication code when no other Two-factor authentication is set-up."
     },
-    "sessionsOpened": "Your currently signed into Minds account on the following devices.",
+    "sessionsOpened": "You are currently signed into Minds account on the following devices.",
     "closeSessions": "Close all sessions",
     "closeSession": "Close session",
     "subscriptionListEmpty": "You don't have any recurring subscription",
@@ -805,7 +807,10 @@
       "c": "ACCOUNT",
       "c2": "Delete Account",
       "d": "INFO",
-      "d1": "App"
+      "d1": "App",
+      "e": "LEGACY",
+      "f": "DATA",
+      "g": "REFERRALS"
     },
     "notificationsOptions": {
       "push": "Push",
@@ -1001,7 +1006,8 @@
       "notes2": "A small amount of ETH will be changed to cover the transaction fee.",
       "notes1": "You can transfer up to {{amount}} tokens to your on-chain wallet.",
       "errorAmountToHigh": "You don't have enough tokens",
-      "acceptTerms": "I agree and understand the terms"
+      "acceptTerms": "I agree and understand the terms",
+      "onchain_transfers": "Onchain Transfers"
     },
     "usd": {
       "bankInfo": "Bank Information",
@@ -1261,7 +1267,8 @@
     "categories": "NSFW Categories",
     "description1": "If this post contains content that is NSFW (Not Safe for Work)  it is your responsibility to tag it accordingly.",
     "description2": "See guidelines for further information.",
-    "button": "NSFW"
+    "button": "NSFW",
+    "showContent": "Show NSFW content in results"
   },
   "update": {
     "title": "Updating to v{{version}}",
@@ -1331,6 +1338,13 @@
     "rewardsSignup": "Rewards Signup",
 
     "description": "If your friend signs up for Minds within 24 hours of clicking the link you shared with them, they’ll be added to your pending referrals. Once they sign up for the rewards program by setting up their Minds wallet, the referral is complete and you’ll both get +10 added to your contribution scores!"
+  },
+  "socialCompass": {
+    "promptTitle": "Build your algorithm",
+    "promptDesc": "Set your echo chamber preferences.",
+    "questionsDesc": "The preferences you set will improve your recommendations over time as the open source machine learning monkeys evolve. Don't worry, it won't impact your default newsfeed.",
+    "thanks": "Thank you for your feedback and supporting the Minds Community",
+    "callToAction": "Start"
   },
   "add": "Add",
   "downloading": "Downloading",

@@ -1,6 +1,5 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import { View } from 'react-native';
 import CenteredLoading from '../../../../common/components/CenteredLoading';
 import DatePicker from '../../../../common/components/DatePicker';
 import MText from '../../../../common/components/MText';
@@ -19,10 +18,6 @@ type PropsType = {
 const TokensRewards = observer(({ walletStore, store }: PropsType) => {
   const theme = ThemedStyles.style;
 
-  if (store.loading) {
-    return <CenteredLoading />;
-  }
-
   if (!store.rewards || !store.rewards.total) {
     return (
       <MText style={[theme.fontXL, theme.centered, theme.padding5x]}>
@@ -32,20 +27,26 @@ const TokensRewards = observer(({ walletStore, store }: PropsType) => {
   }
 
   return (
-    <View style={theme.paddingTop5x}>
+    <>
       <DatePicker
         onConfirm={store.onConfirm}
         maximumDate={new Date()}
         date={store.rewardsSelectedDate}
       />
-      <Payout
-        minds={store.rewards.total.daily}
-        mindsPrice={walletStore.prices.minds}
-        isToday={store.isToday}
-        store={store}
-      />
-      <MindsScores store={store} prices={walletStore.prices} />
-    </View>
+      {store.loading ? (
+        <CenteredLoading />
+      ) : (
+        <>
+          <Payout
+            minds={store.rewards.total.daily}
+            mindsPrice={walletStore.prices.minds}
+            isToday={store.isToday}
+            store={store}
+          />
+          <MindsScores store={store} prices={walletStore.prices} />
+        </>
+      )}
+    </>
   );
 });
 

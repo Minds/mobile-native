@@ -7,7 +7,6 @@ import i18n from '../common/services/i18n.service';
 import StripeCardSelector from '../wire/methods/v2/StripeCardSelector';
 
 import { UserError } from '../common/UserError';
-import Button from '../common/components/Button';
 import FitScrollView from '../common/components/FitScrollView';
 import { useStores } from '../common/hooks/use-stores';
 import Header from './Header';
@@ -21,6 +20,7 @@ import {
 import PlanOptions from './PlanOptions';
 import { useDimensions } from '@react-native-community/hooks';
 import UpgradeScreenPlaceHolder from './UpgradeScreenPlaceHolder';
+import { Button as NewButton } from '~ui';
 
 const isIos = Platform.OS === 'ios';
 
@@ -105,20 +105,16 @@ const UpgradeScreen = observer(({ navigation, route }: PropsType) => {
               <StripeCardSelector onCardSelected={localStore.setCard} />
             </View>
           )}
-          <View
-            style={[
-              theme.padding2x,
-              theme.borderTop,
-              theme.bcolorPrimaryBorder,
-            ]}>
-            <Button
-              onPress={confirmSend}
-              text={i18n.t(`monetize.${pro ? 'pro' : 'plus'}Join`)}
-              containerStyle={styles.buttonRight}
-              loading={localStore.loading}
-              action
-            />
-          </View>
+          <NewButton
+            mode="outline"
+            type="action"
+            top="L2"
+            horizontal="L"
+            loading={localStore.loading}
+            onPress={confirmSend}
+            spinner>
+            {i18n.t(`monetize.${pro ? 'pro' : 'plus'}Join`)}
+          </NewButton>
         </FitScrollView>
       )}
     </View>

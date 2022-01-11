@@ -32,25 +32,22 @@ export default function useBackHandler(onBack, props) {
    * Monitor bottom sheet changes. We use this instead of onChange because onChange doesn't seem to work.
    * When the bottomsheet opens add backhandler listener, and when it closes, remove them
    */
-  const onAnimateHandler = useCallback(
-    (fromIndex: number, toIndex: number) => {
-      // bottom sheet opened
-      if (toIndex >= 0) {
-        setOpened(true);
-        props.onVisibilityChange?.(true);
-        BackHandler.addEventListener('hardwareBackPress', backHandler);
-      }
-      // bottom sheet cosed
-      if (toIndex < 0) {
-        setOpened(false);
-        props.onVisibilityChange?.(false);
-        BackHandler.removeEventListener('hardwareBackPress', backHandler);
-      }
+  const onAnimateHandler = useCallback((fromIndex: number, toIndex: number) => {
+    // bottom sheet opened
+    if (toIndex >= 0) {
+      setOpened(true);
+      props.onVisibilityChange?.(true);
+      BackHandler.addEventListener('hardwareBackPress', backHandler);
+    }
+    // bottom sheet cosed
+    if (toIndex < 0) {
+      setOpened(false);
+      props.onVisibilityChange?.(false);
+      BackHandler.removeEventListener('hardwareBackPress', backHandler);
+    }
 
-      props.onAnimate?.(fromIndex, toIndex);
-    },
-    [backHandler, props],
-  );
+    props.onAnimate?.(fromIndex, toIndex);
+  }, []);
 
   return {
     onAnimateHandler,

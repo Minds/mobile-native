@@ -33,15 +33,15 @@ export const TYPES = {
     fontSize: FONT_SIZES.XXS,
     lineHeight: UNIT.L,
   },
-  button1: {
+  Btn1: {
     fontSize: FONT_SIZES.L,
     lineHeight: UNIT.XXL,
   },
-  button2: {
+  Btn2: {
     fontSize: FONT_SIZES.M,
     lineHeight: UNIT.XL,
   },
-  button3: {
+  Btn3: {
     fontSize: FONT_SIZES.S,
     lineHeight: UNIT.XL,
   },

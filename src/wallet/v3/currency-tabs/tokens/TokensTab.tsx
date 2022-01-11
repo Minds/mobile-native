@@ -1,6 +1,5 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { View } from 'react-native';
 import TopBarButtonTabBar, {
   ButtonTabType,
 } from '../../../../common/components/topbar-tabbar/TopBarButtonTabBar';
@@ -8,7 +7,6 @@ import { TokensOptions } from '../../../v2/WalletTypes';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 import type { WalletStoreType } from '../../../v2/createWalletStore';
 import TokensOverview from '../../../v2/currency-tabs/TokensOverview';
-import { ScrollView } from 'react-native-gesture-handler';
 import TransactionsListTokens from '../../../v2/TransactionList/TransactionsListTokens';
 import ReceiverSettings from '../../../v2/address/ReceiverSettings';
 import { WalletScreenNavigationProp } from '../../WalletScreen';
@@ -22,6 +20,8 @@ import apiService from '../../../../common/services/api.service';
 import { showNotification } from '../../../../../AppMessages';
 import { TokensTabStore } from './createTokensTabStore';
 import i18n from '../../../../common/services/i18n.service';
+import { Screen, Column } from '~ui';
+import TransactionsListWithdrawals from './widthdrawal/TransactionsListWithdrawals';
 
 type PropsType = {
   walletStore: WalletStoreType;
@@ -42,6 +42,10 @@ const TokensTab = observer(({ walletStore, navigation, store }: PropsType) => {
     { id: 'earnings', title: i18n.t('wallet.usd.earnings') },
     { id: 'balance', title: i18n.t('blockchain.balance') },
     { id: 'transactions', title: i18n.t('wallet.transactions.transactions') },
+    {
+      id: 'onchain_transfers',
+      title: i18n.t('wallet.withdraw.onchain_transfers'),
+    },
     { id: 'settings', title: i18n.t('moreScreen.settings') },
   ];
 
@@ -139,6 +143,9 @@ const TokensTab = observer(({ walletStore, navigation, store }: PropsType) => {
         />
       );
       break;
+    case 'onchain_transfers':
+      body = <TransactionsListWithdrawals />;
+      break;
     case 'settings':
       body = (
         <ReceiverSettings
@@ -151,11 +158,12 @@ const TokensTab = observer(({ walletStore, navigation, store }: PropsType) => {
       break;
   }
 
-  const Parent = store.option === 'transactions' ? View : ScrollView;
+  const isScollable =
+    store.option === 'transactions' || store.option === 'onchain_transfers';
 
   return (
-    <Parent>
-      <View style={theme.paddingTop5x}>
+    <Screen scroll={!isScollable}>
+      <Column top="XL" flex>
         <TokenTopBar
           walletStore={walletStore}
           connectWallet={mustVerify || connectWallet}
@@ -167,9 +175,9 @@ const TokensTab = observer(({ walletStore, navigation, store }: PropsType) => {
           onChange={store.setOption}
           scrollViewContainerStyle={theme.paddingRight2x}
         />
-        {body}
-      </View>
-    </Parent>
+        {isScollable ? body : <Column bottom="XXL">{body}</Column>}
+      </Column>
+    </Screen>
   );
 });
 

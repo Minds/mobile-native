@@ -1,0 +1,231 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Slider component should render correctly 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "marginBottom": 28,
+      },
+    ]
+  }
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#FFFFFF",
+        },
+        Object {
+          "fontFamily": "Roboto",
+        },
+        Array [
+          Object {
+            "fontSize": 16,
+          },
+          Object {
+            "fontFamily": "Roboto-Medium",
+            "fontWeight": "500",
+          },
+        ],
+      ]
+    }
+  >
+    questionText
+  </Text>
+  <View
+    allowTouchTrack={false}
+    animationType="timing"
+    onLayout={[Function]}
+    step={1}
+    style={
+      Object {
+        "height": 40,
+        "justifyContent": "center",
+      }
+    }
+    theme={
+      Object {
+        "colors": Object {
+          "black": "#242424",
+          "disabled": "hsl(208, 8%, 90%)",
+          "divider": "#bcbbc1",
+          "error": "#ff190c",
+          "grey0": "#393e42",
+          "grey1": "#43484d",
+          "grey2": "#5e6977",
+          "grey3": "#86939e",
+          "grey4": "#bdc6cf",
+          "grey5": "#e1e8ee",
+          "greyOutline": "#bbb",
+          "platform": Object {
+            "android": Object {
+              "error": "#f44336",
+              "grey": "rgba(0, 0, 0, 0.54)",
+              "primary": "#2196f3",
+              "secondary": "#9C27B0",
+              "success": "#4caf50",
+              "warning": "#ffeb3b",
+            },
+            "ios": Object {
+              "error": "#ff3b30",
+              "grey": "#7d7d7d",
+              "primary": "#007aff",
+              "searchBg": "#dcdce1",
+              "secondary": "#5856d6",
+              "success": "#4cd964",
+              "warning": "#ffcc00",
+            },
+          },
+          "primary": "#2089dc",
+          "searchBg": "#303337",
+          "secondary": "#ca71eb",
+          "success": "#52c41a",
+          "warning": "#faad14",
+          "white": "#ffffff",
+        },
+      }
+    }
+    thumbTouchSize={
+      Object {
+        "height": 80,
+        "width": 80,
+      }
+    }
+    value={25}
+  >
+    <View
+      onLayout={[Function]}
+      style={
+        Object {
+          "backgroundColor": "#414C57",
+          "borderRadius": 2,
+          "height": 1,
+        }
+      }
+    />
+    <View
+      collapsable={false}
+      nativeID="animatedComponent"
+      style={
+        Object {
+          "backgroundColor": "#414C57",
+          "borderRadius": 2,
+          "height": 0,
+          "marginTop": -0,
+          "position": "absolute",
+          "width": 0,
+        }
+      }
+    />
+    <View
+      collapsable={false}
+      nativeID="animatedComponent"
+      onLayout={[Function]}
+      style={
+        Object {
+          "backgroundColor": "#1B85D6",
+          "borderRadius": 10,
+          "height": 20,
+          "position": "absolute",
+          "transform": Array [
+            Object {
+              "translateX": 0,
+            },
+          ],
+          "width": 20,
+        }
+      }
+      testID="sliderThumb"
+    />
+    <View
+      onMoveShouldSetResponder={[Function]}
+      onMoveShouldSetResponderCapture={[Function]}
+      onResponderEnd={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderReject={[Function]}
+      onResponderRelease={[Function]}
+      onResponderStart={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      onStartShouldSetResponderCapture={[Function]}
+      style={
+        Object {
+          "backgroundColor": "transparent",
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+    />
+  </View>
+  <View
+    pointerEvents="none"
+    style={
+      Array [
+        Object {
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+        },
+      ]
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#FFFFFF",
+          },
+          Object {
+            "fontFamily": "Roboto",
+          },
+          Array [
+            Object {
+              "fontSize": 13,
+            },
+            Object {
+              "fontFamily": "Roboto-Medium",
+              "fontWeight": "500",
+            },
+            Object {
+              "color": "#B8C1CA",
+            },
+          ],
+        ]
+      }
+    >
+      minimumStepLabel
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#FFFFFF",
+          },
+          Object {
+            "fontFamily": "Roboto",
+          },
+          Array [
+            Object {
+              "fontSize": 13,
+            },
+            Object {
+              "fontFamily": "Roboto-Medium",
+              "fontWeight": "500",
+            },
+            Object {
+              "color": "#B8C1CA",
+            },
+          ],
+        ]
+      }
+    >
+      maximumStepLabel
+    </Text>
+  </View>
+</View>
+`;

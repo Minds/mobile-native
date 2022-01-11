@@ -1,13 +1,14 @@
 import React from 'react';
 import { WalletScreenNavigationProp } from '../../v3/WalletScreen';
-import { View, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import { WalletStoreType } from '../createWalletStore';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import i18n from '../../../common/services/i18n.service';
 import { UniqueOnChainStoreType } from '../../v3/useUniqueOnchain';
 import MenuItem from '../../../common/components/menus/MenuItem';
 import { observer } from 'mobx-react';
-import MText from '../../../common/components/MText';
+import MenuSubtitle from '~/common/components/menus/MenuSubtitle';
+import { Spacer } from '~ui';
 
 type PropsType = {
   navigation: WalletScreenNavigationProp;
@@ -36,26 +37,18 @@ const ReceiverSettings = observer(
       },
     ];
     return (
-      <View style={theme.paddingTop4x}>
-        <MText style={[theme.colorSecondaryText, styles.subTitle]}>
+      <Spacer top="XXS">
+        <MenuSubtitle>
           {i18n.t('wallet.receiverAddresses').toUpperCase()}
-        </MText>
+        </MenuSubtitle>
         <View style={innerWrapper}>
           {receiverSettingsOptions.map(item => (
             <MenuItem item={item} />
           ))}
         </View>
-      </View>
+      </Spacer>
     );
   },
 );
-
-const styles = StyleSheet.create({
-  subTitle: {
-    paddingLeft: 20,
-    marginBottom: 10,
-    fontSize: 15,
-  },
-});
 
 export default ReceiverSettings;

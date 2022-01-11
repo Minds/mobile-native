@@ -58,20 +58,38 @@ class AttachmentService {
       case 'image/gif':
       case 'image/webp':
         const maxLength = Math.max(media.width, media.height);
-        const processedImage = await imageManipulatorService.resize(media.uri, {
-          width:
-            maxLength === media.width
-              ? Math.min(maxLength, IMAGE_MAX_SIZE)
-              : undefined,
-          height:
-            maxLength === media.height
-              ? Math.min(maxLength, IMAGE_MAX_SIZE)
-              : undefined,
-        });
-        media = {
-          ...media,
-          ...processedImage,
-        };
+
+        //resize image if necessary
+        if (maxLength > IMAGE_MAX_SIZE) {
+          let targetWidth, targetHeight;
+          if (maxLength === media.width) {
+            targetWidth = IMAGE_MAX_SIZE;
+            targetHeight = Math.round(
+              (IMAGE_MAX_SIZE * media.height) / media.width,
+            );
+          } else {
+            targetHeight = IMAGE_MAX_SIZE;
+            targetWidth = Math.round(
+              (IMAGE_MAX_SIZE * media.width) / media.height,
+            );
+          }
+
+          const processedImage = await imageManipulatorService.resize(
+            media.uri,
+            {
+              width: targetWidth,
+              height: targetHeight,
+            },
+          );
+
+          // workaround image manipulation returning wrong resolution
+          processedImage.height = targetHeight;
+
+          media = {
+            ...media,
+            ...processedImage,
+          };
+        }
         break;
       default:
         break;
@@ -129,7 +147,7 @@ class AttachmentService {
     return api.get(`api/v1/media/transcoding/${guid}`);
   }
 
-  getVideoSources(guid) {
+  getVideo(guid) {
     return api.get(`api/v2/media/video/${guid}`);
   }
 

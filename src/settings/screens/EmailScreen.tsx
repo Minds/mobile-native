@@ -1,7 +1,7 @@
-//@ts-nocheck
 import React, { Component } from 'react';
 
 import { View, Alert } from 'react-native';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 import settingsService from '../SettingsService';
 import i18n from '../../common/services/i18n.service';
@@ -9,29 +9,46 @@ import validator from '../../common/services/validator.service';
 import CenteredLoading from '../../common/components/CenteredLoading';
 import ModalConfirmPassword from '../../auth/ModalConfirmPassword';
 import { inject } from 'mobx-react';
-import Input from '../../common/components/Input';
 import ThemedStyles from '../../styles/ThemedStyles';
 import MText from '../../common/components/MText';
-
+import { Button } from '~ui';
+import InputContainer from '~/common/components/InputContainer';
+import { AppStackParamList } from '~/navigation/NavigationTypes';
+import type UserStore from '~/auth/UserStore';
+type NavigationProp = StackNavigationProp<AppStackParamList, 'SettingsEmail'>;
 /**
  * Email settings screen
  */
 @inject('user')
-class EmailScreen extends Component {
+class EmailScreen extends Component<
+  {
+    navigation: NavigationProp;
+    user: UserStore;
+  },
+  {
+    email: string;
+    saving: boolean;
+    isVisible: boolean;
+    loaded: boolean;
+    showConfirmNote: boolean;
+    inProgress: boolean;
+  }
+> {
   static navigationOptions = {
     title: 'Change Email',
   };
 
   state = {
-    email: null,
+    email: '',
     saving: false,
     isVisible: false,
     loaded: false,
+    inProgress: false,
     showConfirmNote: false,
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     settingsService.getSettings().then(({ channel }) => {
       this.setState({ email: channel.email, loaded: true });
     });
@@ -39,15 +56,16 @@ class EmailScreen extends Component {
 
   componentDidMount() {
     const { setOptions } = this.props.navigation;
-    const CS = ThemedStyles.style;
 
     setOptions({
       headerRight: () => (
-        <MText
-          onPress={this.confirmPassword}
-          style={[CS.colorLink, CS.fontL, CS.bold]}>
+        <Button
+          type="action"
+          mode="flat"
+          size="small"
+          onPress={this.confirmPassword}>
           {i18n.t('save')}
-        </MText>
+        </Button>
       ),
     });
   }
@@ -94,7 +112,7 @@ class EmailScreen extends Component {
    * Render
    */
   render() {
-    const CS = ThemedStyles.style;
+    const theme = ThemedStyles.style;
 
     if (this.state.saving || !this.state.loaded) {
       return <CenteredLoading />;
@@ -103,42 +121,37 @@ class EmailScreen extends Component {
     const email = this.state.email;
     const showConfirmNote = this.state.showConfirmNote;
 
-    // validate
-    const error = validator.emailMessage(email);
+    const valid = validator.email(email);
+
     const confirmNote = showConfirmNote ? (
       <MText
         style={[
-          CS.colorSecondaryText,
-          CS.fontM,
-          CS.paddingHorizontal2x,
-          CS.centered,
-          CS.marginTop3x,
+          theme.colorSecondaryText,
+          theme.fontM,
+          theme.paddingHorizontal2x,
+          theme.centered,
+          theme.marginTop3x,
         ]}>
         {i18n.t('emailConfirm.confirmNote')}
       </MText>
     ) : null;
 
     return (
-      <View style={[CS.flexContainer, CS.paddingTop3x, CS.bgPrimaryBackground]}>
-        <View
-          style={[
-            CS.paddingLeft3x,
-            CS.paddingTop3x,
-            CS.bgSecondaryBackground,
-            CS.border,
-            CS.bcolorPrimaryBorder,
-          ]}>
-          <Input
-            style={[CS.border0x, styles.inputHeight]}
-            labelStyle={[CS.colorSecondaryText, CS.fontL, CS.paddingLeft]}
-            placeholder={i18n.t('settings.currentEmail')}
-            onChangeText={this.setEmail}
-            value={email}
-            editable={!this.state.inProgress}
-            testID="emailScreenInput"
-            selectTextOnFocus={true}
-          />
-        </View>
+      <View
+        style={[
+          theme.flexContainer,
+          theme.paddingTop3x,
+          theme.bgPrimaryBackground,
+        ]}>
+        <InputContainer
+          placeholder={i18n.t('settings.currentEmail')}
+          onChangeText={this.setEmail}
+          value={email}
+          editable={!this.state.inProgress}
+          testID="emailScreenInput"
+          error={valid ? undefined : i18n.t('validation.email')}
+          selectTextOnFocus={true}
+        />
         {confirmNote}
         <ModalConfirmPassword
           isVisible={this.state.isVisible}
@@ -151,9 +164,3 @@ class EmailScreen extends Component {
 }
 
 export default EmailScreen;
-
-const styles = {
-  inputHeight: {
-    height: 40,
-  },
-};

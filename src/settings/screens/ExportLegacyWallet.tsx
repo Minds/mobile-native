@@ -8,12 +8,12 @@ import {
   fetchPrivateKeyFromStorage,
   setWallets,
 } from '../../blockchain/ExportOldWallet';
-import Button from '../../common/components/Button';
 import MText from '../../common/components/MText';
 import Selector from '../../common/components/SelectorV2';
 import TextInput from '../../common/components/TextInput';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
+import { Button } from '~ui';
 
 const getWalletLabel = (wallet: any) => (
   <View style={ThemedStyles.style.borderBottomHair}>
@@ -81,7 +81,11 @@ export default observer(function ExportLegacyWallet() {
         keyExtractor={keyExtractor}
         backdropOpacity={0.95}
       />
-      <Button text={'Export'} onPress={() => selectorRef.current?.show()} />
+      <Button
+        disabled={!store.password}
+        onPress={() => selectorRef.current?.show()}>
+        Export
+      </Button>
     </View>
   );
 });

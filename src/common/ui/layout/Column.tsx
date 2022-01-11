@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   flex: {
     flex: 1,
   },
-  center: {
+  centerBoth: {
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -42,5 +42,6 @@ const styles = StyleSheet.create({
   },
   stretch: {
     height: '100%',
+    flexGrow: 1,
   },
 });

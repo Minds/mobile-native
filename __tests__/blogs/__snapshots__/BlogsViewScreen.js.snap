@@ -443,6 +443,8 @@ exports[`blog view screen component should renders correctly 1`] = `
                       }
                     >
                       <View
+                        collapsable={false}
+                        nativeID="animatedComponent"
                         style={
                           Object {
                             "opacity": 1,
@@ -557,6 +559,8 @@ exports[`blog view screen component should renders correctly 1`] = `
                   }
                 >
                   <View
+                    collapsable={false}
+                    nativeID="animatedComponent"
                     style={
                       Object {
                         "opacity": 0,
@@ -756,6 +760,8 @@ exports[`blog view screen component should renders correctly 1`] = `
                       }
                     >
                       <View
+                        collapsable={false}
+                        nativeID="animatedComponent"
                         style={
                           Object {
                             "opacity": 1,
@@ -870,6 +876,8 @@ exports[`blog view screen component should renders correctly 1`] = `
                   }
                 >
                   <View
+                    collapsable={false}
+                    nativeID="animatedComponent"
                     style={
                       Object {
                         "opacity": 0,
@@ -1965,6 +1973,8 @@ exports[`blog view screen component should renders correctly 1`] = `
             }
           >
             <View
+              collapsable={false}
+              nativeID="animatedComponent"
               style={
                 Object {
                   "transform": Array [
@@ -2053,8 +2063,10 @@ exports[`blog view screen component should renders correctly 1`] = `
         >
           <View
             accessible={true}
+            collapsable={false}
             focusable={true}
             forwardedRef={[Function]}
+            nativeID="animatedComponent"
             onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
@@ -2116,10 +2128,12 @@ exports[`blog view screen component should renders correctly 1`] = `
             }
           >
             <View
+              collapsable={false}
               deviceHeight={null}
               deviceWidth={null}
               forwardedRef={[Function]}
               hideModalContentWhileAnimating={false}
+              nativeID="animatedComponent"
               onBackdropPress={[Function]}
               onModalHide={[Function]}
               onModalWillHide={[Function]}

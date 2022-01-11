@@ -201,7 +201,7 @@ const ChannelHeader = withErrorBoundary(
             </View>
           )}
 
-          <Column top="XL2" align={CENTERED ? 'center' : undefined}>
+          <Column top="XL2" align={CENTERED ? 'centerBoth' : undefined}>
             <Row align="centerStart">
               <H4 numberOfLines={1}>
                 {channel ? channel.name : props.channelName}
@@ -300,10 +300,9 @@ const ChannelHeader = withErrorBoundary(
 const styles = ThemedStyles.create({
   channelDescription: ['paddingVertical'],
   buttonsMarginContainer: {
-    marginTop: 5,
     position: 'absolute',
-    right: 0,
-    top: 5,
+    right: 7,
+    top: 12,
   },
   bannerSmallButton: {
     position: 'absolute',

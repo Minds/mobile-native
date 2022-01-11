@@ -22,7 +22,7 @@ const InputUser = observer(({ store }: PropsType) => {
         style={styles.inputText}
         placeholder={i18n.t('auth.username')}
         onChangeText={store.setUsername}
-        autoCompleteType="username"
+        autoComplete="username"
         textContentType="username"
         value={store.username}
       />

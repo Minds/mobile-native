@@ -28,7 +28,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
             "paddingBottom": 8,
           },
           Object {
-            "paddingLeft": 8,
+            "paddingLeft": 12,
           },
           Object {
             "flex": 1,
@@ -146,6 +146,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                 }
               >
                 <Text
+                  numberOfLines={1}
                   style={
                     Array [
                       Object {
@@ -185,7 +186,13 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                     "zIndex": 100,
                   },
                 ],
-                [Function],
+                Object {
+                  "transform": Array [
+                    Object {
+                      "translateY": 0,
+                    },
+                  ],
+                },
               ]
             }
           />
@@ -295,6 +302,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                 }
               >
                 <Text
+                  numberOfLines={1}
                   style={
                     Array [
                       Object {
@@ -334,7 +342,13 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                     "zIndex": 100,
                   },
                 ],
-                [Function],
+                Object {
+                  "transform": Array [
+                    Object {
+                      "translateY": 0,
+                    },
+                  ],
+                },
               ]
             }
           />
@@ -444,6 +458,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                 }
               >
                 <Text
+                  numberOfLines={1}
                   style={
                     Array [
                       Object {
@@ -483,7 +498,13 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                     "zIndex": 100,
                   },
                 ],
-                [Function],
+                Object {
+                  "transform": Array [
+                    Object {
+                      "translateY": 0,
+                    },
+                  ],
+                },
               ]
             }
           />
@@ -593,6 +614,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                 }
               >
                 <Text
+                  numberOfLines={1}
                   style={
                     Array [
                       Object {
@@ -632,7 +654,13 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                     "zIndex": 100,
                   },
                 ],
-                [Function],
+                Object {
+                  "transform": Array [
+                    Object {
+                      "translateY": 0,
+                    },
+                  ],
+                },
               ]
             }
           />
@@ -742,6 +770,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                 }
               >
                 <Text
+                  numberOfLines={1}
                   style={
                     Array [
                       Object {
@@ -781,7 +810,13 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                     "zIndex": 100,
                   },
                 ],
-                [Function],
+                Object {
+                  "transform": Array [
+                    Object {
+                      "translateY": 0,
+                    },
+                  ],
+                },
               ]
             }
           />
@@ -891,6 +926,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                 }
               >
                 <Text
+                  numberOfLines={1}
                   style={
                     Array [
                       Object {
@@ -930,7 +966,13 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                     "zIndex": 100,
                   },
                 ],
-                [Function],
+                Object {
+                  "transform": Array [
+                    Object {
+                      "translateY": 0,
+                    },
+                  ],
+                },
               ]
             }
           />
@@ -955,17 +997,13 @@ exports[`Notifications Screen Component renders correctly 1`] = `
       }
     }
     data={Array []}
-    disableVirtualization={false}
     getItem={[Function]}
     getItemCount={[Function]}
-    horizontal={false}
-    initialNumToRender={10}
     keyExtractor={[Function]}
-    maxToRenderPerBatch={10}
     onContentSizeChange={[Function]}
     onEndReached={[Function]}
-    onEndReachedThreshold={2}
     onLayout={[Function]}
+    onMomentumScrollBegin={[Function]}
     onMomentumScrollEnd={[Function]}
     onRefresh={[Function]}
     onScroll={[Function]}
@@ -988,7 +1026,6 @@ exports[`Notifications Screen Component renders correctly 1`] = `
         "flex": 1,
       }
     }
-    updateCellsBatchingPeriod={50}
     viewabilityConfig={
       Object {
         "itemVisiblePercentThreshold": 50,
@@ -1008,7 +1045,6 @@ exports[`Notifications Screen Component renders correctly 1`] = `
         },
       ]
     }
-    windowSize={21}
   >
     <RCTRefreshControl />
     <View>
@@ -1065,6 +1101,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               }
             >
               <View
+                collapsable={false}
+                nativeID="animatedComponent"
                 style={
                   Object {
                     "backgroundColor": "#242A30",
@@ -1111,6 +1149,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   }
                 >
                   <View
+                    collapsable={false}
+                    nativeID="animatedComponent"
                     style={
                       Object {
                         "backgroundColor": "#242A30",
@@ -1174,6 +1214,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               }
             >
               <View
+                collapsable={false}
+                nativeID="animatedComponent"
                 style={
                   Object {
                     "backgroundColor": "#242A30",
@@ -1220,6 +1262,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   }
                 >
                   <View
+                    collapsable={false}
+                    nativeID="animatedComponent"
                     style={
                       Object {
                         "backgroundColor": "#242A30",
@@ -1283,6 +1327,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               }
             >
               <View
+                collapsable={false}
+                nativeID="animatedComponent"
                 style={
                   Object {
                     "backgroundColor": "#242A30",
@@ -1329,6 +1375,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   }
                 >
                   <View
+                    collapsable={false}
+                    nativeID="animatedComponent"
                     style={
                       Object {
                         "backgroundColor": "#242A30",
@@ -1392,6 +1440,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               }
             >
               <View
+                collapsable={false}
+                nativeID="animatedComponent"
                 style={
                   Object {
                     "backgroundColor": "#242A30",
@@ -1438,6 +1488,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   }
                 >
                   <View
+                    collapsable={false}
+                    nativeID="animatedComponent"
                     style={
                       Object {
                         "backgroundColor": "#242A30",
@@ -1501,6 +1553,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               }
             >
               <View
+                collapsable={false}
+                nativeID="animatedComponent"
                 style={
                   Object {
                     "backgroundColor": "#242A30",
@@ -1547,6 +1601,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   }
                 >
                   <View
+                    collapsable={false}
+                    nativeID="animatedComponent"
                     style={
                       Object {
                         "backgroundColor": "#242A30",
@@ -1610,6 +1666,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
               }
             >
               <View
+                collapsable={false}
+                nativeID="animatedComponent"
                 style={
                   Object {
                     "backgroundColor": "#242A30",
@@ -1656,6 +1714,8 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                   }
                 >
                   <View
+                    collapsable={false}
+                    nativeID="animatedComponent"
                     style={
                       Object {
                         "backgroundColor": "#242A30",
@@ -1672,5 +1732,15 @@ exports[`Notifications Screen Component renders correctly 1`] = `
       </View>
     </View>
   </RCTScrollView>
+  <InteractionsBottomSheet
+    entity={Object {}}
+    keepOpen={false}
+    snapPoints={
+      Array [
+        "90%",
+      ]
+    }
+    withoutInsets={true}
+  />
 </View>
 `;

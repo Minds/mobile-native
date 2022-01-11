@@ -14,6 +14,7 @@ interface LoginResponse extends ApiResponse {
   access_token: string;
   refresh_token: string;
   token_type: string;
+  pseudo_id: string;
 }
 
 export interface RegisterResponse extends ApiResponse {
@@ -82,7 +83,7 @@ class AuthService {
     // ignore if already logged in
     this.checkUserExist(username);
 
-    const data = await api.post<LoginResponse>(
+    const { data, headers: responseHeaders } = await api.rawPost<LoginResponse>(
       'api/v3/oauth/token',
       params,
       headers,
@@ -90,6 +91,14 @@ class AuthService {
 
     if (session.isRelogin(username, data)) {
       return data;
+    }
+
+    if (responseHeaders && responseHeaders['set-cookie']) {
+      const regex = /minds_psudeoid=([^;]*);/g;
+      const result = regex.exec(responseHeaders['set-cookie'].join());
+      if (result && result[1]) {
+        data.pseudo_id = result[1];
+      }
     }
 
     const isFirstLogin = session.tokensData.length === 0;
@@ -239,6 +248,7 @@ class AuthService {
       session.setSwitchingAccount(false);
       return true;
     } catch (err) {
+      session.setSwitchingAccount(false);
       logService.exception('[AuthService] logout', err);
       return false;
     }

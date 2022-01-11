@@ -1,3 +1,89 @@
+From 4ec0435a8e0893fc567b45f1662711b60c38c228 Mon Sep 17 00:00:00 2001
+From: Marc Rousavy <marcrousavy@hotmail.com>
+Date: Tue, 23 Nov 2021 15:44:07 +0100
+Subject: [PATCH] fix: Fix duplicate `JHashMap` definition by moving to custom
+ namespace
+
+Technically `JHashMap` is duplicated now, but in separate namespaces. If I were to remove my `JHashMap` (and `JArrayList`) definitions, the user is forced to use fbjni v3.
+---
+ node_modules/react-native-vision-camera/android/src/main/cpp/JSIJNIConversion.cpp       | 6 +++---
+ node_modules/react-native-vision-camera/android/src/main/cpp/java-bindings/JHashMap.cpp | 8 ++++----
+ node_modules/react-native-vision-camera/android/src/main/cpp/java-bindings/JHashMap.h   | 8 ++++----
+ 3 files changed, 11 insertions(+), 11 deletions(-)
+
+diff --git a/node_modules/react-native-vision-camera/android/src/main/cpp/JSIJNIConversion.cpp b/node_modules/react-native-vision-camera/android/src/main/cpp/JSIJNIConversion.cpp
+index e85a6f748d..4fcb7e6406 100644
+--- a/node_modules/react-native-vision-camera/android/src/main/cpp/JSIJNIConversion.cpp
++++ b/node_modules/react-native-vision-camera/android/src/main/cpp/JSIJNIConversion.cpp
+@@ -156,10 +156,10 @@ jsi::Value JSIJNIConversion::convertJNIObjectToJSIValue(jsi::Runtime &runtime, c
+     auto array = toArrayListFunc(object.get());
+     return convertJNIObjectToJSIValue(runtime, array);
+ 
+-  } else if (object->isInstanceOf(jni::JHashMap<jstring, jobject>::javaClassStatic())) {
++  } else if (object->isInstanceOf(JHashMap<jstring, jobject>::javaClassStatic())) {
+     // HashMap<K, V>
+ 
+-    auto map = static_ref_cast<jni::JHashMap<jstring, jobject>>(object);
++    auto map = static_ref_cast<JHashMap<jstring, jobject>>(object);
+ 
+     auto result = jsi::Object(runtime);
+     for (const auto& entry : *map) {
+@@ -173,7 +173,7 @@ jsi::Value JSIJNIConversion::convertJNIObjectToJSIValue(jsi::Runtime &runtime, c
+   } else if (object->isInstanceOf(react::ReadableMap::javaClassStatic())) {
+     // ReadableMap
+ 
+-    static const auto toHashMapFunc = react::ReadableMap::javaClassLocal()->getMethod<jni::JHashMap<jstring, jobject>()>("toHashMap");
++    static const auto toHashMapFunc = react::ReadableMap::javaClassLocal()->getMethod<JHashMap<jstring, jobject>()>("toHashMap");
+ 
+     // call recursive, this time HashMap<K, V>
+     auto hashMap = toHashMapFunc(object.get());
+diff --git a/node_modules/react-native-vision-camera/android/src/main/cpp/java-bindings/JHashMap.cpp b/node_modules/react-native-vision-camera/android/src/main/cpp/java-bindings/JHashMap.cpp
+index c2ca243890..affd4647b7 100644
+--- a/node_modules/react-native-vision-camera/android/src/main/cpp/java-bindings/JHashMap.cpp
++++ b/node_modules/react-native-vision-camera/android/src/main/cpp/java-bindings/JHashMap.cpp
+@@ -7,14 +7,14 @@
+ #include <jni.h>
+ #include <fbjni/fbjni.h>
+ 
++namespace vision {
+ 
+-namespace facebook {
+-namespace jni {
++using namespace facebook;
++using namespace jni;
+ 
+ template <typename K, typename V>
+ local_ref<JHashMap<K, V>> JHashMap<K, V>::create() {
+   return JHashMap<K, V>::newInstance();
+ }
+ 
+-} // namespace jni
+-} // namespace facebook
++} // namespace vision
+diff --git a/node_modules/react-native-vision-camera/android/src/main/cpp/java-bindings/JHashMap.h b/node_modules/react-native-vision-camera/android/src/main/cpp/java-bindings/JHashMap.h
+index c3df3276fd..b11d3c83ae 100644
+--- a/node_modules/react-native-vision-camera/android/src/main/cpp/java-bindings/JHashMap.h
++++ b/node_modules/react-native-vision-camera/android/src/main/cpp/java-bindings/JHashMap.h
+@@ -7,9 +7,10 @@
+ #include <jni.h>
+ #include <fbjni/fbjni.h>
+ 
++namespace vision {
+ 
+-namespace facebook {
+-namespace jni {
++using namespace facebook;
++using namespace jni;
+ 
+ // TODO: Remove when fbjni 0.2.3 releases.
+ template <typename K = jobject, typename V = jobject>
+@@ -19,5 +20,4 @@ struct JHashMap : JavaClass<JHashMap<K, V>, JMap<K, V>> {
+   static local_ref<JHashMap<K, V>> create();
+ };
+ 
+-} // namespace jni
+-} // namespace facebook
++} // namespace vision
 diff --git a/node_modules/react-native-vision-camera/VisionCamera.podspec b/node_modules/react-native-vision-camera/VisionCamera.podspec
 index 8cfe1c6..e19a8e8 100644
 --- a/node_modules/react-native-vision-camera/VisionCamera.podspec
@@ -29,7 +115,7 @@ index 8cfe1c6..e19a8e8 100644
 +   s.compiler_flags = folly_compiler_flags + ' ' + boost_compiler_flags
 +   s.xcconfig               = {
 +    "CLANG_CXX_LANGUAGE_STANDARD" => "c++14",
-+    "HEADER_SEARCH_PATHS" => "\"$(PODS_ROOT)/boost-for-react-native\" \"$(PODS_ROOT)/glog\" \"$(PODS_ROOT)/#{folly_prefix}Folly\" \"${PODS_ROOT}/Headers/Public/React-hermes\" \"${PODS_ROOT}/Headers/Public/hermes-engine\"",
++    "HEADER_SEARCH_PATHS" => "\"$(PODS_ROOT)/boost\" \"$(PODS_ROOT)/glog\" \"$(PODS_ROOT)/#{folly_prefix}Folly\" \"${PODS_ROOT}/Headers/Public/React-hermes\" \"${PODS_ROOT}/Headers/Public/hermes-engine\"",
 +                               "OTHER_CFLAGS" => "$(inherited)" + " " + folly_flags  }
 +
    s.requires_arc = true

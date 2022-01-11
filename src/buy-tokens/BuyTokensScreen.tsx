@@ -3,7 +3,6 @@ import { View, StyleSheet, Pressable, Linking } from 'react-native';
 import { autorun } from 'mobx';
 import { observer, useLocalStore } from 'mobx-react';
 import ThemedStyles from '../styles/ThemedStyles';
-import Button from '../common/components/Button';
 import { CheckBox } from 'react-native-elements';
 import UniswapWidget from '../common/components/uniswap-widget/UniswapWidget';
 import TransakWidget, {
@@ -15,7 +14,16 @@ import OrderReportModal, {
 import { startCase as _startCase } from 'lodash';
 import i18n from '../common/services/i18n.service';
 import mindsConfigService from '../common/services/minds-config.service';
-import { B1, B2, B3, ScreenHeader, ScreenSection, Row, Screen } from '~ui';
+import {
+  B1,
+  B2,
+  B3,
+  ScreenHeader,
+  ScreenSection,
+  Row,
+  Screen,
+  Button,
+} from '~ui';
 
 type PaymentMethod = 'card' | 'bank' | 'crypto';
 type PaymentOption = { type: PaymentMethod; name: string };
@@ -68,6 +76,14 @@ export default observer(() => {
       }
     });
   }, [store]);
+
+  const handleButtonPress = () => {
+    if (store.paymentMethod === 'crypto') {
+      store.setShowUniswapWidget(!store.showUniswapWidget);
+    } else {
+      store.setShowTransakWidget(!store.showTransakWidget);
+    }
+  };
 
   return (
     <>
@@ -134,27 +150,19 @@ export default observer(() => {
               }
             />
           </View>
-          <Row top="M" align="centerBetween">
+          <Button
+            top="L"
+            stretch
+            type="action"
+            mode="outline"
+            onPress={handleButtonPress}
+            disabled={!canBuyTokens}>
+            {i18n.t('buyTokensScreen.buy')}
+          </Button>
+          <Row top="XL" align="centerBoth">
             <B2 font="bold" onPress={navToTokens}>
               {i18n.t('buyTokensScreen.learnMore')}
             </B2>
-            <Button
-              text={i18n.t('buyTokensScreen.buy')}
-              containerStyle={
-                [
-                  theme.alignCenter,
-                  !canBuyTokens ? styles.disabledButton : null,
-                ] as any
-              }
-              onPress={() => {
-                if (store.paymentMethod === 'crypto') {
-                  store.setShowUniswapWidget(!store.showUniswapWidget);
-                } else {
-                  store.setShowTransakWidget(!store.showTransakWidget);
-                }
-              }}
-              disabled={!canBuyTokens}
-            />
           </Row>
         </ScreenSection>
       </Screen>

@@ -705,7 +705,7 @@
       "smsTitle": "SMS",
       "smsDescription": "Minds will send you an SMS with a two-factor authentication code when prompted"
     },
-    "sessionsOpened": "Your currently signed into Minds account on the following devices.",
+    "sessionsOpened": "You are currently signed into Minds account on the following devices.",
     "closeSessions": "ปิดทุกเซสชั่น",
     "closeSession": "Close session",
     "subscriptionListEmpty": "คุณไม่มีการสมัครหักเงินรายเดือนอัตโนมัติ",

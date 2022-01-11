@@ -99,6 +99,7 @@ const TopBarButtonTabBarItem = ({ tab, buttonCmp, onChange, current }) => {
               align="center"
               top="XXXS"
               font="medium"
+              numberOfLines={1}
               color={isCurrent ? 'link' : 'secondary'}>
               {tab.icon.subtitle}
             </B4>
@@ -128,9 +129,10 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   buttonContainer: {
-    paddingVertical: 5,
-    paddingHorizontal: 15,
-    borderRadius: 15,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 24,
+    marginVertical: 4,
   },
   iconContainer: {
     flexDirection: 'column',

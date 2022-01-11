@@ -1,8 +1,6 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
 import { Tooltip } from 'react-native-elements';
-import { Icon } from '~ui/icons';
-import MText from '../../../common/components/MText';
+import { Icon, B1, Row, Spacer, B2 } from '~ui';
 import ThemedStyles from '~styles/ThemedStyles';
 
 type PropsType = {
@@ -17,26 +15,18 @@ const AccordionHeader = ({ title, subtitle, tooltip, isActive }: PropsType) => {
 
   const SubTitle = subtitle ? (
     typeof subtitle === 'string' ? (
-      <MText style={[theme.fontLM, theme.flexContainer]}>{subtitle}</MText>
+      <B1>{subtitle}</B1>
     ) : (
       subtitle
     )
   ) : null;
   return (
-    <View
-      style={[
-        theme.rowJustifyStart,
-        theme.paddingVertical2x,
-        theme.paddingRight5x,
-        theme.paddingLeft5x,
-      ]}>
-      <View style={[theme.flexContainer, theme.rowJustifyStart]}>
-        {typeof title === 'string' && (
-          <MText style={[theme.fontLM, theme.fontMedium]}>{title}</MText>
-        )}
+    <Row horizontal="L" vertical="S" align="centerStart">
+      <Row flex align="centerStart">
+        {typeof title === 'string' && <B1 font="medium">{title}</B1>}
         {typeof title !== 'string' && title}
         {tooltip && (
-          <View style={styles.tooltipContainer}>
+          <Spacer left="S">
             <Tooltip
               skipAndroidStatusBar={true}
               withOverlay={false}
@@ -44,24 +34,16 @@ const AccordionHeader = ({ title, subtitle, tooltip, isActive }: PropsType) => {
               width={tooltip.width}
               height={tooltip.height}
               backgroundColor={ThemedStyles.getColor('Link')}
-              popover={<MText style={theme.colorWhite}>{tooltip.title}</MText>}>
+              popover={<B2 color="white">{tooltip.title}</B2>}>
               <Icon name="info" size="tiny" />
             </Tooltip>
-          </View>
+          </Spacer>
         )}
-      </View>
-      <View style={theme.paddingRight2x}>{SubTitle}</View>
+      </Row>
+      <Spacer horizontal="M">{SubTitle}</Spacer>
       <Icon name={`chevron-${isActive ? 'up' : 'down'}`} size="small" />
-    </View>
+    </Row>
   );
 };
-
-const styles = StyleSheet.create({
-  tooltipContainer: {
-    paddingLeft: 10,
-    paddingBottom: 2,
-    alignSelf: 'flex-end',
-  },
-});
 
 export default AccordionHeader;

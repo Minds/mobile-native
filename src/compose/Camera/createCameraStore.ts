@@ -75,6 +75,7 @@ const createCameraStore = p => {
 
       camera.current?.startRecording({
         fileType: 'mp4',
+        flash: this.flashMode,
         onRecordingFinished: video => {
           console.log('video recorded', video);
           if (video && p.onMedia) {
@@ -96,6 +97,7 @@ const createCameraStore = p => {
     async takePicture(camera) {
       const options = {
         qualityPrioritization: 'speed',
+        flash: this.flashMode,
       };
 
       // TODO: how to limit portrait mode?

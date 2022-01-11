@@ -11,6 +11,7 @@ export type RefreshToken = {
 
 export type TokensData = {
   user: UserModel;
+  pseudoId: string; // used for snowplow
   sessionExpired: boolean;
   refreshToken: {
     refresh_token: string;
@@ -69,6 +70,7 @@ export class SessionStorageService {
       tokensData: [
         {
           user,
+          pseudoId: '',
           refreshToken,
           accessToken,
           sessionExpired: false,

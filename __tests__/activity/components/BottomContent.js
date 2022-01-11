@@ -10,13 +10,6 @@ import { activitiesServiceFaker } from '../../../__mocks__/fake/ActivitiesFaker'
 import { shallow } from 'enzyme';
 import sessionService from '../../../src/common/services/session.service';
 
-jest.mock('react-native-silent-switch');
-jest.mock('react-native-system-setting', () => {
-  return {
-    getVolume: jest.fn(() => Promise.resolve()),
-  };
-});
-
 describe('BottomContent component', () => {
   let model, navigation, screen;
   beforeEach(() => {

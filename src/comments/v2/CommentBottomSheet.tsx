@@ -1,26 +1,31 @@
 import React, { forwardRef, useCallback } from 'react';
-import ThemedStyles from '../../styles/ThemedStyles';
-import CommentList from './CommentList';
-import CommentsStore from './CommentsStore';
+import { useBackHandler } from '@react-native-community/hooks';
 import {
   createStackNavigator,
   StackNavigationOptions,
   TransitionPresets,
 } from '@react-navigation/stack';
 import { useRoute } from '@react-navigation/native';
-import CommentInput from './CommentInput';
-import { useLocalStore } from 'mobx-react';
-import Handle from '../../common/components/bottom-sheet/Handle';
-import BottomSheet from '~/common/components/bottom-sheet/BottomSheet';
-import { useBackHandler } from '@react-native-community/hooks';
+import { observer, useLocalStore } from 'mobx-react';
+import type BottomSheetType from '@gorhom/bottom-sheet';
 
-const BottomSheetLocalStore = ({ onChange }) => ({
-  isOpen: 0,
-  setOpen(isOpen: number) {
-    if (this.isOpen !== isOpen) {
-      this.isOpen = isOpen;
-    }
-    onChange && onChange(isOpen);
+import CommentList from './CommentList';
+import CommentsStore from './CommentsStore';
+import CommentInput from './CommentInput';
+import ThemedStyles from '~/styles/ThemedStyles';
+import Handle from '~/common/components/bottom-sheet/Handle';
+import BottomSheet from '~/common/components/bottom-sheet/BottomSheet';
+
+const bottomSheetLocalStore = ({ onChange, autoOpen }) => ({
+  isRendered: Boolean(autoOpen),
+  index: Boolean(autoOpen) ? 0 : -1,
+  setIsRendered(isRendered: boolean) {
+    this.isRendered = isRendered;
+    this.index = isRendered ? 0 : -1;
+  },
+  setIndex(index: number) {
+    this.index = index;
+    onChange && onChange(index);
   },
 });
 
@@ -28,7 +33,6 @@ const snapPoints = ['85%'];
 
 type PropsType = {
   commentsStore: CommentsStore;
-  hideContent: boolean;
   autoOpen?: boolean; // auto opens the bottom sheet when the component mounts
   title?: string;
   onChange?: (isOpen: number) => void;
@@ -58,13 +62,35 @@ const ScreenReplyComment = ({ navigation }) => {
 };
 
 const CommentBottomSheet = (props: PropsType, ref: any) => {
-  const localStore = useLocalStore(BottomSheetLocalStore, {
+  const localStore = useLocalStore(bottomSheetLocalStore, {
     onChange: props.onChange,
+    autoOpen: props.autoOpen,
   });
   const { current: focusedUrn } = React.useRef(
     props.commentsStore.getFocusedUrn(),
   );
+
+  const sheetRef = React.useRef<BottomSheetType>(null);
   const route = useRoute<any>();
+
+  React.useImperativeHandle(ref, () => ({
+    expand: () => {
+      if (localStore.isRendered) {
+        localStore.setIndex(0);
+      } else {
+        localStore.setIsRendered(true);
+      }
+    },
+    close: () => {
+      localStore.setIndex(-1);
+    },
+  }));
+
+  React.useEffect(() => {
+    if (!localStore.isRendered && props.autoOpen) {
+      localStore.setIsRendered(true);
+    }
+  }, [props.autoOpen, localStore]);
 
   React.useEffect(() => {
     if (
@@ -103,16 +129,20 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
     [],
   );
 
-  return [
-    <BottomSheet
-      key="commentSheet"
-      ref={ref}
-      index={props.autoOpen ? 0 : -1}
-      onChange={localStore.setOpen}
-      snapPoints={snapPoints}
-      enableContentPanningGesture={true}
-      handleComponent={renderHandle}>
-      {!props.hideContent && ( // we disable the navigator until the screen is focused (for the post swiper)
+  if (!localStore.isRendered) {
+    return null;
+  }
+
+  return (
+    <>
+      <BottomSheet
+        key="commentSheet"
+        ref={sheetRef}
+        index={localStore.index}
+        onChange={localStore.setIndex}
+        snapPoints={snapPoints}
+        enableContentPanningGesture={true}
+        handleComponent={renderHandle}>
         <Stack.Navigator screenOptions={screenOptions}>
           <Stack.Screen
             name="Comments"
@@ -127,11 +157,11 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
             initialParams={{ focusedUrn }}
           />
         </Stack.Navigator>
-      )}
-    </BottomSheet>,
-    <CommentInput key="commentInput" />,
-  ];
+      </BottomSheet>
+      <CommentInput key="commentInput" />
+    </>
+  );
 };
 
 // @ts-ignore
-export default forwardRef(CommentBottomSheet);
+export default observer(forwardRef(CommentBottomSheet));

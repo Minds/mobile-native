@@ -336,6 +336,8 @@ exports[`Activity screen component renders correctly  1`] = `
               }
             >
               <View
+                collapsable={false}
+                nativeID="animatedComponent"
                 style={
                   Object {
                     "transform": Array [
@@ -524,8 +526,10 @@ exports[`Activity screen component renders correctly  1`] = `
             >
               <View
                 accessible={true}
+                collapsable={false}
                 focusable={true}
                 forwardedRef={[Function]}
+                nativeID="animatedComponent"
                 onClick={[Function]}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
@@ -548,10 +552,12 @@ exports[`Activity screen component renders correctly  1`] = `
                 }
               />
               <View
+                collapsable={false}
                 deviceHeight={null}
                 deviceWidth={null}
                 forwardedRef={[Function]}
                 hideModalContentWhileAnimating={false}
+                nativeID="animatedComponent"
                 onBackdropPress={[Function]}
                 onModalHide={[Function]}
                 onModalWillHide={[Function]}
@@ -604,17 +610,13 @@ exports[`Activity screen component renders correctly  1`] = `
                   >
                     <RCTScrollView
                       data={null}
-                      disableVirtualization={false}
                       extraData=""
                       getItem={[Function]}
                       getItemCount={[Function]}
-                      horizontal={false}
-                      initialNumToRender={10}
                       keyExtractor={[Function]}
-                      maxToRenderPerBatch={10}
                       onContentSizeChange={[Function]}
-                      onEndReachedThreshold={2}
                       onLayout={[Function]}
+                      onMomentumScrollBegin={[Function]}
                       onMomentumScrollEnd={[Function]}
                       onScroll={[Function]}
                       onScrollBeginDrag={[Function]}
@@ -629,9 +631,7 @@ exports[`Activity screen component renders correctly  1`] = `
                           "flex": 1,
                         }
                       }
-                      updateCellsBatchingPeriod={50}
                       viewabilityConfigCallbackPairs={Array []}
-                      windowSize={21}
                     >
                       <View />
                     </RCTScrollView>
@@ -847,6 +847,8 @@ exports[`Activity screen component renders correctly  1`] = `
           testID="Thumb up activity button"
         >
           <View
+            collapsable={false}
+            nativeID="animatedComponent"
             style={
               Object {
                 "transform": Array [
@@ -885,7 +887,9 @@ exports[`Activity screen component renders correctly  1`] = `
                     Object {},
                     Array [
                       undefined,
-                      [Function],
+                      Object {
+                        "transform": Array [],
+                      },
                     ],
                   ]
                 }
@@ -947,6 +951,8 @@ exports[`Activity screen component renders correctly  1`] = `
           testID="Thumb down activity button"
         >
           <View
+            collapsable={false}
+            nativeID="animatedComponent"
             style={
               Object {
                 "transform": Array [
@@ -985,7 +991,9 @@ exports[`Activity screen component renders correctly  1`] = `
                     Object {},
                     Array [
                       undefined,
-                      [Function],
+                      Object {
+                        "transform": Array [],
+                      },
                     ],
                   ]
                 }
@@ -1082,6 +1090,8 @@ exports[`Activity screen component renders correctly  1`] = `
             testID=""
           >
             <View
+              collapsable={false}
+              nativeID="animatedComponent"
               style={
                 Object {
                   "transform": Array [
@@ -1122,7 +1132,7 @@ exports[`Activity screen component renders correctly  1`] = `
                           "fontSize": 18.400000000000002,
                         },
                         Object {
-                          "marginTop": 1,
+                          "marginTop": 2,
                         },
                         Object {
                           "fontFamily": "Material Design Icons",
@@ -1252,6 +1262,8 @@ exports[`Activity screen component renders correctly  1`] = `
             testID="Remind activity button"
           >
             <View
+              collapsable={false}
+              nativeID="animatedComponent"
               style={
                 Object {
                   "transform": Array [
@@ -1377,6 +1389,8 @@ exports[`Activity screen component renders correctly  1`] = `
             }
           >
             <View
+              collapsable={false}
+              nativeID="animatedComponent"
               style={
                 Object {
                   "transform": Array [
@@ -1465,8 +1479,10 @@ exports[`Activity screen component renders correctly  1`] = `
         >
           <View
             accessible={true}
+            collapsable={false}
             focusable={true}
             forwardedRef={[Function]}
+            nativeID="animatedComponent"
             onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
@@ -1528,10 +1544,12 @@ exports[`Activity screen component renders correctly  1`] = `
             }
           >
             <View
+              collapsable={false}
               deviceHeight={null}
               deviceWidth={null}
               forwardedRef={[Function]}
               hideModalContentWhileAnimating={false}
+              nativeID="animatedComponent"
               onBackdropPress={[Function]}
               onModalHide={[Function]}
               onModalWillHide={[Function]}
@@ -2457,7 +2475,6 @@ exports[`Activity screen component renders correctly  1`] = `
         "text": "",
       }
     }
-    hideContent={false}
   />
 </View>
 `;

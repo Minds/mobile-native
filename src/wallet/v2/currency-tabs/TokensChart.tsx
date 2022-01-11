@@ -2,6 +2,7 @@ import { useDimensions } from '@react-native-community/hooks';
 import { observer } from 'mobx-react';
 import moment from 'moment';
 import React from 'react';
+import { View } from 'react-native';
 import CenteredLoading from '../../../common/components/CenteredLoading';
 import LineChart from '../../../common/components/charts/LineChart';
 import MText from '../../../common/components/MText';
@@ -33,7 +34,11 @@ const TokensChart = observer(({ timespan }: PropsType) => {
   });
 
   if (store.loading) {
-    return <CenteredLoading />;
+    return (
+      <View style={{ height: width * 0.6 + 70, width }}>
+        <CenteredLoading />
+      </View>
+    );
   }
 
   try {

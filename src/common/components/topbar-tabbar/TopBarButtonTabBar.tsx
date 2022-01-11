@@ -39,7 +39,7 @@ function TopBarButtonTabBar<T>(props: PropsType<T>) {
           Platform.OS === 'android'
             ? theme.paddingBottom
             : theme.paddingBottom2x,
-          theme.paddingLeft2x,
+          theme.paddingLeft3x,
           props.scrollViewContainerStyle,
         ]}>
         {props.tabs.map((tab, i) => (

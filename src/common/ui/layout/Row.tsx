@@ -7,6 +7,7 @@ export const Row = ({
   flex,
   stretch,
   align,
+  flexWrap,
   containerStyle,
   ...more
 }: RowPropType & SpacerPropType) => {
@@ -14,6 +15,7 @@ export const Row = ({
     styles.container,
     align && styles[align],
     flex && styles.flex,
+    flexWrap && styles.flexWrap,
     stretch && styles.stretch,
     containerStyle && containerStyle,
   ]);
@@ -25,8 +27,16 @@ const styles = StyleSheet.create({
   flex: {
     flex: 1,
   },
+  flexWrap: {
+    flex: 1,
+    flexWrap: 'wrap',
+  },
   container: {
     flexDirection: 'row',
+  },
+  baseline: {
+    alignItems: 'baseline',
+    justifyContent: 'flex-start',
   },
   centerBoth: {
     alignItems: 'center',

@@ -9,7 +9,7 @@ import Item from './components/Item';
 import createCashTransactionsStore from './createCashTransactionsStore';
 import Empty from './components/Empty';
 import Header from '../../v3/transaction-list/components/Header';
-import MText from '../../../common/components/MText';
+import { B3 } from '~ui';
 
 const TransactionsListCash = observer(
   ({ navigation, currency, wallet }: PropsType) => {
@@ -29,13 +29,10 @@ const TransactionsListCash = observer(
 
     const renderHeader = useCallback(() => <Header />, []);
 
-    const renderSectionHeader = useCallback(
-      ({ section: { title } }) => (
-        <MText style={[theme.colorSecondaryText, theme.marginBottom2x]}>
-          {title.toUpperCase()}
-        </MText>
-      ),
-      [theme],
+    const renderSectionHeader = ({ section: { title } }) => (
+      <B3 font="medium" bottom="S" color="secondary">
+        {title}
+      </B3>
     );
 
     useEffect(() => {
@@ -56,9 +53,12 @@ const TransactionsListCash = observer(
           theme.bgPrimaryBackground,
           theme.paddingLeft4x,
           theme.paddingRight4x,
+          theme.paddingTop4x,
         ]}
+        contentContainerStyle={theme.paddingBottom12x}
         refreshing={store.refreshing}
         onRefresh={store.refresh}
+        stickySectionHeadersEnabled={false}
       />
     );
   },

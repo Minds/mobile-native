@@ -14,14 +14,16 @@ exports[`renders correctly 1`] = `
       Object {
         "borderColor": "#414C57",
       },
-      Object {
-        "paddingHorizontal": 8,
-      },
       undefined,
     ]
   }
 >
   <RCTScrollView
+    contentContainerStyle={
+      Object {
+        "marginHorizontal": 8,
+      }
+    }
     horizontal={true}
   >
     <View>
@@ -47,55 +49,64 @@ exports[`renders correctly 1`] = `
           ]
         }
       >
-        <Text
+        <View
           style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-              },
-              Object {
-                "fontFamily": "Roboto",
-              },
-              Array [
-                Object {
-                  "fontSize": 16,
-                },
-                Object {
-                  "color": "#B8C1CA",
-                },
-                undefined,
-              ],
-            ]
+            Object {
+              "marginHorizontal": 4,
+            }
           }
         >
-          Tokens
-        </Text>
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-              },
-              Object {
-                "fontFamily": "Roboto",
-              },
+          <Text
+            style={
               Array [
-                Object {
-                  "fontSize": 16,
-                },
                 Object {
                   "color": "#B8C1CA",
                 },
                 Object {
-                  "paddingVertical": 2,
+                  "fontFamily": "Roboto-Medium",
                 },
-                undefined,
-              ],
-            ]
+                Object {
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                },
+                Object {
+                  "textAlign": "left",
+                },
+              ]
+            }
+          >
+            Tokens
+          </Text>
+        </View>
+        <View
+          style={
+            Object {
+              "marginVertical": 1,
+            }
           }
         >
-          711
-        </Text>
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                },
+                Object {
+                  "fontFamily": "Roboto",
+                },
+                Object {
+                  "fontSize": 14,
+                  "lineHeight": 20,
+                },
+                Object {
+                  "textAlign": "left",
+                },
+              ]
+            }
+          >
+            711
+          </Text>
+        </View>
       </View>
       <View
         onPress={[Function]}
@@ -119,55 +130,64 @@ exports[`renders correctly 1`] = `
           ]
         }
       >
-        <Text
+        <View
           style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-              },
-              Object {
-                "fontFamily": "Roboto",
-              },
-              Array [
-                Object {
-                  "fontSize": 16,
-                },
-                Object {
-                  "color": "#B8C1CA",
-                },
-                undefined,
-              ],
-            ]
+            Object {
+              "marginHorizontal": 4,
+            }
           }
         >
-          USD
-        </Text>
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-              },
-              Object {
-                "fontFamily": "Roboto",
-              },
+          <Text
+            style={
               Array [
-                Object {
-                  "fontSize": 16,
-                },
                 Object {
                   "color": "#B8C1CA",
                 },
                 Object {
-                  "paddingVertical": 2,
+                  "fontFamily": "Roboto-Medium",
                 },
-                undefined,
-              ],
-            ]
+                Object {
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                },
+                Object {
+                  "textAlign": "left",
+                },
+              ]
+            }
+          >
+            USD
+          </Text>
+        </View>
+        <View
+          style={
+            Object {
+              "marginVertical": 1,
+            }
           }
         >
-          $123
-        </Text>
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                },
+                Object {
+                  "fontFamily": "Roboto",
+                },
+                Object {
+                  "fontSize": 14,
+                  "lineHeight": 20,
+                },
+                Object {
+                  "textAlign": "left",
+                },
+              ]
+            }
+          >
+            $123
+          </Text>
+        </View>
       </View>
       <View
         onPress={[Function]}
@@ -191,55 +211,64 @@ exports[`renders correctly 1`] = `
           ]
         }
       >
-        <Text
+        <View
           style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-              },
-              Object {
-                "fontFamily": "Roboto",
-              },
-              Array [
-                Object {
-                  "fontSize": 16,
-                },
-                Object {
-                  "color": "#B8C1CA",
-                },
-                undefined,
-              ],
-            ]
+            Object {
+              "marginHorizontal": 4,
+            }
           }
         >
-          Ether
-        </Text>
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-              },
-              Object {
-                "fontFamily": "Roboto",
-              },
+          <Text
+            style={
               Array [
-                Object {
-                  "fontSize": 16,
-                },
                 Object {
                   "color": "#B8C1CA",
                 },
                 Object {
-                  "paddingVertical": 2,
+                  "fontFamily": "Roboto-Medium",
                 },
-                undefined,
-              ],
-            ]
+                Object {
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                },
+                Object {
+                  "textAlign": "left",
+                },
+              ]
+            }
+          >
+            Ether
+          </Text>
+        </View>
+        <View
+          style={
+            Object {
+              "marginVertical": 1,
+            }
           }
         >
-          133
-        </Text>
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                },
+                Object {
+                  "fontFamily": "Roboto",
+                },
+                Object {
+                  "fontSize": 14,
+                  "lineHeight": 20,
+                },
+                Object {
+                  "textAlign": "left",
+                },
+              ]
+            }
+          >
+            133
+          </Text>
+        </View>
       </View>
       <View
         onPress={[Function]}
@@ -263,55 +292,64 @@ exports[`renders correctly 1`] = `
           ]
         }
       >
-        <Text
+        <View
           style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-              },
-              Object {
-                "fontFamily": "Roboto",
-              },
-              Array [
-                Object {
-                  "fontSize": 16,
-                },
-                Object {
-                  "color": "#B8C1CA",
-                },
-                undefined,
-              ],
-            ]
+            Object {
+              "marginHorizontal": 4,
+            }
           }
         >
-          Bitcoin
-        </Text>
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-              },
-              Object {
-                "fontFamily": "Roboto",
-              },
+          <Text
+            style={
               Array [
-                Object {
-                  "fontSize": 16,
-                },
                 Object {
                   "color": "#B8C1CA",
                 },
                 Object {
-                  "paddingVertical": 2,
+                  "fontFamily": "Roboto-Medium",
                 },
-                undefined,
-              ],
-            ]
+                Object {
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                },
+                Object {
+                  "textAlign": "left",
+                },
+              ]
+            }
+          >
+            Bitcoin
+          </Text>
+        </View>
+        <View
+          style={
+            Object {
+              "marginVertical": 1,
+            }
           }
         >
-          153
-        </Text>
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                },
+                Object {
+                  "fontFamily": "Roboto",
+                },
+                Object {
+                  "fontSize": 14,
+                  "lineHeight": 20,
+                },
+                Object {
+                  "textAlign": "left",
+                },
+              ]
+            }
+          >
+            153
+          </Text>
+        </View>
       </View>
     </View>
   </RCTScrollView>

@@ -1,7 +1,5 @@
 import React from 'react';
-import { Platform } from 'react-native';
-import ThemedStyles from '../../../styles/ThemedStyles';
-import Button from '../Button';
+import { Button } from '~ui';
 
 interface PropsType {
   text: string;
@@ -21,31 +19,13 @@ export default function BottomSheetButton({
 }: PropsType) {
   return (
     <Button
-      action={action}
-      color={ThemedStyles.getColor('TertiaryBackground')}
-      containerStyle={action ? buttonActionStyle : buttonStyle}
-      inverted={action !== true ? true : undefined}
-      textStyle={ThemedStyles.style.colorPrimaryText}
-      text={text}
-      loading={loading}
+      top="L"
+      horizontal="L"
       onPress={onPress}
       testID={testID}
-    />
+      loading={loading}
+      mode={action ? 'outline' : 'solid'}>
+      {text}
+    </Button>
   );
 }
-
-const height = Platform.select({ ios: 42, android: 44 });
-
-const buttonStyle = ThemedStyles.combine(
-  'alignSelfStretch',
-  'marginTop3x',
-  'marginHorizontal5x',
-  { height },
-);
-const buttonActionStyle = ThemedStyles.combine(
-  'alignSelfStretch',
-  'marginTop3x',
-  'marginHorizontal5x',
-  'bgTransparent',
-  { height },
-);

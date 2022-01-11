@@ -7,24 +7,30 @@ export type SpacerPropType = {
   children?: ReactNode;
 } & UISpacingPropType;
 
+export type ItemPropType = {
+  noBorder?: boolean;
+};
+
 export type HairlinePropType = {
   noBorder?: boolean;
 };
 
 export type RowPropType = {
   align?:
-    | 'center'
+    | 'centerBoth'
     | 'centerStart'
     | 'centerEnd'
     | 'centerBetween'
-    | 'centerAround';
+    | 'centerAround'
+    | 'baseline';
   background?: 'primary' | 'secondary' | 'tertiary';
   flex?: boolean;
+  flexWrap?: boolean;
   stretch?: boolean;
 };
 
 export type ColumnPropType = {
-  align?: 'center' | 'centerStart' | 'centerEnd';
+  align?: 'centerBoth' | 'centerStart' | 'centerEnd';
   background?: 'primary' | 'secondary' | 'tertiary';
   flex?: boolean;
   stretch?: boolean;

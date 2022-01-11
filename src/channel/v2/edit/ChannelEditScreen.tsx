@@ -11,7 +11,6 @@ import {
 import SmallCircleButton from '../../../common/components/SmallCircleButton';
 import * as Progress from 'react-native-progress';
 import LabeledComponent from '../../../common/components/LabeledComponent';
-import SettingInput from '../../../common/components/SettingInput';
 import i18n from '../../../common/services/i18n.service';
 import { ChannelStoreType } from '../createChannelStore';
 import SaveButton from '../../../common/components/SaveButton';
@@ -19,6 +18,7 @@ import LocationAutoSuggest from '../../../common/components/LocationAutoSuggest'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { NavigationProp } from '@react-navigation/native';
+import InputContainer from '~/common/components/InputContainer';
 
 type PropsType = {
   route: any;
@@ -34,7 +34,7 @@ const createEditChannelStore = () => ({
   },
   displayName: '',
   city: '',
-  dob: '',
+  dob: null as Date | null,
   editingCity: false,
   setEditingCity(editingCity: boolean) {
     this.editingCity = editingCity;
@@ -50,7 +50,7 @@ const createEditChannelStore = () => ({
     this.city = city;
   },
   setDob(dob) {
-    this.dob = dob;
+    this.dob = dob ? (dob instanceof Date ? dob : new Date(dob)) : null;
   },
   initialLoad(channelStore: ChannelStoreType) {
     if (channelStore.channel) {
@@ -134,12 +134,12 @@ const Banner = observer(({ route }: PropsType) => {
 });
 
 const Bio = observer(({ route, navigation, store }: PropsType) => (
-  <SettingInput
+  <InputContainer
     placeholder={i18n.t('channel.edit.bio')}
     onChangeText={store.setBriefDescription}
     value={store.briefDescription}
     testID="displayNameInput"
-    wrapperBorder={useStyle('borderTop')}
+    noBottomBorder
     multiline={true}
   />
 ));
@@ -150,30 +150,33 @@ const About = observer(({ store }: PropsType) => {
   return (
     <>
       {!store.editingCity && (
-        <SettingInput
+        <InputContainer
           placeholder={i18n.t('channel.edit.displayName')}
           onChangeText={store.setDisplayName}
           value={store.displayName}
           testID="displayNameInput"
-          wrapperBorder={theme.borderTop}
+          noBottomBorder
         />
       )}
       {!store.editingCity && (
-        <SettingInput
+        <InputContainer
           placeholder={i18n.t('channel.edit.dob')}
           onChangeText={store.setDob}
           value={store.dob}
           testID="dobInput"
-          wrapperBorder={theme.borderTop}
+          noBottomBorder
+          dateFormat={'ISOString'}
           inputType="dateInput"
         />
       )}
-      <LocationAutoSuggest
-        value={store.city}
-        onChangeText={store.setCity}
-        onEdit={store.setEditingCity}
-        wrapperBorder={theme.borderBottom}
-      />
+      {store.loaded && (
+        <LocationAutoSuggest
+          value={store.city}
+          onChangeText={store.setCity}
+          onEdit={store.setEditingCity}
+          wrapperBorder={theme.borderBottom}
+        />
+      )}
     </>
   );
 });

@@ -1,12 +1,7 @@
 import React, { useCallback } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
 import { RouteProp } from '@react-navigation/core';
-import {
-  KeyboardAvoidingView,
-  Platform,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { KeyboardAvoidingView, Platform, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
@@ -15,6 +10,7 @@ import InputContainer from '../common/components/InputContainer';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import MText from '../common/components/MText';
 import { useBackHandler } from '@react-native-community/hooks';
+import { Button } from '~ui';
 
 type ForgotScreenRouteProp = RouteProp<
   RootStackParamList,
@@ -106,9 +102,13 @@ const TwoFactorConfirmScreen = observer(({ route, navigation }: PropsType) => {
           <MText style={styles.titleText}>
             {title || i18n.t('auth.2faRequired')}
           </MText>
-          <TouchableOpacity onPress={localStore.submit}>
-            <MText style={styles.continue}>{i18n.t('verify')}</MText>
-          </TouchableOpacity>
+          <Button
+            mode="flat"
+            size="small"
+            type="action"
+            onPress={localStore.submit}>
+            {i18n.t('verify')}
+          </Button>
         </View>
         <MText style={styles.description}>{description}</MText>
         <View style={theme.fullWidth}>
@@ -145,7 +145,7 @@ const TwoFactorConfirmScreen = observer(({ route, navigation }: PropsType) => {
 });
 
 const styles = ThemedStyles.create({
-  continue: ['fontL', 'fontMedium', 'colorLink', 'paddingTop'],
+  // continue: ['fontL', 'fontMedium', 'colorLink', 'paddingTop'],
   resend: ['fontMedium', 'colorLink'],
   description: [
     'colorSecondaryText',

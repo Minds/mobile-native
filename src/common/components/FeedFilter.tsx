@@ -8,12 +8,17 @@ import BottomSheetModal from './bottom-sheet/BottomSheetModal';
 import BottomSheetButton from './bottom-sheet/BottomSheetButton';
 import RadioButton from './bottom-sheet/RadioButton';
 import MText from './MText';
+import NsfwToggle from './nsfw/NsfwToggle';
+import { IS_FROM_STORE } from '~/config/Config.e2e';
 
 type PropsType = {
   hideLabel?: boolean;
+  nsfw?: boolean;
   store: {
     filter: string;
     setFilter: Function;
+    setNsfw?: Function;
+    nsfw?: Array<number>;
   };
   containerStyles?: ViewStyle | ViewStyle[];
   textStyle?: TextStyle | TextStyle[];
@@ -39,11 +44,12 @@ const FeedFilter = (props: PropsType) => {
         title: i18n.t(`discovery.${f}`),
         onPress: () => {
           close();
+          // we need to delay due to a bug on the bottomsheet that opens it again if rendered too fast
           setTimeout(() => {
             if (props.store && props.store.setFilter) {
               props.store.setFilter(f);
             }
-          }, 200);
+          }, 1000);
         },
         selected: props.store.filter === f,
       })),
@@ -78,6 +84,12 @@ const FeedFilter = (props: PropsType) => {
         {options.map((b, i) => (
           <RadioButton {...b} key={i} />
         ))}
+        {props.nsfw && !IS_FROM_STORE && props.store.nsfw && (
+          <NsfwToggle
+            value={props.store.nsfw}
+            onChange={v => props.store.setNsfw!(v)}
+          />
+        )}
         <BottomSheetButton text={i18n.t('close')} onPress={close} />
       </BottomSheetModal>
     </>

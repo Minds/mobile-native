@@ -3,6 +3,7 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Tooltip } from 'react-native-elements';
 import MText from '../../../../../common/components/MText';
 import ThemedStyles from '../../../../../styles/ThemedStyles';
+import { B3 } from '~ui';
 
 const ToolTipText = () => (
   <View>
@@ -99,7 +100,7 @@ const ActivityMultiplier = ({ multiplier }: PropsType) => {
         <View />
       </Tooltip>
       <View style={[styles.infoContainer, theme.bgTertiaryBackground]}>
-        <MText style={styles.infoText}>{activityLevelText}</MText>
+        <B3 font="medium">{activityLevelText}</B3>
       </View>
     </TouchableOpacity>
   );
@@ -109,7 +110,7 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     flexDirection: 'row',
-    paddingRight: 10,
+    paddingRight: 0,
   },
   multiplierContainer: {
     flex: 5,
@@ -133,6 +134,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     borderBottomRightRadius: 6,
     borderTopRightRadius: 6,
+    alignItems: 'center',
   },
   infoText: {
     fontSize: 12,

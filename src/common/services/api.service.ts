@@ -446,6 +446,23 @@ export class ApiService {
   }
 
   /**
+   * Api post
+   * @param {string} url
+   * @param {object} body
+   */
+  async rawPost<T>(
+    url: string,
+    body: any = {},
+    headers: any = {},
+  ): Promise<AxiosResponse<T>> {
+    const response = await this.axios.post(this.buildUrl(url), body, {
+      headers,
+    });
+
+    return response;
+  }
+
+  /**
    * Api put
    * @param {string} url
    * @param {object} body

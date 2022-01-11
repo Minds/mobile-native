@@ -1,4 +1,4 @@
-import { Image, Platform, StatusBar, StatusBarStyle, View } from 'react-native';
+import { Platform, StatusBar, StatusBarStyle, View } from 'react-native';
 import React, {
   useCallback,
   useEffect,
@@ -38,8 +38,8 @@ import {
 } from 'react-native-image-colors/lib/typescript/types';
 import AnimatedBanner from './AnimatedBanner';
 import InteractionsBottomSheet from '../../common/components/interactions/InteractionsBottomSheet';
-import MText from '../../common/components/MText';
 import CaptureFab from '~/capture/CaptureFab';
+import Empty from '~/common/components/Empty';
 
 const tinycolor = require('tinycolor2');
 
@@ -88,6 +88,7 @@ const ChannelScreen = observer((props: PropsType) => {
   const topBarAnimationEnabled = useRef(true);
   const channelContext = useMemo(
     () => ({
+      channel: store.channel || undefined,
       /**
        * when the user tapped on channel when they were
        * on that channel page, wiggle the feedList scroll
@@ -98,7 +99,7 @@ const ChannelScreen = observer((props: PropsType) => {
         setTimeout(() => (topBarAnimationEnabled.current = true), 500);
       },
     }),
-    [feedRef],
+    [feedRef, store.channel],
   );
   const bannerUri = store.channel?.getBannerSource().uri;
   const subscribersActionSheetRef = useRef<any>(null);
@@ -384,26 +385,16 @@ const ChannelScreen = observer((props: PropsType) => {
    * if it was some other feed, show nothing
    **/
   const emptyMessage = store.channel.isOwner() ? (
-    <View style={[theme.centered, style.emptyContainer]}>
-      <Image
-        style={style.image}
-        source={require('../../assets/images/emptyFeed.png')}
-      />
-
-      <MText style={style.header}>
-        {i18n.t('channel.createFirstPostTitle')}
-      </MText>
-      <MText style={[theme.colorSecondaryText, style.subTitle]}>
-        {i18n.t('channel.createFirstPostSubTitle')}
-      </MText>
-
+    <Empty
+      title={i18n.t('channel.createFirstPostTitle')}
+      subtitle={i18n.t('channel.createFirstPostSubTitle')}>
       <Button
         onPress={() => props.navigation.navigate('Compose')}
         text={i18n.t('channel.createFirstPostAction')}
         large
         action
       />
-    </View>
+    </Empty>
   ) : undefined;
 
   return (
@@ -473,25 +464,6 @@ const ChannelScreen = observer((props: PropsType) => {
 });
 
 const style = ThemedStyles.create({
-  emptyContainer: {
-    paddingTop: 35,
-    paddingBottom: 100,
-  },
-  header: {
-    paddingTop: 32,
-    paddingBottom: 5,
-    fontSize: 22,
-    fontWeight: '600',
-  },
-  subTitle: {
-    fontSize: 16,
-    paddingBottom: 28,
-    paddingTop: 10,
-  },
-  image: {
-    width: 176,
-    height: 122,
-  },
   nsfwChannel: ['bgPrimaryBackground', 'flexContainer'],
 });
 
