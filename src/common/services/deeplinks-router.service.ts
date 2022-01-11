@@ -66,6 +66,7 @@ class DeeplinksRouter {
    */
   navigate(url) {
     const cleanURL = this.cleanUrl(url);
+
     if (!url || !cleanURL) {
       return;
     }

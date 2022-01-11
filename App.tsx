@@ -152,12 +152,10 @@ class App extends Component<Props, State> {
   handleOpenURL = event => {
     if (event.url) {
       // the var can be cleaned so we check again
-      if (!appInitManager.handlePasswordResetDeepLink()) {
-        setTimeout(() => {
-          deeplinkService.navigate(event.url);
-          event.url = '';
-        }, 100);
-      }
+      setTimeout(() => {
+        deeplinkService.navigate(event.url);
+        event.url = '';
+      }, 100);
     }
   };
 
