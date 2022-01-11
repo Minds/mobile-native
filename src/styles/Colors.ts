@@ -25,7 +25,7 @@ export const LIGHT_THEME = {
   SuccessBackground: '#59A05E',
   DangerBackground: '#CA4A34',
   WarningBackground: '#D49538',
-  BaseBackground: '#3f4b56',
+  BaseBackground: '#D5D5d6',
   Green: '#5AC36F',
   TabBorder: '#4A90E2',
   AdminBadge: '#4caf50',
@@ -39,7 +39,7 @@ export const LIGHT_THEME = {
 };
 
 export const DARK_THEME: ColorsType = {
-  PrimaryBackground: '#242A30',
+  PrimaryBackground: '#1F252C',
   PrimaryBackgroundHighlight: '#1E242A',
   SecondaryBackground: '#1A2025',
   TertiaryBackground: '#404E53',

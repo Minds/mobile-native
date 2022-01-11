@@ -93,7 +93,7 @@ const createChatStore = () => ({
       this.createInProgress = false;
     }
   },
-  clear() {
+  reset() {
     if (this.polling) {
       clearInterval(this.polling);
     }

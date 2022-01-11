@@ -46,7 +46,12 @@ const NotificationsTabIcon = observer((props: PropsType) => {
 
   return (
     <View style={styles.container}>
-      <Icon size="large" name="notification" active={active} />
+      <Icon
+        size="large"
+        name="notification"
+        active={active}
+        activeColor="PrimaryText"
+      />
       {showIndicator && Indicator}
     </View>
   );

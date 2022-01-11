@@ -23,7 +23,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import ShareMenu from 'react-native-share-menu';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import Orientation from 'react-native-orientation-locker';
-
+import { PortalProvider } from '@gorhom/portal';
 import NavigationService, {
   setTopLevelNavigator,
 } from './src/navigation/NavigationService';
@@ -152,12 +152,10 @@ class App extends Component<Props, State> {
   handleOpenURL = event => {
     if (event.url) {
       // the var can be cleaned so we check again
-      if (!appInitManager.handlePasswordResetDeepLink()) {
-        setTimeout(() => {
-          deeplinkService.navigate(event.url);
-          event.url = '';
-        }, 100);
-      }
+      setTimeout(() => {
+        deeplinkService.navigate(event.url);
+        event.url = '';
+      }, 100);
     }
   };
 
@@ -187,19 +185,21 @@ class App extends Component<Props, State> {
                 onStateChange={analyticsService.onNavigatorStateChange}>
                 <StoresProvider>
                   <Provider key="app" {...stores}>
-                    <BottomSheetModalProvider>
-                      <ErrorBoundary
-                        message="An error occurred"
-                        containerStyle={ThemedStyles.style.centered}>
-                        <WCContextProvider>
-                          <NavigationStack
-                            key={ThemedStyles.theme + i18n.locale}
-                            showAuthNav={showAuthNav}
-                          />
-                        </WCContextProvider>
-                        <AppMessages />
-                      </ErrorBoundary>
-                    </BottomSheetModalProvider>
+                    <PortalProvider>
+                      <BottomSheetModalProvider>
+                        <ErrorBoundary
+                          message="An error occurred"
+                          containerStyle={ThemedStyles.style.centered}>
+                          <WCContextProvider>
+                            <NavigationStack
+                              key={ThemedStyles.theme + i18n.locale}
+                              showAuthNav={showAuthNav}
+                            />
+                          </WCContextProvider>
+                          <AppMessages />
+                        </ErrorBoundary>
+                      </BottomSheetModalProvider>
+                    </PortalProvider>
                   </Provider>
                 </StoresProvider>
               </NavigationContainer>
