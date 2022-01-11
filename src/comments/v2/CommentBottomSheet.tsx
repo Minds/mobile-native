@@ -62,7 +62,7 @@ const ScreenReplyComment = ({ navigation }) => {
     }
   }, []);
 
-  return <CommentList store={store} />;
+  return <CommentList store={store} navigation={navigation} />;
 };
 
 const CommentBottomSheet = (props: PropsType, ref: any) => {
