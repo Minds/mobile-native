@@ -58,7 +58,7 @@ const getColorFromURI = async uri => {
   if (Platform.OS === 'android') {
     color = (colors as AndroidImageColors).average!;
   } else {
-    color = (colors as IOSImageColors).primary!;
+    color = (colors as IOSImageColors).background!;
   }
 
   return color;
