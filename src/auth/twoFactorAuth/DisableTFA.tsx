@@ -3,14 +3,14 @@ import { observer } from 'mobx-react';
 import React from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
-import { AppStackParamList } from '../../navigation/NavigationTypes';
+import { MoreStackParamList } from '../../navigation/NavigationTypes';
 import InputContainer from '../../common/components/InputContainer';
 import CenteredLoading from '../../common/components/CenteredLoading';
 import i18n from '../../common/services/i18n.service';
 import { showNotification } from '../../../AppMessages';
 import MText from '../../common/components/MText';
 
-type DisableTFARouteProp = RouteProp<AppStackParamList, 'DisableTFA'>;
+type DisableTFARouteProp = RouteProp<MoreStackParamList, 'DisableTFA'>;
 
 type PropsType = {
   route: DisableTFARouteProp;

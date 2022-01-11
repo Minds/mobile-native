@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { observer } from 'mobx-react';
-import { DotIndicator } from 'react-native-reanimated-indicators';
+import { Flow } from 'react-native-animated-spinkit';
 import { IconButton } from '~ui/icons';
 import ThemedStyles, { useMemoStyle } from '../styles/ThemedStyles';
 import MText from '../common/components/MText';
@@ -32,11 +32,9 @@ export default observer(function (props) {
       )}
       <View style={theme.flexContainer} />
       {props.store.posting ? (
-        <DotIndicator
-          containerStyle={styles.dotIndicatorContainerStyle}
-          color={ThemedStyles.getColor('SecondaryText')}
-          scaleEnabled={true}
-        />
+        <View style={styles.dotIndicatorContainerStyle}>
+          <Flow color={ThemedStyles.getColor('SecondaryText')} />
+        </View>
       ) : (
         props.rightText && (
           <MText

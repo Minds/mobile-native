@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
-import { AppStackParamList } from '../../navigation/NavigationTypes';
+import { MoreStackParamList } from '../../navigation/NavigationTypes';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import InputContainer from '../../common/components/InputContainer';
 import CenteredLoading from '../../common/components/CenteredLoading';
@@ -13,7 +13,7 @@ import { showNotification } from '../../../AppMessages';
 import MText from '../../common/components/MText';
 
 type VerifyAuthAppRouteProp = RouteProp<
-  AppStackParamList,
+  MoreStackParamList,
   'RecoveryCodesScreen'
 >;
 

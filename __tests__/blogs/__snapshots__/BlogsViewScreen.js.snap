@@ -149,7 +149,7 @@ exports[`blog view screen component should renders correctly 1`] = `
               style={
                 Object {
                   "alignItems": "center",
-                  "backgroundColor": "#242A30",
+                  "backgroundColor": "#1F252C",
                   "borderRadius": 24,
                   "height": 44,
                   "justifyContent": "center",
@@ -1159,7 +1159,7 @@ exports[`blog view screen component should renders correctly 1`] = `
     emulateUnlessSupported={true}
     style={
       Object {
-        "backgroundColor": "#242A30",
+        "backgroundColor": "#1F252C",
       }
     }
   >
@@ -2201,7 +2201,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                       style={
                         Object {
                           "alignItems": "center",
-                          "backgroundColor": "#242A30",
+                          "backgroundColor": "#1F252C",
                           "borderBottomWidth": 0.5,
                           "borderColor": "#414C57",
                           "borderTopLeftRadius": 10,
@@ -2292,7 +2292,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                       style={
                         Object {
                           "alignItems": "center",
-                          "backgroundColor": "#242A30",
+                          "backgroundColor": "#1F252C",
                           "borderBottomLeftRadius": 10,
                           "borderBottomRightRadius": 10,
                           "borderColor": "#414C57",
@@ -2391,7 +2391,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                       style={
                         Object {
                           "alignItems": "center",
-                          "backgroundColor": "#242A30",
+                          "backgroundColor": "#1F252C",
                           "borderBottomLeftRadius": 10,
                           "borderBottomRightRadius": 10,
                           "borderColor": "#414C57",

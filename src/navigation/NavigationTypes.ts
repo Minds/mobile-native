@@ -25,6 +25,26 @@ export type DrawerParamList = {
 };
 
 export type InternalStackParamList = {
+  Onboarding: {};
+};
+
+export type DiscoveryStackParamList = {
+  DiscoverySearch: { query: string; plus?: boolean; q?: string; f?: string };
+  Discovery: {};
+  Activity: {
+    entity?: ActivityModel;
+    group?: GroupModel;
+    guid?: string;
+    scrollToBottom?: boolean;
+    focusedUrn?: string;
+    noBottomInset?: boolean;
+  };
+  Channel: {};
+};
+
+export type MoreStackParamList = {
+  Drawer: {};
+  Channel: {};
   Wallet: {
     currency?: string;
     section?: string;
@@ -34,10 +54,48 @@ export type InternalStackParamList = {
   GroupsList: {};
   Settings: {};
   Analytics: {};
-  Onboarding: {};
   InitialOnboarding: {};
   BuyTokens: {};
-  Test: {};
+  Account: {};
+  Network: {};
+  Security: {};
+  Billing: {};
+  Referrals: {};
+  Other: {};
+  Resources: {};
+  SettingsEmail: {};
+  MessengerSettingsScreen: {};
+  RekeyScreen: {};
+  AutoplaySettingsScreen: {};
+  BoostSettingsScreen: {};
+  SettingsPassword: {};
+  SettingsNotifications: {};
+  PushNotificationsSettings: {};
+  EmailNotificationsSettings: {};
+  DataSaverScreen: {};
+  BlockedChannels: {};
+  TierManagementScreen: {};
+  DeleteChannel: {};
+  DeactivateChannel: {};
+  PaymentMethods: {};
+  RecurringPayments: {};
+  ReportedContent: {};
+  AppInfo: {};
+  LanguageScreen: {};
+  NSFWScreen: {};
+  DevicesScreen: {};
+  TwoFactorAuthSettingsScreen: {};
+  RecoveryCodesScreen: {
+    store: TwoFactorStore;
+  };
+  VerifyAuthAppScreen: {
+    store: TwoFactorStore;
+  };
+  DisableTFA: {
+    store: TwoFactorStore;
+    password: string;
+  };
+  ChooseBrowser: {};
 };
 
 export type RootStackParamList = {
@@ -134,7 +192,6 @@ export type AuthStackParamList = {
 };
 
 export type AppStackParamList = {
-  ChooseBrowser: {};
   PortraitViewerScreen: {
     items: Array<PortraitBarItem>;
     index: number;
@@ -163,46 +220,7 @@ export type AppStackParamList = {
   ActivityFullScreenNav: {};
   Newsfeed: {};
   Main: {};
-  Account: {};
-  Network: {};
-  Security: {};
-  Billing: {};
-  Referrals: {};
-  BoostConsole: {};
-  Other: {};
-  Resources: {};
-  SettingsEmail: {};
-  MessengerSettingsScreen: {};
-  RekeyScreen: {};
-  AutoplaySettingsScreen: {};
-  BoostSettingsScreen: {};
-  SettingsPassword: {};
-  SettingsNotifications: {};
-  PushNotificationsSettings: {};
-  EmailNotificationsSettings: {};
-  DataSaverScreen: {};
-  BlockedChannels: {};
-  TierManagementScreen: {};
-  DeleteChannel: {};
-  DeactivateChannel: {};
-  PaymentMethods: {};
-  RecurringPayments: {};
-  ReportedContent: {};
-  AppInfo: {};
-  LanguageScreen: {};
-  NSFWScreen: {};
-  DevicesScreen: {};
-  TwoFactorAuthSettingsScreen: {};
-  RecoveryCodesScreen: {
-    store: TwoFactorStore;
-  };
-  VerifyAuthAppScreen: {
-    store: TwoFactorStore;
-  };
-  DisableTFA: {
-    store: TwoFactorStore;
-    password: string;
-  };
+
   TagSelector: {};
   NsfwSelector: {};
   ScheduleSelector: {};
@@ -243,10 +261,11 @@ export type AppStackParamList = {
     guid?: string;
     scrollToBottom?: boolean;
     focusedUrn?: string;
+    noBottomInset?: boolean;
   };
   Conversation: {};
   DiscoveryFeed: {};
-  DiscoverySearch: { query: string; plus?: boolean; q?: string; f?: string };
+
   Subscribers: {};
   GroupView: {};
   BlogList: {};

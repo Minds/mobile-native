@@ -7,7 +7,7 @@ import ThemedStyles from '../styles/ThemedStyles';
 import DashboardTab from './tabs/dashboard/DashboardTab';
 import TokensTab from './tabs/tokens/TokensTab';
 import TrendingTab from './tabs/trending/TrendingTab';
-import { ScreenHeader } from '~/common/ui/screen';
+import { ScreenHeader, Screen } from '~/common/ui/screen';
 
 type TAnalyticsTabs =
   | 'earnings'
@@ -93,7 +93,7 @@ const AnalyticsScreen = observer(
     }, [Earnings, Engagement, Token, Traffic, Trending, activeTabId]);
 
     return (
-      <View style={theme.flexContainer}>
+      <Screen safe>
         <ScreenHeader title={i18n.t('analytics.title')} />
         <TopbarTabbar
           current={activeTabId}
@@ -107,7 +107,7 @@ const AnalyticsScreen = observer(
           ]}
         />
         <View style={theme.centered}>{screen()}</View>
-      </View>
+      </Screen>
     );
   },
 );
