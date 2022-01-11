@@ -72,6 +72,7 @@ import ChannelEditScreen from '../channel/v2/edit/ChannelEditScreen';
 import MultiUserScreen from '../auth/multi-user/MultiUserScreen';
 import RelogScreen from '../auth/RelogScreen';
 import ChooseBrowserModalScreen from '~/settings/screens/ChooseBrowserModalScreen';
+import withModalProvider from './withModalProvide';
 
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 
@@ -100,6 +101,13 @@ export const InternalStack = () => {
   );
 };
 
+const TabScreenWithModal = withModalProvider(TabsScreen);
+const PortraitViewerScreenWithModal = withModalProvider(PortraitViewerScreen);
+const ChannelScreenV2WithModal = withModalProvider(ChannelScreenV2);
+const ActivityScreenWithModal = withModalProvider(ActivityScreen);
+const GroupViewScreenWithModal = withModalProvider(GroupViewScreen);
+const BlogsViewScreenWithModal = withModalProvider(BlogsViewScreen);
+
 const AppStack = function () {
   const statusBarStyle =
     ThemedStyles.theme === 0 ? 'dark-content' : 'light-content';
@@ -112,12 +120,12 @@ const AppStack = function () {
       <AppStackNav.Navigator screenOptions={ThemedStyles.defaultScreenOptions}>
         <AppStackNav.Screen
           name="Main"
-          component={TabsScreen}
+          component={TabScreenWithModal}
           options={hideHeader}
         />
         <AppStackNav.Screen
           name="PortraitViewerScreen"
-          component={PortraitViewerScreen}
+          component={PortraitViewerScreenWithModal}
           options={{
             animation: 'fade_from_bottom',
             ...hideHeader,
@@ -153,7 +161,7 @@ const AppStack = function () {
         />
         <AppStackNav.Screen
           name="Channel"
-          component={ChannelScreenV2}
+          component={ChannelScreenV2WithModal}
           options={hideHeader}
         />
         <AppStackNav.Screen
@@ -167,7 +175,7 @@ const AppStack = function () {
         />
         <AppStackNav.Screen
           name="Activity"
-          component={ActivityScreen}
+          component={ActivityScreenWithModal}
           options={hideHeader}
         />
         <AppStackNav.Screen
@@ -177,12 +185,12 @@ const AppStack = function () {
         <AppStackNav.Screen name="Subscribers" component={ChannelSubscribers} />
         <AppStackNav.Screen
           name="GroupView"
-          component={GroupViewScreen}
+          component={GroupViewScreenWithModal}
           options={hideHeader}
         />
         <AppStackNav.Screen
           name="BlogView"
-          component={BlogsViewScreen}
+          component={BlogsViewScreenWithModal}
           options={hideHeader}
         />
         <AppStackNav.Screen
