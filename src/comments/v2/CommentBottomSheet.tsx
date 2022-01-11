@@ -131,7 +131,9 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
   );
 
   const ScreenComment = React.useCallback(
-    () => <CommentList store={props.commentsStore} />,
+    ({ navigation }) => (
+      <CommentList store={props.commentsStore} navigation={navigation} />
+    ),
     [props.commentsStore],
   );
 
