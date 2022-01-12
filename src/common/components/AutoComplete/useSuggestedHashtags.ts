@@ -1,23 +1,22 @@
-import UserModel from '~/channel/UserModel';
 import useApiFetch, { FetchStore } from '~/common/hooks/useApiFetch';
 import { useEffect } from 'react';
 import useDebouncedCallback from '~/common/hooks/useDebouncedCallback';
 
-export default function useChannelSuggestion(
+export default function useSuggestedHashtags(
   query,
   limit = 8,
-): FetchStore<{ entities: UserModel[]; status: string }> {
+): FetchStore<{ tags: string[]; status: string }> {
   const fetchStore: FetchStore<{
-    entities: UserModel[];
+    tags: string[];
     status: string;
-  }> = useApiFetch('api/v2/search/suggest/user', {
+  }> = useApiFetch('api/v2/search/suggest/tags', {
     params: {
       limit,
       hydrate: 1,
     },
     persist: true,
     updateStrategy: 'replace',
-    map: entities => UserModel.createMany(entities),
+    // map: entities => UserModel.createMany(entities),
     skip: true,
   });
 
@@ -34,7 +33,7 @@ export default function useChannelSuggestion(
     if (!query) return;
 
     debouncedFetch(query);
-  }, [query]);
+  }, [debouncedFetch, query]);
 
   return fetchStore;
 }

@@ -17,9 +17,12 @@ export interface ChannelAutoCompleteListProps {
    **/
   onChannels?: (channels: UserModel[]) => void;
   /**
-   * when a channel is selected
+   * when a channel is selected,
    **/
-  onSelect?: (channel: UserModel) => void;
+  onSelect?: (selectedText: string) => void;
+  /**
+   * a custom component to use instead of flat list
+   */
   flatListComponent?: FlatList | typeof BottomSheetFlatList;
 }
 
@@ -35,18 +38,21 @@ function ChannelAutoCompleteList({
 
   useEffect(() => {
     onChannels?.(channels || []);
-  }, [channels, length]);
+  }, [channels, length, onChannels]);
 
   const renderItem = useCallback(
     ({ item }) => (
-      <ChannelListItem channel={item} hideButtons onPress={onSelect} />
+      <ChannelListItem
+        channel={item}
+        hideButtons
+        onPress={user => onSelect?.(user.username)}
+      />
     ),
     [onSelect],
   );
 
   const CustomFlatList = (flatListComponent || FlatList) as any;
 
-  // TODO: add empty state
   // TODO: add loading state
   // TODO: add error state
   return (

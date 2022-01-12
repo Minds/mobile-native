@@ -40,124 +40,11 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
-import UserModel from '~/channel/UserModel';
 import Tags from '~/common/components/Tags';
 import useDebouncedCallback from '~/common/hooks/useDebouncedCallback';
-import ChannelAutoCompleteList from '~/common/components/ChannelAutoCompleteList/ChannelAutoCompleteList';
+import AutoComplete from '~/common/components/AutoComplete/AutoComplete';
 
-const { width, height } = Dimensions.get('window');
-
-interface AutoCompleteInput {
-  text: string;
-  selection: { start: number; end: number };
-  textHeight?: number;
-  scrollOffset?: number;
-  onScrollToOffset?: (offset: number) => void;
-  onTextChange: (text: string) => void;
-  onSelectionChange: (selection: { start: number; end: number }) => void;
-  onTextInputFocus?: () => void;
-}
-
-export const useAutoComplete = ({
-  text,
-  selection,
-  textHeight = 29,
-  scrollOffset = 0,
-  onScrollToOffset,
-  onTextChange,
-  onSelectionChange,
-  onTextInputFocus,
-}: AutoCompleteInput) => {
-  const [query, setQuery] = useState('');
-  const [visible, setVisible] = useState(false);
-  const setVisibleDebounced = useDebouncedCallback(v => setVisible(v), 100, []);
-  const keyboard = useKeyboard();
-
-  useEffect(() => {
-    const substr = text.substr(0, selection.start) || '';
-
-    /**
-     * Distance from top within which we don't have to move the scroll position.
-     * in other words, this distance from top is enough to show the popup.
-     * this depends on the device obviously.
-     **/
-    const threshold = (height - keyboard.keyboardHeight) / 3;
-
-    const lastItem = substr
-      .replace(/\n/g, ' ') // replace with space
-      .split(' ')
-      .reverse()[0];
-    const query = lastItem.substring(1);
-
-    if (lastItem && (lastItem[0] === '@' || lastItem[0] === '#') && query) {
-      setVisibleDebounced(true);
-
-      if (textHeight - scrollOffset > threshold) {
-        onScrollToOffset?.(textHeight - 29);
-      }
-      setQuery(query);
-    } else {
-      setVisibleDebounced(false);
-      setQuery('');
-    }
-  }, [
-    keyboard.keyboardHeight,
-    onScrollToOffset,
-    scrollOffset,
-    selection,
-    text,
-    textHeight,
-  ]);
-
-  const [autoCompleteLoaded, setAutoCompleteLoaded] = useState(false);
-  const handleAutoCompleteUsersLoaded = useCallback(
-    (users: UserModel[]) => setAutoCompleteLoaded(Boolean(users.length)),
-    [],
-  );
-  const handleAutoCompleteSelect = useCallback(
-    (user: UserModel) => {
-      let endword: RegExpMatchArray | null = [''],
-        matchText = text.substr(0, selection.end);
-
-      // search end of word
-      if (text.length > selection.end) {
-        endword = text.substr(selection.end).match(/^([a-zA-Z0-9])+\b/);
-        if (endword) {
-          matchText += endword[0];
-        } else {
-          endword = [''];
-        }
-      }
-
-      // the rest of the text
-      const preText = matchText.replace(
-        /\@[a-zA-Z0-9]+$/,
-        '@' + user.username + ' ',
-      );
-      const postText = text.substr(selection.end + endword[0].length);
-
-      onTextChange(preText + postText);
-
-      onSelectionChange({
-        start: preText.length,
-        end: preText.length,
-      });
-      if (onTextInputFocus) {
-        InteractionManager.runAfterInteractions(() => {
-          onTextInputFocus();
-        });
-      }
-    },
-    [text, selection, onTextChange, onSelectionChange, onTextInputFocus],
-  );
-
-  return {
-    visible: visible && autoCompleteLoaded,
-    query,
-    handleAutoCompleteSelect,
-    handleAutoCompleteUsersLoaded,
-  };
-};
+const { width } = Dimensions.get('window');
 
 /**
  * Compose Screen
@@ -185,34 +72,6 @@ export default observer(function ComposeScreen(props) {
     200,
     [],
   );
-  const {
-    visible: autoCompleteVisible,
-    query,
-    handleAutoCompleteUsersLoaded,
-    handleAutoCompleteSelect,
-  } = useAutoComplete({
-    textHeight: store.textHeight,
-    scrollOffset,
-    selection: store.selection,
-    onSelectionChange: selection => {
-      store.setSelection(selection);
-      setTimeout(() => {
-        inputRef.current?.setNativeProps({
-          selection: {
-            start: selection.start,
-            end: selection.end,
-          },
-        });
-      });
-    },
-    text: store.text,
-    onTextChange: text => store.setText(text),
-    onTextInputFocus: () => inputRef.current?.focus(),
-    onScrollToOffset: offset =>
-      scrollViewRef.current?.scrollTo({
-        y: offset,
-      }),
-  });
   const showEmbed = store.embed.hasRichEmbed && store.embed.meta;
   const fontSize =
     store.attachment.hasAttachment || store.text.length > 85
@@ -235,6 +94,7 @@ export default observer(function ComposeScreen(props) {
   const avatar =
     channel && channel.getAvatarSource ? channel.getAvatarSource('medium') : {};
   const keyboard = useKeyboard();
+  const [autoCompleteVisible, setAutoCompleteVisible] = useState(false);
   const [scrollViewHeight, setScrollViewHeight] = useState(0);
   /**
    * animated style for the popover appearing and disappearing functionality
@@ -311,6 +171,20 @@ export default observer(function ComposeScreen(props) {
       setScrollOffsetDebounced(e.nativeEvent.contentOffset.y),
     [],
   );
+
+  const onAutoCompleteShown = useCallback(
+    (visible: boolean) => {
+      setAutoCompleteVisible(visible);
+      if (visible) {
+        setTimeout(() => {
+          InteractionManager.runAfterInteractions(() =>
+            scrollViewRef.current?.scrollTo(store.textHeight + 35),
+          );
+        }, 350);
+      }
+    },
+    [store.textHeight],
+  );
   // #endregion
 
   // #region effects
@@ -339,20 +213,6 @@ export default observer(function ComposeScreen(props) {
       }, 300);
     });
   }, [inputRef]);
-
-  /**
-   * The point of this effect is to move the scroll to the
-   * caret if it was behind the autocomplete view
-   **/
-  useEffect(() => {
-    if (autoCompleteVisible) {
-      setTimeout(() => {
-        InteractionManager.runAfterInteractions(() =>
-          scrollViewRef.current?.scrollTo(store.textHeight + 35),
-        );
-      }, 50);
-    }
-  }, [autoCompleteVisible, store.textHeight]);
   // #endregion
 
   // #region renders
@@ -447,10 +307,30 @@ export default observer(function ComposeScreen(props) {
        * Autocomplete popup
        **/}
       <Animated.View style={autoCompletePopupAnimatedStyle}>
-        <ChannelAutoCompleteList
-          query={query}
-          onChannels={handleAutoCompleteUsersLoaded}
-          onSelect={handleAutoCompleteSelect}
+        <AutoComplete
+          textHeight={store.textHeight}
+          scrollOffset={scrollOffset}
+          selection={store.selection}
+          onSelectionChange={selection => {
+            store.setSelection(selection);
+            setTimeout(() => {
+              inputRef.current?.setNativeProps({
+                selection: {
+                  start: selection.start,
+                  end: selection.end,
+                },
+              });
+            });
+          }}
+          text={store.text}
+          onTextChange={text => store.setText(text)}
+          onTextInputFocus={() => inputRef.current?.focus()}
+          onScrollToOffset={offset =>
+            scrollViewRef.current?.scrollTo({
+              y: offset,
+            })
+          }
+          onVisible={onAutoCompleteShown}
         />
       </Animated.View>
 

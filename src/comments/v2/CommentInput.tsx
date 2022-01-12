@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import type { TextInput as TextInputType } from 'react-native';
 import {
   Dimensions,
@@ -30,11 +30,10 @@ import Animated, {
   useAnimatedStyle,
   withSpring,
 } from 'react-native-reanimated';
-import ChannelAutoCompleteList from '~/common/components/ChannelAutoCompleteList/ChannelAutoCompleteList';
-import { useAutoComplete } from '~/compose/v2/ComposeScreen';
 import Tags from '~/common/components/Tags';
 import { useNavigation } from '@react-navigation/native';
 import { BottomSheetFlatList } from '@gorhom/bottom-sheet';
+import AutoComplete from '~/common/components/AutoComplete/AutoComplete';
 
 const { height } = Dimensions.get('window');
 
@@ -57,6 +56,7 @@ const CommentInput = observer((onShow, onDismiss) => {
   const navigation = useNavigation();
   const theme = ThemedStyles.style;
   const ref = React.useRef<TextInputType>(null);
+  const [autoCompleteVisible, setAutoCompleteVisible] = useState(false);
   const provider = React.useContext(CommentInputContext);
 
   /**
@@ -89,17 +89,6 @@ const CommentInput = observer((onShow, onDismiss) => {
   const afterSelected = () => setTimeout(() => ref.current?.focus(), 400);
   const beforeSelect = () => ref.current?.blur();
 
-  const {
-    visible: autoCompleteVisible,
-    query,
-    handleAutoCompleteUsersLoaded,
-    handleAutoCompleteSelect,
-  } = useAutoComplete({
-    selection: provider.store?.selection || { start: 0, end: 0 },
-    onSelectionChange: selection => provider.store?.setSelection(selection),
-    text: provider.store?.text || '',
-    onTextChange: text => provider.store?.setText(text),
-  });
   const autoCompleteAnimatedStyle = useAnimatedStyle(() => ({
     transform: [
       {
@@ -150,11 +139,15 @@ const CommentInput = observer((onShow, onDismiss) => {
               { top: 35 }, // TODO: logic of number
               autoCompleteAnimatedStyle,
             ]}>
-            <ChannelAutoCompleteList
-              query={query}
-              onChannels={handleAutoCompleteUsersLoaded}
-              onSelect={handleAutoCompleteSelect}
+            <AutoComplete
+              selection={provider.store?.selection || { start: 0, end: 0 }}
+              onSelectionChange={selection =>
+                provider.store?.setSelection(selection)
+              }
+              text={provider.store?.text || ''}
+              onTextChange={text => provider.store?.setText(text)}
               flatListComponent={BottomSheetFlatList}
+              onVisible={setAutoCompleteVisible}
             />
           </Animated.View>
         </View>
