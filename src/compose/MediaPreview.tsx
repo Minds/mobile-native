@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, StyleSheet, Platform } from 'react-native';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Foundation';
 import * as Progress from 'react-native-progress';
 
@@ -26,11 +26,6 @@ export default observer(function MediaPreview(props: PropsType) {
   const [videoSize, setVideoSize] = useState<VideoSizeType>(null);
 
   const onVideoLoaded = React.useCallback(e => {
-    if (e.naturalSize.orientation === 'portrait' && Platform.OS === 'ios') {
-      const w = e.naturalSize.width;
-      e.naturalSize.width = e.naturalSize.height;
-      e.naturalSize.height = w;
-    }
     setVideoSize(e.naturalSize);
   }, []);
 

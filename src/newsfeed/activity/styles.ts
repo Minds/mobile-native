@@ -88,15 +88,15 @@ const remindContainerStyle = ThemedStyles.combine(
 
 const containerStyle = ThemedStyles.combine(
   styles.container,
-  'borderBottom8x',
-  'bcolorTertiaryBackground',
+  'borderBottom6x',
+  'bcolorBaseBackground',
   'bgPrimaryBackground',
 );
 
 const onlyContentContainerStyle = ThemedStyles.combine(
   styles.container,
   'borderHair',
-  'bcolorTertiaryBackground',
+  'bcolorBaseBackground',
   'bgPrimaryBackground',
 );
 const remindedContainerStyle = ThemedStyles.combine(

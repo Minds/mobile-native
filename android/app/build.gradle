@@ -255,7 +255,6 @@ dependencies {
     // }
 
     implementation project(':react-native-fs')
-    implementation project(':react-native-minds-encryption')
     implementation project(':react-native-exception-handler')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation("com.squareup.okhttp3:okhttp-urlconnection:4.9.1")

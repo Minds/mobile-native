@@ -3,7 +3,6 @@ import Icon from 'react-native-vector-icons/Feather';
 import { observer } from 'mobx-react';
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import NavigationService from '../../navigation/NavigationService';
 import ThemedStyles from '../../styles/ThemedStyles';
 import type CommentsStore from './CommentsStore';
 import i18n from '../../common/services/i18n.service';
@@ -13,6 +12,7 @@ import MText from '../../common/components/MText';
 
 export default observer(function CommentListHeader(props: {
   store: CommentsStore;
+  navigation: any;
 }) {
   const route = useRoute<any>();
 
@@ -51,7 +51,7 @@ export default observer(function CommentListHeader(props: {
               theme.marginBottom3x,
             ]}>
             <TouchableOpacity
-              onPress={NavigationService.goBack}
+              onPress={props.navigation.goBack}
               style={theme.paddingHorizontal2x}>
               <Icon
                 name={'arrow-left'}

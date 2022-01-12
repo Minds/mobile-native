@@ -1,7 +1,8 @@
 import React, { useCallback } from 'react';
-import { View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { observer } from 'mobx-react';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 
 import ThemedStyles from '../../styles/ThemedStyles';
 import TopBar from '../TopBar';
@@ -68,7 +69,7 @@ export default observer(function (props) {
         {i18n.t('capture.licenseDescription')}
       </MText>
 
-      <ScrollView>
+      <BottomSheetScrollView>
         <MText
           style={[
             theme.paddingVertical4x,
@@ -103,7 +104,7 @@ export default observer(function (props) {
             selected={store.attachment.license === o.value}
           />
         ))}
-      </ScrollView>
+      </BottomSheetScrollView>
     </View>
   );
 });
