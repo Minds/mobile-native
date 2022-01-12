@@ -10,6 +10,7 @@ import i18n from '../../common/services/i18n.service';
 import NavigationService from '../../navigation/NavigationService';
 import MText from '../../common/components/MText';
 import DateTimePicker from '~/common/components/DateTimePicker';
+import { showNotification } from 'AppMessages';
 
 /**
  * NSFW selector
@@ -23,9 +24,16 @@ export default observer(function (props) {
       dateTimePickerRef.current.show();
     },
     onSelect(data) {
-      // only asign if the date is gt than now
+      // only assign if the date is gt than now
       if (moment(data).diff(moment()) > 0) {
         store.setTimeCreated(data);
+      } else {
+        showNotification(
+          i18n.t('capture.scheduleError'),
+          'warning',
+          3000,
+          'top',
+        );
       }
     },
   }));
