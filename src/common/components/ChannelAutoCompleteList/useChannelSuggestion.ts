@@ -31,7 +31,7 @@ export default function useChannelSuggestion(
   );
 
   useEffect(() => {
-    if (!query || query.length < 2) return;
+    if (!query) return;
 
     debouncedFetch(query);
   }, [query]);

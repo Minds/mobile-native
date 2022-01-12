@@ -89,12 +89,7 @@ export const useAutoComplete = ({
       .reverse()[0];
     const query = lastItem.substring(1);
 
-    if (
-      lastItem &&
-      (lastItem[0] === '@' || lastItem[0] === '#') &&
-      query &&
-      query.length > 2
-    ) {
+    if (lastItem && (lastItem[0] === '@' || lastItem[0] === '#') && query) {
       setVisibleDebounced(true);
 
       if (textHeight - scrollOffset > threshold) {
