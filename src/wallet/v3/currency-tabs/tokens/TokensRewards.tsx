@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react';
 import React from 'react';
 import CenteredLoading from '../../../../common/components/CenteredLoading';
-import DatePicker from '../../../../common/components/DatePicker';
+import DatePicker from '../../../../common/components/controls/DatePicker';
 import MText from '../../../../common/components/MText';
 import i18n from '../../../../common/services/i18n.service';
 import ThemedStyles from '../../../../styles/ThemedStyles';

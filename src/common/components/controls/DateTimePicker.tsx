@@ -1,9 +1,9 @@
 import { observer, useLocalStore } from 'mobx-react';
 import React, { forwardRef, useImperativeHandle, useMemo } from 'react';
 import { View } from 'react-native';
-import i18n from '../services/i18n.service';
+import i18n from '../../services/i18n.service';
 import ThemedStyles, { useStyle } from '~/styles/ThemedStyles';
-import { BottomSheetButton, BottomSheetModal } from './bottom-sheet';
+import { BottomSheetButton, BottomSheetModal } from '../bottom-sheet';
 import type { BottomSheetModal as BottomSheetModalType } from '@gorhom/bottom-sheet';
 import ModernDatePicker from 'react-native-modern-datepicker';
 import { Calendar } from 'react-native-calendars';
