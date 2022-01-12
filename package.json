@@ -102,7 +102,6 @@
     "react-native-keyboard-aware-scroll-view": "^0.9.4",
     "react-native-localize": "^1.3.0",
     "react-native-material-menu": "^1.1.3",
-    "react-native-minds-encryption": "Minds/react-native-minds-encryption#736571522c9d5f96c9bc4b454b2828e3940b6ccc",
     "react-native-mmkv-storage": "^0.6.6",
     "react-native-modal": "^11.10.0",
     "react-native-modern-datepicker": "https://gitlab.com/minds/react-native-modern-datepicker.git",

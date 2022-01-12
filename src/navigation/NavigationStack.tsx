@@ -17,7 +17,6 @@ import TabsScreen from '../tabs/TabsScreen';
 import NotificationsScreen from '../notifications/v3/NotificationsScreen';
 import ActivityScreen from '../newsfeed/ActivityScreen';
 import ChannelSubscribers from '../channel/subscribers/ChannelSubscribers';
-import ConversationScreen from '../messenger/ConversationScreen';
 import GroupViewScreen from '../groups/GroupViewScreen';
 import BlogsViewScreen from '../blogs/BlogsViewScreen';
 import FabScreenV2 from '../wire/v2/FabScreen';
@@ -67,7 +66,6 @@ import SearchScreen from '../topbar/searchbar/SearchScreen';
 import PasswordConfirmScreen from '../auth/PasswordConfirmScreen';
 import TwoFactorConfirmScreen from '../auth/TwoFactorConfirmScreen';
 import RecoveryCodeUsedScreen from '../auth/twoFactorAuth/RecoveryCodeUsedScreen';
-import MessengerScreen from '../messenger/MessengerScreen';
 import ChannelEditScreen from '../channel/v2/edit/ChannelEditScreen';
 import MultiUserScreen from '../auth/multi-user/MultiUserScreen';
 import RelogScreen from '../auth/RelogScreen';
@@ -137,11 +135,6 @@ const AppStack = function () {
           options={{ title: 'Export Wallet' }}
         />
         <AppStackNav.Screen
-          name="Messenger"
-          component={MessengerScreen}
-          options={{ title: i18n.t('messenger.legacyMessenger') }}
-        />
-        <AppStackNav.Screen
           name="CustomMonetize"
           component={CustomMonetizeScreen}
           options={hideHeader}
@@ -177,10 +170,6 @@ const AppStack = function () {
           name="Activity"
           component={ActivityScreenWithModal}
           options={hideHeader}
-        />
-        <AppStackNav.Screen
-          name="Conversation"
-          component={ConversationScreen}
         />
         <AppStackNav.Screen name="Subscribers" component={ChannelSubscribers} />
         <AppStackNav.Screen

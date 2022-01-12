@@ -23,7 +23,6 @@ import DeleteChannelScreen from '../settings/screens/DeleteChannelScreen';
 import DeactivateChannelScreen from '../settings/screens/DeactivateChannelScreen';
 import LanguageScreen from '../settings/screens/LanguageScreen';
 import NSFWScreen from '../settings/screens/NSFWScreen';
-import MessengerSettingsScreen from '../settings/screens/MessengerScreen';
 import DevicesScreen from '../settings/screens/DevicesScreen';
 import BillingScreen from '../settings/screens/BillingScreen';
 import RecurringPayments from '../settings/screens/RecurringPayments';
@@ -274,11 +273,6 @@ export default function () {
         name="NSFWScreen"
         component={NSFWScreen}
         options={{ title: i18n.t('settings.accountOptions.5') }}
-      />
-      <MoreStack.Screen
-        name="MessengerSettingsScreen"
-        component={MessengerSettingsScreen}
-        options={{ title: i18n.t('settings.accountOptions.6') }}
       />
       <MoreStack.Screen
         name="AutoplaySettingsScreen"
