@@ -1,7 +1,6 @@
 import { useKeyboard, useDimensions } from '@react-native-community/hooks';
 import { useState, useEffect, useCallback } from 'react';
 import { InteractionManager } from 'react-native';
-import UserModel from '~/channel/UserModel';
 import useDebouncedCallback from '~/common/hooks/useDebouncedCallback';
 
 export interface AutoCompleteInput {

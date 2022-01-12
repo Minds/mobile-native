@@ -27,8 +27,6 @@ const bottomSheetLocalStore = ({ autoOpen }) => ({
   },
 });
 
-const snapPoints = ['85%'];
-
 const renderBackdrop = backdropProps => (
   <BottomSheetBackdrop
     {...backdropProps}
