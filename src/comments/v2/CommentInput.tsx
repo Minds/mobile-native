@@ -121,7 +121,7 @@ const CommentInput = observer((onShow, onDismiss) => {
 
   const inputMaxHeight = {
     maxHeight:
-      height * 0.4 - (provider.store.parent || provider.store.edit ? 50 : 0),
+      height * 0.2 - (provider.store.parent || provider.store.edit ? 50 : 0),
   };
 
   return (

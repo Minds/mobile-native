@@ -1,5 +1,9 @@
 import React, { forwardRef, useCallback } from 'react';
-import { useBackHandler } from '@react-native-community/hooks';
+import {
+  useBackHandler,
+  useDimensions,
+  useKeyboard,
+} from '@react-native-community/hooks';
 import {
   createStackNavigator,
   StackNavigationOptions,
@@ -14,6 +18,7 @@ import CommentList from './CommentList';
 import CommentsStore from './CommentsStore';
 import ThemedStyles from '~/styles/ThemedStyles';
 import Handle from '~/common/components/bottom-sheet/Handle';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const bottomSheetLocalStore = ({ autoOpen }) => ({
   isRendered: Boolean(autoOpen),
@@ -65,6 +70,8 @@ const ScreenReplyComment = ({ navigation }) => {
 };
 
 const CommentBottomSheet = (props: PropsType, ref: any) => {
+  const height = useDimensions().window.height;
+  const topInsets = useSafeAreaInsets().top;
   const localStore = useLocalStore(bottomSheetLocalStore, {
     onChange: props.onChange,
     autoOpen: props.autoOpen,
@@ -143,42 +150,42 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
     [],
   );
 
+  const { keyboardShown } = useKeyboard();
+
   if (!localStore.isRendered) {
     return null;
   }
 
   return (
-    <>
-      <BottomSheetModal
-        key="commentSheet"
-        backdropComponent={renderBackdrop}
-        handleHeight={20}
-        backgroundComponent={null}
-        ref={sheetRef}
-        snapPoints={snapPoints}
-        index={0}
-        enableContentPanningGesture={true}
-        handleComponent={renderHandle}>
-        <NavigationContainer independent={true}>
-          <Stack.Navigator
-            screenOptions={screenOptions}
-            initialRouteName="Comments">
-            <Stack.Screen
-              name="Comments"
-              component={ScreenComment}
-              initialParams={{
-                title: props.title || '',
-              }}
-            />
-            <Stack.Screen
-              name="ReplyComment"
-              component={ScreenReplyComment}
-              initialParams={{ focusedUrn }}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </BottomSheetModal>
-    </>
+    <BottomSheetModal
+      key="commentSheet"
+      backdropComponent={renderBackdrop}
+      handleHeight={20}
+      backgroundComponent={null}
+      ref={sheetRef}
+      snapPoints={[keyboardShown ? height - topInsets : '85%']}
+      index={0}
+      enableContentPanningGesture={true}
+      handleComponent={renderHandle}>
+      <NavigationContainer independent={true}>
+        <Stack.Navigator
+          screenOptions={screenOptions}
+          initialRouteName="Comments">
+          <Stack.Screen
+            name="Comments"
+            component={ScreenComment}
+            initialParams={{
+              title: props.title || '',
+            }}
+          />
+          <Stack.Screen
+            name="ReplyComment"
+            component={ScreenReplyComment}
+            initialParams={{ focusedUrn }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </BottomSheetModal>
   );
 };
 
