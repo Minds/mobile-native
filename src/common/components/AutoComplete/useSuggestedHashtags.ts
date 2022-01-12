@@ -16,7 +16,6 @@ export default function useSuggestedHashtags(
     },
     persist: true,
     updateStrategy: 'replace',
-    // map: entities => UserModel.createMany(entities),
     skip: true,
   });
 

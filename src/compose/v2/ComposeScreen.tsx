@@ -185,6 +185,22 @@ export default observer(function ComposeScreen(props) {
     },
     [store.textHeight],
   );
+
+  const handleSelectionChange = useCallback(() => {
+    selection => {
+      store.setSelection(selection);
+      setTimeout(() => {
+        inputRef.current?.setNativeProps({
+          selection: {
+            start: selection.start,
+            end: selection.end,
+          },
+        });
+      });
+    };
+  }, [store]);
+
+  const handleTextInputFocus = useCallback(() => inputRef.current?.focus(), []);
   // #endregion
 
   // #region effects
@@ -248,7 +264,7 @@ export default observer(function ComposeScreen(props) {
             : setScrollViewHeight(e.nativeEvent.layout.height)
         }
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 35 }}
+        contentContainerStyle={scrollViewContentContainerStyle}
         onScroll={onScrollHandler}>
         <View style={theme.rowJustifyStart}>
           <View style={useStyle('paddingHorizontal2x', 'paddingTop')}>
@@ -259,7 +275,6 @@ export default observer(function ComposeScreen(props) {
               <>
                 {store.attachment.hasAttachment && <TitleInput store={store} />}
                 <TextInput
-                  onSelectionChange={store.selectionChanged}
                   style={textStyle}
                   onContentSizeChange={localStore.onSizeChange}
                   ref={inputRef}
@@ -270,11 +285,8 @@ export default observer(function ComposeScreen(props) {
                   textAlignVertical="top"
                   multiline={true}
                   selectTextOnFocus={false}
-                  autoCorrect={false}
-                  autoComplete={'off'}
-                  spellCheck={false}
-                  autoCapitalize={'none'}
                   underlineColorAndroid="transparent"
+                  onSelectionChange={store.selectionChanged}
                   testID="PostInput">
                   <Tags navigation={props.navigation} selectable={true}>
                     {store.text}
@@ -300,7 +312,6 @@ export default observer(function ComposeScreen(props) {
             )}
           </View>
         </View>
-        {/*<Animated.View style={spacerAnimatedStyle} />*/}
       </ScrollView>
 
       {/**
@@ -311,20 +322,10 @@ export default observer(function ComposeScreen(props) {
           textHeight={store.textHeight}
           scrollOffset={scrollOffset}
           selection={store.selection}
-          onSelectionChange={selection => {
-            store.setSelection(selection);
-            setTimeout(() => {
-              inputRef.current?.setNativeProps({
-                selection: {
-                  start: selection.start,
-                  end: selection.end,
-                },
-              });
-            });
-          }}
+          onSelectionChange={handleSelectionChange}
           text={store.text}
-          onTextChange={text => store.setText(text)}
-          onTextInputFocus={() => inputRef.current?.focus()}
+          onTextChange={store.setText}
+          onTextInputFocus={handleTextInputFocus}
           onScrollToOffset={offset =>
             scrollViewRef.current?.scrollTo({
               y: offset,
@@ -367,6 +368,8 @@ export default observer(function ComposeScreen(props) {
     </SafeAreaView>
   );
 });
+
+const scrollViewContentContainerStyle = { paddingBottom: 35 };
 
 const styles = ThemedStyles.create({
   bottomBarContainer: [

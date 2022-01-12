@@ -91,10 +91,11 @@ const useAutoComplete = ({
         }
       }
 
+      const tag = query[0] as '@' | '#';
       // the rest of the text
       const preText = matchText.replace(
-        new RegExp(`${query[0]}[a-zA-Z0-9]+$`),
-        query[0] + selectedText + ' ',
+        new RegExp(`${tag}[a-zA-Z0-9]+$`),
+        tag + selectedText + ' ',
       );
       const postText = text.substr(selection.end + endword[0].length);
 

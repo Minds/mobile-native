@@ -16,11 +16,9 @@ import settingsStore from '../settings/SettingsStore';
 import attachmentService from '../common/services/attachment.service';
 import logService from '../common/services/log.service';
 import { runInAction } from 'mobx';
-import { Dimensions, Image, Platform } from 'react-native';
+import { Image, Platform } from 'react-native';
 import { hashRegex } from '../common/components/Tags';
 import getNetworkError from '~/common/helpers/getNetworkError';
-
-const width = Dimensions.get('window').width - 80;
 
 /**
  * Display an error message to the user.

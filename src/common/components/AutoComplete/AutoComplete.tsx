@@ -22,7 +22,8 @@ function AutoComplete(props: AutoCompleteProps) {
     visible,
   } = useAutoComplete(props);
 
-  useEffect(() => props.onVisible?.(visible), [visible]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => props.onVisible?.(visible), [visible, props.onVisible]);
 
   if (!query) {
     return null;
