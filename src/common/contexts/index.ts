@@ -1,6 +1,5 @@
 import newsfeed from '../../newsfeed/NewsfeedStore';
 import boost from '../../boost/BoostStore';
-import messengerList from '../../messenger/MessengerListStore';
 import user from '../../auth/UserStore';
 import blogs from '../../blogs/BlogsStore';
 import wire from '../../wire/WireStore';
@@ -25,7 +24,6 @@ export function createClassStores() {
   const stores = {
     subscriptionRequest: new SubscriptionRequestStore(),
     newsfeed: new newsfeed(),
-    messengerList: new messengerList(),
     user: new user(),
     blogs: new blogs(),
     wire: new wire(),

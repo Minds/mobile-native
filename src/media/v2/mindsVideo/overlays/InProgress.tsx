@@ -1,20 +1,19 @@
 import React from 'react';
-import { DotIndicator } from 'react-native-reanimated-indicators';
+import { Flow } from 'react-native-animated-spinkit';
 import { styles } from './styles';
 import ThemedStyles from '../../../../styles/ThemedStyles';
+import { View } from 'react-native';
 
 const InProgress = () => {
   return (
-    <DotIndicator
-      containerStyle={[
+    <View
+      style={[
         styles.overlayContainer,
         styles.overlayContainerTransparent,
         ThemedStyles.style.rowJustifyCenter,
-      ]}
-      color={ThemedStyles.getColor('Link')}
-      dotSize={15}
-      scaleEnabled={true}
-    />
+      ]}>
+      <Flow color={ThemedStyles.getColor('Link')} />
+    </View>
   );
 };
 

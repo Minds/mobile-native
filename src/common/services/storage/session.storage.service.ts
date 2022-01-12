@@ -122,6 +122,7 @@ export class SessionStorageService {
   }
 
   /**
+   * Deprecated
    * Get messenger private key of the current user
    */
   getPrivateKey(): Promise<string | null | undefined> {
@@ -129,6 +130,7 @@ export class SessionStorageService {
   }
 
   /**
+   * Deprecated
    * Set private key
    * @param {string} privateKey
    */

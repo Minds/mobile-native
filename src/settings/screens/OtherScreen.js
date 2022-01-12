@@ -62,10 +62,6 @@ export default function ({ navigation }) {
       title: i18n.t('blockchain.exportLegacyWallet'),
       onPress: useNavCallback('ExportLegacyWallet'),
     },
-    {
-      title: i18n.t('messenger.legacyMessenger'),
-      onPress: useNavCallback('Messenger'),
-    },
   ];
 
   const data = [

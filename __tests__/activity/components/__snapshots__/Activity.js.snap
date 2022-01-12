@@ -9,13 +9,13 @@ exports[`Activity component renders correctly 1`] = `
         "overflow": "visible",
       },
       Object {
-        "borderBottomWidth": 8,
+        "borderBottomWidth": 6,
       },
       Object {
-        "borderColor": "#404E53",
+        "borderColor": "#3f4b56",
       },
       Object {
-        "backgroundColor": "#242A30",
+        "backgroundColor": "#1F252C",
       },
     ]
   }
