@@ -23,6 +23,7 @@
     "check-prettier-version": "prettier -v"
   },
   "dependencies": {
+    "@bigbee.dev/react-native-measure-text-size": "^1.0.0",
     "@gorhom/bottom-sheet": "^4.1.5",
     "@gorhom/portal": "^1.0.12",
     "@growthbook/growthbook": "^0.13.0",

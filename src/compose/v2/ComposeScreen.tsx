@@ -350,7 +350,7 @@ export default observer(function ComposeScreen(props) {
         InteractionManager.runAfterInteractions(() =>
           scrollViewRef.current?.scrollTo(store.textHeight + 35),
         );
-      }, 0);
+      }, 50);
     }
   }, [autoCompleteVisible, store.textHeight]);
   // #endregion
