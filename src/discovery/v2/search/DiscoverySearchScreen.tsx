@@ -4,14 +4,14 @@ import { observer } from 'mobx-react';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { useNavigation } from '@react-navigation/core';
 import { RouteProp } from '@react-navigation/native';
-import { AppStackParamList } from '../../../navigation/NavigationTypes';
+import { DiscoveryStackParamList } from '../../../navigation/NavigationTypes';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { DiscoverySearchList } from './DiscoverySearchList';
 import { useDiscoveryV2SearchStore } from './DiscoveryV2SearchContext';
 import { DiscoverySearchHeader } from './DiscoverySearchHeader';
 
 interface Props {
-  route: RouteProp<AppStackParamList, 'DiscoverySearch'>;
+  route: RouteProp<DiscoveryStackParamList, 'DiscoverySearch'>;
 }
 
 /**
@@ -22,7 +22,7 @@ export const DiscoverySearchScreen = observer((props: Props) => {
   const store = useDiscoveryV2SearchStore();
 
   const navigation = useNavigation<
-    StackNavigationProp<AppStackParamList, 'DiscoverySearch'>
+    StackNavigationProp<DiscoveryStackParamList, 'DiscoverySearch'>
   >();
   navigation.setOptions({
     headerShown: false,

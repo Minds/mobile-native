@@ -14,7 +14,7 @@ exports[`Activity screen component renders correctly  1`] = `
         "flex": 1,
       },
       Object {
-        "backgroundColor": "#242A30",
+        "backgroundColor": "#1F252C",
       },
     ]
   }
@@ -37,7 +37,7 @@ exports[`Activity screen component renders correctly  1`] = `
           },
           Array [
             Object {
-              "backgroundColor": "#242A30",
+              "backgroundColor": "#1F252C",
             },
             Object {
               "borderBottomWidth": 0,
@@ -783,7 +783,7 @@ exports[`Activity screen component renders correctly  1`] = `
             "justifyContent": "flex-start",
           },
           Object {
-            "backgroundColor": "#242A30",
+            "backgroundColor": "#1F252C",
           },
           Object {
             "paddingLeft": 8,
@@ -1617,7 +1617,7 @@ exports[`Activity screen component renders correctly  1`] = `
                       style={
                         Object {
                           "alignItems": "center",
-                          "backgroundColor": "#242A30",
+                          "backgroundColor": "#1F252C",
                           "borderBottomWidth": 0.5,
                           "borderColor": "#414C57",
                           "borderTopLeftRadius": 10,
@@ -1708,7 +1708,7 @@ exports[`Activity screen component renders correctly  1`] = `
                       style={
                         Object {
                           "alignItems": "center",
-                          "backgroundColor": "#242A30",
+                          "backgroundColor": "#1F252C",
                           "borderBottomLeftRadius": 10,
                           "borderBottomRightRadius": 10,
                           "borderColor": "#414C57",
@@ -1807,7 +1807,7 @@ exports[`Activity screen component renders correctly  1`] = `
                       style={
                         Object {
                           "alignItems": "center",
-                          "backgroundColor": "#242A30",
+                          "backgroundColor": "#1F252C",
                           "borderBottomLeftRadius": 10,
                           "borderBottomRightRadius": 10,
                           "borderColor": "#414C57",

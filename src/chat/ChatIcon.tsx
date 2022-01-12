@@ -1,26 +1,22 @@
 import React, { useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Icon } from '~ui/icons';
+import { IconCircled } from '~ui/icons';
 import { useStores } from '~/common/hooks/use-stores';
 import ChatBubbleIcon from './ChatBubbleIcon';
 
-type PropsType = {
-  active: boolean;
-};
-
-const ChatTabIcon = ({ active }: PropsType) => {
+const ChatIcon = () => {
   const { chat } = useStores();
 
   useEffect(() => {
     chat.init();
     return () => {
-      chat.clear();
+      chat.reset();
     };
   }, [chat]);
 
   return (
     <View style={styles.container}>
-      <Icon size="large" name="chat" active={active} />
+      <IconCircled size="small" name="chat-solid" color="PrimaryText" />
       <ChatBubbleIcon chatStore={chat} />
     </View>
   );
@@ -28,10 +24,10 @@ const ChatTabIcon = ({ active }: PropsType) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
 });
 
-export default ChatTabIcon;
+export default ChatIcon;

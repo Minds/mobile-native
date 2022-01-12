@@ -26,6 +26,7 @@ type PropsType = {
   scrollToBottom?: boolean;
   onInputFocus?: Function;
   onCommentFocus?: Function;
+  navigation: any;
 };
 
 /**
@@ -127,7 +128,7 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
 
   return (
     <View style={styles.container}>
-      <CommentListHeader store={props.store} />
+      <CommentListHeader store={props.store} navigation={navigation} />
       <BottomSheetFlatList
         focusHook={useFocusEffect}
         ref={ref}

@@ -20,6 +20,7 @@ import ActivityIndicator from './ActivityIndicator';
 import MText from './MText';
 
 type PropsType = {
+  prepend?: React.ReactNode;
   feedStore: FeedStore;
   renderTileActivity?: Function;
   renderActivity?: Function;
@@ -29,6 +30,8 @@ type PropsType = {
   navigation: any;
   style?: StyleProp<ViewStyle>;
   hideItems?: boolean;
+  stickyHeaderHiddenOnScroll?: boolean;
+  stickyHeaderIndices?: number[];
   ListEmptyComponent?: React.ReactNode;
   onRefresh?: () => void;
   onScrollBeginDrag?: () => void;
@@ -284,6 +287,7 @@ export default class FeedList<T> extends Component<PropsType> {
       <ErrorBoundary
         message={this.cantShowActivity}
         containerStyle={ThemedStyles.style.borderBottomHair}>
+        {row.index === 0 ? this.props.prepend : null}
         <Activity
           entity={entity}
           navigation={this.props.navigation}

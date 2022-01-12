@@ -1,12 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`AnalyticsScreen component should render correctly 1`] = `
-<View
-  style={
-    Object {
-      "flex": 1,
-    }
-  }
+<Screen
+  safe={true}
 >
   <ScreenHeader
     title="Analytics"
@@ -51,5 +47,5 @@ exports[`AnalyticsScreen component should render correctly 1`] = `
   >
     <Memo(wrappedComponent) />
   </View>
-</View>
+</Screen>
 `;
