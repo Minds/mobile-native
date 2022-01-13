@@ -118,19 +118,21 @@ test:jest:
 .build_android: &build_android
   image: circleci/android:api-30-node
   stage: build
-  cache:
-    key: '$CI_JOB_NAME-$CI_COMMIT_REF_SLUG'
-    paths:
-      - node_modules/
-      - android/vendor/bundle
-      - .gradle/caches
-      - .gradle/wrapper
-      - .android/build-cache/
+  # cache:
+  #   key: '$CI_JOB_NAME-$CI_COMMIT_REF_SLUG'
+  #   paths:
+  #     - node_modules/
+  #     - android/vendor/bundle
+  #     - .gradle/caches
+  #     - .gradle/wrapper
+  #     - .android/build-cache/
   before_script:
     - export ANDROID_SDK_HOME=$CI_PROJECT_DIR
     - export GRADLE_USER_HOME="$CI_PROJECT_DIR/.gradle"
     - sudo sysctl fs.inotify.max_user_watches=524288
     - sudo sysctl -p
+    - sudo ln -s /lib/x86_64-linux-gnu/libncurses.so.6 /lib/x86_64-linux-gnu/libncurses.so.5
+    - sudo ln -s /lib/x86_64-linux-gnu/libncursesw.so.6 /lib/x86_64-linux-gnu/libtinfo.so.5
     - yarn install --frozen-lockfile
     - cd android
     - bundle install --path=vendor/bundle
@@ -155,8 +157,37 @@ build:androidproduction:
 
 # Production version for MR testing (manual)
 build:android-mr-production:
-  <<: *build_android
-  when: manual
+  image: circleci/android:api-30-node
+  stage: build
+  cache:
+    key: '$CI_JOB_NAME-$CI_COMMIT_REF_SLUG'
+    paths:
+      - node_modules/
+      - android/vendor/bundle
+      - .gradle/caches
+      - .gradle/wrapper
+      - .android/build-cache/
+  before_script:
+    - cp android/app/debug.keystore android/debug.keystore
+    - export ANDROID_SDK_HOME=$CI_PROJECT_DIR
+    - export GRADLE_USER_HOME="$CI_PROJECT_DIR/.gradle"
+    - sudo sysctl fs.inotify.max_user_watches=524288
+    - sudo sysctl -p
+    - sudo ln -s /lib/x86_64-linux-gnu/libncurses.so.6 /lib/x86_64-linux-gnu/libncurses.so.5
+    - sudo ln -s /lib/x86_64-linux-gnu/libncursesw.so.6 /lib/x86_64-linux-gnu/libtinfo.so.5
+    - yarn install --frozen-lockfile
+    - cd android
+    - bundle install --path=vendor/bundle
+  script:
+    - bundle exec fastlane assemble_mr_build
+    - mv app/build/outputs/apk/release/app-release.apk ../Minds-$CI_COMMIT_REF_SLUG.apk
+    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@../Minds-$CI_COMMIT_REF_SLUG.apk"
+  artifacts:
+    name: 'Minds APK'
+    paths:
+      - Minds-$CI_COMMIT_REF_SLUG.apk
+    expire_in: 45 days
+    when: on_success
   only:
     refs:
       - /^feat-*/
@@ -182,6 +213,8 @@ build:androidproduction-playstore:
     - export GRADLE_USER_HOME="$CI_PROJECT_DIR/.gradle"
     - sudo sysctl fs.inotify.max_user_watches=524288
     - sudo sysctl -p
+    - sudo ln -s /lib/x86_64-linux-gnu/libncurses.so.6 /lib/x86_64-linux-gnu/libncurses.so.5
+    - sudo ln -s /lib/x86_64-linux-gnu/libncursesw.so.6 /lib/x86_64-linux-gnu/libtinfo.so.5
     - yarn install --frozen-lockfile
     - cd android
     - bundle install --path=vendor/bundle

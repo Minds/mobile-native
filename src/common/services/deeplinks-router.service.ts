@@ -66,6 +66,7 @@ class DeeplinksRouter {
    */
   navigate(url) {
     const cleanURL = this.cleanUrl(url);
+
     if (!url || !cleanURL) {
       return;
     }
@@ -88,7 +89,13 @@ class DeeplinksRouter {
         navigationService[route.type](screen, calcParams);
       }
     } else if (url !== 'https://www.minds.com') {
-      Linking.openURL(url.replace('https://www.', 'https://mobile.'));
+      if (url.startsWith('mindsapp://')) {
+        Linking.openURL(
+          url.replace('mindsapp://', 'https://mobile.minds.com/'),
+        );
+      } else {
+        Linking.openURL(url.replace('https://www.', 'https://mobile.'));
+      }
     }
     return !!route;
   }

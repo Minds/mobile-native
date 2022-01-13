@@ -1,12 +1,14 @@
+import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { useDimensions } from '@react-native-community/hooks';
+import { showNotification } from 'AppMessages';
 import { observer } from 'mobx-react';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { ScrollView } from 'react-native';
 import { BottomSheetButton } from '~/common/components/bottom-sheet';
 import CenteredLoading from '~/common/components/CenteredLoading';
 import { Spacer } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
 import i18n from '../../services/i18n.service';
+import FadeView from '../FadeView';
 import MText from '../MText';
 import QuestionSlider from './QuestionSlider';
 import { useAnswers } from './useAnswers';
@@ -17,6 +19,8 @@ type PropsType = {
   questions?: IQuestion[];
   loading: boolean;
 };
+
+const gradients: any = ['bottom'];
 
 const Questions = observer(({ onSubmit, ...props }: PropsType) => {
   const [questions, setQuestions] = useState<IQuestion[]>([]);
@@ -53,6 +57,7 @@ const Questions = observer(({ onSubmit, ...props }: PropsType) => {
 
   const _onSubmit = useCallback(async () => {
     await answer();
+    showNotification(i18n.t('socialCompass.thanks'), 'success', 3000, 'top');
     onSubmit();
   }, [answer, onSubmit]);
   // #endregion
@@ -63,23 +68,28 @@ const Questions = observer(({ onSubmit, ...props }: PropsType) => {
 
   return (
     <>
-      <ScrollView style={containerHeight}>
-        <Spacer horizontal="M">
-          <MText style={styles.desc}>
-            {i18n.t('socialCompass.questionsDesc')}
-          </MText>
-          {questions.map(question => (
-            <QuestionSlider
-              question={question}
-              onAnswer={onAnswer(question.questionId)}
-            />
-          ))}
-        </Spacer>
-      </ScrollView>
+      <FadeView
+        fades={gradients}
+        fadeLength={100}
+        backgroundColor={ThemedStyles.getColor('PrimaryBackgroundHighlight')}>
+        <BottomSheetScrollView style={containerHeight}>
+          <Spacer horizontal="M" bottom="XL">
+            <MText style={styles.desc}>
+              {i18n.t('socialCompass.questionsDesc')}
+            </MText>
+            {questions.map(question => (
+              <QuestionSlider
+                question={question}
+                onAnswer={onAnswer(question.questionId)}
+              />
+            ))}
+          </Spacer>
+        </BottomSheetScrollView>
+      </FadeView>
       <BottomSheetButton
         loading={answering}
         action
-        text="Continue"
+        text={i18n.t('save')}
         onPress={_onSubmit}
       />
     </>
@@ -88,7 +98,7 @@ const Questions = observer(({ onSubmit, ...props }: PropsType) => {
 
 const styles = ThemedStyles.create({
   container: ['paddingVertical2x'],
-  desc: ['colorSecondaryText', 'marginBottom5x'],
+  desc: ['colorSecondaryText', 'marginBottom5x', 'textCenter'],
 });
 
 export default Questions;

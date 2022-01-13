@@ -31,7 +31,7 @@ export default function ComposeBottomBar(props) {
 
   return (
     <View style={styles.bottomBar}>
-      {!props.store.isEdit && (
+      {!props.store.isEdit && !props.store.isRemind && (
         <IconButton
           name="image"
           style={iconStyle}
@@ -40,7 +40,7 @@ export default function ComposeBottomBar(props) {
           scale
         />
       )}
-      {!props.store.isEdit && (
+      {!props.store.isEdit && !props.store.isRemind && (
         <IconButton
           name="camera"
           style={iconStyle}

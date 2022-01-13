@@ -2,17 +2,15 @@ import { showNotification } from 'AppMessages';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import React, { useCallback, useEffect, useState } from 'react';
-import {
-  Image,
-  InteractionManager,
-  StatusBar,
-  StyleSheet,
-  View,
-} from 'react-native';
+import { Image, InteractionManager, StatusBar, View } from 'react-native';
+import Orientation from 'react-native-orientation-locker';
 import { showMessage } from 'react-native-flash-message';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import RNPhotoEditor from 'react-native-photo-editor';
-import { useSafeArea } from 'react-native-safe-area-context';
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context';
 import ActivityIndicator from '~/common/components/ActivityIndicator';
 import Button from '~/common/components/Button';
 import MText from '~/common/components/MText';
@@ -96,6 +94,16 @@ export default observer(function (props) {
    */
   const setModeVideo = useCallback(() => setMode('video'), []);
 
+  useEffect(() => {
+    Orientation.unlockAllOrientations();
+    return () => Orientation.lockToPortrait();
+  }, []);
+
+  useEffect(() => {
+    if (mediaToConfirm) Orientation.lockToPortrait();
+    else Orientation.unlockAllOrientations();
+  }, [mediaToConfirm]);
+
   /**
    * handles the confirm action
    */
@@ -111,7 +119,7 @@ export default observer(function (props) {
       }
 
       if (onMediaConfirmed) {
-        // if the media confirmed was handled, use the handler
+        // if the media confirmed was handled, use the handler)
         onMediaConfirmed(extractedImage || mediaToConfirm);
       }
 
@@ -212,7 +220,21 @@ export default observer(function (props) {
    */
   const handleCameraCapture = useCallback(media => {
     media.key = 1;
-    setMediaToConfirm(media);
+    if (media.metadata && media.metadata.Orientation === 6) {
+      const h = media.height;
+      media.height = media.width;
+      media.width = h;
+    }
+    // we try to reduce the size of the image
+    attachmentService
+      .processMedia(media)
+      .then(processedMedia => {
+        setMediaToConfirm(processedMedia);
+      })
+      .catch(err => {
+        console.log(err);
+        setMediaToConfirm(media);
+      });
   }, []);
   // #endregion
 
@@ -274,27 +296,23 @@ export default observer(function (props) {
           />
 
           {Boolean(mediaToConfirm) && (
-            <View style={StyleSheet.absoluteFill}>
+            <View style={styles.filterContainer}>
               {mode === 'photo' ? (
                 <View style={theme.flexContainer}>
                   <ImageFilterSlider
                     image={mediaToConfirm}
-                    onImageChange={changedImage => {
-                      changedImage.filtered = true;
-                      setMediaToConfirm(changedImage);
-                    }}
                     extractEnabled={extractEnabled}
                     onExtractImage={handleConfirm}
                     onFilterChange={setFilter}
                   />
 
-                  <View style={styles.topToolbarContainer}>
+                  <SafeAreaView style={styles.topToolbarContainer}>
                     <DownloadIconButton
                       downloading={downloading}
                       onDownload={runDownload}
                     />
                     <EditIconButton onPress={onEdit} />
-                  </View>
+                  </SafeAreaView>
                 </View>
               ) : (
                 <MediaPreviewFullScreen mediaToConfirm={mediaToConfirm} />
@@ -339,7 +357,7 @@ const TabButton = ({ onPress, active, children }) => {
 };
 
 const useBottomBarStyle = () => {
-  const insets = useSafeArea();
+  const insets = useSafeAreaInsets();
   return useStyle(styles.tabContainer, 'paddingVertical2x', {
     paddingBottom: insets.bottom || 16,
     backgroundColor: '#000',
@@ -420,6 +438,7 @@ const styles = ThemedStyles.create({
     'flexContainer',
     { backgroundColor: '#000', height: '100%', width: '100%' },
   ],
+  filterContainer: ['bgBlack', 'positionAbsolute'],
   tabContainer: {
     width: '100%',
     paddingHorizontal: 50,

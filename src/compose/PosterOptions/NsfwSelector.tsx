@@ -43,16 +43,15 @@ const NsfwOption = props => {
  */
 export default observer(function (props) {
   const store = props.route.params.store;
-
+  const length = store.nsfw.length; // dereferencing the array to bind the component to the observable
   const options = useMemo(
     () =>
       _.times(7, i => ({
         value: i,
-        selected:
-          i === 0 ? store.nsfw.length === 0 : store.nsfw.some(o => i === o),
+        selected: i === 0 ? length === 0 : store.nsfw.some(o => i === o),
         label: i18n.t(`nsfw.${i}`),
       })),
-    [store.nsfw],
+    [store.nsfw, length],
   );
 
   return (

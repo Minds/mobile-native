@@ -120,7 +120,7 @@ const PasswordConfirmScreen = observer((props: PropsType) => {
             style={theme.colorPrimaryText}
             placeholder={i18n.t('auth.password')}
             secureTextEntry={localStore.hidePassword}
-            autoCompleteType="password"
+            autoComplete="password"
             textContentType="password"
             onChangeText={localStore.setPassword}
             value={localStore.password}

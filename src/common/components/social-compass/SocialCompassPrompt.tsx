@@ -53,7 +53,7 @@ const SocialCompassPrompt = ({}: PropsType) => {
         onPress={dismiss}
         style={ThemedStyles.style.positionAbsoluteTopRight}
       />
-      <BottomSheetModal ref={ref} title={i18n.t('socialCompass.callToAction')}>
+      <BottomSheetModal ref={ref} title={i18n.t('socialCompass.promptTitle')}>
         <Questions
           questions={questionsResult?.questions}
           loading={loading}
@@ -65,8 +65,13 @@ const SocialCompassPrompt = ({}: PropsType) => {
 };
 
 const styles = ThemedStyles.create({
-  title: ['colorPrimaryText', 'fontLM', 'fontMedium', 'marginBottom'],
-  titleXL: ['colorPrimaryText', 'fontXXL', 'fontMedium', 'marginBottom4x'],
+  title: [
+    'colorPrimaryText',
+    'fontLM',
+    'fontMedium',
+    'marginBottom',
+    'textCenter',
+  ],
   desc: [
     'colorSecondaryText',
     { fontSize: 15 },

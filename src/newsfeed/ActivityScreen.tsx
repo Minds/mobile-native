@@ -103,7 +103,12 @@ const ActivityScreen = observer((props: PropsType) => {
     return store.loading ? <CenteredLoading /> : null;
   }
 
-  return <ActivityFullScreen entity={store.entityStore.entity} />;
+  return (
+    <ActivityFullScreen
+      entity={store.entityStore.entity}
+      noBottomInset={props.route.params.noBottomInset}
+    />
+  );
 });
 
 export default ActivityScreen;

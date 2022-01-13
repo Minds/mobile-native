@@ -19,8 +19,10 @@ const CamIcon: FC<PropsType> = ({ store, style }: PropsType) => {
   // Rotate the icon when changing
   const animate = React.useMemo(
     () => ({
-      rotateY: store.cameraType === 'back' ? '0deg' : '180deg',
-      perspective: 850,
+      transform: [
+        { rotate: store.cameraType === 'back' ? '0deg' : '180deg' },
+        { perspective: 850 },
+      ],
     }),
     [store.cameraType],
   );

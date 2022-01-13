@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, StyleSheet, Platform } from 'react-native';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Foundation';
 import * as Progress from 'react-native-progress';
 
@@ -26,11 +26,6 @@ export default observer(function MediaPreview(props: PropsType) {
   const [videoSize, setVideoSize] = useState<VideoSizeType>(null);
 
   const onVideoLoaded = React.useCallback(e => {
-    if (e.naturalSize.orientation === 'portrait' && Platform.OS === 'ios') {
-      const w = e.naturalSize.width;
-      e.naturalSize.width = e.naturalSize.height;
-      e.naturalSize.height = w;
-    }
     setVideoSize(e.naturalSize);
   }, []);
 
@@ -42,35 +37,31 @@ export default observer(function MediaPreview(props: PropsType) {
     props.store.mediaToConfirm &&
     props.store.mediaToConfirm.type.startsWith('image');
 
-  let aspectRatio,
-    videoHeight = 300;
+  let aspectRatio;
 
   if (!isImage && (props.store.mediaToConfirm?.width || videoSize)) {
     const vs = videoSize || props.store.mediaToConfirm;
-
     aspectRatio = vs.width / vs.height;
-    videoHeight = Math.round(width / aspectRatio);
+  } else {
+    if (
+      props.store.mediaToConfirm?.width &&
+      props.store.mediaToConfirm?.height
+    ) {
+      aspectRatio =
+        props.store.mediaToConfirm?.width / props.store.mediaToConfirm?.height;
+    } else {
+      aspectRatio = 1;
+    }
   }
 
   const previewStyle: any = {
-    height: isImage ? undefined : videoHeight,
+    aspectRatio,
     borderRadius: 10,
     overflow: 'hidden',
   };
 
   return (
     <View style={previewStyle}>
-      {props.store.attachment.uploading && (
-        <Progress.Bar
-          indeterminate={true}
-          progress={props.store.attachment.progress}
-          width={width}
-          color={ThemedStyles.getColor('Green')}
-          borderWidth={0}
-          borderRadius={0}
-          useNativeDriver={true}
-        />
-      )}
       {isImage ? (
         <>
           {!props.store.isEdit && !props.store.portraitMode && (
@@ -112,6 +103,22 @@ export default observer(function MediaPreview(props: PropsType) {
             onReadyForDisplay={onVideoLoaded}
           />
         </>
+      )}
+      {props.store.attachment.uploading && (
+        <Progress.Bar
+          indeterminate={true}
+          progress={props.store.attachment.progress}
+          width={width}
+          color={ThemedStyles.getColor('Green')}
+          borderWidth={0}
+          borderRadius={0}
+          useNativeDriver={true}
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+          }}
+        />
       )}
     </View>
   );

@@ -8,24 +8,26 @@ import {
 } from 'react-native';
 import type { TextInput as TextInputType } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { observer } from 'mobx-react';
 import SoftInputMode from 'react-native-set-soft-input-mode';
+import { useBackHandler } from '@react-native-community/hooks';
+import { action, observable } from 'mobx';
+import { Portal } from '@gorhom/portal';
+import { Flow } from 'react-native-animated-spinkit';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 
 import KeyboardSpacingView from '../../common/components/KeyboardSpacingView';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
-import { observer } from 'mobx-react';
 import type CommentsStore from './CommentsStore';
-import { action, observable } from 'mobx';
 import MediaPreview from './MediaPreview';
 import MetaPreview from '../../compose/MetaPreview';
 import GroupModel from '../../groups/GroupModel';
 import CommentInputBottomMenu from './CommentInputBottomMenu';
 import preventDoubleTap from '../../common/components/PreventDoubleTap';
-import { DotIndicator } from 'react-native-reanimated-indicators';
 import { CHAR_LIMIT } from '../../config/Config';
 import TextInput from '../../common/components/TextInput';
 import MText from '../../common/components/MText';
-import { useBackHandler } from '@react-native-community/hooks';
 
 const { height } = Dimensions.get('window');
 
@@ -40,10 +42,12 @@ const Touchable = preventDoubleTap(TouchableOpacity);
 
 export const CommentInputContext = React.createContext(storeProvider);
 
+const portalKey = 'CommentInputPortal';
+
 /**
  * Floating Input component
  */
-const CommentInput = observer(() => {
+const CommentInput = observer((onShow, onDismiss) => {
   const theme = ThemedStyles.style;
   const ref = React.useRef<TextInputType>(null);
   const provider = React.useContext(CommentInputContext);
@@ -93,117 +97,116 @@ const CommentInput = observer(() => {
   };
 
   return (
-    <KeyboardSpacingView
-      noInset={true}
-      style={StyleSheet.absoluteFill}
-      enabled={Platform.OS === 'ios'}
-      pointerEvents="box-none">
-      <View style={[theme.justifyEnd, theme.flexContainer]}>
-        <View style={theme.flexContainer}>
-          <Touchable
-            style={[theme.flexContainer, theme.bgBlack, theme.opacity50]}
-            activeOpacity={0.5}
-            onPress={hideInput}
-          />
-          <MediaPreview attachment={provider.store.attachment} />
-          {provider.store.embed.meta && (
-            <MetaPreview
-              meta={provider.store.embed.meta}
-              onRemove={provider.store.embed.clearRichEmbed}
-              containerStyle={styles.meta}
-            />
-          )}
-        </View>
-        <View style={[theme.bgPrimaryBackground, styles.inputContainer]}>
-          {(provider.store.parent || provider.store.edit) && (
-            <View
-              style={[
-                theme.borderBottomHair,
-                theme.bcolorPrimaryBorder,
-                theme.paddingBottom2x,
-                theme.paddingHorizontal4x,
-                theme.marginBottom2x,
-              ]}>
-              <MText style={theme.colorSecondaryText}>
-                {provider.store.edit
-                  ? i18n.t('edit')
-                  : i18n.t('activity.replyTo', {
-                      user: provider.store.parent?.ownerObj.username,
-                    })}
-              </MText>
+    <Portal name={portalKey}>
+      <BottomSheetModalProvider>
+        <KeyboardSpacingView
+          style={StyleSheet.absoluteFill}
+          enabled={Platform.OS === 'ios'}
+          pointerEvents="box-none">
+          <View style={[theme.justifyEnd, theme.flexContainer]}>
+            <View style={theme.flexContainer}>
+              <Touchable
+                style={[theme.flexContainer, theme.bgBlack, theme.opacity50]}
+                activeOpacity={0.5}
+                onPress={hideInput}
+              />
+              <MediaPreview attachment={provider.store.attachment} />
+              {provider.store.embed.meta && (
+                <MetaPreview
+                  meta={provider.store.embed.meta}
+                  onRemove={provider.store.embed.clearRichEmbed}
+                  containerStyle={styles.meta}
+                />
+              )}
             </View>
-          )}
-
-          <View
-            style={[
-              theme.rowJustifyStart,
-              theme.alignEnd,
-              theme.paddingHorizontal4x,
-            ]}>
-            <TextInput
-              testID="CommentTextInput"
-              ref={ref}
-              autoFocus={true}
-              multiline={true}
-              editable={!provider.store.saving}
-              scrollEnabled={true}
-              placeholderTextColor={ThemedStyles.getColor('TertiaryText')}
-              placeholder={placeHolder}
-              underlineColorAndroid="transparent"
-              onChangeText={provider.store.setText}
-              value={provider.store.text}
-              maxLength={CHAR_LIMIT}
-              // onBlur={() => provider.store?.setShowInput(false)}
-              style={[
-                theme.fullWidth,
-                theme.colorPrimaryText,
-                theme.fontL,
-                styles.input,
-                inputMaxHeight,
-              ]}
-            />
-            {!provider.store.saving ? (
-              <View>
+            <View style={[theme.bgPrimaryBackground, styles.inputContainer]}>
+              {(provider.store.parent || provider.store.edit) && (
                 <View
                   style={[
-                    theme.rowJustifySpaceBetween,
-                    styles.sendIconCont,
-                    theme.alignCenter,
+                    theme.borderBottomHair,
+                    theme.bcolorPrimaryBorder,
+                    theme.paddingBottom2x,
+                    theme.paddingHorizontal4x,
+                    theme.marginBottom2x,
                   ]}>
-                  <Touchable
-                    onPress={provider.store.post}
-                    style={theme.paddingRight2x}
-                    testID="PostCommentButton">
-                    <Icon
-                      name="md-send"
-                      size={18}
-                      style={theme.colorSecondaryText}
-                    />
-                  </Touchable>
-                  <CommentInputBottomMenu
-                    store={provider.store}
-                    containerStyle={styles.sendIconCont}
-                    afterSelected={afterSelected}
-                    beforeSelect={beforeSelect}
-                  />
+                  <MText style={theme.colorSecondaryText}>
+                    {provider.store.edit
+                      ? i18n.t('edit')
+                      : i18n.t('activity.replyTo', {
+                          user: provider.store.parent?.ownerObj.username,
+                        })}
+                  </MText>
                 </View>
-                <MText style={[theme.fontXS, theme.colorSecondaryText]}>
-                  {provider.store.text.length} / {CHAR_LIMIT}
-                </MText>
-              </View>
-            ) : (
-              <View>
-                <DotIndicator
-                  containerStyle={[theme.alignSelfCenter, theme.justifyEnd]}
-                  color={ThemedStyles.getColor('PrimaryText')}
-                  scaleEnabled={true}
+              )}
+
+              <View
+                style={[
+                  theme.rowJustifyStart,
+                  theme.alignEnd,
+                  theme.paddingHorizontal4x,
+                ]}>
+                <TextInput
+                  testID="CommentTextInput"
+                  ref={ref}
+                  autoFocus={true}
+                  multiline={true}
+                  editable={!provider.store.saving}
+                  scrollEnabled={true}
+                  placeholderTextColor={ThemedStyles.getColor('TertiaryText')}
+                  placeholder={placeHolder}
+                  underlineColorAndroid="transparent"
+                  onChangeText={provider.store.setText}
+                  value={provider.store.text}
+                  maxLength={CHAR_LIMIT}
+                  // onBlur={() => provider.store?.setShowInput(false)}
+                  style={[
+                    theme.fullWidth,
+                    theme.colorPrimaryText,
+                    theme.fontL,
+                    styles.input,
+                    inputMaxHeight,
+                  ]}
                 />
+                {!provider.store.saving ? (
+                  <View>
+                    <View
+                      style={[
+                        theme.rowJustifySpaceBetween,
+                        styles.sendIconCont,
+                        theme.alignCenter,
+                      ]}>
+                      <Touchable
+                        onPress={provider.store.post}
+                        style={theme.paddingRight2x}
+                        testID="PostCommentButton">
+                        <Icon
+                          name="md-send"
+                          size={18}
+                          style={theme.colorSecondaryText}
+                        />
+                      </Touchable>
+                      <CommentInputBottomMenu
+                        store={provider.store}
+                        containerStyle={styles.sendIconCont}
+                        afterSelected={afterSelected}
+                        beforeSelect={beforeSelect}
+                      />
+                    </View>
+                    <MText style={[theme.fontXS, theme.colorSecondaryText]}>
+                      {provider.store.text.length} / {CHAR_LIMIT}
+                    </MText>
+                  </View>
+                ) : (
+                  <View style={[theme.alignSelfCenter, theme.justifyEnd]}>
+                    <Flow color={ThemedStyles.getColor('PrimaryText')} />
+                  </View>
+                )}
               </View>
-            )}
+            </View>
           </View>
-        </View>
-      </View>
-    </KeyboardSpacingView>
+        </KeyboardSpacingView>
+      </BottomSheetModalProvider>
+    </Portal>
   );
 });
 

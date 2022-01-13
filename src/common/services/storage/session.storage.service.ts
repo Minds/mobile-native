@@ -11,6 +11,7 @@ export type RefreshToken = {
 
 export type TokensData = {
   user: UserModel;
+  pseudoId: string; // used for snowplow
   sessionExpired: boolean;
   refreshToken: {
     refresh_token: string;
@@ -69,6 +70,7 @@ export class SessionStorageService {
       tokensData: [
         {
           user,
+          pseudoId: '',
           refreshToken,
           accessToken,
           sessionExpired: false,
@@ -120,6 +122,7 @@ export class SessionStorageService {
   }
 
   /**
+   * Deprecated
    * Get messenger private key of the current user
    */
   getPrivateKey(): Promise<string | null | undefined> {
@@ -127,6 +130,7 @@ export class SessionStorageService {
   }
 
   /**
+   * Deprecated
    * Set private key
    * @param {string} privateKey
    */

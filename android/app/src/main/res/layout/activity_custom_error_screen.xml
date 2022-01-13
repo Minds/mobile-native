@@ -38,7 +38,7 @@
                 android:orientation="vertical"
                 android:padding="20dp">
 
-                <MTextView
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -58,7 +58,7 @@
                     android:src="@android:drawable/ic_dialog_info"
                     android:tint="#D8D8D8" />
 
-                <MTextView
+                <TextView
                     android:id="@+id/textView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -88,7 +88,7 @@
                         android:text="QUIT" />
                 </LinearLayout>
 
-                <MTextView
+                <TextView
                     android:id="@+id/eh_stack_trace_text_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

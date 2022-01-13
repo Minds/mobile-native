@@ -14,7 +14,7 @@ import { UserError } from '../../../common/UserError';
 import supportTiersService from '../../../common/services/support-tiers.service';
 import type { SupportTiersType } from '../../WireTypes';
 import UserModel from '../../../channel/UserModel';
-import { DotIndicator } from 'react-native-reanimated-indicators';
+import { Flow } from 'react-native-animated-spinkit';
 import Selector from '../../../common/components/SelectorV2';
 import MenuItem, {
   MenuItemItem,
@@ -114,6 +114,19 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
    * show input if tokens is selected payment
    */
   const store = useLocalStore(createJoinMembershipStore, { tiers });
+
+  const urn = store.currentTier?.subscription_urn;
+
+  const membershipStyle = useMemoStyle(
+    [
+      urn ? 'rowJustifySpaceBetween' : 'rowJustifyEnd',
+      {
+        flexDirection: 'column',
+        alignItems: 'stretch',
+      },
+    ],
+    [urn],
+  );
 
   useEffect(() => {
     const { entity, user } = route.params;
@@ -310,19 +323,7 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
               </View>
             )}
           <View style={styles.alreadyAMemberWrapper}>
-            <View
-              style={useMemoStyle(
-                [
-                  store.currentTier?.subscription_urn
-                    ? 'rowJustifySpaceBetween'
-                    : 'rowJustifyEnd',
-                  {
-                    flexDirection: 'column',
-                    alignItems: 'stretch',
-                  },
-                ],
-                [store.currentTier?.subscription_urn],
-              )}>
+            <View style={membershipStyle}>
               {!!store.currentTier?.subscription_urn && (
                 <MText style={styles.alreadyAMemberText}>
                   {i18n.t('membership.alreadyMember')}
@@ -342,10 +343,7 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
           </View>
         </>
       ) : (
-        <DotIndicator
-          color={ThemedStyles.getColor('TertiaryText')}
-          dotSize={10}
-        />
+        <Flow color={ThemedStyles.getColor('TertiaryText')} />
       )}
       <Selector
         ref={selectorRef}

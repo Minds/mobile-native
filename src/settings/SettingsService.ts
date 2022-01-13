@@ -1,7 +1,7 @@
 //@ts-nocheck
 import api from './../common/services/api.service';
 import { Alert } from 'react-native';
-import sessionService from '../common/services/session.service';
+import AuthService from '~/auth/AuthService';
 
 /**
  * Settings Service
@@ -49,7 +49,7 @@ class SettingsService {
   async disable() {
     try {
       await api.delete('api/v1/channel');
-      await sessionService.logout();
+      await AuthService.logout();
     } catch (e) {
       Alert.alert('Error disabling the channel');
     }
@@ -61,7 +61,7 @@ class SettingsService {
   async delete(password) {
     try {
       await api.post('api/v2/settings/delete', { password });
-      await sessionService.logout();
+      await AuthService.logout();
     } catch (e) {
       Alert.alert('Error deleting the channel');
     }

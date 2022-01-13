@@ -1,30 +1,36 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, View, Platform } from 'react-native';
-import { IconButton, Avatar } from '~ui';
+import { StyleSheet, View, Platform, Image, ViewStyle } from 'react-native';
+import { IconCircled, Spacer, H1 } from '~ui';
 import { observer } from 'mobx-react';
-import SearchComponent from './searchbar/SearchComponent';
 import ThemedStyles from '../styles/ThemedStyles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useStores } from '../common/hooks/use-stores';
 import useCurrentUser from '../common/hooks/useCurrentUser';
-import intword from '../common/helpers/intword';
 import featuresService from '../common/services/features.service';
 import EmailConfirmation from './EmailConfirmation';
-import MText from '../common/components/MText';
+import PressableScale from '~/common/components/PressableScale';
+import TabChatPreModal, { ChatModalHandle } from '~/tabs/TabChatPreModal';
+import ChatIcon from '~/chat/ChatIcon';
 
 type PropsType = {
   navigation: any;
+  title?: string;
+  noInsets?: boolean;
 };
 
 export const Topbar = observer((props: PropsType) => {
   const { wallet } = useStores();
   const user = useCurrentUser();
   const insets = useSafeAreaInsets();
+  const container = React.useRef({
+    paddingTop: !props.noInsets && insets && insets.top ? insets.top - 5 : 0,
+    height: Platform.select({ ios: props.noInsets ? 70 : 110, android: 70 }),
+    display: 'flex',
+    flexDirection: 'row',
+  }).current as ViewStyle;
   // dereference to react to observable changes
-  const balance = wallet.balance;
-  const prices = wallet.prices;
-  const usdBalance = balance * parseFloat(prices.minds);
 
+  const chatModal = React.useRef<ChatModalHandle>(null);
   useEffect(() => {
     if (user) {
       wallet.loadPrices();
@@ -32,60 +38,36 @@ export const Topbar = observer((props: PropsType) => {
     }
   });
 
-  const avatar = React.useMemo(
-    () => (user ? user.getAvatarSource('medium') : { uri: '' }),
-    [user],
-  );
-
-  const cleanTop = React.useRef({
-    paddingTop: insets && insets.top ? insets.top - 5 : 0,
-  }).current;
-
-  const openMenu = React.useCallback(() => {
-    props.navigation.openDrawer();
-  }, [props.navigation]);
-
-  const openWallet = React.useCallback(() => {
-    props.navigation.navigate('Tabs', {
-      screen: 'CaptureTab',
-      params: { screen: 'Wallet' },
-    });
-  }, [props.navigation]);
-
-  const theme = ThemedStyles.style;
   return (
     <View style={containerStyle}>
-      <View
-        style={[
-          styles.container,
-          theme.borderBottomHair,
-          theme.bcolorPrimaryBorder,
-          cleanTop,
-        ]}>
+      <TabChatPreModal ref={chatModal} />
+      <View style={container}>
         <View style={styles.topbar}>
           <View style={styles.topbarLeft}>
-            <Avatar
-              testID="topbarAvatar"
-              onPress={openMenu}
-              source={avatar}
-              border="solid"
-              size="tiny"
-              icon="menu"
-            />
-            <SearchComponent navigation={props.navigation} />
+            {!!props.title ? (
+              <H1>{props.title}</H1>
+            ) : (
+              <Image
+                resizeMode="contain"
+                source={
+                  ThemedStyles.theme
+                    ? require('../assets/logos/logo-white.png')
+                    : require('../assets/logos/logo.png')
+                }
+                style={styles.logo}
+              />
+            )}
           </View>
           <View style={styles.topbarRight}>
-            <MText
-              onPress={openWallet}
-              style={[
-                theme.fontL,
-                theme.colorSecondaryText,
-                theme.paddingRight2x,
-                theme.paddingVertical2x,
-              ]}>
-              {usdBalance > 0 && '$' + intword(usdBalance)}
-            </MText>
-            <IconButton scale onPress={openWallet} name="coins" />
+            <Spacer right="L">
+              <PressableScale onPress={() => chatModal.current?.showModal()}>
+                <ChatIcon />
+              </PressableScale>
+            </Spacer>
+            <PressableScale
+              onPress={() => props.navigation.navigate('SearchScreen')}>
+              <IconCircled size="small" name="search" color="PrimaryText" />
+            </PressableScale>
           </View>
         </View>
       </View>
@@ -102,6 +84,11 @@ export const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     // paddingBottom: 8,
+  },
+  logo: {
+    marginTop: -12,
+    width: 130,
+    height: 45,
   },
   shadow: {
     zIndex: 999,

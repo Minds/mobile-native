@@ -126,7 +126,7 @@ exports[`blog view screen component should renders correctly 1`] = `
               style={
                 Object {
                   "alignItems": "center",
-                  "backgroundColor": "#242A30",
+                  "backgroundColor": "#1F252C",
                   "borderRadius": 24,
                   "height": 44,
                   "justifyContent": "center",
@@ -420,6 +420,8 @@ exports[`blog view screen component should renders correctly 1`] = `
                       }
                     >
                       <View
+                        collapsable={false}
+                        nativeID="animatedComponent"
                         style={
                           Object {
                             "opacity": 1,
@@ -534,6 +536,8 @@ exports[`blog view screen component should renders correctly 1`] = `
                   }
                 >
                   <View
+                    collapsable={false}
+                    nativeID="animatedComponent"
                     style={
                       Object {
                         "opacity": 0,
@@ -733,6 +737,8 @@ exports[`blog view screen component should renders correctly 1`] = `
                       }
                     >
                       <View
+                        collapsable={false}
+                        nativeID="animatedComponent"
                         style={
                           Object {
                             "opacity": 1,
@@ -847,6 +853,8 @@ exports[`blog view screen component should renders correctly 1`] = `
                   }
                 >
                   <View
+                    collapsable={false}
+                    nativeID="animatedComponent"
                     style={
                       Object {
                         "opacity": 0,
@@ -1128,7 +1136,7 @@ exports[`blog view screen component should renders correctly 1`] = `
     emulateUnlessSupported={true}
     style={
       Object {
-        "backgroundColor": "#242A30",
+        "backgroundColor": "#1F252C",
       }
     }
   >
@@ -1942,6 +1950,8 @@ exports[`blog view screen component should renders correctly 1`] = `
             }
           >
             <View
+              collapsable={false}
+              nativeID="animatedComponent"
               style={
                 Object {
                   "transform": Array [
@@ -2030,8 +2040,10 @@ exports[`blog view screen component should renders correctly 1`] = `
         >
           <View
             accessible={true}
+            collapsable={false}
             focusable={true}
             forwardedRef={[Function]}
+            nativeID="animatedComponent"
             onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
@@ -2093,10 +2105,12 @@ exports[`blog view screen component should renders correctly 1`] = `
             }
           >
             <View
+              collapsable={false}
               deviceHeight={null}
               deviceWidth={null}
               forwardedRef={[Function]}
               hideModalContentWhileAnimating={false}
+              nativeID="animatedComponent"
               onBackdropPress={[Function]}
               onModalHide={[Function]}
               onModalWillHide={[Function]}
@@ -2164,7 +2178,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                       style={
                         Object {
                           "alignItems": "center",
-                          "backgroundColor": "#242A30",
+                          "backgroundColor": "#1F252C",
                           "borderBottomWidth": 0.5,
                           "borderColor": "#414C57",
                           "borderTopLeftRadius": 10,
@@ -2255,7 +2269,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                       style={
                         Object {
                           "alignItems": "center",
-                          "backgroundColor": "#242A30",
+                          "backgroundColor": "#1F252C",
                           "borderBottomLeftRadius": 10,
                           "borderBottomRightRadius": 10,
                           "borderColor": "#414C57",
@@ -2354,7 +2368,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                       style={
                         Object {
                           "alignItems": "center",
-                          "backgroundColor": "#242A30",
+                          "backgroundColor": "#1F252C",
                           "borderBottomLeftRadius": 10,
                           "borderBottomRightRadius": 10,
                           "borderColor": "#414C57",

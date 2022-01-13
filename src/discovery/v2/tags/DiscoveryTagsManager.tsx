@@ -163,33 +163,35 @@ const DiscoveryTagsManager = (props: Props, ref) => {
    * Render
    */
   return (
-    <BottomSheetModal title={i18n.t('discovery.manage')} ref={ref}>
-      <View style={theme.rowJustifyCenter}>
-        <View style={theme.width50}>
-          <BottomSheetButton text={i18n.t('add')} onPress={onAdd} action />
+    <>
+      <BottomSheetModal title={i18n.t('discovery.manage')} ref={ref}>
+        <View style={theme.rowJustifyCenter}>
+          <View style={theme.width50}>
+            <BottomSheetButton text={i18n.t('add')} onPress={onAdd} action />
+          </View>
+          <View style={theme.width50}>
+            <BottomSheetButton text={i18n.t('save')} onPress={onDone} action />
+          </View>
         </View>
-        <View style={theme.width50}>
-          <BottomSheetButton text={i18n.t('save')} onPress={onDone} action />
-        </View>
-      </View>
-      <SectionList
-        style={listHeight}
-        contentContainerStyle={theme.paddingBottom20x}
-        renderItem={ItemPartial}
-        renderSectionHeader={SectionHeaderPartial}
-        sections={[
-          {
-            title: i18n.t('discovery.yourTags'),
-            data: store.selected.slice(),
-          },
-          {
-            title: i18n.t('discovery.otherTags'),
-            data: store.other.slice(),
-          },
-        ]}
-        keyExtractor={keyExtractor}
-        stickySectionHeadersEnabled={true}
-      />
+        <SectionList
+          style={listHeight}
+          contentContainerStyle={theme.paddingBottom20x}
+          renderItem={ItemPartial}
+          renderSectionHeader={SectionHeaderPartial}
+          sections={[
+            {
+              title: i18n.t('discovery.yourTags'),
+              data: store.selected.slice(),
+            },
+            {
+              title: i18n.t('discovery.otherTags'),
+              data: store.other.slice(),
+            },
+          ]}
+          keyExtractor={keyExtractor}
+          stickySectionHeadersEnabled={true}
+        />
+      </BottomSheetModal>
       <FloatingInput
         ref={inputRef}
         onSubmit={onCreate}
@@ -203,7 +205,7 @@ const DiscoveryTagsManager = (props: Props, ref) => {
           style={theme.colorSecondaryText}
         />
       </FloatingInput>
-    </BottomSheetModal>
+    </>
   );
 };
 

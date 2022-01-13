@@ -73,12 +73,11 @@ export const DiscoveryTrendsList = observer(({ plus, store }: PropsType) => {
     store.allFeed.refresh();
   };
 
-  const header =
-    store.trends.length === 0 ? (
-      <DiscoveryTrendPlaceHolder />
-    ) : (
-      <View style={styles.trendHeader}>{store.trends.map(ItemPartial)}</View>
-    );
+  const header = store.trends.length ? (
+    <View style={styles.trendHeader}>{store.trends.map(ItemPartial)}</View>
+  ) : store.loading ? (
+    <DiscoveryTrendPlaceHolder />
+  ) : null;
 
   /**
    * Render

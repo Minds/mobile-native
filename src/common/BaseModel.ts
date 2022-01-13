@@ -372,4 +372,20 @@ export default class BaseModel extends AbstractModel {
 
     return response;
   }
+
+  /**
+   * Get modal class as string
+   */
+  getType() {
+    return this.constructor.name;
+  }
+
+  /**
+   * Verify if it is an instance of the class name
+   * Be advised that this method doesn't check the class inheritance!!!
+   * It is used to avoid some circular dependencies
+   */
+  instanceOf(name) {
+    return name === this.getType();
+  }
 }

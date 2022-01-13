@@ -372,29 +372,10 @@
     "encryptMessage1": "Remember the password or you will be unable to read/write from it."
   },
   "messenger": {
-    "decrypting": "decrypting...",
-    "notAllowed": "This user only allows messages from users that they subscribe to",
-    "allowContact": "Allow contact from unsubscribed users",
-    "couldntDecrypt": "couldn't decrypt",
     "typeYourMessage": "Type your message...",
     "invited": "Invited",
     "invite": "Invite",
-    "isntUsingMessenger": "isn't using Minds Messenger yet",
-    "looksLike": "Looks like",
-    "checkCredentials": "Please check your credentials",
-    "errorCreatingKeys": "Error creating the encryptions keys",
     "messenger": "Messenger",
-    "noMessages": "Search for someone to message",
-    "logoutMessage": "Do you want to logout from messenger?",
-    "changeKeyMessage": "Changing your encryption password will cause your previous messages to be unreadable",
-    "notEncryptedMessage": "Hey @{{user}}! It looks like you haven't setup your encrypted chat password yet. We recommend that you use a different password than your account password for added security.",
-    "onboardingText": "An additional password is required for messenger in order to ensure that your messages are private and fully encrypted.",
-    "setupMessage1": "You only need to enter this encryption password once as long as you stay signed in.",
-    "setupMessage2": "It is important so that no one other than you and the people you are communicating with can access the content of your messages.",
-    "setupMessage3": "By default the content of your messages is fully encrypted. For heightened security you may wish to go to your app settings and turn off push notifications in order to disallow metadata from being tracked.",
-    "messengerRekey": "Change your encryption password",
-    "legacyMessenger": "Legacy Messenger",
-    "errorDirectMessage": "Oops! Please try again in a moment",
     "modal": {
       "action": "Install Minds Chat",
       "appname": "Minds Chat Application",
@@ -807,7 +788,10 @@
       "c": "ACCOUNT",
       "c2": "Delete Account",
       "d": "INFO",
-      "d1": "App"
+      "d1": "App",
+      "e": "LEGACY",
+      "f": "DATA",
+      "g": "REFERRALS"
     },
     "notificationsOptions": {
       "push": "Push",
@@ -1320,6 +1304,7 @@
     }
   },
   "referrals": {
+    "menu": "Invite friends",
     "title": "Earn tokens by inviting your friends to Minds",
     "sendLinkToFriends": "Send this link to your friends to earn tokens for referrals",
     "codeSuffixLabel": "You can also get referrals by adding this code to the end of any Minds link you share",
@@ -1337,10 +1322,11 @@
     "description": "If your friend signs up for Minds within 24 hours of clicking the link you shared with them, they’ll be added to your pending referrals. Once they sign up for the rewards program by setting up their Minds wallet, the referral is complete and you’ll both get +10 added to your contribution scores!"
   },
   "socialCompass": {
-    "promptTitle": "Customize your content preferences",
-    "promptDesc": "Tell us a little about yourself and discover exciting new content just for you.",
-    "questionsDesc": "Complete the following questions so Minds can present you with the most appropriate content.",
-    "callToAction": "Build your algorithm"
+    "promptTitle": "Build your algorithm",
+    "promptDesc": "Set your echo chamber preferences.",
+    "questionsDesc": "The preferences you set will improve your recommendations over time as the open source machine learning monkeys evolve. Don't worry, it won't impact your default newsfeed.",
+    "thanks": "Thank you for your feedback and supporting the Minds Community",
+    "callToAction": "Start"
   },
   "add": "Add",
   "downloading": "Downloading",
@@ -1463,6 +1449,7 @@
   "close": "Close",
   "now": "Now",
   "joined": "Joined",
+  "range": "Range {{range}}",
   "title": "Title",
   "filter": "Filter",
   "captcha": "Enter the characters above",
@@ -1474,6 +1461,7 @@
   "uploading": "Uploading media, please wait",
   "verify": "Verify",
   "other": "Other",
+  "type": "Type",
   "purchase": "Purchase",
   "verification": "Verification",
   "uploadFailed": "Upload failed",
@@ -1504,7 +1492,7 @@
     "buy": "Continue"
   },
   "earnScreen": {
-    "title": "Earn",
+    "title": "Earning on Minds",
     "increase": "Increase your earnings",
     "resources": {
       "title": "Resources",

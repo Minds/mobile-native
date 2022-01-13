@@ -105,6 +105,8 @@ exports[`Slider component should render correctly 1`] = `
       }
     />
     <View
+      collapsable={false}
+      nativeID="animatedComponent"
       style={
         Object {
           "backgroundColor": "#414C57",
@@ -117,6 +119,8 @@ exports[`Slider component should render correctly 1`] = `
       }
     />
     <View
+      collapsable={false}
+      nativeID="animatedComponent"
       onLayout={[Function]}
       style={
         Object {

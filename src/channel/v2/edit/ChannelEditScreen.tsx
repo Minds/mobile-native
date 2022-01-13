@@ -50,7 +50,7 @@ const createEditChannelStore = () => ({
     this.city = city;
   },
   setDob(dob) {
-    this.dob = dob instanceof Date ? dob : new Date(dob);
+    this.dob = dob ? (dob instanceof Date ? dob : new Date(dob)) : null;
   },
   initialLoad(channelStore: ChannelStoreType) {
     if (channelStore.channel) {
@@ -169,12 +169,14 @@ const About = observer(({ store }: PropsType) => {
           inputType="dateInput"
         />
       )}
-      <LocationAutoSuggest
-        value={store.city}
-        onChangeText={store.setCity}
-        onEdit={store.setEditingCity}
-        wrapperBorder={theme.borderBottom}
-      />
+      {store.loaded && (
+        <LocationAutoSuggest
+          value={store.city}
+          onChangeText={store.setCity}
+          onEdit={store.setEditingCity}
+          wrapperBorder={theme.borderBottom}
+        />
+      )}
     </>
   );
 });

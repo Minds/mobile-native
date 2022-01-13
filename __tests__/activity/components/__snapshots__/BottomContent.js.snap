@@ -187,6 +187,7 @@ exports[`BottomContent component renders correctly 1`] = `
         },
       }
     }
+    onPressComment={[Function]}
   />
   <Scheduled
     isScheduled={false}
