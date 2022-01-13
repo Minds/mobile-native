@@ -14,8 +14,9 @@ import { Portal } from '@gorhom/portal';
 import KeyboardSpacingView from '../../common/components/KeyboardSpacingView';
 import ThemedStyles from '../../styles/ThemedStyles';
 import preventDoubleTap from '../../common/components/PreventDoubleTap';
-import { DotIndicator } from 'react-native-reanimated-indicators';
+import { Flow } from 'react-native-animated-spinkit';
 import TextInput from '../../common/components/TextInput';
+import { FullWindowOverlay } from 'react-native-screens';
 
 const { height } = Dimensions.get('window');
 
@@ -61,47 +62,45 @@ const FloatingInput = React.forwardRef(
 
     return (
       <Portal key={key} name={key}>
-        <KeyboardSpacingView
-          style={StyleSheet.absoluteFill}
-          enabled={Platform.OS === 'ios'}
-          pointerEvents="box-none">
-          <View style={styles.mainContainer}>
-            <TouchableOpacity
-              onPress={() => setShow(false)}
-              style={styles.backdrop}
-            />
-            <View style={styles.inputContainer}>
-              <View style={styles.inputRow}>
-                <TextInput
-                  ref={inputRef}
-                  autoFocus={true}
-                  placeholderTextColor={ThemedStyles.getColor('TertiaryText')}
-                  underlineColorAndroid="transparent"
-                  {...props}
-                  style={styles.input}
-                />
-                {!progress && children ? (
-                  <View>
-                    <Touchable
-                      onPress={onSubmit}
-                      testID="submitButton"
-                      style={theme.paddingBottom}>
-                      {children}
-                    </Touchable>
-                  </View>
-                ) : (
-                  <View>
-                    <DotIndicator
-                      containerStyle={styles.indicator}
-                      color={ThemedStyles.getColor('PrimaryText')}
-                      scaleEnabled={true}
-                    />
-                  </View>
-                )}
+        <FullWindowOverlay style={StyleSheet.absoluteFill}>
+          <KeyboardSpacingView
+            style={StyleSheet.absoluteFill}
+            enabled={Platform.OS === 'ios'}
+            pointerEvents="box-none">
+            <View style={styles.mainContainer}>
+              <TouchableOpacity
+                onPress={() => setShow(false)}
+                style={styles.backdrop}
+              />
+              <View style={styles.inputContainer}>
+                <View style={styles.inputRow}>
+                  <TextInput
+                    ref={inputRef}
+                    autoFocus={true}
+                    placeholderTextColor={ThemedStyles.getColor('TertiaryText')}
+                    underlineColorAndroid="transparent"
+                    {...props}
+                    style={styles.input}
+                  />
+                  {!progress && children ? (
+                    <View>
+                      <Touchable
+                        onPress={onSubmit}
+                        testID="submitButton"
+                        style={theme.paddingBottom}>
+                        {children}
+                      </Touchable>
+                    </View>
+                  ) : (
+                    <View style={styles.indicator}>
+                      <Flow color={ThemedStyles.getColor('PrimaryText')} />
+                    </View>
+                  )}
+                </View>
               </View>
             </View>
-          </View>
-        </KeyboardSpacingView>
+          </KeyboardSpacingView>
+        </FullWindowOverlay>
       </Portal>
     );
   },

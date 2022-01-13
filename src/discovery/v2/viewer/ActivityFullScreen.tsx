@@ -48,6 +48,7 @@ const TEXT_MEDIUM_THRESHOLD = 300;
 type PropsType = {
   entity: ActivityModel;
   forceAutoplay?: boolean;
+  noBottomInset?: boolean;
 };
 
 const ActivityOwner = ({
@@ -345,7 +346,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
             <LinearGradient colors={gradientColors} style={styles.linear} />
           )}
         </View>
-        <View style={cleanBottom}>
+        <View style={props.noBottomInset ? undefined : cleanBottom}>
           <InteractionsBar
             onShowUpVotesPress={showUpVotes}
             onShowDownVotesPress={showDownVotes}

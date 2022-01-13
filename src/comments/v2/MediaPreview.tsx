@@ -4,7 +4,7 @@ import React from 'react';
 import { Dimensions, StyleSheet, View, TouchableOpacity } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { DotIndicator } from 'react-native-reanimated-indicators';
+import { Flow } from 'react-native-animated-spinkit';
 
 import type AttachmentStore from '../../common/stores/AttachmentStore';
 import MindsVideo from '../../media/v2/mindsVideo/MindsVideo';
@@ -65,15 +65,9 @@ export default observer(function MediaPreview({
     <View style={[styles.wrapper, aspect]} pointerEvents="box-none">
       {body}
       {attachment.uploading && (
-        <DotIndicator
-          containerStyle={[
-            theme.centered,
-            theme.positionAbsolute,
-            styles.overlay,
-          ]}
-          color="white"
-          scaleEnabled={true}
-        />
+        <View style={[theme.centered, theme.positionAbsolute, styles.overlay]}>
+          <Flow color="white" />
+        </View>
       )}
       <TouchableOpacity
         style={styles.close}

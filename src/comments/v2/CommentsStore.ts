@@ -460,10 +460,17 @@ export default class CommentsStore {
    * Refresh
    */
   @action
-  refresh() {
+  refresh = () => {
     this.refreshing = true;
     this.clearComments();
-  }
+    this.loadComments()
+      .then(() => {
+        this.refreshDone();
+      })
+      .catch(() => {
+        this.refreshDone();
+      });
+  };
 
   /**
    * Refresh done

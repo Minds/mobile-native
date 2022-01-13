@@ -51,7 +51,10 @@ const createSearchResultStore = () => {
     },
     searchDiscovery() {
       this.search = this.searchText;
-      NavigationService.navigate('DiscoverySearch', { query: this.search });
+      NavigationService.navigate('Discovery', {
+        screen: 'DiscoverySearch',
+        params: { query: this.search },
+      });
       this.searchBarItemTap(this.search);
     },
     reset() {

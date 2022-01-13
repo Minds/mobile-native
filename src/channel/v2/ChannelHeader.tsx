@@ -281,6 +281,7 @@ const ChannelHeader = withErrorBoundary(
                   onLayout={onFadeViewLayout}
                   style={styles.fadeView}>
                   <FeedFilter
+                    dateRange
                     store={props.store}
                     containerStyles={styles.feedFilter}
                     textStyle={styles.feedFilterText}

@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { View } from 'react-native-animatable';
-import { DotIndicator } from 'react-native-reanimated-indicators';
+import { Flow } from 'react-native-animated-spinkit';
 
 import ThemedStyles, { useMemoStyle } from '../../styles/ThemedStyles';
 import MText from './MText';
@@ -124,11 +124,7 @@ const Button = props => {
   const fontSize = { fontSize: large ? 19 : small ? 16 : xSmall ? 14 : 17 };
   const body = loading ? (
     <View style={dotIndicatorContainerStyle}>
-      <DotIndicator
-        containerStyle={dotIndicatorStyle}
-        color={textColor || mainColor}
-        scaleEnabled={true}
-      />
+      <Flow color={textColor || mainColor} />
     </View>
   ) : (
     props.text && (
@@ -162,9 +158,3 @@ const Button = props => {
 };
 
 export default Button;
-
-const dotIndicatorStyle = ThemedStyles.combine(
-  { width: 50, alignSelf: 'center' },
-  'rowJustifyCenter',
-  'padding2x',
-);

@@ -18,6 +18,7 @@ import { AnimatePresence } from 'moti';
 import DiscoveryTabContent from './DiscoveryTabContent';
 import Empty from '~/common/components/Empty';
 import Button from '~/common/components/Button';
+import Topbar from '~/topbar/Topbar';
 
 interface Props {
   navigation: any;
@@ -62,7 +63,7 @@ export const DiscoveryV2Screen = withErrorBoundary(
     );
 
     useEffect(() => {
-      const unsubscribe = navigation.addListener('tabPress', () => {
+      const unsubscribe = navigation.getParent().addListener('tabPress', () => {
         if (shouldRefreshOnTabPress) {
           store.refreshTrends();
         }
@@ -134,6 +135,7 @@ export const DiscoveryV2Screen = withErrorBoundary(
 
     return (
       <View style={styles.container}>
+        <Topbar title="Discovery" navigation={navigation} />
         <View style={theme.paddingTop}>
           <InitialOnboardingButton />
           <TopbarTabbar
