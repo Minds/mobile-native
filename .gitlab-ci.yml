@@ -199,10 +199,15 @@ build:android-mr-production:
       - /^fix-*/
       - /^chore-*/
 
+# Cleanup merged APK from browserstack
 build:cleanup:
   image: circleci/android:api-30-node
   when: manual
   stage: build
+  environment:
+    name: review/$CI_COMMIT_REF_SLUG
+    url: https://minds-repo.s3.amazonaws.com/mobile/Minds-$CI_COMMIT_REF_SLUG.apk
+    action: stop
   script:
     - node ../tasks/deleteBrowserstackFile.js Minds-$CI_COMMIT_REF_SLUG.apk
   only:
