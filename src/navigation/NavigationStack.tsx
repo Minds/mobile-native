@@ -134,11 +134,6 @@ const AppStack = function () {
           options={{ title: 'Export Wallet' }}
         />
         <AppStackNav.Screen
-          name="Messenger"
-          component={MessengerScreen}
-          options={{ title: i18n.t('messenger.legacyMessenger') }}
-        />
-        <AppStackNav.Screen
           name="EmailConfirmation"
           component={EmailConfirmationScreen}
         />
