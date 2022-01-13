@@ -34,6 +34,7 @@ import Tags from '~/common/components/Tags';
 import { useNavigation } from '@react-navigation/native';
 import { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 import AutoComplete from '~/common/components/AutoComplete/AutoComplete';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const { height } = Dimensions.get('window');
 
@@ -54,6 +55,7 @@ export const CommentInputContext = React.createContext(storeProvider);
  */
 const CommentInput = observer((onShow, onDismiss) => {
   const navigation = useNavigation();
+  const bottomInset = useSafeAreaInsets().bottom;
   const theme = ThemedStyles.style;
   const ref = React.useRef<TextInputType>(null);
   const [autoCompleteVisible, setAutoCompleteVisible] = useState(false);
@@ -117,6 +119,7 @@ const CommentInput = observer((onShow, onDismiss) => {
     <KeyboardSpacingView
       style={StyleSheet.absoluteFill}
       enabled={Platform.OS === 'ios'}
+      noInset
       pointerEvents="box-none">
       <View style={[theme.justifyEnd, theme.flexContainer]}>
         <View style={theme.flexContainer}>
@@ -152,7 +155,17 @@ const CommentInput = observer((onShow, onDismiss) => {
           </Animated.View>
         </View>
       </View>
-      <View style={[theme.bgPrimaryBackground, styles.inputContainer]}>
+      <View
+        style={[
+          theme.bgPrimaryBackground,
+          styles.inputContainer,
+          {
+            paddingBottom: Platform.select({
+              android: bottomInset + 9,
+              ios: bottomInset + 12,
+            }),
+          },
+        ]}>
         {(provider.store.parent || provider.store.edit) && (
           <View
             style={[
@@ -283,8 +296,8 @@ const styles = StyleSheet.create({
     width: '100%',
     borderColor: 'transparent',
     ...Platform.select({
-      android: { paddingTop: 7, paddingBottom: 9 },
-      ios: { paddingTop: 10, paddingBottom: 12 },
+      android: { paddingTop: 7 },
+      ios: { paddingTop: 10 },
     }),
     shadowOffset: {
       width: 0,
