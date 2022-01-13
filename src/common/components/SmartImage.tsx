@@ -1,6 +1,6 @@
 import { autorun } from 'mobx';
 import { observer, useLocalStore } from 'mobx-react';
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Image, Platform, TouchableOpacity, View } from 'react-native';
 import FastImage, { ResizeMode, Source } from 'react-native-fast-image';
 import ProgressCircle from 'react-native-progress/CircleSnail';
@@ -118,10 +118,25 @@ const SmartImage = observer(function (props: SmartImageProps) {
  */
 const ImageOverlay: FC<{ visible: boolean }> = ({ visible, ...props }) => {
   const theme = ThemedStyles.style;
+  const [shouldRender, setShouldRender] = useState(true);
   const showOverlayTransition = useTimingTransition(visible, {
     duration: 150,
   });
   const opacity = mix(showOverlayTransition, 0, 1);
+
+  useEffect(() => {
+    if (!visible) {
+      setTimeout(() => {
+        setShouldRender(false);
+      }, 150);
+    } else {
+      setShouldRender(true);
+    }
+  }, [visible]);
+
+  if (!shouldRender) {
+    return null;
+  }
 
   return (
     <Animated.View
