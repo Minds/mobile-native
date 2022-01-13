@@ -208,8 +208,14 @@ build:cleanup:
     name: review/$CI_COMMIT_REF_SLUG
     url: https://minds-repo.s3.amazonaws.com/mobile/Minds-$CI_COMMIT_REF_SLUG.apk
     action: stop
+  cache:
+    key: '$CI_JOB_NAME-$CI_COMMIT_REF_SLUG'
+    paths:
+      - node_modules/
+  before_script:
+    - yarn install --frozen-lockfile
   script:
-    - node ../tasks/deleteBrowserstackFile.js Minds-$CI_COMMIT_REF_SLUG.apk
+    - node ./tasks/deleteBrowserstackFile.js Minds-$CI_COMMIT_REF_SLUG.apk
   only:
     refs:
       - /^feat-*/
