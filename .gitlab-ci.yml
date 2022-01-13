@@ -181,6 +181,7 @@ build:android-mr-production:
   script:
     - bundle exec fastlane assemble_mr_build
     - mv app/build/outputs/apk/release/app-release.apk ../Minds-$CI_COMMIT_REF_SLUG.apk
+    - node ../tasks/deleteBrowserstackFile.js Minds-$CI_COMMIT_REF_SLUG.apk
     - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@../Minds-$CI_COMMIT_REF_SLUG.apk"
   artifacts:
     name: 'Minds APK'
@@ -188,6 +189,27 @@ build:android-mr-production:
       - Minds-$CI_COMMIT_REF_SLUG.apk
     expire_in: 45 days
     when: on_success
+  environment:
+    name: review/$CI_COMMIT_REF_SLUG
+    url: https://minds-repo.s3.amazonaws.com/mobile/Minds-$CI_COMMIT_REF_SLUG.apk
+    on_stop: build:cleanup
+  only:
+    refs:
+      - /^feat-*/
+      - /^fix-*/
+      - /^chore-*/
+
+# Cleanup merged APK from browserstack
+build:cleanup:
+  image: circleci/android:api-30-node
+  when: manual
+  stage: build
+  environment:
+    name: review/$CI_COMMIT_REF_SLUG
+    url: https://minds-repo.s3.amazonaws.com/mobile/Minds-$CI_COMMIT_REF_SLUG.apk
+    action: stop
+  script:
+    - node ../tasks/deleteBrowserstackFile.js Minds-$CI_COMMIT_REF_SLUG.apk
   only:
     refs:
       - /^feat-*/
@@ -240,6 +262,7 @@ build:androidproduction-playstore:
   script:
     - echo "Upload $APK_FILENAME"
     - aws s3 cp $APK_FILENAME s3://minds-repo/mobile/$APK_FILENAME
+    - node ./tasks/deleteBrowserstackFile.js $APK_FILENAME
     - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@$APK_FILENAME"
 
 deploy:s3andbrowserstack:oss:
