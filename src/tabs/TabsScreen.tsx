@@ -67,7 +67,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
   const barAnimatedStyle = useAnimatedStyle(() => ({
     transform: [
       {
-        translateX: withSpring(70 * state.index, {
+        translateX: withSpring(((width - 40) / 5) * state.index, {
           mass: 0.2,
         }),
       },
