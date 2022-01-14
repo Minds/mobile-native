@@ -17,7 +17,7 @@ import {
   PressableLine,
   Spacer,
 } from '~ui';
-import FadeFrom from '~/common/components/animations/FadeFrom';
+// import FadeFrom from '~/common/components/animations/FadeFrom';
 import apiService, { isNetworkError } from '~/common/services/api.service';
 import openUrlService from '~/common/services/open-url.service';
 import { showMessage } from 'react-native-flash-message';
@@ -155,15 +155,13 @@ export default function Drawer(props) {
     <Screen safe>
       <FitScrollView>
         <HairlineSpacer top="XXL">
-          <FadeFrom direction="top">
-            <DrawerHeader
-              avatar={avatar}
-              username={channel.username}
-              name={channel.name}
-              onIconPress={handleMultiUserNav}
-              onUserPress={handleChannelNav}
-            />
-          </FadeFrom>
+          <DrawerHeader
+            avatar={avatar}
+            username={channel.username}
+            name={channel.name}
+            onIconPress={handleMultiUserNav}
+            onUserPress={handleChannelNav}
+          />
         </HairlineSpacer>
         <Spacer vertical="M">
           <DrawerList list={optionsList} small={false} />
@@ -180,15 +178,13 @@ export default function Drawer(props) {
 const DrawerList = ({ list, small }) => {
   return list.map((l, i) =>
     !l ? null : (
-      <FadeFrom direction="left" delay={i * 50}>
-        <DrawerNavItem
-          small={small}
-          key={'list' + i}
-          name={l.name}
-          icon={l.icon}
-          onPress={l.onPress}
-        />
-      </FadeFrom>
+      <DrawerNavItem
+        small={small}
+        key={'list' + i}
+        name={l.name}
+        icon={l.icon}
+        onPress={l.onPress}
+      />
     ),
   );
 };
