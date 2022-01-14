@@ -300,6 +300,8 @@ PODS:
   - react-native-image-filter-kit (0.8.0):
     - Bolts/Tasks (= 1.9.0)
     - React
+  - react-native-measure-text-size (1.0.0):
+    - React-Core
   - react-native-mmkv-storage (0.6.8):
     - MMKV (= 1.2.10)
     - React-Core
@@ -550,6 +552,7 @@ DEPENDENCIES:
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - "react-native-cameraroll (from `../node_modules/@react-native-community/cameraroll`)"
   - react-native-image-filter-kit (from `../node_modules/react-native-image-filter-kit`)
+  - "react-native-measure-text-size (from `../node_modules/@bigbee.dev/react-native-measure-text-size`)"
   - react-native-mmkv-storage (from `../node_modules/react-native-mmkv-storage`)
   - react-native-month-year-picker (from `../node_modules/react-native-month-year-picker`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
@@ -702,6 +705,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/cameraroll"
   react-native-image-filter-kit:
     :path: "../node_modules/react-native-image-filter-kit"
+  react-native-measure-text-size:
+    :path: "../node_modules/@bigbee.dev/react-native-measure-text-size"
   react-native-mmkv-storage:
     :path: "../node_modules/react-native-mmkv-storage"
   react-native-month-year-picker:
@@ -866,6 +871,7 @@ SPEC CHECKSUMS:
   React-logger: e522e76fa3e9ec3e7d7115b49485cc065cf4ae06
   react-native-cameraroll: 2957f2bce63ae896a848fbe0d5352c1bd4d20866
   react-native-image-filter-kit: d79137549eb44f8215b7f2be5e77213f605e2c92
+  react-native-measure-text-size: df17d060f981d8ec652aa3118e37322bd7019bd5
   react-native-mmkv-storage: 97ec49dd76cd9823120376677f59f34508ebf708
   react-native-month-year-picker: 9a59b4b8c4802a23123b0ce4ccadce880ad55f8a
   react-native-netinfo: 30fb89fa913c342be82a887b56e96be6d71201dd
