@@ -1,8 +1,10 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Dimensions,
   InteractionManager,
   Keyboard,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
   Platform,
   View,
 } from 'react-native';
@@ -27,10 +29,16 @@ import BottomSheet from '../common/components/bottom-sheet/BottomSheetModal';
 import BottomSheetButton from '../common/components/bottom-sheet/BottomSheetButton';
 import sessionService from '~/common/services/session.service';
 import FastImage from 'react-native-fast-image';
-import { useBackHandler } from '@react-native-community/hooks';
+import { useBackHandler, useKeyboard } from '@react-native-community/hooks';
 import useComposeStore, { ComposeContext } from './useComposeStore';
 import { useFocusEffect } from '@react-navigation/core';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Animated, {
+  useAnimatedStyle,
+  withTiming,
+} from 'react-native-reanimated';
+import useDebouncedCallback from '~/common/hooks/useDebouncedCallback';
+import AutoComplete from '~/common/components/AutoComplete/AutoComplete';
 
 const { width } = Dimensions.get('window');
 
@@ -50,9 +58,16 @@ export default observer(function ComposeScreen(props) {
     },
   }));
   const theme = ThemedStyles.style;
+  const scrollViewRef = useRef<ScrollView>(null);
   const inputRef = useRef<any>(null);
   const optionsRef = useRef<any>(null);
   const confirmRef = useRef<any>(null);
+  const [scrollOffset, setScrollOffset] = useState(0);
+  const setScrollOffsetDebounced = useDebouncedCallback(
+    setScrollOffset,
+    200,
+    [],
+  );
   const showEmbed = store.embed.hasRichEmbed && store.embed.meta;
   const fontSize =
     store.attachment.hasAttachment || store.text.length > 85
@@ -74,6 +89,24 @@ export default observer(function ComposeScreen(props) {
   const channel = sessionService.getUser();
   const avatar =
     channel && channel.getAvatarSource ? channel.getAvatarSource('medium') : {};
+  const keyboard = useKeyboard();
+  const [autoCompleteVisible, setAutoCompleteVisible] = useState(false);
+  const [scrollViewHeight, setScrollViewHeight] = useState(0);
+  /**
+   * animated style for the popover appearing and disappearing functionality
+   **/
+  const autoCompletePopupAnimatedStyle = useAnimatedStyle(
+    () => ({
+      height: withTiming(
+        autoCompleteVisible
+          ? (scrollViewHeight -
+              (keyboard.keyboardShown ? keyboard.keyboardHeight : 0)) /
+              2
+          : 0,
+      ),
+    }),
+    [autoCompleteVisible, scrollViewHeight, keyboard],
+  );
   // #endregion
 
   // #region methods
@@ -128,6 +161,42 @@ export default observer(function ComposeScreen(props) {
     Keyboard.dismiss();
     optionsRef.current.show();
   }, []);
+
+  const onScrollHandler = useCallback(
+    (e: NativeSyntheticEvent<NativeScrollEvent>) =>
+      setScrollOffsetDebounced(e.nativeEvent.contentOffset.y),
+    [],
+  );
+
+  const onAutoCompleteShown = useCallback(
+    (visible: boolean) => {
+      setAutoCompleteVisible(visible);
+      if (visible) {
+        setTimeout(() => {
+          InteractionManager.runAfterInteractions(() =>
+            scrollViewRef.current?.scrollTo(store.textHeight + 35),
+          );
+        }, 350);
+      }
+    },
+    [store.textHeight],
+  );
+
+  const handleSelectionChange = useCallback(() => {
+    selection => {
+      store.setSelection(selection);
+      setTimeout(() => {
+        inputRef.current?.setNativeProps({
+          selection: {
+            start: selection.start,
+            end: selection.end,
+          },
+        });
+      });
+    };
+  }, [store]);
+
+  const handleTextInputFocus = useCallback(() => inputRef.current?.focus(), []);
   // #endregion
 
   // #region effects
@@ -184,9 +253,17 @@ export default observer(function ComposeScreen(props) {
         />
 
         <ScrollView
-          keyboardShouldPersistTaps={'handled'}
+          ref={scrollViewRef}
+          keyboardShouldPersistTaps={'always'}
+          keyboardDismissMode={'none'}
+          onLayout={e =>
+            scrollViewHeight
+              ? null
+              : setScrollViewHeight(e.nativeEvent.layout.height)
+          }
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={styles.bodyContainer}>
+          contentContainerStyle={scrollViewContentContainerStyle}
+          onScroll={onScrollHandler}>
           <View style={theme.rowJustifyStart}>
             <View style={useStyle('paddingHorizontal2x', 'paddingTop')}>
               <FastImage source={avatar} style={styles.wrappedAvatar} />
@@ -238,6 +315,27 @@ export default observer(function ComposeScreen(props) {
           </View>
         </ScrollView>
 
+        {/**
+         * Autocomplete popup
+         **/}
+        <Animated.View style={autoCompletePopupAnimatedStyle}>
+          <AutoComplete
+            textHeight={store.textHeight}
+            scrollOffset={scrollOffset}
+            selection={store.selection}
+            onSelectionChange={handleSelectionChange}
+            text={store.text}
+            onTextChange={store.setText}
+            onTextInputFocus={handleTextInputFocus}
+            onScrollToOffset={offset =>
+              scrollViewRef.current?.scrollTo({
+                y: offset,
+              })
+            }
+            onVisible={onAutoCompleteShown}
+          />
+        </Animated.View>
+
         {showBottomBar && (
           <KeyboardSpacingView
             enabled={Platform.OS === 'ios'}
@@ -272,6 +370,8 @@ export default observer(function ComposeScreen(props) {
     </ComposeContext.Provider>
   );
 });
+
+const scrollViewContentContainerStyle = { paddingBottom: 35 };
 
 const styles = ThemedStyles.create({
   bottomBarContainer: [

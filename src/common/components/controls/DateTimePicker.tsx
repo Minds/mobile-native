@@ -76,7 +76,7 @@ const DateTimePicker = observer(
           bottomSheetRef.current?.present();
         },
         setDate(calendarDate) {
-          localStore.selectedDate = new Date(calendarDate.dateString);
+          localStore.selectedDate = moment(calendarDate.dateString).toDate();
           this.pickerState = 'time';
         },
         setRawDate(date) {
@@ -95,6 +95,7 @@ const DateTimePicker = observer(
           }
 
           bottomSheetRef.current?.dismiss();
+          this.pickerState = 'date';
         },
         onBack() {
           this.pickerState = 'date';
@@ -171,6 +172,7 @@ const DateTimePicker = observer(
             <ModernDatePicker
               ref={timePickerRef}
               mode="time"
+              current={localStore.textDate}
               confirmButtonVisible={false}
               options={timePickerOptions}
               minuteInterval={5}
