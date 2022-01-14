@@ -288,10 +288,11 @@ export default observer(function ComposeScreen(props) {
                     multiline={true}
                     selectTextOnFocus={false}
                     underlineColorAndroid="transparent"
+                    onSelectionChange={store.selectionChanged}
                     testID="PostInput">
-                    {/*
-                  // @ts-ignore */}
-                    <Tags>{store.text}</Tags>
+                    <Tags navigation={props.navigation} selectable={true}>
+                      {store.text}
+                    </Tags>
                   </TextInput>
                 </>
               )}
