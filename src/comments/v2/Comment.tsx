@@ -21,6 +21,7 @@ import { LIGHT_THEME } from '../../styles/Colors';
 import ReadMore from '../../common/components/ReadMore';
 import Translate from '../../common/components/translate/Translate';
 import MText from '../../common/components/MText';
+import NavigationService from '~/navigation/NavigationService';
 
 type PropsType = {
   comment: CommentModel;
@@ -142,7 +143,7 @@ export default observer(function Comment(props: PropsType) {
               <>
                 <ReadMore
                   numberOfLines={6}
-                  navigation={navigation}
+                  navigation={NavigationService}
                   text={entities.decodeHTML(props.comment.description)}
                   renderTruncatedFooter={renderTruncatedFooter}
                   renderRevealedFooter={renderRevealedFooter}
