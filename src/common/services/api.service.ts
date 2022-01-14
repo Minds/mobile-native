@@ -372,9 +372,9 @@ export class ApiService {
     if (!params) {
       params = {};
     }
-    if (process.env.JEST_WORKER_ID === undefined) {
-      params.cb = Date.now(); //bust the cache every time
-    }
+    // if (process.env.JEST_WORKER_ID === undefined) {
+    //   params.cb = Date.now(); //bust the cache every time
+    // }
 
     if (MINDS_STAGING) {
       params.staging = '1';

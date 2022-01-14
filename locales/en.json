@@ -260,6 +260,7 @@
     "maxHashtags": "Sorry, your post cannot contain more than {{maxHashtags}} hashtags.",
     "duplicateHashtagas": "You have some duplicate hashtags",
     "schedule": "Schedule Post",
+    "scheduleError": "The selected date should be in the future",
     "post": "Post",
     "remind": "Remind",
     "placeholder": "Speak your mind...",
@@ -372,29 +373,10 @@
     "encryptMessage1": "Remember the password or you will be unable to read/write from it."
   },
   "messenger": {
-    "decrypting": "decrypting...",
-    "notAllowed": "This user only allows messages from users that they subscribe to",
-    "allowContact": "Allow contact from unsubscribed users",
-    "couldntDecrypt": "couldn't decrypt",
     "typeYourMessage": "Type your message...",
     "invited": "Invited",
     "invite": "Invite",
-    "isntUsingMessenger": "isn't using Minds Messenger yet",
-    "looksLike": "Looks like",
-    "checkCredentials": "Please check your credentials",
-    "errorCreatingKeys": "Error creating the encryptions keys",
     "messenger": "Messenger",
-    "noMessages": "Search for someone to message",
-    "logoutMessage": "Do you want to logout from messenger?",
-    "changeKeyMessage": "Changing your encryption password will cause your previous messages to be unreadable",
-    "notEncryptedMessage": "Hey @{{user}}! It looks like you haven't setup your encrypted chat password yet. We recommend that you use a different password than your account password for added security.",
-    "onboardingText": "An additional password is required for messenger in order to ensure that your messages are private and fully encrypted.",
-    "setupMessage1": "You only need to enter this encryption password once as long as you stay signed in.",
-    "setupMessage2": "It is important so that no one other than you and the people you are communicating with can access the content of your messages.",
-    "setupMessage3": "By default the content of your messages is fully encrypted. For heightened security you may wish to go to your app settings and turn off push notifications in order to disallow metadata from being tracked.",
-    "messengerRekey": "Change your encryption password",
-    "legacyMessenger": "Legacy Messenger",
-    "errorDirectMessage": "Oops! Please try again in a moment",
     "modal": {
       "action": "Install Minds Chat",
       "appname": "Minds Chat Application",
@@ -1323,6 +1305,7 @@
     }
   },
   "referrals": {
+    "menu": "Invite friends",
     "title": "Earn tokens by inviting your friends to Minds",
     "sendLinkToFriends": "Send this link to your friends to earn tokens for referrals",
     "codeSuffixLabel": "You can also get referrals by adding this code to the end of any Minds link you share",
@@ -1467,6 +1450,7 @@
   "close": "Close",
   "now": "Now",
   "joined": "Joined",
+  "range": "Range {{range}}",
   "title": "Title",
   "filter": "Filter",
   "captcha": "Enter the characters above",
@@ -1478,6 +1462,7 @@
   "uploading": "Uploading media, please wait",
   "verify": "Verify",
   "other": "Other",
+  "type": "Type",
   "purchase": "Purchase",
   "verification": "Verification",
   "uploadFailed": "Upload failed",
@@ -1508,7 +1493,7 @@
     "buy": "Continue"
   },
   "earnScreen": {
-    "title": "Earn",
+    "title": "Earning on Minds",
     "increase": "Increase your earnings",
     "resources": {
       "title": "Resources",

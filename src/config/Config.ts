@@ -1,9 +1,10 @@
 //@ts-nocheck
-import { Platform } from 'react-native';
+import { Platform, PlatformIOSStatic } from 'react-native';
 
 import DeviceInfo from 'react-native-device-info';
 
 export const IS_IOS = Platform.OS === 'ios';
+export const IS_IPAD = (Platform as PlatformIOSStatic).isPad;
 export const ONCHAIN_ENABLED = true;
 
 // Send staging cookie to api
@@ -92,10 +93,10 @@ export const MINDS_DEEPLINK = [
   ['forgot-password;:username;:code', 'Forgot'],
   ['settings/other/referrals', 'Referrals'],
   ['email-confirmation', 'EmailConfirmation'],
-  ['groups/profile/:guid/feed', 'GroupView'],
-  ['groups/profile/:guid', 'GroupView'],
+  ['groups/profile/:guid/feed', 'More/GroupView'],
+  ['groups/profile/:guid', 'More/GroupView'],
   ['notifications', 'Notifications', 'navigate'],
-  ['groups/:filter', 'GroupsList'],
+  ['groups/:filter', 'More/GroupsList'],
   ['newsfeed/:guid', 'Activity'],
   ['media/:guid', 'Activity'],
   ['channels/:username', 'Channel'],
@@ -103,15 +104,11 @@ export const MINDS_DEEPLINK = [
   ['blog/view/:guid', 'BlogView'],
   [':user/blog/:slug', 'BlogView'],
   [':username', 'Channel'],
-  ['wallet/:currency/:section', 'Tabs/CaptureTab/Wallet', 'navigate'],
-  [
-    'analytics/dashboard/:type/:subtype',
-    'Tabs/CaptureTab/Analytics',
-    'navigate',
-  ],
-  ['analytics/dashboard/:type', 'Tabs/CaptureTab/Analytics', 'navigate'],
+  ['wallet/:currency/:section', 'More/Wallet', 'navigate'],
+  ['analytics/dashboard/:type/:subtype', 'More/Analytics', 'navigate'],
+  ['analytics/dashboard/:type', 'More/Analytics', 'navigate'],
   ['discovery/search', 'DiscoverySearch'],
-  ['discovery/plus/:tab', 'Tabs/CaptureTab/PlusDiscoveryScreen', 'navigate'], // screen name has slashes to indicate nested screens
+  ['discovery/plus/:tab', 'More/PlusDiscoveryScreen', 'navigate'], // screen name has slashes to indicate nested screens
   ['discovery/:tab', 'Discovery', 'navigate'],
 ];
 

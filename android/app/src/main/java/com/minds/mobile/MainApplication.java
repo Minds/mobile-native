@@ -13,7 +13,6 @@ import com.reactnativecommunity.cameraroll.CameraRollPackage;
 import com.bitgo.randombytes.RandomBytesPackage;
 import com.wix.reactnativenotifications.RNNotificationsPackage;
 
-import com.minds.crypto.CryptoPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;

@@ -24,7 +24,7 @@ import BottomButtonOptions, {
 } from '../../../common/components/BottomButtonOptions';
 import { showNotification } from '../../../../AppMessages';
 import sessionService from '../../../common/services/session.service';
-import { DotIndicator } from 'react-native-reanimated-indicators';
+import { Flow } from 'react-native-animated-spinkit';
 import MText from '../../../common/components/MText';
 const TouchableCustom = withPreventDoubleTap(TouchableOpacity);
 
@@ -169,12 +169,8 @@ export default observer(function SetupChannelScreen() {
                 )}
               </View>
               {channelStore.uploading && channelStore.avatarProgress ? (
-                <View style={[styles.tapOverlayView]}>
-                  <DotIndicator
-                    containerStyle={theme.centered}
-                    color={ThemedStyles.getColor('Link')}
-                    scaleEnabled={true}
-                  />
+                <View style={[styles.tapOverlayView, theme.centered]}>
+                  <Flow color={ThemedStyles.getColor('Link')} />
                 </View>
               ) : null}
             </TouchableCustom>

@@ -1,14 +1,10 @@
 import React from 'react';
-import ThemedStyles from '../../../styles/ThemedStyles';
-import MText from '../MText';
+import { B1 } from '~/common/ui';
 
 export default function SectionSubtitle({ children }) {
-  return <MText style={style}>{children}</MText>;
+  return (
+    <B1 left="XL" top="L" bottom="L" color="secondary" font="medium">
+      {children}
+    </B1>
+  );
 }
-
-const style = ThemedStyles.combine(
-  'colorSecondaryText',
-  'fontL',
-  'marginVertical2x',
-  'marginHorizontal5x',
-);

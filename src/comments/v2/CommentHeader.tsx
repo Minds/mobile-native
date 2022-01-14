@@ -9,6 +9,7 @@ import ChannelBadges from '../../channel/badges/ChannelBadges';
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
 import i18n from '../../common/services/i18n.service';
 import MText from '../../common/components/MText';
+import NavigationService from '~/navigation/NavigationService';
 const DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
 
 type PropsType = {
@@ -28,12 +29,13 @@ class CommentHeader extends PureComponent<PropsType> {
    * Navigate To channel
    */
   _navToChannel = () => {
-    if (this.props.navigation) {
-      this.props.navigation.push('Channel', {
+    NavigationService.push('App', {
+      screen: 'Channel',
+      params: {
         guid: this.props.entity.ownerObj.guid,
         entity: this.props.entity.ownerObj,
-      });
-    }
+      },
+    });
   };
 
   /**

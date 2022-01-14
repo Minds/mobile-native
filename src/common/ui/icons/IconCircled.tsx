@@ -3,10 +3,8 @@ import { View, StyleSheet } from 'react-native';
 import { Icon, IIcon } from './Icon';
 import {
   ICON_BACKGROUND,
-  ICON_SIZE_DEFAULT,
   ICON_COLOR_ACTIVE,
   ICON_COLOR_DEFAULT,
-  UISizing,
   UNIT,
 } from '~styles/Tokens';
 import { getSpacingStylesNext } from '~ui/helpers';
@@ -24,8 +22,6 @@ export function IconCircled({ style, active, ...extra }: IIcon) {
     { backgroundColor: background },
   ];
 
-  let size: UISizing | number | string = ICON_SIZE_DEFAULT;
-
   const extraStyles = getSpacingStylesNext(extra);
 
   if (extraStyles?.length) {
@@ -35,16 +31,9 @@ export function IconCircled({ style, active, ...extra }: IIcon) {
   if (style) {
     containerStyles.push(style);
   }
-
-  if (extra?.size) {
-    size = extra.size;
-  }
-
-  containerStyles.push(styles[size]);
-
   return (
     <View style={containerStyles}>
-      <Icon color={color} nested {...extra} />
+      <Icon color={color} nested {...extra} space="XS" />
     </View>
   );
 }
@@ -53,23 +42,6 @@ const styles = StyleSheet.create({
   container: {
     overflow: 'hidden',
     borderRadius: 200,
-  },
-  micro: {
-    padding: UNIT.XS,
-  },
-  tiny: {
-    padding: UNIT.XS,
-  },
-  small: {
-    padding: UNIT.S,
-  },
-  medium: {
-    padding: UNIT.S,
-  },
-  large: {
-    padding: UNIT.M,
-  },
-  huge: {
-    padding: UNIT.L,
+    padding: UNIT.S * 0.8,
   },
 });

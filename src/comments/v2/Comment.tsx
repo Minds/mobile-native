@@ -182,12 +182,14 @@ export default observer(function Comment(props: PropsType) {
             />
             {canReply && <ReplyAction size={16} onPressReply={reply} />}
             <View style={theme.flexContainer} />
-            <CommentBottomMenu
-              store={props.store}
-              entity={props.store.entity}
-              comment={props.comment}
-              onTranslate={translate}
-            />
+            {!props.isHeader && (
+              <CommentBottomMenu
+                store={props.store}
+                entity={props.store.entity}
+                comment={props.comment}
+                onTranslate={translate}
+              />
+            )}
           </View>
           {!!props.comment.replies_count && !props.hideReply && (
             <TouchableOpacity onPress={viewReply} style={theme.marginBottom3x}>
@@ -218,14 +220,16 @@ export default observer(function Comment(props: PropsType) {
               {i18n.t('confirm18')}
             </MText>
           </TouchableOpacity>
-          <View style={[theme.rowJustifyEnd, theme.padding3x]}>
-            <CommentBottomMenu
-              store={props.store}
-              entity={props.store.entity}
-              comment={props.comment}
-              onTranslate={translate}
-            />
-          </View>
+          {!props.isHeader && (
+            <View style={[theme.rowJustifyEnd, theme.padding3x]}>
+              <CommentBottomMenu
+                store={props.store}
+                entity={props.store.entity}
+                comment={props.comment}
+                onTranslate={translate}
+              />
+            </View>
+          )}
         </View>
       )}
     </View>

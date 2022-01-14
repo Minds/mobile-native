@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import autobind from '../../helpers/autobind';
 import i18n from '../../services/i18n.service';
 import CheckButton from '../bottom-sheet/CheckButton';
-import SectionSubtitle from '../bottom-sheet/SectionSubtitle';
+import SectionTitle from '../bottom-sheet/SectionTitle';
 type PropsType = {
   value: Array<number>;
   onChange: (value: Array<number>) => void;
@@ -56,7 +56,7 @@ export default class NsfwToggle extends Component<PropsType> {
   render() {
     return (
       <React.Fragment>
-        <SectionSubtitle>{i18n.t('nsfw.button')}</SectionSubtitle>
+        <SectionTitle>{i18n.t('nsfw.button')}</SectionTitle>
         <CheckButton
           onPress={this.toggle}
           selected={this.state.active}

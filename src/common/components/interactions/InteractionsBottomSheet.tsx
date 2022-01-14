@@ -1,5 +1,5 @@
 import React, { forwardRef, useCallback, useMemo, useRef } from 'react';
-import BottomSheet from '../bottom-sheet/BottomSheet';
+
 import { observer, useLocalStore } from 'mobx-react';
 import { Platform, StyleSheet, View } from 'react-native';
 import BaseModel from '../../BaseModel';
@@ -19,6 +19,8 @@ import ChannelListItemPlaceholder from '../ChannelListItemPlaceholder';
 import ActivityPlaceHolder from '../../../newsfeed/ActivityPlaceHolder';
 import MText from '../MText';
 import { useNavigation } from '@react-navigation/core';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import { renderBackdrop } from '../bottom-sheet/BottomSheet';
 
 type Interactions =
   | 'upVotes'
@@ -102,11 +104,11 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
       this.visible = visible;
     },
     show() {
-      bottomSheetRef.current?.expand();
+      bottomSheetRef.current?.present();
       store.visible = true;
     },
     hide() {
-      bottomSheetRef.current?.close();
+      bottomSheetRef.current?.dismiss();
       /**
        * we don't turn visibility off, because then
        * the offsetlist will be unmounted and the data,
@@ -225,19 +227,20 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
     },
   }));
 
-  const close = React.useCallback(() => bottomSheetRef.current?.close(), [
+  const close = React.useCallback(() => bottomSheetRef.current?.dismiss(), [
     bottomSheetRef,
   ]);
 
   const onBottomSheetVisibilityChange = useCallback(
     (visible: number) => {
       const shouldShow = visible >= 0;
-
-      if (keepOpen && shouldShow) {
-        store.setVisibility(shouldShow);
-      } else {
-        store.setVisibility(shouldShow);
-      }
+      setTimeout(() => {
+        if (keepOpen && shouldShow) {
+          store.setVisibility(shouldShow);
+        } else {
+          store.setVisibility(shouldShow);
+        }
+      }, 500);
     },
     [keepOpen],
   );
@@ -292,11 +295,16 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
   ]);
 
   return (
-    <BottomSheet
+    <BottomSheetModal
       ref={bottomSheetRef}
       handleComponent={Header}
+      enablePanDownToClose={true}
+      backdropComponent={renderBackdrop}
+      enableContentPanningGesture={false}
+      enableHandlePanningGesture={true}
+      backgroundComponent={null}
       onChange={onBottomSheetVisibilityChange}
-      snapPoints={props.snapPoints}>
+      snapPoints={props.snapPoints || DEFAULT_SNAP_POINTS}>
       <View style={styles.container}>
         {store.visible && (
           <>
@@ -319,9 +327,11 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
           </>
         )}
       </View>
-    </BottomSheet>
+    </BottomSheetModal>
   );
 };
+
+const DEFAULT_SNAP_POINTS = ['80%'];
 
 const styles = ThemedStyles.create({
   container: ['bgPrimaryBackground', 'flexContainer'],

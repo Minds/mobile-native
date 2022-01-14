@@ -63,12 +63,7 @@ export default function ({ navigation }) {
     },
   ];
 
-  const legacy = [
-    {
-      title: i18n.t('messenger.legacyMessenger'),
-      onPress: useNavCallback('Messenger'),
-    },
-  ];
+  const legacy = [];
 
   if (showWallets) {
     legacy.push({
