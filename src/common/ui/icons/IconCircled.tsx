@@ -42,6 +42,6 @@ const styles = StyleSheet.create({
   container: {
     overflow: 'hidden',
     borderRadius: 200,
-    padding: UNIT.S * 0.75,
+    padding: UNIT.S * 0.8,
   },
 });

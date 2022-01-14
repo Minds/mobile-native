@@ -294,7 +294,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                                 Object {
                                   "borderRadius": 200,
                                   "overflow": "hidden",
-                                  "padding": 6,
+                                  "padding": 6.4,
                                 },
                                 Object {
                                   "backgroundColor": "#404e53",
@@ -373,7 +373,7 @@ exports[`Notifications Screen Component renders correctly 1`] = `
                             Object {
                               "borderRadius": 200,
                               "overflow": "hidden",
-                              "padding": 6,
+                              "padding": 6.4,
                             },
                             Object {
                               "backgroundColor": "#404e53",

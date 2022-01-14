@@ -9,8 +9,8 @@ import TopBar from '../TopBar';
 import i18n from '../../common/services/i18n.service';
 import NavigationService from '../../navigation/NavigationService';
 import MText from '../../common/components/MText';
-import DateTimePicker from '~/common/components/DateTimePicker';
 import { showNotification } from 'AppMessages';
+import DateTimePicker from '~/common/components/controls/DateTimePicker';
 
 /**
  * NSFW selector
