@@ -1,9 +1,10 @@
 //@ts-nocheck
-import { Platform } from 'react-native';
+import { Platform, PlatformIOSStatic } from 'react-native';
 
 import DeviceInfo from 'react-native-device-info';
 
 export const IS_IOS = Platform.OS === 'ios';
+export const IS_IPAD = (Platform as PlatformIOSStatic).isPad;
 export const ONCHAIN_ENABLED = true;
 
 // Send staging cookie to api

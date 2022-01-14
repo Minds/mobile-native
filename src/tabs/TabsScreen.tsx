@@ -27,6 +27,7 @@ import preventDoubleTap from '~/common/components/PreventDoubleTap';
 import NewsfeedStack from '~/navigation/NewsfeedStack';
 import MoreStack from '~/navigation/MoreStack';
 import DiscoveryStack from '~/navigation/DiscoveryStack';
+import { IS_IOS } from '~/config/Config';
 // import navigationService from '../navigation/NavigationService';
 
 const DoubleTapSafeTouchable = preventDoubleTap(TouchableOpacity);
@@ -212,7 +213,7 @@ const styles = ThemedStyles.create({
     alignSelf: 'center',
     justifyContent: 'center',
     height: 40,
-    marginBottom: 10,
+    marginBottom: IS_IOS ? 20 : 10,
   },
   buttonContainerFocused: {
     paddingTop: 17,
@@ -224,7 +225,7 @@ const styles = ThemedStyles.create({
     alignSelf: 'center',
     justifyContent: 'center',
     height: 40,
-    marginBottom: 10,
+    marginBottom: IS_IOS ? 20 : 10,
   },
   tabBar: [
     {

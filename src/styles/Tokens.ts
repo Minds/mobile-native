@@ -1,8 +1,4 @@
-import { Platform, PlatformIOSStatic } from 'react-native';
 import { initialWindowMetrics } from 'react-native-safe-area-context';
-
-export const IS_IOS = Platform.OS === 'ios';
-export const IS_IPAD = (Platform as PlatformIOSStatic).isPad;
 
 // current deviceInfo version has an async isTablet function
 // export const IS_TABLET = isTablet();
