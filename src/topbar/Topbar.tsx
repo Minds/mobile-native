@@ -86,9 +86,10 @@ export const styles = StyleSheet.create({
     // paddingBottom: 8,
   },
   logo: {
+    marginLeft: 4,
     marginTop: -12,
-    width: 130,
-    height: 45,
+    width: 118,
+    height: 40,
   },
   shadow: {
     zIndex: 999,
