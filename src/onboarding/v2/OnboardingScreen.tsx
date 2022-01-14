@@ -63,8 +63,8 @@ export default observer(function OnboardingScreen() {
       if (
         step &&
         !step.is_completed &&
-        newsfeed.feedStore.entities[0] &&
-        newsfeed.feedStore.entities[0].owner_guid ===
+        newsfeed.latestFeedStore.entities[0] &&
+        newsfeed.latestFeedStore.entities[0].owner_guid ===
           sessionService.getUser().guid
       ) {
         step.is_completed = true;

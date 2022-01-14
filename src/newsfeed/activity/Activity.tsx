@@ -25,6 +25,7 @@ import { showNotification } from '../../../AppMessages';
 import DeletedRemind from './DeletedRemind';
 import BottomContent from './BottomContent';
 import {
+  borderLessContainerStyle,
   containerStyle,
   onlyContentContainerStyle,
   remindBlockContainerStyle,
@@ -51,6 +52,7 @@ type PropsType = {
   showCommentsOutlet?: boolean;
   storeUserTap?: boolean;
   showOnlyContent?: boolean;
+  borderless?: boolean;
 };
 
 /**
@@ -244,6 +246,8 @@ export default class Activity extends Component<PropsType> {
             ? remindedContainerStyle
             : this.props.showOnlyContent
             ? onlyContentContainerStyle
+            : this.props.borderless
+            ? borderLessContainerStyle
             : containerStyle
         }
         onLayout={this.onLayout}>

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 import {
   TextStyle,
   ViewStyle,
@@ -38,7 +38,7 @@ export interface ButtonPropsType extends TouchableOpacityProps {
 /**
  * Custom Button component
  */
-const Button = props => {
+const Button: FC<ButtonPropsType> = props => {
   const theme = ThemedStyles.style;
 
   const {

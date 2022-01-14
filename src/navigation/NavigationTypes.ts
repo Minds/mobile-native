@@ -302,6 +302,7 @@ export type AppStackParamList = {
     pro?: boolean;
   };
   MultiUserScreen: {};
+  TopNewsfeed: {};
 };
 
 // types for channel edit screens

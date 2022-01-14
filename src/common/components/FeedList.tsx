@@ -33,12 +33,20 @@ type PropsType = {
   stickyHeaderHiddenOnScroll?: boolean;
   stickyHeaderIndices?: number[];
   ListEmptyComponent?: React.ReactNode;
-  onRefresh?: () => void;
+  /**
+   * a function to call on refresh. this replaces the feedList default refresh function
+   */
+  onRefresh?: () => Promise<any>;
+  /**
+   * refreshing state. overwrites the feedList's refreshing
+   */
+  refreshing?: Boolean;
   onScrollBeginDrag?: () => void;
   onMomentumScrollEnd?: () => void;
   afterRefresh?: () => void;
   onScroll?: (e: any) => void;
   refreshControlTintColor?: string;
+  onEndReached?: () => void;
 };
 
 /**
@@ -167,14 +175,12 @@ export default class FeedList<T> extends Component<PropsType> {
         data={!this.props.hideItems ? feedStore.entities.slice() : []}
         renderItem={renderRow}
         keyExtractor={this.keyExtractor}
-        onRefresh={this.refresh}
-        refreshing={feedStore.refreshing}
         onEndReached={this.loadMore}
         refreshControl={
           Boolean(this.props.refreshControlTintColor) ? (
             <RefreshControl
               tintColor={this.props.refreshControlTintColor}
-              refreshing={feedStore.refreshing}
+              refreshing={this.refreshing}
               onRefresh={this.refresh}
             />
           ) : undefined
@@ -192,6 +198,8 @@ export default class FeedList<T> extends Component<PropsType> {
         keyboardShouldPersistTaps="always"
         testID="feedlistCMP"
         {...passThroughProps}
+        onRefresh={this.refresh}
+        refreshing={this.refreshing}
         keyboardDismissMode="on-drag"
         onScroll={this.onScroll}
       />
@@ -270,12 +278,26 @@ export default class FeedList<T> extends Component<PropsType> {
   /**
    * Refresh feed data
    */
-  refresh = () => {
-    this.props.feedStore.refresh();
+  refresh = async () => {
+    if (this.props.onRefresh) {
+      await this.props.onRefresh();
+    } else {
+      await this.props.feedStore.refresh();
+    }
+
     if (this.props.afterRefresh) {
       this.props.afterRefresh();
     }
   };
+
+  /**
+   * returns refreshing based on props or feedStore
+   */
+  get refreshing() {
+    return typeof this.props.refreshing === 'boolean'
+      ? this.props.refreshing
+      : this.props.feedStore.refreshing;
+  }
 
   /**
    * Render activity

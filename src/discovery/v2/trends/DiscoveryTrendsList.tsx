@@ -70,7 +70,7 @@ export const DiscoveryTrendsList = observer(({ plus, store }: PropsType) => {
 
   const onRefresh = () => {
     store.refreshTrends(plus, false);
-    store.allFeed.refresh();
+    return store.allFeed.refresh();
   };
 
   const header = store.trends.length ? (

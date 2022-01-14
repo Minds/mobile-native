@@ -1,4 +1,4 @@
-import { action } from 'mobx';
+import { action, observable } from 'mobx';
 
 import NewsfeedService from './NewsfeedService';
 import ActivityModel from './ActivityModel';
@@ -13,11 +13,20 @@ class NewsfeedStore<T> {
   /**
    * Feed store
    */
-  feedStore: FeedStore = new FeedStore(true);
+  latestFeedStore: FeedStore = new FeedStore(true);
+  /**
+   * Feed store
+   */
+  topFeedStore: FeedStore = new FeedStore(true);
   /**
    * List reference
    */
   listRef?: FeedList<T>;
+  /**
+   * Refreshing state of the newsfeed.
+   * used to mix topFeed and latest feed refreshing state
+   */
+  @observable refreshing = false;
 
   service = new NewsfeedService();
 
@@ -44,10 +53,29 @@ class NewsfeedStore<T> {
    */
   onSubscriptionChange = (user: UserModel) => {
     if (!user.subscribed) {
-      this.feedStore.removeFromOwner(user.guid);
+      this.topFeedStore.removeFromOwner(user.guid);
+      this.latestFeedStore.removeFromOwner(user.guid);
     } else {
-      this.feedStore.refresh();
+      this.topFeedStore.refresh();
+      this.latestFeedStore.refresh();
     }
+  };
+
+  public loadFeed = async () => {
+    await this.topFeedStore.refresh();
+    await this.latestFeedStore.fetchLocalThenRemote(true);
+  };
+
+  @action
+  public refreshFeed = async () => {
+    this.refreshing = true;
+
+    await Promise.all([
+      this.topFeedStore.refresh(),
+      this.latestFeedStore.refresh(),
+    ]);
+
+    this.refreshing = false;
   };
 
   /**
@@ -69,26 +97,37 @@ class NewsfeedStore<T> {
   };
 
   buildStores() {
-    this.feedStore
+    this.latestFeedStore
       .getMetadataService()! // we ignore because the metadata is defined
       .setSource('feed/subscribed')
       .setMedium('feed');
 
-    this.feedStore
+    this.latestFeedStore
       .setEndpoint('api/v2/feeds/subscribed/activities')
       .setInjectBoost(true)
       .setLimit(12);
+
+    this.topFeedStore
+      .getMetadataService()! // we ignore because the metadata is defined
+      .setSource('feed/subscribed')
+      .setMedium('top-feed');
+
+    this.topFeedStore
+      .setEndpoint('api/v3/newsfeed/feed/unseen-top')
+      .setInjectBoost(false)
+      .setLimit(3);
   }
 
   prepend(entity: ActivityModel) {
     const model = ActivityModel.checkOrCreate(entity);
 
-    this.feedStore.prepend(model);
+    this.latestFeedStore.prepend(model);
   }
 
   @action
   reset() {
-    this.feedStore.reset();
+    this.latestFeedStore.reset();
+    this.topFeedStore.reset();
     this.buildStores();
   }
 }
