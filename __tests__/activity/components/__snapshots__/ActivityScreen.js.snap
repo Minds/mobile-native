@@ -2470,6 +2470,10 @@ exports[`Activity screen component renders correctly  1`] = `
         "reversed": true,
         "saving": false,
         "selectMediaType": [Function],
+        "selection": Object {
+          "end": 0,
+          "start": 0,
+        },
         "showInput": false,
         "socketRoomName": "",
         "text": "",
