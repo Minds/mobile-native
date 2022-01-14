@@ -265,6 +265,12 @@ build:androidproduction-playstore:
 .deploy_s3andbrowserstack: &deploy_s3andbrowserstack
   stage: deploy
   image: minds/ci:latest
+  cache:
+    key: '$CI_JOB_NAME-$CI_COMMIT_REF_SLUG'
+    paths:
+      - node_modules/
+  before_script:
+    - yarn install --frozen-lockfile
   script:
     - echo "Upload $APK_FILENAME"
     - aws s3 cp $APK_FILENAME s3://minds-repo/mobile/$APK_FILENAME
