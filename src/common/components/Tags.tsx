@@ -213,14 +213,20 @@ export default class Tags extends PureComponent<PropsType> {
    * Navigate to discovery
    */
   navToDiscovery = q => {
-    this.props.navigation.navigate('DiscoverySearch', { query: q });
+    this.props.navigation.navigate('Discovery', {
+      screen: 'DiscoverySearch',
+      params: { query: q },
+    });
   };
 
   /**
    * Navigate to discovery
    */
   navToChannel = q => {
-    this.props.navigation.push('Channel', { username: q });
+    this.props.navigation.push('App', {
+      screen: 'Channel',
+      params: { username: q },
+    });
   };
 
   navToURL = q => {

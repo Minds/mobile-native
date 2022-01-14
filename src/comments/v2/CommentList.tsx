@@ -134,6 +134,8 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
         ref={ref}
         data={props.store.comments.slice()}
         ListHeaderComponent={Header}
+        onRefresh={props.store.refresh}
+        refreshing={props.store.refreshing}
         ListFooterComponent={Footer}
         keyExtractor={keyExtractor}
         initialNumToRender={4}

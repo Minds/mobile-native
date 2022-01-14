@@ -42,7 +42,10 @@ const ChannelListItem = (props: PropsType) => {
       if (props.channel.isOpen() && !props.channel.can(FLAG_VIEW, true)) {
         return;
       }
-      props.navigation.push('Channel', { entity: props.channel });
+      props.navigation.push('App', {
+        screen: 'Channel',
+        params: { entity: props.channel },
+      });
     }
   }, [props]);
 

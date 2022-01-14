@@ -17,7 +17,6 @@ import TabsScreen from '../tabs/TabsScreen';
 import NotificationsScreen from '../notifications/v3/NotificationsScreen';
 import ActivityScreen from '../newsfeed/ActivityScreen';
 import ChannelSubscribers from '../channel/subscribers/ChannelSubscribers';
-import ConversationScreen from '../messenger/ConversationScreen';
 import GroupViewScreen from '../groups/GroupViewScreen';
 import BlogsViewScreen from '../blogs/BlogsViewScreen';
 import FabScreenV2 from '../wire/v2/FabScreen';
@@ -67,11 +66,11 @@ import SearchScreen from '../topbar/searchbar/SearchScreen';
 import PasswordConfirmScreen from '../auth/PasswordConfirmScreen';
 import TwoFactorConfirmScreen from '../auth/TwoFactorConfirmScreen';
 import RecoveryCodeUsedScreen from '../auth/twoFactorAuth/RecoveryCodeUsedScreen';
-import MessengerScreen from '../messenger/MessengerScreen';
 import ChannelEditScreen from '../channel/v2/edit/ChannelEditScreen';
 import MultiUserScreen from '../auth/multi-user/MultiUserScreen';
 import RelogScreen from '../auth/RelogScreen';
 import ChooseBrowserModalScreen from '~/settings/screens/ChooseBrowserModalScreen';
+import withModalProvider from './withModalProvide';
 
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 
@@ -100,6 +99,13 @@ export const InternalStack = () => {
   );
 };
 
+const TabScreenWithModal = withModalProvider(TabsScreen);
+const PortraitViewerScreenWithModal = withModalProvider(PortraitViewerScreen);
+const ChannelScreenV2WithModal = withModalProvider(ChannelScreenV2);
+const ActivityScreenWithModal = withModalProvider(ActivityScreen);
+const GroupViewScreenWithModal = withModalProvider(GroupViewScreen);
+const BlogsViewScreenWithModal = withModalProvider(BlogsViewScreen);
+
 const AppStack = function () {
   const statusBarStyle =
     ThemedStyles.theme === 0 ? 'dark-content' : 'light-content';
@@ -112,12 +118,12 @@ const AppStack = function () {
       <AppStackNav.Navigator screenOptions={ThemedStyles.defaultScreenOptions}>
         <AppStackNav.Screen
           name="Main"
-          component={TabsScreen}
+          component={TabScreenWithModal}
           options={hideHeader}
         />
         <AppStackNav.Screen
           name="PortraitViewerScreen"
-          component={PortraitViewerScreen}
+          component={PortraitViewerScreenWithModal}
           options={{
             animation: 'fade_from_bottom',
             ...hideHeader,
@@ -127,11 +133,6 @@ const AppStack = function () {
           name="ExportLegacyWallet"
           component={ExportLegacyWallet}
           options={{ title: 'Export Wallet' }}
-        />
-        <AppStackNav.Screen
-          name="Messenger"
-          component={MessengerScreen}
-          options={{ title: i18n.t('messenger.legacyMessenger') }}
         />
         <AppStackNav.Screen
           name="CustomMonetize"
@@ -153,7 +154,7 @@ const AppStack = function () {
         />
         <AppStackNav.Screen
           name="Channel"
-          component={ChannelScreenV2}
+          component={ChannelScreenV2WithModal}
           options={hideHeader}
         />
         <AppStackNav.Screen
@@ -167,22 +168,18 @@ const AppStack = function () {
         />
         <AppStackNav.Screen
           name="Activity"
-          component={ActivityScreen}
+          component={ActivityScreenWithModal}
           options={hideHeader}
-        />
-        <AppStackNav.Screen
-          name="Conversation"
-          component={ConversationScreen}
         />
         <AppStackNav.Screen name="Subscribers" component={ChannelSubscribers} />
         <AppStackNav.Screen
           name="GroupView"
-          component={GroupViewScreen}
+          component={GroupViewScreenWithModal}
           options={hideHeader}
         />
         <AppStackNav.Screen
           name="BlogView"
-          component={BlogsViewScreen}
+          component={BlogsViewScreenWithModal}
           options={hideHeader}
         />
         <AppStackNav.Screen
