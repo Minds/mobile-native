@@ -260,6 +260,7 @@
     "maxHashtags": "Sorry, your post cannot contain more than {{maxHashtags}} hashtags.",
     "duplicateHashtagas": "You have some duplicate hashtags",
     "schedule": "Schedule Post",
+    "scheduleError": "The selected date should be in the future",
     "post": "Post",
     "remind": "Remind",
     "placeholder": "Speak your mind...",
