@@ -4,6 +4,7 @@ import _ from 'lodash';
 import React, { PureComponent } from 'react';
 
 import { TextStyle } from 'react-native';
+import NavigationService from '~/navigation/NavigationService';
 import ThemedStyles from '../../styles/ThemedStyles';
 
 import openUrlService from '../services/open-url.service';
@@ -213,20 +214,31 @@ export default class Tags extends PureComponent<PropsType> {
    * Navigate to discovery
    */
   navToDiscovery = q => {
-    this.props.navigation.navigate('Discovery', {
-      screen: 'DiscoverySearch',
-      params: { query: q },
-    });
+    if (this.props.navigation === NavigationService) {
+      this.props.navigation.navigate('App', {
+        screen: 'DiscoverySearch',
+        params: { query: q },
+      });
+    } else {
+      this.props.navigation.navigate('Discovery', {
+        screen: 'DiscoverySearch',
+        params: { query: q },
+      });
+    }
   };
 
   /**
    * Navigate to discovery
    */
   navToChannel = q => {
-    this.props.navigation.push('App', {
-      screen: 'Channel',
-      params: { username: q },
-    });
+    if (this.props.navigation === NavigationService) {
+      this.props.navigation.push('App', {
+        screen: 'Channel',
+        params: { username: q },
+      });
+    } else {
+      this.props.navigation.push('Channel', { username: q });
+    }
   };
 
   navToURL = q => {

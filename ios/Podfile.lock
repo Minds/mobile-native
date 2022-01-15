@@ -305,7 +305,7 @@ PODS:
   - react-native-mmkv-storage (0.6.8):
     - MMKV (= 1.2.10)
     - React-Core
-  - react-native-month-year-picker (1.6.4):
+  - react-native-month-year-picker (1.8.0):
     - React
   - react-native-netinfo (5.9.10):
     - React-Core
@@ -873,7 +873,7 @@ SPEC CHECKSUMS:
   react-native-image-filter-kit: d79137549eb44f8215b7f2be5e77213f605e2c92
   react-native-measure-text-size: df17d060f981d8ec652aa3118e37322bd7019bd5
   react-native-mmkv-storage: 97ec49dd76cd9823120376677f59f34508ebf708
-  react-native-month-year-picker: 9a59b4b8c4802a23123b0ce4ccadce880ad55f8a
+  react-native-month-year-picker: 2f00a9c261a86a39e14cafd02f4c319ac0fe7fe6
   react-native-netinfo: 30fb89fa913c342be82a887b56e96be6d71201dd
   react-native-notifications: b67765827723f605d9267922977c8b0ad93e96ee
   react-native-orientation-locker: 998c0744e26624407dac068c04c605b4af7304a2

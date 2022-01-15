@@ -71,6 +71,7 @@ import MultiUserScreen from '../auth/multi-user/MultiUserScreen';
 import RelogScreen from '../auth/RelogScreen';
 import ChooseBrowserModalScreen from '~/settings/screens/ChooseBrowserModalScreen';
 import withModalProvider from './withModalProvide';
+import { DiscoverySearchScreen } from '~/discovery/v2/search/DiscoverySearchScreen';
 
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 
@@ -156,6 +157,10 @@ const AppStack = function () {
           name="Channel"
           component={ChannelScreenV2WithModal}
           options={hideHeader}
+        />
+        <AppStackNav.Screen
+          name="DiscoverySearch"
+          component={DiscoverySearchScreen}
         />
         <AppStackNav.Screen
           name="ChannelEdit"
