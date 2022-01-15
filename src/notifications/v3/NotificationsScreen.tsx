@@ -34,31 +34,22 @@ type NotificationList = {
   'load-next': string;
 };
 
-const updateState = (newData: NotificationList, oldData: NotificationList) => {
-  if (newData && newData.notifications) {
-    newData.notifications = newData.notifications.map(
-      (notification: NotificationModel) => {
-        notification = NotificationModel.create(notification);
-        if (notification.from) {
-          notification.from = UserModel.create(notification.from);
-        }
-        if (notification.merged_from && notification.merged_from.length > 0) {
-          notification.merged_from = UserModel.createMany(
-            notification.merged_from,
-          );
-        }
-        return notification;
-      },
-    );
-    return {
-      ...newData,
-      notifications: [
-        ...(oldData ? oldData.notifications : []),
-        ...newData.notifications,
-      ],
-    } as NotificationList;
+const map = data => {
+  if (data) {
+    return data.map((notification: NotificationModel) => {
+      notification = NotificationModel.create(notification);
+      if (notification.from) {
+        notification.from = UserModel.create(notification.from);
+      }
+      if (notification.merged_from && notification.merged_from.length > 0) {
+        notification.merged_from = UserModel.createMany(
+          notification.merged_from,
+        );
+      }
+      return notification;
+    });
   }
-  return { notifications: [] };
+  return [];
 };
 
 const NotificationsScreen = observer(({ navigation }: PropsType) => {
@@ -80,7 +71,8 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
     setResult,
   } = useApiFetch<NotificationList>('api/v3/notifications/list', {
     params,
-    updateState,
+    dataField: 'notifications',
+    map,
   });
 
   const insets = useSafeAreaInsets();
@@ -154,14 +146,9 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
   );
 
   const ListEmptyComponent = React.useMemo(() => {
-    if (error && !loading) {
+    if (error && !loading && !isRefreshing) {
       return (
-        <View>
-          <NotificationsTopBar
-            store={notifications}
-            setResult={setResult}
-            refresh={refresh}
-          />
+        <View style={styles.errorContainerStyle}>
           <MText style={styles.errorStyle} onPress={() => fetch()}>
             {i18n.t('cantReachServer') + '\n'}
             <MText style={styles.errorText}>{i18n.t('tryAgain')}</MText>
@@ -170,7 +157,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
       );
     }
 
-    if (loading && !isRefreshing) {
+    if (loading || isRefreshing) {
       return (
         <View>
           <NotificationPlaceHolder />
@@ -183,7 +170,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
       );
     }
     return (
-      <View>
+      <View style={styles.errorContainerStyle}>
         <EmptyList text={i18n.t(`notification.empty.${filter || 'all'}`)} />
       </View>
     );
@@ -201,7 +188,6 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
         <NotificationItem
           notification={notification}
           onShowSubscribers={() => {
-            console.log('onShowSubscribers');
             interactionsBottomSheetRef.current?.show('subscribers');
           }}
         />
@@ -259,11 +245,7 @@ export default NotificationsScreen;
 const styles = ThemedStyles.create({
   containerStyle: { flexGrow: 1 },
   container: ['bgPrimaryBackground', 'flexContainer'],
-  errorStyle: [
-    'colorSecondaryText',
-    'textCenter',
-    'fontXL',
-    'marginVertical4x',
-  ],
+  errorContainerStyle: ['marginVertical8x', { flexGrow: 1 }],
+  errorStyle: ['colorSecondaryText', 'textCenter', 'fontXL'],
   errorText: ['colorLink', 'marginTop2x'],
 });
