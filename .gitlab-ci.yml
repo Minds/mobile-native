@@ -170,6 +170,7 @@ build:android-mr-production:
       - .android/build-cache/
   before_script:
     - cp android/app/debug.keystore android/debug.keystore
+    - export ENVFILE=".env.staging"
     - export ANDROID_SDK_HOME=$CI_PROJECT_DIR
     - export GRADLE_USER_HOME="$CI_PROJECT_DIR/.gradle"
     - sudo sysctl fs.inotify.max_user_watches=524288

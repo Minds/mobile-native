@@ -1,6 +1,6 @@
 //@ts-nocheck
 import { Platform, PlatformIOSStatic } from 'react-native';
-
+import RNConfig from 'react-native-config';
 import DeviceInfo from 'react-native-device-info';
 
 export const IS_IOS = Platform.OS === 'ios';
@@ -8,7 +8,7 @@ export const IS_IPAD = (Platform as PlatformIOSStatic).isPad;
 export const ONCHAIN_ENABLED = true;
 
 // Send staging cookie to api
-export const MINDS_STAGING = false;
+export const MINDS_STAGING = RNConfig.ENV === 'staging';
 export const MINDS_CANARY = false;
 
 // network timeout time
