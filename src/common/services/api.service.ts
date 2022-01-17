@@ -1,3 +1,4 @@
+import { storages } from '~/common/services/storage/storages.service';
 import Cancelable from 'promise-cancelable';
 import axios, { AxiosInstance, AxiosResponse, CancelTokenSource } from 'axios';
 import { NativeModules } from 'react-native';
@@ -30,6 +31,7 @@ import { observable, action } from 'mobx';
 import { UserError } from '../UserError';
 import i18n from './i18n.service';
 import NavigationService from '../../navigation/NavigationService';
+import { EXPERIMENTS_ID } from '~/settings/screens/DevToolsScreen';
 
 export interface ApiResponse {
   status: 'success' | 'error';
@@ -344,6 +346,11 @@ export class ApiService {
 
     if (MINDS_STAGING) {
       headers.Cookie = `${headers.Cookie};staging=1`;
+
+      const experimentsId = storages.app.getString(EXPERIMENTS_ID);
+      if (experimentsId) {
+        headers.Cookie = `${headers.Cookie};experiments_id=${experimentsId}`;
+      }
     }
     if (MINDS_CANARY) {
       headers.Cookie = `${headers.Cookie};canary=1`;

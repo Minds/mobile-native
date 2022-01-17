@@ -96,6 +96,7 @@ export type MoreStackParamList = {
     password: string;
   };
   ChooseBrowser: {};
+  DevTools: {};
 };
 
 export type RootStackParamList = {
