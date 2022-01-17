@@ -94,7 +94,7 @@ class AuthService {
     }
 
     if (responseHeaders && responseHeaders['set-cookie']) {
-      const regex = /minds_psudeoid=([^;]*);/g;
+      const regex = /minds_pseudoid=([^;]*);/g;
       const result = regex.exec(responseHeaders['set-cookie'].join());
       if (result && result[1]) {
         data.pseudo_id = result[1];
