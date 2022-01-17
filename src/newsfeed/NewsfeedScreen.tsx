@@ -20,6 +20,7 @@ import NewsfeedHeader from './NewsfeedHeader';
 import type NewsfeedStore from './NewsfeedStore';
 import i18nService from '~/common/services/i18n.service';
 import { storages } from '~/common/services/storage/storages.service';
+import Experiment from '~/common/components/Experiment';
 import { Button } from '~/common/ui';
 
 const FEED_TYPE_KEY = 'newsfeed:feedType';
@@ -133,14 +134,18 @@ class NewsfeedScreen extends Component<PropsType> {
         <CheckLanguage />
         <InitialOnboardingButton />
         <PortraitContentBar ref={this.portraitBar} />
-        <NewsfeedHeader
-          feedType={this.state.feedType}
-          onFeedTypeChange={this.handleFeedTypeChange}
-        />
+        <Feature feature="top-feed">
+          <Experiment experiment="top-feed-2" variation="on">
+            <NewsfeedHeader
+              feedType={this.state.feedType}
+              onFeedTypeChange={this.handleFeedTypeChange}
+            />
 
-        {this.state.feedType === 'top' && (
-          <TopFeedMini feed={newsfeed.topFeedStore} />
-        )}
+            {this.state.feedType === 'top' && (
+              <TopFeedMini feed={newsfeed.topFeedStore} />
+            )}
+          </Experiment>
+        </Feature>
       </View>
     );
 
