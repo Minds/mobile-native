@@ -8,6 +8,7 @@ import Button from '../../../Button';
 import ThemedStyles from '../../../../../styles/ThemedStyles';
 import MText from '../../../MText';
 import { useBackHandler } from '@react-native-community/hooks';
+import InputContainer from '~/common/components/InputContainer';
 
 type PropsType = {};
 
@@ -22,30 +23,23 @@ const ConfirmNumber = observer(({}: PropsType) => {
   );
 
   return (
-    <View>
+    <>
       <MText style={localStyles.codeSent}>{`${i18n.t('onboarding.codeSent')} ${
         store?.phone
       }`}</MText>
-      <View style={styles.mainContainer}>
-        <MText style={styles.label}>
-          {i18n.t('onboarding.confirmationCode')}
-        </MText>
-        {Boolean(store?.error) && (
-          <MText style={styles.error}>{store?.error}</MText>
-        )}
-        <TextInput
-          value={store?.code}
-          onChangeText={store?.setCode}
-          keyboardType="numeric"
-          style={ThemedStyles.style.colorPrimaryText}
-        />
-      </View>
+      <InputContainer
+        placeholder={i18n.t('onboarding.confirmationCode')}
+        onChangeText={store?.setCode}
+        value={store?.code}
+        keyboardType="numeric"
+        error={store?.error}
+      />
       <Button
         text={i18n.t('confirm')}
         containerStyle={styles.buttonContainer}
         onPress={store?.confirmAction}
       />
-    </View>
+    </>
   );
 });
 
