@@ -11,6 +11,7 @@ const TopNewsfeedScreen: FC<any> = ({ navigation }) => {
       <Topbar
         navigation={navigation}
         title={i18nService.t('newsfeed.topPosts')}
+        showBack
       />
       <FeedList feedStore={feedStore} navigation={navigation} />
     </>

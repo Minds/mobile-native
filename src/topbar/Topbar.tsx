@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, View, Platform, Image, ViewStyle } from 'react-native';
-import { IconCircled, Spacer, H1 } from '~ui';
+import { IconCircled, Spacer, H1, IconButton } from '~ui';
 import { observer } from 'mobx-react';
 import ThemedStyles from '../styles/ThemedStyles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -16,6 +16,7 @@ type PropsType = {
   navigation: any;
   title?: string;
   noInsets?: boolean;
+  showBack?: boolean;
 };
 
 export const Topbar = observer((props: PropsType) => {
@@ -44,6 +45,15 @@ export const Topbar = observer((props: PropsType) => {
       <View style={container}>
         <View style={styles.topbar}>
           <View style={styles.topbarLeft}>
+            {props.showBack && (
+              <IconButton
+                name="chevron-left"
+                size="huge"
+                right="S"
+                color="White"
+                onPress={() => props.navigation.goBack()}
+              />
+            )}
             {!!props.title ? (
               <H1>{props.title}</H1>
             ) : (
