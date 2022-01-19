@@ -1,6 +1,6 @@
 import { autorun } from 'mobx';
 import { observer, useLocalStore } from 'mobx-react';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import { Image, Platform, TouchableOpacity, View } from 'react-native';
 import FastImage, { ResizeMode, Source } from 'react-native-fast-image';
 import ProgressCircle from 'react-native-progress/CircleSnail';
@@ -118,6 +118,7 @@ const SmartImage = observer(function (props: SmartImageProps) {
  */
 const ImageOverlay: FC<{ visible: boolean }> = ({ visible, ...props }) => {
   const theme = ThemedStyles.style;
+  const previousVisibility = useRef<boolean | null>(null);
   const [shouldRender, setShouldRender] = useState(true);
   const showOverlayTransition = useTimingTransition(visible, {
     duration: 150,
@@ -125,13 +126,14 @@ const ImageOverlay: FC<{ visible: boolean }> = ({ visible, ...props }) => {
   const opacity = mix(showOverlayTransition, 0, 1);
 
   useEffect(() => {
-    if (!visible) {
+    if (!visible && previousVisibility.current === true) {
       setTimeout(() => {
         setShouldRender(false);
       }, 150);
     } else {
       setShouldRender(true);
     }
+    previousVisibility.current = visible;
   }, [visible]);
 
   if (!shouldRender) {
@@ -231,7 +233,6 @@ const createSmartImageStore = props => {
       }
       this.progress = undefined;
       this.retries = 0;
-
       if (props.onLoadEnd) {
         props.onLoadEnd();
       }
@@ -261,12 +262,17 @@ const createSmartImageStore = props => {
       if (!props.source.uri) {
         return false;
       }
-      //@ts-ignore
-      const cached = await FastImage.getCachePath({
-        uri: props.source.uri,
-      });
 
-      return cached;
+      try {
+        //@ts-ignore
+        const cached = await FastImage.getCachePath({
+          uri: props.source.uri,
+        });
+
+        return cached;
+      } catch (e) {}
+
+      return false;
     },
     // shows image if cache exists and shows overlay if it didn't
     async onInit() {
