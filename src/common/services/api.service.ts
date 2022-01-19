@@ -18,6 +18,7 @@ export type TwoFactorType = 'sms' | 'email' | 'totp';
 
 import session, { isTokenExpired } from './session.service';
 import {
+  EXPERIMENTS_ID,
   MINDS_API_URI,
   MINDS_CANARY,
   MINDS_STAGING,
@@ -31,7 +32,6 @@ import { observable, action } from 'mobx';
 import { UserError } from '../UserError';
 import i18n from './i18n.service';
 import NavigationService from '../../navigation/NavigationService';
-import { EXPERIMENTS_ID } from '~/settings/screens/DevToolsScreen';
 
 export interface ApiResponse {
   status: 'success' | 'error';
@@ -344,13 +344,11 @@ export class ApiService {
       ...customHeaders,
     };
 
+    if (EXPERIMENTS_ID) {
+      headers.Cookie = `${headers.Cookie};experiments_id=${EXPERIMENTS_ID}`;
+    }
     if (MINDS_STAGING) {
       headers.Cookie = `${headers.Cookie};staging=1`;
-
-      const experimentsId = storages.app.getString(EXPERIMENTS_ID);
-      if (experimentsId) {
-        headers.Cookie = `${headers.Cookie};experiments_id=${experimentsId}`;
-      }
     }
     if (MINDS_CANARY) {
       headers.Cookie = `${headers.Cookie};canary=1`;

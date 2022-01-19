@@ -72,6 +72,8 @@ import RelogScreen from '../auth/RelogScreen';
 import ChooseBrowserModalScreen from '~/settings/screens/ChooseBrowserModalScreen';
 import withModalProvider from './withModalProvide';
 import { DiscoverySearchScreen } from '~/discovery/v2/search/DiscoverySearchScreen';
+import DevToolsScreen from '~/settings/screens/DevToolsScreen';
+import { IS_REVIEW } from '~/config/Config';
 
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 
@@ -436,6 +438,14 @@ const RootStack = function (props) {
         component={MultiUserRegisterScreen}
         options={modalOptions}
       />
+
+      {IS_REVIEW && (
+        <RootStackNav.Screen
+          name="DevTools"
+          component={DevToolsScreen}
+          options={modalOptions}
+        />
+      )}
     </RootStackNav.Navigator>
   );
 };

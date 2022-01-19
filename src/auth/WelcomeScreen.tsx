@@ -3,7 +3,8 @@ import React, { useCallback } from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Button } from '~ui';
+import MText from '~/common/components/MText';
+import { B1, Button } from '~ui';
 import i18n from '../common/services/i18n.service';
 import { AuthStackParamList } from '../navigation/NavigationTypes';
 import ThemedStyles from '../styles/ThemedStyles';
@@ -41,6 +42,11 @@ export default function WelcomeScreen(props: PropsType) {
     }
   }, [code, username]);
 
+  const openDevtools = useCallback(
+    () => props.navigation.navigate('DevTools'),
+    [props.navigation],
+  );
+
   return (
     <SafeAreaView style={theme.flexContainer}>
       <View style={theme.flexColumnStretch}>
@@ -65,9 +71,18 @@ export default function WelcomeScreen(props: PropsType) {
         </View>
       </View>
       <ResetPasswordModal ref={resetRef} />
+
+      <MText style={devtoolsStyle} onPress={openDevtools}>
+        Dev Options
+      </MText>
     </SafeAreaView>
   );
 }
+
+const devtoolsStyle = ThemedStyles.combine(
+  'positionAbsoluteTopRight',
+  'padding5x',
+);
 
 const styles = StyleSheet.create({
   bulb: {

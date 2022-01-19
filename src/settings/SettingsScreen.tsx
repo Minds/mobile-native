@@ -11,7 +11,7 @@ import sessionService from '../common/services/session.service';
 import apiService from '../common/services/api.service';
 import ThemedStyles from '../styles/ThemedStyles';
 import { ScreenHeader, Screen } from '~/common/ui/screen';
-import { MINDS_STAGING } from '~/config/Config';
+import { IS_REVIEW } from '~/config/Config';
 
 /**
  * Retrieves the link & jwt for zendesk and navigate to it.
@@ -126,7 +126,7 @@ export default function ({ navigation }) {
     },
   ];
 
-  if (MINDS_STAGING) {
+  if (IS_REVIEW) {
     secondSection.push({
       title: 'Developer Options',
       screen: 'DevTools',

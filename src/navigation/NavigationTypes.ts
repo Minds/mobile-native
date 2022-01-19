@@ -167,6 +167,7 @@ export type RootStackParamList = {
     onLogin?: Function;
     onCancel?: Function;
   };
+  DevTools: {};
 };
 
 export type AuthStackParamList = {

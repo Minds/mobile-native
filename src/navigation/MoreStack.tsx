@@ -37,14 +37,13 @@ import DisableTFA from '../auth/twoFactorAuth/DisableTFA';
 import PushNotificationsSettings from '../notifications/v3/settings/push/PushNotificationsSettings';
 import EmailNotificationsSettings from '../notifications/v3/settings/email/EmailNotificationsSettings';
 import ChooseBrowserScreen from '~/settings/screens/ChooseBrowserScreen';
-import { IS_IOS, MINDS_STAGING } from '~/config/Config';
+import { IS_IOS } from '~/config/Config';
 import ReferralsScreen from '~/referral/ReferralsScreen';
 import BoostConsoleScreen from '~/boost/BoostConsoleScreen';
 import OtherScreen from '~/settings/screens/OtherScreen';
 import EmailScreen from '~/settings/screens/EmailScreen';
 import DataSaverScreen from '~/settings/screens/DataSaverScreen';
 import ResourcesScreen from '~/settings/screens/ResourcesScreen';
-import DevToolsScreen from '~/settings/screens/DevToolsScreen';
 
 const MoreStack = createNativeStackNavigator<MoreStackParamList>();
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
@@ -330,13 +329,6 @@ export default function () {
         options={{ title: i18n.t('settings.otherOptions.a1') }}
       />
       <MoreStack.Screen name="AppInfo" component={AppInfoScreen} />
-      {MINDS_STAGING && (
-        <MoreStack.Screen
-          name="DevTools"
-          component={DevToolsScreen}
-          options={{ title: 'Developer Options' }}
-        />
-      )}
     </MoreStack.Navigator>
   );
 }
