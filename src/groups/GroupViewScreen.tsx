@@ -32,7 +32,6 @@ import {
 import ThemedStyles from '../styles/ThemedStyles';
 import sessionService from '../common/services/session.service';
 import ExplicitOverlay from '../common/components/explicit/ExplicitOverlay';
-import CommentBottomSheet from '../comments/v2/CommentBottomSheet';
 import ActivityModel from '../newsfeed/ActivityModel';
 import BottomSheetModal from '../common/components/bottom-sheet/BottomSheetModal';
 import MenuItem, {
@@ -66,8 +65,6 @@ export default class GroupViewScreen extends Component {
     member: null,
   };
 
-  commentsRef;
-
   actionSheetRef = React.createRef();
 
   /**
@@ -79,7 +76,6 @@ export default class GroupViewScreen extends Component {
 
   constructor(props) {
     super(props);
-    this.commentsRef = React.createRef();
     this.props.groupView.reset();
   }
 
@@ -114,12 +110,6 @@ export default class GroupViewScreen extends Component {
     this.props.groupView.group.sendViewed('single');
 
     this.props.groupView.loadTopMembers();
-
-    if (this.props.route.params && this.props.route.params.focusedUrn) {
-      setTimeout(() => {
-        this.openComments();
-      }, 300);
-    }
   }
 
   /**
@@ -203,7 +193,6 @@ export default class GroupViewScreen extends Component {
           styles={styles}
           ref={this.headerRefHandler}
           navigation={this.props.navigation}
-          onPressComment={this.openComments}
         />
         {this.getBackIcon()}
       </View>
@@ -456,14 +445,6 @@ export default class GroupViewScreen extends Component {
             />
           )}
           {memberActionSheet}
-          {this.props.groupView.comments && (
-            <CommentBottomSheet
-              title={i18n.t('conversation')}
-              ref={this.commentsRef}
-              hideContent={!this.state.conversationIsOpen}
-              commentsStore={this.props.groupView.comments}
-            />
-          )}
         </GroupContext.Provider>
       </View>
     );
