@@ -67,14 +67,14 @@ const styles = StyleSheet.create({
     zIndex: 9999,
     opacity: 1,
     position: 'absolute',
-    top: 1,
+    top: -1,
     left: 15,
   },
   unread: {
     zIndex: 9999,
     opacity: 1,
     position: 'absolute',
-    top: 3.5,
+    top: 1.5,
     left: 17,
   },
 });
