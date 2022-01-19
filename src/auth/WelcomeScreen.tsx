@@ -4,7 +4,7 @@ import { Dimensions, StyleSheet, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import MText from '~/common/components/MText';
-import { B1, Button } from '~ui';
+import { Button } from '~ui';
 import i18n from '../common/services/i18n.service';
 import { AuthStackParamList } from '../navigation/NavigationTypes';
 import ThemedStyles from '../styles/ThemedStyles';
