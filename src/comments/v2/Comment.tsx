@@ -21,6 +21,7 @@ import { LIGHT_THEME } from '../../styles/Colors';
 import ReadMore from '../../common/components/ReadMore';
 import Translate from '../../common/components/translate/Translate';
 import MText from '../../common/components/MText';
+import NavigationService from '~/navigation/NavigationService';
 
 type PropsType = {
   comment: CommentModel;
@@ -142,7 +143,7 @@ export default observer(function Comment(props: PropsType) {
               <>
                 <ReadMore
                   numberOfLines={6}
-                  navigation={navigation}
+                  navigation={NavigationService}
                   text={entities.decodeHTML(props.comment.description)}
                   renderTruncatedFooter={renderTruncatedFooter}
                   renderRevealedFooter={renderRevealedFooter}
@@ -182,12 +183,14 @@ export default observer(function Comment(props: PropsType) {
             />
             {canReply && <ReplyAction size={16} onPressReply={reply} />}
             <View style={theme.flexContainer} />
-            <CommentBottomMenu
-              store={props.store}
-              entity={props.store.entity}
-              comment={props.comment}
-              onTranslate={translate}
-            />
+            {!props.isHeader && (
+              <CommentBottomMenu
+                store={props.store}
+                entity={props.store.entity}
+                comment={props.comment}
+                onTranslate={translate}
+              />
+            )}
           </View>
           {!!props.comment.replies_count && !props.hideReply && (
             <TouchableOpacity onPress={viewReply} style={theme.marginBottom3x}>
@@ -218,14 +221,16 @@ export default observer(function Comment(props: PropsType) {
               {i18n.t('confirm18')}
             </MText>
           </TouchableOpacity>
-          <View style={[theme.rowJustifyEnd, theme.padding3x]}>
-            <CommentBottomMenu
-              store={props.store}
-              entity={props.store.entity}
-              comment={props.comment}
-              onTranslate={translate}
-            />
-          </View>
+          {!props.isHeader && (
+            <View style={[theme.rowJustifyEnd, theme.padding3x]}>
+              <CommentBottomMenu
+                store={props.store}
+                entity={props.store.entity}
+                comment={props.comment}
+                onTranslate={translate}
+              />
+            </View>
+          )}
         </View>
       )}
     </View>

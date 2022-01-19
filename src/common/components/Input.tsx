@@ -6,7 +6,7 @@ import InfoPopup from './InfoPopup';
 import ThemedStyles from '../../styles/ThemedStyles';
 import TextInput from './TextInput';
 import MText from './MText';
-import DatePicker from './DatePicker';
+import DatePicker from './controls/DatePicker';
 import ErrorBoundary from './ErrorBoundary';
 
 export interface PropsType extends TextInputProps {

@@ -192,12 +192,12 @@ export type AuthStackParamList = {
 };
 
 export type AppStackParamList = {
+  DiscoverySearch: { query: string; plus?: boolean; q?: string; f?: string };
   PortraitViewerScreen: {
     items: Array<PortraitBarItem>;
     index: number;
   };
   ExportLegacyWallet: {};
-  Messenger: {};
   Fab: {
     disableThresholdCheck?: boolean;
     owner: UserModel;
@@ -220,7 +220,6 @@ export type AppStackParamList = {
   ActivityFullScreenNav: {};
   Newsfeed: {};
   Main: {};
-
   TagSelector: {};
   NsfwSelector: {};
   ScheduleSelector: {};

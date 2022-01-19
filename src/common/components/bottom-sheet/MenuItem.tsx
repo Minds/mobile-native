@@ -12,7 +12,7 @@ export type MenuItemProps = {
   iconType?: IconType;
   iconSize?: number;
   testID?: string;
-  onPress: () => void;
+  onPress?: () => void;
   style?: any;
   textStyle?: any;
 };
@@ -33,7 +33,11 @@ const MenuItem = ({
   const containerStyle = useStyle(styles.menuContainer, style);
 
   return (
-    <MPressable style={containerStyle} onPress={onPress} testID={testID}>
+    <MPressable
+      style={containerStyle}
+      onPress={onPress}
+      testID={testID}
+      disabled={!onPress}>
       {Boolean(iconName) && (
         <View style={styles.iconContainer}>
           <Icon

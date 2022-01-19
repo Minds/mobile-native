@@ -1,12 +1,12 @@
-//@ts-nocheck
 import React, { useCallback } from 'react';
-import { Text, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native';
 import MenuItem from '../../common/components/menus/MenuItem';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
 import MenuSubtitle from '../../common/components/menus/MenuSubtitle';
 import NavigationService from '../../navigation/NavigationService';
 import featuresService from '../../common/services/features.service';
+import { getExportableWallets } from '~/blockchain/ExportOldWallet';
 
 function useNavCallback(screen) {
   return useCallback(() => {
@@ -15,7 +15,13 @@ function useNavCallback(screen) {
 }
 
 export default function ({ navigation }) {
-  const theme = ThemedStyles.style;
+  const [showWallets, setShowWallets] = React.useState(false);
+  React.useEffect(() => {
+    getExportableWallets(true).then(w => {
+      console.log('wallets', w);
+      setShowWallets(w?.length > 0);
+    });
+  }, []);
 
   const contentAdmin = [
     /*{
@@ -57,16 +63,16 @@ export default function ({ navigation }) {
     },
   ];
 
-  const legacy = [
-    {
+  const legacy = [];
+
+  if (showWallets) {
+    legacy.push({
       title: i18n.t('blockchain.exportLegacyWallet'),
-      onPress: useNavCallback('ExportLegacyWallet'),
-    },
-    {
-      title: i18n.t('messenger.legacyMessenger'),
-      onPress: useNavCallback('Messenger'),
-    },
-  ];
+      onPress: () => {
+        NavigationService.navigate('ExportLegacyWallet');
+      },
+    });
+  }
 
   const data = [
     {
@@ -89,9 +95,9 @@ export default function ({ navigation }) {
       {featuresService.has('paywall-2020') &&
         generateSection(i18n.t('settings.otherOptions.b'), paidContent)}
       {generateSection(i18n.t('settings.otherOptions.c'), account)}
-      {generateSection(i18n.t('settings.otherOptions.e'), legacy)}
       {generateSection(i18n.t('settings.otherOptions.f'), data)}
       {generateSection(i18n.t('settings.otherOptions.d'), info)}
+      {generateSection(i18n.t('settings.otherOptions.e'), legacy)}
     </ScrollView>
   );
 }

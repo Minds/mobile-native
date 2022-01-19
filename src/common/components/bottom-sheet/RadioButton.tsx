@@ -5,7 +5,7 @@ type PropsType = {
   title: string;
   iconSize?: number;
   selected: boolean;
-  onPress: () => void;
+  onPress?: () => void;
 };
 
 export default function RadioButton(props: PropsType) {

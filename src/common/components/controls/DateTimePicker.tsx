@@ -1,9 +1,9 @@
 import { observer, useLocalStore } from 'mobx-react';
 import React, { forwardRef, useImperativeHandle, useMemo } from 'react';
 import { View } from 'react-native';
-import i18n from '../services/i18n.service';
+import i18n from '../../services/i18n.service';
 import ThemedStyles, { useStyle } from '~/styles/ThemedStyles';
-import { BottomSheetButton, BottomSheetModal } from './bottom-sheet';
+import { BottomSheetButton, BottomSheetModal } from '../bottom-sheet';
 import type { BottomSheetModal as BottomSheetModalType } from '@gorhom/bottom-sheet';
 import ModernDatePicker from 'react-native-modern-datepicker';
 import { Calendar } from 'react-native-calendars';
@@ -76,7 +76,7 @@ const DateTimePicker = observer(
           bottomSheetRef.current?.present();
         },
         setDate(calendarDate) {
-          localStore.selectedDate = new Date(calendarDate.dateString);
+          localStore.selectedDate = moment(calendarDate.dateString).toDate();
           this.pickerState = 'time';
         },
         setRawDate(date) {
@@ -95,6 +95,7 @@ const DateTimePicker = observer(
           }
 
           bottomSheetRef.current?.dismiss();
+          this.pickerState = 'date';
         },
         onBack() {
           this.pickerState = 'date';
@@ -171,6 +172,7 @@ const DateTimePicker = observer(
             <ModernDatePicker
               ref={timePickerRef}
               mode="time"
+              current={localStore.textDate}
               confirmButtonVisible={false}
               options={timePickerOptions}
               minuteInterval={5}

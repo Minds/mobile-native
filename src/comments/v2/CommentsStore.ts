@@ -35,6 +35,7 @@ export default class CommentsStore {
   @observable loaded = false;
   @observable saving = false;
   @observable text = '';
+  @observable selection = { start: 0, end: 0 };
   @observable mature = 0;
   @observable loadingPrevious = false;
   @observable loadingNext = false;
@@ -460,10 +461,17 @@ export default class CommentsStore {
    * Refresh
    */
   @action
-  refresh() {
+  refresh = () => {
     this.refreshing = true;
     this.clearComments();
-  }
+    this.loadComments()
+      .then(() => {
+        this.refreshDone();
+      })
+      .catch(() => {
+        this.refreshDone();
+      });
+  };
 
   /**
    * Refresh done
@@ -517,6 +525,15 @@ export default class CommentsStore {
   @action
   setCommentDescription(comment, description) {
     comment.description = description;
+  }
+
+  /**
+   * Set selection
+   * @param {object} selection
+   */
+  @action
+  setSelection(selection) {
+    this.selection = selection;
   }
 
   /**

@@ -9,7 +9,7 @@ import type CommentsStore from './CommentsStore';
 import CommentListHeader from './CommentListHeader';
 import LoadMore from './LoadMore';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import { CommentInputContext } from './CommentInput';
+import CommentInput, { CommentInputContext } from './CommentInput';
 import sessionService from '../../common/services/session.service';
 import GroupModel from '../../groups/GroupModel';
 import FastImage from 'react-native-fast-image';
@@ -134,6 +134,8 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
         ref={ref}
         data={props.store.comments.slice()}
         ListHeaderComponent={Header}
+        onRefresh={props.store.refresh}
+        refreshing={props.store.refreshing}
         ListFooterComponent={Footer}
         keyExtractor={keyExtractor}
         initialNumToRender={4}
@@ -143,6 +145,7 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
         style={styles.list}
         contentContainerStyle={styles.listContainer}
       />
+      <CommentInput key="commentInput" />
     </View>
   );
 };
