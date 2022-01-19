@@ -1,5 +1,10 @@
 //@ts-nocheck
 import { storages } from '~/common/services/storage/storages.service';
+import {
+  STAGING_KEY,
+  CANARY_KEY,
+  EXPERIMENTS_ID_KEY,
+} from './../settings/screens/DevToolsScreen';
 import { Platform, PlatformIOSStatic } from 'react-native';
 import RNConfig from 'react-native-config';
 import DeviceInfo from 'react-native-device-info';
@@ -14,11 +19,11 @@ export const IS_PRODUCTION = ENV === 'production';
 export const IS_REVIEW = true || ENV === 'review';
 
 // Send staging cookie to api
-export const MINDS_STAGING = storages.app.getBool('staging') || false;
-export const MINDS_CANARY = storages.app.getBool('canary') || false;
+export const MINDS_STAGING = storages.app.getBool(STAGING_KEY) || false;
+export const MINDS_CANARY = storages.app.getBool(CANARY_KEY) || false;
 
 // the user id to be used with growthbook experiments
-export const EXPERIMENTS_ID = storages.app.getString('experiments_id') || '';
+export const EXPERIMENTS_ID = storages.app.getString(EXPERIMENTS_ID_KEY) || '';
 
 // network timeout time
 export const NETWORK_TIMEOUT = 15000;

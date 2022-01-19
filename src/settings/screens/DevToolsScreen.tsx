@@ -9,15 +9,21 @@ import { B1 } from '~/common/ui';
 import ModalContainer from '~/onboarding/v2/steps/ModalContainer';
 import ThemedStyles from '~/styles/ThemedStyles';
 
+export const EXPERIMENTS_ID_KEY = 'experiments_id';
+export const STAGING_KEY = 'staging';
+export const CANARY_KEY = 'canary';
+
 const DevToolsScreen = () => {
   const navigation = useNavigation();
   const [experimentsId, setExperimentsId] = useState(
-    storages.app.getString('experiments_id') || '',
+    storages.app.getString(EXPERIMENTS_ID_KEY) || '',
   );
   const [staging, setStaging] = useState(
-    storages.app.getBool('staging') || false,
+    storages.app.getBool(STAGING_KEY) || false,
   );
-  const [canary, setCanary] = useState(storages.app.getBool('canary') || false);
+  const [canary, setCanary] = useState(
+    storages.app.getBool(CANARY_KEY) || false,
+  );
 
   const setStringDebounced = useDebouncedCallback(
     storages.app.setString,
@@ -40,7 +46,7 @@ const DevToolsScreen = () => {
           value={staging}
           onValueChange={val => {
             setStaging(val);
-            storages.app.setBool('staging', val);
+            storages.app.setBool(STAGING_KEY, val);
           }}
         />
       </View>
@@ -50,7 +56,7 @@ const DevToolsScreen = () => {
           value={canary}
           onValueChange={val => {
             setCanary(val);
-            storages.app.setBool('canary', val);
+            storages.app.setBool(CANARY_KEY, val);
           }}
         />
       </View>
@@ -58,7 +64,7 @@ const DevToolsScreen = () => {
         placeholder={'Experiments Id'}
         onChangeText={text => {
           setExperimentsId(text);
-          setStringDebounced(EXPERIMENTS_ID, text);
+          setStringDebounced(EXPERIMENTS_ID_KEY, text);
         }}
         value={experimentsId}
       />

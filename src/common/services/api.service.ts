@@ -1,4 +1,3 @@
-import { storages } from '~/common/services/storage/storages.service';
 import Cancelable from 'promise-cancelable';
 import axios, { AxiosInstance, AxiosResponse, CancelTokenSource } from 'axios';
 import { NativeModules } from 'react-native';
