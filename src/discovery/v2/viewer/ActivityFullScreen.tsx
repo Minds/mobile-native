@@ -137,6 +137,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
   const showText = !!entity.text || !!entity.title;
   const { current: cleanBottom } = useRef({
     paddingBottom: insets.bottom - 10,
+    ...ThemedStyles.style.bgPrimaryBackground,
   });
 
   const onPressComment = useCallback(() => {
@@ -346,7 +347,12 @@ const ActivityFullScreen = observer((props: PropsType) => {
             <LinearGradient colors={gradientColors} style={styles.linear} />
           )}
         </View>
-        <View style={props.noBottomInset ? undefined : cleanBottom}>
+        <View
+          style={
+            props.noBottomInset
+              ? ThemedStyles.style.bgPrimaryBackground
+              : cleanBottom
+          }>
           <InteractionsBar
             onShowUpVotesPress={showUpVotes}
             onShowDownVotesPress={showDownVotes}
