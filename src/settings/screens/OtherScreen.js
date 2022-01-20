@@ -97,7 +97,9 @@ export default function ({ navigation }) {
       {generateSection(i18n.t('settings.otherOptions.c'), account)}
       {generateSection(i18n.t('settings.otherOptions.f'), data)}
       {generateSection(i18n.t('settings.otherOptions.d'), info)}
-      {generateSection(i18n.t('settings.otherOptions.e'), legacy)}
+      {showWallets
+        ? generateSection(i18n.t('settings.otherOptions.e'), legacy)
+        : null}
     </ScrollView>
   );
 }

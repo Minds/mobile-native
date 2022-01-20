@@ -147,6 +147,9 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
     () => <Handle style={ThemedStyles.style.bgPrimaryBackground} />,
     [],
   );
+  const onDismiss = useCallback(() => props.commentsStore.setShowInput(false), [
+    props.commentsStore,
+  ]);
 
   const { keyboardShown } = useKeyboard();
 
@@ -158,6 +161,7 @@ const CommentBottomSheet = (props: PropsType, ref: any) => {
     <BottomSheetModal
       key="commentSheet"
       backdropComponent={renderBackdrop}
+      onDismiss={onDismiss}
       handleHeight={20}
       backgroundComponent={null}
       ref={sheetRef}
