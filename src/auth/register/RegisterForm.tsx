@@ -111,6 +111,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
       }
       if (
         !store.username ||
+        store.usernameTaken ||
         !store.email ||
         !validatorService.email(store.email)
       ) {
@@ -183,11 +184,20 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
         error={store.usernameError}
         noBottomBorder
         autofocus
+        autoCorrect={false}
+        keyboardType="name-phone-pad"
+        autoComplete="username-new"
+        textContentType="username"
       />
       <InputContainer
         placeholder={i18n.t('auth.email')}
         onChangeText={store.setEmail}
         value={store.email}
+        autoComplete="email"
+        autoCorrect={false}
+        autoCapitalize="none"
+        keyboardType="email-address"
+        textContentType="emailAddress"
         testID="emailInput"
         error={
           !store.showErrors
@@ -205,6 +215,13 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
         <PasswordInput
           store={store}
           tooltipBackground={ThemedStyles.getColor('TertiaryBackground')}
+          inputProps={{
+            textContentType: 'newPassword',
+            error:
+              store.showErrors && validatePassword(store.password)
+                ? i18n.t('settings.invalidPassword')
+                : undefined,
+          }}
         />
       </View>
     </View>
@@ -245,7 +262,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
       <BottomSheetButton
         onPress={store.onRegisterPress}
         text={i18n.t('auth.createChannel')}
-        disabled={store.inProgress}
+        disabled={true || store.inProgress}
         loading={store.inProgress}
         testID="registerButton"
         action

@@ -11,7 +11,7 @@ import ResetPasswordModal, {
   ResetPasswordModalHandles,
 } from './reset-password/ResetPasswordModal';
 
-const { height, width } = Dimensions.get('window');
+const { height } = Dimensions.get('window');
 const LOGO_HEIGHT = height / 7;
 
 type PropsType = {
@@ -77,15 +77,15 @@ const styles = StyleSheet.create({
     // height: 70,
   },
   image: {
-    height: 0.3679 * (width * 0.43),
-    width: '43%',
+    height: '14%',
+    width: '50%',
     position: 'absolute',
     top: '10%',
     alignSelf: 'center',
   },
   buttonContainer: {
     position: 'absolute',
-    bottom: '10%',
+    bottom: '3%',
     left: 0,
     right: 0,
     padding: 32,
