@@ -6,6 +6,7 @@ import React, { useRef } from 'react';
 import { View, TextStyle } from 'react-native';
 import * as Progress from 'react-native-progress';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import Topbar from '~/topbar/Topbar';
 import { showNotification } from '../../../AppMessages';
 import BottomButtonOptions, {
   ItemType,
@@ -258,7 +259,8 @@ export default observer(function OnboardingScreen() {
     );
 
   return (
-    <View style={[theme.bgSecondaryBackground, theme.flexContainer]}>
+    <View style={[theme.bgPrimaryBackground, theme.flexContainer]}>
+      <Topbar navigation={navigation} />
       {body}
     </View>
   );
