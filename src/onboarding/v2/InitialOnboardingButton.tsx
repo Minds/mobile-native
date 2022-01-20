@@ -8,7 +8,8 @@ import { Tooltip } from 'react-native-elements';
 import useOnboardingProgress from './useOnboardingProgress';
 import { observer } from 'mobx-react';
 import SettingsStore from '../../settings/SettingsStore';
-import Pulse from '~/common/components/animations/Pulse';
+// import Pulse from '~/common/components/animations/Pulse';
+import { Spacer } from '~/common/ui';
 
 let shownOnce = false;
 /**
@@ -82,8 +83,10 @@ export default observer(function InitialOnboardingButton() {
   }
 
   return (
-    <Pulse>
+    // <Pulse repeat={2}>
+    <Spacer vertical="S">
       <MenuItem item={item} titleStyle={theme.bold} testID="startOnboarding" />
-    </Pulse>
+    </Spacer>
+    // </Pulse>
   );
 });
