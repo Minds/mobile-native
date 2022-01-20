@@ -36,9 +36,9 @@ export default function ({ navigation, route }) {
 }
 
 const styles = ThemedStyles.create({
-  container: ['flexContainer', 'bgSecondaryBackground'],
+  container: ['flexContainer', 'bgPrimaryBackground'],
   innerWrapper: ['borderBottomHair', 'bcolorPrimaryBorder'],
-  list: ['bgSecondaryBackground', 'paddingTop4x'],
-  firstMenuItemStyle: ['bgPrimaryBackground'],
-  menuItemStyle: ['bgPrimaryBackground', 'borderTop0x'],
+  list: ['bgPrimaryBackground', 'paddingTop4x'],
+  firstMenuItemStyle: ['bgSecondaryBackground'],
+  menuItemStyle: ['bgSecondaryBackground', 'borderTop0x'],
 });

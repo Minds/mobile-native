@@ -118,7 +118,7 @@ const AppStack = function () {
       />
       <AppStackNav.Navigator screenOptions={ThemedStyles.defaultScreenOptions}>
         <AppStackNav.Screen
-          name="Main"
+          name="Tabs"
           component={TabScreenWithModal}
           options={hideHeader}
         />
@@ -209,11 +209,6 @@ const AppStack = function () {
           name="Report"
           component={ReportScreen}
           options={{ title: i18n.t('report') }}
-        />
-        <AppStackNav.Screen
-          name="OnboardingScreen"
-          component={OnboardingScreen}
-          options={hideHeader}
         />
         <AppStackNav.Screen
           name="TierScreen"
