@@ -219,7 +219,7 @@ export type AppStackParamList = {
   BoostPostScreen: { entity: ActivityModel };
   ActivityFullScreenNav: {};
   Newsfeed: {};
-  Main: {};
+  Tabs: {};
   TagSelector: {};
   NsfwSelector: {};
   ScheduleSelector: {};

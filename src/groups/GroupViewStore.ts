@@ -11,7 +11,6 @@ import logService from '../common/services/log.service';
 import entitiesService from '../common/services/entities.service';
 import GroupModel from './GroupModel';
 import FeedStore from '../common/stores/FeedStore';
-import CommentsStore from '../comments/v2/CommentsStore';
 
 /**
  * Groups store
@@ -32,11 +31,6 @@ class GroupViewStore {
    * Feed store
    */
   feed = new FeedStore(true);
-
-  /**
-   * Comments
-   */
-  comments = null;
 
   /**
    * Group
@@ -348,9 +342,6 @@ class GroupViewStore {
    */
   @action
   setGroup(group) {
-    if (!this.comments) {
-      this.comments = new CommentsStore(group);
-    }
     this.group = GroupModel.checkOrCreate(group);
     this.setGuid(group.guid);
   }
@@ -388,7 +379,6 @@ class GroupViewStore {
     this.showSearch = false;
     this.saving = false;
     this.loading = false;
-    this.comments = null;
   }
 }
 
