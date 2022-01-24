@@ -261,7 +261,7 @@ export default class GroupViewScreen extends Component {
     if (imOwner) {
       if (member['is:owner']) {
         memberActions.push({
-          title: i18n.t('groups.removeOwner'),
+          title: i18n.t('groups.removeAdmin'),
           iconName: 'delete',
           iconType: 'material-community',
           onPress: () => {
@@ -271,7 +271,7 @@ export default class GroupViewScreen extends Component {
         });
       } else if (!member['is:moderator']) {
         memberActions.push({
-          title: i18n.t('groups.makeOwner'),
+          title: i18n.t('groups.makeAdmin'),
           iconName: 'person-circle-outline',
           iconType: 'ionicon',
           onPress: () => {
