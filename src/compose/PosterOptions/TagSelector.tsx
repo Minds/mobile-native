@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback, useRef } from 'react';
-import { View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -11,6 +11,8 @@ import hashtagService from '../../common/services/hashtag.service';
 import HistoryStore from '../../common/stores/HistoryStore';
 import TextInput from '../../common/components/TextInput';
 import MText from '../../common/components/MText';
+import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import { ScrollView } from 'react-native-gesture-handler';
 
 /**
  * Tag row
@@ -117,7 +119,8 @@ export default observer(function (props) {
       </MText>
       <View style={styles.suggestedContainer}>
         <ScrollView
-          showsHorizontalScrollIndicator={false}
+          style={theme.flexContainer}
+          showsHorizontalScrollIndicator={true}
           contentContainerStyle={styles.suggestedScroll}
           horizontal={true}>
           <MIcon name="fire" size={23} style={theme.colorAlert} />
@@ -172,7 +175,7 @@ export default observer(function (props) {
               Clear history
             </MText>
           </View>
-          <ScrollView keyboardShouldPersistTaps={'handled'}>
+          <BottomSheetScrollView keyboardShouldPersistTaps={'handled'}>
             {localStore.history.history.map(t => (
               <MText
                 style={styles.historyTag}
@@ -180,7 +183,7 @@ export default observer(function (props) {
                 #{t}
               </MText>
             ))}
-          </ScrollView>
+          </BottomSheetScrollView>
         </View>
       )}
       <View style={styles.tagsContainer}>
@@ -195,6 +198,7 @@ export default observer(function (props) {
 const styles = StyleSheet.create({
   suggestedContainer: {
     height: 50,
+    width: '100%',
   },
   historyTag: {
     fontSize: 17,
