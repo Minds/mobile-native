@@ -202,7 +202,7 @@ build:android-mr-production:
 
 # Cleanup merged APK from browserstack
 build:cleanup:
-  image: circleci/android:api-30-node
+  image: circleci/android:api-31-node
   when: manual
   stage: build
   environment:
@@ -225,7 +225,7 @@ build:cleanup:
 
 # Play store version (Lowest version code)
 build:androidproduction-playstore:
-  image: circleci/android:api-30-node
+  image: circleci/android:api-31-node
   stage: build
   cache:
     key: '$CI_JOB_NAME-$CI_COMMIT_REF_SLUG'
