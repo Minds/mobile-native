@@ -78,10 +78,6 @@ export default function () {
         }
       : null,
     {
-      title: i18n.t('settings.accountOptions.6'),
-      onPress: () => navigation.push('MessengerSettingsScreen'),
-    },
-    {
       title: i18n.t('settings.accountOptions.7'),
       onPress: () => navigation.push('AutoplaySettingsScreen'),
     },
