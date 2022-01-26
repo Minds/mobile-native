@@ -1,5 +1,4 @@
 stages:
-  - test
   - e2e
   - build
   - deploy
@@ -7,20 +6,20 @@ stages:
   - uploadstore
 
 # Spec test
-test:jest:
-  image: node:12.13.0
-  stage: test
-  cache:
-    key: ${CI_COMMIT_REF_SLUG}
-    paths:
-      - node_modules/
-      - .jest/cache/
-  before_script:
-    - yarn install --frozen-lockfile
-  script:
-    - 'yarn prettier --check "./src/**/*.{ts,tsx,js,json}" "./*.{tsx,ts}"'
-    - yarn tsc
-    - yarn test --forceExit
+# test:jest:
+#   image: node:12.13.0
+#   stage: test
+#   cache:
+#     key: ${CI_COMMIT_REF_SLUG}
+#     paths:
+#       - node_modules/
+#       - .jest/cache/
+#   before_script:
+#     - yarn install --frozen-lockfile
+#   script:
+#     - 'yarn prettier --check "./src/**/*.{ts,tsx,js,json}" "./*.{tsx,ts}"'
+#     - yarn tsc
+#     - yarn test --forceExit
 
 # e2e test
 # e2e:detox:

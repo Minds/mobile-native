@@ -8,7 +8,7 @@ export const IS_IPAD = (Platform as PlatformIOSStatic).isPad;
 export const ONCHAIN_ENABLED = true;
 
 // Send staging cookie to api
-export const MINDS_STAGING = false;
+export const MINDS_STAGING = true;
 export const MINDS_CANARY = false;
 
 // network timeout time

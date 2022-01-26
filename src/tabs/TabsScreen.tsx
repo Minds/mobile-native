@@ -32,6 +32,7 @@ import Animated, {
   useAnimatedStyle,
   withSpring,
 } from 'react-native-reanimated';
+import { useFeature } from '@growthbook/growthbook-react';
 // import navigationService from '../navigation/NavigationService';
 
 const DoubleTapSafeTouchable = preventDoubleTap(TouchableOpacity);
@@ -92,6 +93,10 @@ const TabBar = ({ state, descriptors, navigation }) => {
     [insets.bottom],
   );
 
+  const ff = useFeature('newsfeed-group-posts').on;
+
+  const backgroundColor = ff ? '#1B85D6' : '#ECDA51';
+
   if (focusedOptions.tabBarVisible === false) {
     return null;
   }
@@ -143,7 +148,9 @@ const TabBar = ({ state, descriptors, navigation }) => {
         );
       })}
 
-      <Animated.View style={[styles.bar, barAnimatedStyle]} />
+      <Animated.View
+        style={[styles.bar, barAnimatedStyle, { backgroundColor }]}
+      />
     </View>
   );
 };

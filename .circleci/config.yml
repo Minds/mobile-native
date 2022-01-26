@@ -133,9 +133,6 @@ workflows:
   test:
     jobs:
       - checkout_code
-      - analyse_js:
-          requires:
-            - checkout_code
       - e2e:
           requires:
             - checkout_code
@@ -144,7 +141,7 @@ workflows:
               ignore: /^stable.*/
       - fastlane_build_qa:
           requires:
-            - analyse_js
+            - checkout_code
           filters:
             branches:
               only: /^(fix|feat|chore).*/
@@ -156,7 +153,6 @@ workflows:
               only: /^stable.*/
       - fastlane_release:
           requires:
-            - analyse_js
             - ios-testflight-approval
       - ios-testflight-approval:
           type: approval
