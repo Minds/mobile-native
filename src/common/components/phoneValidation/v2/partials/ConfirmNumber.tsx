@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react';
 import { observer } from 'mobx-react';
-import { View, TextInput } from 'react-native';
 import { styles } from './InputNumber';
 import usePhoneValidationStore from '../usePhoneValidationStore';
 import i18n from '../../../../services/i18n.service';
