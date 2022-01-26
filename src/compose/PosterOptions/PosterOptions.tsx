@@ -17,6 +17,7 @@ import { useBottomSheet } from '@gorhom/bottom-sheet';
 import { StackScreenProps } from '@react-navigation/stack';
 import { PosterStackParamList } from './PosterStackNavigator';
 import { useComposeContext } from '~/compose/useComposeStore';
+import { observer } from 'mobx-react';
 
 const height = 83;
 
@@ -52,7 +53,7 @@ interface PosterOptionsType
   extends FC,
     StackScreenProps<PosterStackParamList, 'PosterOptions'> {}
 
-export default function PosterOptions(props: PosterOptionsType) {
+function PosterOptions(props: PosterOptionsType) {
   const store = useComposeContext();
   // dereference observables to listen to his changes
   const nsfw = store.nsfw.slice();
@@ -174,6 +175,8 @@ export default function PosterOptions(props: PosterOptionsType) {
     </View>
   );
 }
+
+export default observer(PosterOptions);
 
 const styles = ThemedStyles.create({
   headerContainer: {
