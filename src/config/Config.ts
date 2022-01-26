@@ -1,10 +1,5 @@
 //@ts-nocheck
 import { storages } from '~/common/services/storage/storages.service';
-import {
-  STAGING_KEY,
-  CANARY_KEY,
-  EXPERIMENTS_ID_KEY,
-} from './../settings/screens/DevToolsScreen';
 import { Platform, PlatformIOSStatic } from 'react-native';
 import RNConfig from 'react-native-config';
 import DeviceInfo from 'react-native-device-info';
@@ -13,7 +8,12 @@ export const IS_IOS = Platform.OS === 'ios';
 export const IS_IPAD = (Platform as PlatformIOSStatic).isPad;
 export const ONCHAIN_ENABLED = true;
 
-export const ENV = RNConfig.ENV ?? 'production';
+export const EXPERIMENTS_ID_KEY = 'experiments_id';
+export const STAGING_KEY = 'staging';
+export const CANARY_KEY = 'canary';
+
+export const ENV =
+  typeof RNConfig === 'undefined' ? 'test' : RNConfig.ENV ?? 'production';
 
 export const IS_PRODUCTION = ENV === 'production';
 export const IS_REVIEW = true || ENV === 'review';

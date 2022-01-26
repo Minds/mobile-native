@@ -6,12 +6,9 @@ import Toggle from '~/common/components/Toggle';
 import useDebouncedCallback from '~/common/hooks/useDebouncedCallback';
 import { storages } from '~/common/services/storage/storages.service';
 import { B1 } from '~/common/ui';
+import { CANARY_KEY, EXPERIMENTS_ID_KEY, STAGING_KEY } from '~/config/Config';
 import ModalContainer from '~/onboarding/v2/steps/ModalContainer';
 import ThemedStyles from '~/styles/ThemedStyles';
-
-export const EXPERIMENTS_ID_KEY = 'experiments_id';
-export const STAGING_KEY = 'staging';
-export const CANARY_KEY = 'canary';
 
 const DevToolsScreen = () => {
   const navigation = useNavigation();
