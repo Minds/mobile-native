@@ -252,40 +252,40 @@ export default class GroupHeader extends Component<PropsTypes> {
     }
   };
 
-  getActionSheet() {
-    return (
-      <View style={stylesheet.rightToolbar}>
-        <Icon
-          name="more-vert"
-          onPress={this.showActionSheet}
-          size={26}
-          style={ThemedStyles.style.colorPrimaryText}
-        />
-        <BottomSheetModal ref={this.refActionSheet} title={i18n.t('actions')}>
-          {this.props.store.group.conversationDisabled ? (
-            <MenuItem
-              title={i18n.t('groups.enableConversations')}
-              iconName="message-outline"
-              iconType="material-community"
-              onPress={this.toggleConversation}
-            />
-          ) : (
-            <MenuItem
-              title={i18n.t('groups.disableConversations')}
-              iconName="message-lock-outline"
-              iconType="material-community"
-              onPress={this.toggleConversation}
-            />
-          )}
+  // getActionSheet() {
+  //   return (
+  //     <View style={stylesheet.rightToolbar}>
+  //       <Icon
+  //         name="more-vert"
+  //         onPress={this.showActionSheet}
+  //         size={26}
+  //         style={ThemedStyles.style.colorPrimaryText}
+  //       />
+  //       <BottomSheetModal ref={this.refActionSheet} title={i18n.t('actions')}>
+  //         {this.props.store.group.conversationDisabled ? (
+  //           <MenuItem
+  //             title={i18n.t('groups.enableConversations')}
+  //             iconName="message-outline"
+  //             iconType="material-community"
+  //             onPress={this.toggleConversation}
+  //           />
+  //         ) : (
+  //           <MenuItem
+  //             title={i18n.t('groups.disableConversations')}
+  //             iconName="message-lock-outline"
+  //             iconType="material-community"
+  //             onPress={this.toggleConversation}
+  //           />
+  //         )}
 
-          <BottomSheetButton
-            text={i18n.t('cancel')}
-            onPress={this.hideActionSheet}
-          />
-        </BottomSheetModal>
-      </View>
-    );
-  }
+  //         <BottomSheetButton
+  //           text={i18n.t('cancel')}
+  //           onPress={this.hideActionSheet}
+  //         />
+  //       </BottomSheetModal>
+  //     </View>
+  //   );
+  // }
 
   showActionSheet = async () => {
     this.refActionSheet.current?.present();
@@ -320,7 +320,7 @@ export default class GroupHeader extends Component<PropsTypes> {
 
     const avatar = { uri: this.getAvatar() };
     const iurl = { uri: this.getBannerFromGroup() };
-    const actionSheet = group['is:owner'] ? this.getActionSheet() : null;
+    // const actionSheet = group['is:owner'] ? this.getActionSheet() : null;
     return (
       <DismissKeyboard>
         <View>
@@ -352,19 +352,11 @@ export default class GroupHeader extends Component<PropsTypes> {
                   style={iconStyle}
                   onPress={this.share}
                 />
-                {!this.props.store.group?.conversationDisabled && (
-                  <IconButtonNext
-                    name="chat"
-                    size="medium"
-                    style={iconStyle}
-                    onPress={this.props.onPressComment}
-                  />
-                )}
                 {/* {group.can(FLAG_JOIN_GATHERING) && this.getGatheringButton()} */}
                 {group.can(FLAG_JOIN) && this.getActionButton()}
               </View>
             </View>
-            {actionSheet}
+            {/* {actionSheet} */}
           </View>
           <View style={stylesheet.avatarContainer}>
             <Image source={avatar} style={this.avatarStyle} />
@@ -409,4 +401,4 @@ const avatarContainersStyle = ThemedStyles.combine(
   'rowJustifyStart',
   'flexContainer',
 );
-const actionButtonStyle = ThemedStyles.combine('marginLeft', 'marginRight');
+// const actionButtonStyle = ThemedStyles.combine('marginLeft', 'marginRight');

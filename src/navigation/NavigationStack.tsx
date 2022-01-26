@@ -70,6 +70,7 @@ import MultiUserScreen from '../auth/multi-user/MultiUserScreen';
 import RelogScreen from '../auth/RelogScreen';
 import ChooseBrowserModalScreen from '~/settings/screens/ChooseBrowserModalScreen';
 import withModalProvider from './withModalProvide';
+import { DiscoverySearchScreen } from '~/discovery/v2/search/DiscoverySearchScreen';
 
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 
@@ -116,7 +117,7 @@ const AppStack = function () {
       />
       <AppStackNav.Navigator screenOptions={ThemedStyles.defaultScreenOptions}>
         <AppStackNav.Screen
-          name="Main"
+          name="Tabs"
           component={TabScreenWithModal}
           options={hideHeader}
         />
@@ -150,6 +151,10 @@ const AppStack = function () {
           name="Channel"
           component={ChannelScreenV2WithModal}
           options={hideHeader}
+        />
+        <AppStackNav.Screen
+          name="DiscoverySearch"
+          component={DiscoverySearchScreen}
         />
         <AppStackNav.Screen
           name="ChannelEdit"
@@ -198,11 +203,6 @@ const AppStack = function () {
           name="Report"
           component={ReportScreen}
           options={{ title: i18n.t('report') }}
-        />
-        <AppStackNav.Screen
-          name="OnboardingScreen"
-          component={OnboardingScreen}
-          options={hideHeader}
         />
         <AppStackNav.Screen
           name="TierScreen"

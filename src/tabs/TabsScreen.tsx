@@ -28,6 +28,10 @@ import NewsfeedStack from '~/navigation/NewsfeedStack';
 import MoreStack from '~/navigation/MoreStack';
 import DiscoveryStack from '~/navigation/DiscoveryStack';
 import { IS_IOS } from '~/config/Config';
+import Animated, {
+  useAnimatedStyle,
+  withSpring,
+} from 'react-native-reanimated';
 // import navigationService from '../navigation/NavigationService';
 
 const DoubleTapSafeTouchable = preventDoubleTap(TouchableOpacity);
@@ -60,6 +64,15 @@ const Tab = createBottomTabNavigator<TabParamList>();
 const TabBar = ({ state, descriptors, navigation }) => {
   const focusedOptions = descriptors[state.routes[state.index].key].options;
   const insets = useSafeAreaInsets();
+  const barAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [
+      {
+        translateX: withSpring(((width - 40) / 5) * state.index, {
+          mass: 0.2,
+        }),
+      },
+    ],
+  }));
 
   const bottomInset = {
     paddingBottom: insets.bottom
@@ -129,6 +142,8 @@ const TabBar = ({ state, descriptors, navigation }) => {
           </Component>
         );
       })}
+
+      <Animated.View style={[styles.bar, barAnimatedStyle]} />
     </View>
   );
 };
@@ -206,8 +221,6 @@ const styles = ThemedStyles.create({
   buttonContainer: {
     paddingTop: 17,
     flex: 1,
-    borderTopWidth: 4,
-    borderTopColor: 'transparent',
     alignContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
@@ -218,14 +231,20 @@ const styles = ThemedStyles.create({
   buttonContainerFocused: {
     paddingTop: 17,
     flex: 1,
-    borderTopWidth: 4,
-    borderTopColor: '#1B85D6',
     alignContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
     justifyContent: 'center',
     height: 40,
     marginBottom: IS_IOS ? 20 : 10,
+  },
+  bar: {
+    position: 'absolute',
+    top: 0,
+    left: 20,
+    width: 70,
+    height: 4,
+    backgroundColor: '#1B85D6',
   },
   tabBar: [
     {

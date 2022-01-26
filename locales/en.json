@@ -358,8 +358,8 @@
     "myGroups": "My Groups",
     "ban": "Ban",
     "kick": "Kick",
-    "makeOwner": "Make Owner",
-    "removeOwner": "Remove as Owner",
+    "makeAdmin": "Make Admin",
+    "removeAdmin": "Remove as Admin",
     "makeModerator": "Make Moderator",
     "removeModerator": "Remove as Moderator",
     "listMembersCount": "{{count}} members",
@@ -458,6 +458,7 @@
     },
     "empty": {
       "all": "You have no notifications",
+      "comments": "You have no comments notifications",
       "tags": "You have no tags notification",
       "subscriptions": "You have no subscriptions notification",
       "votes": "You have no votes notification",

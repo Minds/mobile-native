@@ -192,6 +192,7 @@ export type AuthStackParamList = {
 };
 
 export type AppStackParamList = {
+  DiscoverySearch: { query: string; plus?: boolean; q?: string; f?: string };
   PortraitViewerScreen: {
     items: Array<PortraitBarItem>;
     index: number;
@@ -218,7 +219,7 @@ export type AppStackParamList = {
   BoostPostScreen: { entity: ActivityModel };
   ActivityFullScreenNav: {};
   Newsfeed: {};
-  Main: {};
+  Tabs: {};
   TagSelector: {};
   NsfwSelector: {};
   ScheduleSelector: {};

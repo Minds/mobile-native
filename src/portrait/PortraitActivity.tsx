@@ -63,6 +63,7 @@ const PortraitActivity = observer((props: PropsType) => {
   const hasRemind = !!entity.remind_object;
   const { current: cleanBottom } = useRef({
     paddingBottom: insets.bottom ? insets.bottom - 10 : 0,
+    backgroundColor: ThemedStyles.getColor('PrimaryBackground'),
   });
   const { current: cleanTop } = useRef({
     paddingTop: insets.top
